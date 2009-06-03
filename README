@@ -1,0 +1,73 @@
+Anki Android: An Anki Port to the Android Platform
+
+Authors
+Andrew (andrewdubya at gmail) http://ichi2.net/anki/wiki/AndroidAnki
+
+What
+
+This is an Android app that can display (random) cards from an Anki deck. 
+
+
+Features
+
+This release (if it can be called that) has a very limited set of features/support:
+
+    * Choosing a deck from the file system. Note: It will crash if you select something other than an Anki deck (and might even crash on a few Anki decks :).
+    * Displaying random cards from the deck.
+    * Cards that are either plain text or HTML-based.
+    * A timer from the start of a card to the time you click 'Show Answer'
+    * A "whiteboard" toggle that allows you to draw on top of the card. 
+
+
+Install the app on your phone and copy .anki decks to the sdcard. If you don't have an Android device, you can download the emulator to try it out:
+
+    *
+
+      http://code.google.com/android/download.html 
+
+The SDK has a tools direcory with a ready-to-run emulator and tools. In Linux/OSX, you can cd to the tools directory and use these commands to set up the environment:
+
+    * First, create an sdcard with:
+          o [Linux]
+                + mkdir -p ~/.android/SDK-1.0/
+                + ./mksdcard 128M ~/.android/SDK-1.0/sdcard.img 
+            [Windows]
+                +
+
+                  mkdir C:\Documents and Settings\<user>\Local Settings\Application Data\Android\SDK-1.0 mksdcard 128M C:\Documents and Settings\<user>\Local Settings\Application Data\Android\SDK-1.0\sdcard.img 
+    * Run the emulator (note that the setup takes a while the first time):
+          o [Linux]
+                + ./emulator 
+            [Windows]
+                + emulator 
+            Note: you can point the emulator to a non-standard sdcard.img location using something like:
+                + ./emulator -sdcard ~/myproject/mysdcard.img 
+    * Wait for the emulator to finish loading so adb can communicate with it. Download the apk file linked above and install with:
+          o ./adb install -r ~/path/to/anki.apk 
+    * Copy one of your decks to the sdcard:
+          o ./adb push ~/path/to/your-deck.anki /sdcard 
+    * In the emulator window, click the grey menu bar at the bottom of the screen. You should see 'Anki' listed as an installed app.
+    * The directory listing should show the deck you copied to the sdcard. Click it to view random cards from the deck. Click the Whiteboard button for an overlay to write on. 
+
+Known Issues
+
+    *
+
+      Spaced repetition isn't implemented :(
+    * The open list is not very user friendly. Moving to directories doesn't scroll it up, and it appears to have problems moving out of symlinked directories. 
+
+Source
+
+I don't have a repository set up yet, but will if there's enough interest. You can grab the current source here. Some basics:
+
+    *
+
+      src/com/ichi2/anki contains the main source code. Anki.java is the opening screen, FlashCard.java is the flash card window, and AnkiDb.java is a poor database layer implementation :)
+    * assets/flashcard_css contains the CSS file included with each flash card
+    * values/strings.xml contains app strings, whiteboard colors, and a basic HTML template for flashcards.
+    * assets/layout contains the layouts for each screen.
+    * The SDK link above documents how to set up a development environment with Eclipse that integrates the emulator. 
+
+Contact
+
+If you have any questions, feel free to e-mail Andrew (andrewdubya at gmail). 
