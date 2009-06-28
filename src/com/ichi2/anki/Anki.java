@@ -95,7 +95,10 @@ public class Anki extends Activity {
     	
     	list = mBrowser.mFiles;
     	for (int i=0; i< list.length; i++) {
-    		fa.add(list[i]);
+    		// Show only Anki deck files.
+    		if (list[i].mFilename.endsWith(".anki")) {
+    			fa.add(list[i]);
+    		}
     	}
     	mFileList.clearChoices();
     }

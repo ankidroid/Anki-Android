@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">Anki</string>
+    <string name="app_name">Ankidroid</string>
 
 <string name="overlay_on">Whiteboard On</string>
 <string name="overlay_off">Whiteboard Off</string>
