@@ -13,6 +13,7 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -29,7 +30,7 @@ public class FlashCard extends Activity {
 	// Variables to hold layout objects that we need to update or handle events for.
 	WebView mCard;
 	ToggleButton mToggleWhiteboard;
-	Button mShowAnswer, mSelectResult;
+	Button mShowAnswer, mSelectRemembered, mSelectNotRemembered;
 	Chronometer mTimer;
 	Whiteboard mWhiteboard;
 	
@@ -47,10 +48,19 @@ public class FlashCard extends Activity {
 		}
 	};
 	
-	// Handler for buttons that allow user to select how well they did. Currently,
-	// this is just a single 'Next' button.
-	View.OnClickListener mSelectResultHandler = new View.OnClickListener() {
+	// Handlers for buttons that allow user to select how well they did.
+	View.OnClickListener mSelectRememberedHandler = new View.OnClickListener() {
 		public void onClick(View view) {
+			// Space this card because it has been successfully remembered.
+			currentCard.space();
+			nextCard();
+			displayCardQuestion();
+		}
+	};
+	View.OnClickListener mSelectNotRememberedHandler = new View.OnClickListener() {
+		public void onClick(View view) {
+			// Reset this card because it has not been successfully remembered.
+			currentCard.reset();
 			nextCard();
 			displayCardQuestion();
 		}
@@ -66,6 +76,7 @@ public class FlashCard extends Activity {
 		AnkiDb.openDatabase(extras.getString(OPT_DB));
 
 		// Initialize the current view to the portrait layout.
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 		initLayout(R.layout.flashcard_portrait);
 
 		// Start by getting the first card and displaying it.
@@ -85,13 +96,15 @@ public class FlashCard extends Activity {
 
 		mCard = (WebView)findViewById(R.id.flashcard);
 		mShowAnswer = (Button)findViewById(R.id.show_answer);
-		mSelectResult = (Button)findViewById(R.id.sel_result);
+		mSelectRemembered = (Button)findViewById(R.id.select_remembered);
+		mSelectNotRemembered = (Button)findViewById(R.id.select_notremembered);
 		mTimer = (Chronometer)findViewById(R.id.card_time);
 		mToggleWhiteboard = (ToggleButton)findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard)findViewById(R.id.whiteboard);
 		
 		mShowAnswer.setOnClickListener(mShowAnswerHandler);
-		mSelectResult.setOnClickListener(mSelectResultHandler);
+		mSelectRemembered.setOnClickListener(mSelectRememberedHandler);
+		mSelectNotRemembered.setOnClickListener(mSelectNotRememberedHandler);
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
 	}
 	
@@ -102,7 +115,7 @@ public class FlashCard extends Activity {
 	// Get the next card.
 	public void nextCard() {
 		// TODO: Use un-implemented spaced repetition :)
-		currentCard = AnkiDb.Card.byRand();
+		currentCard = AnkiDb.Card.smallestIntervalCard();
 	}
 	
 	// Set up the display for the current card.
@@ -116,7 +129,8 @@ public class FlashCard extends Activity {
 			updateCard("Unable to find a card!");
 		} else {
 			mWhiteboard.clear();
-			mSelectResult.setVisibility(View.GONE);
+			mSelectRemembered.setVisibility(View.GONE);
+			mSelectNotRemembered.setVisibility(View.GONE);
 			mShowAnswer.setVisibility(View.VISIBLE);
 			mShowAnswer.requestFocus();
 			mTimer.setBase(SystemClock.elapsedRealtime());
@@ -133,8 +147,9 @@ public class FlashCard extends Activity {
 	// Display the card answer.
 	public void displayCardAnswer() {
 		mTimer.stop();
-		mSelectResult.setVisibility(View.VISIBLE);
-		mSelectResult.requestFocus();
+		mSelectRemembered.setVisibility(View.VISIBLE);
+		mSelectNotRemembered.setVisibility(View.VISIBLE);
+		mSelectRemembered.requestFocus();
 		mShowAnswer.setVisibility(View.GONE);
 		updateCard(currentCard.answer);
 	}

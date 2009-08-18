@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">Ankidroid</string>
+<string name="app_name">Please choose a .anki file from your SD card</string>
 
 <string name="overlay_on">Whiteboard On</string>
 <string name="overlay_off">Whiteboard Off</string>
 <string name="show_answer">Show Answer</string>
 <string name="card_hint">Flashcard</string>
-
 
 <color name="wb_fg_color">#B00000FF</color>
 <color name="wb_bg_color">#0000</color>

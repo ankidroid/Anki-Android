@@ -2,7 +2,6 @@ package com.ichi2.anki;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,19 +9,18 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.ichi2.anki.Anki.FileBrowser.FileEntry;
-import com.ichi2.anki.Anki.FileBrowser.NotDirException;
+import com.ichi2.anki.Ankidroid.FileBrowser.FileEntry;
+import com.ichi2.anki.Ankidroid.FileBrowser.NotDirException;
 
-public class Anki extends Activity {
+public class Ankidroid extends Activity {
 	
 	SQLiteDatabase mDb;
-	Anki mSelf;
+	Ankidroid mSelf;
 	FileBrowser mBrowser;
 	ArrayAdapter<FileBrowser.FileEntry> mFileListAdapter;
 	ListView mFileList;
