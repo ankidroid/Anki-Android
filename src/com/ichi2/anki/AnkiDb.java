@@ -18,14 +18,9 @@ public class AnkiDb {
         mDb = SQLiteDatabase.openDatabase(filename, null, DB_OPEN_OPTS);		
 	}
 	
-	static public abstract class AnkiModel {
-
-		//abstract public AnkiModel instanceFromCursor(Cursor cursor);
-	}
-	
-	static public class Card extends AnkiModel {
+	static public class Card {
 		
-		public Integer id;
+		public String id;
 		public String question, answer;
 		public double interval;
 		
@@ -44,13 +39,16 @@ public class AnkiDb {
 			if (cursor.isClosed()) {
 				throw new SQLException();
 			}
+			Log.d("db", "Nb of results:" + cursor.getCount());
 			cursor.moveToFirst();
 			return instanceFromCursor(cursor);
 		}
 		
 		static Card instanceFromCursor(Cursor cursor) {
 			Card card = new Card();
-			card.id = cursor.getInt(0);
+			String s = cursor.getString(0);
+			Log.d("db", s);
+			card.id = s;//cursor.getInt(0);
 			card.interval = cursor.getDouble(1);
 			card.question = cursor.getString(2);
 			card.answer = cursor.getString(3);
@@ -60,30 +58,30 @@ public class AnkiDb {
 		
 		// Space this card because it has been successfully remembered.
 		public void space() {
-			double newInterval = 2*interval; // Very basic spaced repetition.
-			String query = "update " + TABLE + " set interval=" + newInterval + " where id=" + id;
+			double newInterval = 1;
+			if (interval != 0)
+				newInterval = 2*interval; // Very basic spaced repetition.
+			String query = "UPDATE " + TABLE + " SET interval=" + newInterval + " where id='" + id + "'";
 			Log.d("db", query);
 			Cursor cursor = AnkiDb.mDb.rawQuery(query, null);
-			Log.d("db", cursor.toString());
+			Log.d("db", "cursor=" + cursor.toString());
+			// Just output the interval to be sure the update worked.
+			Card card = oneFromCursor(
+					AnkiDb.mDb.rawQuery("select " + COLUMNS + " from " + TABLE + " where id='" + id + "'", null)
+					);
+			Log.d("db", "Updated card id " + card.id + " with interval " + card.interval);
 		}
 		
 		// Reset this card because it has not been successfully remembered.
 		public void reset() {
-			String query = "update " + TABLE + " set interval=0.1 where id=" + id;
+			String query = "UPDATE " + TABLE + " SET interval=0.1 where id=" + id;
 			Log.d("db", query);
 			AnkiDb.mDb.rawQuery(query, null);
+			// Just debug the interval to be sure the update worked.
+			Card card = oneFromCursor(
+					AnkiDb.mDb.rawQuery("select " + COLUMNS + " from " + TABLE + " where id='" + id + "'", null)
+					);
+			Log.d("db", "Updated card id " + card.id + " with interval " + card.interval);
 		}
-	}
-	
-	static public class FactModel extends AnkiModel {
-		
-		public String tableName() { return "facts"; }
-		public String columnMatch() { return "*"; }
-	}
-	
-	static public class DeckModel extends AnkiModel {
-		
-		public String tableName() { return "decks"; }
-		public String columnMatch() { return "*"; }
 	}
 }
