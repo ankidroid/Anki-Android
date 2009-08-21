@@ -1,5 +1,6 @@
 package com.ichi2.anki;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,7 +30,7 @@ public class AnkiDb {
 		
 		static public Card smallestIntervalCard() throws SQLException {
 			Card card = oneFromCursor(
-					AnkiDb.mDb.rawQuery("select " + COLUMNS + " from " + TABLE + " order by /*interval*/ random() limit 1", null)
+					AnkiDb.mDb.rawQuery("select " + COLUMNS + " from " + TABLE + " order by interval limit 1", null)
 					);
 			Log.d("db", "Selected card id " + card.id + " with interval " + card.interval);
 			return card;
@@ -61,10 +62,11 @@ public class AnkiDb {
 			double newInterval = 1;
 			if (interval != 0)
 				newInterval = 2*interval; // Very basic spaced repetition.
-			String query = "UPDATE " + TABLE + " SET interval=" + newInterval + " where id='" + id + "'";
+			String query = "UPDATE " + TABLE + " SET interval='" + newInterval + "' where id='" + id + "'";
 			Log.d("db", query);
-			Cursor cursor = AnkiDb.mDb.rawQuery(query, null);
-			Log.d("db", "cursor=" + cursor.toString());
+			ContentValues values = new ContentValues();
+			values.put("interval", newInterval);
+			AnkiDb.mDb.update("cards", values, "id='" + id + "'", null);
 			// Just output the interval to be sure the update worked.
 			Card card = oneFromCursor(
 					AnkiDb.mDb.rawQuery("select " + COLUMNS + " from " + TABLE + " where id='" + id + "'", null)
@@ -76,7 +78,9 @@ public class AnkiDb {
 		public void reset() {
 			String query = "UPDATE " + TABLE + " SET interval=0.1 where id=" + id;
 			Log.d("db", query);
-			AnkiDb.mDb.rawQuery(query, null);
+			ContentValues values = new ContentValues();
+			values.put("interval", 0.1);
+			AnkiDb.mDb.update("cards", values, "id='" + id + "'", null);
 			// Just debug the interval to be sure the update worked.
 			Card card = oneFromCursor(
 					AnkiDb.mDb.rawQuery("select " + COLUMNS + " from " + TABLE + " where id='" + id + "'", null)
