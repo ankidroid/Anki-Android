@@ -1,10 +1,13 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
@@ -16,6 +19,8 @@ import android.widget.ToggleButton;
 public class FlashCard extends Activity {
 	
 	public static final String OPT_DB = "DATABASE";
+	
+	public static final int MENU_OPEN = 0;
 	
 	public String card_template;
 
@@ -101,6 +106,28 @@ public class FlashCard extends Activity {
 		mSelectNotRemembered.setOnClickListener(mSelectNotRememberedHandler);
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
 	}
+	
+	/** Creates the menu items */
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    menu.add(0, MENU_OPEN, 0, "Switch to another deck");
+	    return true;
+	}
+
+	/** Handles item selections */
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    case MENU_OPEN:
+	        startOpenActivity();
+	        return true;
+	    }
+	    return false;
+	}
+	
+	public void startOpenActivity() {
+    	Intent openIntent = new Intent(this, Ankidroid.class) ;
+    	startActivity(openIntent);
+	}
+
 	
 	public void setOverlayState(boolean enabled) {
 		mWhiteboard.setVisibility((enabled) ? View.VISIBLE : View.GONE);
