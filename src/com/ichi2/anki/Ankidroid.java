@@ -6,7 +6,6 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,7 +17,6 @@ import com.ichi2.anki.Ankidroid.FileBrowser.NotDirException;
 
 public class Ankidroid extends Activity {
 	
-	SQLiteDatabase mDb;
 	Ankidroid mSelf;
 	FileBrowser mBrowser;
 	ArrayAdapter<FileBrowser.FileEntry> mFileListAdapter;

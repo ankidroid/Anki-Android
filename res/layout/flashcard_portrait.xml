@@ -14,7 +14,7 @@
 			android:gravity="center_vertical|center_horizontal"
 			android:hint="@string/card_hint"
 			android:textSize="30sp" />
-		<view class="com.ichi2.anki.FlashCard$Whiteboard"
+		<view class="com.ichi2.anki.Whiteboard"
 			android:id="@+id/whiteboard"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
