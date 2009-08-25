@@ -22,6 +22,8 @@ public class Ankidroid extends Activity {
 	ArrayAdapter<FileBrowser.FileEntry> mFileListAdapter;
 	ListView mFileList;
 	
+	private String deckFilename;
+	
 	AdapterView.OnItemClickListener mFileSelHandler = new AdapterView.OnItemClickListener() {
 		public void onItemClick(AdapterView parent, View v, int p, long id) {
 			mSelf.handleFileSelection(p);
@@ -39,8 +41,22 @@ public class Ankidroid extends Activity {
         mFileListAdapter = new ArrayAdapter<FileBrowser.FileEntry>(this, R.layout.main_fileentry);
         mFileList.setOnItemClickListener(mFileSelHandler);
         mFileList.setAdapter(mFileListAdapter);
+    
+        if (savedInstanceState != null) {
+        	deckFilename = savedInstanceState.getString("deckFilename");
+        	if (deckFilename != null) {
+        		Intent flashcard = new Intent(this, FlashCard.class) ;
+            	flashcard.putExtra(FlashCard.OPT_DB, deckFilename);
+            	startActivity(flashcard);
+        	}
+        }
         
         populateDirList();
+    }
+    
+    public void onSaveInstanceState(Bundle outState) {
+    	if(deckFilename != null)
+    		outState.putString("deckFilename", deckFilename);
     }
 
     public void handleFileSelection(int id) {
@@ -58,6 +74,7 @@ public class Ankidroid extends Activity {
     }
     
     public void startFlashCardWithDb(String dbName) {
+    	this.deckFilename = dbName;
     	Intent flashcard = new Intent(this, FlashCard.class) ;
     	flashcard.putExtra(FlashCard.OPT_DB, dbName);
     	startActivity(flashcard);

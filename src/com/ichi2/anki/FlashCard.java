@@ -18,7 +18,7 @@ import android.widget.ToggleButton;
 
 public class FlashCard extends Activity {
 	
-	public static final String OPT_DB = "DATABASE";
+	public static final String OPT_DB = "com.ichi2.anki.deckFilename";
 	
 	public static final int MENU_OPEN = 0;
 	
