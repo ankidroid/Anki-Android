@@ -1,5 +1,7 @@
 package com.ichi2.anki;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -76,6 +78,8 @@ public class Ankidroid extends Activity {
 
 		initResourceValues();
 		
+		Log.i("ankidroidstart", "savedInstanceState: " + savedInstanceState);
+		
 		if (extras != null && extras.getString(OPT_DB) != null) {
 			// A deck has just been selected in the decks browser.
 			deckFilename = extras.getString(OPT_DB);
@@ -83,10 +87,15 @@ public class Ankidroid extends Activity {
 		else if (savedInstanceState != null) {
 			// Use the same deck as last time Ankidroid was used.
         	deckFilename = savedInstanceState.getString("deckFilename");
+	    	Log.i("ankidroidstart", "savedInstanceState deckFilename: " + deckFilename);
         }
-		if (deckFilename == null /* FIXME or file does not exist anymore */) {
+		
+		if (deckFilename == null || !new File(deckFilename).exists()) {
 			// No previously selected deck. Open decks browser.
 			openDeckPicker();
+		}
+		else {
+			loadDeck(deckFilename);
 		}
 	}
 	
@@ -146,6 +155,7 @@ public class Ankidroid extends Activity {
 	}
 	
     public void onSaveInstanceState(Bundle outState) {
+    	Log.i("ankidroidstart", "onSaveInstanceState: " + deckFilename);
     	if(deckFilename != null)
     		outState.putString("deckFilename", deckFilename);
     }
