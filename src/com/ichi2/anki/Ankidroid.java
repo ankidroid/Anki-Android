@@ -1,9 +1,14 @@
 package com.ichi2.anki;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -89,9 +94,31 @@ public class Ankidroid extends Activity {
         	deckFilename = savedInstanceState.getString("deckFilename");
 	    	Log.i("ankidroidstart", "savedInstanceState deckFilename: " + deckFilename);
         }
+		else {
+			SharedPreferences preferences = getBaseContext().getSharedPreferences("ankidroid", MODE_PRIVATE);
+			deckFilename = preferences.getString("deckFilename", null);
+		}
 		
 		if (deckFilename == null || !new File(deckFilename).exists()) {
 			// No previously selected deck. Open decks browser.
+			
+			// Option 1: Load sample deck.
+			// This sample deck is for people who downloaded the app but don't know Anki.
+			// These people will understand how it works and will get to love it!
+			// TODO Where should we put this sample deck?
+//			String SAMPLE_DECK_FILENAME = "/sdcard/sample-deck.anki";
+//			if ( ! new File(deckFilename).exists()) {
+//				try {
+//					// Copy the sample deck from the assets to the SD card.
+//					InputStream stream = getResources().getAssets().open("sample-deck.anki");
+//					writeToFile(stream, SAMPLE_DECK_FILENAME);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			loadDeck(SAMPLE_DECK_FILENAME);
+			
+			// Option 2: Show the deck picker.
 			openDeckPicker();
 		}
 		else {
@@ -106,7 +133,7 @@ public class Ankidroid extends Activity {
 		AnkiDb.openDatabase(deckFilename);
 
 		// Initialize the current view to the portrait layout.
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
 		initLayout(R.layout.flashcard_portrait);
 
 		// Start by getting the first card and displaying it.
@@ -156,8 +183,15 @@ public class Ankidroid extends Activity {
 	
     public void onSaveInstanceState(Bundle outState) {
     	Log.i("ankidroidstart", "onSaveInstanceState: " + deckFilename);
-    	if(deckFilename != null)
+    	// Remember current deck's filename.
+    	if(deckFilename != null) {
+    		// Short-time.
     		outState.putString("deckFilename", deckFilename);
+    		// Long-term.
+    		SharedPreferences preferences = getBaseContext().getSharedPreferences("ankidroid", MODE_PRIVATE);
+    		preferences.edit().putString("deckFilename", deckFilename);
+    		preferences.edit().commit();
+    	}
     }
     
 	public void openDeckPicker() {
@@ -228,4 +262,17 @@ public class Ankidroid extends Activity {
 		mShowAnswer.setVisibility(View.GONE);
 		updateCard(currentCard.answer);
 	}
+	
+	void writeToFile(InputStream source, String destination) throws IOException {
+        OutputStream output = new FileOutputStream(destination);
+    
+        // Transfer bytes, from source to destination.
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = source.read(buf)) > 0) {
+            output.write(buf, 0, len);
+        }
+        source.close();
+        output.close();
+    }
 }
