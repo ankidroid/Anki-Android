@@ -56,10 +56,11 @@ public class AnkiDb {
 		static public Card smallestIntervalCard() throws SQLException {
 			Card card = oneFromCursor(
 					AnkiDb.database.rawQuery(
-							"SELECT id,interval,question,answer "
-							+ "FROM cards "
-							+ "ORDER BY interval "
-							+ "LIMIT 1"
+							"SELECT id,interval,question,answer"
+							+ " FROM cards"
+							+ " WHERE priority > 0"
+							+ " ORDER BY interval"
+							+ " LIMIT 1"
 						, null)
 					);
 			Log.i("anki", "Selected card id " + card.id + " with interval " + card.interval);
