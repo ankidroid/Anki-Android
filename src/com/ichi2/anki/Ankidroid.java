@@ -7,17 +7,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -29,6 +30,7 @@ public class Ankidroid extends Activity {
 	public static final String OPT_DB = "com.ichi2.anki.deckFilename";
 	
 	public static final int MENU_OPEN = 0;
+	public static final int MENU_PREFERENCES = 1;
 	
 	public static final int PICK_DECK_REQUEST = 0;
 	
@@ -70,6 +72,9 @@ public class Ankidroid extends Activity {
 	};
 	View.OnClickListener mSelectNotRememberedHandler = new View.OnClickListener() {
 		public void onClick(View view) {
+			// Punish user.
+			Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);  
+			v.vibrate(500);  
 			// Reset this card because it has not been successfully remembered.
 			currentCard.reset();
 			nextCard();
@@ -77,6 +82,7 @@ public class Ankidroid extends Activity {
 		}
 	};
 
+    @Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException {
 		super.onCreate(savedInstanceState);
 		Bundle extras = getIntent().getExtras();
@@ -88,38 +94,41 @@ public class Ankidroid extends Activity {
 		if (extras != null && extras.getString(OPT_DB) != null) {
 			// A deck has just been selected in the decks browser.
 			deckFilename = extras.getString(OPT_DB);
+			Log.i("ankidroidstart", "deckFilename from extras: " + deckFilename);
 		}
 		else if (savedInstanceState != null) {
 			// Use the same deck as last time Ankidroid was used.
         	deckFilename = savedInstanceState.getString("deckFilename");
-	    	Log.i("ankidroidstart", "savedInstanceState deckFilename: " + deckFilename);
+	    	Log.i("ankidroidstart", "deckFilename from savedInstanceState: " + deckFilename);
         }
 		else {
-			SharedPreferences preferences = getBaseContext().getSharedPreferences("ankidroid", MODE_PRIVATE);
+			SharedPreferences preferences = getSharedPreferences("ankidroid", MODE_PRIVATE);
+			Log.i("ankidroidstart", preferences.getAll().toString());
 			deckFilename = preferences.getString("deckFilename", null);
+			Log.i("ankidroidstart", "deckFilename from preferences: " + deckFilename);
 		}
 		
 		if (deckFilename == null || !new File(deckFilename).exists()) {
-			// No previously selected deck. Open decks browser.
+			// No previously selected deck.
 			
 			// Option 1: Load sample deck.
 			// This sample deck is for people who downloaded the app but don't know Anki.
 			// These people will understand how it works and will get to love it!
 			// TODO Where should we put this sample deck?
-//			String SAMPLE_DECK_FILENAME = "/sdcard/sample-deck.anki";
-//			if ( ! new File(deckFilename).exists()) {
-//				try {
-//					// Copy the sample deck from the assets to the SD card.
-//					InputStream stream = getResources().getAssets().open("sample-deck.anki");
-//					writeToFile(stream, SAMPLE_DECK_FILENAME);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			loadDeck(SAMPLE_DECK_FILENAME);
+			String SAMPLE_DECK_FILENAME = "/sdcard/sample-deck.anki";
+			if ( ! new File(/*deckFilename triggers NPE bug in java.io.File.java */"/sdcard", "japanese.anki").exists()) {
+				try {
+					// Copy the sample deck from the assets to the SD card.
+					InputStream stream = getResources().getAssets().open("sample-deck.anki");
+					writeToFile(stream, SAMPLE_DECK_FILENAME);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			loadDeck(SAMPLE_DECK_FILENAME);
 			
 			// Option 2: Show the deck picker.
-			openDeckPicker();
+			//openDeckPicker();
 		}
 		else {
 			loadDeck(deckFilename);
@@ -168,37 +177,45 @@ public class Ankidroid extends Activity {
 	/** Creates the menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    menu.add(0, MENU_OPEN, 0, "Switch to another deck");
+	    menu.add(1, MENU_PREFERENCES, 0, "Preferences");
 	    return true;
 	}
 
 	/** Handles item selections */
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	    case MENU_OPEN:
-	    	openDeckPicker();
+			Intent decksPicker = new Intent(this, DeckPicker.class) ;
+	    	startActivityForResult(decksPicker, PICK_DECK_REQUEST);
+	        return true;
+	    case MENU_PREFERENCES:
+			Intent preferences = new Intent(this, Preferences.class) ;
+	    	startActivity(preferences);
 	        return true;
 	    }
 	    return false;
 	}
 	
+    @Override
     public void onSaveInstanceState(Bundle outState) {
     	Log.i("ankidroidstart", "onSaveInstanceState: " + deckFilename);
     	// Remember current deck's filename.
     	if(deckFilename != null) {
-    		// Short-time.
     		outState.putString("deckFilename", deckFilename);
-    		// Long-term.
-    		SharedPreferences preferences = getBaseContext().getSharedPreferences("ankidroid", MODE_PRIVATE);
+    	}
+    }
+
+    @Override
+    public void onStop() {
+    	super.onStop();
+    	if(deckFilename != null) {
+    		SharedPreferences preferences = getSharedPreferences("ankidroid", MODE_PRIVATE);
     		preferences.edit().putString("deckFilename", deckFilename);
     		preferences.edit().commit();
     	}
     }
     
-	public void openDeckPicker() {
-		Intent decksPicker = new Intent(this, DeckPicker.class) ;
-    	startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-	}
-
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
