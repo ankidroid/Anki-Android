@@ -11,6 +11,7 @@
         </activity>
         <activity android:name="DeckPicker" android:label="Select a deck you copied to your SD card" />
         <activity android:name="Preferences" android:label="Preferences" />
+        <activity android:name="About" android:label="About" />
     </application>
     <uses-sdk android:minSdkVersion="3" />
 	<uses-permission android:name="android.permission.VIBRATE" />
