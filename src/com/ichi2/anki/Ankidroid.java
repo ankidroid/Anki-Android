@@ -127,11 +127,11 @@ public class Ankidroid extends Activity {
 				// This sample deck is for people who downloaded the app but don't know Anki.
 				// These people will understand how it works and will get to love it!
 				// TODO Where should we put this sample deck?
-				String SAMPLE_DECK_FILENAME = "/sdcard/sample-deck.anki";
-				if ( ! new File(/*deckFilename triggers NPE bug in java.io.File.java */"/sdcard", "japanese.anki").exists()) {
+				String SAMPLE_DECK_FILENAME = "/sdcard/country-capitals.anki";
+				if ( ! new File(/*deckFilename triggers NPE bug in java.io.File.java */"/sdcard", "country-capitals.anki").exists()) {
 					try {
 						// Copy the sample deck from the assets to the SD card.
-						InputStream stream = getResources().getAssets().open("sample-deck.anki");
+						InputStream stream = getResources().getAssets().open("country-capitals.anki");
 						writeToFile(stream, SAMPLE_DECK_FILENAME);
 					} catch (IOException e) {
 						e.printStackTrace();
