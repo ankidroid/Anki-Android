@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -28,6 +29,13 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+/**
+ * Main activity for Ankidroid.
+ * Shows a card and controls to answer it.
+ *  
+ * @author Andrew Dubya, Nicolas Raoul
+ *
+ */
 public class Ankidroid extends Activity {
 	
 	public static final String OPT_DB = "com.ichi2.anki.deckFilename";
@@ -42,8 +50,10 @@ public class Ankidroid extends Activity {
 	private String deckFilename;
 	
 	private boolean corporalPunishments;
+	private boolean timerAndWhiteboard;
+	private boolean spacedRepetition;
 
-	public String card_template;
+	public String cardTemplate;
 
 	private AnkiDb.Card currentCard;
 	
@@ -72,7 +82,8 @@ public class Ankidroid extends Activity {
 	View.OnClickListener mSelectRememberedHandler = new View.OnClickListener() {
 		public void onClick(View view) {
 			// Space this card because it has been successfully remembered.
-			currentCard.space();
+			if(spacedRepetition)
+				currentCard.space();
 			nextCard();
 			displayCardQuestion();
 		}
@@ -85,7 +96,8 @@ public class Ankidroid extends Activity {
 				v.vibrate(500);
 			}
 			// Reset this card because it has not been successfully remembered.
-			currentCard.reset();
+			if (spacedRepetition)
+				currentCard.reset();
 			nextCard();
 			displayCardQuestion();
 		}
@@ -101,6 +113,8 @@ public class Ankidroid extends Activity {
 		Log.i("ankidroidstart", "savedInstanceState: " + savedInstanceState);
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
+		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
+		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
 		
 		if (extras != null && extras.getString(OPT_DB) != null) {
 			// A deck has just been selected in the decks browser.
@@ -132,11 +146,18 @@ public class Ankidroid extends Activity {
 					try {
 						// Copy the sample deck from the assets to the SD card.
 						InputStream stream = getResources().getAssets().open("country-capitals.anki");
-						writeToFile(stream, SAMPLE_DECK_FILENAME);
+						boolean written = writeToFile(stream, SAMPLE_DECK_FILENAME);
+						if ( ! written) {
+							openDeckPicker();
+							return;
+						}
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
+				// Initialize the current view to the portrait layout.
+				initLayout(R.layout.flashcard_portrait);
+				// Load sample deck.
 				loadDeck(SAMPLE_DECK_FILENAME);
 			}
 			else {
@@ -145,6 +166,9 @@ public class Ankidroid extends Activity {
 			}
 		}
 		else {
+			// Initialize the current view to the portrait layout.
+			initLayout(R.layout.flashcard_portrait);
+			// Load deck.
 			loadDeck(deckFilename);
 		}
 	}
@@ -155,10 +179,6 @@ public class Ankidroid extends Activity {
 		// Open the right deck.
 		AnkiDb.openDatabase(deckFilename);
 
-		// Initialize the current view to the portrait layout.
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-		initLayout(R.layout.flashcard_portrait);
-
 		// Start by getting the first card and displaying it.
 		nextCard();
 		displayCardQuestion();
@@ -167,11 +187,12 @@ public class Ankidroid extends Activity {
 	// Retrieve resource values.
 	public void initResourceValues() {
 		Resources r = getResources();
-		card_template = r.getString(R.string.card_template);
+		cardTemplate = r.getString(R.string.card_template);
 	}
 	
 	// Set the content view to the one provided and initialize accessors.
 	public void initLayout(Integer layout) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(layout);
 
 		mCard = (WebView)findViewById(R.id.flashcard);
@@ -181,6 +202,8 @@ public class Ankidroid extends Activity {
 		mTimer = (Chronometer)findViewById(R.id.card_time);
 		mToggleWhiteboard = (ToggleButton)findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard)findViewById(R.id.whiteboard);
+
+		showOrHideControls();
 		
 		mShowAnswer.setOnClickListener(mShowAnswerHandler);
 		mSelectRemembered.setOnClickListener(mSelectRememberedHandler);
@@ -264,8 +287,27 @@ public class Ankidroid extends Activity {
         else if(requestCode == PREFERENCES_UPDATE) {
         	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
+    		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
+    		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
+    		showOrHideControls();
         }
     }
+
+	/**
+	 * Depending on preferences, show or hide the timer and whiteboard. 
+	 */
+	private void showOrHideControls() {
+		if( ! timerAndWhiteboard) {
+			mTimer.setVisibility(View.GONE);
+			mToggleWhiteboard.setVisibility(View.GONE);
+			mWhiteboard.setVisibility(View.GONE);
+		}
+		else {
+			mTimer.setVisibility(View.VISIBLE);
+			mToggleWhiteboard.setVisibility(View.VISIBLE);
+			mWhiteboard.setVisibility(View.VISIBLE);
+		}
+	}
 
 	public void setOverlayState(boolean enabled) {
 		mWhiteboard.setVisibility((enabled) ? View.VISIBLE : View.GONE);
@@ -273,7 +315,10 @@ public class Ankidroid extends Activity {
 	
 	// Get the next card.
 	public void nextCard() {
-		currentCard = AnkiDb.Card.smallestIntervalCard();
+		if (spacedRepetition)
+			currentCard = AnkiDb.Card.smallestIntervalCard();
+		else
+			currentCard = AnkiDb.Card.randomCard();
 	}
 	
 	// Set up the display for the current card.
@@ -298,7 +343,7 @@ public class Ankidroid extends Activity {
 	}
 	
 	public void updateCard(String content) {
-		String card = card_template.replace("::content::", content);
+		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
 	}
 	
@@ -312,8 +357,16 @@ public class Ankidroid extends Activity {
 		updateCard(currentCard.answer);
 	}
 	
-	void writeToFile(InputStream source, String destination) throws IOException {
-		new File(destination).createNewFile();
+	private boolean writeToFile(InputStream source, String destination) throws IOException {
+		try {
+			new File(destination).createNewFile();
+		}
+		catch(IOException e) {
+			// Most probably the SD card is not mounted on the Android.
+			// Tell the user to turn off USB storage, which will automatically mount it on Android.
+			Toast.makeText(this, "Please turn off USB storage", Toast.LENGTH_LONG).show();
+			return false;
+		}
         OutputStream output = new FileOutputStream(destination);
     
         // Transfer bytes, from source to destination.
@@ -324,5 +377,6 @@ public class Ankidroid extends Activity {
         }
         source.close();
         output.close();
+        return true;
     }
 }

@@ -15,6 +15,12 @@ import android.widget.ListView;
 import com.ichi2.anki.DeckPicker.FileBrowser.FileEntry;
 import com.ichi2.anki.DeckPicker.FileBrowser.NotDirException;
 
+/**
+ * Allows the user to choose a deck from the filesystem.
+ * 
+ * @author Andrew Dubya
+ *
+ */
 public class DeckPicker extends Activity {
 	
 	DeckPicker mSelf;
@@ -136,7 +142,12 @@ public class DeckPicker extends Activity {
     	
     	public FileBrowser(String location) throws NotDirException {
     		if (location == null) {
-    			mCurrent = new File("/sdcard");
+    			if ( ! new File("/sdcard").exists()) {
+    				mCurrent = new File("/sdcard");
+    			}
+    			else {
+    				mCurrent = new File("/");
+    			}
     		} else {
     			mCurrent = new File(location);
     		}

@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<CheckBoxPreference
+		android:title="Spaced repetition (beta)"
+		android:defaultValue="true"
+		android:summary="Known cards do not reappear soon"
+		android:key="spacedRepetition" />
+	<CheckBoxPreference
+		android:title="Show timer / whiteboard"
+		android:defaultValue="true"
+		android:summary="Let's you write on the screen"
+		android:key="timerAndWhiteboard" />
+	<CheckBoxPreference
 		android:title="Sample deck"
 		android:defaultValue="true"
-		android:summary="Generate if no deck found"
+		android:summary="Generate capitals deck if none found"
 		android:key="generateSampleDeck" />
 	<CheckBoxPreference
 		android:title="Corporal punishments"
 		android:defaultValue="false"
-		android:summary="Vibrate on error, should teach you"
+		android:summary="Vibrate on error, that will teach you"
 		android:key="corporalPunishments" />
 </PreferenceScreen>
