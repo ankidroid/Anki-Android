@@ -52,6 +52,7 @@ public class Ankidroid extends Activity {
 	private boolean corporalPunishments;
 	private boolean timerAndWhiteboard;
 	private boolean spacedRepetition;
+	private String deckPath;
 
 	public String cardTemplate;
 
@@ -115,6 +116,7 @@ public class Ankidroid extends Activity {
 		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
+		deckPath = preferences.getString("deckPath", "/sdcard");
 		
 		if (extras != null && extras.getString(OPT_DB) != null) {
 			// A deck has just been selected in the decks browser.
@@ -240,7 +242,8 @@ public class Ankidroid extends Activity {
 	}
     
     public void openDeckPicker() {
-    	Intent decksPicker = new Intent(this, DeckPicker.class) ;
+    	Intent decksPicker = new Intent(this, DeckPicker.class);
+    	decksPicker.putExtra("com.ichi2.anki.Ankidroid.DeckPath", deckPath);
     	startActivityForResult(decksPicker, PICK_DECK_REQUEST);
     }
 	
@@ -262,7 +265,7 @@ public class Ankidroid extends Activity {
     		preferences.edit().commit();
     	}
     }
-    
+
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -289,6 +292,7 @@ public class Ankidroid extends Activity {
     		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
     		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
     		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
+    		deckPath = preferences.getString("deckPath", "/sdcard");
     		showOrHideControls();
         }
     }

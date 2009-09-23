@@ -30,6 +30,15 @@ public class AnkiDb {
         	SQLiteDatabase.OPEN_READWRITE |
         	SQLiteDatabase.NO_LOCALIZED_COLLATORS);		
 	}
+	
+	/**
+	 * Closes a previously opened database connection.
+	 */
+	static public void closeDatabase() {
+		if (database != null) {
+			database.close();
+		}
+	}
 
 	/**
 	 * A card is Anki's question-answer entity.

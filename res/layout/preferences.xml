@@ -20,4 +20,9 @@
 		android:defaultValue="false"
 		android:summary="Vibrate on error, that will teach you"
 		android:key="corporalPunishments" />
+	<EditTextPreference
+		android:title="Deck path"
+		android:defaultValue="/sdcard"
+		android:summary="Path to where the your decks are stored"
+		android:key="deckPath" />
 </PreferenceScreen>
