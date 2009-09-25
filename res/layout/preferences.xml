@@ -8,7 +8,7 @@
 	<CheckBoxPreference
 		android:title="Show timer / whiteboard"
 		android:defaultValue="true"
-		android:summary="Let's you write on the screen"
+		android:summary="Lets you write on the screen"
 		android:key="timerAndWhiteboard" />
 	<CheckBoxPreference
 		android:title="Sample deck"
