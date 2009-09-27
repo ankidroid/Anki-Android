@@ -160,13 +160,15 @@ public class DeckPicker extends Activity {
     
     public void handleDeckSelection(int id) {
     	HashMap<String,String> data = (HashMap<String,String>) mDeckListAdapter.getItem(id);
-    	
+
     	String deckFilename = data.get("filepath");
     	
     	if (deckFilename != null) {
+    		Log.i("anki", "Selected " + deckFilename);
 	    	Intent intent = this.getIntent();
 			intent.putExtra(Ankidroid.OPT_DB, deckFilename);
 			setResult(RESULT_OK, intent);
+			
 			finish();
     	}
     }
