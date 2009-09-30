@@ -39,10 +39,26 @@ public class AnkiDb {
 			database.close();
 		}
 	}
-
+	
+	/**
+	 * Convenience method for querying the database for a single integer result.
+	 * @param query The raw SQL query to use.
+	 * @return The integer result of the query.
+	 */
+	static public int queryScalar(String query) throws SQLException {
+		Cursor cursor = AnkiDb.database.rawQuery(query, null);
+		if (!cursor.moveToFirst())
+			throw new SQLException("No result for query: " + query);
+		
+		int scalar = cursor.getInt(0);
+		cursor.close();
+		
+		return scalar;
+	}
+	
 	/**
 	 * A card is Anki's question-answer entity.
-	 * @see http://www.ichi2.net/anki/wiki/AddItems
+	 * @see "http://www.ichi2.net/anki/wiki/AddItems"
 	 */
 	static public class Card {
 		

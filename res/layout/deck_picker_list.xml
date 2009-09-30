@@ -22,7 +22,7 @@
 		android:layout_width="fill_parent">
 		
 		<TextView 
-			android:id="@+id/DeckPickerCards" 
+			android:id="@+id/DeckPickerDue" 
 			android:layout_height="wrap_content" 
 			android:layout_width="fill_parent"
 			android:layout_weight="1"
@@ -33,7 +33,7 @@
 		</TextView>
 		
 		<TextView 
-			android:id="@+id/DeckPickerDue" 
+			android:id="@+id/DeckPickerNew" 
 			android:layout_height="wrap_content" 
 			android:layout_width="fill_parent"
 			android:layout_weight="1"
