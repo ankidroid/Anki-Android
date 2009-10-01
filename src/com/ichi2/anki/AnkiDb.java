@@ -23,9 +23,11 @@ public class AnkiDb {
 	 * Open a database connection to an ".anki" SQLite file.
 	 */
 	static public void openDatabase(String ankiFilename) throws SQLException {
+		
 		if (database != null) {
 			database.close();
 		}
+		
         database = SQLiteDatabase.openDatabase(ankiFilename, null,
         	SQLiteDatabase.OPEN_READWRITE |
         	SQLiteDatabase.NO_LOCALIZED_COLLATORS);		
