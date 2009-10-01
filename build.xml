@@ -3,7 +3,9 @@
 
     <!-- The local.properties file is created and updated by the 'android' tool.
          It contain the path to the SDK. It should *NOT* be checked in in Version
-         Control Systems. -->
+         Control Systems. Example of local.properties file:
+         sdk-location=/home/nico/programs/android-sdk
+    -->
     <property file="local.properties"/>
 
     <!-- The build.properties file can be created by you and is never touched
