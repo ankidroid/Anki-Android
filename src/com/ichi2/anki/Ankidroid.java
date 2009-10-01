@@ -51,6 +51,7 @@ public class Ankidroid extends Activity implements Runnable {
 	public static final int PREFERENCES_UPDATE = 1;
 
 	private ProgressDialog dialog;
+	private boolean deckSelected;
 	
 	private String deckFilename;
 	
@@ -179,6 +180,7 @@ public class Ankidroid extends Activity implements Runnable {
 			// Load deck.
 			displayProgressDialogAndLoadDeck();
 		}
+		deckSelected = true;
 	}
 
 	public void loadDeck(String deckFilename) {
@@ -270,7 +272,19 @@ public class Ankidroid extends Activity implements Runnable {
     		preferences.edit().commit();
     	}
     }
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	if (!deckSelected) {
+    		AnkiDb.openDatabase(deckFilename);
+    		deckSelected = true;
+    	}
+    	else
+    		deckSelected = false;
 
+    }
+    
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -291,6 +305,7 @@ public class Ankidroid extends Activity implements Runnable {
     		editor.putString("deckFilename", deckFilename);
     		editor.commit();
     		
+    		deckSelected = true;
     		displayProgressDialogAndLoadDeck();
         }
         else if(requestCode == PREFERENCES_UPDATE) {
