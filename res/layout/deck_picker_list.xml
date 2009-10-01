@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" 
+	android:layout_width="fill_parent" 
+	android:orientation="vertical">
+	
+	<TextView 
+		android:id="@+id/DeckPickerName" 
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent"
+		android:padding="10dip"
+		android:gravity="center_horizontal"
+		android:textSize="24sp"
+		android:textColor="#ffffff">
+	</TextView>
+
+	<LinearLayout 
+		android:id="@+id/DeckPickerHoriz" 
+		android:layout_height="wrap_content" 
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent">
+		
+		<TextView 
+			android:id="@+id/DeckPickerDue" 
+			android:layout_height="wrap_content" 
+			android:layout_width="fill_parent"
+			android:layout_weight="1"
+			android:paddingLeft="10dip"
+			android:paddingRight="5dip"
+			android:paddingBottom="5dip"
+			android:textSize="17sp">
+		</TextView>
+		
+		<TextView 
+			android:id="@+id/DeckPickerNew" 
+			android:layout_height="wrap_content" 
+			android:layout_width="fill_parent"
+			android:layout_weight="1"
+			android:paddingRight="10dip"
+			android:paddingLeft="5dip"
+			android:paddingBottom="5dip"
+			android:gravity="right"
+			android:textSize="17sp">
+		</TextView>
+	
+	</LinearLayout>
+</LinearLayout>
