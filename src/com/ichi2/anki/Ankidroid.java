@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,8 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -36,7 +39,7 @@ import android.widget.ToggleButton;
  * @author Andrew Dubya, Nicolas Raoul
  *
  */
-public class Ankidroid extends Activity {
+public class Ankidroid extends Activity implements Runnable {
 	
 	public static final String OPT_DB = "com.ichi2.anki.deckFilename";
 	
@@ -46,12 +49,15 @@ public class Ankidroid extends Activity {
 	
 	public static final int PICK_DECK_REQUEST = 0;
 	public static final int PREFERENCES_UPDATE = 1;
+
+	private ProgressDialog dialog;
 	
 	private String deckFilename;
 	
 	private boolean corporalPunishments;
 	private boolean timerAndWhiteboard;
 	private boolean spacedRepetition;
+	private String deckPath;
 
 	public String cardTemplate;
 
@@ -115,6 +121,7 @@ public class Ankidroid extends Activity {
 		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
+		deckPath = preferences.getString("deckPath", "/sdcard");
 		
 		if (extras != null && extras.getString(OPT_DB) != null) {
 			// A deck has just been selected in the decks browser.
@@ -158,7 +165,8 @@ public class Ankidroid extends Activity {
 				// Initialize the current view to the portrait layout.
 				initLayout(R.layout.flashcard_portrait);
 				// Load sample deck.
-				loadDeck(SAMPLE_DECK_FILENAME);
+				deckFilename = SAMPLE_DECK_FILENAME;
+				displayProgressDialogAndLoadDeck();
 			}
 			else {
 				// Show the deck picker.
@@ -169,10 +177,10 @@ public class Ankidroid extends Activity {
 			// Initialize the current view to the portrait layout.
 			initLayout(R.layout.flashcard_portrait);
 			// Load deck.
-			loadDeck(deckFilename);
+			displayProgressDialogAndLoadDeck();
 		}
 	}
-	
+
 	public void loadDeck(String deckFilename) {
 		this.deckFilename = deckFilename;
 		
@@ -181,7 +189,6 @@ public class Ankidroid extends Activity {
 
 		// Start by getting the first card and displaying it.
 		nextCard();
-		displayCardQuestion();
 	}
 	
 	// Retrieve resource values.
@@ -240,7 +247,8 @@ public class Ankidroid extends Activity {
 	}
     
     public void openDeckPicker() {
-    	Intent decksPicker = new Intent(this, DeckPicker.class) ;
+    	Intent decksPicker = new Intent(this, DeckPicker.class);
+    	decksPicker.putExtra("com.ichi2.anki.Ankidroid.DeckPath", deckPath);
     	startActivityForResult(decksPicker, PICK_DECK_REQUEST);
     }
 	
@@ -262,7 +270,7 @@ public class Ankidroid extends Activity {
     		preferences.edit().commit();
     	}
     }
-    
+
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -276,22 +284,31 @@ public class Ankidroid extends Activity {
             	return;
             }
             // A deck was picked. Save it in preferences and use it.
-        	deckFilename = intent.getExtras().getString(OPT_DB);
+            
+            deckFilename = intent.getExtras().getString(OPT_DB);
         	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     		Editor editor = preferences.edit();
     		editor.putString("deckFilename", deckFilename);
     		editor.commit();
     		
-        	loadDeck(deckFilename);
+    		displayProgressDialogAndLoadDeck();
         }
         else if(requestCode == PREFERENCES_UPDATE) {
         	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
     		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
     		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
+    		deckPath = preferences.getString("deckPath", "/sdcard");
     		showOrHideControls();
         }
     }
+
+	private void displayProgressDialogAndLoadDeck() {
+		Log.i("anki", "Loading deck " + deckFilename);
+		dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
+		Thread thread = new Thread(this);
+		thread.start();
+	}
 
 	/**
 	 * Depending on preferences, show or hide the timer and whiteboard. 
@@ -381,4 +398,16 @@ public class Ankidroid extends Activity {
         output.close();
         return true;
     }
+	
+	public void run() {
+		loadDeck(deckFilename);
+    	handler.sendEmptyMessage(0);
+    }
+	
+	private Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			dialog.dismiss();
+			displayCardQuestion();
+		}
+	};
 }
