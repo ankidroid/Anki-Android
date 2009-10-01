@@ -120,8 +120,7 @@ public class DeckPicker extends Activity {
     }
     
     public static final class AnkiFilter implements FileFilter {
-
-		@Override
+    	
 		public boolean accept(File pathname) {
 			if (pathname.isFile() && pathname.getName().endsWith(".anki"))
 				return true;
@@ -131,8 +130,7 @@ public class DeckPicker extends Activity {
     }
     
     public static final class HashMapCompare implements Comparator<HashMap<String,String>> {
-
-		@Override
+    	
 		public int compare(HashMap<String, String> object1,
 				HashMap<String, String> object2) {
 			return (int) (Float.parseFloat(object2.get("mod")) - Float.parseFloat(object1.get("mod")));
