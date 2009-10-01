@@ -322,7 +322,9 @@ public class Ankidroid extends Activity implements Runnable {
 		else {
 			mTimer.setVisibility(View.VISIBLE);
 			mToggleWhiteboard.setVisibility(View.VISIBLE);
-			mWhiteboard.setVisibility(View.VISIBLE);
+			if (mToggleWhiteboard.isChecked()) {
+				mWhiteboard.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 
