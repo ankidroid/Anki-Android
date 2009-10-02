@@ -36,7 +36,8 @@ public class DeckPicker extends Activity implements Runnable {
 	private File[] mFileList;
 	private ReentrantLock mLock = new ReentrantLock();
 	private Condition mCondFinished = mLock.newCondition();
-	private boolean mFinished = true;
+	private boolean mIsFinished = true;
+	private boolean mDeckIsSelected = false;
 	
 	AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
 		public void onItemClick(AdapterView parent, View v, int p, long id) {
@@ -131,9 +132,11 @@ public class DeckPicker extends Activity implements Runnable {
     
     public void handleDeckSelection(int id) {
     	String deckFilename = null;
+    	
+    	mDeckIsSelected = true;
     	mLock.lock();
     	try {
-    		while (!mFinished)
+    		while (!mIsFinished)
     			mCondFinished.await();
     			
 	    	HashMap<String,String> data = (HashMap<String,String>) mDeckListAdapter.getItem(id);
@@ -162,8 +165,11 @@ public class DeckPicker extends Activity implements Runnable {
     	if (len > 0 && mFileList != null) {
     		mLock.lock();
     		try {
-	    		mFinished = false;
+	    		mIsFinished = false;
 		    	for (int i = 0; i < len; i++) {
+		    		// Don't load any more decks if one has already been selected.
+		    		if (mDeckIsSelected)
+		    			break;
 		    		
 		    		String path = mFileList[i].getAbsolutePath();
 		    		Deck deck;
@@ -189,7 +195,7 @@ public class DeckPicker extends Activity implements Runnable {
 		    		
 		    		handler.sendMessage(msg);
 		    	}
-	    		mFinished = true;
+	    		mIsFinished = true;
 	    		mCondFinished.signal();
 			} finally {
 				mLock.unlock();
