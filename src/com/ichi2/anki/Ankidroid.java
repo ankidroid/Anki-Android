@@ -180,6 +180,7 @@ public class Ankidroid extends Activity implements Runnable {
 			// Load deck.
 			displayProgressDialogAndLoadDeck();
 		}
+		// Don't open database in onResume(). Is already opening elsewhere.
 		deckSelected = true;
 	}
 
@@ -249,6 +250,7 @@ public class Ankidroid extends Activity implements Runnable {
 	}
     
     public void openDeckPicker() {
+    	deckSelected = false; // Make sure we open the database again in onResume() if user pressed "back".
     	Intent decksPicker = new Intent(this, DeckPicker.class);
     	decksPicker.putExtra("com.ichi2.anki.Ankidroid.DeckPath", deckPath);
     	startActivityForResult(decksPicker, PICK_DECK_REQUEST);
@@ -280,9 +282,6 @@ public class Ankidroid extends Activity implements Runnable {
     		AnkiDb.openDatabase(deckFilename);
     		deckSelected = true;
     	}
-    	else
-    		deckSelected = false;
-
     }
     
 	@Override
@@ -305,6 +304,7 @@ public class Ankidroid extends Activity implements Runnable {
     		editor.putString("deckFilename", deckFilename);
     		editor.commit();
     		
+    		// Don't open database again in onResume(). Load the new one in another thread instead.
     		deckSelected = true;
     		displayProgressDialogAndLoadDeck();
         }

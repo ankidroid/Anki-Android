@@ -66,6 +66,11 @@ public class DeckPicker extends Activity implements Runnable {
         populateDeckList(deckPath);
     }
     
+    public void onPause() {
+    	super.onPause();
+    	waitForDeckLoaderThread();
+    }
+    
     public void populateDeckList(String location)
     {
     	int len = 0;
@@ -132,21 +137,12 @@ public class DeckPicker extends Activity implements Runnable {
     
     public void handleDeckSelection(int id) {
     	String deckFilename = null;
+		
+    	waitForDeckLoaderThread();
     	
-    	mDeckIsSelected = true;
-    	mLock.lock();
-    	try {
-    		while (!mIsFinished)
-    			mCondFinished.await();
-    		
-    		@SuppressWarnings("unchecked")
-	    	HashMap<String,String> data = (HashMap<String,String>) mDeckListAdapter.getItem(id);
-	    	deckFilename = data.get("filepath");
-    	} catch (InterruptedException e) {
-			e.printStackTrace();
-		} finally {
-    		mLock.unlock();
-    	}
+		@SuppressWarnings("unchecked")
+    	HashMap<String,String> data = (HashMap<String,String>) mDeckListAdapter.getItem(id);
+    	deckFilename = data.get("filepath");
     	
     	if (deckFilename != null) {
     		Log.i("anki", "Selected " + deckFilename);
@@ -158,6 +154,19 @@ public class DeckPicker extends Activity implements Runnable {
     	} 
     }
     
+    private void waitForDeckLoaderThread() {
+		mDeckIsSelected = true;
+    	mLock.lock();
+    	try {
+    		while (!mIsFinished)
+    			mCondFinished.await();
+    	} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+    		mLock.unlock();
+    	}
+	}
+    
     public void run() {
     	int len = 0;
     	if (mFileList != null)
@@ -168,6 +177,7 @@ public class DeckPicker extends Activity implements Runnable {
     		try {
 	    		mIsFinished = false;
 		    	for (int i = 0; i < len; i++) {
+		    		
 		    		// Don't load any more decks if one has already been selected.
 		    		if (mDeckIsSelected)
 		    			break;
