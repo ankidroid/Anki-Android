@@ -320,11 +320,32 @@ public class Ankidroid extends Activity implements Runnable {
 
 	private void displayProgressDialogAndLoadDeck() {
 		Log.i("anki", "Loading deck " + deckFilename);
+		showControls(false);
 		dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
 
+	private void showControls(boolean show) {
+		if (show) {
+			mCard.setVisibility(View.VISIBLE);
+			mToggleWhiteboard.setVisibility(View.VISIBLE);
+			mShowAnswer.setVisibility(View.VISIBLE);
+			mSelectRemembered.setVisibility(View.VISIBLE);
+			mSelectNotRemembered.setVisibility(View.VISIBLE);
+			mTimer.setVisibility(View.VISIBLE);
+			mWhiteboard.setVisibility(View.VISIBLE);
+		} else {
+			mCard.setVisibility(View.GONE);
+			mToggleWhiteboard.setVisibility(View.GONE);
+			mShowAnswer.setVisibility(View.GONE);
+			mSelectRemembered.setVisibility(View.GONE);
+			mSelectNotRemembered.setVisibility(View.GONE);
+			mTimer.setVisibility(View.GONE);
+			mWhiteboard.setVisibility(View.GONE);
+		}
+	}
+	
 	/**
 	 * Depending on preferences, show or hide the timer and whiteboard. 
 	 */
@@ -422,6 +443,7 @@ public class Ankidroid extends Activity implements Runnable {
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			dialog.dismiss();
+			showControls(true);
 			displayCardQuestion();
 		}
 	};
