@@ -87,9 +87,13 @@ public class DeckPicker extends Activity implements Runnable {
 		    	data.put("due", "Loading deck...");
 		    	data.put("new", "");
 		    	data.put("mod", String.valueOf(i));
+		    	data.put("filepath", absPath);
 		    	
 		    	tree.add(data);
 	    	}
+	    	
+	    	Thread thread = new Thread(this);
+	    	thread.start();
     	}
     	else {
     		HashMap<String,String> data = new HashMap<String,String>();
@@ -103,10 +107,7 @@ public class DeckPicker extends Activity implements Runnable {
     
     	mDeckList.clear();
     	mDeckList.addAll(tree);
-    	mDeckListView.clearChoices();	
-    	
-    	Thread thread = new Thread(this);
-    	thread.start();
+    	mDeckListView.clearChoices();
     }
     
     public static final class AnkiFilter implements FileFilter {
@@ -199,13 +200,14 @@ public class DeckPicker extends Activity implements Runnable {
     private Handler handler = new Handler() {
     	public void handleMessage(Message msg) {
     		Bundle data = msg.getData();
+    		
+    		String path = data.getString("absPath");
     		String dueString = String.valueOf(data.getInt("due")) +
 						" of " +
 						String.valueOf(data.getInt("total")) +
 						" due";
     		String newString = String.valueOf(data.getInt("new")) +
-						" new today ";
-    		String path = data.getString("absPath");
+						" new today";
     		
     		int count = mDeckList.size();
     		for (int i = 0; i < count; i++) {
