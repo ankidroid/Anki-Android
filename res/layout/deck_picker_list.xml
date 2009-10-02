@@ -43,6 +43,14 @@
 			android:gravity="right"
 			android:textSize="17sp">
 		</TextView>
+		
+		<ProgressBar
+			android:id="@+id/DeckPickerProgress"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:indeterminate="true" 
+			style="?android:attr/progressBarStyleSmall">
+		</ProgressBar>
 	
 	</LinearLayout>
 </LinearLayout>
