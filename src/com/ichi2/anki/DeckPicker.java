@@ -32,7 +32,7 @@ public class DeckPicker extends Activity {
 	ListView mDeckListView;
 	
 	AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
-		public void onItemClick(AdapterView parent, View v, int p, long id) {
+		public void onItemClick(AdapterView<?> parent, View v, int p, long id) {
 			mSelf.handleDeckSelection(p);
 		}
 	};
@@ -138,7 +138,8 @@ public class DeckPicker extends Activity {
     	
     }
     
-    public void handleDeckSelection(int id) {
+	public void handleDeckSelection(int id) {
+    	@SuppressWarnings("unchecked")
     	HashMap<String,String> data = (HashMap<String,String>) mDeckListAdapter.getItem(id);
 
     	String deckFilename = data.get("filepath");
