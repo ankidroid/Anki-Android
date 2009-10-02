@@ -218,6 +218,8 @@ public class DeckPicker extends Activity implements Runnable {
     			}
     			mDeckList.add(i, map);
     		}
+    		
+    		mDeckListView.getChildAt(0).findViewById(R.id.DeckPickerProgress).setVisibility(View.GONE);
     		mDeckListAdapter.notifyDataSetChanged();
     	}
     };
