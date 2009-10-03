@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 
 /**
@@ -58,8 +59,24 @@ public class DeckPicker extends Activity implements Runnable {
 		mDeckListAdapter = new SimpleAdapter(this,
         		mDeckList,
         		R.layout.deck_picker_list,
-        		new String [] {"name","due","new"},
-        		new int [] {R.id.DeckPickerName, R.id.DeckPickerDue, R.id.DeckPickerNew});
+        		new String [] {"name","due","new","showProgress"},
+        		new int [] {R.id.DeckPickerName, 
+				R.id.DeckPickerDue, 
+				R.id.DeckPickerNew,
+				R.id.DeckPickerProgress});
+		
+		mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+			public boolean setViewValue(View view, Object data, String text) {
+				if (view instanceof ProgressBar) {
+					if (text.equals("true"))
+						view.setVisibility(View.VISIBLE);
+					else
+						view.setVisibility(View.GONE);
+					return true;
+				}
+				return false;
+			}
+		});
         mDeckListView.setOnItemClickListener(mDeckSelHandler);
 		mDeckListView.setAdapter(mDeckListAdapter);
 		
@@ -94,6 +111,7 @@ public class DeckPicker extends Activity implements Runnable {
 		    	data.put("new", "");
 		    	data.put("mod", String.valueOf(i));
 		    	data.put("filepath", absPath);
+		    	data.put("showProgress", "true");
 		    	
 		    	tree.add(data);
 	    	}
@@ -104,9 +122,10 @@ public class DeckPicker extends Activity implements Runnable {
     	else {
     		HashMap<String,String> data = new HashMap<String,String>();
 	    	data.put("name", "No decks found.");
-	    	data.put("cards", "");
+	    	data.put("new", "");
 	    	data.put("due", "");
 	    	data.put("mod", "1");
+	    	data.put("showProgress", "false");
 	    	
 	    	tree.add(data);
     	}
@@ -215,7 +234,7 @@ public class DeckPicker extends Activity implements Runnable {
     }
     
     private Handler handler = new Handler() {
-    	public void handleMessage(Message msg) {
+		public void handleMessage(Message msg) {
     		Bundle data = msg.getData();
     		
     		String path = data.getString("absPath");
@@ -226,18 +245,19 @@ public class DeckPicker extends Activity implements Runnable {
     		String newString = String.valueOf(data.getInt("new")) +
 						" new today";
     		
-    		int count = mDeckList.size();
+    		int count = mDeckListAdapter.getCount();
     		for (int i = 0; i < count; i++) {
-    			HashMap<String,String> map = (HashMap<String,String>) mDeckList.remove(i);
+    			@SuppressWarnings("unchecked")
+    			HashMap<String,String> map = (HashMap<String,String>) mDeckListAdapter.getItem(i);
     			if (map.get("filepath").equals(path)) {
     				map.put("due", dueString);
     				map.put("new", newString);
+    				map.put("showProgress", "false");
     			}
-    			mDeckList.add(i, map);
     		}
-    		
-    		mDeckListView.getChildAt(0).findViewById(R.id.DeckPickerProgress).setVisibility(View.GONE);
+
     		mDeckListAdapter.notifyDataSetChanged();
     	}
     };
+    
 }
