@@ -261,6 +261,23 @@ public class Deck {
 		AnkiDb.database.update("decks", values, "id = " + this.id, null);
 	}
 	
+	public static float getLastModified(String deckPath) {
+		float value;
+		AnkiDb.openDatabase(deckPath);
+		Cursor cursor = AnkiDb.database.rawQuery(
+				"SELECT modified"
+				+ " FROM decks"
+				+ " LIMIT 1", null);
+		
+		if (!cursor.moveToFirst())
+			value = -1;
+		else
+			value = cursor.getFloat(0);
+		cursor.close();
+		AnkiDb.closeDatabase();
+		return value;
+	}
+	
 	/* Queue/cache management
 	 ***********************************************************/
 	

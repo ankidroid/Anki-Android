@@ -109,7 +109,7 @@ public class DeckPicker extends Activity implements Runnable {
 		    	data.put("name", fileList[i].getName().replaceAll(".anki", ""));
 		    	data.put("due", "Loading deck...");
 		    	data.put("new", "");
-		    	data.put("mod", String.valueOf(i));
+		    	data.put("mod", String.format("%f", Deck.getLastModified(absPath)));
 		    	data.put("filepath", absPath);
 		    	data.put("showProgress", "true");
 		    	
