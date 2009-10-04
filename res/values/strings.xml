@@ -12,4 +12,9 @@
 <color name="wb_bg_color">#0000</color>
 <string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;file:///android_asset/flashcard_css&quot; /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=&quot;card&quot;&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
 
+<string name="deckpicker_title">Select a deck you copied to your SD card</string>
+<string name="deckpicker_due">%1$d of %2$d due</string>
+<string name="deckpicker_new">%d new today</string>
+<string name="deckpicker_loaddeck">Loading deck...</string>
+<string name="deckpicker_nodeck">No decks found.</string>
 </resources>

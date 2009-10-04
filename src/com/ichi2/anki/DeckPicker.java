@@ -11,6 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Handler;
@@ -90,6 +91,7 @@ public class DeckPicker extends Activity implements Runnable {
     
     public void populateDeckList(String location)
     {
+    	Resources res = getResources();
     	int len = 0;
     	File[] fileList;
     	TreeSet<HashMap<String,String>> tree = new TreeSet<HashMap<String,String>>(new HashMapCompare());
@@ -107,7 +109,7 @@ public class DeckPicker extends Activity implements Runnable {
 	    		
 		    	HashMap<String,String> data = new HashMap<String,String>();
 		    	data.put("name", fileList[i].getName().replaceAll(".anki", ""));
-		    	data.put("due", "Loading deck...");
+		    	data.put("due", res.getString(R.string.deckpicker_loaddeck));
 		    	data.put("new", "");
 		    	data.put("mod", String.format("%f", Deck.getLastModified(absPath)));
 		    	data.put("filepath", absPath);
@@ -121,7 +123,7 @@ public class DeckPicker extends Activity implements Runnable {
     	}
     	else {
     		HashMap<String,String> data = new HashMap<String,String>();
-	    	data.put("name", "No decks found.");
+	    	data.put("name", res.getString(R.string.deckpicker_nodeck));
 	    	data.put("new", "");
 	    	data.put("due", "");
 	    	data.put("mod", "1");
@@ -236,14 +238,16 @@ public class DeckPicker extends Activity implements Runnable {
     private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
     		Bundle data = msg.getData();
+    		Resources res = mSelf.getResources();
     		
     		String path = data.getString("absPath");
-    		String dueString = String.valueOf(data.getInt("due")) +
-						" of " +
-						String.valueOf(data.getInt("total")) +
-						" due";
-    		String newString = String.valueOf(data.getInt("new")) +
-						" new today";
+    		String dueString = String.format(
+    				res.getString(R.string.deckpicker_due),
+    				data.getInt("due"),
+    				data.getInt("total"));
+    		String newString = String.format(
+    				res.getString(R.string.deckpicker_new),
+    				data.getInt("new"));
     		
     		int count = mDeckListAdapter.getCount();
     		for (int i = 0; i < count; i++) {
