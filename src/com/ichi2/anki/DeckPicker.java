@@ -89,7 +89,7 @@ public class DeckPicker extends Activity implements Runnable {
     	waitForDeckLoaderThread();
     }
     
-    public void populateDeckList(String location)
+    private void populateDeckList(String location)
     {
     	Resources res = getResources();
     	int len = 0;
@@ -137,7 +137,7 @@ public class DeckPicker extends Activity implements Runnable {
     	mDeckListView.clearChoices();
     }
     
-    public static final class AnkiFilter implements FileFilter {
+    private static final class AnkiFilter implements FileFilter {
 
 		public boolean accept(File pathname) {
 			if (pathname.isFile() && pathname.getName().endsWith(".anki"))
@@ -147,7 +147,7 @@ public class DeckPicker extends Activity implements Runnable {
     	
     }
     
-    public static final class HashMapCompare implements Comparator<HashMap<String,String>> {
+    private static final class HashMapCompare implements Comparator<HashMap<String,String>> {
 
 		public int compare(HashMap<String, String> object1,
 				HashMap<String, String> object2) {
@@ -156,7 +156,7 @@ public class DeckPicker extends Activity implements Runnable {
     	
     }
     
-    public void handleDeckSelection(int id) {
+    private void handleDeckSelection(int id) {
     	String deckFilename = null;
 		
     	waitForDeckLoaderThread();
