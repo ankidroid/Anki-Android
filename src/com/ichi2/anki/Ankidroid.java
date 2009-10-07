@@ -329,12 +329,7 @@ public class Ankidroid extends Activity implements Runnable {
 	private void showControls(boolean show) {
 		if (show) {
 			mCard.setVisibility(View.VISIBLE);
-			mToggleWhiteboard.setVisibility(View.VISIBLE);
-			mShowAnswer.setVisibility(View.VISIBLE);
-			mSelectRemembered.setVisibility(View.VISIBLE);
-			mSelectNotRemembered.setVisibility(View.VISIBLE);
-			mTimer.setVisibility(View.VISIBLE);
-			mWhiteboard.setVisibility(View.VISIBLE);
+			showOrHideControls();
 		} else {
 			mCard.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
