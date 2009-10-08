@@ -51,6 +51,7 @@ public class Ankidroid extends Activity implements Runnable {
 	public static final int PREFERENCES_UPDATE = 1;
 
 	private ProgressDialog dialog;
+	private boolean deckSelected;
 	
 	private String deckFilename;
 	
@@ -179,6 +180,8 @@ public class Ankidroid extends Activity implements Runnable {
 			// Load deck.
 			displayProgressDialogAndLoadDeck();
 		}
+		// Don't open database in onResume(). Is already opening elsewhere.
+		deckSelected = true;
 	}
 
 	public void loadDeck(String deckFilename) {
@@ -247,6 +250,7 @@ public class Ankidroid extends Activity implements Runnable {
 	}
     
     public void openDeckPicker() {
+    	deckSelected = false; // Make sure we open the database again in onResume() if user pressed "back".
     	Intent decksPicker = new Intent(this, DeckPicker.class);
     	decksPicker.putExtra("com.ichi2.anki.Ankidroid.DeckPath", deckPath);
     	startActivityForResult(decksPicker, PICK_DECK_REQUEST);
@@ -270,7 +274,16 @@ public class Ankidroid extends Activity implements Runnable {
     		preferences.edit().commit();
     	}
     }
-
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	if (!deckSelected) {
+    		AnkiDb.openDatabase(deckFilename);
+    		deckSelected = true;
+    	}
+    }
+    
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -291,6 +304,8 @@ public class Ankidroid extends Activity implements Runnable {
     		editor.putString("deckFilename", deckFilename);
     		editor.commit();
     		
+    		// Don't open database again in onResume(). Load the new one in another thread instead.
+    		deckSelected = true;
     		displayProgressDialogAndLoadDeck();
         }
         else if(requestCode == PREFERENCES_UPDATE) {
@@ -305,11 +320,27 @@ public class Ankidroid extends Activity implements Runnable {
 
 	private void displayProgressDialogAndLoadDeck() {
 		Log.i("anki", "Loading deck " + deckFilename);
+		showControls(false);
 		dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
 		Thread thread = new Thread(this);
 		thread.start();
 	}
 
+	private void showControls(boolean show) {
+		if (show) {
+			mCard.setVisibility(View.VISIBLE);
+			showOrHideControls();
+		} else {
+			mCard.setVisibility(View.GONE);
+			mToggleWhiteboard.setVisibility(View.GONE);
+			mShowAnswer.setVisibility(View.GONE);
+			mSelectRemembered.setVisibility(View.GONE);
+			mSelectNotRemembered.setVisibility(View.GONE);
+			mTimer.setVisibility(View.GONE);
+			mWhiteboard.setVisibility(View.GONE);
+		}
+	}
+	
 	/**
 	 * Depending on preferences, show or hide the timer and whiteboard. 
 	 */
@@ -407,6 +438,7 @@ public class Ankidroid extends Activity implements Runnable {
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			dialog.dismiss();
+			showControls(true);
 			displayCardQuestion();
 		}
 	};

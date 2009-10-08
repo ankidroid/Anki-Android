@@ -6,16 +6,21 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.TreeSet;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-//import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 
 /**
@@ -24,15 +29,20 @@ import android.widget.SimpleAdapter;
  * @author Andrew Dubya
  *
  */
-public class DeckPicker extends Activity {
+public class DeckPicker extends Activity implements Runnable {
 	
-	DeckPicker mSelf;
-	SimpleAdapter mDeckListAdapter;
-	ArrayList<HashMap<String, String>> mDeckList;
-	ListView mDeckListView;
+	private DeckPicker mSelf;
+	private SimpleAdapter mDeckListAdapter;
+	private ArrayList<HashMap<String, String>> mDeckList;
+	private ListView mDeckListView;
+	private File[] mFileList;
+	private ReentrantLock mLock = new ReentrantLock();
+	private Condition mCondFinished = mLock.newCondition();
+	private boolean mIsFinished = true;
+	private boolean mDeckIsSelected = false;
 	
 	AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
-		public void onItemClick(AdapterView parent, View v, int p, long id) {
+		public void onItemClick(AdapterView<?> parent, View v, int p, long id) {
 			mSelf.handleDeckSelection(p);
 		}
 	};
@@ -50,16 +60,38 @@ public class DeckPicker extends Activity {
 		mDeckListAdapter = new SimpleAdapter(this,
         		mDeckList,
         		R.layout.deck_picker_list,
-        		new String [] {"name","due","new"},
-        		new int [] {R.id.DeckPickerName, R.id.DeckPickerDue, R.id.DeckPickerNew});
+        		new String [] {"name","due","new","showProgress"},
+        		new int [] {R.id.DeckPickerName, 
+				R.id.DeckPickerDue, 
+				R.id.DeckPickerNew,
+				R.id.DeckPickerProgress});
+		
+		mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+			public boolean setViewValue(View view, Object data, String text) {
+				if (view instanceof ProgressBar) {
+					if (text.equals("true"))
+						view.setVisibility(View.VISIBLE);
+					else
+						view.setVisibility(View.GONE);
+					return true;
+				}
+				return false;
+			}
+		});
         mDeckListView.setOnItemClickListener(mDeckSelHandler);
 		mDeckListView.setAdapter(mDeckListAdapter);
 		
         populateDeckList(deckPath);
     }
     
-    public void populateDeckList(String location)
+    public void onPause() {
+    	super.onPause();
+    	waitForDeckLoaderThread();
+    }
+    
+    private void populateDeckList(String location)
     {
+    	Resources res = getResources();
     	int len = 0;
     	File[] fileList;
     	TreeSet<HashMap<String,String>> tree = new TreeSet<HashMap<String,String>>(new HashMapCompare());
@@ -70,45 +102,32 @@ public class DeckPicker extends Activity {
     	if (dir.exists() && dir.isDirectory() && fileList != null) {
 	    	len = fileList.length;
     	}
-    	
+    	mFileList = fileList;
     	if (len > 0 && fileList != null) {
 	    	for (int i=0; i<len; i++) {
 	    		String absPath = fileList[i].getAbsolutePath();
-	    		Deck deck;
-	    		
-	    		try {
-	    			deck = Deck.openDeck(absPath);
-	    		} catch (SQLException e) {
-	    			Log.w("anki", "Could not open database " + absPath);
-	    			continue;
-	    		}
-	    		
-	    		int due = deck.failedSoonCount + deck.revCount;
 	    		
 		    	HashMap<String,String> data = new HashMap<String,String>();
 		    	data.put("name", fileList[i].getName().replaceAll(".anki", ""));
-		    	data.put("due", 
-		    			String.valueOf(due)
-		    			+ " of "
-		    			+ String.valueOf(deck.cardCount) 
-		    			+ " due");
-		    	data.put("new", 
-		    			String.valueOf(deck.newCountToday) 
-		    			+ " new");
+		    	data.put("due", res.getString(R.string.deckpicker_loaddeck));
+		    	data.put("new", "");
+		    	data.put("mod", String.format("%f", Deck.getLastModified(absPath)));
 		    	data.put("filepath", absPath);
-		    	data.put("mod", String.valueOf(deck.modified));
-		    	
-		    	deck.closeDeck();
+		    	data.put("showProgress", "true");
 		    	
 		    	tree.add(data);
 	    	}
+	    	
+	    	Thread thread = new Thread(this);
+	    	thread.start();
     	}
     	else {
     		HashMap<String,String> data = new HashMap<String,String>();
-	    	data.put("name", "No decks found.");
-	    	data.put("cards", "");
+	    	data.put("name", res.getString(R.string.deckpicker_nodeck));
+	    	data.put("new", "");
 	    	data.put("due", "");
 	    	data.put("mod", "1");
+	    	data.put("showProgress", "false");
 	    	
 	    	tree.add(data);
     	}
@@ -116,12 +135,9 @@ public class DeckPicker extends Activity {
     	mDeckList.clear();
     	mDeckList.addAll(tree);
     	mDeckListView.clearChoices();
-    	mDeckListAdapter.notifyDataSetChanged();
     }
     
-    public static final class AnkiFilter implements FileFilter {
-
-		//@Override
+    private static final class AnkiFilter implements FileFilter {
 		public boolean accept(File pathname) {
 			if (pathname.isFile() && pathname.getName().endsWith(".anki"))
 				return true;
@@ -130,9 +146,7 @@ public class DeckPicker extends Activity {
     	
     }
     
-    public static final class HashMapCompare implements Comparator<HashMap<String,String>> {
-
-		//@Override
+    private static final class HashMapCompare implements Comparator<HashMap<String,String>> {
 		public int compare(HashMap<String, String> object1,
 				HashMap<String, String> object2) {
 			return (int) (Float.parseFloat(object2.get("mod")) - Float.parseFloat(object1.get("mod")));
@@ -140,10 +154,14 @@ public class DeckPicker extends Activity {
     	
     }
     
-    public void handleDeckSelection(int id) {
+    private void handleDeckSelection(int id) {
+    	String deckFilename = null;
+		
+    	waitForDeckLoaderThread();
+    	
+		@SuppressWarnings("unchecked")
     	HashMap<String,String> data = (HashMap<String,String>) mDeckListAdapter.getItem(id);
-
-    	String deckFilename = data.get("filepath");
+    	deckFilename = data.get("filepath");
     	
     	if (deckFilename != null) {
     		Log.i("anki", "Selected " + deckFilename);
@@ -152,6 +170,96 @@ public class DeckPicker extends Activity {
 			setResult(RESULT_OK, intent);
 			
 			finish();
+    	} 
+    }
+    
+    private void waitForDeckLoaderThread() {
+		mDeckIsSelected = true;
+    	mLock.lock();
+    	try {
+    		while (!mIsFinished)
+    			mCondFinished.await();
+    	} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+    		mLock.unlock();
+    	}
+	}
+    
+    public void run() {
+    	int len = 0;
+    	if (mFileList != null)
+	    	len = mFileList.length;
+    	
+    	if (len > 0 && mFileList != null) {
+    		mLock.lock();
+    		try {
+	    		mIsFinished = false;
+		    	for (int i = 0; i < len; i++) {
+		    		
+		    		// Don't load any more decks if one has already been selected.
+		    		if (mDeckIsSelected)
+		    			break;
+		    		
+		    		String path = mFileList[i].getAbsolutePath();
+		    		Deck deck;
+		    		
+		    		try {
+		    			deck = Deck.openDeck(path);
+		    		} catch (SQLException e) {
+		    			Log.w("anki", "Could not open database " + path);
+		    			continue;
+		    		}
+		    		int dueCards = deck.failedSoonCount + deck.revCount;
+		    		int totalCards = deck.cardCount;
+		    		int newCards = deck.newCountToday;
+		    		deck.closeDeck();
+			
+		    		Bundle data = new Bundle();
+		    		data.putString("absPath", path);
+		    		data.putInt("due", dueCards);
+		    		data.putInt("total", totalCards);
+		    		data.putInt("new", newCards);
+		    		Message msg = Message.obtain();
+		    		msg.setData(data);
+		    		
+		    		handler.sendMessage(msg);
+		    	}
+	    		mIsFinished = true;
+	    		mCondFinished.signal();
+			} finally {
+				mLock.unlock();
+			}
     	}
     }
+    
+    private Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+    		Bundle data = msg.getData();
+    		Resources res = mSelf.getResources();
+    		
+    		String path = data.getString("absPath");
+    		String dueString = String.format(
+    				res.getString(R.string.deckpicker_due),
+    				data.getInt("due"),
+    				data.getInt("total"));
+    		String newString = String.format(
+    				res.getString(R.string.deckpicker_new),
+    				data.getInt("new"));
+    		
+    		int count = mDeckListAdapter.getCount();
+    		for (int i = 0; i < count; i++) {
+    			@SuppressWarnings("unchecked")
+    			HashMap<String,String> map = (HashMap<String,String>) mDeckListAdapter.getItem(i);
+    			if (map.get("filepath").equals(path)) {
+    				map.put("due", dueString);
+    				map.put("new", newString);
+    				map.put("showProgress", "false");
+    			}
+    		}
+
+    		mDeckListAdapter.notifyDataSetChanged();
+    	}
+    };
+    
 }

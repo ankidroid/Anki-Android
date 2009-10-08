@@ -23,9 +23,11 @@ public class AnkiDb {
 	 * Open a database connection to an ".anki" SQLite file.
 	 */
 	static public void openDatabase(String ankiFilename) throws SQLException {
+		
 		if (database != null) {
 			database.close();
 		}
+		
         database = SQLiteDatabase.openDatabase(ankiFilename, null,
         	SQLiteDatabase.OPEN_READWRITE |
         	SQLiteDatabase.NO_LOCALIZED_COLLATORS);		
@@ -90,7 +92,7 @@ public class AnkiDb {
 							+ " LIMIT 1"
 						, null)
 					);
-			Log.i("anki", "Selected card id " + card.id + " with interval " + card.interval);
+			Log.d("anki", "Selected card id " + card.id + " with interval " + card.interval);
 			return card;
 		}
 
@@ -133,19 +135,28 @@ public class AnkiDb {
 		public void space() {
 			double newInterval = 1;
 			if (interval != 0)
-				newInterval = 2*interval; // Very basic spaced repetition.
+				newInterval = 2 * interval; // Very basic spaced repetition.
 			ContentValues values = new ContentValues();
 			values.put("interval", newInterval);
 			AnkiDb.database.update("cards", values, "id='" + id + "'", null);
+			Log.d("anki", "Spaced card to interval " + newInterval);
 		}
 		
 		/**
 		 * Reset this card because it has not been successfully remembered.
 		 */
 		public void reset() {
+			// This lame implementation does not actually reset the interval, it grows it a little bit.
+			// This way, a failed card will not reappear immediately, but as soon as new cards and cards with similar interval are answered.
+			// It is not anymore an "interval" in the sense of the desktop Anki software.
+			// Hopefully, someone will implement real SRS based on the desktop Anki software.
+			double newInterval = 0.3;
+			if (interval != 0)
+				newInterval = 1.01 * interval;
 			ContentValues values = new ContentValues();
-			values.put("interval", 0.1);
+			values.put("interval", newInterval);
 			AnkiDb.database.update("cards", values, "id='" + id + "'", null);
+			Log.d("anki", "Reset card with interval " + newInterval);
 		}
 	}
 }
