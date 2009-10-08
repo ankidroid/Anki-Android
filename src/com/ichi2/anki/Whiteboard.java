@@ -19,6 +19,7 @@ public class Whiteboard extends View {
     private Path    mPath;
     private Paint   mBitmapPaint;
     public  int		mBackgroundColor, mForegroundColor;
+    private boolean locked;
 
     public Whiteboard(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -50,12 +51,14 @@ public class Whiteboard extends View {
 	
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-    	createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        super.onSizeChanged(w, h, oldw, oldh);
+    	//Commented because, at the moment, the size changes in the transition between the front and the back of a card, and that made the Whiteboard to disappear
+    	/*createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        super.onSizeChanged(w, h, oldw, oldh);*/
     }
 
     public void clear() {
    		mBitmap.eraseColor(mBackgroundColor);
+   		unlock();
     }
     
     @Override
@@ -94,23 +97,34 @@ public class Whiteboard extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
+    	if(!locked) {
+            float x = event.getX();
+            float y = event.getY();
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                touch_start(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                touch_move(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                touch_up();
-                invalidate();
-                break;
-        }
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    touch_start(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    touch_move(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    touch_up();
+                    invalidate();
+                    break;
+            }
+    	}
+
         return true;
+    }
+    
+    public void unlock() {
+    	locked = false;
+    }
+    
+    public void lock() {
+    	locked = true;
     }
 }
