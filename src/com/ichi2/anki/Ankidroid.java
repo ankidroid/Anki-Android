@@ -50,6 +50,8 @@ public class Ankidroid extends Activity implements Runnable {
 	public static final int PICK_DECK_REQUEST = 0;
 	public static final int PREFERENCES_UPDATE = 1;
 
+	public static Ankidroid ACTIVE_INSTANCE;
+	
 	private ProgressDialog dialog;
 	private boolean deckSelected;
 	
@@ -113,8 +115,9 @@ public class Ankidroid extends Activity implements Runnable {
     @Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException {
 		super.onCreate(savedInstanceState);
+		ACTIVE_INSTANCE = this;
 		Bundle extras = getIntent().getExtras();
-
+		
 		initResourceValues();
 		
 		Log.i("ankidroidstart", "savedInstanceState: " + savedInstanceState);
@@ -122,7 +125,7 @@ public class Ankidroid extends Activity implements Runnable {
 		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
-		deckPath = preferences.getString("deckPath", "/sdcard");
+		deckPath = preferences.getString("deckPath", "/sdcard/.ankidroid");
 		
 		if (extras != null && extras.getString(OPT_DB) != null) {
 			// A deck has just been selected in the decks browser.
@@ -140,48 +143,67 @@ public class Ankidroid extends Activity implements Runnable {
 			Log.i("ankidroidstart", "deckFilename from preferences: " + deckFilename);
 		}
 		
-		if (deckFilename == null || !new File(deckFilename).exists()) {
-			// No previously selected deck.
-			
-			boolean generateSampleDeck = preferences.getBoolean("generateSampleDeck", true);
-			if (generateSampleDeck) {
-				// Load sample deck.
-				// This sample deck is for people who downloaded the app but don't know Anki.
-				// These people will understand how it works and will get to love it!
-				// TODO Where should we put this sample deck?
-				String SAMPLE_DECK_FILENAME = "/sdcard/country-capitals.anki";
-				if ( ! new File(/*deckFilename triggers NPE bug in java.io.File.java */"/sdcard", "country-capitals.anki").exists()) {
-					try {
-						// Copy the sample deck from the assets to the SD card.
-						InputStream stream = getResources().getAssets().open("country-capitals.anki");
-						boolean written = writeToFile(stream, SAMPLE_DECK_FILENAME);
-						if ( ! written) {
-							openDeckPicker();
-							return;
+		currentCard = (AnkiDb.Card) getLastNonConfigurationInstance();
+		if (currentCard == null) {
+			if (deckFilename == null || !new File(deckFilename).exists()) {
+				// No previously selected deck.
+				
+				boolean generateSampleDeck = preferences.getBoolean("generateSampleDeck", true);
+				if (generateSampleDeck) {
+					// Load sample deck.
+					// This sample deck is for people who downloaded the app but don't know Anki.
+					// These people will understand how it works and will get to love it!
+					// TODO Where should we put this sample deck?
+					String SAMPLE_DECK_FILENAME = "/sdcard/country-capitals.anki";
+					if ( ! new File(/*deckFilename triggers NPE bug in java.io.File.java */"/sdcard", "country-capitals.anki").exists()) {
+						try {
+							// Copy the sample deck from the assets to the SD card.
+							InputStream stream = getResources().getAssets().open("country-capitals.anki");
+							boolean written = writeToFile(stream, SAMPLE_DECK_FILENAME);
+							if ( ! written) {
+								openDeckPicker();
+								return;
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
-					} catch (IOException e) {
-						e.printStackTrace();
 					}
+					// Initialize the current view to the portrait layout.
+					initLayout(R.layout.flashcard_portrait);
+					// Load sample deck.
+					deckFilename = SAMPLE_DECK_FILENAME;
+					displayProgressDialogAndLoadDeck();
 				}
-				// Initialize the current view to the portrait layout.
-				initLayout(R.layout.flashcard_portrait);
-				// Load sample deck.
-				deckFilename = SAMPLE_DECK_FILENAME;
-				displayProgressDialogAndLoadDeck();
+				else {
+					// Show the deck picker.
+					openDeckPicker();
+				}
 			}
 			else {
-				// Show the deck picker.
-				openDeckPicker();
+				// Initialize the current view to the portrait layout.
+				initLayout(R.layout.flashcard_portrait);
+				// Load deck.
+				displayProgressDialogAndLoadDeck();
 			}
 		}
 		else {
-			// Initialize the current view to the portrait layout.
 			initLayout(R.layout.flashcard_portrait);
-			// Load deck.
-			displayProgressDialogAndLoadDeck();
+			showControls(true);
+			displayCardQuestion();
 		}
 		// Don't open database in onResume(). Is already opening elsewhere.
 		deckSelected = true;
+	}
+
+    @Override
+    public void onDestroy() {
+    	super.onDestroy();
+    	ACTIVE_INSTANCE = null;
+    }
+    
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		return currentCard;
 	}
 
 	public void loadDeck(String deckFilename) {
@@ -321,20 +343,29 @@ public class Ankidroid extends Activity implements Runnable {
 	private void displayProgressDialogAndLoadDeck() {
 		Log.i("anki", "Loading deck " + deckFilename);
 		showControls(false);
-		dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
+		//dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
+		showProgressDialog();
 		Thread thread = new Thread(this);
 		thread.start();
 	}
 
+	private static void showProgressDialog() {
+		if (ACTIVE_INSTANCE != null)
+			ACTIVE_INSTANCE.dialog = ProgressDialog.show(ACTIVE_INSTANCE, "", "Loading deck. Please wait...", true);
+	}
+	
+	private static void dismissProgressDialog() {
+		if (ACTIVE_INSTANCE != null)
+			if (ACTIVE_INSTANCE.dialog != null) {
+				ACTIVE_INSTANCE.dialog.dismiss();
+				ACTIVE_INSTANCE.dialog = null;
+			}
+	}
+	
 	private void showControls(boolean show) {
 		if (show) {
 			mCard.setVisibility(View.VISIBLE);
-			mToggleWhiteboard.setVisibility(View.VISIBLE);
-			mShowAnswer.setVisibility(View.VISIBLE);
-			mSelectRemembered.setVisibility(View.VISIBLE);
-			mSelectNotRemembered.setVisibility(View.VISIBLE);
-			mTimer.setVisibility(View.VISIBLE);
-			mWhiteboard.setVisibility(View.VISIBLE);
+			showOrHideControls();
 		} else {
 			mCard.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
@@ -435,16 +466,32 @@ public class Ankidroid extends Activity implements Runnable {
         return true;
     }
 	
+	public AnkiDb.Card nextCard2(String path) {
+		AnkiDb.openDatabase(path);
+		if (ACTIVE_INSTANCE.spacedRepetition)
+			return AnkiDb.Card.smallestIntervalCard();
+		else
+			return AnkiDb.Card.randomCard();
+	}
+	
 	public void run() {
-		loadDeck(deckFilename);
+		AnkiDb.Card card;
+		
+		if (ACTIVE_INSTANCE != null) {
+			card = nextCard2(ACTIVE_INSTANCE.deckFilename); 
+			ACTIVE_INSTANCE.currentCard = card;
+		}
     	handler.sendEmptyMessage(0);
     }
 	
-	private Handler handler = new Handler() {
+	private static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			dialog.dismiss();
-			showControls(true);
-			displayCardQuestion();
+			//dialog.dismiss();
+			dismissProgressDialog();
+			if (ACTIVE_INSTANCE != null) {
+				ACTIVE_INSTANCE.showControls(true);
+				ACTIVE_INSTANCE.displayCardQuestion();
+			}
 		}
 	};
 }
