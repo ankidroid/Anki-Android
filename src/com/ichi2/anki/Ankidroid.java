@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.concurrent.locks.ReentrantLock;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -39,7 +40,7 @@ import android.widget.ToggleButton;
  * @author Andrew Dubya, Nicolas Raoul
  *
  */
-public class Ankidroid extends Activity implements Runnable {
+public class Ankidroid extends Activity {
 	
 	public static final String OPT_DB = "com.ichi2.anki.deckFilename";
 	
@@ -51,6 +52,7 @@ public class Ankidroid extends Activity implements Runnable {
 	public static final int PREFERENCES_UPDATE = 1;
 
 	public static Ankidroid ACTIVE_INSTANCE;
+	public static ReentrantLock ACTIVE_INSTANCE_LOCK = new ReentrantLock();
 	
 	private ProgressDialog dialog;
 	private boolean deckSelected;
@@ -93,8 +95,9 @@ public class Ankidroid extends Activity implements Runnable {
 			// Space this card because it has been successfully remembered.
 			if(spacedRepetition)
 				currentCard.space();
-			nextCard();
-			displayCardQuestion();
+			
+			Thread thread = new CardLoaderThread(false, null, spacedRepetition);
+			thread.start();
 		}
 	};
 	View.OnClickListener mSelectNotRememberedHandler = new View.OnClickListener() {
@@ -107,15 +110,20 @@ public class Ankidroid extends Activity implements Runnable {
 			// Reset this card because it has not been successfully remembered.
 			if (spacedRepetition)
 				currentCard.reset();
-			nextCard();
-			displayCardQuestion();
+
+			Thread thread = new CardLoaderThread(false, null, spacedRepetition);
+			thread.start();
 		}
 	};
 
     @Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException {
 		super.onCreate(savedInstanceState);
+
 		ACTIVE_INSTANCE = this;
+		if (ACTIVE_INSTANCE_LOCK.isHeldByCurrentThread())
+			ACTIVE_INSTANCE_LOCK.unlock();
+		
 		Bundle extras = getIntent().getExtras();
 		
 		initResourceValues();
@@ -203,19 +211,10 @@ public class Ankidroid extends Activity implements Runnable {
     
 	@Override
 	public Object onRetainNonConfigurationInstance() {
+		ACTIVE_INSTANCE_LOCK.lock();
 		return currentCard;
 	}
 
-	public void loadDeck(String deckFilename) {
-		this.deckFilename = deckFilename;
-		
-		// Open the right deck.
-		AnkiDb.openDatabase(deckFilename);
-
-		// Start by getting the first card and displaying it.
-		nextCard();
-	}
-	
 	// Retrieve resource values.
 	public void initResourceValues() {
 		Resources r = getResources();
@@ -343,23 +342,27 @@ public class Ankidroid extends Activity implements Runnable {
 	private void displayProgressDialogAndLoadDeck() {
 		Log.i("anki", "Loading deck " + deckFilename);
 		showControls(false);
-		//dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
 		showProgressDialog();
-		Thread thread = new Thread(this);
+
+		Thread thread = new CardLoaderThread(true, deckFilename, spacedRepetition);
 		thread.start();
 	}
 
 	private static void showProgressDialog() {
+		ACTIVE_INSTANCE_LOCK.lock();
 		if (ACTIVE_INSTANCE != null)
 			ACTIVE_INSTANCE.dialog = ProgressDialog.show(ACTIVE_INSTANCE, "", "Loading deck. Please wait...", true);
+		ACTIVE_INSTANCE_LOCK.unlock();
 	}
 	
 	private static void dismissProgressDialog() {
+		ACTIVE_INSTANCE_LOCK.lock();
 		if (ACTIVE_INSTANCE != null)
 			if (ACTIVE_INSTANCE.dialog != null) {
 				ACTIVE_INSTANCE.dialog.dismiss();
 				ACTIVE_INSTANCE.dialog = null;
 			}
+		ACTIVE_INSTANCE_LOCK.unlock();
 	}
 	
 	private void showControls(boolean show) {
@@ -399,20 +402,8 @@ public class Ankidroid extends Activity implements Runnable {
 		mWhiteboard.setVisibility((enabled) ? View.VISIBLE : View.GONE);
 	}
 	
-	// Get the next card.
-	public void nextCard() {
-		if (spacedRepetition)
-			currentCard = AnkiDb.Card.smallestIntervalCard();
-		else
-			currentCard = AnkiDb.Card.randomCard();
-	}
-	
 	// Set up the display for the current card.
 	public void displayCardQuestion() {
-		if (currentCard == null) {
-			nextCard();
-		}
-		
 		if (currentCard == null) {
 			// error :(
 			updateCard("Unable to find a card!");
@@ -466,32 +457,56 @@ public class Ankidroid extends Activity implements Runnable {
         return true;
     }
 	
-	public AnkiDb.Card nextCard2(String path) {
-		AnkiDb.openDatabase(path);
-		if (ACTIVE_INSTANCE.spacedRepetition)
-			return AnkiDb.Card.smallestIntervalCard();
-		else
-			return AnkiDb.Card.randomCard();
-	}
-	
-	public void run() {
-		AnkiDb.Card card;
-		
-		if (ACTIVE_INSTANCE != null) {
-			card = nextCard2(ACTIVE_INSTANCE.deckFilename); 
-			ACTIVE_INSTANCE.currentCard = card;
-		}
-    	handler.sendEmptyMessage(0);
-    }
-	
 	private static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			//dialog.dismiss();
-			dismissProgressDialog();
+			
+			ACTIVE_INSTANCE_LOCK.lock();
 			if (ACTIVE_INSTANCE != null) {
 				ACTIVE_INSTANCE.showControls(true);
 				ACTIVE_INSTANCE.displayCardQuestion();
 			}
+			ACTIVE_INSTANCE_LOCK.unlock();
+			dismissProgressDialog();
 		}
 	};
+	
+	private class CardLoaderThread extends Thread {
+		private String mDeckPath;
+		private boolean mOpenNewDeck;
+		private boolean mSpacedRepetition;
+		
+		/**
+		 * Creates a new thread to get the next card from a deck.
+		 * 
+		 * @param openNewDeck Sets whether or not the thread will open a new deck in AnkiDb to get the card from.
+		 * @param deckPath The absolute path to the new deck to open. This is ignored if openNewDeck is set to false.
+		 * @param spacedRepetition Sets whether or not spaced repetition should be used to get the next card.
+		 */
+		public CardLoaderThread(boolean openNewDeck, String deckPath, boolean spacedRepetition) {
+			mOpenNewDeck = openNewDeck;
+			mDeckPath = deckPath;
+			mSpacedRepetition = spacedRepetition;
+		}
+		
+		@Override
+		public void run() {
+			AnkiDb.Card card = getNextCard();
+			
+			Ankidroid.ACTIVE_INSTANCE_LOCK.lock();
+			Ankidroid.ACTIVE_INSTANCE.currentCard = card;
+			Ankidroid.ACTIVE_INSTANCE_LOCK.unlock();
+			
+			Ankidroid.handler.sendEmptyMessage(0);
+		}
+		
+		private AnkiDb.Card getNextCard() {
+			if (mOpenNewDeck)
+				AnkiDb.openDatabase(mDeckPath);
+			
+			if (mSpacedRepetition)
+				return AnkiDb.Card.smallestIntervalCard();
+			else
+				return AnkiDb.Card.randomCard();
+		}
+	}
 }
