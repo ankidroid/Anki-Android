@@ -12,7 +12,7 @@ public class Stats {
 	private static final int STATS_DAY = 1;
 	
 	// BEGIN: SQL table columns
-	int id;
+	long id;
 	int type;
 	Date day;
 	int reps;
@@ -61,7 +61,7 @@ public class Stats {
 		matureEase4 = 0;
 	}
 	
-	private void fromDB(int id) {
+	private void fromDB(long id) {
 		Log.i("anki", "Reading stats from DB...");
 		Cursor cursor = AnkiDb.database.rawQuery(
 				"SELECT * " +
@@ -73,7 +73,7 @@ public class Stats {
 			throw new SQLException();
 		cursor.moveToFirst();
 		
-		this.id = cursor.getInt(0);
+		this.id = cursor.getLong(0);
 		type = cursor.getInt(1);
 		day = Date.valueOf(cursor.getString(2));
 		reps = cursor.getInt(3);
@@ -128,7 +128,7 @@ public class Stats {
 		values.put("matureEase2", 0);
 		values.put("matureEase3", 0);
 		values.put("matureEase4", 0);
-		this.id = (int) AnkiDb.database.insert("stats", null, values);
+		this.id = AnkiDb.database.insert("stats", null, values);
 	}
 	
 	public static Date genToday(Deck deck) {
@@ -151,7 +151,7 @@ public class Stats {
 		
 		Stats stats = new Stats();
 		if (cursor.moveToFirst()) {
-			stats.fromDB(cursor.getInt(0));
+			stats.fromDB(cursor.getLong(0));
 			cursor.close();
 			return stats;
 		} else
@@ -180,7 +180,7 @@ public class Stats {
 		
 		Stats stats = new Stats();
 		if (cursor.moveToFirst()) {
-			stats.fromDB(cursor.getInt(0));
+			stats.fromDB(cursor.getLong(0));
 			cursor.close();
 			return stats;
 		} else

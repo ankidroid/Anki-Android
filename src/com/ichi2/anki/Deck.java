@@ -43,12 +43,12 @@ public class Deck {
 	private static final float initialFactor = 2.5f;
 	
 	// BEGIN: SQL table columns
-	int id;
+	long id;
 	float created;
 	float modified;
 	String description;
 	int version;
-	int currentModelId;
+	long currentModelId;
 	String syncName;
 	float lastSync;
 	// Scheduling
@@ -94,11 +94,18 @@ public class Deck {
 	int revCardOrder;
 	// END: SQL table columns
 	
+	// BEGIN JOINed variables
+	//Model currentModel; // Deck.currentModelId = Model.id
+	//ArrayList<Model> models; // Deck.id = Model.deckId
+	// END JOINed variables
+	
 	float averageFactor;
 	int newCardModulus;
 	int newCountToday;
 	
 	float lastLoaded;
+	boolean newEarly;
+	boolean reviewEarly;
 	
 	private Stats globalStats;
 	private Stats dailyStats;
@@ -112,8 +119,8 @@ public class Deck {
 //		sessionStartReps = 0;
 //		sessionStartTime = 0;
 //		lastSessionStart = 0;
-//		newEarly = false;
-//		reviewEarly = false;
+		newEarly = false;
+		reviewEarly = false;
 	}
 	
 	public static Deck openDeck(String path) throws SQLException {
@@ -131,12 +138,12 @@ public class Deck {
 			throw new SQLException();
 		cursor.moveToFirst();
 		
-		deck.id 			 = cursor.getInt(0);
+		deck.id 			 = cursor.getLong(0);
 		deck.created		 = cursor.getFloat(1);
 		deck.modified 		 = cursor.getFloat(2);
 		deck.description	 = cursor.getString(3);
 		deck.version		 = cursor.getInt(4);
-		deck.currentModelId	 = cursor.getInt(5);
+		deck.currentModelId	 = cursor.getLong(5);
 		deck.syncName		 = cursor.getString(6);
 		deck.lastSync		 = cursor.getFloat(7);
 		deck.hardIntervalMin = cursor.getFloat(8);
@@ -192,9 +199,9 @@ public class Deck {
 		
 		if (cursor.moveToFirst()) {
 			int count = cursor.getCount();
-			int [] ids = new int[count];
+			long[] ids = new long[count];
 			for (int i = 0; i < count; i++) {
-				ids[i] = cursor.getInt(0);
+				ids[i] = cursor.getLong(0);
 				cursor.moveToNext();
 			}
 			deck.updatePriorities(ids);
@@ -216,6 +223,15 @@ public class Deck {
 	
 	private boolean modifiedSinceSave() {
 		return this.modified > this.lastLoaded;
+	}
+	
+	private void setModified() {
+		modified = System.currentTimeMillis() / 1000f;
+	}
+	
+	private void flushMod() {
+		setModified();
+		commitToDB();
 	}
 	
 	private void commitToDB() {
@@ -278,6 +294,163 @@ public class Deck {
 		return value;
 	}
 	
+	/* Getting the next card
+	 ***********************************************************/
+	
+	
+	/**
+	 * Return the next card object.
+	 * @return The next due card or null if nothing is due.
+	 */
+	public Card getCard() {
+		checkDue();
+		long id = getCardId();
+		return cardFromId(id);
+	}
+	
+	private long getCardId() {
+		long id;
+		// Failed card due?
+		if ((delay0 != 0) && (failedNowCount != 0))
+			return AnkiDb.queryScalar("SELECT id FROM failedCards LIMIT 1");
+		// Failed card queue too big?
+		if (failedSoonCount >= failedCardMax)
+			return AnkiDb.queryScalar("SELECT id FROM failedCards LIMIT 1");
+		// Distribute new cards?
+		if (timeForNewCard()) {
+			id = maybeGetNewCard();
+			if (id != 0)
+				return id;
+		}
+		// Card due for review?
+		if (revCount != 0)
+			return getRevCard();
+		// New cards left?
+		id = maybeGetNewCard();
+		if (id != 0)
+			return id;
+		// Review ahead?
+		if (reviewEarly) {
+			id = getCardIdAhead();
+			if (id != 0)
+				return id;
+			else {
+				resetAfterReviewEarly();
+				checkDue();
+			}
+		}
+		// Display failed cards early/last
+		if (showFailedLast()) {
+			try {
+			id = AnkiDb.queryScalar("SELECT id FROM failedCards limit 1");
+			} catch (Exception e) {
+				return 0;
+			}
+			return id; 
+		}
+		return 0;
+	}
+	
+	private long getCardIdAhead() {
+		long id = AnkiDb.queryScalar(
+				"SELECT id " +
+				"FROM cards " +
+				"WHERE type = 1 and " +
+				"isDue = 0 and " +
+				"priority in (1,2,3,4) " +
+				"ORDER BY combinedDue " +
+				"LIMIT 1");
+		return id;
+	}
+	
+	/* Get card: helper functions
+	 ***********************************************************/
+	
+	private boolean timeForNewCard() {
+		if (newCardSpacing == NEW_CARDS_LAST)
+			return false;
+		if (newCardSpacing == NEW_CARDS_FIRST)
+			return true;
+		// Force old if there are very high priority cards
+		try {
+			AnkiDb.queryScalar(
+					"SELECT 1 " +
+					"FROM cards " +
+					"WHERE type = 1 and " +
+					"isDue = 1 and " +
+					"priority = 4 " +
+					"LIMIT 1");
+		} catch (Exception e) { // No result from query.
+			if (newCardModulus == 0)
+				return false;
+			else
+				return (dailyStats.reps % newCardModulus) == 0;
+		}
+		return false;
+	}
+	
+	private long maybeGetNewCard() {
+		if ((newCountToday == 0) && (!newEarly))
+			return 0;
+		return getNewCard();
+	}
+	
+	private String newCardTable() {
+		return (new String[]{
+				"acqCardsOld",
+				"acqCardsOld",
+				"acqCardsNew"})[newCardOrder];
+	}
+	
+	private String revCardTable() {
+		return (new String[]{
+				"revCardsOld",
+				"revCardsNew",
+				"revCardsDue",
+				"revCardsRandom"})[revCardOrder];
+	}
+	
+	private long getNewCard() {
+		long id;
+		try {
+			id = AnkiDb.queryScalar(
+					"SELECT id " +
+					"FROM " +
+					newCardTable() +
+					"LIMIT 1");
+		} catch (Exception e) {
+			return 0;
+		}
+		return id;
+	}
+	
+	private long getRevCard() {
+		long id;
+		try {
+			id = AnkiDb.queryScalar(
+					"SELECT id " +
+					"FROM " +
+					revCardTable() +
+					"LIMIT 1");
+		} catch (Exception e) {
+			return 0;
+		}
+		return id;
+	}
+	
+	private boolean showFailedLast() {
+		return (collapseTime != 0f) || (delay0 == 0);
+	}
+	
+	private Card cardFromId(long id) {
+		Card card = new Card();
+		if (!card.fromDB(id))
+			return null;
+		card.genFuzz();
+		card.startTimer();
+		return card;
+	}
+	
 	/* Queue/cache management
 	 ***********************************************************/
 	
@@ -287,26 +460,26 @@ public class Deck {
 		checkDue();
 		// Global counts
 		if (full) {
-			cardCount = AnkiDb.queryScalar("SELECT count(id) FROM cards");
-			factCount = AnkiDb.queryScalar("SELECT count(id) FROM facts");
+			cardCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM cards");
+			factCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM facts");
 		}
 		
 		// Due counts
-		failedSoonCount = AnkiDb.queryScalar("SELECT count(id) FROM failedCards");
-		failedNowCount = AnkiDb.queryScalar(
+		failedSoonCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM failedCards");
+		failedNowCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
 				"WHERE type = 0 and " +
 				"isDue = 1 and " +
 				"combinedDue <= " +
 				String.format("%f", (float) (System.currentTimeMillis() / 1000f)));
-		revCount = AnkiDb.queryScalar(
+		revCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
 				"WHERE type = 1 and " +
 				"priority in (1,2,3,4) and " +
 				"isDue = 1");
-		newCount = AnkiDb.queryScalar(
+		newCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
 				"WHERE type = 2 and " +
@@ -335,7 +508,7 @@ public class Deck {
 						((System.currentTimeMillis() / 1000f) + delay0)),
 				null);
 		
-		failedNowCount = AnkiDb.queryScalar(
+		failedNowCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
 				"WHERE type = 0 and " +
@@ -428,18 +601,46 @@ public class Deck {
 			dailyStats = Stats.dailyStats(this);
 	}
 	
+	private void resetAfterReviewEarly() {
+		long[] ids = null;
+		Cursor cursor = AnkiDb.database.rawQuery(
+				"SELECT id " +
+				"FROM cards " +
+				"WHERE priority = -1", 
+				null);
+		if (cursor.moveToFirst()) {
+			int count = cursor.getCount();
+			ids = new long[count];
+			for (int i = 0; i < count; i++) {
+				ids[i] = cursor.getLong(0);
+				cursor.moveToNext();
+			}
+		}
+		cursor.close();
+		
+		if (ids != null) {
+			updatePriorities(ids);
+			flushMod();
+		}
+		if (reviewEarly || newEarly) {
+			reviewEarly = false;
+			newEarly = false;
+			checkDue();
+		}
+	}
+	
 	/* Priorities
 	 ***********************************************************/
 	
-	private void updatePriorities(int[] cardIds) {
+	private void updatePriorities(long[] cardIds) {
 		updatePriorities(cardIds, null, true);
 	}
 	
-	private void updatePriorities(int[] cardIds, String[] suspend, boolean dirty) {
+	private void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
 		Log.i("ank", "Updating priorities...");
 		// Any tags to suspend
 		if (suspend != null) {
-			int[] ids = tagIds(suspend);
+			long[] ids = tagIds(suspend);
 			AnkiDb.database.execSQL(
 					"UPDATE tags " +
 					"SET priority = 0 " +
@@ -465,9 +666,9 @@ public class Deck {
 			throw new SQLException("No result for query: " + query);
 		
 		int len = cursor.getCount();
-		int[][] cards = new int[len][2];
+		long[][] cards = new long[len][2];
 		for (int i = 0; i < len; i++) {
-			cards[i][0] = cursor.getInt(0);
+			cards[i][0] = cursor.getLong(0);
 			cards[i][1] = cursor.getInt(1);
 		}
 		cursor.close();
@@ -482,7 +683,7 @@ public class Deck {
 				if (cards[i][1] == pri)
 					count++;
 			}
-			int[] cs = new int[count];
+			long[] cs = new long[count];
 			int j = 0;
 			for (int i = 0; i < len; i++) {
 				if (cards[i][1] == pri) {
@@ -576,7 +777,7 @@ public class Deck {
 	 * @param ids The array of integers to include in the list.
 	 * @return An SQL compatible string in the format (ids[0],ids[1],..).
 	 */
-	private static String ids2str(int[] ids) {
+	private static String ids2str(long[] ids) {
 		String str = "(";
 		int len = ids.length;
 		for (int i = 0; i < len; i++ ) {
@@ -594,7 +795,7 @@ public class Deck {
 	 * @param tags An array of the tags to get IDs for.
 	 * @return An array of IDs of the tags.
 	 */
-	private static int[] tagIds(String[] tags) {
+	private static long[] tagIds(String[] tags) {
 		// TODO: Finish porting this method from tags.py.
 		return null;
 	}
