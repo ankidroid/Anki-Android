@@ -106,7 +106,7 @@ public class Ankidroid extends Activity implements Runnable
 	// of a card
 	CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener()
 	{
-		@Override
+		//@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean showAnswer)
 		{
 			if (showAnswer)
