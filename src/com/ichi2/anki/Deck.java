@@ -13,6 +13,12 @@ import android.util.Log;
 
 public class Deck
 {
+	
+	/**
+	 * Tag for logging messages
+	 */
+	private static String TAG = "Ankidroid";
+	
 	// Auto priorities
 	private static final int PRIORITY_HIGH = 4;
 
@@ -183,7 +189,7 @@ public class Deck
 	public static Deck openDeck(String path) throws SQLException
 	{
 		Deck deck = new Deck();
-		Log.i("anki", "Opening database " + path);
+		Log.i(TAG, "openDeck - Opening database " + path);
 		AnkiDb.openDatabase(path);
 
 		// Read in deck table columns
@@ -230,7 +236,7 @@ public class Deck
 		deck.newCount = cursor.getInt(34);
 		deck.revCardOrder = cursor.getInt(35);
 
-		Log.i("anki", "Read " + cursor.getColumnCount() + " columns from decks table.");
+		Log.i(TAG, "openDeck - Read " + cursor.getColumnCount() + " columns from decks table.");
 		cursor.close();
 
 		deck.initVars();
@@ -281,7 +287,7 @@ public class Deck
 
 	private void commitToDB()
 	{
-		Log.i("anki", "Saving deck to DB...");
+		Log.i(TAG, "commitToDB - Saving deck to DB...");
 		ContentValues values = new ContentValues();
 		values.put("id", id);
 		values.put("created", created);
@@ -345,7 +351,7 @@ public class Deck
 
 	private void rebuildCounts(boolean full)
 	{
-		Log.i("anki", "Rebuilding global and due counts...");
+		Log.i(TAG, "rebuildCounts - Rebuilding global and due counts...");
 		// Need to check due first, so new due cards are not added later
 		checkDue();
 		// Global counts
@@ -371,7 +377,7 @@ public class Deck
 	 */
 	private void checkDue()
 	{
-		Log.i("anki", "Checking due cards...");
+		Log.i(TAG, "Checking due cards...");
 		checkDailyStats();
 
 		// Failed cards
@@ -407,7 +413,7 @@ public class Deck
 	 */
 	private void rebuildQueue()
 	{
-		Log.i("anki", "Rebuilding query...");
+		Log.i(TAG, "rebuildQueue - Rebuilding query...");
 		// Setup global/daily stats
 		globalStats = Stats.globalStats(this);
 		dailyStats = Stats.dailyStats(this);
@@ -431,7 +437,7 @@ public class Deck
 			}
 		} else
 			newCardModulus = 0;
-		Log.i("anki", "newCardModulus set to " + newCardModulus);
+		Log.i(TAG, "newCardModulus set to " + newCardModulus);
 
 		Cursor cursor = AnkiDb.database.rawQuery("SELECT avg(factor) " + "FROM cards " + "WHERE type = 1", null);
 		if (cursor.isClosed())
@@ -467,7 +473,7 @@ public class Deck
 
 	private void updatePriorities(int[] cardIds, String[] suspend, boolean dirty)
 	{
-		Log.i("ank", "Updating priorities...");
+		Log.i(TAG, "updatePriorities - Updating priorities...");
 		// Any tags to suspend
 		if (suspend != null)
 		{
@@ -545,7 +551,7 @@ public class Deck
 
 	private void updateDynamicIndices()
 	{
-		Log.i("anki", "Updating indices...");
+		Log.i(TAG, "updateDynamicIndices - Updating indices...");
 		HashMap<String, String> indices = new HashMap<String, String>();
 		indices.put("intervalDesc", "(type, isDue, priority desc, interval desc)");
 		indices.put("intervalAsc", "(type, isDue, priority desc, interval)");

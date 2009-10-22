@@ -9,6 +9,12 @@ import android.util.Log;
 
 public class Stats
 {
+	
+	/**
+	 * Tag for logging messages
+	 */
+	private static String TAG = "Ankidroid";
+	
 	private static final int STATS_LIFE = 0;
 
 	private static final int STATS_DAY = 1;
@@ -89,7 +95,7 @@ public class Stats
 
 	private void fromDB(int id)
 	{
-		Log.i("anki", "Reading stats from DB...");
+		Log.i(TAG, "Reading stats from DB...");
 		Cursor cursor = AnkiDb.database
 		        .rawQuery("SELECT * " + "FROM stats " + "WHERE id = " + String.valueOf(id), null);
 		if (cursor.isClosed())
@@ -125,7 +131,7 @@ public class Stats
 
 	private void create(int type, Date day)
 	{
-		Log.i("anki", "Creating new stats for " + day.toString() + "...");
+		Log.i(TAG, "Creating new stats for " + day.toString() + "...");
 		this.type = type;
 		this.day = day;
 
@@ -162,7 +168,7 @@ public class Stats
 
 	public static Stats globalStats(Deck deck) throws SQLException
 	{
-		Log.i("anki", "Getting global stats...");
+		Log.i(TAG, "Getting global stats...");
 		int type = STATS_LIFE;
 		Date today = genToday(deck);
 
@@ -186,11 +192,11 @@ public class Stats
 
 	public static Stats dailyStats(Deck deck) throws SQLException
 	{
-		Log.i("anki", "Getting daily stats...");
+		Log.i(TAG, "Getting daily stats...");
 		int type = STATS_DAY;
 		Date today = genToday(deck);
 
-		Log.i("anki", "Trying to get stats for " + today.toString());
+		Log.i(TAG, "Trying to get stats for " + today.toString());
 		Cursor cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type)
 		        + " and day = \"" + today.toString() + "\"", null);
 		if (cursor.isClosed())
