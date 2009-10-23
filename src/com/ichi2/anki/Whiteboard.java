@@ -24,9 +24,11 @@ public class Whiteboard extends View
 
 	private Paint mBitmapPaint;
 
-	public int mBackgroundColor, mForegroundColor;
+	public int mBackgroundColor, mForegroundColor, mExtraHeight;
 
-	private boolean locked;
+	private boolean mLocked;
+	
+	private boolean mRecreateBitmap = false;
 
 	public Whiteboard(Context context, AttributeSet attrs)
 	{
@@ -49,6 +51,7 @@ public class Whiteboard extends View
 		 * should be set to the size of the Whiteboard view.
 		 */
 		createBitmap(320, 480, Bitmap.Config.ARGB_8888);
+		//createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
 		mPath = new Path();
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 	}
@@ -63,15 +66,23 @@ public class Whiteboard extends View
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh)
 	{
-		// Commented because, at the moment, the size changes in the transition
-		// between the front and the back of a card, and that made the
-		// Whiteboard to disappear
-		/*
-		 * createBitmap(w, h, Bitmap.Config.ARGB_8888); super.onSizeChanged(w,
-		 * h, oldw, oldh);
-		 */
+		// We want to create the bitmap again only when the screen has been rotated, not when the size changes in the transition
+		// between the front and the back of a card (that would made the Whiteboard to disappear)
+		if(mRecreateBitmap)
+		{
+			mBitmap = Bitmap.createBitmap(w, h + mExtraHeight, Bitmap.Config.ARGB_8888);
+			mCanvas = new Canvas(mBitmap);
+			super.onSizeChanged(w, h, oldw, oldh);
+			mRecreateBitmap = false;
+		}
 	}
 
+	public void rotate(int height) 
+	{
+		mRecreateBitmap = true;
+		mExtraHeight = height;
+	}
+	
 	public void clear()
 	{
 		mBitmap.eraseColor(mBackgroundColor);
@@ -123,7 +134,7 @@ public class Whiteboard extends View
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		if (!locked)
+		if (!mLocked)
 		{
 			float x = event.getX();
 			float y = event.getY();
@@ -150,11 +161,11 @@ public class Whiteboard extends View
 
 	public void unlock()
 	{
-		locked = false;
+		mLocked = false;
 	}
 
 	public void lock()
 	{
-		locked = true;
+		mLocked = true;
 	}
 }

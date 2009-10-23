@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -332,6 +333,7 @@ public class Ankidroid extends Activity implements Runnable
 	@Override
 	public void onStop()
 	{
+		Log.i(TAG, "onStop() - " + System.currentTimeMillis());
 		super.onStop();
 		if (deckFilename != null)
 		{
@@ -342,6 +344,7 @@ public class Ankidroid extends Activity implements Runnable
 	@Override
 	public void onResume()
 	{
+		Log.i(TAG, "onResume() - " + System.currentTimeMillis());
 		super.onResume();
 		if (!deckSelected)
 		{
@@ -382,6 +385,19 @@ public class Ankidroid extends Activity implements Runnable
 		}
 	}
 
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	  super.onConfigurationChanged(newConfig);
+	  //extra height that the Whiteboard should have to be able to write in all its surface either on the question or on the answer
+	  int extraHeight = 0;
+	  if(mSelectRemembered.isShown() && mSelectNotRemembered.isShown())
+	  {
+		  extraHeight = java.lang.Math.max(mSelectRemembered.getHeight(), mSelectNotRemembered.getHeight());
+	  }
+	  mWhiteboard.rotate(extraHeight);
+	}
+
+	
 	private void displayProgressDialogAndLoadDeck()
 	{
 		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
