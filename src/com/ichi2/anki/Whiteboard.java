@@ -51,7 +51,6 @@ public class Whiteboard extends View
 		 * should be set to the size of the Whiteboard view.
 		 */
 		createBitmap(320, 480, Bitmap.Config.ARGB_8888);
-		//createBitmap(1000, 1000, Bitmap.Config.ARGB_8888);
 		mPath = new Path();
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 	}
