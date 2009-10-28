@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Hashtable;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -30,6 +31,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -101,7 +104,12 @@ public class Ankidroid extends Activity implements Runnable
 	private Chronometer mTimer;
 
 	private Whiteboard mWhiteboard;
-
+	
+	private Hashtable<Integer,String> viewNames = new Hashtable<Integer,String>();
+	
+	private LinearLayout mMainLayout, mRememberedLayout, mChronoButtonsLayout;
+	
+	private FrameLayout mCardWhiteboardLayout;
 	
 	// Handler for the flip toogle button, between the question and the answer
 	// of a card
@@ -155,6 +163,22 @@ public class Ankidroid extends Activity implements Runnable
 		}
 	};
 
+	View.OnFocusChangeListener mOnFocusChangeHandler = new View.OnFocusChangeListener() {
+		
+		@Override
+		public void onFocusChange(View v, boolean hasFocus) {
+			String viewName = viewNames.get(new Integer(v.getId()));
+			if(viewName == null) viewName = "Unknown View";
+			
+			String event = "";			
+			if(hasFocus) event = " has gained focus.";
+			else event = " has lost focus.";
+			
+			Log.i(TAG, "View " + viewName + event);
+			
+		}
+	};
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
 	{
@@ -237,6 +261,7 @@ public class Ankidroid extends Activity implements Runnable
 		}
 		// Don't open database in onResume(). Is already opening elsewhere.
 		deckSelected = true;
+		
 	}
 
 	public void loadDeck(String deckFilename)
@@ -270,13 +295,44 @@ public class Ankidroid extends Activity implements Runnable
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
-
+		mMainLayout = (LinearLayout) findViewById(R.id.main_layout);
+		mRememberedLayout = (LinearLayout) findViewById(R.id.remembered_layout);
+		mChronoButtonsLayout = (LinearLayout) findViewById(R.id.chrono_buttons_layout);
+		mCardWhiteboardLayout = (FrameLayout) findViewById(R.id.card_whiteboard_layout);
+		
 		showOrHideControls();
 
 		mSelectRemembered.setOnClickListener(mSelectRememberedHandler);
 		mSelectNotRemembered.setOnClickListener(mSelectNotRememberedHandler);
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
+		
+		mCard.setFocusable(false);
+		
+		//For focus testing purposes
+		viewNames.put(new Integer(mCard.getId()), "mCard");
+		viewNames.put(new Integer(mSelectRemembered.getId()), "mSelectRemembered");
+		viewNames.put(new Integer(mSelectNotRemembered.getId()), "mSelectNotRemembered");
+		viewNames.put(new Integer(mTimer.getId()), "mTimer");
+		viewNames.put(new Integer(mFlipCard.getId()), "mFlipCard");
+		viewNames.put(new Integer(mToggleWhiteboard.getId()), "mToggleWhiteboard");
+		viewNames.put(new Integer(mWhiteboard.getId()), "mWhiteboard");
+		viewNames.put(new Integer(mMainLayout.getId()), "mMainLayout");
+		viewNames.put(new Integer(mRememberedLayout.getId()), "mRememberedLayout");
+		viewNames.put(new Integer(mChronoButtonsLayout.getId()), "mChronoButtonsLayout");
+		viewNames.put(new Integer(mCardWhiteboardLayout.getId()), "mCardWhiteboardLayout");
+		
+		mCard.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mSelectRemembered.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mSelectNotRemembered.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mTimer.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mFlipCard.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mToggleWhiteboard.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mWhiteboard.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mMainLayout.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mRememberedLayout.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mChronoButtonsLayout.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mCardWhiteboardLayout.setOnFocusChangeListener(mOnFocusChangeHandler);
 	}
 
 	/** Creates the menu items */
@@ -392,8 +448,10 @@ public class Ankidroid extends Activity implements Runnable
 	  int extraHeight = 0;
 	  if(mSelectRemembered.isShown() && mSelectNotRemembered.isShown())
 	  {
+		  //if the "Remembered" and "Not remembered" buttons are visible, their height has to be counted in the creation of the new Whiteboard
+		  //because we should be able to write in their space when it is the front part of the card
 		  extraHeight = java.lang.Math.max(mSelectRemembered.getHeight(), mSelectNotRemembered.getHeight());
-	  }
+	  } 
 	  mWhiteboard.rotate(extraHeight);
 	}
 
@@ -487,6 +545,9 @@ public class Ankidroid extends Activity implements Runnable
 		{
 			mSelectRemembered.setVisibility(View.GONE);
 			mSelectNotRemembered.setVisibility(View.GONE);
+									
+			mFlipCard.requestFocus();
+
 			updateCard(currentCard.question);
 		}
 	}
@@ -502,9 +563,12 @@ public class Ankidroid extends Activity implements Runnable
 	{
 		mTimer.stop();
 		mWhiteboard.lock();
+
 		mSelectRemembered.setVisibility(View.VISIBLE);
 		mSelectNotRemembered.setVisibility(View.VISIBLE);
+		
 		mSelectRemembered.requestFocus();
+		
 		updateCard(currentCard.answer);
 	}
 

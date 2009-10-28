@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/main_layout"
 	android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	<FrameLayout
+		android:id="@+id/card_whiteboard_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:layout_weight="5">
@@ -22,6 +24,7 @@
 	</FrameLayout>
 
 	<LinearLayout
+		android:id="@+id/remembered_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<Button
@@ -41,6 +44,7 @@
 	</LinearLayout>
 
 	<LinearLayout
+		android:id="@+id/chrono_buttons_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<Chronometer
