@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +19,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -39,7 +42,7 @@ import android.widget.ToggleButton;
 /**
  * Main activity for Ankidroid. Shows a card and controls to answer it.
  * 
- * @author Andrew Dubya, Nicolas Raoul
+ * @author Andrew Dubya, Nicolas Raoul, Edu Zamora
  * 
  */
 public class Ankidroid extends Activity implements Runnable
@@ -65,6 +68,11 @@ public class Ankidroid extends Activity implements Runnable
 	public static final int MENU_ABOUT = 2;
 
 	/**
+	 * Dialogs
+	 */
+	public static final int DIALOG_NO_SDCARD = 0;
+	
+	/**
 	 * Available options returning from another activity
 	 */
 	public static final int PICK_DECK_REQUEST = 0;
@@ -75,6 +83,8 @@ public class Ankidroid extends Activity implements Runnable
 	 * Variables to hold the state
 	 */
 	private ProgressDialog dialog;
+	
+	private boolean layoutInitialized;
 
 	private boolean deckSelected;
 
@@ -105,11 +115,11 @@ public class Ankidroid extends Activity implements Runnable
 
 	private Whiteboard mWhiteboard;
 	
-	private Hashtable<Integer,String> viewNames = new Hashtable<Integer,String>();
+	//private Hashtable<Integer,String> viewNames = new Hashtable<Integer,String>();
 	
-	private LinearLayout mMainLayout, mRememberedLayout, mChronoButtonsLayout;
+	//private LinearLayout mMainLayout, mRememberedLayout, mChronoButtonsLayout;
 	
-	private FrameLayout mCardWhiteboardLayout;
+	//private FrameLayout mCardWhiteboardLayout;
 	
 	// Handler for the flip toogle button, between the question and the answer
 	// of a card
@@ -118,6 +128,7 @@ public class Ankidroid extends Activity implements Runnable
 		//@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean showAnswer)
 		{
+			Log.i(TAG, "Flip card changed:");
 			if (showAnswer)
 				displayCardAnswer();
 			else
@@ -163,7 +174,7 @@ public class Ankidroid extends Activity implements Runnable
 		}
 	};
 
-	View.OnFocusChangeListener mOnFocusChangeHandler = new View.OnFocusChangeListener() {
+	/*View.OnFocusChangeListener mOnFocusChangeHandler = new View.OnFocusChangeListener() {
 		
 		@Override
 		public void onFocusChange(View v, boolean hasFocus) {
@@ -177,17 +188,19 @@ public class Ankidroid extends Activity implements Runnable
 			Log.i(TAG, "View " + viewName + event);
 			
 		}
-	};
+	};*/
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
 	{
 		super.onCreate(savedInstanceState);
-		Bundle extras = getIntent().getExtras();
-
-		initResourceValues();
-
 		Log.i(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+		Bundle extras = getIntent().getExtras();
+		
+		initResourceValues();
 
 		SharedPreferences preferences = restorePreferences();
 
@@ -211,10 +224,11 @@ public class Ankidroid extends Activity implements Runnable
 		if (deckFilename == null || !new File(deckFilename).exists())
 		{
 			// No previously selected deck.
-
+			Log.i(TAG, "onCreate - No previously selected deck or the previously selected deck is not available at the moment");
 			boolean generateSampleDeck = preferences.getBoolean("generateSampleDeck", true);
 			if (generateSampleDeck)
 			{
+				Log.i(TAG, "onCreate - Generating sample deck...");
 				// Load sample deck.
 				// This sample deck is for people who downloaded the app but
 				// don't know Anki.
@@ -235,18 +249,18 @@ public class Ankidroid extends Activity implements Runnable
 						if (!written)
 						{
 							openDeckPicker();
+							Log.i(TAG, "onCreate - The copy of country-capitals.anki to the sd card failed.");
 							return;
 						}
+						Log.i(TAG, "onCreate - The copy of country-capitals.anki to the sd card was sucessful.");
 					} catch (IOException e)
 					{
 						e.printStackTrace();
 					}
 				}
-				// Initialize the current view to the portrait layout.
-				initLayout(R.layout.flashcard_portrait);
 				// Load sample deck.
 				deckFilename = SAMPLE_DECK_FILENAME;
-				displayProgressDialogAndLoadDeck();
+				//displayProgressDialogAndLoadDeck();
 			} else
 			{
 				// Show the deck picker.
@@ -254,25 +268,35 @@ public class Ankidroid extends Activity implements Runnable
 			}
 		} else
 		{
-			// Initialize the current view to the portrait layout.
-			initLayout(R.layout.flashcard_portrait);
 			// Load deck.
-			displayProgressDialogAndLoadDeck();
+			//displayProgressDialogAndLoadDeck();
 		}
-		// Don't open database in onResume(). Is already opening elsewhere.
-		deckSelected = true;
-		
 	}
 
 	public void loadDeck(String deckFilename)
 	{
 		this.deckFilename = deckFilename;
+		
+		//If I'm not mistaken, the only possibility for deckFilename to be null here is if never existed a deck before 
+		//(so, the sd card was not attached the first time we opened the app and therefore country-capitals.anki wasn't created either)
+		if(isSdCardMounted() && deckFilename != null && new File(deckFilename).exists())
+		{
+			if(!layoutInitialized) 
+			{
+				// Initialize the current view to the portrait layout.
+				initLayout(R.layout.flashcard_portrait);
+				layoutInitialized = true;
+			}
+			Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
+			// Open the right deck.
+			AnkiDb.openDatabase(deckFilename);
+			Log.i(TAG, "Deck loaded!");
 
-		// Open the right deck.
-		AnkiDb.openDatabase(deckFilename);
-
-		// Start by getting the first card and displaying it.
-		nextCard();
+			// Don't open database in onResume(). Is already opening elsewhere.
+			deckSelected = true;
+			// Start by getting the first card and displaying it.
+			nextCard();
+		}
 	}
 
 	// Retrieve resource values.
@@ -285,7 +309,7 @@ public class Ankidroid extends Activity implements Runnable
 	// Set the content view to the one provided and initialize accessors.
 	public void initLayout(Integer layout)
 	{
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		Log.i(TAG, "initLayout - Beginning");
 		setContentView(layout);
 
 		mCard = (WebView) findViewById(R.id.flashcard);
@@ -295,10 +319,10 @@ public class Ankidroid extends Activity implements Runnable
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
-		mMainLayout = (LinearLayout) findViewById(R.id.main_layout);
-		mRememberedLayout = (LinearLayout) findViewById(R.id.remembered_layout);
-		mChronoButtonsLayout = (LinearLayout) findViewById(R.id.chrono_buttons_layout);
-		mCardWhiteboardLayout = (FrameLayout) findViewById(R.id.card_whiteboard_layout);
+		//mMainLayout = (LinearLayout) findViewById(R.id.main_layout);
+		//mRememberedLayout = (LinearLayout) findViewById(R.id.remembered_layout);
+		//mChronoButtonsLayout = (LinearLayout) findViewById(R.id.chrono_buttons_layout);
+		//mCardWhiteboardLayout = (FrameLayout) findViewById(R.id.card_whiteboard_layout);
 		
 		showOrHideControls();
 
@@ -308,9 +332,11 @@ public class Ankidroid extends Activity implements Runnable
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
 		
 		mCard.setFocusable(false);
-		
+
+		Log.i(TAG, "initLayout - Ending");
+
 		//For focus testing purposes
-		viewNames.put(new Integer(mCard.getId()), "mCard");
+		/*viewNames.put(new Integer(mCard.getId()), "mCard");
 		viewNames.put(new Integer(mSelectRemembered.getId()), "mSelectRemembered");
 		viewNames.put(new Integer(mSelectNotRemembered.getId()), "mSelectNotRemembered");
 		viewNames.put(new Integer(mTimer.getId()), "mTimer");
@@ -332,7 +358,7 @@ public class Ankidroid extends Activity implements Runnable
 		mMainLayout.setOnFocusChangeListener(mOnFocusChangeHandler);
 		mRememberedLayout.setOnFocusChangeListener(mOnFocusChangeHandler);
 		mChronoButtonsLayout.setOnFocusChangeListener(mOnFocusChangeHandler);
-		mCardWhiteboardLayout.setOnFocusChangeListener(mOnFocusChangeHandler);
+		mCardWhiteboardLayout.setOnFocusChangeListener(mOnFocusChangeHandler);*/
 	}
 
 	/** Creates the menu items */
@@ -366,6 +392,25 @@ public class Ankidroid extends Activity implements Runnable
 		return false;
 	}
 
+	protected Dialog onCreateDialog(int id)
+	{
+		Dialog dialog;
+		switch(id)
+		{
+		case DIALOG_NO_SDCARD:
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
+			builder.setPositiveButton("OK", null);
+			dialog = builder.create();
+			break;
+		
+		default:
+			dialog = null;
+		}
+		
+		return dialog;
+	}
+	
 	public void openDeckPicker()
 	{
 		deckSelected = false; // Make sure we open the database again in
@@ -400,13 +445,17 @@ public class Ankidroid extends Activity implements Runnable
 	@Override
 	public void onResume()
 	{
-		Log.i(TAG, "onResume() - " + System.currentTimeMillis());
+		Log.i(TAG, "onResume() - deckFilename = " + deckFilename + ", deckSelected = " + deckSelected);
 		super.onResume();
-		if (!deckSelected)
+		if (!deckSelected && isSdCardMounted())
 		{
-			AnkiDb.openDatabase(deckFilename);
-			deckSelected = true;
+			Log.i(TAG, "onResume() - No deck selected before");
+			//AnkiDb.openDatabase(deckFilename);
+			//loadDeck(deckFilename);
+			//deckSelected = true;
+			displayProgressDialogAndLoadDeck();
 		}
+		Log.i(TAG, "onResume() - Ending");
 	}
 
 	@Override
@@ -418,6 +467,7 @@ public class Ankidroid extends Activity implements Runnable
 			if (resultCode != RESULT_OK)
 			{
 				Log.e(TAG, "onActivityResult - Deck browser returned with error");
+				//if deckFilename
 				return;
 			}
 			if (intent == null)
@@ -437,7 +487,10 @@ public class Ankidroid extends Activity implements Runnable
 		} else if (requestCode == PREFERENCES_UPDATE)
 		{
 			restorePreferences();
-			showOrHideControls();
+			//If any deck has been selected (usually because there was no sd card attached, and therefore was impossible to select one) 
+			//the controls have not been initialized, so we don't have to try to show or hide them
+			if(deckSelected)
+				showOrHideControls();
 		}
 	}
 
@@ -459,6 +512,12 @@ public class Ankidroid extends Activity implements Runnable
 	private void displayProgressDialogAndLoadDeck()
 	{
 		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
+		if(!layoutInitialized) 
+		{
+			// Initialize the current view to the portrait layout.
+			initLayout(R.layout.flashcard_portrait);
+			layoutInitialized = true;
+		}
 		showControls(false);
 		dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
 		Thread thread = new Thread(this);
@@ -516,6 +575,7 @@ public class Ankidroid extends Activity implements Runnable
 	// Get the next card.
 	public void nextCard()
 	{
+		Log.i(TAG, "nextCard");
 		if (spacedRepetition)
 			currentCard = AnkiDb.Card.smallestIntervalCard();
 		else
@@ -532,6 +592,8 @@ public class Ankidroid extends Activity implements Runnable
 	// Set up the display for the current card.
 	public void displayCardQuestion()
 	{
+		Log.i(TAG, "displayCardQuestion");
+
 		if (currentCard == null)
 		{
 			nextCard();
@@ -543,6 +605,7 @@ public class Ankidroid extends Activity implements Runnable
 			updateCard("Unable to find a card!");
 		} else
 		{
+			Log.i(TAG, "displayCardQuestion - Hiding 'Remembered' and 'Not Remembered' buttons...");
 			mSelectRemembered.setVisibility(View.GONE);
 			mSelectNotRemembered.setVisibility(View.GONE);
 									
@@ -561,6 +624,8 @@ public class Ankidroid extends Activity implements Runnable
 	// Display the card answer.
 	public void displayCardAnswer()
 	{
+		Log.i(TAG, "displayCardAnswer");
+
 		mTimer.stop();
 		mWhiteboard.lock();
 
@@ -582,7 +647,7 @@ public class Ankidroid extends Activity implements Runnable
 			// Most probably the SD card is not mounted on the Android.
 			// Tell the user to turn off USB storage, which will automatically
 			// mount it on Android.
-			Toast.makeText(this, "Please turn off USB storage", Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "Please turn off USB storage", Toast.LENGTH_LONG).show();
 			return false;
 		}
 		OutputStream output = new FileOutputStream(destination);
@@ -632,6 +697,11 @@ public class Ankidroid extends Activity implements Runnable
 			dialog.dismiss();
 			showControls(true);
 			displayCardQuestion();
+
 		}
 	};
+	
+	private boolean isSdCardMounted() {
+		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+	}
 }

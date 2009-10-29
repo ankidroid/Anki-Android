@@ -10,10 +10,12 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -136,6 +138,16 @@ public class DeckPicker extends Activity implements Runnable
 			thread.start();
 		} else
 		{
+			//There is no sd card attached (wrap this code in a function called something like isSdMounted()
+			//and place it in a utils class
+			if(!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
+				builder.setPositiveButton("OK", null);
+				builder.show();
+			}
+			
 			HashMap<String, String> data = new HashMap<String, String>();
 			data.put("name", res.getString(R.string.deckpicker_nodeck));
 			data.put("new", "");
