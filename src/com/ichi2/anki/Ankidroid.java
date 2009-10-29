@@ -384,7 +384,6 @@ public class Ankidroid extends Activity implements Runnable
 			startActivityForResult(preferences, PREFERENCES_UPDATE);
 			return true;
 		case MENU_ABOUT:
-			Toast.makeText(this, deckFilename, Toast.LENGTH_LONG).show();
 			Intent about = new Intent(this, About.class);
 			startActivity(about);
 			return true;
