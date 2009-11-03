@@ -34,6 +34,8 @@ import android.widget.SimpleAdapter;
 public class DeckPicker extends Activity implements Runnable
 {
 
+	private static final String TAG = "Ankidroid";
+	
 	private DeckPicker mSelf;
 
 	private SimpleAdapter mDeckListAdapter;
@@ -64,6 +66,7 @@ public class DeckPicker extends Activity implements Runnable
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
 	{
+		Log.i(TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
 		mSelf = this;
 		String deckPath = getIntent().getStringExtra("com.ichi2.anki.Ankidroid.DeckPath");
@@ -98,12 +101,16 @@ public class DeckPicker extends Activity implements Runnable
 
 	public void onPause()
 	{
+		Log.i(TAG, "DeckPicker - onPause");
+
 		super.onPause();
 		waitForDeckLoaderThread();
 	}
 
 	private void populateDeckList(String location)
 	{
+		Log.i(TAG, "DeckPicker - populateDeckList");
+
 		Resources res = getResources();
 		int len = 0;
 		File[] fileList;
@@ -111,7 +118,7 @@ public class DeckPicker extends Activity implements Runnable
 
 		File dir = new File(location);
 		fileList = dir.listFiles(new AnkiFilter());
-
+		
 		if (dir.exists() && dir.isDirectory() && fileList != null)
 		{
 			len = fileList.length;
@@ -119,19 +126,29 @@ public class DeckPicker extends Activity implements Runnable
 		mFileList = fileList;
 		if (len > 0 && fileList != null)
 		{
+			Log.i(TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
 			for (int i = 0; i < len; i++)
 			{
 				String absPath = fileList[i].getAbsolutePath();
 
-				HashMap<String, String> data = new HashMap<String, String>();
-				data.put("name", fileList[i].getName().replaceAll(".anki", ""));
-				data.put("due", res.getString(R.string.deckpicker_loaddeck));
-				data.put("new", "");
-				data.put("mod", String.format("%f", Deck.getLastModified(absPath)));
-				data.put("filepath", absPath);
-				data.put("showProgress", "true");
+				Log.i(TAG, "DeckPicker - populateDeckList, file " + i + " :" + fileList[i].getName());
+				
+				try
+				{
+					HashMap<String, String> data = new HashMap<String, String>();
+					data.put("name", fileList[i].getName().replaceAll(".anki", ""));
+					data.put("due", res.getString(R.string.deckpicker_loaddeck));
+					data.put("new", "");
+					data.put("mod", String.format("%f", Deck.getLastModified(absPath)));
+					data.put("filepath", absPath);
+					data.put("showProgress", "true");
 
-				tree.add(data);
+					tree.add(data);
+				} catch (SQLException e) 
+				{
+					Log.w(TAG, "DeckPicker - populateDeckList, File " + fileList[i].getName() + " is not a real anki file");
+				}
+
 			}
 
 			Thread thread = new Thread(this);
@@ -161,6 +178,7 @@ public class DeckPicker extends Activity implements Runnable
 		mDeckList.clear();
 		mDeckList.addAll(tree);
 		mDeckListView.clearChoices();
+		Log.i(TAG, "DeckPicker - populateDeckList, Ending");
 	}
 
 	private static final class AnkiFilter implements FileFilter

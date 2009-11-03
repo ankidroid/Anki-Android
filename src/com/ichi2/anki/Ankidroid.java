@@ -11,8 +11,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
@@ -56,7 +58,7 @@ public class Ankidroid extends Activity implements Runnable
 	/**
 	 * Tag for logging messages
 	 */
-	private static String TAG = "Ankidroid";
+	private static final String TAG = "Ankidroid";
 
 	/**
 	 * Menus
@@ -85,6 +87,8 @@ public class Ankidroid extends Activity implements Runnable
 	private ProgressDialog dialog;
 	
 	private boolean layoutInitialized;
+	
+    private BroadcastReceiver mUnmountReceiver = null;
 
 	private boolean deckSelected;
 
@@ -197,6 +201,8 @@ public class Ankidroid extends Activity implements Runnable
 		Log.i(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+		registerExternalStorageListener();
 		
 		Bundle extras = getIntent().getExtras();
 		
@@ -428,6 +434,7 @@ public class Ankidroid extends Activity implements Runnable
 		{
 			outState.putString("deckFilename", deckFilename);
 		}
+		Log.i(TAG, "onSaveInstanceState - Ending");
 	}
 
 	@Override
@@ -703,4 +710,38 @@ public class Ankidroid extends Activity implements Runnable
 	private boolean isSdCardMounted() {
 		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 	}
+	
+    /**
+     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
+     * The intent will call closeExternalStorageFiles() if the external media
+     * is going to be ejected, so applications can clean up any files they have open.
+     */
+    public void registerExternalStorageListener() {
+        /*if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+                        //saveQueue(true);
+                        //mOneShot = true; // This makes us not save the state again later,
+                                         // which would be wrong because the song ids and
+                                         // card id might not match. 
+                        //closeExternalStorageFiles(intent.getData().getPath());
+                    } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                        ///mMediaMountedCount++;
+                        //mCardId = FileUtils.getFatVolumeId(intent.getData().getPath());
+                        //reloadQueue();
+                        //notifyChange(QUEUE_CHANGED);
+                        //notifyChange(META_CHANGED);
+                    }
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+            iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+            iFilter.addDataScheme("file");
+            registerReceiver(mUnmountReceiver, iFilter);
+        }*/
+    }
 }

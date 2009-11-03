@@ -332,6 +332,7 @@ public class Deck
 	public static float getLastModified(String deckPath)
 	{
 		float value;
+		//Log.i(TAG, "Deck - getLastModified from deck = " + deckPath);
 		AnkiDb.openDatabase(deckPath);
 		Cursor cursor = AnkiDb.database.rawQuery("SELECT modified" + " FROM decks" + " LIMIT 1", null);
 
