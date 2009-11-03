@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -115,7 +116,7 @@ public class DeckPicker extends Activity implements Runnable
 		int len = 0;
 		File[] fileList;
 		TreeSet<HashMap<String, String>> tree = new TreeSet<HashMap<String, String>>(new HashMapCompare());
-
+		
 		File dir = new File(location);
 		fileList = dir.listFiles(new AnkiFilter());
 		
@@ -143,12 +144,16 @@ public class DeckPicker extends Activity implements Runnable
 					data.put("filepath", absPath);
 					data.put("showProgress", "true");
 
-					tree.add(data);
+					//Log.i(TAG, data.get("name") + ", due = " + data.get("due") + ", new = " + data.get("new") + ", showProgress = " + data.get("showProgress") + ", filepath = " + data.get("filepath") + ", last modified = " + data.get("mod"));					
+					//Log.i(TAG, "Tree contains data = " + tree.contains(data));
+					//Log.i(TAG, "Object removed = " + tree.remove(data));
+					boolean result = tree.add(data);
+					//Log.i(TAG, "Result tree.add = " + result);
+					//logTree(tree);
 				} catch (SQLException e) 
 				{
 					Log.w(TAG, "DeckPicker - populateDeckList, File " + fileList[i].getName() + " is not a real anki file");
 				}
-
 			}
 
 			Thread thread = new Thread(this);
@@ -175,6 +180,7 @@ public class DeckPicker extends Activity implements Runnable
 			tree.add(data);
 		}
 
+		//logTree(tree);
 		mDeckList.clear();
 		mDeckList.addAll(tree);
 		mDeckListView.clearChoices();
@@ -195,10 +201,14 @@ public class DeckPicker extends Activity implements Runnable
 	private static final class HashMapCompare implements Comparator<HashMap<String, String>>
 	{
 		public int compare(HashMap<String, String> object1, HashMap<String, String> object2)
-		{
-			return (int) (Float.parseFloat(object2.get("mod")) - Float.parseFloat(object1.get("mod")));
+		{	
+			//Order by last modification date (last deck modified first)
+			if((Float.parseFloat(object2.get("mod")) - Float.parseFloat(object1.get("mod"))) != 0)
+				return (int) (Float.parseFloat(object2.get("mod")) - Float.parseFloat(object1.get("mod")));
+			//But if there are two decks with the same date of modification, order them in alphabetical order
+			else
+				return object1.get("filepath").compareToIgnoreCase(object2.get("filepath"));
 		}
-
 	}
 
 	private void handleDeckSelection(int id)
@@ -322,5 +332,15 @@ public class DeckPicker extends Activity implements Runnable
 			mDeckListAdapter.notifyDataSetChanged();
 		}
 	};
+	
+	/*private void logTree(TreeSet<HashMap<String, String>> tree)
+	{
+		Iterator<HashMap<String, String>> it = tree.iterator();
+		while(it.hasNext())
+		{
+			HashMap<String, String> map = it.next();
+			Log.i(TAG, "logTree - " + map.get("name") + ", due = " + map.get("due") + ", new = " + map.get("new") + ", showProgress = " + map.get("showProgress") + ", filepath = " + map.get("filepath") + ", last modified = " + map.get("mod"));
+		}
+	}*/
 
 }
