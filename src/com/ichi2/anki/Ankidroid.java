@@ -203,12 +203,12 @@ public class Ankidroid extends Activity implements Runnable
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		registerExternalStorageListener();
-		
-		Bundle extras = getIntent().getExtras();
-		
 		initResourceValues();
 
+		Bundle extras = getIntent().getExtras();
 		SharedPreferences preferences = restorePreferences();
+		initLayout(R.layout.flashcard_portrait);
+		//layoutInitialized = true;
 
 		if (extras != null && extras.getString(OPT_DB) != null)
 		{
@@ -279,40 +279,7 @@ public class Ankidroid extends Activity implements Runnable
 		}
 	}
 
-	public void loadDeck(String deckFilename)
-	{
-		Log.i(TAG, "loadDeck - deckFilename = " + deckFilename);
-		this.deckFilename = deckFilename;
-		
-		//If I'm not mistaken, the only possibility for deckFilename to be null here is if never existed a deck before 
-		//(so, the sd card was not attached the first time we opened the app and therefore country-capitals.anki wasn't created either)
-		if(isSdCardMounted() && deckFilename != null && new File(deckFilename).exists())
-		{
-			if(!layoutInitialized) 
-			{
-				// Initialize the current view to the portrait layout.
-				initLayout(R.layout.flashcard_portrait);
-				layoutInitialized = true;
-			}
-			Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
-			// Open the right deck.
-			try
-			{
-				AnkiDb.openDatabase(deckFilename);
-				Log.i(TAG, "Deck loaded!");
-
-				// Don't open database in onResume(). Is already opening elsewhere.
-				deckSelected = true;
-				// Start by getting the first card and displaying it.
-				nextCard();
-			} catch (SQLException e)
-			{
-				Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
-			}
-
-		}
-	}
-
+	
 	// Retrieve resource values.
 	public void initResourceValues()
 	{
@@ -338,7 +305,7 @@ public class Ankidroid extends Activity implements Runnable
 		//mChronoButtonsLayout = (LinearLayout) findViewById(R.id.chrono_buttons_layout);
 		//mCardWhiteboardLayout = (FrameLayout) findViewById(R.id.card_whiteboard_layout);
 		
-		showOrHideControls();
+		showControls(false);
 
 		mSelectRemembered.setOnClickListener(mSelectRememberedHandler);
 		mSelectNotRemembered.setOnClickListener(mSelectNotRememberedHandler);
@@ -476,11 +443,80 @@ public class Ankidroid extends Activity implements Runnable
 		} else
 		{
 			deckSelected = false;
+			displaySdError();
 		}
 
 		Log.i(TAG, "onResume() - Ending");
 	}
 
+	private void displayProgressDialogAndLoadDeck()
+	{
+		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
+		/*if(!layoutInitialized) 
+		{
+			// Initialize the current view to the portrait layout.
+			initLayout(R.layout.flashcard_portrait);
+			layoutInitialized = true;
+		}*/
+		showControls(false);
+		dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
+		Thread thread = new Thread(this);
+		thread.start();
+	}
+
+	public void run()
+	{
+		Log.i(TAG, "Ankidroid loader thread - run");
+		loadDeck(deckFilename);
+		if(deckSelected)
+		{
+			handler.sendEmptyMessage(0);
+		} else
+		{
+			//Dismiss dialog and show something to indicate to the user that a deck has not been loaded
+			dialog.dismiss();
+			
+		}
+	}
+
+	public void loadDeck(String deckFilename)
+	{
+		Log.i(TAG, "loadDeck - deckFilename = " + deckFilename);
+		this.deckFilename = deckFilename;
+		
+		//If I'm not mistaken, the only possibility for deckFilename to be null here is if never existed a deck before 
+		//(so, the sd card was not attached the first time we opened the app and therefore country-capitals.anki wasn't created either)
+		if(isSdCardMounted() && deckFilename != null && new File(deckFilename).exists())
+		{
+
+			Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
+			// Open the right deck.
+			try
+			{
+				AnkiDb.openDatabase(deckFilename);
+				// Don't open database in onResume(). Is already opening elsewhere.
+				deckSelected = true;
+				// Start by getting the first card and displaying it.
+				nextCard();
+				Log.i(TAG, "Deck loaded!");
+			} catch (SQLException e)
+			{
+				Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+			}
+
+		}
+	}
+
+	private Handler handler = new Handler()
+	{
+		public void handleMessage(Message msg)
+		{
+			dialog.dismiss();
+			showControls(true);
+			displayCardQuestion();
+		}
+	};
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
@@ -537,27 +573,12 @@ public class Ankidroid extends Activity implements Runnable
 	  } 
 	  mWhiteboard.rotate(extraHeight);
 	}
-
 	
-	private void displayProgressDialogAndLoadDeck()
-	{
-		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
-		if(!layoutInitialized) 
-		{
-			// Initialize the current view to the portrait layout.
-			initLayout(R.layout.flashcard_portrait);
-			layoutInitialized = true;
-		}
-		showControls(false);
-		dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
-		Thread thread = new Thread(this);
-		thread.start();
-	}
-
+	
 	private void showControls(boolean show)
 	{
-		if(layoutInitialized)
-		{
+		//if(layoutInitialized)
+		//{
 			if (show)
 			{
 				mCard.setVisibility(View.VISIBLE);
@@ -575,7 +596,7 @@ public class Ankidroid extends Activity implements Runnable
 				mToggleWhiteboard.setVisibility(View.GONE);
 				mWhiteboard.setVisibility(View.GONE);
 			}
-		}
+		//}
 
 	}
 
@@ -719,29 +740,7 @@ public class Ankidroid extends Activity implements Runnable
 		editor.commit();
 	}
 
-	public void run()
-	{
-		Log.i(TAG, "Ankidroid loader thread - run");
-		loadDeck(deckFilename);
-		if(deckSelected)
-		{
-			handler.sendEmptyMessage(0);
-		} else
-		{
-			//Dismiss dialog and show something to indicate to the user that a deck has not been loaded
-			dialog.dismiss();
-		}
-	}
 
-	private Handler handler = new Handler()
-	{
-		public void handleMessage(Message msg)
-		{
-			dialog.dismiss();
-			showControls(true);
-			displayCardQuestion();
-		}
-	};
 	
 	private boolean isSdCardMounted() {
 		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
@@ -759,19 +758,9 @@ public class Ankidroid extends Activity implements Runnable
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-                        //saveQueue(true);
-                        //mOneShot = true; // This makes us not save the state again later,
-                                         // which would be wrong because the song ids and
-                                         // card id might not match. 
-                        //closeExternalStorageFiles(intent.getData().getPath());
                     	Log.i(TAG, "mUnmountReceiver - Action = Media Eject");
                     	closeExternalStorageFiles();
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                        ///mMediaMountedCount++;
-                        //mCardId = FileUtils.getFatVolumeId(intent.getData().getPath());
-                        //reloadQueue();
-                        //notifyChange(QUEUE_CHANGED);
-                        //notifyChange(META_CHANGED);
                     	Log.i(TAG, "mUnmountReceiver - Action = Media Mounted");
                     	hideSdError();
                     	onResume();
@@ -806,8 +795,8 @@ public class Ankidroid extends Activity implements Runnable
     
     private void showSdCardElements(boolean show)
     {
-    	if(layoutInitialized)
-    	{
+    	//if(layoutInitialized)
+    	//{
         	LinearLayout layout = (LinearLayout) findViewById(R.id.sd_layout);
         	TextView tv = (TextView) findViewById(R.id.sd_message);
         	ImageView image = (ImageView) findViewById(R.id.sd_icon);
@@ -822,7 +811,7 @@ public class Ankidroid extends Activity implements Runnable
         		tv.setVisibility(View.GONE);
         		image.setVisibility(View.GONE);
         	}
-    	}
+    	//}
 
     }
 }
