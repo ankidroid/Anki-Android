@@ -5,6 +5,9 @@
 	android:layout_width="fill_parent" 
 	android:orientation="vertical">
 	
+	<include layout="@layout/sdcard_error" />
+	
+	
 	<TextView 
 		android:id="@+id/DeckPickerName" 
 		android:layout_height="wrap_content" 

@@ -5,20 +5,24 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -54,6 +58,8 @@ public class DeckPicker extends Activity implements Runnable
 	private boolean mIsFinished = true;
 
 	private boolean mDeckIsSelected = false;
+		
+	private BroadcastReceiver mUnmountReceiver = null;
 
 	AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener()
 	{
@@ -69,8 +75,12 @@ public class DeckPicker extends Activity implements Runnable
 	{
 		Log.i(TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
+		
+		registerExternalStorageListener();
+		
 		mSelf = this;
-		String deckPath = getIntent().getStringExtra("com.ichi2.anki.Ankidroid.DeckPath");
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		String deckPath = preferences.getString("deckPath", "/sdcard");
 		setContentView(R.layout.main);
 
 		mDeckList = new ArrayList<HashMap<String, String>>();
@@ -160,10 +170,13 @@ public class DeckPicker extends Activity implements Runnable
 			thread.start();
 		} else
 		{
+			Log.i(TAG, "populateDeckList - No decks found.");
 			//There is no sd card attached (wrap this code in a function called something like isSdMounted()
 			//and place it in a utils class
 			if(!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
 			{
+				Log.i(TAG, "populateDeckList - No sd card.");
+
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
 				builder.setPositiveButton("OK", null);
@@ -184,6 +197,7 @@ public class DeckPicker extends Activity implements Runnable
 		mDeckList.clear();
 		mDeckList.addAll(tree);
 		mDeckListView.clearChoices();
+		mDeckListAdapter.notifyDataSetChanged();  
 		Log.i(TAG, "DeckPicker - populateDeckList, Ending");
 	}
 
@@ -235,6 +249,7 @@ public class DeckPicker extends Activity implements Runnable
 	private void waitForDeckLoaderThread()
 	{
 		mDeckIsSelected = true;
+		Log.i(TAG, "DeckPicker - waitForDeckLoaderThread(), mDeckIsSelected set to true");
 		mLock.lock();
 		try
 		{
@@ -251,6 +266,7 @@ public class DeckPicker extends Activity implements Runnable
 
 	public void run()
 	{
+		Log.i(TAG, "Thread run - Beginning");
 		int len = 0;
 		if (mFileList != null)
 			len = mFileList.length;
@@ -260,14 +276,18 @@ public class DeckPicker extends Activity implements Runnable
 			mLock.lock();
 			try
 			{
+				Log.i(TAG, "Thread run - Inside lock");
+
 				mIsFinished = false;
 				for (int i = 0; i < len; i++)
 				{
 
 					// Don't load any more decks if one has already been
 					// selected.
+					Log.i(TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
 					if (mDeckIsSelected)
 						break;
+					
 
 					String path = mFileList[i].getAbsolutePath();
 					Deck deck;
@@ -330,9 +350,56 @@ public class DeckPicker extends Activity implements Runnable
 			}
 
 			mDeckListAdapter.notifyDataSetChanged();
+			Log.i(TAG, "DeckPicker - mDeckList notified of changes");
 		}
 	};
 	
+	
+    /**
+     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
+     * The intent will call closeExternalStorageFiles() if the external media
+     * is going to be ejected, so applications can clean up any files they have open.
+     */
+    public void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
+                        //saveQueue(true);
+                        //mOneShot = true; // This makes us not save the state again later,
+                                         // which would be wrong because the song ids and
+                                         // card id might not match. 
+                        //closeExternalStorageFiles(intent.getData().getPath());
+                    	Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
+                    	//closeExternalStorageFiles();
+                		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                		String deckPath = preferences.getString("deckPath", "/sdcard");
+                    	populateDeckList(deckPath);
+                    } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                        ///mMediaMountedCount++;
+                        //mCardId = FileUtils.getFatVolumeId(intent.getData().getPath());
+                        //reloadQueue();
+                        //notifyChange(QUEUE_CHANGED);
+                        //notifyChange(META_CHANGED);
+                    	Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
+                    	//hideSdError();
+                    	//onResume();
+                		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                		String deckPath = preferences.getString("deckPath", "/sdcard");
+                		mDeckIsSelected = false;
+                    	populateDeckList(deckPath);
+                    }
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+            iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+            iFilter.addDataScheme("file");
+            registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
 	/*private void logTree(TreeSet<HashMap<String, String>> tree)
 	{
 		Iterator<HashMap<String, String>> it = tree.iterator();

@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Hashtable;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,9 +35,9 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 /**
@@ -118,6 +117,7 @@ public class Ankidroid extends Activity implements Runnable
 	private Chronometer mTimer;
 
 	private Whiteboard mWhiteboard;
+	
 	
 	//private Hashtable<Integer,String> viewNames = new Hashtable<Integer,String>();
 	
@@ -281,6 +281,7 @@ public class Ankidroid extends Activity implements Runnable
 
 	public void loadDeck(String deckFilename)
 	{
+		Log.i(TAG, "loadDeck - deckFilename = " + deckFilename);
 		this.deckFilename = deckFilename;
 		
 		//If I'm not mistaken, the only possibility for deckFilename to be null here is if never existed a deck before 
@@ -295,13 +296,20 @@ public class Ankidroid extends Activity implements Runnable
 			}
 			Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
 			// Open the right deck.
-			AnkiDb.openDatabase(deckFilename);
-			Log.i(TAG, "Deck loaded!");
+			try
+			{
+				AnkiDb.openDatabase(deckFilename);
+				Log.i(TAG, "Deck loaded!");
 
-			// Don't open database in onResume(). Is already opening elsewhere.
-			deckSelected = true;
-			// Start by getting the first card and displaying it.
-			nextCard();
+				// Don't open database in onResume(). Is already opening elsewhere.
+				deckSelected = true;
+				// Start by getting the first card and displaying it.
+				nextCard();
+			} catch (SQLException e)
+			{
+				Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+			}
+
 		}
 	}
 
@@ -418,11 +426,13 @@ public class Ankidroid extends Activity implements Runnable
 	
 	public void openDeckPicker()
 	{
+		Log.i(TAG, "openDeckPicker");
 		deckSelected = false; // Make sure we open the database again in
 							  // onResume() if user pressed "back".
 		Intent decksPicker = new Intent(this, DeckPicker.class);
 		decksPicker.putExtra("com.ichi2.anki.Ankidroid.DeckPath", deckPath);
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
+		Log.i(TAG, "openDeckPicker - Ending");
 	}
 
 	@Override
@@ -453,14 +463,21 @@ public class Ankidroid extends Activity implements Runnable
 	{
 		Log.i(TAG, "onResume() - deckFilename = " + deckFilename + ", deckSelected = " + deckSelected);
 		super.onResume();
-		if (!deckSelected && isSdCardMounted())
+		if(isSdCardMounted())
 		{
-			Log.i(TAG, "onResume() - No deck selected before");
-			//AnkiDb.openDatabase(deckFilename);
-			//loadDeck(deckFilename);
-			//deckSelected = true;
-			displayProgressDialogAndLoadDeck();
+			if (!deckSelected)
+			{
+				Log.i(TAG, "onResume() - No deck selected before");
+				//AnkiDb.openDatabase(deckFilename);
+				//loadDeck(deckFilename);
+				//deckSelected = true;
+				displayProgressDialogAndLoadDeck();
+			}
+		} else
+		{
+			deckSelected = false;
 		}
+
 		Log.i(TAG, "onResume() - Ending");
 	}
 
@@ -495,7 +512,7 @@ public class Ankidroid extends Activity implements Runnable
 			restorePreferences();
 			//If any deck has been selected (usually because there was no sd card attached, and therefore was impossible to select one) 
 			//the controls have not been initialized, so we don't have to try to show or hide them
-			if(deckSelected)
+			if(deckSelected && isSdCardMounted())
 				showOrHideControls();
 		}
 	}
@@ -532,23 +549,27 @@ public class Ankidroid extends Activity implements Runnable
 
 	private void showControls(boolean show)
 	{
-		if (show)
+		if(layoutInitialized)
 		{
-			mCard.setVisibility(View.VISIBLE);
-			mSelectRemembered.setVisibility(View.VISIBLE);
-			mSelectNotRemembered.setVisibility(View.VISIBLE);
-			mFlipCard.setVisibility(View.VISIBLE);
-			showOrHideControls();
-		} else
-		{
-			mCard.setVisibility(View.GONE);
-			mSelectRemembered.setVisibility(View.GONE);
-			mSelectNotRemembered.setVisibility(View.GONE);
-			mFlipCard.setVisibility(View.GONE);
-			mTimer.setVisibility(View.GONE);
-			mToggleWhiteboard.setVisibility(View.GONE);
-			mWhiteboard.setVisibility(View.GONE);
+			if (show)
+			{
+				mCard.setVisibility(View.VISIBLE);
+				mSelectRemembered.setVisibility(View.VISIBLE);
+				mSelectNotRemembered.setVisibility(View.VISIBLE);
+				mFlipCard.setVisibility(View.VISIBLE);
+				showOrHideControls();
+			} else
+			{
+				mCard.setVisibility(View.GONE);
+				mSelectRemembered.setVisibility(View.GONE);
+				mSelectNotRemembered.setVisibility(View.GONE);
+				mFlipCard.setVisibility(View.GONE);
+				mTimer.setVisibility(View.GONE);
+				mToggleWhiteboard.setVisibility(View.GONE);
+				mWhiteboard.setVisibility(View.GONE);
+			}
 		}
+
 	}
 
 	/**
@@ -692,8 +713,16 @@ public class Ankidroid extends Activity implements Runnable
 
 	public void run()
 	{
+		Log.i(TAG, "Ankidroid loader thread - run");
 		loadDeck(deckFilename);
-		handler.sendEmptyMessage(0);
+		//if(deckSelected)
+		//{
+			handler.sendEmptyMessage(0);
+		//} else
+		//{
+			//Dismiss dialog and show something to indicate to the user that a deck has not been loaded
+			//dialog.dismiss();
+		//}
 	}
 
 	private Handler handler = new Handler()
@@ -703,7 +732,6 @@ public class Ankidroid extends Activity implements Runnable
 			dialog.dismiss();
 			showControls(true);
 			displayCardQuestion();
-
 		}
 	};
 	
@@ -717,7 +745,7 @@ public class Ankidroid extends Activity implements Runnable
      * is going to be ejected, so applications can clean up any files they have open.
      */
     public void registerExternalStorageListener() {
-        /*if (mUnmountReceiver == null) {
+        if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -728,12 +756,17 @@ public class Ankidroid extends Activity implements Runnable
                                          // which would be wrong because the song ids and
                                          // card id might not match. 
                         //closeExternalStorageFiles(intent.getData().getPath());
+                    	Log.i(TAG, "mUnmountReceiver - Action = Media Eject");
+                    	closeExternalStorageFiles();
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                         ///mMediaMountedCount++;
                         //mCardId = FileUtils.getFatVolumeId(intent.getData().getPath());
                         //reloadQueue();
                         //notifyChange(QUEUE_CHANGED);
                         //notifyChange(META_CHANGED);
+                    	Log.i(TAG, "mUnmountReceiver - Action = Media Mounted");
+                    	hideSdError();
+                    	onResume();
                     }
                 }
             };
@@ -742,6 +775,46 @@ public class Ankidroid extends Activity implements Runnable
             iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
             iFilter.addDataScheme("file");
             registerReceiver(mUnmountReceiver, iFilter);
-        }*/
+        }
+    }
+    
+    private void closeExternalStorageFiles()
+    {
+    	AnkiDb.closeDatabase();
+    	displaySdError();
+    }
+    
+    private void displaySdError() 
+    {
+    	showControls(false);
+    	showSdCardElements(true);
+    }
+    
+    private void hideSdError()
+    {
+    	showControls(true);
+    	showSdCardElements(false);
+    }
+    
+    private void showSdCardElements(boolean show)
+    {
+    	if(layoutInitialized)
+    	{
+        	LinearLayout layout = (LinearLayout) findViewById(R.id.sd_layout);
+        	TextView tv = (TextView) findViewById(R.id.sd_message);
+        	ImageView image = (ImageView) findViewById(R.id.sd_icon);
+        	if(show)
+        	{
+        		layout.setVisibility(View.VISIBLE);
+        		tv.setVisibility(View.VISIBLE);
+        		image.setVisibility(View.VISIBLE);
+        	} else
+        	{
+        		layout.setVisibility(View.GONE);
+        		tv.setVisibility(View.GONE);
+        		image.setVisibility(View.GONE);
+        	}
+    	}
+
     }
 }
