@@ -520,6 +520,13 @@ public class Ankidroid extends Activity implements Runnable
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 	  super.onConfigurationChanged(newConfig);
+	  
+	  LinearLayout sdLayout = (LinearLayout) findViewById(R.id.sd_layout);
+	  if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) 
+		  sdLayout.setPadding(0, 50, 0, 0);
+	  else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
+		  sdLayout.setPadding(0, 100, 0, 0);
+		  
 	  //extra height that the Whiteboard should have to be able to write in all its surface either on the question or on the answer
 	  int extraHeight = 0;
 	  if(mSelectRemembered.isShown() && mSelectNotRemembered.isShown())
@@ -644,6 +651,7 @@ public class Ankidroid extends Activity implements Runnable
 
 	public void updateCard(String content)
 	{
+		Log.i(TAG, "updateCard");
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
 	}
@@ -715,14 +723,14 @@ public class Ankidroid extends Activity implements Runnable
 	{
 		Log.i(TAG, "Ankidroid loader thread - run");
 		loadDeck(deckFilename);
-		//if(deckSelected)
-		//{
+		if(deckSelected)
+		{
 			handler.sendEmptyMessage(0);
-		//} else
-		//{
+		} else
+		{
 			//Dismiss dialog and show something to indicate to the user that a deck has not been loaded
-			//dialog.dismiss();
-		//}
+			dialog.dismiss();
+		}
 	}
 
 	private Handler handler = new Handler()

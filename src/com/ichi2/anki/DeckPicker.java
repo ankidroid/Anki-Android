@@ -176,7 +176,8 @@ public class DeckPicker extends Activity implements Runnable
 			if(!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
 			{
 				Log.i(TAG, "populateDeckList - No sd card.");
-
+				setTitle(R.string.deckpicker_title_nosdcard);
+				
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
 				builder.setPositiveButton("OK", null);
@@ -389,6 +390,7 @@ public class DeckPicker extends Activity implements Runnable
                 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 		String deckPath = preferences.getString("deckPath", "/sdcard");
                 		mDeckIsSelected = false;
+                		setTitle(R.string.deckpicker_title);
                     	populateDeckList(deckPath);
                     }
                 }
