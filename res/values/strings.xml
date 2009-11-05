@@ -18,4 +18,6 @@
 <string name="deckpicker_new">%d new today</string>
 <string name="deckpicker_loaddeck">Loading deck...</string>
 <string name="deckpicker_nodeck">No decks found.</string>
+
+<string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 </resources>
