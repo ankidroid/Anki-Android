@@ -8,6 +8,8 @@
 <string name="show_answer">Show Answer</string>
 <string name="show_question">Show Question</string>
 <string name="card_hint">Flashcard</string>
+<string name="deck_not_loaded">No deck loaded.</string>
+<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your sd card.</string>
 
 <color name="wb_fg_color">#B00000FF</color>
 <color name="wb_bg_color">#0000</color>
