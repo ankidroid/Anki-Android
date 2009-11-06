@@ -11,6 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +41,11 @@ public class DeckPicker extends Activity implements Runnable
 {
 
 	private static final String TAG = "Ankidroid";
+	
+	/**
+	 * Dialogs
+	 */
+	public static final int DIALOG_NO_SDCARD = 0;
 	
 	private DeckPicker mSelf;
 
@@ -118,6 +124,25 @@ public class DeckPicker extends Activity implements Runnable
 		waitForDeckLoaderThread();
 	}
 
+	protected Dialog onCreateDialog(int id)
+	{
+		Dialog dialog;
+		switch(id)
+		{
+		case DIALOG_NO_SDCARD:
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
+			builder.setPositiveButton("OK", null);
+			dialog = builder.create();
+			break;
+		
+		default:
+			dialog = null;
+		}
+		
+		return dialog;
+	}
+	
 	private void populateDeckList(String location)
 	{
 		Log.i(TAG, "DeckPicker - populateDeckList");
@@ -177,11 +202,7 @@ public class DeckPicker extends Activity implements Runnable
 			{
 				Log.i(TAG, "populateDeckList - No sd card.");
 				setTitle(R.string.deckpicker_title_nosdcard);
-				
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
-				builder.setPositiveButton("OK", null);
-				builder.show();
+				showDialog(DIALOG_NO_SDCARD);
 			}
 			
 			HashMap<String, String> data = new HashMap<String, String>();
@@ -402,6 +423,14 @@ public class DeckPicker extends Activity implements Runnable
             registerReceiver(mUnmountReceiver, iFilter);
         }
     }
+    
+    public void onStop()
+    {
+    	super.onStop();
+    	Log.i(TAG, "DeckPicker - onStop()");
+    	unregisterReceiver(mUnmountReceiver);
+    }
+    
 	/*private void logTree(TreeSet<HashMap<String, String>> tree)
 	{
 		Iterator<HashMap<String, String>> it = tree.iterator();
