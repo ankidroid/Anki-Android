@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,6 +16,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,7 +29,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -68,6 +66,15 @@ public class Ankidroid extends Activity implements Runnable
 
 	public static final int MENU_ABOUT = 2;
 
+	
+	/**
+	 * Possible outputs trying to load a deck
+	 */
+	public static final int DECK_LOADED = 0;
+	
+	public static final int DECK_NOT_LOADED = 1;
+	
+	public static final int DECK_EMPTY = 2;
 	
 	/**
 	 * Available options returning from another activity
@@ -389,7 +396,7 @@ public class Ankidroid extends Activity implements Runnable
 				if(!new File(deckFilename).exists()) Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + "does not exist.");
 				
 				//Show message informing that no deck has been loaded
-				displayNoDeckError();
+				displayDeckNotLoaded();
 			}
 		} else
 		{
@@ -404,18 +411,10 @@ public class Ankidroid extends Activity implements Runnable
 	public void run()
 	{
 		Log.i(TAG, "Ankidroid loader thread - run");
-		if(loadDeck(deckFilename))
-		{
-			handler.sendEmptyMessage(0);
-		} else
-		{
-			//Dismiss dialog and show something to indicate to the user that a deck has not been loaded
-			dialog.dismiss();
-			displayNoDeckError();
-		}
+		handler.sendEmptyMessage(loadDeck(deckFilename));
 	}
 
-	public boolean loadDeck(String deckFilename)
+	public int loadDeck(String deckFilename)
 	{
 		Log.i(TAG, "loadDeck - deckFilename = " + deckFilename);
 		this.deckFilename = deckFilename;
@@ -428,21 +427,49 @@ public class Ankidroid extends Activity implements Runnable
 			// Start by getting the first card and displaying it.
 			nextCard();
 			Log.i(TAG, "Deck loaded!");
-			return true;
+			return DECK_LOADED;
 		} catch (SQLException e)
 		{
 			Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
-			return false;
+			//Dismiss dialog and show something to indicate to the user that a deck has not been loaded
+			//dialog.dismiss();
+			//displayDeckNotLoaded();
+			return DECK_NOT_LOADED;
+		} catch (CursorIndexOutOfBoundsException e)
+		{
+			Log.i(TAG, "The deck has no cards = " + e.getMessage());
+			//dialog.dismiss();
+			//displayNoCardsInDeck();
+			return DECK_EMPTY;
 		}
 	}
+
 
 	private Handler handler = new Handler()
 	{
 		public void handleMessage(Message msg)
 		{
-			dialog.dismiss();
-			showControls(true);
-			displayCardQuestion();
+			switch(msg.what)
+			{
+				case DECK_LOADED:
+					dialog.dismiss();
+					showControls(true);
+					displayCardQuestion();
+					break;
+					
+				case DECK_NOT_LOADED:
+					dialog.dismiss();
+					displayDeckNotLoaded();
+					break;
+				
+				case DECK_EMPTY:
+					dialog.dismiss();
+					displayNoCardsInDeck();
+					break;
+				
+				default:
+					dialog.dismiss();
+			}
 		}
 	};
 	
@@ -516,7 +543,7 @@ public class Ankidroid extends Activity implements Runnable
 			mSelectNotRemembered.setVisibility(View.VISIBLE);
 			mFlipCard.setVisibility(View.VISIBLE);
 			showOrHideControls();
-			showNoDeckElements(false);
+			hideDeckErrors();
 		} else
 		{
 			mCard.setVisibility(View.GONE);
@@ -715,7 +742,7 @@ public class Ankidroid extends Activity implements Runnable
     private void displaySdError() 
     {
     	showControls(false);
-    	showNoDeckElements(false);
+    	hideDeckErrors();
     	showSdCardElements(true);
     }
     
@@ -742,26 +769,39 @@ public class Ankidroid extends Activity implements Runnable
     	}
     }
     
-    private void displayNoDeckError()
+    private void displayDeckNotLoaded()
     {
-    	showNoDeckElements(true);
+    	LinearLayout layout = (LinearLayout) findViewById(R.id.deck_error_layout);
+    	TextView message = (TextView) findViewById(R.id.deck_message);
+    	TextView detail = (TextView) findViewById(R.id.deck_message_detail);
+     		
+		message.setText(R.string.deck_not_loaded);
+		detail.setText(R.string.deck_not_loaded_detail);
+		layout.setVisibility(View.VISIBLE);
+		message.setVisibility(View.VISIBLE);
+		detail.setVisibility(View.VISIBLE);
     }
     
-    private void showNoDeckElements(boolean show)
+    private void hideDeckErrors()
     {
-    	LinearLayout layout = (LinearLayout) findViewById(R.id.nodeck_layout);
-    	TextView message = (TextView) findViewById(R.id.nodeck_message);
-    	TextView detail = (TextView) findViewById(R.id.nodeck_message_detail);
-    	if(show)
-    	{        		
-    		layout.setVisibility(View.VISIBLE);
-    		message.setVisibility(View.VISIBLE);
-    		detail.setVisibility(View.VISIBLE);
-    	} else
-    	{
-    		layout.setVisibility(View.GONE);
-    		message.setVisibility(View.GONE);
-    		detail.setVisibility(View.VISIBLE);
-    	}
+    	LinearLayout layout = (LinearLayout) findViewById(R.id.deck_error_layout);
+    	TextView message = (TextView) findViewById(R.id.deck_message);
+    	TextView detail = (TextView) findViewById(R.id.deck_message_detail);
+
+		layout.setVisibility(View.GONE);
+		message.setVisibility(View.GONE);
+		detail.setVisibility(View.GONE);
     }
+    
+	private void displayNoCardsInDeck() 
+	{
+    	LinearLayout layout = (LinearLayout) findViewById(R.id.deck_error_layout);
+    	TextView message = (TextView) findViewById(R.id.deck_message);
+    	TextView detail = (TextView) findViewById(R.id.deck_message_detail);
+     		
+		message.setText(R.string.deck_empty);
+		layout.setVisibility(View.VISIBLE);
+		message.setVisibility(View.VISIBLE);
+		detail.setVisibility(View.GONE);
+	}
 }
