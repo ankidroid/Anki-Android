@@ -375,6 +375,12 @@ public class Ankidroid extends Activity implements Runnable
 		Log.i(TAG, "onResume() - Ending");
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+    	unregisterReceiver(mUnmountReceiver);
+	}
+	
 	private void displayProgressDialogAndLoadDeck()
 	{
 		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
@@ -392,8 +398,7 @@ public class Ankidroid extends Activity implements Runnable
 			{
 
 				if(deckFilename == null) Log.i(TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
-
-				if(!new File(deckFilename).exists()) Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + "does not exist.");
+				else if(!new File(deckFilename).exists()) Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + "does not exist.");
 				
 				//Show message informing that no deck has been loaded
 				displayDeckNotLoaded();
@@ -431,15 +436,10 @@ public class Ankidroid extends Activity implements Runnable
 		} catch (SQLException e)
 		{
 			Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
-			//Dismiss dialog and show something to indicate to the user that a deck has not been loaded
-			//dialog.dismiss();
-			//displayDeckNotLoaded();
 			return DECK_NOT_LOADED;
 		} catch (CursorIndexOutOfBoundsException e)
 		{
-			Log.i(TAG, "The deck has no cards = " + e.getMessage());
-			//dialog.dismiss();
-			//displayNoCardsInDeck();
+			Log.i(TAG, "The deck has no cards = " + e.getMessage());;
 			return DECK_EMPTY;
 		}
 	}
@@ -448,27 +448,35 @@ public class Ankidroid extends Activity implements Runnable
 	private Handler handler = new Handler()
 	{
 		public void handleMessage(Message msg)
-		{
+		{	
+			//This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
+			if(dialog.isShowing()) 
+			{
+				try
+				{
+					dialog.dismiss();
+				} catch(Exception e)
+				{
+					Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
+				}
+				
+			}
+			
 			switch(msg.what)
 			{
+
 				case DECK_LOADED:
-					dialog.dismiss();
 					showControls(true);
 					displayCardQuestion();
 					break;
 					
 				case DECK_NOT_LOADED:
-					dialog.dismiss();
 					displayDeckNotLoaded();
 					break;
 				
 				case DECK_EMPTY:
-					dialog.dismiss();
 					displayNoCardsInDeck();
 					break;
-				
-				default:
-					dialog.dismiss();
 			}
 		}
 	};
@@ -514,6 +522,8 @@ public class Ankidroid extends Activity implements Runnable
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 	  super.onConfigurationChanged(newConfig);
+	  
+	  Log.i(TAG, "onConfigurationChanged");
 	  
 	  LinearLayout sdLayout = (LinearLayout) findViewById(R.id.sd_layout);
 	  if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) 
@@ -753,6 +763,8 @@ public class Ankidroid extends Activity implements Runnable
     
     private void showSdCardElements(boolean show)
     {
+    	Log.i(TAG, "showSdCardElements");
+
     	LinearLayout layout = (LinearLayout) findViewById(R.id.sd_layout);
     	TextView tv = (TextView) findViewById(R.id.sd_message);
     	ImageView image = (ImageView) findViewById(R.id.sd_icon);
@@ -771,6 +783,8 @@ public class Ankidroid extends Activity implements Runnable
     
     private void displayDeckNotLoaded()
     {
+    	Log.i(TAG, "displayDeckNotLoaded");
+    	
     	LinearLayout layout = (LinearLayout) findViewById(R.id.deck_error_layout);
     	TextView message = (TextView) findViewById(R.id.deck_message);
     	TextView detail = (TextView) findViewById(R.id.deck_message_detail);
@@ -784,6 +798,8 @@ public class Ankidroid extends Activity implements Runnable
     
     private void hideDeckErrors()
     {
+    	Log.i(TAG, "hideDeckErrors");
+
     	LinearLayout layout = (LinearLayout) findViewById(R.id.deck_error_layout);
     	TextView message = (TextView) findViewById(R.id.deck_message);
     	TextView detail = (TextView) findViewById(R.id.deck_message_detail);
@@ -795,6 +811,8 @@ public class Ankidroid extends Activity implements Runnable
     
 	private void displayNoCardsInDeck() 
 	{
+    	Log.i(TAG, "displayNoCardsInDeck");
+
     	LinearLayout layout = (LinearLayout) findViewById(R.id.deck_error_layout);
     	TextView message = (TextView) findViewById(R.id.deck_message);
     	TextView detail = (TextView) findViewById(R.id.deck_message_detail);
@@ -804,4 +822,5 @@ public class Ankidroid extends Activity implements Runnable
 		message.setVisibility(View.VISIBLE);
 		detail.setVisibility(View.GONE);
 	}
+
 }
