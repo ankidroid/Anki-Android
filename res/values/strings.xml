@@ -6,15 +6,22 @@
 <string name="overlay_on">Whiteboard On</string>
 <string name="overlay_off">Whiteboard Off</string>
 <string name="show_answer">Show Answer</string>
+<string name="show_question">Show Question</string>
 <string name="card_hint">Flashcard</string>
+<string name="deck_not_loaded">No deck loaded.</string>
+<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your sd card.</string>
+<string name="deck_empty">Deck is empty.</string>
 
 <color name="wb_fg_color">#B00000FF</color>
 <color name="wb_bg_color">#0000</color>
 <string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;file:///android_asset/flashcard_css&quot; /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=&quot;card&quot;&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
 
 <string name="deckpicker_title">Select a deck you copied to your SD card</string>
+<string name="deckpicker_title_nosdcard">SD card is unmounted</string>
 <string name="deckpicker_due">%1$d of %2$d due</string>
 <string name="deckpicker_new">%d new today</string>
 <string name="deckpicker_loaddeck">Loading deck...</string>
 <string name="deckpicker_nodeck">No decks found.</string>
+
+<string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 </resources>

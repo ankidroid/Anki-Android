@@ -8,38 +8,70 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.util.Log;
 
-public class Stats {
-	private static final int STATS_LIFE = 0;
-	private static final int STATS_DAY = 1;
+public class Stats
+{
 	
+	/**
+	 * Tag for logging messages
+	 */
+	private static String TAG = "Ankidroid";
+	
+	private static final int STATS_LIFE = 0;
+
+	private static final int STATS_DAY = 1;
+
 	// BEGIN: SQL table columns
 	long id;
+
 	int type;
+
 	Date day;
+
 	int reps;
+
 	float averageTime;
+
 	float reviewTime;
+
 	// Next two columns no longer used
 	float distractedTime;
+
 	int distractedReps;
+
 	int newEase0;
+
 	int newEase1;
+
 	int newEase2;
+
 	int newEase3;
+
 	int newEase4;
+
 	int youngEase0;
+
 	int youngEase1;
+
 	int youngEase2;
+
 	int youngEase3;
+
 	int youngEase4;
+
 	int matureEase0;
+
 	int matureEase1;
+
 	int matureEase2;
+
 	int matureEase3;
+
 	int matureEase4;
+
 	// END: SQL table columns
-	
-	public Stats() {
+
+	public Stats()
+	{
 		day = null;
 		reps = 0;
 		averageTime = 0;
@@ -63,7 +95,7 @@ public class Stats {
 	}
 	
 	private void fromDB(long id) {
-		Log.i("anki", "Reading stats from DB...");
+		Log.i(TAG, "Reading stats from DB...");
 		Cursor cursor = AnkiDb.database.rawQuery(
 				"SELECT * " +
 				"FROM stats " +
@@ -97,15 +129,16 @@ public class Stats {
 		matureEase2 = cursor.getInt(20);
 		matureEase3 = cursor.getInt(21);
 		matureEase4 = cursor.getInt(22);
-		
+
 		cursor.close();
 	}
 
-	private void create(int type, Date day) {
-		Log.i("anki", "Creating new stats for " + day.toString() + "...");
+	private void create(int type, Date day)
+	{
+		Log.i(TAG, "Creating new stats for " + day.toString() + "...");
 		this.type = type;
 		this.day = day;
-		
+
 		ContentValues values = new ContentValues();
 		values.put("type", type);
 		values.put("day", day.toString());
@@ -158,9 +191,10 @@ public class Stats {
 		
 		AnkiDb.database.update("stats", values, "id = " + this.id, null);
 	}
-	
-	public static Date genToday(Deck deck) {
-		return new Date((long)(System.currentTimeMillis() - deck.utcOffset*1000));
+
+	public static Date genToday(Deck deck)
+	{
+		return new Date((long) (System.currentTimeMillis() - deck.utcOffset * 1000));
 	}
 	
 	public static void updateAllStats(Stats global, Stats daily, Card card, int ease, String oldState)
@@ -193,21 +227,18 @@ public class Stats {
 	}
 	
 	public static Stats globalStats(Deck deck) throws SQLException {
-		Log.i("anki", "Getting global stats...");
+		Log.i(TAG, "Getting global stats...");
 		int type = STATS_LIFE;
 		Date today = genToday(deck);
-		
-		Cursor cursor = AnkiDb.database.rawQuery(
-				"SELECT id " +
-				"FROM stats " +
-				"WHERE type = " +
-				String.valueOf(type), 
-				null);
+
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type),
+		        null);
 		if (cursor.isClosed())
 			throw new SQLException();
-		
+
 		Stats stats = new Stats();
-		if (cursor.moveToFirst()) {
+		if (cursor.moveToFirst())
+		{
 			stats.fromDB(cursor.getLong(0));
 			cursor.close();
 			return stats;
@@ -218,25 +249,21 @@ public class Stats {
 		return stats;
 	}
 
-	public static Stats dailyStats(Deck deck) throws SQLException {
-		Log.i("anki", "Getting daily stats...");
+	public static Stats dailyStats(Deck deck) throws SQLException
+	{
+		Log.i(TAG, "Getting daily stats...");
 		int type = STATS_DAY;
 		Date today = genToday(deck);
-		
-		Log.i("anki", "Trying to get stats for " + today.toString());
-		Cursor cursor = AnkiDb.database.rawQuery(
-				"SELECT id " +
-				"FROM stats " +
-				"WHERE type = " +
-				String.valueOf(type) +
-				" and day = \"" +
-				today.toString() + "\"", 
-				null);
+
+		Log.i(TAG, "Trying to get stats for " + today.toString());
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type)
+		        + " and day = \"" + today.toString() + "\"", null);
 		if (cursor.isClosed())
 			throw new SQLException();
-		
+
 		Stats stats = new Stats();
-		if (cursor.moveToFirst()) {
+		if (cursor.moveToFirst())
+		{
 			stats.fromDB(cursor.getLong(0));
 			cursor.close();
 			return stats;

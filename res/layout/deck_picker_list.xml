@@ -4,7 +4,7 @@
 	android:layout_height="wrap_content" 
 	android:layout_width="fill_parent" 
 	android:orientation="vertical">
-	
+		
 	<TextView 
 		android:id="@+id/DeckPickerName" 
 		android:layout_height="wrap_content" 
