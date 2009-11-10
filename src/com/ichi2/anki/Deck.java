@@ -40,7 +40,9 @@ public class Deck {
 	private static final int SEARCH_FID = 3;
 	private static final int DECK_VERSION = 43;
 	
+	private static final float factorFour = 1.3f;
 	private static final float initialFactor = 2.5f;
+	private static final float maxScheduleTime = 36500f;
 	
 	// BEGIN: SQL table columns
 	long id;
@@ -443,6 +445,8 @@ public class Deck {
 	}
 	
 	private Card cardFromId(long id) {
+		if (id == 0)
+			return null;
 		Card card = new Card();
 		if (!card.fromDB(id))
 			return null;
@@ -451,6 +455,271 @@ public class Deck {
 		return card;
 	}
 	
+	/* Answering a card
+	 ***********************************************************/
+	
+	public void answerCard(Card card, int ease)
+	{
+		float now = System.currentTimeMillis() / 1000f;
+		
+		// Old state
+		String oldState = cardState(card);
+		float lastDelaySecs = System.currentTimeMillis() / 1000f - card.combinedDue;
+        float lastDelay = lastDelaySecs / 86400f;
+        int oldSuc = card.successive;
+        
+        // update card details
+        float last = card.interval;
+        card.interval = nextInterval(card, ease);
+        if (lastDelay >= 0)
+            card.lastInterval = last; // keep last interval if reviewing early
+        if (card.reps != 0)
+            card.lastDue = card.due; // only update if card was not new
+        card.due = nextDue(card, ease, oldState);
+        card.isDue = 0;
+        card.lastFactor = card.factor;
+        if (lastDelay >= 0)
+            updateFactor(card, ease); // don't update factor if learning ahead
+        
+        // spacing
+        float space, spaceFactor, minSpacing, minOfOtherCards;
+        Cursor cursor = AnkiDb.database.rawQuery(
+        		"SELECT models.initialSpacing, models.spacing " +
+        		"FROM facts, models " +
+        		"WHERE facts.modelId = models.id and " +
+        		"facts.id = " +
+        		card.factId,
+        		null);
+        if (!cursor.moveToFirst())
+        {
+        	minSpacing = 0;
+        	spaceFactor = 0;
+        }
+        else
+        {
+	        minSpacing = cursor.getFloat(0);
+	        spaceFactor = cursor.getFloat(1);
+        }
+        cursor.close();
+        
+        cursor = AnkiDb.database.rawQuery(
+        		"SELECT min(interval) " +
+        		"FROM cards " +
+        		"WHERE factId = " +
+        		card.factId +
+        		" and id != " +
+        		card.id, 
+        		null);
+		if (!cursor.moveToFirst())
+			minOfOtherCards = 0;
+		else
+			minOfOtherCards = cursor.getFloat(0);
+		cursor.close();
+        if (minOfOtherCards != 0)
+            space = Math.min(minOfOtherCards, card.interval);
+        else
+            space = 0;
+        space = space * spaceFactor * 86400f;
+        space = Math.max(minSpacing, space);
+        space += System.currentTimeMillis() / 1000f;
+        
+        // check what other cards we've spaced
+        String extra;
+        if (this.reviewEarly)
+            extra = "";
+        else
+        {
+            // if not reviewing early, make sure the current card is counted
+            // even if it was not due yet (it's a failed card)
+            extra = "or id = " + card.id;
+        }   
+        cursor = AnkiDb.database.rawQuery(
+        		"SELECT type, count(type) " +
+        		"FROM cards " +
+        		"WHERE factId = " +
+        		card.factId + " and " +
+        		"(isDue = 1 " + extra + ") " +
+        		"GROUP BY type", null);
+        if (cursor.moveToFirst())
+        {
+        	while (cursor.moveToNext())
+        	{
+        		if (cursor.getInt(0) == 0)
+        			failedSoonCount -= cursor.getInt(1);
+        		else if (cursor.getInt(0) == 1)
+        			revCount -= cursor.getInt(1);
+        		else
+        			newCount -= cursor.getInt(1);
+        	}
+        }
+        cursor.close();
+            
+        // space other cards        
+        AnkiDb.database.execSQL(String.format(
+        		"UPDATE cards " +
+        		"SET spaceUntil = %f, " +
+        		"combinedDue = max(%f, due), " +
+        		"modified = %f, " +
+        		"isDue = 0 " +
+        		"WHERE id != %d and factId = %d",
+        		space, space, now, card.id, card.factId));
+        card.spaceUntil = 0;
+        
+        // temp suspend if learning ahead
+        if (this.reviewEarly && lastDelay < 0)
+            if (oldSuc != 0 || lastDelaySecs > this.delay0 || !this.showFailedLast())
+                card.priority = -1;
+        // card stats
+        card.updateStats(ease, oldState);
+        card.toDB();
+        // global/daily stats
+        Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
+        // review history
+        CardHistoryEntry entry = new CardHistoryEntry(card, ease, lastDelay);
+        entry.writeSQL();
+        this.modified = now;
+//        // TODO: Fix leech handling
+//        if (isLeech(card)) 
+//            card = handleLeech(card);
+	}
+	
+//	private boolean isLeech(Card card)
+//	{
+//		int no = card.noCount;
+//        int fmax = getInt("leechFails");
+//        if (fmax == 0)
+//            return false;
+//        return (
+//            // failed
+//            (card.successive == 0) &&
+//            // greater than fail threshold
+//            (no >= fmax) &&
+//            // at least threshold/2 reps since last time
+//            (fmax - no) % (Math.max(fmax/2, 1)) == 0);
+//	}
+//	
+//	// TODO: not sure how this is supposed to affect the DB.
+//	private Card handleLeech(Card card)
+//	{
+//		this.refresh();
+//        Card scard = cardFromId(card.id, true);
+//        tags = scard.fact.tags;
+//        tags = addTags("Leech", tags);
+//        scard.fact.tags = canonifyTags(tags);
+//        scard.fact.setModified(textChanged=True);
+//        self.updateFactTags(scard.fact.id);
+//        self.s.flush();
+//        self.s.expunge(scard);
+//        if (getBool("suspendLeeches"))
+//            suspendCards(card.id);
+//        this.refresh();
+//	}
+	
+	/* Interval management
+	 ***********************************************************/
+	
+	private float nextInterval(Card card, int ease)
+	{
+		float delay = adjustedDelay(card, ease);
+		return nextInterval(card, delay, ease);
+	}
+	
+	private float nextInterval(Card card, float delay, int ease)
+	{
+		float interval = card.interval;
+        float factor = card.factor;
+        
+        // if shown early and not failed
+        if ((delay < 0) && (card.successive != 0))
+        {
+            interval = Math.max(card.lastInterval, card.interval + delay);
+            if (interval < this.midIntervalMin)
+                interval = 0;
+            delay = 0;
+        }
+        
+        // if interval is less than mid interval, use presets
+        if (ease == 1)
+        {
+            interval *= this.delay2;
+            if (interval < this.hardIntervalMin)
+                interval = 0;
+        }
+        else if (interval == 0)
+        {
+            if (ease == 2)
+            	interval = this.hardIntervalMin + ((float) Math.random())*(hardIntervalMax - hardIntervalMin);
+            else if (ease == 3)
+            	interval = this.midIntervalMin + ((float) Math.random())*(midIntervalMax - midIntervalMin);
+            else if (ease == 4)
+            	interval = this.easyIntervalMin + ((float) Math.random())*(easyIntervalMax - easyIntervalMin);
+        }
+        else
+        {
+            // if not cramming, boost initial 2
+            if ((interval < this.hardIntervalMax) && (interval > 0.166))
+            {
+                float mid = (this.midIntervalMin + this.midIntervalMax) / 2f;
+                interval *= (mid / interval / factor);
+            }
+            // multiply last interval by factor
+            if (ease == 2)
+                interval = (interval + delay/4f) * 1.2f;
+            else if (ease == 3)
+                interval = (interval + delay/2f) * factor;
+            else if (ease == 4)
+                interval = (interval + delay) * factor * factorFour;
+            float fuzz = 0.95f + ((float) Math.random())*(1.05f - 0.95f);
+            interval *= fuzz;
+        }
+        if (maxScheduleTime != 0)
+            interval = Math.min(interval, maxScheduleTime);
+        return interval;
+	}
+	
+	private float nextDue(Card card, int ease, String oldState)
+	{
+		float due;
+		if (ease == 1)
+			if (oldState.equals("mature"))
+				due = this.delay1;
+			else
+				due = this.delay0;
+		else
+			due = card.interval * 86400f;
+		return due + (System.currentTimeMillis()/1000f);
+	}
+	
+	private void updateFactor(Card card, int ease)
+	{
+		card.lastFactor = card.factor;
+		if (card.reps == 0)
+			card.factor = this.averageFactor; // card is new, inherit beginning factor
+		if (cardIsBeingLearnt(card) && (ease == 0 || ease == 1 || ease == 2))
+		{
+			if (card.successive != 0 && ease != 2)
+				card.factor -= 0.20f; // only penalize failures after success when starting
+		}
+		else if (ease == 0 || ease == 1)
+			card.factor -= 0.20f;
+		else if (ease == 2)
+			card.factor -= 0.15f;
+		else if (ease == 4)
+			card.factor += 0.10f;
+		card.factor = Math.max(1.3f, card.factor);
+	}
+	
+	private float adjustedDelay(Card card, int ease)
+	{
+		float now = System.currentTimeMillis();
+		if (cardIsNew(card))
+			return 0;
+		if (card.combinedDue <= now)
+			return (now - card.due) / 86400f;
+		else
+			return (now - card.combinedDue) / 86400f;
+	}
+            
 	/* Queue/cache management
 	 ***********************************************************/
 	
@@ -722,6 +991,38 @@ public class Deck {
 				dailyStats.newEase2 +
 				dailyStats.newEase3 +
 				dailyStats.newEase4);
+	}
+	
+	/* Card Predicates
+	 ***********************************************************/
+	
+	private String cardState(Card card)
+	{
+		if (cardIsNew(card))
+            return "new";
+		else if (card.interval > MATURE_THRESHOLD)
+            return "mature";
+        return "young";
+	}
+	
+	/** 
+	 * Check if a card is a new card.
+	 * @param card The card to check.
+	 * @return True if a card has never been seen before.
+	 */
+	private boolean cardIsNew(Card card)
+	{
+		return card.reps == 0;
+	}
+	
+	/** 
+	 * Check if a card is a new card.
+	 * @param card The card to check.
+	 * @return True if card should use present intervals.
+	 */
+	private boolean cardIsBeingLearnt(Card card)
+	{
+		return card.interval < this.easyIntervalMin;
 	}
 	
 	/* Dynamic indices
