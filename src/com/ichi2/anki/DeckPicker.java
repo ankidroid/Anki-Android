@@ -12,6 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -45,7 +46,9 @@ public class DeckPicker extends Activity implements Runnable
 	/**
 	 * Dialogs
 	 */
-	public static final int DIALOG_NO_SDCARD = 0;
+	private static final int DIALOG_NO_SDCARD = 0;
+	
+	private ProgressDialog dialog;
 	
 	private DeckPicker mSelf;
 
@@ -146,7 +149,8 @@ public class DeckPicker extends Activity implements Runnable
 	private void populateDeckList(String location)
 	{
 		Log.i(TAG, "DeckPicker - populateDeckList");
-
+	
+		
 		Resources res = getResources();
 		int len = 0;
 		File[] fileList;
@@ -179,12 +183,7 @@ public class DeckPicker extends Activity implements Runnable
 					data.put("filepath", absPath);
 					data.put("showProgress", "true");
 
-					//Log.i(TAG, data.get("name") + ", due = " + data.get("due") + ", new = " + data.get("new") + ", showProgress = " + data.get("showProgress") + ", filepath = " + data.get("filepath") + ", last modified = " + data.get("mod"));					
-					//Log.i(TAG, "Tree contains data = " + tree.contains(data));
-					//Log.i(TAG, "Object removed = " + tree.remove(data));
 					boolean result = tree.add(data);
-					//Log.i(TAG, "Result tree.add = " + result);
-					//logTree(tree);
 				} catch (SQLException e) 
 				{
 					Log.w(TAG, "DeckPicker - populateDeckList, File " + fileList[i].getName() + " is not a real anki file");
@@ -214,8 +213,6 @@ public class DeckPicker extends Activity implements Runnable
 
 			tree.add(data);
 		}
-
-		//logTree(tree);
 		mDeckList.clear();
 		mDeckList.addAll(tree);
 		mDeckListView.clearChoices();
@@ -259,7 +256,7 @@ public class DeckPicker extends Activity implements Runnable
 
 		if (deckFilename != null)
 		{
-			Log.i("anki", "Selected " + deckFilename);
+			Log.i(TAG, "Selected " + deckFilename);
 			Intent intent = this.getIntent();
 			intent.putExtra(Ankidroid.OPT_DB, deckFilename);
 			setResult(RESULT_OK, intent);
@@ -319,7 +316,7 @@ public class DeckPicker extends Activity implements Runnable
 						deck = Deck.openDeck(path);
 					} catch (SQLException e)
 					{
-						Log.w("anki", "Could not open database " + path);
+						Log.w(TAG, "Could not open database " + path);
 						continue;
 					}
 					int dueCards = deck.failedSoonCount + deck.revCount;
@@ -389,25 +386,12 @@ public class DeckPicker extends Activity implements Runnable
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
-                        //saveQueue(true);
-                        //mOneShot = true; // This makes us not save the state again later,
-                                         // which would be wrong because the song ids and
-                                         // card id might not match. 
-                        //closeExternalStorageFiles(intent.getData().getPath());
                     	Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
-                    	//closeExternalStorageFiles();
                 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 		String deckPath = preferences.getString("deckPath", "/sdcard");
                     	populateDeckList(deckPath);
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                        ///mMediaMountedCount++;
-                        //mCardId = FileUtils.getFatVolumeId(intent.getData().getPath());
-                        //reloadQueue();
-                        //notifyChange(QUEUE_CHANGED);
-                        //notifyChange(META_CHANGED);
                     	Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
-                    	//hideSdError();
-                    	//onResume();
                 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 		String deckPath = preferences.getString("deckPath", "/sdcard");
                 		mDeckIsSelected = false;
