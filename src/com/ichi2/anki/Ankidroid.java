@@ -66,6 +66,10 @@ public class Ankidroid extends Activity implements Runnable
 
 	public static final int MENU_ABOUT = 2;
 
+	/**
+	 * Dialogs
+	 */
+	public static final int DIALOG_UPDATE = 0;
 	
 	/**
 	 * Possible outputs trying to load a deck
@@ -87,13 +91,17 @@ public class Ankidroid extends Activity implements Runnable
 	 * Variables to hold the state
 	 */
 	private ProgressDialog dialog;
-	
-	private boolean layoutInitialized;
-	
+		
     private BroadcastReceiver mUnmountReceiver = null;
 
+    //Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true
+    //We don't have to worry to set deckSelected to true, it's done automatically in displayProgressDialogAndLoadDeck()
+    //We have to set deckSelected to false only on these situations a deck has to be reload and when we know for sure no other thread is trying to load a deck (for example, when sd card is mounted again) 
 	private boolean deckSelected;
 
+	private boolean deckLoaded;
+	
+	//Name of the last deck loaded
 	private String deckFilename;
 
 	private boolean corporalPunishments;
@@ -101,8 +109,6 @@ public class Ankidroid extends Activity implements Runnable
 	private boolean timerAndWhiteboard;
 
 	private boolean spacedRepetition;
-
-	private String deckPath;
 
 	public String cardTemplate;
 
@@ -181,6 +187,8 @@ public class Ankidroid extends Activity implements Runnable
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
 		
+		//checkUpdates();
+		
 		registerExternalStorageListener();
 		initResourceValues();
 
@@ -246,7 +254,6 @@ public class Ankidroid extends Activity implements Runnable
 					}
 					// Load sample deck.
 					deckFilename = SAMPLE_DECK_FILENAME;
-					//displayProgressDialogAndLoadDeck();
 				} else
 				{
 					// Show the deck picker.
@@ -257,7 +264,7 @@ public class Ankidroid extends Activity implements Runnable
 		}
 	}
 
-	
+
 	// Retrieve resource values.
 	public void initResourceValues()
 	{
@@ -322,15 +329,39 @@ public class Ankidroid extends Activity implements Runnable
 		return false;
 	}
 
+	/*protected Dialog onCreateDialog(int id)
+	{
+		Dialog dialog;
+		switch(id)
+		{
+		case DIALOG_UPDATE:
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Update available");
+			builder.setMessage("A new version of Ankidroid is available in Android Market. Would you like to install it?");
+			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				
+				public void onClick(DialogInterface dialog, int which) {
+					Uri ankidroidMarketURI = Uri.parse("http://market.android.com/search?q=pname:com.ichi2.anki");
+					Intent searchUpdateIntent = new Intent(Intent.ACTION_VIEW, ankidroidMarketURI);
+					startActivity(searchUpdateIntent);
+				}
+			});
+			builder.setNegativeButton("No", null);
+			dialog = builder.create();
+			break;
+		
+		default:
+			dialog = null;
+		}
+		
+		return dialog;
+	}*/
 	
 	public void openDeckPicker()
 	{
-		Log.i(TAG, "openDeckPicker");
-		deckSelected = false; // Make sure we open the database again in
-							  // onResume() if user pressed "back".
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
+    	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
-		decksPicker.putExtra("com.ichi2.anki.Ankidroid.DeckPath", deckPath);
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
 		Log.i(TAG, "openDeckPicker - Ending");
 	}
@@ -367,8 +398,6 @@ public class Ankidroid extends Activity implements Runnable
 		if (!deckSelected)
 		{
 			Log.i(TAG, "onResume() - No deck selected before");
-			deckSelected = true;
-        	Log.i(TAG, "onResume - deckSelected = " + deckSelected);
 			displayProgressDialogAndLoadDeck();
 		}
 
@@ -377,6 +406,7 @@ public class Ankidroid extends Activity implements Runnable
 
 	@Override
 	protected void onDestroy() {
+		Log.i(TAG, "onDestroy()");
 		super.onDestroy();
     	unregisterReceiver(mUnmountReceiver);
 	}
@@ -385,6 +415,9 @@ public class Ankidroid extends Activity implements Runnable
 	{
 		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
 
+		// Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
+		deckSelected = true;
+		
 		if(isSdCardMounted())
 		{
 			if (deckFilename != null && new File(deckFilename).exists())
@@ -467,6 +500,7 @@ public class Ankidroid extends Activity implements Runnable
 
 				case DECK_LOADED:
 					showControls(true);
+					deckLoaded = true;
 					displayCardQuestion();
 					break;
 					
@@ -487,16 +521,23 @@ public class Ankidroid extends Activity implements Runnable
 		super.onActivityResult(requestCode, resultCode, intent);
 		if (requestCode == PICK_DECK_REQUEST)
 		{
+			//Clean the previous card before showing the first of the new loaded deck (so the transition is not so abrupt)
+			updateCard("");
+			hideSdError();
+			hideDeckErrors();
+			
 			if (resultCode != RESULT_OK)
 			{
 				Log.e(TAG, "onActivityResult - Deck browser returned with error");
+				//Make sure we open the database again in onResume() if user pressed "back"
 				deckSelected = false;
 				return;
 			}
 			if (intent == null)
 			{
-				deckSelected = false;
 				Log.e(TAG, "onActivityResult - Deck browser returned null intent");
+				//Make sure we open the database again in onResume()
+				deckSelected = false;
 				return;
 			}
 			// A deck was picked. Save it in preferences and use it.
@@ -504,17 +545,13 @@ public class Ankidroid extends Activity implements Runnable
 			deckFilename = intent.getExtras().getString(OPT_DB);
 			savePreferences();
 
-			// Don't open database again in onResume(). Load the new one in
-			// another thread instead.
-			deckSelected = true;
         	Log.i(TAG, "onActivityResult - deckSelected = " + deckSelected);
 			displayProgressDialogAndLoadDeck();
 		} else if (requestCode == PREFERENCES_UPDATE)
 		{
 			restorePreferences();
-			//If any deck has been selected (usually because there was no sd card attached, and therefore was impossible to select one) 
-			//the controls have not been initialized, so we don't have to try to show or hide them
-			if(deckSelected && isSdCardMounted())
+			//If there is no deck loaded the controls have not to be shown
+			if(deckLoaded)
 				showOrHideControls();
 		}
 	}
@@ -545,7 +582,6 @@ public class Ankidroid extends Activity implements Runnable
 	
 	private void showControls(boolean show)
 	{
-
 		if (show)
 		{
 			mCard.setVisibility(View.VISIBLE);
@@ -564,7 +600,6 @@ public class Ankidroid extends Activity implements Runnable
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		}
-
 	}
 
 	/**
@@ -693,7 +728,6 @@ public class Ankidroid extends Activity implements Runnable
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
-		deckPath = preferences.getString("deckPath", "/sdcard");
 
 		return preferences;
 	}
@@ -746,6 +780,7 @@ public class Ankidroid extends Activity implements Runnable
     private void closeExternalStorageFiles()
     {
     	AnkiDb.closeDatabase();
+    	deckLoaded = false;
     	displaySdError();
     }
     
@@ -823,4 +858,8 @@ public class Ankidroid extends Activity implements Runnable
 		detail.setVisibility(View.GONE);
 	}
 
+	/*private void checkUpdates() 
+	{
+		showDialog(DIALOG_UPDATE);
+	}*/
 }

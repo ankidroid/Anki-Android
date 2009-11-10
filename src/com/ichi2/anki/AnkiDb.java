@@ -21,6 +21,11 @@ public class AnkiDb
 	static public SQLiteDatabase database;
 
 	/**
+	 * Tag for logging messages
+	 */
+	private static final String TAG = "Ankidroid";
+	
+	/**
 	 * Open a database connection to an ".anki" SQLite file.
 	 */
 	static public void openDatabase(String ankiFilename) throws SQLException
@@ -96,7 +101,7 @@ public class AnkiDb
 		{
 			Card card = oneFromCursor(AnkiDb.database.rawQuery("SELECT id,interval,question,answer" + " FROM cards"
 			        + " ORDER BY random()" + " LIMIT 1", null));
-			Log.d("anki", "Selected card id " + card.id + " with interval " + card.interval);
+			Log.d(TAG, "Selected card id " + card.id + " with interval " + card.interval);
 			return card;
 		}
 
@@ -107,7 +112,7 @@ public class AnkiDb
 		{
 			Card card = oneFromCursor(AnkiDb.database.rawQuery("SELECT id,interval,question,answer" + " FROM cards"
 			        + " WHERE priority > 0" + " ORDER BY interval" + " LIMIT 1", null));
-			Log.i("anki", "Selected card id " + card.id + " with interval " + card.interval);
+			Log.i(TAG, "Selected card id " + card.id + " with interval " + card.interval);
 			return card;
 		}
 
@@ -140,7 +145,7 @@ public class AnkiDb
 			ContentValues values = new ContentValues();
 			values.put("interval", newInterval);
 			AnkiDb.database.update("cards", values, "id='" + id + "'", null);
-			Log.d("anki", "Spaced card to interval " + newInterval);
+			Log.d(TAG, "Spaced card to interval " + newInterval);
 		}
 
 		/**
@@ -162,7 +167,7 @@ public class AnkiDb
 			ContentValues values = new ContentValues();
 			values.put("interval", newInterval);
 			AnkiDb.database.update("cards", values, "id='" + id + "'", null);
-			Log.d("anki", "Reset card with interval " + newInterval);
+			Log.d(TAG, "Reset card with interval " + newInterval);
 		}
 	}
 }
