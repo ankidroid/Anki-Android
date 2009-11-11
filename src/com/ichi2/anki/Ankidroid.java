@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -111,7 +112,10 @@ public class Ankidroid extends Activity implements Runnable
 
 	public String cardTemplate;
 
-	private AnkiDb.Card currentCard;
+	//private AnkiDb.Card currentCard;
+	private Card currentCard;
+	
+	private Deck deck;
 
 	/** 
 	 * Variables to hold layout objects that we need to update or handle events for
@@ -120,7 +124,8 @@ public class Ankidroid extends Activity implements Runnable
 
 	private ToggleButton mToggleWhiteboard, mFlipCard;
 
-	private Button mSelectRemembered, mSelectNotRemembered;
+	//private Button mSelectRemembered, mSelectNotRemembered;
+	private Button mEase0, mEase1, mEase2, mEase3;
 
 	private Chronometer mTimer;
 
@@ -150,41 +155,67 @@ public class Ankidroid extends Activity implements Runnable
 		}
 	};
 
-	// Handlers for buttons that allow user to select how well they did.
-	View.OnClickListener mSelectRememberedHandler = new View.OnClickListener()
-	{
-		public void onClick(View view)
-		{
-			// Space this card because it has been successfully remembered.
-			if (spacedRepetition)
-				currentCard.space();
-			nextCard();
-		}
-	};
+//	// Handlers for buttons that allow user to select how well they did.
+//	View.OnClickListener mSelectRememberedHandler = new View.OnClickListener()
+//	{
+//		public void onClick(View view)
+//		{
+//			// Space this card because it has been successfully remembered.
+//			if (spacedRepetition)
+//				currentCard.space();
+//			nextCard();
+//		}
+//	};
+//
+//	View.OnClickListener mSelectNotRememberedHandler = new View.OnClickListener()
+//	{
+//		public void onClick(View view)
+//		{
+//			// Punish user.
+//			if (corporalPunishments)
+//			{
+//				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//				v.vibrate(500);
+//			}
+//			// Reset this card because it has not been successfully remembered.
+//			if (spacedRepetition)
+//				currentCard.reset();
+//			nextCard();
+//		}
+//	};
 
-	View.OnClickListener mSelectNotRememberedHandler = new View.OnClickListener()
+	View.OnClickListener mSelectEaseHandler = new View.OnClickListener()
 	{
 		public void onClick(View view)
 		{
-			// Punish user.
-			if (corporalPunishments)
+			switch (view.getId())
 			{
-				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-				v.vibrate(500);
+			case R.id.ease1:
+				if (corporalPunishments)
+				{
+					Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+					v.vibrate(500);
+				}
+				deck.answerCard(currentCard, 1);
+				break;
+			case R.id.ease2:
+				deck.answerCard(currentCard, 2);
+				break;
+			case R.id.ease3:
+				deck.answerCard(currentCard, 3);
+				break;
+			case R.id.ease4:
+				deck.answerCard(currentCard, 4);
+				break;
 			}
-			// Reset this card because it has not been successfully remembered.
-			if (spacedRepetition)
-				currentCard.reset();
 			nextCard();
 		}
 	};
-
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
 	{		
 		super.onCreate(savedInstanceState);
-
 		Log.i(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
 		
 		//checkUpdates();
@@ -264,6 +295,7 @@ public class Ankidroid extends Activity implements Runnable
 		}
 	}
 
+
 	// Retrieve resource values.
 	public void initResourceValues()
 	{
@@ -278,8 +310,12 @@ public class Ankidroid extends Activity implements Runnable
 		setContentView(layout);
 
 		mCard = (WebView) findViewById(R.id.flashcard);
-		mSelectRemembered = (Button) findViewById(R.id.select_remembered);
-		mSelectNotRemembered = (Button) findViewById(R.id.select_notremembered);
+//		mSelectRemembered = (Button) findViewById(R.id.select_remembered);
+//		mSelectNotRemembered = (Button) findViewById(R.id.select_notremembered);
+		mEase0 = (Button) findViewById(R.id.ease1);
+		mEase1 = (Button) findViewById(R.id.ease2);
+		mEase2 = (Button) findViewById(R.id.ease3);
+		mEase3 = (Button) findViewById(R.id.ease4);
 		mTimer = (Chronometer) findViewById(R.id.card_time);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
@@ -287,8 +323,12 @@ public class Ankidroid extends Activity implements Runnable
 		
 		showControls(false);
 
-		mSelectRemembered.setOnClickListener(mSelectRememberedHandler);
-		mSelectNotRemembered.setOnClickListener(mSelectNotRememberedHandler);
+//		mSelectRemembered.setOnClickListener(mSelectRememberedHandler);
+//		mSelectNotRemembered.setOnClickListener(mSelectNotRememberedHandler);
+		mEase0.setOnClickListener(mSelectEaseHandler);
+		mEase1.setOnClickListener(mSelectEaseHandler);
+		mEase2.setOnClickListener(mSelectEaseHandler);
+		mEase3.setOnClickListener(mSelectEaseHandler);
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
 		
@@ -359,6 +399,7 @@ public class Ankidroid extends Activity implements Runnable
 	public void openDeckPicker()
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
+    	deck.closeDeck();
     	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
@@ -384,6 +425,7 @@ public class Ankidroid extends Activity implements Runnable
 		super.onStop();
 		if (deckFilename != null)
 		{
+			//deck.closeDeck();
 			savePreferences();
 		}
 	}
@@ -460,7 +502,8 @@ public class Ankidroid extends Activity implements Runnable
 		try
 		{
 			// Open the right deck.
-			AnkiDb.openDatabase(deckFilename);
+			//AnkiDb.openDatabase(deckFilename);
+			deck = Deck.openDeck(deckFilename);
 			// Start by getting the first card and displaying it.
 			nextCard();
 			Log.i(TAG, "Deck loaded!");
@@ -569,11 +612,13 @@ public class Ankidroid extends Activity implements Runnable
 		  
 	  //extra height that the Whiteboard should have to be able to write in all its surface either on the question or on the answer
 	  int extraHeight = 0;
-	  if(mSelectRemembered.isShown() && mSelectNotRemembered.isShown())
+	  //if(mSelectRemembered.isShown() && mSelectNotRemembered.isShown())
+	  // TODO: test for all buttons here, not just two.
+	  if(mEase0.isShown() && mEase1.isShown())
 	  {
 		  //if the "Remembered" and "Not remembered" buttons are visible, their height has to be counted in the creation of the new Whiteboard
 		  //because we should be able to write in their space when it is the front part of the card
-		  extraHeight = java.lang.Math.max(mSelectRemembered.getHeight(), mSelectNotRemembered.getHeight());
+		  extraHeight = java.lang.Math.max(mEase0.getHeight(), mEase1.getHeight());
 	  } 
 	  mWhiteboard.rotate(extraHeight);
 	}
@@ -584,16 +629,24 @@ public class Ankidroid extends Activity implements Runnable
 		if (show)
 		{
 			mCard.setVisibility(View.VISIBLE);
-			mSelectRemembered.setVisibility(View.VISIBLE);
-			mSelectNotRemembered.setVisibility(View.VISIBLE);
+			//mSelectRemembered.setVisibility(View.VISIBLE);
+			//mSelectNotRemembered.setVisibility(View.VISIBLE);
+			mEase0.setVisibility(View.VISIBLE);
+			mEase1.setVisibility(View.VISIBLE);
+			mEase2.setVisibility(View.VISIBLE);
+			mEase3.setVisibility(View.VISIBLE);
 			mFlipCard.setVisibility(View.VISIBLE);
 			showOrHideControls();
 			hideDeckErrors();
 		} else
 		{
 			mCard.setVisibility(View.GONE);
-			mSelectRemembered.setVisibility(View.GONE);
-			mSelectNotRemembered.setVisibility(View.GONE);
+			//mSelectRemembered.setVisibility(View.GONE);
+			//mSelectNotRemembered.setVisibility(View.GONE);
+			mEase0.setVisibility(View.GONE);
+			mEase1.setVisibility(View.GONE);
+			mEase2.setVisibility(View.GONE);
+			mEase3.setVisibility(View.GONE);
 			mFlipCard.setVisibility(View.GONE);
 			mTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
@@ -632,11 +685,13 @@ public class Ankidroid extends Activity implements Runnable
 	public void nextCard()
 	{
 		Log.i(TAG, "nextCard");
-		if (spacedRepetition)
-			currentCard = AnkiDb.Card.smallestIntervalCard();
-		else
-			currentCard = AnkiDb.Card.randomCard();
+//		if (spacedRepetition)
+//			currentCard = AnkiDb.Card.smallestIntervalCard();
+//		else
+//			currentCard = AnkiDb.Card.randomCard();
 
+		currentCard = deck.getCard();
+		
 		// Set the correct value for the flip card button - That triggers the
 		// listener which displays the question of the card
 		mFlipCard.setChecked(false);
@@ -659,11 +714,23 @@ public class Ankidroid extends Activity implements Runnable
 		{
 			// error :(
 			updateCard("Unable to find a card!");
+			mEase0.setVisibility(View.GONE);
+			mEase1.setVisibility(View.GONE);
+			mEase2.setVisibility(View.GONE);
+			mEase3.setVisibility(View.GONE);
+			mFlipCard.setVisibility(View.GONE);
+			mTimer.setVisibility(View.GONE);
+			mToggleWhiteboard.setVisibility(View.GONE);
+			mWhiteboard.setVisibility(View.GONE);
 		} else
 		{
 			Log.i(TAG, "displayCardQuestion - Hiding 'Remembered' and 'Not Remembered' buttons...");
-			mSelectRemembered.setVisibility(View.GONE);
-			mSelectNotRemembered.setVisibility(View.GONE);
+			//mSelectRemembered.setVisibility(View.GONE);
+			//mSelectNotRemembered.setVisibility(View.GONE);
+			mEase0.setVisibility(View.GONE);
+			mEase1.setVisibility(View.GONE);
+			mEase2.setVisibility(View.GONE);
+			mEase3.setVisibility(View.GONE);
 									
 			mFlipCard.requestFocus();
 
@@ -686,10 +753,15 @@ public class Ankidroid extends Activity implements Runnable
 		mTimer.stop();
 		mWhiteboard.lock();
 
-		mSelectRemembered.setVisibility(View.VISIBLE);
-		mSelectNotRemembered.setVisibility(View.VISIBLE);
+		//mSelectRemembered.setVisibility(View.VISIBLE);
+		//mSelectNotRemembered.setVisibility(View.VISIBLE);
+		mEase0.setVisibility(View.VISIBLE);
+		mEase1.setVisibility(View.VISIBLE);
+		mEase2.setVisibility(View.VISIBLE);
+		mEase3.setVisibility(View.VISIBLE);
 		
-		mSelectRemembered.requestFocus();
+		//mSelectRemembered.requestFocus();
+		mEase2.requestFocus();
 		
 		updateCard(currentCard.answer);
 	}
@@ -778,7 +850,8 @@ public class Ankidroid extends Activity implements Runnable
     
     private void closeExternalStorageFiles()
     {
-    	AnkiDb.closeDatabase();
+    	//AnkiDb.closeDatabase();
+    	deck.closeDeck();
     	deckLoaded = false;
     	displaySdError();
     }

@@ -27,7 +27,7 @@
 			android:visibility="gone" />
 	</FrameLayout>
 
-	<LinearLayout
+	<!-- <LinearLayout
 		android:id="@+id/remembered_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
@@ -45,8 +45,42 @@
 			android:layout_weight="1.2"
 			android:layout_height="fill_parent"
 			android:text="Not Remembered" />
+	</LinearLayout> -->
+	
+	<LinearLayout
+		android:id="@+id/remembered_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<Button
+			android:id="@+id/ease1"
+			android:padding="3dip"
+			android:layout_width="fill_parent"
+			android:layout_weight="1.2"
+			android:layout_height="fill_parent"
+			android:text="1" />
+		<Button
+			android:id="@+id/ease2"
+			android:padding="3dip"
+			android:layout_width="fill_parent"
+			android:layout_weight="1.2"
+			android:layout_height="fill_parent"
+			android:text="2" />
+		<Button
+			android:id="@+id/ease3"
+			android:padding="3dip"
+			android:layout_width="fill_parent"
+			android:layout_weight="1.2"
+			android:layout_height="fill_parent"
+			android:text="3" />
+		<Button
+			android:id="@+id/ease4"
+			android:padding="3dip"
+			android:layout_width="fill_parent"
+			android:layout_weight="1.2"
+			android:layout_height="fill_parent"
+			android:text="4" />
 	</LinearLayout>
-
+	
 	<LinearLayout
 		android:id="@+id/chrono_buttons_layout"
 		android:layout_width="fill_parent"

@@ -287,6 +287,8 @@ public class Deck
 
 	public void closeDeck()
 	{
+		if (modifiedSinceSave())
+			commitToDB();
 		AnkiDb.closeDatabase();
 	}
 
@@ -345,6 +347,7 @@ public class Deck
 		values.put("revCardOrder", revCardOrder);
 
 		AnkiDb.database.update("decks", values, "id = " + this.id, null);
+		lastLoaded = System.currentTimeMillis() / 1000f;
 	}
 
 	public static float getLastModified(String deckPath)
@@ -383,7 +386,7 @@ public class Deck
 		if ((delay0 != 0) && (failedNowCount != 0))
 			return AnkiDb.queryScalar("SELECT id FROM failedCards LIMIT 1");
 		// Failed card queue too big?
-		if (failedSoonCount >= failedCardMax)
+		if ((failedCardMax != 0) && (failedSoonCount >= failedCardMax))
 			return AnkiDb.queryScalar("SELECT id FROM failedCards LIMIT 1");
 		// Distribute new cards?
 		if (timeForNewCard()) {
@@ -466,17 +469,17 @@ public class Deck
 	
 	private String newCardTable() {
 		return (new String[]{
-				"acqCardsOld",
-				"acqCardsOld",
-				"acqCardsNew"})[newCardOrder];
+				"acqCardsOld ",
+				"acqCardsOld ",
+				"acqCardsNew "})[newCardOrder];
 	}
 	
 	private String revCardTable() {
 		return (new String[]{
-				"revCardsOld",
-				"revCardsNew",
-				"revCardsDue",
-				"revCardsRandom"})[revCardOrder];
+				"revCardsOld ",
+				"revCardsNew ",
+				"revCardsDue ",
+				"revCardsRandom "})[revCardOrder];
 	}
 	
 	private long getNewCard() {

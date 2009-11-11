@@ -301,7 +301,7 @@ public class Card {
 		values.put("isDue", this.isDue);
 		values.put("type", this.type);
 		values.put("combinedDue", Math.max(this.spaceUntil, this.due));
-		values.put("realtiveDelay", 0f);
+		values.put("relativeDelay", 0f);
 		AnkiDb.database.update("cards", values, "id = " + this.id, null);
 		
 		// TODO: Should also write JOINED entries: CardModel and Fact.
