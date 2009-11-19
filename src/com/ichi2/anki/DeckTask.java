@@ -19,22 +19,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	private static DeckTask instance;
 	
 	int type;
-//	Deck deck;
-//	Card oldCard;
 	TaskListener listener;
-	
-//	public DeckTask(Deck deck, int type, TaskListener listener)
-//	{
-//		this.deck = deck;
-//		this.type = type;
-//		this.listener = listener;
-//	}
-//	
-//	public DeckTask(Deck deck, Card cardToAnswer, int type, TaskListener listener)
-//	{
-//		this(deck, type, listener);
-//		this.oldCard = cardToAnswer;
-//	}
 	
 	public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params)
 	{
@@ -72,51 +57,19 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	protected void onPreExecute()
 	{
 		listener.onPreExecute();
-//		switch (type)
-//		{
-//		case TASK_TYPE_LOAD_DECK:
-//			onPreExecuteLoadDeck();
-//		case TASK_TYPE_ANSWER_CARD:
-//			onPreExecuteAnswerCard();
-//			break;
-//		default:
-//			break;
-//		}
 	}
 	
 	@Override
 	protected void onProgressUpdate(TaskData... values)
 	{
 		listener.onProgressUpdate(values);
-//		switch (type)
-//		{
-//		case TASK_TYPE_ANSWER_CARD:
-//			onProgressUpdateAnswerCard(values);
-//			break;
-//		default:
-//			break;
-//		}
 	}
 	
 	@Override
 	protected void onPostExecute(TaskData result)
 	{
 		listener.onPostExecute(result);
-//		switch (type)
-//		{
-//		case TASK_TYPE_LOAD_DECK:
-//			onPostExecuteLoadDeck(result);
-//			break;
-//		default:
-//			break;
-//		}
 	}
-	
-//	private void onPreExecuteAnswerCard()
-//	{
-//		oldCard = Ankidroid.this.currentCard;
-//		dialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
-//	}
 	
 	private TaskData doInBackgroundAnswerCard(TaskData... params)
 	{
@@ -151,27 +104,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		return null;
 	}
 	
-//	private void onProgressUpdateAnswerCard(TaskData... values)
-//	{
-//		Card newCard = values[0].getCard();
-//		
-//		Ankidroid.this.currentCard = newCard;
-//		
-//		// Set the correct value for the flip card button - That triggers the
-//		// listener which displays the question of the card
-//		Ankidroid.this.mFlipCard.setChecked(false);
-//		Ankidroid.this.mWhiteboard.clear();
-//		Ankidroid.this.mTimer.setBase(SystemClock.elapsedRealtime());
-//		Ankidroid.this.mTimer.start();
-//		
-//		dialog.dismiss();
-//	}
-	
-//	private void onPreExecuteLoadDeck()
-//	{
-//		dialog = ProgressDialog.show(Ankidroid.this, "", "Loading deck. Please wait...", true);
-//	}
-	
 	private TaskData doInBackgroundLoadDeck(TaskData... params)
 	{
 		String deckFilename = params[0].getString();
@@ -181,10 +113,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		try
 		{
 			// Open the right deck.
-			//AnkiDb.openDatabase(deckFilename);
 			Deck deck = Deck.openDeck(deckFilename);
 			// Start by getting the first card and displaying it.
-			//nextCard(0);
 			Card card = deck.getCard();
 			Log.i(TAG, "Deck loaded!");
 			
@@ -199,38 +129,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			return new TaskData(Ankidroid.DECK_EMPTY);
 		}
 	}
-	
-//	private void onPostExecuteLoadDeck(TaskData result)
-//	{
-//		// This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
-//		if(dialog.isShowing()) 
-//		{
-//			try
-//			{
-//				dialog.dismiss();
-//			} catch(Exception e)
-//			{
-//				Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
-//			}
-//		}
-//		
-//		switch(result.getInt())
-//		{
-//			case DECK_LOADED:
-//				showControls(true);
-//				deckLoaded = true;
-//				displayCardQuestion();
-//				break;
-//				
-//			case DECK_NOT_LOADED:
-//				displayDeckNotLoaded();
-//				break;
-//			
-//			case DECK_EMPTY:
-//				displayNoCardsInDeck();
-//				break;
-//		}
-//	}
 	
 	public static interface TaskListener
 	{
@@ -269,16 +167,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		{
 			this.msg = msg;
 		}
-		
-//		public void putCard(Card card)
-//		{
-//			this.card = card;
-//		}
-//		
-//		public void putInt(int value)
-//		{
-//			this.integer = value;
-//		}
 		
 		public Deck getDeck()
 		{
