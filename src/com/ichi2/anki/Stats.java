@@ -29,12 +29,12 @@ public class Stats
 
 	int reps;
 
-	float averageTime;
+	double averageTime;
 
-	float reviewTime;
+	double reviewTime;
 
 	// Next two columns no longer used
-	float distractedTime;
+	double distractedTime;
 
 	int distractedReps;
 
@@ -110,9 +110,9 @@ public class Stats
 		type = cursor.getInt(1);
 		day = Date.valueOf(cursor.getString(2));
 		reps = cursor.getInt(3);
-		averageTime = cursor.getFloat(4);
-		reviewTime = cursor.getFloat(5);
-		distractedTime = cursor.getFloat(6);
+		averageTime = cursor.getDouble(4);
+		reviewTime = cursor.getDouble(5);
+		distractedTime = cursor.getDouble(6);
 		distractedReps = cursor.getInt(7);
 		newEase0 = cursor.getInt(8);
 		newEase1 = cursor.getInt(9);
@@ -162,7 +162,7 @@ public class Stats
 		values.put("matureEase2", 0);
 		values.put("matureEase3", 0);
 		values.put("matureEase4", 0);
-		this.id = AnkiDb.database.insert("stats", null, values);
+		id = AnkiDb.database.insert("stats", null, values);
 	}
 	
 	public void toDB()
@@ -189,7 +189,7 @@ public class Stats
 		values.put("matureEase3", matureEase3);
 		values.put("matureEase4", matureEase4);
 		
-		AnkiDb.database.update("stats", values, "id = " + this.id, null);
+		AnkiDb.database.update("stats", values, "id = " + id, null);
 	}
 
 	public static Date genToday(Deck deck)
@@ -206,13 +206,13 @@ public class Stats
 	public static void updateStats(Stats stats, Card card, int ease, String oldState)
 	{
 		stats.reps += 1;
-	    float delay = card.totalTime();
+	    double delay = card.totalTime();
 	    if (delay >= 60)
 	        stats.reviewTime += 60;
 	    else
 	    {
 	        stats.reviewTime += delay;
-	        stats.averageTime = (stats.reviewTime / (float) stats.reps);
+	        stats.averageTime = (stats.reviewTime / (double) stats.reps);
 	    }
 	    // update eases
 	    String attr = oldState + String.format("Ease%d", ease);

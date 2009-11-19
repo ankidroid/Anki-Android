@@ -48,6 +48,7 @@ public class AnkiDb
 		if (database != null)
 		{
 			database.close();
+			database = null;
 		}
 	}
 

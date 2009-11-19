@@ -16,12 +16,9 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -44,7 +41,7 @@ import android.widget.ToggleButton;
  * @author Andrew Dubya, Nicolas Raoul, Edu Zamora
  * 
  */
-public class Ankidroid extends Activity implements Runnable
+public class Ankidroid extends Activity// implements Runnable
 {
 
 	/**
@@ -188,27 +185,41 @@ public class Ankidroid extends Activity implements Runnable
 	{
 		public void onClick(View view)
 		{
+			int ease;
 			switch (view.getId())
 			{
 			case R.id.ease1:
+				ease = 1;
 				if (corporalPunishments)
 				{
 					Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 					v.vibrate(500);
 				}
-				deck.answerCard(currentCard, 1);
 				break;
 			case R.id.ease2:
-				deck.answerCard(currentCard, 2);
+				ease = 2;
 				break;
 			case R.id.ease3:
-				deck.answerCard(currentCard, 3);
+				ease = 3;
 				break;
 			case R.id.ease4:
-				deck.answerCard(currentCard, 4);
+				ease = 4;
 				break;
+			default:
+				ease = 0;
+				return;
 			}
-			nextCard();
+//			long start = System.currentTimeMillis();
+//			deck.answerCard(currentCard, ease);
+//			long stop = System.currentTimeMillis();
+//			Log.v(TAG, "mSelectEaseHandler.onClick - Answered card in " + (stop - start) + " ms.");
+			
+			//nextCard(ease);
+			
+			DeckTask.launchDeckTask(
+					DeckTask.TASK_TYPE_ANSWER_CARD,
+					mAnswerCardHandler,
+					new DeckTask.TaskData(ease, deck, currentCard));
 		}
 	};
 	
@@ -464,9 +475,13 @@ public class Ankidroid extends Activity implements Runnable
 			if (deckFilename != null && new File(deckFilename).exists())
 			{
 				showControls(false);
-				dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
-				Thread thread = new Thread(this);
-				thread.start();
+//				dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
+//				Thread thread = new Thread(this);
+//				thread.start();
+				DeckTask.launchDeckTask(
+						DeckTask.TASK_TYPE_LOAD_DECK,
+						mLoadDeckHandler,
+						new DeckTask.TaskData(deckFilename));
 			}
 			else
 			{
@@ -487,75 +502,76 @@ public class Ankidroid extends Activity implements Runnable
 
 	}
 
-	public void run()
-	{
-		Log.i(TAG, "Ankidroid loader thread - run");
-		handler.sendEmptyMessage(loadDeck(deckFilename));
-	}
+//	public void run()
+//	{
+//		Log.i(TAG, "Ankidroid loader thread - run");
+//		handler.sendEmptyMessage(loadDeck(deckFilename));
+//	}
 
-	public int loadDeck(String deckFilename)
-	{
-		Log.i(TAG, "loadDeck - deckFilename = " + deckFilename);
-		this.deckFilename = deckFilename;
-		
-		Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
-		try
-		{
-			// Open the right deck.
-			//AnkiDb.openDatabase(deckFilename);
-			deck = Deck.openDeck(deckFilename);
-			// Start by getting the first card and displaying it.
-			nextCard();
-			Log.i(TAG, "Deck loaded!");
-			return DECK_LOADED;
-		} catch (SQLException e)
-		{
-			Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
-			return DECK_NOT_LOADED;
-		} catch (CursorIndexOutOfBoundsException e)
-		{
-			Log.i(TAG, "The deck has no cards = " + e.getMessage());;
-			return DECK_EMPTY;
-		}
-	}
+//	public int loadDeck(String deckFilename)
+//	{
+//		Log.i(TAG, "loadDeck - deckFilename = " + deckFilename);
+//		this.deckFilename = deckFilename;
+//		
+//		Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
+//		try
+//		{
+//			// Open the right deck.
+//			//AnkiDb.openDatabase(deckFilename);
+//			deck = Deck.openDeck(deckFilename);
+//			// Start by getting the first card and displaying it.
+//			//nextCard(0);
+//			Log.i(TAG, "Deck loaded!");
+//			return DECK_LOADED;
+//		} catch (SQLException e)
+//		{
+//			Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+//			return DECK_NOT_LOADED;
+//		} catch (CursorIndexOutOfBoundsException e)
+//		{
+//			Log.i(TAG, "The deck has no cards = " + e.getMessage());;
+//			return DECK_EMPTY;
+//		}
+//	}
 
 
-	private Handler handler = new Handler()
-	{
-		public void handleMessage(Message msg)
-		{	
-			//This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
-			if(dialog.isShowing()) 
-			{
-				try
-				{
-					dialog.dismiss();
-				} catch(Exception e)
-				{
-					Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
-				}
-				
-			}
-			
-			switch(msg.what)
-			{
-
-				case DECK_LOADED:
-					showControls(true);
-					deckLoaded = true;
-					displayCardQuestion();
-					break;
-					
-				case DECK_NOT_LOADED:
-					displayDeckNotLoaded();
-					break;
-				
-				case DECK_EMPTY:
-					displayNoCardsInDeck();
-					break;
-			}
-		}
-	};
+//	private Handler handler = new Handler()
+//	{
+//		public void handleMessage(Message msg)
+//		{	
+//			//This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
+//			if(dialog.isShowing()) 
+//			{
+//				try
+//				{
+//					dialog.dismiss();
+//				} catch(Exception e)
+//				{
+//					Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
+//				}
+//				
+//			}
+//			nextCard(0);
+//			
+//			switch(msg.what)
+//			{
+//
+//				case DECK_LOADED:
+//					showControls(true);
+//					deckLoaded = true;
+//					displayCardQuestion();
+//					break;
+//					
+//				case DECK_NOT_LOADED:
+//					displayDeckNotLoaded();
+//					break;
+//				
+//				case DECK_EMPTY:
+//					displayNoCardsInDeck();
+//					break;
+//			}
+//		}
+//	};
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
@@ -682,33 +698,63 @@ public class Ankidroid extends Activity implements Runnable
 	}
 
 	// Get the next card.
-	public void nextCard()
-	{
-		Log.i(TAG, "nextCard");
+//	public void nextCard(int ease)
+//	{
+//		Log.i(TAG, "nextCard");
+//		long start, stop;
 //		if (spacedRepetition)
 //			currentCard = AnkiDb.Card.smallestIntervalCard();
 //		else
 //			currentCard = AnkiDb.Card.randomCard();
 
-		currentCard = deck.getCard();
-		
-		// Set the correct value for the flip card button - That triggers the
-		// listener which displays the question of the card
-		mFlipCard.setChecked(false);
-		mWhiteboard.clear();
-		mTimer.setBase(SystemClock.elapsedRealtime());
-		mTimer.start();
-	}
+		// Store away the current card to answer after the new card has been loaded.
+		// In order for it to not appear again as the new card, we temporarily set its
+		// priority to 0.
+//		Card oldCard = currentCard;
+//		if (oldCard != null)
+//		{
+//			start = System.currentTimeMillis();
+//			oldCard.temporarilySetLowestPriority();
+//			stop = System.currentTimeMillis();
+//			Log.v(TAG, "nextCard - Set old card 0 priority in " + (stop - start) + " ms.");
+//		}
+//		
+//		start = System.currentTimeMillis();
+//		currentCard = deck.getCard();
+//		stop = System.currentTimeMillis();
+//		
+//		Log.v(TAG, "nextCard - Loaded new card in " + (stop - start) + " ms.");
+//		
+//		// Set the correct value for the flip card button - That triggers the
+//		// listener which displays the question of the card
+//		mFlipCard.setChecked(false);
+//		mWhiteboard.clear();
+//		mTimer.setBase(SystemClock.elapsedRealtime());
+//		mTimer.start();
+//		
+//		if (ease != 0 && oldCard != null)
+//		{
+//			start = System.currentTimeMillis();
+//			deck.answerCard(oldCard, ease);
+//			stop = System.currentTimeMillis();
+//			Log.v(TAG, "nextCard - Answered old card in " + (stop - start) + " ms.");
+//		}
+//		task = launchDeckTask(
+//				deck,
+//				DeckTask.TASK_TYPE_ANSWER_CARD,
+//				new TaskData(ease));
+//		
+//	}
 
 	// Set up the display for the current card.
 	public void displayCardQuestion()
 	{
 		Log.i(TAG, "displayCardQuestion");
 
-		if (currentCard == null)
-		{
-			nextCard();
-		}
+//		if (currentCard == null)
+//		{
+//			nextCard();
+//		}
 
 		if (currentCard == null)
 		{
@@ -934,4 +980,377 @@ public class Ankidroid extends Activity implements Runnable
 	{
 		showDialog(DIALOG_UPDATE);
 	}*/
+	
+//	private DeckTask launchDeckTask(Deck deck, Card cardToAnswer, int type, DeckTask.TaskData... params)
+//	{
+//		try
+//		{
+//		if ((task != null) && (task.getStatus() != AsyncTask.Status.FINISHED))
+//			task.get();
+//		} catch (Exception e)
+//		{
+//			e.printStackTrace();
+//		}
+//		
+//		switch (type)
+//		{
+//		case DeckTask.TASK_TYPE_LOAD_DECK:
+//			return (DeckTask) new DeckTask(null, null, type, mLoadDeckHandler).execute(params);
+//		case DeckTask.TASK_TYPE_ANSWER_CARD:
+//			return (DeckTask) new DeckTask(deck, cardToAnswer, type, mAnswerCardHandler).execute(params);
+//		default:
+//			return null;
+//		}
+//	}
+	
+	DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener()
+	{
+		
+		@Override
+		public void onPreExecute() {
+			dialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
+		}
+		
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+			// Pass
+		}
+		
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+			Card newCard = values[0].getCard();
+			
+			currentCard = newCard;
+			
+			// Set the correct value for the flip card button - That triggers the
+			// listener which displays the question of the card
+			mFlipCard.setChecked(false);
+			mWhiteboard.clear();
+			mTimer.setBase(SystemClock.elapsedRealtime());
+			mTimer.start();
+			
+			dialog.dismiss();
+		}
+		
+	};
+	
+	DeckTask.TaskListener mLoadDeckHandler = new DeckTask.TaskListener() 
+	{
+		
+		@Override
+		public void onPreExecute() {
+			dialog = ProgressDialog.show(Ankidroid.this, "", "Loading deck. Please wait...", true);
+		}
+		
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+			// This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
+			if(dialog.isShowing()) 
+			{
+				try
+				{
+					dialog.dismiss();
+				} catch(Exception e)
+				{
+					Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
+				}
+			}
+			
+			switch(result.getInt())
+			{
+				case DECK_LOADED:
+					deck = result.getDeck();
+					currentCard = result.getCard();
+					showControls(true);
+					deckLoaded = true;
+					displayCardQuestion();
+					break;
+					
+				case DECK_NOT_LOADED:
+					displayDeckNotLoaded();
+					break;
+				
+				case DECK_EMPTY:
+					displayNoCardsInDeck();
+					break;
+			}
+		}
+		
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+			// Pass
+		}
+		
+	};
+	
+//	public static class DeckTask extends AsyncTask<TaskData, TaskData, TaskData>
+//	{
+//		public static final int TASK_TYPE_LOAD_DECK = 0;
+//		public static final int TASK_TYPE_ANSWER_CARD = 1;
+//		int type;
+//		Deck deck;
+//		Card oldCard;
+//		TaskListener listener;
+//		
+//		public DeckTask(Deck deck, int type, TaskListener listener)
+//		{
+//			this.deck = deck;
+//			this.type = type;
+//			this.listener = listener;
+//		}
+//		
+//		public DeckTask(Deck deck, Card cardToAnswer, int type, TaskListener listener)
+//		{
+//			this(deck, type, listener);
+//			this.oldCard = cardToAnswer;
+//		}
+//
+//		@Override
+//		protected TaskData doInBackground(TaskData... params)
+//		{
+//			switch (type)
+//			{
+//			case TASK_TYPE_LOAD_DECK:
+//				return doInBackgroundLoadDeck(params);
+//			case TASK_TYPE_ANSWER_CARD:
+//				return doInBackgroundAnswerCard(params);
+//			default:
+//				return null;
+//			}
+//		}
+//		
+//		@Override
+//		protected void onPreExecute()
+//		{
+//			listener.onPreExecute();
+////			switch (type)
+////			{
+////			case TASK_TYPE_LOAD_DECK:
+////				onPreExecuteLoadDeck();
+////			case TASK_TYPE_ANSWER_CARD:
+////				onPreExecuteAnswerCard();
+////				break;
+////			default:
+////				break;
+////			}
+//		}
+//		
+//		@Override
+//		protected void onProgressUpdate(TaskData... values)
+//		{
+//			listener.onProgressUpdate(values);
+////			switch (type)
+////			{
+////			case TASK_TYPE_ANSWER_CARD:
+////				onProgressUpdateAnswerCard(values);
+////				break;
+////			default:
+////				break;
+////			}
+//		}
+//		
+//		@Override
+//		protected void onPostExecute(TaskData result)
+//		{
+//			listener.onPostExecute(result);
+////			switch (type)
+////			{
+////			case TASK_TYPE_LOAD_DECK:
+////				onPostExecuteLoadDeck(result);
+////				break;
+////			default:
+////				break;
+////			}
+//		}
+//		
+////		private void onPreExecuteAnswerCard()
+////		{
+////			oldCard = Ankidroid.this.currentCard;
+////			dialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
+////		}
+//		
+//		private TaskData doInBackgroundAnswerCard(TaskData... params)
+//		{
+//			long start, stop;
+//			Card newCard;
+//			int ease = params[0].getInt();
+//			
+//			if (oldCard != null)
+//			{
+//				start = System.currentTimeMillis();
+//				oldCard.temporarilySetLowestPriority();
+//				stop = System.currentTimeMillis();
+//				Log.v(TAG, "doInBackground - Set old card 0 priority in " + (stop - start) + " ms.");
+//			}
+//			
+//			start = System.currentTimeMillis();
+//			newCard = this.deck.getCard();
+//			stop = System.currentTimeMillis();
+//			Log.v(TAG, "doInBackground - Loaded new card in " + (stop - start) + " ms.");
+//			publishProgress(new TaskData(newCard));
+//			
+//			if (ease != 0 && oldCard != null)
+//			{
+//				start = System.currentTimeMillis();
+//				this.deck.answerCard(oldCard, ease);
+//				stop = System.currentTimeMillis();
+//				Log.v(TAG, "doInBackground - Answered old card in " + (stop - start) + " ms.");
+//			}
+//			
+//			return null;
+//		}
+//		
+////		private void onProgressUpdateAnswerCard(TaskData... values)
+////		{
+////			Card newCard = values[0].getCard();
+////			
+////			Ankidroid.this.currentCard = newCard;
+////			
+////			// Set the correct value for the flip card button - That triggers the
+////			// listener which displays the question of the card
+////			Ankidroid.this.mFlipCard.setChecked(false);
+////			Ankidroid.this.mWhiteboard.clear();
+////			Ankidroid.this.mTimer.setBase(SystemClock.elapsedRealtime());
+////			Ankidroid.this.mTimer.start();
+////			
+////			dialog.dismiss();
+////		}
+//		
+////		private void onPreExecuteLoadDeck()
+////		{
+////			dialog = ProgressDialog.show(Ankidroid.this, "", "Loading deck. Please wait...", true);
+////		}
+//		
+//		private TaskData doInBackgroundLoadDeck(TaskData... params)
+//		{
+//			String deckFilename = params[0].getString();
+//			Log.i(TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
+//			
+//			Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
+//			try
+//			{
+//				// Open the right deck.
+//				//AnkiDb.openDatabase(deckFilename);
+//				Deck deck = Deck.openDeck(deckFilename);
+//				// Start by getting the first card and displaying it.
+//				//nextCard(0);
+//				Card card = deck.getCard();
+//				Log.i(TAG, "Deck loaded!");
+//				
+//				return new TaskData(Ankidroid.DECK_LOADED, deck, card);
+//			} catch (SQLException e)
+//			{
+//				Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+//				return new TaskData(Ankidroid.DECK_NOT_LOADED);
+//			} catch (CursorIndexOutOfBoundsException e)
+//			{
+//				Log.i(TAG, "The deck has no cards = " + e.getMessage());;
+//				return new TaskData(Ankidroid.DECK_EMPTY);
+//			}
+//		}
+//		
+////		private void onPostExecuteLoadDeck(TaskData result)
+////		{
+////			// This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
+////			if(dialog.isShowing()) 
+////			{
+////				try
+////				{
+////					dialog.dismiss();
+////				} catch(Exception e)
+////				{
+////					Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
+////				}
+////			}
+////			
+////			switch(result.getInt())
+////			{
+////				case DECK_LOADED:
+////					showControls(true);
+////					deckLoaded = true;
+////					displayCardQuestion();
+////					break;
+////					
+////				case DECK_NOT_LOADED:
+////					displayDeckNotLoaded();
+////					break;
+////				
+////				case DECK_EMPTY:
+////					displayNoCardsInDeck();
+////					break;
+////			}
+////		}
+//		
+//		public static interface TaskListener
+//		{
+//			public void onPreExecute();
+//			
+//			public void onPostExecute(TaskData result);
+//			
+//			public void onProgressUpdate(TaskData... values);
+//		}
+//		
+//		public static class TaskData
+//		{
+//			private Deck deck;
+//			private Card card;
+//			private int integer;
+//			private String msg;
+//			
+//			public TaskData(int value, Deck deck, Card card)
+//			{
+//				this(value);
+//				this.deck = deck;
+//				this.card = card;
+//			}
+//			
+//			public TaskData(Card card)
+//			{
+//				this.card = card;
+//			}
+//			
+//			public TaskData(int value)
+//			{
+//				this.integer = value;
+//			}
+//			
+//			public TaskData(String msg)
+//			{
+//				this.msg = msg;
+//			}
+//			
+////			public void putCard(Card card)
+////			{
+////				this.card = card;
+////			}
+////			
+////			public void putInt(int value)
+////			{
+////				this.integer = value;
+////			}
+//			
+//			public Deck getDeck()
+//			{
+//				return deck;
+//			}
+//			
+//			public Card getCard()
+//			{
+//				return card;
+//			}
+//			
+//			public int getInt()
+//			{
+//				return integer;
+//			}
+//			
+//			public String getString()
+//			{
+//				return msg;
+//			}
+//			
+//		}
+//		
+//	}
+	
 }

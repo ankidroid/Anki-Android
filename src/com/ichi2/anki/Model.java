@@ -11,14 +11,14 @@ public class Model {
 	// BEGIN SQL table entries
 	long id; // Primary key
 	long deckId; // Foreign key
-	float created = System.currentTimeMillis() / 1000f;
-	float modified = System.currentTimeMillis() / 1000f;
+	double created = System.currentTimeMillis() / 1000.0;
+	double modified = System.currentTimeMillis() / 1000.0;
 	String tags = "";
 	String name;
 	String description = "";
 	String features = ""; // obsolete
-	float spacing = 0.1f;
-	float initialSpacing = 60;
+	double spacing = 0.1;
+	double initialSpacing = 60;
 	int source = 0;
 	// BEGIN SQL table entries
 
@@ -39,7 +39,7 @@ public class Model {
 	}
 	
 	public void setModified() {
-		this.modified = System.currentTimeMillis() / 1000f;
+		this.modified = System.currentTimeMillis() / 1000.0;
 	}
 	
 	public void addFieldModel(FieldModel field) {
