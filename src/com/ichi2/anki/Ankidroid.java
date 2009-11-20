@@ -861,7 +861,11 @@ public class Ankidroid extends Activity// implements Runnable
 					currentCard = result.getCard();
 					showControls(true);
 					deckLoaded = true;
+					
 					displayCardQuestion();
+					mWhiteboard.clear();
+					mTimer.setBase(SystemClock.elapsedRealtime());
+					mTimer.start();
 					break;
 					
 				case DECK_NOT_LOADED:
