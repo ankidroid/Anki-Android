@@ -62,6 +62,8 @@ public class Ankidroid extends Activity// implements Runnable
 	public static final int MENU_PREFERENCES = 1;
 
 	public static final int MENU_ABOUT = 2;
+	
+	public static final int MENU_DECKOPTS = 3;
 
 	/**
 	 * Dialogs
@@ -312,6 +314,7 @@ public class Ankidroid extends Activity// implements Runnable
 		menu.add(0, MENU_OPEN, 0, "Switch to another deck");
 		menu.add(1, MENU_PREFERENCES, 0, "Preferences");
 		menu.add(1, MENU_ABOUT, 0, "About");
+		menu.add(1, MENU_DECKOPTS, 0, "Study Options");
 		return true;
 	}
 
@@ -332,6 +335,10 @@ public class Ankidroid extends Activity// implements Runnable
 			Intent about = new Intent(this, About.class);
 			startActivity(about);
 			return true;
+		case MENU_DECKOPTS:
+		    Intent opts = new Intent(this, DeckPreferences.class);
+		    startActivity( opts );
+		    return true;
 		}
 		return false;
 	}

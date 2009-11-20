@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Study Options">
+            <EditTextPreference
+            android:title="New Cards / Day"
+            android:defaultValue="20"
+            android:summary="The maximum number of new cards shown per day."
+            android:numeric="integer" 
+            android:key="newCardsPDay" />
+            
+            <EditTextPreference
+            android:title="Session Time Limit"
+            android:defaultValue="40"
+            android:summary="The number of minutes in a session."
+            android:numeric="integer" 
+            android:key="sessionTLimit" />
+            
+            <EditTextPreference
+            android:title="Session Question Limit"
+            android:defaultValue="0"
+            android:summary="The number of questions in a session. Choose 0 for no limit."
+            android:numeric="integer" 
+            android:key="sessionQLimit" />
+    </PreferenceCategory>
+</PreferenceScreen>
