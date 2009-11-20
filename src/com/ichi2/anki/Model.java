@@ -56,14 +56,12 @@ public class Model {
 	
 	
 	public static final class FieldModelOrdinalComparator implements Comparator<FieldModel> {
-		@Override
 		public int compare(FieldModel object1, FieldModel object2) {
 			return object1.ordinal - object2.ordinal;
 		}
 	}
 	
 	public static final class CardModelOrdinalComparator implements Comparator<CardModel> {
-		@Override
 		public int compare(CardModel object1, CardModel object2) {
 			return object1.ordinal - object2.ordinal;
 		}
