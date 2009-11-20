@@ -134,12 +134,12 @@ public class Deck
 	int failedCardMax;
 
 	// Number of new cards to show per day
-	int newCardsPerDay;
+	private int newCardsPerDay;
 
 	// Currently unused
-	int sessionRepLimit;
+	private int sessionRepLimit;
 
-	int sessionTimeLimit;
+	private int sessionTimeLimit;
 
 	// Stats offset
 	double utcOffset;
@@ -371,6 +371,49 @@ public class Deck
 		AnkiDb.closeDatabase();
 		return value;
 	}
+	
+	/* Getters and Setters for deck properties
+	 * NOTE: The setters flushMod()
+	 ***********************************************************/
+	public int getNewCardsPerDay()
+	{
+	    return newCardsPerDay;
+	}
+	
+	public void setNewCardsPerDay( int num )
+	{
+	    if( num > 0 )
+	    {
+	        newCardsPerDay = num;
+	        flushMod();
+	    }
+	}
+	
+	public int getSessionRepLimit()
+	{
+	    return sessionRepLimit;
+	}
+	public void setSessionRepLimit( int num )
+    {
+        if( num >= 0 )
+        {
+            sessionRepLimit = num;
+            flushMod();
+        }
+    }
+	
+	public int getSessionTimeLimit()
+	{
+	    return sessionTimeLimit;
+	}
+	
+	public void setSessionTimeLimit( int num )
+    {
+        if( num >= 0 ) {
+            sessionTimeLimit = num;
+            flushMod();
+        }
+    }
 	
 	/* Getting the next card
 	 ***********************************************************/
