@@ -110,8 +110,6 @@ public class Ankidroid extends Activity// implements Runnable
 	public String cardTemplate;
 
 	private Card currentCard;
-	
-	private Deck deck;
 
 	/** 
 	 * Variables to hold layout objects that we need to update or handle events for
@@ -182,7 +180,7 @@ public class Ankidroid extends Activity// implements Runnable
 			DeckTask.launchDeckTask(
 					DeckTask.TASK_TYPE_ANSWER_CARD,
 					mAnswerCardHandler,
-					new DeckTask.TaskData(ease, deck, currentCard));
+					new DeckTask.TaskData(ease, AnkidroidApp.deck(), currentCard));
 		}
 	};
 	
@@ -369,7 +367,7 @@ public class Ankidroid extends Activity// implements Runnable
 	public void openDeckPicker()
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
-    	deck.closeDeck();
+    	AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
@@ -717,7 +715,7 @@ public class Ankidroid extends Activity// implements Runnable
     
     private void closeExternalStorageFiles()
     {
-    	deck.closeDeck();
+        AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
     	displaySdError();
     }
@@ -804,17 +802,14 @@ public class Ankidroid extends Activity// implements Runnable
 	DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener()
 	{
 		
-		@Override
 		public void onPreExecute() {
 			dialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
 		}
 		
-		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
 			// Pass
 		}
 		
-		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 			Card newCard = values[0].getCard();
 			
@@ -835,12 +830,10 @@ public class Ankidroid extends Activity// implements Runnable
 	DeckTask.TaskListener mLoadDeckHandler = new DeckTask.TaskListener() 
 	{
 		
-		@Override
 		public void onPreExecute() {
 			dialog = ProgressDialog.show(Ankidroid.this, "", "Loading deck. Please wait...", true);
 		}
 		
-		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
 			// This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
 			if(dialog.isShowing()) 
@@ -857,7 +850,9 @@ public class Ankidroid extends Activity// implements Runnable
 			switch(result.getInt())
 			{
 				case DECK_LOADED:
-					deck = result.getDeck();
+					// Set the deck in the application instance, so other activities
+					// can access the loaded deck.
+				    AnkidroidApp.setDeck( result.getDeck() );
 					currentCard = result.getCard();
 					showControls(true);
 					deckLoaded = true;
@@ -878,7 +873,6 @@ public class Ankidroid extends Activity// implements Runnable
 			}
 		}
 		
-		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 			// Pass
 		}
