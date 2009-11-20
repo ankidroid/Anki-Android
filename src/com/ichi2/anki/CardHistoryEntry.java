@@ -6,35 +6,35 @@ public class CardHistoryEntry {
 	
 	// BEGIN: SQL table columns
 	long cardId;
-	float time = System.currentTimeMillis() / 1000f;
-	float lastInterval;
-	float nextInterval;
+	double time;
+	double lastInterval;
+	double nextInterval;
 	int ease;
-	float delay;
-	float lastFactor;
-	float nextFactor;
+	double delay;
+	double lastFactor;
+	double nextFactor;
 	float reps;
-	float thinkingTime;
+	double thinkingTime;
 	float yesCount;
 	float noCount;
 	// END: SQL table columns
 	
-	public CardHistoryEntry(Card card, int ease, float delay)
+	public CardHistoryEntry(Card card, int ease, double delay)
 	{
 		if (card == null)
 			return;
 		
-		this.cardId = card.id;
-		this.lastInterval = card.lastInterval;
-		this.nextInterval = card.interval;
-		this.lastFactor = card.lastFactor;
-		this.nextFactor = card.factor;
-		this.reps = card.reps;
-		this.yesCount = card.yesCount;
-		this.noCount = card.noCount;
+		cardId = card.id;
+		lastInterval = card.lastInterval;
+		nextInterval = card.interval;
+		lastFactor = card.lastFactor;
+		nextFactor = card.factor;
+		reps = card.reps;
+		yesCount = card.yesCount;
+		noCount = card.noCount;
 		this.ease = ease;
 		this.delay = delay;
-		this.thinkingTime = card.thinkingTime();
+		thinkingTime = card.thinkingTime();
 	}
 	
 	public void writeSQL()
@@ -51,7 +51,7 @@ public class CardHistoryEntry {
 	values.put("thinkingTime", thinkingTime);
 	values.put("yesCount", yesCount);
 	values.put("noCount", noCount);
-	values.put("time", System.currentTimeMillis() / 1000f);
+	values.put("time", System.currentTimeMillis() / 1000.0);
 	
 	AnkiDb.database.insert("reviewHistory", null, values);
 	}

@@ -70,16 +70,16 @@ public class Deck
 
 	private static final int DECK_VERSION = 43;
 	
-	private static final float factorFour = 1.3f;
-	private static final float initialFactor = 2.5f;
-	private static final float maxScheduleTime = 36500f;
+	private static final double factorFour = 1.3;
+	private static final double initialFactor = 2.5;
+	private static final double maxScheduleTime = 36500.0;
 	
 	// BEGIN: SQL table columns
 	long id;
 
-	float created;
+	double created;
 
-	float modified;
+	double modified;
 
 	String description;
 
@@ -89,21 +89,21 @@ public class Deck
 	
 	String syncName;
 
-	float lastSync;
+	double lastSync;
 
 	// Scheduling
 	// Initial intervals
-	float hardIntervalMin;
+	double hardIntervalMin;
 
-	float hardIntervalMax;
+	double hardIntervalMax;
 
-	float midIntervalMin;
+	double midIntervalMin;
 
-	float midIntervalMax;
+	double midIntervalMax;
 
-	float easyIntervalMin;
+	double easyIntervalMin;
 
-	float easyIntervalMax;
+	double easyIntervalMax;
 
 	// Delays on failure
 	int delay0;
@@ -113,7 +113,7 @@ public class Deck
 	int delay2;
 
 	// Collapsing future cards
-	float collapseTime;
+	double collapseTime;
 
 	// Priorities and postponing
 	String highPriority;
@@ -142,7 +142,7 @@ public class Deck
 	int sessionTimeLimit;
 
 	// Stats offset
-	float utcOffset;
+	double utcOffset;
 
 	// Count cache
 	int cardCount;
@@ -167,13 +167,13 @@ public class Deck
 	//ArrayList<Model> models; // Deck.id = Model.deckId
 	// END JOINed variables
 	
-	float averageFactor;
+	double averageFactor;
 
 	int newCardModulus;
 
 	int newCountToday;
 
-	float lastLoaded;
+	double lastLoaded;
 	
 	boolean newEarly;
 
@@ -188,7 +188,7 @@ public class Deck
 		// tmpMediaDir = null;
 		// forceMediaDir = null;
 		// lastTags = "";
-		lastLoaded = (float) System.currentTimeMillis() / 1000;
+		lastLoaded = (double) System.currentTimeMillis() / 1000.0;
 //		undoEnabled = false;
 //		sessionStartReps = 0;
 //		sessionStartTime = 0;
@@ -202,7 +202,7 @@ public class Deck
 		Deck deck = new Deck();
 		Log.i(TAG, "openDeck - Opening database " + path);
 		AnkiDb.openDatabase(path);
-
+		
 		// Read in deck table columns
 		Cursor cursor = AnkiDb.database.rawQuery("SELECT *" + " FROM decks" + " LIMIT 1", null);
 
@@ -211,23 +211,23 @@ public class Deck
 		cursor.moveToFirst();
 		
 		deck.id 			 = cursor.getLong(0);
-		deck.created		 = cursor.getFloat(1);
-		deck.modified 		 = cursor.getFloat(2);
+		deck.created		 = cursor.getDouble(1);
+		deck.modified 		 = cursor.getDouble(2);
 		deck.description	 = cursor.getString(3);
 		deck.version		 = cursor.getInt(4);
 		deck.currentModelId	 = cursor.getLong(5);
 		deck.syncName		 = cursor.getString(6);
-		deck.lastSync		 = cursor.getFloat(7);
-		deck.hardIntervalMin = cursor.getFloat(8);
-		deck.hardIntervalMax = cursor.getFloat(9);
-		deck.midIntervalMin  = cursor.getFloat(10);
-		deck.midIntervalMax  = cursor.getFloat(11);
-		deck.easyIntervalMin = cursor.getFloat(12);
-		deck.easyIntervalMax = cursor.getFloat(13);
+		deck.lastSync		 = cursor.getDouble(7);
+		deck.hardIntervalMin = cursor.getDouble(8);
+		deck.hardIntervalMax = cursor.getDouble(9);
+		deck.midIntervalMin  = cursor.getDouble(10);
+		deck.midIntervalMax  = cursor.getDouble(11);
+		deck.easyIntervalMin = cursor.getDouble(12);
+		deck.easyIntervalMax = cursor.getDouble(13);
 		deck.delay0 		 = cursor.getInt(14);
 		deck.delay1 		 = cursor.getInt(15);
 		deck.delay2 		 = cursor.getInt(16);
-		deck.collapseTime 	 = cursor.getFloat(17);
+		deck.collapseTime 	 = cursor.getDouble(17);
 		deck.highPriority 	 = cursor.getString(18);
 		deck.medPriority 	 = cursor.getString(19);
 		deck.lowPriority 	 = cursor.getString(20);
@@ -238,7 +238,7 @@ public class Deck
 		deck.newCardsPerDay  = cursor.getInt(25);
 		deck.sessionRepLimit = cursor.getInt(26);
 		deck.sessionTimeLimit= cursor.getInt(27);
-		deck.utcOffset		 = cursor.getFloat(28);
+		deck.utcOffset		 = cursor.getDouble(28);
 		deck.cardCount 		 = cursor.getInt(29);
 		deck.factCount 		 = cursor.getInt(30);
 		deck.failedNowCount  = cursor.getInt(31);
@@ -249,9 +249,10 @@ public class Deck
 
 		Log.i(TAG, "openDeck - Read " + cursor.getColumnCount() + " columns from decks table.");
 		cursor.close();
+		Log.i(TAG, String.format("openDeck - modified: %f currentTime: %f", deck.modified, System.currentTimeMillis()/1000.0));
 
 		deck.initVars();
-
+		
 		// Ensure necessary indices are available
 		deck.updateDynamicIndices();
 		// Save counts to determine if we should save deck after check
@@ -259,8 +260,13 @@ public class Deck
 		// Update counts
 		deck.rebuildQueue();
 		// Unsuspend reviewed early & buried
-		cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM cards " + "WHERE type in (0,1,2) and "
-		        + "isDue = 0 and " + "priority in (-1,-2)", null);
+		cursor = AnkiDb.database.rawQuery(
+				"SELECT id " + 
+				"FROM cards " + 
+				"WHERE type in (0,1,2) and " + 
+				"isDue = 0 and " + 
+				"priority in (-1,-2)",
+				null);
 
 		if (cursor.isClosed())
 			throw new SQLException();
@@ -282,6 +288,8 @@ public class Deck
 		if ((oldCount != (deck.failedSoonCount + deck.revCount + deck.newCount)) || deck.modifiedSinceSave())
 			deck.commitToDB();
 
+		Card.updateStmt = null;
+		
 		return deck;
 	}
 
@@ -294,11 +302,11 @@ public class Deck
 
 	private boolean modifiedSinceSave()
 	{
-		return this.modified > this.lastLoaded;
+		return modified > lastLoaded;
 	}
 	
 	private void setModified() {
-		modified = System.currentTimeMillis() / 1000f;
+		modified = System.currentTimeMillis() / 1000.0;
 	}
 	
 	private void flushMod() {
@@ -309,7 +317,6 @@ public class Deck
 	private void commitToDB() {
 		Log.i(TAG, "commitToDB - Saving deck to DB...");
 		ContentValues values = new ContentValues();
-		values.put("id", id);
 		values.put("created", created);
 		values.put("modified", modified);
 		values.put("description", description);
@@ -347,12 +354,11 @@ public class Deck
 		values.put("revCardOrder", revCardOrder);
 
 		AnkiDb.database.update("decks", values, "id = " + this.id, null);
-		lastLoaded = System.currentTimeMillis() / 1000f;
 	}
 
-	public static float getLastModified(String deckPath)
+	public static double getLastModified(String deckPath)
 	{
-		float value;
+		double value;
 		//Log.i(TAG, "Deck - getLastModified from deck = " + deckPath);
 		AnkiDb.openDatabase(deckPath);
 		Cursor cursor = AnkiDb.database.rawQuery("SELECT modified" + " FROM decks" + " LIMIT 1", null);
@@ -360,7 +366,7 @@ public class Deck
 		if (!cursor.moveToFirst())
 			value = -1;
 		else
-			value = cursor.getFloat(0);
+			value = cursor.getDouble(0);
 		cursor.close();
 		AnkiDb.closeDatabase();
 		return value;
@@ -414,7 +420,7 @@ public class Deck
 		// Display failed cards early/last
 		if (showFailedLast()) {
 			try {
-			id = AnkiDb.queryScalar("SELECT id FROM failedCards limit 1");
+			id = AnkiDb.queryScalar("SELECT id FROM failedCards LIMIT 1");
 			} catch (Exception e) {
 				return 0;
 			}
@@ -511,14 +517,19 @@ public class Deck
 	}
 	
 	private boolean showFailedLast() {
-		return (collapseTime != 0f) || (delay0 == 0);
+		return (collapseTime != 0) || (delay0 == 0);
 	}
 	
 	private Card cardFromId(long id) {
 		if (id == 0)
 			return null;
 		Card card = new Card();
-		if (!card.fromDB(id))
+		long start = System.currentTimeMillis();
+		boolean result = card.fromDB(id);
+		long stop = System.currentTimeMillis();
+        Log.v(TAG, "cardFromId - card.fromDB in " + (stop - start) + " ms.");
+        
+		if (!result)
 			return null;
 		card.genFuzz();
 		card.startTimer();
@@ -530,16 +541,16 @@ public class Deck
 	
 	public void answerCard(Card card, int ease)
 	{
-		float now = System.currentTimeMillis() / 1000f;
+		double now = System.currentTimeMillis() / 1000.0;
 		
 		// Old state
 		String oldState = cardState(card);
-		float lastDelaySecs = System.currentTimeMillis() / 1000f - card.combinedDue;
-        float lastDelay = lastDelaySecs / 86400f;
+		double lastDelaySecs = System.currentTimeMillis() / 1000.0 - card.combinedDue;
+        double lastDelay = lastDelaySecs / 86400.0;
         int oldSuc = card.successive;
         
         // update card details
-        float last = card.interval;
+        double last = card.interval;
         card.interval = nextInterval(card, ease);
         if (lastDelay >= 0)
             card.lastInterval = last; // keep last interval if reviewing early
@@ -552,7 +563,8 @@ public class Deck
             updateFactor(card, ease); // don't update factor if learning ahead
         
         // spacing
-        float space, spaceFactor, minSpacing, minOfOtherCards;
+        long start = System.currentTimeMillis();
+        double space, spaceFactor, minSpacing, minOfOtherCards;
         Cursor cursor = AnkiDb.database.rawQuery(
         		"SELECT models.initialSpacing, models.spacing " +
         		"FROM facts, models " +
@@ -567,11 +579,14 @@ public class Deck
         }
         else
         {
-	        minSpacing = cursor.getFloat(0);
-	        spaceFactor = cursor.getFloat(1);
+	        minSpacing = cursor.getDouble(0);
+	        spaceFactor = cursor.getDouble(1);
         }
         cursor.close();
+        long stop = System.currentTimeMillis();
+        Log.v(TAG, "answerCard - spacing in " + (stop - start) + " ms.");
         
+        start = System.currentTimeMillis();
         cursor = AnkiDb.database.rawQuery(
         		"SELECT min(interval) " +
         		"FROM cards " +
@@ -583,15 +598,17 @@ public class Deck
 		if (!cursor.moveToFirst())
 			minOfOtherCards = 0;
 		else
-			minOfOtherCards = cursor.getFloat(0);
+			minOfOtherCards = cursor.getDouble(0);
 		cursor.close();
+		stop = System.currentTimeMillis();
+	    Log.v(TAG, "answerCard - minOfOtherCards in " + (stop - start) + " ms.");
         if (minOfOtherCards != 0)
             space = Math.min(minOfOtherCards, card.interval);
         else
             space = 0;
         space = space * spaceFactor * 86400f;
         space = Math.max(minSpacing, space);
-        space += System.currentTimeMillis() / 1000f;
+        space += System.currentTimeMillis() / 1000.0;
         
         // check what other cards we've spaced
         String extra;
@@ -602,7 +619,9 @@ public class Deck
             // if not reviewing early, make sure the current card is counted
             // even if it was not due yet (it's a failed card)
             extra = "or id = " + card.id;
-        }   
+        }
+        
+        start = System.currentTimeMillis();
         cursor = AnkiDb.database.rawQuery(
         		"SELECT type, count(type) " +
         		"FROM cards " +
@@ -610,21 +629,21 @@ public class Deck
         		card.factId + " and " +
         		"(isDue = 1 " + extra + ") " +
         		"GROUP BY type", null);
-        if (cursor.moveToFirst())
-        {
-        	while (cursor.moveToNext())
-        	{
-        		if (cursor.getInt(0) == 0)
-        			failedSoonCount -= cursor.getInt(1);
-        		else if (cursor.getInt(0) == 1)
-        			revCount -= cursor.getInt(1);
-        		else
-        			newCount -= cursor.getInt(1);
-        	}
-        }
+    	while (cursor.moveToNext())
+    	{
+    		if (cursor.getInt(0) == 0)
+    			failedSoonCount -= cursor.getInt(1);
+    		else if (cursor.getInt(0) == 1)
+    			revCount -= cursor.getInt(1);
+    		else
+    			newCount -= cursor.getInt(1);
+    	}
         cursor.close();
-            
-        // space other cards        
+        stop = System.currentTimeMillis();
+	    Log.v(TAG, "answerCard - other cards for same fact in " + (stop - start) + " ms.");
+	    
+        // space other cards
+	    start = System.currentTimeMillis();
         AnkiDb.database.execSQL(String.format(
         		"UPDATE cards " +
         		"SET spaceUntil = %f, " +
@@ -633,21 +652,37 @@ public class Deck
         		"isDue = 0 " +
         		"WHERE id != %d and factId = %d",
         		space, space, now, card.id, card.factId));
+        stop = System.currentTimeMillis();
+	    Log.v(TAG, "answerCard - space other cards for same fact in " + (stop - start) + " ms.");
         card.spaceUntil = 0;
         
         // temp suspend if learning ahead
-        if (this.reviewEarly && lastDelay < 0)
-            if (oldSuc != 0 || lastDelaySecs > this.delay0 || !this.showFailedLast())
+        if (reviewEarly && lastDelay < 0)
+            if (oldSuc != 0 || lastDelaySecs > delay0 || !showFailedLast())
                 card.priority = -1;
         // card stats
+        start = System.currentTimeMillis();
         card.updateStats(ease, oldState);
+        stop = System.currentTimeMillis();
+        Log.v(TAG, "answerCard - card.updateStats in " + (stop - start) + " ms.");
+        
+        start = System.currentTimeMillis();
         card.toDB();
+        stop = System.currentTimeMillis();
+        Log.v(TAG, "answerCard - card.toDB in " + (stop - start) + " ms.");
+        
         // global/daily stats
+        start = System.currentTimeMillis();
         Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
+        stop = System.currentTimeMillis();
+        Log.v(TAG, "answerCard - Stats.updateAllStats in " + (stop - start) + " ms.");
         // review history
+        start = System.currentTimeMillis();
         CardHistoryEntry entry = new CardHistoryEntry(card, ease, lastDelay);
         entry.writeSQL();
-        this.modified = now;
+        stop = System.currentTimeMillis();
+        Log.v(TAG, "answerCard - CardHistoryEntry in " + (stop - start) + " ms.");
+        modified = now;
 //        // TODO: Fix leech handling
 //        if (isLeech(card)) 
 //            card = handleLeech(card);
@@ -688,22 +723,22 @@ public class Deck
 	/* Interval management
 	 ***********************************************************/
 	
-	private float nextInterval(Card card, int ease)
+	private double nextInterval(Card card, int ease)
 	{
-		float delay = adjustedDelay(card, ease);
+		double delay = adjustedDelay(card, ease);
 		return nextInterval(card, delay, ease);
 	}
 	
-	private float nextInterval(Card card, float delay, int ease)
+	private double nextInterval(Card card, double delay, int ease)
 	{
-		float interval = card.interval;
-        float factor = card.factor;
+		double interval = card.interval;
+        double factor = card.factor;
         
         // if shown early and not failed
         if ((delay < 0) && (card.successive != 0))
         {
             interval = Math.max(card.lastInterval, card.interval + delay);
-            if (interval < this.midIntervalMin)
+            if (interval < midIntervalMin)
                 interval = 0;
             delay = 0;
         }
@@ -711,26 +746,26 @@ public class Deck
         // if interval is less than mid interval, use presets
         if (ease == 1)
         {
-            interval *= this.delay2;
-            if (interval < this.hardIntervalMin)
+            interval *= delay2;
+            if (interval < hardIntervalMin)
                 interval = 0;
         }
         else if (interval == 0)
         {
             if (ease == 2)
-            	interval = this.hardIntervalMin + ((float) Math.random())*(hardIntervalMax - hardIntervalMin);
+            	interval = hardIntervalMin + ((float) Math.random())*(hardIntervalMax - hardIntervalMin);
             else if (ease == 3)
-            	interval = this.midIntervalMin + ((float) Math.random())*(midIntervalMax - midIntervalMin);
+            	interval = midIntervalMin + ((float) Math.random())*(midIntervalMax - midIntervalMin);
             else if (ease == 4)
-            	interval = this.easyIntervalMin + ((float) Math.random())*(easyIntervalMax - easyIntervalMin);
+            	interval = easyIntervalMin + ((float) Math.random())*(easyIntervalMax - easyIntervalMin);
         }
         else
         {
             // if not cramming, boost initial 2
-            if ((interval < this.hardIntervalMax) && (interval > 0.166))
+            if ((interval < hardIntervalMax) && (interval > 0.166))
             {
-                float mid = (this.midIntervalMin + this.midIntervalMax) / 2f;
-                interval *= (mid / interval / factor);
+                double mid = (midIntervalMin + midIntervalMax) / 2.0;
+                interval = mid / factor;
             }
             // multiply last interval by factor
             if (ease == 2)
@@ -747,41 +782,41 @@ public class Deck
         return interval;
 	}
 	
-	private float nextDue(Card card, int ease, String oldState)
+	private double nextDue(Card card, int ease, String oldState)
 	{
-		float due;
+		double due;
 		if (ease == 1)
 			if (oldState.equals("mature"))
-				due = this.delay1;
+				due = delay1;
 			else
-				due = this.delay0;
+				due = delay0;
 		else
-			due = card.interval * 86400f;
-		return due + (System.currentTimeMillis()/1000f);
+			due = card.interval * 86400.0;
+		return due + (System.currentTimeMillis() / 1000.0);
 	}
 	
 	private void updateFactor(Card card, int ease)
 	{
 		card.lastFactor = card.factor;
 		if (card.reps == 0)
-			card.factor = this.averageFactor; // card is new, inherit beginning factor
+			card.factor = averageFactor; // card is new, inherit beginning factor
 		if (cardIsBeingLearnt(card) && (ease == 0 || ease == 1 || ease == 2))
 		{
 			if (card.successive != 0 && ease != 2)
-				card.factor -= 0.20f; // only penalize failures after success when starting
+				card.factor -= 0.20; // only penalize failures after success when starting
 		}
 		else if (ease == 0 || ease == 1)
-			card.factor -= 0.20f;
+			card.factor -= 0.20;
 		else if (ease == 2)
-			card.factor -= 0.15f;
+			card.factor -= 0.15;
 		else if (ease == 4)
-			card.factor += 0.10f;
-		card.factor = Math.max(1.3f, card.factor);
+			card.factor += 0.10;
+		card.factor = Math.max(1.3, card.factor);
 	}
 	
-	private float adjustedDelay(Card card, int ease)
+	private double adjustedDelay(Card card, int ease)
 	{
-		float now = System.currentTimeMillis();
+		double now = System.currentTimeMillis();
 		if (cardIsNew(card))
 			return 0;
 		if (card.combinedDue <= now)
@@ -811,7 +846,7 @@ public class Deck
 				"WHERE type = 0 and " +
 				"isDue = 1 and " +
 				"combinedDue <= " +
-				String.format("%f", (float) (System.currentTimeMillis() / 1000f)));
+				String.format("%f", (double) (System.currentTimeMillis() / 1000.0)));
 		revCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
@@ -844,8 +879,8 @@ public class Deck
 				"type = 0 and " +
 				"isDue = 0 and " +
 				"priority in (1,2,3,4) and " +
-				String.format("combinedDue <= %f", (float)
-						((System.currentTimeMillis() / 1000f) + delay0)),
+				String.format("combinedDue <= %f", 
+						(double) ((System.currentTimeMillis() / 1000.0) + delay0)),
 				null);
 		
 		failedNowCount = (int) AnkiDb.queryScalar(
@@ -853,22 +888,22 @@ public class Deck
 				"FROM cards " +
 				"WHERE type = 0 and " +
 				"isDue = 1 and " +
-				String.format("combinedDue <= %f", (float)
-						(System.currentTimeMillis() / 1000f)));
+				String.format("combinedDue <= %f", 
+						(double) (System.currentTimeMillis() / 1000.0)));
 		
 		// Review
 		val.clear();
 		val.put("isDue", 1);
 		revCount += AnkiDb.database.update("cards", val, "type = 1 and " + "isDue = 0 and "
 		        + "priority in (1,2,3,4) and "
-		        + String.format("combinedDue <= %f", (float) (System.currentTimeMillis() / 1000f)), null);
+		        + String.format("combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
 
 		// New
 		val.clear();
 		val.put("isDue", 1);
 		newCount += AnkiDb.database.update("cards", val, "type = 2 and " + "isDue = 0 and "
 		        + "priority in (1,2,3,4) and "
-		        + String.format("combinedDue <= %f", (float) (System.currentTimeMillis() / 1000f)), null);
+		        + String.format("combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
 
 		newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0);
 	}
@@ -911,7 +946,7 @@ public class Deck
 		if (!cursor.moveToFirst())
 			averageFactor = Deck.initialFactor;
 		else
-			averageFactor = cursor.getFloat(0);
+			averageFactor = cursor.getDouble(0);
 		cursor.close();
 
 		// Recache CSS
@@ -995,7 +1030,7 @@ public class Deck
 
 		String extra = "";
 		if (dirty)
-			extra = ", modified = " + String.format("%f", (float) (System.currentTimeMillis() / 1000f));
+			extra = ", modified = " + String.format("%f", (double) (System.currentTimeMillis() / 1000.0));
 		for (int pri = 0; pri < 5; pri++)
 		{
 			int count = 0;
@@ -1066,7 +1101,7 @@ public class Deck
 	 */
 	private boolean cardIsBeingLearnt(Card card)
 	{
-		return card.interval < this.easyIntervalMin;
+		return card.interval < easyIntervalMin;
 	}
 	
 	/* Dynamic indices
