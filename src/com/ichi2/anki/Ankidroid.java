@@ -127,6 +127,8 @@ public class Ankidroid extends Activity// implements Runnable
 	
 	//the time (in ms) at which the session will be over
 	private long mSessionTimeLimit;
+	
+	private int mSessionCurrReps = 0;
 
 	private Whiteboard mWhiteboard;
 	
@@ -825,11 +827,20 @@ public class Ankidroid extends Activity// implements Runnable
 		}
 		
 		public void onProgressUpdate(DeckTask.TaskData... values) {
-
-		    //Check to see if the session time limit has been reached
-		    if( System.currentTimeMillis() <= mSessionTimeLimit )
+		    mSessionCurrReps++; // increment number reps counter
+		    // Check to see if session rep limit has been reached
+		    if( mSessionCurrReps >= AnkidroidApp.deck().getSessionRepLimit() )
+		    {
+		        Toast.makeText( Ankidroid.this, "Session question limit reached", 5 );
+		        sessioncomplete = true;
+		    } else  if( System.currentTimeMillis() >= mSessionTimeLimit ) //Check to see if the session time limit has been reached
 		    {		    
-		        // session time limit not reached, show next card
+		        // session time limit reached, flag for halt once async task has completed.
+		        sessioncomplete = true;
+		        Toast.makeText( Ankidroid.this, "Session time limit reached", 5 );
+
+		    } else {
+		        // session limits not reached, show next card
 		        Card newCard = values[0].getCard();
 
 		        currentCard = newCard;
@@ -840,12 +851,8 @@ public class Ankidroid extends Activity// implements Runnable
 		        mWhiteboard.clear();
 		        mCardTimer.setBase(SystemClock.elapsedRealtime());
 		        mCardTimer.start();
-		    } else {
-		     // session time limit reached, flag for halt once async task has completed.
-		        sessioncomplete = true;
-		        Toast.makeText( Ankidroid.this, "Session time limit reached", 5 );
 		    }
-			
+
 			dialog.dismiss();
 		}
 		
