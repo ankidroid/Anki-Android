@@ -36,6 +36,9 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
             values.put( "newCardsPDay", String.valueOf( AnkidroidApp.deck().getNewCardsPerDay() ) );
             values.put( "sessionQLimit", String.valueOf( AnkidroidApp.deck().getSessionRepLimit() ) );
             values.put( "sessionTLimit", String.valueOf( AnkidroidApp.deck().getSessionTimeLimit()/60 ) );
+            values.put( "newCardOrder", String.valueOf( AnkidroidApp.deck().getNewCardOrder() ) );
+            values.put( "newCardSpacing", String.valueOf( AnkidroidApp.deck().getNewCardSpacing() ) );
+            values.put( "revCardOrder", String.valueOf( AnkidroidApp.deck().getRevCardOrder() ) );
         }
 
         public class Editor implements SharedPreferences.Editor
@@ -70,6 +73,18 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
                     else if ( entry.getKey().equals( "sessionTLimit" ) )
                     {
                         AnkidroidApp.deck().setSessionTimeLimit( 60 * Integer.parseInt( entry.getValue().toString() ) );
+                    }
+                    else if( entry.getKey().equals( "newCardOrder" ))
+                    {
+                        AnkidroidApp.deck().setNewCardOrder( Integer.parseInt( entry.getValue().toString() ) );
+                    }
+                    else if( entry.getKey().equals( "newCardSpacing" ))
+                    {
+                        AnkidroidApp.deck().setNewCardSpacing( Integer.parseInt( entry.getValue().toString() ) );
+                    }
+                    else if( entry.getKey().equals( "revCardOrder" ))
+                    {
+                        AnkidroidApp.deck().setRevCardOrder( Integer.parseInt( entry.getValue().toString() ) );
                     }
                 }
                 // make sure we refresh the parent cached values

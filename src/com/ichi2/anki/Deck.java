@@ -125,10 +125,10 @@ public class Deck
 	String suspended;
 
 	// 0 is random, 1 is by input date
-	int newCardOrder;
+	private int newCardOrder;
 
 	// When to show new cards
-	int newCardSpacing;
+	private int newCardSpacing;
 
 	// Limit the number of failed cards in play
 	int failedCardMax;
@@ -158,7 +158,7 @@ public class Deck
 	int newCount;
 
 	// Review order
-	int revCardOrder;
+	private int revCardOrder;
 
 	// END: SQL table columns
 	
@@ -375,6 +375,46 @@ public class Deck
 	/* Getters and Setters for deck properties
 	 * NOTE: The setters flushMod()
 	 ***********************************************************/
+	
+	public int getRevCardOrder()
+	{
+	    return revCardOrder;
+	}
+	public void setRevCardOrder( int num )
+	{
+	    if( num > 0 )
+	    {
+	        revCardOrder = num;
+	        flushMod();
+	    }
+	}
+	
+	public int getNewCardSpacing()
+	{
+	    return newCardSpacing;
+	}
+	public void setNewCardSpacing( int num )
+	{
+	    if( num > 0 )
+	    {
+	        newCardSpacing = num;
+	        flushMod();
+	    }
+	}
+	
+	public int getNewCardOrder()
+	{
+	    return newCardOrder;
+	}
+	public void setNewCardOrder( int num )
+	{
+	    if( num > 0 )
+	    {
+	        newCardOrder = num;
+	        flushMod();
+	    }
+	}
+	   
 	public int getNewCardsPerDay()
 	{
 	    return newCardsPerDay;
