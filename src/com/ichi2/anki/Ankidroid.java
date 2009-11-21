@@ -33,6 +33,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 /**
@@ -122,7 +123,10 @@ public class Ankidroid extends Activity// implements Runnable
 
 	private Button mEase0, mEase1, mEase2, mEase3;
 
-	private Chronometer mTimer;
+	private Chronometer mCardTimer;
+	
+	//the time (in ms) at which the session will be over
+	private long mSessionTimeLimit;
 
 	private Whiteboard mWhiteboard;
 	
@@ -288,7 +292,7 @@ public class Ankidroid extends Activity// implements Runnable
 		mEase1 = (Button) findViewById(R.id.ease2);
 		mEase2 = (Button) findViewById(R.id.ease3);
 		mEase3 = (Button) findViewById(R.id.ease4);
-		mTimer = (Chronometer) findViewById(R.id.card_time);
+		mCardTimer = (Chronometer) findViewById(R.id.card_time);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
@@ -549,7 +553,7 @@ public class Ankidroid extends Activity// implements Runnable
 			mEase2.setVisibility(View.GONE);
 			mEase3.setVisibility(View.GONE);
 			mFlipCard.setVisibility(View.GONE);
-			mTimer.setVisibility(View.GONE);
+			mCardTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		}
@@ -563,12 +567,12 @@ public class Ankidroid extends Activity// implements Runnable
 		Log.i(TAG, "showOrHideControls - timerAndWhiteboard: " + timerAndWhiteboard);
 		if (!timerAndWhiteboard)
 		{
-			mTimer.setVisibility(View.GONE);
+			mCardTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		} else
 		{
-			mTimer.setVisibility(View.VISIBLE);
+			mCardTimer.setVisibility(View.VISIBLE);
 			mToggleWhiteboard.setVisibility(View.VISIBLE);
 			if (mToggleWhiteboard.isChecked())
 			{
@@ -596,7 +600,7 @@ public class Ankidroid extends Activity// implements Runnable
 			mEase2.setVisibility(View.GONE);
 			mEase3.setVisibility(View.GONE);
 			mFlipCard.setVisibility(View.GONE);
-			mTimer.setVisibility(View.GONE);
+			mCardTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		} else
@@ -625,7 +629,7 @@ public class Ankidroid extends Activity// implements Runnable
 	{
 		Log.i(TAG, "displayCardAnswer");
 
-		mTimer.stop();
+		mCardTimer.stop();
 		mWhiteboard.lock();
 
 		mEase0.setVisibility(View.VISIBLE);
@@ -808,26 +812,39 @@ public class Ankidroid extends Activity// implements Runnable
 	
 	DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener()
 	{
+	    boolean sessioncomplete = false;
 		
 		public void onPreExecute() {
 			dialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
 		}
 		
 		public void onPostExecute(DeckTask.TaskData result) {
-			// Pass
+		    // TODO show summary screen?
+			if( sessioncomplete )
+			    openDeckPicker();
 		}
 		
 		public void onProgressUpdate(DeckTask.TaskData... values) {
-			Card newCard = values[0].getCard();
-			
-			currentCard = newCard;
-			
-			// Set the correct value for the flip card button - That triggers the
-			// listener which displays the question of the card
-			mFlipCard.setChecked(false);
-			mWhiteboard.clear();
-			mTimer.setBase(SystemClock.elapsedRealtime());
-			mTimer.start();
+
+		    //Check to see if the session time limit has been reached
+		    if( System.currentTimeMillis() <= mSessionTimeLimit )
+		    {		    
+		        // session time limit not reached, show next card
+		        Card newCard = values[0].getCard();
+
+		        currentCard = newCard;
+
+		        // Set the correct value for the flip card button - That triggers the
+		        // listener which displays the question of the card
+		        mFlipCard.setChecked(false);
+		        mWhiteboard.clear();
+		        mCardTimer.setBase(SystemClock.elapsedRealtime());
+		        mCardTimer.start();
+		    } else {
+		     // session time limit reached, flag for halt once async task has completed.
+		        sessioncomplete = true;
+		        Toast.makeText( Ankidroid.this, "Session time limit reached", 5 );
+		    }
 			
 			dialog.dismiss();
 		}
@@ -866,8 +883,10 @@ public class Ankidroid extends Activity// implements Runnable
 					
 					displayCardQuestion();
 					mWhiteboard.clear();
-					mTimer.setBase(SystemClock.elapsedRealtime());
-					mTimer.start();
+					mCardTimer.setBase(SystemClock.elapsedRealtime());
+					mCardTimer.start();
+					Log.e(TAG, "SessionTimeLimit: " + AnkidroidApp.deck().getSessionTimeLimit());
+					mSessionTimeLimit = System.currentTimeMillis() + (AnkidroidApp.deck().getSessionTimeLimit()*1000);
 					break;
 					
 				case DECK_NOT_LOADED:
