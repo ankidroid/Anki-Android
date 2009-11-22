@@ -721,8 +721,6 @@ public class Ankidroid extends Activity implements Runnable
 	public void updateCard(String content)
 	{
 		Log.i(TAG, "updateCard");
-		String card = cardTemplate.replace("::content::", content);
-		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
 		
 		// We want to modify the font size depending on how long is the content
 		// Replace each <br> with 15 spaces, then remove all html tags and spaces
@@ -733,6 +731,9 @@ public class Ankidroid extends Activity implements Runnable
 		// Calculate the size of the font depending on the length of the content
 		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(content.length()/5));
 		mCard.getSettings().setDefaultFontSize(size);
+		
+		String card = cardTemplate.replace("::content::", content);
+		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
 	}
 
 	// Display the card answer.
