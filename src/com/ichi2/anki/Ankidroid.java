@@ -724,13 +724,15 @@ public class Ankidroid extends Activity implements Runnable
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
 		
-		// If the user wants to write the answer
-		if(writeAnswers)
-		{
-			//Calculate the size of the font depending on the length of the string
-			int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(content.length()/10));
-			mCard.getSettings().setDefaultFontSize(size);
-		}
+		// We want to modify the font size depending on how long is the content
+		// Replace each <br> with 15 spaces, then remove all html tags and spaces
+		content = content.replaceAll("\\<br.*?\\>", "               ");
+		content = content.replaceAll("\\<.*?\\>", "");
+		content = content.replaceAll("&nbsp;", " ");
+		
+		// Calculate the size of the font depending on the length of the content
+		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(content.length()/5));
+		mCard.getSettings().setDefaultFontSize(size);
 	}
 
 	// Display the card answer.
@@ -747,13 +749,16 @@ public class Ankidroid extends Activity implements Runnable
 		
 		mSelectRemembered.requestFocus();
 
-		//If the user wrote an answer
+		// If the user wrote an answer
 		if(writeAnswers)
 		{
+			// Obtain the user answer and the correct answer
 			String userAnswer = mAnswerField.getText().toString();
 			String correctAnswer = (String) currentCard.answer.subSequence(
 					currentCard.answer.indexOf(">")+1, 
 					currentCard.answer.lastIndexOf("<"));
+			
+			// Obtain the diff and send it to updateCard
 			String diff = diff(userAnswer, correctAnswer);
 			updateCard(diff + "<br/>" + currentCard.answer);
 		}
@@ -874,7 +879,7 @@ public class Ankidroid extends Activity implements Runnable
 			{
 				// Add in red the chars in the tail of str1
 				diff += "<span style=\"background-color:" + WRONG_COLOR + 
-				"\">" + diffStr1.charAt(i) + "</span>";
+					"\">" + diffStr1.charAt(i) + "</span>";
 			}
 		
 			// Add as many red spaces as needed
