@@ -33,7 +33,8 @@
 		android:layout_height="wrap_content">
 		<EditText android:id="@+id/answer_field"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"/>
+			android:layout_height="wrap_content"
+			android:maxLines="2"/>
 		<Button
 			android:id="@+id/select_remembered"
 			android:padding="3dip"

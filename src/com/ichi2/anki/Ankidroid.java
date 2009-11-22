@@ -63,8 +63,8 @@ public class Ankidroid extends Activity implements Runnable
 	/**
 	 * Max and min size of the font of the questions and answers
 	 */
-	private static final int MAX_FONT_SIZE = 15;
-	private static final int MIN_FONT_SIZE = 4;
+	private static final int MAX_FONT_SIZE = 14;
+	private static final int MIN_FONT_SIZE = 3;
 	
 	/**
 	 * Colors for right and wrong answer
@@ -724,12 +724,12 @@ public class Ankidroid extends Activity implements Runnable
 		
 		// We want to modify the font size depending on how long is the content
 		// Replace each <br> with 15 spaces, then remove all html tags and spaces
-		content = content.replaceAll("\\<br.*?\\>", "               ");
-		content = content.replaceAll("\\<.*?\\>", "");
-		content = content.replaceAll("&nbsp;", " ");
+		String realContent = content.replaceAll("\\<br.*?\\>", "               ");
+		realContent = realContent.replaceAll("\\<.*?\\>", "");
+		realContent = realContent.replaceAll("&nbsp;", " ");
 		
 		// Calculate the size of the font depending on the length of the content
-		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(content.length()/5));
+		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(realContent.length()/5));
 		mCard.getSettings().setDefaultFontSize(size);
 		
 		String card = cardTemplate.replace("::content::", content);
@@ -775,6 +775,8 @@ public class Ankidroid extends Activity implements Runnable
 	 */
 	private String diff(String str1, String str2)
 	{
+		// Replace newlines with <br>
+		str1 = str1.replace("\n", "<br>");
 		String diff = "";
 		
 		// If the strings are equal
