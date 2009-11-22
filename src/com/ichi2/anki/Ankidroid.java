@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -25,6 +26,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +35,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,6 +60,12 @@ public class Ankidroid extends Activity implements Runnable
 	 */
 	private static final String TAG = "Ankidroid";
 
+	/**
+	 * Max and min size of the font of the questions and answers
+	 */
+	private static final int MAX_FONT_SIZE = 15;
+	private static final int MIN_FONT_SIZE = 4;
+	
 	/**
 	 * Menus
 	 */
@@ -109,6 +118,8 @@ public class Ankidroid extends Activity implements Runnable
 	private boolean timerAndWhiteboard;
 
 	private boolean spacedRepetition;
+	
+	private boolean writeAnswers;
 
 	public String cardTemplate;
 
@@ -122,6 +133,8 @@ public class Ankidroid extends Activity implements Runnable
 	private ToggleButton mToggleWhiteboard, mFlipCard;
 
 	private Button mSelectRemembered, mSelectNotRemembered;
+	
+	private EditText mAnswerField;
 
 	private Chronometer mTimer;
 
@@ -160,6 +173,7 @@ public class Ankidroid extends Activity implements Runnable
 			if (spacedRepetition)
 				currentCard.space();
 			nextCard();
+			mAnswerField.setText("");
 		}
 	};
 
@@ -177,6 +191,7 @@ public class Ankidroid extends Activity implements Runnable
 			if (spacedRepetition)
 				currentCard.reset();
 			nextCard();
+			mAnswerField.setText("");
 		}
 	};
 
@@ -285,6 +300,7 @@ public class Ankidroid extends Activity implements Runnable
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
+		mAnswerField = (EditText) findViewById(R.id.answer_field);
 		
 		showControls(false);
 
@@ -429,7 +445,6 @@ public class Ankidroid extends Activity implements Runnable
 			}
 			else
 			{
-
 				if(deckFilename == null) Log.i(TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
 				else if(!new File(deckFilename).exists()) Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + "does not exist.");
 				
@@ -497,7 +512,6 @@ public class Ankidroid extends Activity implements Runnable
 			
 			switch(msg.what)
 			{
-
 				case DECK_LOADED:
 					showControls(true);
 					deckLoaded = true;
@@ -552,7 +566,10 @@ public class Ankidroid extends Activity implements Runnable
 			restorePreferences();
 			//If there is no deck loaded the controls have not to be shown
 			if(deckLoaded)
+			{
 				showOrHideControls();
+				showOrHideAnswerField();
+			}
 		}
 	}
 
@@ -589,6 +606,7 @@ public class Ankidroid extends Activity implements Runnable
 			mSelectNotRemembered.setVisibility(View.VISIBLE);
 			mFlipCard.setVisibility(View.VISIBLE);
 			showOrHideControls();
+			showOrHideAnswerField();
 			hideDeckErrors();
 		} else
 		{
@@ -599,6 +617,7 @@ public class Ankidroid extends Activity implements Runnable
 			mTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
+			mAnswerField.setVisibility(View.GONE);
 		}
 	}
 
@@ -623,6 +642,21 @@ public class Ankidroid extends Activity implements Runnable
 			}
 		}
 	}
+	
+	/**
+	 * Depending on preferences, show or hide the answer field.
+	 */
+	private void showOrHideAnswerField()
+	{
+		Log.i(TAG, "showOrHideAnswerField - writeAnswers: " + writeAnswers);
+		if (!writeAnswers)
+		{
+			mAnswerField.setVisibility(View.GONE);
+		} else
+		{
+			mAnswerField.setVisibility(View.VISIBLE);
+		}
+	}	
 
 	public void setOverlayState(boolean enabled)
 	{
@@ -665,7 +699,13 @@ public class Ankidroid extends Activity implements Runnable
 			Log.i(TAG, "displayCardQuestion - Hiding 'Remembered' and 'Not Remembered' buttons...");
 			mSelectRemembered.setVisibility(View.GONE);
 			mSelectNotRemembered.setVisibility(View.GONE);
-									
+			
+			// If the user wants to write the answer
+			if(writeAnswers)
+			{
+				mAnswerField.setVisibility(View.VISIBLE);
+			}
+			
 			mFlipCard.requestFocus();
 
 			updateCard(currentCard.question);
@@ -677,6 +717,14 @@ public class Ankidroid extends Activity implements Runnable
 		Log.i(TAG, "updateCard");
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
+		
+		// If the user wants to write the answer
+		if(writeAnswers)
+		{
+			//Calculate the size of the font depending on the length of the string
+			int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(content.length()/10));
+			mCard.getSettings().setDefaultFontSize(size);
+		}
 	}
 
 	// Display the card answer.
@@ -689,11 +737,88 @@ public class Ankidroid extends Activity implements Runnable
 
 		mSelectRemembered.setVisibility(View.VISIBLE);
 		mSelectNotRemembered.setVisibility(View.VISIBLE);
+		mAnswerField.setVisibility(View.GONE);
 		
 		mSelectRemembered.requestFocus();
-		
-		updateCard(currentCard.answer);
+
+		//If the user wrote an answer
+		if(writeAnswers)
+		{
+			String userAnswer = mAnswerField.getText().toString();
+			String correctAnswer = (String) currentCard.answer.subSequence(
+					currentCard.answer.indexOf(">")+1, 
+					currentCard.answer.lastIndexOf("<"));
+			String diff = diff(userAnswer, correctAnswer);
+			updateCard(diff + "<br/>" + currentCard.answer);
+		}
+		else
+		{
+			updateCard(currentCard.answer);
+		}
 	}
+	
+	private String diff(String str1, String str2)
+	{
+		String diff = "";
+		if(str1.equals(str2))
+		{
+			diff = "<span style=\"background-color:#c0ffc0\">" + str1 + "</span>";
+		}
+		else
+		{
+			int str1Length = str1.length();
+			int str2Length = str2.length();
+			
+			//Look for prefixes
+			int n = Math.min(str1Length, str2Length);
+			int pre;
+			for(pre = 0; pre < n; pre++)
+			{
+				if(str1.charAt(pre) != str2.charAt(pre))
+				{
+					break;
+				}
+			}
+			
+			//Add the prefix in green
+			if(pre > 0)
+				diff = "<span style=\"background-color:#c0ffc0\">" + 
+					str1.subSequence(0, pre) + "</span>";
+			
+			//Look for sufixes
+			int su;
+			for(su = 1; su <= n - pre; su++)
+			{
+				if(str1.charAt(str1Length - su) != str2.charAt(str2Length - su))
+				{
+					break;
+				}
+			}
+			
+			//Add the rest of the body in red
+			diff += "<span style=\"background-color:#ffc0c0\">" + 
+				str1.subSequence(pre, str1Length - su + 1) + "</span>";
+			
+			//Add the sufix in green
+			if(su > 1)
+				diff += "<span style=\"background-color:#c0ffc0\">" + 
+					str1.subSequence(str1Length - su + 1, str1Length) + "</span>";
+			
+			//Add red spaces at the end if str1 is shorter than str2
+			String aux = "";
+			for(int i = str1Length; i < str2Length; i++)
+			{
+				aux += "&nbsp;&nbsp;";
+			}
+			if(aux != "")
+				diff += "<span style=\"background-color:#ffc0c0\">" + 
+					aux + "</span>";
+		}
+
+		
+		return diff;
+	}
+	
 
 	private boolean writeToFile(InputStream source, String destination) throws IOException
 	{
@@ -728,6 +853,7 @@ public class Ankidroid extends Activity implements Runnable
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
+		writeAnswers = preferences.getBoolean("writeAnswers", false);
 
 		return preferences;
 	}
