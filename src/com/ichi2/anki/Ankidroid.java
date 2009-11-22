@@ -67,6 +67,12 @@ public class Ankidroid extends Activity implements Runnable
 	private static final int MIN_FONT_SIZE = 4;
 	
 	/**
+	 * Colors for right and wrong answer
+	 */
+	private static final String RIGHT_COLOR = "#c0ffc0";
+	private static final String WRONG_COLOR = "#ffc0c0";
+	
+	/**
 	 * Menus
 	 */
 	public static final int MENU_OPEN = 0;
@@ -757,19 +763,25 @@ public class Ankidroid extends Activity implements Runnable
 		}
 	}
 	
+	/**
+	 * Return the diff between str1 and str2 with html tags to highlight equal and 
+	 * non-equal parts of the string
+	 */
 	private String diff(String str1, String str2)
 	{
 		String diff = "";
+		
+		// If the strings are equal
 		if(str1.equals(str2))
 		{
-			diff = "<span style=\"background-color:#c0ffc0\">" + str1 + "</span>";
+			diff = "<span style=\"background-color:" + RIGHT_COLOR + "\">" + str1 + "</span>";
 		}
 		else
 		{
 			int str1Length = str1.length();
 			int str2Length = str2.length();
 			
-			//Look for prefixes
+			// Look for prefixes
 			int n = Math.min(str1Length, str2Length);
 			int pre;
 			for(pre = 0; pre < n; pre++)
@@ -780,12 +792,12 @@ public class Ankidroid extends Activity implements Runnable
 				}
 			}
 			
-			//Add the prefix in green
+			// Add the prefix in green
 			if(pre > 0)
-				diff = "<span style=\"background-color:#c0ffc0\">" + 
-					str1.subSequence(0, pre) + "</span>";
+				diff = "<span style=\"background-color:" + RIGHT_COLOR + "\">" + 
+					str1.substring(0, pre) + "</span>";
 			
-			//Look for sufixes
+			// Look for suffixes
 			int su;
 			for(su = 1; su <= n - pre; su++)
 			{
@@ -794,27 +806,93 @@ public class Ankidroid extends Activity implements Runnable
 					break;
 				}
 			}
-			
-			//Add the rest of the body in red
-			diff += "<span style=\"background-color:#ffc0c0\">" + 
-				str1.subSequence(pre, str1Length - su + 1) + "</span>";
-			
-			//Add the sufix in green
-			if(su > 1)
-				diff += "<span style=\"background-color:#c0ffc0\">" + 
-					str1.subSequence(str1Length - su + 1, str1Length) + "</span>";
-			
-			//Add red spaces at the end if str1 is shorter than str2
-			String aux = "";
-			for(int i = str1Length; i < str2Length; i++)
+		
+			// Process the middle of the body of the strings
+			String diffStr1 = str1.substring(pre, str1Length - su + 1);
+			String diffStr2 = str2.substring(pre, str2Length - su + 1);
+			int diffStr1Length = diffStr1.length();
+			int diffStr2Length = diffStr2.length();
+			int j = 0;
+			int i = 0;
+			int lastCorrectChar = 0;
+			while(i < diffStr1Length - 1 && j < diffStr2Length - 1)
 			{
-				aux += "&nbsp;&nbsp;";
+				// Obtain two chars from string1
+				int k = 2;
+				String bitStr1 = diffStr1.substring(i, i+k);
+				
+				// If the two characters are in the second string
+				int index = diffStr2.substring(j).indexOf(bitStr1);
+				if(index >= 0)
+				{
+					// Try to match more than two chars
+					for(k++; i-1+k < diffStr1Length && j-1+index+k < diffStr2Length; k++)
+					{
+						String tryBitStr1 = diffStr1.substring(i, i+k);
+						if(diffStr2.substring(j+index,j+index+k).equals(tryBitStr1))
+						{
+							bitStr1 = tryBitStr1;
+						}
+						else
+						{
+							break;
+						}
+					}
+					
+					// Generate the spaces needed
+					String spaces = "";
+					for(int m = 0; m < j + index - i; m++)
+					{
+						spaces += "&nbsp;";
+					}
+					
+					// Print red spaces
+					if(spaces != "")
+						diff += "<span style=\"background-color:" + WRONG_COLOR + 
+							"\">" + spaces + "</span>";
+					
+					// Print the k characters in green
+					diff += "<span style=\"background-color:" + RIGHT_COLOR + 
+					"\">" + bitStr1 + "</span>";
+					
+					j += index + k-1;
+					i += k-1;
+					lastCorrectChar = i;
+				}
+				// If they are not in the second string
+				else
+				{
+					// Print in red the current char of string1
+					diff += "<span style=\"background-color:" + WRONG_COLOR + 
+						"\">" + diffStr1.charAt(i) + "</span>";
+					i++;
+				}
+			}
+			
+			// If we got out of the last loop without looking at the last char
+			if(i < diffStr1Length)
+			{
+				// Add in red the chars in the tail of str1
+				diff += "<span style=\"background-color:" + WRONG_COLOR + 
+				"\">" + diffStr1.charAt(i) + "</span>";
+			}
+		
+			// Add as many red spaces as needed
+			String aux = "";
+			for(int m = 0; m < (diffStr2Length-j) - (diffStr1Length-lastCorrectChar); m++)
+			{
+				aux += "&nbsp;";
 			}
 			if(aux != "")
-				diff += "<span style=\"background-color:#ffc0c0\">" + 
+				diff += "<span style=\"background-color:" + WRONG_COLOR + "\">" + 
 					aux + "</span>";
+			
+			
+			// Add the suffix in green
+			if(su > 1)
+				diff += "<span style=\"background-color:" + RIGHT_COLOR + "\">" + 
+					str1.substring(str1Length - su + 1, str1Length) + "</span>";
 		}
-
 		
 		return diff;
 	}
