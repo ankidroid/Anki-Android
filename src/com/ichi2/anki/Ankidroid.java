@@ -305,6 +305,7 @@ public class Ankidroid extends Activity// implements Runnable
 		mEase1.setOnClickListener(mSelectEaseHandler);
 		mEase2.setOnClickListener(mSelectEaseHandler);
 		mEase3.setOnClickListener(mSelectEaseHandler);
+		mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
 		
@@ -828,19 +829,24 @@ public class Ankidroid extends Activity// implements Runnable
 		
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 		    mSessionCurrReps++; // increment number reps counter
+		    
 		    // Check to see if session rep limit has been reached
-		    if( mSessionCurrReps >= AnkidroidApp.deck().getSessionRepLimit() )
+		    int sessionRepLimit = AnkidroidApp.deck().getSessionRepLimit();
+		    Toast sessionMessage = null;
+		    
+		    if( (sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit) )
 		    {
-		        Toast.makeText( Ankidroid.this, "Session question limit reached", 5 );
-		        sessioncomplete = true;
-		    } else  if( System.currentTimeMillis() >= mSessionTimeLimit ) //Check to see if the session time limit has been reached
+		    	sessioncomplete = true;
+		    	sessionMessage = Toast.makeText(Ankidroid.this, "Session question limit reached", Toast.LENGTH_SHORT);
+		    } else if( System.currentTimeMillis() >= mSessionTimeLimit ) //Check to see if the session time limit has been reached
 		    {		    
 		        // session time limit reached, flag for halt once async task has completed.
 		        sessioncomplete = true;
-		        Toast.makeText( Ankidroid.this, "Session time limit reached", 5 );
+		        sessionMessage = Toast.makeText(Ankidroid.this, "Session time limit reached", Toast.LENGTH_SHORT);
 
 		    } else {
 		        // session limits not reached, show next card
+		    	sessioncomplete = false;
 		        Card newCard = values[0].getCard();
 
 		        currentCard = newCard;
@@ -854,6 +860,10 @@ public class Ankidroid extends Activity// implements Runnable
 		    }
 
 			dialog.dismiss();
+			
+			// Show a message to user if a session limit has been reached.
+			if (sessionMessage != null)
+				sessionMessage.show();
 		}
 		
 	};
@@ -887,13 +897,14 @@ public class Ankidroid extends Activity// implements Runnable
 					currentCard = result.getCard();
 					showControls(true);
 					deckLoaded = true;
+					mFlipCard.setChecked(false);
 					
-					displayCardQuestion();
 					mWhiteboard.clear();
 					mCardTimer.setBase(SystemClock.elapsedRealtime());
 					mCardTimer.start();
 					Log.e(TAG, "SessionTimeLimit: " + AnkidroidApp.deck().getSessionTimeLimit());
 					mSessionTimeLimit = System.currentTimeMillis() + (AnkidroidApp.deck().getSessionTimeLimit()*1000);
+					mSessionCurrReps = 0;
 					break;
 					
 				case DECK_NOT_LOADED:
