@@ -19,7 +19,12 @@
 		android:title="Corporal punishments"
 		android:defaultValue="false"
 		android:summary="Vibrate on error, that will teach you"
-		android:key="corporalPunishments" />
+		android:key="corporalPunishments" />	
+	<CheckBoxPreference
+		android:title="Write answers"
+		android:defaultValue="false"
+		android:summary="Lets you write the answer and compare it with the correct one"
+		android:key="writeAnswers" />
 	<EditTextPreference
 		android:title="Deck path"
 		android:defaultValue="/sdcard"

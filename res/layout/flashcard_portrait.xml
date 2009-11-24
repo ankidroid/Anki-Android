@@ -19,7 +19,7 @@
 			android:layout_height="fill_parent"
 			android:gravity="center_vertical|center_horizontal"
 			android:hint="@string/card_hint"
-			android:textSize="30sp" />
+			android:textSize="15sp" />
 		<view class="com.ichi2.anki.Whiteboard"
 			android:id="@+id/whiteboard"
 			android:layout_width="fill_parent"
@@ -31,6 +31,10 @@
 		android:id="@+id/remembered_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
+		<EditText android:id="@+id/answer_field"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:maxLines="2"/>
 		<Button
 			android:id="@+id/select_remembered"
 			android:padding="3dip"

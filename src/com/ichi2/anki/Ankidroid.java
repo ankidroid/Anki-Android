@@ -51,6 +51,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -76,6 +77,18 @@ public class Ankidroid extends Activity implements Runnable
 	private static final String TAG = "Ankidroid";
 
 	private static String ankidroidMarketURIString;
+	
+	/**
+	 * Max and min size of the font of the questions and answers
+	 */
+	private static final int MAX_FONT_SIZE = 14;
+	private static final int MIN_FONT_SIZE = 3;
+	
+	/**
+	 * Colors for right and wrong answer
+	 */
+	private static final String RIGHT_COLOR = "#c0ffc0";
+	private static final String WRONG_COLOR = "#ffc0c0";
 	
 	/**
 	 * Menus
@@ -131,6 +144,8 @@ public class Ankidroid extends Activity implements Runnable
 	private boolean timerAndWhiteboard;
 
 	private boolean spacedRepetition;
+	
+	private boolean writeAnswers;
 
 	public String cardTemplate;
 
@@ -144,6 +159,8 @@ public class Ankidroid extends Activity implements Runnable
 	private ToggleButton mToggleWhiteboard, mFlipCard;
 
 	private Button mSelectRemembered, mSelectNotRemembered;
+	
+	private EditText mAnswerField;
 
 	private Chronometer mTimer;
 
@@ -182,6 +199,7 @@ public class Ankidroid extends Activity implements Runnable
 			if (spacedRepetition)
 				currentCard.space();
 			nextCard();
+			mAnswerField.setText("");
 		}
 	};
 
@@ -199,6 +217,7 @@ public class Ankidroid extends Activity implements Runnable
 			if (spacedRepetition)
 				currentCard.reset();
 			nextCard();
+			mAnswerField.setText("");
 		}
 	};
 
@@ -307,6 +326,7 @@ public class Ankidroid extends Activity implements Runnable
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
+		mAnswerField = (EditText) findViewById(R.id.answer_field);
 		
 		showControls(false);
 
@@ -455,7 +475,6 @@ public class Ankidroid extends Activity implements Runnable
 			}
 			else
 			{
-
 				if(deckFilename == null) Log.i(TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
 				else if(!new File(deckFilename).exists()) Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + "does not exist.");
 				
@@ -523,7 +542,6 @@ public class Ankidroid extends Activity implements Runnable
 			
 			switch(msg.what)
 			{
-
 				case DECK_LOADED:
 					showControls(true);
 					deckLoaded = true;
@@ -578,7 +596,10 @@ public class Ankidroid extends Activity implements Runnable
 			restorePreferences();
 			//If there is no deck loaded the controls have not to be shown
 			if(deckLoaded)
+			{
 				showOrHideControls();
+				showOrHideAnswerField();
+			}
 		}
 	}
 
@@ -615,6 +636,7 @@ public class Ankidroid extends Activity implements Runnable
 			mSelectNotRemembered.setVisibility(View.VISIBLE);
 			mFlipCard.setVisibility(View.VISIBLE);
 			showOrHideControls();
+			showOrHideAnswerField();
 			hideDeckErrors();
 		} else
 		{
@@ -625,6 +647,7 @@ public class Ankidroid extends Activity implements Runnable
 			mTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
+			mAnswerField.setVisibility(View.GONE);
 		}
 	}
 
@@ -649,6 +672,21 @@ public class Ankidroid extends Activity implements Runnable
 			}
 		}
 	}
+	
+	/**
+	 * Depending on preferences, show or hide the answer field.
+	 */
+	private void showOrHideAnswerField()
+	{
+		Log.i(TAG, "showOrHideAnswerField - writeAnswers: " + writeAnswers);
+		if (!writeAnswers)
+		{
+			mAnswerField.setVisibility(View.GONE);
+		} else
+		{
+			mAnswerField.setVisibility(View.VISIBLE);
+		}
+	}	
 
 	public void setOverlayState(boolean enabled)
 	{
@@ -691,7 +729,13 @@ public class Ankidroid extends Activity implements Runnable
 			Log.i(TAG, "displayCardQuestion - Hiding 'Remembered' and 'Not Remembered' buttons...");
 			mSelectRemembered.setVisibility(View.GONE);
 			mSelectNotRemembered.setVisibility(View.GONE);
-									
+			
+			// If the user wants to write the answer
+			if(writeAnswers)
+			{
+				mAnswerField.setVisibility(View.VISIBLE);
+			}
+			
 			mFlipCard.requestFocus();
 
 			updateCard(currentCard.question);
@@ -701,6 +745,17 @@ public class Ankidroid extends Activity implements Runnable
 	public void updateCard(String content)
 	{
 		Log.i(TAG, "updateCard");
+		
+		// We want to modify the font size depending on how long is the content
+		// Replace each <br> with 15 spaces, then remove all html tags and spaces
+		String realContent = content.replaceAll("\\<br.*?\\>", "               ");
+		realContent = realContent.replaceAll("\\<.*?\\>", "");
+		realContent = realContent.replaceAll("&nbsp;", " ");
+		
+		// Calculate the size of the font depending on the length of the content
+		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(realContent.length()/5));
+		mCard.getSettings().setDefaultFontSize(size);
+		
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
 	}
@@ -715,11 +770,165 @@ public class Ankidroid extends Activity implements Runnable
 
 		mSelectRemembered.setVisibility(View.VISIBLE);
 		mSelectNotRemembered.setVisibility(View.VISIBLE);
+		mAnswerField.setVisibility(View.GONE);
 		
 		mSelectRemembered.requestFocus();
-		
-		updateCard(currentCard.answer);
+
+		// If the user wrote an answer
+		if(writeAnswers)
+		{
+			// Obtain the user answer and the correct answer
+			String userAnswer = mAnswerField.getText().toString();
+			String correctAnswer = (String) currentCard.answer.subSequence(
+					currentCard.answer.indexOf(">")+1, 
+					currentCard.answer.lastIndexOf("<"));
+			
+			// Obtain the diff and send it to updateCard
+			String diff = diff(userAnswer, correctAnswer);
+			updateCard(diff + "<br/>" + currentCard.answer);
+		}
+		else
+		{
+			updateCard(currentCard.answer);
+		}
 	}
+	
+	/**
+	 * Return the diff between str1 and str2 with html tags to highlight equal and 
+	 * non-equal parts of the string
+	 */
+	private String diff(String str1, String str2)
+	{
+		// Replace newlines with <br>
+		str1 = str1.replace("\n", "<br>");
+		String diff = "";
+		
+		// If the strings are equal
+		if(str1.equals(str2))
+		{
+			diff = "<span style=\"background-color:" + RIGHT_COLOR + "\">" + str1 + "</span>";
+		}
+		else
+		{
+			int str1Length = str1.length();
+			int str2Length = str2.length();
+			
+			// Look for prefixes
+			int n = Math.min(str1Length, str2Length);
+			int pre;
+			for(pre = 0; pre < n; pre++)
+			{
+				if(str1.charAt(pre) != str2.charAt(pre))
+				{
+					break;
+				}
+			}
+			
+			// Add the prefix in green
+			if(pre > 0)
+				diff = "<span style=\"background-color:" + RIGHT_COLOR + "\">" + 
+					str1.substring(0, pre) + "</span>";
+			
+			// Look for suffixes
+			int su;
+			for(su = 1; su <= n - pre; su++)
+			{
+				if(str1.charAt(str1Length - su) != str2.charAt(str2Length - su))
+				{
+					break;
+				}
+			}
+		
+			// Process the middle of the body of the strings
+			String diffStr1 = str1.substring(pre, str1Length - su + 1);
+			String diffStr2 = str2.substring(pre, str2Length - su + 1);
+			int diffStr1Length = diffStr1.length();
+			int diffStr2Length = diffStr2.length();
+			int j = 0;
+			int i = 0;
+			int lastCorrectChar = 0;
+			while(i < diffStr1Length - 1 && j < diffStr2Length - 1)
+			{
+				// Obtain two chars from string1
+				int k = 2;
+				String bitStr1 = diffStr1.substring(i, i+k);
+				
+				// If the two characters are in the second string
+				int index = diffStr2.substring(j).indexOf(bitStr1);
+				if(index >= 0)
+				{
+					// Try to match more than two chars
+					for(k++; i-1+k < diffStr1Length && j-1+index+k < diffStr2Length; k++)
+					{
+						String tryBitStr1 = diffStr1.substring(i, i+k);
+						if(diffStr2.substring(j+index,j+index+k).equals(tryBitStr1))
+						{
+							bitStr1 = tryBitStr1;
+						}
+						else
+						{
+							break;
+						}
+					}
+					
+					// Generate the spaces needed
+					String spaces = "";
+					for(int m = 0; m < j + index - i; m++)
+					{
+						spaces += "&nbsp;";
+					}
+					
+					// Print red spaces
+					if(spaces != "")
+						diff += "<span style=\"background-color:" + WRONG_COLOR + 
+							"\">" + spaces + "</span>";
+					
+					// Print the k characters in green
+					diff += "<span style=\"background-color:" + RIGHT_COLOR + 
+					"\">" + bitStr1 + "</span>";
+					
+					j += index + k-1;
+					i += k-1;
+					lastCorrectChar = i;
+				}
+				// If they are not in the second string
+				else
+				{
+					// Print in red the current char of string1
+					diff += "<span style=\"background-color:" + WRONG_COLOR + 
+						"\">" + diffStr1.charAt(i) + "</span>";
+					i++;
+				}
+			}
+			
+			// If we got out of the last loop without looking at the last char
+			if(i < diffStr1Length)
+			{
+				// Add in red the chars in the tail of str1
+				diff += "<span style=\"background-color:" + WRONG_COLOR + 
+					"\">" + diffStr1.charAt(i) + "</span>";
+			}
+		
+			// Add as many red spaces as needed
+			String aux = "";
+			for(int m = 0; m < (diffStr2Length-j) - (diffStr1Length-lastCorrectChar); m++)
+			{
+				aux += "&nbsp;";
+			}
+			if(aux != "")
+				diff += "<span style=\"background-color:" + WRONG_COLOR + "\">" + 
+					aux + "</span>";
+			
+			
+			// Add the suffix in green
+			if(su > 1)
+				diff += "<span style=\"background-color:" + RIGHT_COLOR + "\">" + 
+					str1.substring(str1Length - su + 1, str1Length) + "</span>";
+		}
+		
+		return diff;
+	}
+	
 
 	private boolean writeToFile(InputStream source, String destination) throws IOException
 	{
@@ -754,6 +963,7 @@ public class Ankidroid extends Activity implements Runnable
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
+		writeAnswers = preferences.getBoolean("writeAnswers", false);
 
 		return preferences;
 	}
