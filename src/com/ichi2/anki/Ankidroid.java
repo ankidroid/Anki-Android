@@ -33,13 +33,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -54,6 +51,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 /**
@@ -62,7 +60,7 @@ import android.widget.ToggleButton;
  * @author Andrew Dubya, Nicolas Raoul, Edu Zamora
  * 
  */
-public class Ankidroid extends Activity implements Runnable
+public class Ankidroid extends Activity// implements Runnable
 {
 
 	/**
@@ -85,6 +83,8 @@ public class Ankidroid extends Activity implements Runnable
 	public static final int MENU_PREFERENCES = 1;
 
 	public static final int MENU_ABOUT = 2;
+	
+	public static final int MENU_DECKOPTS = 3;
 
 	/**
 	 * Dialogs
@@ -134,7 +134,7 @@ public class Ankidroid extends Activity implements Runnable
 
 	public String cardTemplate;
 
-	private AnkiDb.Card currentCard;
+	private Card currentCard;
 
 	/** 
 	 * Variables to hold layout objects that we need to update or handle events for
@@ -143,9 +143,14 @@ public class Ankidroid extends Activity implements Runnable
 
 	private ToggleButton mToggleWhiteboard, mFlipCard;
 
-	private Button mSelectRemembered, mSelectNotRemembered;
+	private Button mEase0, mEase1, mEase2, mEase3;
 
-	private Chronometer mTimer;
+	private Chronometer mCardTimer;
+	
+	//the time (in ms) at which the session will be over
+	private long mSessionTimeLimit;
+	
+	private int mSessionCurrReps = 0;
 
 	private Whiteboard mWhiteboard;
 	
@@ -173,35 +178,41 @@ public class Ankidroid extends Activity implements Runnable
 		}
 	};
 
-	// Handlers for buttons that allow user to select how well they did.
-	View.OnClickListener mSelectRememberedHandler = new View.OnClickListener()
+	View.OnClickListener mSelectEaseHandler = new View.OnClickListener()
 	{
 		public void onClick(View view)
 		{
-			// Space this card because it has been successfully remembered.
-			if (spacedRepetition)
-				currentCard.space();
-			nextCard();
-		}
-	};
-
-	View.OnClickListener mSelectNotRememberedHandler = new View.OnClickListener()
-	{
-		public void onClick(View view)
-		{
-			// Punish user.
-			if (corporalPunishments)
+			int ease;
+			switch (view.getId())
 			{
-				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-				v.vibrate(500);
+			case R.id.ease1:
+				ease = 1;
+				if (corporalPunishments)
+				{
+					Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+					v.vibrate(500);
+				}
+				break;
+			case R.id.ease2:
+				ease = 2;
+				break;
+			case R.id.ease3:
+				ease = 3;
+				break;
+			case R.id.ease4:
+				ease = 4;
+				break;
+			default:
+				ease = 0;
+				return;
 			}
-			// Reset this card because it has not been successfully remembered.
-			if (spacedRepetition)
-				currentCard.reset();
-			nextCard();
+			
+			DeckTask.launchDeckTask(
+					DeckTask.TASK_TYPE_ANSWER_CARD,
+					mAnswerCardHandler,
+					new DeckTask.TaskData(ease, AnkidroidApp.deck(), currentCard));
 		}
 	};
-
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
@@ -301,17 +312,22 @@ public class Ankidroid extends Activity implements Runnable
 		setContentView(layout);
 
 		mCard = (WebView) findViewById(R.id.flashcard);
-		mSelectRemembered = (Button) findViewById(R.id.select_remembered);
-		mSelectNotRemembered = (Button) findViewById(R.id.select_notremembered);
-		mTimer = (Chronometer) findViewById(R.id.card_time);
+		mEase0 = (Button) findViewById(R.id.ease1);
+		mEase1 = (Button) findViewById(R.id.ease2);
+		mEase2 = (Button) findViewById(R.id.ease3);
+		mEase3 = (Button) findViewById(R.id.ease4);
+		mCardTimer = (Chronometer) findViewById(R.id.card_time);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
 		
 		showControls(false);
 
-		mSelectRemembered.setOnClickListener(mSelectRememberedHandler);
-		mSelectNotRemembered.setOnClickListener(mSelectNotRememberedHandler);
+		mEase0.setOnClickListener(mSelectEaseHandler);
+		mEase1.setOnClickListener(mSelectEaseHandler);
+		mEase2.setOnClickListener(mSelectEaseHandler);
+		mEase3.setOnClickListener(mSelectEaseHandler);
+		mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
 		
@@ -327,6 +343,7 @@ public class Ankidroid extends Activity implements Runnable
 		menu.add(0, MENU_OPEN, 0, "Switch to another deck");
 		menu.add(1, MENU_PREFERENCES, 0, "Preferences");
 		menu.add(1, MENU_ABOUT, 0, "About");
+		menu.add(1, MENU_DECKOPTS, 0, "Study Options");
 		return true;
 	}
 
@@ -347,6 +364,10 @@ public class Ankidroid extends Activity implements Runnable
 			Intent about = new Intent(this, About.class);
 			startActivity(about);
 			return true;
+		case MENU_DECKOPTS:
+		    Intent opts = new Intent(this, DeckPreferences.class);
+		    startActivity( opts );
+		    return true;
 		}
 		return false;
 	}
@@ -383,6 +404,7 @@ public class Ankidroid extends Activity implements Runnable
 	public void openDeckPicker()
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
+    	AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
@@ -446,12 +468,10 @@ public class Ankidroid extends Activity implements Runnable
 			if (deckFilename != null && new File(deckFilename).exists())
 			{
 				showControls(false);
-				if(!updateDialog.isShowing())
-				{
-					progressDialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
-				}
-				Thread thread = new Thread(this);
-				thread.start();
+				DeckTask.launchDeckTask(
+						DeckTask.TASK_TYPE_LOAD_DECK,
+						mLoadDeckHandler,
+						new DeckTask.TaskData(deckFilename));
 			}
 			else
 			{
@@ -472,74 +492,6 @@ public class Ankidroid extends Activity implements Runnable
 
 	}
 
-	public void run()
-	{
-		Log.i(TAG, "Ankidroid loader thread - run");
-		handler.sendEmptyMessage(loadDeck(deckFilename));
-	}
-
-	public int loadDeck(String deckFilename)
-	{
-		Log.i(TAG, "loadDeck - deckFilename = " + deckFilename);
-		this.deckFilename = deckFilename;
-		
-		Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
-		try
-		{
-			// Open the right deck.
-			AnkiDb.openDatabase(deckFilename);
-			// Start by getting the first card and displaying it.
-			nextCard();
-			Log.i(TAG, "Deck loaded!");
-			return DECK_LOADED;
-		} catch (SQLException e)
-		{
-			Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
-			return DECK_NOT_LOADED;
-		} catch (CursorIndexOutOfBoundsException e)
-		{
-			Log.i(TAG, "The deck has no cards = " + e.getMessage());;
-			return DECK_EMPTY;
-		}
-	}
-
-
-	private Handler handler = new Handler()
-	{
-		public void handleMessage(Message msg)
-		{	
-			//This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
-			if(progressDialog != null && progressDialog.isShowing()) 
-			{
-				try
-				{
-					progressDialog.dismiss();
-				} catch(Exception e)
-				{
-					Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
-				}
-				
-			}
-			
-			switch(msg.what)
-			{
-
-				case DECK_LOADED:
-					showControls(true);
-					deckLoaded = true;
-					displayCardQuestion();
-					break;
-					
-				case DECK_NOT_LOADED:
-					displayDeckNotLoaded();
-					break;
-				
-				case DECK_EMPTY:
-					displayNoCardsInDeck();
-					break;
-			}
-		}
-	};
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
@@ -596,11 +548,13 @@ public class Ankidroid extends Activity implements Runnable
 		  
 	  //extra height that the Whiteboard should have to be able to write in all its surface either on the question or on the answer
 	  int extraHeight = 0;
-	  if(mSelectRemembered.isShown() && mSelectNotRemembered.isShown())
+	  //if(mSelectRemembered.isShown() && mSelectNotRemembered.isShown())
+	  // TODO: test for all buttons here, not just two.
+	  if(mEase0.isShown() && mEase1.isShown())
 	  {
 		  //if the "Remembered" and "Not remembered" buttons are visible, their height has to be counted in the creation of the new Whiteboard
 		  //because we should be able to write in their space when it is the front part of the card
-		  extraHeight = java.lang.Math.max(mSelectRemembered.getHeight(), mSelectNotRemembered.getHeight());
+		  extraHeight = java.lang.Math.max(mEase0.getHeight(), mEase1.getHeight());
 	  } 
 	  mWhiteboard.rotate(extraHeight);
 	}
@@ -611,18 +565,22 @@ public class Ankidroid extends Activity implements Runnable
 		if (show)
 		{
 			mCard.setVisibility(View.VISIBLE);
-			mSelectRemembered.setVisibility(View.VISIBLE);
-			mSelectNotRemembered.setVisibility(View.VISIBLE);
+			mEase0.setVisibility(View.VISIBLE);
+			mEase1.setVisibility(View.VISIBLE);
+			mEase2.setVisibility(View.VISIBLE);
+			mEase3.setVisibility(View.VISIBLE);
 			mFlipCard.setVisibility(View.VISIBLE);
 			showOrHideControls();
 			hideDeckErrors();
 		} else
 		{
 			mCard.setVisibility(View.GONE);
-			mSelectRemembered.setVisibility(View.GONE);
-			mSelectNotRemembered.setVisibility(View.GONE);
+			mEase0.setVisibility(View.GONE);
+			mEase1.setVisibility(View.GONE);
+			mEase2.setVisibility(View.GONE);
+			mEase3.setVisibility(View.GONE);
 			mFlipCard.setVisibility(View.GONE);
-			mTimer.setVisibility(View.GONE);
+			mCardTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		}
@@ -636,12 +594,12 @@ public class Ankidroid extends Activity implements Runnable
 		Log.i(TAG, "showOrHideControls - timerAndWhiteboard: " + timerAndWhiteboard);
 		if (!timerAndWhiteboard)
 		{
-			mTimer.setVisibility(View.GONE);
+			mCardTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		} else
 		{
-			mTimer.setVisibility(View.VISIBLE);
+			mCardTimer.setVisibility(View.VISIBLE);
 			mToggleWhiteboard.setVisibility(View.VISIBLE);
 			if (mToggleWhiteboard.isChecked())
 			{
@@ -655,23 +613,6 @@ public class Ankidroid extends Activity implements Runnable
 		mWhiteboard.setVisibility((enabled) ? View.VISIBLE : View.GONE);
 	}
 
-	// Get the next card.
-	public void nextCard()
-	{
-		Log.i(TAG, "nextCard");
-		if (spacedRepetition)
-			currentCard = AnkiDb.Card.smallestIntervalCard();
-		else
-			currentCard = AnkiDb.Card.randomCard();
-
-		// Set the correct value for the flip card button - That triggers the
-		// listener which displays the question of the card
-		mFlipCard.setChecked(false);
-		mWhiteboard.clear();
-		mTimer.setBase(SystemClock.elapsedRealtime());
-		mTimer.start();
-	}
-
 	// Set up the display for the current card.
 	public void displayCardQuestion()
 	{
@@ -679,18 +620,23 @@ public class Ankidroid extends Activity implements Runnable
 
 		if (currentCard == null)
 		{
-			nextCard();
-		}
-
-		if (currentCard == null)
-		{
 			// error :(
 			updateCard("Unable to find a card!");
+			mEase0.setVisibility(View.GONE);
+			mEase1.setVisibility(View.GONE);
+			mEase2.setVisibility(View.GONE);
+			mEase3.setVisibility(View.GONE);
+			mFlipCard.setVisibility(View.GONE);
+			mCardTimer.setVisibility(View.GONE);
+			mToggleWhiteboard.setVisibility(View.GONE);
+			mWhiteboard.setVisibility(View.GONE);
 		} else
 		{
 			Log.i(TAG, "displayCardQuestion - Hiding 'Remembered' and 'Not Remembered' buttons...");
-			mSelectRemembered.setVisibility(View.GONE);
-			mSelectNotRemembered.setVisibility(View.GONE);
+			mEase0.setVisibility(View.GONE);
+			mEase1.setVisibility(View.GONE);
+			mEase2.setVisibility(View.GONE);
+			mEase3.setVisibility(View.GONE);
 									
 			mFlipCard.requestFocus();
 
@@ -710,13 +656,15 @@ public class Ankidroid extends Activity implements Runnable
 	{
 		Log.i(TAG, "displayCardAnswer");
 
-		mTimer.stop();
+		mCardTimer.stop();
 		mWhiteboard.lock();
 
-		mSelectRemembered.setVisibility(View.VISIBLE);
-		mSelectNotRemembered.setVisibility(View.VISIBLE);
+		mEase0.setVisibility(View.VISIBLE);
+		mEase1.setVisibility(View.VISIBLE);
+		mEase2.setVisibility(View.VISIBLE);
+		mEase3.setVisibility(View.VISIBLE);
 		
-		mSelectRemembered.requestFocus();
+		mEase2.requestFocus();
 		
 		updateCard(currentCard.answer);
 	}
@@ -805,7 +753,7 @@ public class Ankidroid extends Activity implements Runnable
     
     private void closeExternalStorageFiles()
     {
-    	AnkiDb.closeDatabase();
+        AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
     	displaySdError();
     }
@@ -886,7 +834,7 @@ public class Ankidroid extends Activity implements Runnable
 
 	private void checkUpdates() 
 	{
-		String result = queryRESTurl("http://www.ichi2.net/anki/wiki/AndroidAnki?action=AttachFile&do=get&target=lastVersionCode");
+		/*String result = queryRESTurl("http://www.ichi2.net/anki/wiki/AndroidAnki?action=AttachFile&do=get&target=lastVersionCode");
 		
 		Log.i(TAG, "Json = " + result);
 		
@@ -911,7 +859,7 @@ public class Ankidroid extends Activity implements Runnable
 			Log.e(TAG, "There was an error parsing the JSON" + e.getMessage());
 		} catch (NameNotFoundException e) {
 			Log.e(TAG, "The name of the Ankidroid package was not found.");
-		}
+		} */
 	}
 	
 
@@ -974,5 +922,120 @@ public class Ankidroid extends Activity implements Runnable
 
 		return contentOfMyInputStream;
 	}
+
 	
+	DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener()
+	{
+	    boolean sessioncomplete = false;
+		
+		public void onPreExecute() {
+			progressDialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
+		}
+		
+		public void onPostExecute(DeckTask.TaskData result) {
+		    // TODO show summary screen?
+			if( sessioncomplete )
+			    openDeckPicker();
+		}
+		
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		    mSessionCurrReps++; // increment number reps counter
+		    
+		    // Check to see if session rep limit has been reached
+		    int sessionRepLimit = AnkidroidApp.deck().getSessionRepLimit();
+		    Toast sessionMessage = null;
+		    
+		    if( (sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit) )
+		    {
+		    	sessioncomplete = true;
+		    	sessionMessage = Toast.makeText(Ankidroid.this, "Session question limit reached", Toast.LENGTH_SHORT);
+		    } else if( System.currentTimeMillis() >= mSessionTimeLimit ) //Check to see if the session time limit has been reached
+		    {		    
+		        // session time limit reached, flag for halt once async task has completed.
+		        sessioncomplete = true;
+		        sessionMessage = Toast.makeText(Ankidroid.this, "Session time limit reached", Toast.LENGTH_SHORT);
+
+		    } else {
+		        // session limits not reached, show next card
+		    	sessioncomplete = false;
+		        Card newCard = values[0].getCard();
+
+		        currentCard = newCard;
+
+		        // Set the correct value for the flip card button - That triggers the
+		        // listener which displays the question of the card
+		        mFlipCard.setChecked(false);
+		        mWhiteboard.clear();
+		        mCardTimer.setBase(SystemClock.elapsedRealtime());
+		        mCardTimer.start();
+		    }
+
+		    progressDialog.dismiss();
+			
+			// Show a message to user if a session limit has been reached.
+			if (sessionMessage != null)
+				sessionMessage.show();
+		}
+		
+	};
+	
+	DeckTask.TaskListener mLoadDeckHandler = new DeckTask.TaskListener() 
+	{
+		
+		public void onPreExecute() {
+			if(updateDialog == null || !updateDialog.isShowing())
+			{
+				progressDialog = ProgressDialog.show(Ankidroid.this, "", "Loading deck. Please wait...", true);
+			}
+		}
+		
+		public void onPostExecute(DeckTask.TaskData result) {
+			// This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
+			if(progressDialog.isShowing()) 
+			{
+				try
+				{
+					progressDialog.dismiss();
+				} catch(Exception e)
+				{
+					Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
+				}
+			}
+			
+			switch(result.getInt())
+			{
+				case DECK_LOADED:
+					// Set the deck in the application instance, so other activities
+					// can access the loaded deck.
+				    AnkidroidApp.setDeck( result.getDeck() );
+					currentCard = result.getCard();
+					showControls(true);
+					deckLoaded = true;
+					mFlipCard.setChecked(false);
+					displayCardQuestion();
+					
+					mWhiteboard.clear();
+					mCardTimer.setBase(SystemClock.elapsedRealtime());
+					mCardTimer.start();
+					Log.i(TAG, "SessionTimeLimit: " + AnkidroidApp.deck().getSessionTimeLimit());
+					mSessionTimeLimit = System.currentTimeMillis() + (AnkidroidApp.deck().getSessionTimeLimit()*1000);
+					mSessionCurrReps = 0;
+					break;
+					
+				case DECK_NOT_LOADED:
+					displayDeckNotLoaded();
+					break;
+				
+				case DECK_EMPTY:
+					displayNoCardsInDeck();
+					break;
+			}
+		}
+		
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+			// Pass
+		}
+		
+	};
+
 }

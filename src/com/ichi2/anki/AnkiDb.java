@@ -48,6 +48,7 @@ public class AnkiDb
 		if (database != null)
 		{
 			database.close();
+			database = null;
 		}
 	}
 
@@ -58,13 +59,13 @@ public class AnkiDb
 	 *            The raw SQL query to use.
 	 * @return The integer result of the query.
 	 */
-	static public int queryScalar(String query) throws SQLException
+	static public long queryScalar(String query) throws SQLException
 	{
 		Cursor cursor = AnkiDb.database.rawQuery(query, null);
 		if (!cursor.moveToFirst())
 			throw new SQLException("No result for query: " + query);
-
-		int scalar = cursor.getInt(0);
+		
+		long scalar = cursor.getLong(0);
 		cursor.close();
 
 		return scalar;
