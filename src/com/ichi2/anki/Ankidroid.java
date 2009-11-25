@@ -161,6 +161,8 @@ public class Ankidroid extends Activity implements Runnable
 	private boolean spacedRepetition;
 	
 	private boolean writeAnswers;
+	
+	private boolean updateNotifications;
 
 	public String cardTemplate;
 
@@ -243,14 +245,15 @@ public class Ankidroid extends Activity implements Runnable
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
 		
-		checkUpdates();
-		
-		registerExternalStorageListener();
-		initResourceValues();
-
 		Bundle extras = getIntent().getExtras();
 		SharedPreferences preferences = restorePreferences();
 		initLayout(R.layout.flashcard_portrait);
+		
+		if(updateNotifications)
+			checkUpdates();
+		
+		registerExternalStorageListener();
+		initResourceValues();
 
 		if (extras != null && extras.getString(OPT_DB) != null)
 		{
@@ -481,7 +484,7 @@ public class Ankidroid extends Activity implements Runnable
 			if (deckFilename != null && new File(deckFilename).exists())
 			{
 				showControls(false);
-				if(!updateDialog.isShowing())
+				if(updateDialog == null || !updateDialog.isShowing())
 				{
 					progressDialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
 				}
@@ -979,6 +982,7 @@ public class Ankidroid extends Activity implements Runnable
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
+		updateNotifications = preferences.getBoolean("updateNotifications", true);
 
 		return preferences;
 	}
@@ -1110,8 +1114,8 @@ public class Ankidroid extends Activity implements Runnable
 	}
 
 	private void checkUpdates() 
-	{
-		String result = queryRESTurl("http://www.ichi2.net/anki/wiki/AndroidAnki?action=AttachFile&do=get&target=lastVersionCode");
+	{		
+		String result = queryRESTurl("http://ankidroid.googlecode.com/files/last_release");
 		
 		Log.i(TAG, "Json = " + result);
 		
