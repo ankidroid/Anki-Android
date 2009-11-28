@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Name <email@email.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.ichi2.anki"
       android:versionName="0.3" android:versionCode="7">
     <application android:label="@string/app_name" android:icon="@drawable/anki" android:debuggable="false">
-        <activity android:name=".Ankidroid" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar" android:configChanges="orientation"
-        >
+        <activity android:name=".Ankidroid" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar" android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -16,4 +30,5 @@
     </application>
     <uses-sdk android:minSdkVersion="3" />
 	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>

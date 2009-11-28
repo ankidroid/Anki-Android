@@ -1,25 +1,55 @@
+/****************************************************************************************
+* Copyright (c) 2009 Name <email@email.com>                                            *
+*                                                                                      *
+* This program is free software; you can redistribute it and/or modify it under        *
+* the terms of the GNU General Public License as published by the Free Software        *
+* Foundation; either version 3 of the License, or (at your option) any later           *
+* version.                                                                             *
+*                                                                                      *
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+* WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+* PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+*                                                                                      *
+* You should have received a copy of the GNU General Public License along with         *
+* this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+****************************************************************************************/
 package com.ichi2.anki;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
-
 import com.ichi2.utils.DiffEngine;
-
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -60,6 +90,8 @@ public class Ankidroid extends Activity implements Runnable
 	 */
 	private static final String TAG = "Ankidroid";
 
+	private static String ankidroidMarketURIString;
+	
 	/**
 	 * Max and min size of the font of the questions and answers
 	 */
@@ -99,8 +131,10 @@ public class Ankidroid extends Activity implements Runnable
 	/**
 	 * Variables to hold the state
 	 */
-	private ProgressDialog dialog;
-		
+	private ProgressDialog progressDialog;
+	
+	private AlertDialog updateDialog;
+	
     private BroadcastReceiver mUnmountReceiver = null;
 
     //Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true
@@ -120,6 +154,8 @@ public class Ankidroid extends Activity implements Runnable
 	private boolean spacedRepetition;
 	
 	private boolean writeAnswers;
+	
+	private boolean updateNotifications;
 
 	public String cardTemplate;
 
@@ -202,14 +238,15 @@ public class Ankidroid extends Activity implements Runnable
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
 		
-		//checkUpdates();
-		
-		registerExternalStorageListener();
-		initResourceValues();
-
 		Bundle extras = getIntent().getExtras();
 		SharedPreferences preferences = restorePreferences();
 		initLayout(R.layout.flashcard_portrait);
+		
+		if(updateNotifications)
+			checkUpdates();
+		
+		registerExternalStorageListener();
+		initResourceValues();
 
 		if (extras != null && extras.getString(OPT_DB) != null)
 		{
@@ -345,7 +382,7 @@ public class Ankidroid extends Activity implements Runnable
 		return false;
 	}
 
-	/*protected Dialog onCreateDialog(int id)
+	protected Dialog onCreateDialog(int id)
 	{
 		Dialog dialog;
 		switch(id)
@@ -357,13 +394,14 @@ public class Ankidroid extends Activity implements Runnable
 			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 				
 				public void onClick(DialogInterface dialog, int which) {
-					Uri ankidroidMarketURI = Uri.parse("http://market.android.com/search?q=pname:com.ichi2.anki");
+					Uri ankidroidMarketURI = Uri.parse(ankidroidMarketURIString);
 					Intent searchUpdateIntent = new Intent(Intent.ACTION_VIEW, ankidroidMarketURI);
 					startActivity(searchUpdateIntent);
 				}
 			});
 			builder.setNegativeButton("No", null);
 			dialog = builder.create();
+			updateDialog = (AlertDialog) dialog;
 			break;
 		
 		default:
@@ -371,7 +409,7 @@ public class Ankidroid extends Activity implements Runnable
 		}
 		
 		return dialog;
-	}*/
+	}
 	
 	public void openDeckPicker()
 	{
@@ -439,7 +477,10 @@ public class Ankidroid extends Activity implements Runnable
 			if (deckFilename != null && new File(deckFilename).exists())
 			{
 				showControls(false);
-				dialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
+				if(updateDialog == null || !updateDialog.isShowing())
+				{
+					progressDialog = ProgressDialog.show(this, "", "Loading deck. Please wait...", true);
+				}
 				Thread thread = new Thread(this);
 				thread.start();
 			}
@@ -498,11 +539,11 @@ public class Ankidroid extends Activity implements Runnable
 		public void handleMessage(Message msg)
 		{	
 			//This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
-			if(dialog.isShowing()) 
+			if(progressDialog != null && progressDialog.isShowing()) 
 			{
 				try
 				{
-					dialog.dismiss();
+					progressDialog.dismiss();
 				} catch(Exception e)
 				{
 					Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
@@ -807,6 +848,7 @@ public class Ankidroid extends Activity implements Runnable
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
+		updateNotifications = preferences.getBoolean("updateNotifications", true);
 
 		return preferences;
 	}
@@ -937,8 +979,95 @@ public class Ankidroid extends Activity implements Runnable
 		detail.setVisibility(View.GONE);
 	}
 
-	/*private void checkUpdates() 
+	private void checkUpdates() 
+	{		
+		String result = queryRESTurl("http://ankidroid.googlecode.com/files/last_release");
+		
+		Log.i(TAG, "Json = " + result);
+		
+		try 
+		{
+			JSONObject json = new JSONObject(result);
+			int versionCode = Integer.parseInt(json.getString("versionCode"));
+			
+			PackageManager manager = getPackageManager();
+			PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+			
+			int versionCodeFromManifest = info.versionCode;
+			
+			if(versionCode > versionCodeFromManifest)
+			{
+				ankidroidMarketURIString = json.getString("uri");
+				showDialog(DIALOG_UPDATE);
+			}
+			
+		} catch(JSONException e)
+		{
+			Log.e(TAG, "There was an error parsing the JSON" + e.getMessage());
+		} catch (NameNotFoundException e) {
+			Log.e(TAG, "The name of the Ankidroid package was not found.");
+		}
+	}
+	
+
+
+	public String queryRESTurl(String url) 
+	{  
+		HttpClient httpclient = new DefaultHttpClient();  
+		HttpGet httpget = new HttpGet(url);  
+		HttpResponse response;  
+	       
+		try {  
+			response = httpclient.execute(httpget);  
+			Log.i(TAG, "Status:[" + response.getStatusLine().toString() + "]");  
+			HttpEntity entity = response.getEntity();  
+	           
+			if (entity != null) 
+			{         
+				InputStream instream = entity.getContent();  
+				String result = convertStreamToString(instream);  
+				Log.i(TAG, "Result of converstion: [" + result + "]");  
+	               
+				instream.close();  
+				return result;  
+			}  
+		} catch (ClientProtocolException e) {  
+			Log.e(TAG, "There was a protocol based error", e);  
+	     } catch (IOException e) {  
+	    	 Log.e(TAG, "There was an IO Stream related error", e);  
+	     }  
+	       
+	     return null;  
+	 }  
+	
+	/**
+	 * Converts an InputStream to a String
+	 * 
+	 * @param is
+	 *            InputStream to convert
+	 * @return String version of the InputStream
+	 */
+	public String convertStreamToString(InputStream is)
 	{
-		showDialog(DIALOG_UPDATE);
-	}*/
+		Log.i(TAG, "convertStreamToString");
+		String contentOfMyInputStream = "";
+		try
+		{
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is), 4096);
+			String line;
+			StringBuilder sb = new StringBuilder();
+			while ((line = rd.readLine()) != null)
+			{
+				sb.append(line);
+			}
+			rd.close();
+			contentOfMyInputStream = sb.toString();
+		} catch (Exception e)
+		{
+			Log.i(TAG, "convertStreamToString - Exception = " + e.getMessage());
+		}
+
+		return contentOfMyInputStream;
+	}
+	
 }
