@@ -14,31 +14,43 @@
 * You should have received a copy of the GNU General Public License along with         *
 * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 ****************************************************************************************/
-package com.ichi2.anki;
 
-import android.content.Intent;
+package com.ichi2.veecheck;
+
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
+import android.view.View;
+import android.widget.Checkable;
 
-import com.tomgibara.android.veecheck.Veecheck;
-import com.tomgibara.android.veecheck.util.PrefSettings;
+import com.ichi2.anki.R;
+import com.tomgibara.android.veecheck.VeecheckActivity;
+import com.tomgibara.android.veecheck.VeecheckState;
+import com.tomgibara.android.veecheck.util.PrefState;
 
-public class Preferences extends PreferenceActivity
-{
+public class Notification extends VeecheckActivity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getPreferenceManager().setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
-		addPreferencesFromResource(R.layout.preferences);
+		setContentView(R.layout.notification);
 	}
 	
-    @Override
-    protected void onPause() {
-    	super.onPause();
-    	//reschedule the checking in case the user has changed anything
-		sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
-    }
+	@Override
+	protected VeecheckState createState() {
+		return new PrefState(this);
+	}
+
+	@Override
+	protected View getNoButton() {
+		return findViewById(R.id.no);
+	}
+
+	@Override
+	protected View getYesButton() {
+		return findViewById(R.id.yes);
+	}
 	
+	@Override
+	protected Checkable getStopCheckBox() {
+		return (Checkable) findViewById(R.id.stop);
+	}
 }

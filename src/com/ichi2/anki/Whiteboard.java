@@ -1,5 +1,6 @@
 /****************************************************************************************
-* Copyright (c) 2009 Name <email@email.com>                                            *
+* Copyright (c) 2009 																   *
+* Edu Zamora <email@email.com>                                            			   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *

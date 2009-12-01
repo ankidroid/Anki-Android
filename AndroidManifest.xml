@@ -17,7 +17,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.ichi2.anki"
       android:versionName="0.3" android:versionCode="7">
-    <application android:label="@string/app_name" android:icon="@drawable/anki" android:debuggable="false">
+    <application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkidroidApp" android:debuggable="false">
         <activity android:name=".Ankidroid" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar" android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +27,27 @@
         <activity android:name="DeckPicker" android:label="@string/deckpicker_title" />
         <activity android:name="Preferences" android:label="Preferences" />
         <activity android:name="About" android:label="About" />
+        <activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
+        <receiver android:name="com.ichi2.veecheck.CheckReceiver">
+			<intent-filter>
+				<action
+					android:name="com.ichi2.anki.VEECHECK_RESCHEDULE_CHECKS">
+				</action>
+			</intent-filter>
+			<intent-filter>
+				<action
+					android:name="com.ichi2.anki.VEECHECK_CONSIDER_CHECK">
+				</action>
+			</intent-filter>
+		</receiver>
+		<service android:name="com.ichi2.veecheck.CheckService">
+			<intent-filter>
+				<action
+					android:name="com.ichi2.anki.VEECHECK_PERFORM_CHECK">
+				</action>
+				<data android:scheme="http"></data>
+			</intent-filter>
+		</service>
     </application>
     <uses-sdk android:minSdkVersion="3" />
 	<uses-permission android:name="android.permission.VIBRATE" />

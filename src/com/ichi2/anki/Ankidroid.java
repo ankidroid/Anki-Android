@@ -1,5 +1,8 @@
 /****************************************************************************************
-* Copyright (c) 2009 Name <email@email.com>                                            *
+* Copyright (c) 2009                                                                   *
+* Andrew Dubya <email@email.com>													   *
+* Edu Zamora <email@email.com>                                                         *
+* Nicolas Raoul <email@email.com>                                            		   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -15,48 +18,31 @@
 ****************************************************************************************/
 package com.ichi2.anki;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import com.ichi2.utils.DiffEngine;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -71,10 +57,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.ichi2.utils.DiffEngine;
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 /**
  * Main activity for Ankidroid. Shows a card and controls to answer it.
- * 
- * @author Andrew Dubya, Nicolas Raoul, Edu Zamora
  * 
  */
 public class Ankidroid extends Activity implements Runnable
@@ -89,8 +76,6 @@ public class Ankidroid extends Activity implements Runnable
 	 * Tag for logging messages
 	 */
 	private static final String TAG = "Ankidroid";
-
-	private static String ankidroidMarketURIString;
 	
 	/**
 	 * Max and min size of the font of the questions and answers
@@ -106,11 +91,6 @@ public class Ankidroid extends Activity implements Runnable
 	public static final int MENU_PREFERENCES = 1;
 
 	public static final int MENU_ABOUT = 2;
-
-	/**
-	 * Dialogs
-	 */
-	public static final int DIALOG_UPDATE = 0;
 	
 	/**
 	 * Possible outputs trying to load a deck
@@ -241,9 +221,6 @@ public class Ankidroid extends Activity implements Runnable
 		Bundle extras = getIntent().getExtras();
 		SharedPreferences preferences = restorePreferences();
 		initLayout(R.layout.flashcard_portrait);
-		
-		if(updateNotifications)
-			checkUpdates();
 		
 		registerExternalStorageListener();
 		initResourceValues();
@@ -380,35 +357,6 @@ public class Ankidroid extends Activity implements Runnable
 			return true;
 		}
 		return false;
-	}
-
-	protected Dialog onCreateDialog(int id)
-	{
-		Dialog dialog;
-		switch(id)
-		{
-		case DIALOG_UPDATE:
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Update available");
-			builder.setMessage("A new version of Ankidroid is available in Android Market. Would you like to install it?");
-			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-				
-				public void onClick(DialogInterface dialog, int which) {
-					Uri ankidroidMarketURI = Uri.parse(ankidroidMarketURIString);
-					Intent searchUpdateIntent = new Intent(Intent.ACTION_VIEW, ankidroidMarketURI);
-					startActivity(searchUpdateIntent);
-				}
-			});
-			builder.setNegativeButton("No", null);
-			dialog = builder.create();
-			updateDialog = (AlertDialog) dialog;
-			break;
-		
-		default:
-			dialog = null;
-		}
-		
-		return dialog;
 	}
 	
 	public void openDeckPicker()
@@ -842,20 +790,20 @@ public class Ankidroid extends Activity implements Runnable
 
 	private SharedPreferences restorePreferences()
 	{
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
-		updateNotifications = preferences.getBoolean("updateNotifications", true);
+		updateNotifications = preferences.getBoolean("enabled", true);
 
 		return preferences;
 	}
 
 	private void savePreferences()
 	{
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		Editor editor = preferences.edit();
 		editor.putString("deckFilename", deckFilename);
 		editor.commit();
@@ -977,97 +925,6 @@ public class Ankidroid extends Activity implements Runnable
 		layout.setVisibility(View.VISIBLE);
 		message.setVisibility(View.VISIBLE);
 		detail.setVisibility(View.GONE);
-	}
-
-	private void checkUpdates() 
-	{		
-		String result = queryRESTurl("http://ankidroid.googlecode.com/files/last_release");
-		
-		Log.i(TAG, "Json = " + result);
-		
-		try 
-		{
-			JSONObject json = new JSONObject(result);
-			int versionCode = Integer.parseInt(json.getString("versionCode"));
-			
-			PackageManager manager = getPackageManager();
-			PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
-			
-			int versionCodeFromManifest = info.versionCode;
-			
-			if(versionCode > versionCodeFromManifest)
-			{
-				ankidroidMarketURIString = json.getString("uri");
-				showDialog(DIALOG_UPDATE);
-			}
-			
-		} catch(JSONException e)
-		{
-			Log.e(TAG, "There was an error parsing the JSON" + e.getMessage());
-		} catch (NameNotFoundException e) {
-			Log.e(TAG, "The name of the Ankidroid package was not found.");
-		}
-	}
-	
-
-
-	public String queryRESTurl(String url) 
-	{  
-		HttpClient httpclient = new DefaultHttpClient();  
-		HttpGet httpget = new HttpGet(url);  
-		HttpResponse response;  
-	       
-		try {  
-			response = httpclient.execute(httpget);  
-			Log.i(TAG, "Status:[" + response.getStatusLine().toString() + "]");  
-			HttpEntity entity = response.getEntity();  
-	           
-			if (entity != null) 
-			{         
-				InputStream instream = entity.getContent();  
-				String result = convertStreamToString(instream);  
-				Log.i(TAG, "Result of converstion: [" + result + "]");  
-	               
-				instream.close();  
-				return result;  
-			}  
-		} catch (ClientProtocolException e) {  
-			Log.e(TAG, "There was a protocol based error", e);  
-	     } catch (IOException e) {  
-	    	 Log.e(TAG, "There was an IO Stream related error", e);  
-	     }  
-	       
-	     return null;  
-	 }  
-	
-	/**
-	 * Converts an InputStream to a String
-	 * 
-	 * @param is
-	 *            InputStream to convert
-	 * @return String version of the InputStream
-	 */
-	public String convertStreamToString(InputStream is)
-	{
-		Log.i(TAG, "convertStreamToString");
-		String contentOfMyInputStream = "";
-		try
-		{
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is), 4096);
-			String line;
-			StringBuilder sb = new StringBuilder();
-			while ((line = rd.readLine()) != null)
-			{
-				sb.append(line);
-			}
-			rd.close();
-			contentOfMyInputStream = sb.toString();
-		} catch (Exception e)
-		{
-			Log.i(TAG, "convertStreamToString - Exception = " + e.getMessage());
-		}
-
-		return contentOfMyInputStream;
 	}
 	
 }

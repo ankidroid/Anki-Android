@@ -14,31 +14,27 @@
 * You should have received a copy of the GNU General Public License along with         *
 * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 ****************************************************************************************/
-package com.ichi2.anki;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.preference.PreferenceActivity;
+package com.ichi2.veecheck;
 
-import com.tomgibara.android.veecheck.Veecheck;
+import android.content.Context;
+
+import com.tomgibara.android.veecheck.VeecheckReceiver;
+import com.tomgibara.android.veecheck.VeecheckSettings;
+import com.tomgibara.android.veecheck.VeecheckState;
 import com.tomgibara.android.veecheck.util.PrefSettings;
+import com.tomgibara.android.veecheck.util.PrefState;
 
-public class Preferences extends PreferenceActivity
-{
+public class CheckReceiver extends VeecheckReceiver {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		getPreferenceManager().setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
-		addPreferencesFromResource(R.layout.preferences);
+	protected VeecheckSettings createSettings(Context context) {
+		return new PrefSettings(context);
 	}
-	
-    @Override
-    protected void onPause() {
-    	super.onPause();
-    	//reschedule the checking in case the user has changed anything
-		sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
-    }
-	
+
+	@Override
+	protected VeecheckState createState(Context context) {
+		return new PrefState(context);
+	}
+
 }

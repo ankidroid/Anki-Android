@@ -15,8 +15,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    
+
 <string name="app_name">Ankidroid</string>
+
+<string name="yes">Yes</string>
+<string name="no">No</string>
 
 <string name="overlay_on">Whiteboard On</string>
 <string name="overlay_off">Whiteboard Off</string>
@@ -29,6 +32,7 @@
 
 <color name="wb_fg_color">#B00000FF</color>
 <color name="wb_bg_color">#0000</color>
+
 <string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;file:///android_asset/flashcard_css&quot; /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=&quot;card&quot;&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
 
 <string name="deckpicker_title">Select a deck you copied to your SD card</string>
@@ -37,6 +41,13 @@
 <string name="deckpicker_new">%d new today</string>
 <string name="deckpicker_loaddeck">Loading deck...</string>
 <string name="deckpicker_nodeck">No decks found.</string>
+
+<string name="notify_ticker">Application Update</string>
+<string name="notify_title">Ankidroid Updated</string>
+<string name="notify_message">Download a new version</string>
+<string name="notification_title">Confirm Ankidroid Update</string>
+<string name="notification_message">A new version of Ankidroid is available in Android Market.\n\nWould you like to install it?</string>
+<string name="notification_stop">Don\'t notify me of this update again</string>
 
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 </resources>
