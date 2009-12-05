@@ -27,9 +27,13 @@ import android.content.SharedPreferences.Editor;
 
 public class AnkidroidApp extends Application {
 
+    private static AnkidroidApp instance;
+    private Deck loadedDeck;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		instance = this;
 		
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
 		//assign some default settings if necessary
@@ -51,4 +55,20 @@ public class AnkidroidApp extends Application {
 		Intent intent = new Intent(Veecheck.getRescheduleAction(this));
 		sendBroadcast(intent);
 	}
+	
+    public static AnkidroidApp getInstance()
+    {
+        return instance;
+    }
+    
+    public static Deck deck()
+    {
+        return instance.loadedDeck;
+    }
+    
+    public static void setDeck( Deck deck )
+    {
+        instance.loadedDeck = deck;
+    }
+    
 }

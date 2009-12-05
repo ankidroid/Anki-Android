@@ -428,7 +428,8 @@ public class DeckPicker extends Activity implements Runnable
     {
     	super.onStop();
     	Log.i(TAG, "DeckPicker - onStop()");
-    	unregisterReceiver(mUnmountReceiver);
+    	if(mUnmountReceiver != null)
+    		unregisterReceiver(mUnmountReceiver);
     }
     
 	/*private void logTree(TreeSet<HashMap<String, String>> tree)
