@@ -715,6 +715,10 @@ public class Ankidroid extends Activity implements Runnable
 		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(realContent.length()/5));
 		mCard.getSettings().setDefaultFontSize(size);
 		
+		//In order to display the bold style correctly, we have to change font-weight to 700
+		content = content.replaceAll("font-weight:600;", "font-weight:700;");
+		
+		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
 	}
