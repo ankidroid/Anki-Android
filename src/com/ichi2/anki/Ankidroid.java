@@ -3,6 +3,7 @@
 * Copyright (c) 2009 Andrew <andrewdubya@gmail.                                        *
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
 * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+* Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>                             *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -118,15 +119,19 @@ public class Ankidroid extends Activity// implements Runnable
 
     private BroadcastReceiver mUnmountReceiver = null;
 
+	//Name of the last deck loaded
+	private String deckFilename;
+	
     //Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true
     //We don't have to worry to set deckSelected to true, it's done automatically in displayProgressDialogAndLoadDeck()
     //We have to set deckSelected to false only on these situations a deck has to be reload and when we know for sure no other thread is trying to load a deck (for example, when sd card is mounted again)
 	private boolean deckSelected;
 
 	private boolean deckLoaded;
+	
+	private boolean cardsToReview;
 
-	//Name of the last deck loaded
-	private String deckFilename;
+	private boolean sdCardAvailable = isSdCardMounted();
 
 	private boolean corporalPunishments;
 
@@ -355,6 +360,13 @@ public class Ankidroid extends Activity// implements Runnable
 		return true;
 	}
 
+	public boolean onPrepareOptionsMenu(Menu menu)
+	{
+		Log.i(TAG, "sdCardAvailable = " + sdCardAvailable + ", deckLoaded = " + deckLoaded);
+		menu.findItem(MENU_DECKOPTS).setEnabled(sdCardAvailable && deckLoaded);
+		return true;
+	}
+	
 	/** Handles item selections */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
@@ -383,7 +395,8 @@ public class Ankidroid extends Activity// implements Runnable
 	public void openDeckPicker()
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
-    	AnkidroidApp.deck().closeDeck();
+    	if(AnkidroidApp.deck() != null)
+    		AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
@@ -507,7 +520,7 @@ public class Ankidroid extends Activity// implements Runnable
 		{
 			restorePreferences();
 			//If there is no deck loaded the controls have not to be shown
-			if(deckLoaded)
+			if(deckLoaded && cardsToReview)
 			{
 				showOrHideControls();
 				showOrHideAnswerField();
@@ -628,6 +641,9 @@ public class Ankidroid extends Activity// implements Runnable
 			mCardTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
+			mAnswerField.setVisibility(View.GONE);
+			
+			cardsToReview = false;
 		} else
 		{
 			Log.i(TAG, "displayCardQuestion - Hiding Ease buttons...");
@@ -783,11 +799,13 @@ public class Ankidroid extends Activity// implements Runnable
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
                     	Log.i(TAG, "mUnmountReceiver - Action = Media Eject");
+                    	sdCardAvailable = false;
                     	closeExternalStorageFiles();
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                     	Log.i(TAG, "mUnmountReceiver - Action = Media Mounted");
                     	hideSdError();
                     	deckSelected = false;
+                    	sdCardAvailable = true;
                     	Log.i(TAG, "mUnmountReceiver - deckSelected = " + deckSelected);
                     	onResume();
                     }
@@ -969,6 +987,7 @@ public class Ankidroid extends Activity// implements Runnable
 					currentCard = result.getCard();
 					showControls(true);
 					deckLoaded = true;
+					cardsToReview = true;
 					mFlipCard.setChecked(false);
 					displayCardQuestion();
 

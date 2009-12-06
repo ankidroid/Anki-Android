@@ -34,7 +34,7 @@ import android.util.Log;
 public class DeckPreferences extends PreferenceActivity implements OnSharedPreferenceChangeListener
 {
 
-    static final String TAG = "DeckPreferences";
+    static final String TAG = "Ankidroid";
 
     public class DeckPreferenceHack implements SharedPreferences
     {
@@ -49,6 +49,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
         protected void cacheValues()
         {
+        	Log.i(TAG, "DeckPreferences - CacheValues");
             values.put( "newCardsPDay", String.valueOf( AnkidroidApp.deck().getNewCardsPerDay() ) );
             values.put( "sessionQLimit", String.valueOf( AnkidroidApp.deck().getSessionRepLimit() ) );
             values.put( "sessionTLimit", String.valueOf( AnkidroidApp.deck().getSessionTimeLimit()/60 ) );
@@ -71,7 +72,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
             public boolean commit()
             {
-                Log.d( TAG, "commit() changes back to database" );
+                Log.d( TAG, "DeckPreferences - commit() changes back to database" );
 
                 // make sure we refresh the parent cached values
                 // cacheValues();
@@ -229,16 +230,17 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
         if ( AnkidroidApp.deck() == null )
         {
-            Log.i( TAG, "Selected Deck is NULL" );
+            Log.i( TAG, "DeckPreferences - Selected Deck is NULL" );
             finish();
+        } 
+        else
+        {
+            this.pref = new DeckPreferenceHack();
+            this.pref.registerOnSharedPreferenceChangeListener( this );
+
+            this.addPreferencesFromResource( R.layout.deck_preferences );
+//            this.updateSummaries();
         }
-
-        this.pref = new DeckPreferenceHack();
-        this.pref.registerOnSharedPreferenceChangeListener( this );
-
-        this.addPreferencesFromResource( R.layout.deck_preferences );
-//        this.updateSummaries();
-
     }
 
     public void onSharedPreferenceChanged( SharedPreferences sharedPreferences, String key )
