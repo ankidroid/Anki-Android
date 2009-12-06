@@ -395,7 +395,7 @@ public class Ankidroid extends Activity// implements Runnable
 	public void openDeckPicker()
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
-    	if(AnkidroidApp.deck() != null)
+    	if(AnkidroidApp.deck() != null && sdCardAvailable)
     		AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
@@ -821,7 +821,8 @@ public class Ankidroid extends Activity// implements Runnable
 
     private void closeExternalStorageFiles()
     {
-        AnkidroidApp.deck().closeDeck();
+    	if(AnkidroidApp.deck() != null)
+    		AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
     	displaySdError();
     }
