@@ -1,5 +1,6 @@
 /****************************************************************************************
-* Copyright (c) 2009 Name <email@email.com>                                            *
+* Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>                             *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -13,6 +14,7 @@
 * You should have received a copy of the GNU General Public License along with         *
 * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 ****************************************************************************************/
+
 package com.ichi2.anki;
 
 import java.util.ArrayList;
@@ -28,12 +30,12 @@ import android.util.Log;
 
 public class Deck
 {
-	
+
 	/**
 	 * Tag for logging messages
 	 */
 	private static String TAG = "Ankidroid";
-	
+
 	// Auto priorities
 	private static final int PRIORITY_HIGH = 4;
 
@@ -84,11 +86,11 @@ public class Deck
 	private static final int SEARCH_FID = 3;
 
 	private static final int DECK_VERSION = 43;
-	
+
 	private static final double factorFour = 1.3;
 	private static final double initialFactor = 2.5;
 	private static final double maxScheduleTime = 36500.0;
-	
+
 	// BEGIN: SQL table columns
 	long id;
 
@@ -99,9 +101,9 @@ public class Deck
 	String description;
 
 	int version;
-	
+
 	long currentModelId;
-	
+
 	String syncName;
 
 	double lastSync;
@@ -176,12 +178,12 @@ public class Deck
 	private int revCardOrder;
 
 	// END: SQL table columns
-	
+
 	// BEGIN JOINed variables
 	//Model currentModel; // Deck.currentModelId = Model.id
 	//ArrayList<Model> models; // Deck.id = Model.deckId
 	// END JOINed variables
-	
+
 	double averageFactor;
 
 	int newCardModulus;
@@ -189,7 +191,7 @@ public class Deck
 	int newCountToday;
 
 	double lastLoaded;
-	
+
 	boolean newEarly;
 
 	boolean reviewEarly;
@@ -217,14 +219,14 @@ public class Deck
 		Deck deck = new Deck();
 		Log.i(TAG, "openDeck - Opening database " + path);
 		AnkiDb.openDatabase(path);
-		
+
 		// Read in deck table columns
 		Cursor cursor = AnkiDb.database.rawQuery("SELECT *" + " FROM decks" + " LIMIT 1", null);
 
 		if (cursor.isClosed())
 			throw new SQLException();
 		cursor.moveToFirst();
-		
+
 		deck.id 			 = cursor.getLong(0);
 		deck.created		 = cursor.getDouble(1);
 		deck.modified 		 = cursor.getDouble(2);
@@ -267,7 +269,7 @@ public class Deck
 		Log.i(TAG, String.format("openDeck - modified: %f currentTime: %f", deck.modified, System.currentTimeMillis()/1000.0));
 
 		deck.initVars();
-		
+
 		// Ensure necessary indices are available
 		deck.updateDynamicIndices();
 		// Save counts to determine if we should save deck after check
@@ -276,10 +278,10 @@ public class Deck
 		deck.rebuildQueue();
 		// Unsuspend reviewed early & buried
 		cursor = AnkiDb.database.rawQuery(
-				"SELECT id " + 
-				"FROM cards " + 
-				"WHERE type in (0,1,2) and " + 
-				"isDue = 0 and " + 
+				"SELECT id " +
+				"FROM cards " +
+				"WHERE type in (0,1,2) and " +
+				"isDue = 0 and " +
 				"priority in (-1,-2)",
 				null);
 
@@ -304,7 +306,7 @@ public class Deck
 			deck.commitToDB();
 
 		Card.updateStmt = null;
-		
+
 		return deck;
 	}
 
@@ -319,16 +321,16 @@ public class Deck
 	{
 		return modified > lastLoaded;
 	}
-	
+
 	private void setModified() {
 		modified = System.currentTimeMillis() / 1000.0;
 	}
-	
+
 	private void flushMod() {
 		setModified();
 		commitToDB();
 	}
-	
+
 	private void commitToDB() {
 		Log.i(TAG, "commitToDB - Saving deck to DB...");
 		ContentValues values = new ContentValues();
@@ -386,11 +388,11 @@ public class Deck
 		AnkiDb.closeDatabase();
 		return value;
 	}
-	
+
 	/* Getters and Setters for deck properties
 	 * NOTE: The setters flushMod()
 	 ***********************************************************/
-	
+
 	public int getRevCardOrder()
 	{
 	    return revCardOrder;
@@ -403,7 +405,7 @@ public class Deck
 	        flushMod();
 	    }
 	}
-	
+
 	public int getNewCardSpacing()
 	{
 	    return newCardSpacing;
@@ -416,7 +418,7 @@ public class Deck
 	        flushMod();
 	    }
 	}
-	
+
 	public int getNewCardOrder()
 	{
 	    return newCardOrder;
@@ -429,12 +431,12 @@ public class Deck
 	        flushMod();
 	    }
 	}
-	   
+
 	public int getNewCardsPerDay()
 	{
 	    return newCardsPerDay;
 	}
-	
+
 	public void setNewCardsPerDay( int num )
 	{
 	    if( num > 0 )
@@ -443,7 +445,7 @@ public class Deck
 	        flushMod();
 	    }
 	}
-	
+
 	public int getSessionRepLimit()
 	{
 	    return sessionRepLimit;
@@ -456,12 +458,12 @@ public class Deck
             flushMod();
         }
     }
-	
+
 	public int getSessionTimeLimit()
 	{
 	    return sessionTimeLimit;
 	}
-	
+
 	public void setSessionTimeLimit( int num )
     {
         if( num >= 0 ) {
@@ -469,11 +471,11 @@ public class Deck
             flushMod();
         }
     }
-	
+
 	/* Getting the next card
 	 ***********************************************************/
-	
-	
+
+
 	/**
 	 * Return the next card object.
 	 * @return The next due card or null if nothing is due.
@@ -483,7 +485,7 @@ public class Deck
 		long id = getCardId();
 		return cardFromId(id);
 	}
-	
+
 	private long getCardId() {
 		long id;
 		// Failed card due?
@@ -522,11 +524,11 @@ public class Deck
 			} catch (Exception e) {
 				return 0;
 			}
-			return id; 
+			return id;
 		}
 		return 0;
 	}
-	
+
 	private long getCardIdAhead() {
 		long id = AnkiDb.queryScalar(
 				"SELECT id " +
@@ -538,10 +540,10 @@ public class Deck
 				"LIMIT 1");
 		return id;
 	}
-	
+
 	/* Get card: helper functions
 	 ***********************************************************/
-	
+
 	private boolean timeForNewCard() {
 		if (newCardSpacing == NEW_CARDS_LAST)
 			return false;
@@ -564,20 +566,20 @@ public class Deck
 		}
 		return false;
 	}
-	
+
 	private long maybeGetNewCard() {
 		if ((newCountToday == 0) && (!newEarly))
 			return 0;
 		return getNewCard();
 	}
-	
+
 	private String newCardTable() {
 		return (new String[]{
 				"acqCardsOld ",
 				"acqCardsOld ",
 				"acqCardsNew "})[newCardOrder];
 	}
-	
+
 	private String revCardTable() {
 		return (new String[]{
 				"revCardsOld ",
@@ -585,7 +587,7 @@ public class Deck
 				"revCardsDue ",
 				"revCardsRandom "})[revCardOrder];
 	}
-	
+
 	private long getNewCard() {
 		long id;
 		try {
@@ -599,7 +601,7 @@ public class Deck
 		}
 		return id;
 	}
-	
+
 	private long getRevCard() {
 		long id;
 		try {
@@ -613,11 +615,11 @@ public class Deck
 		}
 		return id;
 	}
-	
+
 	private boolean showFailedLast() {
 		return (collapseTime != 0) || (delay0 == 0);
 	}
-	
+
 	private Card cardFromId(long id) {
 		if (id == 0)
 			return null;
@@ -626,27 +628,27 @@ public class Deck
 		boolean result = card.fromDB(id);
 		long stop = System.currentTimeMillis();
         Log.v(TAG, "cardFromId - card.fromDB in " + (stop - start) + " ms.");
-        
+
 		if (!result)
 			return null;
 		card.genFuzz();
 		card.startTimer();
 		return card;
 	}
-	
+
 	/* Answering a card
 	 ***********************************************************/
-	
+
 	public void answerCard(Card card, int ease)
 	{
 		double now = System.currentTimeMillis() / 1000.0;
-		
+
 		// Old state
 		String oldState = cardState(card);
 		double lastDelaySecs = System.currentTimeMillis() / 1000.0 - card.combinedDue;
         double lastDelay = lastDelaySecs / 86400.0;
         int oldSuc = card.successive;
-        
+
         // update card details
         double last = card.interval;
         card.interval = nextInterval(card, ease);
@@ -659,7 +661,7 @@ public class Deck
         card.lastFactor = card.factor;
         if (lastDelay >= 0)
             updateFactor(card, ease); // don't update factor if learning ahead
-        
+
         // spacing
         long start = System.currentTimeMillis();
         double space, spaceFactor, minSpacing, minOfOtherCards;
@@ -683,7 +685,7 @@ public class Deck
         cursor.close();
         long stop = System.currentTimeMillis();
         Log.v(TAG, "answerCard - spacing in " + (stop - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
         cursor = AnkiDb.database.rawQuery(
         		"SELECT min(interval) " +
@@ -691,7 +693,7 @@ public class Deck
         		"WHERE factId = " +
         		card.factId +
         		" and id != " +
-        		card.id, 
+        		card.id,
         		null);
 		if (!cursor.moveToFirst())
 			minOfOtherCards = 0;
@@ -707,7 +709,7 @@ public class Deck
         space = space * spaceFactor * 86400f;
         space = Math.max(minSpacing, space);
         space += System.currentTimeMillis() / 1000.0;
-        
+
         // check what other cards we've spaced
         String extra;
         if (this.reviewEarly)
@@ -718,7 +720,7 @@ public class Deck
             // even if it was not due yet (it's a failed card)
             extra = "or id = " + card.id;
         }
-        
+
         start = System.currentTimeMillis();
         cursor = AnkiDb.database.rawQuery(
         		"SELECT type, count(type) " +
@@ -739,7 +741,7 @@ public class Deck
         cursor.close();
         stop = System.currentTimeMillis();
 	    Log.v(TAG, "answerCard - other cards for same fact in " + (stop - start) + " ms.");
-	    
+
         // space other cards
 	    start = System.currentTimeMillis();
         AnkiDb.database.execSQL(String.format(
@@ -753,7 +755,7 @@ public class Deck
         stop = System.currentTimeMillis();
 	    Log.v(TAG, "answerCard - space other cards for same fact in " + (stop - start) + " ms.");
         card.spaceUntil = 0;
-        
+
         // temp suspend if learning ahead
         if (reviewEarly && lastDelay < 0)
             if (oldSuc != 0 || lastDelaySecs > delay0 || !showFailedLast())
@@ -763,12 +765,12 @@ public class Deck
         card.updateStats(ease, oldState);
         stop = System.currentTimeMillis();
         Log.v(TAG, "answerCard - card.updateStats in " + (stop - start) + " ms.");
-        
+
         start = System.currentTimeMillis();
         card.toDB();
         stop = System.currentTimeMillis();
         Log.v(TAG, "answerCard - card.toDB in " + (stop - start) + " ms.");
-        
+
         // global/daily stats
         start = System.currentTimeMillis();
         Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
@@ -782,10 +784,10 @@ public class Deck
         Log.v(TAG, "answerCard - CardHistoryEntry in " + (stop - start) + " ms.");
         modified = now;
 //        // TODO: Fix leech handling
-//        if (isLeech(card)) 
+//        if (isLeech(card))
 //            card = handleLeech(card);
 	}
-	
+
 //	private boolean isLeech(Card card)
 //	{
 //		int no = card.noCount;
@@ -800,7 +802,7 @@ public class Deck
 //            // at least threshold/2 reps since last time
 //            (fmax - no) % (Math.max(fmax/2, 1)) == 0);
 //	}
-//	
+//
 //	// TODO: not sure how this is supposed to affect the DB.
 //	private Card handleLeech(Card card)
 //	{
@@ -817,21 +819,21 @@ public class Deck
 //            suspendCards(card.id);
 //        this.refresh();
 //	}
-	
+
 	/* Interval management
 	 ***********************************************************/
-	
+
 	private double nextInterval(Card card, int ease)
 	{
 		double delay = adjustedDelay(card, ease);
 		return nextInterval(card, delay, ease);
 	}
-	
+
 	private double nextInterval(Card card, double delay, int ease)
 	{
 		double interval = card.interval;
         double factor = card.factor;
-        
+
         // if shown early and not failed
         if ((delay < 0) && (card.successive != 0))
         {
@@ -840,7 +842,7 @@ public class Deck
                 interval = 0;
             delay = 0;
         }
-        
+
         // if interval is less than mid interval, use presets
         if (ease == 1)
         {
@@ -879,7 +881,7 @@ public class Deck
             interval = Math.min(interval, maxScheduleTime);
         return interval;
 	}
-	
+
 	private double nextDue(Card card, int ease, String oldState)
 	{
 		double due;
@@ -892,7 +894,7 @@ public class Deck
 			due = card.interval * 86400.0;
 		return due + (System.currentTimeMillis() / 1000.0);
 	}
-	
+
 	private void updateFactor(Card card, int ease)
 	{
 		card.lastFactor = card.factor;
@@ -911,7 +913,7 @@ public class Deck
 			card.factor += 0.10;
 		card.factor = Math.max(1.3, card.factor);
 	}
-	
+
 	private double adjustedDelay(Card card, int ease)
 	{
 		double now = System.currentTimeMillis();
@@ -922,10 +924,10 @@ public class Deck
 		else
 			return (now - card.combinedDue) / 86400f;
 	}
-            
+
 	/* Queue/cache management
 	 ***********************************************************/
-	
+
 	private void rebuildCounts(boolean full) {
 		Log.i(TAG, "rebuildCounts - Rebuilding global and due counts...");
 		// Need to check due first, so new due cards are not added later
@@ -970,25 +972,25 @@ public class Deck
 		// Failed cards
 		ContentValues val = new ContentValues(1);
 		val.put("isDue", 1);
-		
+
 		failedSoonCount += AnkiDb.database.update(
-				"cards", 
-				val, 
+				"cards",
+				val,
 				"type = 0 and " +
 				"isDue = 0 and " +
 				"priority in (1,2,3,4) and " +
-				String.format("combinedDue <= %f", 
+				String.format("combinedDue <= %f",
 						(double) ((System.currentTimeMillis() / 1000.0) + delay0)),
 				null);
-		
+
 		failedNowCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
 				"WHERE type = 0 and " +
 				"isDue = 1 and " +
-				String.format("combinedDue <= %f", 
+				String.format("combinedDue <= %f",
 						(double) (System.currentTimeMillis() / 1000.0)));
-		
+
 		// Review
 		val.clear();
 		val.put("isDue", 1);
@@ -1059,13 +1061,13 @@ public class Deck
 		if (!Stats.genToday(this).toString().equals(dailyStats.day.toString()))
 			dailyStats = Stats.dailyStats(this);
 	}
-	
+
 	private void resetAfterReviewEarly() {
 		long[] ids = null;
 		Cursor cursor = AnkiDb.database.rawQuery(
 				"SELECT id " +
 				"FROM cards " +
-				"WHERE priority = -1", 
+				"WHERE priority = -1",
 				null);
 		if (cursor.moveToFirst()) {
 			int count = cursor.getCount();
@@ -1076,7 +1078,7 @@ public class Deck
 			}
 		}
 		cursor.close();
-		
+
 		if (ids != null) {
 			updatePriorities(ids);
 			flushMod();
@@ -1087,14 +1089,14 @@ public class Deck
 			checkDue();
 		}
 	}
-	
+
 	/* Priorities
 	 ***********************************************************/
-	
+
 	private void updatePriorities(long[] cardIds) {
 		updatePriorities(cardIds, null, true);
 	}
-	
+
 	private void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
 		Log.i(TAG, "updatePriorities - Updating priorities...");
 		// Any tags to suspend
@@ -1169,10 +1171,10 @@ public class Deck
 	{
 		return (dailyStats.newEase0 + dailyStats.newEase1 + dailyStats.newEase2 + dailyStats.newEase3 + dailyStats.newEase4);
 	}
-	
+
 	/* Card Predicates
 	 ***********************************************************/
-	
+
 	private String cardState(Card card)
 	{
 		if (cardIsNew(card))
@@ -1181,8 +1183,8 @@ public class Deck
             return "mature";
         return "young";
 	}
-	
-	/** 
+
+	/**
 	 * Check if a card is a new card.
 	 * @param card The card to check.
 	 * @return True if a card has never been seen before.
@@ -1191,8 +1193,8 @@ public class Deck
 	{
 		return card.reps == 0;
 	}
-	
-	/** 
+
+	/**
 	 * Check if a card is a new card.
 	 * @param card The card to check.
 	 * @return True if card should use present intervals.
@@ -1201,10 +1203,10 @@ public class Deck
 	{
 		return card.interval < easyIntervalMin;
 	}
-	
+
 	/* Dynamic indices
 	 ***********************************************************/
-	
+
 	private void updateDynamicIndices() {
 		Log.i(TAG, "updateDynamicIndices - Updating indices...");
 		HashMap<String,String> indices = new HashMap<String,String>();
@@ -1247,7 +1249,7 @@ public class Deck
 
 	/**
 	 * Returns a SQL string from an array of integers.
-	 * 
+	 *
 	 * @param ids
 	 *            The array of integers to include in the list.
 	 * @return An SQL compatible string in the format (ids[0],ids[1],..).
@@ -1269,7 +1271,7 @@ public class Deck
 
 	/**
 	 * Gets the IDs of the specified tags.
-	 * 
+	 *
 	 * @param tags
 	 *            An array of the tags to get IDs for.
 	 * @return An array of IDs of the tags.

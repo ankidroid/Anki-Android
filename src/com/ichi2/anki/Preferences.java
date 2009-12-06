@@ -1,6 +1,6 @@
 /****************************************************************************************
-* Copyright (c) 2009 																   *
-* Edu Zamora <email@email.com>                                            			   *
+* Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -33,12 +33,12 @@ public class Preferences extends PreferenceActivity
 		getPreferenceManager().setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
 		addPreferencesFromResource(R.layout.preferences);
 	}
-	
+
     @Override
     protected void onPause() {
     	super.onPause();
     	//reschedule the checking in case the user has changed anything
 		sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
     }
-	
+
 }

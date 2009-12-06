@@ -1,3 +1,19 @@
+/****************************************************************************************
+* Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+*                                                                                      *
+* This program is free software; you can redistribute it and/or modify it under        *
+* the terms of the GNU General Public License as published by the Free Software        *
+* Foundation; either version 3 of the License, or (at your option) any later           *
+* version.                                                                             *
+*                                                                                      *
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+* WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+* PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+*                                                                                      *
+* You should have received a copy of the GNU General Public License along with         *
+* this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+****************************************************************************************/
+
 package com.ichi2.anki;
 
 import java.lang.reflect.Field;
@@ -11,7 +27,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 public class Card {
-	
+
 	// TODO: Javadoc.
 
 	// BEGIN SQL table entries
@@ -60,18 +76,18 @@ public class Card {
 	int type = 2;
 	double combinedDue = 0;
 	// END SQL table entries
-	
+
 	// BEGIN JOINed variables
 	CardModel cardModel;
 	Fact fact;
 	// END JOINed variables
-	
+
 	double timerStarted;
 	double timerStopped;
 	double fuzz;
-	
+
 	static SQLiteStatement updateStmt;
-	
+
 	public Card(Fact fact, CardModel cardModel, double created) {
 		tags = "";
 		id = Util.genID();
@@ -105,7 +121,7 @@ public class Card {
 			question = qa.get("question");
 			answer = qa.get("answer");
 		}
-		
+
 		if (updateStmt == null)
 		{
 			updateStmt = AnkiDb.database.compileStatement(
@@ -150,54 +166,54 @@ public class Card {
 					"WHERE id = ?");
 		}
 	}
-	
+
 	public Card(){
 		this(null, null, Double.NaN);
 	}
-	
+
 	public void setModified() {
 		modified = System.currentTimeMillis() / 1000.0;
 	}
-	
+
 	public void startTimer() {
 		timerStarted = System.currentTimeMillis() / 1000.0;
 	}
-	
+
 	public void stopTimer() {
 		timerStopped = System.currentTimeMillis() / 1000.0;
 	}
-	
+
 	public double thinkingTime() {
 		if (timerStopped == Float.NaN)
 			return (System.currentTimeMillis() / 1000.0) - timerStarted;
 		else
 			return timerStopped - timerStarted;
 	}
-	
+
 	public double totalTime() {
 		return (System.currentTimeMillis() / 1000.0) - timerStarted;
 	}
-	
+
 	public void genFuzz() {
 		Random rand = new Random();
 		fuzz = 0.95 + (0.1 * rand.nextDouble());
 	}
-	
+
 	public String htmlQuestion(String type, boolean align) {
 		return null;
 	}
-	
+
 	public String htmlAnswer(boolean align) {
 		return htmlQuestion("answer", align);
 	}
-	
+
 	public void updateStats(int ease, String state) {
 		reps += 1;
 		if (ease > 1)
 			successive += 1;
 		else
 			successive = 0;
-		
+
 		double delay = totalTime();
 		// Ignore any times over 60 seconds
 		if (delay < 60) {
@@ -218,7 +234,7 @@ public class Card {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		if (ease < 2)
 			noCount += 1;
 		else
@@ -227,19 +243,19 @@ public class Card {
 			firstAnswered = System.currentTimeMillis() / 1000.0;
 		setModified();
 	}
-	
+
 	public String[] splitTags() {
 		return null;
 	}
-	
+
 	public String allTags() {
 		return null;
 	}
-	
+
 	public boolean hasTag(String tag) {
 		return true;
 	}
-	
+
 	public boolean fromDB(long id) {
 		Cursor cursor = AnkiDb.database.rawQuery(
 				"SELECT id, factId, cardModelId, created, modified, tags, " +
@@ -251,13 +267,13 @@ public class Card {
 				"spaceUntil, isDue, type, combinedDue " +
 				"FROM cards " +
 				"WHERE id = " +
-				id, 
+				id,
 				null);
 		if (!cursor.moveToFirst()) {
 			Log.w("anki", "Card.java (fromDB(id)): No result from query.");
 			return false;
 		}
-		
+
 		this.id = cursor.getLong(0);
 		this.factId = cursor.getLong(1);
 		this.cardModelId = cursor.getLong(2);
@@ -295,13 +311,13 @@ public class Card {
 		this.isDue = cursor.getInt(34);
 		this.type = cursor.getInt(35);
 		this.combinedDue = cursor.getDouble(36);
-		
+
 		cursor.close();
-		
+
 		// TODO: Should also read JOINed entries CardModel and Fact.
 		return true;
 	}
-	
+
 	public void toDB() {
 		if (reps == 0)
 			type = 2;
@@ -309,7 +325,7 @@ public class Card {
 			type = 1;
 		else
 			type = 0;
-		
+
 		ContentValues values = new ContentValues();
 		values.put("factId", factId);
 		values.put("cardModelId", cardModelId);
@@ -349,10 +365,10 @@ public class Card {
 		values.put("combinedDue", Math.max(spaceUntil, due));
 		values.put("relativeDelay", 0.0);
 		AnkiDb.database.update("cards", values, "id = " + id, null);
-		
+
 		// TODO: Should also write JOINED entries: CardModel and Fact.
 	}
-	
+
 	public void toDB2()
 	{
 		if (this.reps == 0)
@@ -361,7 +377,7 @@ public class Card {
 			this.type = 1;
 		else
 			this.type = 0;
-		
+
 		AnkiDb.database.execSQL(
 				"UPDATE cards SET " +
 				"factId = " + factId + ", " +
@@ -403,7 +419,7 @@ public class Card {
 				"combinedDue = " + String.format("%f", Math.max(spaceUntil, due)) + " " +
 				"WHERE id = " + id);
 	}
-	
+
 	public void toDB3()
 	{
 		if (this.reps == 0)
@@ -412,7 +428,7 @@ public class Card {
 			this.type = 1;
 		else
 			this.type = 0;
-		
+
 		updateStmt.clearBindings();
 		updateStmt.bindLong(1, factId);
 		updateStmt.bindLong(2, cardModelId);
@@ -451,13 +467,13 @@ public class Card {
 		updateStmt.bindLong(35, type);
 		updateStmt.bindDouble(36, Math.max(spaceUntil, due));
 		updateStmt.bindLong(37, id);
-		
+
 		updateStmt.execute();
 	}
-	
+
 	public void temporarilySetLowestPriority()
 	{
 		AnkiDb.database.execSQL("UPDATE cards SET priority = 0, isDue = 0 WHERE id = " + id);
 	}
-	
+
 }

@@ -1,5 +1,7 @@
 /****************************************************************************************
-* Copyright (c) 2009 Name <email@email.com>                                            *
+* Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
+* Copyright (c) 2009 Andrew <andrewdubya@gmail.com>                                    *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -24,7 +26,7 @@ import android.util.Log;
 /**
  * Database layer for Ankidroid. Can read the native Anki format through
  * Android's SQLite driver.
- * 
+ *
  * @author Andrew Dubya, Nicolas Raoul
  */
 public class AnkiDb
@@ -39,7 +41,7 @@ public class AnkiDb
 	 * Tag for logging messages
 	 */
 	private static final String TAG = "Ankidroid";
-	
+
 	/**
 	 * Open a database connection to an ".anki" SQLite file.
 	 */
@@ -69,7 +71,7 @@ public class AnkiDb
 
 	/**
 	 * Convenience method for querying the database for a single integer result.
-	 * 
+	 *
 	 * @param query
 	 *            The raw SQL query to use.
 	 * @return The integer result of the query.
@@ -79,7 +81,7 @@ public class AnkiDb
 		Cursor cursor = AnkiDb.database.rawQuery(query, null);
 		if (!cursor.moveToFirst())
 			throw new SQLException("No result for query: " + query);
-		
+
 		long scalar = cursor.getLong(0);
 		cursor.close();
 
@@ -88,7 +90,7 @@ public class AnkiDb
 
 	/**
 	 * A card is Anki's question-answer entity.
-	 * 
+	 *
 	 * @see "http://www.ichi2.net/anki/wiki/AddItems"
 	 */
 	static public class Card

@@ -1,5 +1,5 @@
 /****************************************************************************************
-* Copyright (c) 2009 Name <email@email.com>                                            *
+* Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -25,12 +25,12 @@ import android.util.Log;
 
 public class Stats
 {
-	
+
 	/**
 	 * Tag for logging messages
 	 */
 	private static String TAG = "Ankidroid";
-	
+
 	private static final int STATS_LIFE = 0;
 
 	private static final int STATS_DAY = 1;
@@ -108,7 +108,7 @@ public class Stats
 		matureEase3 = 0;
 		matureEase4 = 0;
 	}
-	
+
 	private void fromDB(long id) {
 		Log.i(TAG, "Reading stats from DB...");
 		Cursor cursor = AnkiDb.database.rawQuery(
@@ -120,7 +120,7 @@ public class Stats
 		if (cursor.isClosed())
 			throw new SQLException();
 		cursor.moveToFirst();
-		
+
 		this.id = cursor.getLong(0);
 		type = cursor.getInt(1);
 		day = Date.valueOf(cursor.getString(2));
@@ -179,7 +179,7 @@ public class Stats
 		values.put("matureEase4", 0);
 		id = AnkiDb.database.insert("stats", null, values);
 	}
-	
+
 	public void toDB()
 	{
 		ContentValues values = new ContentValues();
@@ -203,7 +203,7 @@ public class Stats
 		values.put("matureEase2", matureEase2);
 		values.put("matureEase3", matureEase3);
 		values.put("matureEase4", matureEase4);
-		
+
 		AnkiDb.database.update("stats", values, "id = " + id, null);
 	}
 
@@ -211,13 +211,13 @@ public class Stats
 	{
 		return new Date((long) (System.currentTimeMillis() - deck.utcOffset * 1000));
 	}
-	
+
 	public static void updateAllStats(Stats global, Stats daily, Card card, int ease, String oldState)
 	{
 		updateStats(global, card, ease, oldState);
 		updateStats(daily, card, ease, oldState);
 	}
-	
+
 	public static void updateStats(Stats stats, Card card, int ease, String oldState)
 	{
 		stats.reps += 1;
@@ -237,10 +237,10 @@ public class Stats
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	    stats.toDB();
 	}
-	
+
 	public static Stats globalStats(Deck deck) throws SQLException {
 		Log.i(TAG, "Getting global stats...");
 		int type = STATS_LIFE;

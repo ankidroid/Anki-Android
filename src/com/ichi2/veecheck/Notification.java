@@ -1,6 +1,5 @@
 /****************************************************************************************
-* Copyright (c) 2009 																   *
-* Edu Zamora <email@email.com>                                            			   *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -33,7 +32,7 @@ public class Notification extends VeecheckActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.notification);
 	}
-	
+
 	@Override
 	protected VeecheckState createState() {
 		return new PrefState(this);
@@ -48,7 +47,7 @@ public class Notification extends VeecheckActivity {
 	protected View getYesButton() {
 		return findViewById(R.id.yes);
 	}
-	
+
 	@Override
 	protected Checkable getStopCheckBox() {
 		return (Checkable) findViewById(R.id.stop);

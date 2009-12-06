@@ -1,3 +1,19 @@
+/****************************************************************************************
+* Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>                             *
+*                                                                                      *
+* This program is free software; you can redistribute it and/or modify it under        *
+* the terms of the GNU General Public License as published by the Free Software        *
+* Foundation; either version 3 of the License, or (at your option) any later           *
+* version.                                                                             *
+*                                                                                      *
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+* WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+* PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+*                                                                                      *
+* You should have received a copy of the GNU General Public License along with         *
+* this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+****************************************************************************************/
+
 package com.ichi2.utils;
 
 /*
@@ -61,7 +77,7 @@ public class DiffEngine {
    * Double-ending is twice as fast, but less accurate.
    */
   public short Diff_DualThreshold = 32;
-  
+
   /**
    * Colors for right and wrong answer
    */
@@ -960,7 +976,7 @@ public class DiffEngine {
   private Pattern BLANKLINESTART
       = Pattern.compile("\\A\\r?\\n\\r?\\n", Pattern.DOTALL);
 
-  
+
   /**
    * Reorder and merge like edit sections.  Merge equalities.
    * Any edit section can move as long as it doesn't cross an equality.
@@ -1172,22 +1188,24 @@ public class DiffEngine {
       this.text = text;
     }
 
-    
+
     /**
      * Display a human-readable version of this Diff.
      * @return text version.
      */
+    @Override
     public String toString() {
       String prettyText = this.text.replace('\n', '\u00b6');
       return "Diff(" + this.operation + ",\"" + prettyText + "\")";
     }
 
-    
+
     /**
      * Is this Diff equivalent to another Diff?
      * @param d Another Diff to compare against.
      * @return true or false.
      */
+    @Override
     public boolean equals(Object d) {
       try {
         return (((DiffAction) d).operation == this.operation)

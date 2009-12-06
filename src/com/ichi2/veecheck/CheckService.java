@@ -1,6 +1,5 @@
 /****************************************************************************************
-* Copyright (c) 2009 																   *
-* Edu Zamora <email@email.com>                                            			   *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -19,8 +18,6 @@ package com.ichi2.veecheck;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.IntentFilter.MalformedMimeTypeException;
-import android.util.Log;
 
 import com.ichi2.anki.R;
 import com.tomgibara.android.veecheck.VeecheckNotifier;
@@ -30,18 +27,18 @@ import com.tomgibara.android.veecheck.util.DefaultNotifier;
 import com.tomgibara.android.veecheck.util.PrefState;
 
 public class CheckService extends VeecheckService {
-	
+
 	private static final String TAG = "Ankidroid";
 	public static final int NOTIFICATION_ID = 1;
 
 	@Override
 	protected VeecheckNotifier createNotifier() {
 		IntentFilter[] filters = new IntentFilter[1];
-		
+
 		IntentFilter filter = new IntentFilter(Intent.ACTION_VIEW);
 		filter.addDataScheme("http");
 		filters[0] = filter;
-		 
+
 		return new DefaultNotifier(this, NOTIFICATION_ID, filters,
 					new Intent(this, Notification.class),
 					R.drawable.anki,

@@ -1,8 +1,8 @@
 /****************************************************************************************
-* Copyright (c) 2009                                                                   *
-* Andrew Dubya <email@email.com>													   *
-* Edu Zamora <email@email.com>                                                         *
-* Nicolas Raoul <email@email.com>                                            		   *
+* Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
+* Copyright (c) 2009 Andrew <andrewdubya@gmail.                                        *
+* Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -60,7 +60,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
  * Main activity for Ankidroid. Shows a card and controls to answer it.
- * 
+ *
  */
 public class Ankidroid extends Activity// implements Runnable
 {
@@ -74,13 +74,13 @@ public class Ankidroid extends Activity// implements Runnable
 	 * Tag for logging messages
 	 */
 	private static final String TAG = "Ankidroid";
-	
+
 	/**
 	 * Max and min size of the font of the questions and answers
 	 */
 	private static final int MAX_FONT_SIZE = 14;
 	private static final int MIN_FONT_SIZE = 3;
-	
+
 	/**
 	 * Menus
 	 */
@@ -92,16 +92,16 @@ public class Ankidroid extends Activity// implements Runnable
 
 	public static final int MENU_DECKOPTS = 3;
 
-	
+
 	/**
 	 * Possible outputs trying to load a deck
 	 */
 	public static final int DECK_LOADED = 0;
-	
+
 	public static final int DECK_NOT_LOADED = 1;
-	
+
 	public static final int DECK_EMPTY = 2;
-	
+
 	/**
 	 * Available options returning from another activity
 	 */
@@ -113,18 +113,18 @@ public class Ankidroid extends Activity// implements Runnable
 	 * Variables to hold the state
 	 */
 	private ProgressDialog progressDialog;
-	
+
 	private AlertDialog updateDialog;
-	
+
     private BroadcastReceiver mUnmountReceiver = null;
 
     //Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true
     //We don't have to worry to set deckSelected to true, it's done automatically in displayProgressDialogAndLoadDeck()
-    //We have to set deckSelected to false only on these situations a deck has to be reload and when we know for sure no other thread is trying to load a deck (for example, when sd card is mounted again) 
+    //We have to set deckSelected to false only on these situations a deck has to be reload and when we know for sure no other thread is trying to load a deck (for example, when sd card is mounted again)
 	private boolean deckSelected;
 
 	private boolean deckLoaded;
-	
+
 	//Name of the last deck loaded
 	private String deckFilename;
 
@@ -133,35 +133,35 @@ public class Ankidroid extends Activity// implements Runnable
 	private boolean timerAndWhiteboard;
 
 	private boolean spacedRepetition;
-	
+
 	private boolean writeAnswers;
-	
+
 	private boolean updateNotifications;
 
 	public String cardTemplate;
 
 	private Card currentCard;
 
-	/** 
+	/**
 	 * Variables to hold layout objects that we need to update or handle events for
 	 */
 	private WebView mCard;
 
 	private ToggleButton mToggleWhiteboard, mFlipCard;
-	
+
 	private EditText mAnswerField;
 
 	private Button mEase0, mEase1, mEase2, mEase3;
 
 	private Chronometer mCardTimer;
-	
+
 	//the time (in ms) at which the session will be over
 	private long mSessionTimeLimit;
-	
+
 	private int mSessionCurrReps = 0;
 
 	private Whiteboard mWhiteboard;
-	
+
 	// Handler for the flip toogle button, between the question and the answer
 	// of a card
 	CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener()
@@ -214,24 +214,24 @@ public class Ankidroid extends Activity// implements Runnable
 				ease = 0;
 				return;
 			}
-			
+
 			DeckTask.launchDeckTask(
 					DeckTask.TASK_TYPE_ANSWER_CARD,
 					mAnswerCardHandler,
 					new DeckTask.TaskData(ease, AnkidroidApp.deck(), currentCard));
 		}
 	};
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
-	{		
+	{
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
-		
+
 		Bundle extras = getIntent().getExtras();
 		SharedPreferences preferences = restorePreferences();
 		initLayout(R.layout.flashcard_portrait);
-		
+
 		registerExternalStorageListener();
 		initResourceValues();
 
@@ -299,7 +299,7 @@ public class Ankidroid extends Activity// implements Runnable
 					openDeckPicker();
 				}
 			}
-		
+
 		}
 	}
 
@@ -327,7 +327,7 @@ public class Ankidroid extends Activity// implements Runnable
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
 		mAnswerField = (EditText) findViewById(R.id.answer_field);
-		
+
 		showControls(false);
 
 		mEase0.setOnClickListener(mSelectEaseHandler);
@@ -337,7 +337,7 @@ public class Ankidroid extends Activity// implements Runnable
 		mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
-		
+
 		mCard.setFocusable(false);
 
 		Log.i(TAG, "initLayout - Ending");
@@ -345,7 +345,8 @@ public class Ankidroid extends Activity// implements Runnable
 	}
 
 	/** Creates the menu items */
-	public boolean onCreateOptionsMenu(Menu menu)
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu)
 	{
 		menu.add(0, MENU_OPEN, 0, "Switch to another deck");
 		menu.add(1, MENU_PREFERENCES, 0, "Preferences");
@@ -378,7 +379,7 @@ public class Ankidroid extends Activity// implements Runnable
 		}
 		return false;
 	}
-	
+
 	public void openDeckPicker()
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
@@ -433,14 +434,14 @@ public class Ankidroid extends Activity// implements Runnable
 		super.onDestroy();
     	unregisterReceiver(mUnmountReceiver);
 	}
-	
+
 	private void displayProgressDialogAndLoadDeck()
 	{
 		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
 
 		// Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
 		deckSelected = true;
-		
+
 		if(isSdCardMounted())
 		{
 			if (deckFilename != null && new File(deckFilename).exists())
@@ -455,7 +456,7 @@ public class Ankidroid extends Activity// implements Runnable
 			{
 				if(deckFilename == null) Log.i(TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
 				else if(!new File(deckFilename).exists()) Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + "does not exist.");
-				
+
 				//Show message informing that no deck has been loaded
 				displayDeckNotLoaded();
 			}
@@ -469,7 +470,7 @@ public class Ankidroid extends Activity// implements Runnable
 
 	}
 
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
@@ -480,7 +481,7 @@ public class Ankidroid extends Activity// implements Runnable
 			updateCard("");
 			hideSdError();
 			hideDeckErrors();
-			
+
 			if (resultCode != RESULT_OK)
 			{
 				Log.e(TAG, "onActivityResult - Deck browser returned with error");
@@ -517,15 +518,15 @@ public class Ankidroid extends Activity// implements Runnable
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 	  super.onConfigurationChanged(newConfig);
-	  
+
 	  Log.i(TAG, "onConfigurationChanged");
-	  
+
 	  LinearLayout sdLayout = (LinearLayout) findViewById(R.id.sd_layout);
-	  if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) 
+	  if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
 		  sdLayout.setPadding(0, 50, 0, 0);
 	  else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
 		  sdLayout.setPadding(0, 100, 0, 0);
-		  
+
 	  //extra height that the Whiteboard should have to be able to write in all its surface either on the question or on the answer
 	  int extraHeight = 0;
 	  //if(mSelectRemembered.isShown() && mSelectNotRemembered.isShown())
@@ -535,11 +536,11 @@ public class Ankidroid extends Activity// implements Runnable
 		  //if the "Remembered" and "Not remembered" buttons are visible, their height has to be counted in the creation of the new Whiteboard
 		  //because we should be able to write in their space when it is the front part of the card
 		  extraHeight = java.lang.Math.max(mEase0.getHeight(), mEase1.getHeight());
-	  } 
+	  }
 	  mWhiteboard.rotate(extraHeight);
 	}
-	
-	
+
+
 	private void showControls(boolean show)
 	{
 		if (show)
@@ -589,7 +590,7 @@ public class Ankidroid extends Activity// implements Runnable
 			}
 		}
 	}
-	
+
 	/**
 	 * Depending on preferences, show or hide the answer field.
 	 */
@@ -603,7 +604,7 @@ public class Ankidroid extends Activity// implements Runnable
 		{
 			mAnswerField.setVisibility(View.VISIBLE);
 		}
-	}	
+	}
 
 	public void setOverlayState(boolean enabled)
 	{
@@ -635,13 +636,13 @@ public class Ankidroid extends Activity// implements Runnable
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
 			mEase3.setVisibility(View.GONE);
-			
+
 			// If the user wants to write the answer
 			if(writeAnswers)
 			{
 				mAnswerField.setVisibility(View.VISIBLE);
 			}
-			
+
 			mFlipCard.requestFocus();
 
 			updateCard(currentCard.question);
@@ -651,20 +652,20 @@ public class Ankidroid extends Activity// implements Runnable
 	public void updateCard(String content)
 	{
 		Log.i(TAG, "updateCard");
-		
+
 		// We want to modify the font size depending on how long is the content
 		// Replace each <br> with 15 spaces, then remove all html tags and spaces
 		String realContent = content.replaceAll("\\<br.*?\\>", "               ");
 		realContent = realContent.replaceAll("\\<.*?\\>", "");
 		realContent = realContent.replaceAll("&nbsp;", " ");
-		
+
 		// Calculate the size of the font depending on the length of the content
 		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(realContent.length()/5));
 		mCard.getSettings().setDefaultFontSize(size);
-		
+
 		//In order to display the bold style correctly, we have to change font-weight to 700
 		content = content.replaceAll("font-weight:600;", "font-weight:700;");
-		
+
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
@@ -682,9 +683,9 @@ public class Ankidroid extends Activity// implements Runnable
 		mEase1.setVisibility(View.VISIBLE);
 		mEase2.setVisibility(View.VISIBLE);
 		mEase3.setVisibility(View.VISIBLE);
-		
+
 		mAnswerField.setVisibility(View.GONE);
-		
+
 		mEase2.requestFocus();
 
 		// If the user wrote an answer
@@ -695,13 +696,13 @@ public class Ankidroid extends Activity// implements Runnable
 				// Obtain the user answer and the correct answer
 				String userAnswer = mAnswerField.getText().toString();
 				String correctAnswer = (String) currentCard.answer.subSequence(
-						currentCard.answer.indexOf(">")+1, 
+						currentCard.answer.indexOf(">")+1,
 						currentCard.answer.lastIndexOf("<"));
-				
+
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
 				updateCard(diff.diff_prettyHtml(
-						diff.diff_main(userAnswer, correctAnswer)) + 
+						diff.diff_main(userAnswer, correctAnswer)) +
 						"<br/>" + currentCard.answer);
 			}
 			else
@@ -714,7 +715,7 @@ public class Ankidroid extends Activity// implements Runnable
 			updateCard(currentCard.answer);
 		}
 	}
-	
+
 
 	private boolean writeToFile(InputStream source, String destination) throws IOException
 	{
@@ -764,11 +765,11 @@ public class Ankidroid extends Activity// implements Runnable
 	}
 
 
-	
+
 	private boolean isSdCardMounted() {
 		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 	}
-	
+
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
      * The intent will call closeExternalStorageFiles() if the external media
@@ -799,26 +800,26 @@ public class Ankidroid extends Activity// implements Runnable
             registerReceiver(mUnmountReceiver, iFilter);
         }
     }
-    
+
     private void closeExternalStorageFiles()
     {
         AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
     	displaySdError();
     }
-    
-    private void displaySdError() 
+
+    private void displaySdError()
     {
     	showControls(false);
     	hideDeckErrors();
     	showSdCardElements(true);
     }
-    
+
     private void hideSdError()
     {
     	showSdCardElements(false);
     }
-    
+
     private void showSdCardElements(boolean show)
     {
     	Log.i(TAG, "showSdCardElements");
@@ -827,7 +828,7 @@ public class Ankidroid extends Activity// implements Runnable
     	TextView tv = (TextView) findViewById(R.id.sd_message);
     	ImageView image = (ImageView) findViewById(R.id.sd_icon);
     	if(show)
-    	{        		
+    	{
     		layout.setVisibility(View.VISIBLE);
     		tv.setVisibility(View.VISIBLE);
     		image.setVisibility(View.VISIBLE);
@@ -838,22 +839,22 @@ public class Ankidroid extends Activity// implements Runnable
     		image.setVisibility(View.GONE);
     	}
     }
-    
+
     private void displayDeckNotLoaded()
     {
     	Log.i(TAG, "displayDeckNotLoaded");
-    	
+
     	LinearLayout layout = (LinearLayout) findViewById(R.id.deck_error_layout);
     	TextView message = (TextView) findViewById(R.id.deck_message);
     	TextView detail = (TextView) findViewById(R.id.deck_message_detail);
-     		
+
 		message.setText(R.string.deck_not_loaded);
 		detail.setText(R.string.deck_not_loaded_detail);
 		layout.setVisibility(View.VISIBLE);
 		message.setVisibility(View.VISIBLE);
 		detail.setVisibility(View.VISIBLE);
     }
-    
+
     private void hideDeckErrors()
     {
     	Log.i(TAG, "hideDeckErrors");
@@ -866,48 +867,48 @@ public class Ankidroid extends Activity// implements Runnable
 		message.setVisibility(View.GONE);
 		detail.setVisibility(View.GONE);
     }
-    
-	private void displayNoCardsInDeck() 
+
+	private void displayNoCardsInDeck()
 	{
     	Log.i(TAG, "displayNoCardsInDeck");
 
     	LinearLayout layout = (LinearLayout) findViewById(R.id.deck_error_layout);
     	TextView message = (TextView) findViewById(R.id.deck_message);
     	TextView detail = (TextView) findViewById(R.id.deck_message_detail);
-     		
+
 		message.setText(R.string.deck_empty);
 		layout.setVisibility(View.VISIBLE);
 		message.setVisibility(View.VISIBLE);
 		detail.setVisibility(View.GONE);
 	}
-	
+
 	DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener()
 	{
 	    boolean sessioncomplete = false;
-		
+
 		public void onPreExecute() {
 			progressDialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
 		}
-		
+
 		public void onPostExecute(DeckTask.TaskData result) {
 		    // TODO show summary screen?
 			if( sessioncomplete )
 			    openDeckPicker();
 		}
-		
+
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 		    mSessionCurrReps++; // increment number reps counter
-		    
+
 		    // Check to see if session rep limit has been reached
 		    int sessionRepLimit = AnkidroidApp.deck().getSessionRepLimit();
 		    Toast sessionMessage = null;
-		    
+
 		    if( (sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit) )
 		    {
 		    	sessioncomplete = true;
 		    	sessionMessage = Toast.makeText(Ankidroid.this, "Session question limit reached", Toast.LENGTH_SHORT);
 		    } else if( System.currentTimeMillis() >= mSessionTimeLimit ) //Check to see if the session time limit has been reached
-		    {		    
+		    {
 		        // session time limit reached, flag for halt once async task has completed.
 		        sessioncomplete = true;
 		        sessionMessage = Toast.makeText(Ankidroid.this, "Session time limit reached", Toast.LENGTH_SHORT);
@@ -928,27 +929,27 @@ public class Ankidroid extends Activity// implements Runnable
 		    }
 
 		    progressDialog.dismiss();
-			
+
 			// Show a message to user if a session limit has been reached.
 			if (sessionMessage != null)
 				sessionMessage.show();
 		}
-		
+
 	};
-	
-	DeckTask.TaskListener mLoadDeckHandler = new DeckTask.TaskListener() 
+
+	DeckTask.TaskListener mLoadDeckHandler = new DeckTask.TaskListener()
 	{
-		
+
 		public void onPreExecute() {
 			if(updateDialog == null || !updateDialog.isShowing())
 			{
 				progressDialog = ProgressDialog.show(Ankidroid.this, "", "Loading deck. Please wait...", true);
 			}
 		}
-		
+
 		public void onPostExecute(DeckTask.TaskData result) {
 			// This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems that emulator does not do)
-			if(progressDialog.isShowing()) 
+			if(progressDialog.isShowing())
 			{
 				try
 				{
@@ -958,7 +959,7 @@ public class Ankidroid extends Activity// implements Runnable
 					Log.e(TAG, "handleMessage - Dialog dismiss Exception = " + e.getMessage());
 				}
 			}
-			
+
 			switch(result.getInt())
 			{
 				case DECK_LOADED:
@@ -970,7 +971,7 @@ public class Ankidroid extends Activity// implements Runnable
 					deckLoaded = true;
 					mFlipCard.setChecked(false);
 					displayCardQuestion();
-					
+
 					mWhiteboard.clear();
 					mCardTimer.setBase(SystemClock.elapsedRealtime());
 					mCardTimer.start();
@@ -978,21 +979,21 @@ public class Ankidroid extends Activity// implements Runnable
 					mSessionTimeLimit = System.currentTimeMillis() + (AnkidroidApp.deck().getSessionTimeLimit()*1000);
 					mSessionCurrReps = 0;
 					break;
-					
+
 				case DECK_NOT_LOADED:
 					displayDeckNotLoaded();
 					break;
-				
+
 				case DECK_EMPTY:
 					displayNoCardsInDeck();
 					break;
 			}
 		}
-		
+
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 			// Pass
 		}
-		
+
 	};
 
 }

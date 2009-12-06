@@ -1,6 +1,7 @@
 /****************************************************************************************
-* Copyright (c) 2009 																   *
-* Edu Zamora <email@email.com>                                            			   *
+* Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+* Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -50,22 +51,22 @@ import android.widget.SimpleAdapter;
 
 /**
  * Allows the user to choose a deck from the filesystem.
- * 
+ *
  * @author Andrew Dubya
- * 
+ *
  */
 public class DeckPicker extends Activity implements Runnable
 {
 
 	private static final String TAG = "Ankidroid";
-	
+
 	/**
 	 * Dialogs
 	 */
 	private static final int DIALOG_NO_SDCARD = 0;
-	
+
 	private ProgressDialog dialog;
-	
+
 	private DeckPicker mSelf;
 
 	private SimpleAdapter mDeckListAdapter;
@@ -83,7 +84,7 @@ public class DeckPicker extends Activity implements Runnable
 	private boolean mIsFinished = true;
 
 	private boolean mDeckIsSelected = false;
-		
+
 	private BroadcastReceiver mUnmountReceiver = null;
 
 	AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener()
@@ -100,9 +101,9 @@ public class DeckPicker extends Activity implements Runnable
 	{
 		Log.i(TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
-		
+
 		registerExternalStorageListener();
-		
+
 		mSelf = this;
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		String deckPath = preferences.getString("deckPath", "/sdcard");
@@ -135,7 +136,8 @@ public class DeckPicker extends Activity implements Runnable
 		populateDeckList(deckPath);
 	}
 
-	public void onPause()
+	@Override
+    public void onPause()
 	{
 		Log.i(TAG, "DeckPicker - onPause");
 
@@ -143,7 +145,8 @@ public class DeckPicker extends Activity implements Runnable
 		waitForDeckLoaderThread();
 	}
 
-	protected Dialog onCreateDialog(int id)
+	@Override
+    protected Dialog onCreateDialog(int id)
 	{
 		Dialog dialog;
 		switch(id)
@@ -154,27 +157,27 @@ public class DeckPicker extends Activity implements Runnable
 			builder.setPositiveButton("OK", null);
 			dialog = builder.create();
 			break;
-		
+
 		default:
 			dialog = null;
 		}
-		
+
 		return dialog;
 	}
-	
+
 	private void populateDeckList(String location)
 	{
 		Log.i(TAG, "DeckPicker - populateDeckList");
-	
-		
+
+
 		Resources res = getResources();
 		int len = 0;
 		File[] fileList;
 		TreeSet<HashMap<String, String>> tree = new TreeSet<HashMap<String, String>>(new HashMapCompare());
-		
+
 		File dir = new File(location);
 		fileList = dir.listFiles(new AnkiFilter());
-		
+
 		if (dir.exists() && dir.isDirectory() && fileList != null)
 		{
 			len = fileList.length;
@@ -188,7 +191,7 @@ public class DeckPicker extends Activity implements Runnable
 				String absPath = fileList[i].getAbsolutePath();
 
 				Log.i(TAG, "DeckPicker - populateDeckList, file " + i + " :" + fileList[i].getName());
-				
+
 				try
 				{
 					HashMap<String, String> data = new HashMap<String, String>();
@@ -200,7 +203,7 @@ public class DeckPicker extends Activity implements Runnable
 					data.put("showProgress", "true");
 
 					boolean result = tree.add(data);
-				} catch (SQLException e) 
+				} catch (SQLException e)
 				{
 					Log.w(TAG, "DeckPicker - populateDeckList, File " + fileList[i].getName() + " is not a real anki file");
 				}
@@ -219,7 +222,7 @@ public class DeckPicker extends Activity implements Runnable
 				setTitle(R.string.deckpicker_title_nosdcard);
 				showDialog(DIALOG_NO_SDCARD);
 			}
-			
+
 			HashMap<String, String> data = new HashMap<String, String>();
 			data.put("name", res.getString(R.string.deckpicker_nodeck));
 			data.put("new", "");
@@ -232,7 +235,7 @@ public class DeckPicker extends Activity implements Runnable
 		mDeckList.clear();
 		mDeckList.addAll(tree);
 		mDeckListView.clearChoices();
-		mDeckListAdapter.notifyDataSetChanged();  
+		mDeckListAdapter.notifyDataSetChanged();
 		Log.i(TAG, "DeckPicker - populateDeckList, Ending");
 	}
 
@@ -250,7 +253,7 @@ public class DeckPicker extends Activity implements Runnable
 	private static final class HashMapCompare implements Comparator<HashMap<String, String>>
 	{
 		public int compare(HashMap<String, String> object1, HashMap<String, String> object2)
-		{	
+		{
 			//Order by last modification date (last deck modified first)
 			if((Float.parseFloat(object2.get("mod")) - Float.parseFloat(object1.get("mod"))) != 0)
 				return (int) (Float.parseFloat(object2.get("mod")) - Float.parseFloat(object1.get("mod")));
@@ -322,7 +325,7 @@ public class DeckPicker extends Activity implements Runnable
 					Log.i(TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
 					if (mDeckIsSelected)
 						break;
-					
+
 
 					String path = mFileList[i].getAbsolutePath();
 					Deck deck;
@@ -361,7 +364,8 @@ public class DeckPicker extends Activity implements Runnable
 
 	private Handler handler = new Handler()
 	{
-		public void handleMessage(Message msg)
+		@Override
+        public void handleMessage(Message msg)
 		{
 			Bundle data = msg.getData();
 			Resources res = mSelf.getResources();
@@ -388,8 +392,8 @@ public class DeckPicker extends Activity implements Runnable
 			Log.i(TAG, "DeckPicker - mDeckList notified of changes");
 		}
 	};
-	
-	
+
+
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
      * The intent will call closeExternalStorageFiles() if the external media
@@ -423,7 +427,8 @@ public class DeckPicker extends Activity implements Runnable
             registerReceiver(mUnmountReceiver, iFilter);
         }
     }
-    
+
+    @Override
     public void onStop()
     {
     	super.onStop();
@@ -431,7 +436,7 @@ public class DeckPicker extends Activity implements Runnable
     	if(mUnmountReceiver != null)
     		unregisterReceiver(mUnmountReceiver);
     }
-    
+
 	/*private void logTree(TreeSet<HashMap<String, String>> tree)
 	{
 		Iterator<HashMap<String, String>> it = tree.iterator();

@@ -1,6 +1,6 @@
 /****************************************************************************************
-* Copyright (c) 2009 																   *
-* Edu Zamora <email@email.com>                                            			   *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+* Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>                             *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -17,13 +17,13 @@
 
 package com.ichi2.anki;
 
-import com.tomgibara.android.veecheck.Veecheck;
-import com.tomgibara.android.veecheck.util.PrefSettings;
-
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
+import com.tomgibara.android.veecheck.Veecheck;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class AnkidroidApp extends Application {
 
@@ -34,7 +34,7 @@ public class AnkidroidApp extends Application {
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
-		
+
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
 		//assign some default settings if necessary
 		if (prefs.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
@@ -55,20 +55,20 @@ public class AnkidroidApp extends Application {
 		Intent intent = new Intent(Veecheck.getRescheduleAction(this));
 		sendBroadcast(intent);
 	}
-	
+
     public static AnkidroidApp getInstance()
     {
         return instance;
     }
-    
+
     public static Deck deck()
     {
         return instance.loadedDeck;
     }
-    
+
     public static void setDeck( Deck deck )
     {
         instance.loadedDeck = deck;
     }
-    
+
 }

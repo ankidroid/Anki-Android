@@ -1,6 +1,7 @@
 /****************************************************************************************
-* Copyright (c) 2009 																   *
-* Edu Zamora <email@email.com>                                            			   *
+* Copyright (c) 2009 Andrew <andrewdubya@gmail.                                        *
+* Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -15,7 +16,7 @@
 * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 ****************************************************************************************/
 /**
- * 
+ *
  */
 package com.ichi2.anki;
 
@@ -43,7 +44,7 @@ public class Whiteboard extends View
 	public int mBackgroundColor, mForegroundColor, mExtraHeight;
 
 	private boolean mLocked;
-	
+
 	private boolean mRecreateBitmap = false;
 
 	public Whiteboard(Context context, AttributeSet attrs)
@@ -92,12 +93,12 @@ public class Whiteboard extends View
 		}
 	}
 
-	public void rotate(int height) 
+	public void rotate(int height)
 	{
 		mRecreateBitmap = true;
 		mExtraHeight = height;
 	}
-	
+
 	public void clear()
 	{
 		mBitmap.eraseColor(mBackgroundColor);

@@ -1,5 +1,5 @@
 /****************************************************************************************
-* Copyright (c) 2009 Name <email@email.com>                                            *
+* Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -23,7 +23,8 @@ import android.webkit.WebView;
 public class About extends Activity
 {
 
-	public void onCreate(Bundle savedInstanceState) throws SQLException
+	@Override
+    public void onCreate(Bundle savedInstanceState) throws SQLException
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about);
