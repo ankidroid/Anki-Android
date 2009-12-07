@@ -169,7 +169,6 @@ public class DeckPicker extends Activity implements Runnable
 	{
 		Log.i(TAG, "DeckPicker - populateDeckList");
 
-
 		Resources res = getResources();
 		int len = 0;
 		File[] fileList;
@@ -191,7 +190,7 @@ public class DeckPicker extends Activity implements Runnable
 				String absPath = fileList[i].getAbsolutePath();
 
 				Log.i(TAG, "DeckPicker - populateDeckList, file " + i + " :" + fileList[i].getName());
-
+				
 				try
 				{
 					HashMap<String, String> data = new HashMap<String, String>();
@@ -203,6 +202,7 @@ public class DeckPicker extends Activity implements Runnable
 					data.put("showProgress", "true");
 
 					boolean result = tree.add(data);
+
 				} catch (SQLException e)
 				{
 					Log.w(TAG, "DeckPicker - populateDeckList, File " + fileList[i].getName() + " is not a real anki file");
@@ -352,6 +352,7 @@ public class DeckPicker extends Activity implements Runnable
 					msg.setData(data);
 
 					handler.sendMessage(msg);
+
 				}
 				mIsFinished = true;
 				mCondFinished.signal();

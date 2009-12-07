@@ -55,6 +55,7 @@ public class AnkiDb
 
 		database = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
 		        | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+		Log.i(TAG, "AnkiDb - openDatabase, database " + ankiFilename + " opened = " + database.isOpen());
 	}
 
 	/**
@@ -65,6 +66,7 @@ public class AnkiDb
 		if (database != null)
 		{
 			database.close();
+			Log.i(TAG, "AnkiDb - closeDatabase, database " + database.getPath() + " closed = " + !database.isOpen());
 			database = null;
 		}
 	}

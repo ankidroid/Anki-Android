@@ -132,6 +132,8 @@ public class Ankidroid extends Activity// implements Runnable
 	private boolean cardsToReview;
 
 	private boolean sdCardAvailable = isSdCardMounted();
+	
+	private boolean inDeckPicker;
 
 	private boolean corporalPunishments;
 
@@ -226,6 +228,7 @@ public class Ankidroid extends Activity// implements Runnable
 					new DeckTask.TaskData(ease, AnkidroidApp.deck(), currentCard));
 		}
 	};
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
@@ -399,6 +402,7 @@ public class Ankidroid extends Activity// implements Runnable
     		AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
+		inDeckPicker = true;
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
 		Log.i(TAG, "openDeckPicker - Ending");
 	}
@@ -432,6 +436,8 @@ public class Ankidroid extends Activity// implements Runnable
 		Log.i(TAG, "onResume() - deckFilename = " + deckFilename + ", deckSelected = " + deckSelected);
 		super.onResume();
 
+		//registerExternalStorageListener();
+		
 		if (!deckSelected)
 		{
 			Log.i(TAG, "onResume() - No deck selected before");
@@ -441,6 +447,14 @@ public class Ankidroid extends Activity// implements Runnable
 		Log.i(TAG, "onResume() - Ending");
 	}
 
+	/*@Override
+	protected void onPause() {
+		super.onPause();
+		Log.i(TAG, "onPause()");
+		unregisterReceiver(mUnmountReceiver);
+	}*/
+	
+	
 	@Override
 	protected void onDestroy() {
 		Log.i(TAG, "onDestroy()");
@@ -494,7 +508,8 @@ public class Ankidroid extends Activity// implements Runnable
 			updateCard("");
 			hideSdError();
 			hideDeckErrors();
-
+			inDeckPicker = false;
+			
 			if (resultCode != RESULT_OK)
 			{
 				Log.e(TAG, "onActivityResult - Deck browser returned with error");
@@ -807,7 +822,8 @@ public class Ankidroid extends Activity// implements Runnable
                     	deckSelected = false;
                     	sdCardAvailable = true;
                     	Log.i(TAG, "mUnmountReceiver - deckSelected = " + deckSelected);
-                    	onResume();
+                    	if(!inDeckPicker)
+                    		onResume();
                     }
                 }
             };
