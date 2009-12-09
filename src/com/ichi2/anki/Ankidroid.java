@@ -24,6 +24,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -37,6 +40,8 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -122,6 +127,8 @@ public class Ankidroid extends Activity// implements Runnable
 	//Name of the last deck loaded
 	private String deckFilename;
 	
+	private String deckPath;
+	
     //Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true
     //We don't have to worry to set deckSelected to true, it's done automatically in displayProgressDialogAndLoadDeck()
     //We have to set deckSelected to false only on these situations a deck has to be reload and when we know for sure no other thread is trying to load a deck (for example, when sd card is mounted again)
@@ -162,6 +169,8 @@ public class Ankidroid extends Activity// implements Runnable
 
 	private Chronometer mCardTimer;
 
+	private ArrayList<MediaPlayer> sounds;
+	
 	//the time (in ms) at which the session will be over
 	private long mSessionTimeLimit;
 
@@ -446,13 +455,6 @@ public class Ankidroid extends Activity// implements Runnable
 
 		Log.i(TAG, "onResume() - Ending");
 	}
-
-	/*@Override
-	protected void onPause() {
-		super.onPause();
-		Log.i(TAG, "onPause()");
-		unregisterReceiver(mUnmountReceiver);
-	}*/
 	
 	
 	@Override
@@ -684,6 +686,7 @@ public class Ankidroid extends Activity// implements Runnable
 	{
 		Log.i(TAG, "updateCard");
 
+		content = Sound.extractSounds(deckFilename, content);
 		// We want to modify the font size depending on how long is the content
 		// Replace each <br> with 15 spaces, then remove all html tags and spaces
 		String realContent = content.replaceAll("\\<br.*?\\>", "               ");
@@ -700,6 +703,7 @@ public class Ankidroid extends Activity// implements Runnable
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
+		Sound.playSounds();
 	}
 
 	// Display the card answer.
@@ -783,6 +787,7 @@ public class Ankidroid extends Activity// implements Runnable
 		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
 		updateNotifications = preferences.getBoolean("enabled", true);
+		deckPath = preferences.getString("deckPath", "/sdcard");
 
 		return preferences;
 	}
@@ -916,7 +921,7 @@ public class Ankidroid extends Activity// implements Runnable
 		message.setVisibility(View.VISIBLE);
 		detail.setVisibility(View.GONE);
 	}
-
+	  
 	DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener()
 	{
 	    boolean sessioncomplete = false;
