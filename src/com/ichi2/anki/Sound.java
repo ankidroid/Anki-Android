@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
@@ -68,6 +69,7 @@ public class Sound {
 			try 
 			{
 				soundPlayer.setDataSource(soundPath);
+				soundPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
 				soundPlayer.prepare();
 				sounds.add(soundPlayer);
 
