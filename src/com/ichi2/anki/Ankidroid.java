@@ -687,6 +687,8 @@ public class Ankidroid extends Activity// implements Runnable
 		Log.i(TAG, "updateCard");
 
 		content = Sound.extractSounds(deckFilename, content);
+		content = Image.loadImages(deckFilename, content);
+		
 		// We want to modify the font size depending on how long is the content
 		// Replace each <br> with 15 spaces, then remove all html tags and spaces
 		String realContent = content.replaceAll("\\<br.*?\\>", "               ");

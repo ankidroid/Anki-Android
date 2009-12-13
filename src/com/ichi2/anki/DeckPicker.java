@@ -26,6 +26,8 @@ import java.util.TreeSet;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -105,7 +107,7 @@ public class DeckPicker extends Activity implements Runnable
 		registerExternalStorageListener();
 
 		mSelf = this;
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		String deckPath = preferences.getString("deckPath", "/sdcard");
 		setContentView(R.layout.main);
 

@@ -52,6 +52,7 @@
 				<data android:scheme="http"></data>
 			</intent-filter>
 		</service>
+		<provider android:name="AnkidroidContentProvider" android:authorities="com.ichi2.anki"/>
     </application>
     <uses-sdk android:minSdkVersion="3" />
 	<uses-permission android:name="android.permission.VIBRATE" />
