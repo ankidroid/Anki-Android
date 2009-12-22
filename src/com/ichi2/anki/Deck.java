@@ -123,11 +123,11 @@ public class Deck
 	double easyIntervalMax;
 
 	// Delays on failure
-	int delay0;
+	double delay0;
 
-	int delay1;
+	double delay1;
 
-	int delay2;
+	double delay2;
 
 	// Collapsing future cards
 	double collapseTime;
@@ -241,9 +241,9 @@ public class Deck
 		deck.midIntervalMax  = cursor.getDouble(11);
 		deck.easyIntervalMin = cursor.getDouble(12);
 		deck.easyIntervalMax = cursor.getDouble(13);
-		deck.delay0 		 = cursor.getInt(14);
-		deck.delay1 		 = cursor.getInt(15);
-		deck.delay2 		 = cursor.getInt(16);
+		deck.delay0 		 = cursor.getDouble(14);
+		deck.delay1 		 = cursor.getDouble(15);
+		deck.delay2 		 = cursor.getDouble(16);
 		deck.collapseTime 	 = cursor.getDouble(17);
 		deck.highPriority 	 = cursor.getString(18);
 		deck.medPriority 	 = cursor.getString(19);
