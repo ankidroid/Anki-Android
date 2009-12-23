@@ -257,8 +257,8 @@ public class DeckPicker extends Activity implements Runnable
 		public int compare(HashMap<String, String> object1, HashMap<String, String> object2)
 		{
 			//Order by last modification date (last deck modified first)
-			if((Float.parseFloat(object2.get("mod")) - Float.parseFloat(object1.get("mod"))) != 0)
-				return (int) (Float.parseFloat(object2.get("mod")) - Float.parseFloat(object1.get("mod")));
+			if(object2.get("mod").compareToIgnoreCase(object1.get("mod")) != 0)
+				return object2.get("mod").compareToIgnoreCase(object1.get("mod"));
 			//But if there are two decks with the same date of modification, order them in alphabetical order
 			else
 				return object1.get("filepath").compareToIgnoreCase(object2.get("filepath"));
