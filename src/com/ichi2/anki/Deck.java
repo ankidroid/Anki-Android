@@ -123,11 +123,11 @@ public class Deck
 	double easyIntervalMax;
 
 	// Delays on failure
-	int delay0;
+	double delay0;
 
-	int delay1;
+	double delay1;
 
-	int delay2;
+	double delay2;
 
 	// Collapsing future cards
 	double collapseTime;
@@ -154,9 +154,9 @@ public class Deck
 	private int newCardsPerDay;
 
 	// Currently unused
-	private int sessionRepLimit;
+	private long sessionRepLimit;
 
-	private int sessionTimeLimit;
+	private long sessionTimeLimit;
 
 	// Stats offset
 	double utcOffset;
@@ -241,9 +241,9 @@ public class Deck
 		deck.midIntervalMax  = cursor.getDouble(11);
 		deck.easyIntervalMin = cursor.getDouble(12);
 		deck.easyIntervalMax = cursor.getDouble(13);
-		deck.delay0 		 = cursor.getInt(14);
-		deck.delay1 		 = cursor.getInt(15);
-		deck.delay2 		 = cursor.getInt(16);
+		deck.delay0 		 = cursor.getDouble(14);
+		deck.delay1 		 = cursor.getDouble(15);
+		deck.delay2 		 = cursor.getDouble(16);
 		deck.collapseTime 	 = cursor.getDouble(17);
 		deck.highPriority 	 = cursor.getString(18);
 		deck.medPriority 	 = cursor.getString(19);
@@ -446,11 +446,11 @@ public class Deck
 	    }
 	}
 
-	public int getSessionRepLimit()
+	public long getSessionRepLimit()
 	{
 	    return sessionRepLimit;
 	}
-	public void setSessionRepLimit( int num )
+	public void setSessionRepLimit( long num )
     {
         if( num >= 0 )
         {
@@ -459,12 +459,12 @@ public class Deck
         }
     }
 
-	public int getSessionTimeLimit()
+	public long getSessionTimeLimit()
 	{
 	    return sessionTimeLimit;
 	}
 
-	public void setSessionTimeLimit( int num )
+	public void setSessionTimeLimit( long num )
     {
         if( num >= 0 ) {
             sessionTimeLimit = num;
@@ -710,6 +710,7 @@ public class Deck
         space = Math.max(minSpacing, space);
         space += System.currentTimeMillis() / 1000.0;
 
+        /***** Moved to separate method decreaseCounts
         // check what other cards we've spaced
         String extra;
         if (this.reviewEarly)
@@ -741,6 +742,7 @@ public class Deck
         cursor.close();
         stop = System.currentTimeMillis();
 	    Log.v(TAG, "answerCard - other cards for same fact in " + (stop - start) + " ms.");
+	    *****/
 
         // space other cards
 	    start = System.currentTimeMillis();
@@ -786,6 +788,42 @@ public class Deck
 //        // TODO: Fix leech handling
 //        if (isLeech(card))
 //            card = handleLeech(card);
+	}
+	
+	public void decreaseCounts(Card card)
+	{
+		long start, stop;
+		Cursor cursor;
+		String extra;
+        if (reviewEarly)
+            extra = "";
+        else
+        {
+            // if not reviewing early, make sure the current card is counted
+            // even if it was not due yet (it's a failed card)
+            extra = "or id = " + card.id;
+        }
+
+        start = System.currentTimeMillis();
+        cursor = AnkiDb.database.rawQuery(
+        		"SELECT type, count(type) " +
+        		"FROM cards " +
+        		"WHERE factId = " +
+        		card.factId + " and " +
+        		"(isDue = 1 " + extra + ") " +
+        		"GROUP BY type", null);
+    	while (cursor.moveToNext())
+    	{
+    		if (cursor.getInt(0) == 0)
+    			failedSoonCount -= cursor.getInt(1);
+    		else if (cursor.getInt(0) == 1)
+    			revCount -= cursor.getInt(1);
+    		else
+    			newCount -= cursor.getInt(1);
+    	}
+        cursor.close();
+        stop = System.currentTimeMillis();
+	    Log.v(TAG, "decreaseCounts - decreased counts in " + (stop - start) + " ms.");
 	}
 
 //	private boolean isLeech(Card card)

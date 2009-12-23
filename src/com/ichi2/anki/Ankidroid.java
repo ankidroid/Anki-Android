@@ -942,7 +942,7 @@ public class Ankidroid extends Activity// implements Runnable
 		    mSessionCurrReps++; // increment number reps counter
 
 		    // Check to see if session rep limit has been reached
-		    int sessionRepLimit = AnkidroidApp.deck().getSessionRepLimit();
+		    long sessionRepLimit = AnkidroidApp.deck().getSessionRepLimit();
 		    Toast sessionMessage = null;
 
 		    if( (sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit) )
@@ -1018,8 +1018,9 @@ public class Ankidroid extends Activity// implements Runnable
 					mWhiteboard.clear();
 					mCardTimer.setBase(SystemClock.elapsedRealtime());
 					mCardTimer.start();
-					Log.i(TAG, "SessionTimeLimit: " + AnkidroidApp.deck().getSessionTimeLimit());
-					mSessionTimeLimit = System.currentTimeMillis() + (AnkidroidApp.deck().getSessionTimeLimit()*1000);
+					long timelimit = AnkidroidApp.deck().getSessionTimeLimit() * 1000;
+					Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
+					mSessionTimeLimit = System.currentTimeMillis() + timelimit;
 					mSessionCurrReps = 0;
 					break;
 

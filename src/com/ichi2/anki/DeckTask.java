@@ -99,6 +99,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		{
 			start = System.currentTimeMillis();
 			oldCard.temporarilySetLowestPriority();
+			deck.decreaseCounts(oldCard);
 			stop = System.currentTimeMillis();
 			Log.v(TAG, "doInBackground - Set old card 0 priority in " + (stop - start) + " ms.");
 		}

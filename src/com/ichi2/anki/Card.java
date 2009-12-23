@@ -184,7 +184,7 @@ public class Card {
 	}
 
 	public double thinkingTime() {
-		if (timerStopped == Float.NaN)
+		if (Double.isNaN(timerStopped))
 			return (System.currentTimeMillis() / 1000.0) - timerStarted;
 		else
 			return timerStopped - timerStarted;
