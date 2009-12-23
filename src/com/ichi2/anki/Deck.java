@@ -154,9 +154,9 @@ public class Deck
 	private int newCardsPerDay;
 
 	// Currently unused
-	private int sessionRepLimit;
+	private long sessionRepLimit;
 
-	private int sessionTimeLimit;
+	private long sessionTimeLimit;
 
 	// Stats offset
 	double utcOffset;
@@ -446,11 +446,11 @@ public class Deck
 	    }
 	}
 
-	public int getSessionRepLimit()
+	public long getSessionRepLimit()
 	{
 	    return sessionRepLimit;
 	}
-	public void setSessionRepLimit( int num )
+	public void setSessionRepLimit( long num )
     {
         if( num >= 0 )
         {
@@ -459,12 +459,12 @@ public class Deck
         }
     }
 
-	public int getSessionTimeLimit()
+	public long getSessionTimeLimit()
 	{
 	    return sessionTimeLimit;
 	}
 
-	public void setSessionTimeLimit( int num )
+	public void setSessionTimeLimit( long num )
     {
         if( num >= 0 ) {
             sessionTimeLimit = num;

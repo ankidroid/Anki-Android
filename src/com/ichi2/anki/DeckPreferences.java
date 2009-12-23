@@ -85,11 +85,11 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
                     }
                     else if ( entry.getKey().equals( "sessionQLimit" ) )
                     {
-                        AnkidroidApp.deck().setSessionRepLimit( Integer.parseInt( entry.getValue().toString() ) );
+                        AnkidroidApp.deck().setSessionRepLimit( Long.parseLong( entry.getValue().toString() ) );
                     }
                     else if ( entry.getKey().equals( "sessionTLimit" ) )
                     {
-                        AnkidroidApp.deck().setSessionTimeLimit( 60 * Integer.parseInt( entry.getValue().toString() ) );
+                        AnkidroidApp.deck().setSessionTimeLimit( 60 * Long.parseLong( entry.getValue().toString() ) );
                     }
                     else if( entry.getKey().equals( "newCardOrder" ))
                     {
