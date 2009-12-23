@@ -710,6 +710,7 @@ public class Deck
         space = Math.max(minSpacing, space);
         space += System.currentTimeMillis() / 1000.0;
 
+        /***** Moved to separate method decreaseCounts
         // check what other cards we've spaced
         String extra;
         if (this.reviewEarly)
@@ -741,6 +742,7 @@ public class Deck
         cursor.close();
         stop = System.currentTimeMillis();
 	    Log.v(TAG, "answerCard - other cards for same fact in " + (stop - start) + " ms.");
+	    *****/
 
         // space other cards
 	    start = System.currentTimeMillis();
@@ -786,6 +788,42 @@ public class Deck
 //        // TODO: Fix leech handling
 //        if (isLeech(card))
 //            card = handleLeech(card);
+	}
+	
+	public void decreaseCounts(Card card)
+	{
+		long start, stop;
+		Cursor cursor;
+		String extra;
+        if (reviewEarly)
+            extra = "";
+        else
+        {
+            // if not reviewing early, make sure the current card is counted
+            // even if it was not due yet (it's a failed card)
+            extra = "or id = " + card.id;
+        }
+
+        start = System.currentTimeMillis();
+        cursor = AnkiDb.database.rawQuery(
+        		"SELECT type, count(type) " +
+        		"FROM cards " +
+        		"WHERE factId = " +
+        		card.factId + " and " +
+        		"(isDue = 1 " + extra + ") " +
+        		"GROUP BY type", null);
+    	while (cursor.moveToNext())
+    	{
+    		if (cursor.getInt(0) == 0)
+    			failedSoonCount -= cursor.getInt(1);
+    		else if (cursor.getInt(0) == 1)
+    			revCount -= cursor.getInt(1);
+    		else
+    			newCount -= cursor.getInt(1);
+    	}
+        cursor.close();
+        stop = System.currentTimeMillis();
+	    Log.v(TAG, "decreaseCounts - decreased counts in " + (stop - start) + " ms.");
 	}
 
 //	private boolean isLeech(Card card)
