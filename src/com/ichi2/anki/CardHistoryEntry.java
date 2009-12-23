@@ -29,10 +29,10 @@ public class CardHistoryEntry {
 	double delay;
 	double lastFactor;
 	double nextFactor;
-	float reps;
+	double reps;
 	double thinkingTime;
-	float yesCount;
-	float noCount;
+	double yesCount;
+	double noCount;
 	// END: SQL table columns
 
 	public CardHistoryEntry(Card card, int ease, double delay)
