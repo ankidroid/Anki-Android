@@ -942,15 +942,17 @@ public class Ankidroid extends Activity// implements Runnable
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 		    mSessionCurrReps++; // increment number reps counter
 
-		    // Check to see if session rep limit has been reached
-		    long sessionRepLimit = AnkidroidApp.deck().getSessionRepLimit();
+		    // Check to see if session rep or time limit has been reached
+		    Deck deck = AnkidroidApp.deck();
+		    long sessionRepLimit = deck.getSessionRepLimit();
+		    long sessionTime = deck.getSessionTimeLimit();
 		    Toast sessionMessage = null;
 
 		    if( (sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit) )
 		    {
 		    	sessioncomplete = true;
 		    	sessionMessage = Toast.makeText(Ankidroid.this, "Session question limit reached", Toast.LENGTH_SHORT);
-		    } else if( System.currentTimeMillis() >= mSessionTimeLimit ) //Check to see if the session time limit has been reached
+		    } else if( (sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit) ) //Check to see if the session time limit has been reached
 		    {
 		        // session time limit reached, flag for halt once async task has completed.
 		        sessioncomplete = true;
