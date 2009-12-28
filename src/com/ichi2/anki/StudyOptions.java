@@ -11,7 +11,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
-public class StudyOptions extends Activity {
+public class StudyOptions extends Activity
+{
 	
 	private Button mButtonStart;
 	private Button mButtonMore;
@@ -28,9 +29,11 @@ public class StudyOptions extends Activity {
 	private Spinner mSpinnerRevCardOrder;
 	private Spinner mSpinnerFailCardOption;
 	
-	private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
+	private View.OnClickListener mButtonClickListener = new View.OnClickListener()
+	{
 		@Override
-		public void onClick(View v) {
+		public void onClick(View v)
+		{
 			switch (v.getId())
 			{
 			case R.id.studyoptions_start:
@@ -45,9 +48,11 @@ public class StudyOptions extends Activity {
 		}
 	};
 	
-	private View.OnFocusChangeListener mEditFocusListener = new View.OnFocusChangeListener() {
+	private View.OnFocusChangeListener mEditFocusListener = new View.OnFocusChangeListener()
+	{
 		@Override
-		public void onFocusChange(View v, boolean hasFocus) {
+		public void onFocusChange(View v, boolean hasFocus)
+		{
 			Deck deck = AnkidroidApp.deck();
 			if (!hasFocus)
 				switch (v.getId())
@@ -68,9 +73,11 @@ public class StudyOptions extends Activity {
 		}
 	};
 	
-	private DialogInterface.OnClickListener mDialogSaveListener = new DialogInterface.OnClickListener() {
+	private DialogInterface.OnClickListener mDialogSaveListener = new DialogInterface.OnClickListener()
+	{
 		@Override
-		public void onClick(DialogInterface dialog, int which) {
+		public void onClick(DialogInterface dialog, int which)
+		{
 			Deck deck = AnkidroidApp.deck();
 			deck.setNewCardOrder(mSpinnerNewCardOrder.getSelectedItemPosition());
 			deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
@@ -81,7 +88,8 @@ public class StudyOptions extends Activity {
 	};
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.studyoptions);
