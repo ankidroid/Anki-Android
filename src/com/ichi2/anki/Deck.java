@@ -17,6 +17,7 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -195,6 +196,8 @@ public class Deck
 	boolean newEarly;
 
 	boolean reviewEarly;
+	
+	String deckName;
 
 	private Stats globalStats;
 
@@ -219,6 +222,7 @@ public class Deck
 		Deck deck = new Deck();
 		Log.i(TAG, "openDeck - Opening database " + path);
 		AnkiDb.openDatabase(path);
+		deck.deckName = (new File(path)).getName().replace(".anki", "");
 
 		// Read in deck table columns
 		Cursor cursor = AnkiDb.database.rawQuery("SELECT *" + " FROM decks" + " LIMIT 1", null);
@@ -442,6 +446,7 @@ public class Deck
 	    if( num > 0 )
 	    {
 	        newCardsPerDay = num;
+	        checkDue();
 	        flushMod();
 	    }
 	}

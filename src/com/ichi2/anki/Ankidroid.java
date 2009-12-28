@@ -397,7 +397,8 @@ public class Ankidroid extends Activity// implements Runnable
 			startActivity(about);
 			return true;
 		case MENU_DECKOPTS:
-		    Intent opts = new Intent(this, DeckPreferences.class);
+//		    Intent opts = new Intent(this, DeckPreferences.class);
+			Intent opts = new Intent(this, StudyOptions.class);
 		    startActivity( opts );
 		    return true;
 		}
