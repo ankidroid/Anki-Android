@@ -6,6 +6,7 @@ See http://ichi2.net/anki/wiki/AndroidAnki
 1. Create a "local.properties" file containing the path to the Android SDK, for instance:
 sdk-location=/home/nico/programs/android-sdk
 
-2. Uninstall AnkiDroid from your Android phone if it is already installed (Settings > Manage applications).
+2. Plug in your Android phone via USB and run the following command: ant
+install-device
 
-3. Plug in your Android phone via USB and run the following command: ant install
+3. To install on an emulator run: ant install-emulator
