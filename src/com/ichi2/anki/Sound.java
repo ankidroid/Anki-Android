@@ -26,16 +26,14 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
 
 /**
- * Class used to handle, load and play sound files on Ankidroid
- * 
- *
+ * Class used to handle, load and play sound files on Ankidroid.
  */
 public class Sound {
 
 	/**
 	 * Tag for logging messages
 	 */
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 	/**
 	 * Pattern used to identify the markers for sound files
 	 */

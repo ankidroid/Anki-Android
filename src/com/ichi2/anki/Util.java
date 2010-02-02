@@ -19,6 +19,9 @@ package com.ichi2.anki;
 import java.util.Random;
 import java.util.TreeSet;
 
+/**
+ * TODO comments
+ */
 public class Util {
 	private static TreeSet<Integer> idTree;
 	private static long idTime;

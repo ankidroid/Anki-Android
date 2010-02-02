@@ -18,6 +18,10 @@ package com.ichi2.anki;
 
 import java.util.HashMap;
 
+/**
+ * Card model.
+ * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Models
+ */
 public class CardModel {
 
 	// TODO: Javadoc.
@@ -61,9 +65,14 @@ public class CardModel {
 	String typeAnswer = "";
 	// END SQL table entries
 
-	// Backward reference
+	/**
+	 * Backward reference
+	 */
 	Model model;
 
+	/**
+	 * Constructor.
+	 */
 	public CardModel(String name, String qformat, String aformat, boolean active) {
 		this.name = name;
 		this.qformat = qformat;
@@ -72,10 +81,16 @@ public class CardModel {
 		this.id = Util.genID();
 	}
 
+	/**
+	 * Constructor.
+	 */
 	public CardModel() {
 		this("", "q", "a", true);
 	}
 
+	/**
+	 * Return a copy of this object.
+	 */
 	public CardModel copy() {
 		CardModel cardModel = new CardModel(
 				this.name,

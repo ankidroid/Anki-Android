@@ -20,6 +20,9 @@ import android.database.SQLException;
 import android.os.Bundle;
 import android.webkit.WebView;
 
+/**
+ * Shows an about box, which is a small HTML page.
+ */
 public class About extends Activity
 {
 

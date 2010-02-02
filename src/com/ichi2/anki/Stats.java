@@ -23,13 +23,16 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.util.Log;
 
+/**
+ * Deck statistics.
+ */
 public class Stats
 {
 
 	/**
 	 * Tag for logging messages
 	 */
-	private static String TAG = "Ankidroid";
+	private static String TAG = "AnkiDroid";
 
 	private static final int STATS_LIFE = 0;
 

@@ -20,6 +20,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+/**
+ * Anki fact.
+ * A fact is a single piece of information, made up of a number of fields.
+ * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Facts
+ */
 public class Fact {
 
 	// TODO: Javadoc.

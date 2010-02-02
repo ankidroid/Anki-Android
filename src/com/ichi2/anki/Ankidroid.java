@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,7 +39,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -68,7 +65,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  * Main activity for Ankidroid. Shows a card and controls to answer it.
  *
  */
-public class Ankidroid extends Activity// implements Runnable
+public class Ankidroid extends Activity
 {
 
 	/**
@@ -79,7 +76,7 @@ public class Ankidroid extends Activity// implements Runnable
 	/**
 	 * Tag for logging messages
 	 */
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 
 	/**
 	 * Max and min size of the font of the questions and answers

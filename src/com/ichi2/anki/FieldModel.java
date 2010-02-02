@@ -37,7 +37,9 @@ public class FieldModel {
 	int editFontSize = 20;
 	// END SQL table entries
 
-	// Backward reference
+	/**
+	 * Backward reference
+	 */
 	Model model;
 
 	public FieldModel(String name, boolean required, boolean unique) {

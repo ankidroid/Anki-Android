@@ -26,12 +26,9 @@ import java.util.TreeSet;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.tomgibara.android.veecheck.util.PrefSettings;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -51,6 +48,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 /**
  * Allows the user to choose a deck from the filesystem.
  *
@@ -60,14 +59,12 @@ import android.widget.SimpleAdapter;
 public class DeckPicker extends Activity implements Runnable
 {
 
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 
 	/**
 	 * Dialogs
 	 */
 	private static final int DIALOG_NO_SDCARD = 0;
-
-	private ProgressDialog dialog;
 
 	private DeckPicker mSelf;
 
@@ -203,7 +200,7 @@ public class DeckPicker extends Activity implements Runnable
 					data.put("filepath", absPath);
 					data.put("showProgress", "true");
 
-					boolean result = tree.add(data);
+					tree.add(data);
 
 				} catch (SQLException e)
 				{

@@ -21,13 +21,16 @@ import android.database.SQLException;
 import android.os.AsyncTask;
 import android.util.Log;
 
+/**
+ * Loading in the background, so that AnkiDroid does not look like frozen.
+ */
 public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData>
 {
 
 	/**
 	 * Tag for logging messages
 	 */
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 
 	public static final int TASK_TYPE_LOAD_DECK = 0;
 	public static final int TASK_TYPE_ANSWER_CARD = 1;

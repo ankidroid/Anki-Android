@@ -34,7 +34,7 @@ public class Deck
 	/**
 	 * Tag for logging messages
 	 */
-	private static String TAG = "Ankidroid";
+	private static String TAG = "AnkiDroid";
 
 	// Auto priorities
 	private static final int PRIORITY_HIGH = 4;
@@ -1281,7 +1281,7 @@ public class Deck
 	}
 
 	/*
-	 * Utility functions (might be better in a separate classes)
+	 * Utility functions (might be better in a separate class)
 	 * *********************************************************
 	 */
 

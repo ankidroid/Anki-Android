@@ -18,7 +18,6 @@ package com.ichi2.anki;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URI;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -28,21 +27,19 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 /**
- * Content Provider for Ankidroid
- * 
- *
+ * Content Provider for AnkiDroid
  */
 public class AnkidroidContentProvider extends ContentProvider {
 	
 	/**
 	 * Tag for logging messages
 	 */
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 
 
 	/**
 	 * Opens the file located on uri, with permissions mode and retrieves a ParcelFileDescriptor representing it
-	 * @param uri Uri where the file is located
+	 * @param uri URI where the file is located
 	 * @param mode Permissions which the file will be opened with
 	 * @return ParcelFileDescriptor of the file located on uri
 	 */
