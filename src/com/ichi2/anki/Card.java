@@ -476,4 +476,10 @@ public class Card {
 		AnkiDb.database.execSQL("UPDATE cards SET priority = 0, isDue = 0 WHERE id = " + id);
 	}
 
+	/**
+	 * Suspend this card.
+	 */
+	public void suspend() {
+		isDue = 0;
+	}
 }

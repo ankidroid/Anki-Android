@@ -98,6 +98,7 @@ public class Ankidroid extends Activity// implements Runnable
 
 	public static final int MENU_DECKOPTS = 3;
 
+	public static final int MENU_SUSPEND = 4;
 
 	/**
 	 * Possible outputs trying to load a deck
@@ -124,14 +125,18 @@ public class Ankidroid extends Activity// implements Runnable
 
     private BroadcastReceiver mUnmountReceiver = null;
 
-	//Name of the last deck loaded
+	/**
+	 * Name of the last deck loaded
+	 */
 	private String deckFilename;
 	
 	private String deckPath;
 	
-    //Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true
-    //We don't have to worry to set deckSelected to true, it's done automatically in displayProgressDialogAndLoadDeck()
-    //We have to set deckSelected to false only on these situations a deck has to be reload and when we know for sure no other thread is trying to load a deck (for example, when sd card is mounted again)
+    /**
+     * Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true.
+     * We don't have to worry to set deckSelected to true, it's done automatically in displayProgressDialogAndLoadDeck().
+     * We have to set deckSelected to false only on these situations a deck has to be reload and when we know for sure no other thread is trying to load a deck (for example, when sd card is mounted again)
+     */
 	private boolean deckSelected;
 
 	private boolean deckLoaded;
@@ -178,8 +183,9 @@ public class Ankidroid extends Activity// implements Runnable
 
 	private Whiteboard mWhiteboard;
 
-	// Handler for the flip toogle button, between the question and the answer
-	// of a card
+	/**
+	 * Handler for the flip toogle button, between the question and the answer of a card.
+	 */
 	CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener()
 	{
 		//@Override
@@ -193,7 +199,9 @@ public class Ankidroid extends Activity// implements Runnable
 		}
 	};
 
-	// Handler for the Whiteboard toggle button.
+	/**
+	 * Handler for the Whiteboard toggle button.
+	 */
 	CompoundButton.OnCheckedChangeListener mToggleOverlayHandler = new CompoundButton.OnCheckedChangeListener()
 	{
 		public void onCheckedChanged(CompoundButton btn, boolean state)
@@ -321,14 +329,18 @@ public class Ankidroid extends Activity// implements Runnable
 	}
 
 
-	// Retrieve resource values.
+	/**
+	 * Retrieve resource values.
+	 */
 	public void initResourceValues()
 	{
 		Resources r = getResources();
 		cardTemplate = r.getString(R.string.card_template);
 	}
 
-	// Set the content view to the one provided and initialize accessors.
+	/**
+	 * Set the content view to the one provided and initialize accessors.
+	 */
 	public void initLayout(Integer layout)
 	{
 		Log.i(TAG, "initLayout - Beginning");
@@ -361,7 +373,9 @@ public class Ankidroid extends Activity// implements Runnable
 
 	}
 
-	/** Creates the menu items */
+	/** 
+	 * Creates the menu items
+	 */
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -369,6 +383,7 @@ public class Ankidroid extends Activity// implements Runnable
 		menu.add(1, MENU_PREFERENCES, 0, "Preferences");
 		menu.add(1, MENU_ABOUT, 0, "About");
 		menu.add(1, MENU_DECKOPTS, 0, "Study Options");
+		menu.add(1, MENU_SUSPEND, 0, "Suspend");
 		return true;
 	}
 
@@ -379,7 +394,9 @@ public class Ankidroid extends Activity// implements Runnable
 		return true;
 	}
 	
-	/** Handles item selections */
+	/**
+	 * Handles item selections
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -399,6 +416,9 @@ public class Ankidroid extends Activity// implements Runnable
 		case MENU_DECKOPTS:
 		    Intent opts = new Intent(this, DeckPreferences.class);
 		    startActivity( opts );
+		    return true;
+		case MENU_SUSPEND:
+			currentCard.suspend();
 		    return true;
 		}
 		return false;
@@ -641,7 +661,9 @@ public class Ankidroid extends Activity// implements Runnable
 		mWhiteboard.setVisibility((enabled) ? View.VISIBLE : View.GONE);
 	}
 
-	// Set up the display for the current card.
+	/**
+	 * Set up the display for the current card.
+	 */
 	public void displayCardQuestion()
 	{
 		Log.i(TAG, "displayCardQuestion");
@@ -708,7 +730,9 @@ public class Ankidroid extends Activity// implements Runnable
 		Sound.playSounds();
 	}
 
-	// Display the card answer.
+	/**
+	 * Display the card answer.
+	 */
 	public void displayCardAnswer()
 	{
 		Log.i(TAG, "displayCardAnswer");

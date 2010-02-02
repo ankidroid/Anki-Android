@@ -92,6 +92,8 @@ public class AnkiDb
 
 	/**
 	 * A card is Anki's question-answer entity.
+	 * 
+	 * TODO Remove dead code.
 	 *
 	 * @see "http://www.ichi2.net/anki/wiki/AddItems"
 	 */
