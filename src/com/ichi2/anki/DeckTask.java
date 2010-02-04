@@ -33,20 +33,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	public static final int TASK_TYPE_ANSWER_CARD = 1;
 
 	private static DeckTask instance;
+	private static DeckTask oldInstance;
 
 	int type;
 	TaskListener listener;
 
 	public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params)
 	{
-		try
-		{
-			if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED))
-				instance.get();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		oldInstance = instance;
 
 		instance = new DeckTask();
 		instance.listener = listener;
@@ -58,6 +52,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	@Override
 	protected TaskData doInBackground(TaskData... params)
 	{
+		// Wait for old thread (if any) to finish before starting the new one
+		try
+		{
+			if ((oldInstance != null) && (oldInstance.getStatus() != AsyncTask.Status.FINISHED))
+				oldInstance.get();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		switch (type)
 		{
 		case TASK_TYPE_LOAD_DECK:
@@ -94,12 +98,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		Card oldCard = params[0].getCard();
 		int ease = params[0].getInt();
 		Card newCard;
+		long[] ids = new long[1];
 
 		if (oldCard != null)
 		{
+			ids[0] = oldCard.id;
 			start = System.currentTimeMillis();
-			oldCard.temporarilySetLowestPriority();
-			deck.decreaseCounts(oldCard);
+			deck.suspendCards(ids);
+			//oldCard.temporarilySetLowestPriority();
+			//deck.decreaseCounts(oldCard);
 			stop = System.currentTimeMillis();
 			Log.v(TAG, "doInBackground - Set old card 0 priority in " + (stop - start) + " ms.");
 		}
@@ -113,6 +120,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		if (ease != 0 && oldCard != null)
 		{
 			start = System.currentTimeMillis();
+			deck.unsuspendCards(ids);
 			deck.answerCard(oldCard, ease);
 			stop = System.currentTimeMillis();
 			Log.v(TAG, "doInBackground - Answered old card in " + (stop - start) + " ms.");
