@@ -58,6 +58,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.utils.DiffEngine;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -415,7 +416,10 @@ public class Ankidroid extends Activity
 		    startActivity( opts );
 		    return true;
 		case MENU_SUSPEND:
-			currentCard.suspend();
+			mFlipCard.setChecked(true);
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
+					mAnswerCardHandler,
+					new DeckTask.TaskData(0, AnkidroidApp.deck(), currentCard));
 		    return true;
 		}
 		return false;
