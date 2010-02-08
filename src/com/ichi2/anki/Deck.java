@@ -208,7 +208,7 @@ public class Deck
 	
 	Stack<UndoRow> redoStack;
 	
-	boolean undoEnabled;
+	boolean undoEnabled = false;
 	
 	private void initVars()
 	{
@@ -651,6 +651,8 @@ public class Deck
 
 	public void answerCard(Card card, int ease)
 	{
+		String undoName = "Answer Card";
+		setUndoStart(undoName);
 		double now = System.currentTimeMillis() / 1000.0;
 
 		// Old state
@@ -798,6 +800,7 @@ public class Deck
 //        // TODO: Fix leech handling
 //        if (isLeech(card))
 //            card = handleLeech(card);
+        setUndoEnd(undoName);
 	}
 	
 	public void decreaseCounts(Card card)
