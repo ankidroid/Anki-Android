@@ -34,6 +34,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 	public static final int TASK_TYPE_LOAD_DECK = 0;
 	public static final int TASK_TYPE_ANSWER_CARD = 1;
+	public static final int TASK_TYPE_SUSPEND_CARD = 2;
 
 	private static DeckTask instance;
 
@@ -67,6 +68,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			return doInBackgroundLoadDeck(params);
 		case TASK_TYPE_ANSWER_CARD:
 			return doInBackgroundAnswerCard(params);
+		case TASK_TYPE_SUSPEND_CARD:
+			return doInBackgroundSuspendCard(params);
 		default:
 			return null;
 		}
@@ -148,6 +151,30 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			Log.i(TAG, "The deck has no cards = " + e.getMessage());;
 			return new TaskData(Ankidroid.DECK_EMPTY);
 		}
+	}
+	
+	private TaskData doInBackgroundSuspendCard(TaskData... params)
+	{
+		long start, stop;
+		Deck deck = params[0].getDeck();
+		Card oldCard = params[0].getCard();
+		Card newCard;
+
+		if (oldCard != null)
+		{
+			start = System.currentTimeMillis();
+			deck.suspendCard(oldCard.id);
+			stop = System.currentTimeMillis();
+			Log.v(TAG, "doInBackgroundSuspendCard - Suspended card in " + (stop - start) + " ms.");
+		}
+
+		start = System.currentTimeMillis();
+		newCard = deck.getCard();
+		stop = System.currentTimeMillis();
+		Log.v(TAG, "doInBackgroundSuspendCard - Loaded new card in " + (stop - start) + " ms.");
+		publishProgress(new TaskData(newCard));
+
+		return null;
 	}
 
 	public static interface TaskListener

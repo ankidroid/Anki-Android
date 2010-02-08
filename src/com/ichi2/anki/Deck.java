@@ -1130,7 +1130,44 @@ public class Deck
 
 	/* Priorities
 	 ***********************************************************/
-
+	public void suspendCard(long cardId)
+	{
+		long[] ids = new long[1];
+		ids[0] = cardId;
+		suspendCards(ids);
+	}
+	
+	public void suspendCards(long[] ids)
+	{
+		AnkiDb.database.execSQL(
+				"UPDATE cards SET " + 
+				"isDue = 0, " +
+				"priority = -3, " +
+				"modified = " + String.format("%f", (double) (System.currentTimeMillis() / 1000.0)) +
+				" WHERE id IN " + ids2str(ids));
+		rebuildCounts(false);
+		flushMod();
+	}
+	
+	public void unsuspendCard(long cardId)
+	{
+		long[] ids = new long[1];
+		ids[0] = cardId;
+		unsuspendCards(ids);
+	}
+	
+	public void unsuspendCards(long[] ids)
+	{
+		AnkiDb.database.execSQL(
+				"UPDATE cards SET " +
+				"priority = 0, " +
+				"modified = " + String.format("%f", (double) (System.currentTimeMillis() / 1000.0)) +
+				" WHERE id IN " + ids2str(ids));
+		updatePriorities(ids);
+		rebuildCounts(false);
+		flushMod();
+	}
+	
 	private void updatePriorities(long[] cardIds) {
 		updatePriorities(cardIds, null, true);
 	}
