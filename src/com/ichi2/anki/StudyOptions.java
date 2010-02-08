@@ -384,6 +384,8 @@ public class StudyOptions extends Activity
 	private void updateValuesFromDeck()
 	{
 		Deck deck = AnkidroidApp.deck();
+		DeckTask.waitToFinish();
+		deck.checkDue();
 		int reviewCount = deck.revCount + deck.failedSoonCount;
 		String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
 		setTitle(String.format(unformattedTitle, deck.deckName, reviewCount, deck.cardCount));

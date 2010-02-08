@@ -16,6 +16,8 @@
 
 package com.ichi2.anki;
 
+import java.util.concurrent.ExecutionException;
+
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.os.AsyncTask;
@@ -47,6 +49,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		instance.type = type;
 
 		return (DeckTask) instance.execute(params);
+	}
+	
+	public static void waitToFinish() {
+		try {
+			if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED))
+				instance.get();
+		} catch (Exception e) {
+			return;
+		}
 	}
 
 	@Override
@@ -104,6 +115,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		{
 			ids[0] = oldCard.id;
 			start = System.currentTimeMillis();
+			/* getCard() depends on stats being up to date in checkDue()
+			 * when computing newCountToday. */
+			deck.updateCardStats(oldCard, ease);
+			// Suspend card so it will not be retrieved again.
 			deck.suspendCards(ids);
 			//oldCard.temporarilySetLowestPriority();
 			//deck.decreaseCounts(oldCard);

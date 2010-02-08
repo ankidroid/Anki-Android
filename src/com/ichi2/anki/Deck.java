@@ -446,7 +446,7 @@ public class Deck
 	    if( num > 0 )
 	    {
 	        newCardsPerDay = num;
-	        checkDue();
+	        //checkDue();
 	        flushMod();
 	    }
 	}
@@ -777,11 +777,14 @@ public class Deck
         stop = System.currentTimeMillis();
         Log.v(TAG, "answerCard - card.toDB in " + (stop - start) + " ms.");
 
+        // -- Moved to separate function since it needed to be done before answering of the card
         // global/daily stats
-        start = System.currentTimeMillis();
-        Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
-        stop = System.currentTimeMillis();
-        Log.v(TAG, "answerCard - Stats.updateAllStats in " + (stop - start) + " ms.");
+//        start = System.currentTimeMillis();
+//        Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
+//        stop = System.currentTimeMillis();
+//        Log.v(TAG, "answerCard - Stats.updateAllStats in " + (stop - start) + " ms.");
+        // ---------------------
+        
         // review history
         start = System.currentTimeMillis();
         CardHistoryEntry entry = new CardHistoryEntry(card, ease, lastDelay);
@@ -792,6 +795,15 @@ public class Deck
 //        // TODO: Fix leech handling
 //        if (isLeech(card))
 //            card = handleLeech(card);
+	}
+	
+	public void updateCardStats(Card card, int ease)
+	{
+		String oldState = cardState(card);
+		long start = System.currentTimeMillis();
+        Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
+        long stop = System.currentTimeMillis();
+        Log.v(TAG, "updateCardStats - Stats.updateAllStats in " + (stop - start) + " ms.");
 	}
 	
 //	public void decreaseCounts(Card card)
@@ -1006,7 +1018,7 @@ public class Deck
 	/**
 	 * Mark expired cards due and update counts.
 	 */
-	private void checkDue()
+	public void checkDue()
 	{
 		Log.i(TAG, "Checking due cards...");
 		checkDailyStats();
