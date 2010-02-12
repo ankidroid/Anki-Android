@@ -60,6 +60,7 @@ import android.widget.ToggleButton;
 
 import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.utils.DiffEngine;
+import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
@@ -725,6 +726,8 @@ public class Ankidroid extends Activity
 		//In order to display the bold style correctly, we have to change font-weight to 700
 		content = content.replaceAll("font-weight:600;", "font-weight:700;");
 
+		content = RubyParser.ankiRubyToMarkup(content);
+		
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
