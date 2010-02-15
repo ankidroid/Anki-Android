@@ -722,7 +722,6 @@ public class Deck
         space = Math.max(minSpacing, space);
         space += System.currentTimeMillis() / 1000.0;
 
-        /***** Moved to separate method decreaseCounts
         // check what other cards we've spaced
         String extra;
         if (this.reviewEarly)
@@ -754,7 +753,6 @@ public class Deck
         cursor.close();
         stop = System.currentTimeMillis();
 	    Log.v(TAG, "answerCard - other cards for same fact in " + (stop - start) + " ms.");
-	    *****/
 
         // space other cards
 	    start = System.currentTimeMillis();
@@ -784,12 +782,15 @@ public class Deck
         card.toDB();
         stop = System.currentTimeMillis();
         Log.v(TAG, "answerCard - card.toDB in " + (stop - start) + " ms.");
-
+        
+        // -- Moved to separate function since it needed to be done before answering of the card
         // global/daily stats
-        start = System.currentTimeMillis();
-        Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
-        stop = System.currentTimeMillis();
-        Log.v(TAG, "answerCard - Stats.updateAllStats in " + (stop - start) + " ms.");
+//        start = System.currentTimeMillis();
+//        Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
+//        stop = System.currentTimeMillis();
+//        Log.v(TAG, "answerCard - Stats.updateAllStats in " + (stop - start) + " ms.");
+        // ---------------------
+        
         // review history
         start = System.currentTimeMillis();
         CardHistoryEntry entry = new CardHistoryEntry(card, ease, lastDelay);
@@ -803,41 +804,50 @@ public class Deck
         setUndoEnd(undoName);
 	}
 	
-	public void decreaseCounts(Card card)
+	public void updateCardStats(Card card, int ease)
 	{
-		long start, stop;
-		Cursor cursor;
-		String extra;
-        if (reviewEarly)
-            extra = "";
-        else
-        {
-            // if not reviewing early, make sure the current card is counted
-            // even if it was not due yet (it's a failed card)
-            extra = "or id = " + card.id;
-        }
-
-        start = System.currentTimeMillis();
-        cursor = AnkiDb.database.rawQuery(
-        		"SELECT type, count(type) " +
-        		"FROM cards " +
-        		"WHERE factId = " +
-        		card.factId + " and " +
-        		"(isDue = 1 " + extra + ") " +
-        		"GROUP BY type", null);
-    	while (cursor.moveToNext())
-    	{
-    		if (cursor.getInt(0) == 0)
-    			failedSoonCount -= cursor.getInt(1);
-    		else if (cursor.getInt(0) == 1)
-    			revCount -= cursor.getInt(1);
-    		else
-    			newCount -= cursor.getInt(1);
-    	}
-        cursor.close();
-        stop = System.currentTimeMillis();
-	    Log.v(TAG, "decreaseCounts - decreased counts in " + (stop - start) + " ms.");
+		String oldState = cardState(card);
+		long start = System.currentTimeMillis();
+		Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
+		long stop = System.currentTimeMillis();
+		Log.v(TAG, "updateCardStats - Stats.updateAllStats in " + (stop - start) + " ms.");
 	}
+	
+//	public void decreaseCounts(Card card)
+//	{
+//		long start, stop;
+//		Cursor cursor;
+//		String extra;
+//        if (reviewEarly)
+//            extra = "";
+//        else
+//        {
+//            // if not reviewing early, make sure the current card is counted
+//            // even if it was not due yet (it's a failed card)
+//            extra = "or id = " + card.id;
+//        }
+//
+//        start = System.currentTimeMillis();
+//        cursor = AnkiDb.database.rawQuery(
+//        		"SELECT type, count(type) " +
+//        		"FROM cards " +
+//        		"WHERE factId = " +
+//        		card.factId + " and " +
+//        		"(isDue = 1 " + extra + ") " +
+//        		"GROUP BY type", null);
+//    	while (cursor.moveToNext())
+//    	{
+//    		if (cursor.getInt(0) == 0)
+//    			failedSoonCount -= cursor.getInt(1);
+//    		else if (cursor.getInt(0) == 1)
+//    			revCount -= cursor.getInt(1);
+//    		else
+//    			newCount -= cursor.getInt(1);
+//    	}
+//        cursor.close();
+//        stop = System.currentTimeMillis();
+//	    Log.v(TAG, "decreaseCounts - decreased counts in " + (stop - start) + " ms.");
+//	}
 
 //	private boolean isLeech(Card card)
 //	{
@@ -1238,7 +1248,7 @@ public class Deck
 				}
 			}
 			// Catch review early & buried but not suspended cards
-			AnkiDb.database.execSQL("UPDATE cards " + "SET priority = " + pri + extra + "WHERE id in " + ids2str(cs)
+			AnkiDb.database.execSQL("UPDATE cards " + "SET priority = " + pri + extra + " WHERE id in " + ids2str(cs)
 			        + " and " + "priority != " + pri + " and " + "priority >= -2");
 		}
 

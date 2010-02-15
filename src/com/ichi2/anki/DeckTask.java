@@ -104,8 +104,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		if (oldCard != null)
 		{
 			start = System.currentTimeMillis();
-			oldCard.temporarilySetLowestPriority();
-			deck.decreaseCounts(oldCard);
+			/* getCard() depends on stats being up to date in checkDue()
+			* when computing newCountToday. */
+			deck.updateCardStats(oldCard, ease);
+			// Suspend card so it will not be retrieved again.
+			deck.suspendCard(oldCard.id);
+			//oldCard.temporarilySetLowestPriority();
+			//deck.decreaseCounts(oldCard);
 			stop = System.currentTimeMillis();
 			Log.v(TAG, "doInBackground - Set old card 0 priority in " + (stop - start) + " ms.");
 		}
@@ -119,6 +124,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		if (ease != 0 && oldCard != null)
 		{
 			start = System.currentTimeMillis();
+			deck.unsuspendCard(oldCard.id);
 			deck.answerCard(oldCard, ease);
 			stop = System.currentTimeMillis();
 			Log.v(TAG, "doInBackground - Answered old card in " + (stop - start) + " ms.");
