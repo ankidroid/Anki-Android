@@ -646,6 +646,26 @@ public class Deck
 		return card;
 	}
 
+	public void updateCard(Card card) 
+	{
+
+	    double now = System.currentTimeMillis() / 1000.0;
+	    ContentValues updateValues = new ContentValues();
+	    updateValues.put("question", card.question);
+	    updateValues.put("answer", card.answer);
+	    AnkiDb.database.update("cards", updateValues, "id = ?", new String[] {"" + card.id});
+//        AnkiDb.database.execSQL(String.format(
+//                "UPDATE cards " +
+//                "SET question = %s, " +
+//                "answer = %s, " +
+//                "modified = %f, " +
+//                "WHERE id != %d and factId = %d",
+//                card.question, card.answer, now, card.id, card.factId));
+//        
+        Log.v(TAG, "Update question and answer in card id# " + card.id);
+        
+	}
+	
 	/* Answering a card
 	 ***********************************************************/
 
