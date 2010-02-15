@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Map.Entry;
 
 import android.content.ContentValues;
@@ -200,6 +201,15 @@ public class Deck
 
 	private Stats dailyStats;
 
+	/**
+	 * Undo/Redo variables.
+	 */
+	Stack<UndoRow> undoStack;
+	
+	Stack<UndoRow> redoStack;
+	
+	boolean undoEnabled;
+	
 	private void initVars()
 	{
 		// tmpMediaDir = null;
@@ -1279,6 +1289,185 @@ public class Deck
 		return card.interval < easyIntervalMin;
 	}
 
+	/* Undo/Redo
+	 ***********************************************************/
+	private class UndoRow {
+		String name;
+		Long start;
+		Long end;
+		
+		UndoRow(String name, Long start, Long end)
+		{
+			this.name = name;
+			this.start = start;
+			this.end = end;
+		}
+	}
+	
+	private void initUndo()
+	{
+		undoStack = new Stack<UndoRow>();
+		redoStack = new Stack<UndoRow>();
+		undoEnabled = true;
+		
+		AnkiDb.database.execSQL("CREATE TEMPORARY TABLE undoLog (seq INTEGER PRIMARY KEY NOT NULL, sql TEXT)");
+		
+		ArrayList<String> tables = AnkiDb.queryColumn(
+				String.class, 
+				"SELECT name FROM sqlite_master WHERE type = 'table'", 
+				0);
+		Iterator<String> iter = tables.iterator();
+		while (iter.hasNext()) {
+			String table = iter.next();
+			if ( table.equals("undoLog") || table.equals("sqlite_stat1") )
+				continue;
+			ArrayList<String> columns = AnkiDb.queryColumn(
+					String.class, 
+					"PRAGMA TABLE_INFO(" + table + ")", 
+					1);
+			// Insert trigger
+			String sql = "CREATE TEMP TRIGGER _undo_%s_it " +
+					"AFTER INSERT ON %s BEGIN " +
+					"INSERT INTO undoLog VALUES " +
+					"(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
+			AnkiDb.database.execSQL(String.format(sql, table, table, table));
+			// Update trigger
+			sql = String.format("CREATE TEMP TRIGGER _undo_%s_ut " +
+					"AFTER UPDATE ON %s BEGIN " +
+					"INSERT INTO undoLog VALUES " +
+					"(null, 'UPDATE %s ",
+					table, table, table);
+			String sep = "SET ";
+			Iterator<String> columnIter = columns.iterator();
+			while (columnIter.hasNext())
+			{
+				String column = columnIter.next();
+				if (column.equals("unique"))
+					continue;
+				sql += String.format("%s%s=' || quote(old.%s) || '", sep, column, column);
+				sep = ",";
+			}
+			sql += "WHERE rowid = ' || old.rowid); END";
+			AnkiDb.database.execSQL(sql);
+			// Delete trigger
+			sql = String.format("CREATE TEMP TRIGGER _undo_%s_dt " +
+					"BEFORE DELETE ON %s BEGIN " +
+					"INSERT INTO undoLog VALUES " +
+					"(null, 'INSERT INTO %s (rowid",
+					table, table, table);
+			columnIter = columns.iterator();
+			while (columnIter.hasNext())
+			{
+				String column = columnIter.next();
+				sql += String.format(",\"%s\"", column);
+			}
+			sql += ") VALUES (' || old.rowid ||'";
+			columnIter = columns.iterator();
+			while (columnIter.hasNext())
+			{
+				String column = columnIter.next();
+				if (column.equals("unique")) {
+					sql += ",1";
+					continue;
+				}
+				sql += String.format(", ' || quote(old.%s) ||'", column);
+			}
+			sql += ")'); END";
+			AnkiDb.database.execSQL(sql);
+		}
+	}
+	
+	public void setUndoBarrier()
+	{
+		if (undoStack.isEmpty() || undoStack.peek() != null)
+			undoStack.push(null);
+	}
+	
+	public void setUndoStart(String name)
+	{
+		setUndoStart(name, false);
+	}
+	
+	public void setUndoStart(String name, boolean merge)
+	{
+		if (!undoEnabled)
+			return;
+		commitToDB();
+		if (merge && !undoStack.isEmpty())
+			if ((undoStack.peek() != null) && (undoStack.peek().name.equals(name)))
+				return;
+		undoStack.push(new UndoRow(name, latestUndoRow(), null));
+	}
+	
+	public void setUndoEnd(String name)
+	{
+		if (!undoEnabled)
+			return;
+		commitToDB();
+		long end = latestUndoRow();
+		while (undoStack.peek() == null)
+			undoStack.pop(); // Strip off barrier
+		UndoRow row = undoStack.peek();
+		row.end = end;
+		if (row.start == row.end)
+			undoStack.pop();
+		else
+			redoStack.clear();
+	}
+	
+	private long latestUndoRow()
+	{
+		long result;
+		try {
+			result = AnkiDb.queryScalar("SELECT MAX(rowid) FROM undoLog");
+		} catch (SQLException e) {
+			result = 0;
+		}
+		return result;
+	}
+	
+	private void undoredo(Stack<UndoRow> src, Stack<UndoRow> dst)
+	{
+		UndoRow row;
+		commitToDB();
+		while (true)
+		{
+			row = src.pop();
+			if (row != null)
+				break;
+		}
+		Long start = row.start;
+		Long end = row.end;
+		if (end == null)
+			end = latestUndoRow();
+		ArrayList<String> sql = AnkiDb.queryColumn(
+				String.class, 
+				String.format("SELECT sql FROM undoLog " +
+						"WHERE seq > %d and seq <= %d " +
+						"ORDER BY seq DESC", start, end), 
+				0);
+		Long newstart = latestUndoRow();
+		Iterator<String> iter = sql.iterator();
+		while (iter.hasNext())
+			AnkiDb.database.execSQL(iter.next());
+		Long newend = latestUndoRow();
+		dst.push(new UndoRow(row.name, newstart, newend));
+	}
+	
+	public void undo()
+	{
+		undoredo(undoStack, redoStack);
+		commitToDB();
+		rebuildCounts(true);
+	}
+	
+	public void redo()
+	{
+		undoredo(redoStack, undoStack);
+		commitToDB();
+		rebuildCounts(true);
+	}
+	
 	/* Dynamic indices
 	 ***********************************************************/
 

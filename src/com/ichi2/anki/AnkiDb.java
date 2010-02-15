@@ -17,6 +17,8 @@
 ****************************************************************************************/
 package com.ichi2.anki;
 
+import java.util.ArrayList;
+
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -85,5 +87,57 @@ public class AnkiDb
 		cursor.close();
 
 		return scalar;
+	}
+	
+	/**
+	 * Convenience method for querying the database for an entire column. The column
+	 * will be returned as an ArrayList of the specified class.
+	 * 
+	 * See Deck.initUndo() for a usage example.
+	 * 
+	 * @param type The class of the column's data type. Example: int.class, String.class.
+	 * @param query The SQL query statement.
+	 * @param column The column id in the result set to return.
+	 * @return An ArrayList with the contents of the specified column.
+	 */
+	static public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
+		ArrayList<T> results = new ArrayList<T>();
+		
+		try {
+		Cursor cursor = AnkiDb.database.rawQuery(query, null);
+		cursor.moveToFirst();
+		String methodName = getCursorMethodName(type.getSimpleName());
+		do {
+			// The magical line. Almost as illegible as python code ;)
+			results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+		} while (cursor.moveToNext());
+		cursor.close();
+		} catch (Exception e) {
+			Log.e(TAG, "queryColumn: Got Exception: " + e.getMessage());
+			return null;
+		}
+		
+		return results;
+	}
+	
+	/**
+	 * Mapping of Java type names to the corresponding Cursor.get method.
+	 * 
+	 * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
+	 * @return The name of the Cursor method to be called.
+	 */
+	static private String getCursorMethodName(String typeName) {
+		if (typeName.equals("String"))
+			return "getString";
+		else if (typeName.equals("long"))
+			return "getLong";
+		else if (typeName.equals("int"))
+			return "getInt";
+		else if (typeName.equals("float"))
+			return "getFloat";
+		else if (typeName.equals("double"))
+			return "getDouble";
+		else
+			return null;
 	}
 }
