@@ -18,6 +18,9 @@ package com.ichi2.anki;
 
 import java.util.HashMap;
 
+import android.database.Cursor;
+import android.util.Log;
+
 /**
  * Card model.
  * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Models
@@ -88,6 +91,26 @@ public class CardModel {
 		this("", "q", "a", true);
 	}
 
+	public void fromDb(long id)
+	{
+	    Cursor cursor = AnkiDb.database.rawQuery(
+                "SELECT id, ordinal, modelId, name, description, qformat, " +
+                "aformat " +
+                "FROM cardModels " +
+                "WHERE id = " +
+                id,
+                null);
+
+	    cursor.moveToFirst();
+        this.id = cursor.getLong(0);
+        this.ordinal = cursor.getInt(1);
+        this.modelId = cursor.getLong(2);
+        this.name = cursor.getString(3);
+        this.description = cursor.getString(4);
+        this.qformat = cursor.getString(5);
+        this.aformat = cursor.getString(6);
+	}
+	
 	/**
 	 * Return a copy of this object.
 	 */
@@ -126,8 +149,47 @@ public class CardModel {
 		return cardModel;
 	}
 
-	public static HashMap<String, String> formatQA(long cid, long mid, HashMap<String, HashMap<Long, String>> fact, String[] tags, CardModel cm) {
-		// TODO: Port this method from models.py.
-		return null;
+	public static HashMap<String, String> formatQA(Fact fact, CardModel cm) {
+	    
+	    //Not pretty, I know.
+	    String question = cm.qformat;
+	    String answer = cm.aformat;
+	    
+	    int replaceAt = question.indexOf("%(");
+	    while (replaceAt != -1)
+	    {
+	        question = replaceField(question, fact, replaceAt, true);
+	        replaceAt = question.indexOf("%(");
+	    }
+	    
+	    replaceAt = answer.indexOf("%(");
+        while (replaceAt != -1)
+        {
+            answer = replaceField(answer, fact, replaceAt, true);
+            replaceAt = answer.indexOf("%(");
+        }
+        
+		HashMap<String,String> returnMap = new HashMap<String, String>();
+		returnMap.put("question", question);
+		returnMap.put("answer", answer);
+		
+		return returnMap;
 	}
+
+    private static String replaceField(String replaceFrom, Fact fact, int replaceAt, boolean isQuestion) {
+        int endIndex = replaceFrom.indexOf(")", replaceAt);
+        String fieldName =  replaceFrom.substring(replaceAt + 2, endIndex);
+        char fieldType = replaceFrom.charAt(endIndex + 1);
+        if (isQuestion)
+        {
+            String replace = "%(" + fieldName + ")" + fieldType;
+            String with = "<span class=\"fm" + fact.getFieldModelId(fieldName) + "\">" +  fact.getFieldValue(fieldName) + "</span>";
+            replaceFrom = replaceFrom.replace(replace, with);
+        } 
+        else
+        {
+            replaceFrom.replace("%(" + fieldName + ")" + fieldType, "<span class=\"fma" + fact.getFieldModelId(fieldName) + "\">" +  fact.getFieldValue(fieldName) + "</span");
+        }
+        return replaceFrom;
+    }
 }

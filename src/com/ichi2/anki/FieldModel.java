@@ -42,7 +42,18 @@ public class FieldModel {
 	 */
 	Model model;
 
-	public FieldModel(String name, boolean required, boolean unique) {
+	
+	
+	public FieldModel(long id, int ordinal, long modelId, String name,
+            String description) {
+        this.id = id;
+        this.ordinal = ordinal;
+        this.modelId = modelId;
+        this.name = name;
+        this.description = description;
+    }
+
+    public FieldModel(String name, boolean required, boolean unique) {
 		this.name = name;
 		this.required = required ? 1 : 0;
 		this.unique = unique ? 1 : 0;
@@ -72,4 +83,5 @@ public class FieldModel {
 
 		return fieldModel;
 	}
+
 }

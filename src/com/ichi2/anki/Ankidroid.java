@@ -583,11 +583,11 @@ public class Ankidroid extends Activity
         } else if (requestCode == EDIT_CURRENT_CARD)
         {
             		    DeckTask.launchDeckTask(
-                                DeckTask.TASK_TYPE_UPDATE_CARD,
+                                DeckTask.TASK_TYPE_UPDATE_FACT,
                                 mUpdateCardHandler,
                                 new DeckTask.TaskData(0, AnkidroidApp.deck(), currentCard));
             //TODO: code to save the changes made to the current card.
-            mFlipCard.setChecked(false);
+            mFlipCard.setChecked(true);
             displayCardQuestion();
         }
     }
@@ -980,18 +980,11 @@ public class Ankidroid extends Activity
 
     DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener()
     {
-        boolean sessioncomplete = false;
-
         public void onPreExecute() {
             progressDialog = ProgressDialog.show(Ankidroid.this, "", "Saving changes...", true);
         }
 
         public void onPostExecute(DeckTask.TaskData result) {
-            //Nothing... I think.
-        }
-
-        public void onProgressUpdate(DeckTask.TaskData... values) 
-        {
 
             // Set the correct value for the flip card button - That triggers the
             // listener which displays the question of the card
@@ -1001,6 +994,11 @@ public class Ankidroid extends Activity
             mCardTimer.start();
 
             progressDialog.dismiss();
+        }
+
+        public void onProgressUpdate(DeckTask.TaskData... values) 
+        {
+            currentCard = values[0].getCard();
         }
     };
 

@@ -200,6 +200,9 @@ public class Deck
 	private Stats globalStats;
 
 	private Stats dailyStats;
+	
+	private Card currentCard;
+	
 
 	/**
 	 * Undo/Redo variables.
@@ -493,7 +496,16 @@ public class Deck
 	public Card getCard() {
 		checkDue();
 		long id = getCardId();
-		return cardFromId(id);
+		currentCard = cardFromId(id);
+		return currentCard;
+	}
+	
+	
+	// Refreshes the current card and returns it (used when editing cards)
+	// TODO find a less lame way to do this.
+	public Card getCurrentCard()
+	{
+	    return cardFromId(currentCard.id);
 	}
 
 	private long getCardId() {
@@ -646,13 +658,18 @@ public class Deck
 		return card;
 	}
 
+	
+	/**
+	 * Saves an updated card to the database.
+	 * @param The modified version of a card from this deck to be saved.
+	 */
 	public void updateCard(Card card) 
 	{
-
 	    double now = System.currentTimeMillis() / 1000.0;
 	    ContentValues updateValues = new ContentValues();
 	    updateValues.put("question", card.question);
 	    updateValues.put("answer", card.answer);
+	    updateValues.put("modified", now);
 	    AnkiDb.database.update("cards", updateValues, "id = ?", new String[] {"" + card.id});
 //        AnkiDb.database.execSQL(String.format(
 //                "UPDATE cards " +
