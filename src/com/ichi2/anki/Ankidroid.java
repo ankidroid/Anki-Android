@@ -389,6 +389,8 @@ public class Ankidroid extends Activity
 	{
 		Log.i(TAG, "sdCardAvailable = " + sdCardAvailable + ", deckLoaded = " + deckLoaded);
 		menu.findItem(MENU_DECKOPTS).setEnabled(sdCardAvailable && deckLoaded);
+		menu.findItem(MENU_SUSPEND).setEnabled(currentCard != null);
+		menu.findItem(MENU_SUSPEND).setVisible(currentCard != null);
 		return true;
 	}
 	
