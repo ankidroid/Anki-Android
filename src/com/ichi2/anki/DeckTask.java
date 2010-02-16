@@ -16,6 +16,9 @@
 
 package com.ichi2.anki;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.os.AsyncTask;
@@ -35,7 +38,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_LOAD_DECK = 0;
     public static final int TASK_TYPE_ANSWER_CARD = 1;
     public static final int TASK_TYPE_SUSPEND_CARD = 2;
-    public static final int TASK_TYPE_UPDATE_CARD = 3;
+    public static final int TASK_TYPE_UPDATE_FACT = 3;
 
     private static DeckTask instance;
 
@@ -71,12 +74,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             return doInBackgroundAnswerCard(params);
         case TASK_TYPE_SUSPEND_CARD:
             return doInBackgroundSuspendCard(params);
-        case TASK_TYPE_UPDATE_CARD:
-            return doInBackgroundUpdateCard(params);
+        case TASK_TYPE_UPDATE_FACT:
+            return doInBackgroundUpdateFact(params);
         default:
             return null;
         }
     }
+
 
     @Override
     protected void onPreExecute()
@@ -96,16 +100,29 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         listener.onPostExecute(result);
     }
 
-    private TaskData doInBackgroundUpdateCard(TaskData[] params) {
+    private TaskData doInBackgroundUpdateFact(TaskData[] params) {
+
+// Save the fact
         Deck deck = params[0].getDeck();
         Card editCard = params[0].getCard();
+        Fact editFact = editCard.fact;
+        editFact.toDb();
+        LinkedList<Card> saveCards = editFact.getUpdatedRelatedCards();
         
-        deck.updateCard(editCard);
-        
-        publishProgress(new TaskData(editCard));
-        
+        Iterator<Card> iter = saveCards.iterator();
+        while (iter.hasNext())
+        {
+            Card modifyCard = iter.next();
+            deck.updateCard(modifyCard);
+        }
+        // Find all cards based on this fact and update them with the updateCard method.
+
+        publishProgress(new TaskData(deck.getCurrentCard()));
+      
         return null;
     }
+
+    
 
     private TaskData doInBackgroundAnswerCard(TaskData... params)
     {

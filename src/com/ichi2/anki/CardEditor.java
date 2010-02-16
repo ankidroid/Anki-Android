@@ -1,23 +1,33 @@
 package com.ichi2.anki;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.TreeSet;
+
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.ichi2.anki.Fact.Field;
 
 public class CardEditor  extends Activity {
 
     public static final int SAVE_CARD = 0;
     public static final int CANCEL = 1;
     
-    private EditText mQuestionText;
-    private EditText mAnswerText;
+    private LinearLayout fieldsLayoutContainer;
     
     private Button mSave;
     private Button mCancel;
     
     private Card editorCard;
+    
+    LinkedList<FieldEditText> editFields;
 
     
     @Override
@@ -26,37 +36,43 @@ public class CardEditor  extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_editor);
         
-        mQuestionText = (EditText) findViewById(R.id.CardEditorQuestionEditText);
-        mAnswerText = (EditText) findViewById(R.id.CardEditorAnswerEditText);
+        fieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
         
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
 
         editorCard = Ankidroid.getEditorCard();
 
-        String oldQuestion = editorCard.question;
-        String oldAnswer = editorCard.answer;
-
-        if (oldQuestion != null)
-        {
-            mQuestionText.setText(oldQuestion);
+        // Card -> FactID -> FieldIDs -> FieldModels
+        
+        Fact cardFact = editorCard.getFact();
+        TreeSet<Field> fields = cardFact.getFields();
+        
+        editFields = new LinkedList<FieldEditText>();
+        
+        Iterator<Field> iter = fields.iterator();
+        while (iter.hasNext()) {
+            FieldEditText newTextbox = new FieldEditText(this, iter.next());
+            TextView label = newTextbox.getLabel();
+            editFields.add(newTextbox);
+            
+            fieldsLayoutContainer.addView(label);
+            fieldsLayoutContainer.addView(newTextbox);
+            // Generate a new EditText for each field
+            
         }
 
-        if (oldAnswer != null) 
-        {
-            mAnswerText.setText(oldAnswer);
-        } 
-
-
-        
         mSave.setOnClickListener(new View.OnClickListener() 
         {
 
             public void onClick(View v) {
                 
-                editorCard.question = mQuestionText.getText().toString();
-                editorCard.answer = mAnswerText.getText().toString();
-                
+                Iterator<FieldEditText> iter = editFields.iterator();
+                while (iter.hasNext())
+                {
+                    FieldEditText current = iter.next();
+                    current.updateField();
+                }
                 setResult(SAVE_CARD);
                 finish();
             }
@@ -76,4 +92,28 @@ public class CardEditor  extends Activity {
         });
     }
 
+    private class FieldEditText extends EditText
+    {
+
+        Field pairField;
+        
+        public FieldEditText(Context context, Field pairField) {
+            super(context);
+            this.pairField = pairField;
+            this.setText(pairField.value);
+            // TODO Auto-generated constructor stub
+        }
+        
+        public TextView getLabel() 
+        {
+            TextView label = new TextView(this.getContext());
+            label.setText(pairField.fieldModel.name);
+            return label;
+        }
+        
+        public void updateField()
+        {
+            pairField.value = this.getText().toString();
+        }
+    }
 }
