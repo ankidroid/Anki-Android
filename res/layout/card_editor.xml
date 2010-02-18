@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/CardEditorScroll"><LinearLayout android:id="@+id/CardEditorLayout" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/CardEditorQuestionText" android:text="@string/CardEditorQuestionText"></TextView><EditText android:id="@+id/CardEditorQuestionEditText" android:layout_width="fill_parent" android:layout_height="wrap_content"></EditText>
+<ScrollView android:layout_width="fill_parent"
+	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/CardEditorScroll">
+	<LinearLayout android:id="@+id/CardEditorEditFieldsLayout"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/CardEditorQuestionText"
+			android:text="@string/CardEditorQuestionText"></TextView>
+		<EditText android:id="@+id/CardEditorQuestionEditText"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"></EditText>
 
-<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/CardEditorAnswerText" android:text="@string/CardEditorAnswerText"></TextView>
-<EditText android:layout_height="wrap_content" android:id="@+id/CardEditorAnswerEditText" android:layout_width="fill_parent"></EditText>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/CardEditorAnswerText"
+			android:text="@string/CardEditorAnswerText"></TextView>
+		<EditText android:layout_height="wrap_content"
+			android:id="@+id/CardEditorAnswerEditText" android:layout_width="fill_parent"></EditText>
 
 
-<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_gravity="right"><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/CardEditorSaveButton" android:text="@string/CardEditorSaveButton"></Button><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/CardEditorCancelButton" android:text="@string/CardEditorCancelButton"></Button></LinearLayout>
-</LinearLayout>
+		<LinearLayout android:id="@+id/LinearLayout01"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:orientation="horizontal" android:layout_gravity="right">
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/CardEditorSaveButton"
+				android:text="@string/CardEditorSaveButton"></Button>
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/CardEditorCancelButton"
+				android:text="@string/CardEditorCancelButton"></Button>
+		</LinearLayout>
+	</LinearLayout>
 
 </ScrollView>
