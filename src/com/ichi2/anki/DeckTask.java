@@ -41,21 +41,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_UPDATE_FACT = 3;
 
 	private static DeckTask instance;
+	private static DeckTask oldInstance;
 
 	int type;
 	TaskListener listener;
 
 	public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params)
 	{
-		try
-		{
-			if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED))
-				instance.get();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
+		oldInstance = instance;
+		
 		instance = new DeckTask();
 		instance.listener = listener;
 		instance.type = type;
@@ -82,6 +76,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	@Override
 	protected TaskData doInBackground(TaskData... params)
 	{
+		// Wait for previous thread (if any) to finish before continuing
+		try
+		{
+			if ((oldInstance != null) && (oldInstance.getStatus() != AsyncTask.Status.FINISHED))
+				oldInstance.get();
+		} catch (Exception e)
+		{
+			Log.e(TAG, "doInBackground - Got exception while waiting for thread to finish: " + e.getMessage());
+		}
+		
 		switch (type)
 		{
 		case TASK_TYPE_LOAD_DECK:
