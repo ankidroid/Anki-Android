@@ -447,6 +447,9 @@ public class Ankidroid extends Activity
 	public void openDeckPicker()
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
+    	// Wait for any running DeckTask thread to finish before closing deck.
+    	DeckTask.waitToFinish();
+    	
     	if(AnkidroidApp.deck() != null && sdCardAvailable)
     		AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
@@ -899,6 +902,9 @@ public class Ankidroid extends Activity
 
     private void closeExternalStorageFiles()
     {
+    	// Wait for any running DeckTask thread to finish before closing deck.
+    	DeckTask.waitToFinish();
+    	
     	if(AnkidroidApp.deck() != null)
     		AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;

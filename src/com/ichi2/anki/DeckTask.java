@@ -62,6 +62,22 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 		return (DeckTask) instance.execute(params);
 	}
+	
+	/**
+	 * Block the current thread until the currently running DeckTask instance 
+	 * (if any) has finished.
+	 */
+	public static void waitToFinish()
+	{
+		try
+		{
+			if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED))
+				instance.get();
+		} catch (Exception e)
+		{
+			return;
+		}
+	}
 
 	@Override
 	protected TaskData doInBackground(TaskData... params)
