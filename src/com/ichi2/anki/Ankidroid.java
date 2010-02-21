@@ -156,8 +156,6 @@ public class Ankidroid extends Activity
 
 	private boolean timerAndWhiteboard;
 
-	private boolean spacedRepetition;
-
 	private boolean writeAnswers;
 
 	private boolean updateNotifications;
@@ -844,7 +842,6 @@ public class Ankidroid extends Activity
 		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
-		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
 		updateNotifications = preferences.getBoolean("enabled", true);
 		deckPath = preferences.getString("deckPath", "/sdcard");

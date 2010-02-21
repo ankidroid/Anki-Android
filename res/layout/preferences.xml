@@ -18,11 +18,6 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<CheckBoxPreference
-		android:title="Spaced repetition (beta)"
-		android:defaultValue="true"
-		android:summary="Known cards do not reappear soon"
-		android:key="spacedRepetition" />
-	<CheckBoxPreference
 		android:title="Show timer / whiteboard"
 		android:defaultValue="true"
 		android:summary="Lets you write on the screen"
