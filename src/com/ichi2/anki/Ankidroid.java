@@ -702,8 +702,8 @@ public class Ankidroid extends Activity
 
 		if (currentCard == null)
 		{
-			// error :(
-			updateCard("Unable to find a card!");
+			// Either the deck does not contain any card, or all reviews have been done for the time being
+			updateCard("Congratulations! You have finished for now. Please come back tomorrow.");
 			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
