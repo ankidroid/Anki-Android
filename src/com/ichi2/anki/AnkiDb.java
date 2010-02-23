@@ -79,12 +79,17 @@ public class AnkiDb
 	 */
 	static public long queryScalar(String query) throws SQLException
 	{
-		Cursor cursor = AnkiDb.database.rawQuery(query, null);
-		if (!cursor.moveToFirst())
-			throw new SQLException("No result for query: " + query);
-
-		long scalar = cursor.getLong(0);
-		cursor.close();
+		Cursor cursor = null;
+		long scalar;
+		try {
+			cursor = AnkiDb.database.rawQuery(query, null);
+			if (!cursor.moveToFirst())
+				throw new SQLException("No result for query: " + query);
+	
+			scalar = cursor.getLong(0);
+		} finally {
+			if (cursor != null) cursor.close();
+		}
 
 		return scalar;
 	}
@@ -102,19 +107,21 @@ public class AnkiDb
 	 */
 	static public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
 		ArrayList<T> results = new ArrayList<T>();
+		Cursor cursor = null;
 		
 		try {
-		Cursor cursor = AnkiDb.database.rawQuery(query, null);
-		cursor.moveToFirst();
-		String methodName = getCursorMethodName(type.getSimpleName());
-		do {
-			// The magical line. Almost as illegible as python code ;)
-			results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
-		} while (cursor.moveToNext());
-		cursor.close();
+			cursor = AnkiDb.database.rawQuery(query, null);
+			cursor.moveToFirst();
+			String methodName = getCursorMethodName(type.getSimpleName());
+			do {
+				// The magical line. Almost as illegible as python code ;)
+				results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+			} while (cursor.moveToNext());
 		} catch (Exception e) {
 			Log.e(TAG, "queryColumn: Got Exception: " + e.getMessage());
 			return null;
+		} finally {
+			if (cursor != null) cursor.close();
 		}
 		
 		return results;

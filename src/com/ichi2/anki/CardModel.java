@@ -93,22 +93,27 @@ public class CardModel {
 
 	public void fromDb(long id)
 	{
-	    Cursor cursor = AnkiDb.database.rawQuery(
-                "SELECT id, ordinal, modelId, name, description, qformat, " +
-                "aformat " +
-                "FROM cardModels " +
-                "WHERE id = " +
-                id,
-                null);
-
-	    cursor.moveToFirst();
-        this.id = cursor.getLong(0);
-        this.ordinal = cursor.getInt(1);
-        this.modelId = cursor.getLong(2);
-        this.name = cursor.getString(3);
-        this.description = cursor.getString(4);
-        this.qformat = cursor.getString(5);
-        this.aformat = cursor.getString(6);
+		Cursor cursor = null;
+		try {
+		    cursor = AnkiDb.database.rawQuery(
+	                "SELECT id, ordinal, modelId, name, description, qformat, " +
+	                "aformat " +
+	                "FROM cardModels " +
+	                "WHERE id = " +
+	                id,
+	                null);
+	
+		    cursor.moveToFirst();
+	        this.id = cursor.getLong(0);
+	        this.ordinal = cursor.getInt(1);
+	        this.modelId = cursor.getLong(2);
+	        this.name = cursor.getString(3);
+	        this.description = cursor.getString(4);
+	        this.qformat = cursor.getString(5);
+	        this.aformat = cursor.getString(6);
+		} finally {
+			if (cursor != null) cursor.close();
+		}
 	}
 	
 	/**

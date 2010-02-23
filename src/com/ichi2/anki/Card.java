@@ -277,62 +277,66 @@ public class Card {
     }
 
     public boolean fromDB(long id) {
-        Cursor cursor = AnkiDb.database.rawQuery(
-                "SELECT id, factId, cardModelId, created, modified, tags, " +
-                "ordinal, question, answer, priority, interval, lastInterval, " +
-                "due, lastDue, factor, lastFactor, firstAnswered, reps, " +
-                "successive, averageTime, reviewTime, youngEase0, youngEase1, " +
-                "youngEase2, youngEase3, youngEase4, matureEase0, matureEase1, " +
-                "matureEase2, matureEase3, matureEase4, yesCount, noCount, " +
-                "spaceUntil, isDue, type, combinedDue " +
-                "FROM cards " +
-                "WHERE id = " +
-                id,
-                null);
-        if (!cursor.moveToFirst()) {
-            Log.w("anki", "Card.java (fromDB(id)): No result from query.");
-            return false;
-        }
-
-        this.id = cursor.getLong(0);
-        this.factId = cursor.getLong(1);
-        this.cardModelId = cursor.getLong(2);
-        this.created = cursor.getDouble(3);
-        this.modified = cursor.getDouble(4);
-        this.tags = cursor.getString(5);
-        this.ordinal = cursor.getInt(6);
-        this.question = cursor.getString(7);
-        this.answer = cursor.getString(8);
-        this.priority = cursor.getInt(9);
-        this.interval = cursor.getDouble(10);
-        this.lastInterval = cursor.getDouble(11);
-        this.due = cursor.getDouble(12);
-        this.lastDue = cursor.getDouble(13);
-        this.factor = cursor.getDouble(14);
-        this.lastFactor = cursor.getDouble(15);
-        this.firstAnswered = cursor.getDouble(16);
-        this.reps = cursor.getInt(17);
-        this.successive = cursor.getInt(18);
-        this.averageTime = cursor.getDouble(19);
-        this.reviewTime = cursor.getDouble(20);
-        this.youngEase0 = cursor.getInt(21);
-        this.youngEase1 = cursor.getInt(22);
-        this.youngEase2 = cursor.getInt(23);
-        this.youngEase3 = cursor.getInt(24);
-        this.youngEase4 = cursor.getInt(25);
-        this.matureEase0 = cursor.getInt(26);
-        this.matureEase1 = cursor.getInt(27);
-        this.matureEase2 = cursor.getInt(28);
-        this.matureEase3 = cursor.getInt(29);
-        this.matureEase4 = cursor.getInt(30);
-        this.yesCount = cursor.getInt(31);
-        this.noCount = cursor.getInt(32);
-        this.spaceUntil = cursor.getDouble(33);
-        this.isDue = cursor.getInt(34);
-        this.type = cursor.getInt(35);
-        this.combinedDue = cursor.getDouble(36);
-
-        cursor.close();
+    	Cursor cursor = null;
+    	
+    	try {
+	        cursor = AnkiDb.database.rawQuery(
+	                "SELECT id, factId, cardModelId, created, modified, tags, " +
+	                "ordinal, question, answer, priority, interval, lastInterval, " +
+	                "due, lastDue, factor, lastFactor, firstAnswered, reps, " +
+	                "successive, averageTime, reviewTime, youngEase0, youngEase1, " +
+	                "youngEase2, youngEase3, youngEase4, matureEase0, matureEase1, " +
+	                "matureEase2, matureEase3, matureEase4, yesCount, noCount, " +
+	                "spaceUntil, isDue, type, combinedDue " +
+	                "FROM cards " +
+	                "WHERE id = " +
+	                id,
+	                null);
+	        if (!cursor.moveToFirst()) {
+	            Log.w("anki", "Card.java (fromDB(id)): No result from query.");
+	            return false;
+	        }
+	
+	        this.id = cursor.getLong(0);
+	        this.factId = cursor.getLong(1);
+	        this.cardModelId = cursor.getLong(2);
+	        this.created = cursor.getDouble(3);
+	        this.modified = cursor.getDouble(4);
+	        this.tags = cursor.getString(5);
+	        this.ordinal = cursor.getInt(6);
+	        this.question = cursor.getString(7);
+	        this.answer = cursor.getString(8);
+	        this.priority = cursor.getInt(9);
+	        this.interval = cursor.getDouble(10);
+	        this.lastInterval = cursor.getDouble(11);
+	        this.due = cursor.getDouble(12);
+	        this.lastDue = cursor.getDouble(13);
+	        this.factor = cursor.getDouble(14);
+	        this.lastFactor = cursor.getDouble(15);
+	        this.firstAnswered = cursor.getDouble(16);
+	        this.reps = cursor.getInt(17);
+	        this.successive = cursor.getInt(18);
+	        this.averageTime = cursor.getDouble(19);
+	        this.reviewTime = cursor.getDouble(20);
+	        this.youngEase0 = cursor.getInt(21);
+	        this.youngEase1 = cursor.getInt(22);
+	        this.youngEase2 = cursor.getInt(23);
+	        this.youngEase3 = cursor.getInt(24);
+	        this.youngEase4 = cursor.getInt(25);
+	        this.matureEase0 = cursor.getInt(26);
+	        this.matureEase1 = cursor.getInt(27);
+	        this.matureEase2 = cursor.getInt(28);
+	        this.matureEase3 = cursor.getInt(29);
+	        this.matureEase4 = cursor.getInt(30);
+	        this.yesCount = cursor.getInt(31);
+	        this.noCount = cursor.getInt(32);
+	        this.spaceUntil = cursor.getDouble(33);
+	        this.isDue = cursor.getInt(34);
+	        this.type = cursor.getInt(35);
+	        this.combinedDue = cursor.getDouble(36);
+    	} finally {
+    		if (cursor != null) cursor.close();
+    	}
 
         // TODO: Should also read JOINed entries CardModel and Fact.
 
