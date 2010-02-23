@@ -401,6 +401,8 @@ public class Ankidroid extends Activity
 		menu.findItem(MENU_DECKOPTS).setEnabled(sdCardAvailable && deckLoaded);
 		menu.findItem(MENU_SUSPEND).setEnabled(currentCard != null);
 		menu.findItem(MENU_SUSPEND).setVisible(currentCard != null);
+		menu.findItem(MENU_EDIT).setEnabled(currentCard != null);
+		menu.findItem(MENU_EDIT).setVisible(currentCard != null);
 		return true;
 	}
 	
