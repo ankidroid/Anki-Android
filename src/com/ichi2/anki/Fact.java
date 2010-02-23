@@ -86,58 +86,68 @@ public class Fact {
     private boolean fromDb(long id)
     {
         this.id = id;
-        Cursor cursor = AnkiDb.database.rawQuery(
-                "SELECT id, modelId, created, modified, tags, spaceUntil " +
-                "FROM facts " +
-                "WHERE id = " +
-                id,
-                null);
-        if (!cursor.moveToFirst()) {
-            Log.w("anki", "Fact.java (constructor): No result from query.");
-            return false;
+        Cursor cursor = null;
+        
+        try {
+	        cursor = AnkiDb.database.rawQuery(
+	                "SELECT id, modelId, created, modified, tags, spaceUntil " +
+	                "FROM facts " +
+	                "WHERE id = " +
+	                id,
+	                null);
+	        if (!cursor.moveToFirst()) {
+	            Log.w("anki", "Fact.java (constructor): No result from query.");
+	            return false;
+	        }
+	
+	        this.id = cursor.getLong(0);
+	        this.modelId = cursor.getLong(1);
+	        this.created = cursor.getDouble(2);
+	        this.modified = cursor.getDouble(3);
+	        this.tags = cursor.getString(4);
+        } finally {
+        	if (cursor != null) cursor.close();
         }
 
-        this.id = cursor.getLong(0);
-        this.modelId = cursor.getLong(1);
-        this.created = cursor.getDouble(2);
-        this.modified = cursor.getDouble(3);
-        this.tags = cursor.getString(4);
-
-        cursor.close();
-
-        Cursor fieldsCursor = AnkiDb.database.rawQuery(
-                "SELECT id, factId, fieldModelId, value " +
-                "FROM fields " +
-                "WHERE factId = " +
-                id, 
-                null);
-
-        fields = new TreeSet<Field>(new FieldOrdinalComparator());
-        while (fieldsCursor.moveToNext())
-        {
-            long fieldId = fieldsCursor.getLong(0);
-            long fieldModelId = fieldsCursor.getLong(2);
-            String fieldValue = fieldsCursor.getString(3);
-
-            // Get the field model for this field
-            Cursor fieldModelCursor = AnkiDb.database.rawQuery(
-                    "SELECT id, ordinal, modelId, name, description " +
-                    "FROM fieldModels " +
-                    "WHERE id = " +
-                    fieldModelId,
-                    null);
-
-            fieldModelCursor.moveToFirst();
-            FieldModel currentFieldModel = new FieldModel(fieldModelCursor.getLong(0), 
-                    fieldModelCursor.getInt(1), fieldModelCursor.getLong(2),
-                    fieldModelCursor.getString(3), fieldModelCursor.getString(4));
-
-
-
-            fieldModelCursor.close();
-            fields.add(new Field(fieldId, id, currentFieldModel, fieldValue));
+        Cursor fieldsCursor = null;
+        try {
+	        fieldsCursor = AnkiDb.database.rawQuery(
+	                "SELECT id, factId, fieldModelId, value " +
+	                "FROM fields " +
+	                "WHERE factId = " +
+	                id, 
+	                null);
+	
+	        fields = new TreeSet<Field>(new FieldOrdinalComparator());
+	        while (fieldsCursor.moveToNext())
+	        {
+	            long fieldId = fieldsCursor.getLong(0);
+	            long fieldModelId = fieldsCursor.getLong(2);
+	            String fieldValue = fieldsCursor.getString(3);
+	
+	            Cursor fieldModelCursor = null;
+	            FieldModel currentFieldModel = null;
+	            try {
+		            // Get the field model for this field
+		            fieldModelCursor = AnkiDb.database.rawQuery(
+		                    "SELECT id, ordinal, modelId, name, description " +
+		                    "FROM fieldModels " +
+		                    "WHERE id = " +
+		                    fieldModelId,
+		                    null);
+		
+		            fieldModelCursor.moveToFirst();
+		            currentFieldModel = new FieldModel(fieldModelCursor.getLong(0), 
+		                    fieldModelCursor.getInt(1), fieldModelCursor.getLong(2),
+		                    fieldModelCursor.getString(3), fieldModelCursor.getString(4));
+	            } finally {
+	            	if (fieldModelCursor != null) fieldModelCursor.close();
+	            }
+	            fields.add(new Field(fieldId, id, currentFieldModel, fieldValue));
+	        }
+        } finally {
+        	if (fieldsCursor != null) fieldsCursor.close();
         }
-        fieldsCursor.close();
         // Read Fields
         return true;
     }
