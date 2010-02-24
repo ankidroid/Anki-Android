@@ -24,8 +24,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -38,7 +36,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.SQLException;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -58,7 +55,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -135,8 +131,6 @@ public class Ankidroid extends Activity
 	 */
 	private String deckFilename;
 	
-	private String deckPath;
-	
     /**
      * Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true.
      * We don't have to worry to set deckSelected to true, it's done automatically in displayProgressDialogAndLoadDeck().
@@ -177,8 +171,6 @@ public class Ankidroid extends Activity
 	private Button mEase0, mEase1, mEase2, mEase3;
 
 	private Chronometer mCardTimer;
-
-	private ArrayList<MediaPlayer> sounds;
 	
 	//the time (in ms) at which the session will be over
 	private long mSessionTimeLimit;
@@ -846,7 +838,6 @@ public class Ankidroid extends Activity
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
 		updateNotifications = preferences.getBoolean("enabled", true);
-		deckPath = preferences.getString("deckPath", "/sdcard");
 
 		return preferences;
 	}

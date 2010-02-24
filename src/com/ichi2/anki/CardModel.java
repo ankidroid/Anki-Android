@@ -19,7 +19,6 @@ package com.ichi2.anki;
 import java.util.HashMap;
 
 import android.database.Cursor;
-import android.util.Log;
 
 /**
  * Card model.
