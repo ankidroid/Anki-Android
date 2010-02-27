@@ -324,6 +324,13 @@ public class Deck
 			deck.commitToDB();
 
 		Card.updateStmt = null;
+		
+		// Create a temporary view for random new cards. Randomizing the cards by themselves
+		// as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
+		AnkiDb.database.execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS " +
+				"SELECT * FROM cards " +
+				"WHERE type = 2 AND isDue = 1 " +
+				"ORDER BY RANDOM()");
 
 		return deck;
 	}
@@ -423,7 +430,7 @@ public class Deck
 	}
 	public void setRevCardOrder( int num )
 	{
-	    if( num > 0 )
+	    if( num >= 0 )
 	    {
 	        revCardOrder = num;
 	        flushMod();
@@ -436,7 +443,7 @@ public class Deck
 	}
 	public void setNewCardSpacing( int num )
 	{
-	    if( num > 0 )
+	    if( num >= 0 )
 	    {
 	        newCardSpacing = num;
 	        flushMod();
@@ -449,7 +456,7 @@ public class Deck
 	}
 	public void setNewCardOrder( int num )
 	{
-	    if( num > 0 )
+	    if( num >= 0 )
 	    {
 	        newCardOrder = num;
 	        flushMod();
@@ -463,7 +470,7 @@ public class Deck
 
 	public void setNewCardsPerDay( int num )
 	{
-	    if( num > 0 )
+	    if( num >= 0 )
 	    {
 	        newCardsPerDay = num;
 	        flushMod();
@@ -608,7 +615,7 @@ public class Deck
 
 	private String newCardTable() {
 		return (new String[]{
-				"acqCardsOld ",
+				"acqCardsRandom ",
 				"acqCardsOld ",
 				"acqCardsNew "})[newCardOrder];
 	}
