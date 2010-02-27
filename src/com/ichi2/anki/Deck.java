@@ -322,8 +322,6 @@ public class Deck
 		// Save deck to database if it has been modified
 		if ((oldCount != (deck.failedSoonCount + deck.revCount + deck.newCount)) || deck.modifiedSinceSave())
 			deck.commitToDB();
-
-		Card.updateStmt = null;
 		
 		// Create a temporary view for random new cards. Randomizing the cards by themselves
 		// as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
@@ -839,48 +837,6 @@ public class Deck
 //            card = handleLeech(card);
         setUndoEnd(undoName);
 	}
-	
-//	public void updateCardStats(Card card, int ease)
-//	{
-//		String oldState = cardState(card);
-//		Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
-//	}
-	
-//	public void decreaseCounts(Card card)
-//	{
-//		long start, stop;
-//		Cursor cursor;
-//		String extra;
-//        if (reviewEarly)
-//            extra = "";
-//        else
-//        {
-//            // if not reviewing early, make sure the current card is counted
-//            // even if it was not due yet (it's a failed card)
-//            extra = "or id = " + card.id;
-//        }
-//
-//        start = System.currentTimeMillis();
-//        cursor = AnkiDb.database.rawQuery(
-//        		"SELECT type, count(type) " +
-//        		"FROM cards " +
-//        		"WHERE factId = " +
-//        		card.factId + " and " +
-//        		"(isDue = 1 " + extra + ") " +
-//        		"GROUP BY type", null);
-//    	while (cursor.moveToNext())
-//    	{
-//    		if (cursor.getInt(0) == 0)
-//    			failedSoonCount -= cursor.getInt(1);
-//    		else if (cursor.getInt(0) == 1)
-//    			revCount -= cursor.getInt(1);
-//    		else
-//    			newCount -= cursor.getInt(1);
-//    	}
-//        cursor.close();
-//        stop = System.currentTimeMillis();
-//	    Log.v(TAG, "decreaseCounts - decreased counts in " + (stop - start) + " ms.");
-//	}
 
 //	private boolean isLeech(Card card)
 //	{

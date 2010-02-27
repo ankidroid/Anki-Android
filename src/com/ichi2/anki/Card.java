@@ -23,7 +23,6 @@ import java.util.Random;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 public class Card {
@@ -86,8 +85,6 @@ public class Card {
     double timerStopped;
     double fuzz;
 
-    static SQLiteStatement updateStmt;
-
     public Card(Fact fact, CardModel cardModel, double created) {
         tags = "";
         id = Util.genID();
@@ -120,50 +117,6 @@ public class Card {
             //			HashMap<String, String> qa = CardModel.formatQA(id, fact.modelId, d, splitTags(), cardModel);
             //			question = qa.get("question");
             //			answer = qa.get("answer");
-        }
-
-        if (updateStmt == null)
-        {
-            updateStmt = AnkiDb.database.compileStatement(
-                    "UPDATE cards " +
-                    "SET factId = ?, " +
-                    "cardModelId = ?, " +
-                    "created = ?, " +
-                    "modified = ?, " +
-                    "tags = ?, " +
-                    "ordinal = ?, " +
-                    "question = ?, " +
-                    "answer = ?, " +
-                    "priority = ?, " +
-                    "interval = ?, " +
-                    "lastInterval = ?, " +
-                    "due = ?, " +
-                    "lastDue = ?, " +
-                    "factor = ?, " +
-                    "lastFactor = ?, " +
-                    "firstAnswered = ?, " +
-                    "reps = ?, " +
-                    "successive = ?, " +
-                    "averageTime = ?, " +
-                    "reviewTime = ?, " +
-                    "youngEase0 = ?, " +
-                    "youngEase1 = ?, " +
-                    "youngEase2 = ?, " +
-                    "youngEase3 = ?, " +
-                    "youngEase4 = ?, " +
-                    "matureEase0 = ?, " +
-                    "matureEase1 = ?, " +
-                    "matureEase2 = ?, " +
-                    "matureEase3 = ?, " +
-                    "matureEase4 = ?, " +
-                    "yesCount = ?, " +
-                    "noCount = ?, " +
-                    "spaceUntil = ?, " +
-                    "relativeDelay = 0, " +
-                    "isDue = ?, " +
-                    "type = ?, " +
-                    "combinedDue = ? " +
-            "WHERE id = ?");
         }
     }
 
@@ -392,113 +345,6 @@ public class Card {
         AnkiDb.database.update("cards", values, "id = " + id, null);
 
         // TODO: Should also write JOINED entries: CardModel and Fact.
-    }
-
-    public void toDB2()
-    {
-        if (this.reps == 0)
-            this.type = 2;
-        else if (this.successive != 0)
-            this.type = 1;
-        else
-            this.type = 0;
-
-        AnkiDb.database.execSQL(
-                "UPDATE cards SET " +
-                "factId = " + factId + ", " +
-                "cardModelId = " + cardModelId + ", " +
-                "created = " + String.format("%f", created) + ", " +
-                "modified = " + String.format("%f", modified) + ", " +
-                "tags = '" + tags + "', " +
-                "ordinal = " + ordinal + ", " +
-                "question = '" + question + "', " +
-                "answer = '" + answer + "', " +
-                "priority = " + priority + ", " +
-                "interval = " + String.format("%f", interval) + ", " +
-                "lastInterval = " + String.format("%f", lastInterval) + ", " +
-                "due = " + String.format("%f", due) + ", " +
-                "lastDue = " + String.format("%f", lastDue) + ", " +
-                "factor = " + String.format("%f", factor) + ", " +
-                "lastFactor = " + String.format("%f", lastFactor) + ", " +
-                "firstAnswered = " + String.format("%f", firstAnswered) + ", " +
-                "reps = " + reps + ", " +
-                "successive = " + successive + ", " +
-                "averageTime = " + String.format("%f", averageTime) + ", " +
-                "reviewTime = " + String.format("%f", reviewTime) + ", " +
-                "youngEase0 = " + youngEase0 + ", " +
-                "youngEase1 = " + youngEase1 + ", " +
-                "youngEase2 = " + youngEase2 + ", " +
-                "youngEase3 = " + youngEase3 + ", " +
-                "youngEase4 = " + youngEase4 + ", " +
-                "matureEase0 = " + matureEase0 + ", " +
-                "matureEase1 = " + matureEase1 + ", " +
-                "matureEase2 = " + matureEase2 + ", " +
-                "matureEase3 = " + matureEase3 + ", " +
-                "matureEase4 = " + matureEase4 + ", " +
-                "yesCount = " + yesCount + ", " +
-                "noCount = " + noCount + ", " +
-                "spaceUntil = " + String.format("%f", spaceUntil) + ", " +
-                "relativeDelay = 0, " +
-                "isDue = " + isDue + ", " +
-                "type = " + type + ", " +
-                "combinedDue = " + String.format("%f", Math.max(spaceUntil, due)) + " " +
-                "WHERE id = " + id);
-    }
-
-    public void toDB3()
-    {
-        if (this.reps == 0)
-            this.type = 2;
-        else if (this.successive != 0)
-            this.type = 1;
-        else
-            this.type = 0;
-
-        updateStmt.clearBindings();
-        updateStmt.bindLong(1, factId);
-        updateStmt.bindLong(2, cardModelId);
-        updateStmt.bindDouble(3, created);
-        updateStmt.bindDouble(4, modified);
-        updateStmt.bindString(5, tags);
-        updateStmt.bindLong(6, ordinal);
-        updateStmt.bindString(7, question);
-        updateStmt.bindString(8, answer);
-        updateStmt.bindLong(9, priority);
-        updateStmt.bindDouble(10, interval);
-        updateStmt.bindDouble(11, lastInterval);
-        updateStmt.bindDouble(12, due);
-        updateStmt.bindDouble(13, lastDue);
-        updateStmt.bindDouble(14, factor);
-        updateStmt.bindDouble(15, lastFactor);
-        updateStmt.bindDouble(16, firstAnswered);
-        updateStmt.bindLong(17, reps);
-        updateStmt.bindLong(18, successive);
-        updateStmt.bindDouble(19, averageTime);
-        updateStmt.bindDouble(20, reviewTime);
-        updateStmt.bindLong(21, youngEase0);
-        updateStmt.bindLong(22, youngEase1);
-        updateStmt.bindLong(23, youngEase2);
-        updateStmt.bindLong(24, youngEase3);
-        updateStmt.bindLong(25, youngEase4);
-        updateStmt.bindLong(26, matureEase0);
-        updateStmt.bindLong(27, matureEase1);
-        updateStmt.bindLong(28, matureEase2);
-        updateStmt.bindLong(29, matureEase3);
-        updateStmt.bindLong(30, matureEase4);
-        updateStmt.bindLong(31, yesCount);
-        updateStmt.bindLong(32, noCount);
-        updateStmt.bindDouble(33, spaceUntil);
-        updateStmt.bindLong(34, isDue);
-        updateStmt.bindLong(35, type);
-        updateStmt.bindDouble(36, Math.max(spaceUntil, due));
-        updateStmt.bindLong(37, id);
-
-        updateStmt.execute();
-    }
-
-    public void temporarilySetLowestPriority()
-    {
-        AnkiDb.database.execSQL("UPDATE cards SET priority = 0, isDue = 0 WHERE id = " + id);
     }
 
 }
