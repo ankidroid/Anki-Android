@@ -1004,8 +1004,10 @@ public class Ankidroid extends Activity
 	DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener()
 	{
 	    boolean sessioncomplete = false;
+	    long start;
 
 		public void onPreExecute() {
+			start = System.currentTimeMillis();
 			progressDialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
 		}
 
@@ -1054,6 +1056,8 @@ public class Ankidroid extends Activity
 			// Show a message to user if a session limit has been reached.
 			if (sessionMessage != null)
 				sessionMessage.show();
+			
+			Log.w(TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - start) + " ms.");
 		}
 
 	};

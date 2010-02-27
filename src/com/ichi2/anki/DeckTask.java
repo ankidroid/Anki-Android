@@ -145,48 +145,36 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 	private TaskData doInBackgroundAnswerCard(TaskData... params)
 	{
-		long start, stop;
+		long start, start2;
 		Deck deck = params[0].getDeck();
 		Card oldCard = params[0].getCard();
 		int ease = params[0].getInt();
 		Card newCard;
-
+		
+		start2 = System.currentTimeMillis();
+		
 		AnkiDb.database.beginTransaction();
 		try 
 		{
 			if (oldCard != null)
 			{
 				start = System.currentTimeMillis();
-				/* getCard() depends on stats being up to date in checkDue()
-				* when computing newCountToday. */
-				deck.updateCardStats(oldCard, ease);
-				// Suspend card so it will not be retrieved again.
-				deck.suspendCard(oldCard.id);
-				//oldCard.temporarilySetLowestPriority();
-				//deck.decreaseCounts(oldCard);
-				stop = System.currentTimeMillis();
-				Log.v(TAG, "doInBackground - Suspended old card in " + (stop - start) + " ms.");
+				deck.answerCard(oldCard, ease);
+				Log.v(TAG, "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start) + " ms.");
 			}
 	
 			start = System.currentTimeMillis();
 			newCard = deck.getCard();
-			stop = System.currentTimeMillis();
-			Log.v(TAG, "doInBackground - Loaded new card in " + (stop - start) + " ms.");
+			Log.v(TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
 			publishProgress(new TaskData(newCard));
-	
-			if (ease != 0 && oldCard != null)
-			{
-				start = System.currentTimeMillis();
-				deck.unsuspendCard(oldCard.id);
-				deck.answerCard(oldCard, ease);
-				stop = System.currentTimeMillis();
-				Log.v(TAG, "doInBackground - Answered old card in " + (stop - start) + " ms.");
-			}
+			
 			AnkiDb.database.setTransactionSuccessful();
 		} finally 
 		{
 			AnkiDb.database.endTransaction();
 		}
+		
+		Log.w(TAG, "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
 
 		return null;
 	}

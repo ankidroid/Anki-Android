@@ -827,10 +827,8 @@ public class Deck
 
         card.toDB();
         
-        // -- Moved to separate function since it needed to be done before answering of the card
         // global/daily stats
-//        Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
-        // ---------------------
+        Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
         
         // review history
         CardHistoryEntry entry = new CardHistoryEntry(card, ease, lastDelay);
@@ -842,11 +840,11 @@ public class Deck
         setUndoEnd(undoName);
 	}
 	
-	public void updateCardStats(Card card, int ease)
-	{
-		String oldState = cardState(card);
-		Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
-	}
+//	public void updateCardStats(Card card, int ease)
+//	{
+//		String oldState = cardState(card);
+//		Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
+//	}
 	
 //	public void decreaseCounts(Card card)
 //	{
