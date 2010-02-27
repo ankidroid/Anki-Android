@@ -664,10 +664,7 @@ public class Deck
 		if (id == 0)
 			return null;
 		Card card = new Card();
-		long start = System.currentTimeMillis();
 		boolean result = card.fromDB(id);
-		long stop = System.currentTimeMillis();
-        Log.v(TAG, "cardFromId - card.fromDB in " + (stop - start) + " ms.");
 
 		if (!result)
 			return null;
@@ -731,7 +728,6 @@ public class Deck
             updateFactor(card, ease); // don't update factor if learning ahead
 
         // spacing
-        long start = System.currentTimeMillis();
         double space, spaceFactor, minSpacing, minOfOtherCards;
         try {
 	        cursor = AnkiDb.database.rawQuery(
@@ -754,10 +750,7 @@ public class Deck
         } finally {
         	if (cursor != null) cursor.close();
         }
-        long stop = System.currentTimeMillis();
-        Log.v(TAG, "answerCard - spacing in " + (stop - start) + " ms.");
 
-        start = System.currentTimeMillis();
         try {
 	        cursor = AnkiDb.database.rawQuery(
 	        		"SELECT min(interval) " +
@@ -774,8 +767,6 @@ public class Deck
         } finally {
         	if (cursor != null) cursor.close();
         }
-		stop = System.currentTimeMillis();
-	    Log.v(TAG, "answerCard - minOfOtherCards in " + (stop - start) + " ms.");
         if (minOfOtherCards != 0)
             space = Math.min(minOfOtherCards, card.interval);
         else
@@ -795,7 +786,6 @@ public class Deck
             extra = "or id = " + card.id;
         }
 
-        start = System.currentTimeMillis();
         try {
 	        cursor = AnkiDb.database.rawQuery(
 	        		"SELECT type, count(type) " +
@@ -816,11 +806,8 @@ public class Deck
         } finally {
         	if (cursor != null) cursor.close();
         }
-        stop = System.currentTimeMillis();
-	    Log.v(TAG, "answerCard - other cards for same fact in " + (stop - start) + " ms.");
-
+        
         // space other cards
-	    start = System.currentTimeMillis();
         AnkiDb.database.execSQL(String.format(
         		"UPDATE cards " +
         		"SET spaceUntil = %f, " +
@@ -829,8 +816,6 @@ public class Deck
         		"isDue = 0 " +
         		"WHERE id != %d and factId = %d",
         		space, space, now, card.id, card.factId));
-        stop = System.currentTimeMillis();
-	    Log.v(TAG, "answerCard - space other cards for same fact in " + (stop - start) + " ms.");
         card.spaceUntil = 0;
 
         // temp suspend if learning ahead
@@ -838,30 +823,18 @@ public class Deck
             if (oldSuc != 0 || lastDelaySecs > delay0 || !showFailedLast())
                 card.priority = -1;
         // card stats
-        start = System.currentTimeMillis();
         card.updateStats(ease, oldState);
-        stop = System.currentTimeMillis();
-        Log.v(TAG, "answerCard - card.updateStats in " + (stop - start) + " ms.");
 
-        start = System.currentTimeMillis();
         card.toDB();
-        stop = System.currentTimeMillis();
-        Log.v(TAG, "answerCard - card.toDB in " + (stop - start) + " ms.");
         
         // -- Moved to separate function since it needed to be done before answering of the card
         // global/daily stats
-//        start = System.currentTimeMillis();
 //        Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
-//        stop = System.currentTimeMillis();
-//        Log.v(TAG, "answerCard - Stats.updateAllStats in " + (stop - start) + " ms.");
         // ---------------------
         
         // review history
-        start = System.currentTimeMillis();
         CardHistoryEntry entry = new CardHistoryEntry(card, ease, lastDelay);
         entry.writeSQL();
-        stop = System.currentTimeMillis();
-        Log.v(TAG, "answerCard - CardHistoryEntry in " + (stop - start) + " ms.");
         modified = now;
 //        // TODO: Fix leech handling
 //        if (isLeech(card))
@@ -872,10 +845,7 @@ public class Deck
 	public void updateCardStats(Card card, int ease)
 	{
 		String oldState = cardState(card);
-		long start = System.currentTimeMillis();
 		Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
-		long stop = System.currentTimeMillis();
-		Log.v(TAG, "updateCardStats - Stats.updateAllStats in " + (stop - start) + " ms.");
 	}
 	
 //	public void decreaseCounts(Card card)
@@ -1322,7 +1292,6 @@ public class Deck
 						}
 					}
 					// Catch review early & buried but not suspended cards
-					Log.v(TAG, "Update priorities - Catch review early & buried.");
 					AnkiDb.database.execSQL("UPDATE cards " + 
 							"SET priority = " + pri + 
 							extra + 
@@ -1335,7 +1304,6 @@ public class Deck
 			if (cursor != null) cursor.close();
 		}
 		
-		Log.v(TAG, "Update priorities - Set cards with prio 0 isDue 0.");
 		ContentValues val = new ContentValues(1);
 		val.put("isDue", 0);
 		int cnt = AnkiDb.database.update("cards", 
