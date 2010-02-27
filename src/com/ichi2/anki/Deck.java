@@ -1274,55 +1274,69 @@ public class Deck
 		String limit = "";
 		if (cardIds.length <= 1000)
 			limit = "and cardTags.cardId in " + ids2str(cardIds);
-		String query = "SELECT cardTags.cardId, " + "CASE " + "WHEN min(tags.priority) = 0 THEN 0 "
-		        + "WHEN max(tags.priority) > 2 THEN max(tags.priority) " + "WHEN min(tags.priority) = 1 THEN 1 "
-		        + "ELSE 2 END " + "FROM cardTags,tags " + "WHERE cardTags.tagId = tags.id " + limit + " "
-		        + "GROUP BY cardTags.cardId";
+		String query = "SELECT cardTags.cardId, " +
+				"CASE " + 
+				"WHEN min(tags.priority) = 0 THEN 0 " + 
+				"WHEN max(tags.priority) > 2 THEN max(tags.priority) " + 
+				"WHEN min(tags.priority) = 1 THEN 1 " + 
+				"ELSE 2 END " + 
+				"FROM cardTags,tags " + 
+				"WHERE cardTags.tagId = tags.id " + limit + " " + 
+				"GROUP BY cardTags.cardId";
 		try {
 			cursor = AnkiDb.database.rawQuery(query, null);
-			if (!cursor.moveToFirst())
-				throw new SQLException("No result for query: " + query);
+			if (cursor.moveToFirst()) {
+				int len = cursor.getCount();
+				long[][] cards = new long[len][2];
+				for (int i = 0; i < len; i++) {
+					cards[i][0] = cursor.getLong(0);
+					cards[i][1] = cursor.getInt(1);
+				}
 	
-			int len = cursor.getCount();
-			long[][] cards = new long[len][2];
-			for (int i = 0; i < len; i++) {
-				cards[i][0] = cursor.getLong(0);
-				cards[i][1] = cursor.getInt(1);
-			}
-
-			String extra = "";
-			if (dirty)
-				extra = ", modified = " + String.format("%f", (double) (System.currentTimeMillis() / 1000.0));
-			for (int pri = 0; pri < 5; pri++)
-			{
-				int count = 0;
-				for (int i = 0; i < len; i++)
+				String extra = "";
+				if (dirty)
+					extra = ", modified = " + String.format("%f", (double) (System.currentTimeMillis() / 1000.0));
+				for (int pri = 0; pri < 5; pri++)
 				{
-					if (cards[i][1] == pri)
-						count++;
-				}
-				long[] cs = new long[count];
-				int j = 0;
-				for (int i = 0; i < len; i++)
-				{
-					if (cards[i][1] == pri)
+					int count = 0;
+					for (int i = 0; i < len; i++)
 					{
-						cs[j] = cards[i][0];
-						j++;
+						if (cards[i][1] == pri)
+							count++;
 					}
+					long[] cs = new long[count];
+					int j = 0;
+					for (int i = 0; i < len; i++)
+					{
+						if (cards[i][1] == pri)
+						{
+							cs[j] = cards[i][0];
+							j++;
+						}
+					}
+					// Catch review early & buried but not suspended cards
+					Log.v(TAG, "Update priorities - Catch review early & buried.");
+					AnkiDb.database.execSQL("UPDATE cards " + 
+							"SET priority = " + pri + 
+							extra + 
+							" WHERE id in " + ids2str(cs) + " and " + 
+							"priority != " + pri + " and " + 
+							"priority >= -2");
 				}
-				// Catch review early & buried but not suspended cards
-				AnkiDb.database.execSQL("UPDATE cards " + "SET priority = " + pri + extra + " WHERE id in " + ids2str(cs)
-				        + " and " + "priority != " + pri + " and " + "priority >= -2");
 			}
 		} finally {
 			if (cursor != null) cursor.close();
 		}
 		
+		Log.v(TAG, "Update priorities - Set cards with prio 0 isDue 0.");
 		ContentValues val = new ContentValues(1);
 		val.put("isDue", 0);
-		int cnt = AnkiDb.database
-		        .update("cards", val, "type in (0,1,2) and " + "priority = 0 and " + "isDue = 1", null);
+		int cnt = AnkiDb.database.update("cards", 
+				val, 
+				"type in (0,1,2) and " + 
+				"priority = 0 and " + 
+				"isDue = 1", 
+				null);
 		if (cnt > 0)
 			rebuildCounts(false);
 	}
