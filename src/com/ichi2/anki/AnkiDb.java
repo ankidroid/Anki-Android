@@ -136,13 +136,13 @@ public class AnkiDb
 	static private String getCursorMethodName(String typeName) {
 		if (typeName.equals("String"))
 			return "getString";
-		else if (typeName.equals("long"))
+		else if (typeName.equals("Long"))
 			return "getLong";
-		else if (typeName.equals("int"))
+		else if (typeName.equals("Integer"))
 			return "getInt";
-		else if (typeName.equals("float"))
+		else if (typeName.equals("Float"))
 			return "getFloat";
-		else if (typeName.equals("double"))
+		else if (typeName.equals("Double"))
 			return "getDouble";
 		else
 			return null;
