@@ -37,23 +37,18 @@ public class Deck
 	 */
 	private static String TAG = "AnkiDroid";
 
-	// Auto priorities
-	private static final int PRIORITY_HIGH = 4;
-
-	private static final int PRIORITY_MED = 3;
-
-	private static final int PRIORITY_NORM = 2;
-
-	private static final int PRIORITY_LOW = 1;
-
-	private static final int PRIORITY_NONE = 0;
-
-	// Manual priorities
-	private static final int PRIORITY_REVEARLY = -1;
-
-	private static final int PRIORITY_BURIED = -2;
-
-	private static final int PRIORITY_SUSPENDED = -3;
+	/** Priorities
+	 * Auto priorities
+	 *   - High = 4
+	 *   - Medium = 3
+	 *   - Normal = 2
+	 *   - Low = 1
+	 *   - None = 0
+	 * Manual priorities
+	 *   - Review early = -1
+	 *   - Buried = -2
+	 *   - Suspended = -3
+	**/
 
 	// Rest
 	private static final int MATURE_THRESHOLD = 21;
@@ -77,16 +72,6 @@ public class Deck
 	private static final int REV_CARDS_DUE_FIRST = 2;
 
 	private static final int REV_CARDS_RANDOM = 3;
-
-	private static final int SEARCH_TAG = 0;
-
-	private static final int SEARCH_TYPE = 1;
-
-	private static final int SEARCH_PHRASE = 2;
-
-	private static final int SEARCH_FID = 3;
-
-	private static final int DECK_VERSION = 43;
 
 	private static final double factorFour = 1.3;
 	private static final double initialFactor = 2.5;
