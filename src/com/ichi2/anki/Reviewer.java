@@ -46,9 +46,7 @@ public class Reviewer extends Activity {
 	 */
 	private boolean prefCorporalPunishments;
 	private boolean prefTimerAndWhiteboard;
-	//private boolean prefSpacedRepetition;
 	private boolean prefWriteAnswers;
-	//private boolean prefUpdateNotifications;
 	private String prefDeckFilename;
 	
 	public String cardTemplate;
@@ -351,10 +349,7 @@ public class Reviewer extends Activity {
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		prefCorporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		prefTimerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
-		//prefSpacedRepetition = preferences.getBoolean("spacedRepetition", true);
 		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
-		//prefUpdateNotifications = preferences.getBoolean("enabled", true);
-		//deckPath = preferences.getString("deckPath", "/sdcard");
 		prefDeckFilename = preferences.getString("deckFilename", "");
 
 		return preferences;

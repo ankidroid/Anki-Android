@@ -77,16 +77,6 @@ public class StudyOptions extends Activity
 	/**
 	 * Preferences
 	 */
-	private boolean prefCorporalPunishments;
-	
-	private boolean prefTimerAndWhiteboard;
-	
-	private boolean prefSpacedRepetition;
-	
-	private boolean prefWriteAnswers;
-	
-	private boolean prefUpdateNotifications;
-	
 	private String prefDeckPath;
 	
 	
@@ -587,12 +577,6 @@ public class StudyOptions extends Activity
 	private SharedPreferences restorePreferences()
 	{
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		prefCorporalPunishments = preferences.getBoolean("corporalPunishments", false);
-		prefTimerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
-		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + prefTimerAndWhiteboard);
-		prefSpacedRepetition = preferences.getBoolean("spacedRepetition", true);
-		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
-		prefUpdateNotifications = preferences.getBoolean("enabled", true);
 		prefDeckPath = preferences.getString("deckPath", "/sdcard");
 
 		return preferences;
