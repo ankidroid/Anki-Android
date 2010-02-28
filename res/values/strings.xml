@@ -94,6 +94,8 @@
 <string name="menu_open_deck">Open Deck</string>
 <string name="menu_preferences">Preferences</string>
 <string name="menu_about">About</string>
+<string name="menu_suspend_card">Suspend Card</string>
+<string name="menu_edit_card">Edit Card</string>
 <string name="loading">Loading...</string>
 <string name="studyoptions_continue">Continue Reviewing</string>
 <string name="studyoptions_well_done">Well Done!</string>

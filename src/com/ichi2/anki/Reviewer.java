@@ -1,12 +1,16 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,6 +39,14 @@ public class Reviewer extends Activity {
 	public static final int RESULT_SESSION_COMPLETED = 1;
 	public static final int RESULT_NO_MORE_CARDS = 2;
 	
+	public static final int EDIT_CURRENT_CARD = 2;
+	
+	/**
+	 * Menus
+	 */
+	private static final int MENU_SUSPEND = 0;
+	private static final int MENU_EDIT = 1;
+	
 	/**
 	 * Max and min size of the font of the questions and answers
 	 */
@@ -60,8 +72,10 @@ public class Reviewer extends Activity {
 	private Button mEase0, mEase1, mEase2, mEase3;
 	private Chronometer mCardTimer;
 	private Whiteboard mWhiteboard;
+	private ProgressDialog mProgressDialog;
 	
 	private Card mCurrentCard;
+	private static Card editorCard; // To be assigned as the currentCard or a new card to be sent to and from the editor
 	private long mSessionTimeLimit;
 	private int mSessionCurrReps;
 
@@ -126,6 +140,29 @@ public class Reviewer extends Activity {
 		}
 	};
 
+	DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener()
+    {
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(Reviewer.this, "", "Saving changes...", true);
+        }
+
+        public void onPostExecute(DeckTask.TaskData result) {
+
+            // Set the correct value for the flip card button - That triggers the
+            // listener which displays the question of the card
+            mFlipCard.setChecked(false);
+            mWhiteboard.clear();
+            mCardTimer.setBase(SystemClock.elapsedRealtime());
+            mCardTimer.start();
+
+            mProgressDialog.dismiss();
+        }
+
+        public void onProgressUpdate(DeckTask.TaskData... values) 
+        {
+            mCurrentCard = values[0].getCard();
+        }
+    };
 	
 	private DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener()
 	{
@@ -264,6 +301,58 @@ public class Reviewer extends Activity {
 		mCard.setFocusable(false);
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuItem item;
+		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
+		item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		item = menu.add(Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card);
+		item.setIcon(android.R.drawable.ic_menu_edit);
+		
+		return true;
+	}
+	
+	/** Handles item selections */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+		case MENU_SUSPEND:
+			mFlipCard.setChecked(true);
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
+					mAnswerCardHandler,
+					new DeckTask.TaskData(0, AnkidroidApp.deck(), mCurrentCard));
+			return true;
+		case MENU_EDIT:
+			editorCard = mCurrentCard;
+			Intent editCard = new Intent(this, CardEditor.class);
+			startActivityForResult(editCard, EDIT_CURRENT_CARD);
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode == EDIT_CURRENT_CARD)
+        {
+            		    DeckTask.launchDeckTask(
+                                DeckTask.TASK_TYPE_UPDATE_FACT,
+                                mUpdateCardHandler,
+                                new DeckTask.TaskData(0, AnkidroidApp.deck(), mCurrentCard));
+            //TODO: code to save the changes made to the current card.
+            mFlipCard.setChecked(true);
+            displayCardQuestion();
+		}
+	}
+	
+	public static Card getEditorCard () {
+        return editorCard;
+    }
+
 	private void showControls()
 	{
 		mCard.setVisibility(View.VISIBLE);
