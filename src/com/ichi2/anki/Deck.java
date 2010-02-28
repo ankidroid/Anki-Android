@@ -321,6 +321,7 @@ public class Deck
 
 	public void closeDeck()
 	{
+		DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
 		if (modifiedSinceSave())
 			commitToDB();
 		AnkiDb.closeDatabase();
