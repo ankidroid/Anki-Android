@@ -90,6 +90,7 @@ public class Deck
 
 	private static final double factorFour = 1.3;
 	private static final double initialFactor = 2.5;
+	private static final double minimumAverage = 1.7;
 	private static final double maxScheduleTime = 36500.0;
 
 	// BEGIN: SQL table columns
@@ -769,9 +770,10 @@ public class Deck
             space = Math.min(minOfOtherCards, card.interval);
         else
             space = 0;
-        space = space * spaceFactor * 86400f;
+        space = space * spaceFactor * 86400.0;
         space = Math.max(minSpacing, space);
         space += System.currentTimeMillis() / 1000.0;
+        card.combinedDue = Math.max(card.due, space);
 
         // check what other cards we've spaced
         String extra;
@@ -903,11 +905,11 @@ public class Deck
         else if (interval == 0)
         {
             if (ease == 2)
-            	interval = hardIntervalMin + ((float) Math.random())*(hardIntervalMax - hardIntervalMin);
+            	interval = hardIntervalMin + ((double) Math.random())*(hardIntervalMax - hardIntervalMin);
             else if (ease == 3)
-            	interval = midIntervalMin + ((float) Math.random())*(midIntervalMax - midIntervalMin);
+            	interval = midIntervalMin + ((double) Math.random())*(midIntervalMax - midIntervalMin);
             else if (ease == 4)
-            	interval = easyIntervalMin + ((float) Math.random())*(easyIntervalMax - easyIntervalMin);
+            	interval = easyIntervalMin + ((double) Math.random())*(easyIntervalMax - easyIntervalMin);
         }
         else
         {
@@ -919,12 +921,12 @@ public class Deck
             }
             // multiply last interval by factor
             if (ease == 2)
-                interval = (interval + delay/4f) * 1.2f;
+                interval = (interval + delay/4.0) * 1.2;
             else if (ease == 3)
-                interval = (interval + delay/2f) * factor;
+                interval = (interval + delay/2.0) * factor;
             else if (ease == 4)
                 interval = (interval + delay) * factor * factorFour;
-            float fuzz = 0.95f + ((float) Math.random())*(1.05f - 0.95f);
+            double fuzz = 0.95 + ((double) Math.random())*(1.05 - 0.95);
             interval *= fuzz;
         }
         if (maxScheduleTime != 0)
@@ -950,29 +952,25 @@ public class Deck
 		card.lastFactor = card.factor;
 		if (card.reps == 0)
 			card.factor = averageFactor; // card is new, inherit beginning factor
-		if (cardIsBeingLearnt(card) && (ease == 0 || ease == 1 || ease == 2))
-		{
-			if (card.successive != 0 && ease != 2)
-				card.factor -= 0.20; // only penalize failures after success when starting
-		}
-		else if (ease == 0 || ease == 1)
-			card.factor -= 0.20;
-		else if (ease == 2)
-			card.factor -= 0.15;
-		else if (ease == 4)
+		if (card.successive != 0 && !cardIsBeingLearnt(card))
+			if (ease == 1)
+				card.factor -= 0.20;
+			else if (ease == 2)
+				card.factor -= 0.15;
+		if (ease == 4)
 			card.factor += 0.10;
 		card.factor = Math.max(1.3, card.factor);
 	}
 
 	private double adjustedDelay(Card card, int ease)
 	{
-		double now = System.currentTimeMillis();
+		double now = System.currentTimeMillis() / 1000.0;
 		if (cardIsNew(card))
 			return 0;
 		if (card.combinedDue <= now)
-			return (now - card.due) / 86400f;
+			return (now - card.due) / 86400.0;
 		else
-			return (now - card.combinedDue) / 86400f;
+			return (now - card.combinedDue) / 86400.0;
 	}
 
 	/* Queue/cache management
@@ -1099,6 +1097,7 @@ public class Deck
 		} finally {
 			if (cursor != null) cursor.close();
 		}
+		averageFactor = Math.max(averageFactor, minimumAverage);
 
 		// Recache CSS
 		// rebuildCSS();
@@ -1309,7 +1308,7 @@ public class Deck
 	 */
 	private boolean cardIsBeingLearnt(Card card)
 	{
-		return card.interval < easyIntervalMin;
+		return card.lastInterval < 7;
 	}
 
 	/* Undo/Redo
