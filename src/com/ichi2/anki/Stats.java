@@ -20,16 +20,18 @@ import java.sql.Date;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.util.Log;
 
+/**
+ * Deck statistics.
+ */
 public class Stats
 {
 
 	/**
 	 * Tag for logging messages
 	 */
-	private static String TAG = "Ankidroid";
+	private static String TAG = "AnkiDroid";
 
 	private static final int STATS_LIFE = 0;
 
@@ -110,42 +112,46 @@ public class Stats
 	}
 
 	private void fromDB(long id) {
-		Log.i(TAG, "Reading stats from DB...");
-		Cursor cursor = AnkiDb.database.rawQuery(
-				"SELECT * " +
-				"FROM stats " +
-				"WHERE id = " +
-				String.valueOf(id),
-				null);
-		if (cursor.isClosed())
-			throw new SQLException();
-		cursor.moveToFirst();
-
-		this.id = cursor.getLong(0);
-		type = cursor.getInt(1);
-		day = Date.valueOf(cursor.getString(2));
-		reps = cursor.getInt(3);
-		averageTime = cursor.getDouble(4);
-		reviewTime = cursor.getDouble(5);
-		distractedTime = cursor.getDouble(6);
-		distractedReps = cursor.getInt(7);
-		newEase0 = cursor.getInt(8);
-		newEase1 = cursor.getInt(9);
-		newEase2 = cursor.getInt(10);
-		newEase3 = cursor.getInt(11);
-		newEase4 = cursor.getInt(12);
-		youngEase0 = cursor.getInt(13);
-		youngEase1 = cursor.getInt(14);
-		youngEase2 = cursor.getInt(15);
-		youngEase3 = cursor.getInt(16);
-		youngEase4 = cursor.getInt(17);
-		matureEase0 = cursor.getInt(18);
-		matureEase1 = cursor.getInt(19);
-		matureEase2 = cursor.getInt(20);
-		matureEase3 = cursor.getInt(21);
-		matureEase4 = cursor.getInt(22);
-
-		cursor.close();
+		Cursor cursor = null;
+		
+		try {
+			Log.i(TAG, "Reading stats from DB...");
+			cursor = AnkiDb.database.rawQuery(
+					"SELECT * " +
+					"FROM stats " +
+					"WHERE id = " +
+					String.valueOf(id),
+					null);
+			
+			if (!cursor.moveToFirst())
+				return;
+	
+			this.id = cursor.getLong(0);
+			type = cursor.getInt(1);
+			day = Date.valueOf(cursor.getString(2));
+			reps = cursor.getInt(3);
+			averageTime = cursor.getDouble(4);
+			reviewTime = cursor.getDouble(5);
+			distractedTime = cursor.getDouble(6);
+			distractedReps = cursor.getInt(7);
+			newEase0 = cursor.getInt(8);
+			newEase1 = cursor.getInt(9);
+			newEase2 = cursor.getInt(10);
+			newEase3 = cursor.getInt(11);
+			newEase4 = cursor.getInt(12);
+			youngEase0 = cursor.getInt(13);
+			youngEase1 = cursor.getInt(14);
+			youngEase2 = cursor.getInt(15);
+			youngEase3 = cursor.getInt(16);
+			youngEase4 = cursor.getInt(17);
+			matureEase0 = cursor.getInt(18);
+			matureEase1 = cursor.getInt(19);
+			matureEase2 = cursor.getInt(20);
+			matureEase3 = cursor.getInt(21);
+			matureEase4 = cursor.getInt(22);
+		} finally {
+			if (cursor != null) cursor.close();
+		}
 	}
 
 	private void create(int type, Date day)
@@ -241,50 +247,57 @@ public class Stats
 	    stats.toDB();
 	}
 
-	public static Stats globalStats(Deck deck) throws SQLException {
+	public static Stats globalStats(Deck deck) 
+	{
 		Log.i(TAG, "Getting global stats...");
 		int type = STATS_LIFE;
 		Date today = genToday(deck);
+		Cursor cursor = null;
+		Stats stats = null;
 
-		Cursor cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type),
-		        null);
-		if (cursor.isClosed())
-			throw new SQLException();
-
-		Stats stats = new Stats();
-		if (cursor.moveToFirst())
-		{
-			stats.fromDB(cursor.getLong(0));
-			cursor.close();
-			return stats;
-		} else
-			stats.create(type, today);
-		cursor.close();
+		try {
+			cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type),
+			        null);
+	
+			if (cursor.moveToFirst())
+			{
+				stats = new Stats();
+				stats.fromDB(cursor.getLong(0));
+				return stats;
+			}
+		} finally {
+			if (cursor != null) cursor.close();
+		}
+		stats = new Stats();
+		stats.create(type, today);
 		stats.type = type;
 		return stats;
 	}
 
-	public static Stats dailyStats(Deck deck) throws SQLException
+	public static Stats dailyStats(Deck deck)
 	{
 		Log.i(TAG, "Getting daily stats...");
 		int type = STATS_DAY;
 		Date today = genToday(deck);
+		Stats stats = null;
+		Cursor cursor = null;
 
-		Log.i(TAG, "Trying to get stats for " + today.toString());
-		Cursor cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type)
-		        + " and day = \"" + today.toString() + "\"", null);
-		if (cursor.isClosed())
-			throw new SQLException();
-
-		Stats stats = new Stats();
-		if (cursor.moveToFirst())
-		{
-			stats.fromDB(cursor.getLong(0));
-			cursor.close();
-			return stats;
-		} else
-			stats.create(type, today);
-		cursor.close();
+		try {
+			Log.i(TAG, "Trying to get stats for " + today.toString());
+			cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type)
+			        + " and day = \"" + today.toString() + "\"", null);
+	
+			if (cursor.moveToFirst())
+			{
+				stats = new Stats();
+				stats.fromDB(cursor.getLong(0));
+				return stats;
+			}
+		} finally {
+			if (cursor != null) cursor.close();
+		}
+		stats = new Stats();
+		stats.create(type, today);
 		stats.type = type;
 		return stats;
 	}

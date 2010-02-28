@@ -18,6 +18,9 @@ package com.ichi2.anki;
 
 import android.content.ContentValues;
 
+/**
+ * Review history of a card.
+ */
 public class CardHistoryEntry {
 
 	// BEGIN: SQL table columns
@@ -35,6 +38,9 @@ public class CardHistoryEntry {
 	double noCount;
 	// END: SQL table columns
 
+	/**
+	 * Constructor
+	 */
 	public CardHistoryEntry(Card card, int ease, double delay)
 	{
 		if (card == null)
@@ -53,6 +59,9 @@ public class CardHistoryEntry {
 		thinkingTime = card.thinkingTime();
 	}
 
+	/**
+	 * Write review history to the database.
+	 */
 	public void writeSQL()
 	{
 	ContentValues values = new ContentValues();
@@ -71,5 +80,4 @@ public class CardHistoryEntry {
 
 	AnkiDb.database.insert("reviewHistory", null, values);
 	}
-
 }

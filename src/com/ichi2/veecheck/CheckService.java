@@ -28,7 +28,6 @@ import com.tomgibara.android.veecheck.util.PrefState;
 
 public class CheckService extends VeecheckService {
 
-	private static final String TAG = "Ankidroid";
 	public static final int NOTIFICATION_ID = 1;
 
 	@Override

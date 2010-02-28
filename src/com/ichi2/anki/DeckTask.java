@@ -16,23 +16,29 @@
 
 package com.ichi2.anki;
 
-import java.util.concurrent.ExecutionException;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.util.Log;
 
+/**
+ * Loading in the background, so that AnkiDroid does not look like frozen.
+ */
 public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData>
 {
 
 	/**
 	 * Tag for logging messages
 	 */
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 
 	public static final int TASK_TYPE_LOAD_DECK = 0;
 	public static final int TASK_TYPE_ANSWER_CARD = 1;
+	public static final int TASK_TYPE_SUSPEND_CARD = 2;
+    public static final int TASK_TYPE_UPDATE_FACT = 3;
 
 	private static DeckTask instance;
 	private static DeckTask oldInstance;
@@ -43,7 +49,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params)
 	{
 		oldInstance = instance;
-
+		
 		instance = new DeckTask();
 		instance.listener = listener;
 		instance.type = type;
@@ -51,11 +57,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		return (DeckTask) instance.execute(params);
 	}
 	
-	public static void waitToFinish() {
-		try {
+	/**
+	 * Block the current thread until the currently running DeckTask instance 
+	 * (if any) has finished.
+	 */
+	public static void waitToFinish()
+	{
+		try
+		{
 			if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED))
 				instance.get();
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			return;
 		}
 	}
@@ -63,14 +76,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	@Override
 	protected TaskData doInBackground(TaskData... params)
 	{
-		// Wait for old thread (if any) to finish before starting the new one
+		// Wait for previous thread (if any) to finish before continuing
 		try
 		{
 			if ((oldInstance != null) && (oldInstance.getStatus() != AsyncTask.Status.FINISHED))
 				oldInstance.get();
 		} catch (Exception e)
 		{
-			e.printStackTrace();
+			Log.e(TAG, "doInBackground - Got exception while waiting for thread to finish: " + e.getMessage());
 		}
 		
 		switch (type)
@@ -79,6 +92,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			return doInBackgroundLoadDeck(params);
 		case TASK_TYPE_ANSWER_CARD:
 			return doInBackgroundAnswerCard(params);
+		case TASK_TYPE_SUSPEND_CARD:
+			return doInBackgroundSuspendCard(params);
+        case TASK_TYPE_UPDATE_FACT:
+            return doInBackgroundUpdateFact(params);
 		default:
 			return null;
 		}
@@ -102,44 +119,62 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		listener.onPostExecute(result);
 	}
 
+    private TaskData doInBackgroundUpdateFact(TaskData[] params) {
+
+// Save the fact
+        Deck deck = params[0].getDeck();
+        Card editCard = params[0].getCard();
+        Fact editFact = editCard.fact;
+        editFact.toDb();
+        LinkedList<Card> saveCards = editFact.getUpdatedRelatedCards();
+        
+        Iterator<Card> iter = saveCards.iterator();
+        while (iter.hasNext())
+        {
+            Card modifyCard = iter.next();
+            deck.updateCard(modifyCard);
+        }
+        // Find all cards based on this fact and update them with the updateCard method.
+
+        publishProgress(new TaskData(deck.getCurrentCard()));
+      
+        return null;
+    }
+
+    
+
 	private TaskData doInBackgroundAnswerCard(TaskData... params)
 	{
-		long start, stop;
+		long start, start2;
 		Deck deck = params[0].getDeck();
 		Card oldCard = params[0].getCard();
 		int ease = params[0].getInt();
 		Card newCard;
-		long[] ids = new long[1];
-
-		if (oldCard != null)
+		
+		start2 = System.currentTimeMillis();
+		
+		AnkiDb.database.beginTransaction();
+		try 
 		{
-			ids[0] = oldCard.id;
+			if (oldCard != null)
+			{
+				start = System.currentTimeMillis();
+				deck.answerCard(oldCard, ease);
+				Log.v(TAG, "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start) + " ms.");
+			}
+	
 			start = System.currentTimeMillis();
-			/* getCard() depends on stats being up to date in checkDue()
-			 * when computing newCountToday. */
-			deck.updateCardStats(oldCard, ease);
-			// Suspend card so it will not be retrieved again.
-			deck.suspendCards(ids);
-			//oldCard.temporarilySetLowestPriority();
-			//deck.decreaseCounts(oldCard);
-			stop = System.currentTimeMillis();
-			Log.v(TAG, "doInBackground - Set old card 0 priority in " + (stop - start) + " ms.");
-		}
-
-		start = System.currentTimeMillis();
-		newCard = deck.getCard();
-		stop = System.currentTimeMillis();
-		Log.v(TAG, "doInBackground - Loaded new card in " + (stop - start) + " ms.");
-		publishProgress(new TaskData(newCard));
-
-		if (ease != 0 && oldCard != null)
+			newCard = deck.getCard();
+			Log.v(TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
+			publishProgress(new TaskData(newCard));
+			
+			AnkiDb.database.setTransactionSuccessful();
+		} finally 
 		{
-			start = System.currentTimeMillis();
-			deck.unsuspendCards(ids);
-			deck.answerCard(oldCard, ease);
-			stop = System.currentTimeMillis();
-			Log.v(TAG, "doInBackground - Answered old card in " + (stop - start) + " ms.");
+			AnkiDb.database.endTransaction();
 		}
+		
+		Log.w(TAG, "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
 
 		return null;
 	}
@@ -168,6 +203,38 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			Log.i(TAG, "The deck has no cards = " + e.getMessage());;
 			return new TaskData(Ankidroid.DECK_EMPTY);
 		}
+	}
+	
+	private TaskData doInBackgroundSuspendCard(TaskData... params)
+	{
+		long start, stop;
+		Deck deck = params[0].getDeck();
+		Card oldCard = params[0].getCard();
+		Card newCard;
+
+		AnkiDb.database.beginTransaction();
+		try 
+		{
+			if (oldCard != null)
+			{
+				start = System.currentTimeMillis();
+				deck.suspendCard(oldCard.id);
+				stop = System.currentTimeMillis();
+				Log.v(TAG, "doInBackgroundSuspendCard - Suspended card in " + (stop - start) + " ms.");
+			}
+	
+			start = System.currentTimeMillis();
+			newCard = deck.getCard();
+			stop = System.currentTimeMillis();
+			Log.v(TAG, "doInBackgroundSuspendCard - Loaded new card in " + (stop - start) + " ms.");
+			publishProgress(new TaskData(newCard));
+			AnkiDb.database.setTransactionSuccessful();
+		} finally 
+		{
+			AnkiDb.database.endTransaction();
+		}
+		
+		return null;
 	}
 
 	public static interface TaskListener

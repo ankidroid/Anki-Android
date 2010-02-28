@@ -16,7 +16,6 @@
 package com.tomgibara.android.veecheck.util;
 
 import java.util.Iterator;
-import java.util.Set;
 import java.util.TreeSet;
 
 import android.content.Context;

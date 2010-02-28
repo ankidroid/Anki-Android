@@ -1,5 +1,5 @@
 /****************************************************************************************
-* Copyright (c) 2009 Andrew <andrewdubya@gmail.                                        *
+* Copyright (c) 2009 Andrew <andrewdubya@gmail.com>                                    *
 * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
 * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 *                                                                                      *
@@ -15,9 +15,6 @@
 * You should have received a copy of the GNU General Public License along with         *
 * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 ****************************************************************************************/
-/**
- *
- */
 package com.ichi2.anki;
 
 import android.content.Context;
@@ -29,6 +26,10 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * Whiteboard allowing the user to draw the card's answer on the toucscreen.
+ * TODO Javadoc
+ */
 public class Whiteboard extends View
 {
 	private Paint mPaint;

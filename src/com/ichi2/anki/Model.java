@@ -19,6 +19,11 @@ package com.ichi2.anki;
 import java.util.Comparator;
 import java.util.TreeSet;
 
+/**
+ * Anki model.
+ * A model describes the type of information you want to input, and the type of cards which should be generated.
+ * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Models
+ */
 public class Model {
 
 	// TODO: Javadoc.
