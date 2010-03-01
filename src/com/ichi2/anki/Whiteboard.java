@@ -27,7 +27,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Whiteboard allowing the user to draw the card's answer on the toucscreen.
+ * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  * TODO Javadoc
  */
 public class Whiteboard extends View

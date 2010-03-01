@@ -29,6 +29,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.util.Log;
 
+/**
+ * A deck stores all of the cards and scheduling information.
+ * It is saved in a file with a name ending in .anki
+ * 
+ * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Deck
+ */
 public class Deck
 {
 

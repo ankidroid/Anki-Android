@@ -61,7 +61,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
  * Main activity for Ankidroid. Shows a card and controls to answer it.
- *
  */
 public class Ankidroid extends Activity
 {
@@ -152,12 +151,16 @@ public class Ankidroid extends Activity
 
 	private boolean writeAnswers;
 
-	private boolean updateNotifications;
+	private boolean updateNotifications; // TODO use Veecheck only if this is true
 
 	public String cardTemplate;
 
 	private Card currentCard;
-    private static Card editorCard; // To be assigned as the currentCard or a new card to be sent to and from the editor
+	
+	/**
+	 * To be assigned as the currentCard or a new card to be sent to and from the editor
+	 */
+    private static Card editorCard;
 
 	/**
 	 * Variables to hold layout objects that we need to update or handle events for
@@ -172,7 +175,9 @@ public class Ankidroid extends Activity
 
 	private Chronometer mCardTimer;
 	
-	//the time (in ms) at which the session will be over
+	/**
+	 * Time (in ms) at which the session will be over.
+	 */
 	private long mSessionTimeLimit;
 
 	private int mSessionCurrReps = 0;
@@ -743,7 +748,7 @@ public class Ankidroid extends Activity
 		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(realContent.length()/5));
 		mCard.getSettings().setDefaultFontSize(size);
 
-		//In order to display the bold style correctly, we have to change font-weight to 700
+		// In order to display the bold style correctly, we have to change font-weight to 700
 		content = content.replaceAll("font-weight:600;", "font-weight:700;");
 
         content = RubyParser.ankiRubyToMarkup(content);
@@ -801,7 +806,9 @@ public class Ankidroid extends Activity
 		}
 	}
 
-
+	/**
+	 * Utility method to write to a file.
+	 */
 	private boolean writeToFile(InputStream source, String destination) throws IOException
 	{
 		try
@@ -847,8 +854,6 @@ public class Ankidroid extends Activity
 		editor.putString("deckFilename", deckFilename);
 		editor.commit();
 	}
-
-
 
 	private boolean isSdCardMounted() {
 		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());

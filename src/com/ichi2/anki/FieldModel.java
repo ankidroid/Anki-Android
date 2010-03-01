@@ -16,6 +16,10 @@
 
 package com.ichi2.anki;
 
+/**
+ * Fields are the different pieces of data which make up a fact. 
+ * @see http://ichi2.net/anki/wiki/ModelProperties#Fields
+ */
 public class FieldModel {
 
 	// BEGIN SQL table entries
@@ -42,8 +46,6 @@ public class FieldModel {
 	 */
 	Model model;
 
-	
-	
 	public FieldModel(long id, int ordinal, long modelId, String name,
             String description) {
         this.id = id;

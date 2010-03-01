@@ -1,6 +1,18 @@
-/**
- * 
- */
+/****************************************************************************************
+* Copyright (c) 2009 Brennan D'Aguilar <brennan.daguilar@gmail.com>                    *
+*                                                                                      *
+* This program is free software; you can redistribute it and/or modify it under        *
+* the terms of the GNU General Public License as published by the Free Software        *
+* Foundation; either version 3 of the License, or (at your option) any later           *
+* version.                                                                             *
+*                                                                                      *
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+* WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+* PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+*                                                                                      *
+* You should have received a copy of the GNU General Public License along with         *
+* this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+****************************************************************************************/
 package com.ichi2.utils;
 
 /**
@@ -13,8 +25,6 @@ package com.ichi2.utils;
  * <code><ruby><rb>baseText</rb><rt>rubyText</rt></ruby></code>
  *   While webkit on android devices does not support ruby markup yet, 
  *   the text can be adjusted adequately using css.
- * @author brennan.daguilar@gmail.com (Brennan D'Aguilar)
- *
  */
 public class RubyParser {
 

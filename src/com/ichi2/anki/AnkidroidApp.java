@@ -25,6 +25,10 @@ import android.content.SharedPreferences.Editor;
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+/**
+ * Application class.
+ * This file mainly contains Veecheck stuff.
+ */
 public class AnkidroidApp extends Application {
 
 	/**

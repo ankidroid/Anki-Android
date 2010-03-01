@@ -15,7 +15,17 @@ import android.widget.TextView;
 
 import com.ichi2.anki.Fact.Field;
 
-public class CardEditor  extends Activity {
+/**
+ * Allows the user to edit a fact, for instance if there is a typo.
+ * 
+ * A card is a presentation of a fact, and has two sides: a question and an answer.
+ * Any number of fields can appear on each side.
+ * When you add a fact to Anki, cards which show that fact are generated.
+ * Some models generate one card, others generate more than one.
+ * 
+ * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
+ */
+public class CardEditor extends Activity {
 
     public static final int SAVE_CARD = 0;
     public static final int CANCEL = 1;

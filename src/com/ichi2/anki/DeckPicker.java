@@ -1,4 +1,5 @@
 /****************************************************************************************
+* Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>                              *
 * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
 * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
@@ -52,9 +53,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
  * Allows the user to choose a deck from the filesystem.
- *
- * @author Andrew Dubya
- *
  */
 public class DeckPicker extends Activity implements Runnable
 {

@@ -22,7 +22,11 @@ import android.database.Cursor;
 
 /**
  * Card model.
- * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Models
+ * 
+ * Card models are used to make question/answer pairs for the information you add to facts.
+ * You can display any number of fields on the question side and answer side.
+ * 
+ * @see http://ichi2.net/anki/wiki/ModelProperties#Card_Templates
  */
 public class CardModel {
 
