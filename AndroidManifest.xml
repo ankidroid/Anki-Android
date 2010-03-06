@@ -55,7 +55,7 @@
 		<provider android:name="AnkidroidContentProvider" android:authorities="com.ichi2.anki"/>
     <activity android:name="CardEditor" android:label="Card Editor"></activity>
     </application>
-    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4"/>
+    <uses-sdk android:minSdkVersion="3"/>
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<supports-screens 
