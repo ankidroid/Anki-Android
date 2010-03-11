@@ -68,7 +68,7 @@ public class Whiteboard extends View
 		 * TODO: This bitmap size is arbitrary (taken from fingerpaint). It
 		 * should be set to the size of the Whiteboard view.
 		 */
-		createBitmap(320, 480, Bitmap.Config.ARGB_8888);
+		createBitmap(854, 854, Bitmap.Config.ARGB_8888);
 		mPath = new Path();
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 	}
