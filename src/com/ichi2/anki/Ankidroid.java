@@ -698,7 +698,8 @@ public class Ankidroid extends Activity
 		if (currentCard == null)
 		{
 			// Either the deck does not contain any card, or all reviews have been done for the time being
-			updateCard("Congratulations! You have finished for now. Please come back tomorrow.");
+			// TODO a button leading to the deck picker would be nice.
+			updateCard("Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.");
 			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
