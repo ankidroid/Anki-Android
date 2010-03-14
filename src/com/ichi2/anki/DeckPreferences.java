@@ -31,10 +31,13 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 
+/**
+ * Preferences for the current deck.
+ */
 public class DeckPreferences extends PreferenceActivity implements OnSharedPreferenceChangeListener
 {
 
-    static final String TAG = "Ankidroid";
+    static final String TAG = "AnkiDroid";
 
     public class DeckPreferenceHack implements SharedPreferences
     {

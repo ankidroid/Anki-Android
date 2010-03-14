@@ -25,22 +25,36 @@ import android.content.SharedPreferences.Editor;
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+/**
+ * Application class.
+ * This file mainly contains Veecheck stuff.
+ */
 public class AnkidroidApp extends Application {
 
+	/**
+	 * Singleton instance of this class.
+	 */
     private static AnkidroidApp instance;
+    
+    /**
+     * Currently loaded Anki deck.
+     */
     private Deck loadedDeck;
 
+    /**
+     * On application creation.
+     */
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
 
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
-		//assign some default settings if necessary
+		// Assign some default settings if necessary
 		if (prefs.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
 			Editor editor = prefs.edit();
-			//Test Update Notifications
-			//some ridiculously fast polling, just to demonstrate it working...
+			// Test Update Notifications
+			// Some ridiculously fast polling, just to demonstrate it working...
 			/*editor.putBoolean(PrefSettings.KEY_ENABLED, true);
 			editor.putLong(PrefSettings.KEY_PERIOD, 30 * 1000L);
 			editor.putLong(PrefSettings.KEY_CHECK_INTERVAL, 60 * 1000L);
@@ -49,9 +63,9 @@ public class AnkidroidApp extends Application {
 			editor.commit();
 		}
 
-		//reschedule the checks - we need to do this if the settings have changed (as above)
-		//it may also necessary in the case where an application has been updated
-		//here for simplicity, we do it every time the application is launched
+		// Reschedule the checks - we need to do this if the settings have changed (as above)
+		// It may also necessary in the case where an application has been updated
+		// Here for simplicity, we do it every time the application is launched
 		Intent intent = new Intent(Veecheck.getRescheduleAction(this));
 		sendBroadcast(intent);
 	}

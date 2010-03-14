@@ -17,17 +17,16 @@
 ****************************************************************************************/
 package com.ichi2.anki;
 
-import android.content.ContentValues;
+import java.util.ArrayList;
+
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
- * Database layer for Ankidroid. Can read the native Anki format through
- * Android's SQLite driver.
- *
- * @author Andrew Dubya, Nicolas Raoul
+ * Database layer for AnkiDroid.
+ * Can read the native Anki format through Android's SQLite driver.
  */
 public class AnkiDb
 {
@@ -40,7 +39,7 @@ public class AnkiDb
 	/**
 	 * Tag for logging messages
 	 */
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 
 	/**
 	 * Open a database connection to an ".anki" SQLite file.
@@ -80,114 +79,72 @@ public class AnkiDb
 	 */
 	static public long queryScalar(String query) throws SQLException
 	{
-		Cursor cursor = AnkiDb.database.rawQuery(query, null);
-		if (!cursor.moveToFirst())
-			throw new SQLException("No result for query: " + query);
-
-		long scalar = cursor.getLong(0);
-		cursor.close();
+		Cursor cursor = null;
+		long scalar;
+		try {
+			cursor = AnkiDb.database.rawQuery(query, null);
+			if (!cursor.moveToFirst())
+				throw new SQLException("No result for query: " + query);
+	
+			scalar = cursor.getLong(0);
+		} finally {
+			if (cursor != null) cursor.close();
+		}
 
 		return scalar;
 	}
-
+	
 	/**
-	 * A card is Anki's question-answer entity.
-	 *
-	 * @see "http://www.ichi2.net/anki/wiki/AddItems"
+	 * Convenience method for querying the database for an entire column. The column
+	 * will be returned as an ArrayList of the specified class.
+	 * 
+	 * See Deck.initUndo() for a usage example.
+	 * 
+	 * @param type The class of the column's data type. Example: int.class, String.class.
+	 * @param query The SQL query statement.
+	 * @param column The column id in the result set to return.
+	 * @return An ArrayList with the contents of the specified column.
 	 */
-	static public class Card
-	{
-
-		/**
-		 * Identifier of the card, can be negative.
-		 */
-		public long id;
-
-		/**
-		 * Question and answer. Answer contains the reading.
-		 */
-		public String question, answer;
-
-		/**
-		 * Interval is right now used as a ranking in Ankidroid, which is quite
-		 * different from Anki where it is used as an interval.
-		 */
-		public double interval;
-
-		/**
-		 * Get a random card from the deck.
-		 */
-		static public Card randomCard() throws SQLException
-		{
-			Card card = oneFromCursor(AnkiDb.database.rawQuery("SELECT id,interval,question,answer" + " FROM cards"
-			        + " ORDER BY random()" + " LIMIT 1", null));
-			Log.d(TAG, "Selected card id " + card.id + " with interval " + card.interval);
-			return card;
-		}
-
-		/**
-		 * From the deck, get the card with the smallest interval.
-		 */
-		static public Card smallestIntervalCard() throws SQLException
-		{
-			Card card = oneFromCursor(AnkiDb.database.rawQuery("SELECT id,interval,question,answer" + " FROM cards"
-			        + " WHERE priority > 0" + " ORDER BY interval" + " LIMIT 1", null));
-			Log.i(TAG, "Selected card id " + card.id + " with interval " + card.interval);
-			return card;
-		}
-
-		/**
-		 * Return one card starting from the given cursor.
-		 */
-		static private Card oneFromCursor(Cursor cursor)
-		{
-			if (cursor.isClosed())
-			{
-				throw new SQLException();
-			}
+	static public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
+		ArrayList<T> results = new ArrayList<T>();
+		Cursor cursor = null;
+		
+		try {
+			cursor = AnkiDb.database.rawQuery(query, null);
 			cursor.moveToFirst();
-			Card card = new Card();
-			card.id = cursor.getLong(0);
-			card.interval = cursor.getDouble(1);
-			card.question = cursor.getString(2);
-			card.answer = cursor.getString(3);
-			return card;
+			String methodName = getCursorMethodName(type.getSimpleName());
+			do {
+				// The magical line. Almost as illegible as python code ;)
+				results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+			} while (cursor.moveToNext());
+		} catch (Exception e) {
+			Log.e(TAG, "queryColumn: Got Exception: " + e.getMessage());
+			return null;
+		} finally {
+			if (cursor != null) cursor.close();
 		}
-
-		/**
-		 * Space this card because it has been successfully remembered.
-		 */
-		public void space()
-		{
-			double newInterval = 1;
-			if (interval != 0)
-				newInterval = 2 * interval; // Very basic spaced repetition.
-			ContentValues values = new ContentValues();
-			values.put("interval", newInterval);
-			AnkiDb.database.update("cards", values, "id='" + id + "'", null);
-			Log.d(TAG, "Spaced card to interval " + newInterval);
-		}
-
-		/**
-		 * Reset this card because it has not been successfully remembered.
-		 */
-		public void reset()
-		{
-			// This lame implementation does not actually reset the interval, it
-			// grows it a little bit.
-			// This way, a failed card will not reappear immediately, but as
-			// soon as new cards and cards with similar interval are answered.
-			// It is not anymore an "interval" in the sense of the desktop Anki
-			// software.
-			// Hopefully, someone will implement real SRS based on the desktop
-			// Anki software.
-			double newInterval = 0.3;
-			if (interval != 0)
-				newInterval = 1.01 * interval;
-			ContentValues values = new ContentValues();
-			values.put("interval", newInterval);
-			AnkiDb.database.update("cards", values, "id='" + id + "'", null);
-			Log.d(TAG, "Reset card with interval " + newInterval);
-		}
+		
+		return results;
+	}
+	
+	/**
+	 * Mapping of Java type names to the corresponding Cursor.get method.
+	 * 
+	 * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
+	 * @return The name of the Cursor method to be called.
+	 */
+	static private String getCursorMethodName(String typeName) {
+		if (typeName.equals("String"))
+			return "getString";
+		else if (typeName.equals("Long"))
+			return "getLong";
+		else if (typeName.equals("Integer"))
+			return "getInt";
+		else if (typeName.equals("Float"))
+			return "getFloat";
+		else if (typeName.equals("Double"))
+			return "getDouble";
+		else
+			return null;
 	}
 }

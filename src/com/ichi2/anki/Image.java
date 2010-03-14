@@ -20,14 +20,13 @@ import android.util.Log;
 
 /**
  * Class used to display and handle correctly images
- *
  */
 public class Image {
 	
 	/**
 	 * Tag for logging messages
 	 */
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 	
 	/**
 	 * 

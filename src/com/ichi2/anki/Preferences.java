@@ -23,6 +23,9 @@ import android.preference.PreferenceActivity;
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+/**
+ * Preferences dialog.
+ */
 public class Preferences extends PreferenceActivity
 {
 
@@ -37,7 +40,7 @@ public class Preferences extends PreferenceActivity
     @Override
     protected void onPause() {
     	super.onPause();
-    	//reschedule the checking in case the user has changed anything
+    	// Reschedule the checking in case the user has changed anything
 		sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
     }
 

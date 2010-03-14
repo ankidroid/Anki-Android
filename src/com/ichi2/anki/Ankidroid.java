@@ -24,10 +24,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -40,8 +36,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.SQLException;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -62,13 +56,13 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.ichi2.utils.DiffEngine;
+import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
  * Main activity for Ankidroid. Shows a card and controls to answer it.
- *
  */
-public class Ankidroid extends Activity// implements Runnable
+public class Ankidroid extends Activity
 {
 
 	/**
@@ -79,7 +73,7 @@ public class Ankidroid extends Activity// implements Runnable
 	/**
 	 * Tag for logging messages
 	 */
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 
 	/**
 	 * Max and min size of the font of the questions and answers
@@ -98,6 +92,9 @@ public class Ankidroid extends Activity// implements Runnable
 
 	public static final int MENU_DECKOPTS = 3;
 
+	public static final int MENU_SUSPEND = 4;
+
+    private static final int MENU_EDIT = 5; 
 
 	/**
 	 * Possible outputs trying to load a deck
@@ -115,6 +112,10 @@ public class Ankidroid extends Activity// implements Runnable
 
 	public static final int PREFERENCES_UPDATE = 1;
 
+    public static final int EDIT_CURRENT_CARD = 2;
+
+
+
 	/**
 	 * Variables to hold the state
 	 */
@@ -124,14 +125,16 @@ public class Ankidroid extends Activity// implements Runnable
 
     private BroadcastReceiver mUnmountReceiver = null;
 
-	//Name of the last deck loaded
+	/**
+	 * Name of the last deck loaded
+	 */
 	private String deckFilename;
 	
-	private String deckPath;
-	
-    //Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true
-    //We don't have to worry to set deckSelected to true, it's done automatically in displayProgressDialogAndLoadDeck()
-    //We have to set deckSelected to false only on these situations a deck has to be reload and when we know for sure no other thread is trying to load a deck (for example, when sd card is mounted again)
+    /**
+     * Indicates if a deck is trying to be load. onResume() won't try to load a deck if deckSelected is true.
+     * We don't have to worry to set deckSelected to true, it's done automatically in displayProgressDialogAndLoadDeck().
+     * We have to set deckSelected to false only on these situations a deck has to be reload and when we know for sure no other thread is trying to load a deck (for example, when sd card is mounted again)
+     */
 	private boolean deckSelected;
 
 	private boolean deckLoaded;
@@ -146,15 +149,18 @@ public class Ankidroid extends Activity// implements Runnable
 
 	private boolean timerAndWhiteboard;
 
-	private boolean spacedRepetition;
-
 	private boolean writeAnswers;
 
-	private boolean updateNotifications;
+	private boolean updateNotifications; // TODO use Veecheck only if this is true
 
 	public String cardTemplate;
 
 	private Card currentCard;
+	
+	/**
+	 * To be assigned as the currentCard or a new card to be sent to and from the editor
+	 */
+    private static Card editorCard;
 
 	/**
 	 * Variables to hold layout objects that we need to update or handle events for
@@ -168,18 +174,19 @@ public class Ankidroid extends Activity// implements Runnable
 	private Button mEase0, mEase1, mEase2, mEase3;
 
 	private Chronometer mCardTimer;
-
-	private ArrayList<MediaPlayer> sounds;
 	
-	//the time (in ms) at which the session will be over
+	/**
+	 * Time (in ms) at which the session will be over.
+	 */
 	private long mSessionTimeLimit;
 
 	private int mSessionCurrReps = 0;
 
 	private Whiteboard mWhiteboard;
 
-	// Handler for the flip toogle button, between the question and the answer
-	// of a card
+	/**
+	 * Handler for the flip toogle button, between the question and the answer of a card.
+	 */
 	CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener()
 	{
 		//@Override
@@ -193,7 +200,9 @@ public class Ankidroid extends Activity// implements Runnable
 		}
 	};
 
-	// Handler for the Whiteboard toggle button.
+	/**
+	 * Handler for the Whiteboard toggle button.
+	 */
 	CompoundButton.OnCheckedChangeListener mToggleOverlayHandler = new CompoundButton.OnCheckedChangeListener()
 	{
 		public void onCheckedChanged(CompoundButton btn, boolean state)
@@ -238,6 +247,9 @@ public class Ankidroid extends Activity// implements Runnable
 		}
 	};
 
+    public static Card getEditorCard () {
+        return editorCard;
+    }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
@@ -321,14 +333,18 @@ public class Ankidroid extends Activity// implements Runnable
 	}
 
 
-	// Retrieve resource values.
+	/**
+	 * Retrieve resource values.
+	 */
 	public void initResourceValues()
 	{
 		Resources r = getResources();
 		cardTemplate = r.getString(R.string.card_template);
 	}
 
-	// Set the content view to the one provided and initialize accessors.
+	/**
+	 * Set the content view to the one provided and initialize accessors.
+	 */
 	public void initLayout(Integer layout)
 	{
 		Log.i(TAG, "initLayout - Beginning");
@@ -361,7 +377,9 @@ public class Ankidroid extends Activity// implements Runnable
 
 	}
 
-	/** Creates the menu items */
+	/** 
+	 * Creates the menu items
+	 */
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -369,6 +387,8 @@ public class Ankidroid extends Activity// implements Runnable
 		menu.add(1, MENU_PREFERENCES, 0, "Preferences");
 		menu.add(1, MENU_ABOUT, 0, "About");
 		menu.add(1, MENU_DECKOPTS, 0, "Study Options");
+		menu.add(1, MENU_SUSPEND, 0, "Suspend");
+        menu.add(1, MENU_EDIT, 0, "Edit Card"); //Edit the current card.
 		return true;
 	}
 
@@ -376,10 +396,16 @@ public class Ankidroid extends Activity// implements Runnable
 	{
 		Log.i(TAG, "sdCardAvailable = " + sdCardAvailable + ", deckLoaded = " + deckLoaded);
 		menu.findItem(MENU_DECKOPTS).setEnabled(sdCardAvailable && deckLoaded);
+		menu.findItem(MENU_SUSPEND).setEnabled(currentCard != null);
+		menu.findItem(MENU_SUSPEND).setVisible(currentCard != null);
+		menu.findItem(MENU_EDIT).setEnabled(currentCard != null);
+		menu.findItem(MENU_EDIT).setVisible(currentCard != null);
 		return true;
 	}
 	
-	/** Handles item selections */
+	/**
+	 * Handles item selections
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -400,6 +426,17 @@ public class Ankidroid extends Activity// implements Runnable
 		    Intent opts = new Intent(this, DeckPreferences.class);
 		    startActivity( opts );
 		    return true;
+		case MENU_SUSPEND:
+			mFlipCard.setChecked(true);
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
+					mAnswerCardHandler,
+					new DeckTask.TaskData(0, AnkidroidApp.deck(), currentCard));
+		    return true;
+        case MENU_EDIT:
+            editorCard = currentCard;
+            Intent editCard = new Intent(this, CardEditor.class);
+            startActivityForResult(editCard, EDIT_CURRENT_CARD);
+            return true;
 		}
 		return false;
 	}
@@ -407,6 +444,7 @@ public class Ankidroid extends Activity// implements Runnable
 	public void openDeckPicker()
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
+    	
     	if(AnkidroidApp.deck() != null && sdCardAvailable)
     		AnkidroidApp.deck().closeDeck();
     	deckLoaded = false;
@@ -542,6 +580,15 @@ public class Ankidroid extends Activity// implements Runnable
 				showOrHideControls();
 				showOrHideAnswerField();
 			}
+        } else if (requestCode == EDIT_CURRENT_CARD)
+        {
+            		    DeckTask.launchDeckTask(
+                                DeckTask.TASK_TYPE_UPDATE_FACT,
+                                mUpdateCardHandler,
+                                new DeckTask.TaskData(0, AnkidroidApp.deck(), currentCard));
+            //TODO: code to save the changes made to the current card.
+            mFlipCard.setChecked(true);
+            displayCardQuestion();
 		}
 	}
 
@@ -641,15 +688,18 @@ public class Ankidroid extends Activity// implements Runnable
 		mWhiteboard.setVisibility((enabled) ? View.VISIBLE : View.GONE);
 	}
 
-	// Set up the display for the current card.
+	/**
+	 * Set up the display for the current card.
+	 */
 	public void displayCardQuestion()
 	{
 		Log.i(TAG, "displayCardQuestion");
 
 		if (currentCard == null)
 		{
-			// error :(
-			updateCard("Unable to find a card!");
+			// Either the deck does not contain any card, or all reviews have been done for the time being
+			// TODO a button leading to the deck picker would be nice.
+			updateCard("Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.");
 			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
@@ -699,8 +749,10 @@ public class Ankidroid extends Activity// implements Runnable
 		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(realContent.length()/5));
 		mCard.getSettings().setDefaultFontSize(size);
 
-		//In order to display the bold style correctly, we have to change font-weight to 700
+		// In order to display the bold style correctly, we have to change font-weight to 700
 		content = content.replaceAll("font-weight:600;", "font-weight:700;");
+
+        content = RubyParser.ankiRubyToMarkup(content);
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
@@ -708,7 +760,9 @@ public class Ankidroid extends Activity// implements Runnable
 		Sound.playSounds();
 	}
 
-	// Display the card answer.
+	/**
+	 * Display the card answer.
+	 */
 	public void displayCardAnswer()
 	{
 		Log.i(TAG, "displayCardAnswer");
@@ -753,7 +807,9 @@ public class Ankidroid extends Activity// implements Runnable
 		}
 	}
 
-
+	/**
+	 * Utility method to write to a file.
+	 */
 	private boolean writeToFile(InputStream source, String destination) throws IOException
 	{
 		try
@@ -786,10 +842,8 @@ public class Ankidroid extends Activity// implements Runnable
 		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
-		spacedRepetition = preferences.getBoolean("spacedRepetition", true);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
 		updateNotifications = preferences.getBoolean("enabled", true);
-		deckPath = preferences.getString("deckPath", "/sdcard");
 
 		return preferences;
 	}
@@ -801,8 +855,6 @@ public class Ankidroid extends Activity// implements Runnable
 		editor.putString("deckFilename", deckFilename);
 		editor.commit();
 	}
-
-
 
 	private boolean isSdCardMounted() {
 		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
@@ -924,11 +976,39 @@ public class Ankidroid extends Activity// implements Runnable
 		detail.setVisibility(View.GONE);
 	}
 	  
+
+    DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener()
+    {
+        public void onPreExecute() {
+            progressDialog = ProgressDialog.show(Ankidroid.this, "", "Saving changes...", true);
+        }
+
+        public void onPostExecute(DeckTask.TaskData result) {
+
+            // Set the correct value for the flip card button - That triggers the
+            // listener which displays the question of the card
+            mFlipCard.setChecked(false);
+            mWhiteboard.clear();
+            mCardTimer.setBase(SystemClock.elapsedRealtime());
+            mCardTimer.start();
+
+            progressDialog.dismiss();
+        }
+
+        public void onProgressUpdate(DeckTask.TaskData... values) 
+        {
+            currentCard = values[0].getCard();
+        }
+    };
+
+
 	DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener()
 	{
 	    boolean sessioncomplete = false;
+	    long start;
 
 		public void onPreExecute() {
+			start = System.currentTimeMillis();
 			progressDialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
 		}
 
@@ -941,15 +1021,17 @@ public class Ankidroid extends Activity// implements Runnable
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 		    mSessionCurrReps++; // increment number reps counter
 
-		    // Check to see if session rep limit has been reached
-		    long sessionRepLimit = AnkidroidApp.deck().getSessionRepLimit();
+		    // Check to see if session rep or time limit has been reached
+		    Deck deck = AnkidroidApp.deck();
+		    long sessionRepLimit = deck.getSessionRepLimit();
+		    long sessionTime = deck.getSessionTimeLimit();
 		    Toast sessionMessage = null;
 
 		    if( (sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit) )
 		    {
 		    	sessioncomplete = true;
 		    	sessionMessage = Toast.makeText(Ankidroid.this, "Session question limit reached", Toast.LENGTH_SHORT);
-		    } else if( System.currentTimeMillis() >= mSessionTimeLimit ) //Check to see if the session time limit has been reached
+		    } else if( (sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit) ) //Check to see if the session time limit has been reached
 		    {
 		        // session time limit reached, flag for halt once async task has completed.
 		        sessioncomplete = true;
@@ -975,6 +1057,8 @@ public class Ankidroid extends Activity// implements Runnable
 			// Show a message to user if a session limit has been reached.
 			if (sessionMessage != null)
 				sessionMessage.show();
+			
+			Log.w(TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - start) + " ms.");
 		}
 
 	};

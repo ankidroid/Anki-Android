@@ -18,11 +18,6 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<CheckBoxPreference
-		android:title="Spaced repetition (beta)"
-		android:defaultValue="true"
-		android:summary="Known cards do not reappear soon"
-		android:key="spacedRepetition" />
-	<CheckBoxPreference
 		android:title="Show timer / whiteboard"
 		android:defaultValue="true"
 		android:summary="Lets you write on the screen"
@@ -42,11 +37,13 @@
 		android:defaultValue="false"
 		android:summary="Lets you write the answer and compare it with the correct one"
 		android:key="writeAnswers" />
+	<!-- TODO implement this preference. Right now: always use notifications
 	<CheckBoxPreference
 		android:title="Update notifications"
 		android:defaultValue="true"
 		android:summary="Notify me when Ankidroid is updated"
 		android:key="enabled"/>
+	-->
 	<EditTextPreference
 		android:title="Deck path"
 		android:defaultValue="/sdcard"
