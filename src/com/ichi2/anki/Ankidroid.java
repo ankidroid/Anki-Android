@@ -604,17 +604,7 @@ public class Ankidroid extends Activity
 	  else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
 		  sdLayout.setPadding(0, 100, 0, 0);
 
-	  //extra height that the Whiteboard should have to be able to write in all its surface either on the question or on the answer
-	  int extraHeight = 0;
-	  //if(mSelectRemembered.isShown() && mSelectNotRemembered.isShown())
-	  // TODO: test for all buttons here, not just two.
-	  if(mEase0.isShown() && mEase1.isShown())
-	  {
-		  //if the "Remembered" and "Not remembered" buttons are visible, their height has to be counted in the creation of the new Whiteboard
-		  //because we should be able to write in their space when it is the front part of the card
-		  extraHeight = java.lang.Math.max(mEase0.getHeight(), mEase1.getHeight());
-	  }
-	  mWhiteboard.rotate(extraHeight);
+	  mWhiteboard.rotate();
 	}
 
 
