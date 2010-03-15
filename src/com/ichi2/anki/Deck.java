@@ -85,7 +85,8 @@ public class Deck
 	private static final double minimumAverage = 1.7;
 	private static final double maxScheduleTime = 36500.0;
 
-	private static final Locale NULL_LOCALE = null;
+	//Used to format doubles with English's decimal separator system 
+	private static final Locale ENGLISH_LOCALE = new Locale("en_US");
 	
 	// BEGIN: SQL table columns
 	long id;
@@ -278,7 +279,7 @@ public class Deck
 		} finally {
 			if (cursor != null) cursor.close();
 		}
-		Log.i(TAG, String.format(NULL_LOCALE, "openDeck - modified: %f currentTime: %f", deck.modified, System.currentTimeMillis()/1000.0));
+		Log.i(TAG, String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.modified, System.currentTimeMillis()/1000.0));
 
 		deck.initVars();
 
@@ -803,7 +804,7 @@ public class Deck
         }
         
         // space other cards
-        AnkiDb.database.execSQL(String.format(NULL_LOCALE, 
+        AnkiDb.database.execSQL(String.format(ENGLISH_LOCALE, 
         		"UPDATE cards " +
         		"SET spaceUntil = %f, " +
         		"combinedDue = max(%f, due), " +
@@ -989,7 +990,7 @@ public class Deck
 				"WHERE type = 0 and " +
 				"isDue = 1 and " +
 				"combinedDue <= " +
-				String.format(NULL_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
 		revCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
@@ -1022,7 +1023,7 @@ public class Deck
 				"type = 0 and " +
 				"isDue = 0 and " +
 				"priority in (1,2,3,4) and " +
-				String.format(NULL_LOCALE, "combinedDue <= %f",
+				String.format(ENGLISH_LOCALE, "combinedDue <= %f",
 						(double) ((System.currentTimeMillis() / 1000.0) + delay0)),
 				null);
 
@@ -1031,7 +1032,7 @@ public class Deck
 				"FROM cards " +
 				"WHERE type = 0 and " +
 				"isDue = 1 and " +
-				String.format(NULL_LOCALE, "combinedDue <= %f",
+				String.format(ENGLISH_LOCALE, "combinedDue <= %f",
 						(double) (System.currentTimeMillis() / 1000.0)));
 
 		// Review
@@ -1039,14 +1040,14 @@ public class Deck
 		val.put("isDue", 1);
 		revCount += AnkiDb.database.update("cards", val, "type = 1 and " + "isDue = 0 and "
 		        + "priority in (1,2,3,4) and "
-		        + String.format(NULL_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
+		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
 
 		// New
 		val.clear();
 		val.put("isDue", 1);
 		newCount += AnkiDb.database.update("cards", val, "type = 2 and " + "isDue = 0 and "
 		        + "priority in (1,2,3,4) and "
-		        + String.format(NULL_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
+		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
 
 		newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0);
 	}
@@ -1154,7 +1155,7 @@ public class Deck
 				"UPDATE cards SET " + 
 				"isDue = 0, " +
 				"priority = -3, " +
-				"modified = " + String.format(NULL_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
+				"modified = " + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
 				" WHERE id IN " + ids2str(ids));
 		rebuildCounts(false);
 		flushMod();
@@ -1172,7 +1173,7 @@ public class Deck
 		AnkiDb.database.execSQL(
 				"UPDATE cards SET " +
 				"priority = 0, " +
-				"modified = " + String.format(NULL_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
+				"modified = " + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
 				" WHERE id IN " + ids2str(ids));
 		updatePriorities(ids);
 		rebuildCounts(false);
@@ -1220,7 +1221,7 @@ public class Deck
 	
 				String extra = "";
 				if (dirty)
-					extra = ", modified = " + String.format(NULL_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0));
+					extra = ", modified = " + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0));
 				for (int pri = 0; pri < 5; pri++)
 				{
 					int count = 0;
@@ -1347,9 +1348,9 @@ public class Deck
 					"AFTER INSERT ON %s BEGIN " +
 					"INSERT INTO undoLog VALUES " +
 					"(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
-			AnkiDb.database.execSQL(String.format(NULL_LOCALE, sql, table, table, table));
+			AnkiDb.database.execSQL(String.format(ENGLISH_LOCALE, sql, table, table, table));
 			// Update trigger
-			sql = String.format(NULL_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " +
+			sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " +
 					"AFTER UPDATE ON %s BEGIN " +
 					"INSERT INTO undoLog VALUES " +
 					"(null, 'UPDATE %s ",
@@ -1361,13 +1362,13 @@ public class Deck
 				String column = columnIter.next();
 				if (column.equals("unique"))
 					continue;
-				sql += String.format(NULL_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
+				sql += String.format(ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
 				sep = ",";
 			}
 			sql += "WHERE rowid = ' || old.rowid); END";
 			AnkiDb.database.execSQL(sql);
 			// Delete trigger
-			sql = String.format(NULL_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " +
+			sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " +
 					"BEFORE DELETE ON %s BEGIN " +
 					"INSERT INTO undoLog VALUES " +
 					"(null, 'INSERT INTO %s (rowid",
@@ -1376,7 +1377,7 @@ public class Deck
 			while (columnIter.hasNext())
 			{
 				String column = columnIter.next();
-				sql += String.format(NULL_LOCALE, ",\"%s\"", column);
+				sql += String.format(ENGLISH_LOCALE, ",\"%s\"", column);
 			}
 			sql += ") VALUES (' || old.rowid ||'";
 			columnIter = columns.iterator();
@@ -1387,7 +1388,7 @@ public class Deck
 					sql += ",1";
 					continue;
 				}
-				sql += String.format(NULL_LOCALE, ", ' || quote(old.%s) ||'", column);
+				sql += String.format(ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column);
 			}
 			sql += ")'); END";
 			AnkiDb.database.execSQL(sql);
@@ -1459,7 +1460,7 @@ public class Deck
 			end = latestUndoRow();
 		ArrayList<String> sql = AnkiDb.queryColumn(
 				String.class, 
-				String.format(NULL_LOCALE, "SELECT sql FROM undoLog " +
+				String.format(ENGLISH_LOCALE, "SELECT sql FROM undoLog " +
 						"WHERE seq > %d and seq <= %d " +
 						"ORDER BY seq DESC", start, end), 
 				0);

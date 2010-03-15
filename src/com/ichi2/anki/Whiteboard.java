@@ -23,8 +23,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
@@ -32,6 +34,8 @@ import android.view.View;
  */
 public class Whiteboard extends View
 {
+	private Context mContext;
+	
 	private Paint mPaint;
 
 	private Bitmap mBitmap;
@@ -52,6 +56,8 @@ public class Whiteboard extends View
 	{
 		super(context, attrs);
 
+		mContext = context;
+		
 		mBackgroundColor = context.getResources().getColor(R.color.wb_bg_color);
 		mForegroundColor = context.getResources().getColor(R.color.wb_fg_color);
 
@@ -64,11 +70,8 @@ public class Whiteboard extends View
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
 		mPaint.setStrokeWidth(8);
 
-		/*
-		 * TODO: This bitmap size is arbitrary (taken from fingerpaint). It
-		 * should be set to the size of the Whiteboard view.
-		 */
-		createBitmap(854, 854, Bitmap.Config.ARGB_8888);
+		createBitmap();
+		
 		mPath = new Path();
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 	}
@@ -80,24 +83,31 @@ public class Whiteboard extends View
 		clear();
 	}
 
+	public void createBitmap()
+	{
+		Display display = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay(); 
+		int width = display.getWidth();
+		int height = display.getHeight();
+		
+		createBitmap(width, height, Bitmap.Config.ARGB_8888);
+	}
+	
 	@Override
-	protected void onSizeChanged(int w, int h, int oldw, int oldh)
+	public void onSizeChanged(int w, int h, int oldw, int oldh)
 	{
 		// We want to create the bitmap again only when the screen has been rotated, not when the size changes in the transition
 		// between the front and the back of a card (that would made the Whiteboard to disappear)
 		if(mRecreateBitmap)
 		{
-			mBitmap = Bitmap.createBitmap(w, h + mExtraHeight, Bitmap.Config.ARGB_8888);
-			mCanvas = new Canvas(mBitmap);
+			createBitmap();
 			super.onSizeChanged(w, h, oldw, oldh);
 			mRecreateBitmap = false;
 		}
 	}
 
-	public void rotate(int height)
+	public void rotate()
 	{
 		mRecreateBitmap = true;
-		mExtraHeight = height;
 	}
 
 	public void clear()
