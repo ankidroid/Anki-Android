@@ -141,8 +141,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
             public android.content.SharedPreferences.Editor putString( String key, String value )
             {
-                Log.d( this.getClass().toString(), String.format(
-                        "Editor.putString(key=%s, value=%s)", key, value ) );
+                Log.d( this.getClass().toString(), String.format("Editor.putString(key=%s, value=%s)", key, value ) );
                 update.put( key, value );
                 return this;
             }
@@ -193,8 +192,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
         public String getString( String key, String defValue )
         {
-            Log.d( this.getClass().toString(), String.format( "getString(key=%s, defValue=%s)",
-                    key, defValue ) );
+            Log.d( this.getClass().toString(), String.format( "getString(key=%s, defValue=%s)", key, defValue ) );
 
             if ( !values.containsKey( key ) )
                 return defValue;
