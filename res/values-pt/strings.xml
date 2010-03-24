@@ -56,5 +56,23 @@
 <string name="notification_stop">Não me avisar novamente sobre esse update.</string>
 
 <string name="sdcard_missing_message">O cartão SD está indisponível porque está sendo usado como armazenamento USB. Desconecte o USB para acessar os seus decks.</string>
-
+<string name="again">De novo</string>
+<string name="hard">Difícil</string>
+<string name="good">Bom</string>
+<string name="easy">Fácil</string>
+<string name="newcards_day_summ">O número máximo de cards mostrados por dia.</string>
+<string name="newcards_day">Novos Cards / Dia</string>
+<string name="session_time_limit">Limite de Tempo por Sessão</string>
+<string name="session_time_limit_summ">O número de minutos em uma sessão. Escolha 0 para sem limite.</string>
+<string name="session_question_limit">Limite de Questões por Sessão</string>
+<string name="session_question_limit_summ">O número de questões em uma sessão. Escolha 0 para sem limite.</string>
+<string name="new_cards_order">Ordem dos Novos Cards</string>
+<string name="new_cards_order_summ">A ordem da mostragem de novos cards.</string>
+<string name="show_new_cards_in">Mostrar novos cards em...</string>
+<string name="new_card_spacing">Intervalo de Novos Cards</string>
+<string name="new_card_spacing_summ">Como distribuir os novos cards pelas revisões.</string>
+<string name="show_new_cards">Mostrar novos cards...</string>
+<string name="review_cards_order">Ordem de Revisão dos Cards</string>
+<string name="review_cards_in">Revisar cards em...</string>
+<string name="review_cards_order_summ">A ordem em que serão mostrados os cards de revisão.</string>
 </resources>

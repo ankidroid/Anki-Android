@@ -83,28 +83,28 @@
 			android:layout_width="fill_parent"
 			android:layout_weight="1.2"
 			android:layout_height="fill_parent"
-			android:text="Again" />
+			android:text="@string/again" />
 		<Button
 			android:id="@+id/ease2"
 			android:padding="3dip"
 			android:layout_width="fill_parent"
 			android:layout_weight="1.2"
 			android:layout_height="fill_parent"
-			android:text="Hard" />
+			android:text="@string/hard" />
 		<Button
 			android:id="@+id/ease3"
 			android:padding="3dip"
 			android:layout_width="fill_parent"
 			android:layout_weight="1.2"
 			android:layout_height="fill_parent"
-			android:text="Good" />
+			android:text="@string/good" />
 		<Button
 			android:id="@+id/ease4"
 			android:padding="3dip"
 			android:layout_width="fill_parent"
 			android:layout_weight="1.2"
 			android:layout_height="fill_parent"
-			android:text="Easy" />
+			android:text="@string/easy" />
 	</LinearLayout>
 	
 	<LinearLayout

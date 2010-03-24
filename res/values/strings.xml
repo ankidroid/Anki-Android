@@ -56,4 +56,23 @@
 <string name="notification_stop">Don\'t notify me of this update again</string>
 
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
+<string name="again">Again</string>
+<string name="hard">Hard</string>
+<string name="good">Good</string>
+<string name="easy">Easy</string>
+<string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
+<string name="newcards_day">New Cards / Day</string>
+<string name="session_time_limit">Session Time Limit</string>
+<string name="session_time_limit_summ">The number of minutes in a session. Choose 0 for no limit.</string>
+<string name="session_question_limit">Session Question Limit</string>
+<string name="session_question_limit_summ">The number of questions in a session. Choose 0 for no limit.</string>
+<string name="new_cards_order">New Cards Order</string>
+<string name="new_cards_order_summ">The order in which to show new cards.</string>
+<string name="show_new_cards_in">Show new cards in...</string>
+<string name="new_card_spacing">New Card Spacing</string>
+<string name="new_card_spacing_summ">Where to distribute new cards during the review.</string>
+<string name="show_new_cards">Show new cards...</string>
+<string name="review_cards_order">Review Cards Order</string>
+<string name="review_cards_in">Review cards in...</string>
+<string name="review_cards_order_summ">The order in which to show review cards.</string>
 </resources>

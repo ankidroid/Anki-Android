@@ -17,48 +17,48 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Study Options">
             <EditTextPreference
-            android:title="New Cards / Day"
+            android:title="@string/newcards_day"
             android:defaultValue="20"
-            android:summary="The maximum number of new cards shown per day."
+            android:summary="@string/newcards_day_summ"
             android:numeric="integer" 
             android:key="newCardsPDay" />
 
             <EditTextPreference
-            android:title="Session Time Limit"
+            android:title="@string/session_time_limit"
             android:defaultValue="40"
-            android:summary="The number of minutes in a session. Choose 0 for no limit."
+            android:summary="@string/session_time_limit_summ"
             android:numeric="integer" 
             android:key="sessionTLimit" />
 
             <EditTextPreference
-            android:title="Session Question Limit"
+            android:title="@string/session_question_limit"
             android:defaultValue="0"
-            android:summary="The number of questions in a session. Choose 0 for no limit."
+            android:summary="@string/session_question_limit_summ"
             android:numeric="integer" 
             android:key="sessionQLimit" />
 
             <ListPreference
             android:key="newCardOrder"
-            android:title="New Cards Order"
-            android:summary="The order in which to show new cards."
+            android:title="@string/new_cards_order"
+            android:summary="@string/new_cards_order_summ"
             android:entries="@array/newCardOrderLabels"
             android:entryValues="@array/newCardOrderVals"
-            android:dialogTitle="Show new cards in..." />
+            android:dialogTitle="@string/show_new_cards_in" />
 
             <ListPreference
             android:key="newCardSpacing"
-            android:title="New Card Spacing"
-            android:summary="Where to distribute new cards during the review."
+            android:title="@string/new_card_spacing"
+            android:summary="@string/new_card_spacing_summ"
             android:entries="@array/newCardSchedulingLabels"
             android:entryValues="@array/newCardSchedulingVals"
-            android:dialogTitle="Show new cards..." />
+            android:dialogTitle="@string/show_new_cards" />
 
             <ListPreference
             android:key="revCardOrder"
-            android:title="Review Cards Order"
-            android:summary="The order in which to show review cards."
+            android:title="@string/review_cards_order"
+            android:summary="@string/review_cards_order_summ"
             android:entries="@array/revCardOrderLabels"
             android:entryValues="@array/revCardOrderVals"
-            android:dialogTitle="Review cards in..." />
+            android:dialogTitle="@string/review_cards_in" />
     </PreferenceCategory>
 </PreferenceScreen>
