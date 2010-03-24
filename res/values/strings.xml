@@ -20,8 +20,8 @@
 <resources>
     <string name="CardEditorCancelButton">Cancel</string>
     <string name="CardEditorSaveButton">Save</string>
-    <string name="CardEditorAnswerText">Answer:</string>
-    <string name="CardEditorQuestionText">Question:</string>
+    
+    
 <string name="app_name">Ankidroid</string>
 
 <string name="yes">Yes</string>
