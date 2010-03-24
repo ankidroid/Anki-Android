@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="CardEditorCancelButton">Cancelar</string>
+    <string name="CardEditorSaveButton">Salvar</string>
+    
+    
+<string name="app_name">Ankidroid</string>
+
+<string name="yes">Sim</string>
+<string name="no">Não</string>
+
+<string name="overlay_on">Whiteboard Ligado</string>
+<string name="overlay_off">Whiteboard Desligado</string>
+<string name="show_answer">Mostrar Resposta</string>
+<string name="show_question">Mostrar Questão</string><string name="card_hint">Cartões de Memorização</string>
+
+<string name="deck_not_loaded">Falha ao carregar o deck.</string>
+<string name="deck_not_loaded_detail">Por favor, pressione menu e selecione um dos decks armazenados no seu cartão SD.</string>
+<string name="deck_empty">O deck está vazio.</string>
+
+
+
+
+
+
+<string name="deckpicker_title">Selecione um deck que você copiou para seu cartão SD.</string>
+<string name="deckpicker_title_nosdcard">O cartão SD está desmontado.</string>
+<string name="deckpicker_due">%1$d de %2$d programados </string>
+<string name="deckpicker_new">%d Novos hoje</string>
+<string name="deckpicker_loaddeck">Carregando Deck...</string>
+<string name="deckpicker_nodeck">Não foi encontrado nenhum deck.</string>
+
+<string name="notify_ticker">Atualização da Aplicação</string>
+<string name="notify_title">Ankidroid Atualizado</string>
+<string name="notify_message">Baixar uma nova versão</string>
+<string name="notification_title">Confirmar a atualização do Ankidroid</string>
+<string name="notification_message">A new version of Ankidroid is available in Android Market.\n\nGostaria de instala-la?</string>
+<string name="notification_stop">Não me avisar novamente sobre esse update.</string>
+
+<string name="sdcard_missing_message">O cartão SD está indisponível porque está sendo usado como armazenamento USB. Desconecte o USB para acessar os seus decks.</string>
+
+</resources>
