@@ -54,9 +54,9 @@
 
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 
-<!--
-deck_preferences.xml strings
--->
+
+
+<!-- deck_preferences.xml strings -->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
 <string name="newcards_day">New Cards / Day</string>
 <string name="session_time_limit">Session Time Limit</string>
@@ -74,9 +74,7 @@ deck_preferences.xml strings
 <string name="review_cards_order_summ">The order in which to show review cards.</string>
 
 
-<!--
-flashcard_portrait.xml strings
--->
+<!-- flashcard_portrait.xml strings -->
 <string name="overlay_on">Whiteboard On</string>
 <string name="overlay_off">Whiteboard Off</string>
 <string name="show_answer">Show Answer</string>
@@ -88,9 +86,7 @@ flashcard_portrait.xml strings
 <string name="easy">Easy</string>
 
 
-<!--
-preferences.xml strings
--->
+<!-- preferences.xml strings -->
 <string name="show_whiteboard">Show timer / whiteboard</string>
 <string name="show_whiteboard_summ">Lets you write on the screen</string>
 <string name="sample_deck">Sample deck</string>
@@ -101,4 +97,20 @@ preferences.xml strings
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where the your decks are stored</string>
+
+
+<!-- Ankidroid.java strings -->
+<string name="loading_new_card">Loading new card...</string>
+<string name="loading_deck">Loading deck. Please wait...</string>
+<string name="preferences">Preferences</string>
+<string name="about">About</string>
+<string name="study_options">Study Options</string>
+<string name="suspend">Suspend</string>
+<string name="edit_card">Edit Card</string>
+<string name="switch_another_deck">Switch to another deck</string>
+
+
+<string name="saving_changes">Saving changes...</string>
+<string name="session_question_limit_reached">Session question limit reached</string>
+<string name="session_time_limit_reached">Session time limit reached</string>
 </resources>

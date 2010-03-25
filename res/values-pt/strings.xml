@@ -88,4 +88,19 @@
 <string name="deck_path">Pasta dos Deck </string>
 <string name="deck_path_summ">Pasta onde seus decks são armazenados</string>
 
+
+<!-- Ankidroid.java strings -->
+<string name="loading_new_card">Carregando Card...</string>
+<string name="loading_deck">Carregando Deck. Por favor espere...</string>
+<string name="preferences">Preferências</string>
+<string name="about">Sobre</string>
+<string name="study_options">Opções de Estudo</string>
+<string name="suspend">Suspender</string>
+<string name="edit_card">Editar Card</string>
+<string name="switch_another_deck">Mudar para outro deck</string>
+<string name="saving_changes">Salvando Mudanças...</string>
+<string name="session_question_limit_reached">Limite de questões por sessão atingido</string>
+<string name="session_time_limit_reached">Limite de tempo por sessão atingido</string>
+
+
 </resources>

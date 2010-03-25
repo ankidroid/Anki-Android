@@ -383,12 +383,12 @@ public class Ankidroid extends Activity
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
 	{
-		menu.add(0, MENU_OPEN, 0, "Switch to another deck");
-		menu.add(1, MENU_PREFERENCES, 0, "Preferences");
-		menu.add(1, MENU_ABOUT, 0, "About");
-		menu.add(1, MENU_DECKOPTS, 0, "Study Options");
-		menu.add(1, MENU_SUSPEND, 0, "Suspend");
-        menu.add(1, MENU_EDIT, 0, "Edit Card"); //Edit the current card.
+		menu.add(0, MENU_OPEN, 0, getString(R.string.switch_another_deck));
+		menu.add(1, MENU_PREFERENCES, 0, getString(R.string.preferences));
+		menu.add(1, MENU_ABOUT, 0, getString(R.string.about));
+		menu.add(1, MENU_DECKOPTS, 0, getString(R.string.study_options));
+		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
+        menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
 		return true;
 	}
 
@@ -974,7 +974,7 @@ public class Ankidroid extends Activity
     DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener()
     {
         public void onPreExecute() {
-            progressDialog = ProgressDialog.show(Ankidroid.this, "", "Saving changes...", true);
+            progressDialog = ProgressDialog.show(Ankidroid.this, "", getString(R.string.saving_changes), true);
         }
 
         public void onPostExecute(DeckTask.TaskData result) {
@@ -1003,7 +1003,7 @@ public class Ankidroid extends Activity
 
 		public void onPreExecute() {
 			start = System.currentTimeMillis();
-			progressDialog = ProgressDialog.show(Ankidroid.this, "", "Loading new card...", true);
+			progressDialog = ProgressDialog.show(Ankidroid.this, "", getString(R.string.loading_new_card), true);
 		}
 
 		public void onPostExecute(DeckTask.TaskData result) {
@@ -1024,12 +1024,12 @@ public class Ankidroid extends Activity
 		    if( (sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit) )
 		    {
 		    	sessioncomplete = true;
-		    	sessionMessage = Toast.makeText(Ankidroid.this, "Session question limit reached", Toast.LENGTH_SHORT);
+		    	sessionMessage = Toast.makeText(Ankidroid.this, getString(R.string.session_question_limit_reached), Toast.LENGTH_SHORT);
 		    } else if( (sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit) ) //Check to see if the session time limit has been reached
 		    {
 		        // session time limit reached, flag for halt once async task has completed.
 		        sessioncomplete = true;
-		        sessionMessage = Toast.makeText(Ankidroid.this, "Session time limit reached", Toast.LENGTH_SHORT);
+		        sessionMessage = Toast.makeText(Ankidroid.this, getString(R.string.session_time_limit_reached), Toast.LENGTH_SHORT);
 
 		    } else {
 		        // session limits not reached, show next card
@@ -1063,7 +1063,7 @@ public class Ankidroid extends Activity
 		public void onPreExecute() {
 			if(updateDialog == null || !updateDialog.isShowing())
 			{
-				progressDialog = ProgressDialog.show(Ankidroid.this, "", "Loading deck. Please wait...", true);
+				progressDialog = ProgressDialog.show(Ankidroid.this, "", getString(R.string.loading_deck), true);
 			}
 		}
 
