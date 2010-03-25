@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="CardEditorCancelButton">Annuler</string>
+    <string name="CardEditorSaveButton">Enregistrer</string>
+    
+    
+<string name="app_name">AnkiDroid</string>
+
+<string name="yes">Oui</string>
+<string name="no">Non</string>
+
+<string name="overlay_on">Whiteboard activé</string>
+<string name="overlay_off">Whiteboard desactivé</string>
+<string name="show_answer">Voir Réponse</string>
+<string name="show_question">Voir Question</string>
+<string name="card_hint">Carte</string>
+<string name="deck_not_loaded">Le chargement du paquet a échoué.</string>
+<string name="deck_not_loaded_detail">Pressez "MENU" et sélectionnez un des paquets stockés sur votre carte SD.</string>
+<string name="deck_empty">Le paquet est vide.</string>
+
+<color name="wb_fg_color">#B00000FF</color>
+<color name="wb_bg_color">#0000</color>
+
+<string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;file:///android_asset/flashcard_css&quot; /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=&quot;card&quot;&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
+
+<string name="deckpicker_title">Sélectionnez un des paquets stockés sur votre carte SD</string>
+<string name="deckpicker_title_nosdcard">La carte SD n'est pas montée</string>
+<string name="deckpicker_due">%1$d parmi %2$d dûes</string>
+<string name="deckpicker_new">%d nouvelles aujourd\'hui</string>
+<string name="deckpicker_loaddeck">Chargement du paquet...</string>
+<string name="deckpicker_nodeck">Pas de paquets trouvés.</string>
+
+<string name="notify_ticker">Mise à jour de l\'application</string>
+<string name="notify_title">Ankidroid mis à jour</string>
+<string name="notify_message">Télécharger une nouvelle version</string>
+<string name="notification_title">Confirmer la mise à jour d\'AnkiDroid</string>
+<string name="notification_message">Une nouvelle version d\'AnkiDroid est disponible sur Android Market.\n\nVoulez-vous l\'installer ?</string>
+<string name="notification_stop">Ne plus me prévenir de cette mise à jour</string>
+
+<string name="sdcard_missing_message">La carte SD n\'est pas disponible car elle est connectée en USB. Déconnectez l\'USB pour accéder aux paquets.</string>
+<string name="again">Encore</string>
+<string name="hard">Difficile</string>
+<string name="good">Bon</string>
+<string name="easy">Facile</string>
+<string name="newcards_day_summ">Le nombre maximal de nouvelles cartes par jour.</string>
+<string name="newcards_day">Nouvelles cartes par jour</string>
+<string name="session_time_limit">Durée maximale d'une session</string>
+<string name="session_time_limit_summ">La durée maximale d'une session. 0 pour illimité.</string>
+<string name="session_question_limit">Nombre max de questions par session</string>
+<string name="session_question_limit_summ">Le nombre maximal de question dans une session. 0 pour illimité.</string>
+<string name="new_cards_order">Ordre des nouvelles cartesNew Cards Order</string>
+<string name="new_cards_order_summ">L'ordre dans lequel les nouvelles cartes apparaissent.</string>
+<string name="show_new_cards_in">Montrer les nouvelles cartes dans...</string>
+<string name="new_card_spacing">New Card Spacing</string>
+<string name="new_card_spacing_summ">Comment distribuer les nouvelles cartes parmi les révisions.</string>
+<string name="show_new_cards">Montrer les nouvelles cartes...</string>
+<string name="review_cards_order">Ordre des révisions</string>
+<string name="review_cards_in">Réviser les cartes dans...</string>
+<string name="review_cards_order_summ">L'ordre dans lequel les cartes à réviser apparaissent.</string>
+</resources>
