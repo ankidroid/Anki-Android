@@ -27,11 +27,8 @@
 <string name="yes">Yes</string>
 <string name="no">No</string>
 
-<string name="overlay_on">Whiteboard On</string>
-<string name="overlay_off">Whiteboard Off</string>
-<string name="show_answer">Show Answer</string>
-<string name="show_question">Show Question</string>
-<string name="card_hint">Flashcard</string>
+
+
 <string name="deck_not_loaded">Failed to load deck.</string>
 <string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your sd card.</string>
 <string name="deck_empty">Deck is empty.</string>
@@ -56,10 +53,10 @@
 <string name="notification_stop">Don\'t notify me of this update again</string>
 
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
-<string name="again">Again</string>
-<string name="hard">Hard</string>
-<string name="good">Good</string>
-<string name="easy">Easy</string>
+
+<!--
+deck_preferences.xml strings
+-->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
 <string name="newcards_day">New Cards / Day</string>
 <string name="session_time_limit">Session Time Limit</string>
@@ -75,4 +72,33 @@
 <string name="review_cards_order">Review Cards Order</string>
 <string name="review_cards_in">Review cards in...</string>
 <string name="review_cards_order_summ">The order in which to show review cards.</string>
+
+
+<!--
+flashcard_portrait.xml strings
+-->
+<string name="overlay_on">Whiteboard On</string>
+<string name="overlay_off">Whiteboard Off</string>
+<string name="show_answer">Show Answer</string>
+<string name="show_question">Show Question</string>
+<string name="card_hint">Flashcard</string>
+<string name="again">Again</string>
+<string name="hard">Hard</string>
+<string name="good">Good</string>
+<string name="easy">Easy</string>
+
+
+<!--
+preferences.xml strings
+-->
+<string name="show_whiteboard">Show timer / whiteboard</string>
+<string name="show_whiteboard_summ">Lets you write on the screen</string>
+<string name="sample_deck">Sample deck</string>
+<string name="sample_deck_summ">Generate capitals deck if none found</string>
+<string name="corporal_punishments">Corporal punishments</string>
+<string name="corporal_punishments_summ">Vibrate on error, that will teach you</string>
+<string name="write_answers">Write answers</string>
+<string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
+<string name="deck_path">Deck path</string>
+<string name="deck_path_summ">Path to where the your decks are stored</string>
 </resources>

@@ -75,4 +75,17 @@
 <string name="review_cards_order">Ordem de Revisão dos Cards</string>
 <string name="review_cards_in">Revisar cards em...</string>
 <string name="review_cards_order_summ">A ordem em que serão mostrados os cards de revisão.</string>
+
+
+<string name="show_whiteboard">Mostrar timer / whiteboard</string>
+<string name="show_whiteboard_summ">Te permite escrever na Tela</string>
+<string name="sample_deck">Deck de exemplo</string>
+<string name="sample_deck_summ">Gerar deck de capitais se nenhum deck for encontrado</string>
+<string name="corporal_punishments">Punições Corporais</string>
+<string name="corporal_punishments_summ">Vibrar ao errar, que te ensinará</string>
+<string name="write_answers">Escrita de Respostas</string>
+<string name="write_answers_summ">Te permite escrever as respostas e compara-las com a resposta correta</string>
+<string name="deck_path">Pasta dos Deck </string>
+<string name="deck_path_summ">Pasta onde seus decks são armazenados</string>
+
 </resources>

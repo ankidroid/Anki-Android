@@ -18,24 +18,24 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<CheckBoxPreference
-		android:title="Show timer / whiteboard"
+		android:title="@string/show_whiteboard"
 		android:defaultValue="true"
-		android:summary="Lets you write on the screen"
+		android:summary="@string/show_whiteboard_summ"
 		android:key="timerAndWhiteboard" />
 	<CheckBoxPreference
-		android:title="Sample deck"
+		android:title="@string/sample_deck"
 		android:defaultValue="true"
-		android:summary="Generate capitals deck if none found"
+		android:summary="@string/sample_deck_summ"
 		android:key="generateSampleDeck" />
 	<CheckBoxPreference
-		android:title="Corporal punishments"
+		android:title="@string/corporal_punishments"
 		android:defaultValue="false"
-		android:summary="Vibrate on error, that will teach you"
+		android:summary="@string/corporal_punishments_summ"
 		android:key="corporalPunishments" />	
 	<CheckBoxPreference
-		android:title="Write answers"
+		android:title="@string/write_answers"
 		android:defaultValue="false"
-		android:summary="Lets you write the answer and compare it with the correct one"
+		android:summary="@string/write_answers_summ"
 		android:key="writeAnswers" />
 	<!-- TODO implement this preference. Right now: always use notifications
 	<CheckBoxPreference
@@ -45,8 +45,8 @@
 		android:key="enabled"/>
 	-->
 	<EditTextPreference
-		android:title="Deck path"
+		android:title="@string/deck_path"
 		android:defaultValue="/sdcard"
-		android:summary="Path to where the your decks are stored"
+		android:summary="@string/deck_path_summ"
 		android:key="deckPath" />
 </PreferenceScreen>
