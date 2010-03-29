@@ -693,7 +693,7 @@ public class Ankidroid extends Activity
 		{
 			// Either the deck does not contain any card, or all reviews have been done for the time being
 			// TODO a button leading to the deck picker would be nice.
-			updateCard("Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.");
+			updateCard(getString(R.string.congratulations_finished_for_now));
 			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);

@@ -101,6 +101,8 @@
 <string name="saving_changes">Salvando Mudanças...</string>
 <string name="session_question_limit_reached">Limite de questões por sessão atingido</string>
 <string name="session_time_limit_reached">Limite de tempo por sessão atingido</string>
+<string name="congratulations_finished_for_now">Parabéns! Você acabou por enquanto. Por favor volte amanhã, ou troque para outro deck. Decks compartilhados podem ser baixados usando o programa Anki encontrado em http://ichi2.net/anki/</string>
+
 
 
 </resources>
