@@ -42,14 +42,14 @@
 <string name="deckpicker_loaddeck">Carregant baralla...</string>
 <string name="deckpicker_nodeck">No s\'ha trobat cap baralla.</string>
 
-<string name="notify_ticker">Actualització de l'aplicació</string>
+<string name="notify_ticker">Actualització de l\'aplicació</string>
 <string name="notify_title">Ankidroid actualitzat</string>
 <string name="notify_message">Descarregar una nova versió</string>
 <string name="notification_title">Confirmar l\'actualització d'Ankidroid</string>
 <string name="notification_message">Una nova versió d\'Ankidroid està disponible a l\'Android Market.\n\nVols descarregar-la?</string>
 <string name="notification_stop">No tornar a notificar-me sobre aquesta actualització</string>
 
-<string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecta l'USB per accedir a les teves baralles.</string>
+<string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecta l\'USB per accedir a les teves baralles.</string>
 
 
 
@@ -89,7 +89,7 @@
 <string name="sample_deck">Baralla de mostra</string>
 <string name="sample_deck_summ">Genera baralla de capitals si no trobada</string>
 <string name="corporal_punishments">Càstigs corporals</string>
-<string name="corporal_punishments_summ">Vibra al fallar, així n\'apendràs</string>
+<string name="corporal_punishments_summ">Vibra al fallar, així n\'aprendràs</string>
 <string name="write_answers">Escriure respostes</string>
 <string name="write_answers_summ">Et permet escriure la resposta i comparar-la amb la solució correcta</string>
 <string name="deck_path">Directori baralles</string>
@@ -113,8 +113,8 @@
 
 
 <string name="saving_changes">Desant canvis...</string>
-<string name="session_question_limit_reached">S'ha arribat al límit de preguntes de la sessió</string>
-<string name="session_time_limit_reached">S'ha arribat al límit de temps de la sessió</string>
+<string name="session_question_limit_reached">S\'ha arribat al límit de preguntes de la sessió</string>
+<string name="session_time_limit_reached">S\'ha arribat al límit de temps de la sessió</string>
 <string name="congratulations_finished_for_now">Felicitats! Has acabat per ara. Si us plau, torna demà o canvia a una altra baralla. Si vols, pots descarregar baralles compartides utilizant l\'aplicació Anki d\'escriptori.</string>
 <string name="about_content">&lt;html&gt;
 &lt;body&gt;
