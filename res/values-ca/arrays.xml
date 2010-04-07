@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- WARNING: Many values here match static values defined in Deck.java
+                  DO NOT edit them, unless you change their corresponding values -->
+    <!-- Used in deck preferences -->
+    <string-array name="newCardOrderLabels">
+        <item>Ordre aleatori</item>
+        <item>Ordre afegit</item>
+        <item>Ordre invers de l\'afegit</item>  
+    </string-array>
+    <string-array name="newCardOrderVals">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>  
+    </string-array>
+    
+    <string-array name="newCardSchedulingLabels">
+    <item>Distribuir entre repassades</item>
+    <item>Després de les repassades</item>
+    <item>Abans de les repassades</item>  
+    </string-array>
+    
+    <string-array name="newCardSchedulingVals">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>  
+    </string-array>
+    
+    <string-array name="revCardOrderLabels">
+    <item>Major interval primer</item>
+    <item>Menor interval primer</item>
+    <item>Ordre programat</item>
+    <item>Ordre aleatori</item>  
+    </string-array>
+    
+    <string-array name="revCardOrderVals">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    </string-array>
+    
+    <string-array name="failedCardOptionLabels">
+    <item>Mostrar targetes fallades pròximament</item>
+    <item>Mostrar targetes fallades al final</item>
+    <item>Mostrar targetes fallades en 10 minuts</item>
+    <item>Mostrar targetes fallades en 8 hores</item>  
+    <item>Mostrar targetes fallades en 3 dies</item>   
+    </string-array>
+    
+    <string-array name="failedCardOptionVals">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+    </string-array>
+</resources>
