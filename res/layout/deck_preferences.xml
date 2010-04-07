@@ -15,7 +15,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Study Options">
             <EditTextPreference
             android:title="@string/newcards_day"
             android:defaultValue="20"
@@ -60,5 +59,4 @@
             android:entries="@array/revCardOrderLabels"
             android:entryValues="@array/revCardOrderVals"
             android:dialogTitle="@string/review_cards_in" />
-    </PreferenceCategory>
 </PreferenceScreen>

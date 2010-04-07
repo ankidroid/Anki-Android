@@ -98,6 +98,11 @@
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where the your decks are stored</string>
 
+<!-- AndroidManifest.xml strings -->
+<string name="preferences_title">Preferences</string>
+<string name="deckpreferences_title">Deck Preferences</string>
+<string name="about_title">About</string>
+<string name="cardeditor_title">Card Editor</string>
 
 <!-- Ankidroid.java strings -->
 <string name="loading_new_card">Loading new card...</string>
@@ -114,4 +119,15 @@
 <string name="session_question_limit_reached">Session question limit reached</string>
 <string name="session_time_limit_reached">Session time limit reached</string>
 <string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.</string>
+<string name="about_content">&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;AnkiDroid:&lt;br/&gt;
+Flashcards for Android&lt;/h2&gt;
+&lt;p&gt;Ankidroid can read .anki files produced by the desktop &lt;a href=&quot;http://ichi2.net/anki&quot;&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
+&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt;, new feature ideas are very welcome too!
+Please use the &lt;a href=&quot;http://ichi2.net/anki/wiki/AndroidAnki&quot;&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Ankidroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;develop it&lt;/a&gt; :-)
+Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href=&quot;http://ichi2.net/anki/donate.html&quot;&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
 </resources>

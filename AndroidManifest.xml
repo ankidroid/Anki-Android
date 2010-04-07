@@ -28,9 +28,9 @@
             </intent-filter>
         </activity>
         <activity android:name="DeckPicker" android:label="@string/deckpicker_title" />
-        <activity android:name="Preferences" android:label="Preferences" />
-        <activity android:name="DeckPreferences" android:label="Deck Preferences" />
-        <activity android:name="About" android:label="About" />
+        <activity android:name="Preferences" android:label="@string/preferences_title" />
+        <activity android:name="DeckPreferences" android:label="@string/deckpreferences_title" />
+        <activity android:name="About" android:label="@string/about_title" />
         <activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
         <receiver android:name="com.ichi2.veecheck.CheckReceiver">
 			<intent-filter>
@@ -53,7 +53,7 @@
 			</intent-filter>
 		</service>
 		<provider android:name="AnkidroidContentProvider" android:authorities="com.ichi2.anki"/>
-    <activity android:name="CardEditor" android:label="Card Editor"></activity>
+    <activity android:name="CardEditor" android:label="@string/cardeditor_title"></activity>
     </application>
     <uses-sdk android:minSdkVersion="3"/>
 	<uses-permission android:name="android.permission.VIBRATE" />

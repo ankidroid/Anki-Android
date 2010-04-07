@@ -32,6 +32,6 @@ public class About extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about);
 		WebView webview = (WebView) findViewById(R.id.about);
-		webview.loadUrl("file:///android_asset/about.html");
+		webview.loadDataWithBaseURL("", getResources().getString(R.string.about_content), "text/html", "utf-8", null);
 	}
 }
