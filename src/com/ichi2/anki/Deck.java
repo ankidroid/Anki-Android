@@ -565,7 +565,9 @@ public class Deck
 	}
 
 	private long getCardIdAhead() {
-		long id = AnkiDb.queryScalar(
+		long id=0;
+		try {
+		id = AnkiDb.queryScalar(
 				"SELECT id " +
 				"FROM cards " +
 				"WHERE type = 1 and " +
@@ -573,6 +575,9 @@ public class Deck
 				"priority in (1,2,3,4) " +
 				"ORDER BY combinedDue " +
 				"LIMIT 1");
+		} catch (SQLException e) {
+			return 0;
+		}
 		return id;
 	}
 
@@ -1406,6 +1411,16 @@ public class Deck
 		setUndoStart(name, false);
 	}
 	
+
+
+	
+	/**
+	 * @param reviewEarly set to true for early review
+	 */
+	public void setReviewEarly(boolean reviewEarly) {
+		this.reviewEarly = reviewEarly;
+	}
+
 	public void setUndoStart(String name, boolean merge)
 	{
 		if (!undoEnabled)

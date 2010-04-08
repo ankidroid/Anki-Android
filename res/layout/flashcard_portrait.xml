@@ -85,6 +85,13 @@
 			android:layout_height="fill_parent"
 			android:text="@string/again" />
 		<Button
+			android:id="@+id/review_early"
+			android:padding="3dip"
+			android:layout_width="fill_parent"
+			android:layout_weight="1.2"
+			android:layout_height="fill_parent"
+			android:text="@string/review_early" />
+		<Button
 			android:id="@+id/ease2"
 			android:padding="3dip"
 			android:layout_width="fill_parent"
