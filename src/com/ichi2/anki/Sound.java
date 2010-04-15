@@ -26,7 +26,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
 
 /**
- * Class used to handle, load and play sound files on Ankidroid.
+ * Class used to handle, load and play sound files on AnkiDroid.
  */
 public class Sound {
 

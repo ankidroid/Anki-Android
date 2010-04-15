@@ -29,12 +29,12 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  * Application class.
  * This file mainly contains Veecheck stuff.
  */
-public class AnkidroidApp extends Application {
+public class AnkiDroidApp extends Application {
 
 	/**
 	 * Singleton instance of this class.
 	 */
-    private static AnkidroidApp instance;
+    private static AnkiDroidApp instance;
     
     /**
      * Currently loaded Anki deck.
@@ -70,7 +70,7 @@ public class AnkidroidApp extends Application {
 		sendBroadcast(intent);
 	}
 
-    public static AnkidroidApp getInstance()
+    public static AnkiDroidApp getInstance()
     {
         return instance;
     }

@@ -29,7 +29,7 @@ import android.util.Log;
 /**
  * Content Provider for AnkiDroid
  */
-public class AnkidroidContentProvider extends ContentProvider {
+public class AnkiDroidContentProvider extends ContentProvider {
 	
 	/**
 	 * Tag for logging messages
@@ -45,7 +45,7 @@ public class AnkidroidContentProvider extends ContentProvider {
 	 */
 	@Override
 	public ParcelFileDescriptor openFile( Uri uri, String mode ){
-		Log.i(TAG, "AnkidroidContentProvider - openFile = " + uri.getEncodedPath() + ", " + uri.getPath());
+		Log.i(TAG, "AnkiDroidContentProvider - openFile = " + uri.getEncodedPath() + ", " + uri.getPath());
 		
 		File file = null;
 		ParcelFileDescriptor parcel = null;
@@ -53,7 +53,7 @@ public class AnkidroidContentProvider extends ContentProvider {
 		try {
 			file = new File(uri.getPath());
 			parcel = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
-			Log.i(TAG, "AnkidroidContentProvider - File opened succesfully");
+			Log.i(TAG, "AnkiDroidContentProvider - File opened succesfully");
 		} catch (FileNotFoundException e)
 		{
 			Log.e( TAG, "Error finding: " + uri.getPath() + "\n" + e.toString() );

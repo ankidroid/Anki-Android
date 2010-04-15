@@ -193,15 +193,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			Card card = deck.getCard();
 			Log.i(TAG, "Deck loaded!");
 
-			return new TaskData(Ankidroid.DECK_LOADED, deck, card);
+			return new TaskData(AnkiDroid.DECK_LOADED, deck, card);
 		} catch (SQLException e)
 		{
 			Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
-			return new TaskData(Ankidroid.DECK_NOT_LOADED);
+			return new TaskData(AnkiDroid.DECK_NOT_LOADED);
 		} catch (CursorIndexOutOfBoundsException e)
 		{
 			Log.i(TAG, "The deck has no cards = " + e.getMessage());;
-			return new TaskData(Ankidroid.DECK_EMPTY);
+			return new TaskData(AnkiDroid.DECK_EMPTY);
 		}
 	}
 	

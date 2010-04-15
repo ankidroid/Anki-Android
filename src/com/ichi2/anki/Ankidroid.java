@@ -60,9 +60,9 @@ import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
- * Main activity for Ankidroid. Shows a card and controls to answer it.
+ * Main activity for AnkiDroid. Shows a card and controls to answer it.
  */
-public class Ankidroid extends Activity
+public class AnkiDroid extends Activity
 {
 
 	/**
@@ -243,7 +243,7 @@ public class Ankidroid extends Activity
 			DeckTask.launchDeckTask(
 					DeckTask.TASK_TYPE_ANSWER_CARD,
 					mAnswerCardHandler,
-					new DeckTask.TaskData(ease, AnkidroidApp.deck(), currentCard));
+					new DeckTask.TaskData(ease, AnkiDroidApp.deck(), currentCard));
 		}
 	};
 
@@ -256,7 +256,7 @@ public class Ankidroid extends Activity
 		{
 			Log.i(TAG, "mButtonReviewEarlyHandler");
 			mButtonReviewEarly.setVisibility(View.GONE);
-			Deck d = AnkidroidApp.deck();
+			Deck d = AnkiDroidApp.deck();
 			d.setReviewEarly(true);
 			currentCard = d.getCard();
 			if (currentCard != null){
@@ -269,7 +269,7 @@ public class Ankidroid extends Activity
 				mWhiteboard.clear();
 				mCardTimer.setBase(SystemClock.elapsedRealtime());
 				mCardTimer.start();
-				long timelimit = AnkidroidApp.deck().getSessionTimeLimit() * 1000;
+				long timelimit = AnkiDroidApp.deck().getSessionTimeLimit() * 1000;
 				Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
 				mSessionTimeLimit = System.currentTimeMillis() + timelimit;
 				mSessionCurrReps = 0;
@@ -304,7 +304,7 @@ public class Ankidroid extends Activity
 			Log.i(TAG, "onCreate - deckFilename from extras: " + deckFilename);
 		} else if (savedInstanceState != null)
 		{
-			// Use the same deck as last time Ankidroid was used.
+			// Use the same deck as last time AnkiDroid was used.
 			deckFilename = savedInstanceState.getString("deckFilename");
 			Log.i(TAG, "onCreate - deckFilename from savedInstanceState: " + deckFilename);
 		} else
@@ -465,7 +465,7 @@ public class Ankidroid extends Activity
 			mFlipCard.setChecked(true);
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
 					mAnswerCardHandler,
-					new DeckTask.TaskData(0, AnkidroidApp.deck(), currentCard));
+					new DeckTask.TaskData(0, AnkiDroidApp.deck(), currentCard));
 		    return true;
         case MENU_EDIT:
             editorCard = currentCard;
@@ -480,8 +480,8 @@ public class Ankidroid extends Activity
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
     	
-    	if(AnkidroidApp.deck() != null && sdCardAvailable)
-    		AnkidroidApp.deck().closeDeck();
+    	if(AnkiDroidApp.deck() != null && sdCardAvailable)
+    		AnkiDroidApp.deck().closeDeck();
     	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
 		inDeckPicker = true;
@@ -624,7 +624,7 @@ public class Ankidroid extends Activity
             		    DeckTask.launchDeckTask(
                                 DeckTask.TASK_TYPE_UPDATE_FACT,
                                 mUpdateCardHandler,
-                                new DeckTask.TaskData(0, AnkidroidApp.deck(), currentCard));
+                                new DeckTask.TaskData(0, AnkiDroidApp.deck(), currentCard));
             //TODO: code to save the changes made to the current card.
             mFlipCard.setChecked(true);
             displayCardQuestion();
@@ -927,8 +927,8 @@ public class Ankidroid extends Activity
 
     private void closeExternalStorageFiles()
     {
-    	if(AnkidroidApp.deck() != null)
-    		AnkidroidApp.deck().closeDeck();
+    	if(AnkiDroidApp.deck() != null)
+    		AnkiDroidApp.deck().closeDeck();
     	deckLoaded = false;
     	displaySdError();
     }
@@ -1011,7 +1011,7 @@ public class Ankidroid extends Activity
     DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener()
     {
         public void onPreExecute() {
-            progressDialog = ProgressDialog.show(Ankidroid.this, "", getString(R.string.saving_changes), true);
+            progressDialog = ProgressDialog.show(AnkiDroid.this, "", getString(R.string.saving_changes), true);
         }
 
         public void onPostExecute(DeckTask.TaskData result) {
@@ -1040,7 +1040,7 @@ public class Ankidroid extends Activity
 
 		public void onPreExecute() {
 			start = System.currentTimeMillis();
-			progressDialog = ProgressDialog.show(Ankidroid.this, "", getString(R.string.loading_new_card), true);
+			progressDialog = ProgressDialog.show(AnkiDroid.this, "", getString(R.string.loading_new_card), true);
 		}
 
 		public void onPostExecute(DeckTask.TaskData result) {
@@ -1053,7 +1053,7 @@ public class Ankidroid extends Activity
 		    mSessionCurrReps++; // increment number reps counter
 
 		    // Check to see if session rep or time limit has been reached
-		    Deck deck = AnkidroidApp.deck();
+		    Deck deck = AnkiDroidApp.deck();
 		    long sessionRepLimit = deck.getSessionRepLimit();
 		    long sessionTime = deck.getSessionTimeLimit();
 		    Toast sessionMessage = null;
@@ -1061,12 +1061,12 @@ public class Ankidroid extends Activity
 		    if( (sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit) )
 		    {
 		    	sessioncomplete = true;
-		    	sessionMessage = Toast.makeText(Ankidroid.this, getString(R.string.session_question_limit_reached), Toast.LENGTH_SHORT);
+		    	sessionMessage = Toast.makeText(AnkiDroid.this, getString(R.string.session_question_limit_reached), Toast.LENGTH_SHORT);
 		    } else if( (sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit) ) //Check to see if the session time limit has been reached
 		    {
 		        // session time limit reached, flag for halt once async task has completed.
 		        sessioncomplete = true;
-		        sessionMessage = Toast.makeText(Ankidroid.this, getString(R.string.session_time_limit_reached), Toast.LENGTH_SHORT);
+		        sessionMessage = Toast.makeText(AnkiDroid.this, getString(R.string.session_time_limit_reached), Toast.LENGTH_SHORT);
 
 		    } else {
 		        // session limits not reached, show next card
@@ -1100,7 +1100,7 @@ public class Ankidroid extends Activity
 		public void onPreExecute() {
 			if(updateDialog == null || !updateDialog.isShowing())
 			{
-				progressDialog = ProgressDialog.show(Ankidroid.this, "", getString(R.string.loading_deck), true);
+				progressDialog = ProgressDialog.show(AnkiDroid.this, "", getString(R.string.loading_deck), true);
 			}
 		}
 
@@ -1122,7 +1122,7 @@ public class Ankidroid extends Activity
 				case DECK_LOADED:
 					// Set the deck in the application instance, so other activities
 					// can access the loaded deck.
-				    AnkidroidApp.setDeck( result.getDeck() );
+				    AnkiDroidApp.setDeck( result.getDeck() );
 					currentCard = result.getCard();
 					showControls(true);
 					deckLoaded = true;
@@ -1133,7 +1133,7 @@ public class Ankidroid extends Activity
 					mWhiteboard.clear();
 					mCardTimer.setBase(SystemClock.elapsedRealtime());
 					mCardTimer.start();
-					long timelimit = AnkidroidApp.deck().getSessionTimeLimit() * 1000;
+					long timelimit = AnkiDroidApp.deck().getSessionTimeLimit() * 1000;
 					Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
 					mSessionTimeLimit = System.currentTimeMillis() + timelimit;
 					mSessionCurrReps = 0;

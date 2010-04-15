@@ -49,7 +49,7 @@
 <string name="deckpicker_nodeck">Pas de paquets trouvés.</string>
 
 <string name="notify_ticker">Mise à jour de l\'application</string>
-<string name="notify_title">Ankidroid mis à jour</string>
+<string name="notify_title">AnkiDroid mis à jour</string>
 <string name="notify_message">Télécharger une nouvelle version</string>
 <string name="notification_title">Confirmer la mise à jour d\'AnkiDroid</string>
 <string name="notification_message">Une nouvelle version d\'AnkiDroid est disponible sur Android Market.\n\nVoulez-vous l\'installer ?</string>

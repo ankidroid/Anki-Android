@@ -20,8 +20,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.ichi2.anki"
       android:versionName="0.4" android:versionCode="10">
-    <application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkidroidApp" android:debuggable="false">
-        <activity android:name=".Ankidroid" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar" android:configChanges="orientation">
+    <application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="false">
+        <activity android:name=".AnkiDroid" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar" android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -52,7 +52,7 @@
 				<data android:scheme="http"></data>
 			</intent-filter>
 		</service>
-		<provider android:name="AnkidroidContentProvider" android:authorities="com.ichi2.anki"/>
+		<provider android:name="AnkiDroidContentProvider" android:authorities="com.ichi2.anki"/>
     <activity android:name="CardEditor" android:label="@string/cardeditor_title"></activity>
     </application>
     <uses-sdk android:minSdkVersion="3"/>

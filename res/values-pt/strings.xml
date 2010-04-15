@@ -22,7 +22,7 @@
     <string name="CardEditorSaveButton">Salvar</string>
     
     
-<string name="app_name">Ankidroid</string>
+<string name="app_name">AnkiDroid</string>
 
 <string name="yes">Sim</string>
 <string name="no">Não</string>
@@ -49,10 +49,10 @@
 <string name="deckpicker_nodeck">Não foi encontrado nenhum deck.</string>
 
 <string name="notify_ticker">Atualização da Aplicação</string>
-<string name="notify_title">Ankidroid Atualizado</string>
+<string name="notify_title">AnkiDroid Atualizado</string>
 <string name="notify_message">Baixar uma nova versão</string>
-<string name="notification_title">Confirmar a atualização do Ankidroid</string>
-<string name="notification_message">A new version of Ankidroid is available in Android Market.\n\nGostaria de instala-la?</string>
+<string name="notification_title">Confirmar a atualização do AnkiDroid</string>
+<string name="notification_message">A new version of AnkiDroid is available in Android Market.\n\nGostaria de instala-la?</string>
 <string name="notification_stop">Não me avisar novamente sobre esse update.</string>
 
 <string name="sdcard_missing_message">O cartão SD está indisponível porque está sendo usado como armazenamento USB. Desconecte o USB para acessar os seus decks.</string>
@@ -89,7 +89,7 @@
 <string name="deck_path_summ">Pasta onde seus decks são armazenados</string>
 
 
-<!-- Ankidroid.java strings -->
+<!-- AnkiDroid.java strings -->
 <string name="loading_new_card">Carregando Card...</string>
 <string name="loading_deck">Carregando Deck. Por favor espere...</string>
 <string name="preferences">Preferências</string>

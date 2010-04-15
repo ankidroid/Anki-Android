@@ -19,7 +19,7 @@
     <string name="CardEditorSaveButton">Desar</string>
     
     
-<string name="app_name">Ankidroid</string>
+<string name="app_name">AnkiDroid</string>
 
 <string name="yes">Si</string>
 <string name="no">No</string>
@@ -43,10 +43,10 @@
 <string name="deckpicker_nodeck">No s\'ha trobat cap baralla.</string>
 
 <string name="notify_ticker">Actualització de l\'aplicació</string>
-<string name="notify_title">Ankidroid actualitzat</string>
+<string name="notify_title">AnkiDroid actualitzat</string>
 <string name="notify_message">Descarregar una nova versió</string>
-<string name="notification_title">Confirmar l\'actualització d'Ankidroid</string>
-<string name="notification_message">Una nova versió d\'Ankidroid està disponible a l\'Android Market.\n\nVols descarregar-la?</string>
+<string name="notification_title">Confirmar l\'actualització d'AnkiDroid</string>
+<string name="notification_message">Una nova versió d\'AnkiDroid està disponible a l\'Android Market.\n\nVols descarregar-la?</string>
 <string name="notification_stop">No tornar a notificar-me sobre aquesta actualització</string>
 
 <string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecta l\'USB per accedir a les teves baralles.</string>
@@ -101,7 +101,7 @@
 <string name="about_title">Sobre</string>
 <string name="cardeditor_title">Editor targeta</string>
 
-<!-- Ankidroid.java strings -->
+<!-- AnkiDroid.java strings -->
 <string name="loading_new_card">Carregant nova targeta...</string>
 <string name="loading_deck">Carregant baralla. Si us plau, esperi...</string>
 <string name="preferences">Preferències</string>
@@ -120,10 +120,10 @@
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
 Flashcards per Android&lt;/h2&gt;
-&lt;p&gt;Ankidroid pot llegir fitxers .anki produïts amb l\'aplicació d\'escriptori &lt;a href=&quot;http://ichi2.net/anki&quot;&gt;Anki&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Per ajudar-nos a millorar Ankidroid, si us plau reporta qualsevol fallada &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;aqui&lt;/a&gt;. Noves idees per a funcionalitats són també benvingudíssimes!
+&lt;p&gt;AnkiDroid pot llegir fitxers .anki produïts amb l\'aplicació d\'escriptori &lt;a href=&quot;http://ichi2.net/anki&quot;&gt;Anki&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Per ajudar-nos a millorar AnkiDroid, si us plau reporta qualsevol fallada &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;aqui&lt;/a&gt;. Noves idees per a funcionalitats són també benvingudíssimes!
 Per qualsevol dubte, utilitza la &lt;a href=&quot;http://ichi2.net/anki/wiki/AndroidAnki&quot;&gt;wiki&lt;/a&gt; i no dubtis en passar pel &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt; i saludar.&lt;/p&gt;
-&lt;p&gt;Ankidroid és una aplicació de &lt;a href=&quot;http://ca.wikipedia.org/wiki/Codi_obert&quot;&gt;codi obert&lt;/a&gt;, així que encoratgem a tothom per a que s\'animi a &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;desenvolupar-hi&lt;/a&gt; :-)
+&lt;p&gt;AnkiDroid és una aplicació de &lt;a href=&quot;http://ca.wikipedia.org/wiki/Codi_obert&quot;&gt;codi obert&lt;/a&gt;, així que encoratgem a tothom per a que s\'animi a &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;desenvolupar-hi&lt;/a&gt; :-)
 La gent sense habilitats de programació també pot ajudar moltíssim, per exemple, actualitzant la wiki i les captures de pantalla, &lt;a href=&quot;http://ichi2.net/anki/donate.html&quot;&gt;donant&lt;/a&gt; a Anki o bloguejant sobre AnkiDroid!&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>

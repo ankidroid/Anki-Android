@@ -22,7 +22,7 @@
     <string name="CardEditorSaveButton">Save</string>
     
     
-<string name="app_name">Ankidroid</string>
+<string name="app_name">AnkiDroid</string>
 
 <string name="yes">Yes</string>
 <string name="no">No</string>
@@ -46,10 +46,10 @@
 <string name="deckpicker_nodeck">No decks found.</string>
 
 <string name="notify_ticker">Application Update</string>
-<string name="notify_title">Ankidroid Updated</string>
+<string name="notify_title">AnkiDroid Updated</string>
 <string name="notify_message">Download a new version</string>
-<string name="notification_title">Confirm Ankidroid Update</string>
-<string name="notification_message">A new version of Ankidroid is available in Android Market.\n\nWould you like to install it?</string>
+<string name="notification_title">Confirm AnkiDroid Update</string>
+<string name="notification_message">A new version of AnkiDroid is available in Android Market.\n\nWould you like to install it?</string>
 <string name="notification_stop">Don\'t notify me of this update again</string>
 
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
@@ -104,7 +104,7 @@
 <string name="about_title">About</string>
 <string name="cardeditor_title">Card Editor</string>
 
-<!-- Ankidroid.java strings -->
+<!-- AnkiDroid.java strings -->
 <string name="loading_new_card">Loading new card...</string>
 <string name="loading_deck">Loading deck. Please wait...</string>
 <string name="preferences">Preferences</string>
@@ -123,10 +123,10 @@
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
 Flashcards for Android&lt;/h2&gt;
-&lt;p&gt;Ankidroid can read .anki files produced by the desktop &lt;a href=&quot;http://ichi2.net/anki&quot;&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
+&lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href=&quot;http://ichi2.net/anki&quot;&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
 &lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt;, new feature ideas are very welcome too!
 Please use the &lt;a href=&quot;http://ichi2.net/anki/wiki/AndroidAnki&quot;&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Ankidroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;develop it&lt;/a&gt; :-)
+&lt;p&gt;AnkiDroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;develop it&lt;/a&gt; :-)
 Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href=&quot;http://ichi2.net/anki/donate.html&quot;&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>

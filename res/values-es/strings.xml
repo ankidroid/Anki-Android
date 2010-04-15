@@ -19,7 +19,7 @@
     <string name="CardEditorSaveButton">Guardar</string>
     
     
-<string name="app_name">Ankidroid</string>
+<string name="app_name">AnkiDroid</string>
 
 <string name="yes">Sí</string>
 <string name="no">No</string>
@@ -43,10 +43,10 @@
 <string name="deckpicker_nodeck">No se ha encontrado ningún mazo.</string>
 
 <string name="notify_ticker">Actualización de la aplicación</string>
-<string name="notify_title">Ankidroid actualizado</string>
+<string name="notify_title">AnkiDroid actualizado</string>
 <string name="notify_message">Descargar una nueva versión</string>
-<string name="notification_title">Confirmar la actualización de Ankidroid</string>
-<string name="notification_message">Una nueva versión de Ankidroid se encuentra disponible en el Android Market.\n\n¿Quieres descargarla?</string>
+<string name="notification_title">Confirmar la actualización de AnkiDroid</string>
+<string name="notification_message">Una nueva versión de AnkiDroid se encuentra disponible en el Android Market.\n\n¿Quieres descargarla?</string>
 <string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
 
 <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
@@ -101,7 +101,7 @@
 <string name="about_title">Acerca de</string>
 <string name="cardeditor_title">Editor tarjeta</string>
 
-<!-- Ankidroid.java strings -->
+<!-- AnkiDroid.java strings -->
 <string name="loading_new_card">Cargando nueva tarjeta...</string>
 <string name="loading_deck">Cargando mazo. Por favor, espere...</string>
 <string name="preferences">Preferencias</string>
@@ -120,10 +120,10 @@
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
 Flashcards para Android&lt;/h2&gt;
-&lt;p&gt;Ankidroid puede leer ficheros .anki creados con la aplicación de escritorio &lt;a href=&quot;http://ichi2.net/anki&quot;&gt;Anki&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Para ayudarnos a mejorar Ankidroid, por favor reporta cualquier fallo &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;aquí&lt;/a&gt;. ¡Nuevas ideas para funcionalidades también son bienvenidas!
+&lt;p&gt;AnkiDroid puede leer ficheros .anki creados con la aplicación de escritorio &lt;a href=&quot;http://ichi2.net/anki&quot;&gt;Anki&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Para ayudarnos a mejorar AnkiDroid, por favor reporta cualquier fallo &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;aquí&lt;/a&gt;. ¡Nuevas ideas para funcionalidades también son bienvenidas!
 Si tienes cualquier duda, utiliza la &lt;a href=&quot;http://ichi2.net/anki/wiki/AndroidAnki&quot;&gt;wiki&lt;/a&gt; y no dudes en pasarte por el &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;foro&lt;/a&gt; y saludar.&lt;/p&gt;
-&lt;p&gt;Ankidroid es una aplicación de &lt;a href=&quot;http://es.wikipedia.org/wiki/C%C3%B3digo_abierto&quot;&gt;código abierto&lt;/a&gt;, así que os animamos a que participéis en el &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;desarrollo&lt;/a&gt; :-)
+&lt;p&gt;AnkiDroid es una aplicación de &lt;a href=&quot;http://es.wikipedia.org/wiki/C%C3%B3digo_abierto&quot;&gt;código abierto&lt;/a&gt;, así que os animamos a que participéis en el &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;desarrollo&lt;/a&gt; :-)
 La gente sin conocimientos de programación también puede ayudar muchísimo, por ejemplo, actualizando la wiki y las capturas de pantalla, &lt;a href=&quot;http://ichi2.net/anki/donate.html&quot;&gt;donando&lt;/a&gt; a Anki o blogueando sobre AnkiDroid!&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
