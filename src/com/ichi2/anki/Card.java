@@ -96,7 +96,7 @@ public class Card {
 
     public Card(Fact fact, CardModel cardModel, double created) {
         tags = "";
-        id = Util.genID();
+        id = Utils.genID();
         // New cards start as new & due
         type = 2;
         isDue = 1;

@@ -16,13 +16,18 @@
 
 package com.ichi2.anki;
 
+import java.util.List;
 import java.util.Random;
 import java.util.TreeSet;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 /**
  * TODO comments
  */
-public class Util {
+public class Utils {
+	
 	private static TreeSet<Integer> idTree;
 	private static long idTime;
 
@@ -50,5 +55,97 @@ public class Util {
 		}
 		id = rand << 41 | time;
 		return id;
+	}
+	
+	/**
+	 * Returns a SQL string from an array of integers.
+	 *
+	 * @param ids
+	 *            The array of integers to include in the list.
+	 * @return An SQL compatible string in the format (ids[0],ids[1],..).
+	 */
+	public static String ids2str(long[] ids)
+	{
+		String str = "(";
+		int len = ids.length;
+		for (int i = 0; i < len; i++)
+		{
+			if (i == (len - 1))
+				str += ids[i];
+			else
+				str += ids[i] + ",";
+		}
+		str += ")";
+		return str;
+	}
+
+	/**
+	 * Returns a SQL string from an array of integers.
+	 *
+	 * @param ids
+	 *            The array of integers to include in the list.
+	 * @return An SQL compatible string in the format (ids[0],ids[1],..).
+	 */
+	public static String ids2str(JSONArray ids)
+	{
+		String str = "(";
+		int len = ids.length();
+		for (int i = 0; i < len; i++)
+		{
+			try {
+				if (i == (len - 1))
+				{
+					str += ids.get(i);
+				}	
+				else
+				{
+					str += ids.get(i) + ",";
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		str += ")";
+		return str;
+	}
+	
+	public static JSONArray listToJSONArray(List list)
+	{
+		JSONArray jsonArray = new JSONArray();
+		
+		int len = list.size();
+		for(int i = 0; i < len; i++)
+		{
+			jsonArray.put(list.get(i));
+		}
+		
+		return jsonArray;
+	}
+	
+	/**
+	 * Returns a SQL string from an array of integers.
+	 *
+	 * @param ids
+	 *            The array of integers to include in the list.
+	 * @return An SQL compatible string in the format (ids[0],ids[1],..).
+	 */
+	public static String ids2str(List<String> ids)
+	{
+		String str = "(";
+		int len = ids.size();
+		for (int i = 0; i < len; i++)
+		{
+			if (i == (len - 1))
+			{
+				str += ids.get(i);
+			}	
+			else
+			{
+				str += ids.get(i) + ",";
+			}
+		}
+		str += ")";
+		return str;
 	}
 }

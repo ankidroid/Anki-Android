@@ -42,7 +42,7 @@
 <string name="deckpicker_loaddeck">Cargando mazo...</string>
 <string name="deckpicker_nodeck">No se ha encontrado ningún mazo.</string>
 
-<string name="notify_ticker">Actualitzación de la aplicación</string>
+<string name="notify_ticker">Actualización de la aplicación</string>
 <string name="notify_title">Ankidroid actualizado</string>
 <string name="notify_message">Descargar una nueva versión</string>
 <string name="notification_title">Confirmar la actualización de Ankidroid</string>

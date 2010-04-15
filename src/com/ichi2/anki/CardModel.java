@@ -84,7 +84,7 @@ public class CardModel {
 		this.qformat = qformat;
 		this.aformat = aformat;
 		this.active = active ? 1 : 0;
-		this.id = Util.genID();
+		this.id = Utils.genID();
 	}
 
 	/**

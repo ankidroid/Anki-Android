@@ -59,7 +59,7 @@ public class FieldModel {
 		this.name = name;
 		this.required = required ? 1 : 0;
 		this.unique = unique ? 1 : 0;
-		this.id = Util.genID();
+		this.id = Utils.genID();
 	}
 
 	public FieldModel() {

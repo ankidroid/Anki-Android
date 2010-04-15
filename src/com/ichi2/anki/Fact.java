@@ -49,7 +49,7 @@ public class Fact {
 
     public Fact(Model model) {
         this.model = model;
-        this.id = Util.genID();
+        this.id = Utils.genID();
         if (model != null) {
             Iterator<FieldModel> iter = model.fieldModels.iterator();
             while (iter.hasNext()) {
@@ -264,7 +264,7 @@ public class Fact {
                 this.ordinal = fieldModel.ordinal;
             }
             this.value = "";
-            this.id = Util.genID();
+            this.id = Utils.genID();
         }
     }
 

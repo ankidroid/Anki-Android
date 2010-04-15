@@ -52,7 +52,7 @@ public class Model {
 		this.fieldModels = new TreeSet<FieldModel>(new FieldModelOrdinalComparator());
 		this.cardModels = new TreeSet<CardModel>(new CardModelOrdinalComparator());
 		this.name = name;
-		this.id = Util.genID();
+		this.id = Utils.genID();
 	}
 
 	public Model() {
