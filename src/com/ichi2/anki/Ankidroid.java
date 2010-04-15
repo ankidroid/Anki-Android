@@ -171,7 +171,7 @@ public class Ankidroid extends Activity
 
 	private EditText mAnswerField;
 
-	private Button mEase0, mEase1, mEase2, mEase3;
+	private Button mButtonReviewEarly, mEase0, mEase1, mEase2, mEase3;
 
 	private Chronometer mCardTimer;
 	
@@ -244,6 +244,39 @@ public class Ankidroid extends Activity
 					DeckTask.TASK_TYPE_ANSWER_CARD,
 					mAnswerCardHandler,
 					new DeckTask.TaskData(ease, AnkidroidApp.deck(), currentCard));
+		}
+	};
+
+	
+
+	
+	View.OnClickListener mButtonReviewEarlyHandler = new View.OnClickListener()
+	{
+		public void onClick(View view)
+		{
+			Log.i(TAG, "mButtonReviewEarlyHandler");
+			mButtonReviewEarly.setVisibility(View.GONE);
+			Deck d = AnkidroidApp.deck();
+			d.setReviewEarly(true);
+			currentCard = d.getCard();
+			if (currentCard != null){
+				showControls(true);
+				deckLoaded = true;
+				cardsToReview = true;
+				mFlipCard.setChecked(false);
+				displayCardQuestion();
+
+				mWhiteboard.clear();
+				mCardTimer.setBase(SystemClock.elapsedRealtime());
+				mCardTimer.start();
+				long timelimit = AnkidroidApp.deck().getSessionTimeLimit() * 1000;
+				Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
+				mSessionTimeLimit = System.currentTimeMillis() + timelimit;
+				mSessionCurrReps = 0;
+	
+			}
+				
+			
 		}
 	};
 
@@ -351,6 +384,7 @@ public class Ankidroid extends Activity
 		setContentView(layout);
 
 		mCard = (WebView) findViewById(R.id.flashcard);
+		mButtonReviewEarly = (Button) findViewById(R.id.review_early);
 		mEase0 = (Button) findViewById(R.id.ease1);
 		mEase1 = (Button) findViewById(R.id.ease2);
 		mEase2 = (Button) findViewById(R.id.ease3);
@@ -363,6 +397,7 @@ public class Ankidroid extends Activity
 
 		showControls(false);
 
+		mButtonReviewEarly.setOnClickListener(mButtonReviewEarlyHandler);
 		mEase0.setOnClickListener(mSelectEaseHandler);
 		mEase1.setOnClickListener(mSelectEaseHandler);
 		mEase2.setOnClickListener(mSelectEaseHandler);
@@ -628,6 +663,7 @@ public class Ankidroid extends Activity
 		} else
 		{
 			mCard.setVisibility(View.GONE);
+			mButtonReviewEarly.setVisibility(View.GONE);
 			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
@@ -694,6 +730,7 @@ public class Ankidroid extends Activity
 			// Either the deck does not contain any card, or all reviews have been done for the time being
 			// TODO a button leading to the deck picker would be nice.
 			updateCard(getString(R.string.congratulations_finished_for_now));
+			mButtonReviewEarly.setVisibility(View.VISIBLE);
 			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
