@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -55,6 +56,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.Payload;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -96,7 +99,7 @@ public class AnkiDroid extends Activity
 
     private static final int MENU_EDIT = 5; 
     
-    private static final int MENU_GET_SHARED_DECK = 6;
+    private static final int MENU_GET_SHARED_DECKS = 6;
 
 	/**
 	 * Possible outputs trying to load a deck
@@ -421,7 +424,7 @@ public class AnkiDroid extends Activity
 		menu.add(1, MENU_DECKOPTS, 0, getString(R.string.study_options));
 		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
         menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
-        menu.add(1, MENU_GET_SHARED_DECK, 0, getString(R.string.get_shared_deck));
+        menu.add(1, MENU_GET_SHARED_DECKS, 0, getString(R.string.get_shared_deck));
 		return true;
 	}
 
@@ -470,7 +473,8 @@ public class AnkiDroid extends Activity
             Intent editCard = new Intent(this, CardEditor.class);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
             return true;
-        case MENU_GET_SHARED_DECK:
+        case MENU_GET_SHARED_DECKS:
+        	Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
         	return true;
 		}
 		return false;
@@ -1007,7 +1011,9 @@ public class AnkiDroid extends Activity
 		detail.setVisibility(View.GONE);
 	}
 	  
-
+	/**
+	 * Listeners
+	 */
     DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener()
     {
         public void onPreExecute() {
@@ -1153,6 +1159,40 @@ public class AnkiDroid extends Activity
 			// Pass
 		}
 
+	};
+
+	Connection.TaskListener getSharedDecksListener = new Connection.TaskListener() {
+
+		@Override
+		public void onDisconnected() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void onPostExecute(Payload data) {
+			progressDialog.dismiss();
+			if(data.success)
+			{
+				startActivity(new Intent(AnkiDroid.this, SharedDeckPicker.class));
+			}
+			else
+			{
+				//TODO: Show error alert
+			}
+		}
+
+		@Override
+		public void onPreExecute() {
+			progressDialog = ProgressDialog.show(AnkiDroid.this, "", "Loading available shared decks...");
+		}
+
+		@Override
+		public void onProgressUpdate(Object... values) {
+			//Pass
+		}
+		
 	};
 
 }
