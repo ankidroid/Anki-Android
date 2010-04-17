@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Environment;
 
+import com.ichi2.async.Connection;
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -55,6 +56,7 @@ public class AnkiDroidApp extends Application {
 		super.onCreate();
 		instance = this;
 
+		Connection.setContext(getApplicationContext());
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
 		// Assign some default settings if necessary
 		if (prefs.getString(PrefSettings.KEY_CHECK_URI, null) == null) {

@@ -99,6 +99,7 @@
 <string name="deck_path_summ">Path to where the your decks are stored</string>
 
 <!-- AndroidManifest.xml strings -->
+<string name="shareddeckpicker_title">Select the deck you want to download</string>
 <string name="preferences_title">Preferences</string>
 <string name="deckpreferences_title">Deck Preferences</string>
 <string name="about_title">About</string>
