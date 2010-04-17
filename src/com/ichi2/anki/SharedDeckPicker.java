@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,10 @@ public class SharedDeckPicker extends Activity {
 
 	private ProgressDialog progressDialog;
 	
+	private AlertDialog noConnectionAlert;
+	
+	private AlertDialog connectionFailedAlert;
+	
 	List<SharedDeck> mSharedDecks;
 	ListView mSharedDecksListView;
 	SimpleAdapter mSharedDecksAdapter;
@@ -27,6 +32,8 @@ public class SharedDeckPicker extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		initAlertDialogs();
 		
 		mSharedDecks = new ArrayList<SharedDeck>();
 		mSharedDecksAdapter = new SimpleAdapter(this, mSharedDecks, R.layout.shared_deck_item, new String[] {"title"}, new int[] {R.id.SharedDeckTitle});
@@ -37,13 +44,27 @@ public class SharedDeckPicker extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
-				
+				Connection.downloadSharedDeck(downloadSharedDeckListener, new Connection.Payload(new Object[] {mSharedDecks.get(position)}));
 			}
 			
 		});
 		Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
 	}
 
+	/**
+	 * Create AlertDialogs used on all the activity
+	 */
+	private void initAlertDialogs()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		builder.setMessage("No Internet connection.");
+		builder.setPositiveButton("Ok", null);
+		noConnectionAlert = builder.create();
+		
+	    builder.setMessage("The connection was unsuccessful. Check your connection settings and try again, please.");
+	    connectionFailedAlert = builder.create();
+	}
 	
 	/**
 	 * Listeners
@@ -52,8 +73,7 @@ public class SharedDeckPicker extends Activity {
 
 		@Override
 		public void onDisconnected() {
-			// TODO Auto-generated method stub
-			
+			noConnectionAlert.show();
 		}
 
 		@SuppressWarnings("unchecked")
@@ -66,11 +86,43 @@ public class SharedDeckPicker extends Activity {
 				mSharedDecks.addAll((List<SharedDeck>)data.result);
 				mSharedDecksAdapter.notifyDataSetChanged();
 			}
+			else
+			{
+				connectionFailedAlert.show();
+			}
 		}
 
 		@Override
 		public void onPreExecute() {
 			//Pass
+		}
+
+		@Override
+		public void onProgressUpdate(Object... values) {
+			//Pass
+		}
+		
+	};
+	
+	Connection.TaskListener downloadSharedDeckListener = new Connection.TaskListener() {
+
+		@Override
+		public void onDisconnected() {
+			noConnectionAlert.show();
+		}
+
+		@Override
+		public void onPostExecute(Payload data) {
+			progressDialog.dismiss();
+			if(!data.success)
+			{
+				connectionFailedAlert.show();
+			}
+		}
+
+		@Override
+		public void onPreExecute() {
+			progressDialog = ProgressDialog.show(SharedDeckPicker.this, "", "Downloading shared deck...");
 		}
 
 		@Override

@@ -124,7 +124,11 @@ public class AnkiDroid extends Activity
 	 */
 	private ProgressDialog progressDialog;
 
-	private AlertDialog updateDialog;
+	private AlertDialog updateAlert;
+	
+	private AlertDialog noConnectionAlert;
+	
+	private AlertDialog connectionFailedAlert;
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -292,6 +296,7 @@ public class AnkiDroid extends Activity
 
 		Bundle extras = getIntent().getExtras();
 		SharedPreferences preferences = restorePreferences();
+		initAlertDialogs();
 		initLayout(R.layout.flashcard_portrait);
 
 		registerExternalStorageListener();
@@ -375,6 +380,21 @@ public class AnkiDroid extends Activity
 		cardTemplate = r.getString(R.string.card_template);
 	}
 
+	/**
+	 * Create AlertDialogs used on all the activity
+	 */
+	private void initAlertDialogs()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		builder.setMessage("No Internet connection.");
+		builder.setPositiveButton("Ok", null);
+		noConnectionAlert = builder.create();
+		
+	    builder.setMessage("The connection was unsuccessful. Check your connection settings and try again, please.");
+	    connectionFailedAlert = builder.create();
+	}
+	
 	/**
 	 * Set the content view to the one provided and initialize accessors.
 	 */
@@ -1104,7 +1124,7 @@ public class AnkiDroid extends Activity
 	{
 
 		public void onPreExecute() {
-			if(updateDialog == null || !updateDialog.isShowing())
+			if(updateAlert == null || !updateAlert.isShowing())
 			{
 				progressDialog = ProgressDialog.show(AnkiDroid.this, "", getString(R.string.loading_deck), true);
 			}
@@ -1165,8 +1185,7 @@ public class AnkiDroid extends Activity
 
 		@Override
 		public void onDisconnected() {
-			// TODO Auto-generated method stub
-			
+			noConnectionAlert.show();
 		}
 
 		@SuppressWarnings("unchecked")
@@ -1179,7 +1198,7 @@ public class AnkiDroid extends Activity
 			}
 			else
 			{
-				//TODO: Show error alert
+				connectionFailedAlert.show();
 			}
 		}
 
