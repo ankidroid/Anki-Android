@@ -39,131 +39,111 @@ public class AnkiDroidProxy {
 	
 	private static final int CHUNK_SIZE = 32768;
 	
-	public static List<SharedDeck> getSharedDecks() {
+	private static List<SharedDeck> sharedDecks;
+	
+	public static List<SharedDeck> getSharedDecks() throws JSONException, ClientProtocolException, IOException {
 		
-    	List<SharedDeck> sharedDecks = new ArrayList<SharedDeck>();
-		
-		HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/search");
-    	httpGet.setHeader("Accept-Encoding", "identity");
-    	httpGet.setHeader("Host", "anki.ichi2.net");
-    	DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-    	try {
-			HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
+		if(sharedDecks == null)
+		{
+			sharedDecks = new ArrayList<SharedDeck>();
+			
+			HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/search");
+	    	httpGet.setHeader("Accept-Encoding", "identity");
+	    	httpGet.setHeader("Host", "anki.ichi2.net");
+	    	DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+
+	    	HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
 			String response = StringUtils.convertStreamToString(httpResponse.getEntity().getContent());
 			//Log.i(TAG, "Content = " + response);
 			sharedDecks.addAll(handleResult(response));
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		}
 		
 		return sharedDecks;
 	}
 	
-    private static List<SharedDeck> handleResult(String result)
+    private static List<SharedDeck> handleResult(String result) throws JSONException
     {
     	List<SharedDeck> sharedDecks = new ArrayList<SharedDeck>();
     	
-    	try {
-			JSONArray jsonSharedDecks = new JSONArray(result);
+		JSONArray jsonSharedDecks = new JSONArray(result);
+		
+		if(jsonSharedDecks != null)
+		{
+			Log.i(TAG, "Number of shared decks = " + jsonSharedDecks.length());
 			
-			if(jsonSharedDecks != null)
+			for(int i = 0; i < jsonSharedDecks.length(); i++)
 			{
-				Log.i(TAG, "Number of shared decks = " + jsonSharedDecks.length());
+				JSONArray jsonSharedDeck = jsonSharedDecks.getJSONArray(i);
 				
-				for(int i = 0; i < jsonSharedDecks.length(); i++)
-				{
-					JSONArray jsonSharedDeck = jsonSharedDecks.getJSONArray(i);
-					
-					SharedDeck sharedDeck = new SharedDeck();
-					sharedDeck.setId(jsonSharedDeck.getInt(R_ID));
-					sharedDeck.setUsername(jsonSharedDeck.getString(R_USERNAME));
-					sharedDeck.setTitle(jsonSharedDeck.getString(R_TITLE));
-					sharedDeck.setDescription(jsonSharedDeck.getString(R_DESCRIPTION));
-					sharedDeck.setTags(jsonSharedDeck.getString(R_TAGS));
-					sharedDeck.setVersion(jsonSharedDeck.getInt(R_VERSION));
-					sharedDeck.setFacts(jsonSharedDeck.getInt(R_FACTS));
-					sharedDeck.setSize(jsonSharedDeck.getInt(R_SIZE));
-					sharedDeck.setCount(jsonSharedDeck.getInt(R_COUNT));
-					sharedDeck.setModified(jsonSharedDeck.getDouble(R_MODIFIED));
-					sharedDeck.setFileName(jsonSharedDeck.getString(R_FNAME));
-					
-					Log.i(TAG, "Shared deck " + i);
-					sharedDeck.prettyLog();
-					
-					sharedDecks.add(sharedDeck);
-				}
+				SharedDeck sharedDeck = new SharedDeck();
+				sharedDeck.setId(jsonSharedDeck.getInt(R_ID));
+				sharedDeck.setUsername(jsonSharedDeck.getString(R_USERNAME));
+				sharedDeck.setTitle(jsonSharedDeck.getString(R_TITLE));
+				sharedDeck.setDescription(jsonSharedDeck.getString(R_DESCRIPTION));
+				sharedDeck.setTags(jsonSharedDeck.getString(R_TAGS));
+				sharedDeck.setVersion(jsonSharedDeck.getInt(R_VERSION));
+				sharedDeck.setFacts(jsonSharedDeck.getInt(R_FACTS));
+				sharedDeck.setSize(jsonSharedDeck.getInt(R_SIZE));
+				sharedDeck.setCount(jsonSharedDeck.getInt(R_COUNT));
+				sharedDeck.setModified(jsonSharedDeck.getDouble(R_MODIFIED));
+				sharedDeck.setFileName(jsonSharedDeck.getString(R_FNAME));
+				
+				Log.i(TAG, "Shared deck " + i);
+				sharedDeck.prettyLog();
+				
+				sharedDecks.add(sharedDeck);
 			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 		return sharedDecks;
     }
 
-	public static void downloadSharedDeck(SharedDeck sharedDeck) {
+	public static void downloadSharedDeck(SharedDeck sharedDeck) throws ClientProtocolException, IOException {
     	Log.i(TAG, "Downloading deck " + sharedDeck.getId());
-		try {
-    		HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/get?id=" + sharedDeck.getId());
-    		httpGet.setHeader("Accept-Encoding", "identity");
-    		httpGet.setHeader("Host", "anki.ichi2.net");
-    		httpGet.setHeader("Connection", "close");
-    		DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpResponse httpResponse = httpClient.execute(httpGet);
-			Log.i(TAG, "Connection finished!");
-			InputStream is = httpResponse.getEntity().getContent();
-			handleFile(is, sharedDeck);
-			is.close();
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	
+		HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/get?id=" + sharedDeck.getId());
+		httpGet.setHeader("Accept-Encoding", "identity");
+		httpGet.setHeader("Host", "anki.ichi2.net");
+		httpGet.setHeader("Connection", "close");
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		HttpResponse httpResponse = httpClient.execute(httpGet);
+		Log.i(TAG, "Connection finished!");
+		InputStream is = httpResponse.getEntity().getContent();
+		handleFile(is, sharedDeck);
+		is.close();
 	}
 	
-	private static void handleFile(InputStream source, SharedDeck sharedDeck)
+	private static void handleFile(InputStream source, SharedDeck sharedDeck) throws IOException
 	{
-		
-		try {
-			ZipInputStream zipInputStream = null;
-			if(sharedDeck.getFileName().endsWith(".zip"))
+		ZipInputStream zipInputStream = null;
+		if(sharedDeck.getFileName().endsWith(".zip"))
+		{
+			zipInputStream = new ZipInputStream(source);
+			
+			String title = sharedDeck.getTitle();
+			title = title.replace("^", "");
+			title = title.substring(0, java.lang.Math.min(title.length(), 40));
+			
+			if(new File(AnkiDroidApp.getStorageDirectory() + title + ".anki").exists())
+				title += System.currentTimeMillis();
+			
+			ZipEntry zipEntry = null;
+			while((zipEntry = zipInputStream.getNextEntry()) != null)
 			{
-				zipInputStream = new ZipInputStream(source);
+				Log.i(TAG, "zipEntry = " + zipEntry.getName());
 				
-				String title = sharedDeck.getTitle();
-				title = title.replace("^", "");
-				title = title.substring(0, java.lang.Math.min(title.length(), 40));
-				
-				if(new File(AnkiDroidApp.getStorageDirectory() + title + ".anki").exists())
-					title += System.currentTimeMillis();
-				
-				ZipEntry zipEntry = null;
-				while((zipEntry = zipInputStream.getNextEntry()) != null)
+				if("shared.anki".equalsIgnoreCase(zipEntry.getName()))
 				{
-					Log.i(TAG, "zipEntry = " + zipEntry.getName());
-					
-					if("shared.anki".equalsIgnoreCase(zipEntry.getName()))
-					{
-						writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + title + ".anki");
-					}
-					else if(zipEntry.getName().startsWith("shared.media/", 0))
-					{
-						Log.i(TAG, "Folder created = " + new File(AnkiDroidApp.getStorageDirectory() + title + ".media/").mkdir());
-						Log.i(TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
-						writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
-					}
+					writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + title + ".anki");
 				}
-				zipInputStream.close();
+				else if(zipEntry.getName().startsWith("shared.media/", 0))
+				{
+					Log.i(TAG, "Folder created = " + new File(AnkiDroidApp.getStorageDirectory() + title + ".media/").mkdir());
+					Log.i(TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
+					writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
+				}
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			zipInputStream.close();
 		}
 	}
 	
