@@ -118,6 +118,8 @@ public class AnkiDroid extends Activity
 	public static final int PREFERENCES_UPDATE = 1;
 
     public static final int EDIT_CURRENT_CARD = 2;
+    
+    public static final int GET_SHARED_DECK = 3;
 
 	/**
 	 * Variables to hold the state
@@ -513,6 +515,15 @@ public class AnkiDroid extends Activity
 		Log.i(TAG, "openDeckPicker - Ending");
 	}
 
+	public void openSharedDeckPicker()
+	{
+    	if(AnkiDroidApp.deck() != null && sdCardAvailable)
+    		AnkiDroidApp.deck().closeDeck();
+    	deckLoaded = false;
+		Intent intent = new Intent(AnkiDroid.this, SharedDeckPicker.class);
+		startActivityForResult(intent, GET_SHARED_DECK);
+	}
+	
 	@Override
 	public void onSaveInstanceState(Bundle outState)
 	{
@@ -652,6 +663,34 @@ public class AnkiDroid extends Activity
             //TODO: code to save the changes made to the current card.
             mFlipCard.setChecked(true);
             displayCardQuestion();
+		} else if(requestCode == GET_SHARED_DECK)
+		{
+			//Clean the previous card before showing the first of the new loaded deck (so the transition is not so abrupt)
+			updateCard("");
+			hideSdError();
+			hideDeckErrors();
+			
+			if (resultCode != RESULT_OK)
+			{
+				Log.e(TAG, "onActivityResult - Deck browser returned with error");
+				//Make sure we open the database again in onResume() if user pressed "back"
+				deckSelected = false;
+				return;
+			}
+			if (intent == null)
+			{
+				Log.e(TAG, "onActivityResult - Deck browser returned null intent");
+				//Make sure we open the database again in onResume()
+				deckSelected = false;
+				return;
+			}
+			// A deck was picked. Save it in preferences and use it.
+			Log.i(TAG, "onActivityResult = OK");
+			deckFilename = intent.getExtras().getString(OPT_DB);
+			savePreferences();
+
+        	Log.i(TAG, "onActivityResult - deckSelected = " + deckSelected);
+			displayProgressDialogAndLoadDeck();
 		}
 	}
 
@@ -1194,7 +1233,7 @@ public class AnkiDroid extends Activity
 			progressDialog.dismiss();
 			if(data.success)
 			{
-				startActivity(new Intent(AnkiDroid.this, SharedDeckPicker.class));
+				openSharedDeckPicker();
 			}
 			else
 			{

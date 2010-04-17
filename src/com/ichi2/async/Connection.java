@@ -111,7 +111,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 	private Payload doInBackgroundDownloadSharedDeck(Payload data)
 	{
 		try {
-			AnkiDroidProxy.downloadSharedDeck((SharedDeck)data.data[0]);
+			data.result = AnkiDroidProxy.downloadSharedDeck((SharedDeck)data.data[0]);
 		} catch (Exception e) {
 			data.success = false;
 			data.exception = e;

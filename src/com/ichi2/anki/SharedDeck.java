@@ -74,6 +74,14 @@ public class SharedDeck extends HashMap<String, Object>{
 
 	public void setFacts(int facts) {
 		this.facts = facts;
+		if(facts == 1)
+		{
+			put("facts", this.facts + " fact");
+		}
+		else
+		{
+			put("facts", this.facts + " facts");
+		}
 	}
 
 	public int getSize() {

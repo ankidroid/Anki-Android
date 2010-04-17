@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +29,8 @@ public class SharedDeckPicker extends Activity {
 	ListView mSharedDecksListView;
 	SimpleAdapter mSharedDecksAdapter;
 	
+	SharedDeck downloadedDeck;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,7 +39,7 @@ public class SharedDeckPicker extends Activity {
 		initAlertDialogs();
 		
 		mSharedDecks = new ArrayList<SharedDeck>();
-		mSharedDecksAdapter = new SimpleAdapter(this, mSharedDecks, R.layout.shared_deck_item, new String[] {"title"}, new int[] {R.id.SharedDeckTitle});
+		mSharedDecksAdapter = new SimpleAdapter(this, mSharedDecks, R.layout.shared_deck_item, new String[] {"title", "facts"}, new int[] {R.id.SharedDeckTitle, R.id.SharedDeckFacts});
 		mSharedDecksListView = (ListView)findViewById(R.id.files);
 		mSharedDecksListView.setAdapter(mSharedDecksAdapter);
 		mSharedDecksListView.setOnItemClickListener(new OnItemClickListener() {
@@ -44,7 +47,8 @@ public class SharedDeckPicker extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
-				Connection.downloadSharedDeck(downloadSharedDeckListener, new Connection.Payload(new Object[] {mSharedDecks.get(position)}));
+				downloadedDeck = mSharedDecks.get(position);
+				Connection.downloadSharedDeck(downloadSharedDeckListener, new Connection.Payload(new Object[] {downloadedDeck}));
 			}
 			
 		});
@@ -114,7 +118,16 @@ public class SharedDeckPicker extends Activity {
 		@Override
 		public void onPostExecute(Payload data) {
 			progressDialog.dismiss();
-			if(!data.success)
+			if(data.success)
+			{
+				Intent intent = SharedDeckPicker.this.getIntent();
+				// Return the name of the downloaded deck
+				intent.putExtra(AnkiDroid.OPT_DB, (String)data.result);
+				setResult(RESULT_OK, intent);
+
+				finish();
+			}
+			else
 			{
 				connectionFailedAlert.show();
 			}

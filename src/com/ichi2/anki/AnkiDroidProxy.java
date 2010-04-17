@@ -75,7 +75,7 @@ public class AnkiDroidProxy {
 		
 		if(jsonSharedDecks != null)
 		{
-			Log.i(TAG, "Number of shared decks = " + jsonSharedDecks.length());
+			//Log.i(TAG, "Number of shared decks = " + jsonSharedDecks.length());
 			
 			for(int i = 0; i < jsonSharedDecks.length(); i++)
 			{
@@ -94,8 +94,7 @@ public class AnkiDroidProxy {
 				sharedDeck.setModified(jsonSharedDeck.getDouble(R_MODIFIED));
 				sharedDeck.setFileName(jsonSharedDeck.getString(R_FNAME));
 				
-				Log.i(TAG, "Shared deck " + i);
-				sharedDeck.prettyLog();
+				//sharedDeck.prettyLog();
 				
 				sharedDecks.add(sharedDeck);
 			}
@@ -104,7 +103,7 @@ public class AnkiDroidProxy {
 		return sharedDecks;
     }
 
-	public static void downloadSharedDeck(SharedDeck sharedDeck) throws ClientProtocolException, IOException {
+	public static String downloadSharedDeck(SharedDeck sharedDeck) throws ClientProtocolException, IOException {
     	Log.i(TAG, "Downloading deck " + sharedDeck.getId());
     	
 		HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/get?id=" + sharedDeck.getId());
@@ -115,12 +114,16 @@ public class AnkiDroidProxy {
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		Log.i(TAG, "Connection finished!");
 		InputStream is = httpResponse.getEntity().getContent();
-		handleFile(is, sharedDeck);
+		String deckFilename = handleFile(is, sharedDeck);
 		is.close();
+		
+		return deckFilename;
 	}
 	
-	private static void handleFile(InputStream source, SharedDeck sharedDeck) throws IOException
+	private static String handleFile(InputStream source, SharedDeck sharedDeck) throws IOException
 	{
+		String deckFilename = "";
+		
 		ZipInputStream zipInputStream = null;
 		if(sharedDeck.getFileName().endsWith(".zip"))
 		{
@@ -133,24 +136,29 @@ public class AnkiDroidProxy {
 			if(new File(AnkiDroidApp.getStorageDirectory() + "/" + title + ".anki").exists())
 				title += System.currentTimeMillis();
 			
+			String partialDeckPath = AnkiDroidApp.getStorageDirectory() + "/" + title;
+			deckFilename = partialDeckPath + ".anki";
+			
 			ZipEntry zipEntry = null;
 			while((zipEntry = zipInputStream.getNextEntry()) != null)
 			{
-				Log.i(TAG, "zipEntry = " + zipEntry.getName());
+				//Log.i(TAG, "zipEntry = " + zipEntry.getName());
 				
 				if("shared.anki".equalsIgnoreCase(zipEntry.getName()))
 				{
-					writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + "/" + title + ".anki");
+					writeToFile(zipInputStream, deckFilename);
 				}
 				else if(zipEntry.getName().startsWith("shared.media/", 0))
 				{
-					Log.i(TAG, "Folder created = " + new File(AnkiDroidApp.getStorageDirectory() + title + ".media/").mkdir());
-					Log.i(TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
-					writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
+					//Log.i(TAG, "Folder created = " + new File(AnkiDroidApp.getStorageDirectory() + title + ".media/").mkdir());
+					//Log.i(TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
+					writeToFile(zipInputStream, partialDeckPath + ".media/" + zipEntry.getName().replace("shared.media/", ""));
 				}
 			}
 			zipInputStream.close();
 		}
+		
+		return deckFilename;
 	}
 	
 	/**
@@ -158,12 +166,12 @@ public class AnkiDroidProxy {
 	 */
 	private static boolean writeToFile(InputStream source, String destination)
 	{
-		Log.i(TAG, "writeToFile = " + destination);
+		//Log.i(TAG, "writeToFile = " + destination);
 		try
 		{
-			Log.i(TAG, "createNewFile");
+			//Log.i(TAG, "createNewFile");
 			new File(destination).createNewFile();
-			Log.i(TAG, "New file created");
+			//Log.i(TAG, "New file created");
 	
 			OutputStream output = new FileOutputStream(destination);
 			
@@ -173,19 +181,19 @@ public class AnkiDroidProxy {
 			if(source == null) Log.i(TAG, "source is null!");
 			while ((len = source.read(buf)) > 0)
 			{
-				Log.i(TAG, "Writing to file...");
+				//Log.i(TAG, "Writing to file...");
 				output.write(buf, 0, len);
 			}
 			
 			//source.close();
 			output.close();
-			Log.i(TAG, "Write finished!");
+			//Log.i(TAG, "Write finished!");
 
 		} catch (Exception e) {
 			// Most probably the SD card is not mounted on the Android.
 			// Tell the user to turn off USB storage, which will automatically
 			// mount it on Android.
-			Log.i(TAG, "IOException e = " + e.getMessage());
+			//Log.i(TAG, "IOException e = " + e.getMessage());
 			return false;
 		}
 		return true;
