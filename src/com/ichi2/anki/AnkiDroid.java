@@ -387,13 +387,15 @@ public class AnkiDroid extends Activity
 	 */
 	private void initAlertDialogs()
 	{
+		Resources res = getResources();
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		
-		builder.setMessage("No Internet connection.");
-		builder.setPositiveButton("Ok", null);
+		builder.setMessage(res.getString(R.string.connection_needed));
+		builder.setPositiveButton(res.getString(R.string.ok), null);
 		noConnectionAlert = builder.create();
 		
-	    builder.setMessage("The connection was unsuccessful. Check your connection settings and try again, please.");
+	    builder.setMessage(res.getString(R.string.connection_unsuccessful));
 	    connectionFailedAlert = builder.create();
 	}
 	
@@ -1243,7 +1245,7 @@ public class AnkiDroid extends Activity
 
 		@Override
 		public void onPreExecute() {
-			progressDialog = ProgressDialog.show(AnkiDroid.this, "", "Loading available shared decks...");
+			progressDialog = ProgressDialog.show(AnkiDroid.this, "", getResources().getString(R.string.loading_shared_decks));
 		}
 
 		@Override

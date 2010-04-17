@@ -21,6 +21,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.os.Environment;
 
 import com.ichi2.async.Connection;
@@ -47,7 +48,12 @@ public class AnkiDroidApp extends Application {
      * Currently loaded Anki deck.
      */
     private Deck loadedDeck;
-
+    
+    /**
+     * Resources
+     */
+    private Resources res;
+    
     /**
      * On application creation.
      */
@@ -58,6 +64,7 @@ public class AnkiDroidApp extends Application {
 
 		Connection.setContext(getApplicationContext());
 		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+		res = getResources();
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
 		// Assign some default settings if necessary
 		if (prefs.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
@@ -89,6 +96,11 @@ public class AnkiDroidApp extends Application {
     public static String getStorageDirectory()
     {
     	return instance.storageDirectory;
+    }
+    
+    public static Resources getAppResources()
+    {
+    	return instance.res;
     }
     
     public static Deck deck()

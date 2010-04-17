@@ -26,7 +26,7 @@
 
 <string name="yes">Yes</string>
 <string name="no">No</string>
-
+<string name="ok">OK</string>
 
 
 <string name="deck_not_loaded">Failed to load deck.</string>
@@ -108,6 +108,9 @@
 <!-- AnkiDroid.java strings -->
 <string name="loading_new_card">Loading new card...</string>
 <string name="loading_deck">Loading deck. Please wait...</string>
+<string name="loading_shared_decks">Loading available shared decks...</string>
+<string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>
+<string name="connection_needed">No Internet connection</string>
 <string name="preferences">Preferences</string>
 <string name="about">About</string>
 <string name="study_options">Study Options</string>
@@ -116,6 +119,12 @@
 <string name="switch_another_deck">Switch to another deck</string>
 <string name="get_shared_deck">Get shared deck</string>
 
+<!-- SharedDeckPicker.java -->
+<string name="downloading_shared_deck">Downloading shared deck...</string>
+
+<!-- SharedDeck.java -->
+<string name="fact">fact</string>
+<string name="facts">facts</string>
 
 <string name="saving_changes">Saving changes...</string>
 <string name="session_question_limit_reached">Session question limit reached</string>

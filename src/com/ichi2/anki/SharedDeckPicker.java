@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -60,13 +61,15 @@ public class SharedDeckPicker extends Activity {
 	 */
 	private void initAlertDialogs()
 	{
+		Resources res = getResources();
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		
-		builder.setMessage("No Internet connection.");
-		builder.setPositiveButton("Ok", null);
+		builder.setMessage(res.getString(R.string.connection_needed));
+		builder.setPositiveButton(res.getString(R.string.ok), null);
 		noConnectionAlert = builder.create();
 		
-	    builder.setMessage("The connection was unsuccessful. Check your connection settings and try again, please.");
+	    builder.setMessage(res.getString(R.string.connection_unsuccessful));
 	    connectionFailedAlert = builder.create();
 	}
 	
@@ -135,7 +138,7 @@ public class SharedDeckPicker extends Activity {
 
 		@Override
 		public void onPreExecute() {
-			progressDialog = ProgressDialog.show(SharedDeckPicker.this, "", "Downloading shared deck...");
+			progressDialog = ProgressDialog.show(SharedDeckPicker.this, "", getResources().getString(R.string.downloading_shared_deck));
 		}
 
 		@Override
