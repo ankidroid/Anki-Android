@@ -110,7 +110,7 @@
 <string name="suspend">Suspendre</string>
 <string name="edit_card">Editar targeta</string>
 <string name="switch_another_deck">Canviar a una altra baralla</string>
-
+<string name="get_shared_deck">Descarregar baralla compartida</string>
 
 <string name="saving_changes">Desant canvis...</string>
 <string name="session_question_limit_reached">S\'ha arribat al límit de preguntes de la sessió</string>

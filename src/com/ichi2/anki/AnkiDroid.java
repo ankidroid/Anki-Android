@@ -95,6 +95,8 @@ public class AnkiDroid extends Activity
 	public static final int MENU_SUSPEND = 4;
 
     private static final int MENU_EDIT = 5; 
+    
+    private static final int MENU_GET_SHARED_DECK = 6;
 
 	/**
 	 * Possible outputs trying to load a deck
@@ -419,6 +421,7 @@ public class AnkiDroid extends Activity
 		menu.add(1, MENU_DECKOPTS, 0, getString(R.string.study_options));
 		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
         menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
+        menu.add(1, MENU_GET_SHARED_DECK, 0, getString(R.string.get_shared_deck));
 		return true;
 	}
 

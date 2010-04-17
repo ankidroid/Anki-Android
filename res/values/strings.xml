@@ -113,6 +113,7 @@
 <string name="suspend">Suspend</string>
 <string name="edit_card">Edit Card</string>
 <string name="switch_another_deck">Switch to another deck</string>
+<string name="get_shared_deck">Get shared deck</string>
 
 
 <string name="saving_changes">Saving changes...</string>
