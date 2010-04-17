@@ -114,8 +114,6 @@ public class AnkiDroid extends Activity
 
     public static final int EDIT_CURRENT_CARD = 2;
 
-
-
 	/**
 	 * Variables to hold the state
 	 */
@@ -247,9 +245,6 @@ public class AnkiDroid extends Activity
 		}
 	};
 
-	
-
-	
 	View.OnClickListener mButtonReviewEarlyHandler = new View.OnClickListener()
 	{
 		public void onClick(View view)
@@ -330,11 +325,11 @@ public class AnkiDroid extends Activity
 					// These people will understand how it works and will get to
 					// love it!
 					// TODO Where should we put this sample deck?
-					String SAMPLE_DECK_FILENAME = "/sdcard/country-capitals.anki";
+					String SAMPLE_DECK_FILENAME = AnkiDroidApp.getStorageDirectory() + "/country-capitals.anki";
 					if (!new File(/*
 								 * deckFilename triggers NPE bug in
 								 * java.io.File.java
-								 */"/sdcard", "country-capitals.anki").exists())
+								 */AnkiDroidApp.getStorageDirectory(), "country-capitals.anki").exists())
 					{
 						try
 						{
