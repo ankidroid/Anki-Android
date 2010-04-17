@@ -57,6 +57,7 @@ public class AnkiDroidApp extends Application {
 		instance = this;
 
 		Connection.setContext(getApplicationContext());
+		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
 		// Assign some default settings if necessary
 		if (prefs.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
@@ -69,7 +70,6 @@ public class AnkiDroidApp extends Application {
 			editor.putString(PrefSettings.KEY_CHECK_URI, "http://ankidroid.googlecode.com/files/test_notifications.xml");*/
 			editor.putString(PrefSettings.KEY_CHECK_URI, "http://ankidroid.googlecode.com/files/last_release.xml");
 			// Put the base path to the external storage on preferences
-			storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
 			editor.putString("deckPath", storageDirectory);
 			editor.commit();
 		}

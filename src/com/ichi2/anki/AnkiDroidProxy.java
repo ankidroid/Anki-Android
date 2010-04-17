@@ -41,21 +41,27 @@ public class AnkiDroidProxy {
 	
 	private static List<SharedDeck> sharedDecks;
 	
-	public static List<SharedDeck> getSharedDecks() throws JSONException, ClientProtocolException, IOException {
+	public static List<SharedDeck> getSharedDecks() throws Exception {
 		
-		if(sharedDecks == null)
+		try {
+			if(sharedDecks == null)
+			{
+				sharedDecks = new ArrayList<SharedDeck>();
+				
+				HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/search");
+		    	httpGet.setHeader("Accept-Encoding", "identity");
+		    	httpGet.setHeader("Host", "anki.ichi2.net");
+		    	DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+	
+		    	HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
+				String response = StringUtils.convertStreamToString(httpResponse.getEntity().getContent());
+				//Log.i(TAG, "Content = " + response);
+				sharedDecks.addAll(handleResult(response));
+			}
+		} catch (Exception e)
 		{
-			sharedDecks = new ArrayList<SharedDeck>();
-			
-			HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/search");
-	    	httpGet.setHeader("Accept-Encoding", "identity");
-	    	httpGet.setHeader("Host", "anki.ichi2.net");
-	    	DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-
-	    	HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
-			String response = StringUtils.convertStreamToString(httpResponse.getEntity().getContent());
-			//Log.i(TAG, "Content = " + response);
-			sharedDecks.addAll(handleResult(response));
+			sharedDecks = null;
+			throw new Exception();
 		}
 		
 		return sharedDecks;
@@ -124,7 +130,7 @@ public class AnkiDroidProxy {
 			title = title.replace("^", "");
 			title = title.substring(0, java.lang.Math.min(title.length(), 40));
 			
-			if(new File(AnkiDroidApp.getStorageDirectory() + title + ".anki").exists())
+			if(new File(AnkiDroidApp.getStorageDirectory() + "/" + title + ".anki").exists())
 				title += System.currentTimeMillis();
 			
 			ZipEntry zipEntry = null;
@@ -134,13 +140,13 @@ public class AnkiDroidProxy {
 				
 				if("shared.anki".equalsIgnoreCase(zipEntry.getName()))
 				{
-					writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + title + ".anki");
+					writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + "/" + title + ".anki");
 				}
 				else if(zipEntry.getName().startsWith("shared.media/", 0))
 				{
 					Log.i(TAG, "Folder created = " + new File(AnkiDroidApp.getStorageDirectory() + title + ".media/").mkdir());
-					Log.i(TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
-					writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
+					Log.i(TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
+					writeToFile(zipInputStream, AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
 				}
 			}
 			zipInputStream.close();
@@ -152,7 +158,7 @@ public class AnkiDroidProxy {
 	 */
 	private static boolean writeToFile(InputStream source, String destination)
 	{
-		Log.i(TAG, "writeToFile");
+		Log.i(TAG, "writeToFile = " + destination);
 		try
 		{
 			Log.i(TAG, "createNewFile");
