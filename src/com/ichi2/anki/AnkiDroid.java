@@ -470,6 +470,8 @@ public class AnkiDroid extends Activity
             Intent editCard = new Intent(this, CardEditor.class);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
             return true;
+        case MENU_GET_SHARED_DECK:
+        	return true;
 		}
 		return false;
 	}
