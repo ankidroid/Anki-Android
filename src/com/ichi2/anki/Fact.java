@@ -64,7 +64,6 @@ public class Fact {
         fromDb(id);
         //TODO: load fields associated with this fact.
 
-
     }
 
 
@@ -83,7 +82,7 @@ public class Fact {
         this.fields = fields;
     }
 
-    private boolean fromDb(long id)
+    public boolean fromDb(long id)
     {
         this.id = id;
         Cursor cursor = null;

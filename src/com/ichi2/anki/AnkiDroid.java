@@ -576,7 +576,12 @@ public class AnkiDroid extends Activity
 
 	private void displayProgressDialogAndLoadDeck()
 	{
-		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
+		displayProgressDialogAndLoadDeck(false);
+	}
+
+	private void displayProgressDialogAndLoadDeck(boolean updateAllCards)
+	{
+		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename + ", update all cards = " + updateAllCards);
 
 		// Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
 		deckSelected = true;
@@ -586,10 +591,20 @@ public class AnkiDroid extends Activity
 			if (deckFilename != null && new File(deckFilename).exists())
 			{
 				showControls(false);
-				DeckTask.launchDeckTask(
-						DeckTask.TASK_TYPE_LOAD_DECK,
-						mLoadDeckHandler,
-						new DeckTask.TaskData(deckFilename));
+				if(updateAllCards)
+				{
+					DeckTask.launchDeckTask(
+							DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS,
+							mLoadDeckHandler,
+							new DeckTask.TaskData(deckFilename));
+				}
+				else
+				{
+					DeckTask.launchDeckTask(
+							DeckTask.TASK_TYPE_LOAD_DECK,
+							mLoadDeckHandler,
+							new DeckTask.TaskData(deckFilename));
+				}
 			}
 			else
 			{
@@ -612,8 +627,7 @@ public class AnkiDroid extends Activity
 		}
 
 	}
-
-
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
@@ -692,7 +706,8 @@ public class AnkiDroid extends Activity
 			savePreferences();
 
         	Log.i(TAG, "onActivityResult - deckSelected = " + deckSelected);
-			displayProgressDialogAndLoadDeck();
+        	// Load deck and update all cards, because if that is not done both the answer and question will be empty
+			displayProgressDialogAndLoadDeck(true);
 		}
 	}
 
