@@ -20,8 +20,8 @@
 <resources>
     <string name="CardEditorCancelButton">Cancel</string>
     <string name="CardEditorSaveButton">Save</string>
-    
-    
+
+
 <string name="app_name">AnkiDroid</string>
 
 <string name="yes">Yes</string>
@@ -87,6 +87,9 @@
 
 
 <!-- preferences.xml strings -->
+<string name="pref_cat_decks">Decks</string>
+<string name="pref_cat_study">Study options</string>
+<string name="pref_cat_qadisplay">Question and answer display</string>
 <string name="show_whiteboard">Show timer / whiteboard</string>
 <string name="show_whiteboard_summ">Lets you write on the screen</string>
 <string name="sample_deck">Sample deck</string>
@@ -95,6 +98,12 @@
 <string name="corporal_punishments_summ">Vibrate on error, that will teach you</string>
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
+<string name="use_ruby_support">Provide ruby annotation support</string>
+<string name="use_ruby_support_summ">If the characters '[' and ']' are found, then the enclosed text is handled as a ruby annotation</string>
+<string name="qa_font_size">Font size</string>
+<string name="qa_font_size_summ">Default font size. Using 'Relative' changes the font dynamically based on space</string>
+<string name="show_question_answer">Show question in answer</string>
+<string name="show_question_answer_summ">Shows the question also when displaying the answer unless user entered answer.</string>
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where the your decks are stored</string>
 
