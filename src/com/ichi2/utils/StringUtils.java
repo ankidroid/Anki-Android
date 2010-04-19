@@ -14,30 +14,40 @@
 * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
 ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.utils;
 
-import android.util.Log;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-/**
- * Class used to display and handle correctly images
- */
-public class Image {
-	
+public class StringUtils {
+
 	/**
-	 * Tag for logging messages
-	 */
-	private static final String TAG = "AnkiDroid";
-	
-	/**
+	 * Converts an InputStream to a String
 	 * 
-	 * @param deckFilename Deck's filename whose images are going to be load
-	 * @param content HTML content of a card's side (question or answer)
-	 * @return content Modified content in order to display correctly the images
+	 * @param is
+	 *            InputStream to convert
+	 * @return String version of the InputStream
 	 */
-	public static String loadImages(String deckFilename, String content)
+	public static String convertStreamToString(InputStream is)
 	{
-		Log.i(TAG, "Image - loadImages, filename = " + deckFilename);
-		String imagePath = deckFilename.replaceAll(".anki", ".media/");
-		return content.replaceAll("<img src=\"", "<img src=\"" + "content://com.ichi2.anki" + imagePath);
+		String contentOfMyInputStream = "";
+		try
+		{
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is), 4096);
+			String line;
+			StringBuilder sb = new StringBuilder();
+			while ((line = rd.readLine()) != null)
+			{
+				sb.append(line);
+			}
+			rd.close();
+			contentOfMyInputStream = sb.toString();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return contentOfMyInputStream;
 	}
 }

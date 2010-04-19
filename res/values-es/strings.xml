@@ -23,7 +23,7 @@
 
 <string name="yes">Sí</string>
 <string name="no">No</string>
-
+<string name="ok"></string>
 
 
 <string name="deck_not_loaded">Error al cargar el mazo.</string>
@@ -96,6 +96,7 @@
 <string name="deck_path_summ">Directorio donde tus mazos están almacenados</string>
 
 <!-- AndroidManifest.xml strings -->
+<string name="shareddeckpicker_title">Selecciona el mazo a descargar</string>
 <string name="preferences_title">Preferencias</string>
 <string name="deckpreferences_title">Preferencias mazo</string>
 <string name="about_title">Acerca de</string>
@@ -104,13 +105,23 @@
 <!-- AnkiDroid.java strings -->
 <string name="loading_new_card">Cargando nueva tarjeta...</string>
 <string name="loading_deck">Cargando mazo. Por favor, espere...</string>
+<string name="loading_shared_decks">Cargando lista de mazos compartidos...</string>
+<string name="connection_unsuccessful">No se ha podido realizar la conexión.</string>
+<string name="connection_needed">No hay internet</string>
 <string name="preferences">Preferencias</string>
 <string name="about">Acerca de</string>
 <string name="study_options">Opciones de estudio</string>
 <string name="suspend">Suspender</string>
 <string name="edit_card">Editar tarjeta</string>
 <string name="switch_another_deck">Cambiar a otro mazo</string>
+<string name="get_shared_deck">Descargar mazo compartido</string>
 
+<!-- SharedDeckPicker.java -->
+<string name="downloading_shared_deck">Descargando mazo compartido...</string>
+
+<!-- SharedDeck.java -->
+<string name="fact">hecho</string>
+<string name="facts">hechos</string>
 
 <string name="saving_changes">Guardando cambios...</string>
 <string name="session_question_limit_reached">Se ha alcanzado el límite de preguntas de la sesión</string>

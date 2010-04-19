@@ -103,7 +103,7 @@ public class DeckPicker extends Activity implements Runnable
 
 		mSelf = this;
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		String deckPath = preferences.getString("deckPath", "/sdcard");
+		String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
 		setContentView(R.layout.main);
 
 		mDeckList = new ArrayList<HashMap<String, String>>();
@@ -406,12 +406,12 @@ public class DeckPicker extends Activity implements Runnable
                     if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
                     	Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
                 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                		String deckPath = preferences.getString("deckPath", "/sdcard");
+                		String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
                     	populateDeckList(deckPath);
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                     	Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
                 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                		String deckPath = preferences.getString("deckPath", "/sdcard");
+                		String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
                 		mDeckIsSelected = false;
                 		setTitle(R.string.deckpicker_title);
                     	populateDeckList(deckPath);

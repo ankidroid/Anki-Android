@@ -1,5 +1,6 @@
 /****************************************************************************************
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -36,9 +37,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	private static final String TAG = "AnkiDroid";
 
 	public static final int TASK_TYPE_LOAD_DECK = 0;
-	public static final int TASK_TYPE_ANSWER_CARD = 1;
-	public static final int TASK_TYPE_SUSPEND_CARD = 2;
-    public static final int TASK_TYPE_UPDATE_FACT = 3;
+	public static final int TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS = 1;
+	public static final int TASK_TYPE_ANSWER_CARD = 2;
+	public static final int TASK_TYPE_SUSPEND_CARD = 3;
+    public static final int TASK_TYPE_UPDATE_FACT = 4;
 
 	private static DeckTask instance;
 	private static DeckTask oldInstance;
@@ -88,16 +90,29 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		
 		switch (type)
 		{
-		case TASK_TYPE_LOAD_DECK:
-			return doInBackgroundLoadDeck(params);
-		case TASK_TYPE_ANSWER_CARD:
-			return doInBackgroundAnswerCard(params);
-		case TASK_TYPE_SUSPEND_CARD:
-			return doInBackgroundSuspendCard(params);
-        case TASK_TYPE_UPDATE_FACT:
-            return doInBackgroundUpdateFact(params);
-		default:
-			return null;
+			case TASK_TYPE_LOAD_DECK:
+				return doInBackgroundLoadDeck(params);
+			
+			case TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS:
+				TaskData taskData = doInBackgroundLoadDeck(params);
+				if(taskData.integer == AnkiDroid.DECK_LOADED)
+				{
+					taskData.deck.updateAllCards();
+					taskData.card = taskData.deck.getCurrentCard();
+				}
+				return taskData;
+				
+			case TASK_TYPE_ANSWER_CARD:
+				return doInBackgroundAnswerCard(params);
+		
+			case TASK_TYPE_SUSPEND_CARD:
+				return doInBackgroundSuspendCard(params);
+        
+			case TASK_TYPE_UPDATE_FACT:
+				return doInBackgroundUpdateFact(params);
+		
+			default:
+				return null;
 		}
 	}
 
@@ -121,7 +136,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundUpdateFact(TaskData[] params) {
 
-// Save the fact
+    	// Save the fact
         Deck deck = params[0].getDeck();
         Card editCard = params[0].getCard();
         Fact editFact = editCard.fact;

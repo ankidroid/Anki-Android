@@ -1,6 +1,7 @@
 /****************************************************************************************
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
 * Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>                             *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -696,6 +697,37 @@ public class Deck
 //        
         Log.v(TAG, "Update question and answer in card id# " + card.id);
         
+	}
+	
+	// TODO: The real methods to update cards on Anki should be implemented instead of this
+	public void updateAllCards()
+	{
+        Cursor cursor = AnkiDb.database.rawQuery(
+                "SELECT id, factId " +
+                "FROM cards", 
+                null);
+
+        while (cursor.moveToNext())
+        {
+        	// Get card
+            Card card = new Card();
+            card.fromDB(cursor.getLong(0));
+            Log.i(TAG, "Card id = " + card.id);
+            
+            // Get the related fact
+            Fact fact = card.getFact();
+            //Log.i(TAG, "Fact id = " + fact.id);
+            
+            // Generate the question and answer for this card and update it
+            HashMap<String,String> newQA = CardModel.formatQA(fact, card.getCardModel());
+            card.question = newQA.get("question");
+            Log.i(TAG, "Question = " + card.question);
+            card.answer = newQA.get("answer");
+            Log.i(TAG, "Answer = " + card.answer);
+            card.modified = System.currentTimeMillis() / 1000.0;
+            
+            card.toDB();
+        }
 	}
 	
 	/* Answering a card

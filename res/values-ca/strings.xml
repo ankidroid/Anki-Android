@@ -23,7 +23,7 @@
 
 <string name="yes">Si</string>
 <string name="no">No</string>
-
+<string name="ok">Acceptar</string>
 
 
 <string name="deck_not_loaded">Error al carregar la baralla.</string>
@@ -96,6 +96,7 @@
 <string name="deck_path_summ">Directori on les teves baralles es troben emmagatzemades</string>
 
 <!-- AndroidManifest.xml strings -->
+<string name="shareddeckpicker_title">Selecciona la baralla a descarregar</string>
 <string name="preferences_title">Preferències</string>
 <string name="deckpreferences_title">Preferències baralla</string>
 <string name="about_title">Sobre</string>
@@ -104,13 +105,23 @@
 <!-- AnkiDroid.java strings -->
 <string name="loading_new_card">Carregant nova targeta...</string>
 <string name="loading_deck">Carregant baralla. Si us plau, esperi...</string>
+<string name="loading_shared_decks">Carregant llista de baralles compartides...</string>
+<string name="connection_unsuccessful">No s\'ha pogut realitzar la connexió.</string>
+<string name="connection_needed">No hi ha internet</string>
 <string name="preferences">Preferències</string>
 <string name="about">Sobre</string>
 <string name="study_options">Opcions d\'estudi</string>
 <string name="suspend">Suspendre</string>
 <string name="edit_card">Editar targeta</string>
 <string name="switch_another_deck">Canviar a una altra baralla</string>
+<string name="get_shared_deck">Descarregar baralla compartida</string>
 
+<!-- SharedDeckPicker.java -->
+<string name="downloading_shared_deck">Descarregant baralla compartida...</string>
+
+<!-- SharedDeck.java -->
+<string name="fact">fet</string>
+<string name="facts">fets</string>
 
 <string name="saving_changes">Desant canvis...</string>
 <string name="session_question_limit_reached">S\'ha arribat al límit de preguntes de la sessió</string>

@@ -21,7 +21,10 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
+import android.os.Environment;
 
+import com.ichi2.async.Connection;
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -37,10 +40,20 @@ public class AnkiDroidApp extends Application {
     private static AnkiDroidApp instance;
     
     /**
+     * Base path to the available external storage
+     */
+    private String storageDirectory; 
+    
+    /**
      * Currently loaded Anki deck.
      */
     private Deck loadedDeck;
-
+    
+    /**
+     * Resources
+     */
+    private Resources res;
+    
     /**
      * On application creation.
      */
@@ -49,6 +62,9 @@ public class AnkiDroidApp extends Application {
 		super.onCreate();
 		instance = this;
 
+		Connection.setContext(getApplicationContext());
+		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+		res = getResources();
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
 		// Assign some default settings if necessary
 		if (prefs.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
@@ -60,6 +76,8 @@ public class AnkiDroidApp extends Application {
 			editor.putLong(PrefSettings.KEY_CHECK_INTERVAL, 60 * 1000L);
 			editor.putString(PrefSettings.KEY_CHECK_URI, "http://ankidroid.googlecode.com/files/test_notifications.xml");*/
 			editor.putString(PrefSettings.KEY_CHECK_URI, "http://ankidroid.googlecode.com/files/last_release.xml");
+			// Put the base path to the external storage on preferences
+			editor.putString("deckPath", storageDirectory);
 			editor.commit();
 		}
 
@@ -75,6 +93,16 @@ public class AnkiDroidApp extends Application {
         return instance;
     }
 
+    public static String getStorageDirectory()
+    {
+    	return instance.storageDirectory;
+    }
+    
+    public static Resources getAppResources()
+    {
+    	return instance.res;
+    }
+    
     public static Deck deck()
     {
         return instance.loadedDeck;

@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -55,6 +56,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.Payload;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -99,6 +102,8 @@ public class AnkiDroid extends Activity
 
 	private static final int MENU_EDIT = 5; 
 
+	private static final int MENU_GET_SHARED_DECKS = 6;
+
 	/**
 	 * Possible outputs trying to load a deck
 	 */
@@ -115,14 +120,20 @@ public class AnkiDroid extends Activity
 
 	public static final int PREFERENCES_UPDATE = 1;
 
-	public static final int EDIT_CURRENT_CARD = 2;
+    public static final int EDIT_CURRENT_CARD = 2;
+    
+    public static final int GET_SHARED_DECK = 3;
 
 	/**
 	 * Variables to hold the state
 	 */
 	private ProgressDialog progressDialog;
 
-	private AlertDialog updateDialog;
+	private AlertDialog updateAlert;
+	
+	private AlertDialog noConnectionAlert;
+	
+	private AlertDialog connectionFailedAlert;
 
 	private BroadcastReceiver mUnmountReceiver = null;
 
@@ -254,9 +265,6 @@ public class AnkiDroid extends Activity
 		}
 	};
 
-	
-
-	
 	View.OnClickListener mButtonReviewEarlyHandler = new View.OnClickListener()
 	{
 		public void onClick(View view)
@@ -299,6 +307,7 @@ public class AnkiDroid extends Activity
 
 		Bundle extras = getIntent().getExtras();
 		SharedPreferences preferences = restorePreferences();
+		initAlertDialogs();
 		initLayout(R.layout.flashcard_portrait);
 
 		registerExternalStorageListener();
@@ -337,11 +346,11 @@ public class AnkiDroid extends Activity
 					// These people will understand how it works and will get to
 					// love it!
 					// TODO Where should we put this sample deck?
-					String SAMPLE_DECK_FILENAME = "/sdcard/country-capitals.anki";
+					String SAMPLE_DECK_FILENAME = AnkiDroidApp.getStorageDirectory() + "/country-capitals.anki";
 					if (!new File(/*
 								 * deckFilename triggers NPE bug in
 								 * java.io.File.java
-								 */"/sdcard", "country-capitals.anki").exists())
+								 */AnkiDroidApp.getStorageDirectory(), "country-capitals.anki").exists())
 					{
 						try
 						{
@@ -382,6 +391,23 @@ public class AnkiDroid extends Activity
 		cardTemplate = r.getString(R.string.card_template);
 	}
 
+	/**
+	 * Create AlertDialogs used on all the activity
+	 */
+	private void initAlertDialogs()
+	{
+		Resources res = getResources();
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		builder.setMessage(res.getString(R.string.connection_needed));
+		builder.setPositiveButton(res.getString(R.string.ok), null);
+		noConnectionAlert = builder.create();
+		
+	    builder.setMessage(res.getString(R.string.connection_unsuccessful));
+	    connectionFailedAlert = builder.create();
+	}
+	
 	/**
 	 * Set the content view to the one provided and initialize accessors.
 	 */
@@ -431,6 +457,7 @@ public class AnkiDroid extends Activity
 		menu.add(1, MENU_DECKOPTS, 0, getString(R.string.study_options));
 		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
         menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
+        menu.add(1, MENU_GET_SHARED_DECKS, 0, getString(R.string.get_shared_deck));
 		return true;
 	}
 
@@ -479,6 +506,9 @@ public class AnkiDroid extends Activity
             Intent editCard = new Intent(this, CardEditor.class);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
             return true;
+        case MENU_GET_SHARED_DECKS:
+        	Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+        	return true;
 		}
 		return false;
 	}
@@ -496,6 +526,15 @@ public class AnkiDroid extends Activity
 		Log.i(TAG, "openDeckPicker - Ending");
 	}
 
+	public void openSharedDeckPicker()
+	{
+    	if(AnkiDroidApp.deck() != null && sdCardAvailable)
+    		AnkiDroidApp.deck().closeDeck();
+    	deckLoaded = false;
+		Intent intent = new Intent(AnkiDroid.this, SharedDeckPicker.class);
+		startActivityForResult(intent, GET_SHARED_DECK);
+	}
+	
 	@Override
 	public void onSaveInstanceState(Bundle outState)
 	{
@@ -546,7 +585,12 @@ public class AnkiDroid extends Activity
 
 	private void displayProgressDialogAndLoadDeck()
 	{
-		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
+		displayProgressDialogAndLoadDeck(false);
+	}
+
+	private void displayProgressDialogAndLoadDeck(boolean updateAllCards)
+	{
+		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename + ", update all cards = " + updateAllCards);
 
 		// Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
 		deckSelected = true;
@@ -556,10 +600,20 @@ public class AnkiDroid extends Activity
 			if (deckFilename != null && new File(deckFilename).exists())
 			{
 				showControls(false);
-				DeckTask.launchDeckTask(
-						DeckTask.TASK_TYPE_LOAD_DECK,
-						mLoadDeckHandler,
-						new DeckTask.TaskData(deckFilename));
+				if(updateAllCards)
+				{
+					DeckTask.launchDeckTask(
+							DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS,
+							mLoadDeckHandler,
+							new DeckTask.TaskData(deckFilename));
+				}
+				else
+				{
+					DeckTask.launchDeckTask(
+							DeckTask.TASK_TYPE_LOAD_DECK,
+							mLoadDeckHandler,
+							new DeckTask.TaskData(deckFilename));
+				}
 			}
 			else
 			{
@@ -582,8 +636,7 @@ public class AnkiDroid extends Activity
 		}
 
 	}
-
-
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
@@ -635,6 +688,35 @@ public class AnkiDroid extends Activity
             //TODO: code to save the changes made to the current card.
             mFlipCard.setChecked(true);
             displayCardQuestion();
+		} else if(requestCode == GET_SHARED_DECK)
+		{
+			//Clean the previous card before showing the first of the new loaded deck (so the transition is not so abrupt)
+			updateCard("");
+			hideSdError();
+			hideDeckErrors();
+			
+			if (resultCode != RESULT_OK)
+			{
+				Log.e(TAG, "onActivityResult - Deck browser returned with error");
+				//Make sure we open the database again in onResume() if user pressed "back"
+				deckSelected = false;
+				return;
+			}
+			if (intent == null)
+			{
+				Log.e(TAG, "onActivityResult - Deck browser returned null intent");
+				//Make sure we open the database again in onResume()
+				deckSelected = false;
+				return;
+			}
+			// A deck was picked. Save it in preferences and use it.
+			Log.i(TAG, "onActivityResult = OK");
+			deckFilename = intent.getExtras().getString(OPT_DB);
+			savePreferences();
+
+        	Log.i(TAG, "onActivityResult - deckSelected = " + deckSelected);
+        	// Load deck and update all cards, because if that is not done both the answer and question will be empty
+			displayProgressDialogAndLoadDeck(true);
 		}
 	}
 
@@ -777,15 +859,15 @@ public class AnkiDroid extends Activity
 		content = Sound.extractSounds(deckFilename, content);
 		content = Image.loadImages(deckFilename, content);
 		
-		// We want to modify the font size depending on how long is the content
-		// Replace each <br> with 15 spaces, then remove all html tags and spaces
-		String realContent = content.replaceAll("\\<br.*?\\>", "               ");
-		//TODO: replacement for <hr/> in case of showQuestionAnswer = true
-		realContent = realContent.replaceAll("\\<.*?\\>", "");
-		realContent = realContent.replaceAll("&nbsp;", " ");
 
 		// Calculate the size of the font depending on the length of the content
 		if (0 == qaFontSize) {
+			// We want to modify the font size depending on how long is the content
+			// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then remove all html tags and spaces
+			String realContent = content.replaceAll("\\<br.*?\\>", "               ");
+			realContent = content.replaceAll("\\<hr.*?\\>", "                              ");
+			realContent = realContent.replaceAll("\\<.*?\\>", "");
+			realContent = realContent.replaceAll("&nbsp;", " ");
 			int size = Math.max(MIN_QA_FONT_SIZE, MAX_QA_FONT_SIZE - (int)(realContent.length()/5));
 			mCard.getSettings().setDefaultFontSize(size);
 		} else {
@@ -1035,7 +1117,9 @@ public class AnkiDroid extends Activity
 		detail.setVisibility(View.GONE);
 	}
 	  
-
+	/**
+	 * Listeners
+	 */
     DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener()
     {
         public void onPreExecute() {
@@ -1126,7 +1210,7 @@ public class AnkiDroid extends Activity
 	{
 
 		public void onPreExecute() {
-			if(updateDialog == null || !updateDialog.isShowing())
+			if(updateAlert == null || !updateAlert.isShowing())
 			{
 				progressDialog = ProgressDialog.show(AnkiDroid.this, "", getString(R.string.loading_deck), true);
 			}
@@ -1181,6 +1265,39 @@ public class AnkiDroid extends Activity
 			// Pass
 		}
 
+	};
+
+	Connection.TaskListener getSharedDecksListener = new Connection.TaskListener() {
+
+		@Override
+		public void onDisconnected() {
+			noConnectionAlert.show();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void onPostExecute(Payload data) {
+			progressDialog.dismiss();
+			if(data.success)
+			{
+				openSharedDeckPicker();
+			}
+			else
+			{
+				connectionFailedAlert.show();
+			}
+		}
+
+		@Override
+		public void onPreExecute() {
+			progressDialog = ProgressDialog.show(AnkiDroid.this, "", getResources().getString(R.string.loading_shared_decks));
+		}
+
+		@Override
+		public void onProgressUpdate(Object... values) {
+			//Pass
+		}
+		
 	};
 
 }
