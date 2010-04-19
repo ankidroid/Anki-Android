@@ -78,11 +78,14 @@ public class AnkiDroid extends Activity
 	 */
 	private static final String TAG = "AnkiDroid";
 
-	/**
-	 * Max and min size of the font of the questions and answers
-	 */
-	private static final int MAX_FONT_SIZE = 14;
-	private static final int MIN_FONT_SIZE = 3;
+	/** Max size of the font of the questions and answers for relative calculation */
+	private static final int MAX_QA_FONT_SIZE = 14;
+
+	/** Min size of the font of the questions and answers for relative calculation */
+	private static final int MIN_QA_FONT_SIZE = 3;
+	
+	/** The font size specified in shared preferences. If 0 then font is calculated with MAX/MIN_FONT_SIZE */
+	private int qaFontSize = 0;
 
 	/**
 	 * Menus
@@ -132,7 +135,7 @@ public class AnkiDroid extends Activity
 	
 	private AlertDialog connectionFailedAlert;
 
-    private BroadcastReceiver mUnmountReceiver = null;
+	private BroadcastReceiver mUnmountReceiver = null;
 
 	/**
 	 * Name of the last deck loaded
@@ -159,6 +162,12 @@ public class AnkiDroid extends Activity
 	private boolean timerAndWhiteboard;
 
 	private boolean writeAnswers;
+	
+	/** Preference: parse for ruby annotations */
+	private boolean useRubySupport;
+	
+	/** Preference: show the question when showing the answer */
+	private boolean showQuestionAnswer;
 
 	private boolean updateNotifications; // TODO use Veecheck only if this is true
 
@@ -853,17 +862,25 @@ public class AnkiDroid extends Activity
 		// We want to modify the font size depending on how long is the content
 		// Replace each <br> with 15 spaces, then remove all html tags and spaces
 		String realContent = content.replaceAll("\\<br.*?\\>", "               ");
+		//TODO: replacement for <hr/> in case of showQuestionAnswer = true
 		realContent = realContent.replaceAll("\\<.*?\\>", "");
 		realContent = realContent.replaceAll("&nbsp;", " ");
 
 		// Calculate the size of the font depending on the length of the content
-		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(realContent.length()/5));
-		mCard.getSettings().setDefaultFontSize(size);
+		if (0 == qaFontSize) {
+			int size = Math.max(MIN_QA_FONT_SIZE, MAX_QA_FONT_SIZE - (int)(realContent.length()/5));
+			mCard.getSettings().setDefaultFontSize(size);
+		} else {
+			mCard.getSettings().setDefaultFontSize(qaFontSize);
+		}
 
 		// In order to display the bold style correctly, we have to change font-weight to 700
 		content = content.replaceAll("font-weight:600;", "font-weight:700;");
 
-        content = RubyParser.ankiRubyToMarkup(content);
+		// If ruby annotation support is activated, then parse and add markup
+		if (useRubySupport) {
+			content = RubyParser.ankiRubyToMarkup(content);
+		}
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
@@ -914,7 +931,15 @@ public class AnkiDroid extends Activity
 		}
 		else
 		{
-			updateCard(currentCard.answer);
+			if (true == showQuestionAnswer) {
+				StringBuffer sb = new StringBuffer();
+				sb.append(currentCard.question);
+				sb.append("<hr/>");
+				sb.append(currentCard.answer);
+				updateCard(sb.toString());
+			} else {
+				updateCard(currentCard.answer);
+			}
 		}
 	}
 
@@ -954,6 +979,11 @@ public class AnkiDroid extends Activity
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
+		useRubySupport = preferences.getBoolean("useRubySupport", false);
+		//A little hack to get int values from ListPreference. there should be an easier way ...
+		String qaFontSizeString = preferences.getString("qaFontSize", "0");
+		qaFontSize = Integer.parseInt(qaFontSizeString);
+		showQuestionAnswer = preferences.getBoolean("showQuestionAnswer", false);
 		updateNotifications = preferences.getBoolean("enabled", true);
 
 		return preferences;

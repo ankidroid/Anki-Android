@@ -15,59 +15,89 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <!-- WARNING: Many values here match static values defined in Deck.java
-                  DO NOT edit them, unless you change their corresponding values -->
-    <!-- Used in deck preferences -->
-    <string-array name="newCardOrderLabels">
-        <item>Random order</item>
-        <item>Order added</item>
-        <item>Reverse order added</item>  
-    </string-array>
-    <string-array name="newCardOrderVals">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>  
-    </string-array>
-    
-    <string-array name="newCardSchedulingLabels">
-    <item>Spread out through reviews</item>
-    <item>After reviews</item>
-    <item>Before reviews</item>  
-    </string-array>
-    
-    <string-array name="newCardSchedulingVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>  
-    </string-array>
-    
-    <string-array name="revCardOrderLabels">
-    <item>Largest interval first</item>
-    <item>Smallest interval first</item>
-    <item>Order due</item>
-    <item>Random order</item>  
-    </string-array>
-    
-    <string-array name="revCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    </string-array>
-    
-    <string-array name="failedCardOptionLabels">
-    <item>Show failed cards soon</item>
-    <item>Show failed cards at end</item>
-    <item>Show failed cards in 10 minutes</item>
-    <item>Show failed cards in 8 hours</item>  
-    <item>Show failed cards in 3 days</item>   
-    </string-array>
-    
-    <string-array name="failedCardOptionVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    </string-array>
+	<!-- WARNING: Many values here match static values defined in Deck.java
+				  DO NOT edit them, unless you change their corresponding values -->
+	<!-- Used in deck preferences -->
+	<string-array name="newCardOrderLabels">
+		<item>Random order</item>
+		<item>Order added</item>
+		<item>Reverse order added</item>
+	</string-array>
+	<string-array name="newCardOrderVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
+	<string-array name="newCardSchedulingLabels">
+		<item>Spread out through reviews</item>
+		<item>After reviews</item>
+		<item>Before reviews</item>
+	</string-array>
+	<string-array name="newCardSchedulingVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
+	<string-array name="revCardOrderLabels">
+		<item>Largest interval first</item>
+		<item>Smallest interval first</item>
+		<item>Order due</item>
+		<item>Random order</item>
+	</string-array>
+	<string-array name="revCardOrderVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+
+	<string-array name="failedCardOptionLabels">
+		<item>Show failed cards soon</item>
+		<item>Show failed cards at end</item>
+		<item>Show failed cards in 10 minutes</item>
+		<item>Show failed cards in 8 hours</item>
+		<item>Show failed cards in 3 days</item>
+	</string-array>
+	<string-array name="failedCardOptionVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
+
+	<!-- The values below match MIN_QA_FONT_SIZE and MAX_QA_FONT_SIZE in AnkiDroid.java.
+	     This is a convenience, not at requirement -->
+	<string-array name="qaFontSizeLabels">
+		<item>Relative</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+		<item>11</item>
+		<item>12</item>
+		<item>13</item>
+		<item>14</item>
+	</string-array>
+	<string-array name="qaFontSizeVals">
+		<item>0</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+		<item>11</item>
+		<item>12</item>
+		<item>13</item>
+		<item>14</item>
+	</string-array>
 </resources>
