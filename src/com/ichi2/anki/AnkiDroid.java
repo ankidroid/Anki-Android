@@ -859,15 +859,15 @@ public class AnkiDroid extends Activity
 		content = Sound.extractSounds(deckFilename, content);
 		content = Image.loadImages(deckFilename, content);
 		
-		// We want to modify the font size depending on how long is the content
-		// Replace each <br> with 15 spaces, then remove all html tags and spaces
-		String realContent = content.replaceAll("\\<br.*?\\>", "               ");
-		//TODO: replacement for <hr/> in case of showQuestionAnswer = true
-		realContent = realContent.replaceAll("\\<.*?\\>", "");
-		realContent = realContent.replaceAll("&nbsp;", " ");
 
 		// Calculate the size of the font depending on the length of the content
 		if (0 == qaFontSize) {
+			// We want to modify the font size depending on how long is the content
+			// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then remove all html tags and spaces
+			String realContent = content.replaceAll("\\<br.*?\\>", "               ");
+			realContent = content.replaceAll("\\<hr.*?\\>", "                              ");
+			realContent = realContent.replaceAll("\\<.*?\\>", "");
+			realContent = realContent.replaceAll("&nbsp;", " ");
 			int size = Math.max(MIN_QA_FONT_SIZE, MAX_QA_FONT_SIZE - (int)(realContent.length()/5));
 			mCard.getSettings().setDefaultFontSize(size);
 		} else {
