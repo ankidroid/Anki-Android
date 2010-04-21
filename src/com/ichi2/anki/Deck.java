@@ -352,7 +352,7 @@ public class Deck
 		commitToDB();
 	}
 
-	private void commitToDB() {
+	public void commitToDB() {
 		Log.i(TAG, "commitToDB - Saving deck to DB...");
 		ContentValues values = new ContentValues();
 		values.put("created", created);

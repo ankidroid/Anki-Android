@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Locale;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
@@ -20,7 +21,11 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import android.database.Cursor;
 import android.util.Log;
 
 import com.ichi2.utils.FileUtils;
@@ -29,10 +34,14 @@ public class SyncClient {
 
 	private static final String TAG = "AnkiDroid";
 	
+	//Used to format doubles with English's decimal separator system 
+	private static final Locale ENGLISH_LOCALE = new Locale("en_US");
+	
 	/**
 	 * Connection settings
 	 */
 	private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
+	//78.46.104.28
 	private static final String SYNC_HOST = "anki.ichi2.net"; 
 	private static final String SYNC_PORT = "80";
 	
@@ -45,6 +54,86 @@ public class SyncClient {
 	private final String END = "\r\n";
 	private final String TWO_HYPHENS = "--";
 	
+	private Deck deck;
+	
+	public SyncClient(Deck deck)
+	{
+		this.deck = deck;
+	}
+	
+    /**
+     * Anki Desktop -> libanki/anki/sync.py, SyncTools - summary
+     * @param lastSync
+     */
+    public JSONObject summary(double lastSync)
+    {
+    	Log.i(TAG, "Summary Local");
+    	deck.lastSync = lastSync;
+    	deck.commitToDB();
+    	
+    	String lastSyncString = String.format(ENGLISH_LOCALE, "%f", lastSync);
+    	//Cards
+    	JSONArray cards = cursorToJSONArray(AnkiDb.database.rawQuery("SELECT id, modified FROM cards WHERE modified > " + lastSyncString, null));
+    	//Cards - delcards
+    	JSONArray delcards = cursorToJSONArray(AnkiDb.database.rawQuery("SELECT cardId, deletedTime FROM cardsDeleted WHERE deletedTime > " + lastSyncString, null));
+    	
+    	//Facts
+    	JSONArray facts = cursorToJSONArray(AnkiDb.database.rawQuery("SELECT id, modified FROM facts WHERE modified > " + lastSyncString, null));
+    	//Facts - delfacts
+    	JSONArray delfacts = cursorToJSONArray(AnkiDb.database.rawQuery("SELECT factId, deletedTime FROM factsDeleted WHERE deletedTime > " + lastSyncString, null));
+    	
+    	//Models
+    	JSONArray models = cursorToJSONArray(AnkiDb.database.rawQuery("SELECT id, modified FROM models WHERE modified > " + lastSyncString, null));
+    	//Models - delmodels
+    	JSONArray delmodels = cursorToJSONArray(AnkiDb.database.rawQuery("SELECT modelId, deletedTime FROM modelsDeleted WHERE deletedTime > " + lastSyncString, null));
+
+    	//Media
+    	JSONArray media = cursorToJSONArray(AnkiDb.database.rawQuery("SELECT id, created FROM media WHERE created > " + lastSyncString, null));
+    	//Media - delmedia
+    	JSONArray delmedia = cursorToJSONArray(AnkiDb.database.rawQuery("SELECT mediaId, deletedTime FROM mediaDeleted WHERE deletedTime > " + lastSyncString, null));
+
+    	JSONObject summary = new JSONObject();
+    	try {
+			summary.put("cards", cards);
+	    	summary.put("delcards", delcards);
+	    	summary.put("facts", facts);
+	    	summary.put("delfacts", delfacts);
+	    	summary.put("models", models);
+	    	summary.put("delmodels", delmodels);
+	    	summary.put("media", media);
+	    	summary.put("delmedia", delmedia);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Log.i(TAG, "Summary Local = ");
+		Utils.printJSONObject(summary, false);
+		
+    	return summary;
+    }
+    
+    private JSONArray cursorToJSONArray(Cursor cursor)
+    {
+    	JSONArray jsonArray = new JSONArray();
+    	while (cursor.moveToNext())
+    	{
+    		JSONArray element = new JSONArray();
+    		
+    		try {
+    			element.put(cursor.getLong(0));
+				element.put(cursor.getDouble(1));
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+			jsonArray.put(element);
+    	}
+    	
+    	cursor.close();
+    	
+    	return jsonArray;
+    }
+    
 	public void fullSyncFromLocal(String password, String username, String deckName, String deckPath)
 	{
 		URL url;

@@ -58,6 +58,7 @@ public class AnkiDroidProxy {
 	 * Connection settings
 	 */
 	private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
+	//78.46.104.28
 	private static final String SYNC_HOST = "anki.ichi2.net"; 
 	private static final String SYNC_PORT = "80";
 	
