@@ -20,10 +20,8 @@
 package com.ichi2.anki;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -59,6 +57,7 @@ import android.widget.ToggleButton;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.utils.DiffEngine;
+import com.ichi2.utils.FileUtils;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -347,7 +346,8 @@ public class AnkiDroid extends Activity
 						{
 							// Copy the sample deck from the assets to the SD card.
 							InputStream stream = getResources().getAssets().open("country-capitals.anki");
-							boolean written = writeToFile(stream, SAMPLE_DECK_FILENAME);
+							boolean written = FileUtils.writeToFile(stream, SAMPLE_DECK_FILENAME);
+							stream.close();
 							if (!written)
 							{
 								openDeckPicker();
@@ -916,35 +916,6 @@ public class AnkiDroid extends Activity
 		{
 			updateCard(currentCard.answer);
 		}
-	}
-
-	/**
-	 * Utility method to write to a file.
-	 */
-	private boolean writeToFile(InputStream source, String destination) throws IOException
-	{
-		try
-		{
-			new File(destination).createNewFile();
-		} catch (IOException e)
-		{
-			// Most probably the SD card is not mounted on the Android.
-			// Tell the user to turn off USB storage, which will automatically
-			// mount it on Android.
-			return false;
-		}
-		OutputStream output = new FileOutputStream(destination);
-
-		// Transfer bytes, from source to destination.
-		byte[] buf = new byte[1024];
-		int len;
-		while ((len = source.read(buf)) > 0)
-		{
-			output.write(buf, 0, len);
-		}
-		source.close();
-		output.close();
-		return true;
 	}
 
 	private SharedPreferences restorePreferences()

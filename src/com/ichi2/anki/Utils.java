@@ -1,5 +1,6 @@
 /****************************************************************************************
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,18 +17,27 @@
 
 package com.ichi2.anki;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.TreeSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
 
 /**
  * TODO comments
  */
 public class Utils {
 	
+	private static final String TAG = "AnkiDroid";
 	private static TreeSet<Integer> idTree;
 	private static long idTime;
 
@@ -110,19 +120,6 @@ public class Utils {
 		return str;
 	}
 	
-	public static JSONArray listToJSONArray(List list)
-	{
-		JSONArray jsonArray = new JSONArray();
-		
-		int len = list.size();
-		for(int i = 0; i < len; i++)
-		{
-			jsonArray.put(list.get(i));
-		}
-		
-		return jsonArray;
-	}
-	
 	/**
 	 * Returns a SQL string from an array of integers.
 	 *
@@ -148,4 +145,87 @@ public class Utils {
 		str += ")";
 		return str;
 	}
+	
+	public static JSONArray listToJSONArray(List list)
+	{
+		JSONArray jsonArray = new JSONArray();
+		
+		int len = list.size();
+		for(int i = 0; i < len; i++)
+		{
+			jsonArray.put(list.get(i));
+		}
+		
+		return jsonArray;
+	}
+	
+	// Print methods
+	public static void printJSONObject(JSONObject jsonObject)
+	{
+		printJSONObject(jsonObject, "-", false);
+	}
+	
+	public static void printJSONObject(JSONObject jsonObject, boolean writeToFile)
+	{
+		if(writeToFile)
+		{
+			new File("/sdcard/payloadAndroid.txt").delete();
+		}
+		printJSONObject(jsonObject, "-", writeToFile);
+	}
+	
+	public static void printJSONObject(JSONObject jsonObject, String indentation, boolean writeToFile)
+	{
+		try {
+			
+			Iterator<String> keys = jsonObject.keys();
+			TreeSet<String> orderedKeysSet = new TreeSet<String>();
+			while(keys.hasNext())
+			{
+				orderedKeysSet.add(keys.next());
+			}
+			
+			Iterator<String> orderedKeys = orderedKeysSet.iterator();
+			while(orderedKeys.hasNext())
+			{
+				String key = orderedKeys.next();
+
+				try {
+					Object value = jsonObject.get(key);
+					if(value instanceof JSONObject)
+					{
+						if(writeToFile)
+						{
+							BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
+							buff.write(indentation + " " + key + " : ");
+							buff.newLine();
+							buff.close();
+						}
+						Log.i(TAG, "	" + indentation + key + " : ");
+						printJSONObject((JSONObject)value, indentation + "-", writeToFile);
+					}
+					else
+					{
+						if(writeToFile)
+						{
+							BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/payloadAndroid.txt", true));
+							buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
+							buff.newLine();
+							buff.close();
+						}
+						Log.i(TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+
 }

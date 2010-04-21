@@ -17,8 +17,11 @@
 package com.ichi2.utils;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.zip.Deflater;
 
 public class StringUtils {
 
@@ -49,5 +52,37 @@ public class StringUtils {
 		}
 
 		return contentOfMyInputStream;
+	}
+	
+	/**
+	 * Compress data.
+	 * @param bytesToCompress is the byte array to compress.
+	 * @return a compressed byte array.
+	 * @throws java.io.IOException
+	 */
+	public static byte[] compress(byte[] bytesToCompress) throws IOException
+	{
+		// Compressor with highest level of compression.
+		Deflater compressor = new Deflater(Deflater.BEST_COMPRESSION);
+		// Give the compressor the data to compress.
+		compressor.setInput(bytesToCompress); 
+		compressor.finish();
+
+		// Create an expandable byte array to hold the compressed data.
+		// It is not necessary that the compressed data will be smaller than
+		// the uncompressed data.
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(bytesToCompress.length);
+
+		// Compress the data
+		byte[] buf = new byte[bytesToCompress.length + 100];
+		while (!compressor.finished())
+		{
+			bos.write(buf, 0, compressor.deflate(buf));
+		}
+
+		bos.close();
+
+		// Get the compressed data
+		return bos.toByteArray();
 	}
 }
