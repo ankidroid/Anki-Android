@@ -5,13 +5,25 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
+
+import com.ichi2.utils.FileUtils;
 
 public class SyncClient {
 
@@ -121,5 +133,36 @@ public class SyncClient {
 			e.printStackTrace();
 		}
 	}
-		
+	
+	public void fullSyncFromServer(String password, String username, String deckName, String deckPath)
+	{
+		Log.i(TAG, "password = " + password + ", user = " + username +  ", d = " + deckName);
+
+		try {
+			String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&u=" + URLEncoder.encode(username,"UTF-8") + "&d=" + URLEncoder.encode(deckName, "UTF-8");
+
+			Log.i(TAG, "Data json = " + data);
+			HttpPost httpPost = new HttpPost(SYNC_URL + "fulldown");
+			StringEntity entity = new StringEntity(data);
+			httpPost.setEntity(entity);
+			httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			HttpResponse response = httpClient.execute(httpPost);
+			Log.i(TAG, "Response = " + response.toString());
+			HttpEntity entityResponse = response.getEntity();
+			Log.i(TAG, "Entity's response = " + entityResponse.toString());
+			InputStream content = entityResponse.getContent();
+			Log.i(TAG, "Content = " + content.toString());
+			FileUtils.writeToFile(new InflaterInputStream(content), deckPath);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e)
+		{
+			Log.i(TAG, "ClientProtocolException = " + e.getMessage());
+		} catch (IOException e)
+		{
+			Log.i(TAG, "IOException = " + e.getMessage());
+		}
+	}
+
 }
