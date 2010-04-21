@@ -67,14 +67,6 @@ public class AnkiDroidProxy {
 	private JSONArray decks;
 	private String deckName;
 
-	/**
-	 * Constants used on the multipart message
-	 */
-	private static final String MIME_BOUNDARY = "Anki-sync-boundary";
-	private final String END = "\r\n";
-	private final String TWO_HYPHENS = "--";
-
-
 
 	/**
 	 * Shared deck's fields
