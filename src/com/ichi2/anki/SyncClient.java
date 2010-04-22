@@ -10,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Date;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
@@ -53,12 +55,29 @@ public class SyncClient {
 	private final String TWO_HYPHENS = "--";
 	
 	private Deck deck;
+	private AnkiDroidProxy server;
 	
 	public SyncClient(Deck deck)
 	{
 		this.deck = deck;
 	}
 	
+	public void setServer(AnkiDroidProxy server) 
+	{
+		this.server = server;
+	}
+	
+	public JSONArray summaries()
+	{
+		Log.i(TAG, "summaries = " + String.format(ENGLISH_LOCALE, "%f", deck.lastSync));
+
+		JSONArray summaries = new JSONArray();
+		summaries.put(summary(deck.lastSync));
+		summaries.put(server.summary(deck.lastSync));
+
+		return summaries;
+	}
+
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - summary
      * @param lastSync
@@ -131,7 +150,66 @@ public class SyncClient {
     	
     	return jsonArray;
     }
-    
+
+    /**
+     * Full sync
+     */
+
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - needFullSync
+	 * @param sums
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public boolean needFullSync(JSONArray sums)
+	{
+		if(deck.lastSync <= 0)
+		{
+			Log.i(TAG, "deck.lastSync <= 0");
+			return true;
+		}
+		
+		for(int i = 0; i < sums.length(); i++)
+		{
+			try {
+				JSONObject summary = sums.getJSONObject(i);
+				Iterator keys = summary.keys();
+				while(keys.hasNext())
+				{
+					String key = (String)keys.next();
+					JSONArray l = (JSONArray)summary.get(key);
+					Log.i(TAG, "Key " + key + ", length = " + l.length());
+					if(l.length() > 500)
+					{
+						return true;
+					}
+				}
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+			
+		}
+		
+		Log.i(TAG, "Count reviewHistory = " + AnkiDb.queryScalar("SELECT count() FROM reviewHistory WHERE time > " + deck.lastSync));
+		if(AnkiDb.queryScalar("SELECT count() FROM reviewHistory WHERE time > " + deck.lastSync) > 500)
+		{
+			return true;
+		}
+		Log.i(TAG, "lastSync = " + deck.lastSync);
+		Date lastDay = new Date(java.lang.Math.max(0, (long)(deck.lastSync - 60*60*24) * 1000));
+		
+		Log.i(TAG, "lastDay = " + lastDay.toString() + ", lastDayInMillis = " + lastDay.getTime());
+		
+		Log.i(TAG, "Count stats = " + AnkiDb.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\""));
+		if(AnkiDb.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\"") > 100)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	
 	public void fullSyncFromLocal(String password, String username, String deckName, String deckPath)
 	{
 		URL url;

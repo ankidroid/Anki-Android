@@ -62,9 +62,10 @@ public class AnkiDroidProxy {
 	
 	private String username;
 	private String password;
-
-	private JSONArray decks;
 	private String deckName;
+	
+	private JSONObject decks;
+	private double timestamp;
 
 
 	/**
@@ -99,10 +100,31 @@ public class AnkiDroidProxy {
 		this.deckName = "";
 	}
 	
-    public JSONArray getDecks()
+	
+    public void connect()
+    {
+    	if(decks == null)
+    	{
+    		String decksString = getDecks();
+        	try {
+    			JSONObject jsonDecks = new JSONObject(decksString);
+    			if("OK".equalsIgnoreCase(jsonDecks.getString("status")))
+    			{
+    				decks = jsonDecks.getJSONObject("decks");
+    				Log.i(TAG, "Server decks = " + decks.toString());
+    				timestamp = jsonDecks.getDouble("timestamp");
+    				Log.i(TAG, "Server timestamp = " + timestamp);
+    			}
+    		} catch (JSONException e) {
+    			Log.i(TAG, "JSONException = " + e.getMessage());
+    		}
+    	}
+    }
+    
+    public String getDecks()
     {
     	Log.i(TAG, "user = " + username + ", password = " + password);
-    	JSONArray decks = new JSONArray();
+    	String decksServer = "{}";
     	
     	try {
         	String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&client=ankiqt-0.9.9.8.6&u=" + URLEncoder.encode(username,"UTF-8") + "&d=None&sources=" + URLEncoder.encode("[]","UTF-8") + "&libanki=0.9.9.8.6&pversion=5";
@@ -120,7 +142,7 @@ public class AnkiDroidProxy {
 			Log.i(TAG, "Entity's response = " + entityResponse.toString());
 			InputStream content = entityResponse.getContent();
 			Log.i(TAG, "Content = " + content.toString());
-			decks = new JSONArray(Utils.convertStreamToString(new InflaterInputStream(content)));
+			decksServer = Utils.convertStreamToString(new InflaterInputStream(content));
 			Log.i(TAG, "String content = " + decks);
 			
 		} catch (UnsupportedEncodingException e) {
@@ -131,12 +153,9 @@ public class AnkiDroidProxy {
 		} catch (IOException e)
 		{
 			Log.i(TAG, "IOException = " + e.getMessage());
-		} catch (JSONException e) {
-			Log.i(TAG, "JSONException = " + e.getMessage());
-			e.printStackTrace();
 		}
 		
-		return decks;
+		return decksServer;
     }
     
     public void createDeck()

@@ -16,13 +16,17 @@
 
 package com.ichi2.async;
 
+import org.json.JSONArray;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidProxy;
+import com.ichi2.anki.Deck;
 import com.ichi2.anki.SharedDeck;
+import com.ichi2.anki.SyncClient;
 
 public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload>
 {
@@ -31,6 +35,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     
     public static final int TASK_TYPE_GET_SHARED_DECKS = 0;
     public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 1;
+    public static final int TASK_TYPE_SYNC_DECK = 2;
 
 	private static Connection instance;
 	private TaskListener listener;
@@ -94,6 +99,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return launchConnectionTask(listener, data);
 	}
 	
+	public static Connection syncDeck(TaskListener listener, Payload data)
+	{
+		data.taskType = TASK_TYPE_SYNC_DECK;
+		return launchConnectionTask(listener, data);
+	}
+	
 	@Override
 	protected Payload doInBackground(Payload... params) {
 		Payload data = params[0];
@@ -105,6 +116,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 			case TASK_TYPE_DOWNLOAD_SHARED_DECK:
 				return doInBackgroundDownloadSharedDeck(data);
+			
+			case TASK_TYPE_SYNC_DECK:
+				return doInBackgroundSyncDeck(data);
 				
 			default:
 				return null;
@@ -132,6 +146,38 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			data.success = false;
 			data.exception = e;
 			Log.e(TAG, "Error downloading shared deck = " + e.getMessage());
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	private Payload doInBackgroundSyncDeck(Payload data)
+	{
+		try {
+			String username = (String)data.data[0];
+			String password = (String)data.data[1];
+			Deck deck = (Deck)data.data[2];
+			
+			AnkiDroidProxy server = new AnkiDroidProxy(username, password);
+			server.connect();
+			
+			SyncClient client = new SyncClient(deck);
+			client.setServer(server);
+			JSONArray sums = client.summaries();
+			if(client.needFullSync(sums))
+			{
+				Log.i(TAG, "Deck needs full sync");
+			}
+			else
+			{
+				Log.i(TAG, "Deck does not need full sync");
+			}
+			
+			
+		} catch (Exception e) {
+			data.success = false;
+			data.exception = e;
+			Log.e(TAG, "Error synchronizing deck = " + e.getMessage());
 			e.printStackTrace();
 		}
 		return data;
