@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.zip.Deflater;
@@ -41,11 +43,12 @@ public class SyncClient {
 	 * Connection settings
 	 */
 	private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
-	//78.46.104.28
-	private static final String SYNC_HOST = "anki.ichi2.net"; 
+	private static final String SYNC_HOST = "anki.ichi2.net"; //78.46.104.28
 	private static final String SYNC_PORT = "80";
 	
 	private static final int CHUNK_SIZE = 32768;
+	
+	private enum Keys {models, facts, cards, media};
 	
 	/**
 	 * Constants used on the multipart message
@@ -56,10 +59,15 @@ public class SyncClient {
 	
 	private Deck deck;
 	private AnkiDroidProxy server;
+	private double localTime;
+	private double remoteTime;
 	
 	public SyncClient(Deck deck)
 	{
 		this.deck = deck;
+		this.server = null;
+		this.localTime = 0;
+		this.remoteTime = 0;
 	}
 	
 	public void setServer(AnkiDroidProxy server) 
@@ -151,6 +159,246 @@ public class SyncClient {
     	return jsonArray;
     }
 
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - genPayload
+	 */
+	private JSONObject genPayload(JSONArray summaries)
+	{
+		//Log.i(TAG, "genPayload");
+		//Ensure global stats are available (queue may not be built)
+		//preSyncRefresh();
+		
+		JSONObject payload = new JSONObject();
+		
+		Keys[] keys = Keys.values();
+		
+		for(int i = 0; i < keys.length; i++)
+		{
+			//Log.i(TAG, "Key " + keys[i].name());
+			String key = keys[i].name();
+			try {
+				// Handle models, facts, cards and media
+				JSONArray diff = diffSummary((JSONObject)summaries.get(0), (JSONObject)summaries.get(1), key);
+				//payload.put("added-" + key, getObjsFromKey((JSONArray)diff.get(0), key));
+				payload.put("deleted-" + key, diff.get(1));
+				payload.put("missing-" + key, diff.get(2));
+				//deleteObjsFromKey((JSONArray)diff.get(3), key);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		// If the last modified deck was the local one, handle the remainder
+		if(localTime > remoteTime)
+		{
+			/*
+			try {
+				payload.put("deck", bundleDeck());
+				payload.put("stats", bundleStats());
+				payload.put("history",bundleHistory());
+				payload.put("sources", bundleSources());
+				deck.lastSync = deck.modified;
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+		}
+		
+		Log.i(TAG, "Payload =");
+		Utils.printJSONObject(payload, true);
+		
+		return payload;
+	}
+	
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - payloadChanges
+	 */
+	private Object[] payloadChanges(JSONObject payload)
+	{
+		Object[] h = new Object[8];
+		
+		try {
+			h[0] = payload.getJSONObject("added-facts").getJSONArray("facts").length();
+			h[1] = payload.getJSONArray("missing-facts").length();
+			h[2] = payload.getJSONArray("added-cards").length();
+			h[3] = payload.getJSONArray("missing-cards").length();
+			h[4] = payload.getJSONArray("added-models").length();
+			h[5] = payload.getJSONArray("missing-models").length();
+			
+			if(localTime > remoteTime)
+			{
+				h[6] = "all";
+				h[7] = 0;
+			}
+			else
+			{
+				h[6] = 0;
+				h[7] = "all";
+			}
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+
+		return h;
+	}
+	
+	public String payloadChangeReport(JSONObject payload)
+	{
+		return AnkiDroidApp.getAppResources().getString(R.string.change_report_format, payloadChanges(payload));
+	}
+	
+	
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - diffSummary
+	 */
+	private JSONArray diffSummary(JSONObject summaryLocal, JSONObject summaryServer, String key)
+	{
+		JSONArray locallyEdited = new JSONArray();
+		JSONArray locallyDeleted = new JSONArray();
+		JSONArray remotelyEdited = new JSONArray();
+		JSONArray remotelyDeleted = new JSONArray();
+		
+		Log.i(TAG, "\ndiffSummary - Key = " + key);
+		Log.i(TAG, "\nSummary local = ");
+		Utils.printJSONObject(summaryLocal, false);
+		Log.i(TAG, "\nSummary server = ");
+		Utils.printJSONObject(summaryServer, false);
+		
+		//Hash of all modified ids
+		HashSet<Long> ids = new HashSet<Long>();
+		
+		try {
+			//Build a hash (id item key, modification time) of the modifications on server (null -> deleted)
+			HashMap<Long, Double> remoteMod = new HashMap<Long, Double>();
+			putExistingItems(ids, remoteMod, summaryServer.getJSONArray(key));
+			HashMap<Long, Double> rdeletedIds = putDeletedItems(ids, remoteMod, summaryServer.getJSONArray("del" + key));
+			
+			//Build a hash (id item, modification time) of the modifications on client (null -> deleted)
+			HashMap<Long, Double> localMod = new HashMap<Long, Double>();
+			putExistingItems(ids, localMod, summaryLocal.getJSONArray(key));
+			HashMap<Long, Double> ldeletedIds = putDeletedItems(ids, localMod, summaryLocal.getJSONArray("del" + key));
+			
+			Iterator<Long> idsIterator = ids.iterator();
+			while(idsIterator.hasNext())
+			{
+				Long id = idsIterator.next();
+				Double localModTime = localMod.get(id);
+				Double remoteModTime = remoteMod.get(id);
+				
+				Log.i(TAG, "\nid = " + id + ", localModTime = " + localModTime + ", remoteModTime = " + remoteModTime);
+				//Changed/Existing on both sides
+				if(localModTime != null && remoteModTime != null)
+				{
+					Log.i(TAG, "localModTime not null AND remoteModTime not null");
+					if(localModTime < remoteModTime)
+					{
+						Log.i(TAG, "Remotely edited");
+						remotelyEdited.put(id);
+					}
+					else if(localModTime > remoteModTime)
+					{
+						Log.i(TAG, "Locally edited");
+						locallyEdited.put(id);
+					}
+				}
+				// If it's missing on server or newer here, sync
+				else if(localModTime != null  && remoteModTime == null)
+				{
+					Log.i(TAG, "localModTime not null AND remoteModTime null");
+					if(!rdeletedIds.containsKey(id) || rdeletedIds.get(id) < localModTime)
+					{
+						Log.i(TAG, "Locally edited");
+						locallyEdited.put(id);
+					}
+					else
+					{
+						Log.i(TAG, "Remotely deleted");
+						remotelyDeleted.put(id);
+					}
+				}
+				// If it's missing locally or newer there, sync
+				else if(remoteModTime != null && localModTime == null)
+				{
+					Log.i(TAG, "remoteModTime not null AND localModTime null");
+					if(!ldeletedIds.containsKey(id) || ldeletedIds.get(id) < remoteModTime)
+					{
+						Log.i(TAG, "Remotely edited");
+						remotelyEdited.put(id);
+					}
+					else
+					{
+						Log.i(TAG, "Locally deleted");
+						locallyDeleted.put(id);
+					}
+				}
+				//Deleted or not modified in both sides
+				else
+				{
+					Log.i(TAG, "localModTime null AND remoteModTime null");
+					if(ldeletedIds.containsKey(id) && !rdeletedIds.containsKey(id))
+					{
+						Log.i(TAG, "Locally deleted");
+						locallyDeleted.put(id);
+					}
+					else if(rdeletedIds.containsKey(id) && !ldeletedIds.containsKey(id))
+					{
+						Log.i(TAG, "Remotely deleted");
+						remotelyDeleted.put(id);
+					}
+				}
+			}
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+
+		JSONArray diff = new JSONArray();
+		diff.put(locallyEdited);
+		diff.put(locallyDeleted);
+		diff.put(remotelyEdited);
+		diff.put(remotelyDeleted);
+		
+		return diff;
+	}
+	
+	private void putExistingItems(HashSet<Long> ids, HashMap<Long, Double> dictExistingItems, JSONArray existingItems) 
+	{
+		for(int i = 0; i < existingItems.length(); i++)
+		{
+			try {
+				JSONArray itemModified = existingItems.getJSONArray(i);
+				Long idItem = itemModified.getLong(0);
+				Double modTimeItem = itemModified.getDouble(1);
+				dictExistingItems.put(idItem, modTimeItem);
+				ids.add(idItem);
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private HashMap<Long, Double> putDeletedItems(HashSet<Long> ids, HashMap<Long, Double> dictDeletedItems, JSONArray deletedItems)
+	{
+		HashMap<Long, Double> deletedIds = new HashMap<Long, Double>(); 
+		for(int i = 0; i < deletedItems.length(); i++)
+		{
+			try {
+				JSONArray itemModified = deletedItems.getJSONArray(i);
+				Long idItem = itemModified.getLong(0);
+				Double modTimeItem = itemModified.getDouble(1);
+				dictDeletedItems.put(idItem, null);
+				deletedIds.put(idItem, modTimeItem);
+				ids.add(idItem);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return deletedIds;
+	}
+	
     /**
      * Full sync
      */
