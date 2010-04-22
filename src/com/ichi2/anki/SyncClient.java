@@ -29,6 +29,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.test.AnkiDb;
+import com.test.AnkidroidApp;
+
 import android.database.Cursor;
 import android.util.Log;
 
@@ -552,7 +555,89 @@ public class SyncClient {
 		return cardModels;
 	}
 	
+	/**
+	 * Facts
+	 */
 	
+	// TODO: Take into account the updateModified boolean (modified = time.time() or modified = "modified"... what does exactly do that?)
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - getFacts
+	 */
+	private JSONObject getFacts(JSONArray ids)//, boolean updateModified)
+	{
+		Log.i(TAG, "getFacts");
+		
+		JSONObject facts = new JSONObject();
+		
+		JSONArray factsArray = new JSONArray();
+		JSONArray fieldsArray = new JSONArray();
+		
+		for(int i = 0; i < ids.length(); i++)
+		{
+			try {
+				Long id = ids.getLong(i);
+				factsArray.put(getFact(id));
+				putFields(fieldsArray, id);
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		
+		try {
+			facts.put("facts", factsArray);
+			facts.put("fields", fieldsArray);
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+		
+		Log.i(TAG, "facts = ");
+		Utils.printJSONObject(facts, false);
+		
+		return facts;
+	}
+	
+	private JSONArray getFact(Long id)
+	{
+		JSONArray fact = new JSONArray();
+		
+		// TODO: Take into account the updateModified boolean (modified = time.time() or modified = "modified"... what does exactly do that?)
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT id, modelId, created, modified, tags, spaceUntil, lastCardId FROM facts WHERE id = " + id, null);
+		if(cursor.moveToFirst())
+		{
+			try {
+				fact.put(cursor.getLong(0));
+				fact.put(cursor.getLong(1));
+				fact.put(cursor.getDouble(2));
+				fact.put(cursor.getDouble(3));
+				fact.put(cursor.getString(4));
+				fact.put(cursor.getDouble(5));
+				fact.put(cursor.getLong(6));
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		cursor.close();
+		
+		return fact;
+	}
+	
+	private void putFields(JSONArray fields, Long id)
+	{
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT * FROM fields WHERE factId = " + id, null);
+		while(cursor.moveToNext())
+		{
+			JSONArray field = new JSONArray();
+			
+			field.put(cursor.getLong(0));
+			field.put(cursor.getLong(1));
+			field.put(cursor.getLong(2));
+			field.put(cursor.getInt(3));
+			field.put(cursor.getString(4));
+			
+			fields.put(field);
+		}
+		cursor.close();
+	}
 	
     /**
      * Full sync
