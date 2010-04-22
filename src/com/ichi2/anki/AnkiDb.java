@@ -119,7 +119,8 @@ public class AnkiDb
 			} while (cursor.moveToNext());
 		} catch (Exception e) {
 			Log.e(TAG, "queryColumn: Got Exception: " + e.getMessage());
-			return null;
+			//There was no results and therefore the invocation of the correspondent method with cursor null raises an exception
+			//Just return results empty
 		} finally {
 			if (cursor != null) cursor.close();
 		}
