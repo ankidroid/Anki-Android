@@ -121,6 +121,35 @@ public class AnkiDroidProxy {
     	}
     }
     
+    public double modified()
+    {
+    	double lastModified = 0;
+    	
+    	connect();
+    	try {
+			JSONArray deckInfo = decks.getJSONArray(deckName);
+			lastModified = deckInfo.getDouble(0);
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+		
+		return lastModified;
+    }
+    
+    public double lastSync()
+    {
+    	double lastSync = 0;
+    	
+    	connect();
+    	try {
+			JSONArray deckInfo = decks.getJSONArray(deckName);
+			lastSync = deckInfo.getDouble(1);
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+		return lastSync;
+    }
+    
     public String getDecks()
     {
     	Log.i(TAG, "user = " + username + ", password = " + password);

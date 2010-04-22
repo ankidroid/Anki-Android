@@ -29,9 +29,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.test.AnkiDb;
-import com.test.AnkidroidApp;
-
 import android.database.Cursor;
 import android.util.Log;
 
@@ -78,6 +75,42 @@ public class SyncClient {
 		this.server = server;
 	}
 	
+    /**
+     * Anki Desktop -> libanki/anki/sync.py, prepareSync
+     * @return
+     */
+    public boolean prepareSync()
+    {
+    	Log.i(TAG, "prepareSync = " + String.format(ENGLISH_LOCALE, "%f", deck.lastSync));
+    	
+    	localTime = deck.modified;
+    	remoteTime = server.modified();
+    	
+    	Log.i(TAG, "localTime = " + localTime);
+    	Log.i(TAG, "remoteTime = " + remoteTime);
+    	
+    	if(localTime == remoteTime)
+    		return false;
+    	
+    	double l = deck.lastSync;
+    	Log.i(TAG, "lastSync local = " + String.format(ENGLISH_LOCALE, "%f", l));
+    	double r =  server.lastSync();
+    	Log.i(TAG, "lastSync remote = " + String.format(ENGLISH_LOCALE, "%f", r));
+    	
+    	if(l != r)
+    	{
+    		deck.lastSync = java.lang.Math.min(l, r) - 600;
+    		Log.i(TAG, "deck.lastSync = min(l,r) - 600");
+    	}
+    	else
+    	{
+    		deck.lastSync = l;
+    	}
+    	
+    	Log.i(TAG, "deck.lastSync = " + deck.lastSync);
+    	return true;
+    }
+    
 	public JSONArray summaries()
 	{
 		Log.i(TAG, "summaries = " + String.format(ENGLISH_LOCALE, "%f", deck.lastSync));
@@ -165,7 +198,7 @@ public class SyncClient {
 	/**
 	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - genPayload
 	 */
-	private JSONObject genPayload(JSONArray summaries)
+	public JSONObject genPayload(JSONArray summaries)
 	{
 		//Log.i(TAG, "genPayload");
 		//Ensure global stats are available (queue may not be built)
@@ -182,7 +215,7 @@ public class SyncClient {
 			try {
 				// Handle models, facts, cards and media
 				JSONArray diff = diffSummary((JSONObject)summaries.get(0), (JSONObject)summaries.get(1), key);
-				//payload.put("added-" + key, getObjsFromKey((JSONArray)diff.get(0), key));
+				payload.put("added-" + key, getObjsFromKey((JSONArray)diff.get(0), key));
 				payload.put("deleted-" + key, diff.get(1));
 				payload.put("missing-" + key, diff.get(2));
 				//deleteObjsFromKey((JSONArray)diff.get(3), key);
@@ -399,6 +432,29 @@ public class SyncClient {
 		
 		return deletedIds;
 	}
+	
+	private Object getObjsFromKey(JSONArray ids, String key)
+	{
+		if("models".equalsIgnoreCase(key))
+		{
+			return getModels(ids);
+		}
+		else if("facts".equalsIgnoreCase(key))
+		{
+			return getFacts(ids);
+		}
+		else if("cards".equalsIgnoreCase(key))
+		{
+			return getCards(ids);
+		}
+		else if("media".equalsIgnoreCase(key))
+		{
+			//return getMedia(ids);
+		}
+		
+		return null;
+	}
+	
 	
 	/**
 	 * Models
@@ -637,6 +693,111 @@ public class SyncClient {
 			fields.put(field);
 		}
 		cursor.close();
+	}
+	
+	/**
+	 * Cards
+	 */
+	
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - getCards
+	 */
+	private JSONArray getCards(JSONArray ids)
+	{
+		JSONArray cards = new JSONArray();
+		
+		//SELECT id, factId, cardModelId, created, modified, tags, ordinal, priority, interval, lastInterval, due, lastDue, factor, 
+		//firstAnswered, reps, successive, averageTime, reviewTime, youngEase0, youngEase1, youngEase2, youngEase3, youngEase4, 
+		//matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, answer, lastFactor, spaceUntil, 
+		//type, combinedDue FROM cards WHERE id IN " + ids2str(ids)
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT * FROM cards WHERE id IN " + Utils.ids2str(ids), null);
+		while(cursor.moveToNext())
+		{
+			try {
+				JSONArray card = new JSONArray();
+				
+				//id
+				card.put(cursor.getLong(0));
+				//factId
+				card.put(cursor.getLong(1));
+				//cardModelId
+				card.put(cursor.getLong(2));
+				//created
+				card.put(cursor.getDouble(3));
+				//modified
+				card.put(cursor.getDouble(4));
+				//tags
+				card.put(cursor.getString(5));
+				//ordinal
+				card.put(cursor.getInt(6));
+				//priority
+				card.put(cursor.getInt(9));
+				//interval
+				card.put(cursor.getDouble(10));
+				//lastInterval
+				card.put(cursor.getDouble(11));
+				//due
+				card.put(cursor.getDouble(12));
+				//lastDue
+				card.put(cursor.getDouble(13));
+				//factor
+				card.put(cursor.getDouble(14));
+				//firstAnswered
+				card.put(cursor.getDouble(16));
+				//reps
+				card.put(cursor.getString(17));
+				//successive
+				card.put(cursor.getInt(18));
+				//averageTime
+				card.put(cursor.getDouble(19));
+				//reviewTime
+				card.put(cursor.getDouble(20));
+				//youngEase0
+				card.put(cursor.getInt(21));
+				//youngEase1
+				card.put(cursor.getInt(22));
+				//youngEase2
+				card.put(cursor.getInt(23));
+				//youngEase3
+				card.put(cursor.getInt(24));
+				//youngEase4
+				card.put(cursor.getInt(25));
+				//matureEase0
+				card.put(cursor.getInt(26));
+				//matureEase1
+				card.put(cursor.getInt(27));
+				//matureEase2
+				card.put(cursor.getInt(28));
+				//matureEase3
+				card.put(cursor.getInt(29));
+				//matureEase4
+				card.put(cursor.getInt(30));
+				//yesCount
+				card.put(cursor.getInt(31));
+				//noCount
+				card.put(cursor.getInt(32));
+				//question
+				card.put(cursor.getString(7));
+				//answer
+				card.put(cursor.getString(8));
+				//lastFactor
+				card.put(cursor.getDouble(15));
+				//spaceUntil
+				card.put(cursor.getDouble(33));
+				//type
+				card.put(cursor.getInt(36));
+				//combinedDue
+				card.put(cursor.getInt(37));
+				
+				cards.put(card);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		cursor.close();
+			
+		return cards;
 	}
 	
     /**

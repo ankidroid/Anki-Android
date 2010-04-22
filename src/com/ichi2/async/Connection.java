@@ -17,6 +17,7 @@
 package com.ichi2.async;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -163,17 +164,23 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			
 			SyncClient client = new SyncClient(deck);
 			client.setServer(server);
-			JSONArray sums = client.summaries();
-			if(client.needFullSync(sums))
+			if(client.prepareSync())
 			{
-				Log.i(TAG, "Deck needs full sync");
+				JSONArray sums = client.summaries();
+				if(client.needFullSync(sums))
+				{
+					Log.i(TAG, "Deck needs full sync");
+				}
+				else
+				{
+					Log.i(TAG, "Deck does not need full sync");
+					JSONObject payload = client.genPayload(sums);
+				}
 			}
-			else
-			{
-				Log.i(TAG, "Deck does not need full sync");
-			}
-			
-			
+	    	else
+	    	{
+	    		Log.i(TAG, "No changes.");
+	    	}
 		} catch (Exception e) {
 			data.success = false;
 			data.exception = e;
