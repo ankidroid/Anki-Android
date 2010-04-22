@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.TreeSet;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -79,10 +80,10 @@ public class AnkiDroid extends Activity
 	private static final String TAG = "AnkiDroid";
 
 	/** Max size of the font of the questions and answers for relative calculation */
-	private static final int MAX_QA_FONT_SIZE = 14;
+	protected static final int MAX_QA_FONT_SIZE = 14;
 
 	/** Min size of the font of the questions and answers for relative calculation */
-	private static final int MIN_QA_FONT_SIZE = 3;
+	protected static final int MIN_QA_FONT_SIZE = 3;
 	
 	/** The font size specified in shared preferences. If 0 then font is calculated with MAX/MIN_FONT_SIZE */
 	private int qaFontSize = 0;
@@ -810,7 +811,7 @@ public class AnkiDroid extends Activity
 	/**
 	 * Set up the display for the current card.
 	 */
-	public void displayCardQuestion()
+	private void displayCardQuestion()
 	{
 		Log.i(TAG, "displayCardQuestion");
 
@@ -848,50 +849,14 @@ public class AnkiDroid extends Activity
 
 			mFlipCard.requestFocus();
 
-			updateCard(currentCard.question);
+			updateCard(enrichWithQASpan(currentCard.question, false));
 		}
 	}
-
-	public void updateCard(String content)
-	{
-		Log.i(TAG, "updateCard");
-
-		content = Sound.extractSounds(deckFilename, content);
-		content = Image.loadImages(deckFilename, content);
-		
-
-		// Calculate the size of the font depending on the length of the content
-		if (0 == qaFontSize) {
-			// We want to modify the font size depending on how long is the content
-			// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then remove all html tags and spaces
-			String realContent = content.replaceAll("\\<br.*?\\>", "               ");
-			realContent = content.replaceAll("\\<hr.*?\\>", "                              ");
-			realContent = realContent.replaceAll("\\<.*?\\>", "");
-			realContent = realContent.replaceAll("&nbsp;", " ");
-			int size = Math.max(MIN_QA_FONT_SIZE, MAX_QA_FONT_SIZE - (int)(realContent.length()/5));
-			mCard.getSettings().setDefaultFontSize(size);
-		} else {
-			mCard.getSettings().setDefaultFontSize(qaFontSize);
-		}
-
-		// In order to display the bold style correctly, we have to change font-weight to 700
-		content = content.replaceAll("font-weight:600;", "font-weight:700;");
-
-		// If ruby annotation support is activated, then parse and add markup
-		if (useRubySupport) {
-			content = RubyParser.ankiRubyToMarkup(content);
-		}
-
-		Log.i(TAG, "content card = \n" + content);
-		String card = cardTemplate.replace("::content::", content);
-		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
-		Sound.playSounds();
-	}
-
+	
 	/**
 	 * Display the card answer.
 	 */
-	public void displayCardAnswer()
+	private void displayCardAnswer()
 	{
 		Log.i(TAG, "displayCardAnswer");
 
@@ -920,9 +885,9 @@ public class AnkiDroid extends Activity
 
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
-				updateCard(diff.diff_prettyHtml(
+				updateCard(enrichWithQASpan(diff.diff_prettyHtml(
 						diff.diff_main(userAnswer, correctAnswer)) +
-						"<br/>" + currentCard.answer);
+						"<br/>" + currentCard.answer, true));
 			}
 			else
 			{
@@ -933,14 +898,103 @@ public class AnkiDroid extends Activity
 		{
 			if (true == showQuestionAnswer) {
 				StringBuffer sb = new StringBuffer();
-				sb.append(currentCard.question);
+				sb.append(enrichWithQASpan(currentCard.question, false));
 				sb.append("<hr/>");
-				sb.append(currentCard.answer);
+				sb.append(enrichWithQASpan(currentCard.answer, true));
 				updateCard(sb.toString());
 			} else {
-				updateCard(currentCard.answer);
+				updateCard(enrichWithQASpan(currentCard.answer, true));
 			}
 		}
+	}
+	
+	/**
+	 * Updates the main screen for learning with the actual contents (question/answer or something else).
+	 * the contents is enriched based on preferences with Ruby and font size.
+	 * @param content
+	 */
+	private void updateCard(String content)
+	{
+		Log.i(TAG, "updateCard");
+
+		content = Sound.extractSounds(deckFilename, content);
+		content = Image.loadImages(deckFilename, content);
+		
+		// Calculate the size of the font if relative font size is chosen in preferences
+		int fontSize = qaFontSize;
+		if (0 == qaFontSize) {
+			fontSize = calculateDynamicFontSize(content);
+		}
+		mCard.getSettings().setDefaultFontSize(fontSize);
+
+		// In order to display the bold style correctly, we have to change font-weight to 700
+		content = content.replaceAll("font-weight:600;", "font-weight:700;");
+
+		// If ruby annotation support is activated, then parse and add markup
+		if (useRubySupport) {
+			content = RubyParser.ankiRubyToMarkup(content);
+		}
+		
+		// Add CSS for font colour and font size
+		content = enrichWithCSSForFontColorSize(content
+				, fontSize
+				, currentCard.cardModel
+				, null);
+
+		Log.i(TAG, "content card = \n" + content);
+		String card = cardTemplate.replace("::content::", content);
+		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
+		Sound.playSounds();
+	}
+	
+	private final static String enrichWithCSSForFontColorSize(String htmlContent
+			, int defaultFontSize
+			, CardModel cardModel
+			, TreeSet<FieldModel> fieldModels) {
+		
+		return htmlContent;
+	}
+	
+	/**
+	 * Calculates a dynamic font size depending on the length of the contents
+	 * taking into account that the input string contains html-tags, which will not
+	 * be displayed and therefore should not be taken into account.
+	 * @param htmlContents
+	 * @return font size respecting MIN_QA_FONT_SIZE and MAX_QA_FONT_SIZE
+	 */
+	protected final static int calculateDynamicFontSize(String htmlContent) {
+		// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then remove all html tags and spaces
+		String realContent = htmlContent.replaceAll("\\<br.*?\\>", "               ");
+		realContent = realContent.replaceAll("\\<hr.*?\\>", "                              ");
+		realContent = realContent.replaceAll("\\<.*?\\>", "");
+		realContent = realContent.replaceAll("&nbsp;", " ");
+		return Math.max(MIN_QA_FONT_SIZE, MAX_QA_FONT_SIZE - (int)(realContent.length()/5));
+	}
+	
+	/** Constant for class attribute signalling answer */
+	private final static String ANSWER_CLASS = "answer";
+	
+	/** Constant for class attribute signalling question */
+	private final static String QUESTION_CLASS = "question";
+	
+	/**
+	 * Adds a span html tag around the contents to have an indication, where answer/question is displayed
+	 * @param content
+	 * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
+	 * @return
+	 */
+	private final static String enrichWithQASpan(String content, boolean isAnswer) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<span class=\"");
+		if (isAnswer) {
+			sb.append(ANSWER_CLASS);
+		} else {
+			sb.append(QUESTION_CLASS);
+		}
+		sb.append("\">");
+		sb.append(content);
+		sb.append("</span>");
+		return sb.toString();
 	}
 
 	/**
