@@ -449,7 +449,7 @@ public class SyncClient {
 		}
 		else if("media".equalsIgnoreCase(key))
 		{
-			//return getMedia(ids);
+			return getMedia(ids);
 		}
 		
 		return null;
@@ -798,6 +798,46 @@ public class SyncClient {
 		cursor.close();
 			
 		return cards;
+	}
+	
+	/**
+	 * Media
+	 */
+	
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - getMedia
+	 */
+	private JSONArray getMedia(JSONArray ids)
+	{
+		JSONArray media = new JSONArray();
+		
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT id, filename, size, created, originalPath, description FROM media WHERE id IN " + Utils.ids2str(ids), null);
+		while(cursor.moveToNext())
+		{
+			try {
+				JSONArray m = new JSONArray();
+				
+				//id
+				m.put(cursor.getLong(0));
+				//filename
+				m.put(cursor.getString(1));
+				//size
+				m.put(cursor.getInt(2));
+				//created
+				m.put(cursor.getDouble(3));
+				//originalPath
+				m.put(cursor.getString(4));
+				//description
+				m.put(cursor.getString(5));
+				
+				media.put(m);
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		cursor.close();
+		
+		return media;
 	}
 	
     /**
