@@ -1195,7 +1195,7 @@ public class Deck
 				"isDue = 0, " +
 				"priority = -3, " +
 				"modified = " + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
-				" WHERE id IN " + ids2str(ids));
+				" WHERE id IN " + Utils.ids2str(ids));
 		rebuildCounts(false);
 		flushMod();
 	}
@@ -1213,7 +1213,7 @@ public class Deck
 				"UPDATE cards SET " +
 				"priority = 0, " +
 				"modified = " + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
-				" WHERE id IN " + ids2str(ids));
+				" WHERE id IN " + Utils.ids2str(ids));
 		updatePriorities(ids);
 		rebuildCounts(false);
 		flushMod();
@@ -1233,12 +1233,12 @@ public class Deck
 					"UPDATE tags " +
 					"SET priority = 0 " +
 					"WHERE id in " +
-					ids2str(ids));
+					Utils.ids2str(ids));
 		}
 
 		String limit = "";
 		if (cardIds.length <= 1000)
-			limit = "and cardTags.cardId in " + ids2str(cardIds);
+			limit = "and cardTags.cardId in " + Utils.ids2str(cardIds);
 		String query = "SELECT cardTags.cardId, " +
 				"CASE " + 
 				"WHEN min(tags.priority) = 0 THEN 0 " + 
@@ -1283,7 +1283,7 @@ public class Deck
 					AnkiDb.database.execSQL("UPDATE cards " + 
 							"SET priority = " + pri + 
 							extra + 
-							" WHERE id in " + ids2str(cs) + " and " + 
+							" WHERE id in " + Utils.ids2str(cs) + " and " + 
 							"priority != " + pri + " and " + 
 							"priority >= -2");
 				}
@@ -1722,28 +1722,6 @@ public class Deck
 	 * Utility functions (might be better in a separate class)
 	 * *********************************************************
 	 */
-
-	/**
-	 * Returns a SQL string from an array of integers.
-	 *
-	 * @param ids
-	 *            The array of integers to include in the list.
-	 * @return An SQL compatible string in the format (ids[0],ids[1],..).
-	 */
-	private static String ids2str(long[] ids)
-	{
-		String str = "(";
-		int len = ids.length;
-		for (int i = 0; i < len; i++)
-		{
-			if (i == (len - 1))
-				str += ids[i];
-			else
-				str += ids[i] + ",";
-		}
-		str += ")";
-		return str;
-	}
 
 	/**
 	 * Gets the IDs of the specified tags.
