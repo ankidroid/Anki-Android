@@ -42,8 +42,6 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.ichi2.utils.Base64;
-import com.ichi2.utils.FileUtils;
-import com.ichi2.utils.StringUtils;
 
 public class AnkiDroidProxy {
 
@@ -122,7 +120,7 @@ public class AnkiDroidProxy {
 			Log.i(TAG, "Entity's response = " + entityResponse.toString());
 			InputStream content = entityResponse.getContent();
 			Log.i(TAG, "Content = " + content.toString());
-			decks = new JSONArray(StringUtils.convertStreamToString(new InflaterInputStream(content)));
+			decks = new JSONArray(Utils.convertStreamToString(new InflaterInputStream(content)));
 			Log.i(TAG, "String content = " + decks);
 			
 		} catch (UnsupportedEncodingException e) {
@@ -161,7 +159,7 @@ public class AnkiDroidProxy {
 			Log.i(TAG, "Entity's response = " + entityResponse.toString());
 			InputStream content = entityResponse.getContent();
 			Log.i(TAG, "Content = " + content.toString());
-			Log.i(TAG, "String content = " + StringUtils.convertStreamToString(new InflaterInputStream(content)));
+			Log.i(TAG, "String content = " + Utils.convertStreamToString(new InflaterInputStream(content)));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e)
@@ -187,7 +185,7 @@ public class AnkiDroidProxy {
  
     	try {
     		// FIXME: Try to do the connection without encoding the lastSync in Base 64
-        	String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&u=" + URLEncoder.encode(username,"UTF-8") + "&d=" + URLEncoder.encode(deckName, "UTF-8") + "&lastSync=" + URLEncoder.encode(Base64.encodeBytes(StringUtils.compress(String.format(ENGLISH_LOCALE,"%f",lastSync).getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
+        	String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&u=" + URLEncoder.encode(username,"UTF-8") + "&d=" + URLEncoder.encode(deckName, "UTF-8") + "&lastSync=" + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(ENGLISH_LOCALE,"%f",lastSync).getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
         	
         	Log.i(TAG, "Data json = " + data);
         	HttpPost httpPost = new HttpPost(SYNC_URL + "summary");
@@ -202,7 +200,7 @@ public class AnkiDroidProxy {
 			Log.i(TAG, "Entity's response = " + entityResponse.toString());
 			InputStream content = entityResponse.getContent();
 			Log.i(TAG, "Content = " + content.toString());
-			summaryServer = new JSONObject(StringUtils.convertStreamToString(new InflaterInputStream(content)));
+			summaryServer = new JSONObject(Utils.convertStreamToString(new InflaterInputStream(content)));
 			Log.i(TAG, "Summary server = ");
 			Utils.printJSONObject(summaryServer);
 		} catch (UnsupportedEncodingException e) {
@@ -233,7 +231,7 @@ public class AnkiDroidProxy {
 		
 		try {
 			// FIXME: Try to do the connection without encoding the payload in Base 64
-			String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&u=" + URLEncoder.encode(username,"UTF-8") + "&d=" + URLEncoder.encode(deckName, "UTF-8") + "&payload=" + URLEncoder.encode(Base64.encodeBytes(StringUtils.compress(payload.toString().getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
+			String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&u=" + URLEncoder.encode(username,"UTF-8") + "&d=" + URLEncoder.encode(deckName, "UTF-8") + "&payload=" + URLEncoder.encode(Base64.encodeBytes(Utils.compress(payload.toString().getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
 
 			Log.i(TAG, "Data json = " + data);
 			HttpPost httpPost = new HttpPost(SYNC_URL + "applyPayload");
@@ -248,7 +246,7 @@ public class AnkiDroidProxy {
 			Log.i(TAG, "Entity's response = " + entityResponse.toString());
 			InputStream content = entityResponse.getContent();
 			Log.i(TAG, "Content = " + content.toString());
-			String contentString = StringUtils.convertStreamToString(new InflaterInputStream(content));
+			String contentString = Utils.convertStreamToString(new InflaterInputStream(content));
 			Log.i(TAG, "Payload response = ");
 			payloadReply = new JSONObject(contentString);
 			Utils.printJSONObject(payloadReply, false);
@@ -287,7 +285,7 @@ public class AnkiDroidProxy {
 				DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
 
 				HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
-				String response = StringUtils.convertStreamToString(httpResponse.getEntity().getContent());
+				String response = Utils.convertStreamToString(httpResponse.getEntity().getContent());
 				//Log.i(TAG, "Content = " + response);
 				sharedDecks.addAll(handleResult(response));
 			}
@@ -379,13 +377,13 @@ public class AnkiDroidProxy {
 				
 				if("shared.anki".equalsIgnoreCase(zipEntry.getName()))
 				{
-					FileUtils.writeToFile(zipInputStream, deckFilename);
+					Utils.writeToFile(zipInputStream, deckFilename);
 				}
 				else if(zipEntry.getName().startsWith("shared.media/", 0))
 				{
 					//Log.i(TAG, "Folder created = " + new File(AnkiDroidApp.getStorageDirectory() + title + ".media/").mkdir());
 					//Log.i(TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
-					FileUtils.writeToFile(zipInputStream, partialDeckPath + ".media/" + zipEntry.getName().replace("shared.media/", ""));
+					Utils.writeToFile(zipInputStream, partialDeckPath + ".media/" + zipEntry.getName().replace("shared.media/", ""));
 				}
 			}
 			zipInputStream.close();

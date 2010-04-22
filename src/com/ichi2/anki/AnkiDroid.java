@@ -57,7 +57,6 @@ import android.widget.ToggleButton;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.utils.DiffEngine;
-import com.ichi2.utils.FileUtils;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -346,7 +345,7 @@ public class AnkiDroid extends Activity
 						{
 							// Copy the sample deck from the assets to the SD card.
 							InputStream stream = getResources().getAssets().open("country-capitals.anki");
-							boolean written = FileUtils.writeToFile(stream, SAMPLE_DECK_FILENAME);
+							boolean written = Utils.writeToFile(stream, SAMPLE_DECK_FILENAME);
 							stream.close();
 							if (!written)
 							{

@@ -17,14 +17,21 @@
 
 package com.ichi2.anki;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.TreeSet;
+import java.util.zip.Deflater;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +45,9 @@ import android.util.Log;
 public class Utils {
 	
 	private static final String TAG = "AnkiDroid";
+	
+	private static final int CHUNK_SIZE = 32768;
+	
 	private static TreeSet<Integer> idTree;
 	private static long idTime;
 
@@ -157,6 +167,103 @@ public class Utils {
 		}
 		
 		return jsonArray;
+	}
+	
+	
+	/**
+	 * Converts an InputStream to a String
+	 * 
+	 * @param is
+	 *            InputStream to convert
+	 * @return String version of the InputStream
+	 */
+	public static String convertStreamToString(InputStream is)
+	{
+		String contentOfMyInputStream = "";
+		try
+		{
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is), 4096);
+			String line;
+			StringBuilder sb = new StringBuilder();
+			while ((line = rd.readLine()) != null)
+			{
+				sb.append(line);
+			}
+			rd.close();
+			contentOfMyInputStream = sb.toString();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return contentOfMyInputStream;
+	}
+	
+	/**
+	 * Compress data.
+	 * @param bytesToCompress is the byte array to compress.
+	 * @return a compressed byte array.
+	 * @throws java.io.IOException
+	 */
+	public static byte[] compress(byte[] bytesToCompress) throws IOException
+	{
+		// Compressor with highest level of compression.
+		Deflater compressor = new Deflater(Deflater.BEST_COMPRESSION);
+		// Give the compressor the data to compress.
+		compressor.setInput(bytesToCompress); 
+		compressor.finish();
+
+		// Create an expandable byte array to hold the compressed data.
+		// It is not necessary that the compressed data will be smaller than
+		// the uncompressed data.
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(bytesToCompress.length);
+
+		// Compress the data
+		byte[] buf = new byte[bytesToCompress.length + 100];
+		while (!compressor.finished())
+		{
+			bos.write(buf, 0, compressor.deflate(buf));
+		}
+
+		bos.close();
+
+		// Get the compressed data
+		return bos.toByteArray();
+	}
+	
+
+	/**
+	 * Utility method to write to a file.
+	 */
+	public static boolean writeToFile(InputStream source, String destination)
+	{
+		//Log.i(TAG, "writeToFile = " + destination);
+		try
+		{
+			//Log.i(TAG, "createNewFile");
+			new File(destination).createNewFile();
+			//Log.i(TAG, "New file created");
+	
+			OutputStream output = new FileOutputStream(destination);
+			
+			// Transfer bytes, from source to destination.
+			byte[] buf = new byte[CHUNK_SIZE];
+			int len;
+			if(source == null) Log.i(TAG, "source is null!");
+			while ((len = source.read(buf)) > 0)
+			{
+				//Log.i(TAG, "Writing to file...");
+				output.write(buf, 0, len);
+			}
+			
+			output.close();
+			//Log.i(TAG, "Write finished!");
+
+		} catch (Exception e) {
+			//Log.i(TAG, "IOException e = " + e.getMessage());
+			return false;
+		}
+		return true;
 	}
 	
 	// Print methods

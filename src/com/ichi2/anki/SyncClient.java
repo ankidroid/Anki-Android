@@ -28,8 +28,6 @@ import org.json.JSONObject;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.ichi2.utils.FileUtils;
-
 public class SyncClient {
 
 	private static final String TAG = "AnkiDroid";
@@ -242,7 +240,7 @@ public class SyncClient {
 			Log.i(TAG, "Entity's response = " + entityResponse.toString());
 			InputStream content = entityResponse.getContent();
 			Log.i(TAG, "Content = " + content.toString());
-			FileUtils.writeToFile(new InflaterInputStream(content), deckPath);
+			Utils.writeToFile(new InflaterInputStream(content), deckPath);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e)
