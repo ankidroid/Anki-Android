@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 public class SyncClient {
@@ -164,8 +166,7 @@ public class SyncClient {
 	    	summary.put("media", media);
 	    	summary.put("delmedia", delmedia);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.i(TAG, "JSONException = " + e.getMessage());
 		}
 
 		Log.i(TAG, "Summary Local = ");
@@ -218,10 +219,9 @@ public class SyncClient {
 				payload.put("added-" + key, getObjsFromKey((JSONArray)diff.get(0), key));
 				payload.put("deleted-" + key, diff.get(1));
 				payload.put("missing-" + key, diff.get(2));
-				//deleteObjsFromKey((JSONArray)diff.get(3), key);
+				deleteObjsFromKey((JSONArray)diff.get(3), key);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.i(TAG, "JSONException = " + e.getMessage());
 			}
 		}
 		
@@ -236,8 +236,7 @@ public class SyncClient {
 				payload.put("sources", bundleSources());
 				deck.lastSync = deck.modified;
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.i(TAG, "JSONException = " + e.getMessage());
 			}*/
 		}
 		
@@ -455,6 +454,25 @@ public class SyncClient {
 		return null;
 	}
 	
+	private void deleteObjsFromKey(JSONArray ids, String key) throws JSONException
+	{
+		if("models".equalsIgnoreCase(key))
+		{
+			deleteModels(ids);
+		}
+		else if("facts".equalsIgnoreCase(key))
+		{
+			deck.deleteFacts(Utils.jsonArrayToListString(ids));
+		}
+		else if("cards".equalsIgnoreCase(key))
+		{
+			deck.deleteCards(Utils.jsonArrayToListString(ids));
+		}
+		else if("media".equalsIgnoreCase(key))
+		{
+			deleteMedia(ids);
+		}
+	}
 	
 	/**
 	 * Models
@@ -609,6 +627,20 @@ public class SyncClient {
 		cursor.close();
 		
 		return cardModels;
+	}
+	
+	private void deleteModels(JSONArray ids)
+	{
+		Log.i(TAG, "deleteModels");
+		int len = ids.length();
+		for(int i = 0; i < len; i++)
+		{
+			try {
+				deck.deleteModel(ids.getString(i));
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
 	}
 	
 	/**
@@ -791,8 +823,7 @@ public class SyncClient {
 				
 				cards.put(card);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.i(TAG, "JSONException = " + e.getMessage());
 			}
 		}
 		cursor.close();
@@ -838,6 +869,39 @@ public class SyncClient {
 		cursor.close();
 		
 		return media;
+	}
+	
+	private void deleteMedia(JSONArray ids)
+	{
+		Log.i(TAG, "deleteMedia");
+		
+		String idsString = Utils.ids2str(ids);
+		
+		// Get filenames
+		ArrayList<String> files = AnkiDb.queryColumn(String.class, 
+													"SELECT filename FROM media WHERE id IN " + idsString, 
+													0);
+		
+		// Note the media to delete (Insert the media to delete into mediaDeleted)
+		double now = System.currentTimeMillis() / 1000.0;
+		String sqlInsert = "INSERT INTO mediaDeleted SELECT id, " + String.format(ENGLISH_LOCALE, "%f", now) + " FROM media WHERE media.id = ?";
+		SQLiteStatement statement = AnkiDb.database.compileStatement(sqlInsert);
+		int len = ids.length();
+		for(int i = 0; i < len; i++)
+		{
+			try {
+				Log.i(TAG, "Inserting media " + ids.getLong(i) + " into mediaDeleted");
+				statement.bindLong(1, ids.getLong(i));
+				statement.executeInsert();
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		statement.close();
+		
+		// Delete media
+		Log.i(TAG, "Deleting media in = " + idsString);
+		AnkiDb.database.execSQL("DELETE FROM media WHERE id IN " + idsString);
 	}
 	
     /**

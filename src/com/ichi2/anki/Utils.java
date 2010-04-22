@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -169,6 +170,18 @@ public class Utils {
 		return jsonArray;
 	}
 	
+	public static List<String> jsonArrayToListString(JSONArray jsonArray) throws JSONException
+	{
+		ArrayList<String> list = new ArrayList<String>();
+		
+		int len = jsonArray.length();
+		for(int i = 0; i < len; i++)
+		{
+			list.add(jsonArray.getString(i));
+		}
+		
+		return list;
+	}
 	
 	/**
 	 * Converts an InputStream to a String

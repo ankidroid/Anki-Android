@@ -21,6 +21,7 @@ package com.ichi2.anki;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.Stack;
@@ -29,6 +30,7 @@ import java.util.Map.Entry;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 /**
@@ -1344,6 +1346,151 @@ public class Deck
 		return card.lastInterval < 7;
 	}
 
+	/* Cards CRUD
+	 ***********************************************************/
+	
+	public void deleteCards(List<String> ids)
+	{
+		Log.i(TAG, "deleteCards = " + ids.toString());
+		
+		//Bulk delete cards by ID
+		int len = ids.size();
+		if(len > 0)
+		{
+			commitToDB();
+			double now = System.currentTimeMillis() / 1000.0;
+			Log.i(TAG, "Now = " + now);
+			String idsString = Utils.ids2str(ids);
+
+			//Grab fact ids
+			ArrayList<String> factIds = AnkiDb.queryColumn(String.class, 
+															"SELECT factId FROM cards WHERE id in " + idsString, 
+															0);
+
+			//Delete cards
+			AnkiDb.database.execSQL("DELETE FROM cards WHERE id in " + idsString);
+			
+			//Note deleted cards
+			String sqlInsert = "INSERT INTO cardsDeleted values (?," + String.format(ENGLISH_LOCALE, "%f", now) + ")";
+			SQLiteStatement statement = AnkiDb.database.compileStatement(sqlInsert);
+			for(int i = 0; i < len; i++)
+			{
+				statement.bindString(1, ids.get(i));
+				statement.executeInsert();
+			}
+			statement.close();
+			
+			// Gather affected tags (before we delete the corresponding cardTags)
+			ArrayList<String> tags = AnkiDb.queryColumn(String.class, 
+														"SELECT tagId FROM cardTags WHERE cardId in " + idsString, 
+														0);
+			
+			// Delete cardTags
+			AnkiDb.database.execSQL("DELETE FROM cardTags WHERE cardId in " + idsString);
+			
+			// Find out if this tags are used by anything else
+			ArrayList<String> unusedTags = new ArrayList<String>();
+			for(int i = 0; i < tags.size(); i++)
+			{
+				String tagId = tags.get(i);
+				Cursor cursor = AnkiDb.database.rawQuery("SELECT * FROM cardTags WHERE tagId = " + tagId + " LIMIT 1", null);
+				if(!cursor.moveToFirst())
+				{
+					unusedTags.add(tagId);
+				}
+				cursor.close();
+			}
+			
+			//Delete unused tags
+			AnkiDb.database.execSQL("DELETE FROM tags WHERE id in " + Utils.ids2str(unusedTags) + " and priority = 2");
+			
+			//Remove any dangling fact
+			deleteDanglingFacts();
+			rebuildCounts(true);
+			flushMod();
+		}
+	}
+	
+	/* Facts CRUD
+	 ***********************************************************/
+	
+	public void deleteFacts(List<String> ids)
+	{
+		Log.i(TAG, "deleteFacts = " + ids.toString());
+		int len = ids.size();
+		if(len > 0)
+		{
+			commitToDB();
+			double now = System.currentTimeMillis() / 1000.0;
+			String idsString = Utils.ids2str(ids);
+			Log.i(TAG, "DELETE FROM facts WHERE id in " + idsString);
+			AnkiDb.database.execSQL("DELETE FROM facts WHERE id in " + idsString);
+			Log.i(TAG, "DELETE FROM fields WHERE factId in " + idsString);
+			AnkiDb.database.execSQL("DELETE FROM fields WHERE factId in " + idsString);
+			String sqlInsert = "INSERT INTO factsDeleted VALUES(?," + String.format(ENGLISH_LOCALE, "%f", now) + ")";
+			SQLiteStatement statement = AnkiDb.database.compileStatement(sqlInsert);
+			for(int i = 0; i < len; i++)
+			{
+				Log.i(TAG, "inserting into factsDeleted");
+				statement.bindString(1, ids.get(i));
+				statement.executeInsert();
+			}
+			statement.close();
+			rebuildCounts(true);
+			setModified();
+		}
+	}
+	
+	/**
+	 * Delete any fact without cards
+	 * @return ArrayList<String> list with the id of the deleted facts
+	 */
+	public ArrayList<String> deleteDanglingFacts()
+	{
+		Log.i(TAG, "deleteDanglingFacts");
+		ArrayList<String> danglingFacts = AnkiDb.queryColumn(String.class, 
+															"SELECT facts.id FROM facts WHERE facts.id NOT IN (SELECT DISTINCT factId from cards)", 
+															0);
+		
+		if(danglingFacts.size() > 0)
+		{
+			deleteFacts(danglingFacts);
+		}
+		
+		return danglingFacts;
+	}
+	
+	/* Models CRUD
+	 ***********************************************************/
+	
+	//TODO: Handling of the list of models and currentModel
+	public void deleteModel(String id)
+	{
+		Log.i(TAG, "deleteModel = " + id);
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT * FROM models WHERE id = " + id, null);
+		//Does the model exist?
+		if(cursor.moveToFirst())
+		{
+			// Delete the cards that use the model id, through fact
+			ArrayList<String> cardsToDelete = AnkiDb.queryColumn(String.class, 
+																"SELECT cards.id FROM cards, facts WHERE facts.modelId = " + id + " AND facts.id = cards.factId", 
+																0);
+			deleteCards(cardsToDelete);
+			
+			// Delete model
+			AnkiDb.database.execSQL("DELETE FROM models WHERE id = " + id);
+			
+			// Note deleted model
+			ContentValues values = new ContentValues();
+			values.put("modelId", id);
+			values.put("deletedTime", System.currentTimeMillis() / 1000.0);
+			AnkiDb.database.insert("modelsDeleted", null, values);
+			
+			flushMod();
+		}
+		cursor.close();
+	}
+	
 	/* Undo/Redo
 	 ***********************************************************/
 	private class UndoRow {
