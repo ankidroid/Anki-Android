@@ -904,6 +904,56 @@ public class SyncClient {
 		AnkiDb.database.execSQL("DELETE FROM media WHERE id IN " + idsString);
 	}
 	
+	/**
+	 * Deck/Stats/History/Sources
+	 */
+	
+	private JSONArray bundleHistory()
+	{
+		JSONArray bundledHistory = new JSONArray();
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT cardId, time, lastInterval, nextInterval, ease, delay, lastFactor, nextFactor, reps, thinkingTime, yesCount, noCount FROM reviewHistory WHERE time > " + String.format(ENGLISH_LOCALE, "%f", deck.lastSync), null);
+		while(cursor.moveToNext())
+		{
+			try {
+				JSONArray review = new JSONArray();
+				
+				//cardId
+				review.put(cursor.getLong(0));
+				//time
+				review.put(cursor.getDouble(1));
+				//lastInterval
+				review.put(cursor.getDouble(2));
+				//nextInterval
+				review.put(cursor.getDouble(3));
+				//ease
+				review.put(cursor.getInt(4));
+				//delay
+				review.put(cursor.getDouble(5));
+				//lastFactor
+				review.put(cursor.getDouble(6));
+				//nextFactor
+				review.put(cursor.getDouble(7));
+				//reps
+				review.put(cursor.getDouble(8));
+				//thinkingTime
+				review.put(cursor.getDouble(9));
+				//yesCount
+				review.put(cursor.getDouble(10));
+				//noCount
+				review.put(cursor.getDouble(11));
+				
+				bundledHistory.put(review);
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		cursor.close();
+		
+		Log.i(TAG, "Last sync = " + String.format(ENGLISH_LOCALE, "%f", deck.lastSync));
+		Log.i(TAG, "Bundled history = " + bundledHistory.toString());
+		return bundledHistory;
+	}
+	
     /**
      * Full sync
      */

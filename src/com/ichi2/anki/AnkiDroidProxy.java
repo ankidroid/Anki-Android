@@ -98,6 +98,7 @@ public class AnkiDroidProxy {
 		this.username = user;
 		this.password = password;
 		this.deckName = "";
+		this.decks = null;
 	}
 	
 	
