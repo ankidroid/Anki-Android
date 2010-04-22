@@ -373,7 +373,6 @@ public class SyncClient {
 				ids.add(idItem);
 			} catch (JSONException e) {
 				Log.i(TAG, "JSONException = " + e.getMessage());
-				e.printStackTrace();
 			}
 		}
 	}
@@ -391,13 +390,169 @@ public class SyncClient {
 				deletedIds.put(idItem, modTimeItem);
 				ids.add(idItem);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.i(TAG, "JSONException = " + e.getMessage());
 			}
 		}
 		
 		return deletedIds;
 	}
+	
+	/**
+	 * Models
+	 */
+	
+	//TODO: Include the case with updateModified
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - getModels
+	 * @param ids
+	 * @return
+	 */
+	private JSONArray getModels(JSONArray ids)//, boolean updateModified)
+	{
+		JSONArray models = new JSONArray();
+		
+		for(int i = 0; i < ids.length(); i++)
+		{
+			try {
+				models.put(bundleModel(ids.getLong(i)));
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		
+		return models;
+	}
+	
+
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - bundleModel
+	 * @param id
+	 * @return
+	 */
+	private JSONObject bundleModel(Long id)//, boolean updateModified
+	{
+		JSONObject model = new JSONObject();
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT * FROM models WHERE id = " + id, null);
+		if(cursor.moveToFirst())
+		{
+			try {
+				model.put("id", cursor.getLong(0));
+				model.put("deckId", cursor.getInt(1));
+				model.put("created", cursor.getDouble(2));
+				model.put("modified", cursor.getDouble(3));
+				model.put("tags", cursor.getString(4));
+				model.put("name", cursor.getString(5));
+				model.put("description", cursor.getString(6));
+				model.put("features", cursor.getDouble(7));
+				model.put("spacing", cursor.getDouble(8));
+				model.put("initialSpacing", cursor.getDouble(9));
+				model.put("source", cursor.getInt(10));
+				model.put("fieldModels", bundleFieldModels(id));
+				model.put("cardModels", bundleCardModels(id));
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		cursor.close();
+		
+		Log.i(TAG, "Model = ");
+		Utils.printJSONObject(model, false);
+		
+		return model;
+	}
+	
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - bundleFieldModel
+	 * @param id
+	 * @return
+	 */
+	private JSONArray bundleFieldModels(Long id)
+	{
+		JSONArray fieldModels = new JSONArray();
+		
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT * FROM fieldModels WHERE modelId = " + id, null);
+		while(cursor.moveToNext())
+		{
+			JSONObject fieldModel = new JSONObject();
+			
+			try {
+				fieldModel.put("id", cursor.getLong(0));
+				fieldModel.put("ordinal", cursor.getInt(1));
+				fieldModel.put("modelId", cursor.getLong(2));
+				fieldModel.put("name", cursor.getString(3));
+				fieldModel.put("description", cursor.getString(4));
+				fieldModel.put("features", cursor.getString(5));
+				fieldModel.put("required", cursor.getString(6));
+				fieldModel.put("unique", cursor.getString(7));
+				fieldModel.put("numeric", cursor.getString(8));
+				fieldModel.put("quizFontFamily", cursor.getString(9));
+				fieldModel.put("quizFontSize", cursor.getInt(10));
+				fieldModel.put("quizFontColour", cursor.getString(11));
+				fieldModel.put("editFontFamily", cursor.getString(12));
+				fieldModel.put("editFontSize", cursor.getInt(13));
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+
+			fieldModels.put(fieldModel);
+		}
+		cursor.close();
+		
+		return fieldModels;
+	}
+	
+	
+	private JSONArray bundleCardModels(Long id)
+	{
+		JSONArray cardModels = new JSONArray();
+		
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT * FROM cardModels WHERE modelId = " + id, null);
+		while(cursor.moveToNext())
+		{
+			JSONObject cardModel = new JSONObject();
+			
+			try {
+				cardModel.put("id", cursor.getLong(0));
+				cardModel.put("ordinal", cursor.getInt(1));
+				cardModel.put("modelId", cursor.getLong(2));
+				cardModel.put("name", cursor.getString(3));
+				cardModel.put("description", cursor.getString(4));
+				cardModel.put("active", cursor.getString(5));
+				cardModel.put("qformat", cursor.getString(6));
+				cardModel.put("aformat", cursor.getString(7));
+				cardModel.put("lformat", cursor.getString(8));
+				cardModel.put("qedformat", cursor.getString(9));
+				cardModel.put("aedformat", cursor.getString(10));
+				cardModel.put("questionInAnswer", cursor.getString(11));
+				cardModel.put("questionFontFamily", cursor.getString(12));
+				cardModel.put("questionFontSize ", cursor.getInt(13));
+				cardModel.put("questionFontColour", cursor.getString(14));
+				cardModel.put("questionAlign", cursor.getInt(15));
+				cardModel.put("answerFontFamily", cursor.getString(16));
+				cardModel.put("answerFontSize", cursor.getInt(17));
+				cardModel.put("answerFontColour", cursor.getString(18));
+				cardModel.put("answerAlign", cursor.getInt(19));
+				cardModel.put("lastFontFamily", cursor.getString(20));
+				cardModel.put("lastFontSize", cursor.getInt(21));
+				cardModel.put("lastFontColour", cursor.getString(22));
+				cardModel.put("editQuestionFontFamily", cursor.getString(23));
+				cardModel.put("editQuestionFontSize", cursor.getInt(24));
+				cardModel.put("editAnswerFontFamily", cursor.getString(25));
+				cardModel.put("editAnswerFontSize", cursor.getInt(26));
+				cardModel.put("allowEmptyAnswer", cursor.getString(27));
+				cardModel.put("typeAnswer", cursor.getString(28));
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+			
+			cardModels.put(cardModel);
+		}
+		cursor.close();
+		
+		return cardModels;
+	}
+	
+	
 	
     /**
      * Full sync
@@ -539,11 +694,9 @@ public class SyncClient {
 			
 			Log.i(TAG, "Finished!");
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.i(TAG, "MalformedURLException = " + e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.i(TAG, "IOException = " + e.getMessage());
 		}
 	}
 	
