@@ -1238,7 +1238,45 @@ public class SyncClient {
 	
 	private void updateHistory(JSONArray history)
 	{
-
+		String sql = "INSERT OR IGNORE INTO reviewHistory (cardId, time, lastInterval, nextInterval, ease, delay, lastFactor, nextFactor, reps, thinkingTime, yesCount, noCount) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+		SQLiteStatement statement = AnkiDb.database.compileStatement(sql);
+		int len = history.length();
+		for(int i = 0; i < len; i++)
+		{
+			try {
+				JSONArray h = history.getJSONArray(i);
+				
+				//cardId
+				statement.bindLong(1, h.getLong(0));
+				//time
+				statement.bindDouble(2, h.getDouble(1));
+				//lastInterval
+				statement.bindDouble(3, h.getDouble(2));
+				//nextInterval
+				statement.bindDouble(4, h.getDouble(3));
+				//ease
+				statement.bindString(5, h.getString(4));
+				//delay
+				statement.bindDouble(6, h.getDouble(5));
+				//lastFactor
+				statement.bindDouble(7, h.getDouble(6));
+				//nextFactor
+				statement.bindDouble(8, h.getDouble(7));
+				//reps
+				statement.bindDouble(9, h.getDouble(8));
+				//thinkingTime
+				statement.bindDouble(10, h.getDouble(9));
+				//yesCount
+				statement.bindDouble(11, h.getDouble(10));
+				//noCount
+				statement.bindDouble(12, h.getDouble(11));
+				
+				statement.execute();
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		statement.close();
 	}
 	
 	private JSONArray bundleSources()
