@@ -228,16 +228,16 @@ public class SyncClient {
 		// If the last modified deck was the local one, handle the remainder
 		if(localTime > remoteTime)
 		{
-			/*
+			
 			try {
-				payload.put("deck", bundleDeck());
-				payload.put("stats", bundleStats());
+				//payload.put("deck", bundleDeck());
+				//payload.put("stats", bundleStats());
 				payload.put("history",bundleHistory());
 				payload.put("sources", bundleSources());
 				deck.lastSync = deck.modified;
 			} catch (JSONException e) {
 				Log.i(TAG, "JSONException = " + e.getMessage());
-			}*/
+			}
 		}
 		
 		Log.i(TAG, "Payload =");
@@ -952,6 +952,38 @@ public class SyncClient {
 		Log.i(TAG, "Last sync = " + String.format(ENGLISH_LOCALE, "%f", deck.lastSync));
 		Log.i(TAG, "Bundled history = " + bundledHistory.toString());
 		return bundledHistory;
+	}
+	
+	private JSONArray bundleSources()
+	{
+		JSONArray bundledSources = new JSONArray();
+		
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT * FROM sources", null);
+		while(cursor.moveToNext())
+		{
+			try {
+				JSONArray source = new JSONArray();
+				
+				//id
+				source.put(cursor.getLong(0));
+				//name
+				source.put(cursor.getString(1));
+				//created
+				source.put(cursor.getDouble(2));
+				//lastSync
+				source.put(cursor.getDouble(3));
+				//syncPeriod
+				source.put(cursor.getInt(4));
+				
+				bundledSources.put(source);
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		cursor.close();
+		
+		Log.i(TAG, "Bundled sources = " + bundledSources);
+		return bundledSources;
 	}
 	
     /**
