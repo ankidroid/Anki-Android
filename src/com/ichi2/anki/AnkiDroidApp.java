@@ -17,12 +17,15 @@
 
 package com.ichi2.anki;
 
+import java.util.ArrayList;
+
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.util.Log;
 
 import com.ichi2.async.Connection;
 import com.tomgibara.android.veecheck.Veecheck;
@@ -34,6 +37,11 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  */
 public class AnkiDroidApp extends Application {
 
+	private static final String TAG = "AnkiDroid";
+	
+	private static ArrayList<String> cursorMethods = new ArrayList<String>();
+	private static ArrayList<String> cursorNames = new ArrayList<String>();
+	
 	/**
 	 * Singleton instance of this class.
 	 */
@@ -113,4 +121,18 @@ public class AnkiDroidApp extends Application {
         instance.loadedDeck = deck;
     }
 
+    public static void registerCursor(String method, String name)
+    {
+    	cursorMethods.add(method);
+    	cursorNames.add(name);
+    }
+    
+    public static void logCursors()
+    {
+    	for(int i = 0; i < cursorMethods.size(); i++)
+    	{
+    		Log.i(TAG, "Cursor " + cursorNames.get(i));
+    		Log.i(TAG, "	on method " + cursorMethods.get(i));
+    	}
+    }
 }
