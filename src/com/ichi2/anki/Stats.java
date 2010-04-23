@@ -111,7 +111,7 @@ public class Stats
 		matureEase4 = 0;
 	}
 
-	private void fromDB(long id) {
+	public void fromDB(long id) {
 		Cursor cursor = null;
 		
 		try {

@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mindprod.common11.BigDate;
+
 import android.util.Log;
 
 /**
@@ -48,6 +51,9 @@ public class Utils {
 	private static final String TAG = "AnkiDroid";
 	
 	private static final int CHUNK_SIZE = 32768;
+	
+	private static final long MILLIS_IN_A_DAY = 86400000;
+	private static final int DAYS_BEFORE_1970 = 719163;
 	
 	private static TreeSet<Integer> idTree;
 	private static long idTime;
@@ -123,8 +129,7 @@ public class Utils {
 					str += ids.get(i) + ",";
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.i(TAG, "JSONException = " + e.getMessage());
 			}
 		}
 		str += ")";
@@ -336,16 +341,24 @@ public class Utils {
 						Log.i(TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Log.i(TAG, "JSONException = " + e.getMessage());
 				}
 			}
 			
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			Log.i(TAG, "IOException = " + e1.getMessage());
 		}
 		
 	}
 
+	/**
+	 * Returns the proleptic Gregorian ordinal of the date, where January 1 of year 1 has ordinal 1
+	 * @param date Date to convert to ordinal, since 01/01/01
+	 * @return The ordinal representing the date
+	 */
+	public static int dateToOrdinal(Date date)
+	{
+		//BigDate.toOrdinal returns the ordinal since 1970, so we add up the days from 01/01/01 to 1970
+		return BigDate.toOrdinal(date.getYear() + 1900, date.getMonth() + 1, date.getDate()) + DAYS_BEFORE_1970;
+	}
 }

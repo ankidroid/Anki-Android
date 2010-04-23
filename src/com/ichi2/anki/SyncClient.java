@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
@@ -231,7 +232,7 @@ public class SyncClient {
 			
 			try {
 				//payload.put("deck", bundleDeck());
-				//payload.put("stats", bundleStats());
+				payload.put("stats", bundleStats());
 				payload.put("history",bundleHistory());
 				payload.put("sources", bundleSources());
 				deck.lastSync = deck.modified;
@@ -907,6 +908,81 @@ public class SyncClient {
 	/**
 	 * Deck/Stats/History/Sources
 	 */
+	
+	private JSONObject bundleStats()
+	{
+		Log.i(TAG, "bundleStats");
+		
+		JSONObject bundledStats = new JSONObject();
+		
+		// Get daily stats since the last day the deck was synchronized
+		Date lastDay = new Date(java.lang.Math.max(0, (long)(deck.lastSync - 60*60*24) * 1000));
+		Log.i(TAG, "lastDay = " + lastDay.toString());
+		ArrayList<Long> ids = AnkiDb.queryColumn(Long.class, 
+												"SELECT id FROM stats WHERE type = 1 and day >= \"" + lastDay.toString() + "\"", 
+												0);
+		
+		try {
+			Stats stat = new Stats();
+			// Put global stats
+			bundledStats.put("global", bundleStat(Stats.globalStats(deck)));
+			// Put daily stats
+			JSONArray dailyStats = new JSONArray();
+			int len = ids.size();
+			for(int i = 0; i < len; i++)
+			{
+				// Update stat with the values of the stat with id ids.get(i)
+				stat.fromDB(ids.get(i));
+				// Bundle this stat and add it to dailyStats
+				dailyStats.put(bundleStat(stat));
+			}
+			bundledStats.put("daily", dailyStats);
+		} catch (SQLException e) {
+			Log.i(TAG, "SQLException = " + e.getMessage());
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+		
+		Log.i(TAG, "Stats =");
+		Utils.printJSONObject(bundledStats, false);
+		
+		return bundledStats;
+	}
+	
+	private JSONObject bundleStat(Stats stat)
+	{
+		JSONObject bundledStat = new JSONObject();
+		
+		try {
+			bundledStat.put("type", stat.type);
+			bundledStat.put("day", Utils.dateToOrdinal(stat.day));
+			bundledStat.put("reps", stat.reps);
+			bundledStat.put("averageTime", stat.averageTime);
+			bundledStat.put("reviewTime", stat.reviewTime);
+			bundledStat.put("distractedTime", stat.distractedTime);
+			bundledStat.put("distractedReps", stat.distractedReps);
+			bundledStat.put("newEase0", stat.newEase0);
+			bundledStat.put("newEase1", stat.newEase1);
+			bundledStat.put("newEase2", stat.newEase2);
+			bundledStat.put("newEase3", stat.newEase3);
+			bundledStat.put("newEase4", stat.newEase4);
+			bundledStat.put("youngEase0", stat.youngEase0);
+			bundledStat.put("youngEase1", stat.youngEase1);
+			bundledStat.put("youngEase2", stat.youngEase2);
+			bundledStat.put("youngEase3", stat.youngEase3);
+			bundledStat.put("youngEase4", stat.youngEase4);
+			bundledStat.put("matureEase0", stat.matureEase0);
+			bundledStat.put("matureEase1", stat.matureEase1);
+			bundledStat.put("matureEase2", stat.matureEase2);
+			bundledStat.put("matureEase3", stat.matureEase3);
+			bundledStat.put("matureEase4", stat.matureEase4);
+			
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+		
+		return bundledStat;
+	}
 	
 	private JSONArray bundleHistory()
 	{
