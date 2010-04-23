@@ -73,6 +73,11 @@ public class SyncClient {
 		this.remoteTime = 0;
 	}
 	
+	public AnkiDroidProxy getServer()
+	{
+		return server;
+	}
+	
 	public void setServer(AnkiDroidProxy server) 
 	{
 		this.server = server;
@@ -204,7 +209,7 @@ public class SyncClient {
 	{
 		//Log.i(TAG, "genPayload");
 		//Ensure global stats are available (queue may not be built)
-		//preSyncRefresh();
+		preSyncRefresh();
 		
 		JSONObject payload = new JSONObject();
 		
@@ -324,11 +329,31 @@ public class SyncClient {
 				cardIds[i] = cards.getJSONArray(i).getLong(0);
 			}
 			//TODO: updateCardTags
-			//rebuildPriorities(cardIds);
+			rebuildPriorities(cardIds);
 			// Rebuild due counts
 			deck.rebuildCounts(false);
 		} catch (JSONException e) {
 			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - preSyncRefresh
+	 */
+	private void preSyncRefresh()
+	{
+		Stats.globalStats(deck);
+	}
+	
+	private void rebuildPriorities(long[] cardIds)
+	{
+		try {
+			// TODO: Implement updateAllPriorities
+			//deck.updateAllPriorities(true, false);
+			deck.updatePriorities(cardIds, null, false);
+		} catch (SQLException e)
+		{
+			Log.e(TAG, "SQLException e = " + e.getMessage());
 		}
 	}
 	

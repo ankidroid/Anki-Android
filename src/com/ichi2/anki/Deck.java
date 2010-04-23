@@ -96,7 +96,7 @@ public class Deck
 
 	double created;
 
-	double modified;
+	public double modified;
 
 	String description;
 
@@ -190,7 +190,7 @@ public class Deck
 
 	int newCountToday;
 
-	double lastLoaded;
+	public double lastLoaded;
 
 	boolean newEarly;
 
@@ -1223,7 +1223,7 @@ public class Deck
 		updatePriorities(cardIds, null, true);
 	}
 
-	private void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
+	void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
 		Cursor cursor = null;
 		Log.i(TAG, "updatePriorities - Updating priorities...");
 		// Any tags to suspend
