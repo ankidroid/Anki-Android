@@ -158,18 +158,36 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			String username = (String)data.data[0];
 			String password = (String)data.data[1];
 			Deck deck = (Deck)data.data[2];
+			String deckPath = (String)data.data[3];
+			String syncName = deck.getSyncName();
 			
 			AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 			server.connect();
 			
+			if(!server.hasDeck(syncName))
+			{
+				server.createDeck(syncName);
+			}
 			SyncClient client = new SyncClient(deck);
 			client.setServer(server);
+			server.setDeckName(syncName);
 			if(client.prepareSync())
 			{
 				JSONArray sums = client.summaries();
 				if(client.needFullSync(sums))
 				{
 					Log.i(TAG, "Deck needs full sync");
+					String syncFrom = client.prepareFullSync();
+					if("fromLocal".equalsIgnoreCase(syncFrom))
+					{
+						client.fullSyncFromLocal(password, username, syncName, deckPath);
+					}
+					else if("fromServer".equalsIgnoreCase(syncFrom))
+					{
+						client.fullSyncFromServer(password, username, syncName, deckPath);
+					}
+					deck = Deck.openDeck(deckPath);
+					client.setDeck(deck);
 				}
 				else
 				{

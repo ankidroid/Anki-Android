@@ -30,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
@@ -81,6 +82,11 @@ public class SyncClient {
 	public void setServer(AnkiDroidProxy server) 
 	{
 		this.server = server;
+	}
+	
+	public void setDeck(Deck deck) 
+	{
+		this.deck = deck;
 	}
 	
     /**
@@ -2040,6 +2046,21 @@ public class SyncClient {
 		return false;
 	}
 	
+	public String prepareFullSync()
+	{
+		deck.lastSync = System.currentTimeMillis() / 1000.0;
+		deck.commitToDB();
+		deck.closeDeck();
+		
+		if(localTime > remoteTime)
+		{
+			return "fromLocal";
+		}
+		else
+		{
+			return "fromServer";
+		}
+	}
 	
 	public void fullSyncFromLocal(String password, String username, String deckName, String deckPath)
 	{

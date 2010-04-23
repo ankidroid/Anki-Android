@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.InflaterInputStream;
@@ -101,6 +102,10 @@ public class AnkiDroidProxy {
 		this.decks = null;
 	}
 	
+	public void setDeckName(String deckName) 
+	{
+		this.deckName = deckName;
+	}
 	
     public void connect()
     {
@@ -120,6 +125,22 @@ public class AnkiDroidProxy {
     			Log.i(TAG, "JSONException = " + e.getMessage());
     		}
     	}
+    }
+    
+    public boolean hasDeck(String name)
+    {
+    	connect();
+    	Iterator decksIterator = decks.keys();
+    	while(decksIterator.hasNext())
+    	{
+    		String serverDeckName = (String)decksIterator.next();
+    		if(name.equalsIgnoreCase(serverDeckName))
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
     
     public double modified()
@@ -188,12 +209,12 @@ public class AnkiDroidProxy {
 		return decksServer;
     }
     
-    public void createDeck()
+    public void createDeck(String name)
     {
     	Log.i(TAG, "user = " + username + ", password = " + password);
 
     	try {
-        	String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&u=" + URLEncoder.encode(username,"UTF-8") + "&d=None&name=" + URLEncoder.encode("test","UTF-8");
+        	String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&u=" + URLEncoder.encode(username,"UTF-8") + "&d=None&name=" + URLEncoder.encode(name,"UTF-8");
 
         	Log.i(TAG, "Data json = " + data);
         	HttpPost httpPost = new HttpPost(SYNC_URL + "createDeck");
