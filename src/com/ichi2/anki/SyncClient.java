@@ -919,7 +919,114 @@ public class SyncClient {
 	
 	private void updateCards(JSONArray cards)
 	{
+		int len = cards.length();
+		if(len > 0)
+		{
+			ArrayList<String> ids = new ArrayList<String>();
+			for(int i = 0; i < len; i++)
+			{
+				try {
+					ids.add(cards.getJSONArray(i).getString(0));
+				} catch (JSONException e) {
+					Log.i(TAG, "JSONException = " + e.getMessage());
+				}
+			}
+			String idsString = Utils.ids2str(ids);
+			
+			deck.cardCount += len - AnkiDb.queryScalar("SELECT COUNT(*) FROM cards WHERE id IN " + idsString);
 		
+			String sql = "INSERT OR REPLACE INTO cards (id, factId, cardModelId, created, modified, tags, ordinal, priority, interval, lastInterval, due, lastDue, " +
+							"factor, firstAnswered, reps, successive, averageTime, reviewTime, youngEase0, youngEase1, youngEase2, youngEase3, youngEase4, " +
+							"matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, answer, lastFactor, spaceUntil, " +
+							"type, combinedDue, relativeDelay, isDue) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 0, 0)";
+			SQLiteStatement statement = AnkiDb.database.compileStatement(sql);
+			for(int i = 0; i < len; i++)
+			{
+				try {
+					JSONArray card = cards.getJSONArray(i);
+					
+					//id
+					statement.bindLong(1, card.getLong(0));
+					//factId
+					statement.bindLong(2, card.getLong(1));
+					//cardModelId
+					statement.bindLong(3, card.getLong(2));
+					//created
+					statement.bindDouble(4, card.getDouble(3));
+					//modified
+					statement.bindDouble(5, card.getDouble(4));
+					//tags
+					statement.bindString(6, card.getString(5));
+					//ordinal
+					statement.bindString(7, card.getString(6));
+					//priority
+					statement.bindString(8, card.getString(7));
+					//interval
+					statement.bindDouble(9, card.getDouble(8));
+					//lastInterval
+					statement.bindDouble(10, card.getDouble(9));
+					//due
+					statement.bindDouble(11, card.getDouble(10));
+					//lastDue
+					statement.bindDouble(12, card.getDouble(11));
+					//factor
+					statement.bindDouble(13, card.getDouble(12));
+					//firstAnswered
+					statement.bindDouble(14, card.getDouble(13));
+					//reps
+					statement.bindString(15, card.getString(14));
+					//successive
+					statement.bindString(16, card.getString(15));
+					//averageTime
+					statement.bindDouble(17, card.getDouble(16));
+					//reviewTime
+					statement.bindDouble(18, card.getDouble(17));
+					//youngEase0
+					statement.bindString(19, card.getString(18));
+					//youngEase1
+					statement.bindString(20, card.getString(19));
+					//youngEase2
+					statement.bindString(21, card.getString(20));
+					//youngEase3
+					statement.bindString(22, card.getString(21));
+					//youngEase4
+					statement.bindString(23, card.getString(22));
+					//matureEase0
+					statement.bindString(24, card.getString(23));
+					//matureEase1
+					statement.bindString(25, card.getString(24));
+					//matureEase2
+					statement.bindString(26, card.getString(25));
+					//matureEase3
+					statement.bindString(27, card.getString(26));
+					//matureEase4
+					statement.bindString(28, card.getString(27));
+					//yesCount
+					statement.bindString(29, card.getString(28));
+					//noCount
+					statement.bindString(30, card.getString(29));
+					//question
+					statement.bindString(31, card.getString(30));
+					//answer
+					statement.bindString(32, card.getString(31));
+					//lastFactor
+					statement.bindDouble(33, card.getDouble(32));
+					//spaceUntil
+					statement.bindDouble(34, card.getDouble(33));
+					//type
+					statement.bindString(35, card.getString(34));
+					//combinedDue
+					statement.bindString(36, card.getString(35));
+					
+					statement.execute();
+				} catch (JSONException e) {
+					Log.i(TAG, "JSONException = " + e.getMessage());
+				}
+			}
+			statement.close();
+			
+			AnkiDb.database.execSQL("DELETE FROM cardsDeleted WHERE cardId IN " + idsString);
+		}
 	}
 	
 	/**
