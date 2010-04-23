@@ -721,7 +721,301 @@ public class SyncClient {
 	
 	private void updateModels(JSONArray models)
 	{
+		ArrayList<String> insertedModelsIds = new ArrayList<String>();
 		
+		String sql = "INSERT OR REPLACE INTO models (id, deckId, created, modified, tags, name, description, features, spacing, initialSpacing, source) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+		SQLiteStatement statement = AnkiDb.database.compileStatement(sql);
+		int len = models.length();
+		for(int i = 0; i < len; i++)
+		{
+			try {
+				JSONObject model = models.getJSONObject(i);
+				
+				//id
+				String id = model.getString("id");
+				statement.bindString(1, id);
+				//deckId
+				statement.bindLong(2, model.getLong("deckId"));
+				//created
+				statement.bindDouble(3, model.getDouble("created"));
+				//modified
+				statement.bindDouble(4, model.getDouble("modified"));
+				//tags
+				statement.bindString(5, model.getString("tags"));
+				//name
+				statement.bindString(6, model.getString("name"));
+				//description
+				statement.bindString(7, model.getString("name"));
+				//features
+				statement.bindString(8, model.getString("features"));
+				//spacing
+				statement.bindDouble(9, model.getDouble("spacing"));
+				//initialSpacing
+				statement.bindDouble(10, model.getDouble("initialSpacing"));
+				//source
+				statement.bindLong(11, model.getLong("source"));
+				
+				statement.execute();
+				
+				insertedModelsIds.add(id);
+				
+				mergeFieldModels(id, model.getJSONArray("fieldModels"));
+				mergeCardModels(id, model.getJSONArray("cardModels"));
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		statement.close();
+		
+		// Delete inserted models from modelsDeleted
+		AnkiDb.database.execSQL("DELETE FROM modelsDeleted WHERE modelId IN " + Utils.ids2str(insertedModelsIds));
+	}
+	
+	private void mergeFieldModels(String modelId, JSONArray fieldModels)
+	{
+		ArrayList<String> ids = new ArrayList<String>();
+		
+		String sql = "INSERT OR REPLACE INTO fieldModels VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		SQLiteStatement statement = AnkiDb.database.compileStatement(sql);
+		int len = fieldModels.length();
+		for(int i = 0; i < len; i++)
+		{
+			try {
+				JSONObject fieldModel = fieldModels.getJSONObject(i);
+				
+				//id
+				String id = fieldModel.getString("id");
+				statement.bindString(1, id);
+				//ordinal
+				statement.bindString(2, fieldModel.getString("ordinal"));
+				//modelId
+				statement.bindLong(3, fieldModel.getLong("modelId"));
+				//name
+				statement.bindString(4, fieldModel.getString("name"));
+				//description
+				statement.bindString(5, fieldModel.getString("description"));
+				//features
+				statement.bindString(6, fieldModel.getString("features"));
+				//required
+				statement.bindLong(7, Utils.booleanToInt(fieldModel.getBoolean("required")));
+				//unique
+				statement.bindLong(8, Utils.booleanToInt(fieldModel.getBoolean("unique")));
+				//numeric
+				statement.bindLong(9, Utils.booleanToInt(fieldModel.getBoolean("numeric")));
+				//quizFontFamily
+				if(fieldModel.isNull("quizFontFamily"))
+				{
+					statement.bindNull(10);
+				}
+				else
+				{
+					statement.bindString(10, fieldModel.getString("quizFontFamily"));
+				}
+				//quizFontSize
+				if(fieldModel.isNull("quizFontSize"))
+				{
+					statement.bindNull(11);
+				}
+				else
+				{
+					statement.bindString(11, fieldModel.getString("quizFontSize"));
+				}
+				//quizFontColour
+				if(fieldModel.isNull("quizFontColour"))
+				{
+					statement.bindNull(12);
+				}
+				else
+				{
+					statement.bindString(12, fieldModel.getString("quizFontColour"));
+				}
+				//editFontFamily
+				if(fieldModel.isNull("editFontFamily"))
+				{
+					statement.bindNull(13);
+				}
+				else
+				{
+					statement.bindString(13, fieldModel.getString("editFontFamily"));
+				}
+				//editFontSize
+				statement.bindString(14, fieldModel.getString("editFontSize"));
+				
+				statement.execute();
+				
+				ids.add(id);
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException");
+			}
+		}
+		statement.close();
+		
+		//Delete field models that were not returned by the server
+		ArrayList<String> fieldModelsIds = AnkiDb.queryColumn(String.class, 
+																"SELECT id FROM fieldModels WHERE modelId = " + modelId, 
+																0);
+		int lenFieldModelsIds = fieldModelsIds.size();
+		for(int i = 0; i < lenFieldModelsIds; i++)
+		{
+			String fieldModelId = fieldModelsIds.get(i);
+			if(!ids.contains(fieldModelId))
+			{
+				deck.deleteFieldModel(modelId, fieldModelId);
+			}
+		}
+	}
+	
+	private void mergeCardModels(String modelId, JSONArray cardModels)
+	{
+		ArrayList<String> ids = new ArrayList<String>();
+		
+		String sql = "INSERT OR REPLACE INTO cardModels (id, ordinal, modelId, name, description, active, qformat, aformat, lformat, " +
+						"qedformat, aedformat, questionInAnswer, questionFontFamily, questionFontSize, questionFontColour, questionAlign, " +
+						"answerFontFamily, answerFontSize, answerFontColour, answerAlign, lastFontFamily, lastFontSize, lastFontColour, " +
+						"editQuestionFontFamily, editQuestionFontSize, editAnswerFontFamily, editAnswerFontSize, allowEmptyAnswer, typeAnswer) " +
+						"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		SQLiteStatement statement = AnkiDb.database.compileStatement(sql);
+		int len = cardModels.length();
+		for(int i = 0; i < len; i++)
+		{
+			try {
+				JSONObject cardModel = cardModels.getJSONObject(i);
+				
+				//id
+				String id = cardModel.getString("id");
+				statement.bindString(1, id);
+				//ordinal
+				statement.bindString(2, cardModel.getString("ordinal"));
+				//modelId
+				statement.bindLong(3, cardModel.getLong("modelId"));
+				//name
+				statement.bindString(4, cardModel.getString("name"));
+				//description
+				statement.bindString(5, cardModel.getString("description"));
+				//active
+				statement.bindLong(6, Utils.booleanToInt(cardModel.getBoolean("active")));
+				//qformat
+				statement.bindString(7, cardModel.getString("qformat"));
+				//aformat
+				statement.bindString(8, cardModel.getString("aformat"));
+				//lformat
+				if(cardModel.isNull("lformat"))
+				{
+					statement.bindNull(9);
+				}
+				else
+				{
+					statement.bindString(9, cardModel.getString("lformat"));
+				}
+				//qedformat
+				if(cardModel.isNull("qedformat"))
+				{
+					statement.bindNull(10);
+				}
+				else
+				{
+					statement.bindString(10, cardModel.getString("qedformat"));
+				}
+				//aedformat
+				if(cardModel.isNull("aedformat"))
+				{
+					statement.bindNull(11);
+				}
+				else
+				{
+					statement.bindString(11, cardModel.getString("aedformat"));
+				}
+				//questionInAnswer
+				statement.bindLong(12, Utils.booleanToInt(cardModel.getBoolean("questionInAnswer")));
+				//questionFontFamily
+				statement.bindString(13, cardModel.getString("questionFontFamily"));
+				//questionFontSize
+				statement.bindString(14, cardModel.getString("questionFontSize"));
+				//questionFontColour
+				statement.bindString(15, cardModel.getString("questionFontColour"));
+				//questionAlign
+				statement.bindString(16, cardModel.getString("questionAlign"));
+				//answerFontFamily
+				statement.bindString(17, cardModel.getString("answerFontFamily"));
+				//answerFontSize
+				statement.bindString(18, cardModel.getString("answerFontSize"));
+				//answerFontColour
+				statement.bindString(19, cardModel.getString("answerFontColour"));
+				//answerAlign
+				statement.bindString(20, cardModel.getString("answerAlign"));
+				//lastFontFamily
+				statement.bindString(21, cardModel.getString("lastFontFamily"));
+				//lastFontSize
+				statement.bindString(22, cardModel.getString("lastFontSize"));
+				//lastFontColour
+				statement.bindString(23, cardModel.getString("lastFontColour"));
+				//editQuestionFontFamily
+				if(cardModel.isNull("editQuestionFontFamily"))
+				{
+					statement.bindNull(24);
+				}
+				else
+				{
+					statement.bindString(24, cardModel.getString("editQuestionFontFamily"));
+				}
+				//editQuestionFontSize
+				if(cardModel.isNull("editQuestionFontSize"))
+				{
+					statement.bindNull(25);
+				}
+				else
+				{
+					statement.bindString(25, cardModel.getString("editQuestionFontSize"));
+				}
+				//editAnswerFontFamily
+				if(cardModel.isNull("editAnswerFontFamily"))
+				{
+					statement.bindNull(26);
+				}
+				else
+				{
+					statement.bindString(26, cardModel.getString("editAnswerFontFamily"));
+				}
+				//editAnswerFontSize
+				if(cardModel.isNull("editAnswerFontSize"))
+				{
+					statement.bindNull(27);
+				}
+				else
+				{
+					statement.bindString(27, cardModel.getString("editAnswerFontSize"));
+				}
+				//allowEmptyAnswer
+				if(cardModel.isNull("allowEmptyAnswer"))
+				{
+					cardModel.put("allowEmptyAnswer", true);
+				}
+				statement.bindLong(28, Utils.booleanToInt(cardModel.getBoolean("allowEmptyAnswer")));
+				//typeAnswer
+				statement.bindString(29, cardModel.getString("typeAnswer"));
+				
+				statement.execute();
+				
+				ids.add(id);
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		statement.close();
+		
+		// Delete card models that were not returned by the server
+		ArrayList<String> cardModelsIds = AnkiDb.queryColumn(String.class, 
+															"SELECT id FROM cardModels WHERE modelId = " + modelId, 
+															0);
+		int lenCardModelsIds = cardModelsIds.size();
+		for(int i = 0; i < lenCardModelsIds; i++)
+		{
+			String cardModelId = cardModelsIds.get(i);
+			if(!ids.contains(cardModelId))
+			{
+				deck.deleteCardModel(modelId, cardModelId);
+			}
+		}
 	}
 	
 	/**

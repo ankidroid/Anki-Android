@@ -351,6 +351,11 @@ public class Utils {
 		
 	}
 
+	public static int booleanToInt(boolean b)
+	{
+		return (b)?1:0;
+	}
+	
 	/**
 	 * Returns the proleptic Gregorian ordinal of the date, where January 1 of year 1 has ordinal 1
 	 * @param date Date to convert to ordinal, since 01/01/01

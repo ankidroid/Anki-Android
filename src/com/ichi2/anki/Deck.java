@@ -1491,6 +1491,84 @@ public class Deck
 		cursor.close();
 	}
 	
+	public void deleteFieldModel(String modelId, String fieldModelId)
+	{
+		Log.i(TAG, "deleteFieldModel, modelId = " + modelId + ", fieldModelId = " + fieldModelId);
+		
+		long start, stop;
+		start = System.currentTimeMillis();
+		
+		// Delete field model
+		AnkiDb.database.execSQL("DELETE FROM fields WHERE fieldModel = " + fieldModelId);
+		
+		// Note like modified the facts that use this model
+		AnkiDb.database.execSQL("UPDATE facts SET modified = " + String.format(ENGLISH_LOCALE, "%f", (System.currentTimeMillis() / 1000.0)) + " WHERE modelId = " + modelId);
+		
+		// TODO: remove field model from list
+		
+		// Update Question/Answer formats
+		// TODO: All these should be done with the field object
+		String fieldName = "";
+		Cursor cursor = AnkiDb.database.rawQuery("SELECT name FROM fieldModels WHERE id = " + fieldModelId, null);
+		if(cursor.moveToNext())
+		{
+			fieldName = cursor.getString(0);
+		}
+		cursor.close();
+		
+		cursor = AnkiDb.database.rawQuery("SELECT id, qformat, aformat FROM cardModels WHERE modelId = " + modelId, null);
+		String sql = "UPDATE cardModels SET qformat = ?, aformat = ? WHERE id = ?";
+		SQLiteStatement statement = AnkiDb.database.compileStatement(sql);
+		while(cursor.moveToNext())
+		{
+			String id = cursor.getString(0);
+			String newQFormat = cursor.getString(1);
+			String newAFormat = cursor.getString(2);
+			
+			newQFormat = newQFormat.replace("%%(" + fieldName + ")s", "");
+			newQFormat = newQFormat.replace("%%(text:" + fieldName + ")s", "");
+			newAFormat = newAFormat.replace("%%(" + fieldName + ")s", "");
+			newAFormat = newAFormat.replace("%%(text:" + fieldName + ")s", "");
+			
+			statement.bindString(1, newQFormat);
+			statement.bindString(2, newAFormat);
+			statement.bindString(3, id);
+			
+			statement.execute();
+		}
+		cursor.close();
+		statement.close();
+		
+		// TODO: updateCardsFromModel();
+		
+		// Note the model like modified (TODO: We should use the object model instead handling the DB directly)
+		AnkiDb.database.execSQL("UPDATE models SET modified = " + String.format(ENGLISH_LOCALE, "%f", System.currentTimeMillis() / 1000.0) + " WHERE id = " + modelId);
+		
+		flushMod();
+		
+		stop = System.currentTimeMillis();
+		Log.v(TAG, "deleteFieldModel - deleted field models in " + (stop - start) + " ms.");
+	}
+	
+	public void deleteCardModel(String modelId, String cardModelId)
+	{
+		Log.i(TAG, "deleteCardModel, modelId = " + modelId + ", fieldModelId = " + cardModelId);
+		
+		// Delete all cards that use card model from the deck
+		ArrayList<String> cardIds = AnkiDb.queryColumn(String.class, 
+														"SELECT id FROM cards WHERE cardModelId = " + cardModelId, 
+														0);
+		deleteCards(cardIds);
+		
+		// I assume that the line "model.cardModels.remove(cardModel)" actually deletes cardModel from DB (I might be wrong)
+		AnkiDb.database.execSQL("DELETE FROM cardModels WHERE id = " + cardModelId);
+		
+		// Note the model like modified (TODO: We should use the object model instead handling the DB directly)
+		AnkiDb.database.execSQL("UPDATE models SET modified = " + String.format(ENGLISH_LOCALE, "%f", System.currentTimeMillis() / 1000.0) + " WHERE id = " + modelId);
+		
+		flushMod();
+	}
+	
 	/* Undo/Redo
 	 ***********************************************************/
 	private class UndoRow {
