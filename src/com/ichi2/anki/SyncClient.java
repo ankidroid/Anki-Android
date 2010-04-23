@@ -810,7 +810,90 @@ public class SyncClient {
 	
 	private void updateFacts(JSONObject factsDict)
 	{
-		
+		try {
+			JSONArray facts = factsDict.getJSONArray("facts");
+			int lenFacts = facts.length();
+			
+			if(lenFacts > 0)
+			{
+				JSONArray fields = factsDict.getJSONArray("fields");
+				int lenFields = fields.length();
+				
+				// Grab fact ids
+				// They will be used later to recalculate the count of facts and to delete them from DB
+				ArrayList<String> factIds = new ArrayList<String>();
+				for(int i = 0; i < lenFacts; i++)
+				{
+					factIds.add(facts.getJSONArray(i).getString(0));
+				}
+				String factIdsString = Utils.ids2str(factIds);
+				
+				// Recalculate fact count
+				deck.factCount += lenFacts - AnkiDb.queryScalar("SELECT COUNT(*) FROM facts WHERE id IN " + factIdsString);
+				
+				// Update facts
+				String sqlFact = "INSERT OR REPLACE INTO facts (id, modelId, created, modified, tags, spaceUntil, lastCardId) VALUES(?,?,?,?,?,?,?)";
+				SQLiteStatement statement = AnkiDb.database.compileStatement(sqlFact);
+				for(int i = 0; i < lenFacts; i++)
+				{
+					JSONArray fact = facts.getJSONArray(i);
+					
+					//id
+					statement.bindLong(1, fact.getLong(0));
+					//modelId
+					statement.bindLong(2, fact.getLong(1));
+					//created
+					statement.bindDouble(3, fact.getDouble(2));
+					//modified
+					statement.bindDouble(4, fact.getDouble(3));
+					//tags
+					statement.bindString(5, fact.getString(4));
+					//spaceUntil
+					statement.bindDouble(6, fact.getDouble(5));
+					//lastCardId
+					if(!fact.isNull(6))
+					{
+						statement.bindLong(7, fact.getLong(6));
+					}
+					else
+					{
+						statement.bindNull(7);
+					}
+					
+					statement.execute();
+				}
+				statement.close();
+				
+				// Update fields (and delete first the local ones, since ids may have changed)
+				AnkiDb.database.execSQL("DELETE FROM fields WHERE factId IN " + factIdsString);
+				
+				String sqlFields = "INSERT INTO fields (id, factId, fieldModelId, ordinal, value) VALUES(?,?,?,?,?)";
+				statement = AnkiDb.database.compileStatement(sqlFields);
+				for(int i = 0; i < lenFields; i++)
+				{
+					JSONArray field = fields.getJSONArray(i);
+					
+					//id
+					statement.bindLong(1, field.getLong(0));
+					//factId
+					statement.bindLong(2, field.getLong(1));
+					//fieldModelId
+					statement.bindLong(3, field.getLong(2));
+					//ordinal
+					statement.bindString(4, field.getString(3));
+					//value
+					statement.bindString(5, field.getString(4));
+					
+					statement.execute();
+				}
+				statement.close();
+				
+				// Delete inserted facts from deleted
+				AnkiDb.database.execSQL("DELETE FROM factsDeleted WHERE factId IN " + factIdsString);
+			}
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
 	}
 	
 	/**
