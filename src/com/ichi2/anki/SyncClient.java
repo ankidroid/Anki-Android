@@ -1589,9 +1589,87 @@ public class SyncClient {
 		return bundledDeck;
 	}
 	
-	private void updateDeck(JSONObject deck)
+	private void updateDeck(JSONObject deckPayload)
 	{
-
+		try {
+			JSONArray meta = deckPayload.getJSONArray("meta");
+			
+			// Update meta information
+			String sqlMeta = "INSERT OR REPLACE INTO deckVars (key, value) VALUES(?,?)";
+			SQLiteStatement statement = AnkiDb.database.compileStatement(sqlMeta);
+			int lenMeta = meta.length();
+			for(int i = 0; i < lenMeta; i++)
+			{
+				JSONArray deckVar = meta.getJSONArray(i);
+				
+				//key
+				statement.bindString(1, deckVar.getString(0));
+				//value
+				statement.bindString(2, deckVar.getString(1));
+				
+				statement.execute();
+			}
+			statement.close();
+			
+			// Update deck
+			deck.averageFactor = deckPayload.getDouble("averageFactor");
+			deck.cardCount = deckPayload.getInt("cardCount");
+			deck.collapseTime = deckPayload.getDouble("collapseTime");
+			deck.created = deckPayload.getDouble("created");
+			//css
+			deck.currentModelId = deckPayload.getLong("currentModelId");
+			deck.delay0 = deckPayload.getDouble("delay0");
+			deck.delay1 = deckPayload.getDouble("delay1");
+			deck.delay2 = deckPayload.getDouble("delay2");
+			deck.description = deckPayload.getString("description");
+			deck.easyIntervalMax = deckPayload.getDouble("easyIntervalMax");
+			deck.easyIntervalMin = deckPayload.getDouble("easyIntervalMin");
+			deck.factCount = deckPayload.getInt("factCount");
+			deck.failedCardMax = deckPayload.getInt("failedCardMax");
+			deck.failedNowCount = deckPayload.getInt("failedNowCount");
+			deck.failedSoonCount = deckPayload.getInt("failedSoonCount");
+			//forceMediaDir
+			deck.hardIntervalMax = deckPayload.getDouble("hardIntervalMax");
+			deck.hardIntervalMin = deckPayload.getDouble("hardIntervalMin");
+			deck.highPriority = deckPayload.getString("highPriority");
+			deck.id = deckPayload.getLong("id");
+			//key
+			deck.lastLoaded = deckPayload.getDouble("lastLoaded");
+			//lastSessionStart
+			deck.lastSync = deckPayload.getDouble("modified");
+			//lastTags
+			deck.lowPriority = deckPayload.getString("lowPriority");
+			deck.medPriority = deckPayload.getString("medPriority");
+			deck.midIntervalMax = deckPayload.getDouble("midIntervalMax");
+			deck.midIntervalMin = deckPayload.getDouble("midIntervalMin");
+			deck.modified = deckPayload.getDouble("modified");
+			//needLock
+			deck.newCardModulus = deckPayload.getInt("newCardModulus");
+			//newCardOrder
+			//newCardSpacings
+			//newCardsPerDay
+			deck.newCount = deckPayload.getInt("newCount");
+			deck.newCountToday = deckPayload.getInt("newCountToday");
+			deck.newEarly = deckPayload.getBoolean("newEarly");
+			//revCardOrder
+			deck.revCount = deckPayload.getInt("revCount");
+			deck.reviewEarly = deckPayload.getBoolean("reviewEarly");
+			//sessionRepLimit
+			//sessionStartReps
+			//sessionStartTime
+			//sessionTimeLimit
+			deck.suspended = deckPayload.getString("suspended");
+			//tmpMediaDir
+			deck.undoEnabled = deckPayload.getBoolean("undoEnabled");
+			deck.utcOffset = deckPayload.getDouble("utcOffset");
+			
+			deck.commitToDB();
+			
+			deck.updateDynamicIndices();
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+		
 	}
 	
 	private JSONObject bundleStats()

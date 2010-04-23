@@ -1761,7 +1761,7 @@ public class Deck
 	/* Dynamic indices
 	 ***********************************************************/
 
-	private void updateDynamicIndices() {
+	public void updateDynamicIndices() {
 		Log.i(TAG, "updateDynamicIndices - Updating indices...");
 		HashMap<String,String> indices = new HashMap<String,String>();
 		indices.put("intervalDesc", "(type, isDue, priority desc, interval desc)");
