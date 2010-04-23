@@ -284,6 +284,53 @@ public class SyncClient {
 		return AnkiDroidApp.getAppResources().getString(R.string.change_report_format, payloadChanges(payload));
 	}
 	
+	public void applyPayloadReply(JSONObject payloadReply)
+	{
+		Log.i(TAG, "applyPayloadReply");
+		Keys[] keys = Keys.values();
+		
+		for(int i = 0; i < keys.length; i++)
+		{
+			String key = keys[i].name();
+			updateObjsFromKey(payloadReply, key);
+		}
+		
+		try {
+			if(!payloadReply.isNull("deck"))
+			{
+				updateDeck(payloadReply.getJSONObject("deck"));
+				updateStats(payloadReply.getJSONObject("stats"));
+				updateHistory(payloadReply.getJSONArray("history"));
+				if(!payloadReply.isNull("sources"))
+				{
+					updateSources(payloadReply.getJSONArray("sources"));
+				}
+			}
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+		
+		deck.commitToDB();
+		
+		// Rebuild priorities on client
+		
+		// Get card ids
+		try {
+			JSONArray cards = payloadReply.getJSONArray("added-cards");
+			int len = cards.length();
+			long[] cardIds = new long[len];
+			for(int i = 0; i < len; i++)
+			{
+				cardIds[i] = cards.getJSONArray(i).getLong(0);
+			}
+			//TODO: updateCardTags
+			//rebuildPriorities(cardIds);
+			// Rebuild due counts
+			deck.rebuildCounts(false);
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+	}
 	
 	/**
 	 * Anki Desktop -> libanki/anki/sync.py, SyncTools - diffSummary
@@ -475,6 +522,34 @@ public class SyncClient {
 		}
 	}
 	
+	private void updateObjsFromKey(JSONObject payloadReply, String key)
+	{
+		try {
+			if("models".equalsIgnoreCase(key))
+			{
+				Log.i(TAG, "updateModels");
+				updateModels(payloadReply.getJSONArray("added-models"));
+			}
+			else if("facts".equalsIgnoreCase(key))
+			{
+				Log.i(TAG, "updateFacts");
+				updateFacts(payloadReply.getJSONObject("added-facts"));
+			}
+			else if("cards".equalsIgnoreCase(key))
+			{
+				Log.i(TAG, "updateCards");
+				updateCards(payloadReply.getJSONArray("added-cards"));
+			}
+			else if("media".equalsIgnoreCase(key))
+			{
+				Log.i(TAG, "updateMedia");
+				updateMedia(payloadReply.getJSONArray("added-media"));
+			}
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Models
 	 */
@@ -644,6 +719,11 @@ public class SyncClient {
 		}
 	}
 	
+	private void updateModels(JSONArray models)
+	{
+		
+	}
+	
 	/**
 	 * Facts
 	 */
@@ -726,6 +806,11 @@ public class SyncClient {
 			fields.put(field);
 		}
 		cursor.close();
+	}
+	
+	private void updateFacts(JSONObject factsDict)
+	{
+		
 	}
 	
 	/**
@@ -832,6 +917,11 @@ public class SyncClient {
 		return cards;
 	}
 	
+	private void updateCards(JSONArray cards)
+	{
+		
+	}
+	
 	/**
 	 * Media
 	 */
@@ -905,6 +995,11 @@ public class SyncClient {
 		AnkiDb.database.execSQL("DELETE FROM media WHERE id IN " + idsString);
 	}
 	
+	private void updateMedia(JSONArray media)
+	{
+		
+	}
+	
 	/**
 	 * Deck/Stats/History/Sources
 	 */
@@ -975,6 +1070,11 @@ public class SyncClient {
 		Utils.printJSONObject(bundledDeck, false);
 		
 		return bundledDeck;
+	}
+	
+	private void updateDeck(JSONObject deck)
+	{
+
 	}
 	
 	private JSONObject bundleStats()
@@ -1052,6 +1152,11 @@ public class SyncClient {
 		return bundledStat;
 	}
 	
+	private void updateStats(JSONObject stats)
+	{
+
+	}
+	
 	private JSONArray bundleHistory()
 	{
 		JSONArray bundledHistory = new JSONArray();
@@ -1098,6 +1203,11 @@ public class SyncClient {
 		return bundledHistory;
 	}
 	
+	private void updateHistory(JSONArray history)
+	{
+
+	}
+	
 	private JSONArray bundleSources()
 	{
 		JSONArray bundledSources = new JSONArray();
@@ -1128,6 +1238,28 @@ public class SyncClient {
 		
 		Log.i(TAG, "Bundled sources = " + bundledSources);
 		return bundledSources;
+	}
+	
+	private void updateSources(JSONArray sources)
+	{
+		String sql = "INSERT OR REPLACE INTO sources VALUES(?,?,?,?,?)";
+		SQLiteStatement statement = AnkiDb.database.compileStatement(sql);
+		int len = sources.length();
+		for(int i = 0; i < len; i++)
+		{
+			try {
+				JSONArray source = sources.getJSONArray(i);
+				statement.bindLong(1, source.getLong(0));
+				statement.bindString(2, source.getString(1));
+				statement.bindDouble(3, source.getDouble(2));
+				statement.bindDouble(4, source.getDouble(3));
+				statement.bindString(5, source.getString(4));
+				statement.execute();
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		statement.close();
 	}
 	
     /**

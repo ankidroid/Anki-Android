@@ -1011,7 +1011,7 @@ public class Deck
 	/* Queue/cache management
 	 ***********************************************************/
 
-	private void rebuildCounts(boolean full) {
+	public void rebuildCounts(boolean full) {
 		Log.i(TAG, "rebuildCounts - Rebuilding global and due counts...");
 		// Need to check due first, so new due cards are not added later
 		checkDue();
