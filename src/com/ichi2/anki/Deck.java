@@ -422,6 +422,17 @@ public class Deck
 	 * NOTE: The setters flushMod()
 	 ***********************************************************/
 
+	public String getSyncName()
+	{
+		return syncName;
+	}
+	
+	public void setSyncName(String name)
+	{
+		syncName = name;
+		flushMod();
+	}
+	
 	public int getRevCardOrder()
 	{
 	    return revCardOrder;

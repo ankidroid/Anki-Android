@@ -240,7 +240,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
             this.pref.registerOnSharedPreferenceChangeListener( this );
 
             this.addPreferencesFromResource( R.layout.deck_preferences );
-//            this.updateSummaries();
+            //this.updateSummaries();
         }
     }
 

@@ -96,12 +96,14 @@ public class AnkiDroid extends Activity
 	public static final int MENU_ABOUT = 2;
 
 	public static final int MENU_DECKOPTS = 3;
+	
+	public static final int MENU_DECK_PROPERTIES = 4;
 
-	public static final int MENU_SUSPEND = 4;
+	public static final int MENU_SUSPEND = 5;
 
-    private static final int MENU_EDIT = 5; 
-    
-    private static final int MENU_GET_SHARED_DECKS = 6;
+	private static final int MENU_EDIT = 6; 
+
+	private static final int MENU_GET_SHARED_DECKS = 7;
 
 	/**
 	 * Possible outputs trying to load a deck
@@ -455,6 +457,7 @@ public class AnkiDroid extends Activity
 		menu.add(1, MENU_PREFERENCES, 0, getString(R.string.preferences));
 		menu.add(1, MENU_ABOUT, 0, getString(R.string.about));
 		menu.add(1, MENU_DECKOPTS, 0, getString(R.string.study_options));
+		menu.add(1, MENU_DECK_PROPERTIES, 0, getString(R.string.deck_properties));
 		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
         menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
         menu.add(1, MENU_GET_SHARED_DECKS, 0, getString(R.string.get_shared_deck));
@@ -465,6 +468,7 @@ public class AnkiDroid extends Activity
 	{
 		Log.i(TAG, "sdCardAvailable = " + sdCardAvailable + ", deckLoaded = " + deckLoaded);
 		menu.findItem(MENU_DECKOPTS).setEnabled(sdCardAvailable && deckLoaded);
+		menu.findItem(MENU_DECK_PROPERTIES).setEnabled(sdCardAvailable && deckLoaded);
 		menu.findItem(MENU_SUSPEND).setEnabled(currentCard != null);
 		menu.findItem(MENU_SUSPEND).setVisible(currentCard != null);
 		menu.findItem(MENU_EDIT).setEnabled(currentCard != null);
@@ -493,7 +497,11 @@ public class AnkiDroid extends Activity
 			return true;
 		case MENU_DECKOPTS:
 		    Intent opts = new Intent(this, DeckPreferences.class);
-		    startActivity( opts );
+		    startActivity(opts);
+		    return true;
+		case MENU_DECK_PROPERTIES:
+		    Intent deckProperties = new Intent(this, DeckProperties.class);
+		    startActivity(deckProperties);
 		    return true;
 		case MENU_SUSPEND:
 			mFlipCard.setChecked(true);
@@ -937,7 +945,7 @@ public class AnkiDroid extends Activity
 		// Add CSS for font colour and font size
 		content = enrichWithCSSForFontColorSize(content
 				, fontSize
-				, currentCard.cardModel
+				, null//currentCard.cardModel
 				, null);
 
 		Log.i(TAG, "content card = \n" + content);

@@ -112,10 +112,16 @@
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where the your decks are stored</string>
 
+<!-- deck_properties.xml -->
+<string name="deck_properties">Deck properties</string>
+<string name="sync_on">Synchronize this deck</string>
+<string name="sync_name">Name on server</string>
+
 <!-- AndroidManifest.xml strings -->
 <string name="shareddeckpicker_title">Select the deck you want to download</string>
 <string name="preferences_title">Preferences</string>
 <string name="deckpreferences_title">Deck Preferences</string>
+<string name="deckproperties_title">Deck Properties</string>
 <string name="about_title">About</string>
 <string name="cardeditor_title">Card Editor</string>
 
