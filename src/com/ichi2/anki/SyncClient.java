@@ -231,7 +231,7 @@ public class SyncClient {
 		{
 			
 			try {
-				//payload.put("deck", bundleDeck());
+				payload.put("deck", bundleDeck());
 				payload.put("stats", bundleStats());
 				payload.put("history",bundleHistory());
 				payload.put("sources", bundleSources());
@@ -908,6 +908,74 @@ public class SyncClient {
 	/**
 	 * Deck/Stats/History/Sources
 	 */
+	
+	private JSONObject bundleDeck()
+	{
+		JSONObject bundledDeck = new JSONObject();
+		
+		try {
+			bundledDeck.put("averageFactor", deck.averageFactor);
+			bundledDeck.put("cardCount", deck.cardCount);
+			bundledDeck.put("collapseTime", deck.collapseTime);
+			bundledDeck.put("created", deck.created);
+			//bundledDeck.put("currentModelId", testDeck.currentModelId);
+			bundledDeck.put("delay0", deck.delay0);
+			bundledDeck.put("delay1", deck.delay1);
+			bundledDeck.put("delay2", deck.delay2);
+			bundledDeck.put("description", deck.description);
+			bundledDeck.put("easyIntervalMax", deck.easyIntervalMax);
+			bundledDeck.put("easyIntervalMin", deck.easyIntervalMin);
+			bundledDeck.put("factCount", deck.factCount);
+			bundledDeck.put("failedCardMax", deck.failedCardMax);
+			bundledDeck.put("failedNowCount", deck.failedNowCount);
+			bundledDeck.put("failedSoonCount", deck.failedSoonCount);
+			bundledDeck.put("hardIntervalMax", deck.hardIntervalMax);
+			bundledDeck.put("hardIntervalMin", deck.hardIntervalMin);
+			bundledDeck.put("highPriority", deck.highPriority);
+			bundledDeck.put("id", deck.id);
+			bundledDeck.put("lastLoaded", deck.lastLoaded);
+			bundledDeck.put("lastSync", deck.lastSync);
+			bundledDeck.put("lowPriority", deck.lowPriority);
+			bundledDeck.put("medPriority", deck.medPriority);
+			bundledDeck.put("midIntervalMax", deck.midIntervalMax);
+			bundledDeck.put("midIntervalMin", deck.midIntervalMin);
+			bundledDeck.put("modified", deck.modified);
+			bundledDeck.put("newCardModulus", deck.newCardModulus);
+			bundledDeck.put("newCount", deck.newCount);
+			bundledDeck.put("newCountToday", deck.newCountToday);
+			bundledDeck.put("newEarly", deck.newEarly);
+			bundledDeck.put("revCount", deck.revCount);
+			bundledDeck.put("reviewEarly", deck.reviewEarly);
+			bundledDeck.put("suspended", deck.suspended);
+			bundledDeck.put("undoEnabled", deck.undoEnabled);
+			bundledDeck.put("utcOffset", deck.utcOffset);
+			
+			//AnkiDroid Deck.java does not have:
+			//css, forceMediaDir, lastSessionStart, lastTags, needLock, newCardOrder, newCardSpacing, newCardsPerDay, progressHandlerCalled,
+			//progressHandlerEnabled, revCardOrder, sessionRepLimit, sessionStartReps, sessionStartTime, sessionTimeLimit, tmpMediaDir
+			
+			// Add meta information of the deck (deckVars table)
+			JSONArray meta = new JSONArray();
+			Cursor cursor = AnkiDb.database.rawQuery("SELECT * FROM deckVars", null);
+			while(cursor.moveToNext())
+			{
+				JSONArray deckVar = new JSONArray();
+				deckVar.put(cursor.getString(0));
+				deckVar.put(cursor.getString(1));
+				meta.put(deckVar);
+			}
+			cursor.close();
+			bundledDeck.put("meta", meta);
+			
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+		
+		Log.i(TAG, "Deck =");
+		Utils.printJSONObject(bundledDeck, false);
+		
+		return bundledDeck;
+	}
 	
 	private JSONObject bundleStats()
 	{
