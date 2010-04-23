@@ -997,7 +997,40 @@ public class SyncClient {
 	
 	private void updateMedia(JSONArray media)
 	{
+		ArrayList<String> mediaIds = new ArrayList<String>();
+		String sql = "INSERT OR REPLACE INTO media (id, filename, size, created, originalPath, description) VALUES(?,?,?,?,?,?)";
+		SQLiteStatement statement = AnkiDb.database.compileStatement(sql);
+		int len = media.length();
+		for(int i = 0; i < len; i++)
+		{
+			try {
+				JSONArray m = media.getJSONArray(i);
+				
+				// Grab media ids, to delete them later
+				String id = m.getString(0);
+				mediaIds.add(id);
+				
+				//id
+				statement.bindString(1, id);
+				//filename
+				statement.bindString(2, m.getString(1));
+				//size
+				statement.bindString(3, m.getString(2));
+				//created
+				statement.bindDouble(4, m.getDouble(3));
+				//originalPath
+				statement.bindString(5, m.getString(4));
+				//description
+				statement.bindString(6, m.getString(5));
+				
+				statement.execute();
+			} catch (JSONException e) {
+				Log.i(TAG, "JSONException = " + e.getMessage());
+			}
+		}
+		statement.close();
 		
+		AnkiDb.database.execSQL("DELETE FROM mediaDeleted WHERE mediaId IN " + Utils.ids2str(mediaIds));
 	}
 	
 	/**
