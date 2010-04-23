@@ -176,15 +176,15 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 					Log.i(TAG, "Deck does not need full sync");
 					JSONObject payload = client.genPayload(sums);
 					JSONObject payloadReply = client.getServer().applyPayload(payload);
-	        		client.applyPayloadReply(payloadReply);
-	        		deck.lastLoaded = deck.modified;
-	        		deck.commitToDB();
+					client.applyPayloadReply(payloadReply);
+					deck.lastLoaded = deck.modified;
+					deck.commitToDB();
 				}
 			}
-	    	else
-	    	{
-	    		Log.i(TAG, "No changes.");
-	    	}
+			else
+			{
+				Log.i(TAG, "No changes.");
+			}
 		} catch (Exception e) {
 			data.success = false;
 			data.exception = e;
