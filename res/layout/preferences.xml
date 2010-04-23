@@ -23,11 +23,31 @@
 			android:defaultValue="true"
 			android:summary="@string/sample_deck_summ"
 			android:key="generateSampleDeck" />
-	<EditTextPreference
-		android:title="@string/deck_path"
-		android:defaultValue="/sdcard"
-		android:summary="@string/deck_path_summ"
-		android:key="deckPath" />
+		<EditTextPreference
+			android:title="@string/deck_path"
+			android:defaultValue="/sdcard"
+			android:summary="@string/deck_path_summ"
+			android:key="deckPath" />
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="@string/pref_cat_sync">
+		<EditTextPreference
+			android:title="@string/username"
+			android:defaultValue=""
+			android:key="username" />
+		<EditTextPreference
+			android:title="@string/password"
+			android:defaultValue=""
+			android:inputType="textPassword"
+			android:key="password" />
+		<CheckBoxPreference
+			android:title="@string/sync_on_open"
+			android:defaultValue="false"
+			android:key="syncOnOpen" />
+		<CheckBoxPreference
+			android:title="@string/sync_on_close"
+			android:defaultValue="false"
+			android:key="syncOnClose" />
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_study">
