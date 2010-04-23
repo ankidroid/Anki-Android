@@ -366,4 +366,76 @@ public class Utils {
 		//BigDate.toOrdinal returns the ordinal since 1970, so we add up the days from 01/01/01 to 1970
 		return BigDate.toOrdinal(date.getYear() + 1900, date.getMonth() + 1, date.getDate()) + DAYS_BEFORE_1970;
 	}
+	
+	/**
+	 * Return the date corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1
+	 * @param ordinal representing the days since 01/01/01
+	 * @return Date converted from the ordinal
+	 */
+	public static Date ordinalToDate(int ordinal)
+	{
+		return new Date((long)(ordinal - DAYS_BEFORE_1970) * MILLIS_IN_A_DAY);
+	}
+	
+	//Test for dateToOrdinal and fromOrdintalToDate
+	/*
+	 				boolean error = false;
+				
+				int year = 0;
+				int month = 0;
+				int day = 1;
+				Calendar cal = Calendar.getInstance();
+				for(year = 0; year < 111; year++)
+				{
+					if(error) break;
+					Log.i(TAG, "/--------------- YEAR: " + (year + 1900) + " -----------------/");
+					cal.set(Calendar.YEAR, year + 1900);
+					
+					for(month = 0; month < 12; month++)
+					{
+						if(error) break;
+						cal.set(Calendar.MONTH, month);
+						cal.set(Calendar.DAY_OF_MONTH, 1);
+						Log.i(TAG, "/--------------- MONTH: " + (month + 1) + " -----------------/");
+						
+						int maxDaysOnMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+						//Log.i(TAG, "Maxim days on this month = " + maxDaysOnMonth);
+						
+						for(day = 1; day <= maxDaysOnMonth; day++)
+						{
+							Log.i(TAG, "/--------------- DAY: " + day + " -----------------/");
+							cal.set(Calendar.DAY_OF_MONTH, day);
+							Log.i(TAG, "Calendar = " + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DAY_OF_MONTH));
+							Date testDate = new Date(year,month,day);
+							//Date testDate = new Date(System.currentTimeMillis());
+							//Log.i(TAG, "Current millis = " + System.currentTimeMillis());
+							Log.i(TAG, "Day = " + testDate);
+							//Log.i(TAG, "Day of the month = " + testDate.getDate());
+							//Log.i(TAG, "Month = " + (testDate.getMonth() + 1));
+							//Log.i(TAG, "Year = " + (testDate.getYear() + 1900));
+							int ordinal = Utils.dateToOrdinal(testDate);
+							Log.i(TAG, "Ordinal day = " + ordinal);
+							Date date2 = Utils.fromOrdinalToDate(ordinal);
+							Log.i(TAG, "Back to date = " + date2);
+							//Log.i(TAG, "Day of the month = " + date2.getDate());
+							//Log.i(TAG, "Month = " + (date2.getMonth() + 1));
+							//Log.i(TAG, "Year = " + (date2.getYear() + 1900));
+							
+							if(testDate.getDate() == date2.getDate() && testDate.getMonth() == date2.getMonth() && testDate.getYear() == date2.getYear())
+							{
+								Log.i(TAG, "OK!");
+							}
+							else
+							{
+								Log.e(TAG, "ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR!!!");
+								error = true;
+								break;
+							}
+								
+						}
+					}
+				}
+				
+				Log.i(TAG, "PERFECT!!! ^^");
+	 */
 }

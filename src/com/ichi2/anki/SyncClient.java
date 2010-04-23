@@ -1749,7 +1749,69 @@ public class SyncClient {
 	
 	private void updateStats(JSONObject stats)
 	{
-
+		try {
+			//Update global stats
+			Stats globalStats = Stats.globalStats(deck);
+			updateStat(globalStats, stats.getJSONObject("global"));
+			
+			//Update daily stats
+			Stats stat = new Stats();
+			JSONArray remoteDailyStats = stats.getJSONArray("daily");
+			int len = remoteDailyStats.length();
+			for(int i = 0; i < len; i++)
+			{
+				//Get a specific daily stat
+				JSONObject remoteStat = remoteDailyStats.getJSONObject(i);
+				Date dailyStatDate = Utils.ordinalToDate(remoteStat.getInt("day"));
+				
+				//If exists a statistic for this day, get it
+				try {
+					Long id = AnkiDb.queryScalar("SELECT id FROM stats WHERE type = 1 AND day = " + dailyStatDate.toString());
+					stat.fromDB(id);
+				} catch (SQLException e)
+				{
+					//If it does not exist, create a statistic for this day
+					stat.create(Stats.STATS_DAY, dailyStatDate);
+				}
+				
+				//Update daily stat
+				updateStat(stat, remoteStat);
+			}
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
+	}
+	
+	private void updateStat(Stats stat, JSONObject remoteStat)
+	{
+		try {
+			stat.averageTime = remoteStat.getDouble("averageTime");
+			stat.day = Utils.ordinalToDate(remoteStat.getInt("day"));
+			stat.distractedReps = remoteStat.getInt("distractedReps");
+			stat.distractedTime = remoteStat.getDouble("distractedTime");
+			stat.matureEase0 = remoteStat.getInt("matureEase0");
+			stat.matureEase1 = remoteStat.getInt("matureEase1");
+			stat.matureEase2 = remoteStat.getInt("matureEase2");
+			stat.matureEase3 = remoteStat.getInt("matureEase3");
+			stat.matureEase4 = remoteStat.getInt("matureEase4");
+			stat.newEase0 = remoteStat.getInt("newEase0");
+			stat.newEase1 = remoteStat.getInt("newEase1");
+			stat.newEase2 = remoteStat.getInt("newEase2");
+			stat.newEase3 = remoteStat.getInt("newEase3");
+			stat.newEase4 = remoteStat.getInt("newEase4");
+			stat.reps = remoteStat.getInt("reps");
+			stat.reviewTime = remoteStat.getDouble("reviewTime");
+			stat.type = remoteStat.getInt("type");
+			stat.youngEase0 = remoteStat.getInt("youngEase0");
+			stat.youngEase1 = remoteStat.getInt("youngEase1");
+			stat.youngEase2 = remoteStat.getInt("youngEase2");
+			stat.youngEase3 = remoteStat.getInt("youngEase3");
+			stat.youngEase4 = remoteStat.getInt("youngEase4");
+			
+			stat.toDB();
+		} catch (JSONException e) {
+			Log.i(TAG, "JSONException = " + e.getMessage());
+		}
 	}
 	
 	private JSONArray bundleHistory()

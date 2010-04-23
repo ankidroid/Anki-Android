@@ -33,9 +33,9 @@ public class Stats
 	 */
 	private static String TAG = "AnkiDroid";
 
-	private static final int STATS_LIFE = 0;
+	public static final int STATS_LIFE = 0;
 
-	private static final int STATS_DAY = 1;
+	public static final int STATS_DAY = 1;
 
 	// BEGIN: SQL table columns
 	long id;
@@ -154,7 +154,7 @@ public class Stats
 		}
 	}
 
-	private void create(int type, Date day)
+	public void create(int type, Date day)
 	{
 		Log.i(TAG, "Creating new stats for " + day.toString() + "...");
 		this.type = type;
