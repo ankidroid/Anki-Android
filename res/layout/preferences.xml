@@ -17,26 +17,77 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<CheckBoxPreference
-		android:title="@string/show_whiteboard"
-		android:defaultValue="true"
-		android:summary="@string/show_whiteboard_summ"
-		android:key="timerAndWhiteboard" />
-	<CheckBoxPreference
-		android:title="@string/sample_deck"
-		android:defaultValue="true"
-		android:summary="@string/sample_deck_summ"
-		android:key="generateSampleDeck" />
-	<CheckBoxPreference
-		android:title="@string/corporal_punishments"
-		android:defaultValue="false"
-		android:summary="@string/corporal_punishments_summ"
-		android:key="corporalPunishments" />	
-	<CheckBoxPreference
-		android:title="@string/write_answers"
-		android:defaultValue="false"
-		android:summary="@string/write_answers_summ"
-		android:key="writeAnswers" />
+	<PreferenceCategory android:title="@string/pref_cat_decks">
+		<CheckBoxPreference
+			android:title="@string/sample_deck"
+			android:defaultValue="true"
+			android:summary="@string/sample_deck_summ"
+			android:key="generateSampleDeck" />
+		<EditTextPreference
+			android:title="@string/deck_path"
+			android:defaultValue="/sdcard"
+			android:summary="@string/deck_path_summ"
+			android:key="deckPath" />
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="@string/pref_cat_sync">
+		<EditTextPreference
+			android:title="@string/username"
+			android:defaultValue=""
+			android:key="username" />
+		<EditTextPreference
+			android:title="@string/password"
+			android:defaultValue=""
+			android:inputType="textPassword"
+			android:key="password" />
+		<CheckBoxPreference
+			android:title="@string/sync_on_open"
+			android:defaultValue="false"
+			android:key="syncOnOpen" />
+		<CheckBoxPreference
+			android:title="@string/sync_on_close"
+			android:defaultValue="false"
+			android:key="syncOnClose" />
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="@string/pref_cat_study">
+		<CheckBoxPreference
+			android:title="@string/show_whiteboard"
+			android:defaultValue="true"
+			android:summary="@string/show_whiteboard_summ"
+			android:key="timerAndWhiteboard" />
+		<CheckBoxPreference
+			android:title="@string/corporal_punishments"
+			android:defaultValue="false"
+			android:summary="@string/corporal_punishments_summ"
+			android:key="corporalPunishments" />
+		<CheckBoxPreference
+			android:title="@string/write_answers"
+			android:defaultValue="false"
+			android:summary="@string/write_answers_summ"
+			android:key="writeAnswers" />
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="@string/pref_cat_qadisplay">
+		<CheckBoxPreference
+			android:title="@string/use_ruby_support"
+			android:defaultValue="false"
+			android:summary="@string/use_ruby_support_summ"
+			android:key="useRubySupport" />
+		<ListPreference
+			android:title="@string/qa_font_size"
+			android:summary="@string/qa_font_size_summ"
+			android:key="qaFontSize"
+			android:defaultValue="0"
+			android:entries="@array/qaFontSizeLabels"
+			android:entryValues="@array/qaFontSizeVals" />
+		<CheckBoxPreference
+			android:title="@string/show_question_answer"
+			android:defaultValue="false"
+			android:summary="@string/show_question_answer_summ"
+			android:key="showQuestionAnswer" />
+	</PreferenceCategory>
+	
 	<!-- TODO implement this preference. Right now: always use notifications
 	<CheckBoxPreference
 		android:title="Update notifications"
@@ -44,9 +95,4 @@
 		android:summary="Notify me when AnkiDroid is updated"
 		android:key="enabled"/>
 	-->
-	<EditTextPreference
-		android:title="@string/deck_path"
-		android:defaultValue="/sdcard"
-		android:summary="@string/deck_path_summ"
-		android:key="deckPath" />
 </PreferenceScreen>
