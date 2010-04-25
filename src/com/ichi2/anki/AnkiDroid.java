@@ -24,7 +24,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.TreeSet;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -947,20 +946,22 @@ public class AnkiDroid extends Activity
 		Sound.playSounds();
 	}
 	
+	/**
+	 * FIXME: colors for fields (if specified)
+	 * FIXME: relative font css (assuming question is 100%
+	 * @param htmlContent
+	 * @param defaultFontSize
+	 * @param myModel
+	 * @param myCardModelId
+	 * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
+	 */
 	private final static String enrichWithCSSForFontColorSize(String htmlContent
 			, int defaultFontSize
 			, Model myModel
 			, long myCardModelId) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("<style type=\"text/css\">");
+		sb.append("<style type=\"text/css\">\n");
 		CardModel myCardModel = myModel.getCardModel(myCardModelId);
-		
-		//FIXME: start just for testing
-		myCardModel.lastFontColour = "#FFFF00"; //yellow
-		myCardModel.questionFontColour = "#FF0000"; //red
-		myCardModel.answerFontColour = "#00FF00"; //green
-		
-		//FIXME: end just for testing
 
 		//body background
 		if (null != myCardModel.lastFontColour && 0 < myCardModel.lastFontColour.trim().length()) {
