@@ -16,15 +16,34 @@
 
 package com.ichi2.anki;
 
-import java.util.Comparator;
+import java.util.TreeMap;
 import java.util.TreeSet;
+
+import android.database.Cursor;
 
 /**
  * Anki model.
  * A model describes the type of information you want to input, and the type of cards which should be generated.
  * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Models
+ * There can be several models in a Deck.
+ * A Model is related to a Deck via attribute deckId.
+ * A CardModel is related to a Model via CardModel's modelId.
+ * A FieldModel is related to a Model via FieldModel's modelId
+ * A Card has a link to CardModel via Card's cardModelId
+ * A Card has a link to a Fact via Card's factId
+ * A Field has a link to a Fact via Field's factId
+ * A Field has a link to a FieldModel via Field's fieldModelId
+ * => In order to get the CardModel and all FieldModels for a given Card:
+ *     % the CardModel can directly be retrieved from the DB using the Card's cardModelId
+ *     % then from the retrieved CardModel we can get the modelId
+ *     % using the modelId we can get all FieldModels from the DB
+ *     % (alternatively in the CardModel the qformat and aformat fields could be parsed for relevant field names and 
+ *     then this used to only get the necessary fields. But this adds a lot overhead vs. using a bit more memory)
  */
 public class Model {
+	
+	/** Singleton */
+	private static Model currentModel;
 
 	// TODO: Javadoc.
 	// TODO: Methods for reading/writing from/to DB.
@@ -44,18 +63,24 @@ public class Model {
 	// BEGIN SQL table entries
 
 	// BEGIN JOINed entries
-	TreeSet<FieldModel> fieldModels;
-	TreeSet<CardModel> cardModels;
+	TreeSet<FieldModel> fieldModels; //FIXME: is this used at all?
+	TreeSet<CardModel> cardModels; //FIXME: is this used at all?
 	// END JOINed entries
+	
+	/** Map for convenience and speed which contains CardModels from current model */
+	private TreeMap<Long, CardModel> cardModelsMap = new TreeMap<Long, CardModel>();
+	
+	/** Map for convenience and speed which contains FieldModels from current model */
+	private TreeMap<Long, FieldModel> fieldModelsMap = new TreeMap<Long, FieldModel>();
 
-	public Model(String name) {
-		this.fieldModels = new TreeSet<FieldModel>(new FieldModelOrdinalComparator());
-		this.cardModels = new TreeSet<CardModel>(new CardModelOrdinalComparator());
+	private Model(String name) {
+		this.fieldModels = new TreeSet<FieldModel>();
+		this.cardModels = new TreeSet<CardModel>();
 		this.name = name;
 		this.id = Utils.genID();
 	}
 
-	public Model() {
+	private Model() {
 		this("");
 	}
 
@@ -74,18 +99,84 @@ public class Model {
 		this.cardModels.add(card);
 		//this.toDB();
 	}
-
-
-	public static final class FieldModelOrdinalComparator implements Comparator<FieldModel> {
-		public int compare(FieldModel object1, FieldModel object2) {
-			return object1.ordinal - object2.ordinal;
+	
+	/**
+	 * Returns a Model based on the submitted identifier.
+	 * If a model id is submitted (isModelId = true), then the Model data and all related CardModel and FieldModel data are loaded,
+	 * unless the id is the same as one of the currentModel.
+	 * If a cardModel id is submitted, then the related Model data and all related CardModel and FieldModel data are loaded
+	 * unless the cardModel id is already in the cardModel map.
+	 * FIXME: nothing is done to treat db failure or non-existing identifiers
+	 * @param identifier a cardModel id or a model id
+	 * @param isModelId if true then the submitted identifier is a model id; otherwise the identifier is a cardModel id
+	 * @return
+	 */
+	protected static Model getModel(long identifier, boolean isModelId) {
+		if (false == isModelId) {
+			//check whether the identifier is in the cardModelsMap
+			if (null == currentModel || currentModel.cardModelsMap.containsKey(identifier)) {
+				//get the modelId
+				long myModelId = CardModel.modelIdFromDB(identifier);
+				//get the model
+				loadFromDBPlusRelatedModels(myModelId);
+			}
+		} else {
+			if (null == currentModel || currentModel.id != identifier) {
+				//get the model
+				loadFromDBPlusRelatedModels(identifier);
+			}
 		}
+		return currentModel;
 	}
+	
+	protected final CardModel getCardModel(long identifier) {
+		return cardModelsMap.get(identifier);
+	}
+	
+	private static final void loadFromDBPlusRelatedModels(long modelId) {
+		currentModel = fromDb(modelId);
+		//load related card models
+		CardModel.fromDb(currentModel.id, true, currentModel.cardModelsMap);
+		//load related field models
+		//SELECT id FROM fieldmodels where modelid = -4541298410707851455
+	}
+	
+	/**
+	 * Loads a model from the database based on the id
+	 * FIXME: nothing is done in case of db error or no returned row
+	 * @param id
+	 * @return
+	 */
+	private static final Model fromDb(long id) {
+		Cursor cursor = null;
+		Model model = null;
+		try {
+			StringBuffer query = new StringBuffer();
+			query.append("SELECT id, deckId, created, modified, tags, name, description");
+			query.append(", features, spacing, initialSpacing, source");
+			query.append(" FROM models");
+			query.append(" WHERE id = ").append(id);
+			cursor = AnkiDb.database.rawQuery(query.toString(), null);
 
-	public static final class CardModelOrdinalComparator implements Comparator<CardModel> {
-		public int compare(CardModel object1, CardModel object2) {
-			return object1.ordinal - object2.ordinal;
+			cursor.moveToFirst();
+			model = new Model();
+			
+			model.id = cursor.getLong(0); // Primary key
+			model.deckId = cursor.getLong(1); // Foreign key
+			model.created = cursor.getDouble(2);
+			model.modified = cursor.getDouble(3);
+			model.tags = cursor.getString(4);
+			model.name = cursor.getString(5);
+			model.description = cursor.getString(6);
+			model.features = cursor.getString(7);
+			model.spacing = cursor.getDouble(8);
+			model.initialSpacing = cursor.getDouble(9);
+			model.source = cursor.getInt(10);
+		} finally {
+			if (cursor != null)
+				cursor.close();
 		}
+		return model;
 	}
 
 }

@@ -16,11 +16,13 @@
 
 package com.ichi2.anki;
 
+import java.util.Comparator;
+
 /**
  * Fields are the different pieces of data which make up a fact. 
  * @see http://ichi2.net/anki/wiki/ModelProperties#Fields
  */
-public class FieldModel {
+public class FieldModel implements Comparator<FieldModel> {
 
 	// BEGIN SQL table entries
 	long id;
@@ -84,6 +86,16 @@ public class FieldModel {
 		fieldModel.model = null;
 
 		return fieldModel;
+	}
+	
+	/**
+	 * Implements Comparator by comparing the field "ordinal".
+	 * @param object1
+	 * @param object2
+	 * @return 
+	 */
+	public int compare(FieldModel object1, FieldModel object2) {
+		return object1.ordinal - object2.ordinal;
 	}
 
 }

@@ -103,7 +103,7 @@ public class AnkiDroidApp extends Application {
     	return instance.res;
     }
     
-    public static Deck deck()
+    public static Deck getDeck()
     {
         return instance.loadedDeck;
     }

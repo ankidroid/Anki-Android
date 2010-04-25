@@ -86,7 +86,7 @@ public class Card {
     // END SQL table entries
 
     // BEGIN JOINed variables
-    CardModel cardModel;
+    private CardModel cardModel;
     Fact fact;
     // END JOINed variables
 
@@ -231,12 +231,11 @@ public class Card {
         return true;
     }
     
-    public CardModel getCardModel()
-    {
-        CardModel returnModel = new CardModel();
-        returnModel.fromDb(cardModelId);
-        return returnModel;
-    }
+    //FIXME: Should be removed. Calling code should directly interact with Model
+	public CardModel getCardModel() {
+		Model myModel = Model.getModel(cardModelId, false);
+		return myModel.getCardModel(cardModelId);
+	}
 
     public boolean fromDB(long id) {
     	Cursor cursor = null;
