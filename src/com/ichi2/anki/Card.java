@@ -17,8 +17,6 @@
 package com.ichi2.anki;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
 
 import android.content.ContentValues;
@@ -115,6 +113,7 @@ public class Card {
         if (cardModel != null) {
             cardModelId = cardModel.id;
             ordinal = cardModel.ordinal;
+            /* FIXME: what is the code below used for? It is never persisted
             HashMap<String, HashMap<Long, String>> d = new HashMap<String, HashMap<Long, String>>();
             Iterator<FieldModel> iter = fact.model.fieldModels.iterator();
             while (iter.hasNext()) {
@@ -123,6 +122,7 @@ public class Card {
                 field.put(fm.id, fact.getFieldValue(fm.name));
                 d.put(fm.name, field);
             }
+            */
             //			HashMap<String, String> qa = CardModel.formatQA(id, fact.modelId, d, splitTags(), cardModel);
             //			question = qa.get("question");
             //			answer = qa.get("answer");

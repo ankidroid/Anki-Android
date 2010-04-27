@@ -17,9 +17,9 @@
 
 package com.ichi2.anki;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import android.database.Cursor;
 
@@ -64,20 +64,17 @@ public class Model {
 	int source = 0;
 	// BEGIN SQL table entries
 
-	// BEGIN JOINed entries
-	TreeSet<FieldModel> fieldModels; //FIXME: is this used at all?
-	TreeSet<CardModel> cardModels; //FIXME: is this used at all?
-	// END JOINed entries
 	
 	/** Map for convenience and speed which contains CardModels from current model */
 	private TreeMap<Long, CardModel> cardModelsMap = new TreeMap<Long, CardModel>();
 	
 	/** Map for convenience and speed which contains FieldModels from current model */
 	private TreeMap<Long, FieldModel> fieldModelsMap = new TreeMap<Long, FieldModel>();
+	
+	/** Map for convenience and speed which contains the CSS code related to a CardModel */
+	private HashMap<Long, String> cssCardModelMap = new HashMap<Long, String>();
 
 	private Model(String name) {
-		this.fieldModels = new TreeSet<FieldModel>();
-		this.cardModels = new TreeSet<CardModel>();
 		this.name = name;
 		this.id = Utils.genID();
 	}
@@ -88,18 +85,6 @@ public class Model {
 
 	public void setModified() {
 		this.modified = System.currentTimeMillis() / 1000.0;
-	}
-
-	public void addFieldModel(FieldModel field) {
-		field.model = this;
-		this.fieldModels.add(field);
-		//this.toDB();
-	}
-
-	public void addCardModel(CardModel card) {
-		card.model = this;
-		this.cardModels.add(card);
-		//this.toDB();
 	}
 	
 	/**
@@ -137,10 +122,15 @@ public class Model {
 	
 	private static final void loadFromDBPlusRelatedModels(long modelId) {
 		currentModel = fromDb(modelId);
+		
 		//load related card models
 		CardModel.fromDb(currentModel.id, true, currentModel.cardModelsMap);
+		
 		//load related field models
 		FieldModel.fromDb(modelId, currentModel.fieldModelsMap);
+		
+		//prepare CSS for each card model in stead of doing it again and again
+		currentModel.prepareCSSForCardModels();
 	}
 	
 	/**
@@ -182,12 +172,32 @@ public class Model {
 	}
 	
 	/**
-	 * FIXME: colors for fields (if specified)
-	 * FIXME: relative font css (assuming question is 100%)
+	 * Prepares the CSS for all CardModels in this Model
+	 */
+	private final void prepareCSSForCardModels() {
+		CardModel myCardModel = null;
+		String cssString = null;
+		for (Map.Entry<Long, CardModel> entry : cardModelsMap.entrySet()) {
+			myCardModel = entry.getValue();
+			cssString = createCSSForFontColorSize(myCardModel.id);
+			this.cssCardModelMap.put(myCardModel.id, cssString);
+		}
+	}
+	
+	/**
+	 * Returns a cached CSS for the font color and font size of a given CardModel taking into account the included fields
 	 * @param myCardModelId
 	 * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
 	 */
 	protected final String getCSSForFontColorSize(long myCardModelId) {
+		return this.cssCardModelMap.get(myCardModelId);
+	}
+	
+	/**
+	 * @param myCardModelId
+	 * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
+	 */
+	private final String createCSSForFontColorSize(long myCardModelId) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<style type=\"text/css\">\n");
 		CardModel myCardModel = cardModelsMap.get(myCardModelId);
