@@ -1,5 +1,6 @@
 /****************************************************************************************
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -99,8 +100,8 @@ public class CardModel implements Comparator<CardModel> {
 	/** SELECT string with only those fields, which are used in AnkiDroid */
 	private final static String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, aformat" //lformat left out
 		//qedformat, aedformat, questionInAnswer left out
-		+ ", questionFontColour" //questionFontFamily, questionFontSize, questionAlign left out
-		+ ", answerFontColour" //same as for question
+		+ ", questionFontSize, questionFontColour" //questionFontFamily, questionAlign left out
+		+ ", answerFontSize, answerFontColour" //same as for question
 		+ ", lastFontColour" //lastFontFamily, lastFontSize left out
 		//rest left out
 		+ " FROM cardModels";
@@ -137,9 +138,11 @@ public class CardModel implements Comparator<CardModel> {
 					myCardModel.active = cursor.getInt(5);
 					myCardModel.qformat = cursor.getString(6);
 					myCardModel.aformat = cursor.getString(7);
-					myCardModel.questionFontColour = cursor.getString(8);
-					myCardModel.answerFontColour = cursor.getString(9);
-					myCardModel.lastFontColour = cursor.getString(10);
+					myCardModel.questionFontSize = cursor.getInt(8);
+					myCardModel.questionFontColour = cursor.getString(9);
+					myCardModel.answerFontSize = cursor.getInt(10);
+					myCardModel.answerFontColour = cursor.getString(11);
+					myCardModel.lastFontColour = cursor.getString(12);
 					models.put(myCardModel.id, myCardModel);
 				} while (cursor.moveToNext());
 			}

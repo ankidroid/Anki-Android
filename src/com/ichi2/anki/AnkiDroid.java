@@ -4,6 +4,7 @@
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
 * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 * Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>                             *
+* Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -935,50 +936,13 @@ public class AnkiDroid extends Activity
 		}
 		
 		// Add CSS for font colour and font size
-		content = enrichWithCSSForFontColorSize(content
-				, fontSize
-				, Model.getModel(currentCard.cardModelId, false)
-				, currentCard.cardModelId);
+		Model myModel = Model.getModel(currentCard.cardModelId, false);
+		content = myModel.getCSSForFontColorSize(currentCard.cardModelId) + content;
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
 		Sound.playSounds();
-	}
-	
-	/**
-	 * FIXME: colors for fields (if specified)
-	 * FIXME: relative font css (assuming question is 100%
-	 * @param htmlContent
-	 * @param defaultFontSize
-	 * @param myModel
-	 * @param myCardModelId
-	 * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
-	 */
-	private final static String enrichWithCSSForFontColorSize(String htmlContent
-			, int defaultFontSize
-			, Model myModel
-			, long myCardModelId) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("<style type=\"text/css\">\n");
-		CardModel myCardModel = myModel.getCardModel(myCardModelId);
-
-		//body background
-		if (null != myCardModel.lastFontColour && 0 < myCardModel.lastFontColour.trim().length()) {
-			sb.append("body {background-color:").append(myCardModel.lastFontColour).append(";}\n");
-		}
-		//question font color
-		if (null != myCardModel.questionFontColour && 0 < myCardModel.questionFontColour.trim().length()) {
-			sb.append(".").append(QUESTION_CLASS).append(" {color:").append(myCardModel.questionFontColour).append(";}\n");
-		}
-		//answer font color
-		if (null != myCardModel.answerFontColour && 0 < myCardModel.answerFontColour.trim().length()) {
-			sb.append(".").append(ANSWER_CLASS).append(" {color:").append(myCardModel.answerFontColour).append(";}\n");
-		}
-		//finish
-		sb.append("</style>");
-		sb.append(htmlContent);
-		return sb.toString();
 	}
 	
 	/**
@@ -998,10 +962,10 @@ public class AnkiDroid extends Activity
 	}
 	
 	/** Constant for class attribute signalling answer */
-	private final static String ANSWER_CLASS = "answer";
+	protected final static String ANSWER_CLASS = "answer";
 	
 	/** Constant for class attribute signalling question */
-	private final static String QUESTION_CLASS = "question";
+	protected final static String QUESTION_CLASS = "question";
 	
 	/**
 	 * Adds a span html tag around the contents to have an indication, where answer/question is displayed

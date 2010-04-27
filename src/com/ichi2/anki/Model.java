@@ -1,5 +1,6 @@
 /****************************************************************************************
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,6 +17,7 @@
 
 package com.ichi2.anki;
 
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -138,7 +140,7 @@ public class Model {
 		//load related card models
 		CardModel.fromDb(currentModel.id, true, currentModel.cardModelsMap);
 		//load related field models
-		//SELECT id FROM fieldmodels where modelid = -4541298410707851455
+		FieldModel.fromDb(modelId, currentModel.fieldModelsMap);
 	}
 	
 	/**
@@ -177,6 +179,77 @@ public class Model {
 				cursor.close();
 		}
 		return model;
+	}
+	
+	/**
+	 * FIXME: colors for fields (if specified)
+	 * FIXME: relative font css (assuming question is 100%)
+	 * @param myCardModelId
+	 * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
+	 */
+	protected final String getCSSForFontColorSize(long myCardModelId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<style type=\"text/css\">\n");
+		CardModel myCardModel = cardModelsMap.get(myCardModelId);
+		
+		int referenceFontSize = 20; //this is the default in Anki. Only used if the question font for some reason is not set
+		if (0 < myCardModel.questionFontSize) {
+			referenceFontSize = myCardModel.questionFontSize;
+		}
+
+		//body background
+		if (null != myCardModel.lastFontColour && 0 < myCardModel.lastFontColour.trim().length()) {
+			sb.append("body {background-color:").append(myCardModel.lastFontColour).append(";}\n");
+		}
+		//question font size and color
+		sb.append(".").append(AnkiDroid.QUESTION_CLASS).append(" {\n");
+		if (null != myCardModel.questionFontColour && 0 < myCardModel.questionFontColour.trim().length()) {
+			sb.append("color:").append(myCardModel.questionFontColour).append(";\n");
+		}
+		sb.append("font-size:100%;\n");
+		sb.append("}\n");
+		//answer font size and color
+		sb.append(".").append(AnkiDroid.ANSWER_CLASS).append(" {\n");
+		if (null != myCardModel.answerFontColour && 0 < myCardModel.answerFontColour.trim().length()) {
+			sb.append("color:").append(myCardModel.answerFontColour).append(";\n");
+		}
+		if (0 < myCardModel.answerFontSize) {
+			sb.append(calculateRelativeFontSize(referenceFontSize, myCardModel.answerFontSize));
+		}
+		sb.append("}\n");
+		//css for fields. Gets css for all fields no matter whether they actually are used in a given card model
+		FieldModel myFieldModel = null;
+		String hexId = null; //a FieldModel id in unsigned hexa code for the class attribute
+		for (Map.Entry<Long, FieldModel> entry : fieldModelsMap.entrySet()) {
+			myFieldModel = entry.getValue();
+			hexId = "fm" + Long.toHexString(myFieldModel.id);
+			sb.append(".").append(hexId).append(" {\n");
+			if (null != myFieldModel.quizFontColour && 0 < myFieldModel.quizFontColour.trim().length()) {
+				sb.append("color: ").append(myFieldModel.quizFontColour).append(";\n");
+			}
+			if (0 < myFieldModel.quizFontSize) {
+				sb.append(calculateRelativeFontSize(referenceFontSize, myFieldModel.quizFontSize));
+			}
+			sb.append("}\n");
+		}
+		
+		//finish
+		sb.append("</style>");
+		return sb.toString();
+	}
+
+	/**
+	 * 
+	 * @param reference
+	 * @param current
+	 * @return a css entry for relative font size as a percentage of the current in relation to the reference
+	 */
+	private final static String calculateRelativeFontSize(int reference, int current) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("font-size:");
+		sb.append((100 * current)/reference);
+		sb.append("%;\n");
+		return sb.toString();
 	}
 
 }
