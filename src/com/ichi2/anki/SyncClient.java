@@ -46,9 +46,16 @@ public class SyncClient {
 	/**
 	 * Connection settings
 	 */
+	
 	private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
 	private static final String SYNC_HOST = "anki.ichi2.net"; //78.46.104.28
 	private static final String SYNC_PORT = "80";
+	
+	//Test
+	/*
+	private static final String SYNC_URL = "http://172.16.15.143:8001/sync/";
+	private static final String SYNC_HOST = "172.16.15.143";
+	private static final String SYNC_PORT = "8001";*/
 	
 	private static final int CHUNK_SIZE = 32768;
 	
@@ -1797,7 +1804,7 @@ public class SyncClient {
 				
 				//If exists a statistic for this day, get it
 				try {
-					Long id = AnkiDb.queryScalar("SELECT id FROM stats WHERE type = 1 AND day = " + dailyStatDate.toString());
+					Long id = AnkiDb.queryScalar("SELECT id FROM stats WHERE type = 1 AND day = \"" + dailyStatDate.toString() + "\"");
 					stat.fromDB(id);
 				} catch (SQLException e)
 				{

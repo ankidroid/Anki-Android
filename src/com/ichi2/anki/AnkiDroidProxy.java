@@ -56,11 +56,18 @@ public class AnkiDroidProxy {
 	/**
 	 * Connection settings
 	 */
+	
 	private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
 	//78.46.104.28
 	private static final String SYNC_HOST = "anki.ichi2.net"; 
 	private static final String SYNC_PORT = "80";
 	
+	//Test
+	/*
+	private static final String SYNC_URL = "http://172.16.15.143:8001/sync/";
+	private static final String SYNC_HOST = "172.16.15.143";
+	private static final String SYNC_PORT = "8001";
+	*/
 	private String username;
 	private String password;
 	private String deckName;
@@ -211,6 +218,7 @@ public class AnkiDroidProxy {
     
     public void createDeck(String name)
     {
+    	Log.i(TAG, "createDeck");
     	Log.i(TAG, "user = " + username + ", password = " + password);
 
     	try {
@@ -320,6 +328,7 @@ public class AnkiDroidProxy {
 			Log.i(TAG, "Payload response = ");
 			payloadReply = new JSONObject(contentString);
 			Utils.printJSONObject(payloadReply, false);
+			Utils.saveJSONObject(payloadReply);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e)

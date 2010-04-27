@@ -138,6 +138,7 @@
 <string name="edit_card">Edit Card</string>
 <string name="switch_another_deck">Switch to another deck</string>
 <string name="get_shared_deck">Get shared deck</string>
+<string name="synchronize">Synchronize</string>
 
 <!-- SharedDeckPicker.java -->
 <string name="downloading_shared_deck">Downloading shared deck...</string>

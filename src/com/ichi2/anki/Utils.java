@@ -351,6 +351,14 @@ public class Utils {
 		
 	}
 
+	public static void saveJSONObject(JSONObject jsonObject) throws IOException
+	{
+		Log.i(TAG, "saveJSONObject");
+		BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
+		buff.write(jsonObject.toString());
+		buff.close();
+	}
+	
 	public static int booleanToInt(boolean b)
 	{
 		return (b)?1:0;

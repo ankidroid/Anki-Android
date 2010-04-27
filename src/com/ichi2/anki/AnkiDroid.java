@@ -104,6 +104,10 @@ public class AnkiDroid extends Activity
 	private static final int MENU_EDIT = 6; 
 
 	private static final int MENU_GET_SHARED_DECKS = 7;
+	
+	private static final int MENU_SYNC = 8;
+	
+	private static final int MENU_SYNC_FROM_SERVER_PAYLOAD = 9;
 
 	/**
 	 * Possible outputs trying to load a deck
@@ -461,6 +465,8 @@ public class AnkiDroid extends Activity
 		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
         menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
         menu.add(1, MENU_GET_SHARED_DECKS, 0, getString(R.string.get_shared_deck));
+        menu.add(1, MENU_SYNC, 0, R.string.synchronize);
+        menu.add(1, MENU_SYNC_FROM_SERVER_PAYLOAD, 0, "Sync from payload");
 		return true;
 	}
 
@@ -473,6 +479,8 @@ public class AnkiDroid extends Activity
 		menu.findItem(MENU_SUSPEND).setVisible(currentCard != null);
 		menu.findItem(MENU_EDIT).setEnabled(currentCard != null);
 		menu.findItem(MENU_EDIT).setVisible(currentCard != null);
+		menu.findItem(MENU_SYNC).setEnabled(sdCardAvailable && deckLoaded);
+		menu.findItem(MENU_SYNC_FROM_SERVER_PAYLOAD).setEnabled(sdCardAvailable && deckLoaded);
 		return true;
 	}
 	
@@ -517,6 +525,14 @@ public class AnkiDroid extends Activity
         case MENU_GET_SHARED_DECKS:
         	Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
         	return true;
+        	
+        case MENU_SYNC:
+        	syncDeck();
+        	return true;
+        	
+        case MENU_SYNC_FROM_SERVER_PAYLOAD:
+        	Connection.syncDeckFromPayload(syncListener, new Connection.Payload(new Object[] {AnkiDroidApp.deck(), deckFilename}));
+        	return true;
 		}
 		return false;
 	}
@@ -525,8 +541,7 @@ public class AnkiDroid extends Activity
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
     	
-    	if(AnkiDroidApp.deck() != null && sdCardAvailable)
-    		AnkiDroidApp.deck().closeDeck();
+    	closeDeck();
     	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
 		inDeckPicker = true;
@@ -1029,6 +1044,26 @@ public class AnkiDroid extends Activity
 		editor.commit();
 	}
 
+	private void closeDeck()
+	{
+		if(AnkiDroidApp.deck() != null && sdCardAvailable)
+		{
+			//syncDeck();
+			AnkiDroidApp.deck().closeDeck();
+		}
+	}
+	
+	private void syncDeck() {
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		
+		String username = preferences.getString("username", "");
+		String password = preferences.getString("password", "");
+		Deck deck = AnkiDroidApp.deck();
+		
+		Log.i(TAG, "Synchronizing deck " + deckFilename + " with username " + username + " and password " + password);
+		Connection.syncDeck(syncListener, new Connection.Payload(new Object[] {username, password, deck, deckFilename}));		
+	}
+
 	private boolean isSdCardMounted() {
 		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 	}
@@ -1332,4 +1367,32 @@ public class AnkiDroid extends Activity
 		
 	};
 
+	Connection.TaskListener syncListener = new Connection.TaskListener() {
+
+		@Override
+		public void onDisconnected() {
+			noConnectionAlert.show();			
+		}
+
+		@Override
+		public void onPostExecute(Payload data) {
+			progressDialog.dismiss();
+			closeDeck();
+			DeckTask.launchDeckTask(
+					DeckTask.TASK_TYPE_LOAD_DECK,
+					mLoadDeckHandler,
+					new DeckTask.TaskData(deckFilename));
+		}
+
+		@Override
+		public void onPreExecute() {
+			progressDialog = ProgressDialog.show(AnkiDroid.this, "", getResources().getString(R.string.loading_shared_decks));			
+		}
+
+		@Override
+		public void onProgressUpdate(Object... values) {
+			// TODO Auto-generated method stub
+		}
+		
+	};
 }

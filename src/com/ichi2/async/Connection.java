@@ -16,7 +16,13 @@
 
 package com.ichi2.async;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -37,18 +43,19 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final int TASK_TYPE_GET_SHARED_DECKS = 0;
     public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 1;
     public static final int TASK_TYPE_SYNC_DECK = 2;
+    public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 3;
 
 	private static Connection instance;
 	private TaskListener listener;
 	
 	private static Connection launchConnectionTask(TaskListener listener, Payload data)
 	{
-		if(!isOnline())
+		/*if(!isOnline())
 		{
 			data.success = false;
 			listener.onDisconnected();
 			return null;
-		}
+		}*/
 		try
 		{
 			if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED))
@@ -106,6 +113,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return launchConnectionTask(listener, data);
 	}
 	
+	public static Connection syncDeckFromPayload(TaskListener listener, Payload data)
+	{
+		data.taskType = TASK_TYPE_SYNC_DECK_FROM_PAYLOAD;
+		return launchConnectionTask(listener, data);
+	}
+	
 	@Override
 	protected Payload doInBackground(Payload... params) {
 		Payload data = params[0];
@@ -120,6 +133,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			
 			case TASK_TYPE_SYNC_DECK:
 				return doInBackgroundSyncDeck(data);
+				
+			case TASK_TYPE_SYNC_DECK_FROM_PAYLOAD:
+				return doInBackgroundSyncDeckFromPayload(data);
 				
 			default:
 				return null;
@@ -166,6 +182,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			
 			if(!server.hasDeck(syncName))
 			{
+				Log.i(TAG, "AnkiOnline does not have this deck: Creating it...");
 				server.createDeck(syncName);
 			}
 			SyncClient client = new SyncClient(deck);
@@ -209,6 +226,33 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			Log.e(TAG, "Error synchronizing deck = " + e.getMessage());
 			e.printStackTrace();
 		}
+		return data;
+	}
+	
+	private Payload doInBackgroundSyncDeckFromPayload(Payload data)
+	{
+		Log.i(TAG, "SyncDeckFromPayload");
+		Deck deck = (Deck)data.data[0];
+		SyncClient client = new SyncClient(deck);
+		BufferedReader bufPython;
+		try {
+			bufPython = new BufferedReader(new FileReader("/sdcard/jsonObjectPython.txt"));
+			JSONObject payloadReply = new JSONObject(bufPython.readLine());
+			client.applyPayloadReply(payloadReply);
+			deck.lastLoaded = deck.modified;
+			deck.commitToDB();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Log.i(TAG, "Synchronization from payload finished!");
 		return data;
 	}
 	
