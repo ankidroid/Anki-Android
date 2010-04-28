@@ -124,7 +124,7 @@ public class Model {
 		currentModel = fromDb(modelId);
 		
 		//load related card models
-		CardModel.fromDb(currentModel.id, true, currentModel.cardModelsMap);
+		CardModel.fromDb(currentModel.id, currentModel.cardModelsMap);
 		
 		//load related field models
 		FieldModel.fromDb(modelId, currentModel.fieldModelsMap);

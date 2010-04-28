@@ -109,20 +109,16 @@ public class CardModel implements Comparator<CardModel> {
 	/**
 	 * 
 	 * @param modelId
-	 * @param active if true then only CardModels are returned, which currently are active
 	 * @param models will be changed by adding all found CardModels into it
 	 * @return unordered CardModels which are related to a given Model and eventually active put into the parameter "models"
 	 */
-	protected static final void fromDb(long modelId, boolean active, TreeMap<Long, CardModel> models) {
+	protected static final void fromDb(long modelId, TreeMap<Long, CardModel> models) {
 		Cursor cursor = null;
 		CardModel myCardModel = null;
 		try {
 			StringBuffer query = new StringBuffer(SELECT_STRING);
 			query.append(" WHERE modelId = ");
 			query.append(modelId);
-			if (active) {
-				query.append(" AND active = 1");
-			}
 			
 			cursor = AnkiDb.database.rawQuery(query.toString(), null);
 
