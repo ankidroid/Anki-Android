@@ -64,8 +64,8 @@ public class AnkiDroidProxy {
 	
 	//Test
 	/*
-	private static final String SYNC_URL = "http://172.16.15.143:8001/sync/";
-	private static final String SYNC_HOST = "172.16.15.143";
+	private static final String SYNC_URL = "http://192.168.2.103:8001/sync/";
+	private static final String SYNC_HOST = "192.168.2.103";
 	private static final String SYNC_PORT = "8001";
 	*/
 	private String username;
@@ -185,7 +185,7 @@ public class AnkiDroidProxy {
     	String decksServer = "{}";
     	
     	try {
-        	String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&client=ankiqt-0.9.9.8.6&u=" + URLEncoder.encode(username,"UTF-8") + "&d=None&sources=" + URLEncoder.encode("[]","UTF-8") + "&libanki=0.9.9.8.6&pversion=5";
+        	String data = "p=" + URLEncoder.encode(password,"UTF-8") + "&client=ankidroid-0.4&u=" + URLEncoder.encode(username,"UTF-8") + "&d=None&sources=" + URLEncoder.encode("[]","UTF-8") + "&libanki=0.9.9.8.6&pversion=5";
 
         	Log.i(TAG, "Data json = " + data);
         	HttpPost httpPost = new HttpPost(SYNC_URL + "getDecks");
