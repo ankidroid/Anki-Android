@@ -242,12 +242,12 @@ public class CardModel implements Comparator<CardModel> {
         if (isQuestion)
         {
             String replace = "%(" + fieldName + ")" + fieldType;
-            String with = "<span class=\"fm" + fact.getFieldModelId(fieldName) + "\">" +  fact.getFieldValue(fieldName) + "</span>";
+            String with = "<span class=\"fm" + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">" +  fact.getFieldValue(fieldName) + "</span>";
             replaceFrom = replaceFrom.replace(replace, with);
         } 
         else
         {
-            replaceFrom.replace("%(" + fieldName + ")" + fieldType, "<span class=\"fma" + fact.getFieldModelId(fieldName) + "\">" +  fact.getFieldValue(fieldName) + "</span");
+            replaceFrom.replace("%(" + fieldName + ")" + fieldType, "<span class=\"fma" + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">" +  fact.getFieldValue(fieldName) + "</span");
         }
         return replaceFrom;
     }
