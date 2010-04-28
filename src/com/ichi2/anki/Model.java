@@ -101,7 +101,7 @@ public class Model {
 	protected static Model getModel(long identifier, boolean isModelId) {
 		if (false == isModelId) {
 			//check whether the identifier is in the cardModelsMap
-			if (null == currentModel || currentModel.cardModelsMap.containsKey(identifier)) {
+			if (null == currentModel || false == currentModel.cardModelsMap.containsKey(identifier)) {
 				//get the modelId
 				long myModelId = CardModel.modelIdFromDB(identifier);
 				//get the model
