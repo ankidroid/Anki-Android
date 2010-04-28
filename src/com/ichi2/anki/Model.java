@@ -45,7 +45,26 @@ import android.database.Cursor;
 public class Model {
 	
 	/** Singleton */
-	private static Model currentModel;
+	//private static Model currentModel;
+	
+	/**
+	 * A Map of the currently loaded Models. The Models are loaded from the database as soon
+	 * as they are needed for the first time. This is a compromise between RAM need, speed
+	 * and the probability with which more than one Model is needed.
+	 * If only one model is needed, then RAM consumption is basically the same as having a 
+	 * static "currentModel" variable. If more than one Model is needed, then more RAM is
+	 * needed, but on the other hand side Model and its related CardModel and FieldModel are not
+	 * reloaded again and again.
+	 * 
+	 * This Map uses the Model.id field as key
+	 */
+	private static HashMap<Long,Model> models = new HashMap<Long, Model>();
+	
+	/**
+	 * As above but mapping from CardModel to related Model (because when one has a Card, then 
+	 * you need to jump from CardModel to Model.
+	 */
+	private static HashMap<Long,Model> cardModelToModelMap = new HashMap<Long, Model>();
 
 	// TODO: Javadoc.
 	// TODO: Methods for reading/writing from/to DB.
@@ -88,6 +107,15 @@ public class Model {
 	}
 	
 	/**
+	 * FIXME: this should be called whenever the deck is changed.
+	 * Otherwise unnecessary space will be used.
+	 */
+	protected static final void reset() {
+		models = new HashMap<Long, Model>();
+		cardModelToModelMap = new HashMap<Long, Model>();
+	}
+	
+	/**
 	 * Returns a Model based on the submitted identifier.
 	 * If a model id is submitted (isModelId = true), then the Model data and all related CardModel and FieldModel data are loaded,
 	 * unless the id is the same as one of the currentModel.
@@ -100,28 +128,34 @@ public class Model {
 	 */
 	protected static Model getModel(long identifier, boolean isModelId) {
 		if (false == isModelId) {
-			//check whether the identifier is in the cardModelsMap
-			if (null == currentModel || false == currentModel.cardModelsMap.containsKey(identifier)) {
+			//check whether the identifier is in the cardModelToModelMap
+			if (false == cardModelToModelMap.containsKey(identifier)) {
 				//get the modelId
 				long myModelId = CardModel.modelIdFromDB(identifier);
 				//get the model
 				loadFromDBPlusRelatedModels(myModelId);
 			}
-		} else {
-			if (null == currentModel || currentModel.id != identifier) {
-				//get the model
-				loadFromDBPlusRelatedModels(identifier);
-			}
+			return cardModelToModelMap.get(identifier);
 		}
-		return currentModel;
+		//else it is a modelId
+		if (false == models.containsKey(identifier)) {
+			//get the model
+			loadFromDBPlusRelatedModels(identifier);
+		}
+		return models.get(identifier);
 	}
 	
 	protected final CardModel getCardModel(long identifier) {
 		return cardModelsMap.get(identifier);
 	}
 	
+	/**
+	 * Loads the Model from the database.
+	 * then loads the related CardModels and FieldModels from the database.
+	 * @param modelId
+	 */
 	private static final void loadFromDBPlusRelatedModels(long modelId) {
-		currentModel = fromDb(modelId);
+		Model currentModel = fromDb(modelId);
 		
 		//load related card models
 		CardModel.fromDb(currentModel.id, currentModel.cardModelsMap);
@@ -131,6 +165,14 @@ public class Model {
 		
 		//prepare CSS for each card model in stead of doing it again and again
 		currentModel.prepareCSSForCardModels();
+		
+		//make relations to maps
+		models.put(currentModel.id, currentModel);
+		CardModel myCardModel = null;
+		for (Map.Entry<Long, CardModel> entry : currentModel.cardModelsMap.entrySet()) {
+			myCardModel = entry.getValue();
+			cardModelToModelMap.put(myCardModel.id, currentModel);
+		}
 	}
 	
 	/**
