@@ -102,8 +102,8 @@
 <string name="use_ruby_support_summ">If the characters '[' and ']' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="qa_font_size">Font size</string>
 <string name="qa_font_size_summ">Default font size. Using 'Relative' changes the font dynamically based on space</string>
-<string name="show_question_answer">Show question in answer</string>
-<string name="show_question_answer_summ">Shows the question also when displaying the answer unless user entered answer.</string>
+<string name="hide_question_in_answer">Hide question in answer?</string>
+<string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where the your decks are stored</string>
 

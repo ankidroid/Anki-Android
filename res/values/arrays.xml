@@ -100,4 +100,15 @@
 		<item>13</item>
 		<item>14</item>
 	</string-array>
+	
+	<string-array name="hideQuestionInAnswerLabels">
+		<item>Hide the question in answer</item>
+		<item>Show the question in answer</item>
+		<item>As defined in CardModel</item>
+	</string-array>
+	<string-array name="hideQuestionInAnswerVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
 </resources>

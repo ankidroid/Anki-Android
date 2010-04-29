@@ -167,8 +167,14 @@ public class AnkiDroid extends Activity
 	/** Preference: parse for ruby annotations */
 	private boolean useRubySupport;
 	
-	/** Preference: show the question when showing the answer */
-	private boolean showQuestionAnswer;
+	/** Preference: hide the question when showing the answer */
+	private int hideQuestionInAnswer;
+	
+	private static final int HQIA_DO_HIDE = 0;
+	
+	private static final int HQIA_DO_SHOW = 1;
+	
+	private static final int HQIA_CARD_MODEL = 2;
 
 	private boolean updateNotifications; // TODO use Veecheck only if this is true
 
@@ -849,7 +855,12 @@ public class AnkiDroid extends Activity
 
 			mFlipCard.requestFocus();
 
-			updateCard(enrichWithQASpan(currentCard.question, false));
+			String displayString = enrichWithQASpan(currentCard.question, false);
+			//Depending on preferences do or do not show the question
+			if (calculateShowQuestion()) {
+				displayString = displayString + "<hr/>";
+			}
+			updateCard(displayString);
 		}
 	}
 	
@@ -871,6 +882,8 @@ public class AnkiDroid extends Activity
 		mAnswerField.setVisibility(View.GONE);
 
 		mEase2.requestFocus();
+		
+		String displayString = "";
 
 		// If the user wrote an answer
 		if(writeAnswers)
@@ -885,27 +898,39 @@ public class AnkiDroid extends Activity
 
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
-				updateCard(enrichWithQASpan(diff.diff_prettyHtml(
+				
+				displayString = enrichWithQASpan(diff.diff_prettyHtml(
 						diff.diff_main(userAnswer, correctAnswer)) +
-						"<br/>" + currentCard.answer, true));
+						"<br/>" + currentCard.answer, true);
 			}
 			else
 			{
-				updateCard("");
+				displayString = "";
 			}
 		}
 		else
 		{
-			if (true == showQuestionAnswer) {
-				StringBuffer sb = new StringBuffer();
-				sb.append(enrichWithQASpan(currentCard.question, false));
-				sb.append("<hr/>");
-				sb.append(enrichWithQASpan(currentCard.answer, true));
-				updateCard(sb.toString());
-			} else {
-				updateCard(enrichWithQASpan(currentCard.answer, true));
-			}
+			displayString = enrichWithQASpan(currentCard.answer, true);
 		}
+		//Depending on preferences do or do not show the question
+		if (calculateShowQuestion()) {
+			StringBuffer sb = new StringBuffer();
+			sb.append(enrichWithQASpan(currentCard.question, false));
+			sb.append("<hr/>");
+			sb.append(displayString);
+			displayString = sb.toString();
+		}
+		updateCard(displayString);
+	}
+	
+	private final boolean calculateShowQuestion() {
+		if (HQIA_DO_SHOW == hideQuestionInAnswer) {
+			return true;
+		}
+		if (HQIA_CARD_MODEL == hideQuestionInAnswer && 0 == Model.getModel(currentCard.cardModelId, false).getCardModel(currentCard.cardModelId).questionInAnswer) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -1016,8 +1041,7 @@ public class AnkiDroid extends Activity
 		return true;
 	}
 
-	private SharedPreferences restorePreferences()
-	{
+	private SharedPreferences restorePreferences() {
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
@@ -1027,7 +1051,7 @@ public class AnkiDroid extends Activity
 		//A little hack to get int values from ListPreference. there should be an easier way ...
 		String qaFontSizeString = preferences.getString("qaFontSize", "0");
 		qaFontSize = Integer.parseInt(qaFontSizeString);
-		showQuestionAnswer = preferences.getBoolean("showQuestionAnswer", false);
+		hideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", "0"));
 		updateNotifications = preferences.getBoolean("enabled", true);
 
 		return preferences;
