@@ -936,8 +936,11 @@ public class AnkiDroid extends Activity
 		}
 		
 		// Add CSS for font colour and font size
-		Model myModel = Model.getModel(currentCard.cardModelId, false);
-		content = myModel.getCSSForFontColorSize(currentCard.cardModelId) + content;
+		if(currentCard != null)
+		{
+			Model myModel = Model.getModel(currentCard.cardModelId, false);
+			content = myModel.getCSSForFontColorSize(currentCard.cardModelId) + content;
+		}
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
