@@ -4,6 +4,7 @@
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
 * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 * Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>                             *
+* Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -24,7 +25,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.TreeSet;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -262,7 +262,7 @@ public class AnkiDroid extends Activity
 			DeckTask.launchDeckTask(
 					DeckTask.TASK_TYPE_ANSWER_CARD,
 					mAnswerCardHandler,
-					new DeckTask.TaskData(ease, AnkiDroidApp.deck(), currentCard));
+					new DeckTask.TaskData(ease, AnkiDroidApp.getDeck(), currentCard));
 		}
 	};
 
@@ -272,7 +272,7 @@ public class AnkiDroid extends Activity
 		{
 			Log.i(TAG, "mButtonReviewEarlyHandler");
 			mButtonReviewEarly.setVisibility(View.GONE);
-			Deck d = AnkiDroidApp.deck();
+			Deck d = AnkiDroidApp.getDeck();
 			d.setReviewEarly(true);
 			currentCard = d.getCard();
 			if (currentCard != null){
@@ -285,7 +285,7 @@ public class AnkiDroid extends Activity
 				mWhiteboard.clear();
 				mCardTimer.setBase(SystemClock.elapsedRealtime());
 				mCardTimer.start();
-				long timelimit = AnkiDroidApp.deck().getSessionTimeLimit() * 1000;
+				long timelimit = AnkiDroidApp.getDeck().getSessionTimeLimit() * 1000;
 				Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
 				mSessionTimeLimit = System.currentTimeMillis() + timelimit;
 				mSessionCurrReps = 0;
@@ -500,7 +500,7 @@ public class AnkiDroid extends Activity
 			mFlipCard.setChecked(true);
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
 					mAnswerCardHandler,
-					new DeckTask.TaskData(0, AnkiDroidApp.deck(), currentCard));
+					new DeckTask.TaskData(0, AnkiDroidApp.getDeck(), currentCard));
 		    return true;
         case MENU_EDIT:
             editorCard = currentCard;
@@ -518,8 +518,8 @@ public class AnkiDroid extends Activity
 	{
     	Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
     	
-    	if(AnkiDroidApp.deck() != null && sdCardAvailable)
-    		AnkiDroidApp.deck().closeDeck();
+    	if(AnkiDroidApp.getDeck() != null && sdCardAvailable)
+    		AnkiDroidApp.getDeck().closeDeck();
     	deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
 		inDeckPicker = true;
@@ -529,8 +529,8 @@ public class AnkiDroid extends Activity
 
 	public void openSharedDeckPicker()
 	{
-    	if(AnkiDroidApp.deck() != null && sdCardAvailable)
-    		AnkiDroidApp.deck().closeDeck();
+    	if(AnkiDroidApp.getDeck() != null && sdCardAvailable)
+    		AnkiDroidApp.getDeck().closeDeck();
     	deckLoaded = false;
 		Intent intent = new Intent(AnkiDroid.this, SharedDeckPicker.class);
 		startActivityForResult(intent, GET_SHARED_DECK);
@@ -685,7 +685,7 @@ public class AnkiDroid extends Activity
             		    DeckTask.launchDeckTask(
                                 DeckTask.TASK_TYPE_UPDATE_FACT,
                                 mUpdateCardHandler,
-                                new DeckTask.TaskData(0, AnkiDroidApp.deck(), currentCard));
+                                new DeckTask.TaskData(0, AnkiDroidApp.getDeck(), currentCard));
             //TODO: code to save the changes made to the current card.
             mFlipCard.setChecked(true);
             displayCardQuestion();
@@ -936,23 +936,13 @@ public class AnkiDroid extends Activity
 		}
 		
 		// Add CSS for font colour and font size
-		content = enrichWithCSSForFontColorSize(content
-				, fontSize
-				, currentCard.cardModel
-				, null);
+		Model myModel = Model.getModel(currentCard.cardModelId, false);
+		content = myModel.getCSSForFontColorSize(currentCard.cardModelId) + content;
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
 		Sound.playSounds();
-	}
-	
-	private final static String enrichWithCSSForFontColorSize(String htmlContent
-			, int defaultFontSize
-			, CardModel cardModel
-			, TreeSet<FieldModel> fieldModels) {
-		
-		return htmlContent;
 	}
 	
 	/**
@@ -972,10 +962,10 @@ public class AnkiDroid extends Activity
 	}
 	
 	/** Constant for class attribute signalling answer */
-	private final static String ANSWER_CLASS = "answer";
+	protected final static String ANSWER_CLASS = "answer";
 	
 	/** Constant for class attribute signalling question */
-	private final static String QUESTION_CLASS = "question";
+	protected final static String QUESTION_CLASS = "question";
 	
 	/**
 	 * Adds a span html tag around the contents to have an indication, where answer/question is displayed
@@ -1091,8 +1081,8 @@ public class AnkiDroid extends Activity
 
     private void closeExternalStorageFiles()
     {
-    	if(AnkiDroidApp.deck() != null)
-    		AnkiDroidApp.deck().closeDeck();
+    	if(AnkiDroidApp.getDeck() != null)
+    		AnkiDroidApp.getDeck().closeDeck();
     	deckLoaded = false;
     	displaySdError();
     }
@@ -1219,7 +1209,7 @@ public class AnkiDroid extends Activity
 		    mSessionCurrReps++; // increment number reps counter
 
 		    // Check to see if session rep or time limit has been reached
-		    Deck deck = AnkiDroidApp.deck();
+		    Deck deck = AnkiDroidApp.getDeck();
 		    long sessionRepLimit = deck.getSessionRepLimit();
 		    long sessionTime = deck.getSessionTimeLimit();
 		    Toast sessionMessage = null;
@@ -1288,7 +1278,7 @@ public class AnkiDroid extends Activity
 				case DECK_LOADED:
 					// Set the deck in the application instance, so other activities
 					// can access the loaded deck.
-				    AnkiDroidApp.setDeck( result.getDeck() );
+					AnkiDroidApp.setDeck( result.getDeck() );
 					currentCard = result.getCard();
 					showControls(true);
 					deckLoaded = true;
@@ -1299,7 +1289,7 @@ public class AnkiDroid extends Activity
 					mWhiteboard.clear();
 					mCardTimer.setBase(SystemClock.elapsedRealtime());
 					mCardTimer.start();
-					long timelimit = AnkiDroidApp.deck().getSessionTimeLimit() * 1000;
+					long timelimit = AnkiDroidApp.getDeck().getSessionTimeLimit() * 1000;
 					Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
 					mSessionTimeLimit = System.currentTimeMillis() + timelimit;
 					mSessionCurrReps = 0;

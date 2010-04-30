@@ -47,6 +47,7 @@ public class Fact {
     Model model;
     TreeSet<Field> fields;
 
+    /*
     public Fact(Model model) {
         this.model = model;
         this.id = Utils.genID();
@@ -57,6 +58,7 @@ public class Fact {
             }
         }
     }
+    */
 
     // Generate fact object from its ID
     public Fact(long id)

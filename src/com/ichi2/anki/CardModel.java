@@ -1,5 +1,6 @@
 /****************************************************************************************
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,7 +17,9 @@
 
 package com.ichi2.anki;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import android.database.Cursor;
 
@@ -28,7 +31,7 @@ import android.database.Cursor;
  * 
  * @see http://ichi2.net/anki/wiki/ModelProperties#Card_Templates
  */
-public class CardModel {
+public class CardModel implements Comparator<CardModel> {
 
 	// TODO: Javadoc.
 	// TODO: Methods for reading/writing from/to DB.
@@ -94,29 +97,77 @@ public class CardModel {
 		this("", "q", "a", true);
 	}
 
-	public void fromDb(long id)
-	{
+	/** SELECT string with only those fields, which are used in AnkiDroid */
+	private final static String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, aformat" //lformat left out
+		//qedformat, aedformat, questionInAnswer left out
+		+ ", questionFontSize, questionFontColour" //questionFontFamily, questionAlign left out
+		+ ", answerFontSize, answerFontColour" //same as for question
+		+ ", lastFontColour" //lastFontFamily, lastFontSize left out
+		//rest left out
+		+ " FROM cardModels";
+
+	/**
+	 * 
+	 * @param modelId
+	 * @param models will be changed by adding all found CardModels into it
+	 * @return unordered CardModels which are related to a given Model and eventually active put into the parameter "models"
+	 */
+	protected static final void fromDb(long modelId, TreeMap<Long, CardModel> models) {
 		Cursor cursor = null;
+		CardModel myCardModel = null;
 		try {
-		    cursor = AnkiDb.database.rawQuery(
-	                "SELECT id, ordinal, modelId, name, description, qformat, " +
-	                "aformat " +
-	                "FROM cardModels " +
-	                "WHERE id = " +
-	                id,
-	                null);
-	
-		    cursor.moveToFirst();
-	        this.id = cursor.getLong(0);
-	        this.ordinal = cursor.getInt(1);
-	        this.modelId = cursor.getLong(2);
-	        this.name = cursor.getString(3);
-	        this.description = cursor.getString(4);
-	        this.qformat = cursor.getString(5);
-	        this.aformat = cursor.getString(6);
+			StringBuffer query = new StringBuffer(SELECT_STRING);
+			query.append(" WHERE modelId = ");
+			query.append(modelId);
+			
+			cursor = AnkiDb.database.rawQuery(query.toString(), null);
+
+			if (cursor.moveToFirst()) {
+				do {
+					myCardModel = new CardModel();
+					
+					myCardModel.id = cursor.getLong(0);
+					myCardModel.ordinal = cursor.getInt(1);
+					myCardModel.modelId = cursor.getLong(2);
+					myCardModel.name = cursor.getString(3);
+					myCardModel.description = cursor.getString(4);
+					myCardModel.active = cursor.getInt(5);
+					myCardModel.qformat = cursor.getString(6);
+					myCardModel.aformat = cursor.getString(7);
+					myCardModel.questionFontSize = cursor.getInt(8);
+					myCardModel.questionFontColour = cursor.getString(9);
+					myCardModel.answerFontSize = cursor.getInt(10);
+					myCardModel.answerFontColour = cursor.getString(11);
+					myCardModel.lastFontColour = cursor.getString(12);
+					models.put(myCardModel.id, myCardModel);
+				} while (cursor.moveToNext());
+			}
 		} finally {
-			if (cursor != null) cursor.close();
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param cardModelId
+	 * @return the modelId for a given cardModel or 0, if it cannot be found
+	 */
+	protected static final long modelIdFromDB(long cardModelId) {
+		Cursor cursor = null;
+		long modelId = -1;
+		try {
+			String query = "SELECT modelId FROM cardModels WHERE id = " + cardModelId;
+			cursor = AnkiDb.database.rawQuery(query, null);
+			cursor.moveToFirst();
+			modelId = cursor.getLong(0);
+		} finally {
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
+		}
+		return modelId;
 	}
 	
 	/**
@@ -191,13 +242,23 @@ public class CardModel {
         if (isQuestion)
         {
             String replace = "%(" + fieldName + ")" + fieldType;
-            String with = "<span class=\"fm" + fact.getFieldModelId(fieldName) + "\">" +  fact.getFieldValue(fieldName) + "</span>";
+            String with = "<span class=\"fm" + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">" +  fact.getFieldValue(fieldName) + "</span>";
             replaceFrom = replaceFrom.replace(replace, with);
         } 
         else
         {
-            replaceFrom.replace("%(" + fieldName + ")" + fieldType, "<span class=\"fma" + fact.getFieldModelId(fieldName) + "\">" +  fact.getFieldValue(fieldName) + "</span");
+            replaceFrom.replace("%(" + fieldName + ")" + fieldType, "<span class=\"fma" + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">" +  fact.getFieldValue(fieldName) + "</span");
         }
         return replaceFrom;
     }
+    
+	/**
+	 * Implements Comparator by comparing the field "ordinal".
+	 * @param object1
+	 * @param object2
+	 * @return 
+	 */
+	public int compare(CardModel object1, CardModel object2) {
+		return object1.ordinal - object2.ordinal;
+	}
 }

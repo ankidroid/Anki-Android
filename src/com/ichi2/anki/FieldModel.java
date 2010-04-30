@@ -1,5 +1,6 @@
 /****************************************************************************************
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,11 +17,16 @@
 
 package com.ichi2.anki;
 
+import java.util.Comparator;
+import java.util.TreeMap;
+
+import android.database.Cursor;
+
 /**
  * Fields are the different pieces of data which make up a fact. 
  * @see http://ichi2.net/anki/wiki/ModelProperties#Fields
  */
-public class FieldModel {
+public class FieldModel implements Comparator<FieldModel> {
 
 	// BEGIN SQL table entries
 	long id;
@@ -65,6 +71,50 @@ public class FieldModel {
 	public FieldModel() {
 		this("", true, true);
 	}
+	
+	/** SELECT string with only those fields, which are used in AnkiDroid */
+	private final static String SELECT_STRING = "SELECT id, ordinal, modelId, name, description"
+			// features, required, unique, numeric left out
+			+ ", quizFontSize, quizFontColour" // quizFontFamily
+			// editFontFamily, editFontSize left out
+			+ " FROM fieldModels";
+
+	/**
+	 * 
+	 * @param modelId
+	 * @param models will be changed by adding all found FieldModels into it
+	 * @return unordered FieldModels which are related to a given Model put into the parameter "models"
+	 */
+	protected static final void fromDb(long modelId, TreeMap<Long, FieldModel> models) {
+		Cursor cursor = null;
+		FieldModel myFieldModel = null;
+		try {
+			StringBuffer query = new StringBuffer(SELECT_STRING);
+			query.append(" WHERE modelId = ");
+			query.append(modelId);
+
+			cursor = AnkiDb.database.rawQuery(query.toString(), null);
+
+			if (cursor.moveToFirst()) {
+				do {
+					myFieldModel = new FieldModel();
+
+					myFieldModel.id = cursor.getLong(0);
+					myFieldModel.ordinal = cursor.getInt(1);
+					myFieldModel.modelId = cursor.getLong(2);
+					myFieldModel.name = cursor.getString(3);
+					myFieldModel.description = cursor.getString(4);
+					myFieldModel.quizFontSize = cursor.getInt(5);
+					myFieldModel.quizFontColour = cursor.getString(6);
+					models.put(myFieldModel.id, myFieldModel);
+				} while (cursor.moveToNext());
+			}
+		} finally {
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
+		}
+	}
 
 	public FieldModel copy() {
 		FieldModel fieldModel = new FieldModel(
@@ -84,6 +134,16 @@ public class FieldModel {
 		fieldModel.model = null;
 
 		return fieldModel;
+	}
+	
+	/**
+	 * Implements Comparator by comparing the field "ordinal".
+	 * @param object1
+	 * @param object2
+	 * @return 
+	 */
+	public int compare(FieldModel object1, FieldModel object2) {
+		return object1.ordinal - object2.ordinal;
 	}
 
 }
