@@ -101,8 +101,8 @@ public class CardModel implements Comparator<CardModel> {
 	private final static String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, aformat" //lformat left out
 		//qedformat, aedformat left out
 		+ ", questionInAnswer"
-		+ ", questionFontSize, questionFontColour" //questionFontFamily, questionAlign left out
-		+ ", answerFontSize, answerFontColour" //same as for question
+		+ ", questionFontFamily, questionFontSize, questionFontColour" //questionAlign left out
+		+ ", answerFontFamily, answerFontSize, answerFontColour" //same as for question
 		+ ", lastFontColour" //lastFontFamily, lastFontSize left out
 		//rest left out
 		+ " FROM cardModels";
@@ -136,11 +136,13 @@ public class CardModel implements Comparator<CardModel> {
 					myCardModel.qformat = cursor.getString(6);
 					myCardModel.aformat = cursor.getString(7);
 					myCardModel.questionInAnswer = cursor.getInt(8);
-					myCardModel.questionFontSize = cursor.getInt(9);
-					myCardModel.questionFontColour = cursor.getString(10);
-					myCardModel.answerFontSize = cursor.getInt(11);
-					myCardModel.answerFontColour = cursor.getString(12);
-					myCardModel.lastFontColour = cursor.getString(13);
+					myCardModel.questionFontFamily = cursor.getString(9);
+					myCardModel.questionFontSize = cursor.getInt(10);
+					myCardModel.questionFontColour = cursor.getString(11);
+					myCardModel.answerFontFamily = cursor.getString(12);
+					myCardModel.answerFontSize = cursor.getInt(13);
+					myCardModel.answerFontColour = cursor.getString(14);
+					myCardModel.lastFontColour = cursor.getString(15);
 					models.put(myCardModel.id, myCardModel);
 				} while (cursor.moveToNext());
 			}

@@ -55,12 +55,12 @@
 			android:summary="@string/use_ruby_support_summ"
 			android:key="useRubySupport" />
 		<ListPreference
-			android:title="@string/qa_font_size"
-			android:summary="@string/qa_font_size_summ"
-			android:key="qaFontSize"
+			android:title="@string/display_font_size"
+			android:summary="@string/display_font_size_summ"
+			android:key="displayFontSize"
 			android:defaultValue="0"
-			android:entries="@array/qaFontSizeLabels"
-			android:entryValues="@array/qaFontSizeVals" />
+			android:entries="@array/displayFontSizeLabels"
+			android:entryValues="@array/displayFontSizeVals" />
 		<ListPreference
 			android:title="@string/hide_question_in_answer"
 			android:summary="@string/hide_question_in_answer_summ"

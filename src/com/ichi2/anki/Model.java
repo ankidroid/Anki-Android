@@ -66,9 +66,6 @@ public class Model {
 	 */
 	private static HashMap<Long,Model> cardModelToModelMap = new HashMap<Long, Model>();
 
-	// TODO: Javadoc.
-	// TODO: Methods for reading/writing from/to DB.
-
 	// BEGIN SQL table entries
 	long id; // Primary key
 	long deckId; // Foreign key
@@ -83,7 +80,6 @@ public class Model {
 	int source = 0;
 	// BEGIN SQL table entries
 
-	
 	/** Map for convenience and speed which contains CardModels from current model */
 	private TreeMap<Long, CardModel> cardModelsMap = new TreeMap<Long, CardModel>();
 	
@@ -92,6 +88,12 @@ public class Model {
 	
 	/** Map for convenience and speed which contains the CSS code related to a CardModel */
 	private HashMap<Long, String> cssCardModelMap = new HashMap<Long, String>();
+	
+	/**
+	 * The percentage chosen in preferences for font sizing at the time when the css for the CardModels
+	 * related to this Model was calcualted in prepareCSSForCardModels.
+	 */
+	private transient int displayPercentage = 0;
 
 	private Model(String name) {
 		this.name = name;
@@ -163,9 +165,6 @@ public class Model {
 		//load related field models
 		FieldModel.fromDb(modelId, currentModel.fieldModelsMap);
 		
-		//prepare CSS for each card model in stead of doing it again and again
-		currentModel.prepareCSSForCardModels();
-		
 		//make relations to maps
 		models.put(currentModel.id, currentModel);
 		CardModel myCardModel = null;
@@ -221,7 +220,7 @@ public class Model {
 		String cssString = null;
 		for (Map.Entry<Long, CardModel> entry : cardModelsMap.entrySet()) {
 			myCardModel = entry.getValue();
-			cssString = createCSSForFontColorSize(myCardModel.id);
+			cssString = createCSSForFontColorSize(myCardModel.id, displayPercentage);
 			this.cssCardModelMap.put(myCardModel.id, cssString);
 		}
 	}
@@ -229,45 +228,40 @@ public class Model {
 	/**
 	 * Returns a cached CSS for the font color and font size of a given CardModel taking into account the included fields
 	 * @param myCardModelId
+	 * @param percentage the preference factor to use for calculating the display font size from the cardmodel and fontmodel font size
 	 * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
 	 */
-	protected final String getCSSForFontColorSize(long myCardModelId) {
+	protected final String getCSSForFontColorSize(long myCardModelId, int percentage) {
+		//tjek whether the percentage is this the same as last time
+		if (this.displayPercentage != percentage) {
+			this.displayPercentage = percentage;
+			prepareCSSForCardModels();
+		}
 		return this.cssCardModelMap.get(myCardModelId);
 	}
 	
 	/**
 	 * @param myCardModelId
+	 * @param percentage the factor to apply to the font size in card model to the display size (in %)
 	 * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
 	 */
-	private final String createCSSForFontColorSize(long myCardModelId) {
+	private final String createCSSForFontColorSize(long myCardModelId, int percentage) {
 		StringBuffer sb = new StringBuffer();
+		sb.append("<!-- ").append(percentage).append(" % display font size-->");
 		sb.append("<style type=\"text/css\">\n");
 		CardModel myCardModel = cardModelsMap.get(myCardModelId);
 		
-		int referenceFontSize = 20; //this is the default in Anki. Only used if the question font for some reason is not set
-		if (0 < myCardModel.questionFontSize) {
-			referenceFontSize = myCardModel.questionFontSize;
-		}
-
 		//body background
 		if (null != myCardModel.lastFontColour && 0 < myCardModel.lastFontColour.trim().length()) {
 			sb.append("body {background-color:").append(myCardModel.lastFontColour).append(";}\n");
 		}
-		//question font size and color
+		//question
 		sb.append(".").append(AnkiDroid.QUESTION_CLASS).append(" {\n");
-		if (null != myCardModel.questionFontColour && 0 < myCardModel.questionFontColour.trim().length()) {
-			sb.append("color:").append(myCardModel.questionFontColour).append(";\n");
-		}
-		sb.append("font-size:100%;\n");
+		sb.append(calculateDisplay(percentage, myCardModel.questionFontFamily, myCardModel.questionFontSize, myCardModel.questionFontColour));
 		sb.append("}\n");
-		//answer font size and color
+		//answer
 		sb.append(".").append(AnkiDroid.ANSWER_CLASS).append(" {\n");
-		if (null != myCardModel.answerFontColour && 0 < myCardModel.answerFontColour.trim().length()) {
-			sb.append("color:").append(myCardModel.answerFontColour).append(";\n");
-		}
-		if (0 < myCardModel.answerFontSize) {
-			sb.append(calculateRelativeFontSize(referenceFontSize, myCardModel.answerFontSize));
-		}
+		sb.append(calculateDisplay(percentage, myCardModel.answerFontFamily, myCardModel.answerFontSize, myCardModel.answerFontColour));
 		sb.append("}\n");
 		//css for fields. Gets css for all fields no matter whether they actually are used in a given card model
 		FieldModel myFieldModel = null;
@@ -276,12 +270,7 @@ public class Model {
 			myFieldModel = entry.getValue();
 			hexId = "fm" + Long.toHexString(myFieldModel.id);
 			sb.append(".").append(hexId).append(" {\n");
-			if (null != myFieldModel.quizFontColour && 0 < myFieldModel.quizFontColour.trim().length()) {
-				sb.append("color: ").append(myFieldModel.quizFontColour).append(";\n");
-			}
-			if (0 < myFieldModel.quizFontSize) {
-				sb.append(calculateRelativeFontSize(referenceFontSize, myFieldModel.quizFontSize));
-			}
+			sb.append(calculateDisplay(percentage, myFieldModel.quizFontFamily, myFieldModel.quizFontSize, myFieldModel.quizFontColour));
 			sb.append("}\n");
 		}
 		
@@ -289,18 +278,20 @@ public class Model {
 		sb.append("</style>");
 		return sb.toString();
 	}
-
-	/**
-	 * 
-	 * @param reference
-	 * @param current
-	 * @return a css entry for relative font size as a percentage of the current in relation to the reference
-	 */
-	private final static String calculateRelativeFontSize(int reference, int current) {
+	
+	private final static String calculateDisplay(int percentage, String fontFamily, int fontSize, String fontColour) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("font-size:");
-		sb.append((100 * current)/reference);
-		sb.append("%;\n");
+		if (null != fontFamily && 0 < fontFamily.trim().length()) {
+			sb.append("font-family:\"").append(fontFamily).append("\";\n");
+		}
+		if (null != fontColour && 0 < fontColour.trim().length()) {
+			sb.append("color:").append(fontColour).append(";\n");
+		}
+		if (0 < fontSize) {
+			sb.append("font-size:");
+			sb.append((percentage * fontSize)/100);
+			sb.append("px;\n");
+		}
 		return sb.toString();
 	}
 
