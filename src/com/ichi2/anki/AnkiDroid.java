@@ -79,8 +79,14 @@ public class AnkiDroid extends Activity
 	 */
 	private static final String TAG = "AnkiDroid";
 	
+	/** Max size of the font for dynamic calculation of font size */
+	protected static final int MAX_DYNAMIC_FONT_SIZE = 14;
+
+	/** Min size of the font for dynamic calculation of font size */
+	protected static final int MIN_DYNAMIC_FONT_SIZE = 3;
+	
 	/** The percentage of the absolute font size specified in the deck. */
-	private int displayFontSize = 0;
+	private int displayFontSize = 100;
 
 	/**
 	 * Menus
@@ -847,6 +853,7 @@ public class AnkiDroid extends Activity
 				mAnswerField.setVisibility(View.VISIBLE);
 			}
 
+			mFlipCard.setVisibility(View.VISIBLE);
 			mFlipCard.requestFocus();
 
 			String displayString = enrichWithQASpan(currentCard.question, false);
@@ -913,6 +920,7 @@ public class AnkiDroid extends Activity
 			sb.append("<hr/>");
 			sb.append(displayString);
 			displayString = sb.toString();
+			mFlipCard.setVisibility(View.GONE);
 		}
 		updateCard(displayString);
 	}
@@ -948,8 +956,12 @@ public class AnkiDroid extends Activity
 		}
 		
 		// Add CSS for font colour and font size
-		Model myModel = Model.getModel(currentCard.cardModelId, false);
-		content = myModel.getCSSForFontColorSize(currentCard.cardModelId, displayFontSize) + content;
+		if (null != currentCard) {
+			Model myModel = Model.getModel(currentCard.cardModelId, false);
+			content = myModel.getCSSForFontColorSize(currentCard.cardModelId, displayFontSize) + content;
+		} else {
+			mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
+		}
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
@@ -982,6 +994,23 @@ public class AnkiDroid extends Activity
 		sb.append("</span>");
 		return sb.toString();
 	}
+
+	/**
+	* Calculates a dynamic font size depending on the length of the contents
+	* taking into account that the input string contains html-tags, which will not
+	* be displayed and therefore should not be taken into account.
+	* @param htmlContents
+	* @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
+	*/
+	protected final static int calculateDynamicFontSize(String htmlContent) {
+		// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then remove all html tags and spaces
+		String realContent = htmlContent.replaceAll("\\<br.*?\\>", " ");
+		realContent = realContent.replaceAll("\\<hr.*?\\>", " ");
+		realContent = realContent.replaceAll("\\<.*?\\>", "");
+		realContent = realContent.replaceAll("&nbsp;", " ");
+		return Math.max(MIN_DYNAMIC_FONT_SIZE, MAX_DYNAMIC_FONT_SIZE - (int)(realContent.length()/5));
+	}
+
 
 	/**
 	 * Utility method to write to a file.
@@ -1019,11 +1048,18 @@ public class AnkiDroid extends Activity
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
 		useRubySupport = preferences.getBoolean("useRubySupport", false);
-		//A little hack to get int values from ListPreference. there should be an easier way ...
-		String displayFontSizeString = preferences.getString("displayFontSize", "100");
-		displayFontSize = Integer.parseInt(displayFontSizeString);
-		hideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", "0"));
+		displayFontSize = Integer.parseInt(preferences.getString("displayFontSize", "100"));
+		hideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", Integer.toString(HQIA_DO_SHOW)));
 		updateNotifications = preferences.getBoolean("enabled", true);
+		
+		//redraw screen with new preferences
+		if (null != mFlipCard) {
+			if (mFlipCard.isChecked()) {
+				displayCardAnswer();
+			} else {
+				displayCardQuestion();
+			}
+		}
 
 		return preferences;
 	}
