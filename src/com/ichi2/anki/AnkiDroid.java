@@ -675,7 +675,7 @@ public class AnkiDroid extends Activity
 			deckFilename = intent.getExtras().getString(OPT_DB);
 			savePreferences();
 
-        	Log.i(TAG, "onActivityResult - deckSelected = " + deckSelected);
+			Log.i(TAG, "onActivityResult - deckSelected = " + deckSelected);
 			displayProgressDialogAndLoadDeck();
 		} else if (requestCode == PREFERENCES_UPDATE)
 		{
@@ -686,15 +686,14 @@ public class AnkiDroid extends Activity
 				showOrHideControls();
 				showOrHideAnswerField();
 			}
-        } else if (requestCode == EDIT_CURRENT_CARD)
-        {
-            		    DeckTask.launchDeckTask(
-                                DeckTask.TASK_TYPE_UPDATE_FACT,
-                                mUpdateCardHandler,
-                                new DeckTask.TaskData(0, AnkiDroidApp.getDeck(), currentCard));
-            //TODO: code to save the changes made to the current card.
-            mFlipCard.setChecked(true);
-            displayCardQuestion();
+		} else if (requestCode == EDIT_CURRENT_CARD) {
+			if (CardEditor.SAVE_CARD == resultCode) {
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
+						mUpdateCardHandler, new DeckTask.TaskData(0, AnkiDroidApp
+								.getDeck(), currentCard));
+				mFlipCard.setChecked(true);
+				displayCardQuestion();
+			}
 		} else if(requestCode == GET_SHARED_DECK)
 		{
 			//Clean the previous card before showing the first of the new loaded deck (so the transition is not so abrupt)
