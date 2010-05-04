@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ankidroid_widget_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:background="#000000"
+    >
+    
+    <TextView
+        android:id="@+id/anki_droid_text"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dip"
+        android:layout_marginBottom="1dip"
+        android:includeFontPadding="false"
+        android:singleLine="false"
+        android:ellipsize="end"
+        android:textColor="#ffffff"
+        android:lines="3"
+        />
+</RelativeLayout>
