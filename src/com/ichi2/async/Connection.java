@@ -30,6 +30,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Deck;
 import com.ichi2.anki.SharedDeck;
@@ -42,8 +43,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     
     public static final int TASK_TYPE_GET_SHARED_DECKS = 0;
     public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 1;
-    public static final int TASK_TYPE_SYNC_DECK = 2;
-    public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 3;
+    public static final int TASK_TYPE_GET_PERSONAL_DECKS = 2;
+    public static final int TASK_TYPE_DOWNLOAD_PERSONAL_DECK = 3;
+    public static final int TASK_TYPE_SYNC_DECK = 4;
+    public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 5;
 
 	private static Connection instance;
 	private TaskListener listener;
@@ -107,6 +110,18 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return launchConnectionTask(listener, data);
 	}
 	
+	public static Connection getPersonalDecks(TaskListener listener, Payload data)
+	{
+		data.taskType = TASK_TYPE_GET_PERSONAL_DECKS;
+		return launchConnectionTask(listener, data);
+	}
+	
+	public static Connection downloadPersonalDeck(TaskListener listener, Payload data)
+	{
+		data.taskType = TASK_TYPE_DOWNLOAD_PERSONAL_DECK;
+		return launchConnectionTask(listener, data);
+	}
+	
 	public static Connection syncDeck(TaskListener listener, Payload data)
 	{
 		data.taskType = TASK_TYPE_SYNC_DECK;
@@ -130,7 +145,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 			case TASK_TYPE_DOWNLOAD_SHARED_DECK:
 				return doInBackgroundDownloadSharedDeck(data);
+				
+			case TASK_TYPE_GET_PERSONAL_DECKS:
+				return doInBackgroundGetPersonalDecks(data);
 			
+			case TASK_TYPE_DOWNLOAD_PERSONAL_DECK:
+				return doInBackgroundDownloadPersonalDeck(data);
+				
 			case TASK_TYPE_SYNC_DECK:
 				return doInBackgroundSyncDeck(data);
 				
@@ -168,8 +189,42 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return data;
 	}
 	
+	private Payload doInBackgroundGetPersonalDecks(Payload data)
+	{
+		try {
+			String username = (String)data.data[0];
+			String password = (String)data.data[1];
+			AnkiDroidProxy server = new AnkiDroidProxy(username, password);
+			data.result = server.getPersonalDecks();
+		} catch (Exception e) {
+			data.success = false;
+			data.exception = e;
+			Log.e(TAG, "Error getting personal decks = " + e.getMessage());
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	private Payload doInBackgroundDownloadPersonalDeck(Payload data)
+	{
+		try {
+			String username = (String)data.data[0];
+			String password = (String)data.data[1];
+			String deckName = (String)data.data[2];
+			String deckPath = (String)data.data[3];
+			SyncClient.fullSyncFromServer(password, username, deckName, deckPath);
+		} catch (Exception e) {
+			data.success = false;
+			data.exception = e;
+			Log.e(TAG, "Error downloading shared deck = " + e.getMessage());
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
 	private Payload doInBackgroundSyncDeck(Payload data)
 	{
+		AnkiDb.database.beginTransaction();
 		try {
 			String username = (String)data.data[0];
 			String password = (String)data.data[1];
@@ -197,12 +252,15 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 					String syncFrom = client.prepareFullSync();
 					if("fromLocal".equalsIgnoreCase(syncFrom))
 					{
-						client.fullSyncFromLocal(password, username, syncName, deckPath);
+						SyncClient.fullSyncFromLocal(password, username, syncName, deckPath);
 					}
 					else if("fromServer".equalsIgnoreCase(syncFrom))
 					{
-						client.fullSyncFromServer(password, username, syncName, deckPath);
+						SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
 					}
+					AnkiDb.database.setTransactionSuccessful();
+					AnkiDb.database.endTransaction();
+					deck.closeDeck();
 					deck = Deck.openDeck(deckPath);
 					client.setDeck(deck);
 				}
@@ -214,6 +272,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 					client.applyPayloadReply(payloadReply);
 					deck.lastLoaded = deck.modified;
 					deck.commitToDB();
+					AnkiDb.database.setTransactionSuccessful();
 				}
 			}
 			else
@@ -225,6 +284,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			data.exception = e;
 			Log.e(TAG, "Error synchronizing deck = " + e.getMessage());
 			e.printStackTrace();
+		} finally {
+			if(AnkiDb.database.inTransaction())
+			{
+				AnkiDb.database.endTransaction();
+			}
 		}
 		return data;
 	}
@@ -242,13 +306,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			deck.lastLoaded = deck.modified;
 			deck.commitToDB();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

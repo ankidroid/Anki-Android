@@ -118,6 +118,7 @@
 <string name="sync_name">Name on server</string>
 
 <!-- AndroidManifest.xml strings -->
+<string name="personaldeckpicker_title">Open Online Deck</string>
 <string name="shareddeckpicker_title">Select the deck you want to download</string>
 <string name="preferences_title">Preferences</string>
 <string name="deckpreferences_title">Deck Preferences</string>
@@ -137,7 +138,9 @@
 <string name="suspend">Suspend</string>
 <string name="edit_card">Edit Card</string>
 <string name="switch_another_deck">Switch to another deck</string>
-<string name="get_shared_deck">Get shared deck</string>
+<string name="download_deck">Download deck</string>
+<string name="download_shared_deck">Shared deck</string>
+<string name="download_personal_deck">Personal deck</string>
 <string name="synchronize">Synchronize</string>
 
 <!-- SharedDeckPicker.java -->

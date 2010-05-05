@@ -216,6 +216,21 @@ public class AnkiDroidProxy {
 		return decksServer;
     }
     
+    public List<String> getPersonalDecks()
+    {
+    	ArrayList<String> personalDecks = new ArrayList<String>();
+    	
+    	connect();
+    	
+    	Iterator decksIterator = decks.keys();
+    	while(decksIterator.hasNext())
+    	{
+    		personalDecks.add((String)decksIterator.next());
+    	}
+    	
+    	return personalDecks;
+    }
+    
     public void createDeck(String name)
     {
     	Log.i(TAG, "createDeck");

@@ -81,8 +81,8 @@ public class SyncClient {
 	 * Constants used on the multipart message
 	 */
 	private static final String MIME_BOUNDARY = "Anki-sync-boundary";
-	private final String END = "\r\n";
-	private final String TWO_HYPHENS = "--";
+	private final static String END = "\r\n";
+	private final static String TWO_HYPHENS = "--";
 	
 	private Deck deck;
 	private AnkiDroidProxy server;
@@ -318,7 +318,7 @@ public class SyncClient {
 		return AnkiDroidApp.getAppResources().getString(R.string.change_report_format, payloadChanges(payload));
 	}
 	
-	public void applyPayloadReply(JSONObject payloadReply)
+	public void applyPayloadReply(JSONObject payloadReply) throws JSONException
 	{
 		Log.i(TAG, "applyPayloadReply");
 		Keys[] keys = Keys.values();
@@ -327,6 +327,8 @@ public class SyncClient {
 		{
 			String key = keys[i].name();
 			updateObjsFromKey(payloadReply, key);
+			JSONObject crasher = null;
+			//crasher.get("nothing");
 		}
 		
 		try {
@@ -2073,7 +2075,8 @@ public class SyncClient {
 	{
 		deck.lastSync = System.currentTimeMillis() / 1000.0;
 		deck.commitToDB();
-		deck.closeDeck();
+		//The deck is closed after the full sync it is completed
+		//deck.closeDeck();
 		
 		if(localTime > remoteTime)
 		{
@@ -2085,7 +2088,7 @@ public class SyncClient {
 		}
 	}
 	
-	public void fullSyncFromLocal(String password, String username, String deckName, String deckPath)
+	public static void fullSyncFromLocal(String password, String username, String deckName, String deckPath)
 	{
 		URL url;
 		try {
@@ -2100,6 +2103,7 @@ public class SyncClient {
 
 			conn.setRequestProperty("Connection", "close");
 			conn.setRequestProperty("Charset", "UTF-8");
+			//conn.setRequestProperty("Content-Length", "8494662");
 			conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ MIME_BOUNDARY);
 			conn.setRequestProperty("Host", SYNC_HOST);
 
@@ -2132,6 +2136,7 @@ public class SyncClient {
 				Log.i(TAG, "Length = " + length);
 			}
 			dos.finish();
+			fStream.close();
 
 			ds.writeBytes(END);
 			ds.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + TWO_HYPHENS + END);
@@ -2172,7 +2177,7 @@ public class SyncClient {
 		}
 	}
 	
-	public void fullSyncFromServer(String password, String username, String deckName, String deckPath)
+	public static void fullSyncFromServer(String password, String username, String deckName, String deckPath)
 	{
 		Log.i(TAG, "password = " + password + ", user = " + username +  ", d = " + deckName);
 

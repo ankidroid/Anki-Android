@@ -43,6 +43,7 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -87,27 +88,36 @@ public class AnkiDroid extends Activity
 	private int qaFontSize = 0;
 
 	/**
-	 * Menus
+	 * Menus and Submenus
 	 */
-	public static final int MENU_OPEN = 0;
-
-	public static final int MENU_PREFERENCES = 1;
-
-	public static final int MENU_ABOUT = 2;
-
-	public static final int MENU_DECKOPTS = 3;
+	public static final int MAIN_MENU = 0;
 	
-	public static final int MENU_DECK_PROPERTIES = 4;
-
-	public static final int MENU_SUSPEND = 5;
-
-	private static final int MENU_EDIT = 6; 
-
-	private static final int MENU_GET_SHARED_DECKS = 7;
+	public static final int SUBMENU_DOWNLOAD = 1;
 	
-	private static final int MENU_SYNC = 8;
+	/**
+	 * Menu Options
+	 */
+	public static final int MENU_OPEN = Menu.FIRST;
+
+	public static final int MENU_PREFERENCES = MENU_OPEN + 1;
 	
-	private static final int MENU_SYNC_FROM_SERVER_PAYLOAD = 9;
+	public static final int MENU_DECKOPTS = MENU_PREFERENCES + 1;
+	
+	public static final int MENU_DECK_PROPERTIES = MENU_DECKOPTS + 1;
+	
+	private static final int MENU_DOWNLOAD_PERSONAL_DECK = MENU_DECK_PROPERTIES + 1;
+	
+	private static final int MENU_DOWNLOAD_SHARED_DECK = MENU_DOWNLOAD_PERSONAL_DECK + 1;
+	
+	private static final int MENU_SYNC = MENU_DOWNLOAD_SHARED_DECK + 1;
+	
+	private static final int MENU_SYNC_FROM_SERVER_PAYLOAD = MENU_SYNC + 1;
+
+	public static final int MENU_SUSPEND = MENU_SYNC_FROM_SERVER_PAYLOAD + 1;
+
+	private static final int MENU_EDIT = MENU_SUSPEND + 1;
+	
+	public static final int MENU_ABOUT = MENU_EDIT + 1;
 
 	/**
 	 * Possible outputs trying to load a deck
@@ -127,7 +137,10 @@ public class AnkiDroid extends Activity
 
     public static final int EDIT_CURRENT_CARD = 2;
     
-    public static final int GET_SHARED_DECK = 3;
+    public static final int DOWNLOAD_PERSONAL_DECK = 3;
+    
+    public static final int DOWNLOAD_SHARED_DECK = 4;
+    
 
 	/**
 	 * Variables to hold the state
@@ -455,18 +468,20 @@ public class AnkiDroid extends Activity
 	 * Creates the menu items
 	 */
 	@Override
-    public boolean onCreateOptionsMenu(Menu menu)
+	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		menu.add(0, MENU_OPEN, 0, getString(R.string.switch_another_deck));
-		menu.add(1, MENU_PREFERENCES, 0, getString(R.string.preferences));
-		menu.add(1, MENU_ABOUT, 0, getString(R.string.about));
-		menu.add(1, MENU_DECKOPTS, 0, getString(R.string.study_options));
-		menu.add(1, MENU_DECK_PROPERTIES, 0, getString(R.string.deck_properties));
-		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
-        menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
-        menu.add(1, MENU_GET_SHARED_DECKS, 0, getString(R.string.get_shared_deck));
-        menu.add(1, MENU_SYNC, 0, R.string.synchronize);
-        menu.add(1, MENU_SYNC_FROM_SERVER_PAYLOAD, 0, "Sync from payload");
+		menu.add(MAIN_MENU, MENU_OPEN, 0, getString(R.string.switch_another_deck));
+		menu.add(MAIN_MENU, MENU_PREFERENCES, 1, getString(R.string.preferences));
+		menu.add(MAIN_MENU, MENU_DECKOPTS, 2, getString(R.string.study_options));
+		menu.add(MAIN_MENU, MENU_DECK_PROPERTIES, 3, getString(R.string.deck_properties));
+		SubMenu downloadDeckSubMenu = menu.addSubMenu(getString(R.string.download_deck));
+		downloadDeckSubMenu.add(SUBMENU_DOWNLOAD, MENU_DOWNLOAD_PERSONAL_DECK, 0, getString(R.string.download_personal_deck));
+		downloadDeckSubMenu.add(SUBMENU_DOWNLOAD, MENU_DOWNLOAD_SHARED_DECK, 1, getString(R.string.download_shared_deck));
+		menu.add(MAIN_MENU, MENU_SYNC, 5, R.string.synchronize);
+		menu.add(MAIN_MENU, MENU_SYNC_FROM_SERVER_PAYLOAD, 6, "Sync from payload");
+		menu.add(MAIN_MENU, MENU_EDIT, 7, getString(R.string.edit_card)); //Edit the current card.
+		menu.add(MAIN_MENU, MENU_SUSPEND, 8, getString(R.string.suspend));
+		menu.add(MAIN_MENU, MENU_ABOUT, 9, getString(R.string.about));
 		return true;
 	}
 
@@ -475,12 +490,12 @@ public class AnkiDroid extends Activity
 		Log.i(TAG, "sdCardAvailable = " + sdCardAvailable + ", deckLoaded = " + deckLoaded);
 		menu.findItem(MENU_DECKOPTS).setEnabled(sdCardAvailable && deckLoaded);
 		menu.findItem(MENU_DECK_PROPERTIES).setEnabled(sdCardAvailable && deckLoaded);
-		menu.findItem(MENU_SUSPEND).setEnabled(currentCard != null);
-		menu.findItem(MENU_SUSPEND).setVisible(currentCard != null);
-		menu.findItem(MENU_EDIT).setEnabled(currentCard != null);
-		menu.findItem(MENU_EDIT).setVisible(currentCard != null);
 		menu.findItem(MENU_SYNC).setEnabled(sdCardAvailable && deckLoaded);
 		menu.findItem(MENU_SYNC_FROM_SERVER_PAYLOAD).setEnabled(sdCardAvailable && deckLoaded);
+		menu.findItem(MENU_EDIT).setEnabled(currentCard != null);
+		menu.findItem(MENU_EDIT).setVisible(currentCard != null);
+		menu.findItem(MENU_SUSPEND).setEnabled(currentCard != null);
+		menu.findItem(MENU_SUSPEND).setVisible(currentCard != null);
 		return true;
 	}
 	
@@ -490,51 +505,64 @@ public class AnkiDroid extends Activity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
+		Log.i(TAG, "Menu item = " + item.getItemId());
 		switch (item.getItemId())
 		{
-		case MENU_OPEN:
-			openDeckPicker();
-			return true;
-		case MENU_PREFERENCES:
-			Intent preferences = new Intent(this, Preferences.class);
-			startActivityForResult(preferences, PREFERENCES_UPDATE);
-			return true;
-		case MENU_ABOUT:
-			Intent about = new Intent(this, About.class);
-			startActivity(about);
-			return true;
-		case MENU_DECKOPTS:
-		    Intent opts = new Intent(this, DeckPreferences.class);
-		    startActivity(opts);
-		    return true;
-		case MENU_DECK_PROPERTIES:
-		    Intent deckProperties = new Intent(this, DeckProperties.class);
-		    startActivity(deckProperties);
-		    return true;
-		case MENU_SUSPEND:
-			mFlipCard.setChecked(true);
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
-					mAnswerCardHandler,
-					new DeckTask.TaskData(0, AnkiDroidApp.deck(), currentCard));
-		    return true;
-        case MENU_EDIT:
-            editorCard = currentCard;
-            Intent editCard = new Intent(this, CardEditor.class);
-            startActivityForResult(editCard, EDIT_CURRENT_CARD);
-            return true;
-        case MENU_GET_SHARED_DECKS:
-        	Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
-        	return true;
-        	
-        case MENU_SYNC:
-        	syncDeck();
-        	return true;
-        	
-        case MENU_SYNC_FROM_SERVER_PAYLOAD:
-        	Connection.syncDeckFromPayload(syncListener, new Connection.Payload(new Object[] {AnkiDroidApp.deck(), deckFilename}));
-        	return true;
+			case MENU_OPEN:
+				openDeckPicker();
+				break;
+				
+			case MENU_PREFERENCES:
+				Intent preferences = new Intent(this, Preferences.class);
+				startActivityForResult(preferences, PREFERENCES_UPDATE);
+				break;
+				
+			case MENU_ABOUT:
+				Intent about = new Intent(this, About.class);
+				startActivity(about);
+				break;
+				
+			case MENU_DECKOPTS:
+				Intent opts = new Intent(this, DeckPreferences.class);
+				startActivity(opts);
+				break;
+				
+			case MENU_DECK_PROPERTIES:
+				Intent deckProperties = new Intent(this, DeckProperties.class);
+				startActivity(deckProperties);
+				break;
+
+			case MENU_SUSPEND:
+				mFlipCard.setChecked(true);
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
+										mAnswerCardHandler,
+										new DeckTask.TaskData(0, AnkiDroidApp.deck(), currentCard));
+				break;
+
+			case MENU_EDIT:
+				editorCard = currentCard;
+				Intent editCard = new Intent(this, CardEditor.class);
+				startActivityForResult(editCard, EDIT_CURRENT_CARD);
+				break;
+
+			case MENU_DOWNLOAD_PERSONAL_DECK:
+				Intent downloadPersonalDeck = new Intent(this, PersonalDeckPicker.class);
+				startActivityForResult(downloadPersonalDeck, DOWNLOAD_PERSONAL_DECK); 
+				break;
+				
+			case MENU_DOWNLOAD_SHARED_DECK:
+				Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+				break;
+				
+			case MENU_SYNC:
+				syncDeck();
+				break;
+
+			case MENU_SYNC_FROM_SERVER_PAYLOAD:
+				Connection.syncDeckFromPayload(syncListener, new Connection.Payload(new Object[] {AnkiDroidApp.deck(), deckFilename}));
+				break;
 		}
-		return false;
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void openDeckPicker()
@@ -555,7 +583,7 @@ public class AnkiDroid extends Activity
     		AnkiDroidApp.deck().closeDeck();
     	deckLoaded = false;
 		Intent intent = new Intent(AnkiDroid.this, SharedDeckPicker.class);
-		startActivityForResult(intent, GET_SHARED_DECK);
+		startActivityForResult(intent, DOWNLOAD_SHARED_DECK);
 	}
 	
 	@Override
@@ -664,7 +692,7 @@ public class AnkiDroid extends Activity
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
 		super.onActivityResult(requestCode, resultCode, intent);
-		if (requestCode == PICK_DECK_REQUEST)
+		if (requestCode == PICK_DECK_REQUEST || requestCode == DOWNLOAD_PERSONAL_DECK)
 		{
 			//Clean the previous card before showing the first of the new loaded deck (so the transition is not so abrupt)
 			updateCard("");
@@ -711,7 +739,7 @@ public class AnkiDroid extends Activity
             //TODO: code to save the changes made to the current card.
             mFlipCard.setChecked(true);
             displayCardQuestion();
-		} else if(requestCode == GET_SHARED_DECK)
+		} else if(requestCode == DOWNLOAD_SHARED_DECK)
 		{
 			//Clean the previous card before showing the first of the new loaded deck (so the transition is not so abrupt)
 			updateCard("");
@@ -1341,7 +1369,6 @@ public class AnkiDroid extends Activity
 			noConnectionAlert.show();
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public void onPostExecute(Payload data) {
 			progressDialog.dismiss();
@@ -1367,6 +1394,30 @@ public class AnkiDroid extends Activity
 		
 	};
 
+	Connection.TaskListener getPersonalDecksListener = new Connection.TaskListener() {
+
+		@Override
+		public void onDisconnected() {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void onPostExecute(Payload data) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void onPreExecute() {
+			progressDialog = ProgressDialog.show(AnkiDroid.this, "", getResources().getString(R.string.loading_shared_decks));
+		}
+
+		@Override
+		public void onProgressUpdate(Object... values) {
+			//Pass
+		}
+		
+	};
+	
 	Connection.TaskListener syncListener = new Connection.TaskListener() {
 
 		@Override
@@ -1377,7 +1428,9 @@ public class AnkiDroid extends Activity
 		@Override
 		public void onPostExecute(Payload data) {
 			progressDialog.dismiss();
+			Log.i(TAG, "onPostExecute");
 			closeDeck();
+			
 			DeckTask.launchDeckTask(
 					DeckTask.TASK_TYPE_LOAD_DECK,
 					mLoadDeckHandler,
