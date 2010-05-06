@@ -78,9 +78,17 @@
 			android:key="timer" />
 		<CheckBoxPreference
 			android:title="@string/show_whiteboard"
-			android:defaultValue="true"
 			android:summary="@string/show_whiteboard_summ"
+			android:defaultValue="true"
+			android:disableDependentsState="false"
 			android:key="whiteboard" />
+		<EditTextPreference
+			android:title="@string/whiteboard_stroke_width"
+			android:summary="@string/whiteboard_stroke_width_summ"
+			android:dependency="whiteboard"
+			android:defaultValue="6"
+			android:inputType="number"
+			android:key="wbStrokeWidth" />
 		<CheckBoxPreference
 			android:title="@string/write_answers"
 			android:defaultValue="false"

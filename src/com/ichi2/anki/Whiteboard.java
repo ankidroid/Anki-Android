@@ -17,12 +17,15 @@
 ****************************************************************************************/
 package com.ichi2.anki;
 
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -68,7 +71,9 @@ public class Whiteboard extends View
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setStrokeWidth(8);
+		String wbStrokeWidth = PrefSettings.getSharedPrefs(context).getString("wbStrokeWidth", "6");
+		mPaint.setStrokeWidth(Integer.parseInt(wbStrokeWidth));
+		
 
 		createBitmap();
 		
