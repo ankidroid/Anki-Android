@@ -55,7 +55,6 @@
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 
 
-
 <!-- deck_preferences.xml strings -->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
 <string name="newcards_day">New Cards / Day</string>
@@ -171,4 +170,52 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 &lt;/body&gt;
 &lt;/html&gt;</string>
 <string name="review_early">Review Early</string>
+<string-array name="studyoptions_more_new_card_order"><item>New cards in random order</item>
+<item>New cards in order added</item>
+<item>New cards in reverse order added</item>
+</string-array>
+<string-array name="studyoptions_more_new_card_schedule"><item>Spread new cards through reviews</item>
+<item>New cards after reviews</item>
+<item>New cards before reviews</item>
+</string-array>
+<string-array name="studyoptions_more_rev_card_order"><item>Review cards from largest interval</item>
+<item>Review cards from smallest interval</item>
+<item>Review cards in order due</item>
+<item>Review cards in random order</item>
+</string-array>
+<string-array name="studyoptions_more_fail_card_option"><item>Show failed cards soon</item>
+<item>Show failed cards at end</item>
+<item>Show failed cards in 10 minutes</item>
+<item>Show failed cards in 8 hours</item>
+<item>Show failed cards in 3 days</item>
+</string-array>
+<string name="studyoptions_title">Study Options</string>
+<string name="studyoptions_reviews_due">Reviews due:</string>
+<string name="studyoptions_new_today">New today:</string>
+<string name="studyoptions_new_total">New total:</string>
+<string name="studyoptions_new_cards_per_day">New cards per day:</string>
+<string name="studyoptions_session_minutes">Session limit (minutes):</string>
+<string name="studyoptions_session_questions">Session limit (questions):</string>
+<string name="studyoptions_start">Start Reviewing</string>
+<string name="studyoptions_more">More</string>
+<string name="studyoptions_window_title">%s (%d of %d due)</string>
+<string name="studyoptions_more_dialog_title">More Options</string>
+<string name="studyoptions_more_save">Save</string>
+<string name="studyoptions_nodeck_title">No Deck Loaded</string>
+<string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored on your SD card and are read from the location specified in the preferences (currently this is set to: \&quot;%s\&quot;). The preferences can be reached by pressing your device\'s \&quot;Menu\&quot; button and then selecting \&quot;Preferences\&quot;.\n\nTo load a deck, press your device\'s \&quot;Menu\&quot; button and then select \&quot;Open Deck\&quot; or press one of the buttons below.</string>
+<string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
+<string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
+<string name="menu_open_deck">Open Deck</string>
+<string name="menu_preferences">Preferences</string>
+<string name="menu_about">About</string>
+<string name="menu_suspend_card">Suspend Card</string>
+<string name="menu_edit_card">Edit Card</string>
+<string name="loading">Loading...</string>
+<string name="studyoptions_continue">Continue Reviewing</string>
+<string name="studyoptions_well_done">Well Done!</string>
+<string name="studyoptions_congrats_title">Congratulations!</string>
+<string name="studyoptions_congrats_message">You have finished for now.</string>
+<string name="studyoptions_congrats_learnmore">Learn More</string>
+<string name="studyoptions_congrats_reviewearly">Review Early</string>
+<string name="studyoptions_congrats_finish">Finish</string>
 </resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent"
+	android:layout_width="fill_parent">
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:layout_gravity="center"
+		android:orientation="vertical">
+		<TextView
+			android:layout_height="wrap_content"
+			android:text="No Deck Loaded"
+			android:textColor="#ffffff"
+			android:textStyle="bold"
+			android:textSize="28dip"
+			android:gravity="center"
+			android:layout_width="fill_parent"
+			android:id="@+id/studyoptions_nodeck_title" />
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:text="No deck is currently loaded. Anki decks are stored on your SD card and are read from the locations specified in the preferences (the default is /sdcard)."
+			android:layout_marginTop="10dip"
+			android:paddingLeft="20dip"
+			android:paddingRight="20dip"
+			android:id="@+id/studyoptions_nodeck_message" />
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:paddingRight="10dip"
+			android:paddingLeft="10dip"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dip">
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="fill_parent"
+				android:layout_weight="1"
+				android:text="Load Sample Deck"
+				android:id="@+id/studyoptions_load_sample_deck" />
+			<Button
+				android:layout_height="wrap_content"
+				android:layout_width="fill_parent"
+				android:layout_weight="1"
+				android:text="Load Other Deck"
+				android:id="@+id/studyoptions_load_other_deck" />
+		</LinearLayout>
+	</LinearLayout>
+</FrameLayout>

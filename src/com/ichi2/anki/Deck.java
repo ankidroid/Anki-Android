@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -195,6 +196,8 @@ public class Deck
 	boolean newEarly;
 
 	boolean reviewEarly;
+	
+	String deckName;
 
 	private Stats globalStats;
 
@@ -284,6 +287,7 @@ public class Deck
 		}
 		Log.i(TAG, String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.modified, System.currentTimeMillis()/1000.0));
 
+		deck.deckName = (new File(path)).getName().replace(".anki", "");
 		deck.initVars();
 
 		// Ensure necessary indices are available
@@ -1058,7 +1062,7 @@ public class Deck
 	/**
 	 * Mark expired cards due and update counts.
 	 */
-	private void checkDue()
+	public void checkDue()
 	{
 		Log.i(TAG, "Checking due cards...");
 		checkDailyStats();

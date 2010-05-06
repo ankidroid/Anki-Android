@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+	android:paddingRight="10dip">
+	
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:padding="10dip">
+
+		<Spinner
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/studyoptions_new_card_order"
+			android:entries="@array/studyoptions_more_new_card_order" />
+		<Spinner
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/studyoptions_new_card_schedule"
+			android:entries="@array/studyoptions_more_new_card_schedule" />
+		<Spinner
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/studyoptions_rev_card_order"
+			android:entries="@array/studyoptions_more_rev_card_order" />
+		<Spinner
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/studyoptions_fail_card_option"
+			android:entries="@array/studyoptions_more_fail_card_option" />
+
+	</LinearLayout>
+	
+</ScrollView>
