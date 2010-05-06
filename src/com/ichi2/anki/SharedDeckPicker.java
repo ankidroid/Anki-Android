@@ -45,7 +45,7 @@ public class SharedDeckPicker extends Activity {
 		mSharedDecksListView.setAdapter(mSharedDecksAdapter);
 		mSharedDecksListView.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
+//			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
 				downloadedDeck = mSharedDecks.get(position);
@@ -78,13 +78,13 @@ public class SharedDeckPicker extends Activity {
 	 */
 	Connection.TaskListener getSharedDecksListener = new Connection.TaskListener() {
 
-		@Override
+//		@Override
 		public void onDisconnected() {
 			noConnectionAlert.show();
 		}
 
 		@SuppressWarnings("unchecked")
-		@Override
+//		@Override
 		public void onPostExecute(Payload data) {
 			//progressDialog.dismiss();
 			if(data.success)
@@ -99,12 +99,12 @@ public class SharedDeckPicker extends Activity {
 			}
 		}
 
-		@Override
+//		@Override
 		public void onPreExecute() {
 			//Pass
 		}
 
-		@Override
+//		@Override
 		public void onProgressUpdate(Object... values) {
 			//Pass
 		}
@@ -113,12 +113,12 @@ public class SharedDeckPicker extends Activity {
 	
 	Connection.TaskListener downloadSharedDeckListener = new Connection.TaskListener() {
 
-		@Override
+//		@Override
 		public void onDisconnected() {
 			noConnectionAlert.show();
 		}
 
-		@Override
+//		@Override
 		public void onPostExecute(Payload data) {
 			progressDialog.dismiss();
 			if(data.success)
@@ -136,12 +136,12 @@ public class SharedDeckPicker extends Activity {
 			}
 		}
 
-		@Override
+//		@Override
 		public void onPreExecute() {
 			progressDialog = ProgressDialog.show(SharedDeckPicker.this, "", getResources().getString(R.string.downloading_shared_deck));
 		}
 
-		@Override
+//		@Override
 		public void onProgressUpdate(Object... values) {
 			//Pass
 		}

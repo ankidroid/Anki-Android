@@ -1316,13 +1316,13 @@ public class AnkiDroid extends Activity
 
 	Connection.TaskListener getSharedDecksListener = new Connection.TaskListener() {
 
-		@Override
+//		@Override
 		public void onDisconnected() {
 			noConnectionAlert.show();
 		}
 
 		@SuppressWarnings("unchecked")
-		@Override
+//		@Override
 		public void onPostExecute(Payload data) {
 			progressDialog.dismiss();
 			if(data.success)
@@ -1335,12 +1335,12 @@ public class AnkiDroid extends Activity
 			}
 		}
 
-		@Override
+//		@Override
 		public void onPreExecute() {
 			progressDialog = ProgressDialog.show(AnkiDroid.this, "", getResources().getString(R.string.loading_shared_decks));
 		}
 
-		@Override
+//		@Override
 		public void onProgressUpdate(Object... values) {
 			//Pass
 		}
