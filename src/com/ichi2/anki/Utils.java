@@ -255,12 +255,9 @@ public class Utils {
 	 */
 	public static boolean writeToFile(InputStream source, String destination)
 	{
-		//Log.i(TAG, "writeToFile = " + destination);
 		try
 		{
-			//Log.i(TAG, "createNewFile");
 			new File(destination).createNewFile();
-			//Log.i(TAG, "New file created");
 	
 			OutputStream output = new FileOutputStream(destination);
 			
@@ -270,15 +267,12 @@ public class Utils {
 			if(source == null) Log.i(TAG, "source is null!");
 			while ((len = source.read(buf)) > 0)
 			{
-				//Log.i(TAG, "Writing to file...");
 				output.write(buf, 0, len);
 			}
 			
 			output.close();
-			//Log.i(TAG, "Write finished!");
 
 		} catch (Exception e) {
-			//Log.i(TAG, "IOException e = " + e.getMessage());
 			return false;
 		}
 		return true;

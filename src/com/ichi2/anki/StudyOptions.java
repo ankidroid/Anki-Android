@@ -223,6 +223,8 @@ public class StudyOptions extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		
+		Log.i(TAG, "StudyOptions Activity");
+		
 		SharedPreferences preferences = restorePreferences();
 		//registerExternalStorageListener();
 		
@@ -459,7 +461,8 @@ public class StudyOptions extends Activity
 			{
 				// Copy the sample deck from the assets to the SD card.
 				InputStream stream = getResources().getAssets().open(SAMPLE_DECK_NAME);
-				boolean written = writeToFile(stream, sampleDeckFile);
+				boolean written = Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
+				stream.close();
 				if (!written)
 				{
 					openDeckPicker();
@@ -476,32 +479,6 @@ public class StudyOptions extends Activity
 		Intent deckLoadIntent = new Intent();
 		deckLoadIntent.putExtra(OPT_DB, sampleDeckFile.getAbsolutePath());
 		onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
-	}
-	
-	private boolean writeToFile(InputStream source, File destination) throws IOException
-	{
-		try
-		{
-			destination.createNewFile();
-		} catch (IOException e)
-		{
-			// Most probably the SD card is not mounted on the Android.
-			// Tell the user to turn off USB storage, which will automatically
-			// mount it on Android.
-			return false;
-		}
-		FileOutputStream output = new FileOutputStream(destination);
-
-		// Transfer bytes, from source to destination.
-		byte[] buf = new byte[1024];
-		int len;
-		while ((len = source.read(buf)) > 0)
-		{
-			output.write(buf, 0, len);
-		}
-		source.close();
-		output.close();
-		return true;
 	}
 	
 	@Override

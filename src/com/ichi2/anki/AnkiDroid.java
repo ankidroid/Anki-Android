@@ -321,6 +321,7 @@ public class AnkiDroid extends Activity
 	public void onCreate(Bundle savedInstanceState) throws SQLException
 	{
 		super.onCreate(savedInstanceState);
+		Log.i(TAG, "AnkiDroid Activity");
 		Log.i(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
 
 		Bundle extras = getIntent().getExtras();
@@ -436,7 +437,7 @@ public class AnkiDroid extends Activity
 		setContentView(layout);
 
 		mCard = (WebView) findViewById(R.id.flashcard);
-		mButtonReviewEarly = (Button) findViewById(R.id.review_early);
+		//mButtonReviewEarly = (Button) findViewById(R.id.review_early);
 		mEase0 = (Button) findViewById(R.id.ease1);
 		mEase1 = (Button) findViewById(R.id.ease2);
 		mEase2 = (Button) findViewById(R.id.ease3);

@@ -44,30 +44,6 @@
 			android:layout_height="fill_parent"
 			android:visibility="gone" />
 	</FrameLayout>
-
-	<!-- <LinearLayout
-		android:id="@+id/remembered_layout"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<EditText android:id="@+id/answer_field"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:maxLines="2"/>
-		<Button
-			android:id="@+id/select_remembered"
-			android:padding="3dip"
-			android:layout_width="fill_parent"
-			android:layout_weight="1.2"
-			android:layout_height="fill_parent"
-			android:text="Remembered" />
-		<Button
-			android:id="@+id/select_notremembered"
-			android:padding="3dip"
-			android:layout_width="fill_parent"
-			android:layout_weight="1.2"
-			android:layout_height="fill_parent"
-			android:text="Not Remembered" />
-	</LinearLayout> -->
 	
 	<LinearLayout
 		android:id="@+id/remembered_layout"
@@ -84,13 +60,6 @@
 			android:layout_weight="1.2"
 			android:layout_height="fill_parent"
 			android:text="@string/again" />
-		<Button
-			android:id="@+id/review_early"
-			android:padding="3dip"
-			android:layout_width="fill_parent"
-			android:layout_weight="1.2"
-			android:layout_height="fill_parent"
-			android:text="@string/review_early" />
 		<Button
 			android:id="@+id/ease2"
 			android:padding="3dip"

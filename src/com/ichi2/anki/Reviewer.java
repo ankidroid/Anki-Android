@@ -57,7 +57,8 @@ public class Reviewer extends Activity {
 	 * Variables to hold preferences
 	 */
 	private boolean prefCorporalPunishments;
-	private boolean prefTimerAndWhiteboard;
+	private boolean prefTimer;
+	private boolean prefWhiteboard;
 	private boolean prefWriteAnswers;
 	private String prefDeckFilename;
 	
@@ -76,6 +77,7 @@ public class Reviewer extends Activity {
 	
 	private Card mCurrentCard;
 	private static Card editorCard; // To be assigned as the currentCard or a new card to be sent to and from the editor
+	private int mCurrentEase;
 	private long mSessionTimeLimit;
 	private int mSessionCurrReps;
 
@@ -99,7 +101,12 @@ public class Reviewer extends Activity {
 	{
 		public void onCheckedChanged(CompoundButton btn, boolean state)
 		{
+			
 			setOverlayState(state);
+			if(!state)
+			{
+				mWhiteboard.clear();
+			}
 		}
 	};
 	
@@ -107,11 +114,10 @@ public class Reviewer extends Activity {
 	{
 		public void onClick(View view)
 		{
-			int ease;
 			switch (view.getId())
 			{
 			case R.id.ease1:
-				ease = 1;
+				mCurrentEase = 1;
 				if (prefCorporalPunishments)
 				{
 					Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -119,16 +125,16 @@ public class Reviewer extends Activity {
 				}
 				break;
 			case R.id.ease2:
-				ease = 2;
+				mCurrentEase = 2;
 				break;
 			case R.id.ease3:
-				ease = 3;
+				mCurrentEase = 3;
 				break;
 			case R.id.ease4:
-				ease = 4;
+				mCurrentEase = 4;
 				break;
 			default:
-				ease = 0;
+				mCurrentEase = 0;
 				return;
 			}
 			
@@ -136,7 +142,7 @@ public class Reviewer extends Activity {
 			DeckTask.launchDeckTask(
 					DeckTask.TASK_TYPE_ANSWER_CARD,
 					mAnswerCardHandler,
-					new DeckTask.TaskData(ease, AnkiDroidApp.deck(), mCurrentCard));
+					new DeckTask.TaskData(mCurrentEase, AnkiDroidApp.deck(), mCurrentCard));
 		}
 	};
 
@@ -171,7 +177,8 @@ public class Reviewer extends Activity {
 
 		public void onPreExecute() {
 			Reviewer.this.setProgressBarIndeterminateVisibility(true);
-			disableControls();
+			//disableControls();
+			blockControls();
 		}
 
 		public void onPostExecute(DeckTask.TaskData result) {
@@ -222,7 +229,8 @@ public class Reviewer extends Activity {
 		        // Start reviewing next card
 		        Reviewer.this.mCurrentCard = newCard;
 		        Reviewer.this.setProgressBarIndeterminateVisibility(false);
-		        Reviewer.this.enableControls();
+		        //Reviewer.this.enableControls();
+				Reviewer.this.unblockControls();
 		        Reviewer.this.reviewNextCard();
 		    }
 
@@ -362,14 +370,19 @@ public class Reviewer extends Activity {
 		mEase3.setVisibility(View.VISIBLE);
 		mFlipCard.setVisibility(View.VISIBLE);
 		
-		if (!prefTimerAndWhiteboard)
+		if (!prefTimer)
 		{
 			mCardTimer.setVisibility(View.GONE);
+		} else
+		{
+			mCardTimer.setVisibility(View.VISIBLE);
+		}
+		if (!prefWhiteboard)
+		{
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		} else
 		{
-			mCardTimer.setVisibility(View.VISIBLE);
 			mToggleWhiteboard.setVisibility(View.VISIBLE);
 			if (mToggleWhiteboard.isChecked())
 			{
@@ -405,6 +418,7 @@ public class Reviewer extends Activity {
 		mAnswerField.setVisibility(View.GONE);
 	}
 	
+	/* COMMENT: Using unblockControls() and blockControls() instead (06-05-2010)
 	private void enableControls()
 	{
 		mCard.setEnabled(true);
@@ -431,13 +445,118 @@ public class Reviewer extends Activity {
 		mToggleWhiteboard.setEnabled(false);
 		mWhiteboard.setEnabled(false);
 		mAnswerField.setEnabled(false);
+	}*/
+	
+	private void unblockControls()
+	{
+		mCard.setEnabled(true);
+		switch(mCurrentEase)
+		{
+			case 1:
+				mCard.setEnabled(true);
+				mEase0.setClickable(true);
+				mEase1.setEnabled(true);
+				mEase2.setEnabled(true);
+				mEase3.setEnabled(true);
+				break;
+				
+			case 2:
+				mCard.setEnabled(true);
+				mEase0.setEnabled(true);
+				mEase1.setClickable(true);
+				mEase2.setEnabled(true);
+				mEase3.setEnabled(true);
+				break;
+				
+			case 3:
+				mCard.setEnabled(true);
+				mEase0.setEnabled(true);
+				mEase1.setEnabled(true);
+				mEase2.setClickable(true);
+				mEase3.setEnabled(true);
+				break;
+				
+			case 4:
+				mCard.setEnabled(true);
+				mEase0.setEnabled(true);
+				mEase1.setEnabled(true);
+				mEase2.setEnabled(true);
+				mEase3.setClickable(true);
+				break;
+				
+			default:
+				mCard.setEnabled(true);
+				mEase0.setEnabled(true);
+				mEase1.setEnabled(true);
+				mEase2.setEnabled(true);
+				mEase3.setEnabled(true);
+				break;
+		}
+		mFlipCard.setEnabled(true);
+		mCardTimer.setEnabled(true);
+		mToggleWhiteboard.setEnabled(true);
+		mWhiteboard.setEnabled(true);
+		mAnswerField.setEnabled(true);
+	}
+	
+	private void blockControls()
+	{
+		mCard.setEnabled(false);
+		switch(mCurrentEase)
+		{
+			case 1:
+				mCard.setEnabled(false);
+				mEase0.setClickable(false);
+				mEase1.setEnabled(false);
+				mEase2.setEnabled(false);
+				mEase3.setEnabled(false);
+				break;
+				
+			case 2:
+				mCard.setEnabled(false);
+				mEase0.setEnabled(false);
+				mEase1.setClickable(false);
+				mEase2.setEnabled(false);
+				mEase3.setEnabled(false);
+				break;
+				
+			case 3:
+				mCard.setEnabled(false);
+				mEase0.setEnabled(false);
+				mEase1.setEnabled(false);
+				mEase2.setClickable(false);
+				mEase3.setEnabled(false);
+				break;
+				
+			case 4:
+				mCard.setEnabled(false);
+				mEase0.setEnabled(false);
+				mEase1.setEnabled(false);
+				mEase2.setEnabled(false);
+				mEase3.setClickable(false);
+				break;
+				
+			default:
+				mCard.setEnabled(false);
+				mEase0.setEnabled(false);
+				mEase1.setEnabled(false);
+				mEase2.setEnabled(false);
+				mEase3.setEnabled(false);
+				break;
+		}
+		mFlipCard.setEnabled(false);
+		mCardTimer.setEnabled(false);
+		mToggleWhiteboard.setEnabled(false);
+		mWhiteboard.setEnabled(false);
+		mAnswerField.setEnabled(false);
 	}
 	
 	private SharedPreferences restorePreferences()
 	{
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		prefCorporalPunishments = preferences.getBoolean("corporalPunishments", false);
-		prefTimerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
+		prefTimer = preferences.getBoolean("timer", true);
+		prefWhiteboard = preferences.getBoolean("whiteboard", true);
 		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
 		prefDeckFilename = preferences.getString("deckFilename", "");
 
@@ -504,7 +623,6 @@ public class Reviewer extends Activity {
 		Log.i(TAG, "displayCardAnswer");
 		
 		mCardTimer.stop();
-		mWhiteboard.lock();
 
 		mEase0.setVisibility(View.VISIBLE);
 		mEase1.setVisibility(View.VISIBLE);
