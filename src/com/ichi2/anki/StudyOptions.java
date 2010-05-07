@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Activity;
@@ -13,10 +16,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -46,11 +51,19 @@ public class StudyOptions extends Activity
 	/**
 	 * Menus
 	 */
-	private static final int MENU_OPEN = 0;
+	private static final int MENU_OPEN = 1;
+	
+	private static final int MENU_DOWNLOAD_PERSONAL_DECK = 2;
+	
+	private static final int MENU_DOWNLOAD_SHARED_DECK = 3;
 
-	private static final int MENU_PREFERENCES = 1;
+	private static final int MENU_PREFERENCES = 4;
+	
+	private static final int MENU_DECK_PROPERTIES = 5;
+	
+	private static final int MENU_SYNC = 6;
 
-	private static final int MENU_ABOUT = 2;
+	private static final int MENU_ABOUT = 7;
 	
 	/**
 	 * Available options returning from another activity
@@ -60,6 +73,10 @@ public class StudyOptions extends Activity
 	private static final int PREFERENCES_UPDATE = 1;
 	
 	private static final int REQUEST_REVIEW = 2;
+	
+	private static final int DOWNLOAD_PERSONAL_DECK = 3;
+	
+	private static final int DOWNLOAD_SHARED_DECK = 4;
 	
 	/** 
 	 * Constants for selecting which content view to display 
@@ -90,6 +107,15 @@ public class StudyOptions extends Activity
 	/* package */ ProgressDialog mProgressDialog;
 	
 	private int mCurrentContentView;
+	
+	/**
+	 * Alerts to inform the user about different situations
+	 */
+	private ProgressDialog progressDialog;
+
+	private AlertDialog noConnectionAlert;
+	
+	private AlertDialog connectionFailedAlert;
 	
 	/** 
 	 * UI elements for "Study Options" view 
@@ -159,8 +185,10 @@ public class StudyOptions extends Activity
 			{
 			case R.id.studyoptions_start:
 				//finish();
+				Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+				reviewer.putExtra("deckFilename", deckFilename);
 				startActivityForResult(
-						new Intent(StudyOptions.this, Reviewer.class),
+						reviewer,
 						REQUEST_REVIEW
 						);
 				return;
@@ -234,6 +262,7 @@ public class StudyOptions extends Activity
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		initAllContentViews();
+		initAllAlertDialogs();
 		
 		if (savedInstanceState != null)
 		{
@@ -301,6 +330,23 @@ public class StudyOptions extends Activity
 		mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
 		mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
 		mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
+	}
+	
+	/**
+	 * Create AlertDialogs used on all the activity
+	 */
+	private void initAllAlertDialogs()
+	{
+		Resources res = getResources();
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		builder.setMessage(res.getString(R.string.connection_needed));
+		builder.setPositiveButton(res.getString(R.string.ok), null);
+		noConnectionAlert = builder.create();
+		
+		builder.setMessage(res.getString(R.string.connection_unsuccessful));
+		connectionFailedAlert = builder.create();
 	}
 	
 	private AlertDialog createDialog()
@@ -407,8 +453,16 @@ public class StudyOptions extends Activity
 		MenuItem item;
 		item = menu.add(Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck);
 		item.setIcon(android.R.drawable.ic_menu_manage);
+		SubMenu downloadDeckSubMenu = menu.addSubMenu(R.string.download_deck);
+		downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
+		downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.download_personal_deck);
+		downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.download_shared_deck);
 		item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
 		item.setIcon(android.R.drawable.ic_menu_preferences);
+		item = menu.add(Menu.NONE, MENU_DECK_PROPERTIES, Menu.NONE, R.string.deck_properties);
+		item.setIcon(R.drawable.ic_menu_archive);
+		item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
+		item.setIcon(R.drawable.ic_menu_refresh);
 		item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
 		
@@ -424,9 +478,24 @@ public class StudyOptions extends Activity
 		case MENU_OPEN:
 			openDeckPicker();
 			return true;
+		case MENU_DOWNLOAD_PERSONAL_DECK:
+			Intent downloadPersonalDeck = new Intent(this, PersonalDeckPicker.class);
+			startActivityForResult(downloadPersonalDeck, DOWNLOAD_PERSONAL_DECK); 
+			break;
+			
+		case MENU_DOWNLOAD_SHARED_DECK:
+			Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+			break;
 		case MENU_PREFERENCES:
 			Intent preferences = new Intent(this, Preferences.class);
 			startActivityForResult(preferences, PREFERENCES_UPDATE);
+			return true;
+		case MENU_DECK_PROPERTIES:
+			Intent deckProperties = new Intent(this, DeckProperties.class);
+			startActivity(deckProperties);
+			break;
+		case MENU_SYNC:
+			syncDeck();
 			return true;
 		case MENU_ABOUT:
 			Intent about = new Intent(this, About.class);
@@ -449,6 +518,18 @@ public class StudyOptions extends Activity
 		//inDeckPicker = true;
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
 		//Log.i(TAG, "openDeckPicker - Ending");
+	}
+	
+	public void openSharedDeckPicker()
+	{
+    	if(AnkiDroidApp.deck() != null )//&& sdCardAvailable)
+    	{
+    		AnkiDroidApp.deck().closeDeck();
+    		AnkiDroidApp.setDeck(null);
+    	}
+    	//deckLoaded = false;
+		Intent intent = new Intent(StudyOptions.this, SharedDeckPicker.class);
+		startActivityForResult(intent, DOWNLOAD_SHARED_DECK);
 	}
 	
 	private void loadSampleDeck()
@@ -482,11 +563,22 @@ public class StudyOptions extends Activity
 		onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
 	}
 	
+	private void syncDeck() {
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		
+		String username = preferences.getString("username", "");
+		String password = preferences.getString("password", "");
+		Deck deck = AnkiDroidApp.deck();
+		
+		Log.i(TAG, "Synchronizing deck " + deckFilename + " with username " + username + " and password " + password);
+		Connection.syncDeck(syncListener, new Connection.Payload(new Object[] {username, password, deck, deckFilename}));		
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
 		super.onActivityResult(requestCode, resultCode, intent);
-		if (requestCode == PICK_DECK_REQUEST)
+		if (requestCode == PICK_DECK_REQUEST || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK)
 		{
 			//Clean the previous card before showing the first of the new loaded deck (so the transition is not so abrupt)
 //			updateCard("");
@@ -516,7 +608,9 @@ public class StudyOptions extends Activity
 			savePreferences();
 
         	//Log.i(TAG, "onActivityResult - deckSelected = " + deckSelected);
-			displayProgressDialogAndLoadDeck();
+			boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
+			displayProgressDialogAndLoadDeck(updateAllCards);
+			
 		} else if (requestCode == PREFERENCES_UPDATE)
 		{
 			restorePreferences();
@@ -562,6 +656,11 @@ public class StudyOptions extends Activity
 	
 	private void displayProgressDialogAndLoadDeck()
 	{
+		displayProgressDialogAndLoadDeck(false);
+	}
+	
+	private void displayProgressDialogAndLoadDeck(boolean updateAllCards)
+	{
 		Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
 
 		// Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
@@ -572,10 +671,21 @@ public class StudyOptions extends Activity
 			if (deckFilename != null && new File(deckFilename).exists())
 			{
 				//showControls(false);
-				DeckTask.launchDeckTask(
-						DeckTask.TASK_TYPE_LOAD_DECK,
-						mLoadDeckHandler,
-						new DeckTask.TaskData(deckFilename));
+				
+				if(updateAllCards)
+				{
+					DeckTask.launchDeckTask(
+							DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS,
+							mLoadDeckHandler,
+							new DeckTask.TaskData(deckFilename));
+				}
+				else
+				{
+					DeckTask.launchDeckTask(
+							DeckTask.TASK_TYPE_LOAD_DECK,
+							mLoadDeckHandler,
+							new DeckTask.TaskData(deckFilename));
+				}
 			}
 			else
 			{
@@ -659,6 +769,74 @@ public class StudyOptions extends Activity
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 			// Pass
 		}
+	};
+	
+	Connection.TaskListener getSharedDecksListener = new Connection.TaskListener() {
+
+		@Override
+		public void onDisconnected() {
+			noConnectionAlert.show();
+		}
+
+		@Override
+		public void onPostExecute(Payload data) {
+			progressDialog.dismiss();
+			if(data.success)
+			{
+				openSharedDeckPicker();
+			}
+			else
+			{
+				connectionFailedAlert.show();
+			}
+		}
+
+		@Override
+		public void onPreExecute() {
+			progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
+		}
+
+		@Override
+		public void onProgressUpdate(Object... values) {
+			//Pass
+		}
+		
+	};
+	
+	Connection.TaskListener syncListener = new Connection.TaskListener() {
+
+		@Override
+		public void onDisconnected() {
+			noConnectionAlert.show();			
+		}
+
+		@Override
+		public void onPostExecute(Payload data) {
+			progressDialog.dismiss();
+			Log.i(TAG, "onPostExecute");
+			//closeDeck();
+			if(AnkiDroidApp.deck() != null )//&& sdCardAvailable)
+			{
+				AnkiDroidApp.deck().closeDeck();
+				AnkiDroidApp.setDeck(null);
+			}
+			
+			DeckTask.launchDeckTask(
+					DeckTask.TASK_TYPE_LOAD_DECK,
+					mLoadDeckHandler,
+					new DeckTask.TaskData(deckFilename));
+		}
+
+		@Override
+		public void onPreExecute() {
+			progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
+		}
+
+		@Override
+		public void onProgressUpdate(Object... values) {
+			// TODO Auto-generated method stub
+		}
+		
 	};
 	
 }

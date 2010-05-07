@@ -312,11 +312,10 @@ public class Reviewer extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuItem item;
-		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
-		item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 		item = menu.add(Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card);
 		item.setIcon(android.R.drawable.ic_menu_edit);
-		
+		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
+		item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 		return true;
 	}
 	
@@ -326,16 +325,16 @@ public class Reviewer extends Activity {
 	{
 		switch (item.getItemId())
 		{
+		case MENU_EDIT:
+			editorCard = mCurrentCard;
+			Intent editCard = new Intent(this, CardEditor.class);
+			startActivityForResult(editCard, EDIT_CURRENT_CARD);
+			return true;
 		case MENU_SUSPEND:
 			mFlipCard.setChecked(true);
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
 					mAnswerCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
-			return true;
-		case MENU_EDIT:
-			editorCard = mCurrentCard;
-			Intent editCard = new Intent(this, CardEditor.class);
-			startActivityForResult(editCard, EDIT_CURRENT_CARD);
 			return true;
 		}
 		return false;
@@ -606,10 +605,10 @@ public class Reviewer extends Activity {
 		showControls();
 		//mFlipCard.setChecked(false);
 		
-		mEase0.setVisibility(View.GONE);
-		mEase1.setVisibility(View.GONE);
-		mEase2.setVisibility(View.GONE);
-		mEase3.setVisibility(View.GONE);
+		mEase0.setVisibility(View.INVISIBLE);
+		mEase1.setVisibility(View.INVISIBLE);
+		mEase2.setVisibility(View.INVISIBLE);
+		mEase3.setVisibility(View.INVISIBLE);
 
 		// If the user wants to write the answer
 		if(prefWriteAnswers)
