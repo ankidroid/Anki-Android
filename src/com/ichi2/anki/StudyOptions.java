@@ -79,6 +79,7 @@ public class StudyOptions extends Activity
 	 */
 	private String prefDeckPath;
 	
+	private boolean prefStudyOptions;
 	
 	//private boolean deckSelected;
 	
@@ -160,7 +161,7 @@ public class StudyOptions extends Activity
 				//finish();
 				startActivityForResult(
 						new Intent(StudyOptions.this, Reviewer.class),
-						2
+						REQUEST_REVIEW
 						);
 				return;
 			case R.id.studyoptions_more:
@@ -555,7 +556,7 @@ public class StudyOptions extends Activity
 	{
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		prefDeckPath = preferences.getString("deckPath", "/sdcard");
-
+		prefStudyOptions = preferences.getBoolean("study_options", true);
 		return preferences;
 	}
 	
@@ -619,7 +620,18 @@ public class StudyOptions extends Activity
 					// Set the deck in the application instance, so other activities
 					// can access the loaded deck.
 				    AnkiDroidApp.setDeck( result.getDeck() );
-				    showContentView(CONTENT_STUDY_OPTIONS);
+				    if(prefStudyOptions)
+				    {
+				    	showContentView(CONTENT_STUDY_OPTIONS);
+				    }
+				    else
+				    {
+				    	startActivityForResult(
+								new Intent(StudyOptions.this, Reviewer.class),
+								REQUEST_REVIEW
+								);
+				    }
+				    
 					break;
 
 				case AnkiDroid.DECK_NOT_LOADED:

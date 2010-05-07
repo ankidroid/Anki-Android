@@ -94,6 +94,8 @@
 <string name="password">Password</string>
 <string name="sync_on_open">Sync on open</string>
 <string name="sync_on_close">Sync on close</string>
+<string name="show_study_options_on_deck_load">Study options on load</string>
+<string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
 <string name="show_timer">Show timer</string>
 <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
 <string name="show_whiteboard">Show whiteboard</string>
