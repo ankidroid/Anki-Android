@@ -46,67 +46,76 @@
 	</FrameLayout>
 	
 	<LinearLayout
-		android:id="@+id/remembered_layout"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		 <EditText android:id="@+id/answer_field"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:background="#ffffff">
+		
+		<LinearLayout
+			android:id="@+id/remembered_layout"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:maxLines="2"/>
-		<Button
-			android:id="@+id/ease1"
-			android:padding="3dip"
+			android:layout_height="wrap_content">
+			 <EditText android:id="@+id/answer_field"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:maxLines="2"/>
+			<Button
+				android:id="@+id/ease1"
+				android:padding="3dip"
+				android:layout_width="fill_parent"
+				android:layout_weight="1.2"
+				android:layout_height="fill_parent"
+				android:text="@string/again" />
+			<Button
+				android:id="@+id/ease2"
+				android:padding="3dip"
+				android:layout_width="fill_parent"
+				android:layout_weight="1.2"
+				android:layout_height="fill_parent"
+				android:text="@string/hard" />
+			<Button
+				android:id="@+id/ease3"
+				android:padding="3dip"
+				android:layout_width="fill_parent"
+				android:layout_weight="1.2"
+				android:layout_height="fill_parent"
+				android:text="@string/good" />
+			<Button
+				android:id="@+id/ease4"
+				android:padding="3dip"
+				android:layout_width="fill_parent"
+				android:layout_weight="1.2"
+				android:layout_height="fill_parent"
+				android:text="@string/easy" />
+		</LinearLayout>
+		
+		<LinearLayout
+			android:id="@+id/chrono_buttons_layout"
 			android:layout_width="fill_parent"
-			android:layout_weight="1.2"
-			android:layout_height="fill_parent"
-			android:text="@string/again" />
-		<Button
-			android:id="@+id/ease2"
-			android:padding="3dip"
-			android:layout_width="fill_parent"
-			android:layout_weight="1.2"
-			android:layout_height="fill_parent"
-			android:text="@string/hard" />
-		<Button
-			android:id="@+id/ease3"
-			android:padding="3dip"
-			android:layout_width="fill_parent"
-			android:layout_weight="1.2"
-			android:layout_height="fill_parent"
-			android:text="@string/good" />
-		<Button
-			android:id="@+id/ease4"
-			android:padding="3dip"
-			android:layout_width="fill_parent"
-			android:layout_weight="1.2"
-			android:layout_height="fill_parent"
-			android:text="@string/easy" />
-	</LinearLayout>
+			android:layout_height="wrap_content">
+			<ToggleButton
+				android:id="@+id/toggle_overlay"
+				android:layout_width="fill_parent"
+				android:layout_weight="1.2"
+				android:layout_height="fill_parent"
+				android:textOn="@string/overlay_on"
+				android:textOff="@string/overlay_off" />
+			<ToggleButton
+				android:id="@+id/flip_card"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:layout_weight="1.2"
+				android:background="@android:drawable/btn_default_small"
+				android:textOn="@string/show_question"
+				android:textOff="@string/show_answer" />
+			<Chronometer
+				android:id="@+id/card_time"
+				android:layout_width="fill_parent"
+				android:layout_weight="1"
+				android:layout_height="fill_parent"
+				android:gravity="center_vertical|center_horizontal"
+				android:textColor="#000000" />
+		</LinearLayout>
 	
-	<LinearLayout
-		android:id="@+id/chrono_buttons_layout"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<ToggleButton
-			android:id="@+id/toggle_overlay"
-			android:layout_width="fill_parent"
-			android:layout_weight="1.2"
-			android:layout_height="fill_parent"
-			android:textOn="@string/overlay_on"
-			android:textOff="@string/overlay_off" />
-		<ToggleButton
-			android:id="@+id/flip_card"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:layout_weight="1.2"
-			android:background="@android:drawable/btn_default_small"
-			android:textOn="@string/show_question"
-			android:textOff="@string/show_answer" />
-		<Chronometer
-			android:id="@+id/card_time"
-			android:layout_width="fill_parent"
-			android:layout_weight="1"
-			android:layout_height="fill_parent"
-			android:gravity="center_vertical|center_horizontal" />
 	</LinearLayout>
 </LinearLayout>

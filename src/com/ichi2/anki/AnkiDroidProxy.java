@@ -181,7 +181,7 @@ public class AnkiDroidProxy {
     
     public String getDecks()
     {
-    	Log.i(TAG, "user = " + username + ", password = " + password);
+    	Log.i(TAG, "getDecks - user = " + username + ", password = " + password);
     	String decksServer = "{}";
     	
     	try {
@@ -201,7 +201,7 @@ public class AnkiDroidProxy {
 			InputStream content = entityResponse.getContent();
 			Log.i(TAG, "Content = " + content.toString());
 			decksServer = Utils.convertStreamToString(new InflaterInputStream(content));
-			Log.i(TAG, "String content = " + decks);
+			Log.i(TAG, "String content = " + decksServer);
 			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

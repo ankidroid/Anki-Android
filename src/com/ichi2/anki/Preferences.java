@@ -19,6 +19,8 @@ package com.ichi2.anki;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -33,6 +35,11 @@ public class Preferences extends PreferenceActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
+		// Remove the status bar and make title bar progress available
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		getPreferenceManager().setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
 		addPreferencesFromResource(R.layout.preferences);
 	}

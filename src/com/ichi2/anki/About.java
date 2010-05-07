@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.webkit.WebView;
 
 /**
@@ -28,9 +29,13 @@ public class About extends Activity
 {
 
 	@Override
-    public void onCreate(Bundle savedInstanceState) throws SQLException
+	public void onCreate(Bundle savedInstanceState) throws SQLException
 	{
 		super.onCreate(savedInstanceState);
+		// Remove the status bar and make title bar progress available
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		setContentView(R.layout.about);
 		WebView webview = (WebView) findViewById(R.id.about);
 		webview.loadDataWithBaseURL("", getResources().getString(R.string.about_content), "text/html", "utf-8", null);

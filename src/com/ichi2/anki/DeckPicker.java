@@ -44,6 +44,8 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -99,6 +101,10 @@ public class DeckPicker extends Activity implements Runnable
 		Log.i(TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
 
+		// Remove the status bar and make title bar progress available
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		registerExternalStorageListener();
 
 		mSelf = this;

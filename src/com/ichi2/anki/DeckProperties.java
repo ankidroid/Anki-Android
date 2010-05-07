@@ -14,6 +14,8 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class DeckProperties extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
@@ -206,6 +208,10 @@ public class DeckProperties extends PreferenceActivity implements OnSharedPrefer
 		}
 		else
 		{
+			// Remove the status bar and make title bar progress available
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+			
 			this.pref = new DeckPreferenceHack();
 			this.pref.registerOnSharedPreferenceChangeListener( this );
 

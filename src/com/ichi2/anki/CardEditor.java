@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -44,6 +46,10 @@ public class CardEditor extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        //Remove the status bar and make title bar progress available
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
         setContentView(R.layout.card_editor);
         
         fieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
