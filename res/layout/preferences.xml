@@ -75,17 +75,19 @@
 			android:summary="@string/use_ruby_support_summ"
 			android:key="useRubySupport" />
 		<ListPreference
-			android:title="@string/qa_font_size"
-			android:summary="@string/qa_font_size_summ"
-			android:key="qaFontSize"
+			android:title="@string/display_font_size"
+			android:summary="@string/display_font_size_summ"
+			android:key="displayFontSize"
 			android:defaultValue="0"
-			android:entries="@array/qaFontSizeLabels"
-			android:entryValues="@array/qaFontSizeVals" />
-		<CheckBoxPreference
-			android:title="@string/show_question_answer"
-			android:defaultValue="false"
-			android:summary="@string/show_question_answer_summ"
-			android:key="showQuestionAnswer" />
+			android:entries="@array/displayFontSizeLabels"
+			android:entryValues="@array/displayFontSizeVals" />
+		<ListPreference
+			android:title="@string/hide_question_in_answer"
+			android:summary="@string/hide_question_in_answer_summ"
+			android:key="hideQuestionInAnswer"
+			android:defaultValue="0"
+			android:entries="@array/hideQuestionInAnswerLabels"
+			android:entryValues="@array/hideQuestionInAnswerVals" />
 	</PreferenceCategory>
 	
 	<!-- TODO implement this preference. Right now: always use notifications

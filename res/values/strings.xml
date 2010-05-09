@@ -78,7 +78,7 @@
 <string name="overlay_on">Whiteboard On</string>
 <string name="overlay_off">Whiteboard Off</string>
 <string name="show_answer">Show Answer</string>
-<string name="show_question">Show Question</string>
+<string name="show_question">Re-display Question</string>
 <string name="card_hint">Flashcard</string>
 <string name="again">Again</string>
 <string name="hard">Hard</string>
@@ -105,10 +105,10 @@
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
 <string name="use_ruby_support_summ">If the characters '[' and ']' are found, then the enclosed text is handled as a ruby annotation</string>
-<string name="qa_font_size">Font size</string>
-<string name="qa_font_size_summ">Default font size. Using 'Relative' changes the font dynamically based on space</string>
-<string name="show_question_answer">Show question in answer</string>
-<string name="show_question_answer_summ">Shows the question also when displaying the answer unless user entered answer.</string>
+<string name="display_font_size">Relative display font size</string>
+<string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck</string>
+<string name="hide_question_in_answer">Hide question in answer?</string>
+<string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where the your decks are stored</string>
 
