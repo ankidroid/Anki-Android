@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>Random order</item>
+    <item>Order added</item>
+    <item>Reverse order added</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>Spread out through reviews</item>
+    <item>After reviews</item>
+    <item>Before reviews</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Largest interval first</item>
+    <item>Smallest interval first</item>
+    <item>Order due</item>
+    <item>Random order</item>
+  </string-array>
+  <string-array name="failedCardOptionLabels">
+    <item>Show failed cards soon</item>
+    <item>Show failed cards at end</item>
+    <item>Show failed cards in 10 minutes</item>
+    <item>Show failed cards in 8 hours</item>
+    <item>Show failed cards in 3 days</item>
+  </string-array>
+</resources>
