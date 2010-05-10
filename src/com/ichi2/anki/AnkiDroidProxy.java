@@ -75,7 +75,6 @@ public class AnkiDroidProxy {
 	private JSONObject decks;
 	private double timestamp;
 
-
 	/**
 	 * Shared deck's fields
 	 */
@@ -112,6 +111,11 @@ public class AnkiDroidProxy {
 	public void setDeckName(String deckName) 
 	{
 		this.deckName = deckName;
+	}
+	
+	public double getTimestamp() 
+	{
+		return timestamp;
 	}
 	
     public void connect()
@@ -253,6 +257,9 @@ public class AnkiDroidProxy {
 			InputStream content = entityResponse.getContent();
 			Log.i(TAG, "Content = " + content.toString());
 			Log.i(TAG, "String content = " + Utils.convertStreamToString(new InflaterInputStream(content)));
+			
+			//Add created deck to the list of decks on server
+			decks.put(name, new JSONArray("[0,0]"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e)
@@ -261,6 +268,9 @@ public class AnkiDroidProxy {
 		} catch (IOException e)
 		{
 			Log.i(TAG, "IOException = " + e.getMessage());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
     }
     

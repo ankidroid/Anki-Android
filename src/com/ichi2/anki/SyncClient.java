@@ -2025,6 +2025,8 @@ public class SyncClient {
 	@SuppressWarnings("unchecked")
 	public boolean needFullSync(JSONArray sums)
 	{
+		Log.i(TAG, "needFullSync - lastSync = " + deck.lastSync);
+
 		if(deck.lastSync <= 0)
 		{
 			Log.i(TAG, "deck.lastSync <= 0");
@@ -2043,6 +2045,7 @@ public class SyncClient {
 					Log.i(TAG, "Key " + key + ", length = " + l.length());
 					if(l.length() > 500)
 					{
+						Log.i(TAG, "Length of key > 500");
 						return true;
 					}
 				}
@@ -2052,12 +2055,11 @@ public class SyncClient {
 			
 		}
 		
-		Log.i(TAG, "Count reviewHistory = " + AnkiDb.queryScalar("SELECT count() FROM reviewHistory WHERE time > " + deck.lastSync));
 		if(AnkiDb.queryScalar("SELECT count() FROM reviewHistory WHERE time > " + deck.lastSync) > 500)
 		{
+			Log.i(TAG, "reviewHistory since lastSync > 500");
 			return true;
 		}
-		Log.i(TAG, "lastSync = " + deck.lastSync);
 		Date lastDay = new Date(java.lang.Math.max(0, (long)(deck.lastSync - 60*60*24) * 1000));
 		
 		Log.i(TAG, "lastDay = " + lastDay.toString() + ", lastDayInMillis = " + lastDay.getTime());
@@ -2065,6 +2067,7 @@ public class SyncClient {
 		Log.i(TAG, "Count stats = " + AnkiDb.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\""));
 		if(AnkiDb.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\"") > 100)
 		{
+			Log.i(TAG, "stats since lastDay > 100");
 			return true;
 		}
 		

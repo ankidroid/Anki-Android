@@ -807,24 +807,32 @@ public class StudyOptions extends Activity
 
 		@Override
 		public void onDisconnected() {
-			noConnectionAlert.show();			
+			noConnectionAlert.show();
 		}
 
 		@Override
 		public void onPostExecute(Payload data) {
 			progressDialog.dismiss();
 			Log.i(TAG, "onPostExecute");
-			//closeDeck();
-			if(AnkiDroidApp.deck() != null )//&& sdCardAvailable)
+			if(data.success)
 			{
-				AnkiDroidApp.deck().closeDeck();
-				AnkiDroidApp.setDeck(null);
+				//closeDeck();
+				if(AnkiDroidApp.deck() != null )//&& sdCardAvailable)
+				{
+					AnkiDroidApp.deck().closeDeck();
+					AnkiDroidApp.setDeck(null);
+				}
+				
+				DeckTask.launchDeckTask(
+						DeckTask.TASK_TYPE_LOAD_DECK,
+						mLoadDeckHandler,
+						new DeckTask.TaskData(deckFilename));
+			}
+			else
+			{
+				connectionFailedAlert.show();
 			}
 			
-			DeckTask.launchDeckTask(
-					DeckTask.TASK_TYPE_LOAD_DECK,
-					mLoadDeckHandler,
-					new DeckTask.TaskData(deckFilename));
 		}
 
 		@Override

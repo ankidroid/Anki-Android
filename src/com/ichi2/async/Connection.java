@@ -232,6 +232,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			String deckPath = (String)data.data[3];
 			String syncName = deck.getSyncName();
 			
+			Log.i(TAG, "Starting sync: username = " + username + ", password = " + password + ", deckPath = " + deckPath + ", syncName = " + syncName);
 			AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 			server.connect();
 			
@@ -239,6 +240,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			{
 				Log.i(TAG, "AnkiOnline does not have this deck: Creating it...");
 				server.createDeck(syncName);
+			}
+			int timediff = (int) (server.getTimestamp() - (System.currentTimeMillis() / 1000));
+			if(timediff > 300)
+			{
+				Log.i(TAG, "");
+				//TODO: Control what happens when the clocks are unsynchronized
 			}
 			SyncClient client = new SyncClient(deck);
 			client.setServer(server);
@@ -248,7 +255,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 				JSONArray sums = client.summaries();
 				if(client.needFullSync(sums))
 				{
-					Log.i(TAG, "Deck needs full sync");
+					Log.i(TAG, "DECK NEEDS FULL SYNC");
 					String syncFrom = client.prepareFullSync();
 					if("fromLocal".equalsIgnoreCase(syncFrom))
 					{
@@ -266,7 +273,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 				}
 				else
 				{
-					Log.i(TAG, "Deck does not need full sync");
+					Log.i(TAG, "DECK DOES NOT NEED FULL SYNC");
 					JSONObject payload = client.genPayload(sums);
 					JSONObject payloadReply = client.getServer().applyPayload(payload);
 					client.applyPayloadReply(payloadReply);
@@ -277,7 +284,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			}
 			else
 			{
-				Log.i(TAG, "No changes.");
+				Log.i(TAG, "NO CHANGES.");
 			}
 		} catch (Exception e) {
 			data.success = false;
