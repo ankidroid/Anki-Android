@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>Ordine casuale</item>
+    <item>Ordine di aggiunta</item>
+    <item>Ordine di aggiunta inverso</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>Distribuisci sulla sequenza di ripetizione</item>
+    <item>Dopo le ripetizioni</item>
+    <item>Prima delle ripetizioni</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Inizia dalle carte con l'intervallo più lungo</item>
+    <item>Inizia dalle carte con l'intervallo più corto</item>
+    <item>In ordine di scadenza</item>
+    <item>In ordine casuale</item>
+  </string-array>
+  <string-array name="failedCardOptionLabels">
+    <item>Mostra presto le carte fallite</item>
+    <item>Mostra le carte fallite alla fine</item>
+    <item>Mostra le carte fallite tra 10 minuti</item>
+    <item>Mostra le carte fallite tra 8 ore</item>
+    <item>Mostra le carte fallite tra 3 giorni</item>
+  </string-array>
+</resources>

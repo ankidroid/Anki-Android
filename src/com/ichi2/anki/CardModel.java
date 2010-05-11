@@ -99,9 +99,10 @@ public class CardModel implements Comparator<CardModel> {
 
 	/** SELECT string with only those fields, which are used in AnkiDroid */
 	private final static String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, aformat" //lformat left out
-		//qedformat, aedformat, questionInAnswer left out
-		+ ", questionFontSize, questionFontColour" //questionFontFamily, questionAlign left out
-		+ ", answerFontSize, answerFontColour" //same as for question
+		//qedformat, aedformat left out
+		+ ", questionInAnswer"
+		+ ", questionFontFamily, questionFontSize, questionFontColour" //questionAlign left out
+		+ ", answerFontFamily, answerFontSize, answerFontColour" //same as for question
 		+ ", lastFontColour" //lastFontFamily, lastFontSize left out
 		//rest left out
 		+ " FROM cardModels";
@@ -134,11 +135,14 @@ public class CardModel implements Comparator<CardModel> {
 					myCardModel.active = cursor.getInt(5);
 					myCardModel.qformat = cursor.getString(6);
 					myCardModel.aformat = cursor.getString(7);
-					myCardModel.questionFontSize = cursor.getInt(8);
-					myCardModel.questionFontColour = cursor.getString(9);
-					myCardModel.answerFontSize = cursor.getInt(10);
-					myCardModel.answerFontColour = cursor.getString(11);
-					myCardModel.lastFontColour = cursor.getString(12);
+					myCardModel.questionInAnswer = cursor.getInt(8);
+					myCardModel.questionFontFamily = cursor.getString(9);
+					myCardModel.questionFontSize = cursor.getInt(10);
+					myCardModel.questionFontColour = cursor.getString(11);
+					myCardModel.answerFontFamily = cursor.getString(12);
+					myCardModel.answerFontSize = cursor.getInt(13);
+					myCardModel.answerFontColour = cursor.getString(14);
+					myCardModel.lastFontColour = cursor.getString(15);
 					models.put(myCardModel.id, myCardModel);
 				} while (cursor.moveToNext());
 			}

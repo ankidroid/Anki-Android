@@ -79,14 +79,14 @@ public class AnkiDroid extends Activity
 	 */
 	private static final String TAG = "AnkiDroid";
 
-	/** Max size of the font of the questions and answers for relative calculation */
-	protected static final int MAX_QA_FONT_SIZE = 14;
+	/** Max size of the font for dynamic calculation of font size */
+	protected static final int MAX_DYNAMIC_FONT_SIZE = 14;
 
-	/** Min size of the font of the questions and answers for relative calculation */
-	protected static final int MIN_QA_FONT_SIZE = 3;
+	/** Min size of the font for dynamic calculation of font size */
+	protected static final int MIN_DYNAMIC_FONT_SIZE = 3;
 	
-	/** The font size specified in shared preferences. If 0 then font is calculated with MAX/MIN_FONT_SIZE */
-	private int qaFontSize = 0;
+	/** The percentage of the absolute font size specified in the deck. */
+	private int displayFontSize = 100;
 
 	/**
 	 * Menus
@@ -169,8 +169,14 @@ public class AnkiDroid extends Activity
 	/** Preference: parse for ruby annotations */
 	private boolean useRubySupport;
 	
-	/** Preference: show the question when showing the answer */
-	private boolean showQuestionAnswer;
+	/** Preference: hide the question when showing the answer */
+	private int hideQuestionInAnswer;
+	
+	private static final int HQIA_DO_HIDE = 0;
+	
+	private static final int HQIA_DO_SHOW = 1;
+	
+	private static final int HQIA_CARD_MODEL = 2;
 
 	private boolean updateNotifications; // TODO use Veecheck only if this is true
 
@@ -699,15 +705,14 @@ public class AnkiDroid extends Activity
 				showOrHideControls();
 				showOrHideAnswerField();
 			}
-        } else if (requestCode == EDIT_CURRENT_CARD)
-        {
-            		    DeckTask.launchDeckTask(
-                                DeckTask.TASK_TYPE_UPDATE_FACT,
-                                mUpdateCardHandler,
-                                new DeckTask.TaskData(0, AnkiDroidApp.getDeck(), currentCard));
-            //TODO: code to save the changes made to the current card.
+		} else if (requestCode == EDIT_CURRENT_CARD) {
+			if (CardEditor.SAVE_CARD == resultCode) {
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
+						mUpdateCardHandler, new DeckTask.TaskData(0, AnkiDroidApp
+								.getDeck(), currentCard));
             mFlipCard.setChecked(true);
             displayCardQuestion();
+			}
 		} else if(requestCode == GET_SHARED_DECK)
 		{
 			//Clean the previous card before showing the first of the new loaded deck (so the transition is not so abrupt)
@@ -869,9 +874,15 @@ public class AnkiDroid extends Activity
 				mAnswerField.setVisibility(View.VISIBLE);
 			}
 
+			mFlipCard.setVisibility(View.VISIBLE);
 			mFlipCard.requestFocus();
 
-			updateCard(enrichWithQASpan(currentCard.question, false));
+			String displayString = enrichWithQASpan(currentCard.question, false);
+			//Depending on preferences do or do not show the question
+			if (calculateShowQuestion()) {
+				displayString = displayString + "<hr/>";
+			}
+			updateCard(displayString);
 		}
 	}
 	
@@ -893,6 +904,8 @@ public class AnkiDroid extends Activity
 		mAnswerField.setVisibility(View.GONE);
 
 		mEase2.requestFocus();
+		
+		String displayString = "";
 
 		// If the user wrote an answer
 		if(writeAnswers)
@@ -907,27 +920,40 @@ public class AnkiDroid extends Activity
 
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
-				updateCard(enrichWithQASpan(diff.diff_prettyHtml(
+				
+				displayString = enrichWithQASpan(diff.diff_prettyHtml(
 						diff.diff_main(userAnswer, correctAnswer)) +
-						"<br/>" + currentCard.answer, true));
+						"<br/>" + currentCard.answer, true);
 			}
 			else
 			{
-				updateCard("");
+				displayString = "";
 			}
 		}
 		else
 		{
-			if (true == showQuestionAnswer) {
+			displayString = enrichWithQASpan(currentCard.answer, true);
+		}
+		//Depending on preferences do or do not show the question
+		if (calculateShowQuestion()) {
 				StringBuffer sb = new StringBuffer();
 				sb.append(enrichWithQASpan(currentCard.question, false));
 				sb.append("<hr/>");
-				sb.append(enrichWithQASpan(currentCard.answer, true));
-				updateCard(sb.toString());
-			} else {
-				updateCard(enrichWithQASpan(currentCard.answer, true));
+			sb.append(displayString);
+			displayString = sb.toString();
+			mFlipCard.setVisibility(View.GONE);
 			}
+		updateCard(displayString);
 		}
+	
+	private final boolean calculateShowQuestion() {
+		if (HQIA_DO_SHOW == hideQuestionInAnswer) {
+			return true;
+		}
+		if (HQIA_CARD_MODEL == hideQuestionInAnswer && 0 == Model.getModel(currentCard.cardModelId, false).getCardModel(currentCard.cardModelId).questionInAnswer) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -942,13 +968,6 @@ public class AnkiDroid extends Activity
 		content = Sound.extractSounds(deckFilename, content);
 		content = Image.loadImages(deckFilename, content);
 		
-		// Calculate the size of the font if relative font size is chosen in preferences
-		int fontSize = qaFontSize;
-		if (0 == qaFontSize) {
-			fontSize = calculateDynamicFontSize(content);
-		}
-		mCard.getSettings().setDefaultFontSize(fontSize);
-
 		// In order to display the bold style correctly, we have to change font-weight to 700
 		content = content.replaceAll("font-weight:600;", "font-weight:700;");
 
@@ -958,10 +977,11 @@ public class AnkiDroid extends Activity
 		}
 		
 		// Add CSS for font colour and font size
-		if(currentCard != null)
-		{
+		if (null != currentCard) {
 			Model myModel = Model.getModel(currentCard.cardModelId, false);
-			content = myModel.getCSSForFontColorSize(currentCard.cardModelId) + content;
+			content = myModel.getCSSForFontColorSize(currentCard.cardModelId, displayFontSize) + content;
+		} else {
+			mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
 		}
 
 		Log.i(TAG, "content card = \n" + content);
@@ -970,26 +990,10 @@ public class AnkiDroid extends Activity
 		Sound.playSounds();
 	}
 	
-	/**
-	 * Calculates a dynamic font size depending on the length of the contents
-	 * taking into account that the input string contains html-tags, which will not
-	 * be displayed and therefore should not be taken into account.
-	 * @param htmlContents
-	 * @return font size respecting MIN_QA_FONT_SIZE and MAX_QA_FONT_SIZE
-	 */
-	protected final static int calculateDynamicFontSize(String htmlContent) {
-		// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then remove all html tags and spaces
-		String realContent = htmlContent.replaceAll("\\<br.*?\\>", "               ");
-		realContent = realContent.replaceAll("\\<hr.*?\\>", "                              ");
-		realContent = realContent.replaceAll("\\<.*?\\>", "");
-		realContent = realContent.replaceAll("&nbsp;", " ");
-		return Math.max(MIN_QA_FONT_SIZE, MAX_QA_FONT_SIZE - (int)(realContent.length()/5));
-	}
-	
-	/** Constant for class attribute signalling answer */
+	/** Constant for class attribute signaling answer */
 	protected final static String ANSWER_CLASS = "answer";
 	
-	/** Constant for class attribute signalling question */
+	/** Constant for class attribute signaling question */
 	protected final static String QUESTION_CLASS = "question";
 	
 	/**
@@ -1011,6 +1015,23 @@ public class AnkiDroid extends Activity
 		sb.append("</span>");
 		return sb.toString();
 	}
+
+	/**
+	* Calculates a dynamic font size depending on the length of the contents
+	* taking into account that the input string contains html-tags, which will not
+	* be displayed and therefore should not be taken into account.
+	* @param htmlContents
+	* @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
+	*/
+	protected final static int calculateDynamicFontSize(String htmlContent) {
+		// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then remove all html tags and spaces
+		String realContent = htmlContent.replaceAll("\\<br.*?\\>", " ");
+		realContent = realContent.replaceAll("\\<hr.*?\\>", " ");
+		realContent = realContent.replaceAll("\\<.*?\\>", "");
+		realContent = realContent.replaceAll("&nbsp;", " ");
+		return Math.max(MIN_DYNAMIC_FONT_SIZE, MAX_DYNAMIC_FONT_SIZE - (int)(realContent.length()/5));
+	}
+
 
 	/**
 	 * Utility method to write to a file.
@@ -1041,19 +1062,25 @@ public class AnkiDroid extends Activity
 		return true;
 	}
 
-	private SharedPreferences restorePreferences()
-	{
+	private SharedPreferences restorePreferences() {
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		corporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		timerAndWhiteboard = preferences.getBoolean("timerAndWhiteboard", true);
 		Log.i(TAG, "restorePreferences - timerAndWhiteboard: " + timerAndWhiteboard);
 		writeAnswers = preferences.getBoolean("writeAnswers", false);
 		useRubySupport = preferences.getBoolean("useRubySupport", false);
-		//A little hack to get int values from ListPreference. there should be an easier way ...
-		String qaFontSizeString = preferences.getString("qaFontSize", "0");
-		qaFontSize = Integer.parseInt(qaFontSizeString);
-		showQuestionAnswer = preferences.getBoolean("showQuestionAnswer", false);
+		displayFontSize = Integer.parseInt(preferences.getString("displayFontSize", "100"));
+		hideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", Integer.toString(HQIA_DO_SHOW)));
 		updateNotifications = preferences.getBoolean("enabled", true);
+		
+		//redraw screen with new preferences
+		if (null != mFlipCard) {
+			if (mFlipCard.isChecked()) {
+				displayCardAnswer();
+			} else {
+				displayCardQuestion();
+			}
+		}
 
 		return preferences;
 	}

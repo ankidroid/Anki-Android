@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>Случайно</item>
+    <item>Порядок добавлен</item>
+    <item>Обратный порядок добавлен</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>Распространение через отзовы</item>
+    <item>После отзывов</item>
+    <item>Перед отзывами</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Большый интервал первым</item>
+    <item>Наименьший интервал первым</item>
+    <item>Соответствующий порядок</item>
+    <item>В случайном порядке</item>
+  </string-array>
+  <string-array name="failedCardOptionLabels">
+    <item>Показывать неудачные карточки скоро</item>
+    <item>Показывать неудачные карточки а конце</item>
+    <item>Показывать неудачные карточки через 10 минут</item>
+    <item>Показывать неудачные карточки через 8 часов</item>
+    <item>Показывать неудачные карточки через 3 дня</item>
+  </string-array>
+</resources>
