@@ -17,12 +17,14 @@
 
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.util.Log;
 
 import com.ichi2.async.Connection;
 import com.tomgibara.android.veecheck.Veecheck;
@@ -61,8 +63,17 @@ public class AnkiDroidApp extends Application {
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
-
+		
 		Connection.setContext(getApplicationContext());
+		
+		CustomExceptionHandler customExceptionHandler = CustomExceptionHandler.getInstance();
+		customExceptionHandler.Init(instance.getApplicationContext());
+		Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
+		
+		DoImportantStuff();
+	}
+	
+	private void DoImportantStuff() {
 		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
 		res = getResources();
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);

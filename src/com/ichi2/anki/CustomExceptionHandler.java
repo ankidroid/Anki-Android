@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
@@ -142,9 +144,8 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 		printWriter.close();
 
 		Log.i(TAG, "report infomation string created");
-
 		saveReportToFile(reportInformation.toString());
-
+		
 		PreviousHandler.uncaughtException(t, e);
 	}
 
@@ -152,78 +153,18 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 		try {
 			Log.i(TAG, "saveReportFile");
 
-			int random = randomGenerator.nextInt(99999);
-			String filename = String.format("ad-%d.stacktrace", random);
+			Date currentDate = new Date();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+			String filename = String.format("ad-%s.stacktrace", formatter.format(currentDate));
 			
-			if(hasStorage(true)) {
-				Log.i(TAG, "External storage available");
-				File f = new File(Environment.getExternalStorageDirectory().toString(), filename);
-				Log.i(TAG, String.format("Writing to: %s", f.getAbsoluteFile()));
-				
-				f.createNewFile();
-				FileOutputStream fw = new FileOutputStream(f);
-				fw.write(reportInformation.getBytes());
-				fw.close();
-			}
-			else {
-				Log.i(TAG, "No external storage available");
-				FileOutputStream trace = curContext.openFileOutput(filename, Context.MODE_PRIVATE);
-				trace.write(reportInformation.getBytes());
-				trace.close();
-			}
+			Log.i(TAG, "No external storage available");
+			FileOutputStream trace = curContext.openFileOutput(filename, Context.MODE_PRIVATE);
+			trace.write(reportInformation.getBytes());
+			trace.close();
 
 			Log.i(TAG, "report saved");
 		} catch (Exception e) {
 			Log.i(TAG, e.toString());
 		}
-	}
-
-	static private boolean checkFsWritable() {
-		String directoryName = Environment.getExternalStorageDirectory().toString();
-
-		File directory = new File(directoryName);
-
-		if (!directory.isDirectory()) {
-			if (!directory.mkdirs()) {
-				return false;
-			}
-		}
-
-		File f = new File(directoryName, ".probe");
-
-		try {
-			// Remove stale file if any
-			if (f.exists()) {
-				f.delete();
-			}
-
-			if (!f.createNewFile())
-				return false;
-
-			f.delete();
-			return true;
-
-		} catch (IOException ex) {
-			return false;
-		}
-
-	}
-
-	static public boolean hasStorage(boolean requireWriteAccess) {
-		String state = Environment.getExternalStorageState();
-		Log.i(TAG, "storage state is " + state);
-
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-			if (requireWriteAccess) {
-				boolean writable = checkFsWritable();
-				Log.i(TAG, "storage writable is " + writable);
-				return writable;
-			} else {
-				return true;
-			}
-		} else if (!requireWriteAccess && Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-			return true;
-		}
-		return false;
 	}
 }

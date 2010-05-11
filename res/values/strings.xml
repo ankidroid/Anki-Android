@@ -156,4 +156,10 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 &lt;/body&gt;
 &lt;/html&gt;</string>
 <string name="review_early">Review Early</string>
+
+<!-- ErrorReporter.java -->
+<string name="error_message">There are %d errors to report</string>
+<string name="error_ok">Report errors</string>
+<string name="error_cancel">Do not report errors</string>
+<string name="error_email">report@example.org</string>
 </resources>
