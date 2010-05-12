@@ -71,33 +71,30 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
 			//Resources res = context.getResources();
 			RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.ankidroid_widget_view);
+            Deck currentDeck = AnkiDroidApp.getDeck();
             
-			if(AnkiDroidApp.getDeck()==null) {
-				Log.i(TAG, "Deck is null");
-				
-				//Fetch the deck information, sorted by due cards
-				//ArrayList<DeckInformation> decks = fetchDeckInformation();
-				ArrayList<DeckInformation> decks = mockFetchDeckInformation(); // TODO use real instead of mock
-				StringBuilder sb = new StringBuilder();
-				
-				//If there are less than 3 decks display all, otherwise only the first 3
-				for(int i=0; i<decks.size() && i<3; i++) {
-					DeckInformation deck = decks.get(i);
-					sb.append(String.format("%s\n", deck.toString()));
-				}
-				
-				if(sb.length()>1) { //Get rid of the trailing \n
-					sb.substring(0, sb.length()-1);
-				}
-				
-				updateViews.setTextViewText(R.id.anki_droid_text, sb);
+			//Fetch the deck information, sorted by due cards
+			ArrayList<DeckInformation> decks = fetchDeckInformation();
+			//ArrayList<DeckInformation> decks = mockFetchDeckInformation(); // TODO use real instead of mock
+			StringBuilder sb = new StringBuilder();
+			
+			//If there are less than 3 decks display all, otherwise only the first 3
+			for(int i=0; i<decks.size() && i<3; i++) {
+				DeckInformation deck = decks.get(i);
+				sb.append(String.format("%s\n", deck.toString()));
 			}
-			else {
-				//Log.i(TAG, String.format("Deck is open: %s", AnkidroidApp.deck().getDeckPath())); //Added this property to the Deck class, not necessary though
-				Log.i(TAG, String.format("Deck is open: %s", ""));
-				updateViews.setTextViewText(R.id.anki_droid_text, "deck is open");	
+			
+			if(sb.length()>1) { //Get rid of the trailing \n
+				sb.substring(0, sb.length()-1);
 			}
-
+			
+			updateViews.setTextViewText(R.id.anki_droid_text, sb);
+						
+			if(currentDeck!=null) {
+				AnkiDroidApp.setDeck(currentDeck);
+				Deck.openDeck(currentDeck.getDeckPath());
+			}
+			
 			return updateViews;
 		}
 
