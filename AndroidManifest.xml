@@ -33,6 +33,7 @@
         <activity android:name="DeckPreferences" android:label="@string/deckpreferences_title" />
         <activity android:name="About" android:label="@string/about_title" />
         <activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
+        <activity android:name="ErrorReporter" android:label="Error Reporter"></activity>
         <receiver android:name="com.ichi2.veecheck.CheckReceiver">
 			<intent-filter>
 				<action
@@ -66,7 +67,7 @@
 	
 		<!-- Service to perform web API queries -->
 		<service android:name=".AnkiDroidWidget$UpdateService" />
-    </application>
+</application>
     <uses-sdk android:minSdkVersion="3"/>
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.INTERNET" />

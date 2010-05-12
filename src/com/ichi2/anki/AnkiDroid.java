@@ -124,6 +124,8 @@ public class AnkiDroid extends Activity
     public static final int EDIT_CURRENT_CARD = 2;
     
     public static final int GET_SHARED_DECK = 3;
+    
+    public static final int REPORT_ERROR = 4;
 
 	/**
 	 * Variables to hold the state
@@ -306,12 +308,29 @@ public class AnkiDroid extends Activity
         return editorCard;
     }
 
+    private boolean hasErrorFiles() {
+    	for(String file : this.fileList()) {
+    		if(file.endsWith(".stacktrace"))
+    			return true;
+    	}
+    	
+    	return false;
+    }
+    
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
 	{
 		super.onCreate(savedInstanceState);
+		
 		Log.i(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
 
+		boolean hasErrors = hasErrorFiles();
+		
+		if(hasErrors) {
+			Intent i = new Intent(this, ErrorReporter.class);
+			startActivityForResult(i, REPORT_ERROR);
+		}
+		
 		Bundle extras = getIntent().getExtras();
 		SharedPreferences preferences = restorePreferences();
 		initAlertDialogs();
@@ -723,6 +742,9 @@ public class AnkiDroid extends Activity
         	Log.i(TAG, "onActivityResult - deckSelected = " + deckSelected);
         	// Load deck and update all cards, because if that is not done both the answer and question will be empty
 			displayProgressDialogAndLoadDeck(true);
+		} else if(requestCode == REPORT_ERROR) {
+			Log.i(TAG, "onActivityResult - reporting done");
+			return;
 		}
 	}
 
@@ -1343,13 +1365,13 @@ public class AnkiDroid extends Activity
 
 	Connection.TaskListener getSharedDecksListener = new Connection.TaskListener() {
 
-		@Override
+//		@Override
 		public void onDisconnected() {
 			noConnectionAlert.show();
 		}
 
 		@SuppressWarnings("unchecked")
-		@Override
+//		@Override
 		public void onPostExecute(Payload data) {
 			progressDialog.dismiss();
 			if(data.success)
@@ -1362,12 +1384,12 @@ public class AnkiDroid extends Activity
 			}
 		}
 
-		@Override
+//		@Override
 		public void onPreExecute() {
 			progressDialog = ProgressDialog.show(AnkiDroid.this, "", getResources().getString(R.string.loading_shared_decks));
 		}
 
-		@Override
+//		@Override
 		public void onProgressUpdate(Object... values) {
 			//Pass
 		}
