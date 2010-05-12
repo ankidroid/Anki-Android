@@ -5,6 +5,9 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -78,10 +81,14 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 			//ArrayList<DeckInformation> decks = mockFetchDeckInformation(); // TODO use real instead of mock
 			StringBuilder sb = new StringBuilder();
 			
+			int totalDue = 0;
+			
 			//If there are less than 3 decks display all, otherwise only the first 3
 			for(int i=0; i<decks.size() && i<3; i++) {
 				DeckInformation deck = decks.get(i);
 				sb.append(String.format("%s\n", deck.toString()));
+				
+				totalDue += deck.getDueCards();
 			}
 			
 			if(sb.length()>1) { //Get rid of the trailing \n
@@ -93,6 +100,30 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 			if(currentDeck!=null) {
 				AnkiDroidApp.setDeck(currentDeck);
 				Deck.openDeck(currentDeck.getDeckPath());
+			}
+			
+			if(totalDue>30) { //Raise a notification
+				String ns = Context.NOTIFICATION_SERVICE;
+				NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+				
+				int icon = R.drawable.anki;
+				CharSequence tickerText = String.format("%d AnkiDroid cards due", totalDue);
+				long when = System.currentTimeMillis();
+
+				Notification notification = new Notification(icon, tickerText, when);
+				notification.defaults |= Notification.DEFAULT_VIBRATE;
+				notification.defaults |= Notification.DEFAULT_LIGHTS;
+				
+				Context appContext = getApplicationContext();
+				CharSequence contentTitle = "Cards Due";
+				String contentText = sb.toString();
+				Intent notificationIntent = new Intent(this, AnkiDroid.class);
+				PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+				notification.setLatestEventInfo(appContext, contentTitle, contentText, contentIntent);
+				
+				final int WIDGET_NOTIFY_ID = 1;
+				mNotificationManager.notify(WIDGET_NOTIFY_ID, notification);
 			}
 			
 			return updateViews;
