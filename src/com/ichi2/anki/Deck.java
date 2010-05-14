@@ -200,6 +200,15 @@ public class Deck
 	
 	private Card currentCard;
 	
+	private String deckPath;
+	
+	public String getDeckPath() {
+		return deckPath;
+	}
+	
+	public void setDeckPath(String path) {
+		deckPath = path;
+	}
 
 	/**
 	 * Undo/Redo variables.
@@ -239,6 +248,8 @@ public class Deck
 				return null;
 			
 			deck = new Deck();
+			deck.setDeckPath(path);
+			
 			deck.id 			 = cursor.getLong(0);
 			deck.created		 = cursor.getDouble(1);
 			deck.modified 		 = cursor.getDouble(2);

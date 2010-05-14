@@ -51,6 +51,7 @@ public class ErrorReporter extends Activity {
 					Log.e(TAG, e.toString());
 				}
 
+				deleteFiles();
 				setResult(RESULT_OK);
 				finish();
 			}
@@ -58,6 +59,7 @@ public class ErrorReporter extends Activity {
 
 		btnCancel.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				deleteFiles();
 				setResult(RESULT_OK);
 				finish();
 			}
@@ -65,6 +67,19 @@ public class ErrorReporter extends Activity {
 
 		String errorText = String.format(getString(R.string.error_message), noErrors);
 		tvErrorText.setText(errorText);
+	}
+	
+	private void deleteFiles() {
+		ArrayList<String> files = getErrorFiles();
+		
+		for(String file : files) {
+			try {
+				deleteFile(file);
+			}
+			catch(Exception e) {
+				Log.e(TAG, String.format("Could not delete file: %s", file));
+			}
+		}
 	}
 
 	private void sendErrorReport() throws IOException {
@@ -88,7 +103,6 @@ public class ErrorReporter extends Activity {
 				}
 
 				fi.close();
-				deleteFile(filename);
 				
 				report.append(String.format("--> END REPORT %d <--", count++));
 			} catch (Exception ex) {
@@ -97,8 +111,6 @@ public class ErrorReporter extends Activity {
 		}
 
 		sendEmail(report.toString());
-		
-		//Log.d(TAG, report.toString());
 	}
 	
 	private void sendEmail(String body) {

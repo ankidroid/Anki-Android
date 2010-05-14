@@ -5,6 +5,9 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -71,33 +74,58 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
 			//Resources res = context.getResources();
 			RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.ankidroid_widget_view);
+            Deck currentDeck = AnkiDroidApp.getDeck();
             
-			if(AnkiDroidApp.getDeck()==null) {
-				Log.i(TAG, "Deck is null");
+			//Fetch the deck information, sorted by due cards
+			ArrayList<DeckInformation> decks = fetchDeckInformation();
+			//ArrayList<DeckInformation> decks = mockFetchDeckInformation(); // TODO use real instead of mock
+			StringBuilder sb = new StringBuilder();
+			
+			int totalDue = 0;
+			
+			//If there are less than 3 decks display all, otherwise only the first 3
+			for(int i=0; i<decks.size() && i<3; i++) {
+				DeckInformation deck = decks.get(i);
+				sb.append(String.format("%s\n", deck.toString()));
 				
-				//Fetch the deck information, sorted by due cards
-				//ArrayList<DeckInformation> decks = fetchDeckInformation();
-				ArrayList<DeckInformation> decks = mockFetchDeckInformation(); // TODO use real instead of mock
-				StringBuilder sb = new StringBuilder();
-				
-				//If there are less than 3 decks display all, otherwise only the first 3
-				for(int i=0; i<decks.size() && i<3; i++) {
-					DeckInformation deck = decks.get(i);
-					sb.append(String.format("%s\n", deck.toString()));
-				}
-				
-				if(sb.length()>1) { //Get rid of the trailing \n
-					sb.substring(0, sb.length()-1);
-				}
-				
-				updateViews.setTextViewText(R.id.anki_droid_text, sb);
+				totalDue += deck.getDueCards();
 			}
-			else {
-				//Log.i(TAG, String.format("Deck is open: %s", AnkidroidApp.deck().getDeckPath())); //Added this property to the Deck class, not necessary though
-				Log.i(TAG, String.format("Deck is open: %s", ""));
-				updateViews.setTextViewText(R.id.anki_droid_text, "deck is open");	
+			
+			if(sb.length()>1) { //Get rid of the trailing \n
+				sb.substring(0, sb.length()-1);
 			}
+			
+			updateViews.setTextViewText(R.id.anki_droid_text, sb);
+						
+			if(currentDeck!=null) {
+				AnkiDroidApp.setDeck(currentDeck);
+				Deck.openDeck(currentDeck.getDeckPath());
+			}
+			
+			if(totalDue>30) { //Raise a notification
+				String ns = Context.NOTIFICATION_SERVICE;
+				NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+				
+				int icon = R.drawable.anki;
+				CharSequence tickerText = String.format("%d AnkiDroid cards due", totalDue);
+				long when = System.currentTimeMillis();
 
+				Notification notification = new Notification(icon, tickerText, when);
+				notification.defaults |= Notification.DEFAULT_VIBRATE;
+				notification.defaults |= Notification.DEFAULT_LIGHTS;
+				
+				Context appContext = getApplicationContext();
+				CharSequence contentTitle = "Cards Due";
+				String contentText = sb.toString();
+				Intent notificationIntent = new Intent(this, AnkiDroid.class);
+				PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+				notification.setLatestEventInfo(appContext, contentTitle, contentText, contentIntent);
+				
+				final int WIDGET_NOTIFY_ID = 1;
+				mNotificationManager.notify(WIDGET_NOTIFY_ID, notification);
+			}
+			
 			return updateViews;
 		}
 
