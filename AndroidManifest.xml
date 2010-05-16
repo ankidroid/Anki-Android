@@ -27,16 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
          </intent-filter>
         </activity>
-        <activity-alias android:name=".Ankidroid" android:label="@string/app_name" android:targetActivity="StudyOptions">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
         <activity android:name="DeckPicker" android:label="@string/deckpicker_title" />
         <activity android:name="PersonalDeckPicker" android:label="@string/personaldeckpicker_title" />
         <activity android:name="SharedDeckPicker" android:label="@string/shareddeckpicker_title" />
-        <activity android:name="Reviewer" android:label="Reviewer" />
+        <activity android:name="Reviewer" android:label="Reviewer" android:configChanges="orientation" />
         <activity android:name="Preferences" android:label="@string/preferences_title" />
         <activity android:name="DeckPreferences" android:label="@string/deckpreferences_title" />
         <activity android:name="DeckProperties" android:label="@string/deckproperties_title" />

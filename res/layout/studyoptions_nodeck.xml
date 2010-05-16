@@ -10,7 +10,6 @@
 		android:orientation="vertical">
 		<TextView
 			android:layout_height="wrap_content"
-			android:text="No Deck Loaded"
 			android:textColor="#ffffff"
 			android:textStyle="bold"
 			android:textSize="28dip"
@@ -20,7 +19,6 @@
 		<TextView
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
-			android:text="No deck is currently loaded. Anki decks are stored on your SD card and are read from the locations specified in the preferences (the default is /sdcard)."
 			android:layout_marginTop="10dip"
 			android:paddingLeft="20dip"
 			android:paddingRight="20dip"

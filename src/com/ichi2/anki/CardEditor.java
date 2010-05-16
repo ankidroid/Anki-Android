@@ -5,10 +5,12 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +34,11 @@ public class CardEditor extends Activity {
     public static final int SAVE_CARD = 0;
     public static final int CANCEL = 1;
     
+    /**
+	 * Broadcast that informs us when the sd card is about to be unmounted
+	 */
+	private BroadcastReceiver mUnmountReceiver = null;
+	
     private LinearLayout fieldsLayoutContainer;
     
     private Button mSave;
@@ -44,12 +51,12 @@ public class CardEditor extends Activity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        //Remove the status bar and make title bar progress available
+        //Remove the status bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
+        registerExternalStorageListener();
+        
         setContentView(R.layout.card_editor);
         
         fieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
@@ -89,7 +96,7 @@ public class CardEditor extends Activity {
                     FieldEditText current = iter.next();
                     current.updateField();
                 }
-                setResult(SAVE_CARD);
+                setResult(RESULT_OK);
                 finish();
             }
             
@@ -99,15 +106,48 @@ public class CardEditor extends Activity {
         {
             
             public void onClick(View v) {
-                
                 setResult(CANCEL);
                 finish();
-                
             }
             
         });
     }
 
+    @Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	if(mUnmountReceiver != null)
+    		unregisterReceiver(mUnmountReceiver);
+    }
+	
+    /**
+     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
+     */
+    public void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+                    	finishNoStorageAvailable();
+                    } 
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+            iFilter.addDataScheme("file");
+            registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
+
+    private void finishNoStorageAvailable()
+    {
+    	setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
+		finish();
+    }
+    
     private class FieldEditText extends EditText
     {
 

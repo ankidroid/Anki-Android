@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -14,13 +18,17 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
-import android.view.Window;
 import android.view.WindowManager;
 
 public class DeckProperties extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	static final String TAG = "AnkiDroid";
 
+	/**
+	 * Broadcast that informs us when the sd card is about to be unmounted
+	 */
+	private BroadcastReceiver mUnmountReceiver = null;
+	
 	public class DeckPreferenceHack implements SharedPreferences
 	{
 
@@ -208,10 +216,9 @@ public class DeckProperties extends PreferenceActivity implements OnSharedPrefer
 		}
 		else
 		{
-			// Remove the status bar and make title bar progress available
+			// Remove the status bar
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-			//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-			
+			registerExternalStorageListener();
 			this.pref = new DeckPreferenceHack();
 			this.pref.registerOnSharedPreferenceChangeListener( this );
 
@@ -220,6 +227,43 @@ public class DeckProperties extends PreferenceActivity implements OnSharedPrefer
 		}
 	}
 
+	@Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	if(mUnmountReceiver != null)
+    		unregisterReceiver(mUnmountReceiver);
+    }
+	
+	/**
+     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
+     * The intent will call closeExternalStorageFiles() if the external media
+     * is going to be ejected, so applications can clean up any files they have open.
+     */
+    public void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+                    	finishNoStorageAvailable();
+                    } 
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+            iFilter.addDataScheme("file");
+            registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
+
+    private void finishNoStorageAvailable()
+    {
+    	setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
+		finish();
+    }
+    
 	public void onSharedPreferenceChanged( SharedPreferences sharedPreferences, String key )
 	{
 		// update values on changed preference

@@ -121,6 +121,11 @@ public class AnkiDroidApp extends Application {
         instance.loadedDeck = deck;
     }
 
+	public static boolean isSdCardMounted()
+	{
+		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+	}
+	
     public static void registerCursor(String method, String name)
     {
     	cursorMethods.add(method);

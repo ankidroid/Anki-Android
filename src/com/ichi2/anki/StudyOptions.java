@@ -1,19 +1,17 @@
 package com.ichi2.anki;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import com.ichi2.async.Connection;
-import com.ichi2.async.Connection.Payload;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
@@ -29,6 +27,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.Payload;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 
 public class StudyOptions extends Activity
@@ -53,17 +55,19 @@ public class StudyOptions extends Activity
 	 */
 	private static final int MENU_OPEN = 1;
 	
-	private static final int MENU_DOWNLOAD_PERSONAL_DECK = 2;
+	private static final int SUBMENU_DOWNLOAD = 2;
 	
-	private static final int MENU_DOWNLOAD_SHARED_DECK = 3;
+	private static final int MENU_DOWNLOAD_PERSONAL_DECK = 21;
+	
+	private static final int MENU_DOWNLOAD_SHARED_DECK = 22;
 
-	private static final int MENU_PREFERENCES = 4;
+	private static final int MENU_PREFERENCES = 3;
 	
-	private static final int MENU_DECK_PROPERTIES = 5;
+	private static final int MENU_DECK_PROPERTIES = 4;
 	
-	private static final int MENU_SYNC = 6;
+	private static final int MENU_SYNC = 5;
 
-	private static final int MENU_ABOUT = 7;
+	private static final int MENU_ABOUT = 6;
 	
 	/**
 	 * Available options returning from another activity
@@ -78,6 +82,8 @@ public class StudyOptions extends Activity
 	
 	private static final int DOWNLOAD_SHARED_DECK = 4;
 	
+	private static final int DECK_PROPERTIES = 5;
+	
 	/** 
 	 * Constants for selecting which content view to display 
 	 */
@@ -90,6 +96,15 @@ public class StudyOptions extends Activity
 	private static final int CONTENT_DECK_NOT_LOADED = 3;
 	
 	private static final int CONTENT_SESSION_COMPLETE = 4;
+	
+	public static final int CONTENT_NO_EXTERNAL_STORAGE = 5;
+	
+	/**
+	 * Broadcast that informs us when the sd card is about to be unmounted
+	 */
+	private BroadcastReceiver mUnmountReceiver = null;
+	
+	private boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
 	
 	/**
 	 * Preferences
@@ -173,6 +188,11 @@ public class StudyOptions extends Activity
 	
 	private Button mButtonCongratsFinish;
 	
+	/**
+	 * UI elements for "No External Storage Available" view
+	 */
+	private View mNoExternalStorageView;
+	
 	/** 
 	 * Callbacks for UI events
 	 */
@@ -255,7 +275,7 @@ public class StudyOptions extends Activity
 		Log.i(TAG, "StudyOptions Activity");
 		
 		SharedPreferences preferences = restorePreferences();
-		//registerExternalStorageListener();
+		registerExternalStorageListener();
 		
 		// Remove the status bar and make title bar progress available
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -276,18 +296,81 @@ public class StudyOptions extends Activity
 			Log.i(TAG, "onCreate - deckFilename from preferences: " + deckFilename);
 		}
 		
-		if (deckFilename == null || !new File(deckFilename).exists())
-			showContentView(CONTENT_NO_DECK);
+		if(!sdCardAvailable)
+		{
+			showContentView(CONTENT_NO_EXTERNAL_STORAGE);
+		}
 		else
 		{
-			// Load previous deck.
-			Intent deckLoadIntent = new Intent();
-			deckLoadIntent.putExtra(OPT_DB, deckFilename);
-			onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
+			if (deckFilename == null || !new File(deckFilename).exists())
+			{
+				showContentView(CONTENT_NO_DECK);
+			}
+			else
+			{
+				// Load previous deck.
+				loadPreviousDeck();
+			}
 		}
-			
 	}
 	
+    /**
+     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
+     * The intent will call closeExternalStorageFiles() if the external media
+     * is going to be ejected, so applications can clean up any files they have open.
+     */
+    public void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+                    	Log.i(TAG, "mUnmountReceiver - Action = Media Eject");
+                    	closeOpenedDeck();
+                    	showContentView(CONTENT_NO_EXTERNAL_STORAGE);
+                    	sdCardAvailable = false;
+                    } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                    	Log.i(TAG, "mUnmountReceiver - Action = Media Mounted");
+                    	sdCardAvailable = true;
+                    	if(!inDeckPicker)
+                    		loadPreviousDeck();                    
+                    }
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+            iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+            iFilter.addDataScheme("file");
+            registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
+    
+    @Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	Log.i(TAG, "StudyOptions - onDestroy()");
+    	if(mUnmountReceiver != null)
+    		unregisterReceiver(mUnmountReceiver);
+    }
+    
+    private void loadPreviousDeck()
+    {
+    	Intent deckLoadIntent = new Intent();
+		deckLoadIntent.putExtra(OPT_DB, deckFilename);
+		onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
+    }
+    
+    private void closeOpenedDeck()
+    {
+    	if(AnkiDroidApp.deck() != null && sdCardAvailable)
+    	{
+    		AnkiDroidApp.deck().closeDeck();
+    		AnkiDroidApp.setDeck(null);
+    	}
+    }
+    
 	private void initAllContentViews()
 	{
 		// The main study options view that will be used when there are reviews left.
@@ -330,6 +413,9 @@ public class StudyOptions extends Activity
 		mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
 		mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
 		mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
+		
+		// The view to use when there is no external storage available
+		mNoExternalStorageView = getLayoutInflater().inflate(R.layout.studyoptions_nostorage, null);
 	}
 	
 	/**
@@ -417,6 +503,10 @@ public class StudyOptions extends Activity
 			updateValuesFromDeck();
 			setContentView(mCongratsView);
 			break;
+		case CONTENT_NO_EXTERNAL_STORAGE:
+			setTitle(R.string.app_name);
+			setContentView(mNoExternalStorageView);
+			break;
 		}
 	}
 	
@@ -453,7 +543,7 @@ public class StudyOptions extends Activity
 		MenuItem item;
 		item = menu.add(Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck);
 		item.setIcon(android.R.drawable.ic_menu_manage);
-		SubMenu downloadDeckSubMenu = menu.addSubMenu(R.string.download_deck);
+		SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE, R.string.download_deck);
 		downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
 		downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.download_personal_deck);
 		downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.download_shared_deck);
@@ -469,10 +559,21 @@ public class StudyOptions extends Activity
 		return true;
 	}
 	
+	public boolean onPrepareOptionsMenu(Menu menu)
+	{
+		boolean deckLoaded = AnkiDroidApp.deck() != null;
+		menu.findItem(MENU_OPEN).setEnabled(sdCardAvailable);
+		menu.findItem(SUBMENU_DOWNLOAD).setEnabled(sdCardAvailable);
+		menu.findItem(MENU_DECK_PROPERTIES).setEnabled(deckLoaded && sdCardAvailable);
+		menu.findItem(MENU_SYNC).setEnabled(deckLoaded && sdCardAvailable);
+		return true;
+	}
+	
 	/** Handles item selections */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
+		Log.i(TAG, "Item = " + item.getItemId());
 		switch (item.getItemId())
 		{
 		case MENU_OPEN:
@@ -492,7 +593,7 @@ public class StudyOptions extends Activity
 			return true;
 		case MENU_DECK_PROPERTIES:
 			Intent deckProperties = new Intent(this, DeckProperties.class);
-			startActivity(deckProperties);
+			startActivityForResult(deckProperties, DECK_PROPERTIES);
 			break;
 		case MENU_SYNC:
 			syncDeck();
@@ -507,15 +608,10 @@ public class StudyOptions extends Activity
 
 	private void openDeckPicker()
 	{
-    	//Log.i(TAG, "openDeckPicker - deckSelected = " + deckSelected);
-    	if(AnkiDroidApp.deck() != null )//&& sdCardAvailable)
-    	{
-    		AnkiDroidApp.deck().closeDeck();
-    		AnkiDroidApp.setDeck(null);
-    	}
+    	closeOpenedDeck();
     	//deckLoaded = false;
 		Intent decksPicker = new Intent(this, DeckPicker.class);
-		//inDeckPicker = true;
+		inDeckPicker = true;
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
 		//Log.i(TAG, "openDeckPicker - Ending");
 	}
@@ -578,7 +674,12 @@ public class StudyOptions extends Activity
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
 		super.onActivityResult(requestCode, resultCode, intent);
-		if (requestCode == PICK_DECK_REQUEST || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK)
+		
+		if(resultCode == CONTENT_NO_EXTERNAL_STORAGE)
+		{
+			showContentView(CONTENT_NO_EXTERNAL_STORAGE);
+		}
+		else if (requestCode == PICK_DECK_REQUEST || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK)
 		{
 			//Clean the previous card before showing the first of the new loaded deck (so the transition is not so abrupt)
 //			updateCard("");
@@ -623,6 +724,7 @@ public class StudyOptions extends Activity
 //			}
 		} else if (requestCode == REQUEST_REVIEW)
 		{
+			Log.i(TAG, "Result code = " + resultCode);
 			switch (resultCode)
 			{
 			case Reviewer.RESULT_SESSION_COMPLETED:

@@ -6,9 +6,13 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +26,11 @@ import com.ichi2.async.Connection.Payload;
 
 public class SharedDeckPicker extends Activity {
 
+	/**
+	 * Broadcast that informs us when the sd card is about to be unmounted
+	 */
+	private BroadcastReceiver mUnmountReceiver = null;
+	
 	private ProgressDialog progressDialog;
 	
 	private AlertDialog noConnectionAlert;
@@ -38,12 +47,12 @@ public class SharedDeckPicker extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// Remove the status bar and make title bar progress available
+		// Remove the status bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		setContentView(R.layout.main);
 		
+		registerExternalStorageListener();
 		initAlertDialogs();
 		
 		mSharedDecks = new ArrayList<SharedDeck>();
@@ -63,6 +72,43 @@ public class SharedDeckPicker extends Activity {
 		Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
 	}
 
+	@Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	if(mUnmountReceiver != null)
+    		unregisterReceiver(mUnmountReceiver);
+    }
+	
+	/**
+     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
+     * The intent will call closeExternalStorageFiles() if the external media
+     * is going to be ejected, so applications can clean up any files they have open.
+     */
+    public void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+                    	finishNoStorageAvailable();
+                    } 
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+            iFilter.addDataScheme("file");
+            registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
+
+    private void finishNoStorageAvailable()
+    {
+    	setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
+		finish();
+    }
+    
 	/**
 	 * Create AlertDialogs used on all the activity
 	 */

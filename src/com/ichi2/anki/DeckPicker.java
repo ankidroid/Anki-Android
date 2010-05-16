@@ -101,9 +101,8 @@ public class DeckPicker extends Activity implements Runnable
 		Log.i(TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
 
-		// Remove the status bar and make title bar progress available
+		// Remove the status bar
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		registerExternalStorageListener();
 
@@ -433,10 +432,10 @@ public class DeckPicker extends Activity implements Runnable
     }
 
     @Override
-    public void onStop()
+    public void onDestroy()
     {
-    	super.onStop();
-    	Log.i(TAG, "DeckPicker - onStop()");
+    	super.onDestroy();
+    	Log.i(TAG, "DeckPicker - onDestroy()");
     	if(mUnmountReceiver != null)
     		unregisterReceiver(mUnmountReceiver);
     }

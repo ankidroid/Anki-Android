@@ -239,7 +239,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
         else
         {
         	// Remove the status bar and make title bar progress available
-    		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     		//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     		
             this.pref = new DeckPreferenceHack();

@@ -2,9 +2,12 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
@@ -19,6 +22,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -35,7 +39,6 @@ public class Reviewer extends Activity {
 	/**
 	 * Result codes that are returned when this activity finishes.
 	 */
-	public static final int RESULT_DECK_NOT_LOADED = 5;
 	public static final int RESULT_SESSION_COMPLETED = 1;
 	public static final int RESULT_NO_MORE_CARDS = 2;
 	
@@ -53,6 +56,11 @@ public class Reviewer extends Activity {
 	private static final int MAX_FONT_SIZE = 14;
 	private static final int MIN_FONT_SIZE = 3;
 	
+	/**
+	 * Broadcast that informs us when the sd card is about to be unmounted
+	 */
+	private BroadcastReceiver mUnmountReceiver = null;
+
 	/**
 	 * Variables to hold preferences
 	 */
@@ -245,16 +253,20 @@ public class Reviewer extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		Log.i(TAG, "Reviewer - onCreate");
+		
 		// Make sure a deck is loaded before continuing.
 		if (AnkiDroidApp.deck() == null)
 		{
-			setResult(RESULT_DECK_NOT_LOADED);
+			setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
 			finish();
 		}
 		
 		// Remove the status bar and make title bar progress available
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
+		registerExternalStorageListener();
 		
 		restorePreferences();
 		initLayout(R.layout.flashcard_portrait);
@@ -280,6 +292,61 @@ public class Reviewer extends Activity {
 						null));
 	}
 	
+    @Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	Log.i(TAG, "Reviewer - onDestroy()");
+    	if(mUnmountReceiver != null)
+    		unregisterReceiver(mUnmountReceiver);
+    }
+    
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	  super.onConfigurationChanged(newConfig);
+
+	  Log.i(TAG, "onConfigurationChanged");
+
+	  LinearLayout sdLayout = (LinearLayout) findViewById(R.id.sd_layout);
+	  if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+		  sdLayout.setPadding(0, 50, 0, 0);
+	  else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
+		  sdLayout.setPadding(0, 100, 0, 0);
+
+	  mWhiteboard.rotate();
+	  
+	}
+	
+    /**
+     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
+     * The intent will call closeExternalStorageFiles() if the external media
+     * is going to be ejected, so applications can clean up any files they have open.
+     */
+    public void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
+                    	Log.i(TAG, "mUnmountReceiver - Action = Media Eject");
+                    	finishNoStorageAvailable();
+                    } 
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+            iFilter.addDataScheme("file");
+            registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
+
+    private void finishNoStorageAvailable()
+    {
+    	setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
+		finish();
+    }
+    
 	// Set the content view to the one provided and initialize accessors.
 	private void initLayout(Integer layout)
 	{
@@ -346,13 +413,21 @@ public class Reviewer extends Activity {
 		
 		if (requestCode == EDIT_CURRENT_CARD)
         {
-            		    DeckTask.launchDeckTask(
-                                DeckTask.TASK_TYPE_UPDATE_FACT,
-                                mUpdateCardHandler,
-                                new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
-            //TODO: code to save the changes made to the current card.
-            mFlipCard.setChecked(true);
-            displayCardQuestion();
+			if(resultCode == RESULT_OK)
+			{
+				Log.i(TAG, "Saving card...");
+				DeckTask.launchDeckTask(
+                        DeckTask.TASK_TYPE_UPDATE_FACT,
+                        mUpdateCardHandler,
+                        new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
+				//TODO: code to save the changes made to the current card.
+	            mFlipCard.setChecked(true);
+	            displayCardQuestion();
+			}
+			else if(resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE)
+			{
+				finishNoStorageAvailable();
+			}
 		}
 	}
 	
