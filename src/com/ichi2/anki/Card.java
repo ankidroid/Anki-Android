@@ -84,7 +84,8 @@ public class Card {
     // END SQL table entries
 
     // BEGIN JOINed variables
-    private CardModel cardModel;
+    @SuppressWarnings("unused")
+	private CardModel cardModel;
     Fact fact;
     // END JOINed variables
 
@@ -114,6 +115,7 @@ public class Card {
             cardModelId = cardModel.id;
             ordinal = cardModel.ordinal;
             /* FIXME: what is the code below used for? It is never persisted
+             * Additionally, cardModel has no accessor.
             HashMap<String, HashMap<Long, String>> d = new HashMap<String, HashMap<Long, String>>();
             Iterator<FieldModel> iter = fact.model.fieldModels.iterator();
             while (iter.hasNext()) {

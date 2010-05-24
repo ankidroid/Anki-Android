@@ -172,12 +172,13 @@ public class AnkiDroid extends Activity
 	/** Preference: hide the question when showing the answer */
 	private int hideQuestionInAnswer;
 	
-	private static final int HQIA_DO_HIDE = 0;
+//	private static final int HQIA_DO_HIDE = 0;
 	
 	private static final int HQIA_DO_SHOW = 1;
 	
 	private static final int HQIA_CARD_MODEL = 2;
 
+	@SuppressWarnings("unused")
 	private boolean updateNotifications; // TODO use Veecheck only if this is true
 
 	public String cardTemplate;
@@ -1370,7 +1371,6 @@ public class AnkiDroid extends Activity
 			noConnectionAlert.show();
 		}
 
-		@SuppressWarnings("unchecked")
 //		@Override
 		public void onPostExecute(Payload data) {
 			progressDialog.dismiss();

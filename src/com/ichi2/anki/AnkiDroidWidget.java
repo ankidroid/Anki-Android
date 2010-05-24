@@ -129,6 +129,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 			return updateViews;
 		}
 
+		@SuppressWarnings("unused")
 		private ArrayList<DeckInformation> mockFetchDeckInformation() {
 			final int maxDecks = 10;
 			ArrayList<DeckInformation> information = new ArrayList<DeckInformation>(maxDecks);

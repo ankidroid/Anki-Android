@@ -1370,6 +1370,8 @@ public class Deck
 		}
 	}
 	
+	// FIXME: Where should this be called from?
+	@SuppressWarnings("unused")
 	private void initUndo()
 	{
 		undoStack = new Stack<UndoRow>();

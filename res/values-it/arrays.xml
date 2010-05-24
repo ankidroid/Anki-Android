@@ -12,8 +12,8 @@
     <item>Prima delle ripetizioni</item>
   </string-array>
   <string-array name="revCardOrderLabels">
-    <item>Inizia dalle carte con l'intervallo più lungo</item>
-    <item>Inizia dalle carte con l'intervallo più corto</item>
+    <item>Inizia dalle carte con l\'intervallo più lungo</item>
+    <item>Inizia dalle carte con l\'intervallo più corto</item>
     <item>In ordine di scadenza</item>
     <item>In ordine casuale</item>
   </string-array>

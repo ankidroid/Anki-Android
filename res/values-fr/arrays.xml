@@ -21,7 +21,7 @@
     <string-array name="newCardOrderLabels">
         <item>Ordre aléatoire</item>
         <item>Ordre d\'ajout</item>
-        <item>Ordre inverse d'ajout</item>  
+        <item>Ordre inverse d\'ajout</item>  
     </string-array>
     <string-array name="newCardOrderVals">
         <item>0</item>

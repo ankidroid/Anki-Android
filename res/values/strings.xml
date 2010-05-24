@@ -104,7 +104,7 @@
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
-<string name="use_ruby_support_summ">If the characters '[' and ']' are found, then the enclosed text is handled as a ruby annotation</string>
+<string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative display font size</string>
 <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck</string>
 <string name="hide_question_in_answer">Hide question in answer?</string>

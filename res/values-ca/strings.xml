@@ -45,7 +45,7 @@
 <string name="notify_ticker">Actualització de l\'aplicació</string>
 <string name="notify_title">AnkiDroid actualitzat</string>
 <string name="notify_message">Descarregar una nova versió</string>
-<string name="notification_title">Confirmar l\'actualització d'AnkiDroid</string>
+<string name="notification_title">Confirmar l\'actualització d\'AnkiDroid</string>
 <string name="notification_message">Una nova versió d\'AnkiDroid està disponible a l\'Android Market.\n\nVols descarregar-la?</string>
 <string name="notification_stop">No tornar a notificar-me sobre aquesta actualització</string>
 

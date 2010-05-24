@@ -2,17 +2,14 @@ package com.ichi2.anki;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Random;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
@@ -24,7 +21,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 	private static CustomExceptionHandler instance;
 	private Context curContext;
 	private final static String TAG = "CustomExceptionHandler";
-	private Random randomGenerator = new Random();
+//	private Random randomGenerator = new Random();
 	
 	private HashMap<String, String> information = new HashMap<String, String>(
 			20);

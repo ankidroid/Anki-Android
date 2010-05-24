@@ -19,10 +19,10 @@
   <string name="notify_ticker">Aggiornamento applicazione</string>
   <string name="notify_title">Ankidroid Aggiornato</string>
   <string name="notify_message">Scarica una nuova versione</string>
-  <string name="notification_title">Conferma l'aggiornamento di Ankidroid</string>
+  <string name="notification_title">Conferma l\'aggiornamento di Ankidroid</string>
   <string name="notification_message">Una nuova versione di Ankidroid è disponibile in Android Market.\n\nVuoi installarla?</string>
   <string name="notification_stop">Non informarmi più di questo aggiornamento</string>
-  <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l'USB per accedere ai mazzi.</string>
+  <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
   <string name="newcards_day_summ">Il numero massimo di carte nuove mostrate al giorno.</string>
   <string name="newcards_day">Carte nuove / Giorno</string>
   <string name="session_time_limit">Tempo limite di sessione</string>
