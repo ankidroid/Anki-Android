@@ -143,7 +143,7 @@
 <string name="saving_changes">Saving changes...</string>
 <string name="session_question_limit_reached">Session question limit reached</string>
 <string name="session_time_limit_reached">Session time limit reached</string>
-<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.</string>
+<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck.</string>
 <string name="about_content">&lt;html&gt;
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
