@@ -11,6 +11,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,10 +25,12 @@ import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.ichi2.utils.DiffEngine;
+import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class Reviewer extends Activity {
@@ -50,6 +54,14 @@ public class Reviewer extends Activity {
 	private static final int MENU_SUSPEND = 0;
 	private static final int MENU_EDIT = 1;
 	
+	/** Max size of the font of the questions and answers for relative calculation */
+	protected static final int MAX_QA_FONT_SIZE = 14;
+
+	/** Min size of the font of the questions and answers for relative calculation */
+	protected static final int MIN_QA_FONT_SIZE = 3;
+	
+	/** The font size specified in shared preferences. If 0 then font is calculated with MAX/MIN_FONT_SIZE */
+	private int qaFontSize = 0;
 	/**
 	 * Max and min size of the font of the questions and answers
 	 */
@@ -61,6 +73,9 @@ public class Reviewer extends Activity {
 	 */
 	private BroadcastReceiver mUnmountReceiver = null;
 
+	/** Preference: parse for ruby annotations */
+	private boolean useRubySupport;
+	
 	/**
 	 * Variables to hold preferences
 	 */
@@ -70,12 +85,18 @@ public class Reviewer extends Activity {
 	private boolean prefWriteAnswers;
 	private String prefDeckFilename;
 	
+	private boolean notificationBar;
+	
+	
 	public String cardTemplate;
 	
 	/**
 	 * Variables to hold layout objects that we need to update or handle events for
 	 */
 	private WebView mCard;
+	private TextView mTextBarRed;
+	private TextView mTextBarBlack;
+	private TextView mTextBarBlue;
 	private ToggleButton mToggleWhiteboard, mFlipCard;
 	private EditText mAnswerField;
 	private Button mEase0, mEase1, mEase2, mEase3;
@@ -262,13 +283,17 @@ public class Reviewer extends Activity {
 			finish();
 		}
 		
+		restorePreferences();
+		
 		// Remove the status bar and make title bar progress available
+		if (notificationBar==false) {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		registerExternalStorageListener();
 		
-		restorePreferences();
 		initLayout(R.layout.flashcard_portrait);
 		updateTitle();
 		cardTemplate = getResources().getString(R.string.card_template);
@@ -357,6 +382,9 @@ public class Reviewer extends Activity {
 		mEase1 = (Button) findViewById(R.id.ease2);
 		mEase2 = (Button) findViewById(R.id.ease3);
 		mEase3 = (Button) findViewById(R.id.ease4);
+		mTextBarRed = (TextView) findViewById(R.id.red_number);
+		mTextBarBlack = (TextView) findViewById(R.id.black_number);
+		mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 		mCardTimer = (Chronometer) findViewById(R.id.card_time);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
@@ -442,6 +470,9 @@ public class Reviewer extends Activity {
 		mEase1.setVisibility(View.VISIBLE);
 		mEase2.setVisibility(View.VISIBLE);
 		mEase3.setVisibility(View.VISIBLE);
+		mTextBarRed.setVisibility(View.VISIBLE);
+		mTextBarBlack.setVisibility(View.VISIBLE);
+		mTextBarBlue.setVisibility(View.VISIBLE);
 		mFlipCard.setVisibility(View.VISIBLE);
 		
 		if (!prefTimer)
@@ -485,6 +516,9 @@ public class Reviewer extends Activity {
 		mEase1.setVisibility(View.GONE);
 		mEase2.setVisibility(View.GONE);
 		mEase3.setVisibility(View.GONE);
+		mTextBarRed.setVisibility(View.GONE);
+		mTextBarBlack.setVisibility(View.GONE);
+		mTextBarBlue.setVisibility(View.GONE);
 		mFlipCard.setVisibility(View.GONE);
 		mCardTimer.setVisibility(View.GONE);
 		mToggleWhiteboard.setVisibility(View.GONE);
@@ -633,6 +667,10 @@ public class Reviewer extends Activity {
 		prefWhiteboard = preferences.getBoolean("whiteboard", true);
 		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
 		prefDeckFilename = preferences.getString("deckFilename", "");
+		useRubySupport = preferences.getBoolean("useRubySupport", false);
+		String qaFontSizeString = preferences.getString("qaFontSize", "0");
+		qaFontSize = Integer.parseInt(qaFontSizeString);
+		notificationBar = preferences.getBoolean("notificationBar", false);
 
 		return preferences;
 	}
@@ -640,10 +678,10 @@ public class Reviewer extends Activity {
 	private void updateCard(String content)
 	{
 		Log.i(TAG, "updateCard");
-
+		
 		content = Sound.extractSounds(prefDeckFilename, content);
 		content = Image.loadImages(prefDeckFilename, content);
-		
+		/*	
 		// We want to modify the font size depending on how long is the content
 		// Replace each <br> with 15 spaces, then remove all html tags and spaces
 		String realContent = content.replaceAll("\\<br.*?\\>", "               ");
@@ -653,10 +691,23 @@ public class Reviewer extends Activity {
 		// Calculate the size of the font depending on the length of the content
 		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(realContent.length()/5));
 		mCard.getSettings().setDefaultFontSize(size);
-
+		*/
 		//In order to display the bold style correctly, we have to change font-weight to 700
 		content = content.replaceAll("font-weight:600;", "font-weight:700;");
 
+		// If ruby annotation support is activated, then parse and add markup
+
+		if (useRubySupport) {
+			content = RubyParser.ankiRubyToMarkup(content);
+		}
+		
+		// Calculate the size of the font if relative font size is chosen in preferences
+		int fontSize = qaFontSize;
+		if (0 == qaFontSize) {
+			fontSize = calculateDynamicFontSize(content);
+		}
+		mCard.getSettings().setDefaultFontSize(fontSize);
+		
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
@@ -664,7 +715,7 @@ public class Reviewer extends Activity {
 	}
 	
 	private void reviewNextCard()
-	{
+	{		
 		updateTitle();
 		mFlipCard.setChecked(false);
 		
@@ -695,7 +746,7 @@ public class Reviewer extends Activity {
 	private void displayCardAnswer()
 	{
 		Log.i(TAG, "displayCardAnswer");
-		
+			
 		mCardTimer.stop();
 
 		mEase0.setVisibility(View.VISIBLE);
@@ -735,10 +786,41 @@ public class Reviewer extends Activity {
 		}
 	}
 	
+	
+	protected final static int calculateDynamicFontSize(String htmlContent) {
+		// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then remove all html tags and spaces
+		String realContent = htmlContent.replaceAll("\\<br.*?\\>", "               ");
+		realContent = realContent.replaceAll("\\<hr.*?\\>", "                              ");
+		realContent = realContent.replaceAll("\\<.*?\\>", "");
+		realContent = realContent.replaceAll("&nbsp;", " ");
+		return Math.max(MIN_QA_FONT_SIZE, MAX_QA_FONT_SIZE - (int)(realContent.length()/5));
+	}
+		
 	private void updateTitle()
-	{
+	{	
 		Deck deck = AnkiDroidApp.deck();
 		String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
 		setTitle(String.format(unformattedTitle, deck.deckName, deck.revCount + deck.failedSoonCount, deck.cardCount));
+		
+		SpannableString failedSoonCount = new SpannableString(String.valueOf(deck.failedSoonCount));
+		SpannableString revCount = new SpannableString(String.valueOf(deck.revCount));
+		SpannableString newCount = new SpannableString(String.valueOf(deck.newCount));
+		
+		int isDue=deck.getCurrentCard().isDue;
+		int type=deck.getCurrentCard().type;
+		
+		if ((isDue==1) && (type==2)) {
+			newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
+		}		
+		if ((isDue==1) && (type==1)) {
+			revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
+		}
+		if ((isDue==1) && (type==0)) {
+			failedSoonCount.setSpan(new UnderlineSpan(), 0, failedSoonCount.length(), 0);
+		}
+		
+		mTextBarRed.setText(failedSoonCount);
+		mTextBarBlack.setText(revCount);
+		mTextBarBlue.setText(newCount);
 	}
 }

@@ -13,6 +13,17 @@
 		android:paddingRight="10dip">
 
 		<TextView
+			android:id="@+id/studyoptions_deck_name"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/studyoptions_deck_name"
+			android:gravity="center"
+			android:textSize="26sp"
+			android:paddingBottom="10sp"
+			android:textColor="#ffffff"
+			android:textStyle="bold" />
+
+		<TextView
 			android:id="@+id/studyoptions_title"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"

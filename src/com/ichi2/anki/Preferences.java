@@ -17,6 +17,7 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.WindowManager;
@@ -29,14 +30,21 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  */
 public class Preferences extends PreferenceActivity
 {
-
+	
+	private boolean notificationBar;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		
-		// Remove the status bar
+		
+		restorePreferences();
+		// Remove the status bar and make title bar progress available
+		if (notificationBar==false) {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
 		
 		getPreferenceManager().setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
 		addPreferencesFromResource(R.layout.preferences);
@@ -48,5 +56,15 @@ public class Preferences extends PreferenceActivity
     	// Reschedule the checking in case the user has changed anything
 		sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
     }
+    
+	
+	private SharedPreferences restorePreferences()
+	{
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		notificationBar = preferences.getBoolean("notificationBar", false);
+		
+		return preferences;
+	}
+	
 
 }

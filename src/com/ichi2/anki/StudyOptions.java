@@ -115,6 +115,10 @@ public class StudyOptions extends Activity
 	
 	//private boolean deckSelected;
 	
+	
+	private boolean notificationBar;
+	
+	
 	private boolean inDeckPicker;
 	
 	private String deckFilename;
@@ -140,6 +144,8 @@ public class StudyOptions extends Activity
 	private Button mButtonStart;
 	
 	private TextView mTextTitle;
+	private TextView mTextDeckName;
+	
 	
 	private TextView mTextReviewsDue;
 	
@@ -277,8 +283,12 @@ public class StudyOptions extends Activity
 		SharedPreferences preferences = restorePreferences();
 		registerExternalStorageListener();
 		
+		
 		// Remove the status bar and make title bar progress available
+		if (notificationBar==false) {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		initAllContentViews();
@@ -377,6 +387,7 @@ public class StudyOptions extends Activity
 		mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
 		
 		mTextTitle = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_title);
+		mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
 		
 		mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
 		mStudyOptionsView.findViewById(R.id.studyoptions_more).setOnClickListener(mButtonClickListener);
@@ -384,7 +395,7 @@ public class StudyOptions extends Activity
 		mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
 		mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
 		mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
-		
+				
 		mEditNewPerDay = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_new_cards_per_day);
 		mEditSessionTime = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_minutes);
 		mEditSessionQuestions = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_questions);
@@ -416,6 +427,15 @@ public class StudyOptions extends Activity
 		
 		// The view to use when there is no external storage available
 		mNoExternalStorageView = getLayoutInflater().inflate(R.layout.studyoptions_nostorage, null);
+		
+		
+		// First setup for ProgressDialog
+		progressDialog = new ProgressDialog(StudyOptions.this);
+		progressDialog.setCancelable(true);
+		progressDialog.setMax(100);
+		progressDialog.setProgress(0);
+		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		
 	}
 	
 	/**
@@ -471,7 +491,8 @@ public class StudyOptions extends Activity
 	}
 	
 	private void showContentView()
-	{
+	{	
+		
 		switch (mCurrentContentView)
 		{
 		case CONTENT_NO_DECK:
@@ -519,6 +540,7 @@ public class StudyOptions extends Activity
 		String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
 		setTitle(String.format(unformattedTitle, deck.deckName, reviewCount, deck.cardCount));
 		
+		mTextDeckName.setText(deck.deckName);
 		mTextReviewsDue.setText(String.valueOf(reviewCount));
 		mTextNewToday.setText(String.valueOf(deck.newCountToday));
 		mTextNewTotal.setText(String.valueOf(deck.newCount));
@@ -753,6 +775,10 @@ public class StudyOptions extends Activity
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		prefDeckPath = preferences.getString("deckPath", "/sdcard");
 		prefStudyOptions = preferences.getBoolean("study_options", true);
+		
+		notificationBar = preferences.getBoolean("notificationBar", false);
+		
+		
 		return preferences;
 	}
 	
@@ -895,7 +921,12 @@ public class StudyOptions extends Activity
 
 		@Override
 		public void onPreExecute() {
-			progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
+			
+			// progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
+			progressDialog.setTitle("Downloading shared deck");
+			progressDialog.setMessage("Starting");
+			progressDialog.show();
+			
 		}
 
 		@Override
@@ -939,12 +970,20 @@ public class StudyOptions extends Activity
 
 		@Override
 		public void onPreExecute() {
-			progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
+			
+			// progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
+			progressDialog.setTitle("Synchronizing");
+			progressDialog.setMessage("Starting");
+			progressDialog.show();
+			
 		}
 
 		@Override
 		public void onProgressUpdate(Object... values) {
-			// TODO Auto-generated method stub
+			
+			progressDialog.setProgress(((Integer) values[0]));
+			progressDialog.setMessage(((String) values[1]));
+			
 		}
 		
 	};

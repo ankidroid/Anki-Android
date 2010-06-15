@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.Fact.Field;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
  * Allows the user to edit a fact, for instance if there is a typo.
@@ -46,15 +48,21 @@ public class CardEditor extends Activity {
     
     private Card editorCard;
     
+	private boolean notificationBar;
+    
     LinkedList<FieldEditText> editFields;
 
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Remove the status bar
+
+		restorePreferences();
+		// Remove the status bar and make title bar progress available
+		if (notificationBar==false) {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
+		}
+
         registerExternalStorageListener();
         
         setContentView(R.layout.card_editor);
@@ -172,4 +180,12 @@ public class CardEditor extends Activity {
             pairField.value = this.getText().toString();
         }
     }
+    
+	private SharedPreferences restorePreferences()
+	{
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		notificationBar = preferences.getBoolean("notificationBar", false);
+		
+		return preferences;
+	}
 }

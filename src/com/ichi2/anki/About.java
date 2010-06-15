@@ -16,27 +16,46 @@
 ****************************************************************************************/
 package com.ichi2.anki;
 
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.webkit.WebView;
 
 /**
  * Shows an about box, which is a small HTML page.
  */
+
 public class About extends Activity
 {
-
+	private boolean notificationBar;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) throws SQLException
 	{
 		super.onCreate(savedInstanceState);
-		// Remove the status bar
+				
+		restorePreferences();
+		// Remove the status bar and make title bar progress available
+		if (notificationBar==false) {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
+		}
+
 		setContentView(R.layout.about);
 		WebView webview = (WebView) findViewById(R.id.about);
 		webview.loadDataWithBaseURL("", getResources().getString(R.string.about_content), "text/html", "utf-8", null);
 	}
+
+	private SharedPreferences restorePreferences()
+	{
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		notificationBar = preferences.getBoolean("notificationBar", false);
+		
+		return preferences;
+	}
+
 }

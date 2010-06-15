@@ -48,12 +48,21 @@ public class PersonalDeckPicker extends Activity {
 	private String deckName;
 	private String deckPath;
 	
+	
+	private boolean notificationBar;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// Remove the status bar
+		
+		restorePreferences();
+		// Remove the status bar and make title bar progress available
+		if (notificationBar==false) {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+		
 		
 		setContentView(R.layout.main);
 		registerExternalStorageListener();
@@ -213,4 +222,14 @@ public class PersonalDeckPicker extends Activity {
 		}
 		
 	};
+	
+	
+	private SharedPreferences restorePreferences()
+	{
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		notificationBar = preferences.getBoolean("notificationBar", false);
+		
+		return preferences;
+	}
+	
 }

@@ -84,7 +84,6 @@
 <string name="good">Good</string>
 <string name="easy">Easy</string>
 
-
 <!-- preferences.xml strings -->
 <string name="pref_cat_decks">Decks</string>
 <string name="pref_cat_sync">Synchronization</string>
@@ -109,13 +108,15 @@
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
-<string name="use_ruby_support_summ">If the characters '[' and ']' are found, then the enclosed text is handled as a ruby annotation</string>
+<string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="qa_font_size">Font size</string>
-<string name="qa_font_size_summ">Default font size. Using 'Relative' changes the font dynamically based on space</string>
+<string name="qa_font_size_summ">Default font size. Using \'Relative\' changes the font dynamically based on space</string>
 <string name="show_question_answer">Show question in answer</string>
 <string name="show_question_answer_summ">Shows the question also when displaying the answer unless user entered answer.</string>
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where the your decks are stored</string>
+<string name="notification_bar">Show notification bar</string>
+<string name="notification_bar_summ">You can decide if you want to see the notification bar</string>
 
 <!-- deck_properties.xml -->
 <string name="deck_properties">Deck properties</string>
@@ -158,7 +159,23 @@
 <!-- SyncClient.java -->
 <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%s&lt;/td>&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
 
-
+<!-- Progress bar communicates -->
+<string name="determining_task">Determining task</string>
+<string name="connecting_to_server">Connecting to server</string>
+<string name="starting_db_transaction">Starting DB transaction</string>
+<string name="creating_deck_at_server">Creating deck @ server</string>
+<string name="calculating_summaries">Calculating summaries</string>
+<string name="determining_sync_type">Determining sync type</string>
+<string name="performing_full_sync">Performing full sync</string>
+<string name="setting_db_transaction_success">Setting DB transaction success</string>
+<string name="finishing_db_transaction">Finishing DB transaction</string>
+<string name="closing_deck">Closing deck</string>
+<string name="opening_deck_after_sync">Opening deck after sync</string>
+<string name="setting_deck_as_current">Setting deck as current</string>
+<string name="generating_payload">Generating payload</string>
+<string name="getting_payload_reply">Getting payload reply</string>
+<string name="applying_payload_reply">Applying payload reply</string>
+<string name="commiting_payload_to_db">Commiting payload to DB</string>
 
 <string name="saving_changes">Saving changes...</string>
 <string name="session_question_limit_reached">Session question limit reached</string>
@@ -196,6 +213,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <item>Show failed cards in 3 days</item>
 </string-array>
 <string name="studyoptions_title">Study Options</string>
+<string name="studyoptions_deck_name">Deck name</string>
 <string name="studyoptions_reviews_due">Reviews due:</string>
 <string name="studyoptions_new_today">New today:</string>
 <string name="studyoptions_new_total">New total:</string>

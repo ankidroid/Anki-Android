@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -40,6 +42,10 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 {
 
     static final String TAG = "AnkiDroid";
+    
+	
+	private boolean notificationBar;
+	
 
     public class DeckPreferenceHack implements SharedPreferences
     {
@@ -238,8 +244,13 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
         } 
         else
         {
-        	// Remove the status bar and make title bar progress available
-    		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    		
+    		restorePreferences();
+    		// Remove the status bar and make title bar progress available
+    		if (notificationBar==false) {
+    		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    		}
+    		
     		//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     		
             this.pref = new DeckPreferenceHack();
@@ -269,4 +280,14 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
             pref.setSummary( this.pref.getString( key, "" ) );
         }
     }
+    
+	
+	private SharedPreferences restorePreferences()
+	{
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		notificationBar = preferences.getBoolean("notificationBar", false);
+		
+		return preferences;
+	}
+	
 }

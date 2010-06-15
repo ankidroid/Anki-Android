@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class SharedDeckPicker extends Activity {
 
@@ -37,6 +39,10 @@ public class SharedDeckPicker extends Activity {
 	
 	private AlertDialog connectionFailedAlert;
 	
+	
+	private boolean notificationBar;
+	
+	
 	List<SharedDeck> mSharedDecks;
 	ListView mSharedDecksListView;
 	SimpleAdapter mSharedDecksAdapter;
@@ -47,8 +53,11 @@ public class SharedDeckPicker extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// Remove the status bar
+		
+		// Remove the status bar and make title bar progress available
+		if (notificationBar==false) {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
 		
 		setContentView(R.layout.main);
 		
@@ -71,6 +80,16 @@ public class SharedDeckPicker extends Activity {
 		});
 		Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
 	}
+	
+	
+	private SharedPreferences restorePreferences()
+	{
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		notificationBar = preferences.getBoolean("notificationBar", false);
+		
+		return preferences;
+	}
+	
 
 	@Override
     public void onDestroy()

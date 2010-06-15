@@ -42,7 +42,7 @@
 <string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;file:///android_asset/flashcard_css&quot; /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=&quot;card&quot;&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
 
 <string name="deckpicker_title">Sélectionnez un des paquets stockés sur votre carte SD</string>
-<string name="deckpicker_title_nosdcard">La carte SD n'est pas montée</string>
+<string name="deckpicker_title_nosdcard">La carte SD n\'est pas montée</string>
 <string name="deckpicker_due">%1$d parmi %2$d dûes</string>
 <string name="deckpicker_new">%d nouvelles aujourd\'hui</string>
 <string name="deckpicker_loaddeck">Chargement du paquet...</string>
@@ -62,17 +62,17 @@
 <string name="easy">Facile</string>
 <string name="newcards_day_summ">Le nombre maximal de nouvelles cartes par jour.</string>
 <string name="newcards_day">Nouvelles cartes par jour</string>
-<string name="session_time_limit">Durée maximale d'une session</string>
-<string name="session_time_limit_summ">La durée maximale d'une session. 0 pour illimité.</string>
+<string name="session_time_limit">Durée maximale d\'une session</string>
+<string name="session_time_limit_summ">La durée maximale d\'une session. 0 pour illimité.</string>
 <string name="session_question_limit">Nombre max de questions par session</string>
 <string name="session_question_limit_summ">Le nombre maximal de question dans une session. 0 pour illimité.</string>
 <string name="new_cards_order">Ordre des nouvelles cartesNew Cards Order</string>
-<string name="new_cards_order_summ">L'ordre dans lequel les nouvelles cartes apparaissent.</string>
+<string name="new_cards_order_summ">L\'ordre dans lequel les nouvelles cartes apparaissent.</string>
 <string name="show_new_cards_in">Montrer les nouvelles cartes dans...</string>
 <string name="new_card_spacing">New Card Spacing</string>
 <string name="new_card_spacing_summ">Comment distribuer les nouvelles cartes parmi les révisions.</string>
 <string name="show_new_cards">Montrer les nouvelles cartes...</string>
 <string name="review_cards_order">Ordre des révisions</string>
 <string name="review_cards_in">Réviser les cartes dans...</string>
-<string name="review_cards_order_summ">L'ordre dans lequel les cartes à réviser apparaissent.</string>
+<string name="review_cards_order_summ">L\'ordre dans lequel les cartes à réviser apparaissent.</string>
 </resources>

@@ -85,6 +85,10 @@ public class DeckPicker extends Activity implements Runnable
 	private boolean mDeckIsSelected = false;
 
 	private BroadcastReceiver mUnmountReceiver = null;
+	
+	
+	private boolean notificationBar;
+	
 
 	AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener()
 	{
@@ -101,8 +105,12 @@ public class DeckPicker extends Activity implements Runnable
 		Log.i(TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
 
-		// Remove the status bar
+		
+		restorePreferences();
+		// Remove the status bar and make title bar progress available
+		if (notificationBar==false) {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
 		
 		registerExternalStorageListener();
 
@@ -440,6 +448,15 @@ public class DeckPicker extends Activity implements Runnable
     		unregisterReceiver(mUnmountReceiver);
     }
 
+	
+	private SharedPreferences restorePreferences()
+	{
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		notificationBar = preferences.getBoolean("notificationBar", false);
+		
+		return preferences;
+	}
+	
 	/*private void logTree(TreeSet<HashMap<String, String>> tree)
 	{
 		Iterator<HashMap<String, String>> it = tree.iterator();

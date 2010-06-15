@@ -33,6 +33,7 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Deck;
+import com.ichi2.anki.R;
 import com.ichi2.anki.SharedDeck;
 import com.ichi2.anki.SyncClient;
 
@@ -50,7 +51,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 	private static Connection instance;
 	private TaskListener listener;
-	
+		
+	private int CurrentProgress;	
+
 	private static Connection launchConnectionTask(TaskListener listener, Payload data)
 	{
 		/*if(!isOnline())
@@ -138,6 +141,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 	protected Payload doInBackground(Payload... params) {
 		Payload data = params[0];
 		
+		CurrentProgress=0;
+		publishProgress(CurrentProgress+=5,context.getResources().getString(R.string.determining_task));
+		
 		switch(data.taskType)
 		{
 			case TASK_TYPE_GET_SHARED_DECKS:
@@ -224,6 +230,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 	
 	private Payload doInBackgroundSyncDeck(Payload data)
 	{
+		
+		publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.starting_db_transaction));
+		
+		
 		AnkiDb.database.beginTransaction();
 		try {
 			String username = (String)data.data[0];
@@ -234,11 +244,19 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			
 			Log.i(TAG, "Starting sync: username = " + username + ", password = " + password + ", deckPath = " + deckPath + ", syncName = " + syncName);
 			AnkiDroidProxy server = new AnkiDroidProxy(username, password);
-			server.connect();
 			
+			
+			publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.connecting_to_server));
+			
+
+			server.connect();
+						
 			if(!server.hasDeck(syncName))
 			{
 				Log.i(TAG, "AnkiOnline does not have this deck: Creating it...");
+				
+				publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.creating_deck_at_server));
+				
 				server.createDeck(syncName);
 			}
 			int timediff = (int) (server.getTimestamp() - (System.currentTimeMillis() / 1000));
@@ -252,11 +270,23 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			server.setDeckName(syncName);
 			if(client.prepareSync())
 			{
+				
+				publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.calculating_summaries));
+				
+				
 				JSONArray sums = client.summaries();
+				
+				
+				publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.determining_sync_type));
+				
+				
 				if(client.needFullSync(sums))
 				{
 					Log.i(TAG, "DECK NEEDS FULL SYNC");
 					String syncFrom = client.prepareFullSync();
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.performing_full_sync));
+					
 					if("fromLocal".equalsIgnoreCase(syncFrom))
 					{
 						SyncClient.fullSyncFromLocal(password, username, syncName, deckPath);
@@ -265,20 +295,50 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 					{
 						SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
 					}
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.setting_db_transaction_success));
+					
 					AnkiDb.database.setTransactionSuccessful();
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.finishing_db_transaction));
+					
 					AnkiDb.database.endTransaction();
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.closing_deck));
+					
 					deck.closeDeck();
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.opening_deck_after_sync));
+					
 					deck = Deck.openDeck(deckPath);
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.setting_deck_as_current));
+					
 					client.setDeck(deck);
 				}
 				else
 				{
 					Log.i(TAG, "DECK DOES NOT NEED FULL SYNC");
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.generating_payload));
+					
 					JSONObject payload = client.genPayload(sums);
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.getting_payload_reply));
+					
 					JSONObject payloadReply = client.getServer().applyPayload(payload);
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.applying_payload_reply));
+					
 					client.applyPayloadReply(payloadReply);
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.commiting_payload_to_db));
+					
 					deck.lastLoaded = deck.modified;
 					deck.commitToDB();
+					
+					publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.setting_db_transaction_success));
+					
 					AnkiDb.database.setTransactionSuccessful();
 				}
 			}
@@ -294,6 +354,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		} finally {
 			if(AnkiDb.database.inTransaction())
 			{
+				
+				publishProgress(CurrentProgress+=10,context.getResources().getString(R.string.finishing_db_transaction));
+				
 				AnkiDb.database.endTransaction();
 			}
 		}

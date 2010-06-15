@@ -104,6 +104,11 @@
 			android:defaultValue="false"
 			android:summary="@string/corporal_punishments_summ"
 			android:key="corporalPunishments" />
+		<CheckBoxPreference
+			android:title="@string/notification_bar"
+			android:defaultValue="false"
+			android:summary="@string/notification_bar_summ"
+			android:key="notificationBar" />
 	</PreferenceCategory>
 	
 	

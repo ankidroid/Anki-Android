@@ -27,6 +27,42 @@
 	<include layout="@layout/sdcard_error" />
 	<include layout="@layout/deck_error" />
 	
+	<LinearLayout
+		android:id="@+id/bar_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="right"
+		android:background="#ffffff" >
+			<TextView android:id="@+id/red_number"
+			android:layout_width="wrap_content"
+			android:gravity="center_vertical"
+			android:textColor="#ff0000"
+			android:layout_alignParentRight="true"
+			android:text="Red"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:padding="4sp"/>
+			<TextView android:id="@+id/black_number"
+			android:layout_width="wrap_content"
+			android:gravity="center_vertical"
+			android:textColor="#000000"
+			android:layout_alignParentRight="true"
+			android:text="Black"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:padding="4sp"/>
+			<TextView android:id="@+id/blue_number"
+			android:layout_width="wrap_content"
+			android:gravity="center_vertical"
+			android:textColor="#0000ff"
+			android:layout_alignParentRight="true"
+			android:text="Blue"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:padding="4sp"/>
+	
+	</LinearLayout>
+	
 	<FrameLayout
 		android:id="@+id/card_whiteboard_layout"
 		android:layout_width="fill_parent"
