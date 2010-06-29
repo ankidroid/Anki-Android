@@ -162,5 +162,5 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="error_message">There are %d errors to report</string>
 <string name="error_ok">Report errors</string>
 <string name="error_cancel">Do not report errors</string>
-<string name="error_email">anki-android@googlegroups.com</string>
+<string name="error_email">ankidroid-bugs@googlegroups.com</string>
 </resources>
