@@ -62,7 +62,7 @@ public class Card {
     // Stats
     int reps = 0;
     int successive = 0;
-    double averageTime = 0;
+	double averageTime = 0;
     double reviewTime = 0;
     int youngEase0 = 0;
     int youngEase1 = 0;
@@ -356,4 +356,16 @@ public class Card {
         // TODO: Should also write JOINED entries: CardModel and Fact.
     }
 
+    /**
+     * Getters and setters
+     */
+    public int getSuccessive() 
+    {
+		return successive;
+	}
+
+	public void setSuccessive(int successive) 
+	{
+		this.successive = successive;
+	}
 }

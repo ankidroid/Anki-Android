@@ -207,7 +207,7 @@ public class AnkiDroid extends Activity
 
 	private EditText mAnswerField;
 
-	private Button mButtonReviewEarly, mEase0, mEase1, mEase2, mEase3;
+	private Button mButtonReviewEarly, mEase1, mEase2, mEase3, mEase4;
 
 	private Chronometer mCardTimer;
 	
@@ -438,10 +438,10 @@ public class AnkiDroid extends Activity
 
 		mCard = (WebView) findViewById(R.id.flashcard);
 		//mButtonReviewEarly = (Button) findViewById(R.id.review_early);
-		mEase0 = (Button) findViewById(R.id.ease1);
-		mEase1 = (Button) findViewById(R.id.ease2);
-		mEase2 = (Button) findViewById(R.id.ease3);
-		mEase3 = (Button) findViewById(R.id.ease4);
+		mEase1 = (Button) findViewById(R.id.ease1);
+		mEase2 = (Button) findViewById(R.id.ease2);
+		mEase3 = (Button) findViewById(R.id.ease3);
+		mEase4 = (Button) findViewById(R.id.ease4);
 		mCardTimer = (Chronometer) findViewById(R.id.card_time);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
@@ -451,10 +451,10 @@ public class AnkiDroid extends Activity
 		showControls(false);
 
 		mButtonReviewEarly.setOnClickListener(mButtonReviewEarlyHandler);
-		mEase0.setOnClickListener(mSelectEaseHandler);
 		mEase1.setOnClickListener(mSelectEaseHandler);
 		mEase2.setOnClickListener(mSelectEaseHandler);
 		mEase3.setOnClickListener(mSelectEaseHandler);
+		mEase4.setOnClickListener(mSelectEaseHandler);
 		mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
@@ -793,10 +793,10 @@ public class AnkiDroid extends Activity
 		if (show)
 		{
 			mCard.setVisibility(View.VISIBLE);
-			mEase0.setVisibility(View.VISIBLE);
 			mEase1.setVisibility(View.VISIBLE);
 			mEase2.setVisibility(View.VISIBLE);
 			mEase3.setVisibility(View.VISIBLE);
+			mEase4.setVisibility(View.VISIBLE);
 			mFlipCard.setVisibility(View.VISIBLE);
 			showOrHideControls();
 			showOrHideAnswerField();
@@ -805,10 +805,10 @@ public class AnkiDroid extends Activity
 		{
 			mCard.setVisibility(View.GONE);
 			mButtonReviewEarly.setVisibility(View.GONE);
-			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
 			mEase3.setVisibility(View.GONE);
+			mEase4.setVisibility(View.GONE);
 			mFlipCard.setVisibility(View.GONE);
 			mCardTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
@@ -872,10 +872,10 @@ public class AnkiDroid extends Activity
 			// TODO a button leading to the deck picker would be nice.
 			updateCard(getString(R.string.congratulations_finished_for_now));
 			mButtonReviewEarly.setVisibility(View.VISIBLE);
-			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
 			mEase3.setVisibility(View.GONE);
+			mEase4.setVisibility(View.GONE);
 			mFlipCard.setVisibility(View.GONE);
 			mCardTimer.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
@@ -887,10 +887,10 @@ public class AnkiDroid extends Activity
 		{
 			Log.i(TAG, "displayCardQuestion - Hiding Ease buttons...");
 
-			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
 			mEase3.setVisibility(View.GONE);
+			mEase4.setVisibility(View.GONE);
 
 			// If the user wants to write the answer
 			if(writeAnswers)
@@ -914,14 +914,14 @@ public class AnkiDroid extends Activity
 		mCardTimer.stop();
 		mWhiteboard.lock();
 
-		mEase0.setVisibility(View.VISIBLE);
 		mEase1.setVisibility(View.VISIBLE);
 		mEase2.setVisibility(View.VISIBLE);
 		mEase3.setVisibility(View.VISIBLE);
+		mEase4.setVisibility(View.VISIBLE);
 
 		mAnswerField.setVisibility(View.GONE);
 
-		mEase2.requestFocus();
+		mEase3.requestFocus();
 
 		// If the user wrote an answer
 		if(writeAnswers)

@@ -79,10 +79,14 @@
 <string name="show_answer">Show Answer</string>
 <string name="show_question">Show Question</string>
 <string name="card_hint">Flashcard</string>
-<string name="again">Again</string>
-<string name="hard">Hard</string>
-<string name="good">Good</string>
-<string name="easy">Easy</string>
+<string name="ease1_learning">Again</string>
+<string name="ease2_learning">Good</string>
+<string name="ease3_learning">Easy</string>
+<string name="ease4_learning">Very Easy</string>
+<string name="ease1_successive">Again</string>
+<string name="ease2_successive">Hard</string>
+<string name="ease3_successive">Good</string>
+<string name="ease4_successive">Easy</string>
 
 <!-- preferences.xml strings -->
 <string name="pref_cat_decks">Decks</string>

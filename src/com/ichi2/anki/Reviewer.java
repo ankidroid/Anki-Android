@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
@@ -99,7 +100,7 @@ public class Reviewer extends Activity {
 	private TextView mTextBarBlue;
 	private ToggleButton mToggleWhiteboard, mFlipCard;
 	private EditText mAnswerField;
-	private Button mEase0, mEase1, mEase2, mEase3;
+	private Button mEase1, mEase2, mEase3, mEase4;
 	private Chronometer mCardTimer;
 	private Whiteboard mWhiteboard;
 	private ProgressDialog mProgressDialog;
@@ -282,39 +283,41 @@ public class Reviewer extends Activity {
 			setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
 			finish();
 		}
-		
-		restorePreferences();
-		
-		// Remove the status bar and make title bar progress available
-		if (notificationBar==false) {
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		else
+		{
+			restorePreferences();
+			
+			// Remove the status bar and make title bar progress available
+			if (notificationBar==false) {
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			}
+			
+			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+			
+			registerExternalStorageListener();
+			
+			initLayout(R.layout.flashcard_portrait);
+			//updateCounts();
+			cardTemplate = getResources().getString(R.string.card_template);
+			
+			// Initialize session limits
+			long timelimit = AnkiDroidApp.deck().getSessionTimeLimit() * 1000;
+			Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
+			mSessionTimeLimit = System.currentTimeMillis() + timelimit;
+			mSessionCurrReps = 0;
+			
+			/* Load the first card and start reviewing.
+			 * Uses the answer card task to load a card, but since we send null
+			 * as the card to answer, no card will be answered.
+			 */
+			DeckTask.launchDeckTask(
+					DeckTask.TASK_TYPE_ANSWER_CARD, 
+					mAnswerCardHandler, 
+					new DeckTask.TaskData(
+							0,
+							AnkiDroidApp.deck(),
+							null));
 		}
-		
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		
-		registerExternalStorageListener();
-		
-		initLayout(R.layout.flashcard_portrait);
-		updateTitle();
-		cardTemplate = getResources().getString(R.string.card_template);
-		
-		// Initialize session limits
-		long timelimit = AnkiDroidApp.deck().getSessionTimeLimit() * 1000;
-		Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
-		mSessionTimeLimit = System.currentTimeMillis() + timelimit;
-		mSessionCurrReps = 0;
-		
-		/* Load the first card and start reviewing.
-		 * Uses the answer card task to load a card, but since we send null
-		 * as the card to answer, no card will be answered.
-		 */
-		DeckTask.launchDeckTask(
-				DeckTask.TASK_TYPE_ANSWER_CARD, 
-				mAnswerCardHandler, 
-				new DeckTask.TaskData(
-						0,
-						AnkiDroidApp.deck(),
-						null));
 	}
 	
     @Override
@@ -378,10 +381,10 @@ public class Reviewer extends Activity {
 		setContentView(layout);
 
 		mCard = (WebView) findViewById(R.id.flashcard);
-		mEase0 = (Button) findViewById(R.id.ease1);
-		mEase1 = (Button) findViewById(R.id.ease2);
-		mEase2 = (Button) findViewById(R.id.ease3);
-		mEase3 = (Button) findViewById(R.id.ease4);
+		mEase1 = (Button) findViewById(R.id.ease1);
+		mEase2 = (Button) findViewById(R.id.ease2);
+		mEase3 = (Button) findViewById(R.id.ease3);
+		mEase4 = (Button) findViewById(R.id.ease4);
 		mTextBarRed = (TextView) findViewById(R.id.red_number);
 		mTextBarBlack = (TextView) findViewById(R.id.black_number);
 		mTextBarBlue = (TextView) findViewById(R.id.blue_number);
@@ -393,10 +396,10 @@ public class Reviewer extends Activity {
 
 		hideControls();
 
-		mEase0.setOnClickListener(mSelectEaseHandler);
 		mEase1.setOnClickListener(mSelectEaseHandler);
 		mEase2.setOnClickListener(mSelectEaseHandler);
 		mEase3.setOnClickListener(mSelectEaseHandler);
+		mEase4.setOnClickListener(mSelectEaseHandler);
 		mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
 		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
@@ -463,13 +466,62 @@ public class Reviewer extends Activity {
         return editorCard;
     }
 
-	private void showControls()
+	private boolean learningButtons()
 	{
-		mCard.setVisibility(View.VISIBLE);
-		mEase0.setVisibility(View.VISIBLE);
+		return mCurrentCard.successive == 0;
+	}
+	
+	private void showEaseButtons()
+	{
+		Resources res = getResources();
+		
+		// Set correct label for each button
+		if(learningButtons())
+		{
+			mEase1.setText(res.getString(R.string.ease1_learning));
+			mEase2.setText(res.getString(R.string.ease2_learning));
+			mEase3.setText(res.getString(R.string.ease3_learning));
+			mEase4.setText(res.getString(R.string.ease4_learning));
+		}
+		else
+		{
+			mEase1.setText(res.getString(R.string.ease1_successive));
+			mEase2.setText(res.getString(R.string.ease2_successive));
+			mEase3.setText(res.getString(R.string.ease3_successive));
+			mEase4.setText(res.getString(R.string.ease4_successive));
+		}
+		
+		// Show buttons
 		mEase1.setVisibility(View.VISIBLE);
 		mEase2.setVisibility(View.VISIBLE);
 		mEase3.setVisibility(View.VISIBLE);
+		mEase4.setVisibility(View.VISIBLE);
+		
+		// Focus default button
+		if(learningButtons())
+		{
+			mEase2.requestFocus();
+		}
+		else
+		{
+			mEase3.requestFocus();
+		}
+	}
+	
+	private void hideEaseButtons()
+	{
+		//GONE -> It allows to write until the very bottom
+		//INVISIBLE -> The transition between the question and the answer seems more smooth
+		mEase1.setVisibility(View.INVISIBLE);
+		mEase2.setVisibility(View.INVISIBLE);
+		mEase3.setVisibility(View.INVISIBLE);
+		mEase4.setVisibility(View.INVISIBLE);
+	}
+	
+	private void showControls()
+	{
+		mCard.setVisibility(View.VISIBLE);
+		showEaseButtons();
 		mTextBarRed.setVisibility(View.VISIBLE);
 		mTextBarBlack.setVisibility(View.VISIBLE);
 		mTextBarBlue.setVisibility(View.VISIBLE);
@@ -512,10 +564,7 @@ public class Reviewer extends Activity {
 	private void hideControls()
 	{
 		mCard.setVisibility(View.GONE);
-		mEase0.setVisibility(View.GONE);
-		mEase1.setVisibility(View.GONE);
-		mEase2.setVisibility(View.GONE);
-		mEase3.setVisibility(View.GONE);
+		hideEaseButtons();
 		mTextBarRed.setVisibility(View.GONE);
 		mTextBarBlack.setVisibility(View.GONE);
 		mTextBarBlue.setVisibility(View.GONE);
@@ -562,42 +611,42 @@ public class Reviewer extends Activity {
 		{
 			case 1:
 				mCard.setEnabled(true);
-				mEase0.setClickable(true);
-				mEase1.setEnabled(true);
+				mEase1.setClickable(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
+				mEase4.setEnabled(true);
 				break;
 				
 			case 2:
 				mCard.setEnabled(true);
-				mEase0.setEnabled(true);
-				mEase1.setClickable(true);
-				mEase2.setEnabled(true);
+				mEase1.setEnabled(true);
+				mEase2.setClickable(true);
 				mEase3.setEnabled(true);
+				mEase4.setEnabled(true);
 				break;
 				
 			case 3:
 				mCard.setEnabled(true);
-				mEase0.setEnabled(true);
 				mEase1.setEnabled(true);
-				mEase2.setClickable(true);
-				mEase3.setEnabled(true);
+				mEase2.setEnabled(true);
+				mEase3.setClickable(true);
+				mEase4.setEnabled(true);
 				break;
 				
 			case 4:
 				mCard.setEnabled(true);
-				mEase0.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
-				mEase3.setClickable(true);
+				mEase3.setEnabled(true);
+				mEase4.setClickable(true);
 				break;
 				
 			default:
 				mCard.setEnabled(true);
-				mEase0.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
+				mEase4.setEnabled(true);
 				break;
 		}
 		mFlipCard.setEnabled(true);
@@ -614,42 +663,42 @@ public class Reviewer extends Activity {
 		{
 			case 1:
 				mCard.setEnabled(false);
-				mEase0.setClickable(false);
-				mEase1.setEnabled(false);
+				mEase1.setClickable(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
+				mEase4.setEnabled(false);
 				break;
 				
 			case 2:
 				mCard.setEnabled(false);
-				mEase0.setEnabled(false);
-				mEase1.setClickable(false);
-				mEase2.setEnabled(false);
+				mEase1.setEnabled(false);
+				mEase2.setClickable(false);
 				mEase3.setEnabled(false);
+				mEase4.setEnabled(false);
 				break;
 				
 			case 3:
 				mCard.setEnabled(false);
-				mEase0.setEnabled(false);
 				mEase1.setEnabled(false);
-				mEase2.setClickable(false);
-				mEase3.setEnabled(false);
+				mEase2.setEnabled(false);
+				mEase3.setClickable(false);
+				mEase4.setEnabled(false);
 				break;
 				
 			case 4:
 				mCard.setEnabled(false);
-				mEase0.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
-				mEase3.setClickable(false);
+				mEase3.setEnabled(false);
+				mEase4.setClickable(false);
 				break;
 				
 			default:
 				mCard.setEnabled(false);
-				mEase0.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
+				mEase4.setEnabled(false);
 				break;
 		}
 		mFlipCard.setEnabled(false);
@@ -716,7 +765,7 @@ public class Reviewer extends Activity {
 	
 	private void reviewNextCard()
 	{		
-		updateTitle();
+		updateCounts();
 		mFlipCard.setChecked(false);
 		
 		mWhiteboard.clear();
@@ -731,15 +780,11 @@ public class Reviewer extends Activity {
 		showControls();
 		//mFlipCard.setChecked(false);
 		
-		mEase0.setVisibility(View.INVISIBLE);
-		mEase1.setVisibility(View.INVISIBLE);
-		mEase2.setVisibility(View.INVISIBLE);
-		mEase3.setVisibility(View.INVISIBLE);
-
 		// If the user wants to write the answer
 		if(prefWriteAnswers)
 			mAnswerField.setVisibility(View.VISIBLE);
 		
+		hideEaseButtons();
 		mFlipCard.requestFocus();
 	}
 	
@@ -748,16 +793,8 @@ public class Reviewer extends Activity {
 		Log.i(TAG, "displayCardAnswer");
 			
 		mCardTimer.stop();
-
-		mEase0.setVisibility(View.VISIBLE);
-		mEase1.setVisibility(View.VISIBLE);
-		mEase2.setVisibility(View.VISIBLE);
-		mEase3.setVisibility(View.VISIBLE);
-
 		mAnswerField.setVisibility(View.GONE);
-
-		mEase2.requestFocus();
-
+		
 		// If the user wrote an answer
 		if(prefWriteAnswers)
 		{
@@ -784,6 +821,8 @@ public class Reviewer extends Activity {
 		{
 			updateCard(mCurrentCard.answer);
 		}
+		
+		showEaseButtons();
 	}
 	
 	
@@ -796,7 +835,7 @@ public class Reviewer extends Activity {
 		return Math.max(MIN_QA_FONT_SIZE, MAX_QA_FONT_SIZE - (int)(realContent.length()/5));
 	}
 		
-	private void updateTitle()
+	private void updateCounts()
 	{	
 		Deck deck = AnkiDroidApp.deck();
 		String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
@@ -804,10 +843,10 @@ public class Reviewer extends Activity {
 		
 		SpannableString failedSoonCount = new SpannableString(String.valueOf(deck.failedSoonCount));
 		SpannableString revCount = new SpannableString(String.valueOf(deck.revCount));
-		SpannableString newCount = new SpannableString(String.valueOf(deck.newCount));
+		SpannableString newCount = new SpannableString(String.valueOf(deck.newCountToday));
 		
-		int isDue=deck.getCurrentCard().isDue;
-		int type=deck.getCurrentCard().type;
+		int isDue = mCurrentCard.isDue;
+		int type = mCurrentCard.type;
 		
 		if ((isDue==1) && (type==2)) {
 			newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);

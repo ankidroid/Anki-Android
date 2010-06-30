@@ -752,6 +752,8 @@ public class Deck
 
 	public void answerCard(Card card, int ease)
 	{
+		Log.i(TAG, "answerCard");
+		
 		Cursor cursor = null;
 		String undoName = "Answer Card";
 		setUndoStart(undoName);
@@ -846,12 +848,18 @@ public class Deck
 	        		"GROUP BY type", null);
 	    	while (cursor.moveToNext())
 	    	{
+	    		Log.i(TAG, "failedSoonCount before = " + failedSoonCount);
+	    		Log.i(TAG, "revCount before = " + revCount);
+	    		Log.i(TAG, "newCount before = " + newCount);
 	    		if (cursor.getInt(0) == 0)
 	    			failedSoonCount -= cursor.getInt(1);
 	    		else if (cursor.getInt(0) == 1)
 	    			revCount -= cursor.getInt(1);
 	    		else
 	    			newCount -= cursor.getInt(1);
+	    		Log.i(TAG, "failedSoonCount after = " + failedSoonCount);
+	    		Log.i(TAG, "revCount after = " + revCount);
+	    		Log.i(TAG, "newCount after = " + newCount);
 	    	}
         } finally {
         	if (cursor != null) cursor.close();
@@ -1028,6 +1036,7 @@ public class Deck
 
 	public void rebuildCounts(boolean full) {
 		Log.i(TAG, "rebuildCounts - Rebuilding global and due counts...");
+		Log.i(TAG, "Full review = " + full);
 		// Need to check due first, so new due cards are not added later
 		checkDue();
 		// Global counts
@@ -1038,6 +1047,7 @@ public class Deck
 
 		// Due counts
 		failedSoonCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM failedCards");
+		Log.i(TAG, "failedSoonCount = " + failedSoonCount);
 		failedNowCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
@@ -1045,18 +1055,21 @@ public class Deck
 				"isDue = 1 and " +
 				"combinedDue <= " +
 				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+		Log.i(TAG, "failedNowCount = " + failedNowCount);
 		revCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
 				"WHERE type = 1 and " +
 				"priority in (1,2,3,4) and " +
 				"isDue = 1");
+		Log.i(TAG, "revCount = " + revCount);
 		newCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
 				"WHERE type = 2 and " +
 				"priority in (1,2,3,4) and " +
 				"isDue = 1");
+		Log.i(TAG, "newCount = " + newCount);
 	}
 
 	/**
@@ -1070,7 +1083,8 @@ public class Deck
 		// Failed cards
 		ContentValues val = new ContentValues(1);
 		val.put("isDue", 1);
-
+		
+		Log.i(TAG, "failedSoonCount before = " + failedSoonCount);
 		failedSoonCount += AnkiDb.database.update(
 				"cards",
 				val,
@@ -1080,7 +1094,9 @@ public class Deck
 				String.format(ENGLISH_LOCALE, "combinedDue <= %f",
 						(double) ((System.currentTimeMillis() / 1000.0) + delay0)),
 				null);
-
+		Log.i(TAG, "failedSoonCount after = " + failedSoonCount);
+		
+		Log.i(TAG, "failedNowCount before = " + failedNowCount);
 		failedNowCount = (int) AnkiDb.queryScalar(
 				"SELECT count(id) " +
 				"FROM cards " +
@@ -1088,22 +1104,31 @@ public class Deck
 				"isDue = 1 and " +
 				String.format(ENGLISH_LOCALE, "combinedDue <= %f",
 						(double) (System.currentTimeMillis() / 1000.0)));
-
+		Log.i(TAG, "failedNowCount after = " + failedNowCount);
+		
 		// Review
+		Log.i(TAG, "revCount before = " + revCount);
 		val.clear();
 		val.put("isDue", 1);
 		revCount += AnkiDb.database.update("cards", val, "type = 1 and " + "isDue = 0 and "
 		        + "priority in (1,2,3,4) and "
 		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
-
+		Log.i(TAG, "revCount after = " + revCount);
+		
 		// New
+		Log.i(TAG, "newCount before = " + newCount);
 		val.clear();
 		val.put("isDue", 1);
 		newCount += AnkiDb.database.update("cards", val, "type = 2 and " + "isDue = 0 and "
 		        + "priority in (1,2,3,4) and "
 		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
-
+		Log.i(TAG, "newCount after = " + newCount);
+		
+		Log.i(TAG, "newCardsPerDay = " + newCardsPerDay);
+		Log.i(TAG, "newCardsToday = " + newCardsToday());
+		
 		newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0);
+		Log.i(TAG, "newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0) : " + newCountToday);
 	}
 
 	/**
