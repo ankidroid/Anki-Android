@@ -328,6 +328,16 @@ public class Reviewer extends Activity {
     	if(mUnmountReceiver != null)
     		unregisterReceiver(mUnmountReceiver);
     }
+
+	// Saves deck each time Reviewer activity loses focus
+    @Override 
+    public void onPause() 
+    { 
+        super.onPause(); 
+        Log.i(TAG, "Reviewer - onPause()");
+        Deck deck = AnkiDroidApp.deck();
+        deck.commitToDB();
+    }
     
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
