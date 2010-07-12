@@ -574,6 +574,17 @@ public class AnkiDroid extends Activity
 		Log.i(TAG, "onSaveInstanceState - Ending");
 	}
 
+
+	@Override
+		public void onPause()
+		{
+			super.onPause();
+			Log.i(TAG, "onPause - inigo");
+    	if(AnkiDroidApp.getDeck() != null && sdCardAvailable)
+    		AnkiDroidApp.getDeck().closeDeck();
+			Log.i(TAG, "onPause - Ending");
+		}
+
 	@Override
 	public void onStop()
 	{
