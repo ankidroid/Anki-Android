@@ -100,5 +100,5 @@
   <string name="error_message">Există %d erori de raportat</string>
   <string name="error_ok">Raportează erori</string>
   <string name="error_cancel">Nu raporta erorile</string>
-  <string name="error_email">report@example.org</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>

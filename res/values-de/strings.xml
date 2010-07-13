@@ -100,5 +100,5 @@
   <string name="error_message">Es gibt %d Fehler zu melden</string>
   <string name="error_ok">Fehler melden</string>
   <string name="error_cancel">Keine Fehler melden</string>
-  <string name="error_email">report@example.org</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>

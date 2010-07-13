@@ -111,5 +111,5 @@ De som inte kan programmera får gärna hjälpa till med till exempel att uppdat
   <string name="error_message">Det finns %d fel att rapportera</string>
   <string name="error_ok">Rapportera fel</string>
   <string name="error_cancel">Rapportera inte fel</string>
-  <string name="error_email">report@exempel.org</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>
