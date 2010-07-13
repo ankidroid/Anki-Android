@@ -3,14 +3,17 @@ import zipfile
 
 # This script extract localization from ankidroid.zip into the right folders.
 # http://crowdin.net/download/project/ankidroid.zip
+# Unfortunately, the arrays.xml files' 0,1,2,3,4,5 values must be fixed manually (Linux command: meld git)
 
 # TODO
+# Deal with zh-rCN and zh-rTW too.
+# Download ankidroid.zip at the beginning of the script
 # Add GNU-GPL header to files
 # Insert 0,1,2,3,4,5 values that are missing from Crowdin
 
 # Below is the list of official AnkiDroid localizations.
 # Add a language if it is more than 50% translated.
-languages = ['pt-PT', 'fr', 'ru', 'ca', 'es-ES', 'el'];
+languages = ['pt-PT', 'fr', 'ru', 'ca', 'es-ES', 'el', 'it', 'pl', 'de', 'ro', 'sv-SE'];
 
 
 zip = zipfile.ZipFile("ankidroid.zip", "r")

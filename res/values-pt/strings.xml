@@ -1,108 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+<!--Generated with crowdin.net-->
 <resources>
-    <string name="CardEditorCancelButton">Cancelar</string>
-    <string name="CardEditorSaveButton">Salvar</string>
+  <string name="CardEditorCancelButton">Cancelar</string>
+  <string name="CardEditorSaveButton">Salvar</string>
     
     
-<string name="app_name">AnkiDroid</string>
+  <string name="app_name">AnkiDroid</string>
 
-<string name="yes">Sim</string>
-<string name="no">Não</string>
-
-<string name="overlay_on">Whiteboard Ligado</string>
-<string name="overlay_off">Whiteboard Desligado</string>
-<string name="show_answer">Mostrar Resposta</string>
-<string name="show_question">Mostrar Questão</string><string name="card_hint">Cartões de Memorização</string>
-
-<string name="deck_not_loaded">Falha ao carregar o deck.</string>
-<string name="deck_not_loaded_detail">Por favor, pressione menu e selecione um dos decks armazenados no seu cartão SD.</string>
-<string name="deck_empty">O deck está vazio.</string>
-
-
-
-
-
-
-<string name="deckpicker_title">Selecione um deck que você copiou para seu cartão SD.</string>
-<string name="deckpicker_title_nosdcard">O cartão SD está desmontado.</string>
-<string name="deckpicker_due">%1$d de %2$d programados </string>
-<string name="deckpicker_new">%d Novos hoje</string>
-<string name="deckpicker_loaddeck">Carregando Deck...</string>
-<string name="deckpicker_nodeck">Não foi encontrado nenhum deck.</string>
-
-<string name="notify_ticker">Atualização da Aplicação</string>
-<string name="notify_title">AnkiDroid Atualizado</string>
-<string name="notify_message">Baixar uma nova versão</string>
-<string name="notification_title">Confirmar a atualização do AnkiDroid</string>
-<string name="notification_message">A new version of AnkiDroid is available in Android Market.\n\nGostaria de instala-la?</string>
-<string name="notification_stop">Não me avisar novamente sobre esse update.</string>
-
-<string name="sdcard_missing_message">O cartão SD está indisponível porque está sendo usado como armazenamento USB. Desconecte o USB para acessar os seus decks.</string>
-<string name="again">De novo</string>
-<string name="hard">Difícil</string>
-<string name="good">Bom</string>
-<string name="easy">Fácil</string>
-<string name="newcards_day_summ">O número máximo de cards mostrados por dia.</string>
-<string name="newcards_day">Novos Cards / Dia</string>
-<string name="session_time_limit">Limite de Tempo por Sessão</string>
-<string name="session_time_limit_summ">O número de minutos em uma sessão. Escolha 0 para sem limite.</string>
-<string name="session_question_limit">Limite de Questões por Sessão</string>
-<string name="session_question_limit_summ">O número de questões em uma sessão. Escolha 0 para sem limite.</string>
-<string name="new_cards_order">Ordem dos Novos Cards</string>
-<string name="new_cards_order_summ">A ordem da mostragem de novos cards.</string>
-<string name="show_new_cards_in">Mostrar novos cards em...</string>
-<string name="new_card_spacing">Intervalo de Novos Cards</string>
-<string name="new_card_spacing_summ">Como distribuir os novos cards pelas revisões.</string>
-<string name="show_new_cards">Mostrar novos cards...</string>
-<string name="review_cards_order">Ordem de Revisão dos Cards</string>
-<string name="review_cards_in">Revisar cards em...</string>
-<string name="review_cards_order_summ">A ordem em que serão mostrados os cards de revisão.</string>
-
-
-<string name="show_whiteboard">Mostrar timer / whiteboard</string>
-<string name="show_whiteboard_summ">Te permite escrever na Tela</string>
-<string name="sample_deck">Deck de exemplo</string>
-<string name="sample_deck_summ">Gerar deck de capitais se nenhum deck for encontrado</string>
-<string name="corporal_punishments">Punições Corporais</string>
-<string name="corporal_punishments_summ">Vibrar ao errar, que te ensinará</string>
-<string name="write_answers">Escrita de Respostas</string>
-<string name="write_answers_summ">Te permite escrever as respostas e compara-las com a resposta correta</string>
-<string name="deck_path">Pasta dos Deck </string>
-<string name="deck_path_summ">Pasta onde seus decks são armazenados</string>
-
-
-<!-- AnkiDroid.java strings -->
-<string name="loading_new_card">Carregando Card...</string>
-<string name="loading_deck">Carregando Deck. Por favor espere...</string>
-<string name="preferences">Preferências</string>
-<string name="about">Sobre</string>
-<string name="study_options">Opções de Estudo</string>
-<string name="suspend">Suspender</string>
-<string name="edit_card">Editar Card</string>
-<string name="switch_another_deck">Mudar para outro deck</string>
-<string name="saving_changes">Salvando Mudanças...</string>
-<string name="session_question_limit_reached">Limite de questões por sessão atingido</string>
-<string name="session_time_limit_reached">Limite de tempo por sessão atingido</string>
-<string name="congratulations_finished_for_now">Parabéns! Você acabou por enquanto. Por favor volte amanhã, ou troque para outro deck. Decks compartilhados podem ser baixados usando o programa Anki encontrado em http://ichi2.net/anki/</string>
-
-
-
+  <string name="yes">Sim</string>
+  <string name="no">Não</string>
+  <string name="ok">OK</string>
+  <string name="deck_not_loaded">Falha ao carregar o deck.</string>
+  <string name="deck_not_loaded_detail">Por favor, pressione menu e selecione um dos decks armazenados no seu cartão SD.</string>
+  <string name="deck_empty">O deck está vazio.</string>
+  <string name="deckpicker_title">Selecione um deck que você copiou para seu cartão SD.</string>
+  <string name="deckpicker_title_nosdcard">O cartão SD está desmontado.</string>
+  <string name="deckpicker_due">%1$d de %2$d programados </string>
+  <string name="deckpicker_new">%d Novos hoje</string>
+  <string name="deckpicker_loaddeck">Carregando Deck...</string>
+  <string name="deckpicker_nodeck">Não foi encontrado nenhum deck.</string>
+  <string name="notify_ticker">Atualização da Aplicação</string>
+  <string name="notify_title">AnkiDroid Atualizado</string>
+  <string name="notify_message">Baixar uma nova versão</string>
+  <string name="notification_title">Confirmar a atualização do AnkiDroid</string>
+  <string name="notification_message">A new version of AnkiDroid is available in Android Market.\n\nGostaria de instala-la?</string>
+  <string name="notification_stop">Não me avisar novamente sobre esse update.</string>
+  <string name="sdcard_missing_message">O cartão SD está indisponível porque está sendo usado como armazenamento USB. Desconecte o USB para acessar os seus decks.</string>
+  <string name="newcards_day_summ">O número máximo de cards mostrados por dia.</string>
+  <string name="newcards_day">Novos Cards / Dia</string>
+  <string name="session_time_limit">Limite de Tempo por Sessão</string>
+  <string name="session_time_limit_summ">O número de minutos em uma sessão. Escolha 0 para sem limite.</string>
+  <string name="session_question_limit">Limite de Questões por Sessão</string>
+  <string name="session_question_limit_summ">O número de questões em uma sessão. Escolha 0 para sem limite.</string>
+  <string name="new_cards_order">Ordem dos Novos Cards</string>
+  <string name="new_cards_order_summ">A ordem da mostragem de novos cards.</string>
+  <string name="show_new_cards_in">Mostrar novos cards em...</string>
+  <string name="new_card_spacing">Intervalo de Novos Cards</string>
+  <string name="new_card_spacing_summ">Como distribuir os novos cards pelas revisões.</string>
+  <string name="show_new_cards">Mostrar novos cards...</string>
+  <string name="review_cards_order">Ordem de Revisão dos Cards</string>
+  <string name="review_cards_in">Revisar cards em...</string>
+  <string name="review_cards_order_summ">A ordem em que serão mostrados os cards de revisão.</string>
+  <string name="overlay_on">Whiteboard Ligado</string>
+  <string name="overlay_off">Whiteboard Desligado</string>
+  <string name="show_answer">Mostrar Resposta</string>
+  <string name="show_question">Mostrar Questão</string>
+  <string name="card_hint">Cartões de Memorização</string>
+  <string name="again">De novo</string>
+  <string name="hard">Difícil</string>
+  <string name="good">Bom</string>
+  <string name="easy">Fácil</string>
+  <string name="pref_cat_decks">Decks</string>
+  <string name="pref_cat_sync">Sincronização</string>
+  <string name="pref_cat_study">Opções de Estudo</string>
+  <string name="pref_cat_qadisplay">Visualização de perguntas e respostas</string>
+  <string name="username">Usuário</string>
+  <string name="password">Senha</string>
+  <string name="sync_on_open">Sincronização ao abrir</string>
+  <string name="sync_on_close">Sincronizar ao sair</string>
+  <string name="show_whiteboard">Mostrar timer / whiteboard</string>
+  <string name="show_whiteboard_summ">Te permite escrever na Tela</string>
+  <string name="sample_deck">Deck de exemplo</string>
+  <string name="sample_deck_summ">Gerar deck de capitais se nenhum deck for encontrado</string>
+  <string name="corporal_punishments">Punições Corporais</string>
+  <string name="corporal_punishments_summ">Vibrar ao errar, que te ensinará</string>
+  <string name="write_answers">Escrita de Respostas</string>
+  <string name="write_answers_summ">Te permite escrever as respostas e compara-las com a resposta correta</string>
+  <string name="use_ruby_support">Fornecer suporte de anotação ruby</string>
+  <string name="use_ruby_support_summ">Se os caracteres \ ' [\ ' e \ '] \ ' forem encontrados,  então o texto delimitado é tratado como anotação ruby</string>
+  <string name="display_font_size">Tamanho relativo de fonte de exibição</string>
+  <string name="display_font_size_summ">O tamanho da fonte para usar no display relativo às definições do deck</string>
+  <string name="hide_question_in_answer">Ocultar questão ao exibir resposta?</string>
+  <string name="hide_question_in_answer_summ">Determina se a questão deveria ser ocultada quando a resposta é mostrada.</string>
+  <string name="deck_path">Pasta dos Deck </string>
+  <string name="deck_path_summ">Pasta onde seus decks são armazenados</string>
+  <string name="shareddeckpicker_title">Selecione a deck que você deseja baixar</string>
+  <string name="preferences_title">Preferências</string>
+  <string name="deckpreferences_title">Preferências do Deck</string>
+  <string name="about_title">Sobre</string>
+  <string name="cardeditor_title">Editor de Card</string>
+  <string name="loading_new_card">Carregando Card...</string>
+  <string name="loading_deck">Carregando Deck. Por favor espere...</string>
+  <string name="loading_shared_decks">Carregando decks compartilhados disponíveis...</string>
+  <string name="connection_unsuccessful">A conexão foi malsucedida. Verifique suas configurações de conexão e tente novamente, por favor.</string>
+  <string name="connection_needed">Nenhuma conexão com a Internet</string>
+  <string name="preferences">Preferências</string>
+  <string name="about">Sobre</string>
+  <string name="study_options">Opções de Estudo</string>
+  <string name="suspend">Suspender</string>
+  <string name="edit_card">Editar Card</string>
+  <string name="switch_another_deck">Mudar para outro deck</string>
+  <string name="get_shared_deck">Obter deck compartilhado</string>
+  <string name="downloading_shared_deck">Baixando deck compartilhado ...</string>
+  <string name="fact">fato</string>
+  <string name="facts">fatos</string>
+  <string name="saving_changes">Salvando Mudanças...</string>
+  <string name="session_question_limit_reached">Limite de questões por sessão atingido</string>
+  <string name="session_time_limit_reached">Limite de tempo por sessão atingido</string>
+  <string name="congratulations_finished_for_now">Parabéns! Você terminou por enquanto. Por favor, volte amanhã ou mude para outro deck. Decks compartilhados podem ser baixados utilizando o software Anki.</string>
+  <string name="about_content">&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;AnkiDroid:&lt;br/&gt;
+Cards de Memorização para Android&lt;/h2&gt;
+&lt;p&gt;AnkiDroid pode ler arquivos .anki produzidos pelo software &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt; para PC.&lt;/p&gt;
+&lt;p&gt;Para nos ajudar a fazer um AnkiDroid melhor, por favor nos envie qualquer bug que você encontrar...&lt;a href="http://code.google.com/p/ankidroid/issues"&gt;aqui&lt;/a&gt;, novas ideias de recursos são bem-vindas também!
+Por favor use o &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; e diga oi no &lt;a href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid é &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;Software Livre&lt;/a&gt;, então é encorajado a todos que &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;se junte&lt;/a&gt; aos &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contribuidores&lt;/a&gt; :-)
+Não-desenvolvedores conseguem ajudar também, por exemplo atualizando a wiki e os screenshots, &lt;a href="http://ichi2.net/anki/donate.html"&gt;doando&lt;/a&gt; para Anki, ou blogando sobre AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid é licenciado pela &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3&lt;/a&gt; e seu codigo fonte está disponível &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
+  <string name="review_early">Revisar antecipadamente</string>
+  <string name="error_message">Existem %d erros para reportar</string>
+  <string name="error_ok">Relatório de erros</string>
+  <string name="error_cancel">Não reportar erros</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>

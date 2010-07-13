@@ -1,133 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+<!--Generated with crowdin.net-->
 <resources>
-    <string name="CardEditorCancelButton">Cancel·lar</string>
-    <string name="CardEditorSaveButton">Desar</string>
-    
-    
-<string name="app_name">AnkiDroid</string>
-
-<string name="yes">Si</string>
-<string name="no">No</string>
-<string name="ok">Acceptar</string>
-
-
-<string name="deck_not_loaded">Error al carregar la baralla.</string>
-<string name="deck_not_loaded_detail">Si us plau, pulsi el menú i seleccioni una de les baralles emmagatzemades a la seva targeta SD.</string>
-<string name="deck_empty">La baralla està buida.</string>
-
-<color name="wb_fg_color">#B00000FF</color>
-<color name="wb_bg_color">#0000</color>
-
-<string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;file:///android_asset/flashcard_css&quot; /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=&quot;card&quot;&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
-
-<string name="deckpicker_title">Seleccioni una baralla de la seva targeta SD.</string>
-<string name="deckpicker_title_nosdcard">La targeta SD no està disponible</string>
-<string name="deckpicker_due">%1$d de %2$d pendents</string>
-<string name="deckpicker_new">%d noves avui</string>
-<string name="deckpicker_loaddeck">Carregant baralla...</string>
-<string name="deckpicker_nodeck">No s\'ha trobat cap baralla.</string>
-
-<string name="notify_ticker">Actualització de l\'aplicació</string>
-<string name="notify_title">AnkiDroid actualitzat</string>
-<string name="notify_message">Descarregar una nova versió</string>
+  <string name="CardEditorCancelButton">Cancel·lar</string>
+  <string name="CardEditorSaveButton">Desar</string>
+  <string name="app_name">AnkiDroid</string>
+  <string name="yes">Si</string>
+  <string name="no">No</string>
+  <string name="ok">OK</string>
+  <string name="deck_not_loaded">Error al carregar la baralla.</string>
+  <string name="deck_not_loaded_detail">Si us plau, pulsi el menú i seleccioni una de les baralles emmagatzemades a la seva targeta SD.</string>
+  <string name="deck_empty">La baralla està buida.</string>
+  <string name="deckpicker_title">Seleccioni una baralla de la seva targeta SD.</string>
+  <string name="deckpicker_title_nosdcard">La targeta SD no està disponible</string>
+  <string name="deckpicker_due">%1$d de %2$d pendents</string>
+  <string name="deckpicker_new">%d noves avui</string>
+  <string name="deckpicker_loaddeck">Carregant baralla...</string>
+  <string name="deckpicker_nodeck">No s\'ha trobat cap baralla.</string>
+  <string name="notify_ticker">Actualització de l\'aplicació</string>
+  <string name="notify_title">AnkiDroid actualitzat</string>
+  <string name="notify_message">Descarregar una nova versió</string>
 <string name="notification_title">Confirmar l\'actualització d\'AnkiDroid</string>
 <string name="notification_message">Una nova versió d\'AnkiDroid està disponible a l\'Android Market.\n\nVols descarregar-la?</string>
-<string name="notification_stop">No tornar a notificar-me sobre aquesta actualització</string>
-
-<string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecta l\'USB per accedir a les teves baralles.</string>
-
-
-
-<!-- deck_preferences.xml strings -->
-<string name="newcards_day_summ">El nombre màxim de targetes noves mostrades per dia.</string>
-<string name="newcards_day">Noves targetes / dia</string>
-<string name="session_time_limit">Límit de temps per sessió</string>
-<string name="session_time_limit_summ">El nombre de minuts en una sessió. Tria 0 si no vols cap límit.</string>
-<string name="session_question_limit">Límit de preguntes per sessió</string>
-<string name="session_question_limit_summ">El nombre de preguntes en una sessió. Tria 0 si no vols cap límit.</string>
-<string name="new_cards_order">Ordre targetes noves</string>
-<string name="new_cards_order_summ">L\'ordre en el que mostrar les targetes noves.</string>
-<string name="show_new_cards_in">Mostrar targetes noves en...</string>
-<string name="new_card_spacing">Distribució targetes noves</string>
-<string name="new_card_spacing_summ">Com distribuir les targetes noves durant la sessió.</string>
-<string name="show_new_cards">Mostrar targetes noves en...</string>
-<string name="review_cards_order">Ordre targetes a repassar</string>
-<string name="review_cards_in">Repassar targetes en...</string>
-<string name="review_cards_order_summ">L\'ordre en el que mostrar les targetes a repassar.</string>
-
-
-<!-- flashcard_portrait.xml strings -->
-<string name="overlay_on">Pissarra activada</string>
-<string name="overlay_off">Pissarra desactivada</string>
-<string name="show_answer">Mostrar resposta</string>
-<string name="show_question">Mostrar pregunta</string>
-<string name="card_hint">Flashcard</string>
-<string name="again">Un altre cop</string>
-<string name="hard">Difícil</string>
-<string name="good">Bé</string>
-<string name="easy">Fàcil</string>
-
-
-<!-- preferences.xml strings -->
-<string name="show_whiteboard">Mostrar temporitzador / pissarra</string>
-<string name="show_whiteboard_summ">Et permet escriure a la pantalla</string>
-<string name="sample_deck">Baralla de mostra</string>
-<string name="sample_deck_summ">Genera baralla de capitals si no trobada</string>
-<string name="corporal_punishments">Càstigs corporals</string>
-<string name="corporal_punishments_summ">Vibra al fallar, així n\'aprendràs</string>
-<string name="write_answers">Escriure respostes</string>
-<string name="write_answers_summ">Et permet escriure la resposta i comparar-la amb la solució correcta</string>
-<string name="deck_path">Directori baralles</string>
-<string name="deck_path_summ">Directori on les teves baralles es troben emmagatzemades</string>
-
-<!-- AndroidManifest.xml strings -->
-<string name="shareddeckpicker_title">Selecciona la baralla a descarregar</string>
-<string name="preferences_title">Preferències</string>
-<string name="deckpreferences_title">Preferències baralla</string>
-<string name="about_title">Sobre</string>
-<string name="cardeditor_title">Editor targeta</string>
-
-<!-- AnkiDroid.java strings -->
-<string name="loading_new_card">Carregant nova targeta...</string>
-<string name="loading_deck">Carregant baralla. Si us plau, esperi...</string>
+  <string name="notification_stop">No tornar a notificar-me sobre aquesta actualització</string>
+  <string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecta l\'USB per accedir a les teves baralles.</string>
+  <string name="newcards_day_summ">El nombre màxim de targetes noves mostrades per dia.</string>
+  <string name="newcards_day">Noves targetes / dia</string>
+  <string name="session_time_limit">Límit de temps per sessió</string>
+  <string name="session_time_limit_summ">El nombre de minuts en una sessió. Tria 0 si no vols cap límit.</string>
+  <string name="session_question_limit">Límit de preguntes per sessió</string>
+  <string name="session_question_limit_summ">El nombre de preguntes en una sessió. Tria 0 si no vols cap límit.</string>
+  <string name="new_cards_order">Ordre targetes noves</string>
+  <string name="new_cards_order_summ">L\'ordre en el que mostrar les targetes noves.</string>
+  <string name="show_new_cards_in">Mostrar targetes noves en...</string>
+  <string name="new_card_spacing">Distribució targetes noves</string>
+  <string name="new_card_spacing_summ">Com distribuir les targetes noves durant la sessió.</string>
+  <string name="show_new_cards">Mostrar targetes noves en...</string>
+  <string name="review_cards_order">Ordre targetes a repassar</string>
+  <string name="review_cards_in">Repassar targetes en...</string>
+  <string name="review_cards_order_summ">L\'ordre en el que mostrar les targetes a repassar.</string>
+  <string name="overlay_on">Pissarra activada</string>
+  <string name="overlay_off">Pissarra desactivada</string>
+  <string name="show_answer">Mostrar resposta</string>
+  <string name="show_question">Mostrar pregunta</string>
+  <string name="card_hint">Flashcard</string>
+  <string name="again">Un altre cop</string>
+  <string name="hard">Difícil</string>
+  <string name="good">Bé</string>
+  <string name="easy">Fàcil</string>
+  <string name="pref_cat_decks">Decks</string>
+  <string name="pref_cat_sync">Synchronization</string>
+  <string name="pref_cat_study">Study options</string>
+  <string name="pref_cat_qadisplay">Question and answer display</string>
+  <string name="username">Username</string>
+  <string name="password">Password</string>
+  <string name="sync_on_open">Sync on open</string>
+  <string name="sync_on_close">Sync on close</string>
+  <string name="show_whiteboard">Mostrar temporitzador / pissarra</string>
+  <string name="show_whiteboard_summ">Et permet escriure a la pantalla</string>
+  <string name="sample_deck">Baralla de mostra</string>
+  <string name="sample_deck_summ">Genera baralla de capitals si no trobada</string>
+  <string name="corporal_punishments">Càstigs corporals</string>
+  <string name="corporal_punishments_summ">Vibra al fallar, així n\'aprendràs</string>
+  <string name="write_answers">Escriure respostes</string>
+  <string name="write_answers_summ">Et permet escriure la resposta i comparar-la amb la solució correcta</string>
+  <string name="use_ruby_support">Provide ruby annotation support</string>
+  <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
+  <string name="display_font_size">Relative display font size</string>
+  <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck</string>
+  <string name="hide_question_in_answer">Hide question in answer?</string>
+  <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
+  <string name="deck_path">Directori baralles</string>
+  <string name="deck_path_summ">Directori on les teves baralles es troben emmagatzemades</string>
+  <string name="shareddeckpicker_title">Selecciona la baralla a descarregar</string>
+  <string name="preferences_title">Preferències</string>
+  <string name="deckpreferences_title">Preferències baralla</string>
+  <string name="about_title">Sobre</string>
+  <string name="cardeditor_title">Editor targeta</string>
+  <string name="loading_new_card">Carregant nova targeta...</string>
+  <string name="loading_deck">Carregant baralla. Si us plau, esperi...</string>
 <string name="loading_shared_decks">Carregant llista de baralles compartides...</string>
 <string name="connection_unsuccessful">No s\'ha pogut realitzar la connexió.</string>
 <string name="connection_needed">No hi ha internet</string>
-<string name="preferences">Preferències</string>
-<string name="about">Sobre</string>
-<string name="study_options">Opcions d\'estudi</string>
-<string name="suspend">Suspendre</string>
-<string name="edit_card">Editar targeta</string>
-<string name="switch_another_deck">Canviar a una altra baralla</string>
-<string name="get_shared_deck">Descarregar baralla compartida</string>
+  <string name="preferences">Preferències</string>
+  <string name="about">Sobre</string>
+  <string name="study_options">Opcions d\'estudi</string>
+  <string name="suspend">Suspendre</string>
+  <string name="edit_card">Editar targeta</string>
+  <string name="switch_another_deck">Canviar a una altra baralla</string>
+  <string name="get_shared_deck">Descarregar baralla compartida</string>
+  <string name="downloading_shared_deck">Descarregant baralla compartida...</string>
+  <string name="fact">fet</string>
+  <string name="facts">fets</string>
 
-<!-- SharedDeckPicker.java -->
-<string name="downloading_shared_deck">Descarregant baralla compartida...</string>
-
-<!-- SharedDeck.java -->
-<string name="fact">fet</string>
-<string name="facts">fets</string>
-
-<string name="saving_changes">Desant canvis...</string>
-<string name="session_question_limit_reached">S\'ha arribat al límit de preguntes de la sessió</string>
-<string name="session_time_limit_reached">S\'ha arribat al límit de temps de la sessió</string>
-<string name="congratulations_finished_for_now">Felicitats! Has acabat per ara. Si us plau, torna demà o canvia a una altra baralla. Si vols, pots descarregar baralles compartides utilizant l\'aplicació Anki d\'escriptori.</string>
-<string name="about_content">&lt;html&gt;
+  <string name="saving_changes">Desant canvis...</string>
+  <string name="session_question_limit_reached">S\'ha arribat al límit de preguntes de la sessió</string>
+  <string name="session_time_limit_reached">S\'ha arribat al límit de temps de la sessió</string>
+  <string name="congratulations_finished_for_now">Felicitats! Has acabat per ara. Si us plau, torna demà o canvia a una altra baralla. Si vols, pots descarregar baralles compartides utilizant l\'aplicació Anki d\'escriptori.</string>
+  <string name="about_content">&lt;html&gt;
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
 Flashcards per Android&lt;/h2&gt;
@@ -138,4 +107,9 @@ Per qualsevol dubte, utilitza la &lt;a href=&quot;http://ichi2.net/anki/wiki/And
 La gent sense habilitats de programació també pot ajudar moltíssim, per exemple, actualitzant la wiki i les captures de pantalla, &lt;a href=&quot;http://ichi2.net/anki/donate.html&quot;&gt;donant&lt;/a&gt; a Anki o bloguejant sobre AnkiDroid!&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
+  <string name="review_early">Review Early</string>
+  <string name="error_message">There are %d errors to report</string>
+  <string name="error_ok">Report errors</string>
+  <string name="error_cancel">Do not report errors</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>

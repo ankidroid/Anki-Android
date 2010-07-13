@@ -1,39 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+<!--Generated with crowdin.net-->
 <resources>
-    <!-- WARNING: Many values here match static values defined in Deck.java
-                  DO NOT edit them, unless you change their corresponding values -->
-    <!-- Used in deck preferences -->
-    <string-array name="newCardOrderLabels">
-        <item>Ordem Aleatória</item>
-        <item>Ordem de adição</item>
-        <item>Ordem inversa à de adição</item>  
-    </string-array>
+  <string-array name="newCardOrderLabels">
+    <item>Ordem aleatória</item>
+    <item>Ordem de Adição</item>
+    <item>Ordem inversa de à de Adição</item>
+  </string-array>
     <string-array name="newCardOrderVals">
         <item>0</item>
         <item>1</item>
         <item>2</item>  
     </string-array>
     
-    <string-array name="newCardSchedulingLabels">
+  <string-array name="newCardSchedulingLabels">
     <item>Espalhar entre revisões</item>
     <item>Depois das revisões</item>
-    <item>Antes das revisões</item>  
-    </string-array>
+    <item>Antes das revisões</item>
+  </string-array>
     
     <string-array name="newCardSchedulingVals">
     <item>0</item>
@@ -41,12 +24,12 @@
     <item>2</item>  
     </string-array>
     
-    <string-array name="revCardOrderLabels">
-    <item>Maior intervalo primeiro</item>
-    <item>Menor intervalo primeiro</item>
-    <item>Ordem programada</item>
-    <item>Ordem Aleatória</item>  
-    </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Intervalo maior primeiro</item>
+    <item>Intervalo menor primeiro</item>
+    <item>Ordem Programada</item>
+    <item>Ordem aleatória</item>
+  </string-array>
     
     <string-array name="revCardOrderVals">
     <item>0</item>
@@ -55,7 +38,7 @@
     <item>3</item>
     </string-array>
     
-    <string-array name="failedCardOptionLabels">
+  <string-array name="failedCardOptionLabels">
     <item>Mostrar cards errados logo</item>
     <item>Mostrar cards errados no final</item>
     <item>Mostrar cards errados em 10 minutos</item>
@@ -69,5 +52,5 @@
     <item>2</item>
     <item>3</item>
     <item>4</item>
-    </string-array>
+  </string-array>
 </resources>

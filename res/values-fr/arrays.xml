@@ -1,39 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+<!--Generated with crowdin.net-->
 <resources>
-    <!-- WARNING: Many values here match static values defined in Deck.java
-                  DO NOT edit them, unless you change their corresponding values -->
-    <!-- Used in deck preferences -->
-    <string-array name="newCardOrderLabels">
-        <item>Ordre aléatoire</item>
-        <item>Ordre d\'ajout</item>
-        <item>Ordre inverse d\'ajout</item>  
-    </string-array>
+  <string-array name="newCardOrderLabels">
+    <item>Ordre aléatoire</item>
+    <item>Ordre d\'ajout</item>
+    <item>Ordre d\'ajout inverse</item>
+  </string-array>
     <string-array name="newCardOrderVals">
         <item>0</item>
         <item>1</item>
         <item>2</item>  
     </string-array>
     
-    <string-array name="newCardSchedulingLabels">
+  <string-array name="newCardSchedulingLabels">
     <item>Distribuer parmi les révisions</item>
     <item>Après les révisions</item>
-    <item>Avant les révisions</item>  
-    </string-array>
+    <item>Avant les révisions</item>
+  </string-array>
     
     <string-array name="newCardSchedulingVals">
     <item>0</item>
@@ -41,12 +24,12 @@
     <item>2</item>  
     </string-array>
     
-    <string-array name="revCardOrderLabels">
-    <item>Plus grand intervalle d\'abord</item>
-    <item>Plus petit intervalle d\'abord</item>
+  <string-array name="revCardOrderLabels">
+    <item>Longs intervalles d\'abord</item>
+    <item>Courts intervalles d\'abord</item>
     <item>Ordre dû</item>
-    <item>Ordre aléatoire</item>  
-    </string-array>
+    <item>Ordre aléatoire</item>
+  </string-array>
     
     <string-array name="revCardOrderVals">
     <item>0</item>
@@ -55,12 +38,12 @@
     <item>3</item>
     </string-array>
     
-    <string-array name="failedCardOptionLabels">
-    <item>Montrer les cartes ratées d\'abord</item>
-    <item>Montrer les cartes ratées à la fin</item>
-    <item>Montrer les cartes ratées dans 10 minutes</item>
-    <item>Montrer les cartes ratées dans 8 heures</item>  
-    <item>Montrer les cartes ratées dans 3 jours</item>   
+  <string-array name="failedCardOptionLabels">
+    <item>Revoir les cartes ratées bientot</item>
+    <item>Revoir les cartes ratées à la fin</item>
+    <item>Revoir les cartes ratées dans 10 minutes</item>
+    <item>Revoir les cartes ratées dans 8 heures</item>
+    <item>Revoir les cartes ratées dans 3 jours</item>
     </string-array>
     
     <string-array name="failedCardOptionVals">
@@ -69,5 +52,5 @@
     <item>2</item>
     <item>3</item>
     <item>4</item>
-    </string-array>
+  </string-array>
 </resources>

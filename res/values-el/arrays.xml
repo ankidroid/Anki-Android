@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>Τυχαία σειρά</item>
+    <item>Τη σειρά προσθήκης</item>
+    <item>Την αντίστροφη σειρά προσθήκης</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>Ενδιαμέσου των επαναλήψεων</item>
+    <item>Μετά τις επαναλήψεις</item>
+    <item>Πριν τις επαναλήψεις</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Προτεραιότητα σε μεγαλύτερα χρονικα διαστήματα</item>
+    <item>Προτεραιότητα σε μικρότερα χρονικα διαστήματα</item>
+    <item>Σειρά αναμονής</item>
+    <item>Τυχαία σειρά</item>
+  </string-array>
+  <string-array name="failedCardOptionLabels">
+    <item>Επανάληψη των αποτυχημένων καρτών σύντομα</item>
+    <item>Επανάληψη των αποτυχημένων καρτών στο τέλος</item>
+    <item>Επανάληψη των αποτυχημένων καρτών σε 10 λεπτά</item>
+    <item>Επανάληψη των αποτυχημένων καρτών σε 8 ώρες</item>
+    <item>Επανάληψη των αποτυχημένων καρτών σε 3 μέρες</item>
+  </string-array>
+</resources>
