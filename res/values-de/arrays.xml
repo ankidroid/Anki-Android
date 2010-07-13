@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>In zufälliger Reihenfolge</item>
+    <item>In Hinzufügungsreihenfolge</item>
+    <item>In umgekehrter Hinzufügungsreihenfolge</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>Verteilt über Abfrage</item>
+    <item>Nach Abfrage</item>
+    <item>Vor Abfrage</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Größtes Intervall zuerst</item>
+    <item>Kleinstes Intervall zuerst</item>
+    <item>Reihenfolge fälliger Karten</item>
+    <item>Zufällige Reihenfolge</item>
+  </string-array>
+  <string-array name="failedCardOptionLabels">
+    <item>Zeige nichtgewusste Karten bald</item>
+    <item>Zeige nichtgewusste Karten am Schluß</item>
+    <item>Zeige nichtgewusste Karten in 10 Minuten</item>
+    <item>Zeige nichtgewusste Karten in 8 Stunden</item>
+    <item>Zeige nichtgewusste Karten in 3 Tagen</item>
+  </string-array>
+</resources>

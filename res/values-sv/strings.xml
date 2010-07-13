@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string name="CardEditorCancelButton">Avbryt</string>
+  <string name="CardEditorSaveButton">Spara</string>
+  <string name="app_name">Ankidroid</string>
+  <string name="yes">Ja</string>
+  <string name="no">Nej</string>
+  <string name="ok">OK</string>
+  <string name="deck_not_loaded">Kunde inte ladda kortlek.</string>
+  <string name="deck_not_loaded_detail">Var vänlig tryck meny och välj en av kortlekarna sparade på ditt SD-kort.</string>
+  <string name="deck_empty">Kortleken är tom.</string>
+  <string name="deckpicker_title">Välj en kortlek du kopierade till ditt SD-kort</string>
+  <string name="deckpicker_title_nosdcard">SD-kortet är frånkopplat</string>
+  <string name="deckpicker_due">%1$d av %2$d i kö</string>
+  <string name="deckpicker_new">%d nya i dag</string>
+  <string name="deckpicker_loaddeck">Laddar kortlek...</string>
+  <string name="deckpicker_nodeck">Hittade inga kortlekar.</string>
+  <string name="notify_ticker">Programuppdatering</string>
+  <string name="notify_title">Ankidroid uppdaterad</string>
+  <string name="notify_message">Ladda ner en ny version</string>
+  <string name="notification_title">Bekräfta Ankidroid Uppdatera</string>
+  <string name="notification_message">En ny version av Ankidroid finns tillgänglig i Android Market.\n\nVill du installera den?</string>
+  <string name="notification_stop">Medela mig inte om denna uppdatering igen</string>
+  <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
+  <string name="newcards_day_summ">Maximala antalet nya kort per dag.</string>
+  <string name="newcards_day">Nya kort / dag</string>
+  <string name="session_time_limit">Tidsgräns per studiepass</string>
+  <string name="session_time_limit_summ">Antal minuter per studiepass. Välj 0 för obegränsad.</string>
+  <string name="session_question_limit">Antal frågor per studiepass</string>
+  <string name="session_question_limit_summ">Antal frågor per studiepass. Välj 0 för obegränsat.</string>
+  <string name="new_cards_order">Ordning på nya kort</string>
+  <string name="new_cards_order_summ">I vilken ordning nya kort visas.</string>
+  <string name="show_new_cards_in">Visa nya kort om...</string>
+  <string name="new_card_spacing">"Nya kort"-avstånd</string>
+  <string name="new_card_spacing_summ">Hur nya kort distribueras under repetitionen.</string>
+  <string name="show_new_cards">Visa nya kort...</string>
+  <string name="review_cards_order">Kortens repetitionsordning</string>
+  <string name="review_cards_in">Redovisa kort om...</string>
+  <string name="review_cards_order_summ">I vilken ordning repeterade kort ska visas.</string>
+  <string name="overlay_on">Whiteboard På</string>
+  <string name="overlay_off">Whiteboard Av</string>
+  <string name="show_answer">Visa Svar</string>
+  <string name="show_question">Visa Fråga</string>
+  <string name="card_hint">Flashkort</string>
+  <string name="again">Igen</string>
+  <string name="hard">Svår</string>
+  <string name="good">Bra</string>
+  <string name="easy">Lätt</string>
+  <string name="pref_cat_decks">Kortlekar</string>
+  <string name="pref_cat_sync">Synkronisering</string>
+  <string name="pref_cat_study">Instuderingsalternativ</string>
+  <string name="pref_cat_qadisplay">Visning av frågor och svar</string>
+  <string name="username">Användarnamn</string>
+  <string name="password">Lösenord</string>
+  <string name="sync_on_open">Synka vid öppning</string>
+  <string name="sync_on_close">Synka vid avslut</string>
+  <string name="show_whiteboard">Visa tidur / whiteboard</string>
+  <string name="show_whiteboard_summ">Låter dig skriva på skärmen</string>
+  <string name="sample_deck">Exempelkortlek</string>
+  <string name="sample_deck_summ">Genererar huvudstadskortlek om ingen kortlek finns</string>
+  <string name="corporal_punishments">Fysisk bestraffning</string>
+  <string name="corporal_punishments_summ">Vibrerar vid fel svar</string>
+  <string name="write_answers">Skriv svar</string>
+  <string name="write_answers_summ">Låter dig skriva svaret och jämföra med det korrekta svaret</string>
+  <string name="use_ruby_support">Stöd för ruby kommentarer</string>
+  <string name="use_ruby_support_summ">Om tecknet \'[\' och  \']\' hittas så hanteras inramad text som ruby-anteckning</string>
+  <string name="display_font_size">Relativ teckenstorlek</string>
+  <string name="display_font_size_summ">Teckenstorleken anpassas relativt till inställningarna i kortleken</string>
+  <string name="hide_question_in_answer">Dölj frågan vid svar?</string>
+  <string name="hide_question_in_answer_summ">Anger om frågan ska döljas när svaret visas.</string>
+  <string name="deck_path">Sökväg till kortlekarna</string>
+  <string name="deck_path_summ">Sökväg vart dina kortlekar är lagrade</string>
+  <string name="shareddeckpicker_title">Välj den kortlek du vill ladda ner</string>
+  <string name="preferences_title">Inställningar</string>
+  <string name="deckpreferences_title">Kortleksinställningar</string>
+  <string name="about_title">Om</string>
+  <string name="cardeditor_title">Kort editor</string>
+  <string name="loading_new_card">Laddar nästa kort...</string>
+  <string name="loading_deck">Laddar kortlek. Var god vänta...</string>
+  <string name="loading_shared_decks">Laddar tillgängliga delade kortlekar...</string>
+  <string name="connection_unsuccessful">Kunde inte ansluta. Var god kontrollera dina internetinställningar och försök igen.</string>
+  <string name="connection_needed">Ingen internetanslutning</string>
+  <string name="preferences">Inställningar</string>
+  <string name="about">Om</string>
+  <string name="study_options">Instuderingsalternativ</string>
+  <string name="suspend">Åtsidosätt</string>
+  <string name="edit_card">Ändra kort</string>
+  <string name="switch_another_deck">Växla till en annan kortlek</string>
+  <string name="get_shared_deck">Hämta delad kortlek</string>
+  <string name="downloading_shared_deck">Laddar ner dela kortlek...</string>
+  <string name="fact">kort</string>
+  <string name="facts">kort</string>
+  <string name="saving_changes">Sparar ändringar...</string>
+  <string name="session_question_limit_reached">Studiepassets frågegräns är nådd</string>
+  <string name="session_time_limit_reached">Studiepassets tidsgräns är nådd</string>
+  <string name="congratulations_finished_for_now">Grattis! Du är klar för idag. Kom tillbaka imorgon eller växla till en annan kortlek. Du kan även ladda ner delade kortlekar med Anki.</string>
+  <string name="about_content">&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;AnkiDroid:&lt;br/&gt;
+Flashkort för Android&lt;/h2&gt;
+&lt;p&gt;AnkiDroid kan läsa .anki-filer producerade av &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;För att hjälpa oss, var god och rapportera eventuella buggar &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;här&lt;/a&gt;, förslag på nya funktioner är också välkommna!
+Var god använd &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki:t&lt;/a&gt; och kom förbi &lt;a href="http://groups.google.com/group/anki-android"&gt;forumet&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid är ett &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;öppen källkodsprojekt &lt;/a&gt;, så alla uppmanas att &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;gå med&lt;/a&gt; bland &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;utvecklarna&lt;/a&gt; :-)
+De som inte kan programmera får gärna hjälpa till med till exempel att uppdatera wiki:t och skärmdumpar, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donera&lt;/a&gt; till Anki, eller blogga om AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid släps under &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 licens&lt;/a&gt; och källkoden finns tillgänglig &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;här&lt;/a&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
+  <string name="review_early">Repetera tidigare</string>
+  <string name="error_message">Det finns %d fel att rapportera</string>
+  <string name="error_ok">Rapportera fel</string>
+  <string name="error_cancel">Rapportera inte fel</string>
+  <string name="error_email">report@exempel.org</string>
+</resources>

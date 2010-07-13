@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>Slumpvis ordning</item>
+    <item>Ordningen de lades till</item>
+    <item>Motsatta ordning de lades till</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>Fördela bland repetitioner</item>
+    <item>Efter genomgång</item>
+    <item>Innan genomgång</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Störst intervall först</item>
+    <item>Minsta intervall först</item>
+    <item>Efter förfallotid</item>
+    <item>Slumpmässig ordning</item>
+  </string-array>
+  <string-array name="failedCardOptionLabels">
+    <item>Visa felsvarade kort snarast</item>
+    <item>Visa felbesvarade kort sist</item>
+    <item>Visa felsvarade kort om 10 minuter</item>
+    <item>Visa felsvarade kort om 8 timmar</item>
+    <item>Visa felsvarade kort om 3 dagar</item>
+  </string-array>
+</resources>
