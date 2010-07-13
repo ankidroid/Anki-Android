@@ -298,7 +298,10 @@ public class Deck
 		// Ensure necessary indices are available
 		deck.updateDynamicIndices();
 		// Save counts to determine if we should save deck after check
-		int oldCount = deck.failedSoonCount + deck.revCount + deck.newCount;
+		int oldFailedNowCount = deck.failedNowCount;
+		int oldFailedSoonCount = deck.failedSoonCount;
+		int oldRevCount = deck.revCount;
+		int oldNewCount = deck.newCount;
 		// Update counts
 		deck.rebuildQueue();
 		
@@ -328,9 +331,12 @@ public class Deck
 		}
 
 		// Save deck to database if it has been modified
-		if ((oldCount != (deck.failedSoonCount + deck.revCount + deck.newCount)) || deck.modifiedSinceSave())
+		if (oldFailedNowCount != deck.failedNowCount ||
+				oldFailedSoonCount != deck.failedSoonCount ||
+				oldRevCount != deck.revCount ||
+				oldNewCount != deck.newCount || deck.modifiedSinceSave())
 			deck.commitToDB();
-		
+
 		// Create a temporary view for random new cards. Randomizing the cards by themselves
 		// as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
 		AnkiDb.database.execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS " +
