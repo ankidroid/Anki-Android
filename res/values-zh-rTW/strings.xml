@@ -6,6 +6,7 @@
   <string name="app_name">Ankidroid</string>
   <string name="yes">是</string>
   <string name="no">否</string>
+  <string name="ok">確定</string>
   <string name="deck_not_loaded">載入牌組失敗。</string>
   <string name="deck_not_loaded_detail">請按Menu鍵並選取SD卡中的牌組。</string>
   <string name="deck_empty">牌組中沒有卡片。</string>
@@ -47,6 +48,14 @@
   <string name="hard">困難</string>
   <string name="good">可以</string>
   <string name="easy">簡單</string>
+  <string name="pref_cat_decks">牌組</string>
+  <string name="pref_cat_sync">同步</string>
+  <string name="pref_cat_study">複習選項</string>
+  <string name="pref_cat_qadisplay">問答顯示</string>
+  <string name="username">使用者名稱</string>
+  <string name="password">密碼</string>
+  <string name="sync_on_open">開啟時同步</string>
+  <string name="sync_on_close">關閉時同步</string>
   <string name="show_whiteboard">計時器/白板</string>
   <string name="show_whiteboard_summ">讓你可以在螢幕上畫畫</string>
   <string name="sample_deck">範例牌組</string>
@@ -55,17 +64,53 @@
   <string name="corporal_punishments_summ">答錯的時候振動處罰你</string>
   <string name="write_answers">填寫答案</string>
   <string name="write_answers_summ">讓你可以填寫答案，和正確答案比對</string>
+  <string name="use_ruby_support">支援Ruby語言</string>
+  <string name="use_ruby_support_summ">如果包含\'[\'或\']\'符號，當作Ruby語言處理</string>
+  <string name="display_font_size">相對顯示字型大小</string>
+  <string name="display_font_size_summ">相對於牌組中定義的字型大小</string>
+  <string name="hide_question_in_answer">隱藏題目？</string>
+  <string name="hide_question_in_answer_summ">顯示答案時是否隱藏題目。</string>
   <string name="deck_path">牌組路徑</string>
   <string name="deck_path_summ">設定儲存牌組的目錄</string>
+  <string name="shareddeckpicker_title">選擇你想下載的牌組</string>
+  <string name="preferences_title">偏好設定</string>
+  <string name="deckpreferences_title">牌組偏好設定</string>
+  <string name="about_title">關於</string>
+  <string name="cardeditor_title">卡片編輯器</string>
   <string name="loading_new_card">正在載入新卡片…</string>
   <string name="loading_deck">正在載入牌組。請稍等…</string>
+  <string name="loading_shared_decks">正在載入共享牌組...</string>
+  <string name="connection_unsuccessful">連線失敗。請檢查您的連接設置，然後再試一次。</string>
+  <string name="connection_needed">沒有網路連線</string>
   <string name="preferences">偏好設定</string>
   <string name="about">關於</string>
   <string name="study_options">複習選項</string>
   <string name="suspend">暫停</string>
   <string name="edit_card">編輯卡片</string>
   <string name="switch_another_deck">更換牌組</string>
+  <string name="get_shared_deck">下載共享牌組</string>
+  <string name="downloading_shared_deck">正在下載共享牌組...</string>
+  <string name="fact">fact</string>
+  <string name="facts">facts</string>
   <string name="saving_changes">正在儲存設定…</string>
   <string name="session_question_limit_reached">超過回合限制題數</string>
   <string name="session_time_limit_reached">超過回合限制時間</string>
+  <string name="congratulations_finished_for_now">恭喜！您目前已經完成。請明天再來或切換到另一組卡片。共享的牌組可以用電腦的Anki軟體下載。</string>
+  <string name="about_content">&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;AnkiDroid：&lt;br/&gt;
+Android單字卡程式&lt;/h2&gt;
+&lt;p&gt;AnkiDroid可以讀取電腦上&lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;軟體製造出的 .anki 檔。&lt;/p&gt;
+&lt;p&gt;幫我們讓AnkiDroid更好！請&lt;a href="http://code.google.com/p/ankidroid/issues"&gt;回報&lt;/a&gt;你發現的錯誤，也歡迎提出新功能建議！
+你也可以用&lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt;或來&lt;a href="http://groups.google.com/group/anki-android"&gt;論壇&lt;/a&gt;跟我們打個招呼。&lt;/p&gt;
+&lt;p&gt;AnkiDroid是&lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;自由軟體&lt;/a&gt;大家都可以來&lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;參與&lt;/a&gt;，當個&lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;開發者&lt;/a&gt; :-)
+不會寫程式的人也可以幫忙，例如幫忙更新wiki和抓螢幕圖、&lt;a href="http://ichi2.net/anki/donate.html"&gt;捐款&lt;/a&gt;給Anki，或在部落格上寫AnkiDroid的文章！&lt;/p&gt;
+&lt;p&gt;AnkiDroid以&lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 授權&lt;/a&gt;，原始碼可以在&lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;這裡&lt;/a&gt;下載。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
+  <string name="review_early">提早複習</string>
+  <string name="error_message">共有%d個錯誤要回報</string>
+  <string name="error_ok">回報錯誤</string>
+  <string name="error_cancel">不要回報錯誤</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>

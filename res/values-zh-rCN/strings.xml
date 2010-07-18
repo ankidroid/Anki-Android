@@ -6,6 +6,7 @@
   <string name="app_name">Ankidroid</string>
   <string name="yes">是</string>
   <string name="no">否</string>
+  <string name="ok">OK</string>
   <string name="deck_not_loaded">加载牌组失败。</string>
   <string name="deck_not_loaded_detail">请按Menu键并选择SD卡中的牌组。</string>
   <string name="deck_empty">牌组中没有卡片。</string>
@@ -28,7 +29,7 @@
   <string name="session_time_limit">回合时间限制</string>
   <string name="session_time_limit_summ">一回合复习最多几分钟。如果不想限制，请设置0。</string>
   <string name="session_question_limit">回合题数限制</string>
-  <string name="session_question_limit_summ">一回合复习最多几题。如果不想限制，请设置0。</string>
+  <string name="session_question_limit_summ">设定每次的问题数量。如果不想限制，请设置0。</string>
   <string name="new_cards_order">新卡片顺序</string>
   <string name="new_cards_order_summ">有新卡片时出现的顺序。</string>
   <string name="show_new_cards_in">有新卡片的时候…</string>
@@ -47,6 +48,14 @@
   <string name="hard">困难</string>
   <string name="good">一般</string>
   <string name="easy">简单</string>
+  <string name="pref_cat_decks">Decks</string>
+  <string name="pref_cat_sync">同步</string>
+  <string name="pref_cat_study">Study options</string>
+  <string name="pref_cat_qadisplay">Question and answer display</string>
+  <string name="username">用户名</string>
+  <string name="password">Password</string>
+  <string name="sync_on_open">同步打开</string>
+  <string name="sync_on_close">同步关闭</string>
   <string name="show_whiteboard">显示定时器/白板</string>
   <string name="show_whiteboard_summ">让你可以在屏幕上画画</string>
   <string name="sample_deck">牌组例子</string>
@@ -55,17 +64,53 @@
   <string name="corporal_punishments_summ">答错的时候以振动来惩罚你</string>
   <string name="write_answers">填写答案</string>
   <string name="write_answers_summ">让你可以填写答案，和正确答案比对</string>
+  <string name="use_ruby_support">Provide ruby annotation support</string>
+  <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
+  <string name="display_font_size">Relative display font size</string>
+  <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck</string>
+  <string name="hide_question_in_answer">Hide question in answer?</string>
+  <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
   <string name="deck_path">牌组路径</string>
   <string name="deck_path_summ">设置保存牌组的目录</string>
+  <string name="shareddeckpicker_title">Select the deck you want to download</string>
+  <string name="preferences_title">Preferences</string>
+  <string name="deckpreferences_title">Deck Preferences</string>
+  <string name="about_title">About</string>
+  <string name="cardeditor_title">Card Editor</string>
   <string name="loading_new_card">正在加载新卡片…</string>
   <string name="loading_deck">正在加载牌组。请稍等…</string>
+  <string name="loading_shared_decks">Loading available shared decks...</string>
+  <string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>
+  <string name="connection_needed">没有Internet连接</string>
   <string name="preferences">偏好设置</string>
   <string name="about">关于</string>
   <string name="study_options">复习选项</string>
   <string name="suspend">暂停</string>
   <string name="edit_card">编辑卡片</string>
   <string name="switch_another_deck">更换牌组</string>
+  <string name="get_shared_deck">Get shared deck</string>
+  <string name="downloading_shared_deck">Downloading shared deck...</string>
+  <string name="fact">fact</string>
+  <string name="facts">facts</string>
   <string name="saving_changes">正在保存设置…</string>
   <string name="session_question_limit_reached">超过回合限制题数</string>
   <string name="session_time_limit_reached">超过回合限制时间</string>
+  <string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.</string>
+  <string name="about_content">&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;AnkiDroid:&lt;br/&gt;
+Flashcards for Android&lt;/h2&gt;
+&lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
+&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;here&lt;/a&gt;, new feature ideas are very welcome too!
+Please use the &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid is &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;join&lt;/a&gt; the &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contributors&lt;/a&gt; :-)
+Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid is released under the &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
+  <string name="review_early">Review Early</string>
+  <string name="error_message">There are %d errors to report</string>
+  <string name="error_ok">报告错误</string>
+  <string name="error_cancel">Do not report errors</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>
