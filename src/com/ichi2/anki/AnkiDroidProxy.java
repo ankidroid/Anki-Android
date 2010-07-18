@@ -119,7 +119,7 @@ public class AnkiDroidProxy {
 		return sharedDecks;
     }
 
-	public static String downloadSharedDeck(SharedDeck sharedDeck) throws ClientProtocolException, IOException {
+	public static String downloadSharedDeck(SharedDeck sharedDeck, String deckPath) throws ClientProtocolException, IOException {
     	Log.i(TAG, "Downloading deck " + sharedDeck.getId());
     	
 		HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/get?id=" + sharedDeck.getId());
@@ -130,13 +130,13 @@ public class AnkiDroidProxy {
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		Log.i(TAG, "Connection finished!");
 		InputStream is = httpResponse.getEntity().getContent();
-		String deckFilename = handleFile(is, sharedDeck);
+		String deckFilename = handleFile(is, sharedDeck, deckPath);
 		is.close();
 		
 		return deckFilename;
 	}
 	
-	private static String handleFile(InputStream source, SharedDeck sharedDeck) throws IOException
+	private static String handleFile(InputStream source, SharedDeck sharedDeck, String deckPath) throws IOException
 	{
 		String deckFilename = "";
 		
@@ -149,10 +149,10 @@ public class AnkiDroidProxy {
 			title = title.replace("^", "");
 			title = title.substring(0, java.lang.Math.min(title.length(), 40));
 			
-			if(new File(AnkiDroidApp.getStorageDirectory() + "/" + title + ".anki").exists())
+			if(new File(deckPath + "/" + title + ".anki").exists())
 				title += System.currentTimeMillis();
 			
-			String partialDeckPath = AnkiDroidApp.getStorageDirectory() + "/" + title;
+			String partialDeckPath = deckPath + "/" + title;
 			deckFilename = partialDeckPath + ".anki";
 			
 			ZipEntry zipEntry = null;
