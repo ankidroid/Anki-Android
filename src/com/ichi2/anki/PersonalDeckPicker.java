@@ -99,7 +99,12 @@ public class PersonalDeckPicker extends Activity {
     {
     	super.onDestroy();
     	if(mUnmountReceiver != null)
+    	{
     		unregisterReceiver(mUnmountReceiver);
+    	}
+    	// Needed in order to not try to show the alert when the Activity does not exist anymore
+    	connectionFailedAlert = null;
+    	
     }
 	
     /**
@@ -170,7 +175,10 @@ public class PersonalDeckPicker extends Activity {
 			}
 			else
 			{
-				connectionFailedAlert.show();
+				if(connectionFailedAlert != null)
+				{
+					connectionFailedAlert.show();
+				}
 			}
 		}
 

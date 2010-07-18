@@ -42,12 +42,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final String TAG = "Connection";
     public static Context context;
     
-    public static final int TASK_TYPE_GET_SHARED_DECKS = 0;
-    public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 1;
-    public static final int TASK_TYPE_GET_PERSONAL_DECKS = 2;
-    public static final int TASK_TYPE_DOWNLOAD_PERSONAL_DECK = 3;
-    public static final int TASK_TYPE_SYNC_DECK = 4;
-    public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 5;
+    public static final int TASK_TYPE_LOGIN = 0;
+    public static final int TASK_TYPE_GET_SHARED_DECKS = 1;
+    public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 2;
+    public static final int TASK_TYPE_GET_PERSONAL_DECKS = 3;
+    public static final int TASK_TYPE_DOWNLOAD_PERSONAL_DECK = 4;
+    public static final int TASK_TYPE_SYNC_DECK = 5;
+    public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 6;
 
 	private static Connection instance;
 	private TaskListener listener;
@@ -101,6 +102,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     	listener.onProgressUpdate(values);
     }
     
+    public static Connection login(TaskListener listener, Payload data)
+    {
+    	data.taskType = TASK_TYPE_LOGIN;
+    	return launchConnectionTask(listener, data);
+    }
+    
 	public static Connection getSharedDecks(TaskListener listener, Payload data)
 	{
 		data.taskType = TASK_TYPE_GET_SHARED_DECKS;
@@ -146,6 +153,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		
 		switch(data.taskType)
 		{
+			case TASK_TYPE_LOGIN:
+				return doInBackgroundLogin(data);
+				
 			case TASK_TYPE_GET_SHARED_DECKS:
 				return doInBackgroundGetSharedDecks(data);
 
@@ -169,6 +179,27 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		}
 	}
 
+	private Payload doInBackgroundLogin(Payload data)
+	{
+		try {
+			String username = (String) data.data[0];
+			String password = (String) data.data[1];
+			AnkiDroidProxy server = new AnkiDroidProxy(username, password);
+			
+			int status = server.connect();
+			if(status != AnkiDroidProxy.LOGIN_OK)
+			{
+				data.success = false;
+				data.errorType = status;
+			}
+		} catch (Exception e) {
+			data.success = false;
+			data.exception = e;
+			Log.e(TAG, "Error trying to log in");
+		}
+		return data;
+	}
+	
 	private Payload doInBackgroundGetSharedDecks(Payload data)
 	{
 		try {
@@ -185,7 +216,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 	private Payload doInBackgroundDownloadSharedDeck(Payload data)
 	{
 		try {
-			data.result = AnkiDroidProxy.downloadSharedDeck((SharedDeck)data.data[0]);
+			data.result = AnkiDroidProxy.downloadSharedDeck((SharedDeck)data.data[0], (String)data.data[1]);
 		} catch (Exception e) {
 			data.success = false;
 			data.exception = e;

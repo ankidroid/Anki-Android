@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<LinearLayout android:id="@+id/logged_text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_centerVertical="true"
+		android:orientation="horizontal">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/logged_as"
+			android:textSize="20dp"/>
+	
+		<TextView android:id="@+id/username_logged_in"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="6dp"
+			android:textSize="20dp"
+			android:textStyle="bold"/>
+		
+	</LinearLayout>
+	
+	<Button android:id="@+id/logout_button"
+		android:layout_width="80dp"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/logged_text"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="10dp"
+		android:text="@string/logout"/>
+		
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:paddingLeft="10dp"
+	android:paddingTop="15dp"
+	android:paddingRight="10dp"
+	android:paddingBottom="15dp"
+	android:orientation="vertical">
+	
+	<TextView android:id="@+id/username_title"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/username"/>
+		
+	<EditText android:id="@+id/username"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:inputType="textPersonName"/>
+		
+	<TextView android:id="@+id/password_title"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dp"
+		android:text="@string/password"/>
+		
+	<EditText android:id="@+id/password"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:inputType="textPassword"/>
+		
+	<Button android:id="@+id/login_button"
+		android:layout_width="80dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:layout_gravity="right"
+		android:text="@string/login"/>
+	
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_marginTop="20dp">
+		
+		<TextView android:id="@+id/no_account_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:layout_weight="2"
+			android:text="@string/sign_up_description"
+			android:textStyle="bold"
+			android:textSize="16dp"/>
+			
+		<Button android:id="@+id/sign_up_button"
+			android:layout_width="80dp"
+			android:layout_height="wrap_content"
+			android:text="@string/sign_up"/>
+		
+	</LinearLayout>
+	
+</LinearLayout>

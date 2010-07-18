@@ -472,17 +472,17 @@ public class AnkiDroid extends Activity
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		menu.add(MAIN_MENU, MENU_OPEN, 0, getString(R.string.switch_another_deck));
-		menu.add(MAIN_MENU, MENU_PREFERENCES, 1, getString(R.string.preferences));
+		menu.add(MAIN_MENU, MENU_PREFERENCES, 1, getString(R.string.menu_preferences));
 		menu.add(MAIN_MENU, MENU_DECKOPTS, 2, getString(R.string.study_options));
-		menu.add(MAIN_MENU, MENU_DECK_PROPERTIES, 3, getString(R.string.deck_properties));
-		SubMenu downloadDeckSubMenu = menu.addSubMenu(getString(R.string.download_deck));
-		downloadDeckSubMenu.add(SUBMENU_DOWNLOAD, MENU_DOWNLOAD_PERSONAL_DECK, 0, getString(R.string.download_personal_deck));
-		downloadDeckSubMenu.add(SUBMENU_DOWNLOAD, MENU_DOWNLOAD_SHARED_DECK, 1, getString(R.string.download_shared_deck));
-		menu.add(MAIN_MENU, MENU_SYNC, 5, R.string.synchronize);
+		menu.add(MAIN_MENU, MENU_DECK_PROPERTIES, 3, getString(R.string.menu_deck_properties));
+		SubMenu downloadDeckSubMenu = menu.addSubMenu(getString(R.string.menu_download_deck));
+		downloadDeckSubMenu.add(SUBMENU_DOWNLOAD, MENU_DOWNLOAD_PERSONAL_DECK, 0, getString(R.string.menu_download_personal_deck));
+		downloadDeckSubMenu.add(SUBMENU_DOWNLOAD, MENU_DOWNLOAD_SHARED_DECK, 1, getString(R.string.menu_download_shared_deck));
+		menu.add(MAIN_MENU, MENU_SYNC, 5, R.string.menu_synchronize);
 		menu.add(MAIN_MENU, MENU_SYNC_FROM_SERVER_PAYLOAD, 6, "Sync from payload");
-		menu.add(MAIN_MENU, MENU_EDIT, 7, getString(R.string.edit_card)); //Edit the current card.
-		menu.add(MAIN_MENU, MENU_SUSPEND, 8, getString(R.string.suspend));
-		menu.add(MAIN_MENU, MENU_ABOUT, 9, getString(R.string.about));
+		menu.add(MAIN_MENU, MENU_EDIT, 7, getString(R.string.menu_edit_card)); //Edit the current card.
+		menu.add(MAIN_MENU, MENU_SUSPEND, 8, getString(R.string.menu_suspend_card));
+		menu.add(MAIN_MENU, MENU_ABOUT, 9, getString(R.string.menu_about));
 		return true;
 	}
 

@@ -100,6 +100,9 @@ public class AnkiDroidProxy {
 	 * Synchronization
 	 */
 	
+	public static final int LOGIN_OK = 0;
+	public static final int LOGIN_INVALID_USER_PASS = 1;
+	
 	public AnkiDroidProxy(String user, String password)
 	{
 		this.username = user;
@@ -118,7 +121,8 @@ public class AnkiDroidProxy {
 		return timestamp;
 	}
 	
-    public void connect()
+	//TODO: Discover and handle all possible server errors (status) on connect
+    public int connect()
     {
     	if(decks == null)
     	{
@@ -131,11 +135,18 @@ public class AnkiDroidProxy {
     				Log.i(TAG, "Server decks = " + decks.toString());
     				timestamp = jsonDecks.getDouble("timestamp");
     				Log.i(TAG, "Server timestamp = " + timestamp);
+    				return LOGIN_OK;
+    			}
+    			else if("invalidUserPass".equalsIgnoreCase(jsonDecks.getString("status")))
+    			{
+    				return LOGIN_INVALID_USER_PASS;
     			}
     		} catch (JSONException e) {
     			Log.i(TAG, "JSONException = " + e.getMessage());
     		}
     	}
+    	
+    	return LOGIN_OK;
     }
     
     public boolean hasDeck(String name)
@@ -438,7 +449,7 @@ public class AnkiDroidProxy {
 		return sharedDecks;
     }
 
-	public static String downloadSharedDeck(SharedDeck sharedDeck) throws ClientProtocolException, IOException {
+	public static String downloadSharedDeck(SharedDeck sharedDeck, String deckPath) throws ClientProtocolException, IOException {
     	Log.i(TAG, "Downloading deck " + sharedDeck.getId());
     	
 		HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/get?id=" + sharedDeck.getId());
@@ -449,13 +460,13 @@ public class AnkiDroidProxy {
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		Log.i(TAG, "Connection finished!");
 		InputStream is = httpResponse.getEntity().getContent();
-		String deckFilename = handleFile(is, sharedDeck);
+		String deckFilename = handleFile(is, sharedDeck, deckPath);
 		is.close();
 		
 		return deckFilename;
 	}
 	
-	private static String handleFile(InputStream source, SharedDeck sharedDeck) throws IOException
+	private static String handleFile(InputStream source, SharedDeck sharedDeck, String deckPath) throws IOException
 	{
 		String deckFilename = "";
 		
@@ -468,10 +479,10 @@ public class AnkiDroidProxy {
 			title = title.replace("^", "");
 			title = title.substring(0, java.lang.Math.min(title.length(), 40));
 			
-			if(new File(AnkiDroidApp.getStorageDirectory() + "/" + title + ".anki").exists())
+			if(new File(deckPath + "/" + title + ".anki").exists())
 				title += System.currentTimeMillis();
 			
-			String partialDeckPath = AnkiDroidApp.getStorageDirectory() + "/" + title;
+			String partialDeckPath = deckPath + "/" + title;
 			deckFilename = partialDeckPath + ".anki";
 			
 			ZipEntry zipEntry = null;

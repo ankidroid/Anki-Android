@@ -30,26 +30,6 @@
 			android:key="deckPath" />
 	</PreferenceCategory>
 	
-	<PreferenceCategory android:title="@string/pref_cat_sync">
-		<EditTextPreference
-			android:title="@string/username"
-			android:defaultValue=""
-			android:key="username" />
-		<EditTextPreference
-			android:title="@string/password"
-			android:defaultValue=""
-			android:inputType="textPassword"
-			android:key="password" />
-		<!--  <CheckBoxPreference
-			android:title="@string/sync_on_open"
-			android:defaultValue="false"
-			android:key="syncOnOpen" />
-		<CheckBoxPreference
-			android:title="@string/sync_on_close"
-			android:defaultValue="false"
-			android:key="syncOnClose" />  -->
-	</PreferenceCategory>
-	
 	<PreferenceCategory android:title="@string/pref_cat_qadisplay">
 		<ListPreference
 			android:title="@string/qa_font_size"

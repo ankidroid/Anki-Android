@@ -61,13 +61,15 @@ public class StudyOptions extends Activity
 	
 	private static final int MENU_DOWNLOAD_SHARED_DECK = 22;
 
-	private static final int MENU_PREFERENCES = 3;
+	private static final int MENU_SYNC = 3;
 	
-	private static final int MENU_DECK_PROPERTIES = 4;
+	private static final int MENU_MY_ACCOUNT = 4;
 	
-	private static final int MENU_SYNC = 5;
-
-	private static final int MENU_ABOUT = 6;
+	private static final int MENU_PREFERENCES = 5;
+	
+	private static final int MENU_DECK_PROPERTIES = 6;
+	
+	private static final int MENU_ABOUT = 7;
 	
 	/**
 	 * Available options returning from another activity
@@ -565,16 +567,18 @@ public class StudyOptions extends Activity
 		MenuItem item;
 		item = menu.add(Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck);
 		item.setIcon(android.R.drawable.ic_menu_manage);
-		SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE, R.string.download_deck);
+		SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE, R.string.menu_download_deck);
 		downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
-		downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.download_personal_deck);
-		downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.download_shared_deck);
+		downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
+		downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
+		item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
+		item.setIcon(R.drawable.ic_menu_refresh);
+		item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
+		item.setIcon(R.drawable.ic_menu_home);
 		item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
 		item.setIcon(android.R.drawable.ic_menu_preferences);
 		item = menu.add(Menu.NONE, MENU_DECK_PROPERTIES, Menu.NONE, R.string.deck_properties);
 		item.setIcon(R.drawable.ic_menu_archive);
-		item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
-		item.setIcon(R.drawable.ic_menu_refresh);
 		item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
 		
@@ -598,34 +602,46 @@ public class StudyOptions extends Activity
 		Log.i(TAG, "Item = " + item.getItemId());
 		switch (item.getItemId())
 		{
-		case MENU_OPEN:
-			openDeckPicker();
-			return true;
-		case MENU_DOWNLOAD_PERSONAL_DECK:
-			Intent downloadPersonalDeck = new Intent(this, PersonalDeckPicker.class);
-			startActivityForResult(downloadPersonalDeck, DOWNLOAD_PERSONAL_DECK); 
-			break;
+			case MENU_OPEN:
+				openDeckPicker();
+				return true;
 			
-		case MENU_DOWNLOAD_SHARED_DECK:
-			Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
-			break;
-		case MENU_PREFERENCES:
-			Intent preferences = new Intent(this, Preferences.class);
-			startActivityForResult(preferences, PREFERENCES_UPDATE);
-			return true;
-		case MENU_DECK_PROPERTIES:
-			Intent deckProperties = new Intent(this, DeckProperties.class);
-			startActivityForResult(deckProperties, DECK_PROPERTIES);
-			break;
-		case MENU_SYNC:
-			syncDeck();
-			return true;
-		case MENU_ABOUT:
-			Intent about = new Intent(this, About.class);
-			startActivity(about);
-			return true;
+			case MENU_DOWNLOAD_PERSONAL_DECK:
+				Intent downloadPersonalDeck = new Intent(this, PersonalDeckPicker.class);
+				startActivityForResult(downloadPersonalDeck, DOWNLOAD_PERSONAL_DECK); 
+				return true;
+			
+			case MENU_DOWNLOAD_SHARED_DECK:
+				Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+				return true;
+			
+			case MENU_SYNC:
+				syncDeck();
+				return true;
+			
+			case MENU_MY_ACCOUNT:
+				Intent myAccount = new Intent(this, MyAccount.class);
+				startActivity(myAccount);
+				return true;
+				
+			case MENU_PREFERENCES:
+				Intent preferences = new Intent(this, Preferences.class);
+				startActivityForResult(preferences, PREFERENCES_UPDATE);
+				return true;
+				
+			case MENU_DECK_PROPERTIES:
+				Intent deckProperties = new Intent(this, DeckProperties.class);
+				startActivityForResult(deckProperties, DECK_PROPERTIES);
+				return true;
+				
+			case MENU_ABOUT:
+				Intent about = new Intent(this, About.class);
+				startActivity(about);
+				return true;
+				
+			default:
+				return super.onOptionsItemSelected(item);
 		}
-		return false;
 	}
 
 	private void openDeckPicker()

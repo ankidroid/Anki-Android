@@ -74,7 +74,9 @@ public class SharedDeckPicker extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
 				downloadedDeck = mSharedDecks.get(position);
-				Connection.downloadSharedDeck(downloadSharedDeckListener, new Connection.Payload(new Object[] {downloadedDeck}));
+				SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+				String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+				Connection.downloadSharedDeck(downloadSharedDeckListener, new Connection.Payload(new Object[] {downloadedDeck, deckPath}));
 			}
 			
 		});
