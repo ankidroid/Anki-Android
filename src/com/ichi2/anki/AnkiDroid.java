@@ -1,6 +1,6 @@
 /****************************************************************************************
 * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
-* Copyright (c) 2009 Andrew <andrewdubya@gmail.                                        *
+* Copyright (c) 2009 Andrew <andrewdubya@gmail.com>                                    *
 * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
 * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
 * Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>                             *
@@ -93,17 +93,17 @@ public class AnkiDroid extends Activity
 	 */
 	public static final int MENU_OPEN = 0;
 
-	public static final int MENU_PREFERENCES = 1;
+    private static final int MENU_GET_SHARED_DECKS = 1;
 
-	public static final int MENU_ABOUT = 2;
+	public static final int MENU_PREFERENCES = 2;
 
 	public static final int MENU_DECKOPTS = 3;
 
-	public static final int MENU_SUSPEND = 4;
-
-    private static final int MENU_EDIT = 5; 
+    private static final int MENU_EDIT = 4;
     
-    private static final int MENU_GET_SHARED_DECKS = 6;
+	public static final int MENU_SUSPEND = 5;
+
+	public static final int MENU_ABOUT = 6;
 
 	/**
 	 * Possible outputs trying to load a deck
@@ -199,7 +199,7 @@ public class AnkiDroid extends Activity
 
 	private EditText mAnswerField;
 
-	private Button mButtonReviewEarly, mEase0, mEase1, mEase2, mEase3;
+	private Button mButtonReviewEarly, mButtonSwitchDeck, mEase0, mEase1, mEase2, mEase3;
 
 	private Chronometer mCardTimer;
 	
@@ -281,6 +281,7 @@ public class AnkiDroid extends Activity
 		{
 			Log.i(TAG, "mButtonReviewEarlyHandler");
 			mButtonReviewEarly.setVisibility(View.GONE);
+			mButtonSwitchDeck.setVisibility(View.GONE);
 			Deck d = AnkiDroidApp.getDeck();
 			d.setReviewEarly(true);
 			currentCard = d.getCard();
@@ -298,10 +299,18 @@ public class AnkiDroid extends Activity
 				Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
 				mSessionTimeLimit = System.currentTimeMillis() + timelimit;
 				mSessionCurrReps = 0;
-	
 			}
-				
-			
+		}
+	};
+
+	View.OnClickListener mButtonSwitchDeckHandler = new View.OnClickListener()
+	{
+		public void onClick(View view)
+		{
+			Log.i(TAG, "mButtonSwitchDeckHandler");
+			mButtonReviewEarly.setVisibility(View.GONE);
+			mButtonSwitchDeck.setVisibility(View.GONE);
+			openDeckPicker();
 		}
 	};
 
@@ -445,6 +454,7 @@ public class AnkiDroid extends Activity
 
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mButtonReviewEarly = (Button) findViewById(R.id.review_early);
+		mButtonSwitchDeck = (Button) findViewById(R.id.switch_deck);
 		mEase0 = (Button) findViewById(R.id.ease1);
 		mEase1 = (Button) findViewById(R.id.ease2);
 		mEase2 = (Button) findViewById(R.id.ease3);
@@ -458,6 +468,7 @@ public class AnkiDroid extends Activity
 		showControls(false);
 
 		mButtonReviewEarly.setOnClickListener(mButtonReviewEarlyHandler);
+		mButtonSwitchDeck.setOnClickListener(mButtonSwitchDeckHandler);
 		mEase0.setOnClickListener(mSelectEaseHandler);
 		mEase1.setOnClickListener(mSelectEaseHandler);
 		mEase2.setOnClickListener(mSelectEaseHandler);
@@ -479,12 +490,12 @@ public class AnkiDroid extends Activity
     public boolean onCreateOptionsMenu(Menu menu)
 	{
 		menu.add(0, MENU_OPEN, 0, getString(R.string.switch_another_deck));
-		menu.add(1, MENU_PREFERENCES, 0, getString(R.string.preferences));
-		menu.add(1, MENU_ABOUT, 0, getString(R.string.about));
-		menu.add(1, MENU_DECKOPTS, 0, getString(R.string.study_options));
-		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
-        menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
         menu.add(1, MENU_GET_SHARED_DECKS, 0, getString(R.string.get_shared_deck));
+		menu.add(1, MENU_PREFERENCES, 0, getString(R.string.preferences));
+		menu.add(1, MENU_DECKOPTS, 0, getString(R.string.study_options));
+        menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
+		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
+		menu.add(1, MENU_ABOUT, 0, getString(R.string.about));
 		return true;
 	}
 
@@ -510,32 +521,32 @@ public class AnkiDroid extends Activity
 		case MENU_OPEN:
 			openDeckPicker();
 			return true;
+        case MENU_GET_SHARED_DECKS:
+        	Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+        	return true;
 		case MENU_PREFERENCES:
 			Intent preferences = new Intent(this, Preferences.class);
 			startActivityForResult(preferences, PREFERENCES_UPDATE);
 			return true;
-		case MENU_ABOUT:
-			Intent about = new Intent(this, About.class);
-			startActivity(about);
-			return true;
 		case MENU_DECKOPTS:
 		    Intent opts = new Intent(this, DeckPreferences.class);
 		    startActivity( opts );
-		    return true;
-		case MENU_SUSPEND:
-			mFlipCard.setChecked(true);
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
-					mAnswerCardHandler,
-					new DeckTask.TaskData(0, AnkiDroidApp.getDeck(), currentCard));
 		    return true;
         case MENU_EDIT:
             editorCard = currentCard;
             Intent editCard = new Intent(this, CardEditor.class);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
             return true;
-        case MENU_GET_SHARED_DECKS:
-        	Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
-        	return true;
+		case MENU_SUSPEND:
+			mFlipCard.setChecked(true);
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
+					mAnswerCardHandler,
+					new DeckTask.TaskData(0, AnkiDroidApp.getDeck(), currentCard));
+		    return true;
+		case MENU_ABOUT:
+			Intent about = new Intent(this, About.class);
+			startActivity(about);
+			return true;
 		}
 		return false;
 	}
@@ -782,6 +793,7 @@ public class AnkiDroid extends Activity
 		{
 			mCard.setVisibility(View.GONE);
 			mButtonReviewEarly.setVisibility(View.GONE);
+			mButtonSwitchDeck.setVisibility(View.GONE);
 			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
@@ -849,6 +861,7 @@ public class AnkiDroid extends Activity
 			// TODO a button leading to the deck picker would be nice.
 			updateCard(getString(R.string.congratulations_finished_for_now));
 			mButtonReviewEarly.setVisibility(View.VISIBLE);
+			mButtonSwitchDeck.setVisibility(View.VISIBLE);
 			mEase0.setVisibility(View.GONE);
 			mEase1.setVisibility(View.GONE);
 			mEase2.setVisibility(View.GONE);
