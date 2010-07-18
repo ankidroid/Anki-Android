@@ -25,19 +25,19 @@
   <string name="sdcard_missing_message">La carte SD n\'est pas disponible car elle est connectée en USB. Déconnectez l\'USB pour accéder aux paquets.</string>
   <string name="newcards_day_summ">Le nombre maximal de nouvelles cartes par jour.</string>
   <string name="newcards_day">Nouvelles cartes par jour</string>
-  <string name="session_time_limit">Durée maximale d'une session</string>
-  <string name="session_time_limit_summ">La durée maximale d'une session. 0 pour illimité.</string>
+  <string name="session_time_limit">Durée maximale d\'une session</string>
+  <string name="session_time_limit_summ">La durée maximale d\'une session. 0 pour illimité.</string>
   <string name="session_question_limit">Nombre max de questions par session</string>
   <string name="session_question_limit_summ">Le nombre maximal de question dans une session. 0 pour illimité.</string>
   <string name="new_cards_order">Ordre des nouvelles cartes</string>
-  <string name="new_cards_order_summ">L'ordre dans lequel les nouvelles cartes apparaissent.</string>
+  <string name="new_cards_order_summ">L\'ordre dans lequel les nouvelles cartes apparaissent.</string>
   <string name="show_new_cards_in">Montrer les nouvelles cartes dans...</string>
   <string name="new_card_spacing">New Card Spacing</string>
   <string name="new_card_spacing_summ">Comment distribuer les nouvelles cartes parmi les révisions.</string>
   <string name="show_new_cards">Montrer les nouvelles cartes...</string>
   <string name="review_cards_order">Ordre des révisions</string>
   <string name="review_cards_in">Réviser les cartes dans...</string>
-  <string name="review_cards_order_summ">L'ordre dans lequel les cartes à réviser apparaissent.</string>
+  <string name="review_cards_order_summ">L\'ordre dans lequel les cartes à réviser apparaissent.</string>
   <string name="overlay_on">Whiteboard activé</string>
   <string name="overlay_off">Whiteboard desactivé</string>
   <string name="show_answer">Voir Réponse</string>
@@ -62,9 +62,9 @@
   <string name="corporal_punishments">Châtiments corporels</string>
   <string name="corporal_punishments_summ">Vibrer en cas d\'erreur, ça vous apprendra</string>
   <string name="write_answers">Écrire les réponses</string>
-  <string name="write_answers_summ">Vous permet d'écrire la réponse et la comparer avec la bonne</string>
+  <string name="write_answers_summ">Vous permet d\'écrire la réponse et la comparer avec la bonne</string>
   <string name="use_ruby_support">Montrer les annotations ruby</string>
-  <string name="use_ruby_support_summ">Si les caractères \'[\ ' et \']\' sont trouvés, considérer le texte comme une annotation ruby</string>
+  <string name="use_ruby_support_summ">Si les caractères \'[\' et \']\' sont trouvés, considérer le texte comme une annotation ruby</string>
   <string name="display_font_size">Fonte d\'affichage en taille relative</string>
   <string name="display_font_size_summ">Utiliser la taille de fonte relativement à la taille définie dans le paquet</string>
   <string name="hide_question_in_answer">Ne pas montrer la question dans la réponse ?</string>
@@ -76,7 +76,7 @@
   <string name="deckpreferences_title">Préférences du paquet</string>
   <string name="about_title">À propos</string>
   <string name="cardeditor_title">Éditeur</string>
-  <string name="loading_new_card">Chargement d'une nouvelle carte...</string>
+  <string name="loading_new_card">Chargement d\'une nouvelle carte...</string>
   <string name="loading_deck">Chargement du paquet. Veuillez patienter...</string>
   <string name="loading_shared_decks">Chargement des paquets partagés disponibles...</string>
   <string name="connection_unsuccessful">La connexion a échoué. Vérifiez vos paramètres de connexion et essayez à nouveau, merci.</string>
@@ -103,10 +103,11 @@ Flashcards pour Android&lt;/h2&gt;
 &lt;p&gt;Merci de nous signaler les bugs &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;ici&lt;/a&gt;, les nouvelles idées sont aussi bienvenues !
 Utilisez le &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; dites bonjour sur le &lt;a href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;AnkiDroid est &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;open source&lt;/a&gt;, donc tout le monde est invité à &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;rejoindre&lt;/a&gt; notre &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;équipe&lt;/a&gt; :-)
-Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et les screenshots, en &lt;a href="http://ichi2.net/anki/donate.html"&gt;donnant&lt;/a&gt; à Anki, ou en bloguant à propos d'AnkiDroid!&lt;/p&gt;
+Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et les screenshots, en &lt;a href="http://ichi2.net/anki/donate.html"&gt;donnant&lt;/a&gt; à Anki, ou en bloguant à propos d\'AnkiDroid!&lt;/p&gt;
 &lt;p&gt;AnkiDroid est distribué sous &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;licence GNU-GPL v3&lt;/a&gt; et le code source est disponible &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;ici&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
-&lt;/html&gt;</string>
+&lt;/html&gt;
+</string>
   <string name="review_early">Revoir en avance</string>
   <string name="error_message">Il y a %d erreurs à signaler</string>
   <string name="error_ok">Signaler les erreurs</string>

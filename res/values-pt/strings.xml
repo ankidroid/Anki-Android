@@ -67,7 +67,7 @@
   <string name="write_answers">Escrita de Respostas</string>
   <string name="write_answers_summ">Te permite escrever as respostas e compara-las com a resposta correta</string>
   <string name="use_ruby_support">Fornecer suporte de anotação ruby</string>
-  <string name="use_ruby_support_summ">Se os caracteres \ ' [\ ' e \ '] \ ' forem encontrados,  então o texto delimitado é tratado como anotação ruby</string>
+  <string name="use_ruby_support_summ">Se os caracteres \' [\' e \'] \' forem encontrados,  então o texto delimitado é tratado como anotação ruby</string>
   <string name="display_font_size">Tamanho relativo de fonte de exibição</string>
   <string name="display_font_size_summ">O tamanho da fonte para usar no display relativo às definições do deck</string>
   <string name="hide_question_in_answer">Ocultar questão ao exibir resposta?</string>
