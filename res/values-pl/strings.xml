@@ -6,6 +6,7 @@
   <string name="app_name">Ankidroid</string>
   <string name="yes">Tak</string>
   <string name="no">Nie</string>
+  <string name="ok">OK</string>
   <string name="deck_not_loaded">Nie udało się załadować talii.</string>
   <string name="deck_not_loaded_detail">Proszę naciśnij menu i wybierz jedną z talii, przechowywaną na Twojej kartcie SD.</string>
   <string name="deck_empty">Talia jest pusta.</string>
@@ -47,6 +48,14 @@
   <string name="hard">Trudna</string>
   <string name="good">Dobra</string>
   <string name="easy">Łatwa</string>
+  <string name="pref_cat_decks">Decks</string>
+  <string name="pref_cat_sync">Synchronization</string>
+  <string name="pref_cat_study">Study options</string>
+  <string name="pref_cat_qadisplay">Question and answer display</string>
+  <string name="username">Username</string>
+  <string name="password">Password</string>
+  <string name="sync_on_open">Sync on open</string>
+  <string name="sync_on_close">Sync on close</string>
   <string name="show_whiteboard">Pokaż zegar / tablicę</string>
   <string name="show_whiteboard_summ">Umożliwia pisanie na ekranie</string>
   <string name="sample_deck">Przykładowa talia</string>
@@ -55,17 +64,53 @@
   <string name="corporal_punishments_summ">Wibracja podczas błędu, to Cię nauczy</string>
   <string name="write_answers">Napisz odpowiedzi</string>
   <string name="write_answers_summ">Pozwala napisać odpowiedź i porównać ją z właściwą</string>
+  <string name="use_ruby_support">Provide ruby annotation support</string>
+  <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
+  <string name="display_font_size">Relative display font size</string>
+  <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck</string>
+  <string name="hide_question_in_answer">Hide question in answer?</string>
+  <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
   <string name="deck_path">Ścieżka talii</string>
   <string name="deck_path_summ">Ścieżka do miejsca w której Twoje talie są przechowywane</string>
+  <string name="shareddeckpicker_title">Select the deck you want to download</string>
+  <string name="preferences_title">Preferences</string>
+  <string name="deckpreferences_title">Deck Preferences</string>
+  <string name="about_title">About</string>
+  <string name="cardeditor_title">Card Editor</string>
   <string name="loading_new_card">Ładowanie nowej karty ...</string>
   <string name="loading_deck">Ładowanie talii. Proszę czekać...</string>
+  <string name="loading_shared_decks">Loading available shared decks...</string>
+  <string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>
+  <string name="connection_needed">No Internet connection</string>
   <string name="preferences">Preferencje</string>
   <string name="about">O programie</string>
   <string name="study_options">Opcje nauki</string>
   <string name="suspend">Zawieś</string>
   <string name="edit_card">Edytuj kartę</string>
   <string name="switch_another_deck">Przełącz się do innej talii</string>
+  <string name="get_shared_deck">Get shared deck</string>
+  <string name="downloading_shared_deck">Downloading shared deck...</string>
+  <string name="fact">fact</string>
+  <string name="facts">facts</string>
   <string name="saving_changes">Trwa zapisywanie zmian...</string>
   <string name="session_question_limit_reached">Osiągnięto limit pytań w sesji</string>
   <string name="session_time_limit_reached">Osiągnięto limit czasu w sesji</string>
+  <string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.</string>
+  <string name="about_content">&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;AnkiDroid:&lt;br/&gt;
+Flashcards for Android&lt;/h2&gt;
+&lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
+&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;here&lt;/a&gt;, new feature ideas are very welcome too!
+Please use the &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid is &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;join&lt;/a&gt; the &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contributors&lt;/a&gt; :-)
+Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid is released under the &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
+  <string name="review_early">Review Early</string>
+  <string name="error_message">There are %d errors to report</string>
+  <string name="error_ok">Report errors</string>
+  <string name="error_cancel">Do not report errors</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>

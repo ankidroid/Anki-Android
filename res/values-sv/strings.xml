@@ -27,15 +27,15 @@
   <string name="newcards_day">Nya kort / dag</string>
   <string name="session_time_limit">Tidsgräns per studiepass</string>
   <string name="session_time_limit_summ">Antal minuter per studiepass. Välj 0 för obegränsad.</string>
-  <string name="session_question_limit">Antal frågor per studiepass</string>
+  <string name="session_question_limit">Frågor per studiepass</string>
   <string name="session_question_limit_summ">Antal frågor per studiepass. Välj 0 för obegränsat.</string>
   <string name="new_cards_order">Ordning på nya kort</string>
   <string name="new_cards_order_summ">I vilken ordning nya kort visas.</string>
   <string name="show_new_cards_in">Visa nya kort om...</string>
-  <string name="new_card_spacing">"Nya kort"-avstånd</string>
+  <string name="new_card_spacing">Avstånd mellan nya kort</string>
   <string name="new_card_spacing_summ">Hur nya kort distribueras under repetitionen.</string>
   <string name="show_new_cards">Visa nya kort...</string>
-  <string name="review_cards_order">Kortens repetitionsordning</string>
+  <string name="review_cards_order">Repetitionsordning</string>
   <string name="review_cards_in">Redovisa kort om...</string>
   <string name="review_cards_order_summ">I vilken ordning repeterade kort ska visas.</string>
   <string name="overlay_on">Whiteboard På</string>
@@ -86,7 +86,7 @@
   <string name="study_options">Instuderingsalternativ</string>
   <string name="suspend">Åtsidosätt</string>
   <string name="edit_card">Ändra kort</string>
-  <string name="switch_another_deck">Växla till en annan kortlek</string>
+  <string name="switch_another_deck">Växla kortlek</string>
   <string name="get_shared_deck">Hämta delad kortlek</string>
   <string name="downloading_shared_deck">Laddar ner dela kortlek...</string>
   <string name="fact">kort</string>

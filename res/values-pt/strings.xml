@@ -3,10 +3,7 @@
 <resources>
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Salvar</string>
-    
-    
   <string name="app_name">AnkiDroid</string>
-
   <string name="yes">Sim</string>
   <string name="no">Não</string>
   <string name="ok">OK</string>
