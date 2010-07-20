@@ -106,7 +106,8 @@ Utilisez le &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt
 Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et les screenshots, en &lt;a href="http://ichi2.net/anki/donate.html"&gt;donnant&lt;/a&gt; à Anki, ou en bloguant à propos d\'AnkiDroid!&lt;/p&gt;
 &lt;p&gt;AnkiDroid est distribué sous &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;licence GNU-GPL v3&lt;/a&gt; et le code source est disponible &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;ici&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
-&lt;/html&gt;</string>
+&lt;/html&gt;
+</string>
   <string name="review_early">Revoir en avance</string>
   <string name="error_message">Il y a %d erreurs à signaler</string>
   <string name="error_ok">Signaler les erreurs</string>
