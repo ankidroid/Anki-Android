@@ -53,7 +53,7 @@
   <string name="pref_cat_qadisplay">Visualizzazione domanda e risposta</string>
   <string name="username">Nome utente</string>
   <string name="password">Password</string>
-  <string name="sync_on_open">Sincronizzazione all'apertura</string>
+  <string name="sync_on_open">Sincronizzazione all\'apertura</string>
   <string name="sync_on_close">Sincronizzazione alla chiusura</string>
   <string name="show_whiteboard">Mostra timer / lavagna</string>
   <string name="show_whiteboard_summ">Consente di scrivere sullo schermo</string>
