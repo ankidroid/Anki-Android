@@ -7,16 +7,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class SharedDeckPicker extends Activity {
 
@@ -45,11 +47,13 @@ public class SharedDeckPicker extends Activity {
 		mSharedDecksListView.setAdapter(mSharedDecksAdapter);
 		mSharedDecksListView.setOnItemClickListener(new OnItemClickListener() {
 
-//			@Override
+			//@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
 				downloadedDeck = mSharedDecks.get(position);
-				Connection.downloadSharedDeck(downloadSharedDeckListener, new Connection.Payload(new Object[] {downloadedDeck}));
+				SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+				String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+				Connection.downloadSharedDeck(downloadSharedDeckListener, new Connection.Payload(new Object[] {downloadedDeck, deckPath}));
 			}
 			
 		});
