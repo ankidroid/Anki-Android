@@ -31,6 +31,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.util.Log;
 
+import android.content.SharedPreferences;
+import android.os.Vibrator;
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 /**
  * A deck stores all of the cards and scheduling information.
  * It is saved in a file with a name ending in .anki
@@ -1053,12 +1057,59 @@ public class Deck
 				"isDue = 1");
 	}
 
+	public String reportCounts() {
+		int myfailedSoonCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM failedCards");
+		int myfailedNowCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 0 and " +
+				"isDue = 1 and " +
+				"combinedDue <= " +
+				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+		int myrevCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 1 and " +
+				"priority in (1,2,3,4) and " +
+				"isDue = 1");
+		int mynewCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 2 and " +
+				"priority in (1,2,3,4) and " +
+				"isDue = 1");
+		return myfailedSoonCount + "-" + myfailedNowCount + "-" + myrevCount + "-" + mynewCount + "<br/>" +
+				failedSoonCount + "-" + failedNowCount + "-" + revCount + "-" + newCount;
+	}
+
 	/**
 	 * Mark expired cards due and update counts.
 	 */
 	private void checkDue()
 	{
-		Log.i(TAG, "Checking due cards...");
+		int myfailedSoonCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM failedCards");
+		int myfailedNowCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 0 and " +
+				"isDue = 1 and " +
+				"combinedDue <= " +
+				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+		int myrevCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 1 and " +
+				"priority in (1,2,3,4) and " +
+				"isDue = 1");
+		int mynewCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 2 and " +
+				"priority in (1,2,3,4) and " +
+				"isDue = 1");
+		Log.w(TAG, "Checking due cards... (FS, FN, R, N): (" +
+			 	myfailedSoonCount + ", " + myfailedNowCount + ", " + myrevCount + ", " + mynewCount + ") vs (" +
+				failedSoonCount + ", " + failedNowCount + ", " + revCount + ", " + newCount + ")");
 		checkDailyStats();
 
 		// Failed cards
@@ -1098,6 +1149,30 @@ public class Deck
 		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
 
 		newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0);
+
+		myfailedSoonCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM failedCards");
+		myfailedNowCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 0 and " +
+				"isDue = 1 and " +
+				"combinedDue <= " +
+				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+		myrevCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 1 and " +
+				"priority in (1,2,3,4) and " +
+				"isDue = 1");
+		mynewCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 2 and " +
+				"priority in (1,2,3,4) and " +
+				"isDue = 1");
+		Log.w(TAG, "Checked due cards... (FS, FN, R, N): (" +
+			 	myfailedSoonCount + ", " + myfailedNowCount + ", " + myrevCount + ", " + mynewCount + ") vs (" +
+				failedSoonCount + ", " + failedNowCount + ", " + revCount + ", " + newCount + ")");
 	}
 
 	/**
