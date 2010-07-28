@@ -38,11 +38,15 @@ public class CardHistoryEntry {
 	double noCount;
 	// END: SQL table columns
 
+	Deck deck;
+	
 	/**
 	 * Constructor
 	 */
-	public CardHistoryEntry(Card card, int ease, double delay)
+	public CardHistoryEntry(Deck deck, Card card, int ease, double delay)
 	{
+		this.deck = deck;
+		
 		if (card == null)
 			return;
 
@@ -64,20 +68,20 @@ public class CardHistoryEntry {
 	 */
 	public void writeSQL()
 	{
-	ContentValues values = new ContentValues();
-	values.put("cardId", cardId);
-	values.put("lastInterval", lastInterval);
-	values.put("nextInterval", nextInterval);
-	values.put("ease", ease);
-	values.put("delay", delay);
-	values.put("lastFactor", lastFactor);
-	values.put("nextFactor", nextFactor);
-	values.put("reps", reps);
-	values.put("thinkingTime", thinkingTime);
-	values.put("yesCount", yesCount);
-	values.put("noCount", noCount);
-	values.put("time", System.currentTimeMillis() / 1000.0);
-
-	AnkiDb.database.insert("reviewHistory", null, values);
+		ContentValues values = new ContentValues();
+		values.put("cardId", cardId);
+		values.put("lastInterval", lastInterval);
+		values.put("nextInterval", nextInterval);
+		values.put("ease", ease);
+		values.put("delay", delay);
+		values.put("lastFactor", lastFactor);
+		values.put("nextFactor", nextFactor);
+		values.put("reps", reps);
+		values.put("thinkingTime", thinkingTime);
+		values.put("yesCount", yesCount);
+		values.put("noCount", noCount);
+		values.put("time", System.currentTimeMillis() / 1000.0);
+	
+		AnkiDatabaseManager.getDatabase(deck.deckPath).database.insert("reviewHistory", null, values);
 	}
 }

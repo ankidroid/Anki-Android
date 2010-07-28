@@ -46,8 +46,10 @@ public class Fact {
 
     Model model;
     TreeSet<Field> fields;
+    Deck deck;
 
-    public Fact(Model model) {
+    public Fact(Deck deck, Model model) {
+    	this.deck = deck;
         this.model = model;
         this.id = Utils.genID();
         if (model != null) {
@@ -59,11 +61,11 @@ public class Fact {
     }
 
     // Generate fact object from its ID
-    public Fact(long id)
+    public Fact(Deck deck, long id)
     {
+    	this.deck = deck;
         fromDb(id);
         //TODO: load fields associated with this fact.
-
     }
 
 
@@ -85,10 +87,11 @@ public class Fact {
     public boolean fromDb(long id)
     {
         this.id = id;
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
         Cursor cursor = null;
         
         try {
-	        cursor = AnkiDb.database.rawQuery(
+	        cursor = ankiDB.database.rawQuery(
 	                "SELECT id, modelId, created, modified, tags, spaceUntil " +
 	                "FROM facts " +
 	                "WHERE id = " +
@@ -110,7 +113,7 @@ public class Fact {
 
         Cursor fieldsCursor = null;
         try {
-	        fieldsCursor = AnkiDb.database.rawQuery(
+	        fieldsCursor = ankiDB.database.rawQuery(
 	                "SELECT id, factId, fieldModelId, value " +
 	                "FROM fields " +
 	                "WHERE factId = " +
@@ -128,7 +131,7 @@ public class Fact {
 	            FieldModel currentFieldModel = null;
 	            try {
 		            // Get the field model for this field
-		            fieldModelCursor = AnkiDb.database.rawQuery(
+		            fieldModelCursor = ankiDB.database.rawQuery(
 		                    "SELECT id, ordinal, modelId, name, description " +
 		                    "FROM fieldModels " +
 		                    "WHERE id = " +
@@ -189,7 +192,7 @@ public class Fact {
 
             updateValues = new ContentValues();
             updateValues.put("value", f.value);
-            AnkiDb.database.update("fields", updateValues, "id = ?", new String[] {"" + f.id});
+            AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("fields", updateValues, "id = ?", new String[] {"" + f.id});
         }
     }
 
@@ -198,7 +201,7 @@ public class Fact {
         LinkedList<Card> returnList = new LinkedList<Card>();
 
 
-        Cursor cardsCursor = AnkiDb.database.rawQuery(
+        Cursor cardsCursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
                 "SELECT id, factId " +
                 "FROM cards " +
                 "WHERE factId = " +
@@ -207,7 +210,7 @@ public class Fact {
 
         while (cardsCursor.moveToNext())
         {
-            Card newCard = new Card();
+            Card newCard = new Card(deck);
             newCard.fromDB(cardsCursor.getLong(0));
             HashMap<String,String> newQA = CardModel.formatQA(this, newCard.getCardModel());
             newCard.question = newQA.get("question");

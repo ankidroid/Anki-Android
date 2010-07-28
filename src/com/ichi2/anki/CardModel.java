@@ -75,11 +75,13 @@ public class CardModel {
 	 * Backward reference
 	 */
 	Model model;
-
+	Deck deck;
+	
 	/**
 	 * Constructor.
 	 */
-	public CardModel(String name, String qformat, String aformat, boolean active) {
+	public CardModel(Deck deck, String name, String qformat, String aformat, boolean active) {
+		this.deck = deck;
 		this.name = name;
 		this.qformat = qformat;
 		this.aformat = aformat;
@@ -90,15 +92,15 @@ public class CardModel {
 	/**
 	 * Constructor.
 	 */
-	public CardModel() {
-		this("", "q", "a", true);
+	public CardModel(Deck deck) {
+		this(deck, "", "q", "a", true);
 	}
 
 	public void fromDb(long id)
 	{
 		Cursor cursor = null;
 		try {
-		    cursor = AnkiDb.database.rawQuery(
+		    cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
 	                "SELECT id, ordinal, modelId, name, description, qformat, " +
 	                "aformat " +
 	                "FROM cardModels " +
@@ -124,6 +126,7 @@ public class CardModel {
 	 */
 	public CardModel copy() {
 		CardModel cardModel = new CardModel(
+				this.deck,
 				this.name,
 				this.qformat,
 				this.aformat,

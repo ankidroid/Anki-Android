@@ -87,8 +87,11 @@ public class Stats
 
 	// END: SQL table columns
 
-	public Stats()
+	Deck deck;
+	
+	public Stats(Deck deck)
 	{
+		this.deck = deck;
 		day = null;
 		reps = 0;
 		averageTime = 0;
@@ -116,7 +119,7 @@ public class Stats
 		
 		try {
 			Log.i(TAG, "Reading stats from DB...");
-			cursor = AnkiDb.database.rawQuery(
+			cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
 					"SELECT * " +
 					"FROM stats " +
 					"WHERE id = " +
@@ -183,7 +186,7 @@ public class Stats
 		values.put("matureEase2", 0);
 		values.put("matureEase3", 0);
 		values.put("matureEase4", 0);
-		id = AnkiDb.database.insert("stats", null, values);
+		id = AnkiDatabaseManager.getDatabase(deck.deckPath).database.insert("stats", null, values);
 	}
 
 	public void toDB()
@@ -210,7 +213,7 @@ public class Stats
 		values.put("matureEase3", matureEase3);
 		values.put("matureEase4", matureEase4);
 
-		AnkiDb.database.update("stats", values, "id = " + id, null);
+		AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("stats", values, "id = " + id, null);
 	}
 
 	public static Date genToday(Deck deck)
@@ -256,19 +259,19 @@ public class Stats
 		Stats stats = null;
 
 		try {
-			cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type),
+			cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type),
 			        null);
 	
 			if (cursor.moveToFirst())
 			{
-				stats = new Stats();
+				stats = new Stats(deck);
 				stats.fromDB(cursor.getLong(0));
 				return stats;
 			}
 		} finally {
 			if (cursor != null) cursor.close();
 		}
-		stats = new Stats();
+		stats = new Stats(deck);
 		stats.create(type, today);
 		stats.type = type;
 		return stats;
@@ -284,19 +287,19 @@ public class Stats
 
 		try {
 			Log.i(TAG, "Trying to get stats for " + today.toString());
-			cursor = AnkiDb.database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type)
+			cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery("SELECT id " + "FROM stats " + "WHERE type = " + String.valueOf(type)
 			        + " and day = \"" + today.toString() + "\"", null);
 	
 			if (cursor.moveToFirst())
 			{
-				stats = new Stats();
+				stats = new Stats(deck);
 				stats.fromDB(cursor.getLong(0));
 				return stats;
 			}
 		} finally {
 			if (cursor != null) cursor.close();
 		}
-		stats = new Stats();
+		stats = new Stats(deck);
 		stats.create(type, today);
 		stats.type = type;
 		return stats;

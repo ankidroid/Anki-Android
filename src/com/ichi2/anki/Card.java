@@ -90,11 +90,13 @@ public class Card {
     Fact fact;
     // END JOINed variables
 
+    Deck deck;
+    
     double timerStarted;
     double timerStopped;
     double fuzz;
 
-    public Card(Fact fact, CardModel cardModel, double created) {
+    public Card(Deck deck, Fact fact, CardModel cardModel, double created) {
         tags = "";
         id = Utils.genID();
         // New cards start as new & due
@@ -110,6 +112,7 @@ public class Card {
         else
             due = modified;
         combinedDue = due;
+        this.deck = deck;
         this.fact = fact;
         this.cardModel = cardModel;
         if (cardModel != null) {
@@ -129,8 +132,8 @@ public class Card {
         }
     }
 
-    public Card(){
-        this(null, null, Double.NaN);
+    public Card(Deck deck){
+        this(deck, null, null, Double.NaN);
     }
 
     public Fact getFact() 
@@ -141,7 +144,7 @@ public class Card {
         } 
         else
         {
-            fact = new Fact(factId);
+            fact = new Fact(deck, factId);
             return fact;
         }
     }
@@ -233,7 +236,7 @@ public class Card {
     
     public CardModel getCardModel()
     {
-        CardModel returnModel = new CardModel();
+        CardModel returnModel = new CardModel(deck);
         returnModel.fromDb(cardModelId);
         return returnModel;
     }
@@ -242,7 +245,7 @@ public class Card {
     	Cursor cursor = null;
     	
     	try {
-	        cursor = AnkiDb.database.rawQuery(
+	        cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
 	                "SELECT id, factId, cardModelId, created, modified, tags, " +
 	                "ordinal, question, answer, priority, interval, lastInterval, " +
 	                "due, lastDue, factor, lastFactor, firstAnswered, reps, " +
@@ -351,7 +354,7 @@ public class Card {
         values.put("type", type);
         values.put("combinedDue", Math.max(spaceUntil, due));
         values.put("relativeDelay", 0.0);
-        AnkiDb.database.update("cards", values, "id = " + id, null);
+        AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("cards", values, "id = " + id, null);
 
         // TODO: Should also write JOINED entries: CardModel and Fact.
     }

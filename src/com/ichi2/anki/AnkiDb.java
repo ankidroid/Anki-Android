@@ -34,7 +34,7 @@ public class AnkiDb
 	/**
 	 * The deck, which is actually an SQLite database.
 	 */
-	static public SQLiteDatabase database;
+	public SQLiteDatabase database;
 
 	/**
 	 * Tag for logging messages
@@ -44,23 +44,15 @@ public class AnkiDb
 	/**
 	 * Open a database connection to an ".anki" SQLite file.
 	 */
-	static public void openDatabase(String ankiFilename) throws SQLException
+	public AnkiDb(String ankiFilename) throws SQLException
 	{
-
-		if (database != null)
-		{
-			database.close();
-		}
-
-		database = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
-		        | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-		Log.i(TAG, "AnkiDb - openDatabase, database " + ankiFilename + " opened = " + database.isOpen());
+		database = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 	}
-
+	
 	/**
 	 * Closes a previously opened database connection.
 	 */
-	static public void closeDatabase()
+	public void closeDatabase()
 	{
 		if (database != null)
 		{
@@ -77,12 +69,12 @@ public class AnkiDb
 	 *            The raw SQL query to use.
 	 * @return The integer result of the query.
 	 */
-	static public long queryScalar(String query) throws SQLException
+	public long queryScalar(String query) throws SQLException
 	{
 		Cursor cursor = null;
 		long scalar;
 		try {
-			cursor = AnkiDb.database.rawQuery(query, null);
+			cursor = database.rawQuery(query, null);
 			if (!cursor.moveToFirst())
 				throw new SQLException("No result for query: " + query);
 	
@@ -105,12 +97,12 @@ public class AnkiDb
 	 * @param column The column id in the result set to return.
 	 * @return An ArrayList with the contents of the specified column.
 	 */
-	static public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
+	public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
 		ArrayList<T> results = new ArrayList<T>();
 		Cursor cursor = null;
 		
 		try {
-			cursor = AnkiDb.database.rawQuery(query, null);
+			cursor = database.rawQuery(query, null);
 			cursor.moveToFirst();
 			String methodName = getCursorMethodName(type.getSimpleName());
 			do {

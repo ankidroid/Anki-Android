@@ -168,7 +168,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		
 		start2 = System.currentTimeMillis();
 		
-		AnkiDb.database.beginTransaction();
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
+		ankiDB.database.beginTransaction();
 		try 
 		{
 			if (oldCard != null)
@@ -183,10 +184,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			Log.v(TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
 			publishProgress(new TaskData(newCard));
 			
-			AnkiDb.database.setTransactionSuccessful();
+			ankiDB.database.setTransactionSuccessful();
 		} finally 
 		{
-			AnkiDb.database.endTransaction();
+			ankiDB.database.endTransaction();
 		}
 		
 		Log.w(TAG, "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
@@ -227,7 +228,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		Card oldCard = params[0].getCard();
 		Card newCard;
 
-		AnkiDb.database.beginTransaction();
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
+		ankiDB.database.beginTransaction();
 		try 
 		{
 			if (oldCard != null)
@@ -243,10 +245,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			stop = System.currentTimeMillis();
 			Log.v(TAG, "doInBackgroundSuspendCard - Loaded new card in " + (stop - start) + " ms.");
 			publishProgress(new TaskData(newCard));
-			AnkiDb.database.setTransactionSuccessful();
+			ankiDB.database.setTransactionSuccessful();
 		} finally 
 		{
-			AnkiDb.database.endTransaction();
+			ankiDB.database.endTransaction();
 		}
 		
 		return null;
