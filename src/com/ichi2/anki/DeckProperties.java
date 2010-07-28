@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.tomgibara.android.veecheck.util.PrefSettings;
-
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,15 +18,10 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
-import android.view.WindowManager;
 
 public class DeckProperties extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	static final String TAG = "AnkiDroid";
-	
-	
-	private boolean notificationBar;
-	
 	
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
@@ -222,13 +215,6 @@ public class DeckProperties extends PreferenceActivity implements OnSharedPrefer
 		}
 		else
 		{
-			
-			restorePreferences();
-			// Remove the status bar and make title bar progress available
-			if (notificationBar==false) {
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-			}
-			
 			registerExternalStorageListener();
 			this.pref = new DeckPreferenceHack();
 			this.pref.registerOnSharedPreferenceChangeListener( this );
@@ -293,15 +279,6 @@ public class DeckProperties extends PreferenceActivity implements OnSharedPrefer
 				continue;
 			pref.setSummary( this.pref.getString( key, "" ) );
 		}
-	}
-
-	
-	private SharedPreferences restorePreferences()
-	{
-		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		notificationBar = preferences.getBoolean("notificationBar", false);
-		
-		return preferences;
 	}
 	
 }

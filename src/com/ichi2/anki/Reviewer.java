@@ -88,7 +88,6 @@ public class Reviewer extends Activity {
 	
 	private boolean notificationBar;
 	
-	
 	public String cardTemplate;
 	
 	/**
@@ -288,8 +287,9 @@ public class Reviewer extends Activity {
 			restorePreferences();
 			
 			// Remove the status bar and make title bar progress available
-			if (notificationBar==false) {
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			if(notificationBar == false) 
+			{
+				getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			}
 			
 			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);

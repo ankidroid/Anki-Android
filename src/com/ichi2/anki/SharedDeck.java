@@ -7,17 +7,17 @@ import android.util.Log;
 public class SharedDeck extends HashMap<String, Object>{
 
 	private static final String TAG = "AnkidroidSharedDecks";
-	private int id;
-	private String username;
-	private String title;
-	private String description;
-	private String tags;
-	private int version;
-	private int facts;
-	private int size;
-	private int count;
-	private double modified;
-	private String fileName;
+	protected int id;
+	protected String username;
+	protected String title;
+	protected String description;
+	protected String tags;
+	protected int version;
+	protected int facts;
+	protected int size;
+	protected int count;
+	protected double modified;
+	protected String fileName;
 
 	public int getId() {
 		return id;

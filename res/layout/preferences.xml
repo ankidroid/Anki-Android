@@ -25,7 +25,7 @@
 			android:key="generateSampleDeck" />
 		<EditTextPreference
 			android:title="@string/deck_path"
-			android:defaultValue="/sdcard"
+			android:defaultValue="/sdcard/Anki"
 			android:summary="@string/deck_path_summ"
 			android:key="deckPath" />
 	</PreferenceCategory>
@@ -86,7 +86,7 @@
 			android:key="corporalPunishments" />
 		<CheckBoxPreference
 			android:title="@string/notification_bar"
-			android:defaultValue="false"
+			android:defaultValue="true"
 			android:summary="@string/notification_bar_summ"
 			android:key="notificationBar" />
 	</PreferenceCategory>

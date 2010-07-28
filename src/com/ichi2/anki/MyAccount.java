@@ -225,7 +225,7 @@ public class MyAccount extends Activity {
 			}
 			else
 			{
-				if(data.errorType == AnkiDroidProxy.LOGIN_INVALID_USER_PASS)
+				if(data.returnType == AnkiDroidProxy.LOGIN_INVALID_USER_PASS)
 				{
 					mInvalidUserPassAlert.show();
 				}

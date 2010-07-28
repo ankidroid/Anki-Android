@@ -24,9 +24,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
-import java.util.Map.Entry;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -229,7 +229,7 @@ public class Deck
 		reviewEarly = false;
 	}
 
-	public static Deck openDeck(String path) throws SQLException
+	public static synchronized Deck openDeck(String path) throws SQLException
 	{
 		Deck deck = null;
 		Cursor cursor = null;
@@ -336,7 +336,7 @@ public class Deck
 		return deck;
 	}
 
-	public void closeDeck()
+	public synchronized void closeDeck()
 	{
 		DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
 		if (modifiedSinceSave())
@@ -721,7 +721,8 @@ public class Deck
 	{
         Cursor cursor = AnkiDb.database.rawQuery(
                 "SELECT id, factId " +
-                "FROM cards", 
+                "FROM cards " +
+                "ORDER BY id", 
                 null);
 
         while (cursor.moveToNext())
@@ -745,6 +746,7 @@ public class Deck
             
             card.toDB();
         }
+        cursor.close();
 	}
 	
 	/* Answering a card

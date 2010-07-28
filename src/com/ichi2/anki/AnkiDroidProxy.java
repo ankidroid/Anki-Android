@@ -492,7 +492,7 @@ public class AnkiDroidProxy {
 				
 				if("shared.anki".equalsIgnoreCase(zipEntry.getName()))
 				{
-					Utils.writeToFile(zipInputStream, deckFilename);
+					Utils.writeToFile(zipInputStream, deckFilename + ".tmp");
 				}
 				else if(zipEntry.getName().startsWith("shared.media/", 0))
 				{
@@ -502,6 +502,9 @@ public class AnkiDroidProxy {
 				}
 			}
 			zipInputStream.close();
+			
+			// TODO: Finish he workflow of temporal files (when a temporal file is renamed, how...) and see that is consistent in any scenario
+			new File(deckFilename + ".tmp").renameTo(new File(deckFilename));
 		}
 		
 		return deckFilename;

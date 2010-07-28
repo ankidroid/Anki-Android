@@ -44,8 +44,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -86,10 +84,6 @@ public class DeckPicker extends Activity implements Runnable
 
 	private BroadcastReceiver mUnmountReceiver = null;
 	
-	
-	private boolean notificationBar;
-	
-
 	AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener()
 	{
 		public void onItemClick(AdapterView<?> parent, View v, int p, long id)
@@ -105,13 +99,6 @@ public class DeckPicker extends Activity implements Runnable
 		Log.i(TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
 
-		
-		restorePreferences();
-		// Remove the status bar and make title bar progress available
-		if (notificationBar==false) {
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
-		
 		registerExternalStorageListener();
 
 		mSelf = this;
@@ -257,7 +244,6 @@ public class DeckPicker extends Activity implements Runnable
 				return true;
 			return false;
 		}
-
 	}
 
 	private static final class HashMapCompare implements Comparator<HashMap<String, String>>
@@ -447,15 +433,6 @@ public class DeckPicker extends Activity implements Runnable
     	if(mUnmountReceiver != null)
     		unregisterReceiver(mUnmountReceiver);
     }
-
-	
-	private SharedPreferences restorePreferences()
-	{
-		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		notificationBar = preferences.getBoolean("notificationBar", false);
-		
-		return preferences;
-	}
 	
 	/*private void logTree(TreeSet<HashMap<String, String>> tree)
 	{

@@ -74,6 +74,10 @@ public class AnkiDroidApp extends Application {
 		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
 		res = getResources();
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
+		
+		// FIXME: Test
+		DownloadManager.getSharedInstance(getApplicationContext(), prefs.getString("username", "eduzasu"), prefs.getString("password", "asrso8D0f1i8f"), prefs.getString("deckPath", "/mnt/sdcard/Anki Decks"));
+		
 		// Assign some default settings if necessary
 		if (prefs.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
 			Editor editor = prefs.edit();

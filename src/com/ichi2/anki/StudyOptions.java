@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -116,10 +115,6 @@ public class StudyOptions extends Activity
 	private boolean prefStudyOptions;
 	
 	//private boolean deckSelected;
-	
-	
-	private boolean notificationBar;
-	
 	
 	private boolean inDeckPicker;
 	
@@ -285,18 +280,18 @@ public class StudyOptions extends Activity
 		SharedPreferences preferences = restorePreferences();
 		registerExternalStorageListener();
 		
-		
-		// Remove the status bar and make title bar progress available
-		if (notificationBar==false) {
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
-		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		initAllContentViews();
 		initAllAlertDialogs();
 		
-		if (savedInstanceState != null)
+		Bundle extras = getIntent().getExtras();
+		if (extras != null && extras.getString(OPT_DB) != null)
+		{
+			deckFilename = extras.getString(OPT_DB);
+			Log.i(TAG, "onCreate - deckFilename from extras: " + deckFilename);
+		}
+		else if(savedInstanceState != null)
 		{
 			// Use the same deck as last time Ankidroid was used.
 			deckFilename = savedInstanceState.getString("deckFilename");
@@ -432,11 +427,11 @@ public class StudyOptions extends Activity
 		
 		
 		// First setup for ProgressDialog
-		progressDialog = new ProgressDialog(StudyOptions.this);
-		progressDialog.setCancelable(true);
-		progressDialog.setMax(100);
-		progressDialog.setProgress(0);
-		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		//progressDialog = new ProgressDialog(StudyOptions.this);
+		//progressDialog.setCancelable(true);
+		//progressDialog.setMax(100);
+		//progressDialog.setProgress(0);
+		//progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		
 	}
 	
@@ -792,9 +787,6 @@ public class StudyOptions extends Activity
 		prefDeckPath = preferences.getString("deckPath", "/sdcard");
 		prefStudyOptions = preferences.getBoolean("study_options", true);
 		
-		notificationBar = preferences.getBoolean("notificationBar", false);
-		
-		
 		return preferences;
 	}
 	
@@ -937,11 +929,10 @@ public class StudyOptions extends Activity
 
 		@Override
 		public void onPreExecute() {
-			
-			// progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
-			progressDialog.setTitle("Downloading shared deck");
-			progressDialog.setMessage("Starting");
-			progressDialog.show();
+			progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
+			//progressDialog.setTitle("Downloading shared deck");
+			//progressDialog.setMessage("Starting");
+			//progressDialog.show();
 			
 		}
 
@@ -986,19 +977,18 @@ public class StudyOptions extends Activity
 
 		@Override
 		public void onPreExecute() {
-			
-			// progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
-			progressDialog.setTitle("Synchronizing");
-			progressDialog.setMessage("Starting");
-			progressDialog.show();
+			progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
+			//progressDialog.setTitle("Synchronizing");
+			//progressDialog.setMessage("Starting");
+			//progressDialog.show();
 			
 		}
 
 		@Override
 		public void onProgressUpdate(Object... values) {
-			
-			progressDialog.setProgress(((Integer) values[0]));
-			progressDialog.setMessage(((String) values[1]));
+			// Pass
+			//progressDialog.setProgress(((Integer) values[0]));
+			//progressDialog.setMessage(((String) values[1]));
 			
 		}
 		

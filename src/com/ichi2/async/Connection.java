@@ -83,7 +83,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     protected void onPreExecute() 
     {
-    	listener.onPreExecute();
+    	if(listener != null)
+    	{
+    		listener.onPreExecute();
+    	}
     }
 
     /*
@@ -91,7 +94,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     public void onPostExecute(Payload data)
     {
-    	listener.onPostExecute(data);
+    	if(listener != null)
+    	{
+    		listener.onPostExecute(data);
+    	}
     }
 
     /*
@@ -99,7 +105,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     public void onProgressUpdate(Object... values)
     {
-    	listener.onProgressUpdate(values);
+    	if(listener != null)
+    	{
+    		listener.onProgressUpdate(values);
+    	}
     }
     
     public static Connection login(TaskListener listener, Payload data)
@@ -126,10 +135,19 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return launchConnectionTask(listener, data);
 	}
 	
+	/*
 	public static Connection downloadPersonalDeck(TaskListener listener, Payload data)
 	{
 		data.taskType = TASK_TYPE_DOWNLOAD_PERSONAL_DECK;
 		return launchConnectionTask(listener, data);
+	}
+	*/
+	
+	public void downloadPersonalDeck(TaskListener listener, Payload data)
+	{
+		data.taskType = TASK_TYPE_DOWNLOAD_PERSONAL_DECK;
+		this.listener = listener;
+		execute(data);
 	}
 	
 	public static Connection syncDeck(TaskListener listener, Payload data)
@@ -190,7 +208,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			if(status != AnkiDroidProxy.LOGIN_OK)
 			{
 				data.success = false;
-				data.errorType = status;
+				data.returnType = status;
 			}
 		} catch (Exception e) {
 			data.success = false;
@@ -449,7 +467,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         public Object[] data;
         public Object result;
         public boolean success;
-        public int errorType;
+        public int returnType;
         public Exception exception;
 
         public Payload(Object[] data) {

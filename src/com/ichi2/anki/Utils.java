@@ -39,9 +39,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mindprod.common11.BigDate;
-
 import android.util.Log;
+
+import com.mindprod.common11.BigDate;
 
 /**
  * TODO comments
@@ -257,6 +257,7 @@ public class Utils {
 	{
 		try
 		{
+			Log.i(TAG, "Creating new file... = " + destination);
 			new File(destination).createNewFile();
 	
 			OutputStream output = new FileOutputStream(destination);
@@ -268,8 +269,10 @@ public class Utils {
 			while ((len = source.read(buf)) > 0)
 			{
 				output.write(buf, 0, len);
+				Log.i(TAG, "Write...");
 			}
 			
+			Log.i(TAG, "Finished writing!");
 			output.close();
 
 		} catch (Exception e) {

@@ -33,6 +33,8 @@ package com.mindprod.common11;
 import java.util.BitSet;
 import java.util.Vector;
 
+import android.graphics.Color;
+
 /**
  * Miscellaneous static methods for dealing with Strings in JDK 1.1+.
  * <p/>

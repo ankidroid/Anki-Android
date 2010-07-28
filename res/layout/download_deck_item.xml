@@ -21,7 +21,48 @@
   android:layout_height="wrap_content"
   android:orientation="vertical">
 
-	<TextView android:id="@+id/SharedDeckTitle"
+	  
+	  <TextView android:id="@+id/header_title"
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:textColor="#000000"
+	  	android:textColorHighlight="#000000"
+	  	android:background="#dddddd"
+	  	android:textStyle="bold"
+	  	android:visibility="gone"/>
+	  	
+
+	<TextView android:id="@+id/download_title"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="10dip"
+		android:singleLine="true"
+		android:ellipsize="end"
+		android:textSize="24sp"
+		android:textColor="#ffffff"
+		android:visibility="gone"/>
+	
+	<ProgressBar android:id="@+id/progress_bar"
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:padding="10dip"
+  		style="?android:attr/progressBarStyleHorizontal"
+  		android:indeterminate="true"
+  		android:indeterminateBehavior="cycle"
+  		android:progress="0"
+  		android:max="100"
+  		android:visibility="gone"/>
+  	
+  	<TextView android:id="@+id/progress_text"
+  		android:layout_width="wrap_content"
+  		android:layout_height="wrap_content"
+  		android:paddingLeft="10dip"
+  		android:paddingBottom="5dip"
+  		android:text="Downloading..."
+  		android:textColor="#ffffff"
+  		android:visibility="gone"/>
+  		
+	<TextView android:id="@+id/deck_title"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:padding="10dip"
@@ -29,7 +70,7 @@
 		android:textSize="24sp"
 		android:textColor="#ffffff"/>
 		
-	<TextView android:id="@+id/SharedDeckFacts" 
+	<TextView android:id="@+id/deck_facts" 
 		android:layout_height="wrap_content" 
 		android:layout_width="fill_parent"
 		android:gravity="center_horizontal"
