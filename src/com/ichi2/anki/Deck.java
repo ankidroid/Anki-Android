@@ -1091,6 +1091,7 @@ public class Deck
 		checkDailyStats();
 
 		// Failed cards
+		failedSoonCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM failedCards");
 		ContentValues val = new ContentValues(1);
 		val.put("isDue", 1);
 
@@ -1113,6 +1114,12 @@ public class Deck
 						(double) (System.currentTimeMillis() / 1000.0)));
 
 		// Review
+		revCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 1 and " +
+				"priority in (1,2,3,4) and " +
+				"isDue = 1");
 		val.clear();
 		val.put("isDue", 1);
 		revCount += AnkiDb.database.update("cards", val, "type = 1 and " + "isDue = 0 and "
@@ -1120,6 +1127,12 @@ public class Deck
 		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
 
 		// New
+		newCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 2 and " +
+				"priority in (1,2,3,4) and " +
+				"isDue = 1");
 		val.clear();
 		val.put("isDue", 1);
 		newCount += AnkiDb.database.update("cards", val, "type = 2 and " + "isDue = 0 and "
