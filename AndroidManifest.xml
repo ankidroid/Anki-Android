@@ -57,6 +57,7 @@
 				<data android:scheme="http"></data>
 			</intent-filter>
 		</service>
+		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
 		<provider android:name="AnkiDroidContentProvider" android:authorities="com.ichi2.anki"/>
     <activity android:name="CardEditor" android:label="@string/cardeditor_title"></activity>
     </application>

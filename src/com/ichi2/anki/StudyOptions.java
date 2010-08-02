@@ -8,14 +8,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +31,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.ichi2.anki.services.DownloadManagerService;
+import com.ichi2.anki.services.IDownloadManagerService;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -99,6 +105,11 @@ public class StudyOptions extends Activity
 	private static final int CONTENT_SESSION_COMPLETE = 4;
 	
 	public static final int CONTENT_NO_EXTERNAL_STORAGE = 5;
+	
+	/**
+	 * Download Manager Service stub
+	 */
+	//private IDownloadManagerService mService = null;
 	
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
@@ -285,6 +296,15 @@ public class StudyOptions extends Activity
 		initAllContentViews();
 		initAllAlertDialogs();
 		
+		/*
+		Intent serviceIntent = new Intent(StudyOptions.this, DownloadManagerService.class);
+		serviceIntent.putExtra("username", preferences.getString("username", ""));
+		serviceIntent.putExtra("password", preferences.getString("password", ""));
+		serviceIntent.putExtra("destination", preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+		startService(serviceIntent);
+		*/
+		//bindService(serviceIntent, mConnection, Context.BIND_AUTO_CREATE);
+		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null && extras.getString(OPT_DB) != null)
 		{
@@ -341,7 +361,7 @@ public class StudyOptions extends Activity
                     	Log.i(TAG, "mUnmountReceiver - Action = Media Mounted");
                     	sdCardAvailable = true;
                     	if(!inDeckPicker)
-                    		loadPreviousDeck();                    
+                    		loadPreviousDeck();
                     }
                 }
             };
@@ -359,7 +379,9 @@ public class StudyOptions extends Activity
     	super.onDestroy();
     	Log.i(TAG, "StudyOptions - onDestroy()");
     	if(mUnmountReceiver != null)
+    	{
     		unregisterReceiver(mUnmountReceiver);
+    	}
     }
     
     private void loadPreviousDeck()
@@ -532,19 +554,22 @@ public class StudyOptions extends Activity
 	{
 		Deck deck = AnkiDroidApp.deck();
 		DeckTask.waitToFinish();
-		deck.checkDue();
-		int reviewCount = deck.revCount + deck.failedSoonCount;
-		String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
-		setTitle(String.format(unformattedTitle, deck.deckName, reviewCount, deck.cardCount));
-		
-		mTextDeckName.setText(deck.deckName);
-		mTextReviewsDue.setText(String.valueOf(reviewCount));
-		mTextNewToday.setText(String.valueOf(deck.newCountToday));
-		mTextNewTotal.setText(String.valueOf(deck.newCount));
-		
-		mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
-		mEditSessionTime.setText(String.valueOf(deck.getSessionTimeLimit()/60));
-		mEditSessionQuestions.setText(String.valueOf(deck.getSessionRepLimit()));
+		if(deck != null)
+		{
+			deck.checkDue();
+			int reviewCount = deck.revCount + deck.failedSoonCount;
+			String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
+			setTitle(String.format(unformattedTitle, deck.deckName, reviewCount, deck.cardCount));
+			
+			mTextDeckName.setText(deck.deckName);
+			mTextReviewsDue.setText(String.valueOf(reviewCount));
+			mTextNewToday.setText(String.valueOf(deck.newCountToday));
+			mTextNewTotal.setText(String.valueOf(deck.newCount));
+			
+			mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
+			mEditSessionTime.setText(String.valueOf(deck.getSessionTimeLimit()/60));
+			mEditSessionQuestions.setText(String.valueOf(deck.getSessionRepLimit()));
+		}
 	}
 
 	@Override
@@ -993,5 +1018,28 @@ public class StudyOptions extends Activity
 		}
 		
 	};
+	
+	/**
+	 * Class for interacting with the main interface of the service.
+	 */
+	/*
+	private ServiceConnection mConnection = new ServiceConnection() {
+
+    	public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the service object we can use to
+            // interact with the service.  We are communicating with our
+            // service through an IDL interface, so get a client-side
+            // representation of that from the raw service object.
+            mService = IDownloadManagerService.Stub.asInterface(service);
+            Log.i(TAG, "onServiceConnected");
+        } 
+
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			mService = null;
+		}
+	};
+	*/
 	
 }

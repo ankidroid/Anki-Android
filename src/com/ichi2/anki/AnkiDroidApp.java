@@ -71,7 +71,7 @@ public class AnkiDroidApp extends Application {
 		instance = this;
 
 		Connection.setContext(getApplicationContext());
-		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Anki";
 		res = getResources();
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
 		

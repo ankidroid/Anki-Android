@@ -4,7 +4,10 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
-public class Download extends HashMap<String,Object>{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Download extends HashMap<String,Object> implements Parcelable {
 
 	public static final String TAG = "AnkiDroid";
 
@@ -20,25 +23,27 @@ public class Download extends HashMap<String,Object>{
     public static final int ERROR = 4;
     
     // Download URL
-	private URL url;
+	protected String url;
 	// Size of download in bytes
     protected long size;
     // Number of bytes downloaded
-    private long downloaded;
+    protected long downloaded;
     // Current status of download
-    private int status; 
-    private int progress;
+    protected int status; 
+    protected int progress;
     // Download's title
     protected String title;
     
     // Constructor for Download.
-    public Download(URL url) {
+    /*
+    public Download(String url) {
     	this.url = url;
     	put("filename", url.toString());
         size = -1;
         downloaded = 0;
         status = START;
     }
+    */
     
     public Download(String title)
     {
@@ -55,11 +60,11 @@ public class Download extends HashMap<String,Object>{
     	status = START;
     }
     
-    public URL getUrl() {
+    public String getUrl() {
 		return url;
 	}
 
-	public void setUrl(URL url) {
+	public void setUrl(String url) {
 		this.url = url;
 		put("filename", url.toString());
 	}
@@ -162,4 +167,46 @@ public class Download extends HashMap<String,Object>{
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	/**
+	 * Parcel methods
+	 */
+	
+	public Download(Parcel in) {
+		readFromParcel(in);
+	}
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(url);
+		dest.writeLong(size);
+		dest.writeLong(downloaded);
+		dest.writeInt(status);
+		dest.writeInt(progress);
+		dest.writeString(title);
+	}
+	
+	protected void readFromParcel(Parcel in) {
+		url = in.readString();
+		size = in.readLong();
+		downloaded = in.readLong();
+		status = in.readInt();
+		progress = in.readInt();
+		title = in.readString();
+	}
+	
+	public static final Parcelable.Creator<Download> CREATOR = new Parcelable.Creator<Download>() {
+		
+		public Download createFromParcel(Parcel in) {
+			return new Download(in);
+		}
+
+		public Download[] newArray(int size) {
+			return new Download[size];
+		}
+	};
 }

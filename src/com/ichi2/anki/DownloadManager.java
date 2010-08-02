@@ -79,13 +79,13 @@ public class DownloadManager {
 		mSharedDeckDownloads = new ArrayList<SharedDeckDownload>();
 		mSharedDeckListeners = new ArrayList<DownloadsListener>();
 		
-		addIncompleteDownloads();
-		resumeDownloads();
+		//addIncompleteDownloads();
+		//resumeDownloads();
 	}
 
 	private void addIncompleteDownloads() 
 	{
-		Log.i(TAG, "Adding incomplete downloads:");
+		Log.i(TAG, "DownloadManager - Adding incomplete downloads:");
 		File dir = new File(mDestination);
 		File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
 		
