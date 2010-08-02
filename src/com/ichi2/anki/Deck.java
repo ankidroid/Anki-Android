@@ -1087,29 +1087,7 @@ public class Deck
 	 */
 	private void checkDue()
 	{
-		int myfailedSoonCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM failedCards");
-		int myfailedNowCount = (int) AnkiDb.queryScalar(
-				"SELECT count(id) " +
-				"FROM cards " +
-				"WHERE type = 0 and " +
-				"isDue = 1 and " +
-				"combinedDue <= " +
-				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
-		int myrevCount = (int) AnkiDb.queryScalar(
-				"SELECT count(id) " +
-				"FROM cards " +
-				"WHERE type = 1 and " +
-				"priority in (1,2,3,4) and " +
-				"isDue = 1");
-		int mynewCount = (int) AnkiDb.queryScalar(
-				"SELECT count(id) " +
-				"FROM cards " +
-				"WHERE type = 2 and " +
-				"priority in (1,2,3,4) and " +
-				"isDue = 1");
-		Log.w(TAG, "Checking due cards... (FS, FN, R, N): (" +
-			 	myfailedSoonCount + ", " + myfailedNowCount + ", " + myrevCount + ", " + mynewCount + ") vs (" +
-				failedSoonCount + ", " + failedNowCount + ", " + revCount + ", " + newCount + ")");
+		Log.w(TAG, "Checking due cards");
 		checkDailyStats();
 
 		// Failed cards
@@ -1149,30 +1127,6 @@ public class Deck
 		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
 
 		newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0);
-
-		myfailedSoonCount = (int) AnkiDb.queryScalar("SELECT count(id) FROM failedCards");
-		myfailedNowCount = (int) AnkiDb.queryScalar(
-				"SELECT count(id) " +
-				"FROM cards " +
-				"WHERE type = 0 and " +
-				"isDue = 1 and " +
-				"combinedDue <= " +
-				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
-		myrevCount = (int) AnkiDb.queryScalar(
-				"SELECT count(id) " +
-				"FROM cards " +
-				"WHERE type = 1 and " +
-				"priority in (1,2,3,4) and " +
-				"isDue = 1");
-		mynewCount = (int) AnkiDb.queryScalar(
-				"SELECT count(id) " +
-				"FROM cards " +
-				"WHERE type = 2 and " +
-				"priority in (1,2,3,4) and " +
-				"isDue = 1");
-		Log.w(TAG, "Checked due cards... (FS, FN, R, N): (" +
-			 	myfailedSoonCount + ", " + myfailedNowCount + ", " + myrevCount + ", " + mynewCount + ") vs (" +
-				failedSoonCount + ", " + failedNowCount + ", " + revCount + ", " + newCount + ")");
 	}
 
 	/**
