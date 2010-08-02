@@ -78,7 +78,7 @@
 			android:title="@string/display_font_size"
 			android:summary="@string/display_font_size_summ"
 			android:key="displayFontSize"
-			android:defaultValue="0"
+			android:defaultValue="100"
 			android:entries="@array/displayFontSizeLabels"
 			android:entryValues="@array/displayFontSizeVals" />
 		<ListPreference
