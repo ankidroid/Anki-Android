@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -32,43 +31,38 @@ import com.ichi2.anki.services.IDownloadManagerService;
 import com.ichi2.anki.services.ISharedDeckServiceCallback;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class SharedDeckPicker extends Activity {
 
 	private static final String TAG = "AnkiDroid";
-	
-	//private DownloadManager mDownloadManager;
 	
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
 	 */
 	private BroadcastReceiver mUnmountReceiver = null;
 	
-	private ProgressDialog progressDialog;
+	private ProgressDialog mProgressDialog;
 	
-	private AlertDialog noConnectionAlert;
+	private AlertDialog mNoConnectionAlert;
 	
-	private AlertDialog connectionFailedAlert;
+	private AlertDialog mConnectionFailedAlert;
 	
-	/** The primary interface we will be calling on the service. */
-	private IDownloadManagerService mService = null;
+	
+	private Intent mDownloadManagerServiceIntent;
+	// Service interface we will use to call the service
+	private IDownloadManagerService mDownloadManagerService = null;
 	
 	List<Download> mSharedDeckDownloads;
 	List<SharedDeck> mSharedDecks;
 	
 	List<Object> mAllSharedDecks;
 	ListView mSharedDecksListView;
-	//SimpleAdapter mSharedDecksAdapter;
 	SharedDecksAdapter mSharedDecksAdapter;
-	SharedDeck deckToDownload;
 	
-	private String username;
-	private String password;
-	private String deckName;
-	private String deckPath;
 	
-	private Intent serviceIntent;
+	/********************************************************************
+	 * Lifecycle methods												*
+	 ********************************************************************/
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +70,9 @@ public class SharedDeckPicker extends Activity {
 		
 		setContentView(R.layout.download_deck_picker);
 		
+		initDownloadManagerService();
 		registerExternalStorageListener();
 		initAlertDialogs();
-		
-		SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
-		username = pref.getString("username", "");
-		password = pref.getString("password", "");
-		
-		serviceIntent = new Intent(SharedDeckPicker.this, DownloadManagerService.class);
-		serviceIntent.putExtra("username", username);
-		serviceIntent.putExtra("password", password);
-		serviceIntent.putExtra("destination", pref.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
-		// Needed when the incomplete downloads are resumed while entering SharedDeckPicker
-		// if the Service gets shut down, we want it to be restarted automatically, so for this to happen it has to be started but not stopped
-		startService(serviceIntent);
-		bindService(serviceIntent, mConnection, Context.BIND_AUTO_CREATE);
 		
 		mSharedDeckDownloads = new ArrayList<Download>();
 		mSharedDecks = new ArrayList<SharedDeck>();
@@ -104,25 +86,24 @@ public class SharedDeckPicker extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
-				SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-				String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+				SharedDeck selectedDeck = (SharedDeck) mAllSharedDecks.get(position);
 				
-				deckToDownload = (SharedDeck) mAllSharedDecks.get(position);
-				SharedDeckDownload sharedDeckDownload = new SharedDeckDownload(deckToDownload.getId(), deckToDownload.getTitle(), deckToDownload.getFileName(), deckToDownload.getSize());
+				SharedDeckDownload sharedDeckDownload = new SharedDeckDownload(selectedDeck.getId(), selectedDeck.getTitle());
+				sharedDeckDownload.setSize(selectedDeck.getSize());
 				mSharedDeckDownloads.add(sharedDeckDownload);
 				refreshSharedDecksList();
 				
-				//mDownloadManager.downloadFile(sharedDeckDownload);
 				try {
-					startService(serviceIntent);
-					mService.downloadFile(sharedDeckDownload);
+					startService(mDownloadManagerServiceIntent);
+					mDownloadManagerService.downloadFile(sharedDeckDownload);
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
+					// There is nothing special we need to do if the service has crashed
+					Log.e(TAG, "RemoteException = " + e.getMessage());
 					e.printStackTrace();
 				}
 			}
 		});
-		//mDownloadManager = DownloadManager.getSharedInstance(getApplicationContext(), username, password, pref.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+		
 		Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
 	}
 	
@@ -130,90 +111,102 @@ public class SharedDeckPicker extends Activity {
 	protected void onResume() {
 		Log.i(TAG, "onResume");
 		super.onResume();
-		/*
-		mDownloadManager.registerListener(DownloadManager.SHARED_DECK_DOWNLOAD, downloadListener);
-		mSharedDeckDownloads.clear();
-		mSharedDeckDownloads.addAll(mDownloadManager.getDownloadsList(DownloadManager.SHARED_DECK_DOWNLOAD));
-		refreshSharedDecksList();
-		*/
-		try {
-			if(mService != null)
-			{
-				mService.registerSharedDeckCallback(mCallback);
-				setSharedDeckDownloads(mService.getSharedDeckDownloads());
+		if(mDownloadManagerService != null)
+		{
+			try {
+				
+				mDownloadManagerService.registerSharedDeckCallback(mCallback);
+				setSharedDeckDownloads(mDownloadManagerService.getSharedDeckDownloads());
+			} catch (RemoteException e) {
+				// There is nothing special we need to do if the service has crashed
+				Log.e(TAG, "RemoteException = " + e.getMessage());
+				e.printStackTrace();
 			}
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if(mService != null)
+		if(mDownloadManagerService != null)
 		{
 			try {
-				mService.unregisterSharedDeckCallback(mCallback);
+				mDownloadManagerService.unregisterSharedDeckCallback(mCallback);
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
+				// There is nothing special we need to do if the service has crashed
+				Log.e(TAG, "RemoteException = " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
 	}
 
 	@Override
-    public void onDestroy()
-    {
-    	super.onDestroy();
-    	if(mUnmountReceiver != null)
-    	{
-    		unregisterReceiver(mUnmountReceiver);
-    	}
-    	releaseService();
-    	
-    	// Needed in order to not try to show the alert when the Activity does not exist anymore
-    	connectionFailedAlert = null;
-    }
+	public void onDestroy()
+	{
+		super.onDestroy();
+		releaseBroadcastReceiver();
+		releaseService();
+		releaseAlerts();
+	}
+	
+	
+	/********************************************************************
+	 * Custom methods													*
+	 ********************************************************************/
+	
+	private void initDownloadManagerService()
+	{
+		mDownloadManagerServiceIntent = new Intent(SharedDeckPicker.this, DownloadManagerService.class);
+		// Needed when the incomplete downloads are resumed while entering SharedDeckPicker
+		// if the Service gets shut down, we want it to be restarted automatically, so for this to happen it has to be started but not stopped
+		startService(mDownloadManagerServiceIntent);
+		bindService(mDownloadManagerServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+	}
 	
 	private void releaseService()
 	{
 		if(mConnection != null)
-    	{
-    		unbindService(mConnection);
-    		mConnection = null;
-    	}
+		{
+			unbindService(mConnection);
+			mConnection = null;
+		}
 	}
 	
 	/**
-     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
-     * The intent will call closeExternalStorageFiles() if the external media
-     * is going to be ejected, so applications can clean up any files they have open.
-     */
-    public void registerExternalStorageListener() {
-        if (mUnmountReceiver == null) {
-            mUnmountReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    String action = intent.getAction();
-                    if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-                    	finishNoStorageAvailable();
-                    } 
-                }
-            };
-            IntentFilter iFilter = new IntentFilter();
-            iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
-            iFilter.addDataScheme("file");
-            registerReceiver(mUnmountReceiver, iFilter);
-        }
-    }
-
-    private void finishNoStorageAvailable()
-    {
-    	setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-		finish();
-    }
-    
+	 * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
+	 * The intent will call closeExternalStorageFiles() if the external media
+	 * is going to be ejected, so applications can clean up any files they have open.
+	 */
+	public void registerExternalStorageListener() 
+	{
+		if (mUnmountReceiver == null) 
+		{
+			mUnmountReceiver = new BroadcastReceiver() {
+				@Override
+				public void onReceive(Context context, Intent intent) {
+					String action = intent.getAction();
+					if (action.equals(Intent.ACTION_MEDIA_EJECT)) 
+					{
+						finishNoStorageAvailable();
+					} 
+				}
+			};
+			IntentFilter iFilter = new IntentFilter();
+			iFilter.addAction(Intent.ACTION_MEDIA_EJECT);
+			iFilter.addDataScheme("file");
+			registerReceiver(mUnmountReceiver, iFilter);
+		}
+	}
+	
+	private void releaseBroadcastReceiver()
+	{
+		if(mUnmountReceiver != null)
+		{
+			unregisterReceiver(mUnmountReceiver);
+			mUnmountReceiver = null;
+		}
+	}
+	
 	/**
 	 * Create AlertDialogs used on all the activity
 	 */
@@ -225,10 +218,17 @@ public class SharedDeckPicker extends Activity {
 		
 		builder.setMessage(res.getString(R.string.connection_needed));
 		builder.setPositiveButton(res.getString(R.string.ok), null);
-		noConnectionAlert = builder.create();
+		mNoConnectionAlert = builder.create();
 		
-	    builder.setMessage(res.getString(R.string.connection_unsuccessful));
-	    connectionFailedAlert = builder.create();
+		builder.setMessage(res.getString(R.string.connection_unsuccessful));
+		mConnectionFailedAlert = builder.create();
+	}
+	
+	private void releaseAlerts()
+	{
+		// Needed in order to not try to show the alerts when the Activity does not exist anymore
+		mNoConnectionAlert = null;
+		mConnectionFailedAlert = null;
 	}
 	
 	private void refreshSharedDecksList() 
@@ -246,42 +246,62 @@ public class SharedDeckPicker extends Activity {
 		refreshSharedDecksList();
 	}
 	
-	/**
-	 * Listeners
-	 */
-	/*
-	DownloadManager.DownloadsListener downloadListener = new DownloadManager.DownloadsListener() {
-		
-		@Override
-		public void onStateChanged(List downloads) {
-			mSharedDeckDownloads.clear();
-			mSharedDeckDownloads.addAll(downloads);
-			
-			refreshSharedDecksList();
-		}
-		
-	};
-	*/
+	private void finishNoStorageAvailable()
+	{
+		setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
+		finish();
+	}
 	
-	/*
-	SharedDownloadManager.DownloadsListener downloadListener = new SharedDownloadManager.DownloadsListener() {
-		
-		@Override
-		public void onStateChanged(List downloads) {
-			mSharedDeckDownloads.clear();
-			mSharedDeckDownloads.addAll(downloads);
-			
-			refreshSharedDecksList();
+	
+	/********************************************************************
+	 * Service Connection												*
+	 ********************************************************************/
+	
+	/**
+	 * Class for interacting with the main interface of the service.
+	 */
+	private ServiceConnection mConnection = new ServiceConnection() {
+
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			// This is called when the connection with the service has been
+			// established, giving us the service object we can use to
+			// interact with the service.  We are communicating with our
+			// service through an IDL interface, so get a client-side
+			// representation of that from the raw service object.
+			mDownloadManagerService = IDownloadManagerService.Stub.asInterface(service);
+
+			Log.i(TAG, "onServiceConnected");
+			// We want to monitor the service for as long as we are
+			// connected to it.
+			try {
+				mDownloadManagerService.registerSharedDeckCallback(mCallback);
+			} catch (RemoteException e) {
+				// In this case the service has crashed before we could even
+				// do anything with it; we can count on soon being
+				// disconnected (and then reconnected if it can be restarted)
+				// so there is no need to do anything here.
+			}
 		}
-		
+
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			mDownloadManagerService = null;
+		}
 	};
-	*/
+	
+	
+	/********************************************************************
+	 * Listeners														*
+	 ********************************************************************/
 	
 	Connection.TaskListener getSharedDecksListener = new Connection.TaskListener() {
 
 		@Override
 		public void onDisconnected() {
-			noConnectionAlert.show();
+			if(mNoConnectionAlert != null)
+			{
+				mNoConnectionAlert.show();
+			}
 		}
 
 		@SuppressWarnings("unchecked")
@@ -296,7 +316,10 @@ public class SharedDeckPicker extends Activity {
 			}
 			else
 			{
-				connectionFailedAlert.show();
+				if(mConnectionFailedAlert != null)
+				{
+					mConnectionFailedAlert.show();
+				}
 			}
 		}
 
@@ -312,78 +335,10 @@ public class SharedDeckPicker extends Activity {
 		
 	};
 	
-	Connection.TaskListener downloadSharedDeckListener = new Connection.TaskListener() {
-
-		@Override
-		public void onDisconnected() {
-			noConnectionAlert.show();
-		}
-
-		@Override
-		public void onPostExecute(Payload data) {
-			//progressDialog.dismiss();
-			if(data.success)
-			{
-				Intent intent = SharedDeckPicker.this.getIntent();
-				// Return the name of the downloaded deck
-				intent.putExtra(AnkiDroid.OPT_DB, (String)data.result);
-				setResult(RESULT_OK, intent);
-
-				finish();
-			}
-			else
-			{
-				connectionFailedAlert.show();
-			}
-		}
-
-		@Override
-		public void onPreExecute() {
-			//progressDialog = ProgressDialog.show(SharedDeckPicker.this, "", getResources().getString(R.string.downloading_shared_deck));
-		}
-
-		@Override
-		public void onProgressUpdate(Object... values) {
-			//Pass
-		}
-		
-	};
 	
-	/**
-	 * Class for interacting with the main interface of the service.
-	 */
-	private ServiceConnection mConnection = new ServiceConnection() {
-
-    	public void onServiceConnected(ComponentName className, IBinder service) {
-            // This is called when the connection with the service has been
-            // established, giving us the service object we can use to
-            // interact with the service.  We are communicating with our
-            // service through an IDL interface, so get a client-side
-            // representation of that from the raw service object.
-            mService = IDownloadManagerService.Stub.asInterface(service);
-
-            Log.i(TAG, "onServiceConnected");
-            // We want to monitor the service for as long as we are
-            // connected to it.
-            try {
-                mService.registerSharedDeckCallback(mCallback);
-            } catch (RemoteException e) {
-                // In this case the service has crashed before we could even
-                // do anything with it; we can count on soon being
-                // disconnected (and then reconnected if it can be restarted)
-                // so there is no need to do anything here.
-            } 
-        }
-
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			mService = null;
-		}
-	};
-	
-	// ----------------------------------------------------------------------
-	// Code showing how to deal with callbacks.
-	// ----------------------------------------------------------------------
+	/********************************************************************
+	 * Callbacks														*
+	 ********************************************************************/
 
 	/**
 	 * This implementation is used to receive callbacks from the remote
@@ -405,74 +360,9 @@ public class SharedDeckPicker extends Activity {
 	};
 	
 	
-	class ViewWrapper {
-		
-		View base;
-		TextView headerTitle = null;
-		TextView downloadTitle = null;
-		ProgressBar progressBar = null;
-		TextView progressBarText = null;
-		TextView deckTitle = null;
-		TextView deckFacts = null;
-		
-		ViewWrapper(View base) {
-			this.base = base;
-		}
-		
-		TextView getHeaderTitle() 
-		{
-			if(headerTitle == null)
-			{
-				headerTitle = (TextView) base.findViewById(R.id.header_title);
-			}
-			return headerTitle;
-		}
-		
-		TextView getDownloadTitle() 
-		{
-			if(downloadTitle == null)
-			{
-				downloadTitle = (TextView) base.findViewById(R.id.download_title);
-			}
-			return downloadTitle;
-		}
-		
-		ProgressBar getProgressBar()
-		{
-			if(progressBar == null)
-			{
-				progressBar = (ProgressBar) base.findViewById(R.id.progress_bar);
-			}
-			return progressBar;
-		}
-		
-		TextView getProgressBarText()
-		{
-			if(progressBarText == null)
-			{
-				progressBarText = (TextView) base.findViewById(R.id.progress_text);
-			}
-			return progressBarText;
-		}
-
-		TextView getDeckTitle()
-		{
-			if(deckTitle == null)
-			{
-				deckTitle = (TextView) base.findViewById(R.id.deck_title);
-			}
-			return deckTitle;
-		}
-		
-		TextView getDeckFacts()
-		{
-			if(deckFacts == null)
-			{
-				deckFacts = (TextView) base.findViewById(R.id.deck_facts);
-			}
-			return deckFacts;
-		}
-	}
+	/********************************************************************
+	 * Adapters															*
+	 ********************************************************************/
 	
 	public class SharedDecksAdapter extends BaseAdapter {
 
@@ -499,17 +389,18 @@ public class SharedDeckPicker extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View row = convertView;
-			ViewWrapper wrapper = null;
+			DownloadViewWrapper wrapper = null;
+			Resources res = getResources();
 			
 			if(row == null)
 			{
 				row = getLayoutInflater().inflate(R.layout.download_deck_item, null);
-				wrapper = new ViewWrapper(row);
+				wrapper = new DownloadViewWrapper(row);
 				row.setTag(wrapper);
 			}
 			else
 			{
-				wrapper = (ViewWrapper)row.getTag();
+				wrapper = (DownloadViewWrapper)row.getTag();
 			}
 			
 			TextView headerTitle = wrapper.getHeaderTitle();
@@ -529,7 +420,7 @@ public class SharedDeckPicker extends Activity {
 				
 				if(position == 0)
 				{
-					headerTitle.setText("Currently downloading");
+					headerTitle.setText(res.getString(R.string.currently_downloading));
 					headerTitle.setVisibility(View.VISIBLE);
 				}
 				else
@@ -542,27 +433,27 @@ public class SharedDeckPicker extends Activity {
 				switch(download.getStatus())
 				{
 					case Download.START:
-						progressText.setText("Starting download...");
+						progressText.setText(res.getString(R.string.starting_download));
 						break;
 						
 					case Download.DOWNLOADING:
-						progressText.setText("Downloading...");
+						progressText.setText(res.getString(R.string.downloading));
 						break;
 						
 					case Download.PAUSED:
-						progressText.setText("Paused");
+						progressText.setText(res.getString(R.string.paused));
 						break;
 					
 					case Download.COMPLETE:
-						progressText.setText("Downloaded");
+						progressText.setText(res.getString(R.string.downloaded));
 						break;
 					
 					case SharedDeckDownload.UPDATE:
-						progressText.setText("Updating...");
+						progressText.setText(res.getString(R.string.updating));
 						break;
 						
 					default:
-						progressText.setText("Error");
+						progressText.setText(res.getString(R.string.error));
 						break;
 				}
 				progressText.setVisibility(View.VISIBLE);
@@ -572,7 +463,7 @@ public class SharedDeckPicker extends Activity {
 				SharedDeck sharedDeck = (SharedDeck) obj;
 				if(position > 0 && (mAllSharedDecks.get(position - 1) instanceof Download))
 				{
-					headerTitle.setText("Shared Decks");
+					headerTitle.setText(res.getString(R.string.shared_decks));
 					headerTitle.setVisibility(View.VISIBLE);
 				}
 				else
@@ -585,7 +476,15 @@ public class SharedDeckPicker extends Activity {
 				
 				sharedDeckTitle.setText(sharedDeck.getTitle());
 				sharedDeckTitle.setVisibility(View.VISIBLE);
-				sharedDeckFacts.setText(sharedDeck.getFacts() + " facts");
+				int numFacts = sharedDeck.getFacts();
+				if(numFacts == 1)
+				{
+					sharedDeckFacts.setText(numFacts + " " + res.getString(R.string.fact));
+				}
+				else
+				{
+					sharedDeckFacts.setText(numFacts + " " + res.getString(R.string.facts));
+				}
 				sharedDeckFacts.setVisibility(View.VISIBLE);
 			}
 			

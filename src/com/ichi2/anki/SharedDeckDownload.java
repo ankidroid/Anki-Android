@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 public class SharedDeckDownload extends Download implements Parcelable {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final int UPDATE = 5;
 	
 	private int id;
@@ -13,21 +15,13 @@ public class SharedDeckDownload extends Download implements Parcelable {
 	public SharedDeckDownload(String title)
 	{
 		super(title);
-		setStatus(UPDATE);
 	}
 	
-	public SharedDeckDownload(int id, String title, long downloaded) {
-		super(title, downloaded);
-		this.id = id;
-	}
-	
-	public SharedDeckDownload(int id, String title, String filename, long size) {
+	public SharedDeckDownload(int id, String title) {
 		super(title);
-		setSize(size);
 		this.id = id;
-		this.filename = filename;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -44,9 +38,9 @@ public class SharedDeckDownload extends Download implements Parcelable {
 		this.filename = filename;
 	}
 	
-	/**
-	 * Parcel methods
-	 */
+	/********************************************************************
+	 * Parcel methods													*
+	 ********************************************************************/
 	
 	public SharedDeckDownload(Parcel in) {
 		super(in);

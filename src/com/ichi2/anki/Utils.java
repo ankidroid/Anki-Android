@@ -162,7 +162,7 @@ public class Utils {
 		return str;
 	}
 	
-	public static JSONArray listToJSONArray(List list)
+	public static JSONArray listToJSONArray(List<Object> list)
 	{
 		JSONArray jsonArray = new JSONArray();
 		

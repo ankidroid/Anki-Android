@@ -121,7 +121,6 @@ public class AnkiDroidProxy {
 		return timestamp;
 	}
 	
-	//TODO: Discover and handle all possible server errors (status) on connect
     public int connect()
     {
     	if(decks == null)
@@ -276,11 +275,13 @@ public class AnkiDroidProxy {
 		} catch (ClientProtocolException e)
 		{
 			Log.i(TAG, "ClientProtocolException = " + e.getMessage());
+			e.printStackTrace();
 		} catch (IOException e)
 		{
 			Log.i(TAG, "IOException = " + e.getMessage());
+			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			Log.i(TAG, "JSONException = " + e.getMessage());
 			e.printStackTrace();
 		}
     }
@@ -402,7 +403,7 @@ public class AnkiDroidProxy {
 				HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
 				String response = Utils.convertStreamToString(httpResponse.getEntity().getContent());
 				//Log.i(TAG, "Content = " + response);
-				sharedDecks.addAll(handleResult(response));
+				sharedDecks.addAll(getSharedDecksListFromJSONArray(new JSONArray(response)));
 			}
 		} catch (Exception e)
 		{
@@ -413,11 +414,9 @@ public class AnkiDroidProxy {
 		return sharedDecks;
 	}
 	
-    private static List<SharedDeck> handleResult(String result) throws JSONException
-    {
-    	List<SharedDeck> sharedDecks = new ArrayList<SharedDeck>();
-    	
-		JSONArray jsonSharedDecks = new JSONArray(result);
+	private static List<SharedDeck> getSharedDecksListFromJSONArray(JSONArray jsonSharedDecks) throws JSONException
+	{
+		List<SharedDeck> sharedDecks = new ArrayList<SharedDeck>();
 		
 		if(jsonSharedDecks != null)
 		{
@@ -447,67 +446,6 @@ public class AnkiDroidProxy {
 		}
 		
 		return sharedDecks;
-    }
+	}
 
-	public static String downloadSharedDeck(SharedDeck sharedDeck, String deckPath) throws ClientProtocolException, IOException {
-    	Log.i(TAG, "Downloading deck " + sharedDeck.getId());
-    	
-		HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/get?id=" + sharedDeck.getId());
-		httpGet.setHeader("Accept-Encoding", "identity");
-		httpGet.setHeader("Host", "anki.ichi2.net");
-		httpGet.setHeader("Connection", "close");
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpResponse httpResponse = httpClient.execute(httpGet);
-		Log.i(TAG, "Connection finished!");
-		InputStream is = httpResponse.getEntity().getContent();
-		String deckFilename = handleFile(is, sharedDeck, deckPath);
-		is.close();
-		
-		return deckFilename;
-	}
-	
-	private static String handleFile(InputStream source, SharedDeck sharedDeck, String deckPath) throws IOException
-	{
-		String deckFilename = "";
-		
-		ZipInputStream zipInputStream = null;
-		if(sharedDeck.getFileName().endsWith(".zip"))
-		{
-			zipInputStream = new ZipInputStream(source);
-			
-			String title = sharedDeck.getTitle();
-			title = title.replace("^", "");
-			title = title.substring(0, java.lang.Math.min(title.length(), 40));
-			
-			if(new File(deckPath + "/" + title + ".anki").exists())
-				title += System.currentTimeMillis();
-			
-			String partialDeckPath = deckPath + "/" + title;
-			deckFilename = partialDeckPath + ".anki";
-			
-			ZipEntry zipEntry = null;
-			while((zipEntry = zipInputStream.getNextEntry()) != null)
-			{
-				//Log.i(TAG, "zipEntry = " + zipEntry.getName());
-				
-				if("shared.anki".equalsIgnoreCase(zipEntry.getName()))
-				{
-					Utils.writeToFile(zipInputStream, deckFilename + ".tmp");
-				}
-				else if(zipEntry.getName().startsWith("shared.media/", 0))
-				{
-					//Log.i(TAG, "Folder created = " + new File(AnkiDroidApp.getStorageDirectory() + title + ".media/").mkdir());
-					//Log.i(TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
-					Utils.writeToFile(zipInputStream, partialDeckPath + ".media/" + zipEntry.getName().replace("shared.media/", ""));
-				}
-			}
-			zipInputStream.close();
-			
-			// TODO: Finish he workflow of temporal files (when a temporal file is renamed, how...) and see that is consistent in any scenario
-			new File(deckFilename + ".tmp").renameTo(new File(deckFilename));
-		}
-		
-		return deckFilename;
-	}
-	
 }

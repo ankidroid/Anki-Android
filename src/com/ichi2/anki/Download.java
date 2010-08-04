@@ -1,7 +1,5 @@
 package com.ichi2.anki;
 
-import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import android.os.Parcel;
@@ -9,58 +7,41 @@ import android.os.Parcelable;
 
 public class Download extends HashMap<String,Object> implements Parcelable {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final String TAG = "AnkiDroid";
 
 	// Status names
-    public static final String STATUSES[] = {"Downloading", "Paused", "Complete", "Cancelled", "Error"};
-    
-    // Status codes
-    public static final int START = -1;
-    public static final int DOWNLOADING = 0;
-    public static final int PAUSED = 1;
-    public static final int COMPLETE = 2;
-    public static final int CANCELLED = 3;
-    public static final int ERROR = 4;
-    
-    // Download URL
+	public static final String STATUSES[] = {"Downloading", "Paused", "Complete", "Cancelled", "Error"};
+
+	// Status codes
+	public static final int START = -1;
+	public static final int DOWNLOADING = 0;
+	public static final int PAUSED = 1;
+	public static final int COMPLETE = 2;
+	public static final int CANCELLED = 3;
+	public static final int ERROR = 4;
+
+	// Download's title
+	protected String title;
+	// Download URL
 	protected String url;
 	// Size of download in bytes
-    protected long size;
-    // Number of bytes downloaded
-    protected long downloaded;
-    // Current status of download
-    protected int status; 
-    protected int progress;
-    // Download's title
-    protected String title;
-    
-    // Constructor for Download.
-    /*
-    public Download(String url) {
-    	this.url = url;
-    	put("filename", url.toString());
-        size = -1;
-        downloaded = 0;
-        status = START;
-    }
-    */
-    
-    public Download(String title)
-    {
-    	this.title = title;
-    	size = -1;
-    	downloaded = 0;
-    	status = START;
-    }
-    
-    public Download(String title, long downloaded)
-    {
-    	this.title = title;
-    	this.downloaded = downloaded;
-    	status = START;
-    }
-    
-    public String getUrl() {
+	protected long size;
+	// Number of bytes downloaded
+	protected long downloaded;
+	// Current status of download
+	protected int status; 
+
+	public Download(String title)
+	{
+		this.title = title;
+		size = -1;
+		downloaded = 0;
+		status = START;
+	}
+	
+	public String getUrl() {
 		return url;
 	}
 
@@ -75,6 +56,7 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 
 	public void setSize(long size) {
 		this.size = size;
+		/*
 		float sizeToShow = size;
 		int divs = 0;
 		while(sizeToShow > 1000)
@@ -102,7 +84,7 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 				put("size", dec.format(sizeToShow) + "GB");
 				break;
 		}
-		setProgress();
+		*/
 	}
 
 	public long getDownloaded() {
@@ -111,6 +93,7 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 
 	public void setDownloaded(long downloaded) {
 		this.downloaded = downloaded;
+		/*
 		float downloadedToShow = downloaded;
 		int divs = 0;
 		while(downloadedToShow > 1000)
@@ -138,18 +121,12 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 				put("downloaded", dec.format(downloadedToShow) + "GB");
 				break;
 		}
-		setProgress();
+		*/
 	}
 
 	public int getProgress() 
 	{
-		return progress;
-	}
-	
-	private void setProgress() 
-	{
-		progress = (int) (((float)downloaded / size) * 100);
-		put("progress", progress + "%");
+		return (int) (((float)downloaded / size) * 100);
 	}
 	
 	public int getStatus() {
@@ -168,9 +145,9 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 		this.title = title;
 	}
 
-	/**
-	 * Parcel methods
-	 */
+	/********************************************************************
+	 * Parcel methods													*
+	 ********************************************************************/
 	
 	public Download(Parcel in) {
 		readFromParcel(in);
@@ -186,7 +163,6 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 		dest.writeLong(size);
 		dest.writeLong(downloaded);
 		dest.writeInt(status);
-		dest.writeInt(progress);
 		dest.writeString(title);
 	}
 	
@@ -195,7 +171,6 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 		size = in.readLong();
 		downloaded = in.readLong();
 		status = in.readInt();
-		progress = in.readInt();
 		title = in.readString();
 	}
 	

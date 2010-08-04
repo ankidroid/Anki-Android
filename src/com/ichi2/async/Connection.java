@@ -35,21 +35,18 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Deck;
 import com.ichi2.anki.R;
-import com.ichi2.anki.SharedDeck;
 import com.ichi2.anki.SyncClient;
 
 public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload>
 {
-    public static final String TAG = "Connection";
-    public static Context context;
-    
-    public static final int TASK_TYPE_LOGIN = 0;
-    public static final int TASK_TYPE_GET_SHARED_DECKS = 1;
-    public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 2;
-    public static final int TASK_TYPE_GET_PERSONAL_DECKS = 3;
-    public static final int TASK_TYPE_DOWNLOAD_PERSONAL_DECK = 4;
-    public static final int TASK_TYPE_SYNC_DECK = 5;
-    public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 6;
+	public static final String TAG = "Connection";
+	public static Context context;
+	
+	public static final int TASK_TYPE_LOGIN = 0;
+	public static final int TASK_TYPE_GET_SHARED_DECKS = 1;
+	public static final int TASK_TYPE_GET_PERSONAL_DECKS = 2;
+	public static final int TASK_TYPE_SYNC_DECK = 3;
+	public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 4;
 
 	private static Connection instance;
 	private TaskListener listener;
@@ -58,12 +55,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 	private static Connection launchConnectionTask(TaskListener listener, Payload data)
 	{
-		/*if(!isOnline())
+		if(!isOnline())
 		{
 			data.success = false;
 			listener.onDisconnected();
 			return null;
-		}*/
+		}
 		try
 		{
 			if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED))
@@ -79,7 +76,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return (Connection)instance.execute(data);
 	}
 	
-	   /*
+	/*
      * Runs on GUI thread
      */
     protected void onPreExecute() 
@@ -124,31 +121,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return launchConnectionTask(listener, data);
 	}
 	
-	public static Connection downloadSharedDeck(TaskListener listener, Payload data)
-	{
-		data.taskType = TASK_TYPE_DOWNLOAD_SHARED_DECK;
-		return launchConnectionTask(listener, data);
-	}
-	
 	public static Connection getPersonalDecks(TaskListener listener, Payload data)
 	{
 		data.taskType = TASK_TYPE_GET_PERSONAL_DECKS;
 		return launchConnectionTask(listener, data);
-	}
-	
-	/*
-	public static Connection downloadPersonalDeck(TaskListener listener, Payload data)
-	{
-		data.taskType = TASK_TYPE_DOWNLOAD_PERSONAL_DECK;
-		return launchConnectionTask(listener, data);
-	}
-	*/
-	
-	public void downloadPersonalDeck(TaskListener listener, Payload data)
-	{
-		data.taskType = TASK_TYPE_DOWNLOAD_PERSONAL_DECK;
-		this.listener = listener;
-		execute(data);
 	}
 	
 	public static Connection syncDeck(TaskListener listener, Payload data)
@@ -178,15 +154,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			case TASK_TYPE_GET_SHARED_DECKS:
 				return doInBackgroundGetSharedDecks(data);
 
-			case TASK_TYPE_DOWNLOAD_SHARED_DECK:
-				return doInBackgroundDownloadSharedDeck(data);
-				
 			case TASK_TYPE_GET_PERSONAL_DECKS:
 				return doInBackgroundGetPersonalDecks(data);
 			
-			case TASK_TYPE_DOWNLOAD_PERSONAL_DECK:
-				return doInBackgroundDownloadPersonalDeck(data);
-				
 			case TASK_TYPE_SYNC_DECK:
 				return doInBackgroundSyncDeck(data);
 				
@@ -232,19 +202,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return data;
 	}
 
-	private Payload doInBackgroundDownloadSharedDeck(Payload data)
-	{
-		try {
-			data.result = AnkiDroidProxy.downloadSharedDeck((SharedDeck)data.data[0], (String)data.data[1]);
-		} catch (Exception e) {
-			data.success = false;
-			data.exception = e;
-			Log.e(TAG, "Error downloading shared deck = " + e.getMessage());
-			e.printStackTrace();
-		}
-		return data;
-	}
-	
 	private Payload doInBackgroundGetPersonalDecks(Payload data)
 	{
 		try {
@@ -256,23 +213,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			data.success = false;
 			data.exception = e;
 			Log.e(TAG, "Error getting personal decks = " + e.getMessage());
-			e.printStackTrace();
-		}
-		return data;
-	}
-	
-	private Payload doInBackgroundDownloadPersonalDeck(Payload data)
-	{
-		try {
-			String username = (String)data.data[0];
-			String password = (String)data.data[1];
-			String deckName = (String)data.data[2];
-			String deckPath = (String)data.data[3];
-			SyncClient.fullSyncFromServer(password, username, deckName, deckPath);
-		} catch (Exception e) {
-			data.success = false;
-			data.exception = e;
-			Log.e(TAG, "Error downloading shared deck = " + e.getMessage());
 			e.printStackTrace();
 		}
 		return data;
@@ -449,11 +389,16 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 	
 	public static boolean isOnline() 
 	{
-		 ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		 
-		 if(cm.getActiveNetworkInfo() != null)
-			 return cm.getActiveNetworkInfo().isConnectedOrConnecting();
-		 else return false;
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		
+		if(cm.getActiveNetworkInfo() != null)
+		{
+			return cm.getActiveNetworkInfo().isConnectedOrConnecting();
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public static void setContext(Context applicationContext)

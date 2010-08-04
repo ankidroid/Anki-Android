@@ -18,9 +18,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="CardEditorCancelButton">Cancel</string>
-    <string name="CardEditorSaveButton">Save</string>
-
+<string name="CardEditorCancelButton">Cancel</string>
+<string name="CardEditorSaveButton">Save</string>
 
 <string name="app_name">AnkiDroid</string>
 
@@ -55,7 +54,7 @@
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 
 
-<!-- deck_preferences.xml strings -->
+<!-- deck_preferences.xml -->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
 <string name="newcards_day">New Cards / Day</string>
 <string name="session_time_limit">Session Time Limit</string>
@@ -73,7 +72,7 @@
 <string name="review_cards_order_summ">The order in which to show review cards.</string>
 
 
-<!-- flashcard_portrait.xml strings -->
+<!-- flashcard_portrait.xml -->
 <string name="overlay_on">Whiteboard On</string>
 <string name="overlay_off">Whiteboard Off</string>
 <string name="show_answer">Show Answer</string>
@@ -88,7 +87,7 @@
 <string name="ease3_successive">Good</string>
 <string name="ease4_successive">Easy</string>
 
-<!-- preferences.xml strings -->
+<!-- preferences.xml -->
 <string name="pref_cat_decks">Decks</string>
 <string name="pref_cat_sync">Synchronization</string>
 <string name="pref_cat_advanced">Advanced</string>
@@ -125,7 +124,7 @@
 <string name="sync_on">Synchronize this deck</string>
 <string name="sync_name">Name on server</string>
 
-<!-- AndroidManifest.xml strings -->
+<!-- AndroidManifest.xml -->
 <string name="personaldeckpicker_title">Open Online Deck</string>
 <string name="shareddeckpicker_title">Select the deck you want to download</string>
 <string name="preferences_title">Preferences</string>
@@ -134,7 +133,7 @@
 <string name="about_title">About</string>
 <string name="cardeditor_title">Card Editor</string>
 
-<!-- AnkiDroid.java strings -->
+<!-- AnkiDroid.java -->
 <string name="loading_new_card">Loading new card...</string>
 <string name="loading_deck">Loading deck. Please wait...</string>
 <string name="loading_shared_decks">Loading available shared decks...</string>
@@ -145,8 +144,24 @@
 <string name="edit_card">Edit Card</string>
 <string name="switch_another_deck">Switch to another deck</string>
 
+<!-- PersonalDeckPicker.java -->
+<string name="currently_downloading">Currently downloading</string>
+<string name="personal_decks">Personal Decks</string>
+<string name="starting_download">Starting download...</string>
+<string name="downloading">Downloading...</string>
+<string name="paused">Paused</string>
+<string name="downloaded">Downloaded</string>
+<string name="error">Error</string>
+
 <!-- SharedDeckPicker.java -->
-<string name="downloading_shared_deck">Downloading shared deck...</string>
+<string name="shared_decks">Shared Decks</string>
+<string name="updating">Updating...</string>
+<!-- currently_downloading -> PersonalDeckPicker.java -->
+<!-- starting_download -> PersonalDeckPicker.java -->
+<!-- downloading -> PersonalDeckPicker.java -->
+<!-- paused -> PersonalDeckPicker.java -->
+<!-- downloaded -> PersonalDeckPicker.java -->
+<!-- error -> PersonalDeckPicker.java -->
 
 <!-- SharedDeck.java -->
 <string name="fact">fact</string>
@@ -249,7 +264,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="studyoptions_congrats_reviewearly">Review Early</string>
 <string name="studyoptions_congrats_finish">Finish</string>
 
-<!-- My Account -->
+<!-- MyAccount.java -->
 <string name="username">Username</string>
 <string name="password">Password</string>
 <string name="login">Login</string>
@@ -261,5 +276,9 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="alert_logging_message">Logging in, please wait...</string>
 <string name="invalid_username_password">Invalid username or password.</string>
 <string name="ankionline_sign_up_url">http://ankisrs.net/account/login</string>
+
+<!-- DownloadManagerService.java -->
+<string name="download_finished">Download finished</string>
+<string name="deck_downloaded">Deck downloaded</string>
 
 </resources>

@@ -55,10 +55,4 @@ interface IDownloadManagerService {
     List<SharedDeckDownload> getSharedDeckDownloads();
     
     void downloadFile(in Download download);
-    
-    void addIncompleteDownloads();
-    
-    void resumeDownloads();
-    
-    void resumeDownload(in Download download);
 }

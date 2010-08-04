@@ -6,6 +6,8 @@ import android.util.Log;
 
 public class SharedDeck extends HashMap<String, Object>{
 
+	private static final long serialVersionUID = 1L;
+	
 	private static final String TAG = "AnkidroidSharedDecks";
 	protected int id;
 	protected String username;
