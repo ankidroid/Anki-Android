@@ -101,8 +101,8 @@ public class CardModel implements Comparator<CardModel> {
 	private final static String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, aformat" //lformat left out
 		//qedformat, aedformat left out
 		+ ", questionInAnswer"
-		+ ", questionFontFamily, questionFontSize, questionFontColour" //questionAlign left out
-		+ ", answerFontFamily, answerFontSize, answerFontColour" //same as for question
+		+ ", questionFontFamily, questionFontSize, questionFontColour, questionAlign"
+		+ ", answerFontFamily, answerFontSize, answerFontColour, answerAlign"
 		+ ", lastFontColour" //lastFontFamily, lastFontSize left out
 		//rest left out
 		+ " FROM cardModels";
@@ -139,10 +139,12 @@ public class CardModel implements Comparator<CardModel> {
 					myCardModel.questionFontFamily = cursor.getString(9);
 					myCardModel.questionFontSize = cursor.getInt(10);
 					myCardModel.questionFontColour = cursor.getString(11);
-					myCardModel.answerFontFamily = cursor.getString(12);
-					myCardModel.answerFontSize = cursor.getInt(13);
-					myCardModel.answerFontColour = cursor.getString(14);
-					myCardModel.lastFontColour = cursor.getString(15);
+					myCardModel.questionAlign = cursor.getInt(12);
+					myCardModel.answerFontFamily = cursor.getString(13);
+					myCardModel.answerFontSize = cursor.getInt(14);
+					myCardModel.answerFontColour = cursor.getString(15);
+					myCardModel.answerAlign = cursor.getInt(16);
+					myCardModel.lastFontColour = cursor.getString(17);
 					models.put(myCardModel.id, myCardModel);
 				} while (cursor.moveToNext());
 			}
