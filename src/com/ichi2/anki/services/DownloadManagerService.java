@@ -144,6 +144,9 @@ public class DownloadManagerService extends Service {
 	public void stopIfFinished() {
 		if(!hasMoreWork())
 		{
+			// Delete tmp folder
+			boolean deleted = new File(mDestination + "/tmp").delete();
+			Log.i(TAG, mDestination + "/tmp folder was deleted = " + deleted);
 			Log.i(TAG, "Service stopping itself...");
 			stopSelf();
 		}
@@ -214,7 +217,7 @@ public class DownloadManagerService extends Service {
 		{
 			Log.i(TAG, "DownloadManagerService - Adding incomplete downloads:");
 
-			File dir = new File(mDestination);
+			File dir = new File(mDestination + "/tmp/");
 			File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
 			
 			if(fileList != null)
@@ -290,6 +293,9 @@ public class DownloadManagerService extends Service {
 		@Override
 		public void resumeDownload(Download download)
 		{
+			// Create tmp folder where the temporal decks are going to be stored
+			new File(mDestination + "/tmp/").mkdirs();
+			
 			if(download instanceof SharedDeckDownload)
 			{
 				SharedDeckDownload sharedDeckDownload = (SharedDeckDownload) download;
@@ -379,7 +385,7 @@ public class DownloadManagerService extends Service {
 			if(new File(mDestination + "/" + title + ".anki").exists())
 				title += System.currentTimeMillis();
 
-			String partialDeckPath = mDestination + "/" + title;
+			String partialDeckPath = mDestination + "/tmp/" + title;
 			String deckFilename = partialDeckPath + ".anki.updating";
 
 			ZipEntry zipEntry = null;
@@ -393,13 +399,14 @@ public class DownloadManagerService extends Service {
 				}
 				else if(zipEntry.getName().startsWith("shared.media/", 0))
 				{
-					Log.i(TAG, "Folder created = " + new File(AnkiDroidApp.getStorageDirectory() + title + ".media/").mkdir());
+					Log.i(TAG, "Folder created = " + new File(partialDeckPath + ".media/").mkdir());
 					Log.i(TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
 					Utils.writeToFile(zipInputStream, partialDeckPath + ".media/" + zipEntry.getName().replace("shared.media/", ""));
 				}
 			}
 			zipInputStream.close();
 			
+			// Delete zip file
 			new File(zipFilename).delete();
 		}
 
@@ -473,7 +480,7 @@ public class DownloadManagerService extends Service {
 				}
 				
 				// Open file
-				file = new RandomAccessFile(mDestination + "/" + download.getTitle() + ".anki.tmp", "rw");
+				file = new RandomAccessFile(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp", "rw");
 				// FIXME:  Uncomment next line when the connection is fixed on AnkiOnline (= when the connection only returns the bytes specified on the range property)
 				//file.seek(download.getDownloaded());
 				
@@ -507,7 +514,7 @@ public class DownloadManagerService extends Service {
 				if (download.getStatus() == Download.DOWNLOADING) 
 				{
 					download.setStatus(Download.COMPLETE);
-					new File(mDestination + "/" + download.getTitle() + ".anki.tmp").renameTo(new File(mDestination + "/" + download.getTitle() + ".anki"));
+					new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").renameTo(new File(mDestination + "/" + download.getTitle() + ".anki"));
 					publishProgress();
 				}
 				long finishTime = System.currentTimeMillis();
@@ -546,9 +553,12 @@ public class DownloadManagerService extends Service {
 		protected void onPostExecute(Download download) 
 		{
 			// TODO: Error cases
+			if(download.getStatus() == Download.COMPLETE)
+			{
+				showNotification(download.getTitle());
+			}
 			mPersonalDeckDownloads.remove(download);
 			notifyPersonalDeckObservers();
-			showNotification(download.getTitle());
 			stopIfFinished();
 		}
 	}
@@ -614,7 +624,7 @@ public class DownloadManagerService extends Service {
 				}
 				
 				// Open file
-				file = new RandomAccessFile(mDestination + "/" + download.getTitle() + "." + download.getId() +".shared.zip.tmp", "rw");
+				file = new RandomAccessFile(mDestination + "/tmp/" + download.getTitle() + "." + download.getId() +".shared.zip.tmp", "rw");
 				// FIXME:  Uncomment next line when the connection is fixed on AnkiOnline (= when the connection only returns the bytes specified on the range property)
 				//file.seek(download.getDownloaded());
 				
@@ -652,7 +662,7 @@ public class DownloadManagerService extends Service {
 				if (download.getStatus() == Download.DOWNLOADING) 
 				{
 					download.setStatus(Download.COMPLETE);
-					new File(mDestination + "/" + download.getTitle() + "." + download.getId() +".shared.zip.tmp").renameTo(new File(mDestination + "/" + download.getTitle() + ".zip"));
+					new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId() +".shared.zip.tmp").renameTo(new File(mDestination + "/tmp/" + download.getTitle() + ".zip"));
 					//TODO: NOTIFY???
 					publishProgress();
 				}
@@ -699,7 +709,7 @@ public class DownloadManagerService extends Service {
 			
 			try {
 				// Unzip deck and media
-				String unzippedDeckName = unzipSharedDeckFile(mDestination + "/" + download.getTitle() + ".zip", sharedDownload.getTitle());
+				String unzippedDeckName = unzipSharedDeckFile(mDestination + "/tmp/" + download.getTitle() + ".zip", sharedDownload.getTitle());
 				// Update all the cards in the deck
 				new UpdateDeckTask().execute(new Payload(new Object[] {unzippedDeckName, download}));
 			} catch (IOException e) {
@@ -739,7 +749,7 @@ public class DownloadManagerService extends Service {
 		{
 			Payload data = params[0];
 			String deckName = (String) data.data[0];
-			String deckFilename = mDestination + "/" + deckName + ".anki.updating";
+			String deckFilename = mDestination + "/tmp/" + deckName + ".anki.updating";
 			Log.i(TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
 			Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
@@ -789,7 +799,9 @@ public class DownloadManagerService extends Service {
 				}
 				// TODO: Remove download and notify only on success?
 				String deckName = (String)result.data[0];
-				new File(mDestination + "/" + deckName + ".anki.updating").renameTo(new File(mDestination + "/" + deckName + ".anki"));
+				// Move deck and media to the default deck path
+				new File(mDestination + "/tmp/" + deckName + ".anki.updating").renameTo(new File(mDestination + "/" + deckName + ".anki"));
+				new File(mDestination + "/tmp/" + deckName + ".media/").renameTo(new File(mDestination + "/" + deckName + ".media/"));
 				mSharedDeckDownloads.remove((Download)result.data[1]);
 				notifySharedDeckObservers();
 				showNotification((String)result.data[0]);
