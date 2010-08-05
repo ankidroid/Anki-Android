@@ -1,4 +1,4 @@
-package com.ichi2.anki;
+ package com.ichi2.anki;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +15,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -290,27 +291,19 @@ public class StudyOptions extends Activity
 		initAllContentViews();
 		initAllAlertDialogs();
 		
-		/*
-		Intent serviceIntent = new Intent(StudyOptions.this, DownloadManagerService.class);
-		serviceIntent.putExtra("username", preferences.getString("username", ""));
-		serviceIntent.putExtra("password", preferences.getString("password", ""));
-		serviceIntent.putExtra("destination", preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
-		startService(serviceIntent);
-		*/
-		//bindService(serviceIntent, mConnection, Context.BIND_AUTO_CREATE);
-		
-		Bundle extras = getIntent().getExtras();
-		if (extras != null && extras.getString(OPT_DB) != null)
+		Intent intent = getIntent();
+		if("android.intent.action.VIEW".equalsIgnoreCase(intent.getAction()) && intent.getDataString() != null)
 		{
-			deckFilename = extras.getString(OPT_DB);
-			Log.i(TAG, "onCreate - deckFilename from extras: " + deckFilename);
+			deckFilename = Uri.parse(intent.getDataString()).getPath();
+			Log.i(TAG, "onCreate - deckFilename from intent: " + deckFilename);
 		}
 		else if(savedInstanceState != null)
 		{
 			// Use the same deck as last time Ankidroid was used.
 			deckFilename = savedInstanceState.getString("deckFilename");
 			Log.i(TAG, "onCreate - deckFilename from savedInstanceState: " + deckFilename);
-		} else
+		} 
+		else
 		{
 			Log.i(TAG, "onCreate - " + preferences.getAll().toString());
 			deckFilename = preferences.getString("deckFilename", null);
@@ -621,7 +614,7 @@ public class StudyOptions extends Activity
 				return true;
 			
 			case MENU_DOWNLOAD_PERSONAL_DECK:
-				Intent downloadPersonalDeck = new Intent(this, PersonalDeckPicker.class);
+				Intent downloadPersonalDeck = new Intent(StudyOptions.this, PersonalDeckPicker.class);
 				startActivityForResult(downloadPersonalDeck, DOWNLOAD_PERSONAL_DECK); 
 				return true;
 			
@@ -634,22 +627,22 @@ public class StudyOptions extends Activity
 				return true;
 			
 			case MENU_MY_ACCOUNT:
-				Intent myAccount = new Intent(this, MyAccount.class);
+				Intent myAccount = new Intent(StudyOptions.this, MyAccount.class);
 				startActivity(myAccount);
 				return true;
 				
 			case MENU_PREFERENCES:
-				Intent preferences = new Intent(this, Preferences.class);
+				Intent preferences = new Intent(StudyOptions.this, Preferences.class);
 				startActivityForResult(preferences, PREFERENCES_UPDATE);
 				return true;
 				
 			case MENU_DECK_PROPERTIES:
-				Intent deckProperties = new Intent(this, DeckProperties.class);
+				Intent deckProperties = new Intent(StudyOptions.this, DeckProperties.class);
 				startActivityForResult(deckProperties, DECK_PROPERTIES);
 				return true;
 				
 			case MENU_ABOUT:
-				Intent about = new Intent(this, About.class);
+				Intent about = new Intent(StudyOptions.this, About.class);
 				startActivity(about);
 				return true;
 				
@@ -662,7 +655,7 @@ public class StudyOptions extends Activity
 	{
     	closeOpenedDeck();
     	//deckLoaded = false;
-		Intent decksPicker = new Intent(this, DeckPicker.class);
+		Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
 		inDeckPicker = true;
 		startActivityForResult(decksPicker, PICK_DECK_REQUEST);
 		//Log.i(TAG, "openDeckPicker - Ending");

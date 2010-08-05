@@ -18,26 +18,32 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.ichi2.anki"
-      android:versionName="0.4" android:versionCode="10">
-    <application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
-        <activity android:name="StudyOptions">
-         <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-         </intent-filter>
-        </activity>
-        <activity android:name="DeckPicker" android:label="@string/deckpicker_title" />
-        <activity android:name="PersonalDeckPicker" android:label="@string/personaldeckpicker_title" />
-        <activity android:name="SharedDeckPicker" android:label="@string/shareddeckpicker_title" />
-        <activity android:name="Reviewer" android:label="Reviewer" android:configChanges="orientation" />
-        <activity android:name="MyAccount" android:label="My Account"/>
-        <activity android:name="Preferences" android:label="@string/preferences_title" />
-        <activity android:name="DeckPreferences" android:label="@string/deckpreferences_title" />
-        <activity android:name="DeckProperties" android:label="@string/deckproperties_title" />
-        <activity android:name="About" android:label="@string/about_title" />
-        <activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
-        <receiver android:name="com.ichi2.veecheck.CheckReceiver">
+	package="com.ichi2.anki"
+	android:versionName="0.4" android:versionCode="10">
+	<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
+		<activity android:name="StudyOptions">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="com.ankidroid.category.DECK" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="application/vnd.anki" />
+			</intent-filter>
+		</activity>
+		<activity android:name="DeckPicker" android:label="@string/deckpicker_title" />
+		<activity android:name="PersonalDeckPicker" android:label="@string/personaldeckpicker_title" />
+		<activity android:name="SharedDeckPicker" android:label="@string/shareddeckpicker_title" />
+		<activity android:name="Reviewer" android:label="Reviewer" android:configChanges="orientation" />
+		<activity android:name="MyAccount" android:label="My Account"/>
+		<activity android:name="Preferences" android:label="@string/preferences_title" />
+		<activity android:name="DeckPreferences" android:label="@string/deckpreferences_title" />
+		<activity android:name="DeckProperties" android:label="@string/deckproperties_title" />
+		<activity android:name="About" android:label="@string/about_title" />
+		<activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
+		<receiver android:name="com.ichi2.veecheck.CheckReceiver">
 			<intent-filter>
 				<action
 					android:name="com.ichi2.anki.VEECHECK_RESCHEDULE_CHECKS">
@@ -59,15 +65,15 @@
 		</service>
 		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
 		<provider android:name="AnkiDroidContentProvider" android:authorities="com.ichi2.anki"/>
-    <activity android:name="CardEditor" android:label="@string/cardeditor_title"></activity>
-    </application>
-    <uses-sdk android:minSdkVersion="3"/>
+	<activity android:name="CardEditor" android:label="@string/cardeditor_title"></activity>
+	</application>
+	<uses-sdk android:minSdkVersion="3"/>
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<supports-screens 
-	     android:largeScreens="true" 
-	     android:normalScreens="true" 
-	     android:smallScreens="true" 
-	     android:anyDensity="true"/>
+		android:largeScreens="true" 
+		android:normalScreens="true" 
+		android:smallScreens="true" 
+		android:anyDensity="true"/>
 </manifest>

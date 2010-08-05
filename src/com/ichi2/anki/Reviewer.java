@@ -435,7 +435,7 @@ public class Reviewer extends Activity {
 		{
 		case MENU_EDIT:
 			editorCard = mCurrentCard;
-			Intent editCard = new Intent(this, CardEditor.class);
+			Intent editCard = new Intent(Reviewer.this, CardEditor.class);
 			startActivityForResult(editCard, EDIT_CURRENT_CARD);
 			return true;
 		case MENU_SUSPEND:

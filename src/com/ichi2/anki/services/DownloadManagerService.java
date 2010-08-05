@@ -340,12 +340,7 @@ public class DownloadManagerService extends Service {
 		// Set the icon, scrolling text and timestamp
 		Notification notification = new Notification(R.drawable.anki, res.getString(R.string.download_finished), System.currentTimeMillis());
 
-		Intent loadDeckIntent = new Intent(this, StudyOptions.class);
-		loadDeckIntent.putExtra(StudyOptions.OPT_DB, mDestination + "/" + deckTitle + ".anki");
-		// Needed to really differentiate between intents
-		// If we don't set a different data for every intent, they get confused and different intents open the same deck
-		loadDeckIntent.setData(Uri.parse(deckTitle));
-		
+		Intent loadDeckIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mDestination + "/" + deckTitle + ".anki"), DownloadManagerService.this, StudyOptions.class);
 		// The PendingIntent to launch our activity if the user selects this notification
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, loadDeckIntent, 0);
 
