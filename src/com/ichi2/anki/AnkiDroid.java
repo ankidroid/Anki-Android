@@ -25,6 +25,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -87,6 +89,10 @@ public class AnkiDroid extends Activity
 	
 	/** The percentage of the absolute font size specified in the deck. */
 	private int displayFontSize = 100;
+
+	/** Regex pattern used in removing tags from text before diff */
+	private static final Pattern spanPattern = Pattern.compile("</?span[^>]*>");
+	private static final Pattern brPattern = Pattern.compile("<br\\s?/?>");
 
 	/**
 	 * Menus
@@ -935,9 +941,10 @@ public class AnkiDroid extends Activity
 			{
 				// Obtain the user answer and the correct answer
 				String userAnswer = mAnswerField.getText().toString();
-				String correctAnswer = (String) currentCard.answer.subSequence(
-						currentCard.answer.indexOf(">")+1,
-						currentCard.answer.lastIndexOf("<"));
+				Matcher spanMatcher = spanPattern.matcher(currentCard.answer);
+				String correctAnswer = spanMatcher.replaceAll("");
+				Matcher brMatcher = brPattern.matcher(correctAnswer);
+				correctAnswer = brMatcher.replaceAll("\n");
 
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
