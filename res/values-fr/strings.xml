@@ -50,7 +50,7 @@
   <string name="pref_cat_decks">Paquets</string>
   <string name="pref_cat_sync">Synchronisation</string>
   <string name="pref_cat_study">Options d\'étude</string>
-  <string name="pref_cat_qadisplay">Affichage question et réponse</string>
+ <string name="pref_cat_qadisplay">Affichage question et réponse</string>
   <string name="username">Nom d\'utilisateur</string>
   <string name="password">Mot de passe</string>
   <string name="sync_on_open">Synchro au démarrage</string>

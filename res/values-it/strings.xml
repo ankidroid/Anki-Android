@@ -31,7 +31,7 @@
   <string name="session_question_limit_summ">Numero di domande per sessione. Scegli 0 per nessun limite.</string>
   <string name="new_cards_order">Ordine nuove carte</string>
   <string name="new_cards_order_summ">Ordine in cui mostrare le nuove carte.</string>
-  <string name="show_new_cards_in">Mostra le nuove carte in...</string>
+  <string name="show_new_cards_in">Mostra le nuove carte tra...</string>
   <string name="new_card_spacing">Distanza nuove carte</string>
   <string name="new_card_spacing_summ">Dove distribuire le carte nuove durante la revisione.</string>
   <string name="show_new_cards">Mostra le carte nuove...</string>
@@ -47,6 +47,14 @@
   <string name="hard">Difficile</string>
   <string name="good">Normale</string>
   <string name="easy">Facile</string>
+  <string name="pref_cat_decks">Mazzi</string>
+  <string name="pref_cat_sync">Sincronizzazione</string>
+  <string name="pref_cat_study">Opzioni di studio</string>
+  <string name="pref_cat_qadisplay">Visualizzazione domanda e risposta</string>
+  <string name="username">Nome utente</string>
+  <string name="password">Password</string>
+  <string name="sync_on_open">Sincronizzazione all\'apertura</string>
+  <string name="sync_on_close">Sincronizzazione alla chiusura</string>
   <string name="show_whiteboard">Mostra timer / lavagna</string>
   <string name="show_whiteboard_summ">Consente di scrivere sullo schermo</string>
   <string name="sample_deck">Mazzo di esempio</string>
@@ -55,17 +63,53 @@
   <string name="corporal_punishments_summ">Vibra in caso di errore, per insegnarti</string>
   <string name="write_answers">Scrivi le risposte</string>
   <string name="write_answers_summ">Consente di scrivere la risposta e confrontarla con quella corretta</string>
+  <string name="use_ruby_support">Provide ruby annotation support</string>
+  <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
+  <string name="display_font_size">Relative display font size</string>
+  <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck</string>
+  <string name="hide_question_in_answer">Hide question in answer?</string>
+  <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
   <string name="deck_path">Percorso del mazzo</string>
   <string name="deck_path_summ">Percorso dove sono salvati i tuoi mazzi</string>
+  <string name="shareddeckpicker_title">Select the deck you want to download</string>
+  <string name="preferences_title">Preferences</string>
+  <string name="deckpreferences_title">Deck Preferences</string>
+  <string name="about_title">Informazioni</string>
+  <string name="cardeditor_title">Card Editor</string>
   <string name="loading_new_card">Caricamento nuova carta...</string>
   <string name="loading_deck">Caricamento mazzo. Attendi...</string>
+  <string name="loading_shared_decks">Loading available shared decks...</string>
+  <string name="connection_unsuccessful">La connessione non è riuscita. Controlla le impostazioni di connessione e riprova.</string>
+  <string name="connection_needed">Nessuna connessione a Internet</string>
   <string name="preferences">Preferenze</string>
   <string name="about">Informazioni</string>
   <string name="study_options">Opzioni di studio</string>
   <string name="suspend">Sospendi</string>
   <string name="edit_card">Modifica carta</string>
   <string name="switch_another_deck">Passare a un altro mazzo</string>
+  <string name="get_shared_deck">Get shared deck</string>
+  <string name="downloading_shared_deck">Downloading shared deck...</string>
+  <string name="fact">fatto</string>
+  <string name="facts">fatti</string>
   <string name="saving_changes">Salvataggio delle modifiche ...</string>
   <string name="session_question_limit_reached">Limite di domande della sessione raggiunto</string>
   <string name="session_time_limit_reached">Limite di tempo della sessione raggiunto</string>
+  <string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.</string>
+  <string name="about_content">&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;AnkiDroid:&lt;br/&gt;
+Flashcards for Android&lt;/h2&gt;
+&lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
+&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;here&lt;/a&gt;, new feature ideas are very welcome too!
+Please use the &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid is &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;join&lt;/a&gt; the &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contributors&lt;/a&gt; :-)
+Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid is released under the &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
+  <string name="review_early">Ripeti in anticipo</string>
+  <string name="error_message">Ci sono %d errori da segnalare</string>
+  <string name="error_ok">Segnala gli errori</string>
+  <string name="error_cancel">Non segnalare gli errori</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>
