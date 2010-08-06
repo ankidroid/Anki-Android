@@ -209,7 +209,7 @@ public class AnkiDroid extends Activity
 
 	private Chronometer mCardTimer;
 	
-	private WebView mCounts;
+	//private WebView mCounts;
 
 	/**
 	 * Time (in ms) at which the session will be over.
@@ -468,7 +468,7 @@ public class AnkiDroid extends Activity
 		mEase2 = (Button) findViewById(R.id.ease3);
 		mEase3 = (Button) findViewById(R.id.ease4);
 		mCardTimer = (Chronometer) findViewById(R.id.card_time);
-		mCounts = (WebView) findViewById(R.id.counts);
+		//mCounts = (WebView) findViewById(R.id.counts);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
@@ -809,7 +809,7 @@ public class AnkiDroid extends Activity
 			mEase3.setVisibility(View.GONE);
 			mFlipCard.setVisibility(View.GONE);
 			mCardTimer.setVisibility(View.GONE);
-			mCounts.setVisibility(View.GONE);
+			//mCounts.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 			mAnswerField.setVisibility(View.GONE);
@@ -825,13 +825,13 @@ public class AnkiDroid extends Activity
 		if (!timerAndWhiteboard)
 		{
 			mCardTimer.setVisibility(View.GONE);
-			mCounts.setVisibility(View.GONE);
+			//mCounts.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		} else
 		{
 			mCardTimer.setVisibility(View.VISIBLE);
-			mCounts.setVisibility(View.VISIBLE);
+			//mCounts.setVisibility(View.VISIBLE);
 			mToggleWhiteboard.setVisibility(View.VISIBLE);
 			if (mToggleWhiteboard.isChecked())
 			{
@@ -909,7 +909,7 @@ public class AnkiDroid extends Activity
 				displayString = displayString + "<hr/>";
 			}
 			updateCard(displayString);
-			mCounts.loadDataWithBaseURL("", AnkiDroidApp.getDeck().reportCounts(), "text/html", "utf-8", null);
+			//mCounts.loadDataWithBaseURL("", AnkiDroidApp.getDeck().reportCounts(), "text/html", "utf-8", null);
 		}
 	}
 	
@@ -969,7 +969,7 @@ public class AnkiDroid extends Activity
 				sb.append("<hr/>");
 			sb.append(displayString);
 			displayString = sb.toString();
-			mFlipCard.setVisibility(View.GONE);
+			mFlipCard.setVisibility(View.INVISIBLE);
 			}
 		updateCard(displayString);
 		}
