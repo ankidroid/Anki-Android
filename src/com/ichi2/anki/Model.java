@@ -260,11 +260,11 @@ public class Model {
 		}
 		//question
 		sb.append(".").append(AnkiDroid.QUESTION_CLASS).append(" {\n");
-		sb.append(calculateDisplay(percentage, myCardModel.questionFontFamily, myCardModel.questionFontSize, myCardModel.questionFontColour, myCardModel.questionAlign));
+		sb.append(calculateDisplay(percentage, myCardModel.questionFontFamily, myCardModel.questionFontSize, myCardModel.questionFontColour, myCardModel.questionAlign, false));
 		sb.append("}\n");
 		//answer
 		sb.append(".").append(AnkiDroid.ANSWER_CLASS).append(" {\n");
-		sb.append(calculateDisplay(percentage, myCardModel.answerFontFamily, myCardModel.answerFontSize, myCardModel.answerFontColour, myCardModel.answerAlign));
+		sb.append(calculateDisplay(percentage, myCardModel.answerFontFamily, myCardModel.answerFontSize, myCardModel.answerFontColour, myCardModel.answerAlign, false));
 		sb.append("}\n");
 		//css for fields. Gets css for all fields no matter whether they actually are used in a given card model
 		FieldModel myFieldModel = null;
@@ -273,7 +273,7 @@ public class Model {
 			myFieldModel = entry.getValue();
 			hexId = "fm" + Long.toHexString(myFieldModel.id);
 			sb.append(".").append(hexId).append(" {\n");
-			sb.append(calculateDisplay(percentage, myFieldModel.quizFontFamily, myFieldModel.quizFontSize, myFieldModel.quizFontColour, 0));
+			sb.append(calculateDisplay(percentage, myFieldModel.quizFontFamily, myFieldModel.quizFontSize, myFieldModel.quizFontColour, 0, true));
 			sb.append("}\n");
 		}
 		
@@ -282,7 +282,7 @@ public class Model {
 		return sb.toString();
 	}
 	
-	private final static String calculateDisplay(int percentage, String fontFamily, int fontSize, String fontColour, int align) {
+	private final static String calculateDisplay(int percentage, String fontFamily, int fontSize, String fontColour, int align, boolean isField) {
 		StringBuffer sb = new StringBuffer();
 		if (null != fontFamily && 0 < fontFamily.trim().length()) {
 			sb.append("font-family:\"").append(fontFamily).append("\";\n");
@@ -295,10 +295,14 @@ public class Model {
 			sb.append((percentage * fontSize)/100);
 			sb.append("px;\n");
 		}
-		sb.append("float:");
-		sb.append(align_text[align]);
-		sb.append(";\n");
-		sb.append("padding:5px;\n");
+		
+        if (!isField) {
+            sb.append("text-align:");
+            sb.append(align_text[align]);
+            sb.append(";\n");
+            sb.append("padding-left:5px;\n");
+            sb.append("padding-right:5px;\n");
+        }
 
 		return sb.toString();
 	}

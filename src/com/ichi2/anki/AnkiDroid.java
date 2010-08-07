@@ -1032,7 +1032,7 @@ public class AnkiDroid extends Activity
 	 */
 	private final static String enrichWithQASpan(String content, boolean isAnswer) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("<span class=\"");
+		sb.append("<p class=\"");
 		if (isAnswer) {
 			sb.append(ANSWER_CLASS);
 		} else {
@@ -1040,7 +1040,7 @@ public class AnkiDroid extends Activity
 		}
 		sb.append("\">");
 		sb.append(content);
-		sb.append("</span>");
+		sb.append("</p>");
 		return sb.toString();
 	}
 
