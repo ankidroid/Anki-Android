@@ -1052,40 +1052,42 @@ public class Deck
 				"priority in (1,2,3,4) and " +
 				"isDue = 1");
 	}
-
-	public String reportCounts() {
-		Cursor cursor = null;
-		int myfailedSoonCount = 0;
-		int myrevCount = 0;
-		int mynewCount = 0;
-		int myfailedNowCount = (int) AnkiDb.queryScalar(
-				"SELECT count(id) " +
-				"FROM cards " +
-				"WHERE type = 0 and " +
-				"isDue = 1 and " +
-				"combinedDue <= " +
-				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
-		try {
-			cursor = AnkiDb.database.rawQuery(
-					"SELECT type, count(id) " +
-					"FROM cards " +
-					"WHERE priority in (1,2,3,4) and " +
-					"isDue = 1 " +
-					"GROUP BY type", null);
-			while (cursor.moveToNext()) {
-				switch (cursor.getInt(0)) {
-					case 0: myfailedSoonCount = cursor.getInt(1); break;
-					case 1: myrevCount = cursor.getInt(1); break;
-					case 2: mynewCount = cursor.getInt(1); break;
-				}
-			}
-		} finally {
-			if (cursor != null) cursor.close();
-		}
-
-		return myfailedSoonCount + "-" + myfailedNowCount + "-" + myrevCount + "-" + mynewCount + "<br/>" +
-				failedSoonCount + "-" + failedNowCount + "-" + revCount + "-" + newCount;
-	}
+	/*
+	 * Report real counts for miscounting debugging
+	 */
+//	public String reportCounts() {
+//		Cursor cursor = null;
+//		int myfailedSoonCount = 0;
+//		int myrevCount = 0;
+//		int mynewCount = 0;
+//		int myfailedNowCount = (int) AnkiDb.queryScalar(
+//				"SELECT count(id) " +
+//				"FROM cards " +
+//				"WHERE type = 0 and " +
+//				"isDue = 1 and " +
+//				"combinedDue <= " +
+//				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+//		try {
+//			cursor = AnkiDb.database.rawQuery(
+//					"SELECT type, count(id) " +
+//					"FROM cards " +
+//					"WHERE priority in (1,2,3,4) and " +
+//					"isDue = 1 " +
+//					"GROUP BY type", null);
+//			while (cursor.moveToNext()) {
+//				switch (cursor.getInt(0)) {
+//					case 0: myfailedSoonCount = cursor.getInt(1); break;
+//					case 1: myrevCount = cursor.getInt(1); break;
+//					case 2: mynewCount = cursor.getInt(1); break;
+//				}
+//			}
+//		} finally {
+//			if (cursor != null) cursor.close();
+//		}
+//
+//		return myfailedSoonCount + "-" + myfailedNowCount + "-" + myrevCount + "-" + mynewCount + "<br/>" +
+//				failedSoonCount + "-" + failedNowCount + "-" + revCount + "-" + newCount;
+//	}
 
 	/**
 	 * Mark expired cards due and update counts.
