@@ -1053,6 +1053,40 @@ public class Deck
 				"isDue = 1");
 	}
 
+	public String reportCounts() {
+		Cursor cursor = null;
+		int myfailedSoonCount = 0;
+		int myrevCount = 0;
+		int mynewCount = 0;
+		int myfailedNowCount = (int) AnkiDb.queryScalar(
+				"SELECT count(id) " +
+				"FROM cards " +
+				"WHERE type = 0 and " +
+				"isDue = 1 and " +
+				"combinedDue <= " +
+				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+		try {
+			cursor = AnkiDb.database.rawQuery(
+					"SELECT type, count(id) " +
+					"FROM cards " +
+					"WHERE priority in (1,2,3,4) and " +
+					"isDue = 1 " +
+					"GROUP BY type", null);
+			while (cursor.moveToNext()) {
+				switch (cursor.getInt(0)) {
+					case 0: myfailedSoonCount = cursor.getInt(1); break;
+					case 1: myrevCount = cursor.getInt(1); break;
+					case 2: mynewCount = cursor.getInt(1); break;
+				}
+			}
+		} finally {
+			if (cursor != null) cursor.close();
+		}
+
+		return myfailedSoonCount + "-" + myfailedNowCount + "-" + myrevCount + "-" + mynewCount + "<br/>" +
+				failedSoonCount + "-" + failedNowCount + "-" + revCount + "-" + newCount;
+	}
+
 	/**
 	 * Mark expired cards due and update counts.
 	 */
@@ -1061,16 +1095,14 @@ public class Deck
 		Log.i(TAG, "Checking due cards...");
 		checkDailyStats();
 
-		// Failed cards
 		ContentValues val = new ContentValues(1);
 		val.put("isDue", 1);
-
-		failedSoonCount += AnkiDb.database.update(
+		AnkiDb.database.update(
 				"cards",
 				val,
-				"type = 0 and " +
-				"isDue = 0 and " +
 				"priority in (1,2,3,4) and " +
+				"type in (0,1,2) and " +
+				"isDue = 0 and " +
 				String.format(ENGLISH_LOCALE, "combinedDue <= %f",
 						(double) ((System.currentTimeMillis() / 1000.0) + delay0)),
 				null);
@@ -1083,19 +1115,24 @@ public class Deck
 				String.format(ENGLISH_LOCALE, "combinedDue <= %f",
 						(double) (System.currentTimeMillis() / 1000.0)));
 
-		// Review
-		val.clear();
-		val.put("isDue", 1);
-		revCount += AnkiDb.database.update("cards", val, "type = 1 and " + "isDue = 0 and "
-		        + "priority in (1,2,3,4) and "
-		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
-
-		// New
-		val.clear();
-		val.put("isDue", 1);
-		newCount += AnkiDb.database.update("cards", val, "type = 2 and " + "isDue = 0 and "
-		        + "priority in (1,2,3,4) and "
-		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
+		Cursor cursor = null;
+		try {
+			cursor = AnkiDb.database.rawQuery(
+					"SELECT type, count(id) " +
+					"FROM cards " +
+					"WHERE priority in (1,2,3,4) and " +
+					"isDue = 1 " +
+					"GROUP BY type", null);
+			while (cursor.moveToNext()) {
+				switch (cursor.getInt(0)) {
+					case 0: failedSoonCount = cursor.getInt(1); break;
+					case 1: revCount = cursor.getInt(1); break;
+					case 2: newCount = cursor.getInt(1); break;
+				}
+			}
+		} finally {
+			if (cursor != null) cursor.close();
+		}
 
 		newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0);
 	}

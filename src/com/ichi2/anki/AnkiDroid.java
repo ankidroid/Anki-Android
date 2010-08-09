@@ -25,6 +25,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -87,6 +89,10 @@ public class AnkiDroid extends Activity
 	
 	/** The percentage of the absolute font size specified in the deck. */
 	private int displayFontSize = 100;
+
+	/** Regex pattern used in removing tags from text before diff */
+	private static final Pattern spanPattern = Pattern.compile("</?span[^>]*>");
+	private static final Pattern brPattern = Pattern.compile("<br\\s?/?>");
 
 	/**
 	 * Menus
@@ -203,6 +209,8 @@ public class AnkiDroid extends Activity
 
 	private Chronometer mCardTimer;
 	
+	//private WebView mCounts;
+
 	/**
 	 * Time (in ms) at which the session will be over.
 	 */
@@ -460,6 +468,7 @@ public class AnkiDroid extends Activity
 		mEase2 = (Button) findViewById(R.id.ease3);
 		mEase3 = (Button) findViewById(R.id.ease4);
 		mCardTimer = (Chronometer) findViewById(R.id.card_time);
+		//mCounts = (WebView) findViewById(R.id.counts);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
@@ -800,6 +809,7 @@ public class AnkiDroid extends Activity
 			mEase3.setVisibility(View.GONE);
 			mFlipCard.setVisibility(View.GONE);
 			mCardTimer.setVisibility(View.GONE);
+			//mCounts.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 			mAnswerField.setVisibility(View.GONE);
@@ -815,11 +825,13 @@ public class AnkiDroid extends Activity
 		if (!timerAndWhiteboard)
 		{
 			mCardTimer.setVisibility(View.GONE);
+			//mCounts.setVisibility(View.GONE);
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		} else
 		{
 			mCardTimer.setVisibility(View.VISIBLE);
+			//mCounts.setVisibility(View.VISIBLE);
 			mToggleWhiteboard.setVisibility(View.VISIBLE);
 			if (mToggleWhiteboard.isChecked())
 			{
@@ -897,6 +909,7 @@ public class AnkiDroid extends Activity
 				displayString = displayString + "<hr/>";
 			}
 			updateCard(displayString);
+			//mCounts.loadDataWithBaseURL("", AnkiDroidApp.getDeck().reportCounts(), "text/html", "utf-8", null);
 		}
 	}
 	
@@ -928,9 +941,10 @@ public class AnkiDroid extends Activity
 			{
 				// Obtain the user answer and the correct answer
 				String userAnswer = mAnswerField.getText().toString();
-				String correctAnswer = (String) currentCard.answer.subSequence(
-						currentCard.answer.indexOf(">")+1,
-						currentCard.answer.lastIndexOf("<"));
+				Matcher spanMatcher = spanPattern.matcher(currentCard.answer);
+				String correctAnswer = spanMatcher.replaceAll("");
+				Matcher brMatcher = brPattern.matcher(correctAnswer);
+				correctAnswer = brMatcher.replaceAll("\n");
 
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
@@ -955,7 +969,7 @@ public class AnkiDroid extends Activity
 				sb.append("<hr/>");
 			sb.append(displayString);
 			displayString = sb.toString();
-			mFlipCard.setVisibility(View.GONE);
+			mFlipCard.setVisibility(View.INVISIBLE);
 			}
 		updateCard(displayString);
 		}
@@ -994,7 +1008,7 @@ public class AnkiDroid extends Activity
 		if (null != currentCard) {
 			Model myModel = Model.getModel(currentCard.cardModelId, false);
 			content = myModel.getCSSForFontColorSize(currentCard.cardModelId, displayFontSize) + content;
-		} else {
+		} else { 
 			mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
 		}
 
@@ -1018,7 +1032,7 @@ public class AnkiDroid extends Activity
 	 */
 	private final static String enrichWithQASpan(String content, boolean isAnswer) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("<span class=\"");
+		sb.append("<p class=\"");
 		if (isAnswer) {
 			sb.append(ANSWER_CLASS);
 		} else {
@@ -1026,7 +1040,7 @@ public class AnkiDroid extends Activity
 		}
 		sb.append("\">");
 		sb.append(content);
-		sb.append("</span>");
+		sb.append("</p>");
 		return sb.toString();
 	}
 

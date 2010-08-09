@@ -30,26 +30,6 @@
 			android:key="deckPath" />
 	</PreferenceCategory>
 	
-	<PreferenceCategory android:title="@string/pref_cat_sync">
-		<EditTextPreference
-			android:title="@string/username"
-			android:defaultValue=""
-			android:key="username" />
-		<EditTextPreference
-			android:title="@string/password"
-			android:defaultValue=""
-			android:inputType="textPassword"
-			android:key="password" />
-		<CheckBoxPreference
-			android:title="@string/sync_on_open"
-			android:defaultValue="false"
-			android:key="syncOnOpen" />
-		<CheckBoxPreference
-			android:title="@string/sync_on_close"
-			android:defaultValue="false"
-			android:key="syncOnClose" />
-	</PreferenceCategory>
-	
 	<PreferenceCategory android:title="@string/pref_cat_study">
 		<CheckBoxPreference
 			android:title="@string/show_whiteboard"
@@ -78,14 +58,14 @@
 			android:title="@string/display_font_size"
 			android:summary="@string/display_font_size_summ"
 			android:key="displayFontSize"
-			android:defaultValue="0"
+			android:defaultValue="100"
 			android:entries="@array/displayFontSizeLabels"
 			android:entryValues="@array/displayFontSizeVals" />
 		<ListPreference
 			android:title="@string/hide_question_in_answer"
 			android:summary="@string/hide_question_in_answer_summ"
 			android:key="hideQuestionInAnswer"
-			android:defaultValue="0"
+			android:defaultValue="1"
 			android:entries="@array/hideQuestionInAnswerLabels"
 			android:entryValues="@array/hideQuestionInAnswerVals" />
 	</PreferenceCategory>

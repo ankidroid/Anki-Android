@@ -80,6 +80,7 @@
 <string name="show_answer">Show Answer</string>
 <string name="show_question">Re-display Question</string>
 <string name="card_hint">Flashcard</string>
+<string name="count_hint">Counts</string>
 <string name="again">Again</string>
 <string name="hard">Hard</string>
 <string name="good">Good</string>
