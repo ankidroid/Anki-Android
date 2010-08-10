@@ -728,7 +728,8 @@ public class AnkiDroid extends Activity
 				showOrHideAnswerField();
 			}
 		} else if (requestCode == EDIT_CURRENT_CARD) {
-			if (CardEditor.SAVE_CARD == resultCode) {
+			Log.w(TAG, "card editor result: " + resultCode);
+			if (RESULT_OK == resultCode) {
 				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
 						mUpdateCardHandler, new DeckTask.TaskData(0, AnkiDroidApp
 								.getDeck(), currentCard));
