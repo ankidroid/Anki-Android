@@ -461,6 +461,7 @@ public class AnkiDroid extends Activity
 		setContentView(layout);
 
 		mCard = (WebView) findViewById(R.id.flashcard);
+		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		mButtonReviewEarly = (Button) findViewById(R.id.review_early);
 		mButtonSwitchDeck = (Button) findViewById(R.id.switch_deck);
 		mEase0 = (Button) findViewById(R.id.ease1);

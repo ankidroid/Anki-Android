@@ -36,7 +36,7 @@
 <color name="wb_fg_color">#B00000FF</color>
 <color name="wb_bg_color">#0000</color>
 
-<string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;file:///android_asset/flashcard_css&quot; /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=&quot;card&quot;&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
+<string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/flashcard_css\" /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=\"card\"&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
 
 <string name="deckpicker_title">Select a deck you copied to your SD card</string>
 <string name="deckpicker_title_nosdcard">SD card is unmounted</string>
