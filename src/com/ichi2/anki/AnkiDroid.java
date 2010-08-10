@@ -527,12 +527,13 @@ public class AnkiDroid extends Activity
 				Intent opts = new Intent(this, DeckPreferences.class);
 				startActivity(opts);
 				break;
-				
+			
+			/*
 			case MENU_DECK_PROPERTIES:
 				Intent deckProperties = new Intent(this, DeckProperties.class);
 				startActivity(deckProperties);
 				break;
-
+			*/
 			case MENU_SUSPEND:
 				mFlipCard.setChecked(true);
 				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 

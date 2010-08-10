@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -126,18 +127,20 @@ public class StudyOptions extends Activity
 	
 	private String deckFilename;
 	
-	/* package */ ProgressDialog mProgressDialog;
-	
 	private int mCurrentContentView;
 	
 	/**
 	 * Alerts to inform the user about different situations
 	 */
-	private ProgressDialog progressDialog;
+	private ProgressDialog mProgressDialog;
 
 	private AlertDialog noConnectionAlert;
 	
 	private AlertDialog connectionFailedAlert;
+	
+	private AlertDialog mUserNotLoggedInAlert;
+	
+	private AlertDialog mConnectionErrorAlert;
 	
 	/** 
 	 * UI elements for "Study Options" view 
@@ -289,7 +292,7 @@ public class StudyOptions extends Activity
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		initAllContentViews();
-		initAllAlertDialogs();
+		initAllDialogs();
 		
 		Intent intent = getIntent();
 		if("android.intent.action.VIEW".equalsIgnoreCase(intent.getAction()) && intent.getDataString() != null)
@@ -433,24 +436,16 @@ public class StudyOptions extends Activity
 		
 		// The view to use when there is no external storage available
 		mNoExternalStorageView = getLayoutInflater().inflate(R.layout.studyoptions_nostorage, null);
-		
-		
-		// First setup for ProgressDialog
-		//progressDialog = new ProgressDialog(StudyOptions.this);
-		//progressDialog.setCancelable(true);
-		//progressDialog.setMax(100);
-		//progressDialog.setProgress(0);
-		//progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		
 	}
 	
 	/**
 	 * Create AlertDialogs used on all the activity
 	 */
-	private void initAllAlertDialogs()
+	private void initAllDialogs()
 	{
 		Resources res = getResources();
 		
+		// Init alert dialogs
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		
 		builder.setMessage(res.getString(R.string.connection_needed));
@@ -459,6 +454,33 @@ public class StudyOptions extends Activity
 		
 		builder.setMessage(res.getString(R.string.connection_unsuccessful));
 		connectionFailedAlert = builder.create();
+		
+		builder.setTitle(res.getString(R.string.connection_error_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setMessage(res.getString(R.string.no_user_password_error_message));
+		builder.setPositiveButton(res.getString(R.string.log_in), new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent myAccount = new Intent(StudyOptions.this, MyAccount.class);
+				startActivity(myAccount);
+			}
+		});
+		builder.setNegativeButton(res.getString(R.string.cancel), null);
+		mUserNotLoggedInAlert = builder.create();
+		
+		builder.setTitle(res.getString(R.string.connection_error_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setMessage(res.getString(R.string.connection_error_message));
+		builder.setPositiveButton(res.getString(R.string.retry), new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				syncDeck();
+			}
+		});
+		builder.setNegativeButton(res.getString(R.string.cancel), null);
+		mConnectionErrorAlert = builder.create();
 	}
 	
 	private AlertDialog createDialog()
@@ -584,8 +606,8 @@ public class StudyOptions extends Activity
 		item.setIcon(R.drawable.ic_menu_home);
 		item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
 		item.setIcon(android.R.drawable.ic_menu_preferences);
-		item = menu.add(Menu.NONE, MENU_DECK_PROPERTIES, Menu.NONE, R.string.deck_properties);
-		item.setIcon(R.drawable.ic_menu_archive);
+		//item = menu.add(Menu.NONE, MENU_DECK_PROPERTIES, Menu.NONE, R.string.deck_properties);
+		//item.setIcon(R.drawable.ic_menu_archive);
 		item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
 		
@@ -597,7 +619,7 @@ public class StudyOptions extends Activity
 		boolean deckLoaded = AnkiDroidApp.deck() != null;
 		menu.findItem(MENU_OPEN).setEnabled(sdCardAvailable);
 		menu.findItem(SUBMENU_DOWNLOAD).setEnabled(sdCardAvailable);
-		menu.findItem(MENU_DECK_PROPERTIES).setEnabled(deckLoaded && sdCardAvailable);
+		//menu.findItem(MENU_DECK_PROPERTIES).setEnabled(deckLoaded && sdCardAvailable);
 		menu.findItem(MENU_SYNC).setEnabled(deckLoaded && sdCardAvailable);
 		return true;
 	}
@@ -614,12 +636,21 @@ public class StudyOptions extends Activity
 				return true;
 			
 			case MENU_DOWNLOAD_PERSONAL_DECK:
-				Intent downloadPersonalDeck = new Intent(StudyOptions.this, PersonalDeckPicker.class);
-				startActivityForResult(downloadPersonalDeck, DOWNLOAD_PERSONAL_DECK); 
+				if(AnkiDroidApp.isUserLoggedIn())
+				{
+					Intent downloadPersonalDeck = new Intent(StudyOptions.this, PersonalDeckPicker.class);
+					startActivityForResult(downloadPersonalDeck, DOWNLOAD_PERSONAL_DECK); 
+				}
+				else
+				{
+					mUserNotLoggedInAlert.show();
+				}
 				return true;
 			
 			case MENU_DOWNLOAD_SHARED_DECK:
-				Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+				//Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+				Intent downloadSharedDeck = new Intent(StudyOptions.this, SharedDeckPicker.class);
+				startActivityForResult(downloadSharedDeck, DOWNLOAD_SHARED_DECK);
 				return true;
 			
 			case MENU_SYNC:
@@ -634,11 +665,6 @@ public class StudyOptions extends Activity
 			case MENU_PREFERENCES:
 				Intent preferences = new Intent(StudyOptions.this, Preferences.class);
 				startActivityForResult(preferences, PREFERENCES_UPDATE);
-				return true;
-				
-			case MENU_DECK_PROPERTIES:
-				Intent deckProperties = new Intent(StudyOptions.this, DeckProperties.class);
-				startActivityForResult(deckProperties, DECK_PROPERTIES);
 				return true;
 				
 			case MENU_ABOUT:
@@ -704,15 +730,24 @@ public class StudyOptions extends Activity
 		onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
 	}
 	
-	private void syncDeck() {
+	private void syncDeck() 
+	{
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		
 		String username = preferences.getString("username", "");
 		String password = preferences.getString("password", "");
-		Deck deck = AnkiDroidApp.deck();
 		
-		Log.i(TAG, "Synchronizing deck " + deckFilename + " with username " + username + " and password " + password);
-		Connection.syncDeck(syncListener, new Connection.Payload(new Object[] {username, password, deck, deckFilename}));		
+		if(AnkiDroidApp.isUserLoggedIn())
+		{
+			Deck deck = AnkiDroidApp.deck();
+			
+			Log.i(TAG, "Synchronizing deck " + deckFilename + " with username " + username + " and password " + password);
+			Connection.syncDeck(syncListener, new Connection.Payload(new Object[] {username, password, deck, deckFilename}));
+		}
+		else
+		{
+			mUserNotLoggedInAlert.show();
+		}
 	}
 	
 	@Override
@@ -796,7 +831,7 @@ public class StudyOptions extends Activity
 	private SharedPreferences restorePreferences()
 	{
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		prefDeckPath = preferences.getString("deckPath", "/sdcard");
+		prefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
 		prefStudyOptions = preferences.getBoolean("study_options", true);
 		
 		return preferences;
@@ -850,7 +885,6 @@ public class StudyOptions extends Activity
 //        	Log.i(TAG, "displayProgressDialogAndLoadDeck - deckSelected = " + deckSelected);
 //			displaySdError();
 //		}
-
 	}
 	
 	DeckTask.TaskListener mLoadDeckHandler = new DeckTask.TaskListener()
@@ -859,7 +893,7 @@ public class StudyOptions extends Activity
 		public void onPreExecute() {
 //			if(updateDialog == null || !updateDialog.isShowing())
 //			{
-				mProgressDialog = ProgressDialog.show(StudyOptions.this, "", "Loading deck. Please wait...", true);
+				mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_deck), true);
 //			}
 		}
 
@@ -919,53 +953,20 @@ public class StudyOptions extends Activity
 		}
 	};
 	
-	Connection.TaskListener getSharedDecksListener = new Connection.TaskListener() {
-
-		@Override
-		public void onDisconnected() {
-			noConnectionAlert.show();
-		}
-
-		@Override
-		public void onPostExecute(Payload data) {
-			progressDialog.dismiss();
-			if(data.success)
-			{
-				openSharedDeckPicker();
-			}
-			else
-			{
-				connectionFailedAlert.show();
-			}
-		}
-
-		@Override
-		public void onPreExecute() {
-			progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
-			//progressDialog.setTitle("Downloading shared deck");
-			//progressDialog.setMessage("Starting");
-			//progressDialog.show();
-			
-		}
-
-		@Override
-		public void onProgressUpdate(Object... values) {
-			//Pass
-		}
-		
-	};
-	
 	Connection.TaskListener syncListener = new Connection.TaskListener() {
 
 		@Override
 		public void onDisconnected() {
-			noConnectionAlert.show();
+			//noConnectionAlert.show();
 		}
 
 		@Override
 		public void onPostExecute(Payload data) {
-			progressDialog.dismiss();
 			Log.i(TAG, "onPostExecute");
+			if(mProgressDialog != null)
+			{
+				mProgressDialog.dismiss();
+			}
 			if(data.success)
 			{
 				//closeDeck();
@@ -982,51 +983,31 @@ public class StudyOptions extends Activity
 			}
 			else
 			{
-				connectionFailedAlert.show();
+				//connectionFailedAlert.show();
+				if(mConnectionErrorAlert != null)
+				{
+					mConnectionErrorAlert.show();
+				}
 			}
 			
 		}
 
 		@Override
 		public void onPreExecute() {
-			progressDialog = ProgressDialog.show(StudyOptions.this, "", getResources().getString(R.string.loading_shared_decks));
-			//progressDialog.setTitle("Synchronizing");
-			//progressDialog.setMessage("Starting");
-			//progressDialog.show();
-			
+			// Pass
 		}
 
 		@Override
 		public void onProgressUpdate(Object... values) {
-			// Pass
-			//progressDialog.setProgress(((Integer) values[0]));
-			//progressDialog.setMessage(((String) values[1]));
-			
+			if(mProgressDialog == null || !mProgressDialog.isShowing())
+			{
+				mProgressDialog = ProgressDialog.show(StudyOptions.this, getResources().getString(R.string.sync_progress_bar_title), (String)values[0]);
+			}
+			else
+			{
+				mProgressDialog.setMessage((String)values[0]);
+			}
 		}
 		
 	};
-	
-	/**
-	 * Class for interacting with the main interface of the service.
-	 */
-	/*
-	private ServiceConnection mConnection = new ServiceConnection() {
-
-    	public void onServiceConnected(ComponentName className, IBinder service) {
-            // This is called when the connection with the service has been
-            // established, giving us the service object we can use to
-            // interact with the service.  We are communicating with our
-            // service through an IDL interface, so get a client-side
-            // representation of that from the raw service object.
-            mService = IDownloadManagerService.Stub.asInterface(service);
-            Log.i(TAG, "onServiceConnected");
-        } 
-
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			mService = null;
-		}
-	};
-	*/
-	
 }

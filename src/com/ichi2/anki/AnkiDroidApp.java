@@ -60,7 +60,12 @@ public class AnkiDroidApp extends Application {
     /**
      * Resources
      */
-    private Resources res;
+    private Resources mResources;
+    
+    /**
+     * Preferences
+     */
+    private SharedPreferences mPreferences;
     
     /**
      * On application creation.
@@ -71,13 +76,14 @@ public class AnkiDroidApp extends Application {
 		instance = this;
 
 		Connection.setContext(getApplicationContext());
+		
 		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Anki";
-		res = getResources();
-		SharedPreferences prefs = PrefSettings.getSharedPrefs(this);
+		mResources = getResources();
+		mPreferences = PrefSettings.getSharedPrefs(this);
 		
 		// Assign some default settings if necessary
-		if (prefs.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
-			Editor editor = prefs.edit();
+		if (mPreferences.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
+			Editor editor = mPreferences.edit();
 			// Test Update Notifications
 			// Some ridiculously fast polling, just to demonstrate it working...
 			/*editor.putBoolean(PrefSettings.KEY_ENABLED, true);
@@ -109,7 +115,7 @@ public class AnkiDroidApp extends Application {
     
     public static Resources getAppResources()
     {
-    	return instance.res;
+    	return instance.mResources;
     }
     
     public static Deck deck()
@@ -125,6 +131,19 @@ public class AnkiDroidApp extends Application {
 	public static boolean isSdCardMounted()
 	{
 		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+	}
+	
+	public static boolean isUserLoggedIn()
+	{
+		String username = instance.mPreferences.getString("username", "");
+		String password = instance.mPreferences.getString("password", "");
+		
+		if(!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""))
+		{
+			return true;
+		}
+		
+		return false;
 	}
 	
     public static void registerCursor(String method, String name)

@@ -40,7 +40,6 @@
 		<activity android:name="MyAccount" android:label="My Account"/>
 		<activity android:name="Preferences" android:label="@string/preferences_title" />
 		<activity android:name="DeckPreferences" android:label="@string/deckpreferences_title" />
-		<activity android:name="DeckProperties" android:label="@string/deckproperties_title" />
 		<activity android:name="About" android:label="@string/about_title" />
 		<activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
 		<receiver android:name="com.ichi2.veecheck.CheckReceiver">

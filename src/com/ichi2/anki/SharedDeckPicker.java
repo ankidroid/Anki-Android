@@ -9,9 +9,11 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -43,10 +45,11 @@ public class SharedDeckPicker extends Activity {
 	
 	private ProgressDialog mProgressDialog;
 	
-	private AlertDialog mNoConnectionAlert;
+	//private AlertDialog mNoConnectionAlert;
 	
-	private AlertDialog mConnectionFailedAlert;
+	//private AlertDialog mConnectionFailedAlert;
 	
+	private AlertDialog mConnectionErrorAlert;
 	
 	private Intent mDownloadManagerServiceIntent;
 	// Service interface we will use to call the service
@@ -72,7 +75,7 @@ public class SharedDeckPicker extends Activity {
 		
 		initDownloadManagerService();
 		registerExternalStorageListener();
-		initAlertDialogs();
+		initDialogs();
 		
 		mSharedDeckDownloads = new ArrayList<Download>();
 		mSharedDecks = new ArrayList<SharedDeck>();
@@ -146,7 +149,7 @@ public class SharedDeckPicker extends Activity {
 		super.onDestroy();
 		releaseBroadcastReceiver();
 		releaseService();
-		releaseAlerts();
+		releaseDialogs();
 	}
 	
 	
@@ -210,25 +213,53 @@ public class SharedDeckPicker extends Activity {
 	/**
 	 * Create AlertDialogs used on all the activity
 	 */
-	private void initAlertDialogs()
+	private void initDialogs()
 	{
 		Resources res = getResources();
 		
+		// Init progress dialog
+		mProgressDialog = new ProgressDialog(SharedDeckPicker.this);
+		mProgressDialog.setMessage(res.getString(R.string.loading_shared_decks));
+		
+		// Init alert dialogs
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		
+		/*
 		builder.setMessage(res.getString(R.string.connection_needed));
 		builder.setPositiveButton(res.getString(R.string.ok), null);
 		mNoConnectionAlert = builder.create();
 		
 		builder.setMessage(res.getString(R.string.connection_unsuccessful));
 		mConnectionFailedAlert = builder.create();
+		*/
+		builder.setTitle(res.getString(R.string.connection_error_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setMessage(res.getString(R.string.connection_error_return_message));
+		builder.setPositiveButton(res.getString(R.string.retry), new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+			}
+		});
+		builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				SharedDeckPicker.this.finish();
+			}
+			
+		});
+		mConnectionErrorAlert = builder.create();
 	}
 	
-	private void releaseAlerts()
+	private void releaseDialogs()
 	{
 		// Needed in order to not try to show the alerts when the Activity does not exist anymore
-		mNoConnectionAlert = null;
-		mConnectionFailedAlert = null;
+		mProgressDialog = null;
+		//mNoConnectionAlert = null;
+		//mConnectionFailedAlert = null;
+		mConnectionErrorAlert = null;
 	}
 	
 	private void refreshSharedDecksList() 
@@ -298,16 +329,23 @@ public class SharedDeckPicker extends Activity {
 
 		@Override
 		public void onDisconnected() {
-			if(mNoConnectionAlert != null)
+			/*
+			Log.i(TAG, "onDisconnected");
+			if(mConnectionErrorAlert != null)
 			{
-				mNoConnectionAlert.show();
+				mConnectionErrorAlert.show();
 			}
+			*/
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onPostExecute(Payload data) {
-			//progressDialog.dismiss();
+			if(mProgressDialog != null)
+			{
+				mProgressDialog.dismiss();
+			}
+			
 			if(data.success)
 			{
 				mSharedDecks.clear();
@@ -316,16 +354,19 @@ public class SharedDeckPicker extends Activity {
 			}
 			else
 			{
-				if(mConnectionFailedAlert != null)
+				if(mConnectionErrorAlert != null)
 				{
-					mConnectionFailedAlert.show();
+					mConnectionErrorAlert.show();
 				}
 			}
 		}
 
 		@Override
 		public void onPreExecute() {
-			//Pass
+			if(mProgressDialog != null)
+			{
+				mProgressDialog.show();
+			}
 		}
 
 		@Override

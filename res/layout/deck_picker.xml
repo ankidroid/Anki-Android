@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<ListView android:id="@+id/files"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:fastScrollEnabled="true"/>
+
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="#8b8b8b">
+		
+		<Button	android:id="@+id/sync_all_button"
+			android:layout_width="150dp"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="3dp"
+			android:layout_marginBottom="3dp"
+			android:text="Sync all"/>
+		
+	</RelativeLayout>
+	
+</LinearLayout>

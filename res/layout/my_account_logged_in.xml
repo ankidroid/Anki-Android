@@ -31,6 +31,6 @@
 		android:layout_below="@id/logged_text"
 		android:layout_centerHorizontal="true"
 		android:layout_marginTop="10dp"
-		android:text="@string/logout"/>
+		android:text="@string/log_out"/>
 		
 </RelativeLayout>

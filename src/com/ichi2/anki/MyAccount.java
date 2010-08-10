@@ -47,7 +47,7 @@ public class MyAccount extends Activity {
 		initAllContentViews();
 		initAllAlertDialogs();
 		
-		if(isUserLoggedIn())
+		if(AnkiDroidApp.isUserLoggedIn())
 		{
 			SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 			String username = preferences.getString("username", "");
@@ -76,20 +76,6 @@ public class MyAccount extends Activity {
 		}
 		
 		return loginFieldValid;
-	}
-	
-	private boolean isUserLoggedIn()
-	{
-		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		String username = preferences.getString("username", "");
-		String password = preferences.getString("password", "");
-		
-		if(!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""))
-		{
-			return true;
-		}
-		
-		return false;
 	}
 	
 	private void saveUserInformation(String username, String password)
@@ -182,7 +168,7 @@ public class MyAccount extends Activity {
 		builder.setMessage(res.getString(R.string.connection_unsuccessful));
 		mConnectionFailedAlert = builder.create();
 		
-		builder.setTitle(res.getString(R.string.login));
+		builder.setTitle(res.getString(R.string.log_in));
 		builder.setIcon(android.R.drawable.ic_dialog_alert);
 		builder.setMessage(res.getString(R.string.invalid_username_password));
 		mInvalidUserPassAlert = builder.create();

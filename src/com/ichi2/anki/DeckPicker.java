@@ -104,11 +104,11 @@ public class DeckPicker extends Activity implements Runnable
 		mSelf = this;
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 		String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
-		setContentView(R.layout.main);
+		setContentView(R.layout.deck_picker);
 
 		mDeckList = new ArrayList<HashMap<String, String>>();
 		mDeckListView = (ListView) findViewById(R.id.files);
-		mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_picker_list, new String[]
+		mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[]
 		{ "name", "due", "new", "showProgress" }, new int[]
 		{ R.id.DeckPickerName, R.id.DeckPickerDue, R.id.DeckPickerNew, R.id.DeckPickerProgress });
 

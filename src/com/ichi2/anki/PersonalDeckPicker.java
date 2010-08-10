@@ -9,10 +9,12 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -20,6 +22,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -45,9 +48,11 @@ public class PersonalDeckPicker extends Activity {
 	
 	private ProgressDialog mProgressDialog;
 	
-	private AlertDialog mNoConnectionAlert;
+	//private AlertDialog mNoConnectionAlert;
 	
-	private AlertDialog mConnectionFailedAlert;
+	//private AlertDialog mConnectionFailedAlert;
+	
+	private AlertDialog mConnectionErrorAlert;
 
 	private Intent mDownloadManagerServiceIntent;
 	// Service interface we will use to call the service
@@ -73,7 +78,7 @@ public class PersonalDeckPicker extends Activity {
 		
 		initDownloadManagerService();
 		registerExternalStorageListener();
-		initAlertDialogs();
+		initDialogs();
 		
 		mPersonalDeckDownloads = new ArrayList<Download>();
 		mPersonalDecks = new ArrayList<String>();
@@ -103,10 +108,7 @@ public class PersonalDeckPicker extends Activity {
 			
 		});
 		
-		SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
-		String username = pref.getString("username", "");
-		String password = pref.getString("password", "");
-		Connection.getPersonalDecks(getPersonalDecksListener, new Connection.Payload(new Object[] {username, password}));
+		getPersonalDecks();
 	}
 	
 	@Override
@@ -148,7 +150,7 @@ public class PersonalDeckPicker extends Activity {
 		super.onDestroy();
 		releaseService();
 		releaseBroadcastReceiver();
-		releaseAlertDialogs();
+		releaseDialogs();
 	}
 	
 	
@@ -210,25 +212,54 @@ public class PersonalDeckPicker extends Activity {
 	/**
 	 * Create AlertDialogs used on all the activity
 	 */
-	private void initAlertDialogs()
+	private void initDialogs()
 	{
 		Resources res = getResources();
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		// Init progress dialog
+		mProgressDialog = new ProgressDialog(PersonalDeckPicker.this);
+		mProgressDialog.setMessage(res.getString(R.string.loading_personal_decks));
 		
+		// Init alert dialogs
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		/*
 		builder.setMessage(res.getString(R.string.connection_needed));
 		builder.setPositiveButton(res.getString(R.string.ok), null);
 		mNoConnectionAlert = builder.create();
 		
 		builder.setMessage(res.getString(R.string.connection_unsuccessful));
 		mConnectionFailedAlert = builder.create();
+		*/
+		
+		builder.setTitle(res.getString(R.string.connection_error_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setMessage(res.getString(R.string.connection_error_return_message));
+		builder.setPositiveButton(res.getString(R.string.retry), new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				getPersonalDecks();
+			}
+		});
+		builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				PersonalDeckPicker.this.finish();
+			}
+			
+		});
+		mConnectionErrorAlert = builder.create();
 	}
 	
-	private void releaseAlertDialogs()
+	private void releaseDialogs()
 	{
 		// Needed in order to not try to show the alerts when the Activity does not exist anymore
-		mNoConnectionAlert = null;
-		mConnectionFailedAlert = null;
+		mProgressDialog = null;
+		//mNoConnectionAlert = null;
+		//mConnectionFailedAlert = null;
+		mConnectionErrorAlert = null;
 	}
 	
 	private void refreshPersonalDecksList() 
@@ -237,6 +268,15 @@ public class PersonalDeckPicker extends Activity {
 		mAllPersonalDecks.addAll(mPersonalDeckDownloads);
 		mAllPersonalDecks.addAll(mPersonalDecks);
 		mPersonalDecksAdapter.notifyDataSetChanged();
+	}
+	
+	private void getPersonalDecks() 
+	{
+		Log.i(TAG, "getPersonalDecks");
+		SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+		String username = pref.getString("username", "");
+		String password = pref.getString("password", "");
+		Connection.getPersonalDecks(getPersonalDecksListener, new Connection.Payload(new Object[] {username, password}));
 	}
 	
 	private void setPersonalDeckDownloads(List<Download> downloads)
@@ -298,16 +338,24 @@ public class PersonalDeckPicker extends Activity {
 
 		@Override
 		public void onDisconnected() {
-			if(mNoConnectionAlert != null)
+			/*
+			Log.i(TAG, "onDisconnected");
+			if(mConnectionErrorAlert != null)
 			{
-				mNoConnectionAlert.show();
+				mConnectionErrorAlert.show();
 			}
+			*/
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onPostExecute(Payload data) {
-			//progressDialog.dismiss();
+			Log.i(TAG, "onPostExecute");
+			if(mProgressDialog != null)
+			{
+				mProgressDialog.dismiss();
+			}
+
 			if(data.success)
 			{
 				mPersonalDecks.clear();
@@ -317,16 +365,20 @@ public class PersonalDeckPicker extends Activity {
 			}
 			else
 			{
-				if(mConnectionFailedAlert != null)
+				if(mConnectionErrorAlert != null)
 				{
-					mConnectionFailedAlert.show();
+					mConnectionErrorAlert.show();
 				}
 			}
 		}
 
 		@Override
-		public void onPreExecute() {
-			//Pass
+		public void onPreExecute() 
+		{
+			if(mProgressDialog != null)
+			{
+				mProgressDialog.show();
+			}
 		}
 
 		@Override
