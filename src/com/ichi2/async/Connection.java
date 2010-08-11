@@ -20,6 +20,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.SQLException;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -46,22 +49,23 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 	public static final int TASK_TYPE_LOGIN = 0;
 	public static final int TASK_TYPE_GET_SHARED_DECKS = 1;
 	public static final int TASK_TYPE_GET_PERSONAL_DECKS = 2;
-	public static final int TASK_TYPE_SYNC_DECK = 3;
-	public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 4;
+	public static final int TASK_TYPE_SYNC_ALL_DECKS = 3;
+	public static final int TASK_TYPE_SYNC_DECK = 4;
+	public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 5;
 
 	private static Connection instance;
 	private TaskListener listener;
 		
 	private static Connection launchConnectionTask(TaskListener listener, Payload data)
 	{
-		/*
+		
 		if(!isOnline())
 		{
 			data.success = false;
 			listener.onDisconnected();
 			return null;
 		}
-		*/
+		
 		try
 		{
 			if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED))
@@ -128,6 +132,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return launchConnectionTask(listener, data);
 	}
 	
+	public static Connection syncAllDecks(TaskListener listener, Payload data)
+	{
+		data.taskType = TASK_TYPE_SYNC_ALL_DECKS;
+		return launchConnectionTask(listener, data);
+	}
+	
 	public static Connection syncDeck(TaskListener listener, Payload data)
 	{
 		data.taskType = TASK_TYPE_SYNC_DECK;
@@ -155,6 +165,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			case TASK_TYPE_GET_PERSONAL_DECKS:
 				return doInBackgroundGetPersonalDecks(data);
 			
+			case TASK_TYPE_SYNC_ALL_DECKS:
+				return doInBackgroundSyncAllDecks(data);
+				
 			case TASK_TYPE_SYNC_DECK:
 				return doInBackgroundSyncDeck(data);
 				
@@ -216,6 +229,40 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 		return data;
 	}
 	
+	private Payload doInBackgroundSyncAllDecks(Payload data)
+	{
+		Log.i(TAG, "doInBackgroundSyncAllDecks");
+		String username = (String) data.data[0];
+		String password = (String) data.data[1];
+		Log.i(TAG, "username = " + username);
+		Log.i(TAG, "password = " + password);
+		
+		ArrayList<HashMap<String, String>> decks = (ArrayList<HashMap<String, String>>) data.data[2];
+		
+		for(int i = 0; i < decks.size(); i++)
+		{
+			Log.i(TAG, "Synchronizing deck " + i);
+			try
+			{
+				HashMap<String, String> deckHashMap = decks.get(i);
+				String deckPath = deckHashMap.get("filepath");
+				Deck deck = Deck.openDeck(deckPath);
+				
+				Payload syncDeckData = new Payload(new Object[] {username, password, deck, deckPath});
+				syncDeckData = doInBackgroundSyncDeck(syncDeckData);
+				if(syncDeckData.success == false)
+				{
+					Log.i(TAG, "Deck " + deck.getSyncName() + " not synchronized");
+				}
+			} catch(Exception e)
+			{
+				Log.e(TAG, "Exception e = " + e.getMessage());
+			}
+		}
+		
+		return data;
+	}
+	
 	private Payload doInBackgroundSyncDeck(Payload data)
 	{
 		Resources res = context.getResources();
@@ -239,7 +286,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			Log.i(TAG, "Starting sync: username = " + username + ", password = " + password + ", deckPath = " + deckPath + ", syncName = " + syncName);
 			AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 			
-			publishProgress(res.getString(R.string.sync_connecting_message));
+			publishProgress(syncName, res.getString(R.string.sync_connecting_message));
 			server.connect();
 						
 			if(!server.hasDeck(syncName))
@@ -253,31 +300,31 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 				Log.i(TAG, "The clock is unsynchronized!");
 				//TODO: Control what happens when the clocks are unsynchronized
 			}
-			publishProgress(res.getString(R.string.sync_syncing_message, new Object[] {syncName}));
+			publishProgress(syncName, res.getString(R.string.sync_syncing_message, new Object[] {syncName}));
 			SyncClient client = new SyncClient(deck);
 			client.setServer(server);
 			server.setDeckName(syncName);
 			if(client.prepareSync())
 			{
 				
-				publishProgress(res.getString(R.string.sync_summary_from_server_message));
+				publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
 				JSONArray sums = client.summaries();
 				
 				if(client.needFullSync(sums))
 				{
 					Log.i(TAG, "DECK NEEDS FULL SYNC");
 
-					publishProgress(res.getString(R.string.sync_preparing_full_sync_message));
+					publishProgress(syncName, res.getString(R.string.sync_preparing_full_sync_message));
 					String syncFrom = client.prepareFullSync();
 					
 					if("fromLocal".equalsIgnoreCase(syncFrom))
 					{
-						publishProgress(res.getString(R.string.sync_uploading_message));
+						publishProgress(syncName, res.getString(R.string.sync_uploading_message));
 						SyncClient.fullSyncFromLocal(password, username, syncName, deckPath);
 					}
 					else if("fromServer".equalsIgnoreCase(syncFrom))
 					{
-						publishProgress(res.getString(R.string.sync_downloading_message));
+						publishProgress(syncName, res.getString(R.string.sync_downloading_message));
 						SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
 					}
 					ankiDB.database.setTransactionSuccessful();
@@ -287,33 +334,33 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 					deck = Deck.openDeck(deckPath);
 					client.setDeck(deck);
 					
-					publishProgress(res.getString(R.string.sync_complete_message));
+					publishProgress(syncName, res.getString(R.string.sync_complete_message));
 				}
 				else
 				{
 					Log.i(TAG, "DECK DOES NOT NEED FULL SYNC");
 					
-					publishProgress(res.getString(R.string.sync_determining_differences_message));
+					publishProgress(syncName, res.getString(R.string.sync_determining_differences_message));
 					
 					JSONObject payload = client.genPayload(sums);
 					
-					publishProgress(res.getString(R.string.sync_transferring_payload_message));
+					publishProgress(syncName, res.getString(R.string.sync_transferring_payload_message));
 					JSONObject payloadReply = client.getServer().applyPayload(payload);
 					
-					publishProgress(res.getString(R.string.sync_applying_reply_message));
+					publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
 					client.applyPayloadReply(payloadReply);
 					
 					deck.lastLoaded = deck.modified;
 					deck.commitToDB();
 					
 					ankiDB.database.setTransactionSuccessful();
-					publishProgress(res.getString(R.string.sync_complete_message));
+					publishProgress(syncName, res.getString(R.string.sync_complete_message));
 				}
 			}
 			else
 			{
 				Log.i(TAG, "NO CHANGES.");
-				publishProgress(res.getString(R.string.sync_no_changes_message));
+				publishProgress(syncName, res.getString(R.string.sync_no_changes_message));
 			}
 		} catch (Exception e) {
 			data.success = false;
@@ -324,6 +371,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			if(ankiDB.database != null && ankiDB.database.inTransaction())
 			{
 				ankiDB.database.endTransaction();
+			}
+			
+			if(deck != null)
+			{
+				deck.closeDeck();
 			}
 		}
 		return data;

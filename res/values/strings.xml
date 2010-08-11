@@ -137,7 +137,7 @@
 <string name="loading_new_card">Loading new card...</string>
 <string name="loading_deck">Loading deck. Please wait...</string>
 <string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>
-<string name="connection_needed">No Internet connection</string>
+<string name="connection_needed">You are currently offline.</string>
 <string name="study_options">Study Options</string>
 <string name="suspend">Suspend</string>
 <string name="edit_card">Edit Card</string>
@@ -293,7 +293,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <!-- StudyOptions.java -->
 <string name="connection_error_message">A network error has ocurred.</string>
 <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
-<string name="sync_progress_bar_title">Synchronizing...</string>
+<string name="sync_progress_bar_title">Syncing %s</string>
 
 <!-- Connection.java -->
 <string name="sync_connecting_message">Connecting...</string>

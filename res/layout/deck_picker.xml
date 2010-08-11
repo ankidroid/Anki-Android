@@ -11,10 +11,11 @@
 		android:layout_weight="1"
 		android:fastScrollEnabled="true"/>
 
-	<RelativeLayout
+	<RelativeLayout android:id="@+id/sync_all_bar"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:background="#8b8b8b">
+		android:background="#8b8b8b"
+		android:visibility="gone">
 		
 		<Button	android:id="@+id/sync_all_button"
 			android:layout_width="150dp"

@@ -45,9 +45,7 @@ public class SharedDeckPicker extends Activity {
 	
 	private ProgressDialog mProgressDialog;
 	
-	//private AlertDialog mNoConnectionAlert;
-	
-	//private AlertDialog mConnectionFailedAlert;
+	private AlertDialog mNoConnectionAlert;
 	
 	private AlertDialog mConnectionErrorAlert;
 	
@@ -217,21 +215,22 @@ public class SharedDeckPicker extends Activity {
 	{
 		Resources res = getResources();
 		
-		// Init progress dialog
-		mProgressDialog = new ProgressDialog(SharedDeckPicker.this);
-		mProgressDialog.setMessage(res.getString(R.string.loading_shared_decks));
-		
 		// Init alert dialogs
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		
-		/*
+		builder.setTitle(res.getString(R.string.connection_error_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
 		builder.setMessage(res.getString(R.string.connection_needed));
-		builder.setPositiveButton(res.getString(R.string.ok), null);
+		builder.setPositiveButton(res.getString(R.string.ok), new OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				finish();
+			}
+			
+		});
 		mNoConnectionAlert = builder.create();
 		
-		builder.setMessage(res.getString(R.string.connection_unsuccessful));
-		mConnectionFailedAlert = builder.create();
-		*/
 		builder.setTitle(res.getString(R.string.connection_error_title));
 		builder.setIcon(android.R.drawable.ic_dialog_alert);
 		builder.setMessage(res.getString(R.string.connection_error_return_message));
@@ -329,13 +328,11 @@ public class SharedDeckPicker extends Activity {
 
 		@Override
 		public void onDisconnected() {
-			/*
 			Log.i(TAG, "onDisconnected");
-			if(mConnectionErrorAlert != null)
+			if(mNoConnectionAlert != null)
 			{
-				mConnectionErrorAlert.show();
+				mNoConnectionAlert.show();
 			}
-			*/
 		}
 
 		@SuppressWarnings("unchecked")
@@ -363,9 +360,9 @@ public class SharedDeckPicker extends Activity {
 
 		@Override
 		public void onPreExecute() {
-			if(mProgressDialog != null)
+			if(mProgressDialog == null || !mProgressDialog.isShowing())
 			{
-				mProgressDialog.show();
+				mProgressDialog = ProgressDialog.show(SharedDeckPicker.this, "", getResources().getString(R.string.loading_shared_decks));
 			}
 		}
 

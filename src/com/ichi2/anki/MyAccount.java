@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -36,7 +37,7 @@ public class MyAccount extends Activity {
 	
 	private ProgressDialog mProgressDialog;
 	private AlertDialog mNoConnectionAlert;
-	private AlertDialog mConnectionFailedAlert;
+	private AlertDialog mConnectionErrorAlert;
 	private AlertDialog mInvalidUserPassAlert;
 	
 	@Override
@@ -87,6 +88,23 @@ public class MyAccount extends Activity {
 		editor.commit();
 	}
 	
+	private void login()
+	{
+		String username = mUsername.getText().toString();
+		String password = mPassword.getText().toString();
+		
+		Log.i(TAG, "Username = " + username);
+		Log.i(TAG, "Password = " + password);
+		if(isUsernameAndPasswordValid(username, password))
+		{
+			Connection.login(loginListener, new Connection.Payload(new Object[] {username, password}));
+		}
+		else
+		{
+			mInvalidUserPassAlert.show();
+		}
+	}
+	
 	private void logout()
 	{
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
@@ -111,19 +129,7 @@ public class MyAccount extends Activity {
 			@Override
 			public void onClick(View v) 
 			{
-				String username = mUsername.getText().toString();
-				String password = mPassword.getText().toString();
-				
-				Log.i(TAG, "Username = " + username);
-				Log.i(TAG, "Password = " + password);
-				if(isUsernameAndPasswordValid(username, password))
-				{
-					Connection.login(loginListener, new Connection.Payload(new Object[] {username, password}));
-				}
-				else
-				{
-					mInvalidUserPassAlert.show();
-				}
+				login();
 			}
 			
 		});
@@ -161,17 +167,29 @@ public class MyAccount extends Activity {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		
+		builder.setTitle(res.getString(R.string.connection_error_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
 		builder.setMessage(res.getString(R.string.connection_needed));
 		builder.setPositiveButton(res.getString(R.string.ok), null);
 		mNoConnectionAlert = builder.create();
-		
-		builder.setMessage(res.getString(R.string.connection_unsuccessful));
-		mConnectionFailedAlert = builder.create();
 		
 		builder.setTitle(res.getString(R.string.log_in));
 		builder.setIcon(android.R.drawable.ic_dialog_alert);
 		builder.setMessage(res.getString(R.string.invalid_username_password));
 		mInvalidUserPassAlert = builder.create();
+		
+		builder.setTitle(res.getString(R.string.connection_error_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setMessage(res.getString(R.string.connection_error_message));
+		builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				login();
+			}
+		});
+		builder.setNegativeButton(res.getString(R.string.cancel), null);
+		mConnectionErrorAlert = builder.create();
 	}
 	
 	/**
@@ -187,13 +205,20 @@ public class MyAccount extends Activity {
 		@Override
 		public void onPreExecute() {
 			Log.i(TAG, "onPreExcecute");
-			mProgressDialog = ProgressDialog.show(MyAccount.this, "", getResources().getString(R.string.alert_logging_message), true);
+			if(mProgressDialog == null || !mProgressDialog.isShowing())
+			{
+				mProgressDialog = ProgressDialog.show(MyAccount.this, "", getResources().getString(R.string.alert_logging_message), true);
+			}
 		}
 		
 		@Override
 		public void onPostExecute(Payload data) {
 			Log.i(TAG, "onPostExecute, succes = " + data.success);
-			mProgressDialog.dismiss();
+			if(mProgressDialog != null)
+			{
+				mProgressDialog.dismiss();
+			}
+			
 			if(data.success)
 			{
 				// Hide soft keyboard
@@ -213,18 +238,27 @@ public class MyAccount extends Activity {
 			{
 				if(data.returnType == AnkiDroidProxy.LOGIN_INVALID_USER_PASS)
 				{
-					mInvalidUserPassAlert.show();
+					if(mInvalidUserPassAlert != null)
+					{
+						mInvalidUserPassAlert.show();
+					}
 				}
 				else
 				{
-					mConnectionFailedAlert.show();
+					if(mConnectionErrorAlert != null)
+					{
+						mConnectionErrorAlert.show();
+					}
 				}
 			}
 		}
 		
 		@Override
 		public void onDisconnected() {
-			mNoConnectionAlert.show();
+			if(mNoConnectionAlert != null)
+			{
+				mNoConnectionAlert.show();
+			}
 		}
 	};
 	

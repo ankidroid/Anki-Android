@@ -68,7 +68,7 @@ public class StudyOptions extends Activity
 	
 	private static final int MENU_PREFERENCES = 5;
 	
-	private static final int MENU_DECK_PROPERTIES = 6;
+	//private static final int MENU_DECK_PROPERTIES = 6;
 	
 	private static final int MENU_ABOUT = 7;
 	
@@ -85,7 +85,7 @@ public class StudyOptions extends Activity
 	
 	private static final int DOWNLOAD_SHARED_DECK = 4;
 	
-	private static final int DECK_PROPERTIES = 5;
+	//private static final int DECK_PROPERTIES = 5;
 	
 	/** 
 	 * Constants for selecting which content view to display 
@@ -134,9 +134,7 @@ public class StudyOptions extends Activity
 	 */
 	private ProgressDialog mProgressDialog;
 
-	private AlertDialog noConnectionAlert;
-	
-	private AlertDialog connectionFailedAlert;
+	private AlertDialog mNoConnectionAlert;
 	
 	private AlertDialog mUserNotLoggedInAlert;
 	
@@ -448,12 +446,11 @@ public class StudyOptions extends Activity
 		// Init alert dialogs
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		
+		builder.setTitle(res.getString(R.string.connection_error_title));
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
 		builder.setMessage(res.getString(R.string.connection_needed));
 		builder.setPositiveButton(res.getString(R.string.ok), null);
-		noConnectionAlert = builder.create();
-		
-		builder.setMessage(res.getString(R.string.connection_unsuccessful));
-		connectionFailedAlert = builder.create();
+		mNoConnectionAlert = builder.create();
 		
 		builder.setTitle(res.getString(R.string.connection_error_title));
 		builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -957,7 +954,10 @@ public class StudyOptions extends Activity
 
 		@Override
 		public void onDisconnected() {
-			//noConnectionAlert.show();
+			if(mNoConnectionAlert != null)
+			{
+				mNoConnectionAlert.show();
+			}
 		}
 
 		@Override
@@ -970,11 +970,11 @@ public class StudyOptions extends Activity
 			if(data.success)
 			{
 				//closeDeck();
-				if(AnkiDroidApp.deck() != null )//&& sdCardAvailable)
-				{
-					AnkiDroidApp.deck().closeDeck();
+				//if(AnkiDroidApp.deck() != null )//&& sdCardAvailable)
+				//{
+					//AnkiDroidApp.deck().closeDeck();
 					AnkiDroidApp.setDeck(null);
-				}
+				//}
 				
 				DeckTask.launchDeckTask(
 						DeckTask.TASK_TYPE_LOAD_DECK,
@@ -1001,11 +1001,12 @@ public class StudyOptions extends Activity
 		public void onProgressUpdate(Object... values) {
 			if(mProgressDialog == null || !mProgressDialog.isShowing())
 			{
-				mProgressDialog = ProgressDialog.show(StudyOptions.this, getResources().getString(R.string.sync_progress_bar_title), (String)values[0]);
+				mProgressDialog = ProgressDialog.show(StudyOptions.this, (String)values[0], (String)values[1]);
 			}
 			else
 			{
-				mProgressDialog.setMessage((String)values[0]);
+				mProgressDialog.setTitle((String)values[0]);
+				mProgressDialog.setMessage((String)values[1]);
 			}
 		}
 		

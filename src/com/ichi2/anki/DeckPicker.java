@@ -30,8 +30,10 @@ import java.util.concurrent.locks.ReentrantLock;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -44,11 +46,16 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
+import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
@@ -63,9 +70,21 @@ public class DeckPicker extends Activity implements Runnable
 	 * Dialogs
 	 */
 	private static final int DIALOG_NO_SDCARD = 0;
+	
+	private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
+	
+	private static final int DIALOG_NO_CONNECTION = 2;
+	
+	private static final int DIALOG_CONNECTION_ERROR = 3;
 
 	private DeckPicker mSelf;
 
+	private ProgressDialog mProgressDialog;
+	
+	private RelativeLayout mSyncAllBar;
+	
+	private Button mSyncAllButton;
+	
 	private SimpleAdapter mDeckListAdapter;
 
 	private ArrayList<HashMap<String, String>> mDeckList;
@@ -106,6 +125,27 @@ public class DeckPicker extends Activity implements Runnable
 		String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
 		setContentView(R.layout.deck_picker);
 
+		mSyncAllBar = (RelativeLayout) findViewById(R.id.sync_all_bar);
+		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
+		mSyncAllButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if(AnkiDroidApp.isUserLoggedIn())
+				{
+					SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+					String username = preferences.getString("username", "");
+					String password = preferences.getString("password", "");
+					Connection.syncAllDecks(syncAllDecksListener, new Connection.Payload(new Object[] {username, password, mDeckList}));
+				}
+				else
+				{
+					showDialog(DIALOG_USER_NOT_LOGGED_IN);
+				}
+			}
+			
+		});
+		
 		mDeckList = new ArrayList<HashMap<String, String>>();
 		mDeckListView = (ListView) findViewById(R.id.files);
 		mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[]
@@ -134,7 +174,7 @@ public class DeckPicker extends Activity implements Runnable
 	}
 
 	@Override
-    public void onPause()
+	public void onPause()
 	{
 		Log.i(TAG, "DeckPicker - onPause");
 
@@ -143,20 +183,61 @@ public class DeckPicker extends Activity implements Runnable
 	}
 
 	@Override
-    protected Dialog onCreateDialog(int id)
+	protected Dialog onCreateDialog(int id)
 	{
 		Dialog dialog;
+		Resources res = getResources();
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
 		switch(id)
 		{
-		case DIALOG_NO_SDCARD:
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
-			builder.setPositiveButton("OK", null);
-			dialog = builder.create();
-			break;
+			case DIALOG_NO_SDCARD:
+				builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
+				builder.setPositiveButton("OK", null);
+				dialog = builder.create();
+				break;
 
-		default:
-			dialog = null;
+			case DIALOG_USER_NOT_LOGGED_IN:
+				builder.setTitle(res.getString(R.string.connection_error_title));
+				builder.setIcon(android.R.drawable.ic_dialog_alert);
+				builder.setMessage(res.getString(R.string.no_user_password_error_message));
+				builder.setPositiveButton(res.getString(R.string.log_in), new DialogInterface.OnClickListener() {
+	
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
+						startActivity(myAccount);
+					}
+				});
+				builder.setNegativeButton(res.getString(R.string.cancel), null);
+				dialog = builder.create();
+				break;
+			
+			case DIALOG_NO_CONNECTION:
+				builder.setTitle(res.getString(R.string.connection_error_title));
+				builder.setIcon(android.R.drawable.ic_dialog_alert);
+				builder.setMessage(res.getString(R.string.connection_needed));
+				builder.setPositiveButton(res.getString(R.string.ok), null);
+				dialog = builder.create();
+				break;
+				
+			case DIALOG_CONNECTION_ERROR:
+				builder.setTitle(res.getString(R.string.connection_error_title));
+				builder.setIcon(android.R.drawable.ic_dialog_alert);
+				builder.setMessage(res.getString(R.string.connection_error_message));
+				builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						
+					}
+				});
+				builder.setNegativeButton(res.getString(R.string.cancel), null);
+				dialog = builder.create();
+				break;
+				
+			default:
+				dialog = null;
 		}
 
 		return dialog;
@@ -206,6 +287,8 @@ public class DeckPicker extends Activity implements Runnable
 				}
 			}
 
+			mSyncAllBar.setVisibility(View.VISIBLE);
+			
 			Thread thread = new Thread(this);
 			thread.start();
 		} else
@@ -228,6 +311,8 @@ public class DeckPicker extends Activity implements Runnable
 			data.put("showProgress", "false");
 
 			tree.add(data);
+			
+			mSyncAllBar.setVisibility(View.GONE);
 		}
 		mDeckList.clear();
 		mDeckList.addAll(tree);
@@ -362,7 +447,7 @@ public class DeckPicker extends Activity implements Runnable
 	private Handler handler = new Handler()
 	{
 		@Override
-        public void handleMessage(Message msg)
+		public void handleMessage(Message msg)
 		{
 			Bundle data = msg.getData();
 			Resources res = mSelf.getResources();
@@ -433,6 +518,51 @@ public class DeckPicker extends Activity implements Runnable
     	if(mUnmountReceiver != null)
     		unregisterReceiver(mUnmountReceiver);
     }
+	
+    Connection.TaskListener syncAllDecksListener = new Connection.TaskListener() {
+		
+    	@Override
+		public void onDisconnected() {
+    		showDialog(DIALOG_NO_CONNECTION);
+    	}
+
+		@Override
+		public void onPostExecute(Payload data) {
+			Log.i(TAG, "onPostExecute");
+			if(mProgressDialog != null)
+			{
+				mProgressDialog.dismiss();
+			}
+			if(data.success)
+			{
+				Log.i(TAG, "All decks synchronized!");
+				// TODO: Show a sync log?
+			}
+			else
+			{
+				// It could happen some error?
+			}
+			
+		}
+
+		@Override
+		public void onPreExecute() {
+			// Pass
+		}
+
+		@Override
+		public void onProgressUpdate(Object... values) {
+			if(mProgressDialog == null || !mProgressDialog.isShowing())
+			{
+				mProgressDialog = ProgressDialog.show(DeckPicker.this, (String)values[0], (String)values[1]);
+			}
+			else
+			{
+				mProgressDialog.setTitle((String)values[0]);
+				mProgressDialog.setMessage((String)values[1]);
+			}
+		}
+	};
 	
 	/*private void logTree(TreeSet<HashMap<String, String>> tree)
 	{
