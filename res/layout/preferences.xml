@@ -70,11 +70,9 @@
 			android:entryValues="@array/hideQuestionInAnswerVals" />
 	</PreferenceCategory>
 	
-	<!-- TODO implement this preference. Right now: always use notifications
 	<CheckBoxPreference
 		android:title="Update notifications"
 		android:defaultValue="true"
 		android:summary="Notify me when AnkiDroid is updated"
 		android:key="enabled"/>
-	-->
 </PreferenceScreen>
