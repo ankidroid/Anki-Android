@@ -35,7 +35,13 @@
         <activity android:name="About" android:label="@string/about_title" />
         <activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
         <activity android:name="ErrorReporter" android:label="Error Reporter"></activity>
-        <receiver android:name="com.ichi2.veecheck.CheckReceiver">
+				<receiver android:name="com.ichi2.veecheck.CheckReceiver"
+					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+			<intent-filter>
+				<action
+				 android:name="android.intent.action.BOOT_COMPLETED">
+				</action>
+			</intent-filter>
 			<intent-filter>
 				<action
 					android:name="com.ichi2.anki.VEECHECK_RESCHEDULE_CHECKS">
