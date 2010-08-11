@@ -25,8 +25,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -208,6 +208,8 @@ public class AnkiDroid extends Activity
 	private Button mButtonReviewEarly, mButtonSwitchDeck, mEase0, mEase1, mEase2, mEase3;
 
 	private Chronometer mCardTimer;
+	
+	private LinearLayout mChronoButtonsLayout;
 	
 	//private WebView mCounts;
 
@@ -474,7 +476,8 @@ public class AnkiDroid extends Activity
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
 		mAnswerField = (EditText) findViewById(R.id.answer_field);
-
+		mChronoButtonsLayout = (LinearLayout) findViewById(R.id.chrono_buttons_layout);
+		
 		showControls(false);
 
 		mButtonReviewEarly.setOnClickListener(mButtonReviewEarlyHandler);
@@ -901,6 +904,7 @@ public class AnkiDroid extends Activity
 				mAnswerField.setVisibility(View.VISIBLE);
 			}
 
+			mChronoButtonsLayout.setVisibility(View.VISIBLE);
 			mFlipCard.setVisibility(View.VISIBLE);
 			mFlipCard.requestFocus();
 
@@ -971,7 +975,12 @@ public class AnkiDroid extends Activity
 			sb.append(displayString);
 			displayString = sb.toString();
 			mFlipCard.setVisibility(View.INVISIBLE);
+			if(!timerAndWhiteboard)
+			{
+				mChronoButtonsLayout.setVisibility(View.GONE);
 			}
+			
+		}
 		updateCard(displayString);
 		}
 	
