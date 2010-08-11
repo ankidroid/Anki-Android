@@ -180,7 +180,7 @@ public class AnkiDroid extends Activity
 	
 //	private static final int HQIA_DO_HIDE = 0;
 	
-	private static final int HQIA_DO_SHOW = 1;
+	private static final int HQIA_DO_SHOW = 1; // HQIA = Hide Question In Answer
 	
 	private static final int HQIA_CARD_MODEL = 2;
 
@@ -499,13 +499,13 @@ public class AnkiDroid extends Activity
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
 	{
-		menu.add(0, MENU_OPEN, 0, getString(R.string.switch_another_deck));
-        menu.add(1, MENU_GET_SHARED_DECKS, 0, getString(R.string.get_shared_deck));
-		menu.add(1, MENU_PREFERENCES, 0, getString(R.string.preferences));
-		menu.add(1, MENU_DECKOPTS, 0, getString(R.string.study_options));
-        menu.add(1, MENU_EDIT, 0, getString(R.string.edit_card)); //Edit the current card.
-		menu.add(1, MENU_SUSPEND, 0, getString(R.string.suspend));
-		menu.add(1, MENU_ABOUT, 0, getString(R.string.about));
+		menu.add(Menu.NONE, MENU_OPEN, MENU_OPEN, getString(R.string.switch_another_deck));
+        menu.add(Menu.NONE, MENU_GET_SHARED_DECKS, MENU_GET_SHARED_DECKS, getString(R.string.get_shared_deck));
+		menu.add(Menu.NONE, MENU_PREFERENCES, MENU_PREFERENCES, getString(R.string.preferences));
+		menu.add(Menu.NONE, MENU_DECKOPTS, MENU_DECKOPTS, getString(R.string.study_options));
+        menu.add(Menu.NONE, MENU_EDIT, MENU_EDIT, getString(R.string.edit_card));
+		menu.add(Menu.NONE, MENU_SUSPEND, MENU_SUSPEND, getString(R.string.suspend));
+		menu.add(Menu.NONE, MENU_ABOUT, MENU_ABOUT, getString(R.string.about));
 		return true;
 	}
 
