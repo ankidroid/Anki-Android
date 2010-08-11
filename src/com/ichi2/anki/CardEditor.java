@@ -27,9 +27,6 @@ import com.ichi2.anki.Fact.Field;
  */
 public class CardEditor extends Activity {
 
-    public static final int SAVE_CARD = 0;
-    public static final int CANCEL = 1;
-    
     private LinearLayout fieldsLayoutContainer;
     
     private Button mSave;
@@ -83,7 +80,7 @@ public class CardEditor extends Activity {
                     FieldEditText current = iter.next();
                     current.updateField();
                 }
-                setResult(SAVE_CARD);
+                setResult(RESULT_OK);
                 finish();
             }
             
@@ -94,7 +91,7 @@ public class CardEditor extends Activity {
             
             public void onClick(View v) {
                 
-                setResult(CANCEL);
+                setResult(RESULT_CANCELED);
                 finish();
                 
             }
