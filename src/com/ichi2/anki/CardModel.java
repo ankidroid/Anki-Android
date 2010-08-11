@@ -20,6 +20,8 @@ package com.ichi2.anki;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import android.database.Cursor;
 
@@ -35,6 +37,11 @@ public class CardModel implements Comparator<CardModel> {
 
 	// TODO: Javadoc.
 	// TODO: Methods for reading/writing from/to DB.
+
+	/** Regex pattern used in removing tags from text before diff */
+	private static final Pattern factPattern = Pattern.compile("%\\([tT]ags\\)s");
+	private static final Pattern modelPattern = Pattern.compile("%\\(modelTags\\)s");
+	private static final Pattern templPattern = Pattern.compile("%\\(cardModel\\)s");
 
 	// BEGIN SQL table columns
 	long id; // Primary key
@@ -214,12 +221,33 @@ public class CardModel implements Comparator<CardModel> {
 		return cardModel;
 	}
 
-	public static HashMap<String, String> formatQA(Fact fact, CardModel cm) {
+	public static HashMap<String, String> formatQA(Fact fact, CardModel cm, String[] tags) {
 	    
 	    //Not pretty, I know.
 	    String question = cm.qformat;
 	    String answer = cm.aformat;
-	    
+
+	    // First deal with the tag fields:
+	    //   %(tags)s = factTags             tags where src = 0
+	    //   %(modelTags)s = modelTags       tags where src = 1
+	    //   %(cardModel)s = templateTags    tags where src = 2
+	    Matcher tagMatcher;
+	    // fact tags %(tags)s or %(Tags)s
+	    tagMatcher = factPattern.matcher(question);
+	    question = tagMatcher.replaceAll(tags[Card.TAGS_FACT]);
+	    tagMatcher = factPattern.matcher(answer);
+	    answer = tagMatcher.replaceAll(tags[Card.TAGS_FACT]);
+	    // modelTags %(modelTags)s
+	    tagMatcher = modelPattern.matcher(question);
+	    question = tagMatcher.replaceAll(tags[Card.TAGS_MODEL]);
+	    tagMatcher = modelPattern.matcher(answer);
+	    answer = tagMatcher.replaceAll(tags[Card.TAGS_MODEL]);
+	    // templateTags %(cardModel)s
+	    tagMatcher = templPattern.matcher(question);
+	    question = tagMatcher.replaceAll(tags[Card.TAGS_TEMPL]);
+	    tagMatcher = templPattern.matcher(answer);
+	    answer = tagMatcher.replaceAll(tags[Card.TAGS_TEMPL]);
+
 	    int replaceAt = question.indexOf("%(");
 	    while (replaceAt != -1)
 	    {

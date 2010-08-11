@@ -36,6 +36,16 @@ public class Card {
 
     // TODO: Javadoc.
 
+    /**
+     * Tag for logging messages
+     */
+    private static String TAG = "AnkiDroid";
+
+    /** Tags src constants */
+    public static final int TAGS_FACT = 0;
+    public static final int TAGS_MODEL = 1;
+    public static final int TAGS_TEMPL = 2;
+
     // BEGIN SQL table entries
     long id; // Primary key
     long factId; // Foreign key facts.id
@@ -87,6 +97,7 @@ public class Card {
     @SuppressWarnings("unused")
 	private CardModel cardModel;
     Fact fact;
+    private String[] tagsBySrc;
     // END JOINed variables
 
     double timerStarted;
@@ -95,6 +106,11 @@ public class Card {
 
     public Card(Fact fact, CardModel cardModel, double created) {
         tags = "";
+        tagsBySrc = new String[3];
+        tagsBySrc[TAGS_FACT] = "";
+        tagsBySrc[TAGS_MODEL] = "";
+        tagsBySrc[TAGS_TEMPL] = "";
+
         id = Utils.genID();
         // New cards start as new & due
         type = 2;
@@ -222,21 +238,48 @@ public class Card {
     }
 
     public String[] splitTags() {
-        return null;
+        return tagsBySrc;
     }
 
     public String allTags() {
-        return null;
+        // Non-Canonified string of fact and model tags
+        return tagsBySrc[TAGS_FACT] + "," + tagsBySrc[TAGS_MODEL];
     }
 
     public boolean hasTag(String tag) {
-        return true;
+        return (allTags().indexOf(tag) != -1);
     }
     
     //FIXME: Should be removed. Calling code should directly interact with Model
 	public CardModel getCardModel() {
 		Model myModel = Model.getModel(cardModelId, false);
 		return myModel.getCardModel(cardModelId);
+	}
+
+	// Loading tags for this card. Only needed when we modify the card fields and need to update question and answer.
+	public void loadTags() {
+		Cursor cursor = null;
+
+		int tagSrc = 0;
+		try {
+			cursor = AnkiDb.database.rawQuery(
+					"SELECT tags.tag, cardTags.src " +
+					"FROM cardTags JOIN tags ON cardTags.tagId = tags.id " +
+					"WHERE cardTags.cardId = " + id +
+					" AND cardTags.src in (" + TAGS_FACT + ", " + TAGS_MODEL + "," + TAGS_TEMPL +") " +
+					"ORDER BY cardTags.id",
+					null);
+			while (cursor.moveToNext()) {
+				tagSrc = cursor.getInt(1);
+				if (tagsBySrc[tagSrc].length() > 0) {
+					tagsBySrc[tagSrc] += " " + cursor.getString(0);
+				} else {
+					tagsBySrc[tagSrc] += cursor.getString(0);
+				}
+			}
+		} finally {
+			if (cursor != null) cursor.close();
+		}
 	}
 
     public boolean fromDB(long id) {
