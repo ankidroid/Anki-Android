@@ -870,7 +870,7 @@ public class StudyOptions extends Activity
 			else
 			{
 				if(deckFilename == null) Log.i(TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
-				else if(!new File(deckFilename).exists()) Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + "does not exist.");
+				else if(!new File(deckFilename).exists()) Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + " does not exist.");
 
 				//Show message informing that no deck has been loaded
 				//displayDeckNotLoaded();

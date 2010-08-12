@@ -674,7 +674,7 @@ public class AnkiDroid extends Activity
 					Log.i(TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
 				}
 				else if(!new File(deckFilename).exists()){
-					Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + "does not exist.");
+					Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + " does not exist.");
 				}
 
 				//Show message informing that no deck has been loaded

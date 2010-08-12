@@ -17,6 +17,7 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Application;
@@ -77,9 +78,10 @@ public class AnkiDroidApp extends Application {
 
 		Connection.setContext(getApplicationContext());
 		
-		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Anki";
 		mResources = getResources();
 		mPreferences = PrefSettings.getSharedPrefs(this);
+		
+		storageDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
 		
 		// Assign some default settings if necessary
 		if (mPreferences.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
@@ -91,11 +93,19 @@ public class AnkiDroidApp extends Application {
 			editor.putLong(PrefSettings.KEY_CHECK_INTERVAL, 60 * 1000L);
 			editor.putString(PrefSettings.KEY_CHECK_URI, "http://ankidroid.googlecode.com/files/test_notifications.xml");*/
 			editor.putString(PrefSettings.KEY_CHECK_URI, "http://ankidroid.googlecode.com/files/last_release.xml");
-			// Put the base path to the external storage on preferences
-			editor.putString("deckPath", storageDirectory);
+			
+			// Create the folder "AnkiDroid", if not exists, where the decks will be stored by default
+			new File(storageDirectory + "/AnkiDroid").mkdir();
+			
+			// Put the base path in preferences pointing to the default "AnkiDroid" folder 
+			editor.putString("deckPath", storageDirectory  + "/AnkiDroid");
+			
 			editor.commit();
 		}
 
+		Log.i(TAG, "storageDirectory = " + storageDirectory);
+		Log.i(TAG, "deckPath = " + mPreferences.getString("deckPath", storageDirectory));
+		
 		// Reschedule the checks - we need to do this if the settings have changed (as above)
 		// It may also necessary in the case where an application has been updated
 		// Here for simplicity, we do it every time the application is launched
