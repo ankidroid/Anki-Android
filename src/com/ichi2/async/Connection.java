@@ -29,7 +29,6 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.database.SQLException;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -232,40 +231,49 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 	private Payload doInBackgroundSyncAllDecks(Payload data)
 	{
 		Log.i(TAG, "doInBackgroundSyncAllDecks");
+		ArrayList<HashMap<String,String>> decksChangelogs = new ArrayList<HashMap<String,String>>();
+		
 		String username = (String) data.data[0];
 		String password = (String) data.data[1];
 		Log.i(TAG, "username = " + username);
 		Log.i(TAG, "password = " + password);
 		
-		ArrayList<HashMap<String, String>> decks = (ArrayList<HashMap<String, String>>) data.data[2];
-		
-		for(int i = 0; i < decks.size(); i++)
+		ArrayList<HashMap<String, String>> decksToSync = (ArrayList<HashMap<String, String>>) data.data[2];
+		for(int i = 0; i < decksToSync.size(); i++)
 		{
 			Log.i(TAG, "Synchronizing deck " + i);
+			String deckPath = decksToSync.get(i).get("filepath");
 			try
 			{
-				HashMap<String, String> deckHashMap = decks.get(i);
-				String deckPath = deckHashMap.get("filepath");
 				Deck deck = Deck.openDeck(deckPath);
-				
+
 				Payload syncDeckData = new Payload(new Object[] {username, password, deck, deckPath});
 				syncDeckData = doInBackgroundSyncDeck(syncDeckData);
-				if(syncDeckData.success == false)
-				{
-					Log.i(TAG, "Deck " + deck.getSyncName() + " not synchronized");
-				}
+				decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
 			} catch(Exception e)
 			{
 				Log.e(TAG, "Exception e = " + e.getMessage());
+				// Probably, there was an error trying to open the deck, so we can not retrieve the deck name from it
+				String deckName = deckPath.substring(deckPath.lastIndexOf("/") + 1);
+				deckName = deckName.substring(0, deckName.length() - ".anki".length());
+				
+				// Create sync changelog and add it to the list
+				HashMap<String,String> deckChangelog = new HashMap<String,String>();
+				deckChangelog.put("deckName", deckName);
+				deckChangelog.put("message", context.getResources().getString(R.string.sync_log_error_message));
+				
+				decksChangelogs.add(deckChangelog);
 			}
 		}
 		
+		data.result = decksChangelogs;
 		return data;
 	}
 	
 	private Payload doInBackgroundSyncDeck(Payload data)
 	{
 		Resources res = context.getResources();
+		HashMap<String,String> syncChangelog = new HashMap<String,String>();
 		
 		String username = (String)data.data[0];
 		String password = (String)data.data[1];
@@ -279,6 +287,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			Log.i(TAG, "syncName = *" + syncName + "*");
 			deck.setSyncName(syncName);
 		}
+		syncChangelog.put("deckName", syncName);
 		
 		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 		ankiDB.database.beginTransaction();
@@ -306,7 +315,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			server.setDeckName(syncName);
 			if(client.prepareSync())
 			{
-				
 				publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
 				JSONArray sums = client.summaries();
 				
@@ -321,11 +329,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 					{
 						publishProgress(syncName, res.getString(R.string.sync_uploading_message));
 						SyncClient.fullSyncFromLocal(password, username, syncName, deckPath);
+						syncChangelog.put("message", res.getString(R.string.sync_log_uploading_message));
 					}
 					else if("fromServer".equalsIgnoreCase(syncFrom))
 					{
 						publishProgress(syncName, res.getString(R.string.sync_downloading_message));
 						SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
+						syncChangelog.put("message", res.getString(R.string.sync_log_downloading_message));
 					}
 					ankiDB.database.setTransactionSuccessful();
 					ankiDB.database.endTransaction();
@@ -343,9 +353,27 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 					publishProgress(syncName, res.getString(R.string.sync_determining_differences_message));
 					
 					JSONObject payload = client.genPayload(sums);
+					int factsAddedOnLocal = payload.getJSONArray("added-cards").length();
+					if(factsAddedOnLocal == 1)
+					{
+						syncChangelog.put("message", res.getString(R.string.sync_log_fact_to_server_message));
+					}
+					else if(factsAddedOnLocal > 1)
+					{
+						syncChangelog.put("message", res.getString(R.string.sync_log_facts_to_server_message, factsAddedOnLocal));
+					}
 					
 					publishProgress(syncName, res.getString(R.string.sync_transferring_payload_message));
 					JSONObject payloadReply = client.getServer().applyPayload(payload);
+					int factsAddedOnServer = payloadReply.getJSONArray("added-cards").length();
+					if(factsAddedOnServer == 1)
+					{
+						syncChangelog.put("message", res.getString(R.string.sync_log_fact_from_server_message));
+					}
+					else if(payloadReply.getJSONArray("added-cards").length() > 1)
+					{
+						syncChangelog.put("message", res.getString(R.string.sync_log_facts_from_server_message, factsAddedOnServer));
+					}
 					
 					publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
 					client.applyPayloadReply(payloadReply);
@@ -361,12 +389,14 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 			{
 				Log.i(TAG, "NO CHANGES.");
 				publishProgress(syncName, res.getString(R.string.sync_no_changes_message));
+				syncChangelog.put("message", res.getString(R.string.sync_log_no_changes_message));
 			}
 		} catch (Exception e) {
-			data.success = false;
-			data.exception = e;
 			Log.e(TAG, "Error synchronizing deck = " + e.getMessage());
 			e.printStackTrace();
+			syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
+			data.success = false;
+			data.exception = e;
 		} finally {
 			if(ankiDB.database != null && ankiDB.database.inTransaction())
 			{
@@ -378,6 +408,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 				deck.closeDeck();
 			}
 		}
+		
+		data.result = syncChangelog;
 		return data;
 	}
 	

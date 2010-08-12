@@ -44,6 +44,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -75,11 +78,11 @@ public class DeckPicker extends Activity implements Runnable
 	
 	private static final int DIALOG_NO_CONNECTION = 2;
 	
-	private static final int DIALOG_CONNECTION_ERROR = 3;
-
 	private DeckPicker mSelf;
 
 	private ProgressDialog mProgressDialog;
+	
+	private AlertDialog mSyncLogAlert;
 	
 	private RelativeLayout mSyncAllBar;
 	
@@ -118,13 +121,12 @@ public class DeckPicker extends Activity implements Runnable
 		Log.i(TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
 
-		registerExternalStorageListener();
-
 		mSelf = this;
-		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
 		setContentView(R.layout.deck_picker);
-
+		
+		registerExternalStorageListener();
+		initDialogs();
+		
 		mSyncAllBar = (RelativeLayout) findViewById(R.id.sync_all_bar);
 		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
@@ -170,7 +172,8 @@ public class DeckPicker extends Activity implements Runnable
 		mDeckListView.setOnItemClickListener(mDeckSelHandler);
 		mDeckListView.setAdapter(mDeckListAdapter);
 
-		populateDeckList(deckPath);
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+		populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
 	}
 
 	@Override
@@ -180,6 +183,15 @@ public class DeckPicker extends Activity implements Runnable
 
 		super.onPause();
 		waitForDeckLoaderThread();
+	}
+	
+	private void initDialogs()
+	{
+		// Sync Log dialog
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(getResources().getString(R.string.sync_log_tite));
+		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+		mSyncLogAlert = builder.create();
 	}
 
 	@Override
@@ -218,21 +230,6 @@ public class DeckPicker extends Activity implements Runnable
 				builder.setIcon(android.R.drawable.ic_dialog_alert);
 				builder.setMessage(res.getString(R.string.connection_needed));
 				builder.setPositiveButton(res.getString(R.string.ok), null);
-				dialog = builder.create();
-				break;
-				
-			case DIALOG_CONNECTION_ERROR:
-				builder.setTitle(res.getString(R.string.connection_error_title));
-				builder.setIcon(android.R.drawable.ic_dialog_alert);
-				builder.setMessage(res.getString(R.string.connection_error_message));
-				builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						
-					}
-				});
-				builder.setNegativeButton(res.getString(R.string.cancel), null);
 				dialog = builder.create();
 				break;
 				
@@ -519,6 +516,35 @@ public class DeckPicker extends Activity implements Runnable
     		unregisterReceiver(mUnmountReceiver);
     }
 	
+	private CharSequence getSyncLogMessage(ArrayList<HashMap<String, String>> decksChangelogs) 
+	{
+		SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+		int len = decksChangelogs.size();
+		for(int i = 0; i < len; i++)
+		{
+			HashMap<String,String> deckChangelog = decksChangelogs.get(i);
+			String deckName = deckChangelog.get("deckName");
+			
+			// Append deck name
+			spannableStringBuilder.append(deckName);
+			// Underline deck name
+			spannableStringBuilder.setSpan(new UnderlineSpan(), spannableStringBuilder.length() - deckName.length(), spannableStringBuilder.length(), 0);
+			// Put deck name in bold style
+			spannableStringBuilder.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), spannableStringBuilder.length() - deckName.length(), spannableStringBuilder.length(), 0);
+			
+			// Append sync message
+			spannableStringBuilder.append("\n" + deckChangelog.get("message"));
+			
+			// If it is not the last element, add the proper separation
+			if(i != (len - 1))
+			{
+				spannableStringBuilder.append("\n\n");
+			}
+		}
+		
+		return spannableStringBuilder;
+	}
+	
     Connection.TaskListener syncAllDecksListener = new Connection.TaskListener() {
 		
     	@Override
@@ -526,31 +552,12 @@ public class DeckPicker extends Activity implements Runnable
     		showDialog(DIALOG_NO_CONNECTION);
     	}
 
-		@Override
-		public void onPostExecute(Payload data) {
-			Log.i(TAG, "onPostExecute");
-			if(mProgressDialog != null)
-			{
-				mProgressDialog.dismiss();
-			}
-			if(data.success)
-			{
-				Log.i(TAG, "All decks synchronized!");
-				// TODO: Show a sync log?
-			}
-			else
-			{
-				// It could happen some error?
-			}
-			
-		}
-
-		@Override
+    	@Override
 		public void onPreExecute() {
 			// Pass
 		}
-
-		@Override
+    	
+    	@Override
 		public void onProgressUpdate(Object... values) {
 			if(mProgressDialog == null || !mProgressDialog.isShowing())
 			{
@@ -561,6 +568,18 @@ public class DeckPicker extends Activity implements Runnable
 				mProgressDialog.setTitle((String)values[0]);
 				mProgressDialog.setMessage((String)values[1]);
 			}
+		}
+    	
+		@Override
+		public void onPostExecute(Payload data) {
+			Log.i(TAG, "onPostExecute");
+			if(mProgressDialog != null)
+			{
+				mProgressDialog.dismiss();
+			}
+
+			mSyncLogAlert.setMessage(getSyncLogMessage((ArrayList<HashMap<String, String>>) data.result));
+			mSyncLogAlert.show();
 		}
 	};
 	
