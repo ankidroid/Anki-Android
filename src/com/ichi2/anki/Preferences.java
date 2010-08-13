@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -28,20 +29,26 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  */
 public class Preferences extends PreferenceActivity
 {
+	private boolean veecheckStatus;
+	private PreferenceManager pm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		getPreferenceManager().setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
+		pm = getPreferenceManager();
+		pm.setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
 		addPreferencesFromResource(R.layout.preferences);
+		veecheckStatus = pm.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, PrefSettings.DEFAULT_ENABLED);
 	}
 
     @Override
     protected void onPause() {
     	super.onPause();
-    	// Reschedule the checking in case the user has changed anything
-		sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
+    	// Reschedule the checking in case the user has changed the veecheck switch
+			if (veecheckStatus ^ pm.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, veecheckStatus)) {
+				sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
+			}
     }
 
 }

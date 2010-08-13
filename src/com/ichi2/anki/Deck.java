@@ -723,6 +723,7 @@ public class Deck
         	// Get card
             Card card = new Card();
             card.fromDB(cursor.getLong(0));
+            card.loadTags();
             Log.i(TAG, "Card id = " + card.id);
             
             // Get the related fact
@@ -730,7 +731,7 @@ public class Deck
             //Log.i(TAG, "Fact id = " + fact.id);
             
             // Generate the question and answer for this card and update it
-            HashMap<String,String> newQA = CardModel.formatQA(fact, card.getCardModel());
+            HashMap<String,String> newQA = CardModel.formatQA(fact, card.getCardModel(), card.splitTags());
             card.question = newQA.get("question");
             Log.i(TAG, "Question = " + card.question);
             card.answer = newQA.get("answer");
