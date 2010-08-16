@@ -9,7 +9,6 @@
   <string name="deck_not_loaded">Impossibile caricare il mazzo.</string>
   <string name="deck_not_loaded_detail">Premi menu e seleziona uno dei mazzi nella tua scheda SD.</string>
   <string name="deck_empty">Il mazzo è vuoto.</string>
-  <string name="card_template">&lt;html&gt; &lt;head&gt; &lt;link rel="stylesheet" type="text/css" href="file:///android_asset/flashcard_css" /&gt; &lt;/head&gt; &lt;body&gt; &lt;span class="card"&gt; ::content:: &lt;/span&gt; &lt;/body&gt; &lt;/html&gt;</string>
   <string name="deckpicker_title">Seleziona uno dei mazzi che hai copiato sulla tua scheda SD</string>
   <string name="deckpicker_title_nosdcard">La scheda SD non è montata</string>
   <string name="deckpicker_due">%1$d di %2$d da ripetere</string>
