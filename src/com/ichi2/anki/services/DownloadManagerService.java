@@ -87,7 +87,7 @@ public class DownloadManagerService extends Service {
 		
 		restorePreferences();
 		
-		// If there are incomplete work, finish it
+		// If there is incomplete work, finish it
 		addIncompleteDownloads();
 		resumeDownloads();
 		
@@ -242,7 +242,7 @@ public class DownloadManagerService extends Service {
 			SharedDeckDownload sharedDeckDownload = (SharedDeckDownload) download;
 			if(sharedDeckDownload.getStatus() == SharedDeckDownload.UPDATE)
 			{
-				new UpdateDeckTask().execute(new Payload(new Object[] {sharedDeckDownload.getTitle(), sharedDeckDownload}));
+				new UpdateDeckTask().execute(new Payload(new Object[] {sharedDeckDownload}));
 			}
 			else
 			{
@@ -495,6 +495,34 @@ public class DownloadManagerService extends Service {
 	};
 	
 	/********************************************************************
+	 * Listeners	 													*
+	 ********************************************************************/
+	
+	public interface ProgressListener 
+	{
+		
+		public void onProgressUpdate(Object... values);
+	}
+	
+	private ProgressListener mUpdateListener = new ProgressListener() {
+
+		@Override
+		public void onProgressUpdate(Object... values) {
+			String deckPath = (String) values[0];
+			Long numUpdatedCards = (Long) values[1];
+			
+			//Save on preferences
+			SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+			Editor editor = pref.edit();
+			Log.i(TAG, "ProgressListener, deckPath = " + deckPath);
+			editor.putLong("numUpdatedCards:" + deckPath, numUpdatedCards);
+			editor.commit();
+		}
+		
+	};
+	
+	
+	/********************************************************************
 	 * Async Tasks	 													*
 	 ********************************************************************/
 	
@@ -646,9 +674,9 @@ public class DownloadManagerService extends Service {
 		}
 	}
 	
-	private class DownloadSharedDeckTask extends AsyncTask<Download, Object, Download> {
+	private class DownloadSharedDeckTask extends AsyncTask<Download, Object, SharedDeckDownload> {
 		
-		protected Download doInBackground(Download... downloads) 
+		protected SharedDeckDownload doInBackground(Download... downloads) 
 		{
 			SharedDeckDownload download = (SharedDeckDownload) downloads[0];
 			
@@ -775,7 +803,7 @@ public class DownloadManagerService extends Service {
 			notifySharedDeckObservers();
 		}
 
-		protected void onPostExecute(Download download) 
+		protected void onPostExecute(SharedDeckDownload download) 
 		{
 			Log.i(TAG, "onPostExecute");
 			SharedDeckDownload sharedDownload = (SharedDeckDownload) download;
@@ -784,8 +812,14 @@ public class DownloadManagerService extends Service {
 			
 			// Unzip deck and media
 			String unzippedDeckName = unzipSharedDeckFile(mDestination + "/tmp/" + download.getTitle() + ".zip", sharedDownload.getTitle());
+			download.setTitle(unzippedDeckName);
+			
 			// Update all cards in deck
-			new UpdateDeckTask().execute(new Payload(new Object[] {unzippedDeckName, download}));
+			SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+			Editor editor = pref.edit();
+			editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
+			editor.commit();
+			new UpdateDeckTask().execute(new Payload(new Object[] {download}));
 			
 		}
 	}
@@ -805,7 +839,10 @@ public class DownloadManagerService extends Service {
 			{
 				HashMap<String,Object> results = (HashMap<String, Object>) data.result;
 				Deck deck = (Deck) results.get("deck");
-				deck.updateAllCards();
+				//deck.updateAllCards();
+				SharedDeckDownload download = (SharedDeckDownload) args[0].data[0];
+				SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+				deck.updateAllCardsFromPosition(pref.getLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0), mUpdateListener);
 			}
 			else
 			{
@@ -817,8 +854,8 @@ public class DownloadManagerService extends Service {
 		private Payload doInBackgroundLoadDeck(Payload... params)
 		{
 			Payload data = params[0];
-			String deckName = (String) data.data[0];
-			String deckFilename = mDestination + "/tmp/" + deckName + ".anki.updating";
+			SharedDeckDownload download = (SharedDeckDownload) data.data[0];
+			String deckFilename = mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
 			Log.i(TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
 			Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
@@ -835,6 +872,7 @@ public class DownloadManagerService extends Service {
 				HashMap<String,Object> results = new HashMap<String,Object>();
 				results.put("deck", deck);
 				results.put("card", card);
+				results.put("position", download.getNumUpdatedCards());
 				data.result = results;
 				return data;
 			} catch (SQLException e)
@@ -867,13 +905,19 @@ public class DownloadManagerService extends Service {
 					deck.closeDeck();
 				}
 				// TODO: Remove download and notify only on success?
-				String deckName = (String)result.data[0];
+				SharedDeckDownload download = (SharedDeckDownload)result.data[0];
+				
+				// Put updated cards to 0
+				SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+				Editor editor = pref.edit();
+				editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
+				editor.commit();
 				// Move deck and media to the default deck path
-				new File(mDestination + "/tmp/" + deckName + ".anki.updating").renameTo(new File(mDestination + "/" + deckName + ".anki"));
-				new File(mDestination + "/tmp/" + deckName + ".media/").renameTo(new File(mDestination + "/" + deckName + ".media/"));
-				mSharedDeckDownloads.remove((Download)result.data[1]);
+				new File(mDestination + "/tmp/" + download.getTitle() + ".anki.updating").renameTo(new File(mDestination + "/" + download.getTitle() + ".anki"));
+				new File(mDestination + "/tmp/" + download.getTitle() + ".media/").renameTo(new File(mDestination + "/" + download.getTitle() + ".media/"));
+				mSharedDeckDownloads.remove(download);
 				notifySharedDeckObservers();
-				showNotification((String)result.data[0]);
+				showNotification(download.getTitle());
 				stopIfFinished();
 			}
 		}

@@ -34,6 +34,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.ichi2.anki.services.DownloadManagerService.ProgressListener;
+
 /**
  * A deck stores all of the cards and scheduling information.
  * It is saved in a file with a name ending in .anki
@@ -730,34 +732,47 @@ public class Deck
 	// TODO: The real methods to update cards on Anki should be implemented instead of this
 	public void updateAllCards()
 	{
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deckPath).database.rawQuery(
-                "SELECT id, factId " +
-                "FROM cards " +
-                "ORDER BY id", 
-                null);
+		updateAllCardsFromPosition(0, null);
+	}
+	
+	public void updateAllCardsFromPosition(long numUpdatedCards, ProgressListener listener)
+	{
+		Cursor cursor = AnkiDatabaseManager.getDatabase(deckPath).database.rawQuery(
+				"SELECT id, factId " +
+				"FROM cards " +
+				"ORDER BY id " +
+				"LIMIT " + Long.MAX_VALUE + " OFFSET " + numUpdatedCards, 
+				null);
 
-        while (cursor.moveToNext())
-        {
-        	// Get card
-            Card card = new Card(this);
-            card.fromDB(cursor.getLong(0));
-            Log.i(TAG, "Card id = " + card.id);
-            
-            // Get the related fact
-            Fact fact = card.getFact();
-            //Log.i(TAG, "Fact id = " + fact.id);
-            
-            // Generate the question and answer for this card and update it
-            HashMap<String,String> newQA = CardModel.formatQA(fact, card.getCardModel());
-            card.question = newQA.get("question");
-            Log.i(TAG, "Question = " + card.question);
-            card.answer = newQA.get("answer");
-            Log.i(TAG, "Answer = " + card.answer);
-            card.modified = System.currentTimeMillis() / 1000.0;
-            
-            card.toDB();
-        }
-        cursor.close();
+		while (cursor.moveToNext())
+		{
+			// Get card
+			Card card = new Card(this);
+			card.fromDB(cursor.getLong(0));
+			Log.i(TAG, "Card id = " + card.id + ", numUpdatedCards = " + numUpdatedCards);
+			
+			// Get the related fact
+			Fact fact = card.getFact();
+			//Log.i(TAG, "Fact id = " + fact.id);
+			
+			// Generate the question and answer for this card and update it
+			HashMap<String,String> newQA = CardModel.formatQA(fact, card.getCardModel());
+			card.question = newQA.get("question");
+			Log.i(TAG, "Question = " + card.question);
+			card.answer = newQA.get("answer");
+			Log.i(TAG, "Answer = " + card.answer);
+			card.modified = System.currentTimeMillis() / 1000.0;
+			
+			card.toDB();
+			
+			numUpdatedCards++;
+			
+			if(listener != null)
+			{
+				listener.onProgressUpdate(new Object[] {deckPath, numUpdatedCards});
+			}
+		}
+		cursor.close();
 	}
 	
 	/* Answering a card

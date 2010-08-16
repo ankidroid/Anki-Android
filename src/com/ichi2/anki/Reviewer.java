@@ -812,9 +812,17 @@ public class Reviewer extends Activity {
 			{
 				// Obtain the user answer and the correct answer
 				String userAnswer = mAnswerField.getText().toString();
+				Log.i(TAG, "Current card answer = " + mCurrentCard.answer);
+				Log.i(TAG, "Index of > = " + mCurrentCard.answer.indexOf(">") + 1);
+				Log.i(TAG, "Last index of < = " + mCurrentCard.answer.lastIndexOf("<"));
+				
 				String correctAnswer = (String) mCurrentCard.answer.subSequence(
-						mCurrentCard.answer.indexOf(">")+1,
-						mCurrentCard.answer.lastIndexOf("<"));
+						1,
+						2);
+				
+				//String correctAnswer = (String) mCurrentCard.answer.subSequence(
+				//		mCurrentCard.answer.indexOf(">")+1,
+				//		mCurrentCard.answer.lastIndexOf("<"));
 
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
