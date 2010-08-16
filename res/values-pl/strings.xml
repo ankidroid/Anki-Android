@@ -10,7 +10,6 @@
   <string name="deck_not_loaded">Nie udało się załadować talii.</string>
   <string name="deck_not_loaded_detail">Proszę naciśnij menu i wybierz jedną z talii, przechowywaną na Twojej kartcie SD.</string>
   <string name="deck_empty">Talia jest pusta.</string>
-  <string name="card_template">&lt;html&gt;&lt;head&gt;&lt;link rel="stylesheet" type="text/css" href="file:///android_asset/flashcard_css" /&gt;&lt;/head&gt;&lt;body&gt; &lt;span class="card"&gt;::Zawartość::&lt;/span&gt; &lt;/body&gt;&lt;/html&gt;</string>
   <string name="deckpicker_title">Wybierz talię skopiowaną na Twoją kartę SD</string>
   <string name="deckpicker_title_nosdcard">Karta SD jest niezainstalowana</string>
   <string name="deckpicker_due">%1$d z %2$d zaległych</string>

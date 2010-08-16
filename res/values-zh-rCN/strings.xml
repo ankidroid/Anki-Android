@@ -10,7 +10,6 @@
   <string name="deck_not_loaded">加载牌组失败。</string>
   <string name="deck_not_loaded_detail">请按Menu键并选择SD卡中的牌组。</string>
   <string name="deck_empty">牌组中没有卡片。</string>
-  <string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel="stylesheet" type="text/css" href="file:///android_asset/flashcard_css" /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class="card"&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
   <string name="deckpicker_title">选择你存在SD卡中的牌组</string>
   <string name="deckpicker_title_nosdcard">SD卡已拔除</string>
   <string name="deckpicker_due">%2$d张中的%1$d张待复习</string>
