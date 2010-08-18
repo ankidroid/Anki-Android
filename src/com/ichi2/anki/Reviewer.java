@@ -1,5 +1,8 @@
 package com.ichi2.anki;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -11,7 +14,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.os.Vibrator;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -55,19 +57,18 @@ public class Reviewer extends Activity {
 	private static final int MENU_SUSPEND = 0;
 	private static final int MENU_EDIT = 1;
 	
-	/** Max size of the font of the questions and answers for relative calculation */
-	protected static final int MAX_QA_FONT_SIZE = 14;
+	/** Max size of the font for dynamic calculation of font size */
+	protected static final int MAX_DYNAMIC_FONT_SIZE = 14;
 
-	/** Min size of the font of the questions and answers for relative calculation */
-	protected static final int MIN_QA_FONT_SIZE = 3;
-	
-	/** The font size specified in shared preferences. If 0 then font is calculated with MAX/MIN_FONT_SIZE */
-	private int qaFontSize = 0;
-	/**
-	 * Max and min size of the font of the questions and answers
-	 */
-	private static final int MAX_FONT_SIZE = 14;
-	private static final int MIN_FONT_SIZE = 3;
+	/** Min size of the font for dynamic calculation of font size */
+	protected static final int MIN_DYNAMIC_FONT_SIZE = 3;
+
+	/** The percentage of the absolute font size specified in the deck. */
+	private int displayFontSize = 100;
+
+	/** Regex pattern used in removing tags from text before diff */
+	private static final Pattern spanPattern = Pattern.compile("</?span[^>]*>");
+	private static final Pattern brPattern = Pattern.compile("<br\\s?/?>");
 	
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
@@ -80,13 +81,25 @@ public class Reviewer extends Activity {
 	/**
 	 * Variables to hold preferences
 	 */
-	private boolean prefCorporalPunishments;
 	private boolean prefTimer;
 	private boolean prefWhiteboard;
 	private boolean prefWriteAnswers;
-	private String prefDeckFilename;
+	private String deckFilename;
 	
 	private boolean notificationBar;
+	
+	/** Preference: hide the question when showing the answer */
+	private int hideQuestionInAnswer;
+
+	// private static final int HQIA_DO_HIDE = 0;
+
+	private static final int HQIA_DO_SHOW = 1; // HQIA = Hide Question In Answer
+
+	private static final int HQIA_CARD_MODEL = 2;
+
+	@SuppressWarnings("unused")
+	private boolean updateNotifications; // TODO use Veecheck only if this is
+											// true
 	
 	public String cardTemplate;
 	
@@ -147,11 +160,6 @@ public class Reviewer extends Activity {
 			{
 			case R.id.ease1:
 				mCurrentEase = 1;
-				if (prefCorporalPunishments)
-				{
-					Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-					v.vibrate(500);
-				}
 				break;
 			case R.id.ease2:
 				mCurrentEase = 2;
@@ -391,6 +399,8 @@ public class Reviewer extends Activity {
 		setContentView(layout);
 
 		mCard = (WebView) findViewById(R.id.flashcard);
+		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+		mCard.setScrollbarFadingEnabled(false);
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
@@ -404,8 +414,9 @@ public class Reviewer extends Activity {
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
 		mAnswerField = (EditText) findViewById(R.id.answer_field);
 
-		hideControls();
-
+		hideEaseButtons();
+		showControls();
+		
 		mEase1.setOnClickListener(mSelectEaseHandler);
 		mEase2.setOnClickListener(mSelectEaseHandler);
 		mEase3.setOnClickListener(mSelectEaseHandler);
@@ -531,7 +542,6 @@ public class Reviewer extends Activity {
 	private void showControls()
 	{
 		mCard.setVisibility(View.VISIBLE);
-		showEaseButtons();
 		mTextBarRed.setVisibility(View.VISIBLE);
 		mTextBarBlack.setVisibility(View.VISIBLE);
 		mTextBarBlue.setVisibility(View.VISIBLE);
@@ -721,52 +731,57 @@ public class Reviewer extends Activity {
 	private SharedPreferences restorePreferences()
 	{
 		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		prefCorporalPunishments = preferences.getBoolean("corporalPunishments", false);
 		prefTimer = preferences.getBoolean("timer", true);
 		prefWhiteboard = preferences.getBoolean("whiteboard", true);
 		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
-		prefDeckFilename = preferences.getString("deckFilename", "");
+		deckFilename = preferences.getString("deckFilename", "");
 		useRubySupport = preferences.getBoolean("useRubySupport", false);
-		String qaFontSizeString = preferences.getString("qaFontSize", "0");
-		qaFontSize = Integer.parseInt(qaFontSizeString);
 		notificationBar = preferences.getBoolean("notificationBar", false);
+		displayFontSize = Integer.parseInt(preferences.getString("displayFontSize", "100"));
+		hideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", Integer.toString(HQIA_DO_SHOW)));
+		updateNotifications = preferences.getBoolean("enabled", true);
 
+		// Redraw screen with new preferences
+		if(mFlipCard != null) 
+		{
+			if (mFlipCard.isChecked()) 
+			{
+				displayCardAnswer();
+			} 
+			else 
+			{
+				displayCardQuestion();
+			}
+		}
+		
 		return preferences;
 	}
 	
 	private void updateCard(String content)
 	{
 		Log.i(TAG, "updateCard");
-		
-		content = Sound.extractSounds(prefDeckFilename, content);
-		content = Image.loadImages(prefDeckFilename, content);
-		/*	
-		// We want to modify the font size depending on how long is the content
-		// Replace each <br> with 15 spaces, then remove all html tags and spaces
-		String realContent = content.replaceAll("\\<br.*?\\>", "               ");
-		realContent = realContent.replaceAll("\\<.*?\\>", "");
-		realContent = realContent.replaceAll("&nbsp;", " ");
 
-		// Calculate the size of the font depending on the length of the content
-		int size = Math.max(MIN_FONT_SIZE, MAX_FONT_SIZE - (int)(realContent.length()/5));
-		mCard.getSettings().setDefaultFontSize(size);
-		*/
-		//In order to display the bold style correctly, we have to change font-weight to 700
+		content = Sound.extractSounds(deckFilename, content);
+		content = Image.loadImages(deckFilename, content);
+
+		// In order to display the bold style correctly, we have to change
+		// font-weight to 700
 		content = content.replaceAll("font-weight:600;", "font-weight:700;");
 
 		// If ruby annotation support is activated, then parse and add markup
-
 		if (useRubySupport) {
 			content = RubyParser.ankiRubyToMarkup(content);
 		}
-		
-		// Calculate the size of the font if relative font size is chosen in preferences
-		int fontSize = qaFontSize;
-		if (0 == qaFontSize) {
-			fontSize = calculateDynamicFontSize(content);
+
+		// Add CSS for font colour and font size
+		if (mCurrentCard != null) {
+			Deck currentDeck = AnkiDroidApp.deck();
+			Model myModel = Model.getModel(currentDeck, mCurrentCard.cardModelId, false);
+			content = myModel.getCSSForFontColorSize(mCurrentCard.cardModelId, displayFontSize) + content;
+		} else {
+			mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
 		}
-		mCard.getSettings().setDefaultFontSize(fontSize);
-		
+
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
 		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
@@ -785,17 +800,26 @@ public class Reviewer extends Activity {
 	
 	private void displayCardQuestion()
 	{
-		updateCard(mCurrentCard.question);
-		
-		showControls();
-		//mFlipCard.setChecked(false);
+		// Clean answer field
+		mAnswerField.setText("");
+		hideEaseButtons();
 		
 		// If the user wants to write the answer
 		if(prefWriteAnswers)
+		{
 			mAnswerField.setVisibility(View.VISIBLE);
+		}
 		
-		hideEaseButtons();
+		mFlipCard.setVisibility(View.VISIBLE);
 		mFlipCard.requestFocus();
+
+		String displayString = enrichWithQASpan(mCurrentCard.question, false);
+		// Depending on preferences do or do not show the question
+		if (calculateShowQuestion()) {
+			displayString = displayString + "<hr/>";
+		}
+		
+		updateCard(displayString);
 	}
 	
 	private void displayCardAnswer()
@@ -805,6 +829,8 @@ public class Reviewer extends Activity {
 		mCardTimer.stop();
 		mAnswerField.setVisibility(View.GONE);
 		
+		String displayString = "";
+		
 		// If the user wrote an answer
 		if(prefWriteAnswers)
 		{
@@ -812,45 +838,111 @@ public class Reviewer extends Activity {
 			{
 				// Obtain the user answer and the correct answer
 				String userAnswer = mAnswerField.getText().toString();
-				Log.i(TAG, "Current card answer = " + mCurrentCard.answer);
-				Log.i(TAG, "Index of > = " + mCurrentCard.answer.indexOf(">") + 1);
-				Log.i(TAG, "Last index of < = " + mCurrentCard.answer.lastIndexOf("<"));
-				
-				String correctAnswer = (String) mCurrentCard.answer.subSequence(
-						1,
-						2);
-				
-				//String correctAnswer = (String) mCurrentCard.answer.subSequence(
-				//		mCurrentCard.answer.indexOf(">")+1,
-				//		mCurrentCard.answer.lastIndexOf("<"));
+				Matcher spanMatcher = spanPattern.matcher(mCurrentCard.answer);
+				String correctAnswer = spanMatcher.replaceAll("");
+				Matcher brMatcher = brPattern.matcher(correctAnswer);
+				correctAnswer = brMatcher.replaceAll("\n");
 
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
-				updateCard(diff.diff_prettyHtml(
-						diff.diff_main(userAnswer, correctAnswer)) +
-						"<br/>" + mCurrentCard.answer);
+
+				displayString = enrichWithQASpan(
+						diff.diff_prettyHtml(diff.diff_main(userAnswer,
+								correctAnswer)) + "<br/>" + mCurrentCard.answer,
+						true);
 			}
 			else
 			{
-				updateCard("");
+				displayString = "";
 			}
 		}
-		else
+		else 
 		{
-			updateCard(mCurrentCard.answer);
+			displayString = enrichWithQASpan(mCurrentCard.answer, true);
+		}
+		
+		// Depending on preferences do or do not show the question
+		if (calculateShowQuestion()) {
+			StringBuffer sb = new StringBuffer();
+			sb.append(enrichWithQASpan(mCurrentCard.question, false));
+			sb.append("<hr/>");
+			sb.append(displayString);
+			displayString = sb.toString();
+			mFlipCard.setVisibility(View.INVISIBLE);
+			// TODO: Test what happens when we show both question and answer and we hide timer and whiteboard
+			/*
+			if (!timerAndWhiteboard) {
+				mChronoButtonsLayout.setVisibility(View.GONE);
+			}
+			*/
+
 		}
 		
 		showEaseButtons();
+		updateCard(displayString);
 	}
 	
+	private final boolean calculateShowQuestion() {
+		if(HQIA_DO_SHOW == hideQuestionInAnswer) 
+		{
+			return true;
+		}
+		if(HQIA_CARD_MODEL == hideQuestionInAnswer && 
+				Model.getModel(AnkiDroidApp.deck(), mCurrentCard.cardModelId, false).getCardModel(mCurrentCard.cardModelId).questionInAnswer == 0) 
+		{
+			return true;
+		}
+		return false;
+	}
 	
+	/** Constant for class attribute signaling answer */
+	protected final static String ANSWER_CLASS = "answer";
+
+	/** Constant for class attribute signaling question */
+	protected final static String QUESTION_CLASS = "question";
+
+	/**
+	 * Adds a span html tag around the contents to have an indication, where
+	 * answer/question is displayed
+	 * 
+	 * @param content
+	 * @param isAnswer
+	 *            if true then the class attribute is set to "answer",
+	 *            "question" otherwise.
+	 * @return
+	 */
+	private final static String enrichWithQASpan(String content, boolean isAnswer) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<p class=\"");
+		if (isAnswer) {
+			sb.append(ANSWER_CLASS);
+		} else {
+			sb.append(QUESTION_CLASS);
+		}
+		sb.append("\">");
+		sb.append(content);
+		sb.append("</p>");
+		return sb.toString();
+	}
+	
+	/**
+	 * Calculates a dynamic font size depending on the length of the contents
+	 * taking into account that the input string contains html-tags, which will
+	 * not be displayed and therefore should not be taken into account.
+	 * 
+	 * @param htmlContents
+	 * @return font size respecting MIN_DYNAMIC_FONT_SIZE and
+	 *         MAX_DYNAMIC_FONT_SIZE
+	 */
 	protected final static int calculateDynamicFontSize(String htmlContent) {
-		// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then remove all html tags and spaces
-		String realContent = htmlContent.replaceAll("\\<br.*?\\>", "               ");
-		realContent = realContent.replaceAll("\\<hr.*?\\>", "                              ");
+		// Replace each <br> with 15 spaces, each <hr> with 30 spaces, then
+		// remove all html tags and spaces
+		String realContent = htmlContent.replaceAll("\\<br.*?\\>", " ");
+		realContent = realContent.replaceAll("\\<hr.*?\\>", " ");
 		realContent = realContent.replaceAll("\\<.*?\\>", "");
 		realContent = realContent.replaceAll("&nbsp;", " ");
-		return Math.max(MIN_QA_FONT_SIZE, MAX_QA_FONT_SIZE - (int)(realContent.length()/5));
+		return Math.max(MIN_DYNAMIC_FONT_SIZE, MAX_DYNAMIC_FONT_SIZE
+				- (int) (realContent.length() / 5));
 	}
 		
 	private void updateCounts()

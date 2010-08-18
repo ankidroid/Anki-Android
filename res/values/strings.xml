@@ -35,7 +35,7 @@
 <color name="wb_fg_color">#B00000FF</color>
 <color name="wb_bg_color">#0000</color>
 
-<string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;file:///android_asset/flashcard_css&quot; /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=&quot;card&quot;&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
+<string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/flashcard_css\" /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=\"card\"&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
 
 <!-- DeckPicker.java -->
 <string name="deckpicker_title">Select a deck you copied to your SD card</string>
@@ -78,7 +78,7 @@
 <string name="overlay_on">Whiteboard On</string>
 <string name="overlay_off">Whiteboard Off</string>
 <string name="show_answer">Show Answer</string>
-<string name="show_question">Show Question</string>
+<string name="show_question">Re-display Question</string>
 <string name="card_hint">Flashcard</string>
 <string name="ease1_learning">Again</string>
 <string name="ease2_learning">Good</string>
@@ -112,10 +112,10 @@
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
-<string name="qa_font_size">Font size</string>
-<string name="qa_font_size_summ">Default font size. Using \'Relative\' changes the font dynamically based on space</string>
-<string name="show_question_answer">Show question in answer</string>
-<string name="show_question_answer_summ">Shows the question also when displaying the answer unless user entered answer.</string>
+<string name="display_font_size">Relative display font size</string>
+<string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck</string>
+<string name="hide_question_in_answer">Hide question in answer?</string>
+<string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where the your decks are stored</string>
 <string name="notification_bar">Show notification bar</string>
@@ -202,7 +202,7 @@
 <string name="saving_changes">Saving changes...</string>
 <string name="session_question_limit_reached">Session question limit reached</string>
 <string name="session_time_limit_reached">Session time limit reached</string>
-<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.</string>
+<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck.</string>
 <string name="about_content">&lt;html&gt;
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
@@ -210,8 +210,9 @@ Flashcards for Android&lt;/h2&gt;
 &lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href=&quot;http://ichi2.net/anki&quot;&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
 &lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt;, new feature ideas are very welcome too!
 Please use the &lt;a href=&quot;http://ichi2.net/anki/wiki/AndroidAnki&quot;&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;develop it&lt;/a&gt; :-)
+&lt;p&gt;AnkiDroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;join&lt;/a&gt; the &lt;a href=&quot;http://ichi2.net/anki/wiki/AnkiDroidContributors&quot;&gt;contributors&lt;/a&gt; :-)
 Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href=&quot;http://ichi2.net/anki/donate.html&quot;&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid is released under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href=&quot;http://github.com/nicolas-raoul/Anki-Android&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
 <string name="review_early">Review Early</string>
@@ -318,4 +319,9 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_log_fact_from_server_message">1 fact from server</string>
 <string name="sync_log_facts_from_server_message">%d facts from server</string>
 
+<!-- ErrorReporter.java -->
+<string name="error_message">There are %d errors to report</string>
+<string name="error_ok">Report errors</string>
+<string name="error_cancel">Do not report errors</string>
+<string name="error_email">ankidroid@gmail.com</string>
 </resources>

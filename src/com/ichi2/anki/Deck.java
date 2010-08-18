@@ -210,7 +210,6 @@ public class Deck
 	
 	private Card currentCard;
 	
-
 	/**
 	 * Undo/Redo variables.
 	 */
@@ -249,6 +248,7 @@ public class Deck
 				return null;
 			
 			deck = new Deck();
+			
 			deck.id 			 = cursor.getLong(0);
 			deck.created		 = cursor.getDouble(1);
 			deck.modified 		 = cursor.getDouble(2);
@@ -439,6 +439,16 @@ public class Deck
 	 * NOTE: The setters flushMod()
 	 ***********************************************************/
 
+	public String getDeckPath() 
+	{
+		return deckPath;
+	}
+	
+	public void setDeckPath(String path) 
+	{
+		deckPath = path;
+	}
+	
 	public String getSyncName()
 	{
 		return syncName;
@@ -751,12 +761,15 @@ public class Deck
 			card.fromDB(cursor.getLong(0));
 			Log.i(TAG, "Card id = " + card.id + ", numUpdatedCards = " + numUpdatedCards);
 			
+			// Load tags
+			card.loadTags();
+			
 			// Get the related fact
 			Fact fact = card.getFact();
 			//Log.i(TAG, "Fact id = " + fact.id);
 			
 			// Generate the question and answer for this card and update it
-			HashMap<String,String> newQA = CardModel.formatQA(fact, card.getCardModel());
+			HashMap<String,String> newQA = CardModel.formatQA(fact, card.getCardModel(), card.splitTags());
 			card.question = newQA.get("question");
 			Log.i(TAG, "Question = " + card.question);
 			card.answer = newQA.get("answer");
@@ -1102,6 +1115,42 @@ public class Deck
 				"isDue = 1");
 		Log.i(TAG, "newCount = " + newCount);
 	}
+	/*
+	 * Report real counts for miscounting debugging
+	 */
+//	public String reportCounts() {
+//		Cursor cursor = null;
+//		int myfailedSoonCount = 0;
+//		int myrevCount = 0;
+//		int mynewCount = 0;
+//		int myfailedNowCount = (int) AnkiDb.queryScalar(
+//				"SELECT count(id) " +
+//				"FROM cards " +
+//				"WHERE type = 0 and " +
+//				"isDue = 1 and " +
+//				"combinedDue <= " +
+//				String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+//		try {
+//			cursor = AnkiDb.database.rawQuery(
+//					"SELECT type, count(id) " +
+//					"FROM cards " +
+//					"WHERE priority in (1,2,3,4) and " +
+//					"isDue = 1 " +
+//					"GROUP BY type", null);
+//			while (cursor.moveToNext()) {
+//				switch (cursor.getInt(0)) {
+//					case 0: myfailedSoonCount = cursor.getInt(1); break;
+//					case 1: myrevCount = cursor.getInt(1); break;
+//					case 2: mynewCount = cursor.getInt(1); break;
+//				}
+//			}
+//		} finally {
+//			if (cursor != null) cursor.close();
+//		}
+//
+//		return myfailedSoonCount + "-" + myfailedNowCount + "-" + myrevCount + "-" + mynewCount + "<br/>" +
+//				failedSoonCount + "-" + failedNowCount + "-" + revCount + "-" + newCount;
+//	}
 
 	/**
 	 * Mark expired cards due and update counts.
@@ -1113,53 +1162,48 @@ public class Deck
 		
 		checkDailyStats();
 
-		// Failed cards
 		ContentValues val = new ContentValues(1);
 		val.put("isDue", 1);
-		
-		Log.i(TAG, "failedSoonCount before = " + failedSoonCount);
-		failedSoonCount += ankiDB.database.update(
-				"cards",
-				val,
-				"type = 0 and " +
-				"isDue = 0 and " +
-				"priority in (1,2,3,4) and " +
-				String.format(ENGLISH_LOCALE, "combinedDue <= %f",
-						(double) ((System.currentTimeMillis() / 1000.0) + delay0)),
-				null);
-		Log.i(TAG, "failedSoonCount after = " + failedSoonCount);
-		
-		Log.i(TAG, "failedNowCount before = " + failedNowCount);
+		ankiDB.database.update(
+						"cards",
+						val,
+						"priority in (1,2,3,4) and " +
+						"type in (0,1,2) and " +
+						"isDue = 0 and " +
+						String.format(ENGLISH_LOCALE, "combinedDue <= %f",
+								(double) ((System.currentTimeMillis() / 1000.0) + delay0)),
+								null);
+
 		failedNowCount = (int) ankiDB.queryScalar(
-				"SELECT count(id) " +
-				"FROM cards " +
-				"WHERE type = 0 and " +
-				"isDue = 1 and " +
-				String.format(ENGLISH_LOCALE, "combinedDue <= %f",
-						(double) (System.currentTimeMillis() / 1000.0)));
-		Log.i(TAG, "failedNowCount after = " + failedNowCount);
+						"SELECT count(id) " +
+						"FROM cards " +
+						"WHERE type = 0 and " +
+						"isDue = 1 and " +
+						String.format(ENGLISH_LOCALE, "combinedDue <= %f",
+								(double) (System.currentTimeMillis() / 1000.0)));
+
+		Cursor cursor = null;
+		try {
+			cursor = ankiDB.database.rawQuery(
+							"SELECT type, count(id) " +
+							"FROM cards " +
+							"WHERE priority in (1,2,3,4) and " +
+							"isDue = 1 " +
+							"GROUP BY type", null);
 		
-		// Review
-		Log.i(TAG, "revCount before = " + revCount);
-		val.clear();
-		val.put("isDue", 1);
-		revCount += ankiDB.database.update("cards", val, "type = 1 and " + "isDue = 0 and "
-		        + "priority in (1,2,3,4) and "
-		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
-		Log.i(TAG, "revCount after = " + revCount);
-		
-		// New
-		Log.i(TAG, "newCount before = " + newCount);
-		val.clear();
-		val.put("isDue", 1);
-		newCount += ankiDB.database.update("cards", val, "type = 2 and " + "isDue = 0 and "
-		        + "priority in (1,2,3,4) and "
-		        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)), null);
-		Log.i(TAG, "newCount after = " + newCount);
-		
-		Log.i(TAG, "newCardsPerDay = " + newCardsPerDay);
-		Log.i(TAG, "newCardsToday = " + newCardsToday());
-		
+			while (cursor.moveToNext()) 
+			{
+				switch (cursor.getInt(0)) 
+				{
+					case 0: failedSoonCount = cursor.getInt(1); break;
+					case 1: revCount = cursor.getInt(1); break;
+					case 2: newCount = cursor.getInt(1); break;
+				}
+			}
+		} finally {
+			 if (cursor != null) cursor.close();
+		}
+
 		newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0);
 		Log.i(TAG, "newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0) : " + newCountToday);
 	}
@@ -1663,6 +1707,8 @@ public class Deck
 		}
 	}
 	
+	// FIXME: Where should this be called from?
+	@SuppressWarnings("unused")
 	private void initUndo()
 	{
 		undoStack = new Stack<UndoRow>();

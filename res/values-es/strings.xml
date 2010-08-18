@@ -1,141 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+<!--Generated with crowdin.net-->
 <resources>
-    <string name="CardEditorCancelButton">Cancelar</string>
-    <string name="CardEditorSaveButton">Guardar</string>
-    
-    
-<string name="app_name">AnkiDroid</string>
-
-<string name="yes">Sí</string>
-<string name="no">No</string>
-<string name="ok"></string>
-
-
-<string name="deck_not_loaded">Error al cargar el mazo.</string>
-<string name="deck_not_loaded_detail">Por favor, pulse el menú y seleccione uno de los mazos almacenados en su tarjeta SD.</string>
-<string name="deck_empty">El mazo está vacío.</string>
-
-<color name="wb_fg_color">#B00000FF</color>
-<color name="wb_bg_color">#0000</color>
-
-<string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;file:///android_asset/flashcard_css&quot; /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=&quot;card&quot;&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
-
-<string name="deckpicker_title">Seleccione un mazo de su tarjeta SD.</string>
-<string name="deckpicker_title_nosdcard">La tarjeta SD no está disponible</string>
-<string name="deckpicker_due">%1$d de %2$d pendientes</string>
-<string name="deckpicker_new">%d nuevas hoy</string>
-<string name="deckpicker_loaddeck">Cargando mazo...</string>
-<string name="deckpicker_nodeck">No se ha encontrado ningún mazo.</string>
-
-<string name="notify_ticker">Actualización de la aplicación</string>
-<string name="notify_title">AnkiDroid actualizado</string>
-<string name="notify_message">Descargar una nueva versión</string>
-<string name="notification_title">Confirmar la actualización de AnkiDroid</string>
-<string name="notification_message">Una nueva versión de AnkiDroid se encuentra disponible en el Android Market.\n\n¿Quieres descargarla?</string>
-<string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
-
-<string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
-
-
-
-<!-- deck_preferences.xml strings -->
-<string name="newcards_day_summ">El número máximo de tarjetas nuevas mostradas per día.</string>
-<string name="newcards_day">Nuevas tarjetas / día</string>
-<string name="session_time_limit">Límite de tiempo por sesión</string>
-<string name="session_time_limit_summ">El número de minutos en una sesión. Escoge 0 si no deseas ningún límite.</string>
-<string name="session_question_limit">Límite de preguntas por sesión</string>
-<string name="session_question_limit_summ">El número de preguntas en una sesión. Escoge 0 si no deseas ningún límite.</string>
-<string name="new_cards_order">Orden tarjetas nuevas</string>
-<string name="new_cards_order_summ">El orden en el que mostrar las tarjetas nuevas.</string>
-<string name="show_new_cards_in">Mostrar tarjetas nuevas en...</string>
-<string name="new_card_spacing">Distribución tarjetas nuevas</string>
-<string name="new_card_spacing_summ">Cómo distribuir las tarjetas nuevas durante la sesión.</string>
-<string name="show_new_cards">Mostrar tarjetas nuevas en...</string>
-<string name="review_cards_order">Orden tarjetas a repasar</string>
-<string name="review_cards_in">Repasar tarjetas en...</string>
-<string name="review_cards_order_summ">El orden en el que mostrar las tarjetas a repasar.</string>
-
-
-<!-- flashcard_portrait.xml strings -->
-<string name="overlay_on">Pizarra activada</string>
-<string name="overlay_off">Pizarra desactivada</string>
-<string name="show_answer">Mostrar respuesta</string>
-<string name="show_question">Mostrar pregunta</string>
-<string name="card_hint">Flashcard</string>
-<string name="again">Otra vez</string>
-<string name="hard">Difícil</string>
-<string name="good">Bien</string>
-<string name="easy">Fácil</string>
-
-
-<!-- preferences.xml strings -->
-<string name="show_whiteboard">Mostrar temporizador / pizarra</string>
-<string name="show_whiteboard_summ">Te permite escribir en la pantalla</string>
-<string name="sample_deck">Mazo de muestra</string>
-<string name="sample_deck_summ">Genera mazo de capitales si no encontrado</string>
-<string name="corporal_punishments">Castigos corporales</string>
-<string name="corporal_punishments_summ">Vibra al fallar, así aprenderás</string>
-<string name="write_answers">Escribir respuestas</string>
-<string name="write_answers_summ">Te permite escribir la respuesta y compararla con la solución correcta</string>
-<string name="deck_path">Directorio mazos</string>
-<string name="deck_path_summ">Directorio donde tus mazos están almacenados</string>
-
-<!-- AndroidManifest.xml strings -->
-<string name="shareddeckpicker_title">Selecciona el mazo a descargar</string>
-<string name="preferences_title">Preferencias</string>
-<string name="deckpreferences_title">Preferencias mazo</string>
-<string name="about_title">Acerca de</string>
-<string name="cardeditor_title">Editor tarjeta</string>
-
-<!-- AnkiDroid.java strings -->
-<string name="loading_new_card">Cargando nueva tarjeta...</string>
-<string name="loading_deck">Cargando mazo. Por favor, espere...</string>
-<string name="loading_shared_decks">Cargando lista de mazos compartidos...</string>
-<string name="connection_unsuccessful">No se ha podido realizar la conexión.</string>
-<string name="connection_needed">No hay internet</string>
-<string name="preferences">Preferencias</string>
-<string name="about">Acerca de</string>
-<string name="study_options">Opciones de estudio</string>
-<string name="suspend">Suspender</string>
-<string name="edit_card">Editar tarjeta</string>
-<string name="switch_another_deck">Cambiar a otro mazo</string>
-<string name="get_shared_deck">Descargar mazo compartido</string>
-
-<!-- SharedDeckPicker.java -->
-<string name="downloading_shared_deck">Descargando mazo compartido...</string>
-
-<!-- SharedDeck.java -->
-<string name="fact">hecho</string>
-<string name="facts">hechos</string>
-
-<string name="saving_changes">Guardando cambios...</string>
-<string name="session_question_limit_reached">Se ha alcanzado el límite de preguntas de la sesión</string>
-<string name="session_time_limit_reached">Se ha alcanzado el límite de tiempo de la sesión</string>
-<string name="congratulations_finished_for_now">¡Bien hecho! Has acabado por ahora. Por favor, vuelve mañana o cambia a otro mazo. Si quieres, puedes descargar mazos compartidos utilizando la aplicación Anki de escritorio.</string>
-<string name="about_content">&lt;html&gt;
+  <string name="CardEditorCancelButton">Cancelar</string>
+  <string name="CardEditorSaveButton">Guardar</string>
+  <string name="app_name">AnkiDroid</string>
+  <string name="yes">Sí</string>
+  <string name="no">No</string>
+  <string name="ok">OK</string>
+  <string name="deck_not_loaded">Error al cargar el mazo.</string>
+  <string name="deck_not_loaded_detail">Por favor, pulse el menú y seleccione uno de los mazos almacenados en su tarjeta SD.</string>
+  <string name="deck_empty">El mazo está vacío.</string>
+  <string name="deckpicker_title">Seleccione un mazo de su tarjeta SD.</string>
+  <string name="deckpicker_title_nosdcard">La tarjeta SD no está disponible</string>
+  <string name="deckpicker_due">%1$d de %2$d pendientes</string>
+  <string name="deckpicker_new">%d nuevas hoy</string>
+  <string name="deckpicker_loaddeck">Cargando mazo...</string>
+  <string name="deckpicker_nodeck">No se ha encontrado ningún mazo.</string>
+  <string name="notify_ticker">Actualización de la aplicación</string>
+  <string name="notify_title">AnkiDroid actualizado</string>
+  <string name="notify_message">Descargar una nueva versión</string>
+  <string name="notification_title">Confirmar la actualización de AnkiDroid</string>
+  <string name="notification_message">Una nueva versión de AnkiDroid se encuentra disponible en el Android Market.\n\n¿Quieres descargarla?</string>
+  <string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
+  <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
+  <string name="newcards_day_summ">El número máximo de tarjetas nuevas mostradas per día.</string>
+  <string name="newcards_day">Nuevas tarjetas / día</string>
+  <string name="session_time_limit">Límite de tiempo por sesión</string>
+  <string name="session_time_limit_summ">El número de minutos en una sesión. Escoge 0 si no deseas ningún límite.</string>
+  <string name="session_question_limit">Límite de preguntas por sesión</string>
+  <string name="session_question_limit_summ">El número de preguntas en una sesión. Escoge 0 si no deseas ningún límite.</string>
+  <string name="new_cards_order">Orden tarjetas nuevas</string>
+  <string name="new_cards_order_summ">El orden en el que mostrar las tarjetas nuevas.</string>
+  <string name="show_new_cards_in">Mostrar tarjetas nuevas en...</string>
+  <string name="new_card_spacing">Distribución tarjetas nuevas</string>
+  <string name="new_card_spacing_summ">Cómo distribuir las tarjetas nuevas durante la sesión.</string>
+  <string name="show_new_cards">Mostrar tarjetas nuevas en...</string>
+  <string name="review_cards_order">Orden tarjetas a repasar</string>
+  <string name="review_cards_in">Repasar tarjetas en...</string>
+  <string name="review_cards_order_summ">El orden en el que mostrar las tarjetas a repasar.</string>
+  <string name="overlay_on">Pizarra activada</string>
+  <string name="overlay_off">Pizarra desactivada</string>
+  <string name="show_answer">Mostrar respuesta</string>
+  <string name="show_question">Mostrar pregunta</string>
+  <string name="card_hint">Flashcard</string>
+  <string name="again">Otra vez</string>
+  <string name="hard">Difícil</string>
+  <string name="good">Bien</string>
+  <string name="easy">Fácil</string>
+  <string name="pref_cat_decks">Barajas</string>
+  <string name="pref_cat_sync">Sincronización</string>
+  <string name="pref_cat_study">Opciones de estudio</string>
+  <string name="pref_cat_qadisplay">Question and answer display</string>
+  <string name="username">Usuario</string>
+  <string name="password">Contraseña</string>
+  <string name="sync_on_open">Sync on open</string>
+  <string name="sync_on_close">Sync on close</string>
+  <string name="show_whiteboard">Mostrar temporizador / pizarra</string>
+  <string name="show_whiteboard_summ">Te permite escribir en la pantalla</string>
+  <string name="sample_deck">Mazo de muestra</string>
+  <string name="sample_deck_summ">Genera mazo de capitales si no encontrado</string>
+  <string name="corporal_punishments">Castigos corporales</string>
+  <string name="corporal_punishments_summ">Vibra al fallar, así aprenderás</string>
+  <string name="write_answers">Escribir respuestas</string>
+  <string name="write_answers_summ">Te permite escribir la respuesta y compararla con la solución correcta</string>
+  <string name="use_ruby_support">Provide ruby annotation support</string>
+  <string name="use_ruby_support_summ">En caso de encontrarse los caracteres \'[\' y \']\', el texto es tratado como una anotación Ruby</string>
+  <string name="display_font_size">Tamaño de letra relativo</string>
+  <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck</string>
+  <string name="hide_question_in_answer">¿Ocultar la pregunta en la respuesa?</string>
+  <string name="hide_question_in_answer_summ">Determina si la pregunta debería de ocultarse cuando la respuesta se muestra.</string>
+  <string name="deck_path">Directorio mazos</string>
+  <string name="deck_path_summ">Directorio donde tus mazos están almacenados</string>
+  <string name="shareddeckpicker_title">Selecciona la baraja que desea descargar</string>
+  <string name="preferences_title">Preferencias</string>
+  <string name="deckpreferences_title">Preferencias de baraja</string>
+  <string name="about_title">Acerca de</string>
+  <string name="cardeditor_title">Editor de tarjetas</string>
+  <string name="loading_new_card">Cargando nueva tarjeta...</string>
+  <string name="loading_deck">Cargando mazo. Por favor, espere...</string>
+  <string name="loading_shared_decks">Cargando barajas compartidas disponibles...</string>
+  <string name="connection_unsuccessful">La conexión falló. Compruebe su configuración de conexión e intentelo de nuevo, por favor.</string>
+  <string name="connection_needed">No hay conexión a Internet</string>
+  <string name="preferences">Preferencias</string>
+  <string name="about">Acerca de</string>
+  <string name="study_options">Opciones de estudio</string>
+  <string name="suspend">Suspender</string>
+  <string name="edit_card">Editar tarjeta</string>
+  <string name="switch_another_deck">Cambiar a otro mazo</string>
+  <string name="get_shared_deck">Obtener baraja compartida</string>
+  <string name="downloading_shared_deck">Descargando baraja compartida...</string>
+  <string name="fact">hecho</string>
+  <string name="facts">hechos</string>
+  <string name="saving_changes">Guardando cambios...</string>
+  <string name="session_question_limit_reached">Se ha alcanzado el límite de preguntas de la sesión</string>
+  <string name="session_time_limit_reached">Se ha alcanzado el límite de tiempo de la sesión</string>
+  <string name="congratulations_finished_for_now">Felicidades! Has terminado por ahora. Por favor vuelve mañana o cambia a otra baraja. Las barajas compartidas se pueden descargar por el software Anki.</string>
+  <string name="about_content">&lt;html&gt;
 &lt;body&gt;
-&lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Flashcards para Android&lt;/h2&gt;
-&lt;p&gt;AnkiDroid puede leer ficheros .anki creados con la aplicación de escritorio &lt;a href=&quot;http://ichi2.net/anki&quot;&gt;Anki&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Para ayudarnos a mejorar AnkiDroid, por favor reporta cualquier fallo &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;aquí&lt;/a&gt;. ¡Nuevas ideas para funcionalidades también son bienvenidas!
-Si tienes cualquier duda, utiliza la &lt;a href=&quot;http://ichi2.net/anki/wiki/AndroidAnki&quot;&gt;wiki&lt;/a&gt; y no dudes en pasarte por el &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;foro&lt;/a&gt; y saludar.&lt;/p&gt;
-&lt;p&gt;AnkiDroid es una aplicación de &lt;a href=&quot;http://es.wikipedia.org/wiki/C%C3%B3digo_abierto&quot;&gt;código abierto&lt;/a&gt;, así que os animamos a que participéis en el &lt;a href=&quot;http://ichi2.net/anki/wiki/ContributeToAnkiDroid&quot;&gt;desarrollo&lt;/a&gt; :-)
-La gente sin conocimientos de programación también puede ayudar muchísimo, por ejemplo, actualizando la wiki y las capturas de pantalla, &lt;a href=&quot;http://ichi2.net/anki/donate.html&quot;&gt;donando&lt;/a&gt; a Anki o blogueando sobre AnkiDroid!&lt;/p&gt;
+&lt;h1&gt;AnkiDroid:&lt;br/&gt;
+Flashcards oara Android&lt;/h1&gt;
+&lt;p&gt;AnkiDroid puede leer ficheros .anki hechos por la aplicación de escritorio &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Para ayudarnos a hacer un mejor AnkiDroid, por favor reporta cualquier bug &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;aqui&lt;/a&gt;, nuevas ideas y mejoras son muy bien recibidas!
+Por favor usa la &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; y di Hola en el &lt;a href="http://groups.google.com/group/anki-android"&gt;foro&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid  &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;software de código abierto&lt;/a&gt;, asi que animamos a todo el mundo a &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;unirse&lt;/a&gt; a los &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contribuyentes&lt;/a&gt; :-)
+Los no-desarrolladores tambien pueden ayudar, por ejemplo actualizando la wiki y las capturas de pantalla, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donando&lt;/a&gt; a Anki, or blogueando acerca de AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid esta licenciado bajo la licencia&lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3&lt;/a&gt; y el código fuente esta disponible &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;aqui&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
+  <string name="review_early">Revisión temprana</string>
+  <string name="error_message">Hay %d errores para reportar</string>
+  <string name="error_ok">Informar sobre errores</string>
+  <string name="error_cancel">No informar de errores</string>
+  <string name="error_email">ankidroid@gmail.com</string>
 </resources>

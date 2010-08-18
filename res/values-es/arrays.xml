@@ -1,39 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+<!--Generated with crowdin.net-->
 <resources>
-    <!-- WARNING: Many values here match static values defined in Deck.java
-                  DO NOT edit them, unless you change their corresponding values -->
-    <!-- Used in deck preferences -->
-    <string-array name="newCardOrderLabels">
-        <item>Orden aleatorio</item>
-        <item>Orden añadido</item>
-        <item>Orden inverso del añadido</item>  
-    </string-array>
+  <string-array name="newCardOrderLabels">
+    <item>Orden aleatorio</item>
+    <item>Orden añadido</item>
+    <item>Orden inverso del añadido</item>
+  </string-array>
     <string-array name="newCardOrderVals">
         <item>0</item>
         <item>1</item>
         <item>2</item>  
     </string-array>
     
-    <string-array name="newCardSchedulingLabels">
+  <string-array name="newCardSchedulingLabels">
     <item>Distribuir entre repasos</item>
     <item>Después de los repasos</item>
-    <item>Antes de los repasos</item>  
-    </string-array>
+    <item>Antes de los repasos</item>
+  </string-array>
     
     <string-array name="newCardSchedulingVals">
     <item>0</item>
@@ -41,12 +24,12 @@
     <item>2</item>  
     </string-array>
     
-    <string-array name="revCardOrderLabels">
+  <string-array name="revCardOrderLabels">
     <item>Mayor intervalo primero</item>
     <item>Menor intervalo primero</item>
     <item>Orden programado</item>
-    <item>Orden aleatorio</item>  
-    </string-array>
+    <item>Orden aleatorio</item>
+  </string-array>
     
     <string-array name="revCardOrderVals">
     <item>0</item>
@@ -55,9 +38,9 @@
     <item>3</item>
     </string-array>
     
-    <string-array name="failedCardOptionLabels">
+  <string-array name="failedCardOptionLabels">
     <item>Mostrar tarjetas falladas próximamente</item>
-    <item>Mostrar tarjetas falladas al final</item>
+    <item>Mostrar tarjetas falladas al final&lt;</item>
     <item>Mostrar tarjetas falladas en 10 minutos</item>
     <item>Mostrar tarjetas falladas en 8 horas</item>  
     <item>Mostrar tarjetas falladas en 3 días</item>   
@@ -69,5 +52,5 @@
     <item>2</item>
     <item>3</item>
     <item>4</item>
-    </string-array>
+  </string-array>
 </resources>

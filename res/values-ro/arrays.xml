@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>Ordine aleatoare</item>
+    <item>Ordine adaugată</item>
+    <item>Ordine inversă adaugată</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>Răspândite prin recapitulări</item>
+    <item>După recapitulări</item>
+    <item>Înainte de recapitulări</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Cel mai mare interval la inceput</item>
+    <item>Cel mai mic interval la inceput</item>
+    <item>Ordine scadentă</item>
+    <item>Ordine aleatoare</item>
+  </string-array>
+  <string-array name="failedCardOptionLabels">
+    <item>Prezintă carduri eşuate la scurt timp după</item>
+    <item>Prezintă carduri eşuate la final</item>
+    <item>Prezintă carduri eşuate în 10 minute</item>
+    <item>Prezintă carduri eşuate în 8 ore</item>
+    <item>Prezintă carduri eşuate în 3 zile</item>
+  </string-array>
+</resources>

@@ -1,5 +1,6 @@
 /****************************************************************************************
-* Copyright (c) 2009 Daniel Sv√§rd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+* Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
 *                                                                                      *
 * This program is free software; you can redistribute it and/or modify it under        *
 * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,7 +17,11 @@
 
 package com.ichi2.anki;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import android.database.Cursor;
 
@@ -28,10 +33,15 @@ import android.database.Cursor;
  * 
  * @see http://ichi2.net/anki/wiki/ModelProperties#Card_Templates
  */
-public class CardModel {
+public class CardModel implements Comparator<CardModel> {
 
 	// TODO: Javadoc.
 	// TODO: Methods for reading/writing from/to DB.
+
+	/** Regex pattern used in removing tags from text before diff */
+	private static final Pattern factPattern = Pattern.compile("%\\([tT]ags\\)s");
+	private static final Pattern modelPattern = Pattern.compile("%\\(modelTags\\)s");
+	private static final Pattern templPattern = Pattern.compile("%\\(cardModel\\)s");
 
 	// BEGIN SQL table columns
 	long id; // Primary key
@@ -75,13 +85,11 @@ public class CardModel {
 	 * Backward reference
 	 */
 	Model model;
-	Deck deck;
-	
+
 	/**
 	 * Constructor.
 	 */
-	public CardModel(Deck deck, String name, String qformat, String aformat, boolean active) {
-		this.deck = deck;
+	public CardModel(String name, String qformat, String aformat, boolean active) {
 		this.name = name;
 		this.qformat = qformat;
 		this.aformat = aformat;
@@ -92,33 +100,87 @@ public class CardModel {
 	/**
 	 * Constructor.
 	 */
-	public CardModel(Deck deck) {
-		this(deck, "", "q", "a", true);
+	public CardModel() {
+		this("", "q", "a", true);
 	}
 
-	public void fromDb(long id)
-	{
+	/** SELECT string with only those fields, which are used in AnkiDroid */
+	private final static String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, aformat" //lformat left out
+		//qedformat, aedformat left out
+		+ ", questionInAnswer"
+		+ ", questionFontFamily, questionFontSize, questionFontColour, questionAlign"
+		+ ", answerFontFamily, answerFontSize, answerFontColour, answerAlign"
+		+ ", lastFontColour" //lastFontFamily, lastFontSize left out
+		//rest left out
+		+ " FROM cardModels";
+
+	/**
+	 * 
+	 * @param modelId
+	 * @param models will be changed by adding all found CardModels into it
+	 * @return unordered CardModels which are related to a given Model and eventually active put into the parameter "models"
+	 */
+	protected static final void fromDb(Deck deck, long modelId, TreeMap<Long, CardModel> models) {
 		Cursor cursor = null;
+		CardModel myCardModel = null;
 		try {
-		    cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
-	                "SELECT id, ordinal, modelId, name, description, qformat, " +
-	                "aformat " +
-	                "FROM cardModels " +
-	                "WHERE id = " +
-	                id,
-	                null);
-	
-		    cursor.moveToFirst();
-	        this.id = cursor.getLong(0);
-	        this.ordinal = cursor.getInt(1);
-	        this.modelId = cursor.getLong(2);
-	        this.name = cursor.getString(3);
-	        this.description = cursor.getString(4);
-	        this.qformat = cursor.getString(5);
-	        this.aformat = cursor.getString(6);
+			StringBuffer query = new StringBuffer(SELECT_STRING);
+			query.append(" WHERE modelId = ");
+			query.append(modelId);
+			
+			cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(query.toString(), null);
+
+			if (cursor.moveToFirst()) {
+				do {
+					myCardModel = new CardModel();
+					
+					myCardModel.id = cursor.getLong(0);
+					myCardModel.ordinal = cursor.getInt(1);
+					myCardModel.modelId = cursor.getLong(2);
+					myCardModel.name = cursor.getString(3);
+					myCardModel.description = cursor.getString(4);
+					myCardModel.active = cursor.getInt(5);
+					myCardModel.qformat = cursor.getString(6);
+					myCardModel.aformat = cursor.getString(7);
+					myCardModel.questionInAnswer = cursor.getInt(8);
+					myCardModel.questionFontFamily = cursor.getString(9);
+					myCardModel.questionFontSize = cursor.getInt(10);
+					myCardModel.questionFontColour = cursor.getString(11);
+					myCardModel.questionAlign = cursor.getInt(12);
+					myCardModel.answerFontFamily = cursor.getString(13);
+					myCardModel.answerFontSize = cursor.getInt(14);
+					myCardModel.answerFontColour = cursor.getString(15);
+					myCardModel.answerAlign = cursor.getInt(16);
+					myCardModel.lastFontColour = cursor.getString(17);
+					models.put(myCardModel.id, myCardModel);
+				} while (cursor.moveToNext());
+			}
 		} finally {
-			if (cursor != null) cursor.close();
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param cardModelId
+	 * @return the modelId for a given cardModel or 0, if it cannot be found
+	 */
+	protected static final long modelIdFromDB(Deck deck, long cardModelId) {
+		Cursor cursor = null;
+		long modelId = -1;
+		try {
+			String query = "SELECT modelId FROM cardModels WHERE id = " + cardModelId;
+			cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(query, null);
+			cursor.moveToFirst();
+			modelId = cursor.getLong(0);
+		} finally {
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
+		}
+		return modelId;
 	}
 	
 	/**
@@ -126,7 +188,6 @@ public class CardModel {
 	 */
 	public CardModel copy() {
 		CardModel cardModel = new CardModel(
-				this.deck,
 				this.name,
 				this.qformat,
 				this.aformat,
@@ -160,12 +221,33 @@ public class CardModel {
 		return cardModel;
 	}
 
-	public static HashMap<String, String> formatQA(Fact fact, CardModel cm) {
+	public static HashMap<String, String> formatQA(Fact fact, CardModel cm, String[] tags) {
 	    
 	    //Not pretty, I know.
 	    String question = cm.qformat;
 	    String answer = cm.aformat;
-	    
+
+	    // First deal with the tag fields:
+	    //   %(tags)s = factTags             tags where src = 0
+	    //   %(modelTags)s = modelTags       tags where src = 1
+	    //   %(cardModel)s = templateTags    tags where src = 2
+	    Matcher tagMatcher;
+	    // fact tags %(tags)s or %(Tags)s
+	    tagMatcher = factPattern.matcher(question);
+	    question = tagMatcher.replaceAll(tags[Card.TAGS_FACT]);
+	    tagMatcher = factPattern.matcher(answer);
+	    answer = tagMatcher.replaceAll(tags[Card.TAGS_FACT]);
+	    // modelTags %(modelTags)s
+	    tagMatcher = modelPattern.matcher(question);
+	    question = tagMatcher.replaceAll(tags[Card.TAGS_MODEL]);
+	    tagMatcher = modelPattern.matcher(answer);
+	    answer = tagMatcher.replaceAll(tags[Card.TAGS_MODEL]);
+	    // templateTags %(cardModel)s
+	    tagMatcher = templPattern.matcher(question);
+	    question = tagMatcher.replaceAll(tags[Card.TAGS_TEMPL]);
+	    tagMatcher = templPattern.matcher(answer);
+	    answer = tagMatcher.replaceAll(tags[Card.TAGS_TEMPL]);
+
 	    int replaceAt = question.indexOf("%(");
 	    while (replaceAt != -1)
 	    {
@@ -194,13 +276,23 @@ public class CardModel {
         if (isQuestion)
         {
             String replace = "%(" + fieldName + ")" + fieldType;
-            String with = "<span class=\"fm" + fact.getFieldModelId(fieldName) + "\">" +  fact.getFieldValue(fieldName) + "</span>";
+            String with = "<span class=\"fm" + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">" +  fact.getFieldValue(fieldName) + "</span>";
             replaceFrom = replaceFrom.replace(replace, with);
         } 
         else
         {
-            replaceFrom.replace("%(" + fieldName + ")" + fieldType, "<span class=\"fma" + fact.getFieldModelId(fieldName) + "\">" +  fact.getFieldValue(fieldName) + "</span");
+            replaceFrom.replace("%(" + fieldName + ")" + fieldType, "<span class=\"fma" + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">" +  fact.getFieldValue(fieldName) + "</span");
         }
         return replaceFrom;
     }
+    
+	/**
+	 * Implements Comparator by comparing the field "ordinal".
+	 * @param object1
+	 * @param object2
+	 * @return 
+	 */
+	public int compare(CardModel object1, CardModel object2) {
+		return object1.ordinal - object2.ordinal;
+	}
 }

@@ -33,9 +33,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  */
 public class CardEditor extends Activity {
 
-    public static final int SAVE_CARD = 0;
-    public static final int CANCEL = 1;
-    
     /**
 	 * Broadcast that informs us when the sd card is about to be unmounted
 	 */
@@ -56,12 +53,6 @@ public class CardEditor extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-		restorePreferences();
-		// Remove the status bar and make title bar progress available
-		if (notificationBar==false) {
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
 
         registerExternalStorageListener();
         
@@ -114,7 +105,7 @@ public class CardEditor extends Activity {
         {
             
             public void onClick(View v) {
-                setResult(CANCEL);
+                setResult(RESULT_CANCELED);
                 finish();
             }
             
@@ -181,11 +172,4 @@ public class CardEditor extends Activity {
         }
     }
     
-	private SharedPreferences restorePreferences()
-	{
-		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-		notificationBar = preferences.getBoolean("notificationBar", false);
-		
-		return preferences;
-	}
 }

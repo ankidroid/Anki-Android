@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>Pokaż nowe karty w losowej kolejności</item>
+    <item>Pokaż nowe karty w kolejności dodania</item>
+    <item>Pokaż nowe karty w odwróconej kolejności dodania</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>Rozprosz nowe karty między powtórkami</item>
+    <item>Pokaż nowe karty po wszystkich innych kartach</item>
+    <item>Pokaż nowe karty przed powtórką</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Zacznij od kart o największej przerwie</item>
+    <item>Zacznij od kart o najmniejszej przerwie</item>
+    <item>Przeglądaj karty w kolejnośc daty pojawienia się</item>
+    <item>Pokaż karty w losowej kolejności</item>
+  </string-array>
+  <string-array name="failedCardOptionLabels">
+    <item>Pokaż wkrótce źle rozwiązane karty</item>
+    <item>Pokaż źle rozwiązane karty na końcu</item>
+    <item>Pokaż źle rozwiązane karty za 10 minut</item>
+    <item>Pokaż źle rozwiązane karty za 8 godzin</item>
+    <item>Pokaż źle rozwiązane karty za 3 dni</item>
+  </string-array>
+</resources>

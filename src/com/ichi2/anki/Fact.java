@@ -37,6 +37,11 @@ public class Fact {
     // TODO: Finish porting from facts.py.
     // TODO: Methods to read/write from/to DB.
 
+	/**
+	 * Tag for logging messages
+	 */
+	private static String TAG = "AnkiDroid";
+
     long id;
     long modelId;
     double created;
@@ -48,6 +53,7 @@ public class Fact {
     TreeSet<Field> fields;
     Deck deck;
 
+    /*
     public Fact(Deck deck, Model model) {
     	this.deck = deck;
         this.model = model;
@@ -59,6 +65,7 @@ public class Fact {
             }
         }
     }
+    */
 
     // Generate fact object from its ID
     public Fact(Deck deck, long id)
@@ -98,7 +105,7 @@ public class Fact {
 	                id,
 	                null);
 	        if (!cursor.moveToFirst()) {
-	            Log.w("anki", "Fact.java (constructor): No result from query.");
+	            Log.w(TAG, "Fact.java (constructor): No result from query.");
 	            return false;
 	        }
 	
@@ -212,7 +219,8 @@ public class Fact {
         {
             Card newCard = new Card(deck);
             newCard.fromDB(cardsCursor.getLong(0));
-            HashMap<String,String> newQA = CardModel.formatQA(this, newCard.getCardModel());
+            newCard.loadTags();
+            HashMap<String,String> newQA = CardModel.formatQA(this, newCard.getCardModel(), newCard.splitTags());
             newCard.question = newQA.get("question");
             newCard.answer = newQA.get("answer");
             

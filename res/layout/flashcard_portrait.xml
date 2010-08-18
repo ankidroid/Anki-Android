@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+<!-- 
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com> 
 ~
 ~ This program is free software; you can redistribute it and/or modify it under
 ~ the terms of the GNU General Public License as published by the Free Software
@@ -17,141 +17,91 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/main_layout"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/main_layout" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="#ffffff">
+
 	<include layout="@layout/sdcard_error" />
 	<include layout="@layout/deck_error" />
-	
-	<LinearLayout
-		android:id="@+id/bar_layout"
+
+	<LinearLayout android:id="@+id/bar_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:gravity="right"
-		android:background="#ffffff" >
-			<TextView android:id="@+id/red_number"
-			android:layout_width="wrap_content"
-			android:gravity="center_vertical"
-			android:textColor="#ff0000"
-			android:layout_alignParentRight="true"
-			android:text="Red"
-			android:layout_height="wrap_content"
-			android:layout_alignParentTop="true"
-			android:padding="4sp"/>
-			<TextView android:id="@+id/black_number"
-			android:layout_width="wrap_content"
-			android:gravity="center_vertical"
-			android:textColor="#000000"
-			android:layout_alignParentRight="true"
-			android:text="Black"
-			android:layout_height="wrap_content"
-			android:layout_alignParentTop="true"
-			android:padding="4sp"/>
-			<TextView android:id="@+id/blue_number"
-			android:layout_width="wrap_content"
-			android:gravity="center_vertical"
-			android:textColor="#0000ff"
-			android:layout_alignParentRight="true"
-			android:text="Blue"
-			android:layout_height="wrap_content"
-			android:layout_alignParentTop="true"
-			android:padding="4sp"/>
-	
+		android:gravity="right">
+		<TextView android:id="@+id/red_number" android:layout_width="wrap_content"
+			android:gravity="center_vertical" android:textColor="#ff0000"
+			android:layout_alignParentRight="true" android:text="Red"
+			android:layout_height="wrap_content" android:layout_alignParentTop="true"
+			android:padding="4sp" />
+		<TextView android:id="@+id/black_number"
+			android:layout_width="wrap_content" android:gravity="center_vertical"
+			android:textColor="#000000" android:layout_alignParentRight="true"
+			android:text="Black" android:layout_height="wrap_content"
+			android:layout_alignParentTop="true" android:padding="4sp" />
+		<TextView android:id="@+id/blue_number" android:layout_width="wrap_content"
+			android:gravity="center_vertical" android:textColor="#0000ff"
+			android:layout_alignParentRight="true" android:text="Blue"
+			android:layout_height="wrap_content" android:layout_alignParentTop="true"
+			android:padding="4sp" />
+
 	</LinearLayout>
-	
-	<FrameLayout
-		android:id="@+id/card_whiteboard_layout"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
+
+	<FrameLayout android:id="@+id/card_whiteboard_layout"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:layout_weight="5">
-		<WebView android:id="@+id/flashcard"
+		<WebView android:id="@+id/flashcard" 
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:gravity="center_vertical|center_horizontal"
 			android:hint="@string/card_hint"
 			android:textSize="15sp" />
-		<view class="com.ichi2.anki.Whiteboard"
-			android:id="@+id/whiteboard"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
+		<view class="com.ichi2.anki.Whiteboard" android:id="@+id/whiteboard"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:visibility="gone" />
 	</FrameLayout>
-	
-	<LinearLayout
-		android:layout_width="fill_parent"
+
+	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:background="#ffffff">
-		
-		<LinearLayout
-			android:id="@+id/remembered_layout"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			 <EditText android:id="@+id/answer_field"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:maxLines="2"/>
-			<Button
-				android:id="@+id/ease1"
-				android:padding="3dip"
-				android:layout_width="fill_parent"
-				android:layout_weight="1.2"
-				android:layout_height="fill_parent"
-				android:text="@string/again" />
-			<Button
-				android:id="@+id/ease2"
-				android:padding="3dip"
-				android:layout_width="fill_parent"
-				android:layout_weight="1.2"
-				android:layout_height="fill_parent"
-				android:text="@string/hard" />
-			<Button
-				android:id="@+id/ease3"
-				android:padding="3dip"
-				android:layout_width="fill_parent"
-				android:layout_weight="1.2"
-				android:layout_height="fill_parent"
-				android:text="@string/good" />
-			<Button
-				android:id="@+id/ease4"
-				android:padding="3dip"
-				android:layout_width="fill_parent"
-				android:layout_weight="1.2"
-				android:layout_height="fill_parent"
-				android:text="@string/easy" />
+		android:orientation="vertical">
+
+		<LinearLayout android:id="@+id/remembered_layout"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+			<EditText android:id="@+id/answer_field"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:maxLines="2" />
+			<Button android:id="@+id/ease1" android:padding="3dip"
+				android:layout_width="fill_parent" android:layout_weight="1.2"
+				android:layout_height="fill_parent" android:text="@string/again" />
+			<Button android:id="@+id/ease2" android:padding="3dip"
+				android:layout_width="fill_parent" android:layout_weight="1.2"
+				android:layout_height="fill_parent" android:text="@string/hard" />
+			<Button android:id="@+id/ease3" android:padding="3dip"
+				android:layout_width="fill_parent" android:layout_weight="1.2"
+				android:layout_height="fill_parent" android:text="@string/good" />
+			<Button android:id="@+id/ease4" android:padding="3dip"
+				android:layout_width="fill_parent" android:layout_weight="1.2"
+				android:layout_height="fill_parent" android:text="@string/easy" />
 		</LinearLayout>
-		
-		<LinearLayout
-			android:id="@+id/chrono_buttons_layout"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<ToggleButton
-				android:id="@+id/toggle_overlay"
-				android:layout_width="fill_parent"
+
+		<LinearLayout android:id="@+id/chrono_buttons_layout"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+			<ToggleButton android:id="@+id/toggle_overlay"
+				android:layout_width="fill_parent" 
 				android:layout_weight="1.2"
-				android:layout_height="fill_parent"
+				android:layout_height="fill_parent" 
 				android:textOn="@string/overlay_on"
 				android:textOff="@string/overlay_off" />
-			<ToggleButton
-				android:id="@+id/flip_card"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:layout_weight="1.2"
-				android:background="@android:drawable/btn_default_small"
-				android:textOn="@string/show_question"
+			<ToggleButton android:id="@+id/flip_card"
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:layout_weight="1.2" android:background="@android:drawable/btn_default_small"
+				android:textOn="@string/show_question" 
 				android:textOff="@string/show_answer" />
-			<Chronometer
-				android:id="@+id/card_time"
-				android:layout_width="fill_parent"
-				android:layout_weight="1"
-				android:layout_height="fill_parent"
-				android:gravity="center_vertical|center_horizontal"
+			<Chronometer android:id="@+id/card_time"
+				android:layout_width="fill_parent" android:layout_weight="1"
+				android:layout_height="fill_parent" android:gravity="center_vertical|center_horizontal"
 				android:textColor="#000000" />
 		</LinearLayout>
-	
+
 	</LinearLayout>
 </LinearLayout>

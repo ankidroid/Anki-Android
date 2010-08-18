@@ -19,7 +19,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki"
-	android:versionName="0.4" android:versionCode="10">
+	android:versionName="0.5" android:versionCode="13"
+	android:installLocation="auto">
 	<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
 		<activity android:name="StudyOptions">
 			<intent-filter>
@@ -41,8 +42,16 @@
 		<activity android:name="Preferences" android:label="@string/preferences_title" />
 		<activity android:name="DeckPreferences" android:label="@string/deckpreferences_title" />
 		<activity android:name="About" android:label="@string/about_title" />
+		<activity android:name="CardEditor" android:label="@string/cardeditor_title"></activity>
+		<activity android:name="ErrorReporter" android:label="Error Reporter"></activity>
 		<activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
-		<receiver android:name="com.ichi2.veecheck.CheckReceiver">
+		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
+					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+			<intent-filter>
+				<action
+				 android:name="android.intent.action.BOOT_COMPLETED">
+				</action>
+			</intent-filter>
 			<intent-filter>
 				<action
 					android:name="com.ichi2.anki.VEECHECK_RESCHEDULE_CHECKS">
@@ -64,8 +73,17 @@
 		</service>
 		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
 		<provider android:name="AnkiDroidContentProvider" android:authorities="com.ichi2.anki"/>
-	<activity android:name="CardEditor" android:label="@string/cardeditor_title"></activity>
-	</application>
+		<!-- Broadcast Receiver that will process AppWidget updates -->
+		<receiver android:name=".AnkiDroidWidget" android:label="AnkiDroid">
+			<intent-filter>
+			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_ankidroid" />
+		</receiver>
+	
+		<!-- Service to perform web API queries -->
+		<service android:name=".AnkiDroidWidget$UpdateService" />
+</application>
 	<uses-sdk android:minSdkVersion="3"/>
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.INTERNET" />

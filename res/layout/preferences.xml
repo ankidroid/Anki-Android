@@ -32,17 +32,19 @@
 	
 	<PreferenceCategory android:title="@string/pref_cat_qadisplay">
 		<ListPreference
-			android:title="@string/qa_font_size"
-			android:summary="@string/qa_font_size_summ"
-			android:key="qaFontSize"
-			android:defaultValue="0"
-			android:entries="@array/qaFontSizeLabels"
-			android:entryValues="@array/qaFontSizeVals" />
-		<CheckBoxPreference
-			android:title="@string/show_question_answer"
-			android:defaultValue="false"
-			android:summary="@string/show_question_answer_summ"
-			android:key="showQuestionAnswer" />
+			android:title="@string/display_font_size"
+			android:summary="@string/display_font_size_summ"
+			android:key="displayFontSize"
+			android:defaultValue="100"
+			android:entries="@array/displayFontSizeLabels"
+			android:entryValues="@array/displayFontSizeVals" />
+		<ListPreference
+			android:title="@string/hide_question_in_answer"
+			android:summary="@string/hide_question_in_answer_summ"
+			android:key="hideQuestionInAnswer"
+			android:defaultValue="1"
+			android:entries="@array/hideQuestionInAnswerLabels"
+			android:entryValues="@array/hideQuestionInAnswerVals" />
 		<CheckBoxPreference
 			android:title="@string/use_ruby_support"
 			android:defaultValue="false"
@@ -56,6 +58,11 @@
 			android:defaultValue="true"
 			android:summary="@string/show_study_options_on_deck_load_summ"
 			android:key="study_options" />
+		<CheckBoxPreference
+			android:title="@string/notification_bar"
+			android:defaultValue="true"
+			android:summary="@string/notification_bar_summ"
+			android:key="notificationBar" />
 		<CheckBoxPreference
 			android:title="@string/show_timer"
 			android:defaultValue="true"
@@ -80,23 +87,10 @@
 			android:summary="@string/write_answers_summ"
 			android:key="writeAnswers" />
 		<CheckBoxPreference
-			android:title="@string/corporal_punishments"
-			android:defaultValue="false"
-			android:summary="@string/corporal_punishments_summ"
-			android:key="corporalPunishments" />
-		<CheckBoxPreference
-			android:title="@string/notification_bar"
+			android:title="Update notifications"
 			android:defaultValue="true"
-			android:summary="@string/notification_bar_summ"
-			android:key="notificationBar" />
+			android:summary="Notify me when AnkiDroid is updated"
+			android:key="enabled"/>
 	</PreferenceCategory>
 	
-	
-	<!-- TODO implement this preference. Right now: always use notifications
-	<CheckBoxPreference
-		android:title="Update notifications"
-		android:defaultValue="true"
-		android:summary="Notify me when AnkiDroid is updated"
-		android:key="enabled"/>
-	-->
 </PreferenceScreen>

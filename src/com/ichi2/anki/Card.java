@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2009 Daniel Sv√§rd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -17,8 +17,6 @@
 package com.ichi2.anki;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
 
 import android.content.ContentValues;
@@ -37,6 +35,16 @@ import android.util.Log;
 public class Card {
 
     // TODO: Javadoc.
+
+    /**
+     * Tag for logging messages
+     */
+    private static String TAG = "AnkiDroid";
+
+    /** Tags src constants */
+    public static final int TAGS_FACT = 0;
+    public static final int TAGS_MODEL = 1;
+    public static final int TAGS_TEMPL = 2;
 
     // BEGIN SQL table entries
     long id; // Primary key
@@ -62,7 +70,7 @@ public class Card {
     // Stats
     int reps = 0;
     int successive = 0;
-	double averageTime = 0;
+    double averageTime = 0;
     double reviewTime = 0;
     int youngEase0 = 0;
     int youngEase1 = 0;
@@ -85,19 +93,26 @@ public class Card {
     double combinedDue = 0;
     // END SQL table entries
 
-    // BEGIN JOINed variables
-    CardModel cardModel;
-    Fact fact;
-    // END JOINed variables
-
     Deck deck;
     
+    // BEGIN JOINed variables
+    @SuppressWarnings("unused")
+	private CardModel cardModel;
+    Fact fact;
+    private String[] tagsBySrc;
+    // END JOINed variables
+
     double timerStarted;
     double timerStopped;
     double fuzz;
 
     public Card(Deck deck, Fact fact, CardModel cardModel, double created) {
         tags = "";
+        tagsBySrc = new String[3];
+        tagsBySrc[TAGS_FACT] = "";
+        tagsBySrc[TAGS_MODEL] = "";
+        tagsBySrc[TAGS_TEMPL] = "";
+
         id = Utils.genID();
         // New cards start as new & due
         type = 2;
@@ -118,6 +133,8 @@ public class Card {
         if (cardModel != null) {
             cardModelId = cardModel.id;
             ordinal = cardModel.ordinal;
+            /* FIXME: what is the code below used for? It is never persisted
+             * Additionally, cardModel has no accessor.
             HashMap<String, HashMap<Long, String>> d = new HashMap<String, HashMap<Long, String>>();
             Iterator<FieldModel> iter = fact.model.fieldModels.iterator();
             while (iter.hasNext()) {
@@ -126,6 +143,7 @@ public class Card {
                 field.put(fm.id, fact.getFieldValue(fm.name));
                 d.put(fm.name, field);
             }
+            */
             //			HashMap<String, String> qa = CardModel.formatQA(id, fact.modelId, d, splitTags(), cardModel);
             //			question = qa.get("question");
             //			answer = qa.get("answer");
@@ -223,23 +241,49 @@ public class Card {
     }
 
     public String[] splitTags() {
-        return null;
+        return tagsBySrc;
     }
 
     public String allTags() {
-        return null;
+        // Non-Canonified string of fact and model tags
+        return tagsBySrc[TAGS_FACT] + "," + tagsBySrc[TAGS_MODEL];
     }
 
     public boolean hasTag(String tag) {
-        return true;
+        return (allTags().indexOf(tag) != -1);
     }
     
-    public CardModel getCardModel()
-    {
-        CardModel returnModel = new CardModel(deck);
-        returnModel.fromDb(cardModelId);
-        return returnModel;
-    }
+    //FIXME: Should be removed. Calling code should directly interact with Model
+	public CardModel getCardModel() {
+		Model myModel = Model.getModel(deck, cardModelId, false);
+		return myModel.getCardModel(cardModelId);
+	}
+
+	// Loading tags for this card. Only needed when we modify the card fields and need to update question and answer.
+	public void loadTags() {
+		Cursor cursor = null;
+
+		int tagSrc = 0;
+		try {
+			cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
+								"SELECT tags.tag, cardTags.src " +
+								"FROM cardTags JOIN tags ON cardTags.tagId = tags.id " +
+								"WHERE cardTags.cardId = " + id +
+								" AND cardTags.src in (" + TAGS_FACT + ", " + TAGS_MODEL + "," + TAGS_TEMPL +") " +
+								"ORDER BY cardTags.id",
+								null);
+			while (cursor.moveToNext()) {
+				tagSrc = cursor.getInt(1);
+				if (tagsBySrc[tagSrc].length() > 0) {
+					tagsBySrc[tagSrc] += " " + cursor.getString(0);
+				} else {
+					tagsBySrc[tagSrc] += cursor.getString(0);
+				}
+			}
+		} finally {
+			if (cursor != null) cursor.close();
+		}
+	}
 
     public boolean fromDB(long id) {
     	Cursor cursor = null;
@@ -359,16 +403,4 @@ public class Card {
         // TODO: Should also write JOINED entries: CardModel and Fact.
     }
 
-    /**
-     * Getters and setters
-     */
-    public int getSuccessive() 
-    {
-		return successive;
-	}
-
-	public void setSuccessive(int successive) 
-	{
-		this.successive = successive;
-	}
 }

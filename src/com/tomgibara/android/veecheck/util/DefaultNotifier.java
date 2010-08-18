@@ -19,15 +19,15 @@ import static com.tomgibara.android.veecheck.Veecheck.LOG_TAG;
 
 import java.util.Map;
 
+import com.tomgibara.android.veecheck.VeecheckActivity;
+import com.tomgibara.android.veecheck.VeecheckNotifier;
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-
-import com.tomgibara.android.veecheck.VeecheckActivity;
-import com.tomgibara.android.veecheck.VeecheckNotifier;
 
 /**
  * An implementation of {@link VeecheckNotifier} that directs a user to a

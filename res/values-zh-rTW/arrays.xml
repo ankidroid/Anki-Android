@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>隨機順序</item>
+    <item>新增的順序</item>
+    <item>新增順序反過來</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>穿插在複習中</item>
+    <item>複習之後</item>
+    <item>複習之前</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>間隔最久的先</item>
+    <item>間隔最短的先</item>
+    <item>照排列順序來</item>
+    <item>隨機順序</item>
+  </string-array>
+  <string-array name="failedCardOptionLabels">
+    <item>馬上再複習忘記的卡片</item>
+    <item>結束時複習忘記的卡片</item>
+    <item>10分鐘內複習忘記的卡片</item>
+    <item>8小時內複習忘記的卡片</item>
+    <item>3天內複習忘記的卡片</item>
+  </string-array>
+</resources>
