@@ -400,7 +400,6 @@ public class Reviewer extends Activity {
 
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-		mCard.setScrollbarFadingEnabled(false);
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
@@ -736,7 +735,7 @@ public class Reviewer extends Activity {
 		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
 		deckFilename = preferences.getString("deckFilename", "");
 		useRubySupport = preferences.getBoolean("useRubySupport", false);
-		notificationBar = preferences.getBoolean("notificationBar", false);
+		notificationBar = preferences.getBoolean("notificationBar", true);
 		displayFontSize = Integer.parseInt(preferences.getString("displayFontSize", "100"));
 		hideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", Integer.toString(HQIA_DO_SHOW)));
 		updateNotifications = preferences.getBoolean("enabled", true);

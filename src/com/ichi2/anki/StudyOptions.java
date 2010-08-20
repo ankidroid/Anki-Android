@@ -592,7 +592,7 @@ public class StudyOptions extends Activity
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuItem item;
 		item = menu.add(Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck);
-		item.setIcon(android.R.drawable.ic_menu_manage);
+		item.setIcon(R.drawable.ic_menu_manage);
 		SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE, R.string.menu_download_deck);
 		downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
 		downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
@@ -602,11 +602,11 @@ public class StudyOptions extends Activity
 		item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
 		item.setIcon(R.drawable.ic_menu_home);
 		item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
-		item.setIcon(android.R.drawable.ic_menu_preferences);
+		item.setIcon(R.drawable.ic_menu_preferences);
 		//item = menu.add(Menu.NONE, MENU_DECK_PROPERTIES, Menu.NONE, R.string.deck_properties);
-		//item.setIcon(R.drawable.ic_menu_archive);
+		item.setIcon(R.drawable.ic_menu_archive);
 		item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
-		item.setIcon(android.R.drawable.ic_menu_info_details);
+		item.setIcon(R.drawable.ic_menu_info_details);
 		
 		return true;
 	}

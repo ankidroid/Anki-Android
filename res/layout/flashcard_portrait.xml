@@ -54,6 +54,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:gravity="center_vertical|center_horizontal"
+			android:fadeScrollbars="false"
 			android:hint="@string/card_hint"
 			android:textSize="15sp" />
 		<view class="com.ichi2.anki.Whiteboard" android:id="@+id/whiteboard"
