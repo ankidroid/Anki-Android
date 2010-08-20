@@ -400,7 +400,7 @@ public class Reviewer extends Activity {
 
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-		mCard.setScrollbarFadingEnabled(false);
+		// mCard.setScrollbarFadingEnabled(false);  //  Removed because method not available on Android 1.5
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
