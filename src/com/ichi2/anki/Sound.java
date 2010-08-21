@@ -42,6 +42,10 @@ public class Sound {
 	 * ArrayList to store the current sound files
 	 */
 	private static ArrayList<MediaPlayer> sounds;
+	/**
+	 * Our media player
+	 */
+	private static MediaPlayer soundPlayer = new MediaPlayer();
 	
 	/**
 	 * Searches and loads the sound files specified on content (belonging to deck deckFilename) and cleans the markers used for it
@@ -60,7 +64,8 @@ public class Sound {
 			content = content.replace(contentToReplace, "");
 			String sound = matcher.group(1);
 			Log.i(TAG, "Sound " + matcher.groupCount() + ": " + sound);
-			MediaPlayer soundPlayer = new MediaPlayer();
+			// Release any resources from previous MediaPlayer
+			soundPlayer.reset();
 			String soundPath = deckFilename.replaceAll(".anki", "") + ".media/" + sound;
 			Log.i(TAG, "getSounds - soundPath = " + soundPath);
 			try 
