@@ -198,8 +198,11 @@ public class Reviewer extends Activity {
             mFlipCard.setChecked(false);
             if (prefWhiteboard)
             	mWhiteboard.clear();
-            mCardTimer.setBase(SystemClock.elapsedRealtime());
-            mCardTimer.start();
+            if (prefTimer)
+            {
+            	mCardTimer.setBase(SystemClock.elapsedRealtime());
+            	mCardTimer.start();
+            }
 
             mProgressDialog.dismiss();
         }
@@ -410,7 +413,8 @@ public class Reviewer extends Activity {
 		mTextBarRed = (TextView) findViewById(R.id.red_number);
 		mTextBarBlack = (TextView) findViewById(R.id.black_number);
 		mTextBarBlue = (TextView) findViewById(R.id.blue_number);
-		mCardTimer = (Chronometer) findViewById(R.id.card_time);
+		if (prefTimer)
+			mCardTimer = (Chronometer) findViewById(R.id.card_time);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		if (prefWhiteboard)
 		{
@@ -552,15 +556,14 @@ public class Reviewer extends Activity {
 		mTextBarBlue.setVisibility(View.VISIBLE);
 		mFlipCard.setVisibility(View.VISIBLE);
 		
-		mCardTimer.setVisibility((prefTimer)? View.VISIBLE : View.GONE);
+		if (prefTimer)
+			mCardTimer.setVisibility(View.VISIBLE);
 
 		if (prefWhiteboard)
 		{
 			mToggleWhiteboard.setVisibility(View.VISIBLE);
 			if (mToggleWhiteboard.isChecked())
-			{
 				mWhiteboard.setVisibility(View.VISIBLE);
-			}
 		}
 		
 		mAnswerField.setVisibility((prefWriteAnswers)? View.VISIBLE : View.GONE);
@@ -579,7 +582,8 @@ public class Reviewer extends Activity {
 		mTextBarBlack.setVisibility(View.GONE);
 		mTextBarBlue.setVisibility(View.GONE);
 		mFlipCard.setVisibility(View.GONE);
-		mCardTimer.setVisibility(View.GONE);
+		if (prefTimer)
+			mCardTimer.setVisibility(View.GONE);
 		if (prefWhiteboard)
 		{
 			mToggleWhiteboard.setVisibility(View.GONE);
@@ -663,7 +667,8 @@ public class Reviewer extends Activity {
 				break;
 		}
 		mFlipCard.setEnabled(true);
-		mCardTimer.setEnabled(true);
+		if (prefTimer)
+			mCardTimer.setEnabled(true);
 		if (prefWhiteboard)
 		{
 			mToggleWhiteboard.setEnabled(true);
@@ -718,7 +723,8 @@ public class Reviewer extends Activity {
 				break;
 		}
 		mFlipCard.setEnabled(false);
-		mCardTimer.setEnabled(false);
+		if (prefTimer)
+			mCardTimer.setEnabled(false);
 		if (prefWhiteboard)
 		{
 			mToggleWhiteboard.setEnabled(false);
@@ -794,8 +800,11 @@ public class Reviewer extends Activity {
 		
 		if (prefWhiteboard)
 			mWhiteboard.clear();
-		mCardTimer.setBase(SystemClock.elapsedRealtime());
-		mCardTimer.start();
+		if (prefTimer)
+		{
+			mCardTimer.setBase(SystemClock.elapsedRealtime());
+			mCardTimer.start();
+		}
 	}
 	
 	private void displayCardQuestion()
@@ -826,7 +835,8 @@ public class Reviewer extends Activity {
 	{
 		Log.i(TAG, "displayCardAnswer");
 			
-		mCardTimer.stop();
+		if (prefTimer)
+			mCardTimer.stop();
 		mAnswerField.setVisibility(View.GONE);
 		
 		String displayString = "";
