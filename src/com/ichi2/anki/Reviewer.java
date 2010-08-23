@@ -422,7 +422,8 @@ public class Reviewer extends Activity {
 			mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 			mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
 		}
-		mAnswerField = (EditText) findViewById(R.id.answer_field);
+		if (prefWriteAnswers)
+			mAnswerField = (EditText) findViewById(R.id.answer_field);
 
 		hideEaseButtons();
 		showControls();
@@ -566,7 +567,8 @@ public class Reviewer extends Activity {
 				mWhiteboard.setVisibility(View.VISIBLE);
 		}
 		
-		mAnswerField.setVisibility((prefWriteAnswers)? View.VISIBLE : View.GONE);
+		if (prefWriteAnswers)
+			mAnswerField.setVisibility((prefWriteAnswers)? View.VISIBLE : View.GONE);
 	}
 	
 	public void setOverlayState(boolean enabled)
@@ -589,7 +591,8 @@ public class Reviewer extends Activity {
 			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
 		}
-		mAnswerField.setVisibility(View.GONE);
+		if (prefWriteAnswers)
+			mAnswerField.setVisibility(View.GONE);
 	}
 	
 	/* COMMENT: Using unblockControls() and blockControls() instead (06-05-2010)
@@ -674,7 +677,8 @@ public class Reviewer extends Activity {
 			mToggleWhiteboard.setEnabled(true);
 			mWhiteboard.setEnabled(true);
 		}
-		mAnswerField.setEnabled(true);
+		if (prefWriteAnswers)
+			mAnswerField.setEnabled(true);
 	}
 	
 	private void blockControls()
@@ -730,7 +734,8 @@ public class Reviewer extends Activity {
 			mToggleWhiteboard.setEnabled(false);
 			mWhiteboard.setEnabled(false);
 		}
-		mAnswerField.setEnabled(false);
+		if (prefWriteAnswers)
+			mAnswerField.setEnabled(false);
 	}
 	
 	private SharedPreferences restorePreferences()
@@ -809,13 +814,13 @@ public class Reviewer extends Activity {
 	
 	private void displayCardQuestion()
 	{
-		// Clean answer field
-		mAnswerField.setText("");
 		hideEaseButtons();
 		
 		// If the user wants to write the answer
 		if(prefWriteAnswers)
 		{
+			// Clean answer field
+			mAnswerField.setText("");
 			mAnswerField.setVisibility(View.VISIBLE);
 		}
 		
@@ -837,7 +842,8 @@ public class Reviewer extends Activity {
 			
 		if (prefTimer)
 			mCardTimer.stop();
-		mAnswerField.setVisibility(View.GONE);
+		if (prefWriteAnswers)
+			mAnswerField.setVisibility(View.GONE);
 		
 		String displayString = "";
 		
