@@ -143,11 +143,13 @@ public class Reviewer extends Activity {
 	{
 		public void onCheckedChanged(CompoundButton btn, boolean state)
 		{
-			
-			setOverlayState(state);
-			if(!state)
+			if (prefWhiteboard)
 			{
-				mWhiteboard.clear();
+				setOverlayState(state);
+				if(!state)
+				{
+					mWhiteboard.clear();
+				}
 			}
 		}
 	};
@@ -194,7 +196,8 @@ public class Reviewer extends Activity {
             // Set the correct value for the flip card button - That triggers the
             // listener which displays the question of the card
             mFlipCard.setChecked(false);
-            mWhiteboard.clear();
+            if (prefWhiteboard)
+            	mWhiteboard.clear();
             mCardTimer.setBase(SystemClock.elapsedRealtime());
             mCardTimer.start();
 
@@ -359,8 +362,8 @@ public class Reviewer extends Activity {
 	  else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
 		  sdLayout.setPadding(0, 100, 0, 0);
 
-	  mWhiteboard.rotate();
-	  
+	  if (prefWhiteboard)
+		  mWhiteboard.rotate();
 	}
 	
     /**
@@ -409,8 +412,12 @@ public class Reviewer extends Activity {
 		mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 		mCardTimer = (Chronometer) findViewById(R.id.card_time);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
-		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
-		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
+		if (prefWhiteboard)
+		{
+			mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
+			mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
+			mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
+		}
 		mAnswerField = (EditText) findViewById(R.id.answer_field);
 
 		hideEaseButtons();
@@ -422,7 +429,6 @@ public class Reviewer extends Activity {
 		mEase4.setOnClickListener(mSelectEaseHandler);
 		mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
-		mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
 
 		mCard.setFocusable(false);
 	}
@@ -546,18 +552,9 @@ public class Reviewer extends Activity {
 		mTextBarBlue.setVisibility(View.VISIBLE);
 		mFlipCard.setVisibility(View.VISIBLE);
 		
-		if (!prefTimer)
-		{
-			mCardTimer.setVisibility(View.GONE);
-		} else
-		{
-			mCardTimer.setVisibility(View.VISIBLE);
-		}
-		if (!prefWhiteboard)
-		{
-			mToggleWhiteboard.setVisibility(View.GONE);
-			mWhiteboard.setVisibility(View.GONE);
-		} else
+		mCardTimer.setVisibility((prefTimer)? View.VISIBLE : View.GONE);
+
+		if (prefWhiteboard)
 		{
 			mToggleWhiteboard.setVisibility(View.VISIBLE);
 			if (mToggleWhiteboard.isChecked())
@@ -566,13 +563,7 @@ public class Reviewer extends Activity {
 			}
 		}
 		
-		if (!prefWriteAnswers)
-		{
-			mAnswerField.setVisibility(View.GONE);
-		} else
-		{
-			mAnswerField.setVisibility(View.VISIBLE);
-		}
+		mAnswerField.setVisibility((prefWriteAnswers)? View.VISIBLE : View.GONE);
 	}
 	
 	public void setOverlayState(boolean enabled)
@@ -589,8 +580,11 @@ public class Reviewer extends Activity {
 		mTextBarBlue.setVisibility(View.GONE);
 		mFlipCard.setVisibility(View.GONE);
 		mCardTimer.setVisibility(View.GONE);
-		mToggleWhiteboard.setVisibility(View.GONE);
-		mWhiteboard.setVisibility(View.GONE);
+		if (prefWhiteboard)
+		{
+			mToggleWhiteboard.setVisibility(View.GONE);
+			mWhiteboard.setVisibility(View.GONE);
+		}
 		mAnswerField.setVisibility(View.GONE);
 	}
 	
@@ -670,8 +664,11 @@ public class Reviewer extends Activity {
 		}
 		mFlipCard.setEnabled(true);
 		mCardTimer.setEnabled(true);
-		mToggleWhiteboard.setEnabled(true);
-		mWhiteboard.setEnabled(true);
+		if (prefWhiteboard)
+		{
+			mToggleWhiteboard.setEnabled(true);
+			mWhiteboard.setEnabled(true);
+		}
 		mAnswerField.setEnabled(true);
 	}
 	
@@ -722,8 +719,11 @@ public class Reviewer extends Activity {
 		}
 		mFlipCard.setEnabled(false);
 		mCardTimer.setEnabled(false);
-		mToggleWhiteboard.setEnabled(false);
-		mWhiteboard.setEnabled(false);
+		if (prefWhiteboard)
+		{
+			mToggleWhiteboard.setEnabled(false);
+			mWhiteboard.setEnabled(false);
+		}
 		mAnswerField.setEnabled(false);
 	}
 	
@@ -792,7 +792,8 @@ public class Reviewer extends Activity {
 		updateCounts();
 		mFlipCard.setChecked(false);
 		
-		mWhiteboard.clear();
+		if (prefWhiteboard)
+			mWhiteboard.clear();
 		mCardTimer.setBase(SystemClock.elapsedRealtime());
 		mCardTimer.start();
 	}
