@@ -123,7 +123,7 @@ public class Reviewer extends Activity {
 	private long mSessionTimeLimit;
 	private int mSessionCurrReps;
 
-	// Handler for the flip toogle button, between the question and the answer
+	// Handler for the flip toggle button, between the question and the answer
 	// of a card
 	private CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener()
 	{
@@ -772,7 +772,7 @@ public class Reviewer extends Activity {
 			content = RubyParser.ankiRubyToMarkup(content);
 		}
 
-		// Add CSS for font colour and font size
+		// Add CSS for font color and font size
 		if (mCurrentCard != null) {
 			Deck currentDeck = AnkiDroidApp.deck();
 			Model myModel = Model.getModel(currentDeck, mCurrentCard.cardModelId, false);
@@ -867,7 +867,7 @@ public class Reviewer extends Activity {
 			sb.append("<hr/>");
 			sb.append(displayString);
 			displayString = sb.toString();
-			mFlipCard.setVisibility(View.INVISIBLE);
+			mFlipCard.setVisibility(View.GONE);
 			// TODO: Test what happens when we show both question and answer and we hide timer and whiteboard
 			/*
 			if (!timerAndWhiteboard) {

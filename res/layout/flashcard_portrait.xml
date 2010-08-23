@@ -34,17 +34,16 @@
 			android:layout_alignParentRight="true" android:text="Failed"
 			android:layout_height="wrap_content" android:layout_alignParentTop="true"
 			android:padding="4sp" />
-		<TextView android:id="@+id/black_number"
-			android:layout_width="wrap_content" android:gravity="center_vertical"
-			android:textColor="#000000" android:layout_alignParentRight="true"
-			android:text="Due" android:layout_height="wrap_content"
-			android:layout_alignParentTop="true" android:padding="4sp" />
+		<TextView android:id="@+id/black_number" android:layout_width="wrap_content"
+			android:gravity="center_vertical" android:textColor="#000000"
+			android:layout_alignParentRight="true" android:text="Due"
+			android:layout_height="wrap_content" android:layout_alignParentTop="true"
+			android:padding="4sp" />
 		<TextView android:id="@+id/blue_number" android:layout_width="wrap_content"
 			android:gravity="center_vertical" android:textColor="#0000ff"
 			android:layout_alignParentRight="true" android:text="New today"
 			android:layout_height="wrap_content" android:layout_alignParentTop="true"
 			android:padding="4sp" />
-
 	</LinearLayout>
 
 	<FrameLayout android:id="@+id/card_whiteboard_layout"
@@ -73,15 +72,19 @@
 				android:maxLines="2" />
 			<Button android:id="@+id/ease1" android:padding="3dip"
 				android:layout_width="fill_parent" android:layout_weight="1.2"
+				android:background="@android:drawable/btn_default_small"
 				android:layout_height="fill_parent" android:text="@string/again" />
 			<Button android:id="@+id/ease2" android:padding="3dip"
 				android:layout_width="fill_parent" android:layout_weight="1.2"
+				android:background="@android:drawable/btn_default_small"
 				android:layout_height="fill_parent" android:text="@string/hard" />
 			<Button android:id="@+id/ease3" android:padding="3dip"
 				android:layout_width="fill_parent" android:layout_weight="1.2"
+				android:background="@android:drawable/btn_default_small"
 				android:layout_height="fill_parent" android:text="@string/good" />
 			<Button android:id="@+id/ease4" android:padding="3dip"
 				android:layout_width="fill_parent" android:layout_weight="1.2"
+				android:background="@android:drawable/btn_default_small"
 				android:layout_height="fill_parent" android:text="@string/easy" />
 		</LinearLayout>
 
