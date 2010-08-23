@@ -75,31 +75,21 @@ public class Reviewer extends Activity {
 	 */
 	private BroadcastReceiver mUnmountReceiver = null;
 
-	/** Preference: parse for ruby annotations */
-	private boolean useRubySupport;
-	
 	/**
 	 * Variables to hold preferences
 	 */
 	private boolean prefTimer;
 	private boolean prefWhiteboard;
 	private boolean prefWriteAnswers;
+	private boolean prefNotificationBar;
+	private boolean prefUseRubySupport;
 	private String deckFilename;
-	
-	private boolean notificationBar;
-	
-	/** Preference: hide the question when showing the answer */
-	private int hideQuestionInAnswer;
+	private int prefHideQuestionInAnswer;
 
-	// private static final int HQIA_DO_HIDE = 0;
-
-	private static final int HQIA_DO_SHOW = 1; // HQIA = Hide Question In Answer
-
+	/** Hide Question In Answer choices */
+	private static final int HQIA_DO_HIDE = 0;
+	private static final int HQIA_DO_SHOW = 1;
 	private static final int HQIA_CARD_MODEL = 2;
-
-	@SuppressWarnings("unused")
-	private boolean updateNotifications; // TODO use Veecheck only if this is
-											// true
 	
 	public String cardTemplate;
 	
@@ -301,7 +291,7 @@ public class Reviewer extends Activity {
 			restorePreferences();
 			
 			// Remove the status bar and make title bar progress available
-			if(notificationBar == false) 
+			if(prefNotificationBar == false)
 			{
 				getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			}
@@ -745,11 +735,10 @@ public class Reviewer extends Activity {
 		prefWhiteboard = preferences.getBoolean("whiteboard", true);
 		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
 		deckFilename = preferences.getString("deckFilename", "");
-		useRubySupport = preferences.getBoolean("useRubySupport", false);
-		notificationBar = preferences.getBoolean("notificationBar", true);
+		prefUseRubySupport = preferences.getBoolean("useRubySupport", false);
+		prefNotificationBar = preferences.getBoolean("notificationBar", true);
 		displayFontSize = Integer.parseInt(preferences.getString("displayFontSize", "100"));
-		hideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", Integer.toString(HQIA_DO_SHOW)));
-		updateNotifications = preferences.getBoolean("enabled", true);
+		prefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", Integer.toString(HQIA_DO_SHOW)));
 
 		// Redraw screen with new preferences
 		if(mFlipCard != null) 
@@ -779,9 +768,8 @@ public class Reviewer extends Activity {
 		content = content.replaceAll("font-weight:600;", "font-weight:700;");
 
 		// If ruby annotation support is activated, then parse and add markup
-		if (useRubySupport) {
+		if (prefUseRubySupport)
 			content = RubyParser.ankiRubyToMarkup(content);
-		}
 
 		// Add CSS for font color and font size
 		if (mCurrentCard != null) {
@@ -899,11 +887,11 @@ public class Reviewer extends Activity {
 	}
 	
 	private final boolean calculateShowQuestion() {
-		if(HQIA_DO_SHOW == hideQuestionInAnswer) 
+		if(HQIA_DO_SHOW == prefHideQuestionInAnswer) 
 		{
 			return true;
 		}
-		if(HQIA_CARD_MODEL == hideQuestionInAnswer && 
+		if(HQIA_CARD_MODEL == prefHideQuestionInAnswer && 
 				Model.getModel(AnkiDroidApp.deck(), mCurrentCard.cardModelId, false).getCardModel(mCurrentCard.cardModelId).questionInAnswer == 0) 
 		{
 			return true;
