@@ -60,6 +60,7 @@ public class Reviewer extends Activity {
 	 */
 	private static final int MENU_SUSPEND = 0;
 	private static final int MENU_EDIT = 1;
+	private static final int MENU_MARK = 2;
 	
 	/** Max size of the font for dynamic calculation of font size */
 	protected static final int MAX_DYNAMIC_FONT_SIZE = 14;
@@ -445,6 +446,8 @@ public class Reviewer extends Activity {
 		item.setIcon(android.R.drawable.ic_menu_edit);
 		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
 		item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
+		item.setIcon(R.drawable.ic_menu_star);
 		return true;
 	}
 	
@@ -464,6 +467,8 @@ public class Reviewer extends Activity {
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
 					mAnswerCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
+			return true;
+		case MENU_MARK:
 			return true;
 		}
 		return false;
