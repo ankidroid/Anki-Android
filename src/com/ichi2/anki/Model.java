@@ -265,11 +265,11 @@ public class Model {
 			sb.append("body {background-color:").append(myCardModel.lastFontColour).append(";}\n");
 		}
 		//question
-		sb.append(".").append(AnkiDroid.QUESTION_CLASS).append(" {\n");
+		sb.append(".").append(Reviewer.QUESTION_CLASS).append(" {\n");
 		sb.append(calculateDisplay(percentage, myCardModel.questionFontFamily, myCardModel.questionFontSize, myCardModel.questionFontColour, myCardModel.questionAlign, false));
 		sb.append("}\n");
 		//answer
-		sb.append(".").append(AnkiDroid.ANSWER_CLASS).append(" {\n");
+		sb.append(".").append(Reviewer.ANSWER_CLASS).append(" {\n");
 		sb.append(calculateDisplay(percentage, myCardModel.answerFontFamily, myCardModel.answerFontSize, myCardModel.answerFontColour, myCardModel.answerAlign, false));
 		sb.append("}\n");
 		//css for fields. Gets css for all fields no matter whether they actually are used in a given card model
