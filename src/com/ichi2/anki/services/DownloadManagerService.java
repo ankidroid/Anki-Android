@@ -36,10 +36,10 @@ import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.ichi2.anki.AnkiDroid;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Card;
 import com.ichi2.anki.Deck;
+import com.ichi2.anki.DeckTask;
 import com.ichi2.anki.Download;
 import com.ichi2.anki.R;
 import com.ichi2.anki.SharedDeckDownload;
@@ -835,7 +835,7 @@ public class DownloadManagerService extends Service {
 		@Override
 		protected Payload doInBackground(Payload... args) {
 			Payload data = doInBackgroundLoadDeck(args);
-			if(data.returnType == AnkiDroid.DECK_LOADED)
+			if(data.returnType == DeckTask.DECK_LOADED)
 			{
 				HashMap<String,Object> results = (HashMap<String, Object>) data.result;
 				Deck deck = (Deck) results.get("deck");
@@ -868,7 +868,7 @@ public class DownloadManagerService extends Service {
 				Log.i(TAG, "Deck loaded!");
 
 				// Set the result
-				data.returnType = AnkiDroid.DECK_LOADED;
+				data.returnType = DeckTask.DECK_LOADED;
 				HashMap<String,Object> results = new HashMap<String,Object>();
 				results.put("deck", deck);
 				results.put("card", card);
@@ -879,14 +879,14 @@ public class DownloadManagerService extends Service {
 			{
 				Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
 				data.success = false;
-				data.returnType = AnkiDroid.DECK_NOT_LOADED;
+				data.returnType = DeckTask.DECK_NOT_LOADED;
 				data.exception = e;
 				return data;
 			} catch (CursorIndexOutOfBoundsException e)
 			{
 				Log.i(TAG, "The deck has no cards = " + e.getMessage());
 				data.success = false;
-				data.returnType = AnkiDroid.DECK_EMPTY;
+				data.returnType = DeckTask.DECK_EMPTY;
 				data.exception = e;
 				return data;
 			}

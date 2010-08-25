@@ -905,7 +905,7 @@ public class StudyOptions extends Activity
 			
 			switch(result.getInt())
 			{
-				case AnkiDroid.DECK_LOADED:
+				case DeckTask.DECK_LOADED:
 					// Set the deck in the application instance, so other activities
 					// can access the loaded deck.
 				    AnkiDroidApp.setDeck( result.getDeck() );
@@ -923,11 +923,11 @@ public class StudyOptions extends Activity
 				    
 					break;
 
-				case AnkiDroid.DECK_NOT_LOADED:
+				case DeckTask.DECK_NOT_LOADED:
 					showContentView(CONTENT_DECK_NOT_LOADED);
 					break;
 
-				case AnkiDroid.DECK_EMPTY:
+				case DeckTask.DECK_EMPTY:
 					//displayNoCardsInDeck();
 					break;
 			}

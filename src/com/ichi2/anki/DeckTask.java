@@ -41,6 +41,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	public static final int TASK_TYPE_ANSWER_CARD = 2;
 	public static final int TASK_TYPE_SUSPEND_CARD = 3;
     public static final int TASK_TYPE_UPDATE_FACT = 4;
+    
+	/**
+	 * Possible outputs trying to load a deck
+	 */
+	public static final int DECK_LOADED = 0;
+	public static final int DECK_NOT_LOADED = 1;
+	public static final int DECK_EMPTY = 2;
 
 	private static DeckTask instance;
 	private static DeckTask oldInstance;
@@ -95,7 +102,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			
 			case TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS:
 				TaskData taskData = doInBackgroundLoadDeck(params);
-				if(taskData.integer == AnkiDroid.DECK_LOADED)
+				if(taskData.integer == DECK_LOADED)
 				{
 					taskData.deck.updateAllCards();
 					taskData.card = taskData.deck.getCurrentCard();
@@ -209,15 +216,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			Card card = deck.getCard();
 			Log.i(TAG, "Deck loaded!");
 
-			return new TaskData(AnkiDroid.DECK_LOADED, deck, card);
+			return new TaskData(DECK_LOADED, deck, card);
 		} catch (SQLException e)
 		{
 			Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
-			return new TaskData(AnkiDroid.DECK_NOT_LOADED);
+			return new TaskData(DECK_NOT_LOADED);
 		} catch (CursorIndexOutOfBoundsException e)
 		{
 			Log.i(TAG, "The deck has no cards = " + e.getMessage());;
-			return new TaskData(AnkiDroid.DECK_EMPTY);
+			return new TaskData(DECK_EMPTY);
 		}
 	}
 	

@@ -355,7 +355,7 @@ public class DeckPicker extends Activity implements Runnable
 		{
 			Log.i(TAG, "Selected " + deckFilename);
 			Intent intent = this.getIntent();
-			intent.putExtra(AnkiDroid.OPT_DB, deckFilename);
+			intent.putExtra(StudyOptions.OPT_DB, deckFilename);
 			setResult(RESULT_OK, intent);
 
 			finish();

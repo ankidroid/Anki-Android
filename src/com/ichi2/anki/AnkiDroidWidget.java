@@ -117,7 +117,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 				Context appContext = getApplicationContext();
 				CharSequence contentTitle = "Cards Due";
 				String contentText = sb.toString();
-				Intent notificationIntent = new Intent(this, AnkiDroid.class);
+				// XXX Martin: have to test
+				Intent notificationIntent = new Intent(this, AnkiDroidApp.class);
 				PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
 				notification.setLatestEventInfo(appContext, contentTitle, contentText, contentIntent);
