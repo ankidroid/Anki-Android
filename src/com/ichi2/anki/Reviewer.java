@@ -763,7 +763,7 @@ public class Reviewer extends Activity {
 	{
 		Log.i(TAG, "updateCard");
 
-		content = Sound.extractSounds(deckFilename, content);
+		content = Sound.parseSounds(deckFilename, content);
 		content = Image.loadImages(deckFilename, content);
 
 		// In order to display the bold style correctly, we have to change

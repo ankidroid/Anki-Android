@@ -964,7 +964,7 @@ public class AnkiDroid extends Activity {
 	private void updateCard(String content) {
 		Log.i(TAG, "updateCard");
 
-		content = Sound.extractSounds(deckFilename, content);
+		//content = Sound.extractSounds(deckFilename, content);
 		content = Image.loadImages(deckFilename, content);
 
 		// In order to display the bold style correctly, we have to change
