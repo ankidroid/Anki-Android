@@ -134,6 +134,8 @@ public class Reviewer extends Activity {
 		public void onCheckedChanged(CompoundButton buttonView, boolean showAnswer)
 		{
 			Log.i(TAG, "Flip card changed:");
+			Sound.stopSounds();
+			
 			if (showAnswer)
 				displayCardAnswer();
 			else
@@ -159,6 +161,8 @@ public class Reviewer extends Activity {
 	{
 		public void onClick(View view)
 		{
+			Sound.stopSounds();
+			
 			switch (view.getId())
 			{
 			case R.id.ease1:
@@ -763,6 +767,7 @@ public class Reviewer extends Activity {
 	{
 		Log.i(TAG, "updateCard");
 
+		Log.i(TAG, "Initial content = \n" + content);
 		content = Sound.parseSounds(deckFilename, content);
 		content = Image.loadImages(deckFilename, content);
 

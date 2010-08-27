@@ -90,7 +90,7 @@ public class Sound {
 		}
 		
 		mFinishTime = System.currentTimeMillis();
-		Log.i(TAG, "Sounds parsed in " + (mFinishTime - mStartTime) + " milliseconds");
+		Log.i(TAG, mSoundPaths.size() + " sounds parsed in " + (mFinishTime - mStartTime) + " milliseconds");
 		
 		return content;
 	}
@@ -113,7 +113,7 @@ public class Sound {
 	 * Play the sound indicated by the path stored on the position soundToPlayIndex of the mSoundPaths array
 	 * @param soundToPlayIndex
 	 */
-	public static void playSound(int soundToPlayIndex)
+	private static void playSound(int soundToPlayIndex)
 	{
 		mStartSoundTime = System.currentTimeMillis();
 		mMediaPlayer = new MediaPlayer();
@@ -132,7 +132,7 @@ public class Sound {
 					Log.i(TAG, "Sound " + numSoundsPlayed + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
 					
 					// If there is still more sounds to play for the current card, play the next one
-					if(numSoundsPlayed != mSoundPaths.size() - 1)
+					if(numSoundsPlayed < mSoundPaths.size())
 					{
 						playSound(numSoundsPlayed);
 					}
@@ -163,6 +163,18 @@ public class Sound {
 		{
 			mMediaPlayer.release();
 			mMediaPlayer = null;
+		}
+	}
+	
+	/**
+	 * Stops the playing sounds
+	 */
+	public static void stopSounds()
+	{
+		if(mMediaPlayer != null)
+		{
+			mMediaPlayer.stop();
+			releaseSound();
 		}
 	}
 }
