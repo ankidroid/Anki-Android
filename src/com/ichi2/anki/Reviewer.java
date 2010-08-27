@@ -49,7 +49,10 @@ public class Reviewer extends Activity {
 	public static final int RESULT_SESSION_COMPLETED = 1;
 	public static final int RESULT_NO_MORE_CARDS = 2;
 	
-	public static final int EDIT_CURRENT_CARD = 2;
+	/**
+	 * Available options performed by other activities
+	 */
+	public static final int EDIT_CURRENT_CARD = 0;
 	
 	/**
 	 * Menus

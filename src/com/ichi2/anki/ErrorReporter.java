@@ -36,7 +36,7 @@ public class ErrorReporter extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.email_error);
 
-		int noErrors = getErrorFiles().size();
+		int numErrors = getErrorFiles().size();
 
 		TextView tvErrorText = (TextView) findViewById(R.id.tvErrorText);
 		Button btnOk = (Button) findViewById(R.id.btnSendEmail);
@@ -64,7 +64,15 @@ public class ErrorReporter extends Activity {
 			}
 		});
 
-		String errorText = String.format(getString(R.string.error_message), noErrors);
+		String errorText;
+		if(numErrors == 1)
+		{
+			errorText = getString(R.string.error_message);
+		}
+		else
+		{
+			errorText = String.format(getString(R.string.errors_message), numErrors);
+		}
 		tvErrorText.setText(errorText);
 	}
 	
