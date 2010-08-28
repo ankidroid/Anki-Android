@@ -34,26 +34,32 @@ public class Sound {
 	 * Tag for logging messages
 	 */
 	private static final String TAG = "AnkiDroid";
+
 	/**
 	 * Pattern used to identify the markers for sound files
 	 */
 	private static Pattern mSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
+	
 	/**
 	 * Media player used to play the sounds
 	 */
 	private static MediaPlayer mMediaPlayer;
+	
 	/**
 	 * ArrayList to store the current sound paths
 	 */
 	private static ArrayList<String> mSoundPaths;
+	
 	/**
 	 * Counter of the number of sounds played out of the total number of sounds in soundPaths
 	 */
 	private static int numSoundsPlayed;
+	
 	/**
 	 * Variables used to track the total time spent
 	 */
 	private static long mStartTime, mFinishTime;
+	
 	/**
 	 * Variables used to track the time spent playing one particular sound
 	 */
@@ -108,7 +114,7 @@ public class Sound {
 			playSound(numSoundsPlayed);
 		}
 	}
-	
+
 	/**
 	 * Play the sound indicated by the path stored on the position soundToPlayIndex of the mSoundPaths array
 	 * @param soundToPlayIndex
@@ -124,7 +130,7 @@ public class Sound {
 			mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
 
 				@Override
-				public void onCompletion(MediaPlayer mp) {
+						public void onCompletion(MediaPlayer mp) {
 					releaseSound();
 					numSoundsPlayed++;
 					
@@ -133,18 +139,18 @@ public class Sound {
 					
 					// If there is still more sounds to play for the current card, play the next one
 					if(numSoundsPlayed < mSoundPaths.size())
-					{
+							{
 						playSound(numSoundsPlayed);
 					}
 					else
-					{
+							{
 						// If it was the last sound, annotate the total time taken
 						mFinishTime = System.currentTimeMillis();
 						Log.i(TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) + " milliseconds");
-					}
-				}
+							}
+						}
 				
-			});
+					});
 			
 			mMediaPlayer.start();
 		} catch(Exception e) 
