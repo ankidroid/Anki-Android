@@ -320,7 +320,8 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_log_facts_from_server_message">%d facts from server</string>
 
 <!-- ErrorReporter.java -->
-<string name="error_message">There are %d errors to report</string>
+<string name="error_message">There is 1 error to report</string>
+<string name="errors_message">There are %d errors to report</string>
 <string name="error_ok">Report errors</string>
 <string name="error_cancel">Do not report errors</string>
 <string name="error_email">ankidroid@gmail.com</string>
