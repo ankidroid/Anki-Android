@@ -49,7 +49,10 @@ public class Reviewer extends Activity {
 	public static final int RESULT_SESSION_COMPLETED = 1;
 	public static final int RESULT_NO_MORE_CARDS = 2;
 	
-	public static final int EDIT_CURRENT_CARD = 2;
+	/**
+	 * Available options performed by other activities
+	 */
+	public static final int EDIT_CURRENT_CARD = 0;
 	
 	/**
 	 * Menus
@@ -121,6 +124,8 @@ public class Reviewer extends Activity {
 		public void onCheckedChanged(CompoundButton buttonView, boolean showAnswer)
 		{
 			Log.i(TAG, "Flip card changed:");
+			Sound.stopSounds();
+			
 			if (showAnswer)
 				displayCardAnswer();
 			else
@@ -148,6 +153,8 @@ public class Reviewer extends Activity {
 	{
 		public void onClick(View view)
 		{
+			Sound.stopSounds();
+			
 			switch (view.getId())
 			{
 			case R.id.ease1:
@@ -734,7 +741,8 @@ public class Reviewer extends Activity {
 	{
 		Log.i(TAG, "updateCard");
 
-		content = Sound.extractSounds(deckFilename, content);
+		Log.i(TAG, "Initial content = \n" + content);
+		content = Sound.parseSounds(deckFilename, content);
 		content = Image.loadImages(deckFilename, content);
 
 		// In order to display the bold style correctly, we have to change
