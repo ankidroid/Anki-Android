@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -841,6 +842,10 @@ public class Reviewer extends Activity {
 		// If the user wrote an answer
 		if(prefWriteAnswers)
 		{
+			// Hide soft keyboard
+			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
+			
 			if(mCurrentCard != null)
 			{
 				// Obtain the user answer and the correct answer
