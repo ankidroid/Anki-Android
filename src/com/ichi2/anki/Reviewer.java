@@ -351,8 +351,11 @@ public class Reviewer extends Activity {
     { 
         super.onPause(); 
         Log.i(TAG, "Reviewer - onPause()");
+        // Save changes
         Deck deck = AnkiDroidApp.deck();
         deck.commitToDB();
+        
+        Sound.stopSounds();
     }
     
 	@Override
