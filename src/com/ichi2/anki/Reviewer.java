@@ -801,6 +801,8 @@ public class Reviewer extends Activity {
 		updateCounts();
 		mFlipCard.setChecked(false);
 		
+		// Clean answer field
+		mAnswerField.setText("");
 		mWhiteboard.clear();
 		mCardTimer.setBase(SystemClock.elapsedRealtime());
 		mCardTimer.start();
@@ -808,14 +810,16 @@ public class Reviewer extends Activity {
 	
 	private void displayCardQuestion()
 	{
-		// Clean answer field
-		mAnswerField.setText("");
 		hideEaseButtons();
 		
 		// If the user wants to write the answer
 		if(prefWriteAnswers)
 		{
 			mAnswerField.setVisibility(View.VISIBLE);
+			
+			// Show soft keyboard
+			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
 		}
 		
 		mFlipCard.setVisibility(View.VISIBLE);
