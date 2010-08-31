@@ -91,6 +91,14 @@
 			android:defaultValue="true"
 			android:summary="Notify me when AnkiDroid is updated"
 			android:key="enabled"/>
+		<ListPreference
+			android:title="@string/error_reporting_choice"
+			android:summary="@string/error_reporting_choice_summary"
+			android:defaultValue="2"
+			android:entries="@array/error_reporting_choice_labels"
+			android:entryValues="@array/error_reporting_choice_values"
+			android:key="reportErrorMode" 
+			/>
 	</PreferenceCategory>
 	
 </PreferenceScreen>
