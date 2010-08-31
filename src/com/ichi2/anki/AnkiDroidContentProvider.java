@@ -46,6 +46,7 @@ public class AnkiDroidContentProvider extends ContentProvider {
 	@Override
 	public ParcelFileDescriptor openFile( Uri uri, String mode ){
 		Log.i(TAG, "AnkiDroidContentProvider - openFile = " + uri.getEncodedPath() + ", " + uri.getPath());
+		Log.i(TAG, "Open mode = " + mode);
 		
 		File file = null;
 		ParcelFileDescriptor parcel = null;

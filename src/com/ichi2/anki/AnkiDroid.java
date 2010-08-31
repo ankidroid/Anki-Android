@@ -462,7 +462,7 @@ public class AnkiDroid extends Activity {
 		mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
 		mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
 		mAnswerField = (EditText) findViewById(R.id.answer_field);
-		mChronoButtonsLayout = (LinearLayout) findViewById(R.id.chrono_buttons_layout);
+		mChronoButtonsLayout = (LinearLayout) findViewById(R.id.buttons_layout);
 
 		showControls(false);
 

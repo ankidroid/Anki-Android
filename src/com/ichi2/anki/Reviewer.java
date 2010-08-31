@@ -849,10 +849,6 @@ public class Reviewer extends Activity {
 		// If the user wrote an answer
 		if(prefWriteAnswers)
 		{
-			// Hide soft keyboard
-			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
-			
 			if(mCurrentCard != null)
 			{
 				// Obtain the user answer and the correct answer
@@ -861,7 +857,8 @@ public class Reviewer extends Activity {
 				String correctAnswer = spanMatcher.replaceAll("");
 				Matcher brMatcher = brPattern.matcher(correctAnswer);
 				correctAnswer = brMatcher.replaceAll("\n");
-
+				Log.i(TAG, "correct answer = " + correctAnswer);
+				
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
 
@@ -874,6 +871,10 @@ public class Reviewer extends Activity {
 			{
 				displayString = "";
 			}
+			
+			// Hide soft keyboard
+			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
 		}
 		else 
 		{
