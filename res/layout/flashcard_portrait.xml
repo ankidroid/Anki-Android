@@ -59,7 +59,8 @@
 			android:layout_height="fill_parent"
 			android:gravity="center_vertical|right"
 			android:paddingRight="5dp"
-			android:textColor="#000000" />
+			android:textColor="#000000"
+			android:visibility="gone" />
 	</LinearLayout>
 
 	<FrameLayout android:id="@+id/card_whiteboard_layout"
@@ -90,30 +91,35 @@
 			<EditText android:id="@+id/answer_field"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:maxLines="2" />
+				android:maxLines="2"
+				android:visibility="gone" />
 			<Button android:id="@+id/ease1"
 				android:padding="3dip"
 				android:layout_width="fill_parent"
 				android:layout_weight="1.2"
 				android:layout_height="fill_parent"
+				android:background="@android:drawable/btn_default_small"
 				android:text="@string/again" />
 			<Button android:id="@+id/ease2"
 				android:padding="3dip"
 				android:layout_width="fill_parent"
 				android:layout_weight="1.2"
 				android:layout_height="fill_parent"
+				android:background="@android:drawable/btn_default_small"
 				android:text="@string/hard" />
 			<Button android:id="@+id/ease3"
 				android:padding="3dip"
 				android:layout_width="fill_parent"
 				android:layout_weight="1.2"
 				android:layout_height="fill_parent"
+				android:background="@android:drawable/btn_default_small"
 				android:text="@string/good" />
 			<Button android:id="@+id/ease4"
 				android:padding="3dip"
 				android:layout_width="fill_parent"
 				android:layout_weight="1.2"
 				android:layout_height="fill_parent"
+				android:background="@android:drawable/btn_default_small"
 				android:text="@string/easy" />
 		</LinearLayout>
 
@@ -125,7 +131,8 @@
 				android:layout_weight="1.2"
 				android:layout_height="fill_parent" 
 				android:textOn="@string/overlay_on"
-				android:textOff="@string/overlay_off" />
+				android:textOff="@string/overlay_off"
+				android:visibility="gone" />
 			<ToggleButton android:id="@+id/flip_card"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
