@@ -37,7 +37,8 @@ public class Image {
 	public static String loadImages(String deckFilename, String content)
 	{
 		Log.i(TAG, "Image - loadImages, filename = " + deckFilename);
-		String imagePath = deckFilename.replaceAll(".anki", ".media/");
+		String imagePath = deckFilename.replace(".anki", ".media/");
+		Log.i(TAG, "Image path = " + imagePath);
 		return content.replaceAll("<img src=\"", "<img src=\"" + "content://com.ichi2.anki" + imagePath);
 	}
 }
