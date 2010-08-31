@@ -267,6 +267,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="menu_suspend_card">Suspend Card</string>
 <string name="menu_edit_card">Edit Card</string>
 <string name="menu_mark_card">Mark Card</string>
+<string name="menu_marked">Marked</string>
 
 <string name="loading">Loading...</string>
 <string name="studyoptions_continue">Continue Reviewing</string>

@@ -38,7 +38,7 @@ import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class Reviewer extends Activity {
-	
+
 	/**
 	 * Tag for logging messages
 	 */
@@ -205,6 +205,22 @@ public class Reviewer extends Activity {
             }
 
             mProgressDialog.dismiss();
+        }
+
+        public void onProgressUpdate(DeckTask.TaskData... values) 
+        {
+            mCurrentCard = values[0].getCard();
+        }
+    };
+    
+	DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener()
+    {
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(Reviewer.this, "", "Saving changes...", true);
+        }
+
+        public void onPostExecute(DeckTask.TaskData result) {
+        	mProgressDialog.dismiss();
         }
 
         public void onProgressUpdate(DeckTask.TaskData... values) 
@@ -447,7 +463,20 @@ public class Reviewer extends Activity {
 		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
 		item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 		item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
-		item.setIcon(R.drawable.ic_menu_star);
+		return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem markItem = menu.findItem(MENU_MARK);
+		mCurrentCard.loadTags();
+		if (mCurrentCard.hasTag(Deck.TAG_MARKED)) {
+			markItem.setTitle(R.string.menu_marked);
+			markItem.setIcon(R.drawable.star_big_on);
+		} else {
+			markItem.setTitle(R.string.menu_mark_card);
+			markItem.setIcon(R.drawable.ic_menu_star);
+		}
 		return true;
 	}
 	
@@ -469,6 +498,9 @@ public class Reviewer extends Activity {
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
 			return true;
 		case MENU_MARK:
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, 
+					mMarkCardHandler,
+					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
 			return true;
 		}
 		return false;
