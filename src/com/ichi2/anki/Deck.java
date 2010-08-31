@@ -821,9 +821,6 @@ public class Deck
         if (lastDelay >= 0)
             updateFactor(card, ease); // don't update factor if learning ahead
 
-				Log.w(TAG, "answerCard - Update card details (phase 1) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
-
         // spacing
         double space, spaceFactor, minSpacing, minOfOtherCards;
         try {
@@ -848,9 +845,6 @@ public class Deck
         	if (cursor != null) cursor.close();
         }
 
-				Log.w(TAG, "answerCard - Spacing (phase 2) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
-
         try {
 	        cursor = ankiDB.database.rawQuery(
 	        		"SELECT min(interval) " +
@@ -868,9 +862,6 @@ public class Deck
         	if (cursor != null) cursor.close();
         }
 
-				Log.w(TAG, "answerCard - More spacing (phase 3) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
-
         if (minOfOtherCards != 0)
             space = Math.min(minOfOtherCards, card.interval);
         else
@@ -879,9 +870,6 @@ public class Deck
         space = Math.max(minSpacing, space);
         space += System.currentTimeMillis() / 1000.0;
         card.combinedDue = Math.max(card.due, space);
-
-				Log.w(TAG, "answerCard - More spacing (phase 4) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 
         // check what other cards we've spaced
         String extra;
@@ -921,9 +909,6 @@ public class Deck
         	if (cursor != null) cursor.close();
         }
         
-				Log.w(TAG, "answerCard - More spacing (phase 5) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
-
         // space other cards
         ankiDB.database.execSQL(String.format(ENGLISH_LOCALE, 
         		"UPDATE cards " +
@@ -935,9 +920,6 @@ public class Deck
         		space, space, now, card.id, card.factId));
         card.spaceUntil = 0;
 
-				Log.w(TAG, "answerCard - Space others (phase 6) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
-
         // temp suspend if learning ahead
         if (reviewEarly && lastDelay < 0)
             if (oldSuc != 0 || lastDelaySecs > delay0 || !showFailedLast())
@@ -945,27 +927,15 @@ public class Deck
         // card stats
         card.updateStats(ease, oldState);
 
-				Log.w(TAG, "answerCard - Update stats (phase 7) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
-
         card.toDB();
         
-				Log.w(TAG, "answerCard - Card to DB (phase 8) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
-
         // global/daily stats
         Stats.updateAllStats(this.globalStats, this.dailyStats, card, ease, oldState);
         
-				Log.w(TAG, "answerCard - Update gl/dy stats (phase 9) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
-
         // review history
         CardHistoryEntry entry = new CardHistoryEntry(this, card, ease, lastDelay);
         entry.writeSQL();
         modified = now;
-
-				Log.w(TAG, "answerCard - Review history (phase 10) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 
 //        // TODO: Fix leech handling
 //        if (isLeech(card))

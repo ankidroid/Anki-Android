@@ -42,7 +42,7 @@ public class Reviewer extends Activity {
 	/**
 	 * Tag for logging messages
 	 */
-	private static final String TAG = "Ankidroid";
+	private static final String TAG = "AnkiDroid";
 	
 	/**
 	 * Result codes that are returned when this activity finishes.
@@ -219,8 +219,12 @@ public class Reviewer extends Activity {
 	{
 	    boolean sessioncomplete;
 	    boolean nomorecards;
+			long start;
+			long start2;
 
 		public void onPreExecute() {
+			start = System.currentTimeMillis();
+			start2 = start;
 			Reviewer.this.setProgressBarIndeterminateVisibility(true);
 			//disableControls();
 			blockControls();
@@ -250,6 +254,7 @@ public class Reviewer extends Activity {
 		    long sessionTime = deck.getSessionTimeLimit();
 		    Toast sessionMessage = null;
 
+
 		    if( (sessionRepLimit > 0) && (Reviewer.this.mSessionCurrReps >= sessionRepLimit) )
 		    {
 		    	sessioncomplete = true;
@@ -263,6 +268,8 @@ public class Reviewer extends Activity {
 		    } else {
 		        // session limits not reached, show next card
 		        Card newCard = values[0].getCard();
+				Log.w(TAG, "answerCard - get card (phase 1) in " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 
 		        // If the card is null means that there are no more cards scheduled for review.
 		        if (newCard == null)
@@ -271,17 +278,31 @@ public class Reviewer extends Activity {
 		        	return;
 		        }
 		        
+							Log.w(TAG, "onProgressUpdate - checked null " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 		        // Start reviewing next card
 		        Reviewer.this.mCurrentCard = newCard;
 		        Reviewer.this.setProgressBarIndeterminateVisibility(false);
+							Log.w(TAG, "onProgressUpdate - visibility " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 		        //Reviewer.this.enableControls();
 				Reviewer.this.unblockControls();
+							Log.w(TAG, "onProgressUpdate - unblock ctrl " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 		        Reviewer.this.reviewNextCard();
+							Log.w(TAG, "onProgressUpdate - review next " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 		    }
+
+				Log.w(TAG, "answerCard - Checked times (phase 3) in " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
+
 
 			// Show a message to user if a session limit has been reached.
 			if (sessionMessage != null)
 				sessionMessage.show();
+
+			Log.w(TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - start2) + " ms.");
 		}
 
 	};
@@ -801,20 +822,31 @@ public class Reviewer extends Activity {
 	
 	private void reviewNextCard()
 	{		
+		long start = System.currentTimeMillis();
 		updateCounts();
+		Log.w(TAG, "reviewNextCard - update counts in " + (System.currentTimeMillis() - start) + " ms.");
+		start = System.currentTimeMillis();
 		mFlipCard.setChecked(false);
+		Log.w(TAG, "reviewNextCard - check flipcard in " + (System.currentTimeMillis() - start) + " ms.");
+		start = System.currentTimeMillis();
 		
 		// Clean answer field
 		if (prefWriteAnswers)
 			mAnswerField.setText("");
+		Log.w(TAG, "reviewNextCard - clear answer field in " + (System.currentTimeMillis() - start) + " ms.");
+		start = System.currentTimeMillis();
 
 		if (prefWhiteboard)
 			mWhiteboard.clear();
+		Log.w(TAG, "reviewNextCard - clear whiteboard in " + (System.currentTimeMillis() - start) + " ms.");
+		start = System.currentTimeMillis();
 		
 		if (prefTimer) {
 			mCardTimer.setBase(SystemClock.elapsedRealtime());
 			mCardTimer.start();
 		}
+		Log.w(TAG, "reviewNextCard - reset timer in " + (System.currentTimeMillis() - start) + " ms.");
+		start = System.currentTimeMillis();
 	}
 	
 	private void displayCardQuestion()
