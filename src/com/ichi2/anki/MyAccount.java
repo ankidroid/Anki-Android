@@ -222,8 +222,8 @@ public class MyAccount extends Activity {
 			if(data.success)
 			{
 				// Hide soft keyboard
-				InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); 
-				mgr.hideSoftInputFromWindow(mUsername.getWindowToken(), 0);
+				InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); 
+				inputMethodManager.hideSoftInputFromWindow(mUsername.getWindowToken(), 0);
 				
 				saveUserInformation((String) data.data[0], (String) data.data[1]);
 				

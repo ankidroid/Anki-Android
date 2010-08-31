@@ -26,7 +26,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
 
 /**
- * Class used to handle, load and play sound files on AnkiDroid.
+ * Class used to parse, load and play sound files on AnkiDroid.
  */
 public class Sound {
 
@@ -37,78 +37,144 @@ public class Sound {
 	/**
 	 * Pattern used to identify the markers for sound files
 	 */
-	private static Pattern pattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
+	private static Pattern mSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
 	/**
-	 * ArrayList to store the current sound files
+	 * Media player used to play the sounds
 	 */
-	private static ArrayList<MediaPlayer> sounds;
+	private static MediaPlayer mMediaPlayer;
 	/**
-	 * Our media player
+	 * ArrayList to store the current sound paths
 	 */
-	private static MediaPlayer soundPlayer = new MediaPlayer();
+	private static ArrayList<String> mSoundPaths;
+	/**
+	 * Counter of the number of sounds played out of the total number of sounds in soundPaths
+	 */
+	private static int numSoundsPlayed;
+	/**
+	 * Variables used to track the total time spent
+	 */
+	private static long mStartTime, mFinishTime;
+	/**
+	 * Variables used to track the time spent playing one particular sound
+	 */
+	private static long mStartSoundTime, mFinishSoundTime;
 	
 	/**
-	 * Searches and loads the sound files specified on content (belonging to deck deckFilename) and cleans the markers used for it
-	 * @param deckFilename Deck's filename whose sound files we are loading
-	 * @param content HTML content of a card's side (question or answer)
-	 * @return content Content without the markers of sounds, ready to be displayed
+	 * Parses the content (belonging to deck deckFilename), cleaning the sound markers used and extracting the sound paths (stored on mSoundPaths)
+	 * @param deckFilename Deck's filename whose content is being parsed
+	 * @param content HTML content of a card
+	 * @return content Content without the markers for sounds, ready to be displayed
 	 */
-	public static String extractSounds(String deckFilename, String content)
+	public static String parseSounds(String deckFilename, String content)
 	{
-		Log.i(TAG, "getSounds");
-		sounds = new ArrayList<MediaPlayer>();
-		Matcher matcher = pattern.matcher(content);
+		mStartTime = System.currentTimeMillis();
+		
+		Log.i(TAG, "parseSounds");
+		mSoundPaths = new ArrayList<String>();
+		Matcher matcher = mSoundPattern.matcher(content);
+		// While there is matches of the pattern for sound markers
 		while(matcher.find())
 		{
+			// Clean the sound marker from content
 			String contentToReplace = matcher.group();
 			content = content.replace(contentToReplace, "");
+			
+			// Get the sound file name
 			String sound = matcher.group(1);
 			Log.i(TAG, "Sound " + matcher.groupCount() + ": " + sound);
-			// Release any resources from previous MediaPlayer
-			soundPlayer.reset();
+			
+			// Construct the sound path and store it
 			String soundPath = deckFilename.replaceAll(".anki", "") + ".media/" + sound;
-			Log.i(TAG, "getSounds - soundPath = " + soundPath);
-			try 
-			{
-				soundPlayer.setDataSource(soundPath);
-				soundPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
-				soundPlayer.prepare();
-				sounds.add(soundPlayer);
-
-				if(sounds.size() > 1)
-				{
-					sounds.get(sounds.size() - 2).setOnCompletionListener(new OnCompletionListener() {
-
-						public void onCompletion(MediaPlayer mp) {
-							try
-							{
-								int i = sounds.indexOf(mp) + 1;
-								sounds.get(i).start();
-							} catch (Exception e)
-							{
-								Log.e(TAG, "playSounds - Error reproducing a sound = " + e.getMessage());
-							}
-						}
-				
-					});
-				}
-			} catch (Exception e)
-			{
-				Log.e(TAG, "getSounds - Error setting data source for Media Player = " + e.getMessage());
-			}
-
+			Log.i(TAG, "parseSounds - soundPath = " + soundPath);
+			mSoundPaths.add(soundPath);
 		}
+		
+		mFinishTime = System.currentTimeMillis();
+		Log.i(TAG, mSoundPaths.size() + " sounds parsed in " + (mFinishTime - mStartTime) + " milliseconds");
+		
 		return content;
 	}
 	
 	/**
-	 * Play the sounds that were previously extracted from a side of a card
+	 * Plays the sounds stored on the paths indicated by mSoundPaths
 	 */
 	public static void playSounds()
 	{
-		if(!sounds.isEmpty())
+		// If there are sounds to play for the current card, play the first one
+		if(mSoundPaths.size() > 0)
 		{
-			sounds.get(0).start();
+			numSoundsPlayed = 0;
+			mStartTime = System.currentTimeMillis();
+			playSound(numSoundsPlayed);
+		}
+	}
+	
+	/**
+	 * Play the sound indicated by the path stored on the position soundToPlayIndex of the mSoundPaths array
+	 * @param soundToPlayIndex
+	 */
+	private static void playSound(int soundToPlayIndex)
+	{
+		mStartSoundTime = System.currentTimeMillis();
+		mMediaPlayer = new MediaPlayer();
+		try {
+			mMediaPlayer.setDataSource(mSoundPaths.get(soundToPlayIndex));
+			mMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
+			mMediaPlayer.prepare();
+			mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+				@Override
+				public void onCompletion(MediaPlayer mp) {
+					releaseSound();
+					numSoundsPlayed++;
+					
+					mFinishSoundTime = System.currentTimeMillis();
+					Log.i(TAG, "Sound " + numSoundsPlayed + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
+					
+					// If there is still more sounds to play for the current card, play the next one
+					if(numSoundsPlayed < mSoundPaths.size())
+					{
+						playSound(numSoundsPlayed);
+					}
+					else
+					{
+						// If it was the last sound, annotate the total time taken
+						mFinishTime = System.currentTimeMillis();
+						Log.i(TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) + " milliseconds");
+					}
+				}
+				
+			});
+			
+			mMediaPlayer.start();
+		} catch(Exception e) 
+		{
+			Log.e(TAG, "playSounds - Error reproducing sound " + (soundToPlayIndex + 1) + " = " + e.getMessage());
+			releaseSound();
+		}
+	}
+	
+	/**
+	 * Releases the sound
+	 */
+	private static void releaseSound()
+	{
+		if(mMediaPlayer != null)
+		{
+			mMediaPlayer.release();
+			mMediaPlayer = null;
+		}
+	}
+	
+	/**
+	 * Stops the playing sounds
+	 */
+	public static void stopSounds()
+	{
+		if(mMediaPlayer != null)
+		{
+			mMediaPlayer.stop();
+			releaseSound();
 		}
 	}
 }

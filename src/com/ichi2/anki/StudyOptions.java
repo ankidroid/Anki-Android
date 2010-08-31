@@ -73,7 +73,7 @@ public class StudyOptions extends Activity
 	private static final int MENU_ABOUT = 7;
 	
 	/**
-	 * Available options returning from another activity
+	 * Available options performed by other activities
 	 */
 	private static final int PICK_DECK_REQUEST = 0;
 
@@ -85,6 +85,7 @@ public class StudyOptions extends Activity
 	
 	private static final int DOWNLOAD_SHARED_DECK = 4;
 	
+	private static final int REPORT_ERROR = 5;
 	//private static final int DECK_PROPERTIES = 5;
 	
 	/** 
@@ -284,6 +285,12 @@ public class StudyOptions extends Activity
 		
 		Log.i(TAG, "StudyOptions Activity");
 		
+		if(hasErrorFiles()) 
+		{
+			Intent i = new Intent(this, ErrorReporter.class);
+			startActivityForResult(i, REPORT_ERROR);
+		}
+		
 		SharedPreferences preferences = restorePreferences();
 		registerExternalStorageListener();
 		
@@ -387,6 +394,16 @@ public class StudyOptions extends Activity
     		AnkiDroidApp.setDeck(null);
     	}
     }
+    
+    private boolean hasErrorFiles() 
+    {
+		for (String file : this.fileList()) {
+			if (file.endsWith(".stacktrace"))
+				return true;
+		}
+
+		return false;
+	}
     
 	private void initAllContentViews()
 	{

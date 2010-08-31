@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -49,7 +50,10 @@ public class Reviewer extends Activity {
 	public static final int RESULT_SESSION_COMPLETED = 1;
 	public static final int RESULT_NO_MORE_CARDS = 2;
 	
-	public static final int EDIT_CURRENT_CARD = 2;
+	/**
+	 * Available options performed by other activities
+	 */
+	public static final int EDIT_CURRENT_CARD = 0;
 	
 	/**
 	 * Menus
@@ -121,6 +125,8 @@ public class Reviewer extends Activity {
 		public void onCheckedChanged(CompoundButton buttonView, boolean showAnswer)
 		{
 			Log.i(TAG, "Flip card changed:");
+			Sound.stopSounds();
+			
 			if (showAnswer)
 				displayCardAnswer();
 			else
@@ -148,6 +154,8 @@ public class Reviewer extends Activity {
 	{
 		public void onClick(View view)
 		{
+			Sound.stopSounds();
+			
 			switch (view.getId())
 			{
 			case R.id.ease1:
@@ -338,8 +346,11 @@ public class Reviewer extends Activity {
     { 
         super.onPause(); 
         Log.i(TAG, "Reviewer - onPause()");
+        // Save changes
         Deck deck = AnkiDroidApp.deck();
         deck.commitToDB();
+        
+        Sound.stopSounds();
     }
     
 	@Override
@@ -734,7 +745,8 @@ public class Reviewer extends Activity {
 	{
 		Log.i(TAG, "updateCard");
 
-		content = Sound.extractSounds(deckFilename, content);
+		Log.i(TAG, "Initial content = \n" + content);
+		content = Sound.parseSounds(deckFilename, content);
 		content = Image.loadImages(deckFilename, content);
 
 		// In order to display the bold style correctly, we have to change
@@ -765,6 +777,10 @@ public class Reviewer extends Activity {
 		updateCounts();
 		mFlipCard.setChecked(false);
 		
+		// Clean answer field
+		if (prefWriteAnswers)
+			mAnswerField.setText("");
+
 		if (prefWhiteboard)
 			mWhiteboard.clear();
 		
@@ -780,9 +796,11 @@ public class Reviewer extends Activity {
 		
 		// If the user wants to write the answer
 		if (prefWriteAnswers) {
-			// Clean answer field
-			mAnswerField.setText("");
 			mAnswerField.setVisibility(View.VISIBLE);
+			
+			// Show soft keyboard
+			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
 		}
 		
 		mFlipCard.setVisibility(View.VISIBLE);
@@ -818,7 +836,8 @@ public class Reviewer extends Activity {
 				String correctAnswer = spanMatcher.replaceAll("");
 				Matcher brMatcher = brPattern.matcher(correctAnswer);
 				correctAnswer = brMatcher.replaceAll("\n");
-
+				Log.i(TAG, "correct answer = " + correctAnswer);
+				
 				// Obtain the diff and send it to updateCard
 				DiffEngine diff = new DiffEngine();
 
@@ -827,6 +846,14 @@ public class Reviewer extends Activity {
 								correctAnswer)) + "<br/>" + mCurrentCard.answer,
 						true);
 			}
+			else
+			{
+				displayString = "";
+			}
+			
+			// Hide soft keyboard
+			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
 		}
 		else 
 		{
