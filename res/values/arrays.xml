@@ -113,4 +113,15 @@
 		<item>1</item>
 		<item>2</item>
 	</string-array>
+	
+	<string-array name="error_reporting_choice_labels">
+		<item>Always report</item>
+		<item>Never report</item>
+		<item>Ask me</item>
+	</string-array>
+	<string-array name="error_reporting_choice_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
 </resources>
