@@ -805,10 +805,16 @@ public class Reviewer extends Activity {
 		mFlipCard.setChecked(false);
 		
 		// Clean answer field
-		mAnswerField.setText("");
-		mWhiteboard.clear();
-		mCardTimer.setBase(SystemClock.elapsedRealtime());
-		mCardTimer.start();
+		if (prefWriteAnswers)
+			mAnswerField.setText("");
+
+		if (prefWhiteboard)
+			mWhiteboard.clear();
+		
+		if (prefTimer) {
+			mCardTimer.setBase(SystemClock.elapsedRealtime());
+			mCardTimer.start();
+		}
 	}
 	
 	private void displayCardQuestion()

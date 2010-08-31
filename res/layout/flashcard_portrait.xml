@@ -59,7 +59,8 @@
 			android:layout_height="fill_parent"
 			android:gravity="center_vertical|right"
 			android:paddingRight="5dp"
-			android:textColor="#000000" />
+			android:textColor="#000000"
+			android:visibility="gone" />
 	</LinearLayout>
 
 	<FrameLayout android:id="@+id/card_whiteboard_layout"
