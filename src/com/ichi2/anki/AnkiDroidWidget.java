@@ -165,7 +165,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 						
 			int minimumCardsDueForNotification = Integer.parseInt(PrefSettings
 					.getSharedPrefs(context)
-					.getString("minimumCardsDueForNotification", "30")
+					.getString("minimumCardsDueForNotification", "25")
 					);
 			
 			if(totalDue>=minimumCardsDueForNotification) { //Raise a notification
@@ -174,7 +174,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 				NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 				
 				int icon = R.drawable.anki;
-				CharSequence tickerText = String.format("%d AnkiDroid cards due", totalDue);
+				CharSequence tickerText = String.format(getString(R.string.widget_minimum_cards_due_notification_ticker_text), totalDue);
 				long when = System.currentTimeMillis();
 
 				Notification notification = new Notification(icon, tickerText, when);
@@ -183,7 +183,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 				if(preferences.getBoolean("widgetBlink", false)) notification.defaults |= Notification.DEFAULT_LIGHTS;
 				
 				Context appContext = getApplicationContext();
-				CharSequence contentTitle = "Cards Due";
+				CharSequence contentTitle = getText(R.string.widget_minimum_cards_due_notification_ticker_title);
 				String contentText = sb.toString();
 				// XXX Martin: have to test
 				Intent notificationIntent = new Intent(this, AnkiDroidApp.class);
