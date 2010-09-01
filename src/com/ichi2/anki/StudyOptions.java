@@ -238,6 +238,23 @@ public class StudyOptions extends Activity
 		}
 	};
 
+	private Boolean isValidInt(String test) {
+		try {
+			Integer.parseInt(test);
+			return true;
+		} catch(NumberFormatException e) {
+			return false;
+		}
+	}
+	
+	private Boolean isValidLong(String test) {
+		try {
+			Long.parseLong(test);
+			return true;
+		} catch(NumberFormatException e) {
+			return false;
+		}
+	}
 	
 	private View.OnFocusChangeListener mEditFocusListener = new View.OnFocusChangeListener()
 	{
@@ -246,21 +263,32 @@ public class StudyOptions extends Activity
 		{
 			Deck deck = AnkiDroidApp.deck();
 			if (!hasFocus)
+			{
+				String inputText = ((EditText)v).getText().toString();
+			
 				switch (v.getId())
 				{
 				case R.id.studyoptions_new_cards_per_day:
-					deck.setNewCardsPerDay(Integer.parseInt(((EditText)v).getText().toString()));
-					updateValuesFromDeck();
+					if(isValidInt(inputText)) {
+						deck.setNewCardsPerDay(Integer.parseInt(inputText));
+						updateValuesFromDeck();
+					}
 					return;
 				case R.id.studyoptions_session_minutes:
-					deck.setSessionTimeLimit(Long.parseLong(((EditText)v).getText().toString()) * 60);
+					if(isValidLong(inputText)) {
+						deck.setSessionTimeLimit(Long.parseLong(inputText) * 60);
+					}
+					
 					return;
 				case R.id.studyoptions_session_questions:
-					deck.setSessionRepLimit(Long.parseLong(((EditText)v).getText().toString()));
+					if(isValidLong(inputText)) {
+						deck.setSessionRepLimit(Long.parseLong(inputText));
+					}
 					return;
 				default:
 					return;
 				}
+			}
 		}
 	};
 	
