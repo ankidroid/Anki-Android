@@ -272,17 +272,23 @@ public class StudyOptions extends Activity
 					if(isValidInt(inputText)) {
 						deck.setNewCardsPerDay(Integer.parseInt(inputText));
 						updateValuesFromDeck();
+					} else {
+						((EditText)v).setText(Integer.toString(deck.getNewCardsPerDay()));
 					}
 					return;
 				case R.id.studyoptions_session_minutes:
 					if(isValidLong(inputText)) {
 						deck.setSessionTimeLimit(Long.parseLong(inputText) * 60);
+					} else {
+						((EditText)v).setText(Long.toString(deck.getSessionTimeLimit()/60));
 					}
 					
 					return;
 				case R.id.studyoptions_session_questions:
 					if(isValidLong(inputText)) {
 						deck.setSessionRepLimit(Long.parseLong(inputText));
+					} else {
+						((EditText)v).setText(Long.toString(deck.getSessionRepLimit()));
 					}
 					return;
 				default:
