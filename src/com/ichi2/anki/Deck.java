@@ -1431,7 +1431,13 @@ public class Deck
 					" and src = 0");
 		}
 		
-		// TODO Martin delete unused tags from tags table
+		// delete unused tags from tags table
+		try {
+			ankiDB.queryScalar("select id from cardTags where tagId = " + tagId + " limit 1");
+		} catch (SQLException e) {
+			ankiDB.database.execSQL("delete from tags" +
+					" where id = " + tagId);
+		}
 		
 		flushMod();
 	}
