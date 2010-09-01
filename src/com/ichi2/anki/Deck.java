@@ -1298,6 +1298,152 @@ public class Deck
 			checkDue();
 		}
 	}
+	
+	/* Tags: adding/removing in bulk
+	 ***********************************************************/
+	public static final String TAG_MARKED = "Marked";
+	
+	public ArrayList<String> factTags(long[] factIds)
+	{
+		return AnkiDatabaseManager.getDatabase(deckPath).queryColumn(
+				String.class, 
+				"select tags from facts WHERE id in " + Utils.ids2str(factIds), 
+				0);
+	}
+	
+	public void addTag(long factId, String tag)
+	{
+		long[] ids = new long[1];
+		ids[0] = factId;
+		addTag(ids, tag);
+	}
+	
+	public void addTag(long[] factIds, String tag)
+	{
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+		ArrayList<String> factTagsList = factTags(factIds);
+		
+		// Create tag if necessary
+		long tagId = tagId(tag, true);
+		
+		for(int i = 0; i < factTagsList.size(); i++)
+		{
+			String newTags = factTagsList.get(i);
+			
+			if (newTags.indexOf(tag) == -1) {
+				if (newTags.length() == 0)
+					newTags += tag;
+				else
+					newTags += "," + tag;
+			}
+			Log.i(TAG, "old tags = " + factTagsList.get(i));
+			Log.i(TAG, "new tags = " + newTags);
+			
+			if (newTags.length() > factTagsList.get(i).length()) {
+				ankiDB.database.execSQL(
+						"update facts set " +
+						"tags = \"" + newTags + "\", " +
+						"modified = " + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
+						" where id = " + factIds[i]);
+			}
+		}
+		
+		ArrayList<String> cardIdList = ankiDB.queryColumn(
+				String.class, 
+				"select id from cards where factId in " + Utils.ids2str(factIds), 
+				0);
+		
+		ContentValues values = new ContentValues();
+		
+		for(int i = 0; i < cardIdList.size(); i++)
+		{
+			String cardId = cardIdList.get(i);
+			try {
+				// Check if the tag already exists
+				ankiDB.queryScalar("select id from cardTags" +
+						" where cardId = " + cardId +
+						" and tagId = " + tagId +
+						" and src = 0");
+			} catch (SQLException e) {
+				values.put("cardId", cardId);
+				values.put("tagId", tagId);
+				values.put("src", "0");
+				ankiDB.database.insert("cardTags", null, values);
+			}
+		}
+		
+		flushMod();
+	}
+	
+	public void deleteTag(long factId, String tag)
+	{
+		long[] ids = new long[1];
+		ids[0] = factId;
+		deleteTag(ids, tag);
+	}
+	
+	public void deleteTag(long[] factIds, String tag)
+	{
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+		ArrayList<String> factTagsList = factTags(factIds);
+		
+		long tagId = tagId(tag, false);
+		
+		for(int i = 0; i < factTagsList.size(); i++)
+		{
+			String factTags = factTagsList.get(i);
+			String newTags = factTags;
+			
+			int tagIdx = factTags.indexOf(tag);
+			if ((tagIdx == 0) && (factTags.length() > tag.length())) {
+				// tag is the first element of many, remove "tag,"
+				newTags = factTags.substring(tag.length() + 1, factTags.length());
+			} else if ((tagIdx > 0) && (tagIdx + tag.length() == factTags.length())) {
+				// tag is the last of many elements, remove ",tag"
+				newTags = factTags.substring(0, tagIdx - 1);
+			} else if (tagIdx > 0) {
+				// tag is enclosed between other elements, remove ",tag"
+				newTags = factTags.substring(0, tagIdx -1) + factTags.substring(tag.length(), factTags.length());
+			} else if (tagIdx == 0) {
+				// tag is the only element
+				newTags = "";
+			}
+			Log.i(TAG, "old tags = " + factTags);
+			Log.i(TAG, "new tags = " + newTags);
+			
+			if (newTags.length() < factTags.length()) {
+				ankiDB.database.execSQL(
+						"update facts set " +
+						"tags = \"" + newTags + "\", " +
+						"modified = " + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
+						" where id = " + factIds[i]);
+			}
+		}
+		
+		ArrayList<String> cardIdList = ankiDB.queryColumn(
+				String.class, 
+				"select id from cards where factId in " + Utils.ids2str(factIds), 
+				0);
+		
+		for (int i = 0; i < cardIdList.size(); i++)
+		{
+			String cardId = cardIdList.get(i);
+			ankiDB.database.execSQL("delete from cardTags" +
+					" WHERE cardId = " + cardId +
+					" and tagId = " + tagId +
+					" and src = 0");
+		}
+		
+		// delete unused tags from tags table
+		try {
+			ankiDB.queryScalar("select id from cardTags where tagId = " + tagId + " limit 1");
+		} catch (SQLException e) {
+			ankiDB.database.execSQL("delete from tags" +
+					" where id = " + tagId);
+		}
+		
+		flushMod();
+	}
 
 	/* Priorities
 	 ***********************************************************/
@@ -1349,7 +1495,7 @@ public class Deck
 		Log.i(TAG, "updatePriorities - Updating priorities...");
 		// Any tags to suspend
 		if (suspend != null) {
-			long[] ids = tagIds(suspend);
+			long[] ids = tagIds(suspend, false);
 			ankiDB.database.execSQL(
 					"UPDATE tags " +
 					"SET priority = 0 " +
@@ -1485,9 +1631,9 @@ public class Deck
 			String idsString = Utils.ids2str(ids);
 
 			//Grab fact ids
-			ArrayList<String> factIds = ankiDB.queryColumn(String.class, 
-															"SELECT factId FROM cards WHERE id in " + idsString, 
-															0);
+//			ArrayList<String> factIds = ankiDB.queryColumn(String.class, 
+//															"SELECT factId FROM cards WHERE id in " + idsString, 
+//															0);
 
 			//Delete cards
 			ankiDB.database.execSQL("DELETE FROM cards WHERE id in " + idsString);
@@ -1934,6 +2080,31 @@ public class Deck
 	 * Utility functions (might be better in a separate class)
 	 * *********************************************************
 	 */
+	
+	/**
+	 * Return ID for tag, creating if necessary.
+	 * @param tag the tag we are looking for
+	 * @param create whether to create the tag if it doesn't exist in the database
+	 * @return ID of the specified tag, 0 if it doesn't exist, and -1 in the case of error
+	 */
+	private long tagId(String tag, Boolean create)
+	{
+		long id = 0;
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+		
+		try {
+			id = ankiDB.queryScalar("select id from tags where tag = \"" + tag + "\"");
+		} catch (SQLException e) {
+			if (create) {
+				ContentValues value = new ContentValues();
+				value.put("tag", tag);
+				id = ankiDB.database.insert("tags", null, value);
+			} else {
+				id = 0;
+			}
+		}
+		return id;
+	}
 
 	/**
 	 * Gets the IDs of the specified tags.
@@ -1942,7 +2113,7 @@ public class Deck
 	 *            An array of the tags to get IDs for.
 	 * @return An array of IDs of the tags.
 	 */
-	private static long[] tagIds(String[] tags)
+	private long[] tagIds(String[] tags, Boolean create)
 	{
 		// TODO: Finish porting this method from tags.py.
 		return null;

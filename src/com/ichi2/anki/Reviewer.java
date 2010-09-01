@@ -38,7 +38,7 @@ import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class Reviewer extends Activity {
-	
+
 	/**
 	 * Tag for logging messages
 	 */
@@ -60,6 +60,7 @@ public class Reviewer extends Activity {
 	 */
 	private static final int MENU_SUSPEND = 0;
 	private static final int MENU_EDIT = 1;
+	private static final int MENU_MARK = 2;
 	
 	/** Max size of the font for dynamic calculation of font size */
 	protected static final int MAX_DYNAMIC_FONT_SIZE = 14;
@@ -207,6 +208,22 @@ public class Reviewer extends Activity {
             mCardTimer.start();
 
             mProgressDialog.dismiss();
+        }
+
+        public void onProgressUpdate(DeckTask.TaskData... values) 
+        {
+            mCurrentCard = values[0].getCard();
+        }
+    };
+    
+	DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener()
+    {
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(Reviewer.this, "", "Saving changes...", true);
+        }
+
+        public void onPostExecute(DeckTask.TaskData result) {
+        	mProgressDialog.dismiss();
         }
 
         public void onProgressUpdate(DeckTask.TaskData... values) 
@@ -466,6 +483,21 @@ public class Reviewer extends Activity {
 		item.setIcon(android.R.drawable.ic_menu_edit);
 		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
 		item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
+		return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem markItem = menu.findItem(MENU_MARK);
+		mCurrentCard.loadTags();
+		if (mCurrentCard.hasTag(Deck.TAG_MARKED)) {
+			markItem.setTitle(R.string.menu_marked);
+			markItem.setIcon(R.drawable.star_big_on);
+		} else {
+			markItem.setTitle(R.string.menu_mark_card);
+			markItem.setIcon(R.drawable.ic_menu_star);
+		}
 		return true;
 	}
 	
@@ -484,6 +516,11 @@ public class Reviewer extends Activity {
 			mFlipCard.setChecked(true);
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
 					mAnswerCardHandler,
+					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
+			return true;
+		case MENU_MARK:
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, 
+					mMarkCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
 			return true;
 		}
