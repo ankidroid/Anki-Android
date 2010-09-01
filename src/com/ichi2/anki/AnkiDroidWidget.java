@@ -15,7 +15,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Environment;
 import android.os.IBinder;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -39,22 +45,63 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 			private String deckName;
 			private int newCards;
 			private int dueCards;
+			private int failedCards;
 			
 			public String getDeckName() { return deckName; }
 			public int getNewCards() { return newCards; }
 			public int getDueCards() { return dueCards; }
+			public int getFailedCards() { return failedCards; }
 			
-			public DeckInformation(String deckName, int newCards, int dueCards) {
+			public DeckInformation(String deckName, int newCards, int dueCards, int failedCards) {
 				this.deckName = deckName;
-				this.newCards = newCards;
-				this.dueCards = dueCards;
+				this.newCards = newCards; //Blue
+				this.dueCards = dueCards; //Black
+				this.failedCards = failedCards; //Red
 			}
 			
 			public String toString() {
-				if(getDeckName().length()>13)
-					return String.format("%s %d %d", getDeckName().substring(0, 13), getNewCards(), getDueCards());
-				else 
-					return String.format("%s %d %d", getDeckName(), getNewCards(), getDueCards());
+				String deckName =
+					getDeckName().length()>13 
+						? getDeckName().substring(0,13)
+						: getDeckName();
+						
+				return String.format("%s %d %d", deckName, getNewCards(), getDueCards());
+			}
+			
+			public CharSequence getDeckText() {
+				String deckName =
+					getDeckName().length()>13 
+						? getDeckName().substring(0,13)
+						: getDeckName();
+						
+				SpannableStringBuilder sb = new SpannableStringBuilder();
+				
+				sb.append(deckName);
+				sb.append(" ");
+				
+				SpannableString red = new SpannableString(Integer.toString(getFailedCards()));
+				red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+				SpannableString black = new SpannableString(Integer.toString(getDueCards()));
+				black.setSpan(new ForegroundColorSpan(Color.BLACK), 0, black.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				
+				SpannableString blue = new SpannableString(Integer.toString(getNewCards()));
+				blue.setSpan(new ForegroundColorSpan(Color.BLUE), 0, blue.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				
+				sb.append(red);
+				sb.append(" ");
+				sb.append(black);
+				sb.append(" ");
+				sb.append(blue);
+				
+				return sb;
+				
+//				return String.format("%s  <font color='red'>%d</font> <font color='black'>%d</font> <font color='blue'>%d</font>", 
+//						deckName,
+//						getFailedCards(),
+//						getDueCards(),
+//						getNewCards()
+//						);
 			}
 		}
 		
@@ -76,33 +123,53 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 			RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.ankidroid_widget_view);
             Deck currentDeck = AnkiDroidApp.deck();
             
-			//Fetch the deck information, sorted by due cards
+            boolean isMounted = !Environment.MEDIA_MOUNTED.equals(Environment
+    				.getExternalStorageState());
+            
+            if(isMounted) {
+            	updateViews.setTextViewText(R.id.anki_droid_text, context.getText(R.string.sdcard_missing_message));
+            	return updateViews;
+            }
+            
+			if(currentDeck!=null) { //Close the current deck, otherwise we'll have problems
+				currentDeck.closeDeck();
+			}
+			
+            //Fetch the deck information, sorted by due cards
 			ArrayList<DeckInformation> decks = fetchDeckInformation();
 			//ArrayList<DeckInformation> decks = mockFetchDeckInformation(); // TODO use real instead of mock
-			StringBuilder sb = new StringBuilder();
+
+			if(currentDeck!=null) {
+				AnkiDroidApp.setDeck(currentDeck);
+				Deck.openDeck(currentDeck.getDeckPath());
+			}
+			
+			SpannableStringBuilder sb = new SpannableStringBuilder();
 			
 			int totalDue = 0;
 			
 			//If there are less than 3 decks display all, otherwise only the first 3
 			for(int i=0; i<decks.size() && i<3; i++) {
 				DeckInformation deck = decks.get(i);
-				sb.append(String.format("%s\n", deck.toString()));
+				sb.append(deck.getDeckText());
+				sb.append('\n');
 				
 				totalDue += deck.getDueCards();
 			}
 			
 			if(sb.length()>1) { //Get rid of the trailing \n
-				sb.substring(0, sb.length()-1);
+				sb.subSequence(0, sb.length()-1);
 			}
 			
 			updateViews.setTextViewText(R.id.anki_droid_text, sb);
 						
-			if(currentDeck!=null) {
-				AnkiDroidApp.setDeck(currentDeck);
-				Deck.openDeck(currentDeck.getDeckPath());
-			}
+			int minimumCardsDueForNotification = Integer.parseInt(PrefSettings
+					.getSharedPrefs(context)
+					.getString("minimumCardsDueForNotification", "30")
+					);
 			
-			if(totalDue>30) { //Raise a notification
+			if(totalDue>=minimumCardsDueForNotification) { //Raise a notification
+				SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 				String ns = Context.NOTIFICATION_SERVICE;
 				NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 				
@@ -111,8 +178,9 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 				long when = System.currentTimeMillis();
 
 				Notification notification = new Notification(icon, tickerText, when);
-				notification.defaults |= Notification.DEFAULT_VIBRATE;
-				notification.defaults |= Notification.DEFAULT_LIGHTS;
+				
+				if(preferences.getBoolean("widgetVibrate", false)) notification.defaults |= Notification.DEFAULT_VIBRATE;
+				if(preferences.getBoolean("widgetBlink", false)) notification.defaults |= Notification.DEFAULT_LIGHTS;
 				
 				Context appContext = getApplicationContext();
 				CharSequence contentTitle = "Cards Due";
@@ -137,7 +205,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 			
 			for(int i=0; i<maxDecks; i++) {
 				String deckName = String.format("my anki deck number %d", i);
-				information.add(new DeckInformation(deckName, i*20, i*25));
+				information.add(new DeckInformation(deckName, i*20, i*25, i*5));
 			}
 			
 			Collections.sort(information, new ByDueComparator());
@@ -173,10 +241,11 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 					Deck deck = Deck.openDeck(absPath);
 					int dueCards = deck.failedSoonCount + deck.revCount;
 					int newCards = deck.newCountToday;
+					int failedCards = deck.failedSoonCount;
 					deck.closeDeck();
 					
 					//Add the information about the deck
-					information.add(new DeckInformation(deckName, newCards, dueCards));
+					information.add(new DeckInformation(deckName, newCards, dueCards, failedCards));
 				}
 				catch(Exception e) {
 					Log.i(TAG, "Could not open deck");

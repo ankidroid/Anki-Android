@@ -100,5 +100,22 @@
 			android:key="reportErrorMode" 
 			/>
 	</PreferenceCategory>
-	
+	<PreferenceCategory android:title="@string/widget_pref">			
+		<ListPreference
+			android:title="@string/widget_minimum_cards_due"
+			android:summary="@string/widget_minimum_cards_due_summary"
+			android:defaultValue="30"
+			android:entries="@array/widget_minimum_cards_due_labels"
+			android:entryValues="@array/widget_minimum_cards_due_values"
+			android:key="minimumCardsDueForNotification" 
+			/>
+		<CheckBoxPreference
+			android:title="@string/widget_minimum_cards_due_vibrate"
+			android:defaultValue="false"
+			android:key="widgetVibrate"/>
+		<CheckBoxPreference
+			android:title="@string/widget_minimum_cards_due_blink"
+			android:defaultValue="false"
+			android:key="widgetBlink"/>
+	</PreferenceCategory>
 </PreferenceScreen>

@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:focusable="true"
-    android:background="#000000"
+    style="@style/WidgetBackground"
     >
     
     <TextView
@@ -15,7 +15,7 @@
         android:includeFontPadding="false"
         android:singleLine="false"
         android:ellipsize="end"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:lines="3"
         />
 </RelativeLayout>
