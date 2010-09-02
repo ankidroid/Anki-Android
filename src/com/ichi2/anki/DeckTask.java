@@ -183,21 +183,27 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			{
 				start = System.currentTimeMillis();
 				deck.answerCard(oldCard, ease);
-				Log.v(TAG, "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start) + " ms.");
+				Log.w(TAG, "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start) + " ms.");
 			}
 	
 			start = System.currentTimeMillis();
 			newCard = deck.getCard();
-			Log.v(TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
+			Log.w(TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
+			start = System.currentTimeMillis();
 			publishProgress(new TaskData(newCard));
+			Log.w(TAG, "doInBackgroundAnswerCard - published progress in " + (System.currentTimeMillis() - start) + " ms.");
 			
+			start = System.currentTimeMillis();
 			ankiDB.database.setTransactionSuccessful();
+			Log.w(TAG, "doInBackgroundAnswerCard - set transaction successful in " + (System.currentTimeMillis() - start) + " ms.");
 		} finally 
 		{
+			start = System.currentTimeMillis();
 			ankiDB.database.endTransaction();
+			Log.w(TAG, "doInBackgroundAnswerCard - end transaction in " + (System.currentTimeMillis() - start) + " ms.");
 		}
 		
-		Log.w(TAG, "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
+		Log.e(TAG, "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
 
 		return null;
 	}

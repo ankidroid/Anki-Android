@@ -47,6 +47,7 @@ public class AnkiDb
 	public AnkiDb(String ankiFilename) throws SQLException
 	{
 		database = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+		//database.execSQL("PRAGMA synchronous=OFF");
 	}
 	
 	/**

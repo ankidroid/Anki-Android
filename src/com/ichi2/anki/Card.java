@@ -398,7 +398,14 @@ public class Card {
         values.put("type", type);
         values.put("combinedDue", Math.max(spaceUntil, due));
         values.put("relativeDelay", 0.0);
-        AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("cards", values, "id = " + id, null);
+				double start = System.currentTimeMillis();
+        AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("cards",values, "id = ?",
+						new String[]{new Long(id).toString()});
+				//Log.e(TAG, "cardToDB in " + (System.currentTimeMillis() - start) + " ms.");
+				//Log.e(TAG, "cardToDB: '" + values.toString() + "'");
+//start = System.currentTimeMillis();
+        //AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("cards", values, "id = " + id, null);
+				//Log.e(TAG, "cardToDB 2 in " + (System.currentTimeMillis() - start) + " ms.");
 
         // TODO: Should also write JOINED entries: CardModel and Fact.
     }

@@ -134,13 +134,18 @@ public class Reviewer extends Activity {
 		//@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean showAnswer)
 		{
-			Log.i(TAG, "Flip card changed:");
+			Log.w(TAG, "Flip card changed:");
 			Sound.stopSounds();
 			
-			if (showAnswer)
+			long start = System.currentTimeMillis();
+			if (showAnswer) {
 				displayCardAnswer();
-			else
+				Log.w(TAG, "flipcard listener - displayed card answer in " + (System.currentTimeMillis() - start) + " ms.");
+			start = System.currentTimeMillis();
+			} else {
 				displayCardQuestion();
+				Log.w(TAG, "flipcard listener - displayed card question in " + (System.currentTimeMillis() - start) + " ms.");
+			}
 		}
 	};
 	
@@ -245,6 +250,8 @@ public class Reviewer extends Activity {
 		}
 
 		public void onProgressUpdate(DeckTask.TaskData... values) {
+				Log.w(TAG, "onProgressUpdate - just in " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 			sessioncomplete = false;
 			nomorecards = false;
 
@@ -254,6 +261,8 @@ public class Reviewer extends Activity {
 		    long sessionTime = deck.getSessionTimeLimit();
 		    Toast sessionMessage = null;
 
+				Log.w(TAG, "onProgressUpdate - check limits in " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 
 		    if( (sessionRepLimit > 0) && (Reviewer.this.mSessionCurrReps >= sessionRepLimit) )
 		    {
@@ -266,10 +275,11 @@ public class Reviewer extends Activity {
 		        sessionMessage = Toast.makeText(Reviewer.this, "Session time limit reached", Toast.LENGTH_SHORT);
 
 		    } else {
+				Log.w(TAG, "onProgressUpdate - before get card in " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 		        // session limits not reached, show next card
 		        Card newCard = values[0].getCard();
-				Log.w(TAG, "answerCard - get card (phase 1) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
+				Log.w(TAG, "onProgressUpdate - get card in " + (System.currentTimeMillis() - start) + " ms.");
 
 		        // If the card is null means that there are no more cards scheduled for review.
 		        if (newCard == null)
@@ -278,31 +288,20 @@ public class Reviewer extends Activity {
 		        	return;
 		        }
 		        
-							Log.w(TAG, "onProgressUpdate - checked null " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 		        // Start reviewing next card
 		        Reviewer.this.mCurrentCard = newCard;
 		        Reviewer.this.setProgressBarIndeterminateVisibility(false);
-							Log.w(TAG, "onProgressUpdate - visibility " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 		        //Reviewer.this.enableControls();
 				Reviewer.this.unblockControls();
-							Log.w(TAG, "onProgressUpdate - unblock ctrl " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 		        Reviewer.this.reviewNextCard();
-							Log.w(TAG, "onProgressUpdate - review next " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 		    }
-
-				Log.w(TAG, "answerCard - Checked times (phase 3) in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 
 
 			// Show a message to user if a session limit has been reached.
 			if (sessionMessage != null)
 				sessionMessage.show();
 
-			Log.w(TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - start2) + " ms.");
+			Log.w(TAG, "onProgressUpdate - Total new card received in " + (System.currentTimeMillis() - start2) + " ms.");
 		}
 
 	};
