@@ -90,7 +90,7 @@ public class Sound {
 			Log.i(TAG, "Sound " + matcher.groupCount() + ": " + sound);
 			
 			// Construct the sound path and store it
-			String soundPath = deckFilename.replaceAll(".anki", "") + ".media/" + sound;
+			String soundPath = deckFilename.replace(".anki", ".media/") + sound;
 			Log.i(TAG, "parseSounds - soundPath = " + soundPath);
 			mSoundPaths.add(soundPath);
 		}
