@@ -126,29 +126,23 @@
 	</string-array>
 	
 	<string-array name="widget_minimum_cards_due_labels">
-		<item>0</item>
 		<item>10</item>
-		<item>20</item>
-		<item>30</item>
-		<item>40</item>
+		<item>25</item>
 		<item>50</item>
-		<item>60</item>
-		<item>70</item>
-		<item>80</item>
-		<item>90</item>
+		<item>75</item>
 		<item>100</item>
+		<item>150</item>
+		<item>200</item>
+		<item>Never</item>
 	</string-array>
 	<string-array name="widget_minimum_cards_due_values">
-		<item>0</item>
 		<item>10</item>
-		<item>20</item>
-		<item>30</item>
-		<item>40</item>
+		<item>25</item>
 		<item>50</item>
-		<item>60</item>
-		<item>70</item>
-		<item>80</item>
-		<item>90</item>
+		<item>75</item>
 		<item>100</item>
+		<item>150</item>
+		<item>200</item>
+		<item>1000000</item>
 	</string-array>
 </resources>
