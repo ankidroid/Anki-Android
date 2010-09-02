@@ -829,13 +829,16 @@ public class Reviewer extends Activity {
 	{
 		Log.i(TAG, "updateCard");
 
-		Log.i(TAG, "Initial content = \n" + content);
+		Log.i(TAG, "Initial content card = \n" + content);
 		content = Sound.parseSounds(deckFilename, content);
 		content = Image.loadImages(deckFilename, content);
 
+		// Apply custom css styles
+		content = content.replace("href=\"css/", "href=\"content://com.ichi2.anki" + deckFilename.replace(".anki", ".media/") + "/css/");
+		
 		// In order to display the bold style correctly, we have to change
 		// font-weight to 700
-		content = content.replaceAll("font-weight:600;", "font-weight:700;");
+		content = content.replace("font-weight:600;", "font-weight:700;");
 
 		// If ruby annotation support is activated, then parse and add markup
 		if (useRubySupport) {
