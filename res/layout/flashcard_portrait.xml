@@ -131,7 +131,8 @@
 				android:layout_weight="1.2"
 				android:layout_height="fill_parent" 
 				android:textOn="@string/overlay_on"
-				android:textOff="@string/overlay_off" />
+				android:textOff="@string/overlay_off"
+				android:visibility="gone" />
 			<ToggleButton android:id="@+id/flip_card"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
