@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 /**
@@ -42,12 +43,56 @@ public class AnkiDb
 	private static final String TAG = "AnkiDroid";
 
 	/**
+	 * Prepared statements for quick updates to the database
+	 */
+	private static final String[] card_state = new String[]{"young", "mature"};
+	public SQLiteStatement space_other_cards;
+	public SQLiteStatement[][] space_card;
+	/**
 	 * Open a database connection to an ".anki" SQLite file.
 	 */
 	public AnkiDb(String ankiFilename) throws SQLException
 	{
 		database = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 		//database.execSQL("PRAGMA synchronous=OFF");
+		space_other_cards = database.compileStatement("UPDATE cards " +
+        		"SET spaceUntil = ?, " +
+        		"combinedDue = max(?, due), " +
+        		"modified = ?, " +
+        		"isDue = 0 " +
+        		"WHERE factId = ?");
+
+		String space_card_sql_templ = "UPDATE cards " +
+        		"SET interval = ?, " +
+        		"lastInterval = ?, " +
+        		"due = ?, " +
+        		"lastDue = ?, " +
+        		"factor = ?, " +
+        		"lastFactor = ?, " +
+        		"firstAnswered = ?, " +
+        		"reps = ?, " +
+        		"successive = ?, " +
+        		"averageTime = ?, " +
+        		"reviewTime = ?, " +
+        		"%sEase%1d = ?, " +
+        		"yesCount = ?, " +
+        		"noCount = ?, " +
+        		"spaceUntil = ?, " +
+					 	"combinedDue = ?, " +
+					 	"type = ? " +
+        		"WHERE id = ?";
+		String space_card_sql[][] = new String[2][5];
+		space_card = new SQLiteStatement[2][5];
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 5; j++) {
+				space_card_sql[i][j] = String.format(space_card_sql_templ, card_state[i], j);
+				Log.e(TAG, "AnkiDB - prep stat: '" + space_card_sql[i][j] + "'");
+				space_card[i][j] = database.compileStatement(space_card_sql[i][j]);
+			}
+		}
+
+
+		
 	}
 	
 	/**
