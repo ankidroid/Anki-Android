@@ -90,12 +90,28 @@ public class MyAccount extends Activity {
 	
 	private void login()
 	{
+		// Hide soft keyboard
+		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); 
+		inputMethodManager.hideSoftInputFromWindow(mUsername.getWindowToken(), 0);
+		
 		String username = mUsername.getText().toString();
 		String password = mPassword.getText().toString();
 		
 		Log.i(TAG, "Username = " + username);
 		Log.i(TAG, "Password = " + password);
+		
+		/* Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
 		if(isUsernameAndPasswordValid(username, password))
+		{
+			Connection.login(loginListener, new Connection.Payload(new Object[] {username, password}));
+		}
+		else
+		{
+			mInvalidUserPassAlert.show();
+		}
+		*/
+		
+		if(!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password))
 		{
 			Connection.login(loginListener, new Connection.Payload(new Object[] {username, password}));
 		}
@@ -221,10 +237,6 @@ public class MyAccount extends Activity {
 			
 			if(data.success)
 			{
-				// Hide soft keyboard
-				InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); 
-				inputMethodManager.hideSoftInputFromWindow(mUsername.getWindowToken(), 0);
-				
 				saveUserInformation((String) data.data[0], (String) data.data[1]);
 				
 				Log.i(TAG, "User successfully logged!");
