@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
@@ -843,11 +844,8 @@ public class Reviewer extends Activity {
 
 		Log.i(TAG, "Initial content card = \n" + content);
 		content = Sound.parseSounds(deckFilename, content);
-		content = Image.loadImages(deckFilename, content);
+		//content = Image.loadImages(deckFilename, content);
 
-		// Apply custom css styles
-		content = content.replace("href=\"css/", "href=\"content://com.ichi2.anki" + deckFilename.replace(".anki", ".media/") + "/css/");
-		
 		// In order to display the bold style correctly, we have to change
 		// font-weight to 700
 		content = content.replace("font-weight:600;", "font-weight:700;");
@@ -868,7 +866,7 @@ public class Reviewer extends Activity {
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
-		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
+		mCard.loadDataWithBaseURL("file://" + deckFilename.replace(".anki", ".media/"), card, "text/html", "utf-8", null);
 		Sound.playSounds();
 	}
 	
