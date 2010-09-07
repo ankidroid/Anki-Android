@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
@@ -19,15 +20,19 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,9 +63,11 @@ public class Reviewer extends Activity {
 	/**
 	 * Menus
 	 */
-	private static final int MENU_SUSPEND = 0;
-	private static final int MENU_EDIT = 1;
-	private static final int MENU_MARK = 2;
+	private static final int MENU_WHITEBOARD = 0;
+	private static final int MENU_CLEAR_WHITEBOARD = 1;
+	private static final int MENU_EDIT = 2;
+	private static final int MENU_SUSPEND = 3;
+	private static final int MENU_MARK = 4;
 	
 	/** Max size of the font for dynamic calculation of font size */
 	protected static final int MAX_DYNAMIC_FONT_SIZE = 14;
@@ -105,13 +112,15 @@ public class Reviewer extends Activity {
 	private TextView mTextBarRed;
 	private TextView mTextBarBlack;
 	private TextView mTextBarBlue;
-	private ToggleButton mToggleWhiteboard, mFlipCard;
+	private ToggleButton mFlipCard;
 	private EditText mAnswerField;
 	private Button mEase1, mEase2, mEase3, mEase4;
 	private Chronometer mCardTimer;
 	private Whiteboard mWhiteboard;
 	private ProgressDialog mProgressDialog;
+	public static ImageView mImageTest;
 	
+	private boolean mShowWhiteboard = false;
 	private Card mCurrentCard;
 	private static Card editorCard; // To be assigned as the currentCard or a new card to be sent to and from the editor
 	private int mCurrentEase;
@@ -132,22 +141,6 @@ public class Reviewer extends Activity {
 				displayCardAnswer();
 			else
 				displayCardQuestion();
-		}
-	};
-	
-	// Handler for the Whiteboard toggle button.
-	CompoundButton.OnCheckedChangeListener mToggleOverlayHandler = new CompoundButton.OnCheckedChangeListener()
-	{
-		public void onCheckedChanged(CompoundButton btn, boolean state)
-		{
-			if (prefWhiteboard)
-			{
-				setOverlayState(state);
-				if (!state)
-				{
-					mWhiteboard.clear();
-				}
-			}
 		}
 	};
 	
@@ -444,6 +437,7 @@ public class Reviewer extends Activity {
 
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+		mCard.getSettings().setBuiltInZoomControls(true);
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
@@ -455,11 +449,7 @@ public class Reviewer extends Activity {
 			mCardTimer = (Chronometer) findViewById(R.id.card_time);
 		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		if (prefWhiteboard)
-		{
 			mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
-			mToggleWhiteboard = (ToggleButton) findViewById(R.id.toggle_overlay);
-			mToggleWhiteboard.setOnCheckedChangeListener(mToggleOverlayHandler);
-		}
 		if (prefWriteAnswers)
 			mAnswerField = (EditText) findViewById(R.id.answer_field);
 
@@ -479,6 +469,13 @@ public class Reviewer extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuItem item;
+		if(prefWhiteboard)
+		{
+			item = menu.add(Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.show_whiteboard);
+			item.setIcon(R.drawable.ic_menu_compose);
+			item = menu.add(Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE, R.string.clear_whiteboard);
+			item.setIcon(R.drawable.ic_menu_clear_playlist);
+		}
 		item = menu.add(Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card);
 		item.setIcon(android.R.drawable.ic_menu_edit);
 		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
@@ -507,22 +504,45 @@ public class Reviewer extends Activity {
 	{
 		switch (item.getItemId())
 		{
-		case MENU_EDIT:
-			editorCard = mCurrentCard;
-			Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-			startActivityForResult(editCard, EDIT_CURRENT_CARD);
-			return true;
-		case MENU_SUSPEND:
-			mFlipCard.setChecked(true);
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
+			case MENU_WHITEBOARD:
+				// Toggle mShowWhiteboard value
+				mShowWhiteboard = !mShowWhiteboard;
+				if(mShowWhiteboard)
+				{
+					// Show whiteboard
+					mWhiteboard.setVisibility(View.VISIBLE);
+					item.setTitle(R.string.hide_whiteboard);
+				}
+				else
+				{
+					// Hide whiteboard
+					mWhiteboard.setVisibility(View.GONE);
+					item.setTitle(R.string.show_whiteboard);
+				}
+				return true;
+				
+			case MENU_CLEAR_WHITEBOARD:
+				mWhiteboard.clear();
+				return true;
+				
+			case MENU_EDIT:
+				editorCard = mCurrentCard;
+				Intent editCard = new Intent(Reviewer.this, CardEditor.class);
+				startActivityForResult(editCard, EDIT_CURRENT_CARD);
+				return true;
+		
+			case MENU_SUSPEND:
+				mFlipCard.setChecked(true);
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
 					mAnswerCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
-			return true;
-		case MENU_MARK:
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, 
+				return true;
+		
+			case MENU_MARK:
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, 
 					mMarkCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
-			return true;
+				return true;
 		}
 		return false;
 	}
@@ -601,10 +621,10 @@ public class Reviewer extends Activity {
 	{
 		//GONE -> It allows to write until the very bottom
 		//INVISIBLE -> The transition between the question and the answer seems more smooth
-		mEase1.setVisibility(View.INVISIBLE);
-		mEase2.setVisibility(View.INVISIBLE);
-		mEase3.setVisibility(View.INVISIBLE);
-		mEase4.setVisibility(View.INVISIBLE);
+		mEase1.setVisibility(View.GONE);
+		mEase2.setVisibility(View.GONE);
+		mEase3.setVisibility(View.GONE);
+		mEase4.setVisibility(View.GONE);
 	}
 	
 	private void showControls()
@@ -620,8 +640,8 @@ public class Reviewer extends Activity {
 
 		if (prefWhiteboard)
 		{
-			mToggleWhiteboard.setVisibility(View.VISIBLE);
-			if (mToggleWhiteboard.isChecked())
+			if(mShowWhiteboard)
+			{
 				mWhiteboard.setVisibility(View.VISIBLE);
 		}
 		
@@ -645,13 +665,11 @@ public class Reviewer extends Activity {
 		if (prefTimer)
 			mCardTimer.setVisibility(View.GONE);
 		if (prefWhiteboard)
-		{
-			mToggleWhiteboard.setVisibility(View.GONE);
 			mWhiteboard.setVisibility(View.GONE);
-		}
 		if (prefWriteAnswers)
 			mAnswerField.setVisibility(View.GONE);
 	}
+	
 	
 	private void unblockControls()
 	{
@@ -703,10 +721,8 @@ public class Reviewer extends Activity {
 		if (prefTimer)
 			mCardTimer.setEnabled(true);
 		
-		if (prefWhiteboard) {
-			mToggleWhiteboard.setEnabled(true);
+		if (prefWhiteboard)
 			mWhiteboard.setEnabled(true);
-		}
 	
 		if (prefWriteAnswers)
 			mAnswerField.setEnabled(true);
@@ -762,10 +778,8 @@ public class Reviewer extends Activity {
 		if (prefTimer)
 			mCardTimer.setEnabled(false);
 		
-		if (prefWhiteboard)	{
-			mToggleWhiteboard.setEnabled(false);
+		if (prefWhiteboard)
 			mWhiteboard.setEnabled(false);
-		}
 		
 		if (prefWriteAnswers)
 			mAnswerField.setEnabled(false);
@@ -803,13 +817,13 @@ public class Reviewer extends Activity {
 	{
 		Log.i(TAG, "updateCard");
 
-		Log.i(TAG, "Initial content = \n" + content);
+		Log.i(TAG, "Initial content card = \n" + content);
 		content = Sound.parseSounds(deckFilename, content);
-		content = Image.loadImages(deckFilename, content);
+		content = Image.scaleImages(deckFilename, content, mCard.getHeight(), mCard.getWidth(), mCard.getScale());
 
 		// In order to display the bold style correctly, we have to change
 		// font-weight to 700
-		content = content.replaceAll("font-weight:600;", "font-weight:700;");
+		content = content.replace("font-weight:600;", "font-weight:700;");
 
 		// If ruby annotation support is activated, then parse and add markup
 		if (prefUseRubySupport)
@@ -826,7 +840,7 @@ public class Reviewer extends Activity {
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
-		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
+		mCard.loadDataWithBaseURL("file://" + deckFilename.replace(".anki", ".media/"), card, "text/html", "utf-8", null);
 		Sound.playSounds();
 	}
 	

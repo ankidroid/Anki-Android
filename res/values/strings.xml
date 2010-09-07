@@ -55,6 +55,10 @@
 
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 
+<!-- Reviewer.java -->
+<string name="show_whiteboard">Show Whiteboard</string>
+<string name="hide_whiteboard">Hide Whiteboard</string>
+<string name="clear_whiteboard">Clear Whiteboard</string>
 
 <!-- deck_preferences.xml -->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
@@ -75,8 +79,6 @@
 
 
 <!-- flashcard_portrait.xml -->
-<string name="overlay_on">Whiteboard On</string>
-<string name="overlay_off">Whiteboard Off</string>
 <string name="show_answer">Show Answer</string>
 <string name="show_question">Re-display Question</string>
 <string name="card_hint">Flashcard</string>
@@ -100,7 +102,7 @@
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
 <string name="show_timer">Show timer</string>
 <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
-<string name="show_whiteboard">Show whiteboard</string>
+<!-- show_whiteboard -> Reviewer.java -->
 <string name="show_whiteboard_summ">Lets you write on the screen</string>
 <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
 <string name="whiteboard_stroke_width_summ">Select the width of the stroke</string>

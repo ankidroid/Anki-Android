@@ -89,11 +89,7 @@ public class Whiteboard extends View
 
 	public void createBitmap()
 	{
-		Display display = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay(); 
-		int width = display.getWidth();
-		int height = display.getHeight();
-		
-		createBitmap(width, height, Bitmap.Config.ARGB_8888);
+		createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ARGB_8888);
 	}
 	
 	@Override

@@ -18,8 +18,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/main_layout" android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:id="@+id/main_layout" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
 	android:background="#ffffff">
 
 	<include layout="@layout/sdcard_error" />
@@ -85,7 +87,7 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
-		<LinearLayout android:id="@+id/remembered_layout"
+		<LinearLayout android:id="@+id/answer_options_layout"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
 			<EditText android:id="@+id/answer_field"
@@ -123,24 +125,12 @@
 				android:text="@string/easy" />
 		</LinearLayout>
 
-		<LinearLayout android:id="@+id/buttons_layout"
+		<ToggleButton android:id="@+id/flip_card"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<ToggleButton android:id="@+id/toggle_overlay"
-				android:layout_width="fill_parent" 
-				android:layout_weight="1.2"
-				android:layout_height="fill_parent" 
-				android:textOn="@string/overlay_on"
-				android:textOff="@string/overlay_off"
-				android:visibility="gone" />
-			<ToggleButton android:id="@+id/flip_card"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:layout_weight="1.2"
-				android:background="@android:drawable/btn_default_small"
-				android:textOn="@string/show_question" 
-				android:textOff="@string/show_answer" />
-		</LinearLayout>
+			android:layout_height="wrap_content"
+			android:background="@android:drawable/btn_default_small"
+			android:textOn="@string/show_question" 
+			android:textOff="@string/show_answer" />
 
 	</LinearLayout>
 </LinearLayout>

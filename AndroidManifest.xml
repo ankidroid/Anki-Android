@@ -72,7 +72,6 @@
 			</intent-filter>
 		</service>
 		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
-		<provider android:name="AnkiDroidContentProvider" android:authorities="com.ichi2.anki"/>
 		<!-- Broadcast Receiver that will process AppWidget updates -->
 		<receiver android:name=".AnkiDroidWidget" android:label="AnkiDroid">
 			<intent-filter>
