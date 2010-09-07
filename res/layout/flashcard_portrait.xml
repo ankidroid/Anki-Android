@@ -81,7 +81,7 @@
 			android:layout_height="fill_parent"
 			android:visibility="gone" />
 	</FrameLayout>
-	
+
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -125,12 +125,12 @@
 				android:text="@string/easy" />
 		</LinearLayout>
 
-			<ToggleButton android:id="@+id/flip_card"
-				android:layout_width="fill_parent"
+		<ToggleButton android:id="@+id/flip_card"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-				android:background="@android:drawable/btn_default_small"
-				android:textOn="@string/show_question" 
-				android:textOff="@string/show_answer" />
+			android:background="@android:drawable/btn_default_small"
+			android:textOn="@string/show_question" 
+			android:textOff="@string/show_answer" />
 
 	</LinearLayout>
 </LinearLayout>

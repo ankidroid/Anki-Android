@@ -438,6 +438,7 @@ public class Reviewer extends Activity {
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
 		mEase4 = (Button) findViewById(R.id.ease4);
+		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mTextBarRed = (TextView) findViewById(R.id.red_number);
 		mTextBarBlack = (TextView) findViewById(R.id.black_number);
 		mTextBarBlue = (TextView) findViewById(R.id.blue_number);
@@ -665,42 +666,14 @@ public class Reviewer extends Activity {
 			mAnswerField.setVisibility(View.GONE);
 	}
 	
-	/* COMMENT: Using unblockControls() and blockControls() instead (06-05-2010)
-	private void enableControls()
-	{
-		mCard.setEnabled(true);
-		mEase0.setEnabled(true);
-		mEase1.setEnabled(true);
-		mEase2.setEnabled(true);
-		mEase3.setEnabled(true);
-		mFlipCard.setEnabled(true);
-		mCardTimer.setEnabled(true);
-		mToggleWhiteboard.setEnabled(true);
-		mWhiteboard.setEnabled(true);
-		mAnswerField.setEnabled(true);
-	}
-	
-	private void disableControls()
-	{
-		mCard.setEnabled(false);
-		mEase0.setEnabled(false);
-		mEase1.setEnabled(false);
-		mEase2.setEnabled(false);
-		mEase3.setEnabled(false);
-		mFlipCard.setEnabled(false);
-		mCardTimer.setEnabled(false);
-		mToggleWhiteboard.setEnabled(false);
-		mWhiteboard.setEnabled(false);
-		mAnswerField.setEnabled(false);
-	}*/
-	
 	private void unblockControls()
 	{
 		mCard.setEnabled(true);
-		switch(mCurrentEase)
+		mFlipCard.setEnabled(true);
+		
+		switch (mCurrentEase)
 		{
 			case 1:
-				mCard.setEnabled(true);
 				mEase1.setClickable(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
@@ -708,7 +681,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 2:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setClickable(true);
 				mEase3.setEnabled(true);
@@ -716,7 +688,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 3:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setClickable(true);
@@ -724,7 +695,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 4:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
@@ -732,14 +702,12 @@ public class Reviewer extends Activity {
 				break;
 				
 			default:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
 				mEase4.setEnabled(true);
 				break;
 		}
-		mFlipCard.setEnabled(true);
 		
 		if (prefTimer)
 			mCardTimer.setEnabled(true);
@@ -748,16 +716,17 @@ public class Reviewer extends Activity {
 			mWhiteboard.setEnabled(true);
 	
 		if (prefWriteAnswers)
-		mAnswerField.setEnabled(true);
+			mAnswerField.setEnabled(true);
 	}
 	
 	private void blockControls()
 	{
 		mCard.setEnabled(false);
-		switch(mCurrentEase)
+		mFlipCard.setEnabled(false);
+		
+		switch (mCurrentEase)
 		{
 			case 1:
-				mCard.setEnabled(false);
 				mEase1.setClickable(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
@@ -765,7 +734,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 2:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setClickable(false);
 				mEase3.setEnabled(false);
@@ -773,7 +741,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 3:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setClickable(false);
@@ -781,7 +748,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 4:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
@@ -789,21 +755,18 @@ public class Reviewer extends Activity {
 				break;
 				
 			default:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
 				mEase4.setEnabled(false);
 				break;
 		}
-		mFlipCard.setEnabled(false);
 		
 		if (prefTimer)
 			mCardTimer.setEnabled(false);
 		
-		if (prefWhiteboard)	{
+		if (prefWhiteboard)
 			mWhiteboard.setEnabled(false);
-		}
 		
 		if (prefWriteAnswers)
 			mAnswerField.setEnabled(false);
@@ -955,10 +918,6 @@ public class Reviewer extends Activity {
 								correctAnswer)) + "<br/>" + mCurrentCard.answer,
 						true);
 			}
-			else
-			{
-				displayString = "";
-			}
 			
 			// Hide soft keyboard
 			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -984,16 +943,21 @@ public class Reviewer extends Activity {
 	}
 	
 	private final boolean questionIsDisplayed()
-		{
+	{
 		switch (prefHideQuestionInAnswer)
 		{
-			case HQIA_DO_HIDE: return false;
-			case HQIA_DO_SHOW: return true;
+			case HQIA_DO_HIDE:
+				return false;
+			
+			case HQIA_DO_SHOW: 
+				return true;
+			
 			case HQIA_CARD_MODEL:
 				return (Model.getModel(AnkiDroidApp.deck(), mCurrentCard.cardModelId, false)
 						.getCardModel(mCurrentCard.cardModelId).questionInAnswer == 0);
+			
 			default:
-			return true;
+				return true;
 		}
 	}
 	
