@@ -53,6 +53,7 @@ public class Image {
 		
 		Log.i(TAG, "Display height = " + displayHeight);
 		Log.i(TAG, "Display width = " + displayWidth);
+		Log.i(TAG, "Scale In percent = " + scaleInPercent);
 		
 		// Leave some margin
 		displayWidth -= 15;
@@ -103,6 +104,7 @@ public class Image {
 					// Counter the scale factor that will be applied later
 					imageHeight = (int) (imageHeight / scaleInPercent);
 					imageWidth = (int) (imageWidth / scaleInPercent);
+					Log.i(TAG, "Final img height = " + imageHeight + ", width = " + imageWidth);
 					
 					// Apply scaled height and scaled width
 					content = content.replaceFirst(matcher.group(), matcher.group() + " height=\"" + (imageHeight) + "\" width=\"" + (imageWidth) + "\"");
