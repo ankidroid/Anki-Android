@@ -12,7 +12,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
@@ -20,13 +19,10 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -94,17 +90,15 @@ public class Reviewer extends Activity {
 	private boolean prefWhiteboard;
 	private boolean prefWriteAnswers;
 	private boolean prefNotificationBar;
-	private boolean prefUseRubySupport; // Parse for ruby annotations
+	private boolean prefUseRubySupport;
 	private String deckFilename;
-	private int prefHideQuestionInAnswer; // Hide the question when showing the answer
-	
-	private static final int HQIA_DO_HIDE = 0; // HQIA = Hide Question In Answer
+	private int prefHideQuestionInAnswer;
+
+	/** Hide Question In Answer choices */
+	private static final int HQIA_DO_HIDE = 0;
 	private static final int HQIA_DO_SHOW = 1;
 	private static final int HQIA_CARD_MODEL = 2;
 
-	@SuppressWarnings("unused")
-	private boolean updateNotifications; // TODO use Veecheck only if this is true
-	
 	public String cardTemplate;
 	
 	/**
@@ -129,7 +123,7 @@ public class Reviewer extends Activity {
 	private long mSessionTimeLimit;
 	private int mSessionCurrReps;
 
-	// Handler for the flip toogle button, between the question and the answer
+	// Handler for the flip toggle button, between the question and the answer
 	// of a card
 	private CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener()
 	{
@@ -190,11 +184,15 @@ public class Reviewer extends Activity {
             // Set the correct value for the flip card button - That triggers the
             // listener which displays the question of the card
             mFlipCard.setChecked(false);
-            mWhiteboard.clear();
+            
+            if (prefWhiteboard)
+            	mWhiteboard.clear();
+            
             if (prefTimer) {
             	mCardTimer.setBase(SystemClock.elapsedRealtime());
             	mCardTimer.start();
             }
+
             mProgressDialog.dismiss();
         }
 
@@ -231,7 +229,6 @@ public class Reviewer extends Activity {
 			start = System.currentTimeMillis();
 			start2 = start;
 			Reviewer.this.setProgressBarIndeterminateVisibility(true);
-			//disableControls();
 			blockControls();
 		}
 
@@ -258,7 +255,6 @@ public class Reviewer extends Activity {
 		    long sessionRepLimit = deck.getSessionRepLimit();
 		    long sessionTime = deck.getSessionTimeLimit();
 		    Toast sessionMessage = null;
-
 
 		    if( (sessionRepLimit > 0) && (Reviewer.this.mSessionCurrReps >= sessionRepLimit) )
 		    {
@@ -329,7 +325,7 @@ public class Reviewer extends Activity {
 			restorePreferences();
 			
 			// Remove the status bar and make title bar progress available
-			if(prefNotificationBar == false) 
+			if(prefNotificationBar == false)
 			{
 				getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			}
@@ -396,8 +392,8 @@ public class Reviewer extends Activity {
 	  else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
 		  sdLayout.setPadding(0, 100, 0, 0);
 
-	  mWhiteboard.rotate();
-	  
+	  if (prefWhiteboard)
+		  mWhiteboard.rotate();
 	}
 	
     /**
@@ -442,10 +438,10 @@ public class Reviewer extends Activity {
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
 		mEase4 = (Button) findViewById(R.id.ease4);
+		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mTextBarRed = (TextView) findViewById(R.id.red_number);
 		mTextBarBlack = (TextView) findViewById(R.id.black_number);
 		mTextBarBlue = (TextView) findViewById(R.id.blue_number);
-		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		if (prefTimer)
 			mCardTimer = (Chronometer) findViewById(R.id.card_time);
 		if (prefWhiteboard)
@@ -525,24 +521,24 @@ public class Reviewer extends Activity {
 				mWhiteboard.clear();
 				return true;
 				
-		case MENU_EDIT:
-			editorCard = mCurrentCard;
-			Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-			startActivityForResult(editCard, EDIT_CURRENT_CARD);
-			return true;
+			case MENU_EDIT:
+				editorCard = mCurrentCard;
+				Intent editCard = new Intent(Reviewer.this, CardEditor.class);
+				startActivityForResult(editCard, EDIT_CURRENT_CARD);
+				return true;
 		
-		case MENU_SUSPEND:
-			mFlipCard.setChecked(true);
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
+			case MENU_SUSPEND:
+				mFlipCard.setChecked(true);
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, 
 					mAnswerCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
-			return true;
+				return true;
 		
-		case MENU_MARK:
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, 
+			case MENU_MARK:
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, 
 					mMarkCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
-			return true;
+				return true;
 		}
 		return false;
 	}
@@ -650,9 +646,6 @@ public class Reviewer extends Activity {
 		mWhiteboard.setVisibility((enabled) ? View.VISIBLE : View.GONE);
 	}
 	
-	/**
-	 * TODO: Method never called?
-	 */
 	private void hideControls()
 	{
 		mCard.setVisibility(View.GONE);
@@ -669,42 +662,14 @@ public class Reviewer extends Activity {
 			mAnswerField.setVisibility(View.GONE);
 	}
 	
-	/* COMMENT: Using unblockControls() and blockControls() instead (06-05-2010)
-	private void enableControls()
-	{
-		mCard.setEnabled(true);
-		mEase0.setEnabled(true);
-		mEase1.setEnabled(true);
-		mEase2.setEnabled(true);
-		mEase3.setEnabled(true);
-		mFlipCard.setEnabled(true);
-		mCardTimer.setEnabled(true);
-		mToggleWhiteboard.setEnabled(true);
-		mWhiteboard.setEnabled(true);
-		mAnswerField.setEnabled(true);
-	}
-	
-	private void disableControls()
-	{
-		mCard.setEnabled(false);
-		mEase0.setEnabled(false);
-		mEase1.setEnabled(false);
-		mEase2.setEnabled(false);
-		mEase3.setEnabled(false);
-		mFlipCard.setEnabled(false);
-		mCardTimer.setEnabled(false);
-		mToggleWhiteboard.setEnabled(false);
-		mWhiteboard.setEnabled(false);
-		mAnswerField.setEnabled(false);
-	}*/
-	
 	private void unblockControls()
 	{
 		mCard.setEnabled(true);
-		switch(mCurrentEase)
+		mFlipCard.setEnabled(true);
+		
+		switch (mCurrentEase)
 		{
 			case 1:
-				mCard.setEnabled(true);
 				mEase1.setClickable(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
@@ -712,7 +677,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 2:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setClickable(true);
 				mEase3.setEnabled(true);
@@ -720,7 +684,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 3:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setClickable(true);
@@ -728,7 +691,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 4:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
@@ -736,14 +698,13 @@ public class Reviewer extends Activity {
 				break;
 				
 			default:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
 				mEase4.setEnabled(true);
 				break;
 		}
-		mFlipCard.setEnabled(true);
+
 		
 		if (prefTimer)
 			mCardTimer.setEnabled(true);
@@ -752,16 +713,17 @@ public class Reviewer extends Activity {
 			mWhiteboard.setEnabled(true);
 	
 		if (prefWriteAnswers)
-		mAnswerField.setEnabled(true);
+			mAnswerField.setEnabled(true);
 	}
 	
 	private void blockControls()
 	{
 		mCard.setEnabled(false);
-		switch(mCurrentEase)
+		mFlipCard.setEnabled(false);
+		
+		switch (mCurrentEase)
 		{
 			case 1:
-				mCard.setEnabled(false);
 				mEase1.setClickable(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
@@ -769,7 +731,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 2:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setClickable(false);
 				mEase3.setEnabled(false);
@@ -777,7 +738,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 3:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setClickable(false);
@@ -785,7 +745,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 4:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
@@ -793,21 +752,18 @@ public class Reviewer extends Activity {
 				break;
 				
 			default:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
 				mEase4.setEnabled(false);
 				break;
 		}
-		mFlipCard.setEnabled(false);
 		
 		if (prefTimer)
 			mCardTimer.setEnabled(false);
 		
-		if (prefWhiteboard)	{
+		if (prefWhiteboard)
 			mWhiteboard.setEnabled(false);
-		}
 		
 		if (prefWriteAnswers)
 			mAnswerField.setEnabled(false);
@@ -854,11 +810,10 @@ public class Reviewer extends Activity {
 		content = content.replace("font-weight:600;", "font-weight:700;");
 
 		// If ruby annotation support is activated, then parse and add markup
-		if (prefUseRubySupport) {
+		if (prefUseRubySupport)
 			content = RubyParser.ankiRubyToMarkup(content);
-		}
 
-		// Add CSS for font colour and font size
+		// Add CSS for font color and font size
 		if (mCurrentCard != null) {
 			Deck currentDeck = AnkiDroidApp.deck();
 			Model myModel = Model.getModel(currentDeck, mCurrentCard.cardModelId, false);
@@ -907,8 +862,7 @@ public class Reviewer extends Activity {
 		hideEaseButtons();
 		
 		// If the user wants to write the answer
-		if(prefWriteAnswers)
-		{
+		if (prefWriteAnswers) {
 			mAnswerField.setVisibility(View.VISIBLE);
 			
 			// Show soft keyboard
@@ -920,7 +874,8 @@ public class Reviewer extends Activity {
 		mFlipCard.requestFocus();
 
 		String displayString = enrichWithQASpan(mCurrentCard.question, false);
-		// Depending on preferences do or do not show the question
+		// Show an horizontal line as separation when question is shown in answer
+		// XXX Martin: is it really necessary on the question side?
 		if (questionIsDisplayed()) {
 			displayString = displayString + "<hr/>";
 		}
@@ -931,15 +886,14 @@ public class Reviewer extends Activity {
 	private void displayCardAnswer()
 	{
 		Log.i(TAG, "displayCardAnswer");
-		
+
+		String displayString = "";
+
 		if (prefTimer)
 			mCardTimer.stop();
-		
-		String displayString = "";
-		
+
 		// If the user wrote an answer
-		if(prefWriteAnswers)
-		{
+		if (prefWriteAnswers) {
 			mAnswerField.setVisibility(View.GONE);
 			if(mCurrentCard != null)
 			{
@@ -958,10 +912,6 @@ public class Reviewer extends Activity {
 						diff.diff_prettyHtml(diff.diff_main(userAnswer,
 								correctAnswer)) + "<br/>" + mCurrentCard.answer,
 						true);
-			}
-			else
-			{
-				displayString = "";
 			}
 			
 			// Hide soft keyboard
@@ -988,7 +938,7 @@ public class Reviewer extends Activity {
 	}
 	
 	private final boolean questionIsDisplayed()
-		{
+	{
 		switch (prefHideQuestionInAnswer)
 		{
 			case HQIA_DO_HIDE: return false;
@@ -997,7 +947,7 @@ public class Reviewer extends Activity {
 				return (Model.getModel(AnkiDroidApp.deck(), mCurrentCard.cardModelId, false)
 						.getCardModel(mCurrentCard.cardModelId).questionInAnswer == 0);
 			default:
-			return true;
+				return true;
 		}
 	}
 	
