@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
@@ -19,15 +20,19 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -115,6 +120,7 @@ public class Reviewer extends Activity {
 	private Chronometer mCardTimer;
 	private Whiteboard mWhiteboard;
 	private ProgressDialog mProgressDialog;
+	public static ImageView mImageTest;
 	
 	private boolean mShowWhiteboard = false;
 	private Card mCurrentCard;
@@ -431,6 +437,7 @@ public class Reviewer extends Activity {
 
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+		mCard.getSettings().setBuiltInZoomControls(true);
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
@@ -840,10 +847,7 @@ public class Reviewer extends Activity {
 
 		Log.i(TAG, "Initial content card = \n" + content);
 		content = Sound.parseSounds(deckFilename, content);
-		content = Image.loadImages(deckFilename, content);
-
-		// Apply custom css styles
-		content = content.replace("href=\"css/", "href=\"content://com.ichi2.anki" + deckFilename.replace(".anki", ".media/") + "/css/");
+		content = Image.scaleImages(deckFilename, content, mCard.getHeight(), mCard.getWidth(), mCard.getScale());
 		
 		// In order to display the bold style correctly, we have to change
 		// font-weight to 700
@@ -865,7 +869,7 @@ public class Reviewer extends Activity {
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
-		mCard.loadDataWithBaseURL("", card, "text/html", "utf-8", null);
+		mCard.loadDataWithBaseURL("file://" + deckFilename.replace(".anki", ".media/"), card, "text/html", "utf-8", null);
 		Sound.playSounds();
 	}
 	

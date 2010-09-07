@@ -18,8 +18,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/main_layout" android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:id="@+id/main_layout" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
 	android:background="#ffffff">
 
 	<include layout="@layout/sdcard_error" />
@@ -79,7 +81,7 @@
 			android:layout_height="fill_parent"
 			android:visibility="gone" />
 	</FrameLayout>
-
+	
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
