@@ -90,6 +90,7 @@ public class Reviewer extends Activity {
 	private boolean prefTimer;
 	private boolean prefWhiteboard;
 	private boolean prefWriteAnswers;
+	private boolean prefTextSelection;
 	private boolean prefNotificationBar;
 	private boolean prefUseRubySupport;
 	private String deckFilename;
@@ -458,8 +459,11 @@ public class Reviewer extends Activity {
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		mCard.getSettings().setBuiltInZoomControls(true);
-		mCard.getSettings().setLightTouchEnabled(true);
-		mCard.setOnLongClickListener(mLongClickHandler);
+		if (prefTextSelection) {
+			mCard.setOnLongClickListener(mLongClickHandler);
+		} else {
+			mCard.setFocusable(false);
+		}
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
@@ -484,8 +488,6 @@ public class Reviewer extends Activity {
 		mEase4.setOnClickListener(mSelectEaseHandler);
 		mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
-
-//		mCard.setFocusable(false);
 	}
 	
 	@Override
@@ -801,6 +803,7 @@ public class Reviewer extends Activity {
 		prefTimer = preferences.getBoolean("timer", true);
 		prefWhiteboard = preferences.getBoolean("whiteboard", true);
 		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
+		prefTextSelection = preferences.getBoolean("textSelection", false);
 		deckFilename = preferences.getString("deckFilename", "");
 		prefUseRubySupport = preferences.getBoolean("useRubySupport", false);
 		prefNotificationBar = preferences.getBoolean("notificationBar", true);
