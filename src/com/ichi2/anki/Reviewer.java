@@ -17,6 +17,7 @@ import android.os.SystemClock;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -170,6 +171,29 @@ public class Reviewer extends Activity {
 					DeckTask.TASK_TYPE_ANSWER_CARD,
 					mAnswerCardHandler,
 					new DeckTask.TaskData(mCurrentEase, AnkiDroidApp.deck(), mCurrentCard));
+		}
+	};
+
+    /**
+     * Select Text in the webview and automatically sends the selected text to the clipboard
+     * From http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
+     */
+	private void selectAndCopyText() {
+		try {
+			Log.i(TAG, "start selection");
+			KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
+			shiftPressEvent.dispatch(mCard);
+		} catch (Exception e) {
+			throw new AssertionError(e);
+		}
+	}
+
+	private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener()
+	{
+		public boolean onLongClick(View view)
+		{
+			selectAndCopyText();
+			return true;
 		}
 	};
 
@@ -434,6 +458,8 @@ public class Reviewer extends Activity {
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		mCard.getSettings().setBuiltInZoomControls(true);
+		mCard.getSettings().setLightTouchEnabled(true);
+		mCard.setOnLongClickListener(mLongClickHandler);
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
@@ -459,7 +485,7 @@ public class Reviewer extends Activity {
 		mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
 
-		mCard.setFocusable(false);
+//		mCard.setFocusable(false);
 	}
 	
 	@Override
