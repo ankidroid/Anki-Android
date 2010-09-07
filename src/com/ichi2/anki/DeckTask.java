@@ -176,7 +176,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		start2 = System.currentTimeMillis();
 		
 		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
-	//	ankiDB.database.beginTransaction();
+		ankiDB.database.beginTransaction();
 		try 
 		{
 			if (oldCard != null)
@@ -194,12 +194,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			Log.w(TAG, "doInBackgroundAnswerCard - published progress in " + (System.currentTimeMillis() - start) + " ms.");
 			
 			start = System.currentTimeMillis();
-		//	ankiDB.database.setTransactionSuccessful();
+			ankiDB.database.setTransactionSuccessful();
 			Log.w(TAG, "doInBackgroundAnswerCard - set transaction successful in " + (System.currentTimeMillis() - start) + " ms.");
 		} finally 
 		{
 			start = System.currentTimeMillis();
-		//	ankiDB.database.endTransaction();
+			ankiDB.database.endTransaction();
 			Log.w(TAG, "doInBackgroundAnswerCard - end transaction in " + (System.currentTimeMillis() - start) + " ms.");
 		}
 		

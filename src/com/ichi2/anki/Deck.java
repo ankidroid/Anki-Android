@@ -924,6 +924,10 @@ public class Deck
         	if (cursor != null) cursor.close();
         }
 				Log.e(TAG, "answerCard - check counts in " + (System.currentTimeMillis() - start) + " ms.");
+
+
+				/*----------------------*/
+				/*
 				start = System.currentTimeMillis();
 				ankiDB.space_other_cards.bindDouble(1, space);
 				ankiDB.space_other_cards.bindDouble(2, space);
@@ -931,6 +935,8 @@ public class Deck
 				ankiDB.space_other_cards.bindLong(4, card.factId);
 				ankiDB.space_other_cards.execute();
 				Log.e(TAG, "answerCard - space cards 2 in " + (System.currentTimeMillis() - start) + " ms.");
+				*/
+				/*----------------------*/
 
        /* 
 				start = System.currentTimeMillis();
@@ -944,10 +950,10 @@ public class Deck
         		"isDue = 0 " +
         		"WHERE factId = %d",
         		space, space, now, card.factId));
-        card.spaceUntil = 0;
 
 				Log.e(TAG, "answerCard - space cards in " + (System.currentTimeMillis() - start) + " ms.");
 			*/
+        card.spaceUntil = 0;
 
 				//Log.e(TAG, String.format(ENGLISH_LOCALE, "UPDATE cards " + "SET spaceUntil = %f, " + "combinedDue = max(%f, due), " + "modified = %f, " + "isDue = 0 " + "WHERE id != %d and factId = %d", space, space, now, card.id, card.factId));
 				
@@ -979,8 +985,9 @@ public class Deck
 				// card stats
         card.updateStats(ease, oldState);
 				Log.e(TAG, "answerCard - update stats in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 
+
+/*
 				start = System.currentTimeMillis();
         if (card.successive != 0)
             card.type = 1;
@@ -1026,24 +1033,129 @@ public class Deck
 				ankiDB.space_card[sti][ease].bindLong(18, card.id);
 				ankiDB.space_card[sti][ease].execute();
 				Log.e(TAG, "answerCard - card todb 2 in " + (System.currentTimeMillis() - start) + " ms.");
+*/
 
-		Card card1 = new Card(this);
-		card1.fromDB(card.id);
-		String card1str = "id="+card1.id + " cardid=" + card1.factId + " cardModelId=" + card1.cardModelId + " created=" + card1.created + " tags=" + card1.tags + " ordinal=" + card1.ordinal + " priority=" + card1.priority + " interval=" + card1.interval + " lastInterval=" + card1.lastInterval + " due=" + card1.due + " lastDue=" + card1.lastDue + " factor=" + card1.factor + " lastFactor=" + card1.lastFactor + " firstAnswered=" + card1.firstAnswered + " reps=" + card1.reps + " successive=" + card1.successive + " averageTime=" + card1.averageTime + " reviewTime=" + card1.reviewTime + " youngEase0=" + card1.youngEase0 + " youngEase1=" + card1.youngEase1 + " youngEase2=" + card1.youngEase2 + " youngEase3=" + card1.youngEase3 + " youngEase4=" + card1.youngEase4 + " matureEase0=" + card1.matureEase0 + " matureEase1=" + card1.matureEase1 + " matureEase2=" + card1.matureEase2 + " matureEase3=" + card1.matureEase3 + " matureEase4=" + card1.matureEase4 + " yesCount=" + card1.yesCount + " noCount=" + card1.noCount + " spaceUntil=" + card1.spaceUntil + " isDue=" + card1.isDue + " type=" + card1.type + " combinedDue=" + card1.combinedDue;
-
+				/*----------------------*/
+				/*
 				start = System.currentTimeMillis();
         card.toDB();
 				Log.e(TAG, "answerCard - card todb in " + (System.currentTimeMillis() - start) + " ms.");
-				
-		Card card2 = new Card(this);
-		card2.fromDB(card.id);
-		String card2str = "id="+card2.id + " cardid=" + card2.factId + " cardModelId=" + card2.cardModelId + " created=" + card2.created + " tags=" + card2.tags + " ordinal=" + card2.ordinal + " priority=" + card2.priority + " interval=" + card2.interval + " lastInterval=" + card2.lastInterval + " due=" + card2.due + " lastDue=" + card2.lastDue + " factor=" + card2.factor + " lastFactor=" + card2.lastFactor + " firstAnswered=" + card2.firstAnswered + " reps=" + card2.reps + " successive=" + card2.successive + " averageTime=" + card2.averageTime + " reviewTime=" + card2.reviewTime + " youngEase0=" + card2.youngEase0 + " youngEase1=" + card2.youngEase1 + " youngEase2=" + card2.youngEase2 + " youngEase3=" + card2.youngEase3 + " youngEase4=" + card2.youngEase4 + " matureEase0=" + card2.matureEase0 + " matureEase1=" + card2.matureEase1 + " matureEase2=" + card2.matureEase2 + " matureEase3=" + card2.matureEase3 + " matureEase4=" + card2.matureEase4 + " yesCount=" + card2.yesCount + " noCount=" + card2.noCount + " spaceUntil=" + card2.spaceUntil + " isDue=" + card2.isDue + " type=" + card2.type + " combinedDue=" + card2.combinedDue;
-		//Log.e(TAG, "prove valid2: '" +  card2str + "'");
+				*/
+				/*----------------------*/
+
+/*
+				String card1str = "";
+				Cursor cursor1 = null;
+				Card card1 = new Card(this);
+				try {
+					cursor1 = ankiDB.database.rawQuery("SELECT id FROM cards WHERE factId = " + card.factId, null);
+					while (cursor1.moveToNext())
+					{
+						Log.w(TAG, "checking valid 1 id = '" + cursor1.getLong(0) + "'");
+						card1.fromDB(cursor1.getLong(0));
+						card1str += String.format("NEW[id=%d factid=%d cardModelId=%d created=%f ordinal=%d priority=%d interval=%f lastInterval=%f due=%f lastDue=%f factor=%f lastFactor=%f firstAnswered=%f reps=%d successive=%d averageTime=%f reviewTime=%f youngEase0=%d youngEase1=%d youngEase2=%d youngEase3=%d youngEase4=%d matureEase0=%d matureEase1=%d matureEase2=%d matureEase3=%d matureEase4=%d yesCount=%d noCount=%d spaceUntil=%f isDue=%d type=%d combinedDue=%f] ", card1.id, card1.factId, card1.cardModelId, card1.created, card1.ordinal, card1.priority, card1.interval, card1. lastInterval, card1.due, card1.lastDue, card1.factor, card1.lastFactor, card1.firstAnswered, card1.reps, card1.successive, card1.averageTime, card1.reviewTime, card1.youngEase0, card1.youngEase1, card1.youngEase2 ,card1.youngEase3 ,card1.youngEase4, card1.matureEase0, card1.matureEase1, card1.matureEase2, card1.matureEase3, card1.matureEase4, card1.yesCount, card1.noCount, card1.spaceUntil, card1.isDue, card1.type, card1.combinedDue);
+					}
+        } finally {
+        	if (cursor1 != null) cursor1.close();
+        }
+*/
+
+				/*----------------------*/
+				start = System.currentTimeMillis();
+				String easename = "";
+				int easenum = 0;
+				if (oldState == "young") {
+					switch(ease) {
+						case 0: easename = "youngEase0"; easenum = card.youngEase0; break;
+						case 1: easename = "youngEase1"; easenum = card.youngEase1; break;
+						case 2: easename = "youngEase2"; easenum = card.youngEase2; break;
+						case 3: easename = "youngEase3"; easenum = card.youngEase3; break;
+						case 4: easename = "youngEase4"; easenum = card.youngEase4; break;
+						default:
+					}
+				} else {
+					switch(ease) {
+						case 0: easename = "matureEase0"; easenum = card.matureEase0; break;
+						case 1: easename = "matureEase1"; easenum = card.matureEase1; break;
+						case 2: easename = "matureEase2"; easenum = card.matureEase2; break;
+						case 3: easename = "matureEase3"; easenum = card.matureEase3; break;
+						case 4: easename = "matureEase4"; easenum = card.matureEase4; break;
+						default:
+					}
+				}
+				if (card.successive != 0)
+            card.type = 1;
+        else
+            card.type = 0;
+				String sql1 = String.format( 
+        		"UPDATE cards " +
+        		"SET spaceUntil = (case when id == %d then 0 else %f end), " +
+        		"combinedDue = (case when id == %d then %f else max(%f, due) end), " +
+        		"modified = %f, " +
+        		"isDue = 0, " +
+						"interval = (case when id == %d then %f else interval end), " +
+						"lastInterval = (case when id == %d then %f else lastInterval end), " +
+						"due = (case when id == %d then %f else due end), " +
+						"lastDue = (case when id == %d then %f else lastDue end), " +
+						"factor = (case when id == %d then %f else factor end), " +
+						"lastFactor = (case when id == %d then %f else lastFactor end), " +
+						"firstAnswered = (case when id == %d then %f else firstAnswered end), " +
+						"reps = (case when id == %d then %d else reps end), " +
+						"successive = (case when id == %d then %d else successive end), " +
+						"averageTime = (case when id == %d then %f else averageTime end), " +
+						"reviewTime = (case when id == %d then %f else reviewTime end), " +
+						"%s = (case when id == %d then %d else %s end), " +
+						"yesCount = (case when id == %d then %d else yesCount end), " +
+						"noCount = (case when id == %d then %d else noCount end), " +
+						"type = (case when id == %d then %d else type end) " +
+        		"WHERE factId = %d",
+        		card.id, space,
+						card.id, card.due, space,
+					 	now,
+						card.id, card.interval,
+						card.id, card.lastInterval,
+						card.id, card.due,
+						card.id, card.lastDue,
+						card.id, card.factor,
+						card.id, card.lastFactor,
+						card.id, card.firstAnswered,
+						card.id, card.reps,
+						card.id, card.successive,
+						card.id, card.averageTime,
+						card.id, card.reviewTime,
+						easename, card.id, easenum, easename,
+						card.id, card.yesCount,
+						card.id, card.noCount,
+						card.id, card.type,
+						card.factId);
+				ankiDB.database.execSQL(sql1);
+				Log.e(TAG, "answerCard - unified update in " + (System.currentTimeMillis() - start) + " ms.");
+				/*----------------------*/
+
+
+/*		
+				String card2str = "";
+				Cursor cursor2 = null;
+				Card card2 = new Card(this);
+				try {
+					String sss = "SELECT id FROM cards WHERE factId = " + card.factId;
+					Log.w(TAG, sss);
+					cursor2 = ankiDB.database.rawQuery(sss, null);
+					while (cursor2.moveToNext())
+					{
+						Log.w(TAG, "checking valid 2 id = '" + cursor2.getLong(0) + "'");
+						card2.fromDB(cursor2.getLong(0));
+						card2str += String.format("NEW[id=%d factid=%d cardModelId=%d created=%f ordinal=%d priority=%d interval=%f lastInterval=%f due=%f lastDue=%f factor=%f lastFactor=%f firstAnswered=%f reps=%d successive=%d averageTime=%f reviewTime=%f youngEase0=%d youngEase1=%d youngEase2=%d youngEase3=%d youngEase4=%d matureEase0=%d matureEase1=%d matureEase2=%d matureEase3=%d matureEase4=%d yesCount=%d noCount=%d spaceUntil=%f isDue=%d type=%d combinedDue=%f] ", card2.id, card2.factId, card2.cardModelId, card2.created, card2.ordinal, card2.priority, card2.interval, card2. lastInterval, card2.due, card2.lastDue, card2.factor, card2.lastFactor, card2.firstAnswered, card2.reps, card2.successive, card2.averageTime, card2.reviewTime, card2.youngEase0, card2.youngEase1, card2.youngEase2 ,card2.youngEase3 ,card2.youngEase4, card2.matureEase0, card2.matureEase1, card2.matureEase2, card2.matureEase3, card2.matureEase4, card2.yesCount, card2.noCount, card2.spaceUntil, card2.isDue, card2.type, card2.combinedDue);
+					}
+        } finally {
+        	if (cursor2 != null) cursor2.close();
+        }
 
 		if (card1str.compareTo(card2str)!=0) {
-			Log.e(TAG, "Alert!!!!! prove valid1: '" +  card1str + "' prove valid2 '" + card2str);
+			Log.e(TAG, "Alert!!!!! prove valid: '" + card1str + "'");
+			Log.e(TAG, "Alert!!!!! prove valid: '" + card2str + "'");
 		}
-
+*/
 
         
 				start = System.currentTimeMillis();
@@ -1356,10 +1468,11 @@ public class Deck
 	private void rebuildQueue()
 	{
 		Cursor cursor = null;
-		Log.i(TAG, "rebuildQueue - Rebuilding query...");
+		Log.e(TAG, "rebuildQueue - Rebuilding query...");
 		// Setup global/daily stats
 		globalStats = Stats.globalStats(this);
 		dailyStats = Stats.dailyStats(this);
+		AnkiDatabaseManager.getDatabase(this.deckPath).prepareStatsStatements(globalStats, dailyStats);
 
 		// Mark due cards and update counts
 		checkDue();

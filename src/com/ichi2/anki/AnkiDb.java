@@ -48,6 +48,9 @@ public class AnkiDb
 	private static final String[] card_state = new String[]{"young", "mature"};
 	public SQLiteStatement space_other_cards;
 	public SQLiteStatement[][] space_card;
+	public SQLiteStatement[][] update_all_stats_and_avg;
+	public SQLiteStatement[][] update_all_stats_no_avg;
+	
 	/**
 	 * Open a database connection to an ".anki" SQLite file.
 	 */
@@ -94,7 +97,33 @@ public class AnkiDb
 
 		
 	}
-	
+
+	public void prepareStatsStatements(Stats global, Stats daily) {
+		String update_all_stats_and_avg_templ = "UPDATE stats " +
+        		"SET reps = reps + 1, " +
+        		"reviewTime = reviewTime + ?, " +
+        		"averageTime = (reviewTime + ?)/(reps+1), " +
+        		"%sEase%1d = %sEase%1d + 1 " +
+        		"WHERE id = " + global.id + " or id = " + daily.id;
+		String update_all_stats_no_avg_templ = "UPDATE stats " +
+        		"SET reps = reps + 1, " +
+        		"reviewTime = reviewTime + 60, " +
+        		"%sEase%1d = %sEase%1d + 1 " +
+        		"WHERE id = " + global.id + " or id = " + daily.id;
+		String update_all_stats_and_avg_sql[][] = new String[2][5];
+		String update_all_stats_no_avg_sql[][] = new String[2][5];
+		space_card = new SQLiteStatement[2][5];
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 5; j++) {
+				update_all_stats_and_avg_sql[i][j] = String.format(update_all_stats_and_avg_templ, card_state[i], j);
+				update_all_stats_no_avg_sql[i][j] = String.format(update_all_stats_no_avg_templ, card_state[i], j);
+				Log.e(TAG, "AnkiDB - prep stats stat: '" + update_all_stats_and_avg_sql[i][j] + "'");
+				update_all_stats_and_avg[i][j] = database.compileStatement(update_all_stats_and_avg_sql[i][j]);
+				update_all_stats_no_avg[i][j] = database.compileStatement(update_all_stats_no_avg_sql[i][j]);
+			}
+		}	
+	}
+
 	/**
 	 * Closes a previously opened database connection.
 	 */
