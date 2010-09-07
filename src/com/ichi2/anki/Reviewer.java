@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -114,8 +113,8 @@ public class Reviewer extends Activity {
 	private Chronometer mCardTimer;
 	private Whiteboard mWhiteboard;
 	private ProgressDialog mProgressDialog;
-	public static ImageView mImageTest;
-	
+
+	private float mScaleInPercent;
 	private boolean mShowWhiteboard = false;
 	private Card mCurrentCard;
 	private static Card editorCard; // To be assigned as the currentCard or a new card to be sent to and from the editor
@@ -434,6 +433,7 @@ public class Reviewer extends Activity {
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		mCard.getSettings().setBuiltInZoomControls(true);
+		mScaleInPercent = mCard.getScale();
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
@@ -803,7 +803,7 @@ public class Reviewer extends Activity {
 
 		Log.i(TAG, "Initial content card = \n" + content);
 		content = Sound.parseSounds(deckFilename, content);
-		content = Image.scaleImages(deckFilename, content, mCard.getHeight(), mCard.getWidth(), mCard.getScale());
+		content = Image.scaleImages(deckFilename, content, mCard.getHeight(), mCard.getWidth(), mScaleInPercent);
 		
 		// In order to display the bold style correctly, we have to change
 		// font-weight to 700
