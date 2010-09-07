@@ -12,7 +12,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
@@ -20,13 +19,10 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -442,12 +438,12 @@ public class Reviewer extends Activity {
 		mEase2 = (Button) findViewById(R.id.ease2);
 		mEase3 = (Button) findViewById(R.id.ease3);
 		mEase4 = (Button) findViewById(R.id.ease4);
+		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		mTextBarRed = (TextView) findViewById(R.id.red_number);
 		mTextBarBlack = (TextView) findViewById(R.id.black_number);
 		mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 		if (prefTimer)
 			mCardTimer = (Chronometer) findViewById(R.id.card_time);
-		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		if (prefWhiteboard)
 			mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
 		if (prefWriteAnswers)
@@ -638,12 +634,8 @@ public class Reviewer extends Activity {
 		if (prefTimer)
 			mCardTimer.setVisibility(View.VISIBLE);
 
-		if (prefWhiteboard)
-		{
-			if(mShowWhiteboard)
-			{
+		if (prefWhiteboard && mShowWhiteboard)
 				mWhiteboard.setVisibility(View.VISIBLE);
-		}
 		
 		if (prefWriteAnswers)
 			mAnswerField.setVisibility(View.VISIBLE);
@@ -674,10 +666,11 @@ public class Reviewer extends Activity {
 	private void unblockControls()
 	{
 		mCard.setEnabled(true);
-		switch(mCurrentEase)
+		mFlipCard.setEnabled(true);
+		
+		switch (mCurrentEase)
 		{
 			case 1:
-				mCard.setEnabled(true);
 				mEase1.setClickable(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
@@ -685,7 +678,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 2:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setClickable(true);
 				mEase3.setEnabled(true);
@@ -693,7 +685,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 3:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setClickable(true);
@@ -701,7 +692,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 4:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
@@ -709,14 +699,12 @@ public class Reviewer extends Activity {
 				break;
 				
 			default:
-				mCard.setEnabled(true);
 				mEase1.setEnabled(true);
 				mEase2.setEnabled(true);
 				mEase3.setEnabled(true);
 				mEase4.setEnabled(true);
 				break;
 		}
-		mFlipCard.setEnabled(true);
 		
 		if (prefTimer)
 			mCardTimer.setEnabled(true);
@@ -731,10 +719,11 @@ public class Reviewer extends Activity {
 	private void blockControls()
 	{
 		mCard.setEnabled(false);
-		switch(mCurrentEase)
+		mFlipCard.setEnabled(false);
+		
+		switch (mCurrentEase)
 		{
 			case 1:
-				mCard.setEnabled(false);
 				mEase1.setClickable(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
@@ -742,7 +731,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 2:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setClickable(false);
 				mEase3.setEnabled(false);
@@ -750,7 +738,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 3:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setClickable(false);
@@ -758,7 +745,6 @@ public class Reviewer extends Activity {
 				break;
 				
 			case 4:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
@@ -766,14 +752,12 @@ public class Reviewer extends Activity {
 				break;
 				
 			default:
-				mCard.setEnabled(false);
 				mEase1.setEnabled(false);
 				mEase2.setEnabled(false);
 				mEase3.setEnabled(false);
 				mEase4.setEnabled(false);
 				break;
 		}
-		mFlipCard.setEnabled(false);
 		
 		if (prefTimer)
 			mCardTimer.setEnabled(false);
@@ -928,10 +912,6 @@ public class Reviewer extends Activity {
 						diff.diff_prettyHtml(diff.diff_main(userAnswer,
 								correctAnswer)) + "<br/>" + mCurrentCard.answer,
 						true);
-			}
-			else
-			{
-				displayString = "";
 			}
 			
 			// Hide soft keyboard
