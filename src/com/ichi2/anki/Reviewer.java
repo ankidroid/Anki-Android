@@ -184,7 +184,6 @@ public class Reviewer extends Activity {
      */
 	private void selectAndCopyText() {
 		try {
-			Log.i(TAG, "start selection");
 			KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
 			shiftPressEvent.dispatch(mCard);
 		} catch (Exception e) {
