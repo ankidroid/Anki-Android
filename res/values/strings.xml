@@ -270,6 +270,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="menu_about">About</string>
 <string name="menu_suspend_card">Suspend Card</string>
 <string name="menu_edit_card">Edit Card</string>
+<string name="menu_search">Lookup in Aedict</string>
 <string name="menu_mark_card">Mark Card</string>
 <string name="menu_marked">Marked</string>
 

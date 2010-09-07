@@ -14,6 +14,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -64,7 +65,8 @@ public class Reviewer extends Activity {
 	private static final int MENU_CLEAR_WHITEBOARD = 1;
 	private static final int MENU_EDIT = 2;
 	private static final int MENU_SUSPEND = 3;
-	private static final int MENU_MARK = 4;
+	private static final int MENU_SEARCH = 4;
+	private static final int MENU_MARK = 5;
 	
 	/** Max size of the font for dynamic calculation of font size */
 	protected static final int MAX_DYNAMIC_FONT_SIZE = 14;
@@ -117,6 +119,7 @@ public class Reviewer extends Activity {
 	private Whiteboard mWhiteboard;
 	private ProgressDialog mProgressDialog;
 	public static ImageView mImageTest;
+	private ClipboardManager clipboard;
 	
 	private boolean mShowWhiteboard = false;
 	private Card mCurrentCard;
@@ -461,6 +464,7 @@ public class Reviewer extends Activity {
 		mCard.getSettings().setBuiltInZoomControls(true);
 		if (prefTextSelection) {
 			mCard.setOnLongClickListener(mLongClickHandler);
+			clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 		} else {
 			mCard.setFocusable(false);
 		}
@@ -504,20 +508,31 @@ public class Reviewer extends Activity {
 		item.setIcon(android.R.drawable.ic_menu_edit);
 		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
 		item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		if (prefTextSelection)
+		{
+			item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, R.string.menu_search);
+			item.setIcon(R.drawable.ic_menu_search);
+		}
 		item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
 		return true;
 	}
 	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		MenuItem markItem = menu.findItem(MENU_MARK);
+		MenuItem item = menu.findItem(MENU_MARK);
 		mCurrentCard.loadTags();
 		if (mCurrentCard.hasTag(Deck.TAG_MARKED)) {
-			markItem.setTitle(R.string.menu_marked);
-			markItem.setIcon(R.drawable.star_big_on);
+			item.setTitle(R.string.menu_marked);
+			item.setIcon(R.drawable.star_big_on);
 		} else {
-			markItem.setTitle(R.string.menu_mark_card);
-			markItem.setIcon(R.drawable.ic_menu_star);
+			item.setTitle(R.string.menu_mark_card);
+			item.setIcon(R.drawable.ic_menu_star);
+		}
+		item = menu.findItem(MENU_SEARCH);
+		if (clipboard.hasText()) {
+			item.setEnabled(true);
+		} else {
+			item.setEnabled(false);
 		}
 		return true;
 	}
@@ -561,7 +576,17 @@ public class Reviewer extends Activity {
 					mAnswerCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
 				return true;
-		
+
+			case MENU_SEARCH:
+				if (clipboard.hasText()) {
+					// TODO Check what happens if Aedict is not installed
+					Intent aedictIntent = new Intent("sk.baka.aedict.action.ACTION_SEARCH_EDICT");
+					aedictIntent.putExtra("kanjis", clipboard.getText());
+					startActivity(aedictIntent);
+					clipboard.setText("");
+				}
+				return true;
+
 			case MENU_MARK:
 				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, 
 					mMarkCardHandler,
