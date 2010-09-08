@@ -14,9 +14,11 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,7 +64,8 @@ public class Reviewer extends Activity {
 	private static final int MENU_CLEAR_WHITEBOARD = 1;
 	private static final int MENU_EDIT = 2;
 	private static final int MENU_SUSPEND = 3;
-	private static final int MENU_MARK = 4;
+	private static final int MENU_SEARCH = 4;
+	private static final int MENU_MARK = 5;
 	
 	/** Max size of the font for dynamic calculation of font size */
 	protected static final int MAX_DYNAMIC_FONT_SIZE = 14;
@@ -88,11 +91,12 @@ public class Reviewer extends Activity {
 	private boolean prefTimer;
 	private boolean prefWhiteboard;
 	private boolean prefWriteAnswers;
+	private boolean prefTextSelection;
 	private boolean prefNotificationBar;
 	private boolean prefUseRubySupport; // Parse for ruby annotations
 	private String deckFilename;
 	private int prefHideQuestionInAnswer; // Hide the question when showing the answer
-	
+
 	/** Hide Question In Answer choices */
 	private static final int HQIA_DO_HIDE = 0;
 	private static final int HQIA_DO_SHOW = 1;
@@ -116,6 +120,7 @@ public class Reviewer extends Activity {
 	private Chronometer mCardTimer;
 	private Whiteboard mWhiteboard;
 	private ProgressDialog mProgressDialog;
+	private ClipboardManager clipboard;
 
 	private float mScaleInPercent;
 	private boolean mShowWhiteboard = false;
@@ -172,6 +177,28 @@ public class Reviewer extends Activity {
 					DeckTask.TASK_TYPE_ANSWER_CARD,
 					mAnswerCardHandler,
 					new DeckTask.TaskData(mCurrentEase, AnkiDroidApp.deck(), mCurrentCard));
+		}
+	};
+
+	/**
+	 * Select Text in the webview and automatically sends the selected text to the clipboard
+	 * From http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
+	 */
+	private void selectAndCopyText() {
+		try {
+			KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
+			shiftPressEvent.dispatch(mCard);
+		} catch (Exception e) {
+			throw new AssertionError(e);
+		}
+	}
+
+	private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener()
+	{
+		public boolean onLongClick(View view)
+		{
+			selectAndCopyText();
+			return true;
 		}
 	};
 
@@ -436,6 +463,12 @@ public class Reviewer extends Activity {
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		mCard.getSettings().setBuiltInZoomControls(true);
+		if (prefTextSelection) {
+			mCard.setOnLongClickListener(mLongClickHandler);
+			clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+		} else {
+			mCard.setFocusable(false);
+		}
 		mScaleInPercent = mCard.getScale();
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
@@ -461,8 +494,6 @@ public class Reviewer extends Activity {
 		mEase4.setOnClickListener(mSelectEaseHandler);
 		mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
 		mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
-
-		mCard.setFocusable(false);
 	}
 	
 	@Override
@@ -479,21 +510,29 @@ public class Reviewer extends Activity {
 		item.setIcon(android.R.drawable.ic_menu_edit);
 		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
 		item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		if (prefTextSelection)
+		{
+			item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, R.string.menu_search);
+			item.setIcon(R.drawable.ic_menu_search);
+		}
 		item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
 		return true;
 	}
 	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		MenuItem markItem = menu.findItem(MENU_MARK);
+		MenuItem item = menu.findItem(MENU_MARK);
 		mCurrentCard.loadTags();
 		if (mCurrentCard.hasTag(Deck.TAG_MARKED)) {
-			markItem.setTitle(R.string.menu_marked);
-			markItem.setIcon(R.drawable.star_big_on);
+			item.setTitle(R.string.menu_marked);
+			item.setIcon(R.drawable.star_big_on);
 		} else {
-			markItem.setTitle(R.string.menu_mark_card);
-			markItem.setIcon(R.drawable.ic_menu_star);
+			item.setTitle(R.string.menu_mark_card);
+			item.setIcon(R.drawable.ic_menu_star);
 		}
+		item = menu.findItem(MENU_SEARCH);
+		boolean lookupPossible = clipboard.hasText() && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT");
+		item.setEnabled(lookupPossible);
 		return true;
 	}
 	
@@ -536,7 +575,16 @@ public class Reviewer extends Activity {
 					mAnswerCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
 			return true;
-		
+
+		case MENU_SEARCH:
+			if (clipboard.hasText()&& Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT")) {
+				Intent aedictIntent = new Intent("sk.baka.aedict.action.ACTION_SEARCH_EDICT");
+				aedictIntent.putExtra("kanjis", clipboard.getText());
+				startActivity(aedictIntent);
+				clipboard.setText("");
+			}
+			return true;
+
 		case MENU_MARK:
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, 
 					mMarkCardHandler,
@@ -780,6 +828,7 @@ public class Reviewer extends Activity {
 		prefTimer = preferences.getBoolean("timer", true);
 		prefWhiteboard = preferences.getBoolean("whiteboard", true);
 		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
+		prefTextSelection = preferences.getBoolean("textSelection", false);
 		deckFilename = preferences.getString("deckFilename", "");
 		prefUseRubySupport = preferences.getBoolean("useRubySupport", false);
 		prefNotificationBar = preferences.getBoolean("notificationBar", true);
@@ -809,17 +858,16 @@ public class Reviewer extends Activity {
 		Log.i(TAG, "Initial content card = \n" + content);
 		content = Sound.parseSounds(deckFilename, content);
 		content = Image.scaleImages(deckFilename, content, mCard.getHeight(), mCard.getWidth(), mScaleInPercent);
-		
+
 		// In order to display the bold style correctly, we have to change
 		// font-weight to 700
 		content = content.replace("font-weight:600;", "font-weight:700;");
 
 		// If ruby annotation support is activated, then parse and add markup
-		if (prefUseRubySupport) {
+		if (prefUseRubySupport)
 			content = RubyParser.ankiRubyToMarkup(content);
-		}
 
-		// Add CSS for font colour and font size
+		// Add CSS for font color and font size
 		if (mCurrentCard != null) {
 			Deck currentDeck = AnkiDroidApp.deck();
 			Model myModel = Model.getModel(currentDeck, mCurrentCard.cardModelId, false);
@@ -880,7 +928,7 @@ public class Reviewer extends Activity {
 		mFlipCard.requestFocus();
 
 		String displayString = enrichWithQASpan(mCurrentCard.question, false);
-		// Depending on preferences do or do not show the question
+		// Show an horizontal line as separation when question is shown in answer
 		// XXX Martin: is it really necessary on the question side?
 		if (questionIsDisplayed()) {
 			displayString = displayString + "<hr/>";
@@ -892,14 +940,14 @@ public class Reviewer extends Activity {
 	private void displayCardAnswer()
 	{
 		Log.i(TAG, "displayCardAnswer");
-		
+
 		if (prefTimer)
 			mCardTimer.stop();
-		
+
 		String displayString = "";
 		
 		// If the user wrote an answer
-		if(prefWriteAnswers)
+		if (prefWriteAnswers)
 		{
 			mAnswerField.setVisibility(View.GONE);
 			if(mCurrentCard != null)
@@ -945,7 +993,7 @@ public class Reviewer extends Activity {
 	}
 	
 	private final boolean questionIsDisplayed()
-		{
+	{
 		switch (prefHideQuestionInAnswer)
 		{
 			case HQIA_DO_HIDE:

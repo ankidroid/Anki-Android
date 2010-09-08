@@ -87,6 +87,11 @@
 			android:summary="@string/write_answers_summ"
 			android:key="writeAnswers" />
 		<CheckBoxPreference
+			android:title="@string/text_selection"
+			android:defaultValue="false"
+			android:summary="@string/text_selection_summ"
+			android:key="textSelection" />
+		<CheckBoxPreference
 			android:title="Update notifications"
 			android:defaultValue="true"
 			android:summary="Notify me when AnkiDroid is updated"
