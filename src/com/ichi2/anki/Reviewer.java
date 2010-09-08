@@ -574,8 +574,7 @@ public class Reviewer extends Activity {
 				return true;
 
 			case MENU_SEARCH:
-				if (clipboard.hasText()) {
-					// TODO Check what happens if Aedict is not installed
+				if (clipboard.hasText()&& Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT")) {
 					Intent aedictIntent = new Intent("sk.baka.aedict.action.ACTION_SEARCH_EDICT");
 					aedictIntent.putExtra("kanjis", clipboard.getText());
 					startActivity(aedictIntent);
