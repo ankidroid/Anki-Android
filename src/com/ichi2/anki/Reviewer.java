@@ -528,11 +528,8 @@ public class Reviewer extends Activity {
 			item.setIcon(R.drawable.ic_menu_star);
 		}
 		item = menu.findItem(MENU_SEARCH);
-		if (clipboard.hasText()) {
-			item.setEnabled(true);
-		} else {
-			item.setEnabled(false);
-		}
+		boolean lookupPossible = clipboard.hasText() && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT");
+		item.setEnabled(lookupPossible);
 		return true;
 	}
 	
