@@ -57,7 +57,21 @@ public class AnkiDb
 	public AnkiDb(String ankiFilename) throws SQLException
 	{
 		database = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-		//database.execSQL("PRAGMA synchronous=OFF");
+		Log.w(TAG, "DB: " + ankiFilename);
+		if (ankiFilename == "/mnt/sdcard/AnkiDroid/slow_truncate.anki") {
+			database.execSQL("PRAGMA journal_mode=TRUNCATE");
+		Log.w(TAG, "DB: " + ankiFilename);
+		} else if (ankiFilename == "/mnt/sdcard/AnkiDroid/slow_persist.anki") {
+			database.execSQL("PRAGMA journal_mode=PERSIST");
+		Log.w(TAG, "DB: " + ankiFilename);
+		} else if (ankiFilename == "/mnt/sdcard/AnkiDroid/slow_memory.anki") {
+			database.execSQL("PRAGMA journal_mode=MEMORY");
+		Log.w(TAG, "DB: " + ankiFilename);
+		} else if (ankiFilename == "/mnt/sdcard/AnkiDroid/slow_normal.anki") {
+			database.execSQL("PRAGMA synchronous=NORMAL");
+		Log.w(TAG, "DB: " + ankiFilename);
+		}
+
 		space_other_cards = database.compileStatement("UPDATE cards " +
         		"SET spaceUntil = ?, " +
         		"combinedDue = max(?, due), " +
@@ -112,11 +126,12 @@ public class AnkiDb
         		"WHERE id = " + global.id + " or id = " + daily.id;
 		String update_all_stats_and_avg_sql[][] = new String[2][5];
 		String update_all_stats_no_avg_sql[][] = new String[2][5];
-		space_card = new SQLiteStatement[2][5];
+		update_all_stats_and_avg = new SQLiteStatement[2][5];
+		update_all_stats_no_avg = new SQLiteStatement[2][5];
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 5; j++) {
-				update_all_stats_and_avg_sql[i][j] = String.format(update_all_stats_and_avg_templ, card_state[i], j);
-				update_all_stats_no_avg_sql[i][j] = String.format(update_all_stats_no_avg_templ, card_state[i], j);
+				update_all_stats_and_avg_sql[i][j] = String.format(update_all_stats_and_avg_templ, card_state[i], j, card_state[i], j);
+				update_all_stats_no_avg_sql[i][j] = String.format(update_all_stats_no_avg_templ, card_state[i], j, card_state[i], j);
 				Log.e(TAG, "AnkiDB - prep stats stat: '" + update_all_stats_and_avg_sql[i][j] + "'");
 				update_all_stats_and_avg[i][j] = database.compileStatement(update_all_stats_and_avg_sql[i][j]);
 				update_all_stats_no_avg[i][j] = database.compileStatement(update_all_stats_no_avg_sql[i][j]);

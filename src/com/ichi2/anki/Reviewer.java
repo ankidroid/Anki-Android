@@ -127,6 +127,11 @@ public class Reviewer extends Activity {
 	private long mSessionTimeLimit;
 	private int mSessionCurrReps;
 
+	// Timing variables
+	long numCardsAnswered = 0;
+	long lastTime = 0;
+	long avgTime = 0;
+	
 	// Handler for the flip toogle button, between the question and the answer
 	// of a card
 	private CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener()
@@ -247,6 +252,12 @@ public class Reviewer extends Activity {
 			    Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
 			    Reviewer.this.finish();
 			}
+			numCardsAnswered += 1;
+			lastTime = System.currentTimeMillis() - start2;
+			avgTime += (lastTime - avgTime) / numCardsAnswered;
+			Log.w(TAG, "onProgressUpdate - Total new card received in " + lastTime + " ms.");
+			Toast sessionMessage = Toast.makeText(Reviewer.this, "Reps: " + numCardsAnswered + " Last: " + lastTime + " Avg: " + avgTime, Toast.LENGTH_SHORT);
+			sessionMessage.show();
 		}
 
 		public void onProgressUpdate(DeckTask.TaskData... values) {
@@ -301,7 +312,6 @@ public class Reviewer extends Activity {
 			if (sessionMessage != null)
 				sessionMessage.show();
 
-			Log.w(TAG, "onProgressUpdate - Total new card received in " + (System.currentTimeMillis() - start2) + " ms.");
 		}
 
 	};
