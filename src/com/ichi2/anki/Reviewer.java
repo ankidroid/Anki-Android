@@ -1,5 +1,6 @@
 package com.ichi2.anki;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -334,8 +335,11 @@ public class Reviewer extends Activity {
 			registerExternalStorageListener();
 			
 			initLayout(R.layout.flashcard_portrait);
-			//updateCounts();
-			cardTemplate = getResources().getString(R.string.card_template);
+			try {
+				cardTemplate = Utils.convertStreamToString(getAssets().open("card_template.html"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			// Initialize session limits
 			long timelimit = AnkiDroidApp.deck().getSessionTimeLimit() * 1000;
@@ -433,6 +437,7 @@ public class Reviewer extends Activity {
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		mCard.getSettings().setBuiltInZoomControls(true);
+		mCard.getSettings().setJavaScriptEnabled(true);
 		mScaleInPercent = mCard.getScale();
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
