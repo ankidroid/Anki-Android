@@ -14,32 +14,31 @@
 		<TextView android:id="@+id/studyoptions_deck_name"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:paddingBottom="10sp"
 			android:gravity="center"
-			android:lines="2"
+			android:lines="1"
 			android:ellipsize="end"
 			android:text="@string/studyoptions_deck_name"
 			android:textColor="#ffffff"
 			android:textSize="26sp"
 			android:textStyle="bold" />
-			
-		<TextView android:id="@+id/studyoptions_title"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:text="@string/studyoptions_title"
-			android:textColor="#ffffff"
-			android:textSize="26dip"
-			android:textStyle="bold" />
 
 		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="10dip"
-			android:layout_marginBottom="10dip"
+			android:layout_marginTop="5dip"
+			android:layout_marginBottom="5dip"
 			android:gravity="center"
 			android:orientation="horizontal">
 
+			<TextView android:id="@+id/studyoptions_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="60dip"
+				android:text="@string/studyoptions_title"
+				android:textColor="#ffffff"
+				android:textSize="26dip"
+				android:textStyle="bold" />
+			
 			<LinearLayout
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
