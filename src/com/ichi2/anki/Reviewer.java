@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.database.Cursor;
 
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
@@ -128,7 +129,7 @@ public class Reviewer extends Activity {
 	private int mSessionCurrReps;
 
 	// Timing variables
-	long numCardsAnswered = 0;
+	long numCardsAnswered = -1;
 	long lastTime = 0;
 	long avgTime = 0;
 	
@@ -238,6 +239,8 @@ public class Reviewer extends Activity {
 			Reviewer.this.setProgressBarIndeterminateVisibility(true);
 			//disableControls();
 			blockControls();
+//			if
+//				AnkiDb ankiDb = AnkiDatabaseManager.getDatabase(AnkiDroidApp.deck().deckPath);
 		}
 
 		public void onPostExecute(DeckTask.TaskData result) {
@@ -252,12 +255,24 @@ public class Reviewer extends Activity {
 			    Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
 			    Reviewer.this.finish();
 			}
-			numCardsAnswered += 1;
 			lastTime = System.currentTimeMillis() - start2;
-			avgTime += (lastTime - avgTime) / numCardsAnswered;
-			Log.w(TAG, "onProgressUpdate - Total new card received in " + lastTime + " ms.");
-			Toast sessionMessage = Toast.makeText(Reviewer.this, "Reps: " + numCardsAnswered + " Last: " + lastTime + " Avg: " + avgTime, Toast.LENGTH_SHORT);
-			sessionMessage.show();
+			numCardsAnswered += 1;
+			if (numCardsAnswered > 0) {
+				avgTime += (lastTime - avgTime) / numCardsAnswered;
+				AnkiDb ankiDb = AnkiDatabaseManager.getDatabase(AnkiDroidApp.deck().deckPath);
+				Cursor cur = ankiDb.database.rawQuery("PRAGMA journal_mode", null);
+				cur.moveToFirst();
+				String jm = cur.getString(0).substring(0,1).toUpperCase();
+				cur.close();
+				cur = ankiDb.database.rawQuery("PRAGMA synchronous", null);
+				cur.moveToFirst();
+				long sn = cur.getLong(0);
+				cur.close();
+				Log.w(TAG, "onProgressUpdate - Total new card received in " + lastTime + " ms.");
+
+				Toast sessionMessage = Toast.makeText(Reviewer.this, "Flags: " + jm + sn + " Reps: " + numCardsAnswered + " Last: " + lastTime + " Avg: " + avgTime, Toast.LENGTH_SHORT);
+				sessionMessage.show();
+			}
 		}
 
 		public void onProgressUpdate(DeckTask.TaskData... values) {

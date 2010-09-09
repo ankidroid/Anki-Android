@@ -431,6 +431,7 @@ public class Deck
 		if(!dbAlreadyOpened)
 		{
 			AnkiDatabaseManager.closeDatabase(deckPath);
+			Log.w(TAG, "Closing " + deckPath);
 		}
 		
 		return value;

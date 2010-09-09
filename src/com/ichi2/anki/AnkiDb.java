@@ -58,19 +58,36 @@ public class AnkiDb
 	{
 		database = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 		Log.w(TAG, "DB: " + ankiFilename);
-		if (ankiFilename == "/mnt/sdcard/AnkiDroid/slow_truncate.anki") {
-			database.execSQL("PRAGMA journal_mode=TRUNCATE");
-		Log.w(TAG, "DB: " + ankiFilename);
-		} else if (ankiFilename == "/mnt/sdcard/AnkiDroid/slow_persist.anki") {
-			database.execSQL("PRAGMA journal_mode=PERSIST");
-		Log.w(TAG, "DB: " + ankiFilename);
-		} else if (ankiFilename == "/mnt/sdcard/AnkiDroid/slow_memory.anki") {
-			database.execSQL("PRAGMA journal_mode=MEMORY");
-		Log.w(TAG, "DB: " + ankiFilename);
-		} else if (ankiFilename == "/mnt/sdcard/AnkiDroid/slow_normal.anki") {
-			database.execSQL("PRAGMA synchronous=NORMAL");
-		Log.w(TAG, "DB: " + ankiFilename);
+		if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_wal.anki")) {
+			database.rawQuery("PRAGMA journal_mode=WAL", null);
+			database.rawQuery("PRAGMA synchronous=NORMAL", null);
+			Log.w(TAG, "journal = wal");
+		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_truncate.anki")) {
+			database.rawQuery("PRAGMA journal_mode=TRUNCATE", null);
+			database.rawQuery("PRAGMA synchronous=NORMAL", null);
+			Log.w(TAG, "journal = truncate");
+		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_persist.anki")) {
+			database.rawQuery("PRAGMA journal_mode=PERSIST", null);
+			database.rawQuery("PRAGMA synchronous=NORMAL", null);
+			Log.w(TAG, "journal = persist");
+		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_memory.anki")) {
+			database.rawQuery("PRAGMA journal_mode=MEMORY", null);
+			database.rawQuery("PRAGMA synchronous=NORMAL", null);
+			Log.w(TAG, "journal = memory");
+		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_normal.anki")) {
+			database.rawQuery("PRAGMA synchronous=NORMAL", null);
+			Log.w(TAG, "sync = normal");
 		}
+			Log.w(TAG, "DB: " + ankiFilename);
+				Cursor cur = database.rawQuery("PRAGMA journal_mode", null);
+				cur.moveToFirst();
+				String jm = cur.getString(0).substring(0,1).toUpperCase();
+				cur.close();
+				cur = database.rawQuery("PRAGMA synchronous", null);
+				cur.moveToFirst();
+				long sn = cur.getLong(0);
+				cur.close();
+				Log.w(TAG, "Opening DB: " + ankiFilename + " flags: " + jm + sn);
 
 		space_other_cards = database.compileStatement("UPDATE cards " +
         		"SET spaceUntil = ?, " +
