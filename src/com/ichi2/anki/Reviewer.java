@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -367,6 +369,7 @@ public class Reviewer extends Activity {
 			initLayout(R.layout.flashcard_portrait);
 			try {
 				cardTemplate = Utils.convertStreamToString(getAssets().open("card_template.html"));
+				cardTemplate = cardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = " + getAvailableWidthInCard() + ";");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -415,15 +418,19 @@ public class Reviewer extends Activity {
     
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
-	  super.onConfigurationChanged(newConfig);
+		super.onConfigurationChanged(newConfig);
 
-	  Log.i(TAG, "onConfigurationChanged");
+		Log.i(TAG, "onConfigurationChanged");
 
-	  LinearLayout sdLayout = (LinearLayout) findViewById(R.id.sd_layout);
-	  if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
-		  sdLayout.setPadding(0, 50, 0, 0);
-	  else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
-		  sdLayout.setPadding(0, 100, 0, 0);
+		// Modify the card template to indicate the new available width and refresh card
+		cardTemplate = cardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = " + getAvailableWidthInCard() + ";");
+		refreshCard();
+		
+		LinearLayout sdLayout = (LinearLayout) findViewById(R.id.sd_layout);
+		if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+			sdLayout.setPadding(0, 50, 0, 0);
+		else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
+			sdLayout.setPadding(0, 100, 0, 0);
 
 	  if (prefWhiteboard)
 	      mWhiteboard.rotate();
@@ -476,7 +483,7 @@ public class Reviewer extends Activity {
 		}
 
 		mCard.getSettings().setJavaScriptEnabled(true);
-
+		mCard.setWebChromeClient(new MyWebChromeClient());
 		mScaleInPercent = mCard.getScale();
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
@@ -700,11 +707,6 @@ public class Reviewer extends Activity {
 			mAnswerField.setVisibility(View.VISIBLE);
 	}
 	
-	public void setOverlayState(boolean enabled)
-	{
-		mWhiteboard.setVisibility((enabled) ? View.VISIBLE : View.GONE);
-	}
-	
 	/**
 	 * TODO: Method never called?
 	 */
@@ -859,14 +861,31 @@ public class Reviewer extends Activity {
 		return preferences;
 	}
 	
+	private int getAvailableWidthInCard()
+	{
+		// The width available is equals to 
+		// the screen's width divided by the default scale factor used by the WebView, because this scale factor will be applied later
+		// and minus 10 pixels, because there is a padding of 5px on the left and another padding of 5px on the right
+		int availableWidth = (int) (AnkiDroidApp.getDisplayWidth() / mScaleInPercent) - 10;
+		Log.i(TAG, "availableWidth = " + availableWidth);
+		return availableWidth;
+	}
+	
+	private void refreshCard()
+	{
+		if (mFlipCard.isChecked())
+			displayCardAnswer();
+		else
+			displayCardQuestion();
+	}
+	
 	private void updateCard(String content)
 	{
 		Log.i(TAG, "updateCard");
 
 		Log.i(TAG, "Initial content card = \n" + content);
 		content = Sound.parseSounds(deckFilename, content);
-		content = Image.scaleImages(deckFilename, content, mCard.getHeight(), mCard.getWidth(), mScaleInPercent);
-
+		
 		// In order to display the bold style correctly, we have to change
 		// font-weight to 700
 		content = content.replace("font-weight:600;", "font-weight:700;");
@@ -886,7 +905,9 @@ public class Reviewer extends Activity {
 
 		Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
+		//Log.i(TAG, "card html = \n" + card); 
 		mCard.loadDataWithBaseURL("file://" + deckFilename.replace(".anki", ".media/"), card, "text/html", "utf-8", null);
+
 		Sound.playSounds();
 	}
 	
@@ -1096,4 +1117,17 @@ public class Reviewer extends Activity {
 		mTextBarBlack.setText(revCount);
 		mTextBarBlue.setText(newCount);
 	}
+	
+    /**
+     * Provides a hook for calling "alert" from javascript. Useful for
+     * debugging your javascript.
+     */
+    final class MyWebChromeClient extends WebChromeClient {
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+            Log.i(TAG, message);
+            result.confirm();
+            return true;
+        }
+    }
 }
