@@ -81,18 +81,19 @@ public class Sound {
 		// While there is matches of the pattern for sound markers
 		while(matcher.find())
 		{
-			// Clean the sound marker from content
-			String contentToReplace = matcher.group();
-			content = content.replace(contentToReplace, "");
-			
 			// Get the sound file name
 			String sound = matcher.group(1);
-			Log.i(TAG, "Sound " + matcher.groupCount() + ": " + sound);
+			//Log.i(TAG, "Sound " + matcher.groupCount() + ": " + sound);
 			
 			// Construct the sound path and store it
 			String soundPath = deckFilename.replace(".anki", ".media/") + sound;
-			Log.i(TAG, "parseSounds - soundPath = " + soundPath);
+			//Log.i(TAG, "parseSounds - soundPath = " + soundPath);
 			mSoundPaths.add(soundPath);
+			
+			// Clean the sound marker from content
+			String contentToReplace = matcher.group();
+			content = content.replace(contentToReplace, "<a onclick=\"window.interface.playSound(this.title);\" title=\"" + soundPath + "\"><span style=\"padding:5px;display:inline-block; vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+			//content = content.replace(contentToReplace, "");
 		}
 		
 		mFinishTime = System.currentTimeMillis();
@@ -107,7 +108,7 @@ public class Sound {
 	public static void playSounds()
 	{
 		// If there are sounds to play for the current card, play the first one
-		if(mSoundPaths.size() > 0)
+		if(mSoundPaths != null && mSoundPaths.size() > 0)
 		{
 			numSoundsPlayed = 0;
 			mStartTime = System.currentTimeMillis();
@@ -130,7 +131,7 @@ public class Sound {
 			mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
 
 				@Override
-						public void onCompletion(MediaPlayer mp) {
+				public void onCompletion(MediaPlayer mp) {
 					releaseSound();
 					numSoundsPlayed++;
 					
@@ -139,24 +140,43 @@ public class Sound {
 					
 					// If there is still more sounds to play for the current card, play the next one
 					if(numSoundsPlayed < mSoundPaths.size())
-							{
+					{
 						playSound(numSoundsPlayed);
 					}
 					else
-							{
+					{
 						// If it was the last sound, annotate the total time taken
 						mFinishTime = System.currentTimeMillis();
 						Log.i(TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) + " milliseconds");
-							}
-						}
-				
-					});
+					}
+				}});
 			
 			mMediaPlayer.start();
 		} catch(Exception e) 
 		{
 			Log.e(TAG, "playSounds - Error reproducing sound " + (soundToPlayIndex + 1) + " = " + e.getMessage());
 			releaseSound();
+		}
+	}
+	
+	public static void playSound(String soundPath)
+	{
+		if(mSoundPaths.contains(soundPath))
+		{
+			mStartSoundTime = System.currentTimeMillis();
+			mMediaPlayer = new MediaPlayer();
+			try {
+				mMediaPlayer.setDataSource(soundPath);
+				mMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
+				mMediaPlayer.prepare();
+				mMediaPlayer.start();
+			} catch(Exception e) 
+			{
+				Log.e(TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
+				releaseSound();
+			}
+			mFinishSoundTime = System.currentTimeMillis();
+			Log.i(TAG, "Sound " + soundPath + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
 		}
 	}
 	
