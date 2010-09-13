@@ -129,9 +129,9 @@ public class Reviewer extends Activity {
 	private int mSessionCurrReps;
 
 	// Timing variables
-	long numCardsAnswered = -1;
-	long lastTime = 0;
-	long avgTime = 0;
+	public long numCardsAnswered = -1;
+	public long lastTime = 0;
+	public long avgTime = 0;
 	
 	// Handler for the flip toogle button, between the question and the answer
 	// of a card
@@ -270,7 +270,7 @@ public class Reviewer extends Activity {
 				cur.close();
 				Log.w(TAG, "onProgressUpdate - Total new card received in " + lastTime + " ms.");
 
-				Toast sessionMessage = Toast.makeText(Reviewer.this, "Flags: " + jm + sn + " Reps: " + numCardsAnswered + " Last: " + lastTime + " Avg: " + avgTime, Toast.LENGTH_SHORT);
+				Toast sessionMessage = Toast.makeText(Reviewer.this, "-_-Flags: " + jm + sn + " Reps: " + numCardsAnswered + " Last: " + lastTime + " Avg: " + avgTime + "-_-", Toast.LENGTH_SHORT);
 				sessionMessage.show();
 			}
 		}
