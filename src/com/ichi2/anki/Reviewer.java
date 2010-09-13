@@ -14,6 +14,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
@@ -484,6 +486,7 @@ public class Reviewer extends Activity {
 
 		mCard.getSettings().setJavaScriptEnabled(true);
 		mCard.setWebChromeClient(new MyWebChromeClient());
+		mCard.addJavascriptInterface(new JavaScriptInterface(), "interface");
 		mScaleInPercent = mCard.getScale();
 		mEase1 = (Button) findViewById(R.id.ease1);
 		mEase2 = (Button) findViewById(R.id.ease2);
@@ -903,9 +906,9 @@ public class Reviewer extends Activity {
 			mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
 		}
 
-		Log.i(TAG, "content card = \n" + content);
+		//Log.i(TAG, "content card = \n" + content);
 		String card = cardTemplate.replace("::content::", content);
-		//Log.i(TAG, "card html = \n" + card); 
+		Log.i(TAG, "card html = \n" + card); 
 		mCard.loadDataWithBaseURL("file://" + deckFilename.replace(".anki", ".media/"), card, "text/html", "utf-8", null);
 
 		Sound.playSounds();
@@ -1130,4 +1133,33 @@ public class Reviewer extends Activity {
             return true;
         }
     }
+    
+	final class JavaScriptInterface {
+		
+		JavaScriptInterface() {
+			
+		}
+		
+        /**
+         * This is not called on the UI thread. Send a message that will be
+         * handled on the UI thread.
+         */
+		public void playSound(String soundPath)
+		{
+			Log.i(TAG, "js = " + soundPath);
+			Message msg = Message.obtain();
+			msg.obj = soundPath;
+			mHandler.sendMessage(msg);
+		}
+	}
+	
+    private Handler mHandler = new Handler() {
+    	
+    	@Override
+    	public void handleMessage(Message msg)
+    	{
+    		Sound.stopSounds();
+    		Sound.playSound((String) msg.obj);
+    	}
+    };
 }
