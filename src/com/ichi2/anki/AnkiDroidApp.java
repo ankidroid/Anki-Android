@@ -21,12 +21,15 @@ import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
 import com.tomgibara.android.veecheck.Veecheck;
@@ -48,24 +51,9 @@ public class AnkiDroidApp extends Application {
 	private static AnkiDroidApp instance;
 
 	/**
-	 * Base path to the available external storage
-	 */
-	private String storageDirectory;
-
-	/**
 	 * Currently loaded Anki deck.
 	 */
 	private Deck loadedDeck;
-
-	/**
-	 * Resources
-	 */
-	private Resources mResources;
-
-	/**
-	 * Preferences
-	 */
-	private SharedPreferences mPreferences;
 
 	/**
 	 * On application creation.
@@ -77,20 +65,15 @@ public class AnkiDroidApp extends Application {
 
 		Connection.setContext(getApplicationContext());
 
-		mResources = getResources();
-		mPreferences = PrefSettings.getSharedPrefs(this);
-
 		// Error Reporter
 		CustomExceptionHandler customExceptionHandler = CustomExceptionHandler.getInstance();
 		customExceptionHandler.Init(instance.getApplicationContext());
 		Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
 		
-		storageDirectory = Environment.getExternalStorageDirectory()
-				.getAbsolutePath();
-
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(this);
 		// Assign some default settings if necessary
-		if (mPreferences.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
-			Editor editor = mPreferences.edit();
+		if (preferences.getString(PrefSettings.KEY_CHECK_URI, null) == null) {
+			Editor editor = preferences.edit();
 			// Test Update Notifications
 			// Some ridiculously fast polling, just to demonstrate it working...
 			/*
@@ -105,11 +88,11 @@ public class AnkiDroidApp extends Application {
 
 			// Create the folder "AnkiDroid", if not exists, where the decks
 			// will be stored by default
-			new File(storageDirectory + "/AnkiDroid").mkdir();
+			new File(getStorageDirectory() + "/AnkiDroid").mkdir();
 
 			// Put the base path in preferences pointing to the default
 			// "AnkiDroid" folder
-			editor.putString("deckPath", storageDirectory + "/AnkiDroid");
+			editor.putString("deckPath", getStorageDirectory() + "/AnkiDroid");
 
 			editor.commit();
 		}
@@ -128,11 +111,11 @@ public class AnkiDroidApp extends Application {
 	}
 
 	public static String getStorageDirectory() {
-		return instance.storageDirectory;
+		return Environment.getExternalStorageDirectory().getAbsolutePath();
 	}
 
 	public static Resources getAppResources() {
-		return instance.mResources;
+		return instance.getResources();
 	}
 
 	public static Deck deck() {
@@ -144,13 +127,13 @@ public class AnkiDroidApp extends Application {
 	}
 
 	public static boolean isSdCardMounted() {
-		return Environment.MEDIA_MOUNTED.equals(Environment
-				.getExternalStorageState());
+		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 	}
 
 	public static boolean isUserLoggedIn() {
-		String username = instance.mPreferences.getString("username", "");
-		String password = instance.mPreferences.getString("password", "");
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(instance);
+		String username = preferences.getString("username", "");
+		String password = preferences.getString("password", "");
 
 		if (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase("")) {
 			return true;
@@ -158,7 +141,19 @@ public class AnkiDroidApp extends Application {
 
 		return false;
 	}
-
+	
+	public static int getDisplayHeight()
+	{
+		Display display = ((WindowManager) instance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay(); 
+		return display.getHeight();
+	}
+	
+	public static int getDisplayWidth()
+	{
+		Display display = ((WindowManager) instance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay(); 
+		return display.getWidth();
+	}
+	
 	public static void registerCursor(String method, String name) {
 		cursorMethods.add(method);
 		cursorNames.add(name);
@@ -170,4 +165,5 @@ public class AnkiDroidApp extends Application {
 			Log.i(TAG, " on method " + cursorMethods.get(i));
 		}
 	}
+	
 }

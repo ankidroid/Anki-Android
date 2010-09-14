@@ -35,8 +35,6 @@
 <color name="wb_fg_color">#B00000FF</color>
 <color name="wb_bg_color">#0000</color>
 
-<string name="card_template">&lt;html&gt;  &lt;head&gt;   &lt;link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/flashcard_css\" /&gt; &lt;/head&gt; &lt;body&gt;  &lt;span class=\"card\"&gt; ::content:: &lt;/span&gt;  &lt;/body&gt; &lt;/html&gt;</string>
-
 <!-- DeckPicker.java -->
 <string name="deckpicker_title">Select a deck you copied to your SD card</string>
 <string name="deckpicker_title_nosdcard">SD card is unmounted</string>
@@ -55,6 +53,10 @@
 
 <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
 
+<!-- Reviewer.java -->
+<string name="show_whiteboard">Show Whiteboard</string>
+<string name="hide_whiteboard">Hide Whiteboard</string>
+<string name="clear_whiteboard">Clear Whiteboard</string>
 
 <!-- deck_preferences.xml -->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
@@ -75,8 +77,6 @@
 
 
 <!-- flashcard_portrait.xml -->
-<string name="overlay_on">Whiteboard On</string>
-<string name="overlay_off">Whiteboard Off</string>
 <string name="show_answer">Show Answer</string>
 <string name="show_question">Re-display Question</string>
 <string name="card_hint">Flashcard</string>
@@ -100,7 +100,7 @@
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
 <string name="show_timer">Show timer</string>
 <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
-<string name="show_whiteboard">Show whiteboard</string>
+<!-- show_whiteboard -> Reviewer.java -->
 <string name="show_whiteboard_summ">Lets you write on the screen</string>
 <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
 <string name="whiteboard_stroke_width_summ">Select the width of the stroke</string>
@@ -110,6 +110,8 @@
 <string name="corporal_punishments_summ">Vibrate on error, that will teach you</string>
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
+<string name="text_selection">Allow text selection</string>
+<string name="text_selection_summ">Lets you select and copy text from cards with a long click, and perform lookup in external dictionnary</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative display font size</string>
@@ -266,6 +268,9 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="menu_about">About</string>
 <string name="menu_suspend_card">Suspend Card</string>
 <string name="menu_edit_card">Edit Card</string>
+<string name="menu_search">Lookup in Aedict</string>
+<string name="menu_mark_card">Mark Card</string>
+<string name="menu_marked">Marked</string>
 
 <string name="loading">Loading...</string>
 <string name="studyoptions_continue">Continue Reviewing</string>
@@ -327,4 +332,13 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="error_email">ankidroid@gmail.com</string>
 <string name="error_reporting_choice">Error reporting mode</string>
 <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
+
+<!--  Widget -->
+<string name="widget_pref">Widget</string>
+<string name="widget_minimum_cards_due">Widget notification threshold</string>
+<string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised</string>
+<string name="widget_minimum_cards_due_vibrate">Vibrate</string>
+<string name="widget_minimum_cards_due_blink">Blink light</string>
+<string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
+<string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
 </resources>

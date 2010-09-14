@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2009 Daniel SvŠrd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Svï¿½rd <daniel.svard@gmail.com>                             *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -245,8 +245,13 @@ public class Card {
     }
 
     public String allTags() {
-        // Non-Canonified string of fact and model tags
-        return tagsBySrc[TAGS_FACT] + "," + tagsBySrc[TAGS_MODEL];
+    	// Non-Canonified string of fact and model tags
+    	if ((tagsBySrc[TAGS_FACT].length() > 0) && (tagsBySrc[TAGS_MODEL].length() > 0))
+    		return tagsBySrc[TAGS_FACT] + "," + tagsBySrc[TAGS_MODEL];
+    	else if (tagsBySrc[TAGS_FACT].length() > 0)
+    		return tagsBySrc[TAGS_FACT];
+    	else
+    		return tagsBySrc[TAGS_MODEL];
     }
 
     public boolean hasTag(String tag) {
@@ -259,11 +264,19 @@ public class Card {
 		return myModel.getCardModel(cardModelId);
 	}
 
-	// Loading tags for this card. Only needed when we modify the card fields and need to update question and answer.
+	// Loading tags for this card. Needed when:
+	// - we modify the card fields and need to update question and answer.
+	// - we check is a card is marked
 	public void loadTags() {
 		Cursor cursor = null;
 
 		int tagSrc = 0;
+		
+		// Flush tags
+		for (int i=0; i<tagsBySrc.length; i++) {
+			tagsBySrc[i] = "";
+		}
+		
 		try {
 			cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
 								"SELECT tags.tag, cardTags.src " +
@@ -275,7 +288,7 @@ public class Card {
 			while (cursor.moveToNext()) {
 				tagSrc = cursor.getInt(1);
 				if (tagsBySrc[tagSrc].length() > 0) {
-					tagsBySrc[tagSrc] += " " + cursor.getString(0);
+					tagsBySrc[tagSrc] += "," + cursor.getString(0);
 				} else {
 					tagsBySrc[tagSrc] += cursor.getString(0);
 				}

@@ -124,4 +124,25 @@
 		<item>1</item>
 		<item>2</item>
 	</string-array>
+	
+	<string-array name="widget_minimum_cards_due_labels">
+		<item>10</item>
+		<item>25</item>
+		<item>50</item>
+		<item>75</item>
+		<item>100</item>
+		<item>150</item>
+		<item>200</item>
+		<item>Never</item>
+	</string-array>
+	<string-array name="widget_minimum_cards_due_values">
+		<item>10</item>
+		<item>25</item>
+		<item>50</item>
+		<item>75</item>
+		<item>100</item>
+		<item>150</item>
+		<item>200</item>
+		<item>1000000</item>
+	</string-array>
 </resources>

@@ -40,8 +40,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 	public static final int TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS = 1;
 	public static final int TASK_TYPE_ANSWER_CARD = 2;
 	public static final int TASK_TYPE_SUSPEND_CARD = 3;
-    public static final int TASK_TYPE_UPDATE_FACT = 4;
-    
+	public static final int TASK_TYPE_MARK_CARD = 4;
+	public static final int TASK_TYPE_UPDATE_FACT = 5;
+
 	/**
 	 * Possible outputs trying to load a deck
 	 */
@@ -114,6 +115,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 		
 			case TASK_TYPE_SUSPEND_CARD:
 				return doInBackgroundSuspendCard(params);
+				
+			case TASK_TYPE_MARK_CARD:
+				return doInBackgroundMarkCard(params);
         
 			case TASK_TYPE_UPDATE_FACT:
 				return doInBackgroundUpdateFact(params);
@@ -258,6 +262,38 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 			stop = System.currentTimeMillis();
 			Log.v(TAG, "doInBackgroundSuspendCard - Loaded new card in " + (stop - start) + " ms.");
 			publishProgress(new TaskData(newCard));
+			ankiDB.database.setTransactionSuccessful();
+		} finally 
+		{
+			ankiDB.database.endTransaction();
+		}
+		
+		return null;
+	}
+	
+	private TaskData doInBackgroundMarkCard(TaskData... params)
+	{
+		long start, stop;
+		Deck deck = params[0].getDeck();
+		Card currentCard = params[0].getCard();
+
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
+		ankiDB.database.beginTransaction();
+		try 
+		{
+			if (currentCard != null)
+			{
+				start = System.currentTimeMillis();
+				if (currentCard.hasTag(Deck.TAG_MARKED)) {
+					deck.deleteTag(currentCard.factId, Deck.TAG_MARKED);
+				} else {
+					deck.addTag(currentCard.factId, Deck.TAG_MARKED);
+				}
+				stop = System.currentTimeMillis();
+				Log.v(TAG, "doInBackgroundMarkCard - Marked card in " + (stop - start) + " ms.");
+			}
+	
+			publishProgress(new TaskData(currentCard));
 			ankiDB.database.setTransactionSuccessful();
 		} finally 
 		{

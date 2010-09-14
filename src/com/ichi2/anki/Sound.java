@@ -65,15 +65,12 @@ public class Sound {
 	 */
 	private static long mStartSoundTime, mFinishSoundTime;
 	
-	/**
-	 * Parses the content (belonging to deck deckFilename), cleaning the sound markers used and extracting the sound paths (stored on mSoundPaths)
-	 * @param deckFilename Deck's filename whose content is being parsed
-	 * @param content HTML content of a card
-	 * @return content Content without the markers for sounds, ready to be displayed
-	 */
 	public static String parseSounds(String deckFilename, String content)
 	{
 		mStartTime = System.currentTimeMillis();
+
+		StringBuilder stringBuilder = new StringBuilder();
+		String contentLeft = content;
 		
 		Log.i(TAG, "parseSounds");
 		mSoundPaths = new ArrayList<String>();
@@ -81,24 +78,31 @@ public class Sound {
 		// While there is matches of the pattern for sound markers
 		while(matcher.find())
 		{
-			// Clean the sound marker from content
-			String contentToReplace = matcher.group();
-			content = content.replace(contentToReplace, "");
-			
 			// Get the sound file name
 			String sound = matcher.group(1);
-			Log.i(TAG, "Sound " + matcher.groupCount() + ": " + sound);
+			//Log.i(TAG, "Sound " + matcher.groupCount() + ": " + sound);
 			
 			// Construct the sound path and store it
-			String soundPath = deckFilename.replaceAll(".anki", "") + ".media/" + sound;
-			Log.i(TAG, "parseSounds - soundPath = " + soundPath);
+			String soundPath = deckFilename.replace(".anki", ".media/") + sound;
+			//Log.i(TAG, "parseSounds - soundPath = " + soundPath);
 			mSoundPaths.add(soundPath);
+			
+			// Construct the new content, appending the substring from the beginning of the content left until the beginning of the sound marker
+			// and then appending the html code to add the play button
+			String soundMarker = matcher.group();
+			int markerStart = contentLeft.indexOf(soundMarker);
+			stringBuilder.append(contentLeft.substring(0, markerStart));
+			stringBuilder.append("<a onclick=\"window.interface.playSound(this.title);\" title=\"" + soundPath + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+			contentLeft = contentLeft.substring(markerStart + soundMarker.length());
+			//Log.i(TAG, "Content left = " + contentLeft);
 		}
+		
+		stringBuilder.append(contentLeft);
 		
 		mFinishTime = System.currentTimeMillis();
 		Log.i(TAG, mSoundPaths.size() + " sounds parsed in " + (mFinishTime - mStartTime) + " milliseconds");
 		
-		return content;
+		return stringBuilder.toString();
 	}
 	
 	/**
@@ -107,7 +111,7 @@ public class Sound {
 	public static void playSounds()
 	{
 		// If there are sounds to play for the current card, play the first one
-		if(mSoundPaths.size() > 0)
+		if(mSoundPaths != null && mSoundPaths.size() > 0)
 		{
 			numSoundsPlayed = 0;
 			mStartTime = System.currentTimeMillis();
@@ -130,33 +134,52 @@ public class Sound {
 			mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
 
 				@Override
-						public void onCompletion(MediaPlayer mp) {
+				public void onCompletion(MediaPlayer mp) {
 					releaseSound();
 					numSoundsPlayed++;
 					
 					mFinishSoundTime = System.currentTimeMillis();
-					Log.i(TAG, "Sound " + numSoundsPlayed + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
+					//Log.i(TAG, "Sound " + numSoundsPlayed + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
 					
 					// If there is still more sounds to play for the current card, play the next one
 					if(numSoundsPlayed < mSoundPaths.size())
-							{
+					{
 						playSound(numSoundsPlayed);
 					}
 					else
-							{
+					{
 						// If it was the last sound, annotate the total time taken
 						mFinishTime = System.currentTimeMillis();
-						Log.i(TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) + " milliseconds");
-							}
-						}
-				
-					});
+						//Log.i(TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) + " milliseconds");
+					}
+				}});
 			
 			mMediaPlayer.start();
 		} catch(Exception e) 
 		{
 			Log.e(TAG, "playSounds - Error reproducing sound " + (soundToPlayIndex + 1) + " = " + e.getMessage());
 			releaseSound();
+		}
+	}
+	
+	public static void playSound(String soundPath)
+	{
+		if(mSoundPaths.contains(soundPath))
+		{
+			mStartSoundTime = System.currentTimeMillis();
+			mMediaPlayer = new MediaPlayer();
+			try {
+				mMediaPlayer.setDataSource(soundPath);
+				mMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
+				mMediaPlayer.prepare();
+				mMediaPlayer.start();
+			} catch(Exception e) 
+			{
+				Log.e(TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
+				releaseSound();
+			}
+			mFinishSoundTime = System.currentTimeMillis();
+			Log.i(TAG, "Sound " + soundPath + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
 		}
 	}
 	
