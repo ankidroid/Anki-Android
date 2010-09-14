@@ -336,7 +336,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <!--  Widget -->
 <string name="widget_pref">Widget</string>
 <string name="widget_minimum_cards_due">Widget notification threshold</string>
-<string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notfication is raised</string>
+<string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised</string>
 <string name="widget_minimum_cards_due_vibrate">Vibrate</string>
 <string name="widget_minimum_cards_due_blink">Blink light</string>
 <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
