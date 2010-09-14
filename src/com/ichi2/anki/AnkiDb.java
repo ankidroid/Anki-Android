@@ -77,6 +77,9 @@ public class AnkiDb
 		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_normal.anki")) {
 			database.rawQuery("PRAGMA synchronous=NORMAL", null);
 			Log.w(TAG, "sync = normal");
+		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow-f-normal.anki")) {
+			database.rawQuery("PRAGMA synchronous=NORMAL", null);
+			Log.w(TAG, "sync = normal");
 		}
 			Log.w(TAG, "DB: " + ankiFilename);
 				Cursor cur = database.rawQuery("PRAGMA journal_mode", null);
