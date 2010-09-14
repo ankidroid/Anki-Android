@@ -223,14 +223,12 @@ public class Stats
 
 	public static void updateAllStats(Stats global, Stats daily, Card card, int ease, String oldState)
 	{
-		/*
 		updateStats(global, card, ease, oldState);
 		updateStats(daily, card, ease, oldState);
 	}
 
 	public static void updateStats(Stats stats, Card card, int ease, String oldState)
 	{
-		
 		stats.reps += 1;
 	    double delay = card.totalTime();
 	    if (delay >= 60)
@@ -249,48 +247,8 @@ public class Stats
 			e.printStackTrace();
 		}
 
-	    //stats.toDB();
-		*/
-
-		global.reps += 1;
-		daily.reps += 1;
-		double delay = card.totalTime();
-		int sti = (oldState == "young") ? 0 : 1;
-		AnkiDb ankiDb = AnkiDatabaseManager.getDatabase(global.deck.deckPath);
-		if (delay >= 60) {
-			global.reviewTime += 60;
-			daily.reviewTime += 60;
-			ankiDb.update_all_stats_no_avg[sti][ease].execute();
-		} else {
-			global.reviewTime += delay;
-			global.averageTime = (global.reviewTime / (double) global.reps);
-			daily.reviewTime += delay;
-			daily.averageTime = (daily.reviewTime / (double) daily.reps);
-			if (sti == 0) {
-					switch(ease) {
-						case 0: global.youngEase0 += 1; daily.youngEase0 += 1; break;
-						case 1: global.youngEase1 += 1; daily.youngEase1 += 1; break;
-						case 2: global.youngEase2 += 1; daily.youngEase2 += 1; break;
-						case 3: global.youngEase3 += 1; daily.youngEase3 += 1; break;
-						case 4: global.youngEase4 += 1; daily.youngEase4 += 1; break;
-						default:
-					}
-				} else {
-					switch(ease) {
-						case 0: global.matureEase0 += 1; daily.matureEase0 += 1; break;
-						case 1: global.matureEase1 += 1; daily.matureEase1 += 1; break;
-						case 2: global.matureEase2 += 1; daily.matureEase2 += 1; break;
-						case 3: global.matureEase3 += 1; daily.matureEase3 += 1; break;
-						case 4: global.matureEase4 += 1; daily.matureEase4 += 1; break;
-						default:
-					}
-				}
-			ankiDb.update_all_stats_and_avg[sti][ease].bindDouble(1, delay);
-			ankiDb.update_all_stats_and_avg[sti][ease].bindDouble(2, delay);
-			ankiDb.update_all_stats_and_avg[sti][ease].execute();
-		}
+	    stats.toDB();
 	}
-
 
 	public static Stats globalStats(Deck deck) 
 	{

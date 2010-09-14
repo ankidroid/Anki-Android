@@ -41,7 +41,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import android.database.Cursor;
 
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
@@ -155,18 +154,13 @@ public class Reviewer extends Activity {
 		//@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean showAnswer)
 		{
-			Log.w(TAG, "Flip card changed:");
+			Log.i(TAG, "Flip card changed:");
 			Sound.stopSounds();
 			
-			long start = System.currentTimeMillis();
-			if (showAnswer) {
+			if (showAnswer)
 				displayCardAnswer();
-				Log.w(TAG, "flipcard listener - displayed card answer in " + (System.currentTimeMillis() - start) + " ms.");
-			start = System.currentTimeMillis();
-			} else {
+			else
 				displayCardQuestion();
-				Log.w(TAG, "flipcard listener - displayed card question in " + (System.currentTimeMillis() - start) + " ms.");
-			}
 		}
 	};
 	
@@ -282,8 +276,6 @@ public class Reviewer extends Activity {
 			start2 = start;
 			Reviewer.this.setProgressBarIndeterminateVisibility(true);
 			blockControls();
-//			if
-//				AnkiDb ankiDb = AnkiDatabaseManager.getDatabase(AnkiDroidApp.deck().deckPath);
 		}
 
 		public void onPostExecute(DeckTask.TaskData result) {
@@ -298,29 +290,9 @@ public class Reviewer extends Activity {
 			    Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
 			    Reviewer.this.finish();
 			}
-			lastTime = System.currentTimeMillis() - start2;
-			numCardsAnswered += 1;
-			if (numCardsAnswered > 0) {
-				avgTime += (lastTime - avgTime) / numCardsAnswered;
-				AnkiDb ankiDb = AnkiDatabaseManager.getDatabase(AnkiDroidApp.deck().deckPath);
-				Cursor cur = ankiDb.database.rawQuery("PRAGMA journal_mode", null);
-				cur.moveToFirst();
-				String jm = cur.getString(0).substring(0,1).toUpperCase();
-				cur.close();
-				cur = ankiDb.database.rawQuery("PRAGMA synchronous", null);
-				cur.moveToFirst();
-				long sn = cur.getLong(0);
-				cur.close();
-				Log.w(TAG, "onProgressUpdate - Total new card received in " + lastTime + " ms.");
-
-				Toast sessionMessage = Toast.makeText(Reviewer.this, "-_-Flags: " + jm + sn + " Reps: " + numCardsAnswered + " Last: " + lastTime + " Avg: " + avgTime + "-_-", Toast.LENGTH_SHORT);
-				sessionMessage.show();
-			}
 		}
 
 		public void onProgressUpdate(DeckTask.TaskData... values) {
-				Log.w(TAG, "onProgressUpdate - just in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 			sessioncomplete = false;
 			nomorecards = false;
 
@@ -341,11 +313,10 @@ public class Reviewer extends Activity {
 		        sessionMessage = Toast.makeText(Reviewer.this, "Session time limit reached", Toast.LENGTH_SHORT);
 
 		    } else {
-				Log.w(TAG, "onProgressUpdate - before get card in " + (System.currentTimeMillis() - start) + " ms.");
-				start = System.currentTimeMillis();
 		        // session limits not reached, show next card
 		        Card newCard = values[0].getCard();
-				Log.w(TAG, "onProgressUpdate - get card in " + (System.currentTimeMillis() - start) + " ms.");
+				Log.w(TAG, "answerCard - get card (phase 1) in " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 
 		        // If the card is null means that there are no more cards scheduled for review.
 		        if (newCard == null)
@@ -354,19 +325,31 @@ public class Reviewer extends Activity {
 		        	return;
 		        }
 		        
+							Log.w(TAG, "onProgressUpdate - checked null " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 		        // Start reviewing next card
 		        Reviewer.this.mCurrentCard = newCard;
 		        Reviewer.this.setProgressBarIndeterminateVisibility(false);
+							Log.w(TAG, "onProgressUpdate - visibility " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 		        //Reviewer.this.enableControls();
 				Reviewer.this.unblockControls();
+							Log.w(TAG, "onProgressUpdate - unblock ctrl " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 		        Reviewer.this.reviewNextCard();
+							Log.w(TAG, "onProgressUpdate - review next " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 		    }
+
+				Log.w(TAG, "answerCard - Checked times (phase 3) in " + (System.currentTimeMillis() - start) + " ms.");
+				start = System.currentTimeMillis();
 
 
 			// Show a message to user if a session limit has been reached.
 			if (sessionMessage != null)
 				sessionMessage.show();
 
+			Log.w(TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - start2) + " ms.");
 		}
 
 	};

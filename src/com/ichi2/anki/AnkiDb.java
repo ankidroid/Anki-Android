@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 /**
@@ -43,122 +42,13 @@ public class AnkiDb
 	private static final String TAG = "AnkiDroid";
 
 	/**
-	 * Prepared statements for quick updates to the database
-	 */
-	private static final String[] card_state = new String[]{"young", "mature"};
-	public SQLiteStatement space_other_cards;
-	public SQLiteStatement[][] space_card;
-	public SQLiteStatement[][] update_all_stats_and_avg;
-	public SQLiteStatement[][] update_all_stats_no_avg;
-	
-	/**
 	 * Open a database connection to an ".anki" SQLite file.
 	 */
 	public AnkiDb(String ankiFilename) throws SQLException
 	{
 		database = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-		Log.w(TAG, "DB: " + ankiFilename);
-		if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_wal.anki")) {
-			database.rawQuery("PRAGMA journal_mode=WAL", null);
-			database.rawQuery("PRAGMA synchronous=NORMAL", null);
-			Log.w(TAG, "journal = wal");
-		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_truncate.anki")) {
-			database.rawQuery("PRAGMA journal_mode=TRUNCATE", null);
-			database.rawQuery("PRAGMA synchronous=NORMAL", null);
-			Log.w(TAG, "journal = truncate");
-		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_persist.anki")) {
-			database.rawQuery("PRAGMA journal_mode=PERSIST", null);
-			database.rawQuery("PRAGMA synchronous=NORMAL", null);
-			Log.w(TAG, "journal = persist");
-		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_memory.anki")) {
-			database.rawQuery("PRAGMA journal_mode=MEMORY", null);
-			database.rawQuery("PRAGMA synchronous=NORMAL", null);
-			Log.w(TAG, "journal = memory");
-		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow_normal.anki")) {
-			database.rawQuery("PRAGMA synchronous=NORMAL", null);
-			Log.w(TAG, "sync = normal");
-		} else if (ankiFilename.equals("/mnt/sdcard/AnkiDroid/slow-f-normal.anki")) {
-			database.rawQuery("PRAGMA synchronous=NORMAL", null);
-			Log.w(TAG, "sync = normal");
-		}
-			Log.w(TAG, "DB: " + ankiFilename);
-				Cursor cur = database.rawQuery("PRAGMA journal_mode", null);
-				cur.moveToFirst();
-				String jm = cur.getString(0).substring(0,1).toUpperCase();
-				cur.close();
-				cur = database.rawQuery("PRAGMA synchronous", null);
-				cur.moveToFirst();
-				long sn = cur.getLong(0);
-				cur.close();
-				Log.w(TAG, "Opening DB: " + ankiFilename + " flags: " + jm + sn);
-
-		space_other_cards = database.compileStatement("UPDATE cards " +
-        		"SET spaceUntil = ?, " +
-        		"combinedDue = max(?, due), " +
-        		"modified = ?, " +
-        		"isDue = 0 " +
-        		"WHERE factId = ?");
-
-		String space_card_sql_templ = "UPDATE cards " +
-        		"SET interval = ?, " +
-        		"lastInterval = ?, " +
-        		"due = ?, " +
-        		"lastDue = ?, " +
-        		"factor = ?, " +
-        		"lastFactor = ?, " +
-        		"firstAnswered = ?, " +
-        		"reps = ?, " +
-        		"successive = ?, " +
-        		"averageTime = ?, " +
-        		"reviewTime = ?, " +
-        		"%sEase%1d = ?, " +
-        		"yesCount = ?, " +
-        		"noCount = ?, " +
-        		"spaceUntil = ?, " +
-					 	"combinedDue = ?, " +
-					 	"type = ? " +
-        		"WHERE id = ?";
-		String space_card_sql[][] = new String[2][5];
-		space_card = new SQLiteStatement[2][5];
-		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 5; j++) {
-				space_card_sql[i][j] = String.format(space_card_sql_templ, card_state[i], j);
-				Log.e(TAG, "AnkiDB - prep stat: '" + space_card_sql[i][j] + "'");
-				space_card[i][j] = database.compileStatement(space_card_sql[i][j]);
-			}
-		}
-
-
-		
 	}
-
-	public void prepareStatsStatements(Stats global, Stats daily) {
-		String update_all_stats_and_avg_templ = "UPDATE stats " +
-        		"SET reps = reps + 1, " +
-        		"reviewTime = reviewTime + ?, " +
-        		"averageTime = (reviewTime + ?)/(reps+1), " +
-        		"%sEase%1d = %sEase%1d + 1 " +
-        		"WHERE id = " + global.id + " or id = " + daily.id;
-		String update_all_stats_no_avg_templ = "UPDATE stats " +
-        		"SET reps = reps + 1, " +
-        		"reviewTime = reviewTime + 60, " +
-        		"%sEase%1d = %sEase%1d + 1 " +
-        		"WHERE id = " + global.id + " or id = " + daily.id;
-		String update_all_stats_and_avg_sql[][] = new String[2][5];
-		String update_all_stats_no_avg_sql[][] = new String[2][5];
-		update_all_stats_and_avg = new SQLiteStatement[2][5];
-		update_all_stats_no_avg = new SQLiteStatement[2][5];
-		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 5; j++) {
-				update_all_stats_and_avg_sql[i][j] = String.format(update_all_stats_and_avg_templ, card_state[i], j, card_state[i], j);
-				update_all_stats_no_avg_sql[i][j] = String.format(update_all_stats_no_avg_templ, card_state[i], j, card_state[i], j);
-				Log.e(TAG, "AnkiDB - prep stats stat: '" + update_all_stats_and_avg_sql[i][j] + "'");
-				update_all_stats_and_avg[i][j] = database.compileStatement(update_all_stats_and_avg_sql[i][j]);
-				update_all_stats_no_avg[i][j] = database.compileStatement(update_all_stats_no_avg_sql[i][j]);
-			}
-		}	
-	}
-
+	
 	/**
 	 * Closes a previously opened database connection.
 	 */
