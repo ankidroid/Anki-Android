@@ -548,9 +548,11 @@ public class Reviewer extends Activity {
 			item.setTitle(R.string.menu_mark_card);
 			item.setIcon(R.drawable.ic_menu_star);
 		}
-		item = menu.findItem(MENU_SEARCH);
-		boolean lookupPossible = clipboard.hasText() && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT");
-		item.setEnabled(lookupPossible);
+		if (prefTextSelection) {
+			item = menu.findItem(MENU_SEARCH);
+			boolean lookupPossible = clipboard.hasText() && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT");
+			item.setEnabled(lookupPossible);
+		}
 		return true;
 	}
 	
@@ -595,7 +597,7 @@ public class Reviewer extends Activity {
 			return true;
 
 		case MENU_SEARCH:
-			if (clipboard.hasText()&& Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT")) {
+			if (prefTextSelection && clipboard.hasText() && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT")) {
 				Intent aedictIntent = new Intent("sk.baka.aedict.action.ACTION_SEARCH_EDICT");
 				aedictIntent.putExtra("kanjis", clipboard.getText());
 				startActivity(aedictIntent);
