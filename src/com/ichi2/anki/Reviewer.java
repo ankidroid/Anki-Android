@@ -13,6 +13,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +30,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
@@ -48,6 +50,16 @@ public class Reviewer extends Activity {
 	 * Tag for logging messages
 	 */
 	private static final String TAG = "AnkiDroid";
+	
+	/**
+	 * Variables used to track the time spent displaying a card
+	 */
+	private static long mDisplayCardStartTime, mDisplayCardFinishTime;
+	
+	/**
+	 * Variables used to track the time spent updating and displaying a card
+	 */
+	private static long mUpdateCardStartTime, mUpdateCardFinishTime;
 	
 	/**
 	 * Result codes that are returned when this activity finishes.
@@ -446,7 +458,8 @@ public class Reviewer extends Activity {
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		mCard.getSettings().setBuiltInZoomControls(true);
 		mCard.getSettings().setJavaScriptEnabled(true);
-		mCard.setWebChromeClient(new MyWebChromeClient());
+		mCard.setWebViewClient(new AnkiDroidWebViewClient());
+		mCard.setWebChromeClient(new AnkiDroidWebChromeClient());
 		mCard.addJavascriptInterface(new JavaScriptInterface(), "interface");
 		mScaleInPercent = mCard.getScale();
 		mEase1 = (Button) findViewById(R.id.ease1);
@@ -829,8 +842,11 @@ public class Reviewer extends Activity {
 	private void updateCard(String content)
 	{
 		Log.i(TAG, "updateCard");
-
-		Log.i(TAG, "Initial content card = \n" + content);
+		mUpdateCardStartTime = System.currentTimeMillis();
+		
+		//Log.i(TAG, "Initial content card = \n" + content);
+		//content = Image.parseImages(deckFilename, content);
+		//Log.i(TAG, "content after parsing images = \n" + content);
 		content = Sound.parseSounds(deckFilename, content);
 		
 		// In order to display the bold style correctly, we have to change
@@ -1066,11 +1082,30 @@ public class Reviewer extends Activity {
 		mTextBarBlue.setText(newCount);
 	}
 	
+	final class AnkiDroidWebViewClient extends WebViewClient {
+		
+		@Override
+		public void onPageStarted(WebView view, String url, Bitmap favicon)
+		{
+			mDisplayCardStartTime = System.currentTimeMillis();
+		}
+		
+		@Override
+		public void  onPageFinished  (WebView view, String url)
+		{
+			mDisplayCardFinishTime = System.currentTimeMillis();
+			mUpdateCardFinishTime = System.currentTimeMillis();
+			
+			Log.i(TAG, "Time spent displaying card = "+ (mDisplayCardFinishTime - mDisplayCardStartTime) + " milliseconds");
+			Log.i(TAG, "Time spent updating card = "+ (mUpdateCardFinishTime - mUpdateCardStartTime) + " milliseconds");
+		}
+	}
+	
     /**
      * Provides a hook for calling "alert" from javascript. Useful for
      * debugging your javascript.
      */
-    final class MyWebChromeClient extends WebChromeClient {
+    final class AnkiDroidWebChromeClient extends WebChromeClient {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
             Log.i(TAG, message);
@@ -1081,9 +1116,7 @@ public class Reviewer extends Activity {
     
 	final class JavaScriptInterface {
 		
-		JavaScriptInterface() {
-			
-		}
+		JavaScriptInterface() {}
 		
         /**
          * This is not called on the UI thread. Send a message that will be

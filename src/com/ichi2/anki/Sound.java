@@ -65,12 +65,6 @@ public class Sound {
 	 */
 	private static long mStartSoundTime, mFinishSoundTime;
 	
-	/**
-	 * Parses the content (belonging to deck deckFilename), cleaning the sound markers used and extracting the sound paths (stored on mSoundPaths)
-	 * @param deckFilename Deck's filename whose content is being parsed
-	 * @param content HTML content of a card
-	 * @return content Content without the markers for sounds and with play buttons for each sound instead, ready to be displayed
-	 */
 	public static String parseSounds(String deckFilename, String content)
 	{
 		mStartTime = System.currentTimeMillis();
@@ -98,7 +92,7 @@ public class Sound {
 			String soundMarker = matcher.group();
 			int markerStart = contentLeft.indexOf(soundMarker);
 			stringBuilder.append(contentLeft.substring(0, markerStart));
-			stringBuilder.append("<a onclick=\"window.interface.playSound(this.title);\" title=\"" + soundPath + "\"><span style=\"padding:5px;display:inline-block; vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+			stringBuilder.append("<a onclick=\"window.interface.playSound(this.title);\" title=\"" + soundPath + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
 			contentLeft = contentLeft.substring(markerStart + soundMarker.length());
 			//Log.i(TAG, "Content left = " + contentLeft);
 		}
@@ -145,7 +139,7 @@ public class Sound {
 					numSoundsPlayed++;
 					
 					mFinishSoundTime = System.currentTimeMillis();
-					Log.i(TAG, "Sound " + numSoundsPlayed + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
+					//Log.i(TAG, "Sound " + numSoundsPlayed + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
 					
 					// If there is still more sounds to play for the current card, play the next one
 					if(numSoundsPlayed < mSoundPaths.size())
@@ -156,7 +150,7 @@ public class Sound {
 					{
 						// If it was the last sound, annotate the total time taken
 						mFinishTime = System.currentTimeMillis();
-						Log.i(TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) + " milliseconds");
+						//Log.i(TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) + " milliseconds");
 					}
 				}});
 			
