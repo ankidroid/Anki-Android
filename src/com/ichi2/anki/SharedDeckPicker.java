@@ -472,10 +472,12 @@ public class SharedDeckPicker extends Activity {
 				{
 					case Download.START:
 						progressText.setText(res.getString(R.string.starting_download));
+						progressBar.setProgress(0);
 						break;
 						
 					case Download.DOWNLOADING:
 						progressText.setText(res.getString(R.string.downloading));
+						progressBar.setProgress(download.getProgress());
 						break;
 						
 					case Download.PAUSED:
@@ -484,6 +486,7 @@ public class SharedDeckPicker extends Activity {
 					
 					case Download.COMPLETE:
 						progressText.setText(res.getString(R.string.downloaded));
+						progressBar.setProgress(0);
 						break;
 					
 					case SharedDeckDownload.UPDATE:
