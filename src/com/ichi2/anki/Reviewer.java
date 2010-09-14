@@ -18,9 +18,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,7 +81,8 @@ public class Reviewer extends Activity {
 	private static final int MENU_CLEAR_WHITEBOARD = 1;
 	private static final int MENU_EDIT = 2;
 	private static final int MENU_SUSPEND = 3;
-	private static final int MENU_MARK = 4;
+	private static final int MENU_SEARCH = 4;
+	private static final int MENU_MARK = 5;
 	
 	/** Max size of the font for dynamic calculation of font size */
 	protected static final int MAX_DYNAMIC_FONT_SIZE = 14;
@@ -105,12 +108,14 @@ public class Reviewer extends Activity {
 	private boolean prefTimer;
 	private boolean prefWhiteboard;
 	private boolean prefWriteAnswers;
+	private boolean prefTextSelection;
 	private boolean prefNotificationBar;
 	private boolean prefUseRubySupport; // Parse for ruby annotations
 	private String deckFilename;
 	private int prefHideQuestionInAnswer; // Hide the question when showing the answer
-	
-	private static final int HQIA_DO_HIDE = 0; // HQIA = Hide Question In Answer
+
+	/** Hide Question In Answer choices */
+	private static final int HQIA_DO_HIDE = 0;
 	private static final int HQIA_DO_SHOW = 1;
 	private static final int HQIA_CARD_MODEL = 2;
 
@@ -132,6 +137,7 @@ public class Reviewer extends Activity {
 	private Chronometer mCardTimer;
 	private Whiteboard mWhiteboard;
 	private ProgressDialog mProgressDialog;
+	private ClipboardManager clipboard;
 
 	private float mScaleInPercent;
 	private boolean mShowWhiteboard = false;
@@ -141,7 +147,7 @@ public class Reviewer extends Activity {
 	private long mSessionTimeLimit;
 	private int mSessionCurrReps;
 
-	// Handler for the flip toogle button, between the question and the answer
+	// Handler for the flip toggle button, between the question and the answer
 	// of a card
 	private CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener()
 	{
@@ -191,6 +197,28 @@ public class Reviewer extends Activity {
 		}
 	};
 
+	/**
+	 * Select Text in the webview and automatically sends the selected text to the clipboard
+	 * From http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
+	 */
+	private void selectAndCopyText() {
+		try {
+			KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
+			shiftPressEvent.dispatch(mCard);
+		} catch (Exception e) {
+			throw new AssertionError(e);
+		}
+	}
+
+	private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener()
+	{
+		public boolean onLongClick(View view)
+		{
+			selectAndCopyText();
+			return true;
+		}
+	};
+
 	DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener()
     {
         public void onPreExecute() {
@@ -202,11 +230,15 @@ public class Reviewer extends Activity {
             // Set the correct value for the flip card button - That triggers the
             // listener which displays the question of the card
             mFlipCard.setChecked(false);
-            mWhiteboard.clear();
+            
+            if (prefWhiteboard)
+                mWhiteboard.clear();
+            
             if (prefTimer) {
             	mCardTimer.setBase(SystemClock.elapsedRealtime());
             	mCardTimer.start();
             }
+
             mProgressDialog.dismiss();
         }
 
@@ -243,7 +275,6 @@ public class Reviewer extends Activity {
 			start = System.currentTimeMillis();
 			start2 = start;
 			Reviewer.this.setProgressBarIndeterminateVisibility(true);
-			//disableControls();
 			blockControls();
 		}
 
@@ -270,7 +301,6 @@ public class Reviewer extends Activity {
 		    long sessionRepLimit = deck.getSessionRepLimit();
 		    long sessionTime = deck.getSessionTimeLimit();
 		    Toast sessionMessage = null;
-
 
 		    if( (sessionRepLimit > 0) && (Reviewer.this.mSessionCurrReps >= sessionRepLimit) )
 		    {
@@ -341,7 +371,7 @@ public class Reviewer extends Activity {
 			restorePreferences();
 			
 			// Remove the status bar and make title bar progress available
-			if(prefNotificationBar == false) 
+			if(prefNotificationBar == false)
 			{
 				getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			}
@@ -416,7 +446,8 @@ public class Reviewer extends Activity {
 		else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
 			sdLayout.setPadding(0, 100, 0, 0);
 
-		mWhiteboard.rotate();
+	  if (prefWhiteboard)
+	      mWhiteboard.rotate();
 	}
 	
     /**
@@ -457,6 +488,14 @@ public class Reviewer extends Activity {
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		mCard.getSettings().setBuiltInZoomControls(true);
+
+		if (prefTextSelection) {
+			mCard.setOnLongClickListener(mLongClickHandler);
+			clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+		} else {
+			mCard.setFocusable(false);
+		}
+
 		mCard.getSettings().setJavaScriptEnabled(true);
 		mCard.setWebViewClient(new AnkiDroidWebViewClient());
 		mCard.setWebChromeClient(new AnkiDroidWebChromeClient());
@@ -470,7 +509,6 @@ public class Reviewer extends Activity {
 		mTextBarRed = (TextView) findViewById(R.id.red_number);
 		mTextBarBlack = (TextView) findViewById(R.id.black_number);
 		mTextBarBlue = (TextView) findViewById(R.id.blue_number);
-		mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
 		if (prefTimer)
 			mCardTimer = (Chronometer) findViewById(R.id.card_time);
 		if (prefWhiteboard)
@@ -503,20 +541,30 @@ public class Reviewer extends Activity {
 		item.setIcon(android.R.drawable.ic_menu_edit);
 		item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
 		item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		if (prefTextSelection)
+		{
+			item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, R.string.menu_search);
+			item.setIcon(R.drawable.ic_menu_search);
+		}
 		item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
 		return true;
 	}
 	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		MenuItem markItem = menu.findItem(MENU_MARK);
+		MenuItem item = menu.findItem(MENU_MARK);
 		mCurrentCard.loadTags();
 		if (mCurrentCard.hasTag(Deck.TAG_MARKED)) {
-			markItem.setTitle(R.string.menu_marked);
-			markItem.setIcon(R.drawable.star_big_on);
+			item.setTitle(R.string.menu_marked);
+			item.setIcon(R.drawable.star_big_on);
 		} else {
-			markItem.setTitle(R.string.menu_mark_card);
-			markItem.setIcon(R.drawable.ic_menu_star);
+			item.setTitle(R.string.menu_mark_card);
+			item.setIcon(R.drawable.ic_menu_star);
+		}
+		if (prefTextSelection) {
+			item = menu.findItem(MENU_SEARCH);
+			boolean lookupPossible = clipboard.hasText() && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT");
+			item.setEnabled(lookupPossible);
 		}
 		return true;
 	}
@@ -560,7 +608,16 @@ public class Reviewer extends Activity {
 					mAnswerCardHandler,
 					new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
 			return true;
-		
+
+		case MENU_SEARCH:
+			if (prefTextSelection && clipboard.hasText() && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT")) {
+				Intent aedictIntent = new Intent("sk.baka.aedict.action.ACTION_SEARCH_EDICT");
+				aedictIntent.putExtra("kanjis", clipboard.getText());
+				startActivity(aedictIntent);
+				clipboard.setText("");
+			}
+			return true;
+
 		case MENU_MARK:
 			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, 
 					mMarkCardHandler,
@@ -799,6 +856,7 @@ public class Reviewer extends Activity {
 		prefTimer = preferences.getBoolean("timer", true);
 		prefWhiteboard = preferences.getBoolean("whiteboard", true);
 		prefWriteAnswers = preferences.getBoolean("writeAnswers", false);
+		prefTextSelection = preferences.getBoolean("textSelection", false);
 		deckFilename = preferences.getString("deckFilename", "");
 		prefUseRubySupport = preferences.getBoolean("useRubySupport", false);
 		prefNotificationBar = preferences.getBoolean("notificationBar", true);
@@ -854,11 +912,10 @@ public class Reviewer extends Activity {
 		content = content.replace("font-weight:600;", "font-weight:700;");
 
 		// If ruby annotation support is activated, then parse and add markup
-		if (prefUseRubySupport) {
+		if (prefUseRubySupport)
 			content = RubyParser.ankiRubyToMarkup(content);
-		}
 
-		// Add CSS for font colour and font size
+		// Add CSS for font color and font size
 		if (mCurrentCard != null) {
 			Deck currentDeck = AnkiDroidApp.deck();
 			Model myModel = Model.getModel(currentDeck, mCurrentCard.cardModelId, false);
@@ -909,8 +966,7 @@ public class Reviewer extends Activity {
 		hideEaseButtons();
 		
 		// If the user wants to write the answer
-		if(prefWriteAnswers)
-		{
+		if (prefWriteAnswers) {
 			mAnswerField.setVisibility(View.VISIBLE);
 			
 			// Show soft keyboard
@@ -922,7 +978,8 @@ public class Reviewer extends Activity {
 		mFlipCard.requestFocus();
 
 		String displayString = enrichWithQASpan(mCurrentCard.question, false);
-		// Depending on preferences do or do not show the question
+		// Show an horizontal line as separation when question is shown in answer
+		// XXX Martin: is it really necessary on the question side?
 		if (questionIsDisplayed()) {
 			displayString = displayString + "<hr/>";
 		}
@@ -933,14 +990,14 @@ public class Reviewer extends Activity {
 	private void displayCardAnswer()
 	{
 		Log.i(TAG, "displayCardAnswer");
-		
+
 		if (prefTimer)
 			mCardTimer.stop();
-		
+
 		String displayString = "";
 		
 		// If the user wrote an answer
-		if(prefWriteAnswers)
+		if (prefWriteAnswers)
 		{
 			mAnswerField.setVisibility(View.GONE);
 			if(mCurrentCard != null)
@@ -1000,7 +1057,7 @@ public class Reviewer extends Activity {
 						.getCardModel(mCurrentCard.cardModelId).questionInAnswer == 0);
 			
 			default:
-				return true;
+			return true;
 		}
 	}
 	

@@ -110,6 +110,8 @@
 <string name="corporal_punishments_summ">Vibrate on error, that will teach you</string>
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
+<string name="text_selection">Allow text selection</string>
+<string name="text_selection_summ">Lets you select and copy text from cards with a long click, and perform lookup in external dictionnary</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative display font size</string>
@@ -266,6 +268,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="menu_about">About</string>
 <string name="menu_suspend_card">Suspend Card</string>
 <string name="menu_edit_card">Edit Card</string>
+<string name="menu_search">Lookup in Aedict</string>
 <string name="menu_mark_card">Mark Card</string>
 <string name="menu_marked">Marked</string>
 
@@ -333,7 +336,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <!--  Widget -->
 <string name="widget_pref">Widget</string>
 <string name="widget_minimum_cards_due">Widget notification threshold</string>
-<string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notfication is raised</string>
+<string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised</string>
 <string name="widget_minimum_cards_due_vibrate">Vibrate</string>
 <string name="widget_minimum_cards_due_blink">Blink light</string>
 <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
