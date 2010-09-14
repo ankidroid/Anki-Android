@@ -69,11 +69,14 @@ public class Sound {
 	 * Parses the content (belonging to deck deckFilename), cleaning the sound markers used and extracting the sound paths (stored on mSoundPaths)
 	 * @param deckFilename Deck's filename whose content is being parsed
 	 * @param content HTML content of a card
-	 * @return content Content without the markers for sounds, ready to be displayed
+	 * @return content Content without the markers for sounds and with play buttons for each sound instead, ready to be displayed
 	 */
 	public static String parseSounds(String deckFilename, String content)
 	{
 		mStartTime = System.currentTimeMillis();
+
+		StringBuilder stringBuilder = new StringBuilder();
+		String contentLeft = content;
 		
 		Log.i(TAG, "parseSounds");
 		mSoundPaths = new ArrayList<String>();
@@ -90,16 +93,22 @@ public class Sound {
 			//Log.i(TAG, "parseSounds - soundPath = " + soundPath);
 			mSoundPaths.add(soundPath);
 			
-			// Clean the sound marker from content
-			String contentToReplace = matcher.group();
-			content = content.replace(contentToReplace, "<a onclick=\"window.interface.playSound(this.title);\" title=\"" + soundPath + "\"><span style=\"padding:5px;display:inline-block; vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
-			//content = content.replace(contentToReplace, "");
+			// Construct the new content, appending the substring from the beginning of the content left until the beginning of the sound marker
+			// and then appending the html code to add the play button
+			String soundMarker = matcher.group();
+			int markerStart = contentLeft.indexOf(soundMarker);
+			stringBuilder.append(contentLeft.substring(0, markerStart));
+			stringBuilder.append("<a onclick=\"window.interface.playSound(this.title);\" title=\"" + soundPath + "\"><span style=\"padding:5px;display:inline-block; vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+			contentLeft = contentLeft.substring(markerStart + soundMarker.length());
+			//Log.i(TAG, "Content left = " + contentLeft);
 		}
+		
+		stringBuilder.append(contentLeft);
 		
 		mFinishTime = System.currentTimeMillis();
 		Log.i(TAG, mSoundPaths.size() + " sounds parsed in " + (mFinishTime - mStartTime) + " milliseconds");
 		
-		return content;
+		return stringBuilder.toString();
 	}
 	
 	/**
