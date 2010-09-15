@@ -120,8 +120,8 @@
 <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where the your decks are stored</string>
-<string name="notification_bar">Show notification bar</string>
-<string name="notification_bar_summ">You can decide if you want to see the notification bar</string>
+<string name="fullscreen_review">Review in fullscreen</string>
+<string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
 
 <!-- deck_properties.xml -->
 <string name="deck_properties">Deck properties</string>
