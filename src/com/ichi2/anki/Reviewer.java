@@ -569,6 +569,13 @@ public class Reviewer extends Activity {
 		}
 		if (prefFullscreenReview)
 		{
+			// Temporarily remove top bar to avoid annoying screen flickering
+			mTextBarRed.setVisibility(View.GONE);
+			mTextBarBlack.setVisibility(View.GONE);
+			mTextBarBlue.setVisibility(View.GONE);
+			if (prefTimer)
+				mCardTimer.setVisibility(View.GONE);
+
 			getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 		return true;
@@ -579,6 +586,13 @@ public class Reviewer extends Activity {
 	{
 		if (prefFullscreenReview)
 		{
+			// Restore top bar
+			mTextBarRed.setVisibility(View.VISIBLE);
+			mTextBarBlack.setVisibility(View.VISIBLE);
+			mTextBarBlue.setVisibility(View.VISIBLE);
+			if (prefTimer)
+				mCardTimer.setVisibility(View.VISIBLE);
+
 			// Restore fullscreen preference
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
