@@ -742,16 +742,16 @@ public class Deck
 	// TODO: The real methods to update cards on Anki should be implemented instead of this
 	public void updateAllCards()
 	{
-		updateAllCardsFromPosition(0, null);
+		updateAllCardsFromPosition(0, null, Long.MAX_VALUE);
 	}
 	
-	public void updateAllCardsFromPosition(long numUpdatedCards, ProgressListener listener)
+	public long updateAllCardsFromPosition(long numUpdatedCards, ProgressListener listener, long limitCards)
 	{
 		Cursor cursor = AnkiDatabaseManager.getDatabase(deckPath).database.rawQuery(
 				"SELECT id, factId " +
 				"FROM cards " +
 				"ORDER BY id " +
-				"LIMIT " + Long.MAX_VALUE + " OFFSET " + numUpdatedCards, 
+				"LIMIT " + limitCards + " OFFSET " + numUpdatedCards, 
 				null);
 
 		while (cursor.moveToNext())
@@ -780,12 +780,14 @@ public class Deck
 			
 			numUpdatedCards++;
 			
-			if(listener != null)
-			{
-				listener.onProgressUpdate(new Object[] {deckPath, numUpdatedCards});
-			}
 		}
+		//if(listener != null)
+		//{
+		//	listener.onProgressUpdate(new Object[] {deckPath, numUpdatedCards});
+		//}
 		cursor.close();
+
+		return numUpdatedCards;
 	}
 	
 	/* Answering a card
@@ -1079,6 +1081,11 @@ public class Deck
 	/* Queue/cache management
 	 ***********************************************************/
 
+	public long getCardCount() {
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+		return ankiDB.queryScalar("SELECT count(id) FROM cards");
+	}
+
 	public void rebuildCounts(boolean full) {
 		Log.i(TAG, "rebuildCounts - Rebuilding global and due counts...");
 		Log.i(TAG, "Full review = " + full);
@@ -1088,7 +1095,7 @@ public class Deck
 		checkDue();
 		// Global counts
 		if (full) {
-			cardCount = (int) ankiDB.queryScalar("SELECT count(id) FROM cards");
+			cardCount = (int) getCardCount();
 			factCount = (int) ankiDB.queryScalar("SELECT count(id) FROM facts");
 		}
 

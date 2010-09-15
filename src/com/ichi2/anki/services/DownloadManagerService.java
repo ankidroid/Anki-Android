@@ -514,7 +514,7 @@ public class DownloadManagerService extends Service {
 			//Save on preferences
 			SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
 			Editor editor = pref.edit();
-			Log.i(TAG, "ProgressListener, deckPath = " + deckPath);
+			Log.i(TAG, "ProgressListener, deckPath = " + deckPath + " NumCards: " + numUpdatedCards);
 			editor.putLong("numUpdatedCards:" + deckPath, numUpdatedCards);
 			editor.commit();
 		}
@@ -834,6 +834,12 @@ public class DownloadManagerService extends Service {
 		}
 
 		@Override
+		protected void onProgressUpdate(Payload... values) 
+		{
+			notifySharedDeckObservers();
+		}
+
+		@Override
 		protected Payload doInBackground(Payload... args) {
 			Payload data = doInBackgroundLoadDeck(args);
 			if(data.returnType == DeckTask.DECK_LOADED)
@@ -843,8 +849,20 @@ public class DownloadManagerService extends Service {
 				//deck.updateAllCards();
 				SharedDeckDownload download = (SharedDeckDownload) args[0].data[0];
 				SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
-				deck.updateAllCardsFromPosition(pref.getLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0), mUpdateListener);
-				publishProgress();
+				String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
+				long totalCards = deck.getCardCount();
+				long updatedCards = pref.getLong(updatedCardsPref, 0);
+				download.setNumTotalCards((int)totalCards);
+				while (updatedCards < totalCards) {
+					//deck.updateAllCardsFromPosition(updatedCards, mUpdateListener, 10);
+					updatedCards = deck.updateAllCardsFromPosition(updatedCards, null, 100);
+					Editor editor = pref.edit();
+					Log.i(TAG, "Updating Deck, deckPath = " + download.getTitle() + " NumCards: " + updatedCards);
+					editor.putLong(updatedCardsPref, updatedCards);
+					editor.commit();
+					download.setNumUpdatedCards((int)updatedCards);
+					publishProgress();
+				}
 			}
 			else
 			{
