@@ -14,10 +14,12 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -212,8 +214,13 @@ public class Reviewer extends Activity {
 
 	private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener()
 	{
+		@Override
 		public boolean onLongClick(View view)
 		{
+			Log.i(TAG, "onLongClick");
+			// Get instance of Vibrator from current Context
+			Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+			v.vibrate(50);
 			selectAndCopyText();
 			return true;
 		}
@@ -488,12 +495,14 @@ public class Reviewer extends Activity {
 		mCard = (WebView) findViewById(R.id.flashcard);
 		mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		mCard.getSettings().setBuiltInZoomControls(true);
-
+		if(Integer.parseInt(android.os.Build.VERSION.SDK) > 7)
+		{
+			mCard.setFocusableInTouchMode(false);
+		}
+		Log.i(TAG, "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = " + mCard.isFocusableInTouchMode());
 		if (prefTextSelection) {
 			mCard.setOnLongClickListener(mLongClickHandler);
 			clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		} else {
-			mCard.setFocusable(false);
 		}
 
 		mCard.getSettings().setJavaScriptEnabled(true);
@@ -563,6 +572,8 @@ public class Reviewer extends Activity {
 		}
 		if (prefTextSelection) {
 			item = menu.findItem(MENU_SEARCH);
+			Log.i(TAG, "Clipboard has text = " + clipboard.hasText());
+			Log.i(TAG, "Is intent available = " + Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT"));
 			boolean lookupPossible = clipboard.hasText() && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT");
 			item.setEnabled(lookupPossible);
 		}
