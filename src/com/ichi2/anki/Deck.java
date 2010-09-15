@@ -747,13 +747,17 @@ public class Deck
 	
 	public long updateAllCardsFromPosition(long numUpdatedCards, ProgressListener listener, long limitCards)
 	{
-		Cursor cursor = AnkiDatabaseManager.getDatabase(deckPath).database.rawQuery(
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+		Cursor cursor = ankiDB.database.rawQuery(
 				"SELECT id, factId " +
 				"FROM cards " +
 				"ORDER BY id " +
 				"LIMIT " + limitCards + " OFFSET " + numUpdatedCards, 
 				null);
 
+		ankiDB.database.beginTransaction();
+		try
+		{
 		while (cursor.moveToNext())
 		{
 			// Get card

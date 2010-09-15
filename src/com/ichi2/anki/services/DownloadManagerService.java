@@ -844,6 +844,7 @@ public class DownloadManagerService extends Service {
 			Payload data = doInBackgroundLoadDeck(args);
 			if(data.returnType == DeckTask.DECK_LOADED)
 			{
+				double now = System.currentTimeMillis();
 				HashMap<String,Object> results = (HashMap<String, Object>) data.result;
 				Deck deck = (Deck) results.get("deck");
 				//deck.updateAllCards();
@@ -863,6 +864,7 @@ public class DownloadManagerService extends Service {
 					download.setNumUpdatedCards((int)updatedCards);
 					publishProgress();
 				}
+				Log.i(TAG, "Time to update deck = " + (System.currentTimeMillis() - now)/1000.0 + " sec.");
 			}
 			else
 			{
