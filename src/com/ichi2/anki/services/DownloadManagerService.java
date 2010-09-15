@@ -761,6 +761,7 @@ public class DownloadManagerService extends Service {
 					// Write buffer to file.
 					file.write(buffer, 0, read);
 					download.setDownloaded(download.getDownloaded() + read);
+					publishProgress();
 				}
 				
 				// Change status to complete if this point was reached because downloading has finished
@@ -843,6 +844,7 @@ public class DownloadManagerService extends Service {
 				SharedDeckDownload download = (SharedDeckDownload) args[0].data[0];
 				SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
 				deck.updateAllCardsFromPosition(pref.getLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0), mUpdateListener);
+				publishProgress();
 			}
 			else
 			{

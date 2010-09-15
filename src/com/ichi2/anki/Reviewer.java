@@ -111,7 +111,7 @@ public class Reviewer extends Activity {
 	private boolean prefWhiteboard;
 	private boolean prefWriteAnswers;
 	private boolean prefTextSelection;
-	private boolean prefNotificationBar;
+	private boolean prefFullscreenReview;
 	private boolean prefUseRubySupport; // Parse for ruby annotations
 	private String deckFilename;
 	private int prefHideQuestionInAnswer; // Hide the question when showing the answer
@@ -377,10 +377,11 @@ public class Reviewer extends Activity {
 		{
 			restorePreferences();
 			
-			// Remove the status bar and make title bar progress available
-			if(prefNotificationBar == false)
+			// Remove the status bar and title bar
+			if (prefFullscreenReview)
 			{
 				getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+				requestWindowFeature(Window.FEATURE_NO_TITLE);
 			}
 			
 			requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -577,9 +578,37 @@ public class Reviewer extends Activity {
 			boolean lookupPossible = clipboard.hasText() && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT");
 			item.setEnabled(lookupPossible);
 		}
+		if (prefFullscreenReview)
+		{
+			// Temporarily remove top bar to avoid annoying screen flickering
+			mTextBarRed.setVisibility(View.GONE);
+			mTextBarBlack.setVisibility(View.GONE);
+			mTextBarBlue.setVisibility(View.GONE);
+			if (prefTimer)
+				mCardTimer.setVisibility(View.GONE);
+
+			getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
 		return true;
 	}
-	
+
+	@Override
+	public void onOptionsMenuClosed(Menu menu)
+	{
+		if (prefFullscreenReview)
+		{
+			// Restore top bar
+			mTextBarRed.setVisibility(View.VISIBLE);
+			mTextBarBlack.setVisibility(View.VISIBLE);
+			mTextBarBlue.setVisibility(View.VISIBLE);
+			if (prefTimer)
+				mCardTimer.setVisibility(View.VISIBLE);
+
+			// Restore fullscreen preference
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+	}
+
 	/** Handles item selections */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
@@ -870,7 +899,7 @@ public class Reviewer extends Activity {
 		prefTextSelection = preferences.getBoolean("textSelection", false);
 		deckFilename = preferences.getString("deckFilename", "");
 		prefUseRubySupport = preferences.getBoolean("useRubySupport", false);
-		prefNotificationBar = preferences.getBoolean("notificationBar", true);
+		prefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
 		displayFontSize = Integer.parseInt(preferences.getString("displayFontSize", "100"));
 		prefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", Integer.toString(HQIA_DO_SHOW)));
 

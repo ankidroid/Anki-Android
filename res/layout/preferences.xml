@@ -59,10 +59,10 @@
 			android:summary="@string/show_study_options_on_deck_load_summ"
 			android:key="study_options" />
 		<CheckBoxPreference
-			android:title="@string/notification_bar"
-			android:defaultValue="true"
-			android:summary="@string/notification_bar_summ"
-			android:key="notificationBar" />
+			android:title="@string/fullscreen_review"
+			android:defaultValue="false"
+			android:summary="@string/fullscreen_review_summ"
+			android:key="fullscreenReview" />
 		<CheckBoxPreference
 			android:title="@string/show_timer"
 			android:defaultValue="true"
