@@ -491,10 +491,7 @@ public class SharedDeckPicker extends Activity {
 					
 					case SharedDeckDownload.UPDATE:
 						progressText.setText(res.getString(R.string.updating));
-						if (download instanceof SharedDeckDownload) {
-							Log.i(TAG, "Updating shared download view, progress = " + download.getProgress());
-							progressBar.setProgress(((SharedDeckDownload)download).getProgress());
-						}
+						progressBar.setProgress(download.getProgress());
 						break;
 						
 					default:

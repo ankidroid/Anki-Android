@@ -497,7 +497,7 @@ public class DownloadManagerService extends Service {
 	/********************************************************************
 	 * Listeners	 													*
 	 ********************************************************************/
-	
+	/*	
 	public interface ProgressListener 
 	{
 		
@@ -514,13 +514,13 @@ public class DownloadManagerService extends Service {
 			//Save on preferences
 			SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
 			Editor editor = pref.edit();
-			Log.i(TAG, "ProgressListener, deckPath = " + deckPath + " NumCards: " + numUpdatedCards);
+			Log.w(TAG, "ProgressListener, deckPath = " + deckPath + " NumCards: " + numUpdatedCards);
 			editor.putLong("numUpdatedCards:" + deckPath, numUpdatedCards);
 			editor.commit();
 		}
 		
 	};
-	
+	*/
 	
 	/********************************************************************
 	 * Async Tasks	 													*
@@ -528,6 +528,7 @@ public class DownloadManagerService extends Service {
 	
 	private class DownloadPersonalDeckTask extends AsyncTask<Download, Object, Download> {
 		
+		@Override
 		protected Download doInBackground(Download... downloads) 
 		{
 			Download download = downloads[0];
@@ -656,11 +657,13 @@ public class DownloadManagerService extends Service {
 			return download;
 		}
 
+		@Override
 		protected void onProgressUpdate(Object... values) 
 		{
 			notifyPersonalDeckObservers();
 		}
 
+		@Override
 		protected void onPostExecute(Download download) 
 		{
 			// TODO: Error cases
@@ -676,6 +679,7 @@ public class DownloadManagerService extends Service {
 	
 	private class DownloadSharedDeckTask extends AsyncTask<Download, Object, SharedDeckDownload> {
 		
+		@Override
 		protected SharedDeckDownload doInBackground(Download... downloads) 
 		{
 			SharedDeckDownload download = (SharedDeckDownload) downloads[0];
@@ -799,11 +803,13 @@ public class DownloadManagerService extends Service {
 			return download;
 		}
 		
+		@Override
 		protected void onProgressUpdate(Object... values) 
 		{
 			notifySharedDeckObservers();
 		}
 
+		@Override
 		protected void onPostExecute(SharedDeckDownload download) 
 		{
 			Log.i(TAG, "onPostExecute");
@@ -853,12 +859,11 @@ public class DownloadManagerService extends Service {
 				String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
 				long totalCards = deck.getCardCount();
 				long updatedCards = pref.getLong(updatedCardsPref, 0);
+				long batchSize = Math.max(100, totalCards/100);
 				download.setNumTotalCards((int)totalCards);
 				while (updatedCards < totalCards) {
-					//deck.updateAllCardsFromPosition(updatedCards, mUpdateListener, 10);
-					updatedCards = deck.updateAllCardsFromPosition(updatedCards, null, 100);
+					updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
 					Editor editor = pref.edit();
-					Log.i(TAG, "Updating Deck, deckPath = " + download.getTitle() + " NumCards: " + updatedCards);
 					editor.putLong(updatedCardsPref, updatedCards);
 					editor.commit();
 					download.setNumUpdatedCards((int)updatedCards);
@@ -915,7 +920,8 @@ public class DownloadManagerService extends Service {
 		}
 		
 		@Override
-		protected void onPostExecute(Payload result) {
+		protected void onPostExecute(Payload result)
+	 	{
 			super.onPostExecute(result);
 			if(result.success)
 			{

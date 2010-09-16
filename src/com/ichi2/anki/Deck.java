@@ -34,8 +34,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
-import com.ichi2.anki.services.DownloadManagerService.ProgressListener;
-
 /**
  * A deck stores all of the cards and scheduling information.
  * It is saved in a file with a name ending in .anki
@@ -742,10 +740,10 @@ public class Deck
 	// TODO: The real methods to update cards on Anki should be implemented instead of this
 	public void updateAllCards()
 	{
-		updateAllCardsFromPosition(0, null, Long.MAX_VALUE);
+		updateAllCardsFromPosition(0, Long.MAX_VALUE);
 	}
 	
-	public long updateAllCardsFromPosition(long numUpdatedCards, ProgressListener listener, long limitCards)
+	public long updateAllCardsFromPosition(long numUpdatedCards, long limitCards)
 	{
 		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 		Cursor cursor = ankiDB.database.rawQuery(
@@ -785,10 +783,6 @@ public class Deck
 				numUpdatedCards++;
 
 			}
-			//if(listener != null)
-			//{
-			//	listener.onProgressUpdate(new Object[] {deckPath, numUpdatedCards});
-			//}
 			cursor.close();
 			ankiDB.database.setTransactionSuccessful();
 		} finally 
