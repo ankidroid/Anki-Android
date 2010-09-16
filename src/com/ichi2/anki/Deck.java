@@ -742,50 +742,61 @@ public class Deck
 	// TODO: The real methods to update cards on Anki should be implemented instead of this
 	public void updateAllCards()
 	{
-		updateAllCardsFromPosition(0, null);
+		updateAllCardsFromPosition(0, null, Long.MAX_VALUE);
 	}
 	
-	public void updateAllCardsFromPosition(long numUpdatedCards, ProgressListener listener)
+	public long updateAllCardsFromPosition(long numUpdatedCards, ProgressListener listener, long limitCards)
 	{
-		Cursor cursor = AnkiDatabaseManager.getDatabase(deckPath).database.rawQuery(
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+		Cursor cursor = ankiDB.database.rawQuery(
 				"SELECT id, factId " +
 				"FROM cards " +
 				"ORDER BY id " +
-				"LIMIT " + Long.MAX_VALUE + " OFFSET " + numUpdatedCards, 
+				"LIMIT " + limitCards + " OFFSET " + numUpdatedCards, 
 				null);
 
-		while (cursor.moveToNext())
+		ankiDB.database.beginTransaction();
+		try
 		{
-			// Get card
-			Card card = new Card(this);
-			card.fromDB(cursor.getLong(0));
-			Log.i(TAG, "Card id = " + card.id + ", numUpdatedCards = " + numUpdatedCards);
-			
-			// Load tags
-			card.loadTags();
-			
-			// Get the related fact
-			Fact fact = card.getFact();
-			//Log.i(TAG, "Fact id = " + fact.id);
-			
-			// Generate the question and answer for this card and update it
-			HashMap<String,String> newQA = CardModel.formatQA(fact, card.getCardModel(), card.splitTags());
-			card.question = newQA.get("question");
-			Log.i(TAG, "Question = " + card.question);
-			card.answer = newQA.get("answer");
-			Log.i(TAG, "Answer = " + card.answer);
-			card.modified = System.currentTimeMillis() / 1000.0;
-			
-			card.toDB();
-			
-			numUpdatedCards++;
-			
-			if(listener != null)
+			while (cursor.moveToNext())
 			{
-				listener.onProgressUpdate(new Object[] {deckPath, numUpdatedCards});
+				// Get card
+				Card card = new Card(this);
+				card.fromDB(cursor.getLong(0));
+				Log.i(TAG, "Card id = " + card.id + ", numUpdatedCards = " + numUpdatedCards);
+
+				// Load tags
+				card.loadTags();
+
+				// Get the related fact
+				Fact fact = card.getFact();
+				//Log.i(TAG, "Fact id = " + fact.id);
+
+				// Generate the question and answer for this card and update it
+				HashMap<String,String> newQA = CardModel.formatQA(fact, card.getCardModel(), card.splitTags());
+				card.question = newQA.get("question");
+				Log.i(TAG, "Question = " + card.question);
+				card.answer = newQA.get("answer");
+				Log.i(TAG, "Answer = " + card.answer);
+				card.modified = System.currentTimeMillis() / 1000.0;
+
+				card.toDB();
+
+				numUpdatedCards++;
+
 			}
+			//if(listener != null)
+			//{
+			//	listener.onProgressUpdate(new Object[] {deckPath, numUpdatedCards});
+			//}
+			cursor.close();
+			ankiDB.database.setTransactionSuccessful();
+		} finally 
+		{
+			ankiDB.database.endTransaction();
 		}
-		cursor.close();
+
+		return numUpdatedCards;
 	}
 	
 	/* Answering a card
@@ -1079,6 +1090,11 @@ public class Deck
 	/* Queue/cache management
 	 ***********************************************************/
 
+	public long getCardCount() {
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+		return ankiDB.queryScalar("SELECT count(id) FROM cards");
+	}
+
 	public void rebuildCounts(boolean full) {
 		Log.i(TAG, "rebuildCounts - Rebuilding global and due counts...");
 		Log.i(TAG, "Full review = " + full);
@@ -1088,7 +1104,7 @@ public class Deck
 		checkDue();
 		// Global counts
 		if (full) {
-			cardCount = (int) ankiDB.queryScalar("SELECT count(id) FROM cards");
+			cardCount = (int) getCardCount();
 			factCount = (int) ankiDB.queryScalar("SELECT count(id) FROM facts");
 		}
 

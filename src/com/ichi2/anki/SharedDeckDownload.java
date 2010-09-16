@@ -12,6 +12,7 @@ public class SharedDeckDownload extends Download implements Parcelable {
 	private int id;
 	private String filename;
 	private int numUpdatedCards;
+	private int numTotalCards;
 	
 	public SharedDeckDownload(String title)
 	{
@@ -38,6 +39,14 @@ public class SharedDeckDownload extends Download implements Parcelable {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+
+	public int getNumTotalCards() {
+		return numTotalCards;
+	}
+
+	public void setNumTotalCards(int numTotalCards) {
+		this.numTotalCards = numTotalCards;
+	}
 	
 	public int getNumUpdatedCards() {
 		return numUpdatedCards;
@@ -46,7 +55,20 @@ public class SharedDeckDownload extends Download implements Parcelable {
 	public void setNumUpdatedCards(int numUpdatedCards) {
 		this.numUpdatedCards = numUpdatedCards;
 	}
-	
+
+	@Override
+	public int getProgress() 
+	{
+		if (status == UPDATE) {
+			if (numTotalCards > 0) {
+				return (int) (((float)numUpdatedCards / numTotalCards) * 100);
+			} else {
+				return 0;
+			}
+		} else {
+			return super.getProgress(); //(int) (((float)downloaded / size) * 100);
+		}
+	}	
 	/********************************************************************
 	 * Parcel methods													*
 	 ********************************************************************/
