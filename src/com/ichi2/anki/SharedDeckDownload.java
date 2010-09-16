@@ -13,6 +13,7 @@ public class SharedDeckDownload extends Download implements Parcelable {
 	private String filename;
 	private int numUpdatedCards;
 	private int numTotalCards;
+	private double estTimeToCompletion;
 	
 	public SharedDeckDownload(String title)
 	{
@@ -47,13 +48,22 @@ public class SharedDeckDownload extends Download implements Parcelable {
 	public void setNumTotalCards(int numTotalCards) {
 		this.numTotalCards = numTotalCards;
 	}
-	
+
 	public int getNumUpdatedCards() {
 		return numUpdatedCards;
 	}
 
 	public void setNumUpdatedCards(int numUpdatedCards) {
 		this.numUpdatedCards = numUpdatedCards;
+	}
+	
+	// ETA: estimated time for completion in seconds
+	public double getEstTimeToCompletion() {
+		return estTimeToCompletion;
+	}
+
+	public void setEstTimeToCompletion(double estTime) {
+		this.estTimeToCompletion = estTime;
 	}
 
 	@Override

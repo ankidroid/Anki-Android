@@ -826,6 +826,7 @@ public class DownloadManagerService extends Service {
 			Editor editor = pref.edit();
 			editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
 			editor.commit();
+
 			new UpdateDeckTask().execute(new Payload(new Object[] {download}));
 			
 		}
@@ -847,12 +848,14 @@ public class DownloadManagerService extends Service {
 
 		@Override
 		protected Payload doInBackground(Payload... args) {
+
 			Payload data = doInBackgroundLoadDeck(args);
 			if(data.returnType == DeckTask.DECK_LOADED)
 			{
 				double now = System.currentTimeMillis();
 				HashMap<String,Object> results = (HashMap<String, Object>) data.result;
 				Deck deck = (Deck) results.get("deck");
+				//deck.beforeUpdateCards();
 				//deck.updateAllCards();
 				SharedDeckDownload download = (SharedDeckDownload) args[0].data[0];
 				SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
@@ -861,15 +864,38 @@ public class DownloadManagerService extends Service {
 				long updatedCards = pref.getLong(updatedCardsPref, 0);
 				long batchSize = Math.max(100, totalCards/100);
 				download.setNumTotalCards((int)totalCards);
+				long[] batchTimes = new long[5];
+				double avgBatchTime = 0;
+				double numBatches = ((double)totalCards) / batchSize;
+				int currentBatch = 0;
+				long batchStart;
+				long elapsedTime = 0;
 				while (updatedCards < totalCards) {
+					batchStart = System.currentTimeMillis();
 					updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
 					Editor editor = pref.edit();
 					editor.putLong(updatedCardsPref, updatedCards);
 					editor.commit();
 					download.setNumUpdatedCards((int)updatedCards);
 					publishProgress();
+					batchTimes[currentBatch%5] = System.currentTimeMillis() - batchStart;
+					elapsedTime += batchTimes[currentBatch%5];
+					if (currentBatch < 4) {
+						avgBatchTime = 0;
+						for (int i = 0; i <= currentBatch; i++) {
+							avgBatchTime += batchTimes[i];
+						}
+						avgBatchTime /= currentBatch+1.0;
+					} else {
+						avgBatchTime = (batchTimes[0] + batchTimes[1] + batchTimes[2] + batchTimes[3] + batchTimes[4])/5.0;
+					}
+					currentBatch++;
+
+					Log.i(TAG, "Elapsed = " + elapsedTime/1000.0 + " sec, total estimated = " + (elapsedTime + Math.max(0, numBatches - currentBatch) * avgBatchTime) / 1000.0 + " sec.");
+					download.setEstTimeToCompletion(Math.max(0, numBatches - currentBatch) * avgBatchTime / 1000.0);
 				}
 				Log.i(TAG, "Time to update deck = " + (System.currentTimeMillis() - now)/1000.0 + " sec.");
+				//deck.afterUpdateCards();
 			}
 			else
 			{

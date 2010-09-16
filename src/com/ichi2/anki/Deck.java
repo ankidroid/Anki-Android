@@ -737,6 +737,40 @@ public class Deck
         
 	}
 	
+	// Optimization for updateAllCardsFromPosition and updateAllCards
+	// Drops some indices and changes synchronous pragma
+	public void beforeUpdateCards() {
+		long now = System.currentTimeMillis();
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+		ankiDB.database.execSQL("PRAGMA synchronous=NORMAL");
+//		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_duePriority");
+//		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_priorityDue");
+//		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_factor");
+		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_sort");
+//		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_factId");
+//		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_intervalDesc");
+//		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_intervalAsc");
+//		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_randomOrder");
+//		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_dueAsc");
+//		ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_dueDesc");
+		Log.w(TAG, "BEFORE UPDATE = " + (System.currentTimeMillis() - now));
+	}
+	public void afterUpdateCards() {
+		long now = System.currentTimeMillis();
+		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+//		ankiDB.database.execSQL("CREATE INDEX ix_cards_duePriority on cards (type, isDue, combinedDue, priority)");
+//		ankiDB.database.execSQL("CREATE INDEX ix_cards_priorityDue on cards (type, isDue, priority, combinedDue)");
+//		ankiDB.database.execSQL("CREATE INDEX ix_cards_factor on cards 			(type, factor)");
+		ankiDB.database.execSQL("CREATE INDEX ix_cards_sort on cards (answer collate nocase)");
+//		ankiDB.database.execSQL("CREATE INDEX ix_cards_factId on cards (factId, type)");
+//		updateDynamicIndices();
+		ankiDB.database.execSQL("PRAGMA synchronous=FULL");
+		Log.w(TAG, "AFTER UPDATE = " + (System.currentTimeMillis() - now));
+		//now = System.currentTimeMillis();
+		//ankiDB.database.execSQL("ANALYZE");
+		//Log.i("ANALYZE = " + System.currentTimeMillis() - now);
+	}
+
 	// TODO: The real methods to update cards on Anki should be implemented instead of this
 	public void updateAllCards()
 	{
@@ -778,7 +812,7 @@ public class Deck
 				Log.i(TAG, "Answer = " + card.answer);
 				card.modified = System.currentTimeMillis() / 1000.0;
 
-				card.toDB();
+				card.updateQAfields();
 
 				numUpdatedCards++;
 

@@ -416,4 +416,12 @@ public class Card {
         // TODO: Should also write JOINED entries: CardModel and Fact.
     }
 
+		// Method used for building downloaded decks
+    public void updateQAfields() {
+        ContentValues values = new ContentValues();
+        values.put("modified", modified);
+        values.put("question", question);
+        values.put("answer", answer);
+        AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("cards", values, "id = " + id, null);
+    }
 }
