@@ -445,6 +445,7 @@ public class SharedDeckPicker extends Activity {
 			TextView downloadingSharedDeckTitle = wrapper.getDownloadTitle();
 			ProgressBar progressBar = wrapper.getProgressBar();
 			TextView progressText = wrapper.getProgressBarText();
+			TextView estimatedText = wrapper.getEstimatedTimeText();
 			TextView sharedDeckTitle = wrapper.getDeckTitle();
 			TextView sharedDeckFacts = wrapper.getDeckFacts();
 			
@@ -472,33 +473,40 @@ public class SharedDeckPicker extends Activity {
 				{
 					case Download.START:
 						progressText.setText(res.getString(R.string.starting_download));
+						estimatedText.setText("");
 						progressBar.setProgress(0);
 						break;
 						
 					case Download.DOWNLOADING:
 						progressText.setText(res.getString(R.string.downloading));
+						estimatedText.setText(download.getEstTimeToCompletion());
 						progressBar.setProgress(download.getProgress());
 						break;
 						
 					case Download.PAUSED:
 						progressText.setText(res.getString(R.string.paused));
+						estimatedText.setText("");
 						break;
 					
 					case Download.COMPLETE:
 						progressText.setText(res.getString(R.string.downloaded));
+						estimatedText.setText("");
 						progressBar.setProgress(0);
 						break;
 					
 					case SharedDeckDownload.UPDATE:
 						progressText.setText(res.getString(R.string.updating));
+						estimatedText.setText(download.getEstTimeToCompletion());
 						progressBar.setProgress(download.getProgress());
 						break;
 						
 					default:
 						progressText.setText(res.getString(R.string.error));
+						estimatedText.setText("");
 						break;
 				}
 				progressText.setVisibility(View.VISIBLE);
+				estimatedText.setVisibility(View.VISIBLE);
 			}
 			else
 			{
@@ -515,6 +523,7 @@ public class SharedDeckPicker extends Activity {
 				downloadingSharedDeckTitle.setVisibility(View.GONE);
 				progressBar.setVisibility(View.GONE);
 				progressText.setVisibility(View.GONE);
+				estimatedText.setVisibility(View.GONE);
 				
 				sharedDeckTitle.setText(sharedDeck.getTitle());
 				sharedDeckTitle.setVisibility(View.VISIBLE);

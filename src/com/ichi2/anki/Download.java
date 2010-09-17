@@ -124,6 +124,14 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 		*/
 	}
 
+	public String getEstTimeToCompletion() {
+		return "";
+	}
+
+	public void setEstTimeToCompletion(double estTime) {
+		// pass
+	}
+
 	public int getProgress() 
 	{
 		return (int) (((float)downloaded / size) * 100);
