@@ -906,7 +906,7 @@ public class DownloadManagerService extends Service {
 			}
 			avgBatchTime /= usedForAvg;
 			download.setEstTimeToCompletion(Math.max(0, totalBatches - currentBatch - 1) * avgBatchTime / 1000.0);
-			Log.w(TAG, "tot: " + totalBatches + " " + currentBatch + " " + lastBatchTime + " " + avgBatchTime + " Elapsed = " + elapsedTime/1000.0 + " sec, total estimated = " + (elapsedTime + Math.max(0, totalBatches - currentBatch) * avgBatchTime) / 1000.0 + " sec.");
+			Log.w(TAG, "tot: " + totalBatches + " " + currentBatch + " " + lastBatchTime + " " + avgBatchTime + " Elapsed = " + elapsedTime/1000.0 + " sec, total estimated = " + (elapsedTime + Math.max(0, totalBatches - currentBatch - 1) * avgBatchTime) / 1000.0 + " sec.");
 		}
 		
 		private Payload doInBackgroundLoadDeck(Payload... params)
