@@ -17,6 +17,7 @@ package com.ichi2.anki;
 
 import java.lang.reflect.Field;
 import java.sql.Date;
+import java.util.Calendar;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -218,7 +219,11 @@ public class Stats
 
 	public static Date genToday(Deck deck)
 	{
-		return new Date((long) (System.currentTimeMillis() - deck.utcOffset * 1000));
+		// Get timezone offset in milliseconds
+		Calendar now = Calendar.getInstance();
+		int timezoneOffset = (now.get(Calendar.ZONE_OFFSET) + now.get(Calendar.DST_OFFSET));
+		
+		return new Date((long) (System.currentTimeMillis() - deck.utcOffset * 1000 - timezoneOffset));
 	}
 
 	public static void updateAllStats(Stats global, Stats daily, Card card, int ease, String oldState)
