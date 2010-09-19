@@ -39,7 +39,7 @@ public class Preferences extends PreferenceActivity {
 		pm = getPreferenceManager();
 		pm.setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
 		
-		addPreferencesFromResource(R.layout.preferences);
+		addPreferencesFromResource(R.xml.preferences);
 		veecheckStatus = pm.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, PrefSettings.DEFAULT_ENABLED);
 	}
 
