@@ -620,6 +620,7 @@ public class DownloadManagerService extends Service {
 					// Write buffer to file.
 					file.write(buffer, 0, read);
 					download.setDownloaded(download.getDownloaded() + read);
+					publishProgress();
 				}
 				
 				// Change status to complete if this point was reached because downloading has finished
@@ -862,11 +863,12 @@ public class DownloadManagerService extends Service {
 				String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
 				long totalCards = deck.getCardCount();
 				long updatedCards = pref.getLong(updatedCardsPref, 0);
-				long batchSize = Math.max(100, totalCards/100);
+				long batchSize = Math.max(100, totalCards/200);
 				download.setNumTotalCards((int)totalCards);
-				recentBatchTimings = new long[runningAverageLength];
+				recentBatchTimings = new long[runningAvgLength];
 				totalBatches = ((double)totalCards) / batchSize;
-				int currentBatch = 0;
+				int currentBatch = (int)(updatedCards / batchSize);
+				long runningAvgCount = 0;
 				long batchStart;
 				elapsedTime = 0;
 				while (updatedCards < totalCards) {
@@ -877,8 +879,9 @@ public class DownloadManagerService extends Service {
 					editor.commit();
 					download.setNumUpdatedCards((int)updatedCards);
 					publishProgress();
-					estimateTimeToCompletion(download, currentBatch, System.currentTimeMillis() - batchStart);
+					estimateTimeToCompletion(download, currentBatch, runningAvgCount, System.currentTimeMillis() - batchStart);
 					currentBatch++;
+					runningAvgCount++;
 				}
 				Log.i(TAG, "Time to update deck = " + download.getEstTimeToCompletion() + " sec.");
 				//deck.afterUpdateCards();
@@ -890,17 +893,17 @@ public class DownloadManagerService extends Service {
 			return data;
 		}
 
-		private static final int runningAverageLength = 5;
+		private static final int runningAvgLength = 5;
 		private long[] recentBatchTimings;
 		private long elapsedTime;
 		private double totalBatches;
 
-	 	private void estimateTimeToCompletion(SharedDeckDownload download, long currentBatch, long lastBatchTime) {
+	 	private void estimateTimeToCompletion(SharedDeckDownload download, long currentBatch, long runningAvgCount, long lastBatchTime) {
 			double avgBatchTime = 0.0;
 			avgBatchTime = 0;
-			recentBatchTimings[((int)currentBatch) % runningAverageLength] = lastBatchTime;
+			recentBatchTimings[((int)runningAvgCount) % runningAvgLength] = lastBatchTime;
 			elapsedTime += lastBatchTime;
-			int usedForAvg = Math.min(((int)currentBatch)+1, runningAverageLength);
+			int usedForAvg = Math.min(((int)runningAvgCount)+1, runningAvgLength);
 			for (int i = 0; i < usedForAvg; i++) {
 				avgBatchTime += recentBatchTimings[i];
 			}

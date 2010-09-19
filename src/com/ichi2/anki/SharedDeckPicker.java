@@ -479,7 +479,7 @@ public class SharedDeckPicker extends Activity {
 						
 					case Download.DOWNLOADING:
 						progressText.setText(res.getString(R.string.downloading));
-						estimatedText.setText(download.getEstTimeToCompletion());
+						estimatedText.setText("");
 						progressBar.setProgress(download.getProgress());
 						break;
 						
