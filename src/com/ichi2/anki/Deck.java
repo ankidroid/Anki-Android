@@ -780,10 +780,11 @@ public class Deck
 	public long updateAllCardsFromPosition(long numUpdatedCards, long limitCards)
 	{
 		AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+		// TODO: Cache this query, order by FactId, Id
 		Cursor cursor = ankiDB.database.rawQuery(
 				"SELECT id, factId " +
 				"FROM cards " +
-				"ORDER BY id " +
+				"ORDER BY factId, id " +
 				"LIMIT " + limitCards + " OFFSET " + numUpdatedCards, 
 				null);
 

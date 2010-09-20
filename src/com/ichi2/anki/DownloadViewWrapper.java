@@ -11,6 +11,7 @@ public class DownloadViewWrapper {
 	private TextView downloadTitle = null;
 	private ProgressBar progressBar = null;
 	private TextView progressBarText = null;
+	private TextView estimatedTimeText = null;
 	private TextView deckTitle = null;
 	private TextView deckFacts = null;
 	
@@ -52,6 +53,15 @@ public class DownloadViewWrapper {
 			progressBarText = (TextView) base.findViewById(R.id.progress_text);
 		}
 		return progressBarText;
+	}
+
+	TextView getEstimatedTimeText()
+	{
+		if(estimatedTimeText == null)
+		{
+			estimatedTimeText = (TextView) base.findViewById(R.id.estimated_text);
+		}
+		return estimatedTimeText;
 	}
 
 	TextView getDeckTitle()

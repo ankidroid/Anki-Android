@@ -620,6 +620,7 @@ public class DownloadManagerService extends Service {
 					// Write buffer to file.
 					file.write(buffer, 0, read);
 					download.setDownloaded(download.getDownloaded() + read);
+					publishProgress();
 				}
 				
 				// Change status to complete if this point was reached because downloading has finished
@@ -862,14 +863,14 @@ public class DownloadManagerService extends Service {
 				String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
 				long totalCards = deck.getCardCount();
 				long updatedCards = pref.getLong(updatedCardsPref, 0);
-				long batchSize = Math.max(100, totalCards/100);
+				long batchSize = Math.max(100, totalCards/200);
 				download.setNumTotalCards((int)totalCards);
-				long[] batchTimes = new long[5];
-				double avgBatchTime = 0;
-				double numBatches = ((double)totalCards) / batchSize;
-				int currentBatch = 0;
+				recentBatchTimings = new long[runningAvgLength];
+				totalBatches = ((double)totalCards) / batchSize;
+				int currentBatch = (int)(updatedCards / batchSize);
+				long runningAvgCount = 0;
 				long batchStart;
-				long elapsedTime = 0;
+				elapsedTime = 0;
 				while (updatedCards < totalCards) {
 					batchStart = System.currentTimeMillis();
 					updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
@@ -878,23 +879,11 @@ public class DownloadManagerService extends Service {
 					editor.commit();
 					download.setNumUpdatedCards((int)updatedCards);
 					publishProgress();
-					batchTimes[currentBatch%5] = System.currentTimeMillis() - batchStart;
-					elapsedTime += batchTimes[currentBatch%5];
-					if (currentBatch < 4) {
-						avgBatchTime = 0;
-						for (int i = 0; i <= currentBatch; i++) {
-							avgBatchTime += batchTimes[i];
-						}
-						avgBatchTime /= currentBatch+1.0;
-					} else {
-						avgBatchTime = (batchTimes[0] + batchTimes[1] + batchTimes[2] + batchTimes[3] + batchTimes[4])/5.0;
-					}
+					estimateTimeToCompletion(download, currentBatch, runningAvgCount, System.currentTimeMillis() - batchStart);
 					currentBatch++;
-
-					Log.i(TAG, "Elapsed = " + elapsedTime/1000.0 + " sec, total estimated = " + (elapsedTime + Math.max(0, numBatches - currentBatch) * avgBatchTime) / 1000.0 + " sec.");
-					download.setEstTimeToCompletion(Math.max(0, numBatches - currentBatch) * avgBatchTime / 1000.0);
+					runningAvgCount++;
 				}
-				Log.i(TAG, "Time to update deck = " + (System.currentTimeMillis() - now)/1000.0 + " sec.");
+				Log.i(TAG, "Time to update deck = " + download.getEstTimeToCompletion() + " sec.");
 				//deck.afterUpdateCards();
 			}
 			else
@@ -902,6 +891,25 @@ public class DownloadManagerService extends Service {
 				data.success = false;
 			}
 			return data;
+		}
+
+		private static final int runningAvgLength = 5;
+		private long[] recentBatchTimings;
+		private long elapsedTime;
+		private double totalBatches;
+
+	 	private void estimateTimeToCompletion(SharedDeckDownload download, long currentBatch, long runningAvgCount, long lastBatchTime) {
+			double avgBatchTime = 0.0;
+			avgBatchTime = 0;
+			recentBatchTimings[((int)runningAvgCount) % runningAvgLength] = lastBatchTime;
+			elapsedTime += lastBatchTime;
+			int usedForAvg = Math.min(((int)runningAvgCount)+1, runningAvgLength);
+			for (int i = 0; i < usedForAvg; i++) {
+				avgBatchTime += recentBatchTimings[i];
+			}
+			avgBatchTime /= usedForAvg;
+			download.setEstTimeToCompletion(Math.max(0, totalBatches - currentBatch - 1) * avgBatchTime / 1000.0);
+			Log.i(TAG, "TotalBatches: " + totalBatches + " Current: " + currentBatch + " LastBatch: " + lastBatchTime/1000.0 + " RunningAvg: " + avgBatchTime/1000.0 + " Elapsed: " + elapsedTime/1000.0 + " TotalEstimated: " + (elapsedTime + Math.max(0, totalBatches - currentBatch - 1) * avgBatchTime) / 1000.0 + " sec");
 		}
 		
 		private Payload doInBackgroundLoadDeck(Payload... params)

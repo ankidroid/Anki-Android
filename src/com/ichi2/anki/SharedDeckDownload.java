@@ -58,10 +58,40 @@ public class SharedDeckDownload extends Download implements Parcelable {
 	}
 	
 	// ETA: estimated time for completion in seconds
-	public double getEstTimeToCompletion() {
-		return estTimeToCompletion;
+	@Override
+	public String getEstTimeToCompletion() {
+
+		if (estTimeToCompletion < 0.1) {
+			return "";
+		}
+
+		String estTimeStr;
+		long estTime = (long)estTimeToCompletion;
+		long hours = estTime / 3600;
+		estTime %= 3600;
+		long minutes = estTime / 60;
+		long seconds = estTime % 60;
+		
+		if (hours > 0) {
+			if (minutes > 0) {
+				return String.format("~ %dh %dm", hours, minutes);
+			} else {
+				return String.format("~ %dh", hours);
+			}
+		} else if (minutes > 10) {
+				return String.format("~ %dm", minutes);
+		} else if (minutes > 0) {
+			if (seconds > 0) {
+				return String.format("~ %dm %ds", minutes, seconds);
+			} else {
+				return String.format("~ %dm", minutes);
+			}
+		} else {
+			return String.format("~ %ds", seconds);
+		}
 	}
 
+	@Override
 	public void setEstTimeToCompletion(double estTime) {
 		this.estTimeToCompletion = estTime;
 	}

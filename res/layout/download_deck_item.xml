@@ -17,20 +17,20 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:orientation="vertical">
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
 
-	  
-	  <TextView android:id="@+id/header_title"
-	  	android:layout_width="fill_parent"
-	  	android:layout_height="wrap_content"
-	  	android:textColor="#000000"
-	  	android:textColorHighlight="#000000"
-	  	android:background="#dddddd"
-	  	android:textStyle="bold"
-	  	android:visibility="gone"/>
-	  	
+
+	<TextView android:id="@+id/header_title"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textColor="#000000"
+		android:textColorHighlight="#000000"
+		android:background="#dddddd"
+		android:textStyle="bold"
+		android:visibility="gone"/>
+
 
 	<TextView android:id="@+id/download_title"
 		android:layout_width="fill_parent"
@@ -41,25 +41,41 @@
 		android:textSize="24sp"
 		android:textColor="#ffffff"
 		android:visibility="gone"/>
-	
+
 	<ProgressBar android:id="@+id/progress_bar"
-  		android:layout_width="fill_parent"
-  		android:layout_height="wrap_content"
-  		android:padding="10dip"
-  		style="?android:attr/progressBarStyleHorizontal"
-  		android:progress="0"
-  		android:max="100"
-  		android:visibility="gone"/>
-  	
-  	<TextView android:id="@+id/progress_text"
-  		android:layout_width="wrap_content"
-  		android:layout_height="wrap_content"
-  		android:paddingLeft="10dip"
-  		android:paddingBottom="5dip"
-  		android:text="Downloading..."
-  		android:textColor="#ffffff"
-  		android:visibility="gone"/>
-  		
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:padding="10dip"
+		style="?android:attr/progressBarStyleHorizontal"
+		android:progress="0"
+		android:max="100"
+		android:visibility="gone"/>
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="horizontal">
+
+		<TextView android:id="@+id/progress_text"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:paddingLeft="10dip"
+			android:paddingBottom="5dip"
+			android:text="Downloading..."
+			android:textColor="#ffffff"
+			android:visibility="gone"/>
+
+		<TextView android:id="@+id/estimated_text"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:paddingRight="10dip"
+			android:paddingBottom="5dip"
+			android:text=""
+			android:gravity="right"
+			android:textColor="#ffffff"
+			android:visibility="gone"/>
+
+	</LinearLayout>
+
 	<TextView android:id="@+id/deck_title"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -67,7 +83,7 @@
 		android:gravity="center_horizontal"
 		android:textSize="24sp"
 		android:textColor="#ffffff"/>
-		
+
 	<TextView android:id="@+id/deck_facts" 
 		android:layout_height="wrap_content" 
 		android:layout_width="fill_parent"
@@ -76,5 +92,5 @@
 		android:paddingRight="5dip"
 		android:paddingBottom="5dip"
 		android:textSize="17sp"/>
-			
+
 </LinearLayout>
