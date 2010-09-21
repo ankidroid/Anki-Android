@@ -8,6 +8,8 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -104,11 +106,12 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
 		collectInformation();
 		Date currentDate = new Date();
-
+		SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss ", Locale.US);
+		SimpleDateFormat df2 = new SimpleDateFormat(" yyyy", Locale.US);
+		TimeZone tz = TimeZone.getDefault();
 		StringBuilder reportInformation = new StringBuilder(10000);
-		reportInformation.append(String.format(
-				"Report Generated: %s\nBegin Collected Information\n\n",
-				currentDate.toString()));
+		reportInformation.append(String.format("Report Generated: %s%s%s\nBegin Collected Information\n\n",
+				df1.format(currentDate), tz.getID(), df2.format(currentDate)));
 
 		for (String key : information.keySet()) {
 			String value = information.get(key);
