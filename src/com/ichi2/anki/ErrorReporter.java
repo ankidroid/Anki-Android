@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -20,6 +23,7 @@ import android.widget.TextView;
 
 public class ErrorReporter extends Activity {
 	public static String TAG = "ErrorReporter";
+	private static final Locale ENGLISH_LOCALE = new Locale("en_US");
 
 	private ArrayList<String> getErrorFiles() {
 		ArrayList<String> files = new ArrayList<String>();
@@ -150,7 +154,11 @@ public class ErrorReporter extends Activity {
 	
 	private void sendEmail(String body) {
 		Intent sendIntent = new Intent(Intent.ACTION_SEND);
-		String subject = String.format("Bug Report on %s", new Date());
+		SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss ", Locale.US);
+		SimpleDateFormat df2 = new SimpleDateFormat(" yyyy", Locale.US);
+		Date ts = new Date();
+		TimeZone tz = TimeZone.getDefault();
+		String subject = String.format("Bug Report on %s%s%s", df1.format(ts), tz.getID(), df2.format(ts));
 		sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.error_email)});
 		sendIntent.putExtra(Intent.EXTRA_TEXT, body);
 		sendIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
