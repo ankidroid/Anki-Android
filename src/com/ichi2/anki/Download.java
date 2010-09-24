@@ -36,6 +36,7 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 	public Download(String title)
 	{
 		this.title = title;
+		this.put(title, true);
 		size = -1;
 		downloaded = 0;
 		status = START;
@@ -150,6 +151,8 @@ public class Download extends HashMap<String,Object> implements Parcelable {
 	}
 
 	public void setTitle(String title) {
+		this.remove(this.title);
+		this.put(title, true);
 		this.title = title;
 	}
 
