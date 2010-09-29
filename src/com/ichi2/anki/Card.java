@@ -16,19 +16,17 @@
 
 package com.ichi2.anki;
 
-import java.lang.reflect.Field;
-import java.util.Random;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.lang.reflect.Field;
+import java.util.Random;
+
 /**
- * 
- * A card is a presentation of a fact, and has two sides: a question and an answer.
- * Any number of fields can appear on each side.
- * When you add a fact to Anki, cards which show that fact are generated.
- * Some models generate one card, others generate more than one.
+ * A card is a presentation of a fact, and has two sides: a question and an answer. Any number of fields can appear on
+ * each side. When you add a fact to Anki, cards which show that fact are generated. Some models generate one card,
+ * others generate more than one.
  * 
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  */
@@ -94,10 +92,10 @@ public class Card {
     // END SQL table entries
 
     Deck deck;
-    
+
     // BEGIN JOINed variables
     @SuppressWarnings("unused")
-	private CardModel cardModel;
+    private CardModel cardModel;
     Fact fact;
     private String[] tagsBySrc;
     // END JOINed variables
@@ -105,6 +103,7 @@ public class Card {
     double timerStarted;
     double timerStopped;
     double fuzz;
+
 
     public Card(Deck deck, Fact fact, CardModel cardModel, double created) {
         tags = "";
@@ -122,10 +121,10 @@ public class Card {
         modified = System.currentTimeMillis() / 1000.0;
         if (created != Double.NaN) {
             this.created = created;
-            this.due = created;
-        }
-        else
+            due = created;
+        } else {
             due = modified;
+        }
         combinedDue = due;
         this.deck = deck;
         this.fact = fact;
@@ -133,95 +132,102 @@ public class Card {
         if (cardModel != null) {
             cardModelId = cardModel.id;
             ordinal = cardModel.ordinal;
-            /* FIXME: what is the code below used for? It is never persisted
-             * Additionally, cardModel has no accessor.
-            HashMap<String, HashMap<Long, String>> d = new HashMap<String, HashMap<Long, String>>();
-            Iterator<FieldModel> iter = fact.model.fieldModels.iterator();
-            while (iter.hasNext()) {
-                FieldModel fm = iter.next();
-                HashMap<Long, String> field = new HashMap<Long, String>();
-                field.put(fm.id, fact.getFieldValue(fm.name));
-                d.put(fm.name, field);
-            }
-            */
-            //			HashMap<String, String> qa = CardModel.formatQA(id, fact.modelId, d, splitTags(), cardModel);
-            //			question = qa.get("question");
-            //			answer = qa.get("answer");
+            /*
+             * FIXME: what is the code below used for? It is never persisted Additionally, cardModel has no accessor.
+             * HashMap<String, HashMap<Long, String>> d = new HashMap<String, HashMap<Long, String>>();
+             * Iterator<FieldModel> iter = fact.model.fieldModels.iterator(); while (iter.hasNext()) { FieldModel fm =
+             * iter.next(); HashMap<Long, String> field = new HashMap<Long, String>(); field.put(fm.id,
+             * fact.getFieldValue(fm.name)); d.put(fm.name, field); }
+             */
+            // HashMap<String, String> qa = CardModel.formatQA(id, fact.modelId, d, splitTags(), cardModel);
+            // question = qa.get("question");
+            // answer = qa.get("answer");
         }
     }
 
-    public Card(Deck deck){
+
+    public Card(Deck deck) {
         this(deck, null, null, Double.NaN);
     }
 
-    public Fact getFact() 
-    {
-        if (fact != null)
-        {
+
+    public Fact getFact() {
+        if (fact != null) {
             return fact;
-        } 
-        else
-        {
+        } else {
             fact = new Fact(deck, factId);
             return fact;
         }
     }
 
+
     public void setModified() {
         modified = System.currentTimeMillis() / 1000.0;
     }
+
 
     public void startTimer() {
         timerStarted = System.currentTimeMillis() / 1000.0;
     }
 
+
     public void stopTimer() {
         timerStopped = System.currentTimeMillis() / 1000.0;
     }
 
+
     public double thinkingTime() {
-        if (Double.isNaN(timerStopped))
+        if (Double.isNaN(timerStopped)) {
             return (System.currentTimeMillis() / 1000.0) - timerStarted;
-        else
+        } else {
             return timerStopped - timerStarted;
+        }
     }
+
 
     public double totalTime() {
         return (System.currentTimeMillis() / 1000.0) - timerStarted;
     }
+
 
     public void genFuzz() {
         Random rand = new Random();
         fuzz = 0.95 + (0.1 * rand.nextDouble());
     }
 
+
     public String htmlQuestion(String type, boolean align) {
         return null;
     }
+
 
     public String htmlAnswer(boolean align) {
         return htmlQuestion("answer", align);
     }
 
+
     public void updateStats(int ease, String state) {
         reps += 1;
-        if (ease > 1)
+        if (ease > 1) {
             successive += 1;
-        else
+        } else {
             successive = 0;
+        }
 
         double delay = totalTime();
         // Ignore any times over 60 seconds
         if (delay < 60) {
             reviewTime += delay;
-            if (averageTime != 0)
+            if (averageTime != 0) {
                 averageTime = (averageTime + delay) / 2.0;
-            else
+            } else {
                 averageTime = delay;
+            }
         }
         // We don't track first answer for cards
-        if (state == "new")
+        if ("new".equalsIgnoreCase(state)) {
             state = "young";
+        }
         // Update ease and yes/no count
         String attr = state + String.format("Ease%d", ease);
         try {
@@ -231,147 +237,155 @@ public class Card {
             e.printStackTrace();
         }
 
-        if (ease < 2)
+        if (ease < 2) {
             noCount += 1;
-        else
+        } else {
             yesCount += 1;
-        if (firstAnswered == 0)
+        }
+        if (firstAnswered == 0) {
             firstAnswered = System.currentTimeMillis() / 1000.0;
+        }
         setModified();
     }
+
 
     public String[] splitTags() {
         return tagsBySrc;
     }
 
+
     public String allTags() {
-    	// Non-Canonified string of fact and model tags
-    	if ((tagsBySrc[TAGS_FACT].length() > 0) && (tagsBySrc[TAGS_MODEL].length() > 0))
-    		return tagsBySrc[TAGS_FACT] + "," + tagsBySrc[TAGS_MODEL];
-    	else if (tagsBySrc[TAGS_FACT].length() > 0)
-    		return tagsBySrc[TAGS_FACT];
-    	else
-    		return tagsBySrc[TAGS_MODEL];
+        // Non-Canonified string of fact and model tags
+        if ((tagsBySrc[TAGS_FACT].length() > 0) && (tagsBySrc[TAGS_MODEL].length() > 0)) {
+            return tagsBySrc[TAGS_FACT] + "," + tagsBySrc[TAGS_MODEL];
+        } else if (tagsBySrc[TAGS_FACT].length() > 0) {
+            return tagsBySrc[TAGS_FACT];
+        } else {
+            return tagsBySrc[TAGS_MODEL];
+        }
     }
+
 
     public boolean hasTag(String tag) {
         return (allTags().indexOf(tag) != -1);
     }
-    
-    //FIXME: Should be removed. Calling code should directly interact with Model
-	public CardModel getCardModel() {
-		Model myModel = Model.getModel(deck, cardModelId, false);
-		return myModel.getCardModel(cardModelId);
-	}
 
-	// Loading tags for this card. Needed when:
-	// - we modify the card fields and need to update question and answer.
-	// - we check is a card is marked
-	public void loadTags() {
-		Cursor cursor = null;
 
-		int tagSrc = 0;
-		
-		// Flush tags
-		for (int i=0; i<tagsBySrc.length; i++) {
-			tagsBySrc[i] = "";
-		}
-		
-		try {
-			cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
-								"SELECT tags.tag, cardTags.src " +
-								"FROM cardTags JOIN tags ON cardTags.tagId = tags.id " +
-								"WHERE cardTags.cardId = " + id +
-								" AND cardTags.src in (" + TAGS_FACT + ", " + TAGS_MODEL + "," + TAGS_TEMPL +") " +
-								"ORDER BY cardTags.id",
-								null);
-			while (cursor.moveToNext()) {
-				tagSrc = cursor.getInt(1);
-				if (tagsBySrc[tagSrc].length() > 0) {
-					tagsBySrc[tagSrc] += "," + cursor.getString(0);
-				} else {
-					tagsBySrc[tagSrc] += cursor.getString(0);
-				}
-			}
-		} finally {
-			if (cursor != null) cursor.close();
-		}
-	}
+    // FIXME: Should be removed. Calling code should directly interact with Model
+    public CardModel getCardModel() {
+        Model myModel = Model.getModel(deck, cardModelId, false);
+        return myModel.getCardModel(cardModelId);
+    }
+
+
+    // Loading tags for this card. Needed when:
+    // - we modify the card fields and need to update question and answer.
+    // - we check is a card is marked
+    public void loadTags() {
+        Cursor cursor = null;
+
+        int tagSrc = 0;
+
+        // Flush tags
+        for (int i = 0; i < tagsBySrc.length; i++) {
+            tagsBySrc[i] = "";
+        }
+
+        try {
+            cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery("SELECT tags.tag, cardTags.src "
+                    + "FROM cardTags JOIN tags ON cardTags.tagId = tags.id " + "WHERE cardTags.cardId = " + id
+                    + " AND cardTags.src in (" + TAGS_FACT + ", " + TAGS_MODEL + "," + TAGS_TEMPL + ") "
+                    + "ORDER BY cardTags.id", null);
+            while (cursor.moveToNext()) {
+                tagSrc = cursor.getInt(1);
+                if (tagsBySrc[tagSrc].length() > 0) {
+                    tagsBySrc[tagSrc] += "," + cursor.getString(0);
+                } else {
+                    tagsBySrc[tagSrc] += cursor.getString(0);
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
 
     public boolean fromDB(long id) {
-    	Cursor cursor = null;
-    	
-    	try {
-	        cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
-	                "SELECT id, factId, cardModelId, created, modified, tags, " +
-	                "ordinal, question, answer, priority, interval, lastInterval, " +
-	                "due, lastDue, factor, lastFactor, firstAnswered, reps, " +
-	                "successive, averageTime, reviewTime, youngEase0, youngEase1, " +
-	                "youngEase2, youngEase3, youngEase4, matureEase0, matureEase1, " +
-	                "matureEase2, matureEase3, matureEase4, yesCount, noCount, " +
-	                "spaceUntil, isDue, type, combinedDue " +
-	                "FROM cards " +
-	                "WHERE id = " +
-	                id,
-	                null);
-	        if (!cursor.moveToFirst()) {
-	            Log.w("anki", "Card.java (fromDB(id)): No result from query.");
-	            return false;
-	        }
-	
-	        this.id = cursor.getLong(0);
-	        this.factId = cursor.getLong(1);
-	        this.cardModelId = cursor.getLong(2);
-	        this.created = cursor.getDouble(3);
-	        this.modified = cursor.getDouble(4);
-	        this.tags = cursor.getString(5);
-	        this.ordinal = cursor.getInt(6);
-	        this.question = cursor.getString(7);
-	        this.answer = cursor.getString(8);
-	        this.priority = cursor.getInt(9);
-	        this.interval = cursor.getDouble(10);
-	        this.lastInterval = cursor.getDouble(11);
-	        this.due = cursor.getDouble(12);
-	        this.lastDue = cursor.getDouble(13);
-	        this.factor = cursor.getDouble(14);
-	        this.lastFactor = cursor.getDouble(15);
-	        this.firstAnswered = cursor.getDouble(16);
-	        this.reps = cursor.getInt(17);
-	        this.successive = cursor.getInt(18);
-	        this.averageTime = cursor.getDouble(19);
-	        this.reviewTime = cursor.getDouble(20);
-	        this.youngEase0 = cursor.getInt(21);
-	        this.youngEase1 = cursor.getInt(22);
-	        this.youngEase2 = cursor.getInt(23);
-	        this.youngEase3 = cursor.getInt(24);
-	        this.youngEase4 = cursor.getInt(25);
-	        this.matureEase0 = cursor.getInt(26);
-	        this.matureEase1 = cursor.getInt(27);
-	        this.matureEase2 = cursor.getInt(28);
-	        this.matureEase3 = cursor.getInt(29);
-	        this.matureEase4 = cursor.getInt(30);
-	        this.yesCount = cursor.getInt(31);
-	        this.noCount = cursor.getInt(32);
-	        this.spaceUntil = cursor.getDouble(33);
-	        this.isDue = cursor.getInt(34);
-	        this.type = cursor.getInt(35);
-	        this.combinedDue = cursor.getDouble(36);
-    	} finally {
-    		if (cursor != null) cursor.close();
-    	}
+        Cursor cursor = null;
+
+        try {
+            cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
+                    "SELECT id, factId, cardModelId, created, modified, tags, "
+                            + "ordinal, question, answer, priority, interval, lastInterval, "
+                            + "due, lastDue, factor, lastFactor, firstAnswered, reps, "
+                            + "successive, averageTime, reviewTime, youngEase0, youngEase1, "
+                            + "youngEase2, youngEase3, youngEase4, matureEase0, matureEase1, "
+                            + "matureEase2, matureEase3, matureEase4, yesCount, noCount, "
+                            + "spaceUntil, isDue, type, combinedDue " + "FROM cards " + "WHERE id = " + id, null);
+            if (!cursor.moveToFirst()) {
+                Log.w("anki", "Card.java (fromDB(id)): No result from query.");
+                return false;
+            }
+
+            this.id = cursor.getLong(0);
+            factId = cursor.getLong(1);
+            cardModelId = cursor.getLong(2);
+            created = cursor.getDouble(3);
+            modified = cursor.getDouble(4);
+            tags = cursor.getString(5);
+            ordinal = cursor.getInt(6);
+            question = cursor.getString(7);
+            answer = cursor.getString(8);
+            priority = cursor.getInt(9);
+            interval = cursor.getDouble(10);
+            lastInterval = cursor.getDouble(11);
+            due = cursor.getDouble(12);
+            lastDue = cursor.getDouble(13);
+            factor = cursor.getDouble(14);
+            lastFactor = cursor.getDouble(15);
+            firstAnswered = cursor.getDouble(16);
+            reps = cursor.getInt(17);
+            successive = cursor.getInt(18);
+            averageTime = cursor.getDouble(19);
+            reviewTime = cursor.getDouble(20);
+            youngEase0 = cursor.getInt(21);
+            youngEase1 = cursor.getInt(22);
+            youngEase2 = cursor.getInt(23);
+            youngEase3 = cursor.getInt(24);
+            youngEase4 = cursor.getInt(25);
+            matureEase0 = cursor.getInt(26);
+            matureEase1 = cursor.getInt(27);
+            matureEase2 = cursor.getInt(28);
+            matureEase3 = cursor.getInt(29);
+            matureEase4 = cursor.getInt(30);
+            yesCount = cursor.getInt(31);
+            noCount = cursor.getInt(32);
+            spaceUntil = cursor.getDouble(33);
+            isDue = cursor.getInt(34);
+            type = cursor.getInt(35);
+            combinedDue = cursor.getDouble(36);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
 
         // TODO: Should also read JOINed entries CardModel and Fact.
 
         return true;
     }
 
+
     public void toDB() {
-        if (reps == 0)
+        if (reps == 0) {
             type = 2;
-        else if (successive != 0)
+        } else if (successive != 0) {
             type = 1;
-        else
+        } else {
             type = 0;
+        }
 
         ContentValues values = new ContentValues();
         values.put("factId", factId);
@@ -416,7 +430,8 @@ public class Card {
         // TODO: Should also write JOINED entries: CardModel and Fact.
     }
 
-		// Method used for building downloaded decks
+
+    // Method used for building downloaded decks
     public void updateQAfields() {
         ContentValues values = new ContentValues();
         values.put("modified", modified);

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.tomgibara.android.veecheck;
 
 import android.app.Activity;
@@ -23,94 +24,101 @@ import android.view.View.OnClickListener;
 import android.widget.Checkable;
 
 /**
- * Base class for an activity which gives the user the option of continuing with
- * an upgrade.
+ * Base class for an activity which gives the user the option of continuing with an upgrade.
  * 
  * @author Tom Gibara
- *
  */
 
 public abstract class VeecheckActivity extends Activity implements OnClickListener {
 
-	private Intent updateIntent;
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		View yesButton = getYesButton();
-		View noButton = getNoButton();
-		updateIntent = getUpdateIntent();
-		if (updateIntent == null) {
-			yesButton.setEnabled(false);
-			noButton.setEnabled(false);
-		} else {
-			yesButton.setOnClickListener(this);
-			noButton.setOnClickListener(this);
-		}
-	}
+    private Intent updateIntent;
 
-	/**
-	 * Responds to the "yes" and "no" buttons
-	 */
-	
-	public void onClick(View view) {
-		Checkable stopCheckBox = getStopCheckBox();
-		boolean stop = stopCheckBox == null ? false : stopCheckBox.isChecked();
-		if (view == getYesButton()) {
-			if (stop) createState().setIgnoredIntent(updateIntent);
-			startActivity(updateIntent);
-			finish();
-		} else if (view == getNoButton()) {
-			if (stop) createState().setIgnoredIntent(updateIntent);
-			finish();
-		}
-	}
-	
-	/**
-	 * The intent that will be used to start an activity if the user clicks okay.
-	 */
-	
-	public Intent getUpdateIntent() {
-		return getIntent().getParcelableExtra(Intent.EXTRA_INTENT);
-	}
-	
-	/**
-	 * The veecheck state information as required by this activity.
-	 * 
-	 * @return the state information for this application
-	 */
-	
-	abstract protected VeecheckState createState();
-	
-	/**
-	 * The button inside this activity's content view which the user is invited
-	 * to click on to continue. This method will be called immediately after the
-	 * {@link #onCreate(Bundle)} method has been called.
-	 * 
-	 * @return a view in this activity's content view, never null
-	 */
-	
-	abstract protected View getYesButton();
 
-	/**
-	 * The button inside this activity's content view which the user may click
-	 * to cancel the update. This method will be called immediately after the
-	 * {@link #onCreate(Bundle)} method has been called.
-	 * 
-	 * @return a view in this activity's content view, never null
-	 */
-	
-	abstract protected View getNoButton();
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        View yesButton = getYesButton();
+        View noButton = getNoButton();
+        updateIntent = getUpdateIntent();
+        if (updateIntent == null) {
+            yesButton.setEnabled(false);
+            noButton.setEnabled(false);
+        } else {
+            yesButton.setOnClickListener(this);
+            noButton.setOnClickListener(this);
+        }
+    }
 
-	/**
-	 * The checkable view inside this activity's content view which the user may
-	 * click to opt out of receiving further notifications about the same update.
-	 * This method will be called immediately after the {@link #onCreate(Bundle)} method
-	 * has been called.
-	 * 
-	 * @return a checkable view in this activity's content view, or null
-	 */
-	
-	abstract protected Checkable getStopCheckBox();
+
+    /**
+     * Responds to the "yes" and "no" buttons
+     */
+
+    @Override
+    public void onClick(View view) {
+        Checkable stopCheckBox = getStopCheckBox();
+        boolean stop = stopCheckBox == null ? false : stopCheckBox.isChecked();
+        if (view == getYesButton()) {
+            if (stop) {
+                createState().setIgnoredIntent(updateIntent);
+            }
+            startActivity(updateIntent);
+            finish();
+        } else if (view == getNoButton()) {
+            if (stop) {
+                createState().setIgnoredIntent(updateIntent);
+            }
+            finish();
+        }
+    }
+
+
+    /**
+     * The intent that will be used to start an activity if the user clicks okay.
+     */
+
+    public Intent getUpdateIntent() {
+        return getIntent().getParcelableExtra(Intent.EXTRA_INTENT);
+    }
+
+
+    /**
+     * The veecheck state information as required by this activity.
+     * 
+     * @return the state information for this application
+     */
+
+    abstract protected VeecheckState createState();
+
+
+    /**
+     * The button inside this activity's content view which the user is invited to click on to continue. This method
+     * will be called immediately after the {@link #onCreate(Bundle)} method has been called.
+     * 
+     * @return a view in this activity's content view, never null
+     */
+
+    abstract protected View getYesButton();
+
+
+    /**
+     * The button inside this activity's content view which the user may click to cancel the update. This method will be
+     * called immediately after the {@link #onCreate(Bundle)} method has been called.
+     * 
+     * @return a view in this activity's content view, never null
+     */
+
+    abstract protected View getNoButton();
+
+
+    /**
+     * The checkable view inside this activity's content view which the user may click to opt out of receiving further
+     * notifications about the same update. This method will be called immediately after the {@link #onCreate(Bundle)}
+     * method has been called.
+     * 
+     * @return a checkable view in this activity's content view, or null
+     */
+
+    abstract protected Checkable getStopCheckBox();
 
 }
