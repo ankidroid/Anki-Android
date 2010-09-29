@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Class used to display and handle correctly images
+ * Class used to display and handle correctly images.
  */
 public class Image {
 
@@ -34,31 +34,32 @@ public class Image {
     /**
      * Pattern used to identify img tags
      */
-    private static Pattern mImagePattern = Pattern
+    private static Pattern sImagePattern = Pattern
             .compile("(?i)<img[^<>(src)]*src\\s*=\\s*(\"[^\"]*\"|'[^']*'|[^'\">]+)[^<>]*>");
 
     /**
      * Variables used to track the total time spent
      */
-    private static long mStartTime, mFinishTime;
+    private static long sStartTime;
+    private static long sFinishTime;
 
 
     /**
      * Parses the content (belonging to deck deckFilename), adding an onload event to the img tags, that will be useful
-     * in order to resize them
+     * in order to resize them.
      * 
      * @param deckFilename Deck's filename whose content is being parsed
      * @param content HTML content of a card
      * @return content Content with the onload events for the img tags
      */
     public static String parseImages(String deckFilename, String content) {
-        mStartTime = System.currentTimeMillis();
+        sStartTime = System.currentTimeMillis();
 
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
         Log.i(TAG, "parseImages");
-        Matcher matcher = mImagePattern.matcher(content);
+        Matcher matcher = sImagePattern.matcher(content);
         while (matcher.find()) {
             String img = matcher.group(1);
             // Log.i(TAG, "Image " + matcher.groupCount() + ": " + img);
@@ -74,8 +75,8 @@ public class Image {
 
         stringBuilder.append(contentLeft);
 
-        mFinishTime = System.currentTimeMillis();
-        Log.i(TAG, "Images parsed in " + (mFinishTime - mStartTime) + " milliseconds");
+        sFinishTime = System.currentTimeMillis();
+        Log.i(TAG, "Images parsed in " + (sFinishTime - sStartTime) + " milliseconds");
 
         return stringBuilder.toString();
     }

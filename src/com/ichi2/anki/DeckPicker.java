@@ -81,17 +81,12 @@ public class DeckPicker extends Activity implements Runnable {
     private DeckPicker mSelf;
 
     private ProgressDialog mProgressDialog;
-
     private AlertDialog mSyncLogAlert;
-
     private RelativeLayout mSyncAllBar;
-
     private Button mSyncAllButton;
 
     private SimpleAdapter mDeckListAdapter;
-
     private ArrayList<HashMap<String, String>> mDeckList;
-
     private ListView mDeckListView;
 
     private File[] mFileList;
@@ -106,13 +101,85 @@ public class DeckPicker extends Activity implements Runnable {
 
     private BroadcastReceiver mUnmountReceiver = null;
 
-    AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
+    // ----------------------------------------------------------------------------
+    // LISTENERS
+    // ----------------------------------------------------------------------------
+
+    private AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View v, int p, long id) {
             mSelf.handleDeckSelection(p);
         }
     };
 
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle data = msg.getData();
+            Resources res = mSelf.getResources();
+
+            String path = data.getString("absPath");
+            String dueString = String.format(res.getString(R.string.deckpicker_due), data.getInt("due"),
+                    data.getInt("total"));
+            String newString = String.format(res.getString(R.string.deckpicker_new), data.getInt("new"));
+
+            int count = mDeckListAdapter.getCount();
+            for (int i = 0; i < count; i++) {
+                @SuppressWarnings("unchecked")
+                HashMap<String, String> map = (HashMap<String, String>) mDeckListAdapter.getItem(i);
+                if (map.get("filepath").equals(path)) {
+                    map.put("due", dueString);
+                    map.put("new", newString);
+                    map.put("showProgress", "false");
+                }
+            }
+
+            mDeckListAdapter.notifyDataSetChanged();
+            Log.i(TAG, "DeckPicker - mDeckList notified of changes");
+        }
+    };
+
+    private Connection.TaskListener mSyncAllDecksListener = new Connection.TaskListener() {
+
+        @Override
+        public void onDisconnected() {
+            showDialog(DIALOG_NO_CONNECTION);
+        }
+
+
+        @Override
+        public void onPreExecute() {
+            // Pass
+        }
+
+
+        @Override
+        public void onProgressUpdate(Object... values) {
+            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+                mProgressDialog = ProgressDialog.show(DeckPicker.this, (String) values[0], (String) values[1]);
+            } else {
+                mProgressDialog.setTitle((String) values[0]);
+                mProgressDialog.setMessage((String) values[1]);
+            }
+        }
+
+
+        @Override
+        public void onPostExecute(Payload data) {
+            Log.i(TAG, "onPostExecute");
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+
+            mSyncLogAlert.setMessage(getSyncLogMessage((ArrayList<HashMap<String, String>>) data.result));
+            mSyncLogAlert.show();
+        }
+    };
+
+
+    // ----------------------------------------------------------------------------
+    // ANDROID METHODS
+    // ----------------------------------------------------------------------------
 
     /** Called when the activity is first created. */
     @Override
@@ -136,7 +203,7 @@ public class DeckPicker extends Activity implements Runnable {
                     SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
                     String username = preferences.getString("username", "");
                     String password = preferences.getString("password", "");
-                    Connection.syncAllDecks(syncAllDecksListener, new Connection.Payload(new Object[] { username,
+                    Connection.syncAllDecks(mSyncAllDecksListener, new Connection.Payload(new Object[] { username,
                             password, mDeckList }));
                 } else {
                     showDialog(DIALOG_USER_NOT_LOGGED_IN);
@@ -182,12 +249,13 @@ public class DeckPicker extends Activity implements Runnable {
     }
 
 
-    private void initDialogs() {
-        // Sync Log dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.sync_log_tite));
-        builder.setPositiveButton(getResources().getString(R.string.ok), null);
-        mSyncLogAlert = builder.create();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "DeckPicker - onDestroy()");
+        if (mUnmountReceiver != null) {
+            unregisterReceiver(mUnmountReceiver);
+        }
     }
 
 
@@ -233,6 +301,54 @@ public class DeckPicker extends Activity implements Runnable {
         }
 
         return dialog;
+    }
+
+
+    // ----------------------------------------------------------------------------
+    // CUSTOM METHODS
+    // ----------------------------------------------------------------------------
+
+    /**
+     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The intent will call
+     * closeExternalStorageFiles() if the external media is going to be ejected, so applications can clean up any files
+     * they have open.
+     */
+    public void registerExternalStorageListener() {
+        if (mUnmountReceiver == null) {
+            mUnmountReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
+                        Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                        String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+                        populateDeckList(deckPath);
+                    } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                        Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                        String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+                        mDeckIsSelected = false;
+                        setTitle(R.string.deckpicker_title);
+                        populateDeckList(deckPath);
+                    }
+                }
+            };
+            IntentFilter iFilter = new IntentFilter();
+            iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+            iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+            iFilter.addDataScheme("file");
+            registerReceiver(mUnmountReceiver, iFilter);
+        }
+    }
+
+
+    private void initDialogs() {
+        // Sync Log dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.sync_log_tite));
+        builder.setPositiveButton(getResources().getString(R.string.ok), null);
+        mSyncLogAlert = builder.create();
     }
 
 
@@ -307,65 +423,6 @@ public class DeckPicker extends Activity implements Runnable {
         Log.i(TAG, "DeckPicker - populateDeckList, Ending");
     }
 
-    private static final class AnkiFilter implements FileFilter {
-        @Override
-        public boolean accept(File pathname) {
-            if (pathname.isFile() && pathname.getName().endsWith(".anki")) {
-                return true;
-            }
-            return false;
-        }
-    }
-
-    private static final class HashMapCompare implements Comparator<HashMap<String, String>> {
-        @Override
-        public int compare(HashMap<String, String> object1, HashMap<String, String> object2) {
-            // Order by last modification date (last deck modified first)
-            if (object2.get("mod").compareToIgnoreCase(object1.get("mod")) != 0) {
-                return object2.get("mod").compareToIgnoreCase(object1.get("mod"));
-                // But if there are two decks with the same date of modification, order them in alphabetical order
-            } else {
-                return object1.get("filepath").compareToIgnoreCase(object2.get("filepath"));
-            }
-        }
-    }
-
-
-    private void handleDeckSelection(int id) {
-        String deckFilename = null;
-
-        waitForDeckLoaderThread();
-
-        @SuppressWarnings("unchecked")
-        HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
-        deckFilename = data.get("filepath");
-
-        if (deckFilename != null) {
-            Log.i(TAG, "Selected " + deckFilename);
-            Intent intent = this.getIntent();
-            intent.putExtra(StudyOptions.OPT_DB, deckFilename);
-            setResult(RESULT_OK, intent);
-
-            finish();
-        }
-    }
-
-
-    private void waitForDeckLoaderThread() {
-        mDeckIsSelected = true;
-        Log.i(TAG, "DeckPicker - waitForDeckLoaderThread(), mDeckIsSelected set to true");
-        mLock.lock();
-        try {
-            while (!mIsFinished) {
-                mCondFinished.await();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            mLock.unlock();
-        }
-    }
-
 
     @Override
     public void run() {
@@ -412,7 +469,7 @@ public class DeckPicker extends Activity implements Runnable {
                     Message msg = Message.obtain();
                     msg.setData(data);
 
-                    handler.sendMessage(msg);
+                    mHandler.sendMessage(msg);
 
                 }
                 mIsFinished = true;
@@ -423,75 +480,39 @@ public class DeckPicker extends Activity implements Runnable {
         }
     }
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle data = msg.getData();
-            Resources res = mSelf.getResources();
 
-            String path = data.getString("absPath");
-            String dueString = String.format(res.getString(R.string.deckpicker_due), data.getInt("due"),
-                    data.getInt("total"));
-            String newString = String.format(res.getString(R.string.deckpicker_new), data.getInt("new"));
+    private void handleDeckSelection(int id) {
+        String deckFilename = null;
 
-            int count = mDeckListAdapter.getCount();
-            for (int i = 0; i < count; i++) {
-                @SuppressWarnings("unchecked")
-                HashMap<String, String> map = (HashMap<String, String>) mDeckListAdapter.getItem(i);
-                if (map.get("filepath").equals(path)) {
-                    map.put("due", dueString);
-                    map.put("new", newString);
-                    map.put("showProgress", "false");
-                }
-            }
+        waitForDeckLoaderThread();
 
-            mDeckListAdapter.notifyDataSetChanged();
-            Log.i(TAG, "DeckPicker - mDeckList notified of changes");
-        }
-    };
+        @SuppressWarnings("unchecked")
+        HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
+        deckFilename = data.get("filepath");
 
+        if (deckFilename != null) {
+            Log.i(TAG, "Selected " + deckFilename);
+            Intent intent = this.getIntent();
+            intent.putExtra(StudyOptions.OPT_DB, deckFilename);
+            setResult(RESULT_OK, intent);
 
-    /**
-     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The intent will call
-     * closeExternalStorageFiles() if the external media is going to be ejected, so applications can clean up any files
-     * they have open.
-     */
-    public void registerExternalStorageListener() {
-        if (mUnmountReceiver == null) {
-            mUnmountReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    String action = intent.getAction();
-                    if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
-                        Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                        String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
-                        populateDeckList(deckPath);
-                    } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                        Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                        String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
-                        mDeckIsSelected = false;
-                        setTitle(R.string.deckpicker_title);
-                        populateDeckList(deckPath);
-                    }
-                }
-            };
-            IntentFilter iFilter = new IntentFilter();
-            iFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
-            iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
-            iFilter.addDataScheme("file");
-            registerReceiver(mUnmountReceiver, iFilter);
+            finish();
         }
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "DeckPicker - onDestroy()");
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver);
+    private void waitForDeckLoaderThread() {
+        mDeckIsSelected = true;
+        Log.i(TAG, "DeckPicker - waitForDeckLoaderThread(), mDeckIsSelected set to true");
+        mLock.lock();
+        try {
+            while (!mIsFinished) {
+                mCondFinished.await();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            mLock.unlock();
         }
     }
 
@@ -524,48 +545,30 @@ public class DeckPicker extends Activity implements Runnable {
         return spannableStringBuilder;
     }
 
-    Connection.TaskListener syncAllDecksListener = new Connection.TaskListener() {
+    // ----------------------------------------------------------------------------
+    // INNER CLASSES
+    // ----------------------------------------------------------------------------
 
+    private static final class AnkiFilter implements FileFilter {
         @Override
-        public void onDisconnected() {
-            showDialog(DIALOG_NO_CONNECTION);
+        public boolean accept(File pathname) {
+            if (pathname.isFile() && pathname.getName().endsWith(".anki")) {
+                return true;
+            }
+            return false;
         }
+    }
 
-
+    private static final class HashMapCompare implements Comparator<HashMap<String, String>> {
         @Override
-        public void onPreExecute() {
-            // Pass
-        }
-
-
-        @Override
-        public void onProgressUpdate(Object... values) {
-            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = ProgressDialog.show(DeckPicker.this, (String) values[0], (String) values[1]);
+        public int compare(HashMap<String, String> object1, HashMap<String, String> object2) {
+            // Order by last modification date (last deck modified first)
+            if (object2.get("mod").compareToIgnoreCase(object1.get("mod")) != 0) {
+                return object2.get("mod").compareToIgnoreCase(object1.get("mod"));
+                // But if there are two decks with the same date of modification, order them in alphabetical order
             } else {
-                mProgressDialog.setTitle((String) values[0]);
-                mProgressDialog.setMessage((String) values[1]);
+                return object1.get("filepath").compareToIgnoreCase(object2.get("filepath"));
             }
         }
-
-
-        @Override
-        public void onPostExecute(Payload data) {
-            Log.i(TAG, "onPostExecute");
-            if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
-            }
-
-            mSyncLogAlert.setMessage(getSyncLogMessage((ArrayList<HashMap<String, String>>) data.result));
-            mSyncLogAlert.show();
-        }
-    };
-
-    /*
-     * private void logTree(TreeSet<HashMap<String, String>> tree) { Iterator<HashMap<String, String>> it =
-     * tree.iterator(); while(it.hasNext()) { HashMap<String, String> map = it.next(); Log.i(TAG, "logTree - " +
-     * map.get("name") + ", due = " + map.get("due") + ", new = " + map.get("new") + ", showProgress = " +
-     * map.get("showProgress") + ", filepath = " + map.get("filepath") + ", last modified = " + map.get("mod")); } }
-     */
-
+    }
 }

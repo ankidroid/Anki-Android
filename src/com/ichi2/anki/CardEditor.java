@@ -33,16 +33,18 @@ public class CardEditor extends Activity {
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private LinearLayout fieldsLayoutContainer;
-
+    private LinearLayout mFieldsLayoutContainer;
     private Button mSave;
     private Button mCancel;
 
-    private Card editorCard;
+    private Card mEditorCard;
 
-    LinkedList<FieldEditText> editFields;
+    private LinkedList<FieldEditText> mEditFields;
 
-
+    // ----------------------------------------------------------------------------
+    // ANDROID METHODS
+    // ----------------------------------------------------------------------------
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,28 +53,28 @@ public class CardEditor extends Activity {
 
         setContentView(R.layout.card_editor);
 
-        fieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
+        mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
 
-        editorCard = Reviewer.getEditorCard();
+        mEditorCard = Reviewer.getEditorCard();
 
         // Card -> FactID -> FieldIDs -> FieldModels
 
-        Fact cardFact = editorCard.getFact();
+        Fact cardFact = mEditorCard.getFact();
         TreeSet<Field> fields = cardFact.getFields();
 
-        editFields = new LinkedList<FieldEditText>();
+        mEditFields = new LinkedList<FieldEditText>();
 
         Iterator<Field> iter = fields.iterator();
         while (iter.hasNext()) {
             FieldEditText newTextbox = new FieldEditText(this, iter.next());
             TextView label = newTextbox.getLabel();
-            editFields.add(newTextbox);
+            mEditFields.add(newTextbox);
 
-            fieldsLayoutContainer.addView(label);
-            fieldsLayoutContainer.addView(newTextbox);
+            mFieldsLayoutContainer.addView(label);
+            mFieldsLayoutContainer.addView(newTextbox);
             // Generate a new EditText for each field
 
         }
@@ -82,7 +84,7 @@ public class CardEditor extends Activity {
             @Override
             public void onClick(View v) {
 
-                Iterator<FieldEditText> iter = editFields.iterator();
+                Iterator<FieldEditText> iter = mEditFields.iterator();
                 while (iter.hasNext()) {
                     FieldEditText current = iter.next();
                     current.updateField();
@@ -114,6 +116,10 @@ public class CardEditor extends Activity {
     }
 
 
+    // ----------------------------------------------------------------------------
+    // CUSTOM METHODS
+    // ----------------------------------------------------------------------------
+    
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
      */
@@ -141,6 +147,10 @@ public class CardEditor extends Activity {
         finish();
     }
 
+    // ----------------------------------------------------------------------------
+    // INNER CLASSES
+    // ----------------------------------------------------------------------------
+    
     private class FieldEditText extends EditText {
 
         Field pairField;

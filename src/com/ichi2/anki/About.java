@@ -37,7 +37,7 @@ public class About extends Activity {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) throws SQLException {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setTitle(getAboutTitle());
@@ -61,7 +61,6 @@ public class About extends Activity {
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "Couldn't find package named " + this.getPackageName(), e);
         }
-        ;
 
         appName.append("About ");
         appName.append(pkgName);

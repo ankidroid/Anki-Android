@@ -31,14 +31,14 @@ import java.util.ArrayList;
 public class AnkiDb {
 
     /**
-     * The deck, which is actually an SQLite database.
-     */
-    public SQLiteDatabase database;
-
-    /**
      * Tag for logging messages
      */
     private static final String TAG = "AnkiDroid";
+
+    /**
+     * The deck, which is actually an SQLite database.
+     */
+    public SQLiteDatabase database;
 
 
     /**
@@ -130,7 +130,7 @@ public class AnkiDb {
      * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
      * @return The name of the Cursor method to be called.
      */
-    static private String getCursorMethodName(String typeName) {
+    private static String getCursorMethodName(String typeName) {
         if (typeName.equals("String")) {
             return "getString";
         } else if (typeName.equals("Long")) {

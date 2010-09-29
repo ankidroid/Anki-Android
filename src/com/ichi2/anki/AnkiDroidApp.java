@@ -1,18 +1,18 @@
 /****************************************************************************************
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 									*
- * Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com> 								*
- * 																						*
- * This program is free software; you can redistribute it and/or modify it under 		*
- * the terms of the GNU General Public License as published by the Free Software 		*
- * Foundation; either version 3 of the License, or (at your option) any later 			*
- * version. 																				*
- * 																						*
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY 		*
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 		*
- * PARTICULAR PURPOSE. See the GNU General Public License for more details. 				*
- * 																						*
- * You should have received a copy of the GNU General Public License along with 			*
- * this program. If not, see <http://www.gnu.org/licenses/>. 							*
+ * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+ * Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>                             *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
 package com.ichi2.anki;
@@ -24,7 +24,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -33,27 +32,23 @@ import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * Application class. This file mainly contains Veecheck stuff.
  */
 public class AnkiDroidApp extends Application {
 
-    private static final String TAG = "AnkiDroid";
-
-    private static ArrayList<String> cursorMethods = new ArrayList<String>();
-    private static ArrayList<String> cursorNames = new ArrayList<String>();
+    public static final String TAG = "AnkiDroid";
 
     /**
      * Singleton instance of this class.
      */
-    private static AnkiDroidApp instance;
+    private static AnkiDroidApp sInstance;
 
     /**
      * Currently loaded Anki deck.
      */
-    private Deck loadedDeck;
+    private Deck mLoadedDeck;
 
 
     /**
@@ -62,13 +57,13 @@ public class AnkiDroidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
+        sInstance = this;
 
         Connection.setContext(getApplicationContext());
 
         // Error Reporter
         CustomExceptionHandler customExceptionHandler = CustomExceptionHandler.getInstance();
-        customExceptionHandler.Init(instance.getApplicationContext());
+        customExceptionHandler.Init(sInstance.getApplicationContext());
         Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
 
         SharedPreferences preferences = PrefSettings.getSharedPrefs(this);
@@ -106,7 +101,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static AnkiDroidApp getInstance() {
-        return instance;
+        return sInstance;
     }
 
 
@@ -116,17 +111,17 @@ public class AnkiDroidApp extends Application {
 
 
     public static Resources getAppResources() {
-        return instance.getResources();
+        return sInstance.getResources();
     }
 
 
     public static Deck deck() {
-        return instance.loadedDeck;
+        return sInstance.mLoadedDeck;
     }
 
 
     public static void setDeck(Deck deck) {
-        instance.loadedDeck = deck;
+        sInstance.mLoadedDeck = deck;
     }
 
 
@@ -136,7 +131,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static boolean isUserLoggedIn() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(instance);
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(sInstance);
         String username = preferences.getString("username", "");
         String password = preferences.getString("password", "");
 
@@ -149,30 +144,15 @@ public class AnkiDroidApp extends Application {
 
 
     public static int getDisplayHeight() {
-        Display display = ((WindowManager) instance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE))
+        Display display = ((WindowManager) sInstance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay();
         return display.getHeight();
     }
 
 
     public static int getDisplayWidth() {
-        Display display = ((WindowManager) instance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE))
+        Display display = ((WindowManager) sInstance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay();
         return display.getWidth();
     }
-
-
-    public static void registerCursor(String method, String name) {
-        cursorMethods.add(method);
-        cursorNames.add(name);
-    }
-
-
-    public static void logCursors() {
-        for (int i = 0; i < cursorMethods.size(); i++) {
-            Log.i(TAG, "Cursor " + cursorNames.get(i));
-            Log.i(TAG, " on method " + cursorMethods.get(i));
-        }
-    }
-
 }
