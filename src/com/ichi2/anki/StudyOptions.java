@@ -68,7 +68,7 @@ public class StudyOptions extends Activity
 	
 	private static final int MENU_PREFERENCES = 5;
 	
-	//private static final int MENU_DECK_PROPERTIES = 6;
+	private static final int MENU_ADD_FACT = 6;
 	
 	private static final int MENU_ABOUT = 7;
 	
@@ -86,7 +86,6 @@ public class StudyOptions extends Activity
 	private static final int DOWNLOAD_SHARED_DECK = 4;
 	
 	private static final int REPORT_ERROR = 5;
-	//private static final int DECK_PROPERTIES = 5;
 	
 	/** 
 	 * Constants for selecting which content view to display 
@@ -653,8 +652,8 @@ public class StudyOptions extends Activity
 		item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
 		item.setIcon(R.drawable.ic_menu_home);
 		item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
+		item = menu.add(Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card);
 		item.setIcon(R.drawable.ic_menu_preferences);
-		//item = menu.add(Menu.NONE, MENU_DECK_PROPERTIES, Menu.NONE, R.string.deck_properties);
 		item.setIcon(R.drawable.ic_menu_archive);
 		item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
 		item.setIcon(R.drawable.ic_menu_info_details);
@@ -667,7 +666,6 @@ public class StudyOptions extends Activity
 		boolean deckLoaded = AnkiDroidApp.deck() != null;
 		menu.findItem(MENU_OPEN).setEnabled(sdCardAvailable);
 		menu.findItem(SUBMENU_DOWNLOAD).setEnabled(sdCardAvailable);
-		//menu.findItem(MENU_DECK_PROPERTIES).setEnabled(deckLoaded && sdCardAvailable);
 		menu.findItem(MENU_SYNC).setEnabled(deckLoaded && sdCardAvailable);
 		return true;
 	}
@@ -686,8 +684,9 @@ public class StudyOptions extends Activity
 			case MENU_DOWNLOAD_PERSONAL_DECK:
 				if(AnkiDroidApp.isUserLoggedIn())
 				{
-					Intent downloadPersonalDeck = new Intent(StudyOptions.this, PersonalDeckPicker.class);
-					startActivityForResult(downloadPersonalDeck, DOWNLOAD_PERSONAL_DECK); 
+					startActivityForResult(
+							new Intent(StudyOptions.this, PersonalDeckPicker.class),
+							DOWNLOAD_PERSONAL_DECK); 
 				}
 				else
 				{
@@ -696,9 +695,9 @@ public class StudyOptions extends Activity
 				return true;
 			
 			case MENU_DOWNLOAD_SHARED_DECK:
-				//Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
-				Intent downloadSharedDeck = new Intent(StudyOptions.this, SharedDeckPicker.class);
-				startActivityForResult(downloadSharedDeck, DOWNLOAD_SHARED_DECK);
+				startActivityForResult(
+						new Intent(StudyOptions.this, SharedDeckPicker.class),
+						DOWNLOAD_SHARED_DECK);
 				return true;
 			
 			case MENU_SYNC:
@@ -706,18 +705,24 @@ public class StudyOptions extends Activity
 				return true;
 			
 			case MENU_MY_ACCOUNT:
-				Intent myAccount = new Intent(StudyOptions.this, MyAccount.class);
-				startActivity(myAccount);
+				startActivity(
+						new Intent(StudyOptions.this, MyAccount.class));
 				return true;
 				
 			case MENU_PREFERENCES:
-				Intent preferences = new Intent(StudyOptions.this, Preferences.class);
-				startActivityForResult(preferences, PREFERENCES_UPDATE);
+				startActivityForResult(
+						new Intent(StudyOptions.this, Preferences.class),
+						PREFERENCES_UPDATE);
+				return true;
+				
+			case MENU_ADD_FACT:
+				startActivity(
+						new Intent(this, FactAdder.class));
 				return true;
 				
 			case MENU_ABOUT:
-				Intent about = new Intent(StudyOptions.this, About.class);
-				startActivity(about);
+				startActivity(
+						new Intent(StudyOptions.this, About.class));
 				return true;
 				
 			default:

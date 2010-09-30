@@ -80,7 +80,7 @@ public class FieldModel implements Comparator<FieldModel> {
 			+ " FROM fieldModels";
 
 	/**
-	 * 
+	 * Return all field models
 	 * @param modelId
 	 * @param models will be changed by adding all found FieldModels into it
 	 * @return unordered FieldModels which are related to a given Model put into the parameter "models"
