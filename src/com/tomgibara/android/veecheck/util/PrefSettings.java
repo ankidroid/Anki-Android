@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.tomgibara.android.veecheck.util;
 
 import android.content.Context;
@@ -21,66 +22,75 @@ import android.content.SharedPreferences;
 import com.tomgibara.android.veecheck.VeecheckSettings;
 
 /**
- * A convenient implementation of {@link VeecheckSettings} that stores its state
- * in a {@link SharedPreferences}.
+ * A convenient implementation of {@link VeecheckSettings} that stores its state in a {@link SharedPreferences}.
  * 
  * @author Tom Gibara
- *
  */
 
 public class PrefSettings implements VeecheckSettings {
 
-	/**
-	 * The name of the shared preferences for this class, as supplied to
-	 * {@link Context#getSharedPreferences(String, int)}.
-	 */
-	
-	public static final String SHARED_PREFS_NAME = VeecheckSettings.class.getPackage().getName();
+    /**
+     * The name of the shared preferences for this class, as supplied to
+     * {@link Context#getSharedPreferences(String, int)}.
+     */
 
-	public static final String KEY_ENABLED        = "enabled";
-	public static final String KEY_PERIOD         = "period";
-	public static final String KEY_CHECK_URI      = "check_uri";
-	//was min_period, leaving to applications to deal with switch over
-	public static final String KEY_CHECK_INTERVAL = "check_interval";
-	
-	public static final boolean DEFAULT_ENABLED        = true;
-	public static final long    DEFAULT_PERIOD         = 24 * 60 * 60 * 1000L;
-	public static final String  DEFAULT_CHECK_URI      = null;
-	public static final long    DEFAULT_CHECK_INTERVAL = 3 * 24 * 60 * 60 * 1000L;
-	
-	/**
-	 * @param context the invoking context
-	 * @return the preferences into which these settings are persisted 
-	 */
-	
-	public static SharedPreferences getSharedPrefs(Context context) {
-		return context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-	}
-	
-	private final SharedPreferences prefs;
+    public static final String SHARED_PREFS_NAME = VeecheckSettings.class.getPackage().getName();
 
-	public PrefSettings(SharedPreferences prefs) {
-		this.prefs = prefs;
-	}
+    public static final String KEY_ENABLED = "enabled";
+    public static final String KEY_PERIOD = "period";
+    public static final String KEY_CHECK_URI = "check_uri";
+    // was min_period, leaving to applications to deal with switch over
+    public static final String KEY_CHECK_INTERVAL = "check_interval";
 
-	public PrefSettings(Context context) {
-		this(getSharedPrefs(context));
-	}
-	
-	public boolean isEnabled() {
-		return prefs.getBoolean(KEY_ENABLED, DEFAULT_ENABLED);
-	}
+    public static final boolean DEFAULT_ENABLED = true;
+    public static final long DEFAULT_PERIOD = 24 * 60 * 60 * 1000L;
+    public static final String DEFAULT_CHECK_URI = null;
+    public static final long DEFAULT_CHECK_INTERVAL = 3 * 24 * 60 * 60 * 1000L;
 
-	public long getPeriod() {
-		return prefs.getLong(KEY_PERIOD, DEFAULT_PERIOD);
-	}
 
-	public String getCheckUri() {
-		return prefs.getString(KEY_CHECK_URI, DEFAULT_CHECK_URI);
-	}
+    /**
+     * @param context the invoking context
+     * @return the preferences into which these settings are persisted
+     */
 
-	public long getCheckInterval() {
-		return prefs.getLong(KEY_CHECK_INTERVAL, DEFAULT_CHECK_INTERVAL);
-	}
-	
+    public static SharedPreferences getSharedPrefs(Context context) {
+        return context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+    }
+
+    private final SharedPreferences prefs;
+
+
+    public PrefSettings(SharedPreferences prefs) {
+        this.prefs = prefs;
+    }
+
+
+    public PrefSettings(Context context) {
+        this(getSharedPrefs(context));
+    }
+
+
+    @Override
+    public boolean isEnabled() {
+        return prefs.getBoolean(KEY_ENABLED, DEFAULT_ENABLED);
+    }
+
+
+    @Override
+    public long getPeriod() {
+        return prefs.getLong(KEY_PERIOD, DEFAULT_PERIOD);
+    }
+
+
+    @Override
+    public String getCheckUri() {
+        return prefs.getString(KEY_CHECK_URI, DEFAULT_CHECK_URI);
+    }
+
+
+    @Override
+    public long getCheckInterval() {
+        return prefs.getLong(KEY_CHECK_INTERVAL, DEFAULT_CHECK_INTERVAL);
+    }
+
 }

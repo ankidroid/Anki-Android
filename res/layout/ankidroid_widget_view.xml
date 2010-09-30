@@ -6,8 +6,7 @@
     style="@style/WidgetBackground"
     >
     
-    <TextView
-        android:id="@+id/anki_droid_text"
+    <TextView android:id="@+id/anki_droid_text"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_marginTop="14dip"
