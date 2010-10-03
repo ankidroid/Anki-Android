@@ -267,7 +267,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     private Payload doInBackgroundSyncDeck(Payload data) {
         Resources res = context.getResources();
         HashMap<String, String> syncChangelog = new HashMap<String, String>();
-
         String username = (String) data.data[0];
         String password = (String) data.data[1];
         Deck deck = (Deck) data.data[2];

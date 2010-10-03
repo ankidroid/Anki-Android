@@ -1,0 +1,9 @@
+#Organize Import Order
+#Wed Sep 22 13:18:39 CEST 2010
+6=javax
+5=java
+4=org
+3=net
+2=junit
+1=com
+0=android
