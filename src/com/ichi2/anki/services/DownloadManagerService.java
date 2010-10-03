@@ -45,10 +45,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class DownloadManagerService extends Service {
 
@@ -62,6 +65,9 @@ public class DownloadManagerService extends Service {
 
     private static final String ANKI_URL = "http://anki.ichi2.net";
     private static final String SYNC_URL = ANKI_URL + "/sync/";
+
+    // Regex for finding incomplete downloads shared preferences
+    private static final Pattern numUpdatedCardsPattern = Pattern.compile("^numUpdatedCards:.*/([^/]+\\.anki\\.updating)$");
 
     private String mUsername;
     private String mPassword;
@@ -89,6 +95,8 @@ public class DownloadManagerService extends Service {
 
         // If there is incomplete work, finish it
         addIncompleteDownloads();
+        // Clean up shared preferences of completed downloads
+        removeCompletedDownloadsPrefs();
         resumeDownloads();
 
         // serviceHandler = new Handler();
@@ -199,6 +207,42 @@ public class DownloadManagerService extends Service {
         }
         // If no decks were added, stop the service
         stopIfFinished();
+    }
+
+    // Cleans up the SharedPreferences space from numUpdatedCards records of downloads that have been
+    // completed or aborted
+    public void removeCompletedDownloadsPrefs() {
+        Log.i(TAG, "DownloadManagerService - Removing shared preferences of completed or aborted downloads");
+
+        File dir = new File(mDestination + "/tmp/");
+        File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
+        HashSet<String> filenames = new HashSet();
+
+        // Get all incomplete downloads filenames
+        if (fileList != null) {
+            for (int i = 0; i < fileList.length; i++) {
+                File file = fileList[i];
+                filenames.add(file.getName());
+            }
+        }
+
+        // Remove any download related shared preference that doesn't have a corresponding incomplete file
+        SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+        Matcher sharedPrefMatcher;
+        Editor editor = pref.edit();
+        boolean sharedPreferencesChanged = false;
+        for (String key : pref.getAll().keySet()) {
+            sharedPrefMatcher = numUpdatedCardsPattern.matcher(key);
+            if (sharedPrefMatcher.matches() && sharedPrefMatcher.groupCount() > 0) {
+                if (!filenames.contains(sharedPrefMatcher.group(1))) {
+                    editor.remove(key);
+                    sharedPreferencesChanged = true;
+                }
+            }
+        }
+        if (sharedPreferencesChanged) {
+            editor.commit();
+        }
     }
 
 
@@ -484,15 +528,23 @@ public class DownloadManagerService extends Service {
     /********************************************************************
      * Listeners *
      ********************************************************************/
-    /*
-     * public interface ProgressListener { public void onProgressUpdate(Object... values); } private ProgressListener
-     * mUpdateListener = new ProgressListener() {
-     * @Override public void onProgressUpdate(Object... values) { String deckPath = (String) values[0]; Long
-     * numUpdatedCards = (Long) values[1]; //Save on preferences SharedPreferences pref =
-     * PrefSettings.getSharedPrefs(getBaseContext()); Editor editor = pref.edit(); Log.w(TAG,
-     * "ProgressListener, deckPath = " + deckPath + " NumCards: " + numUpdatedCards); editor.putLong("numUpdatedCards:"
-     * + deckPath, numUpdatedCards); editor.commit(); } };
-     */
+
+    // public interface ProgressListener {
+    //     public void onProgressUpdate(Object... values);
+    // }
+    // private ProgressListener mUpdateListener = new ProgressListener() {
+    //     @Override
+    //     public void onProgressUpdate(Object... values) {
+    //         String deckPath = (String) values[0];
+    //         Long numUpdatedCards = (Long) values[1];
+    //         //Save on preferences
+    //         SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+    //         Editor editor = pref.edit();
+    //         Log.w(TAG, "ProgressListener, deckPath = " + deckPath + " NumCards: " + numUpdatedCards);
+    //         editor.putLong("numUpdatedCards:" + deckPath, numUpdatedCards); editor.commit();
+    //     }
+    // };
+
 
     /********************************************************************
      * Async Tasks *
