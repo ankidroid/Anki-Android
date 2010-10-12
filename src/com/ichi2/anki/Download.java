@@ -12,9 +12,6 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
     public static final String TAG = "AnkiDroid";
 
-    // Status names
-    public static final String STATUSES[] = { "Downloading", "Paused", "Complete", "Cancelled", "Error" };
-
     // Status codes
     public static final int START = -1;
     public static final int DOWNLOADING = 0;

@@ -8,7 +8,7 @@ public class SharedDeckDownload extends Download implements Parcelable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final int UPDATE = 5;
+    public static final int UPDATING = 5;
 
     private int id;
     private String filename;
@@ -111,14 +111,14 @@ public class SharedDeckDownload extends Download implements Parcelable {
 
     @Override
     public int getProgress() {
-        if (status == UPDATE) {
+        if (status == UPDATING || status == PAUSED) {
             if (numTotalCards > 0) {
                 return (int) (((float) numUpdatedCards / numTotalCards) * 100);
             } else {
                 return 0;
             }
         } else {
-            return super.getProgress(); // (int) (((float)downloaded / size) * 100);
+            return super.getProgress();
         }
     }
 

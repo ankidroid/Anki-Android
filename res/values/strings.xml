@@ -175,6 +175,9 @@
 <!-- connection_error_message -> PersonalDeckPicker.java -->
 <!-- retry -> PersonalDeckPicker.java -->
 <!-- cancel -> PersonalDeckPicker.java -->
+<string name="cancel_download">Cancel Download</string>
+<string name="resume_download">Resume Download</string>
+<string name="pause_download">Pause Download</string>
 
 <!-- SharedDeck.java -->
 <string name="fact">fact</string>

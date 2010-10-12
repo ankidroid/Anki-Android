@@ -55,4 +55,6 @@ interface IDownloadManagerService {
     List<SharedDeckDownload> getSharedDeckDownloads();
     
     void downloadFile(in Download download);
+
+	void resumeDownloadUpdating(in Download download);
 }

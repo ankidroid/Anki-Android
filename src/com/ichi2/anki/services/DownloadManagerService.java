@@ -68,6 +68,7 @@ public class DownloadManagerService extends Service {
 
     // Regex for finding incomplete downloads shared preferences
     private static final Pattern numUpdatedCardsPattern = Pattern.compile("^numUpdatedCards:.*/([^/]+\\.anki\\.updating)$");
+    private static final Pattern pausedPattern = Pattern.compile("^paused:.*/([^/]+\\.anki\\.updating)$");
 
     private String mUsername;
     private String mPassword;
@@ -197,9 +198,15 @@ public class DownloadManagerService extends Service {
                 // Shared but not totally updated decks
                 else if (filename.endsWith(".anki.updating")) {
                     String title = filename.substring(0, filename.length() - ".anki.updating".length());
-
                     SharedDeckDownload download = new SharedDeckDownload(title);
-                    download.setStatus(SharedDeckDownload.UPDATE);
+
+                    SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+                    String pausedPref = "paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
+                    if (pref.getBoolean(pausedPref, false)) {
+                        download.setStatus(SharedDeckDownload.PAUSED);
+                    } else {
+                        download.setStatus(SharedDeckDownload.UPDATING);
+                    }
                     mSharedDeckDownloads.add(download);
                 }
             }
@@ -210,9 +217,9 @@ public class DownloadManagerService extends Service {
     }
 
     // Cleans up the SharedPreferences space from numUpdatedCards records of downloads that have been
-    // completed or aborted
+    // completed or cancelled
     public void removeCompletedDownloadsPrefs() {
-        Log.i(TAG, "DownloadManagerService - Removing shared preferences of completed or aborted downloads");
+        Log.i(TAG, "DownloadManagerService - Removing shared preferences of completed or cancelled downloads");
 
         File dir = new File(mDestination + "/tmp/");
         File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
@@ -233,6 +240,13 @@ public class DownloadManagerService extends Service {
         boolean sharedPreferencesChanged = false;
         for (String key : pref.getAll().keySet()) {
             sharedPrefMatcher = numUpdatedCardsPattern.matcher(key);
+            if (sharedPrefMatcher.matches() && sharedPrefMatcher.groupCount() > 0) {
+                if (!filenames.contains(sharedPrefMatcher.group(1))) {
+                    editor.remove(key);
+                    sharedPreferencesChanged = true;
+                }
+            }
+            sharedPrefMatcher = pausedPattern.matcher(key);
             if (sharedPrefMatcher.matches() && sharedPrefMatcher.groupCount() > 0) {
                 if (!filenames.contains(sharedPrefMatcher.group(1))) {
                     editor.remove(key);
@@ -279,7 +293,11 @@ public class DownloadManagerService extends Service {
 
         if (download instanceof SharedDeckDownload) {
             SharedDeckDownload sharedDeckDownload = (SharedDeckDownload) download;
-            if (sharedDeckDownload.getStatus() == SharedDeckDownload.UPDATE) {
+            // We need to go through UpdateDeckTask even when the download is paused, in order for
+            // numUpdatedCards and numTotalCards to get updated, so that progress is displayed correctly
+            if (sharedDeckDownload.getStatus() == SharedDeckDownload.PAUSED ||
+                 sharedDeckDownload.getStatus() == SharedDeckDownload.UPDATING) {
+//            } else if (sharedDeckDownload.getStatus() == SharedDeckDownload.UPDATING) {
                 new UpdateDeckTask().execute(new Payload(new Object[] { sharedDeckDownload }));
             } else {
                 new DownloadSharedDeckTask().execute(sharedDeckDownload);
@@ -510,6 +528,14 @@ public class DownloadManagerService extends Service {
                 mPersonalDeckDownloads.add(download);
             }
             resumeDownload(download);
+        }
+
+
+        @Override
+        public void resumeDownloadUpdating(Download download) throws RemoteException {
+            if (download instanceof SharedDeckDownload) {
+                resumeDownload(download);
+            }
         }
 
 
@@ -832,7 +858,7 @@ public class DownloadManagerService extends Service {
         protected void onPostExecute(SharedDeckDownload download) {
             Log.i(TAG, "onPostExecute");
             SharedDeckDownload sharedDownload = (SharedDeckDownload) download;
-            sharedDownload.setStatus(SharedDeckDownload.UPDATE);
+            sharedDownload.setStatus(SharedDeckDownload.UPDATING);
             notifySharedDeckObservers();
 
             // Unzip deck and media
@@ -881,16 +907,17 @@ public class DownloadManagerService extends Service {
                 String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle()
                         + ".anki.updating";
                 long totalCards = deck.getCardCount();
-                long updatedCards = pref.getLong(updatedCardsPref, 0);
-                long batchSize = Math.max(100, totalCards / 200);
                 download.setNumTotalCards((int) totalCards);
+                long updatedCards = pref.getLong(updatedCardsPref, 0);
+                download.setNumUpdatedCards((int) updatedCards);
+                long batchSize = Math.max(100, totalCards / 200);
                 recentBatchTimings = new long[runningAvgLength];
                 totalBatches = ((double) totalCards) / batchSize;
                 int currentBatch = (int) (updatedCards / batchSize);
                 long runningAvgCount = 0;
                 long batchStart;
                 elapsedTime = 0;
-                while (updatedCards < totalCards) {
+                while (updatedCards < totalCards && download.getStatus() == SharedDeckDownload.UPDATING) {
                     batchStart = System.currentTimeMillis();
                     updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
                     Editor editor = pref.edit();
@@ -903,7 +930,17 @@ public class DownloadManagerService extends Service {
                     currentBatch++;
                     runningAvgCount++;
                 }
-                Log.i(TAG, "Time to update deck = " + download.getEstTimeToCompletion() + " sec.");
+                if (download.getStatus() == SharedDeckDownload.UPDATING) {
+                    data.success = true;
+                } else if (download.getStatus() == SharedDeckDownload.PAUSED) {
+                    Editor editor = pref.edit();
+                    String pausedPref = "paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
+                    editor.putBoolean(pausedPref, true);
+                    editor.commit();
+                    data.success = false;
+                    Log.w(TAG, "updated paused " + download.getTitle() + " " + updatedCards + "/" + totalCards);
+                }
+                // Log.i(TAG, "Time to update deck = " + download.getEstTimeToCompletion() + " sec.");
                 // deck.afterUpdateCards();
             } else {
                 data.success = false;
@@ -977,13 +1014,13 @@ public class DownloadManagerService extends Service {
         @Override
         protected void onPostExecute(Payload result) {
             super.onPostExecute(result);
+            HashMap<String, Object> results = (HashMap<String, Object>) result.result;
+            Deck deck = (Deck) results.get("deck");
+            // Close the previously opened deck.
+            if (deck != null) {
+                deck.closeDeck();
+            }
             if (result.success) {
-                HashMap<String, Object> results = (HashMap<String, Object>) result.result;
-                Deck deck = (Deck) results.get("deck");
-                // Close the previously opened deck.
-                if (deck != null) {
-                    deck.closeDeck();
-                }
                 // TODO: Remove download and notify only on success?
                 SharedDeckDownload download = (SharedDeckDownload) result.data[0];
 

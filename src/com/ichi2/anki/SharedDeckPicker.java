@@ -17,9 +17,14 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -61,6 +66,10 @@ public class SharedDeckPicker extends Activity {
     ListView mSharedDecksListView;
     SharedDecksAdapter mSharedDecksAdapter;
 
+    // Context menu options
+    private static final int MENU_CANCEL = Menu.FIRST+1;
+    private static final int MENU_PAUSE = Menu.FIRST+2;
+    private static final int MENU_RESUME = Menu.FIRST+3;
 
     /********************************************************************
      * Lifecycle methods *
@@ -83,30 +92,86 @@ public class SharedDeckPicker extends Activity {
         mSharedDecksAdapter = new SharedDecksAdapter();
         mSharedDecksListView = (ListView) findViewById(R.id.list);
         mSharedDecksListView.setAdapter(mSharedDecksAdapter);
+        registerForContextMenu(mSharedDecksListView);
+
         mSharedDecksListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SharedDeck selectedDeck = (SharedDeck) mAllSharedDecks.get(position);
+                Object obj = mAllSharedDecks.get(position);
+                if (obj instanceof SharedDeck) {
+                    SharedDeck selectedDeck = (SharedDeck)obj;
 
-                SharedDeckDownload sharedDeckDownload = new SharedDeckDownload(selectedDeck.getId(), selectedDeck
+                    SharedDeckDownload sharedDeckDownload = new SharedDeckDownload(selectedDeck.getId(), selectedDeck
                         .getTitle());
-                sharedDeckDownload.setSize(selectedDeck.getSize());
-                mSharedDeckDownloads.add(sharedDeckDownload);
-                refreshSharedDecksList();
+                    sharedDeckDownload.setSize(selectedDeck.getSize());
+                    mSharedDeckDownloads.add(sharedDeckDownload);
+                    refreshSharedDecksList();
 
-                try {
-                    startService(mDownloadManagerServiceIntent);
-                    mDownloadManagerService.downloadFile(sharedDeckDownload);
-                } catch (RemoteException e) {
-                    // There is nothing special we need to do if the service has crashed
-                    Log.e(TAG, "RemoteException = " + e.getMessage());
-                    e.printStackTrace();
+                    try {
+                        startService(mDownloadManagerServiceIntent);
+                        mDownloadManagerService.downloadFile(sharedDeckDownload);
+                    } catch (RemoteException e) {
+                        // There is nothing special we need to do if the service has crashed
+                        Log.e(TAG, "RemoteException = " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
             }
         });
 
         Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        Resources res = getResources();
+        int position = ((AdapterContextMenuInfo)menuInfo).position;
+        Object obj = mAllSharedDecks.get(position);
+        if (obj instanceof Download) {
+            Download download = (Download) obj;
+            menu.add(Menu.NONE, MENU_CANCEL, Menu.NONE, res.getString(R.string.cancel_download));
+            if (download.getStatus() == SharedDeckDownload.PAUSED) {
+                menu.add(Menu.NONE, MENU_RESUME, Menu.NONE, res.getString(R.string.resume_download));
+            } else if (download.getStatus() == SharedDeckDownload.UPDATING) {
+                menu.add(Menu.NONE, MENU_PAUSE, Menu.NONE, res.getString(R.string.pause_download));
+            }
+       }
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        Object obj = mAllSharedDecks.get(info.position);
+
+        if (obj instanceof Download) {
+            Download download = (Download)obj;
+
+            switch (item.getItemId()) {
+                case MENU_CANCEL:
+                    break;
+                case MENU_RESUME:
+                    download.setStatus(SharedDeckDownload.UPDATING);
+                    Log.w(TAG, "Resuming " + download.getTitle());
+                    try {
+                        startService(mDownloadManagerServiceIntent);
+                        mDownloadManagerService.resumeDownloadUpdating(download);
+                    } catch (RemoteException e) {
+                        // There is nothing special we need to do if the service has crashed
+                        Log.e(TAG, "RemoteException = " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                    break;
+                case MENU_PAUSE:
+                    download.setStatus(Download.PAUSED);
+                    Log.w(TAG, "Paused " + download.getTitle());
+            }
+            mSharedDecksAdapter.notifyDataSetChanged();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -411,10 +476,10 @@ public class SharedDeckPicker extends Activity {
         }
 
 
-        @Override
-        public boolean isEnabled(int position) {
-            return !(mAllSharedDecks.get(position) instanceof Download);
-        }
+        //@Override
+        //public boolean isEnabled(int position) {
+        //    return !(mAllSharedDecks.get(position) instanceof Download);
+        //}
 
 
         @Override
@@ -470,7 +535,11 @@ public class SharedDeckPicker extends Activity {
 
                     case Download.PAUSED:
                         progressText.setText(res.getString(R.string.paused));
+                        Log.w(TAG, "progress of paused " + download.getTitle() + " " +
+                                ((SharedDeckDownload)download).getNumUpdatedCards() + "/" +
+                               ((SharedDeckDownload)download).getNumTotalCards());
                         estimatedText.setText("");
+                        progressBar.setProgress(download.getProgress());
                         break;
 
                     case Download.COMPLETE:
@@ -479,7 +548,7 @@ public class SharedDeckPicker extends Activity {
                         progressBar.setProgress(0);
                         break;
 
-                    case SharedDeckDownload.UPDATE:
+                    case SharedDeckDownload.UPDATING:
                         progressText.setText(res.getString(R.string.updating));
                         estimatedText.setText(download.getEstTimeToCompletion());
                         progressBar.setProgress(download.getProgress());
@@ -516,6 +585,7 @@ public class SharedDeckPicker extends Activity {
                 sharedDeckFacts.setVisibility(View.VISIBLE);
             }
 
+            Log.w(TAG, "Position " + position + " " + row.isClickable() + " " + row.isLongClickable() + " " + row.isFocused() + " " + row.isEnabled() + " " + row.isFocusable() + " " +row.isFocusableInTouchMode());
             return row;
         }
 
