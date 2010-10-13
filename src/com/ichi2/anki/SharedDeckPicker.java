@@ -30,6 +30,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ichi2.anki.services.DownloadManagerService;
 import com.ichi2.anki.services.IDownloadManagerService;
@@ -98,9 +99,20 @@ public class SharedDeckPicker extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Resources res = getResources();
                 Object obj = mAllSharedDecks.get(position);
                 if (obj instanceof SharedDeck) {
-                    SharedDeck selectedDeck = (SharedDeck)obj;
+                    SharedDeck selectedDeck = (SharedDeck) obj;
+
+                    for (Download d : mSharedDeckDownloads) {
+                        if (d.getTitle().equals(selectedDeck.getTitle())) {
+                            // Duplicate downloads not allowed, sorry.
+                            Toast duplicateMessage = Toast.makeText(SharedDeckPicker.this,
+                                res.getString(R.string.duplicate_download), Toast.LENGTH_SHORT);
+                            duplicateMessage.show();
+                            return;
+                        }
+                    }
 
                     SharedDeckDownload sharedDeckDownload = new SharedDeckDownload(selectedDeck.getId(), selectedDeck
                         .getTitle());
@@ -126,7 +138,7 @@ public class SharedDeckPicker extends Activity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         Resources res = getResources();
-        int position = ((AdapterContextMenuInfo)menuInfo).position;
+        int position = ((AdapterContextMenuInfo) menuInfo).position;
         Object obj = mAllSharedDecks.get(position);
         if (obj instanceof Download) {
             Download download = (Download) obj;
@@ -142,18 +154,18 @@ public class SharedDeckPicker extends Activity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Object obj = mAllSharedDecks.get(info.position);
 
         if (obj instanceof Download) {
-            Download download = (Download)obj;
+            Download download = (Download) obj;
 
             switch (item.getItemId()) {
                 case MENU_CANCEL:
+                    download.setStatus(SharedDeckDownload.CANCELLED);
                     break;
                 case MENU_RESUME:
                     download.setStatus(SharedDeckDownload.UPDATING);
-                    Log.w(TAG, "Resuming " + download.getTitle());
                     try {
                         startService(mDownloadManagerServiceIntent);
                         mDownloadManagerService.resumeDownloadUpdating(download);
@@ -165,7 +177,7 @@ public class SharedDeckPicker extends Activity {
                     break;
                 case MENU_PAUSE:
                     download.setStatus(Download.PAUSED);
-                    Log.w(TAG, "Paused " + download.getTitle());
+                    break;
             }
             mSharedDecksAdapter.notifyDataSetChanged();
             return true;
@@ -535,9 +547,6 @@ public class SharedDeckPicker extends Activity {
 
                     case Download.PAUSED:
                         progressText.setText(res.getString(R.string.paused));
-                        Log.w(TAG, "progress of paused " + download.getTitle() + " " +
-                                ((SharedDeckDownload)download).getNumUpdatedCards() + "/" +
-                               ((SharedDeckDownload)download).getNumTotalCards());
                         estimatedText.setText("");
                         progressBar.setProgress(download.getProgress());
                         break;
@@ -551,6 +560,12 @@ public class SharedDeckPicker extends Activity {
                     case SharedDeckDownload.UPDATING:
                         progressText.setText(res.getString(R.string.updating));
                         estimatedText.setText(download.getEstTimeToCompletion());
+                        progressBar.setProgress(download.getProgress());
+                        break;
+
+                    case Download.CANCELLED:
+                        progressText.setText(res.getString(R.string.cancelling));
+                        estimatedText.setText("");
                         progressBar.setProgress(download.getProgress());
                         break;
 
@@ -585,7 +600,6 @@ public class SharedDeckPicker extends Activity {
                 sharedDeckFacts.setVisibility(View.VISIBLE);
             }
 
-            Log.w(TAG, "Position " + position + " " + row.isClickable() + " " + row.isLongClickable() + " " + row.isFocused() + " " + row.isEnabled() + " " + row.isFocusable() + " " +row.isFocusableInTouchMode());
             return row;
         }
 

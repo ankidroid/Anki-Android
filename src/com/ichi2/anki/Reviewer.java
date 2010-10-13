@@ -303,6 +303,7 @@ public class Reviewer extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            Resources res = getResources();
             sessioncomplete = false;
             nomorecards = false;
 
@@ -314,11 +315,13 @@ public class Reviewer extends Activity {
 
             if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
                 sessioncomplete = true;
-                sessionMessage = Toast.makeText(Reviewer.this, "Session question limit reached", Toast.LENGTH_SHORT);
+                sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_question_limit_reached),
+                        Toast.LENGTH_SHORT);
             } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
                 // session time limit reached, flag for halt once async task has completed.
                 sessioncomplete = true;
-                sessionMessage = Toast.makeText(Reviewer.this, "Session time limit reached", Toast.LENGTH_SHORT);
+                sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_time_limit_reached),
+                        Toast.LENGTH_SHORT);
 
             } else {
                 // session limits not reached, show next card

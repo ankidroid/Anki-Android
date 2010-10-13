@@ -40,6 +40,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.lang.SecurityException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -297,7 +298,6 @@ public class DownloadManagerService extends Service {
             // numUpdatedCards and numTotalCards to get updated, so that progress is displayed correctly
             if (sharedDeckDownload.getStatus() == SharedDeckDownload.PAUSED ||
                  sharedDeckDownload.getStatus() == SharedDeckDownload.UPDATING) {
-//            } else if (sharedDeckDownload.getStatus() == SharedDeckDownload.UPDATING) {
                 new UpdateDeckTask().execute(new Payload(new Object[] { sharedDeckDownload }));
             } else {
                 new DownloadSharedDeckTask().execute(sharedDeckDownload);
@@ -566,7 +566,6 @@ public class DownloadManagerService extends Service {
     //         //Save on preferences
     //         SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
     //         Editor editor = pref.edit();
-    //         Log.w(TAG, "ProgressListener, deckPath = " + deckPath + " NumCards: " + numUpdatedCards);
     //         editor.putLong("numUpdatedCards:" + deckPath, numUpdatedCards); editor.commit();
     //     }
     // };
@@ -810,13 +809,18 @@ public class DownloadManagerService extends Service {
                     publishProgress();
                 }
 
-                // Change status to complete if this point was reached because downloading has finished
                 if (download.getStatus() == Download.DOWNLOADING) {
+                    // Change status to complete if this point was reached because downloading has finished
                     download.setStatus(Download.COMPLETE);
                     new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId() + ".shared.zip.tmp")
                             .renameTo(new File(mDestination + "/tmp/" + download.getTitle() + ".zip"));
                     publishProgress();
+                } else if (download.getStatus() == Download.CANCELLED) {
+                    // Cancelled download, clean up
+                    new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId()
+                            + ".shared.zip.tmp").delete();
                 }
+
 
                 long finishTime = System.currentTimeMillis();
                 Log.i(TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
@@ -857,23 +861,28 @@ public class DownloadManagerService extends Service {
         @Override
         protected void onPostExecute(SharedDeckDownload download) {
             Log.i(TAG, "onPostExecute");
-            SharedDeckDownload sharedDownload = (SharedDeckDownload) download;
-            sharedDownload.setStatus(SharedDeckDownload.UPDATING);
-            notifySharedDeckObservers();
+            if (download.getStatus() == Download.COMPLETE) {
+                download.setStatus(SharedDeckDownload.UPDATING);
+                notifySharedDeckObservers();
 
-            // Unzip deck and media
-            String unzippedDeckName = unzipSharedDeckFile(mDestination + "/tmp/" + download.getTitle() + ".zip",
-                    sharedDownload.getTitle());
-            download.setTitle(unzippedDeckName);
+                // Unzip deck and media
+                String unzippedDeckName = unzipSharedDeckFile(mDestination + "/tmp/" + download.getTitle() + ".zip",
+                        download.getTitle());
+                download.setTitle(unzippedDeckName);
 
-            // Update all cards in deck
-            SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
-            Editor editor = pref.edit();
-            editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
-            editor.commit();
+                // Update all cards in deck
+                SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+                Editor editor = pref.edit();
+                editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
+                editor.commit();
 
-            new UpdateDeckTask().execute(new Payload(new Object[] { download }));
+                new UpdateDeckTask().execute(new Payload(new Object[] { download }));
 
+            } else if (download.getStatus() == Download.CANCELLED) {
+                mSharedDeckDownloads.remove(download);
+                notifySharedDeckObservers();
+                stopIfFinished();
+            }
         }
     }
 
@@ -938,7 +947,6 @@ public class DownloadManagerService extends Service {
                     editor.putBoolean(pausedPref, true);
                     editor.commit();
                     data.success = false;
-                    Log.w(TAG, "updated paused " + download.getTitle() + " " + updatedCards + "/" + totalCards);
                 }
                 // Log.i(TAG, "Time to update deck = " + download.getEstTimeToCompletion() + " sec.");
                 // deck.afterUpdateCards();
@@ -1020,13 +1028,12 @@ public class DownloadManagerService extends Service {
             if (deck != null) {
                 deck.closeDeck();
             }
+            SharedDeckDownload download = (SharedDeckDownload) result.data[0];
+            SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+            Editor editor = pref.edit();
             if (result.success) {
-                // TODO: Remove download and notify only on success?
-                SharedDeckDownload download = (SharedDeckDownload) result.data[0];
-
                 // Put updated cards to 0
-                SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
-                Editor editor = pref.edit();
+                // TODO: Why do we need to zero the updated cards?
                 editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
                 editor.commit();
                 // Move deck and media to the default deck path
@@ -1035,10 +1042,29 @@ public class DownloadManagerService extends Service {
                 new File(mDestination + "/tmp/" + download.getTitle() + ".media/").renameTo(new File(mDestination + "/"
                         + download.getTitle() + ".media/"));
                 mSharedDeckDownloads.remove(download);
-                notifySharedDeckObservers();
                 showNotification(download.getTitle());
-                stopIfFinished();
+            } else {
+                // If paused do nothing, if cancelled clean up
+                if (download.getStatus() == Download.CANCELLED) {
+                    try {
+                        new File(mDestination + "/tmp/" + download.getTitle() + ".anki.updating").delete();
+                        File mediaFolder = new File(mDestination + "/tmp/" + download.getTitle() + ".media/");
+                        for (File f : mediaFolder.listFiles()) {
+                            f.delete();
+                        }
+                        mediaFolder.delete();
+                    } catch (SecurityException e) {
+                        Log.e(TAG, "SecurityException = " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                    editor.remove("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating");
+                    editor.remove("paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating");
+                    editor.commit();
+                    mSharedDeckDownloads.remove(download);
+                }
             }
+            notifySharedDeckObservers();
+            stopIfFinished();
         }
     }
 
