@@ -947,6 +947,9 @@ public class DownloadManagerService extends Service {
                     editor.putBoolean(pausedPref, true);
                     editor.commit();
                     data.success = false;
+                    Log.i(TAG, "pausing deck " + download.getTitle());
+                } else if (download.getStatus() == SharedDeckDownload.CANCELLED) {
+                    data.success = false;
                 }
                 // Log.i(TAG, "Time to update deck = " + download.getEstTimeToCompletion() + " sec.");
                 // deck.afterUpdateCards();
@@ -1031,6 +1034,8 @@ public class DownloadManagerService extends Service {
             SharedDeckDownload download = (SharedDeckDownload) result.data[0];
             SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
             Editor editor = pref.edit();
+
+            Log.i(TAG, "Finished deck " + download.getTitle() + " " + result.success);
             if (result.success) {
                 // Put updated cards to 0
                 // TODO: Why do we need to zero the updated cards?
