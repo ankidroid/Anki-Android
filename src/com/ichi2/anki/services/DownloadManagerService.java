@@ -1054,10 +1054,12 @@ public class DownloadManagerService extends Service {
                     try {
                         new File(mDestination + "/tmp/" + download.getTitle() + ".anki.updating").delete();
                         File mediaFolder = new File(mDestination + "/tmp/" + download.getTitle() + ".media/");
-                        for (File f : mediaFolder.listFiles()) {
-                            f.delete();
+                        if (mediaFolder != null && mediaFolder.listFiles() != null) {
+                            for (File f : mediaFolder.listFiles()) {
+                                f.delete();
+                            }
+                            mediaFolder.delete();
                         }
-                        mediaFolder.delete();
                     } catch (SecurityException e) {
                         Log.e(TAG, "SecurityException = " + e.getMessage());
                         e.printStackTrace();
