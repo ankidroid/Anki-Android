@@ -184,7 +184,7 @@ public class AnkiDroidProxy {
 
 
     public String getDecks() {
-        Log.i(TAG, "getDecks - user = " + username + ", password = " + password);
+        // Log.i(TAG, "getDecks - user = " + username + ", password = " + password);
         String decksServer = "{}";
 
         try {
@@ -192,7 +192,7 @@ public class AnkiDroidProxy {
                     + URLEncoder.encode(username, "UTF-8") + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8")
                     + "&libanki=0.9.9.8.6&pversion=5";
 
-            Log.i(TAG, "Data json = " + data);
+            // Log.i(TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "getDecks");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
@@ -236,13 +236,13 @@ public class AnkiDroidProxy {
 
     public void createDeck(String name) {
         Log.i(TAG, "createDeck");
-        Log.i(TAG, "user = " + username + ", password = " + password);
+        // Log.i(TAG, "user = " + username + ", password = " + password);
 
         try {
             String data = "p=" + URLEncoder.encode(password, "UTF-8") + "&u=" + URLEncoder.encode(username, "UTF-8")
                     + "&d=None&name=" + URLEncoder.encode(name, "UTF-8");
 
-            Log.i(TAG, "Data json = " + data);
+            // Log.i(TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "createDeck");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
@@ -283,7 +283,7 @@ public class AnkiDroidProxy {
 
         Log.i(TAG, "Summary Server");
 
-        Log.i(TAG, "user = " + username + ", password = " + password + ", lastSync = " + lastSync);
+        // Log.i(TAG, "user = " + username + ", password = " + password + ", lastSync = " + lastSync);
         JSONObject summaryServer = new JSONObject();
 
         try {
@@ -298,7 +298,7 @@ public class AnkiDroidProxy {
                     + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(ENGLISH_LOCALE, "%f", lastSync)
                             .getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
 
-            Log.i(TAG, "Data json = " + data);
+            // Log.i(TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "summary");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
@@ -335,7 +335,7 @@ public class AnkiDroidProxy {
      */
     public JSONObject applyPayload(JSONObject payload) {
         Log.i(TAG, "applyPayload");
-        Log.i(TAG, "user = " + username + ", password = " + password + ", payload = " + payload.toString());
+        // Log.i(TAG, "user = " + username + ", password = " + password + ", payload = " + payload.toString());
         JSONObject payloadReply = new JSONObject();
 
         try {
@@ -345,7 +345,7 @@ public class AnkiDroidProxy {
                     + URLEncoder.encode(Base64.encodeBytes(Utils.compress(payload.toString().getBytes())), "UTF-8")
                     + "&base64=" + URLEncoder.encode("true", "UTF-8");
 
-            Log.i(TAG, "Data json = " + data);
+            // Log.i(TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "applyPayload");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);

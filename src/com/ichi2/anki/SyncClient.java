@@ -2098,13 +2098,13 @@ public class SyncClient {
 
 
     public static void fullSyncFromServer(String password, String username, String deckName, String deckPath) {
-        Log.i(TAG, "password = " + password + ", user = " + username + ", d = " + deckName);
+        // Log.i(TAG, "password = " + password + ", user = " + username + ", d = " + deckName);
 
         try {
             String data = "p=" + URLEncoder.encode(password, "UTF-8") + "&u=" + URLEncoder.encode(username, "UTF-8")
                     + "&d=" + URLEncoder.encode(deckName, "UTF-8");
 
-            Log.i(TAG, "Data json = " + data);
+            // Log.i(TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "fulldown");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
