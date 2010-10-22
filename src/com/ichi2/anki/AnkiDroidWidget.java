@@ -291,7 +291,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             @Override
             public int compare(DeckInformation deck1, DeckInformation deck2) {
 
-                if (deck2.dueCards == deck2.dueCards) {
+                if (deck1.dueCards == deck2.dueCards) {
                     return 0;
                 }
 
