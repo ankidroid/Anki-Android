@@ -129,6 +129,7 @@ public class PersonalDeckPicker extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        Log.i(TAG, "onpause kostas");
         if (mDownloadManagerService != null) {
             try {
                 mDownloadManagerService.unregisterPersonalDeckCallback(mCallback);
@@ -389,7 +390,6 @@ public class PersonalDeckPicker extends Activity {
     private IPersonalDeckServiceCallback mCallback = new IPersonalDeckServiceCallback.Stub() {
         @Override
         public void publishProgress(List<Download> downloads) throws RemoteException {
-            Log.i(TAG, "publishProgress");
             setPersonalDeckDownloads(downloads);
         }
     };
