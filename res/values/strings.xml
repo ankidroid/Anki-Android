@@ -58,6 +58,8 @@
 <string name="show_whiteboard">Show Whiteboard</string>
 <string name="hide_whiteboard">Hide Whiteboard</string>
 <string name="clear_whiteboard">Clear Whiteboard</string>
+<string name="session_question_limit_reached">Session question limit reached</string>
+<string name="session_time_limit_reached">Session time limit reached</string>
 
 <!-- deck_preferences.xml -->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
@@ -157,6 +159,7 @@
 <string name="paused">Paused</string>
 <string name="downloaded">Downloaded</string>
 <string name="error">Error</string>
+<string name="cancelling">Cancelling...</string>
 <string name="loading_personal_decks">Loading available personal decks...</string>
 <string name="connection_error_title">Attention</string>
 <string name="connection_error_return_message">A network error has ocurred. Retry, or cancel and return to the previous screen.</string>
@@ -177,6 +180,10 @@
 <!-- connection_error_message -> PersonalDeckPicker.java -->
 <!-- retry -> PersonalDeckPicker.java -->
 <!-- cancel -> PersonalDeckPicker.java -->
+<string name="cancel_download">Cancel Download</string>
+<string name="resume_download">Resume Download</string>
+<string name="pause_download">Pause Download</string>
+<string name="duplicate_download">This deck is already downloading</string>
 
 <!-- SharedDeck.java -->
 <string name="fact">fact</string>
@@ -204,8 +211,6 @@
 <string name="commiting_payload_to_db">Commiting payload to DB</string>
 
 <string name="saving_changes">Saving changes...</string>
-<string name="session_question_limit_reached">Session question limit reached</string>
-<string name="session_time_limit_reached">Session time limit reached</string>
 <string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck.</string>
 <string name="about_content">&lt;html&gt;
 &lt;body&gt;

@@ -40,6 +40,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.lang.SecurityException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -68,6 +69,7 @@ public class DownloadManagerService extends Service {
 
     // Regex for finding incomplete downloads shared preferences
     private static final Pattern numUpdatedCardsPattern = Pattern.compile("^numUpdatedCards:.*/([^/]+\\.anki\\.updating)$");
+    private static final Pattern pausedPattern = Pattern.compile("^paused:.*/([^/]+\\.anki\\.updating)$");
 
     private String mUsername;
     private String mPassword;
@@ -197,9 +199,15 @@ public class DownloadManagerService extends Service {
                 // Shared but not totally updated decks
                 else if (filename.endsWith(".anki.updating")) {
                     String title = filename.substring(0, filename.length() - ".anki.updating".length());
-
                     SharedDeckDownload download = new SharedDeckDownload(title);
-                    download.setStatus(SharedDeckDownload.UPDATE);
+
+                    SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+                    String pausedPref = "paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
+                    if (pref.getBoolean(pausedPref, false)) {
+                        download.setStatus(SharedDeckDownload.PAUSED);
+                    } else {
+                        download.setStatus(SharedDeckDownload.UPDATING);
+                    }
                     mSharedDeckDownloads.add(download);
                 }
             }
@@ -210,9 +218,9 @@ public class DownloadManagerService extends Service {
     }
 
     // Cleans up the SharedPreferences space from numUpdatedCards records of downloads that have been
-    // completed or aborted
+    // completed or cancelled
     public void removeCompletedDownloadsPrefs() {
-        Log.i(TAG, "DownloadManagerService - Removing shared preferences of completed or aborted downloads");
+        Log.i(TAG, "DownloadManagerService - Removing shared preferences of completed or cancelled downloads");
 
         File dir = new File(mDestination + "/tmp/");
         File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
@@ -233,6 +241,13 @@ public class DownloadManagerService extends Service {
         boolean sharedPreferencesChanged = false;
         for (String key : pref.getAll().keySet()) {
             sharedPrefMatcher = numUpdatedCardsPattern.matcher(key);
+            if (sharedPrefMatcher.matches() && sharedPrefMatcher.groupCount() > 0) {
+                if (!filenames.contains(sharedPrefMatcher.group(1))) {
+                    editor.remove(key);
+                    sharedPreferencesChanged = true;
+                }
+            }
+            sharedPrefMatcher = pausedPattern.matcher(key);
             if (sharedPrefMatcher.matches() && sharedPrefMatcher.groupCount() > 0) {
                 if (!filenames.contains(sharedPrefMatcher.group(1))) {
                     editor.remove(key);
@@ -279,7 +294,10 @@ public class DownloadManagerService extends Service {
 
         if (download instanceof SharedDeckDownload) {
             SharedDeckDownload sharedDeckDownload = (SharedDeckDownload) download;
-            if (sharedDeckDownload.getStatus() == SharedDeckDownload.UPDATE) {
+            // We need to go through UpdateDeckTask even when the download is paused, in order for
+            // numUpdatedCards and numTotalCards to get updated, so that progress is displayed correctly
+            if (sharedDeckDownload.getStatus() == SharedDeckDownload.PAUSED ||
+                 sharedDeckDownload.getStatus() == SharedDeckDownload.UPDATING) {
                 new UpdateDeckTask().execute(new Payload(new Object[] { sharedDeckDownload }));
             } else {
                 new DownloadSharedDeckTask().execute(sharedDeckDownload);
@@ -514,6 +532,14 @@ public class DownloadManagerService extends Service {
 
 
         @Override
+        public void resumeDownloadUpdating(Download download) throws RemoteException {
+            if (download instanceof SharedDeckDownload) {
+                resumeDownload(download);
+            }
+        }
+
+
+        @Override
         public List<Download> getPersonalDeckDownloads() throws RemoteException {
             return mPersonalDeckDownloads;
         }
@@ -540,7 +566,6 @@ public class DownloadManagerService extends Service {
     //         //Save on preferences
     //         SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
     //         Editor editor = pref.edit();
-    //         Log.w(TAG, "ProgressListener, deckPath = " + deckPath + " NumCards: " + numUpdatedCards);
     //         editor.putLong("numUpdatedCards:" + deckPath, numUpdatedCards); editor.commit();
     //     }
     // };
@@ -784,13 +809,18 @@ public class DownloadManagerService extends Service {
                     publishProgress();
                 }
 
-                // Change status to complete if this point was reached because downloading has finished
                 if (download.getStatus() == Download.DOWNLOADING) {
+                    // Change status to complete if this point was reached because downloading has finished
                     download.setStatus(Download.COMPLETE);
                     new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId() + ".shared.zip.tmp")
                             .renameTo(new File(mDestination + "/tmp/" + download.getTitle() + ".zip"));
                     publishProgress();
+                } else if (download.getStatus() == Download.CANCELLED) {
+                    // Cancelled download, clean up
+                    new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId()
+                            + ".shared.zip.tmp").delete();
                 }
+
 
                 long finishTime = System.currentTimeMillis();
                 Log.i(TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
@@ -831,23 +861,28 @@ public class DownloadManagerService extends Service {
         @Override
         protected void onPostExecute(SharedDeckDownload download) {
             Log.i(TAG, "onPostExecute");
-            SharedDeckDownload sharedDownload = (SharedDeckDownload) download;
-            sharedDownload.setStatus(SharedDeckDownload.UPDATE);
-            notifySharedDeckObservers();
+            if (download.getStatus() == Download.COMPLETE) {
+                download.setStatus(SharedDeckDownload.UPDATING);
+                notifySharedDeckObservers();
 
-            // Unzip deck and media
-            String unzippedDeckName = unzipSharedDeckFile(mDestination + "/tmp/" + download.getTitle() + ".zip",
-                    sharedDownload.getTitle());
-            download.setTitle(unzippedDeckName);
+                // Unzip deck and media
+                String unzippedDeckName = unzipSharedDeckFile(mDestination + "/tmp/" + download.getTitle() + ".zip",
+                        download.getTitle());
+                download.setTitle(unzippedDeckName);
 
-            // Update all cards in deck
-            SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
-            Editor editor = pref.edit();
-            editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
-            editor.commit();
+                // Update all cards in deck
+                SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+                Editor editor = pref.edit();
+                editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
+                editor.commit();
 
-            new UpdateDeckTask().execute(new Payload(new Object[] { download }));
+                new UpdateDeckTask().execute(new Payload(new Object[] { download }));
 
+            } else if (download.getStatus() == Download.CANCELLED) {
+                mSharedDeckDownloads.remove(download);
+                notifySharedDeckObservers();
+                stopIfFinished();
+            }
         }
     }
 
@@ -881,16 +916,17 @@ public class DownloadManagerService extends Service {
                 String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle()
                         + ".anki.updating";
                 long totalCards = deck.getCardCount();
-                long updatedCards = pref.getLong(updatedCardsPref, 0);
-                long batchSize = Math.max(100, totalCards / 200);
                 download.setNumTotalCards((int) totalCards);
+                long updatedCards = pref.getLong(updatedCardsPref, 0);
+                download.setNumUpdatedCards((int) updatedCards);
+                long batchSize = Math.max(100, totalCards / 200);
                 recentBatchTimings = new long[runningAvgLength];
                 totalBatches = ((double) totalCards) / batchSize;
                 int currentBatch = (int) (updatedCards / batchSize);
                 long runningAvgCount = 0;
                 long batchStart;
                 elapsedTime = 0;
-                while (updatedCards < totalCards) {
+                while (updatedCards < totalCards && download.getStatus() == SharedDeckDownload.UPDATING) {
                     batchStart = System.currentTimeMillis();
                     updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
                     Editor editor = pref.edit();
@@ -903,7 +939,19 @@ public class DownloadManagerService extends Service {
                     currentBatch++;
                     runningAvgCount++;
                 }
-                Log.i(TAG, "Time to update deck = " + download.getEstTimeToCompletion() + " sec.");
+                if (download.getStatus() == SharedDeckDownload.UPDATING) {
+                    data.success = true;
+                } else if (download.getStatus() == SharedDeckDownload.PAUSED) {
+                    Editor editor = pref.edit();
+                    String pausedPref = "paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
+                    editor.putBoolean(pausedPref, true);
+                    editor.commit();
+                    data.success = false;
+                    Log.i(TAG, "pausing deck " + download.getTitle());
+                } else if (download.getStatus() == SharedDeckDownload.CANCELLED) {
+                    data.success = false;
+                }
+                // Log.i(TAG, "Time to update deck = " + download.getEstTimeToCompletion() + " sec.");
                 // deck.afterUpdateCards();
             } else {
                 data.success = false;
@@ -977,19 +1025,20 @@ public class DownloadManagerService extends Service {
         @Override
         protected void onPostExecute(Payload result) {
             super.onPostExecute(result);
-            if (result.success) {
-                HashMap<String, Object> results = (HashMap<String, Object>) result.result;
-                Deck deck = (Deck) results.get("deck");
-                // Close the previously opened deck.
-                if (deck != null) {
-                    deck.closeDeck();
-                }
-                // TODO: Remove download and notify only on success?
-                SharedDeckDownload download = (SharedDeckDownload) result.data[0];
+            HashMap<String, Object> results = (HashMap<String, Object>) result.result;
+            Deck deck = (Deck) results.get("deck");
+            // Close the previously opened deck.
+            if (deck != null) {
+                deck.closeDeck();
+            }
+            SharedDeckDownload download = (SharedDeckDownload) result.data[0];
+            SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
+            Editor editor = pref.edit();
 
+            Log.i(TAG, "Finished deck " + download.getTitle() + " " + result.success);
+            if (result.success) {
                 // Put updated cards to 0
-                SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
-                Editor editor = pref.edit();
+                // TODO: Why do we need to zero the updated cards?
                 editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
                 editor.commit();
                 // Move deck and media to the default deck path
@@ -998,10 +1047,31 @@ public class DownloadManagerService extends Service {
                 new File(mDestination + "/tmp/" + download.getTitle() + ".media/").renameTo(new File(mDestination + "/"
                         + download.getTitle() + ".media/"));
                 mSharedDeckDownloads.remove(download);
-                notifySharedDeckObservers();
                 showNotification(download.getTitle());
-                stopIfFinished();
+            } else {
+                // If paused do nothing, if cancelled clean up
+                if (download.getStatus() == Download.CANCELLED) {
+                    try {
+                        new File(mDestination + "/tmp/" + download.getTitle() + ".anki.updating").delete();
+                        File mediaFolder = new File(mDestination + "/tmp/" + download.getTitle() + ".media/");
+                        if (mediaFolder != null && mediaFolder.listFiles() != null) {
+                            for (File f : mediaFolder.listFiles()) {
+                                f.delete();
+                            }
+                            mediaFolder.delete();
+                        }
+                    } catch (SecurityException e) {
+                        Log.e(TAG, "SecurityException = " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                    editor.remove("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating");
+                    editor.remove("paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating");
+                    editor.commit();
+                    mSharedDeckDownloads.remove(download);
+                }
             }
+            notifySharedDeckObservers();
+            stopIfFinished();
         }
     }
 
