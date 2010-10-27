@@ -43,6 +43,7 @@
 		<activity android:name="DeckPreferences" android:label="@string/deckpreferences_title" />
 		<activity android:name="About" android:label="@string/about_title" />
 		<activity android:name="CardEditor" android:label="@string/cardeditor_title"></activity>
+		<activity android:name="FactAdder" android:label="@string/factadder_title"></activity>
 		<activity android:name="ErrorReporter" android:label="Error Reporter"></activity>
 		<activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
 		<receiver android:name="com.ichi2.veecheck.CheckReceiver"

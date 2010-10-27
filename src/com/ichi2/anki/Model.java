@@ -18,6 +18,7 @@
 package com.ichi2.anki;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -146,6 +147,33 @@ public class Model {
         }
         return models.get(identifier);
     }
+
+    
+    public static HashMap<Long, Model> getModels(Deck deck) {
+    	Model mModel ; 
+    	HashMap<Long, Model> mModels= new HashMap<Long, Model>() ;
+    	
+    	Cursor mCursor =null;
+    	AnkiDb ankiDB=AnkiDatabaseManager.getDatabase(deck.deckPath);
+    	try{
+    		mCursor = ankiDB.database.rawQuery("SELECT id FROM models", null);
+    		if (!mCursor.moveToFirst()) {
+    			return mModels;
+    		}
+            do{
+            	Long id=mCursor.getLong(0);
+            	mModel=getModel(deck, id, true);
+            	mModels.put(id, mModel);
+
+            } while (mCursor.moveToNext());
+
+    	} finally {
+            if (mCursor != null) {
+                mCursor.close();
+            }
+        }
+		return mModels;
+	}
 
 
     protected final CardModel getCardModel(long identifier) {

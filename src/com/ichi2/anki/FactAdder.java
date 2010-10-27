@@ -1,23 +1,22 @@
 package com.ichi2.anki;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.ichi2.anki.Fact.Field;
-
+import com.ichi2.anki.Model;
 /**
  * Allows the user to add a fact.
  * 
@@ -36,67 +35,54 @@ public class FactAdder extends Activity {
 	private BroadcastReceiver mUnmountReceiver = null;
 	
     private LinearLayout fieldsLayoutContainer;
-    
-    private Button mSave;
-    private Button mCancel;
-    
-    private Card editorCard;
-    
-    LinkedList<FieldEditText> editFields;
+    HashMap<Long, Model> models;
+        
+    private Button addButton, closeButton, modelButton;
+    static final int DIALOG_MODEL_SELECT = 0;
 
-    
+    private Long currentSelectedModelId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         registerExternalStorageListener();
         
-        setContentView(R.layout.card_editor);
+        setContentView(R.layout.fact_adder);
         
-        fieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
+        fieldsLayoutContainer = (LinearLayout) findViewById(R.id.FactAdderEditFieldsLayout);
         
-        mSave = (Button) findViewById(R.id.CardEditorSaveButton);
-        mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
-
-        editorCard = Reviewer.getEditorCard();
-
-        // Card -> FactID -> FieldIDs -> FieldModels
+        addButton = (Button) findViewById(R.id.FactAdderAddButton);
+        closeButton = (Button) findViewById(R.id.FactAdderCloseButton);
+        modelButton = (Button) findViewById(R.id.FactAdderModelButton);
+        Deck deck = AnkiDroidApp.deck();
         
-        Fact cardFact = editorCard.getFact();
-        TreeSet<Field> fields = cardFact.getFields();
         
-        editFields = new LinkedList<FieldEditText>();
-        
-        Iterator<Field> iter = fields.iterator();
-        while (iter.hasNext()) {
-            FieldEditText newTextbox = new FieldEditText(this, iter.next());
-            TextView label = newTextbox.getLabel();
-            editFields.add(newTextbox);
-            
-            fieldsLayoutContainer.addView(label);
-            fieldsLayoutContainer.addView(newTextbox);
-            // Generate a new EditText for each field
-            
-        }
-
-        mSave.setOnClickListener(new View.OnClickListener() 
+        models=Model.getModels(deck);
+        currentSelectedModelId=deck.currentModelId;
+        modelButton.setText(models.get(currentSelectedModelId).name);
+        addButton.setOnClickListener(new View.OnClickListener() 
         {
 
             public void onClick(View v) {
                 
-                Iterator<FieldEditText> iter = editFields.iterator();
-                while (iter.hasNext())
-                {
-                    FieldEditText current = iter.next();
-                    current.updateField();
-                }
                 setResult(RESULT_OK);
                 finish();
             }
             
         });
+
+        modelButton.setOnClickListener(new View.OnClickListener() 
+        {
+
+            public void onClick(View v) {
+                
+                showDialog(DIALOG_MODEL_SELECT);
+            }
+            
+        });
+
         
-        mCancel.setOnClickListener(new View.OnClickListener() 
+        closeButton.setOnClickListener(new View.OnClickListener() 
         {
             
             public void onClick(View v) {
@@ -115,6 +101,44 @@ public class FactAdder extends Activity {
     		unregisterReceiver(mUnmountReceiver);
     }
 	
+    protected Dialog onCreateDialog(int id) {
+        Dialog dialog;
+        
+        switch(id) {
+        case DIALOG_MODEL_SELECT:
+        	ArrayList<CharSequence> dialogItems=new ArrayList<CharSequence>();
+        	// Use this array to know which ID is associated with each Item(name)
+        	final ArrayList<Long> dialogIds=new ArrayList<Long>();
+        	
+        	Model mModel;
+
+        	
+        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        	builder.setTitle("Select Model:");
+        	for (Long i:models.keySet()){
+        		mModel=models.get(i);
+        		dialogItems.add(mModel.name);
+        		dialogIds.add(i);
+        	}
+        	// Convert to Array
+        	CharSequence items[] = new CharSequence[dialogItems.size()];
+        	dialogItems.toArray(items);
+        	
+        	builder.setItems(items, new DialogInterface.OnClickListener() {
+        	    public void onClick(DialogInterface dialog, int item) {
+        	    	currentSelectedModelId=dialogIds.get(item);
+        	        modelButton.setText(models.get(currentSelectedModelId).name);
+        	    	Log.i("Debug: id: ",dialogIds.get(item).toString());
+        	    }
+        	});
+        	AlertDialog alert = builder.create();
+            return alert;
+        default:
+            dialog = null;
+        }
+        return dialog;
+    }
+    
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
      */
@@ -141,30 +165,5 @@ public class FactAdder extends Activity {
     	setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
 		finish();
     }
-    
-    private class FieldEditText extends EditText
-    {
-
-        Field pairField;
         
-        public FieldEditText(Context context, Field pairField) {
-            super(context);
-            this.pairField = pairField;
-            this.setText(pairField.value);
-            // TODO Auto-generated constructor stub
-        }
-        
-        public TextView getLabel() 
-        {
-            TextView label = new TextView(this.getContext());
-            label.setText(pairField.fieldModel.name);
-            return label;
-        }
-        
-        public void updateField()
-        {
-            pairField.value = this.getText().toString();
-        }
-    }
-    
 }
