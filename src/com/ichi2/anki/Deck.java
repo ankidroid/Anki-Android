@@ -1357,7 +1357,8 @@ public class Deck {
         // Create tag if necessary
         long tagId = tagId(tag, true);
 
-        for (int i = 0; i < factTagsList.size(); i++) {
+        int nbFactTags = factTagsList.size();
+        for (int i = 0; i < nbFactTags; i++) {
             String newTags = factTagsList.get(i);
 
             if (newTags.indexOf(tag) == -1) {
@@ -1382,8 +1383,7 @@ public class Deck {
 
         ContentValues values = new ContentValues();
 
-        for (int i = 0; i < cardIdList.size(); i++) {
-            String cardId = cardIdList.get(i);
+        for (String cardId : cardIdList) {
             try {
                 // Check if the tag already exists
                 ankiDB.queryScalar("select id from cardTags" + " where cardId = " + cardId + " and tagId = " + tagId
@@ -1413,7 +1413,8 @@ public class Deck {
 
         long tagId = tagId(tag, false);
 
-        for (int i = 0; i < factTagsList.size(); i++) {
+        int nbFactTags = factTagsList.size();
+        for (int i = 0; i < nbFactTags; i++) {
             String factTags = factTagsList.get(i);
             String newTags = factTags;
 
@@ -1444,8 +1445,7 @@ public class Deck {
         ArrayList<String> cardIdList = ankiDB.queryColumn(String.class,
                 "select id from cards where factId in " + Utils.ids2str(factIds), 0);
 
-        for (int i = 0; i < cardIdList.size(); i++) {
-            String cardId = cardIdList.get(i);
+        for (String cardId : cardIdList) {
             ankiDB.database.execSQL("delete from cardTags" + " WHERE cardId = " + cardId + " and tagId = " + tagId
                     + " and src = 0");
         }
@@ -1644,8 +1644,8 @@ public class Deck {
             // Note deleted cards
             String sqlInsert = "INSERT INTO cardsDeleted values (?," + String.format(ENGLISH_LOCALE, "%f", now) + ")";
             SQLiteStatement statement = ankiDB.database.compileStatement(sqlInsert);
-            for (int i = 0; i < len; i++) {
-                statement.bindString(1, ids.get(i));
+            for (String id : ids) {
+                statement.bindString(1, id);
                 statement.executeInsert();
             }
             statement.close();
@@ -1659,8 +1659,7 @@ public class Deck {
 
             // Find out if this tags are used by anything else
             ArrayList<String> unusedTags = new ArrayList<String>();
-            for (int i = 0; i < tags.size(); i++) {
-                String tagId = tags.get(i);
+            for (String tagId : tags) {
                 Cursor cursor = ankiDB.database.rawQuery("SELECT * FROM cardTags WHERE tagId = " + tagId + " LIMIT 1",
                         null);
                 if (!cursor.moveToFirst()) {
@@ -1698,9 +1697,9 @@ public class Deck {
             ankiDB.database.execSQL("DELETE FROM fields WHERE factId in " + idsString);
             String sqlInsert = "INSERT INTO factsDeleted VALUES(?," + String.format(ENGLISH_LOCALE, "%f", now) + ")";
             SQLiteStatement statement = ankiDB.database.compileStatement(sqlInsert);
-            for (int i = 0; i < len; i++) {
+            for (String id : ids) {
                 Log.i(TAG, "inserting into factsDeleted");
-                statement.bindString(1, ids.get(i));
+                statement.bindString(1, id);
                 statement.executeInsert();
             }
             statement.close();

@@ -235,9 +235,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         Log.i(TAG, "password = " + password);
 
         ArrayList<HashMap<String, String>> decksToSync = (ArrayList<HashMap<String, String>>) data.data[2];
-        for (int i = 0; i < decksToSync.size(); i++) {
-            Log.i(TAG, "Synchronizing deck " + i);
-            String deckPath = decksToSync.get(i).get("filepath");
+        for (HashMap<String, String> deckToSync : decksToSync) {
+            Log.i(TAG, "Synchronizing deck");
+            String deckPath = deckToSync.get("filepath");
             try {
                 Deck deck = Deck.openDeck(deckPath);
 

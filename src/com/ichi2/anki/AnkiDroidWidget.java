@@ -179,7 +179,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             int totalDue = 0;
 
             // If there are less than 3 decks display all, otherwise only the first 3
-            for (int i = 0; i < decks.size() && i < 3; i++) {
+            int nbDecks = decks.size();
+            for (int i = 0; i < nbDecks && i < 3; i++) {
                 DeckInformation deck = decks.get(i);
                 sb.append(deck.getDeckText());
                 sb.append('\n');

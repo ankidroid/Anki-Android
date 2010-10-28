@@ -159,9 +159,8 @@ public class Utils {
     public static JSONArray listToJSONArray(List<Object> list) {
         JSONArray jsonArray = new JSONArray();
 
-        int len = list.size();
-        for (int i = 0; i < len; i++) {
-            jsonArray.put(list.get(i));
+        for (Object o : list) {
+            jsonArray.put(o);
         }
 
         return jsonArray;

@@ -186,9 +186,7 @@ public class DownloadManagerService extends Service {
         File[] fileList = dir.listFiles(new IncompleteDownloadsFilter());
 
         if (fileList != null) {
-            for (int i = 0; i < fileList.length; i++) {
-                File file = fileList[i];
-
+            for (File file : fileList) {
                 String filename = file.getName();
                 Log.i(TAG, "Filename = " + filename);
 
@@ -241,8 +239,7 @@ public class DownloadManagerService extends Service {
 
         // Get all incomplete downloads filenames
         if (fileList != null) {
-            for (int i = 0; i < fileList.length; i++) {
-                File file = fileList[i];
+            for (File file : fileList) {
                 filenames.add(file.getName());
             }
         }

@@ -484,7 +484,8 @@ public class SyncClient {
 
 
     private void putExistingItems(HashSet<Long> ids, HashMap<Long, Double> dictExistingItems, JSONArray existingItems) {
-        for (int i = 0; i < existingItems.length(); i++) {
+        int nbItems = existingItems.length();
+        for (int i = 0; i < nbItems; i++) {
             try {
                 JSONArray itemModified = existingItems.getJSONArray(i);
                 Long idItem = itemModified.getLong(0);
@@ -501,7 +502,8 @@ public class SyncClient {
     private HashMap<Long, Double> putDeletedItems(HashSet<Long> ids, HashMap<Long, Double> dictDeletedItems,
             JSONArray deletedItems) {
         HashMap<Long, Double> deletedIds = new HashMap<Long, Double>();
-        for (int i = 0; i < deletedItems.length(); i++) {
+        int nbItems = deletedItems.length();
+        for (int i = 0; i < nbItems; i++) {
             try {
                 JSONArray itemModified = deletedItems.getJSONArray(i);
                 Long idItem = itemModified.getLong(0);
@@ -582,7 +584,8 @@ public class SyncClient {
     {
         JSONArray models = new JSONArray();
 
-        for (int i = 0; i < ids.length(); i++) {
+        int nbIds = ids.length();
+        for (int i = 0; i < nbIds; i++) {
             try {
                 models.put(bundleModel(ids.getLong(i)));
             } catch (JSONException e) {
@@ -858,9 +861,8 @@ public class SyncClient {
         // Delete field models that were not returned by the server
         ArrayList<String> fieldModelsIds = ankiDB.queryColumn(String.class,
                 "SELECT id FROM fieldModels WHERE modelId = " + modelId, 0);
-        int lenFieldModelsIds = fieldModelsIds.size();
-        for (int i = 0; i < lenFieldModelsIds; i++) {
-            String fieldModelId = fieldModelsIds.get(i);
+
+        for (String fieldModelId : fieldModelsIds) {
             if (!ids.contains(fieldModelId)) {
                 deck.deleteFieldModel(modelId, fieldModelId);
             }
@@ -986,9 +988,8 @@ public class SyncClient {
         // Delete card models that were not returned by the server
         ArrayList<String> cardModelsIds = ankiDB.queryColumn(String.class, "SELECT id FROM cardModels WHERE modelId = "
                 + modelId, 0);
-        int lenCardModelsIds = cardModelsIds.size();
-        for (int i = 0; i < lenCardModelsIds; i++) {
-            String cardModelId = cardModelsIds.get(i);
+
+        for (String cardModelId : cardModelsIds) {
             if (!ids.contains(cardModelId)) {
                 deck.deleteCardModel(modelId, cardModelId);
             }
@@ -1014,7 +1015,8 @@ public class SyncClient {
         JSONArray factsArray = new JSONArray();
         JSONArray fieldsArray = new JSONArray();
 
-        for (int i = 0; i < ids.length(); i++) {
+        int len = ids.length();
+        for (int i = 0; i < len; i++) {
             try {
                 Long id = ids.getLong(i);
                 factsArray.put(getFact(id));
@@ -1670,10 +1672,9 @@ public class SyncClient {
             bundledStats.put("global", bundleStat(Stats.globalStats(deck)));
             // Put daily stats
             JSONArray dailyStats = new JSONArray();
-            int len = ids.size();
-            for (int i = 0; i < len; i++) {
+            for (Long id : ids) {
                 // Update stat with the values of the stat with id ids.get(i)
-                stat.fromDB(ids.get(i));
+                stat.fromDB(id);
                 // Bundle this stat and add it to dailyStats
                 dailyStats.put(bundleStat(stat));
             }
@@ -1953,7 +1954,8 @@ public class SyncClient {
             return true;
         }
 
-        for (int i = 0; i < sums.length(); i++) {
+        int len = sums.length();
+        for (int i = 0; i < len; i++) {
             try {
                 JSONObject summary = sums.getJSONObject(i);
                 Iterator keys = summary.keys();

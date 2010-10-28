@@ -369,14 +369,14 @@ public class DeckPicker extends Activity implements Runnable {
         mFileList = fileList;
         if (len > 0 && fileList != null) {
             Log.i(TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
-            for (int i = 0; i < len; i++) {
-                String absPath = fileList[i].getAbsolutePath();
+            for (File file : fileList) {
+                String absPath = file.getAbsolutePath();
 
-                Log.i(TAG, "DeckPicker - populateDeckList, file " + i + " :" + fileList[i].getName());
+                Log.i(TAG, "DeckPicker - populateDeckList, file:" + file.getName());
 
                 try {
                     HashMap<String, String> data = new HashMap<String, String>();
-                    data.put("name", fileList[i].getName().replaceAll(".anki", ""));
+                    data.put("name", file.getName().replaceAll(".anki", ""));
                     data.put("due", res.getString(R.string.deckpicker_loaddeck));
                     data.put("new", "");
                     data.put("mod", String.format("%f", Deck.getLastModified(absPath)));
@@ -386,7 +386,7 @@ public class DeckPicker extends Activity implements Runnable {
                     tree.add(data);
 
                 } catch (SQLException e) {
-                    Log.w(TAG, "DeckPicker - populateDeckList, File " + fileList[i].getName()
+                    Log.w(TAG, "DeckPicker - populateDeckList, File " + file.getName()
                             + " is not a real anki file");
                 }
             }
@@ -427,18 +427,14 @@ public class DeckPicker extends Activity implements Runnable {
     @Override
     public void run() {
         Log.i(TAG, "Thread run - Beginning");
-        int len = 0;
-        if (mFileList != null) {
-            len = mFileList.length;
-        }
 
-        if (len > 0 && mFileList != null) {
+        if (mFileList != null && mFileList.length > 0) {
             mLock.lock();
             try {
                 Log.i(TAG, "Thread run - Inside lock");
 
                 mIsFinished = false;
-                for (int i = 0; i < len; i++) {
+                for (File file : mFileList) {
 
                     // Don't load any more decks if one has already been
                     // selected.
@@ -447,7 +443,7 @@ public class DeckPicker extends Activity implements Runnable {
                         break;
                     }
 
-                    String path = mFileList[i].getAbsolutePath();
+                    String path = file.getAbsolutePath();
                     Deck deck;
 
                     try {

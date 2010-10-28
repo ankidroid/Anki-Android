@@ -412,7 +412,8 @@ public class AnkiDroidProxy {
         if (jsonSharedDecks != null) {
             // Log.i(TAG, "Number of shared decks = " + jsonSharedDecks.length());
 
-            for (int i = 0; i < jsonSharedDecks.length(); i++) {
+            int nbDecks = jsonSharedDecks.length();
+            for (int i = 0; i < nbDecks; i++) {
                 JSONArray jsonSharedDeck = jsonSharedDecks.getJSONArray(i);
 
                 SharedDeck sharedDeck = new SharedDeck();
