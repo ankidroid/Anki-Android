@@ -31,11 +31,6 @@ import java.util.regex.Pattern;
 public class Sound {
 
     /**
-     * Tag for logging messages
-     */
-    private static final String TAG = "AnkiDroid";
-
-    /**
      * Pattern used to identify the markers for sound files
      */
     private static Pattern mSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
@@ -72,18 +67,18 @@ public class Sound {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
-        Log.i(TAG, "parseSounds");
+        Log.i(AnkiDroidApp.TAG, "parseSounds");
         mSoundPaths = new ArrayList<String>();
         Matcher matcher = mSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
             // Get the sound file name
             String sound = matcher.group(1);
-            // Log.i(TAG, "Sound " + matcher.groupCount() + ": " + sound);
+            // Log.i(AnkiDroidApp.TAG, "Sound " + matcher.groupCount() + ": " + sound);
 
             // Construct the sound path and store it
             String soundPath = deckFilename.replace(".anki", ".media/") + sound;
-            // Log.i(TAG, "parseSounds - soundPath = " + soundPath);
+            // Log.i(AnkiDroidApp.TAG, "parseSounds - soundPath = " + soundPath);
             mSoundPaths.add(soundPath);
 
             // Construct the new content, appending the substring from the beginning of the content left until the
@@ -97,13 +92,13 @@ public class Sound {
                             + soundPath
                             + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
-            // Log.i(TAG, "Content left = " + contentLeft);
+            // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
 
         stringBuilder.append(contentLeft);
 
         mFinishTime = System.currentTimeMillis();
-        Log.i(TAG, mSoundPaths.size() + " sounds parsed in " + (mFinishTime - mStartTime) + " milliseconds");
+        Log.i(AnkiDroidApp.TAG, mSoundPaths.size() + " sounds parsed in " + (mFinishTime - mStartTime) + " milliseconds");
 
         return stringBuilder.toString();
     }
@@ -142,7 +137,7 @@ public class Sound {
                     numSoundsPlayed++;
 
                     mFinishSoundTime = System.currentTimeMillis();
-                    // Log.i(TAG, "Sound " + numSoundsPlayed + " played in " + (mFinishSoundTime - mStartSoundTime) +
+                    // Log.i(AnkiDroidApp.TAG, "Sound " + numSoundsPlayed + " played in " + (mFinishSoundTime - mStartSoundTime) +
                     // " milliseconds");
 
                     // If there is still more sounds to play for the current card, play the next one
@@ -151,7 +146,7 @@ public class Sound {
                     } else {
                         // If it was the last sound, annotate the total time taken
                         mFinishTime = System.currentTimeMillis();
-                        // Log.i(TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) +
+                        // Log.i(AnkiDroidApp.TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) +
                         // " milliseconds");
                     }
                 }
@@ -159,7 +154,7 @@ public class Sound {
 
             mMediaPlayer.start();
         } catch (Exception e) {
-            Log.e(TAG, "playSounds - Error reproducing sound " + (soundToPlayIndex + 1) + " = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + (soundToPlayIndex + 1) + " = " + e.getMessage());
             releaseSound();
         }
     }
@@ -175,11 +170,11 @@ public class Sound {
                 mMediaPlayer.prepare();
                 mMediaPlayer.start();
             } catch (Exception e) {
-                Log.e(TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
+                Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
                 releaseSound();
             }
             mFinishSoundTime = System.currentTimeMillis();
-            Log.i(TAG, "Sound " + soundPath + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
+            Log.i(AnkiDroidApp.TAG, "Sound " + soundPath + " played in " + (mFinishSoundTime - mStartSoundTime) + " milliseconds");
         }
     }
 

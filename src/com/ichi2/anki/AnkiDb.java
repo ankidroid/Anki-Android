@@ -31,11 +31,6 @@ import java.util.ArrayList;
 public class AnkiDb {
 
     /**
-     * Tag for logging messages
-     */
-    private static final String TAG = "AnkiDroid";
-
-    /**
      * The deck, which is actually an SQLite database.
      */
     public SQLiteDatabase database;
@@ -56,7 +51,7 @@ public class AnkiDb {
     public void closeDatabase() {
         if (database != null) {
             database.close();
-            Log.i(TAG, "AnkiDb - closeDatabase, database " + database.getPath() + " closed = " + !database.isOpen());
+            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + database.getPath() + " closed = " + !database.isOpen());
             database = null;
         }
     }
@@ -110,7 +105,7 @@ public class AnkiDb {
                 results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
             } while (cursor.moveToNext());
         } catch (Exception e) {
-            Log.e(TAG, "queryColumn: Got Exception: " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "queryColumn: Got Exception: " + e.getMessage());
             // There was no results and therefore the invocation of the correspondent method with cursor null raises an
             // exception
             // Just return results empty

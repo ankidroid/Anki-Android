@@ -29,11 +29,6 @@ import java.util.Calendar;
  */
 public class Stats {
 
-    /**
-     * Tag for logging messages
-     */
-    private static String TAG = "AnkiDroid";
-
     public static final int STATS_LIFE = 0;
 
     public static final int STATS_DAY = 1;
@@ -120,7 +115,7 @@ public class Stats {
         Cursor cursor = null;
 
         try {
-            Log.i(TAG, "Reading stats from DB...");
+            Log.i(AnkiDroidApp.TAG, "Reading stats from DB...");
             cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery("SELECT * " + "FROM stats "
                     + "WHERE id = " + String.valueOf(id), null);
 
@@ -160,7 +155,7 @@ public class Stats {
 
 
     public void create(int type, Date day) {
-        Log.i(TAG, "Creating new stats for " + day.toString() + "...");
+        Log.i(AnkiDroidApp.TAG, "Creating new stats for " + day.toString() + "...");
         this.type = type;
         this.day = day;
 
@@ -256,7 +251,7 @@ public class Stats {
 
 
     public static Stats globalStats(Deck deck) {
-        Log.i(TAG, "Getting global stats...");
+        Log.i(AnkiDroidApp.TAG, "Getting global stats...");
         int type = STATS_LIFE;
         Date today = genToday(deck);
         Cursor cursor = null;
@@ -284,14 +279,14 @@ public class Stats {
 
 
     public static Stats dailyStats(Deck deck) {
-        Log.i(TAG, "Getting daily stats...");
+        Log.i(AnkiDroidApp.TAG, "Getting daily stats...");
         int type = STATS_DAY;
         Date today = genToday(deck);
         Stats stats = null;
         Cursor cursor = null;
 
         try {
-            Log.i(TAG, "Trying to get stats for " + today.toString());
+            Log.i(AnkiDroidApp.TAG, "Trying to get stats for " + today.toString());
             cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery("SELECT id " + "FROM stats "
                     + "WHERE type = " + String.valueOf(type) + " and day = \"" + today.toString() + "\"", null);
 

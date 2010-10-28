@@ -30,11 +30,6 @@ import android.webkit.WebView;
  */
 
 public class About extends Activity {
-    /**
-     * Tag for logging messages
-     */
-    private static final String TAG = "AnkiDroid";
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +54,7 @@ public class About extends Activity {
             pkgName = getString(pInfo.applicationInfo.labelRes);
             pkgVersion = pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + this.getPackageName(), e);
+            Log.e(AnkiDroidApp.TAG, "Couldn't find package named " + this.getPackageName(), e);
         }
 
         appName.append("About ");

@@ -39,8 +39,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class MyAccount extends Activity {
 
-    private static final String TAG = "AnkiDroid";
-
     private View mLoginToMyAccountView;
     private View mLoggedIntoMyAccountView;
 
@@ -107,8 +105,8 @@ public class MyAccount extends Activity {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
 
-        Log.i(TAG, "Username = " + username);
-        Log.i(TAG, "Password = " + password);
+        Log.i(AnkiDroidApp.TAG, "Username = " + username);
+        Log.i(AnkiDroidApp.TAG, "Password = " + password);
 
         /*
          * Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
@@ -221,7 +219,7 @@ public class MyAccount extends Activity {
 
         @Override
         public void onPreExecute() {
-            Log.i(TAG, "onPreExcecute");
+            Log.i(AnkiDroidApp.TAG, "onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = ProgressDialog.show(MyAccount.this, "",
                         getResources().getString(R.string.alert_logging_message), true);
@@ -231,7 +229,7 @@ public class MyAccount extends Activity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(TAG, "onPostExecute, succes = " + data.success);
+            Log.i(AnkiDroidApp.TAG, "onPostExecute, succes = " + data.success);
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
@@ -239,7 +237,7 @@ public class MyAccount extends Activity {
             if (data.success) {
                 saveUserInformation((String) data.data[0], (String) data.data[1]);
 
-                Log.i(TAG, "User successfully logged!");
+                Log.i(AnkiDroidApp.TAG, "User successfully logged!");
 
                 // Show logged view
                 mUsernameLoggedIn.setText((String) data.data[0]);

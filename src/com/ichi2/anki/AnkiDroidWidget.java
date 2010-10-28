@@ -42,18 +42,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class AnkiDroidWidget extends AppWidgetProvider {
-    private static final String TAG = "AnkiDroidWidget";
-
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(TAG, "onUpdate");
+        Log.i(AnkiDroidApp.TAG, "onUpdate");
 
         context.startService(new Intent(context, UpdateService.class));
     }
 
     public static class UpdateService extends Service {
-        private static final String TAG = "AnkiDroidWidgetUpdateService";
 
         // Simple class to hold the deck information for the widget
         public class DeckInformation {
@@ -137,7 +134,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
         @Override
         public void onStart(Intent intent, int startId) {
-            Log.i(TAG, "OnStart");
+            Log.i(AnkiDroidApp.TAG, "OnStart");
 
             RemoteViews updateViews = buildUpdate(this);
 
@@ -148,7 +145,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
 
         private RemoteViews buildUpdate(Context context) {
-            Log.i(TAG, "buildUpdate");
+            Log.i(AnkiDroidApp.TAG, "buildUpdate");
 
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.ankidroid_widget_view);
@@ -251,7 +248,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
 
         private ArrayList<DeckInformation> fetchDeckInformation() {
-            Log.i(TAG, "fetchDeckInformation");
+            Log.i(AnkiDroidApp.TAG, "fetchDeckInformation");
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
             String deckPath = preferences.getString("deckPath", "/sdcard");
@@ -285,13 +282,13 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     // Add the information about the deck
                     information.add(new DeckInformation(deckName, newCards, dueCards, failedCards));
                 } catch (Exception e) {
-                    Log.i(TAG, "Could not open deck");
-                    Log.e(TAG, e.toString());
+                    Log.i(AnkiDroidApp.TAG, "Could not open deck");
+                    Log.e(AnkiDroidApp.TAG, e.toString());
                 }
             }
 
             if (!information.isEmpty() && information.size() > 1) { // Sort and reverse the list if there are decks
-                Log.i(TAG, "Sorting deck");
+                Log.i(AnkiDroidApp.TAG, "Sorting deck");
 
                 Collections.sort(information, new ByDueComparator());
                 Collections.reverse(information);
@@ -327,7 +324,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
         @Override
         public IBinder onBind(Intent arg0) {
-            Log.i(TAG, "onBind");
+            Log.i(AnkiDroidApp.TAG, "onBind");
             // TODO Auto-generated method stub
             return null;
         }

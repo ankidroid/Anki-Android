@@ -24,6 +24,7 @@ import android.util.Log;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Deck;
 import com.ichi2.anki.R;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload> {
-    public static final String TAG = "Connection";
+
     public static Context context;
 
     public static final int TASK_TYPE_LOGIN = 0;
@@ -190,7 +191,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         } catch (Exception e) {
             data.success = false;
             data.exception = e;
-            Log.e(TAG, "Error trying to log in");
+            Log.e(AnkiDroidApp.TAG, "Error trying to log in");
         }
         return data;
     }
@@ -202,7 +203,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         } catch (Exception e) {
             data.success = false;
             data.exception = e;
-            Log.e(TAG, "Error getting shared decks = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "Error getting shared decks = " + e.getMessage());
             e.printStackTrace();
         }
         return data;
@@ -218,7 +219,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         } catch (Exception e) {
             data.success = false;
             data.exception = e;
-            Log.e(TAG, "Error getting personal decks = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "Error getting personal decks = " + e.getMessage());
             e.printStackTrace();
         }
         return data;
@@ -226,17 +227,17 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     private Payload doInBackgroundSyncAllDecks(Payload data) {
-        Log.i(TAG, "doInBackgroundSyncAllDecks");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSyncAllDecks");
         ArrayList<HashMap<String, String>> decksChangelogs = new ArrayList<HashMap<String, String>>();
 
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        Log.i(TAG, "username = " + username);
-        Log.i(TAG, "password = " + password);
+        Log.i(AnkiDroidApp.TAG, "username = " + username);
+        Log.i(AnkiDroidApp.TAG, "password = " + password);
 
         ArrayList<HashMap<String, String>> decksToSync = (ArrayList<HashMap<String, String>>) data.data[2];
         for (HashMap<String, String> deckToSync : decksToSync) {
-            Log.i(TAG, "Synchronizing deck");
+            Log.i(AnkiDroidApp.TAG, "Synchronizing deck");
             String deckPath = deckToSync.get("filepath");
             try {
                 Deck deck = Deck.openDeck(deckPath);
@@ -245,7 +246,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 syncDeckData = doInBackgroundSyncDeck(syncDeckData);
                 decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
             } catch (Exception e) {
-                Log.e(TAG, "Exception e = " + e.getMessage());
+                Log.e(AnkiDroidApp.TAG, "Exception e = " + e.getMessage());
                 // Probably, there was an error trying to open the deck, so we can not retrieve the deck name from it
                 String deckName = deckPath.substring(deckPath.lastIndexOf("/") + 1);
                 deckName = deckName.substring(0, deckName.length() - ".anki".length());
@@ -275,7 +276,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         if (syncName == null || syncName.equalsIgnoreCase("")) {
             syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1);
             syncName = syncName.substring(0, syncName.length() - ".anki".length());
-            Log.i(TAG, "syncName = *" + syncName + "*");
+            Log.i(AnkiDroidApp.TAG, "syncName = *" + syncName + "*");
             deck.setSyncName(syncName);
         }
         syncChangelog.put("deckName", syncName);
@@ -283,7 +284,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         ankiDB.database.beginTransaction();
         try {
-            Log.i(TAG, "Starting sync: username = " + username + ", password = " + password + ", deckPath = "
+            Log.i(AnkiDroidApp.TAG, "Starting sync: username = " + username + ", password = " + password + ", deckPath = "
                     + deckPath + ", syncName = " + syncName);
             AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 
@@ -291,12 +292,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             server.connect();
 
             if (!server.hasDeck(syncName)) {
-                Log.i(TAG, "AnkiOnline does not have this deck: Creating it...");
+                Log.i(AnkiDroidApp.TAG, "AnkiOnline does not have this deck: Creating it...");
                 server.createDeck(syncName);
             }
             int timediff = (int) (server.getTimestamp() - (System.currentTimeMillis() / 1000));
             if (timediff > 300) {
-                Log.i(TAG, "The clock is unsynchronized!");
+                Log.i(AnkiDroidApp.TAG, "The clock is unsynchronized!");
                 // TODO: Control what happens when the clocks are unsynchronized
             }
             publishProgress(syncName, res.getString(R.string.sync_syncing_message, new Object[] { syncName }));
@@ -308,7 +309,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 JSONArray sums = client.summaries();
 
                 if (client.needFullSync(sums)) {
-                    Log.i(TAG, "DECK NEEDS FULL SYNC");
+                    Log.i(AnkiDroidApp.TAG, "DECK NEEDS FULL SYNC");
 
                     publishProgress(syncName, res.getString(R.string.sync_preparing_full_sync_message));
                     String syncFrom = client.prepareFullSync();
@@ -331,7 +332,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));
                 } else {
-                    Log.i(TAG, "DECK DOES NOT NEED FULL SYNC");
+                    Log.i(AnkiDroidApp.TAG, "DECK DOES NOT NEED FULL SYNC");
 
                     publishProgress(syncName, res.getString(R.string.sync_determining_differences_message));
 
@@ -364,12 +365,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));
                 }
             } else {
-                Log.i(TAG, "NO CHANGES.");
+                Log.i(AnkiDroidApp.TAG, "NO CHANGES.");
                 publishProgress(syncName, res.getString(R.string.sync_no_changes_message));
                 syncChangelog.put("message", res.getString(R.string.sync_log_no_changes_message));
             }
         } catch (Exception e) {
-            Log.e(TAG, "Error synchronizing deck = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "Error synchronizing deck = " + e.getMessage());
             e.printStackTrace();
             syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
             data.success = false;
@@ -390,7 +391,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     private Payload doInBackgroundSyncDeckFromPayload(Payload data) {
-        Log.i(TAG, "SyncDeckFromPayload");
+        Log.i(AnkiDroidApp.TAG, "SyncDeckFromPayload");
         Deck deck = (Deck) data.data[0];
         SyncClient client = new SyncClient(deck);
         BufferedReader bufPython;
@@ -408,7 +409,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             e.printStackTrace();
         }
 
-        Log.i(TAG, "Synchronization from payload finished!");
+        Log.i(AnkiDroidApp.TAG, "Synchronization from payload finished!");
         return data;
     }
 

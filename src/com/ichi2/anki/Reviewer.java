@@ -63,11 +63,6 @@ import java.util.regex.Pattern;
 public class Reviewer extends Activity {
 
     /**
-     * Tag for logging messages.
-     */
-    public static final String TAG = "AnkiDroid";
-
-    /**
      * Result codes that are returned when this activity finishes.
      */
     public static final int RESULT_SESSION_COMPLETED = 1;
@@ -194,7 +189,7 @@ public class Reviewer extends Activity {
     private CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean showAnswer) {
-            Log.i(TAG, "Flip card changed:");
+            Log.i(AnkiDroidApp.TAG, "Flip card changed:");
             Sound.stopSounds();
 
             if (showAnswer) {
@@ -238,7 +233,7 @@ public class Reviewer extends Activity {
     private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View view) {
-            Log.i(TAG, "onLongClick");
+            Log.i(AnkiDroidApp.TAG, "onLongClick");
             Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             selectAndCopyText();
@@ -339,7 +334,7 @@ public class Reviewer extends Activity {
             } else {
                 // session limits not reached, show next card
                 Card newCard = values[0].getCard();
-                Log.w(TAG, "answerCard - get card (phase 1) in " + (System.currentTimeMillis() - start) + " ms.");
+                Log.w(AnkiDroidApp.TAG, "answerCard - get card (phase 1) in " + (System.currentTimeMillis() - start) + " ms.");
                 start = System.currentTimeMillis();
 
                 // If the card is null means that there are no more cards scheduled for review.
@@ -348,23 +343,23 @@ public class Reviewer extends Activity {
                     return;
                 }
 
-                Log.w(TAG, "onProgressUpdate - checked null " + (System.currentTimeMillis() - start) + " ms.");
+                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - checked null " + (System.currentTimeMillis() - start) + " ms.");
                 start = System.currentTimeMillis();
                 // Start reviewing next card
                 mCurrentCard = newCard;
                 Reviewer.this.setProgressBarIndeterminateVisibility(false);
-                Log.w(TAG, "onProgressUpdate - visibility " + (System.currentTimeMillis() - start) + " ms.");
+                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - visibility " + (System.currentTimeMillis() - start) + " ms.");
                 start = System.currentTimeMillis();
                 // Reviewer.this.enableControls();
                 Reviewer.this.unblockControls();
-                Log.w(TAG, "onProgressUpdate - unblock ctrl " + (System.currentTimeMillis() - start) + " ms.");
+                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - unblock ctrl " + (System.currentTimeMillis() - start) + " ms.");
                 start = System.currentTimeMillis();
                 Reviewer.this.reviewNextCard();
-                Log.w(TAG, "onProgressUpdate - review next " + (System.currentTimeMillis() - start) + " ms.");
+                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - review next " + (System.currentTimeMillis() - start) + " ms.");
                 start = System.currentTimeMillis();
             }
 
-            Log.w(TAG, "answerCard - Checked times (phase 3) in " + (System.currentTimeMillis() - start) + " ms.");
+            Log.w(AnkiDroidApp.TAG, "answerCard - Checked times (phase 3) in " + (System.currentTimeMillis() - start) + " ms.");
             start = System.currentTimeMillis();
 
             // Show a message to user if a session limit has been reached.
@@ -372,7 +367,7 @@ public class Reviewer extends Activity {
                 sessionMessage.show();
             }
 
-            Log.w(TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - start2) + " ms.");
+            Log.w(AnkiDroidApp.TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - start2) + " ms.");
         }
 
 
@@ -399,7 +394,7 @@ public class Reviewer extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG, "Reviewer - onCreate");
+        Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
         // Make sure a deck is loaded before continuing.
         if (AnkiDroidApp.deck() == null) {
@@ -432,7 +427,7 @@ public class Reviewer extends Activity {
 
             // Initialize session limits
             long timelimit = AnkiDroidApp.deck().getSessionTimeLimit() * 1000;
-            Log.i(TAG, "SessionTimeLimit: " + timelimit + " ms.");
+            Log.i(AnkiDroidApp.TAG, "SessionTimeLimit: " + timelimit + " ms.");
             mSessionTimeLimit = System.currentTimeMillis() + timelimit;
             mSessionCurrReps = 0;
 
@@ -448,7 +443,7 @@ public class Reviewer extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        Log.i(TAG, "Reviewer - onPause()");
+        Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
         // Save changes
         Deck deck = AnkiDroidApp.deck();
         deck.commitToDB();
@@ -460,7 +455,7 @@ public class Reviewer extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "Reviewer - onDestroy()");
+        Log.i(AnkiDroidApp.TAG, "Reviewer - onDestroy()");
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
@@ -471,7 +466,7 @@ public class Reviewer extends Activity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        Log.i(TAG, "onConfigurationChanged");
+        Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
 
         // Modify the card template to indicate the new available width and refresh card
         mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
@@ -519,8 +514,8 @@ public class Reviewer extends Activity {
         }
         if (mPrefTextSelection) {
             item = menu.findItem(MENU_SEARCH);
-            Log.i(TAG, "Clipboard has text = " + mClipboard.hasText());
-            Log.i(TAG,
+            Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + mClipboard.hasText());
+            Log.i(AnkiDroidApp.TAG,
                     "Is intent available = "
                             + Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT"));
             boolean lookupPossible = mClipboard.hasText()
@@ -619,7 +614,7 @@ public class Reviewer extends Activity {
 
         if (requestCode == EDIT_CURRENT_CARD) {
             if (resultCode == RESULT_OK) {
-                Log.i(TAG, "Saving card...");
+                Log.i(AnkiDroidApp.TAG, "Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
                 // TODO: code to save the changes made to the current card.
@@ -648,7 +643,7 @@ public class Reviewer extends Activity {
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-                        Log.i(TAG, "mUnmountReceiver - Action = Media Eject");
+                        Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
                         finishNoStorageAvailable();
                     }
                 }
@@ -681,7 +676,7 @@ public class Reviewer extends Activity {
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
             mCard.setFocusableInTouchMode(false);
         }
-        Log.i(TAG,
+        Log.i(AnkiDroidApp.TAG,
                 "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = " + mCard.isFocusableInTouchMode());
         if (mPrefTextSelection) {
             mCard.setOnLongClickListener(mLongClickHandler);
@@ -826,30 +821,30 @@ public class Reviewer extends Activity {
     private void reviewNextCard() {
         long start = System.currentTimeMillis();
         updateCounts();
-        Log.w(TAG, "reviewNextCard - update counts in " + (System.currentTimeMillis() - start) + " ms.");
+        Log.w(AnkiDroidApp.TAG, "reviewNextCard - update counts in " + (System.currentTimeMillis() - start) + " ms.");
         start = System.currentTimeMillis();
         mFlipCard.setChecked(false);
-        Log.w(TAG, "reviewNextCard - check flipcard in " + (System.currentTimeMillis() - start) + " ms.");
+        Log.w(AnkiDroidApp.TAG, "reviewNextCard - check flipcard in " + (System.currentTimeMillis() - start) + " ms.");
         start = System.currentTimeMillis();
 
         // Clean answer field
         if (mPrefWriteAnswers) {
             mAnswerField.setText("");
         }
-        Log.w(TAG, "reviewNextCard - clear answer field in " + (System.currentTimeMillis() - start) + " ms.");
+        Log.w(AnkiDroidApp.TAG, "reviewNextCard - clear answer field in " + (System.currentTimeMillis() - start) + " ms.");
         start = System.currentTimeMillis();
 
         if (mPrefWhiteboard) {
             mWhiteboard.clear();
         }
-        Log.w(TAG, "reviewNextCard - clear whiteboard in " + (System.currentTimeMillis() - start) + " ms.");
+        Log.w(AnkiDroidApp.TAG, "reviewNextCard - clear whiteboard in " + (System.currentTimeMillis() - start) + " ms.");
         start = System.currentTimeMillis();
 
         if (mPrefTimer) {
             mCardTimer.setBase(SystemClock.elapsedRealtime());
             mCardTimer.start();
         }
-        Log.w(TAG, "reviewNextCard - reset timer in " + (System.currentTimeMillis() - start) + " ms.");
+        Log.w(AnkiDroidApp.TAG, "reviewNextCard - reset timer in " + (System.currentTimeMillis() - start) + " ms.");
         start = System.currentTimeMillis();
     }
 
@@ -909,7 +904,7 @@ public class Reviewer extends Activity {
 
 
     private void displayCardAnswer() {
-        Log.i(TAG, "displayCardAnswer");
+        Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
 
         if (mPrefTimer) {
             mCardTimer.stop();
@@ -927,7 +922,7 @@ public class Reviewer extends Activity {
                 String correctAnswer = spanMatcher.replaceAll("");
                 Matcher brMatcher = brPattern.matcher(correctAnswer);
                 correctAnswer = brMatcher.replaceAll("\n");
-                Log.i(TAG, "correct answer = " + correctAnswer);
+                Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
 
                 // Obtain the diff and send it to updateCard
                 DiffEngine diff = new DiffEngine();
@@ -959,12 +954,12 @@ public class Reviewer extends Activity {
 
 
     private void updateCard(String content) {
-        Log.i(TAG, "updateCard");
+        Log.i(AnkiDroidApp.TAG, "updateCard");
         mUpdateCardStartTime = System.currentTimeMillis();
 
-        // Log.i(TAG, "Initial content card = \n" + content);
+        // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
         // content = Image.parseImages(deckFilename, content);
-        // Log.i(TAG, "content after parsing images = \n" + content);
+        // Log.i(AnkiDroidApp.TAG, "content after parsing images = \n" + content);
         content = Sound.parseSounds(mDeckFilename, content);
 
         // In order to display the bold style correctly, we have to change
@@ -985,9 +980,9 @@ public class Reviewer extends Activity {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
         }
 
-        // Log.i(TAG, "content card = \n" + content);
+        // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         String card = mCardTemplate.replace("::content::", content);
-        Log.i(TAG, "card html = \n" + card);
+        Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         mCard.loadDataWithBaseURL("file://" + mDeckFilename.replace(".anki", ".media/"), card, "text/html", "utf-8",
                 null);
 
@@ -1175,7 +1170,7 @@ public class Reviewer extends Activity {
         // applied later
         // and minus the padding
         int availableWidth = (int) (AnkiDroidApp.getDisplayWidth() / mScaleInPercent) - TOTAL_WIDTH_PADDING;
-        Log.i(TAG, "availableWidth = " + availableWidth);
+        Log.i(AnkiDroidApp.TAG, "availableWidth = " + availableWidth);
         return availableWidth;
     }
 
@@ -1210,9 +1205,9 @@ public class Reviewer extends Activity {
             mDisplayCardFinishTime = System.currentTimeMillis();
             mUpdateCardFinishTime = System.currentTimeMillis();
 
-            Log.i(TAG, "Time spent displaying card = " + (mDisplayCardFinishTime - mDisplayCardStartTime)
+            Log.i(AnkiDroidApp.TAG, "Time spent displaying card = " + (mDisplayCardFinishTime - mDisplayCardStartTime)
                     + " milliseconds");
-            Log.i(TAG, "Time spent updating card = " + (mUpdateCardFinishTime - mUpdateCardStartTime) + " milliseconds");
+            Log.i(AnkiDroidApp.TAG, "Time spent updating card = " + (mUpdateCardFinishTime - mUpdateCardStartTime) + " milliseconds");
         }
     }
 
@@ -1222,7 +1217,7 @@ public class Reviewer extends Activity {
     public final class AnkiDroidWebChromeClient extends WebChromeClient {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-            Log.i(TAG, message);
+            Log.i(AnkiDroidApp.TAG, message);
             result.confirm();
             return true;
         }

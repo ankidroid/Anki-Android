@@ -67,8 +67,6 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class DeckPicker extends Activity implements Runnable {
 
-    private static final String TAG = "AnkiDroid";
-
     /**
      * Dialogs
      */
@@ -135,7 +133,7 @@ public class DeckPicker extends Activity implements Runnable {
             }
 
             mDeckListAdapter.notifyDataSetChanged();
-            Log.i(TAG, "DeckPicker - mDeckList notified of changes");
+            Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
         }
     };
 
@@ -166,7 +164,7 @@ public class DeckPicker extends Activity implements Runnable {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(TAG, "onPostExecute");
+            Log.i(AnkiDroidApp.TAG, "onPostExecute");
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
@@ -184,7 +182,7 @@ public class DeckPicker extends Activity implements Runnable {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) throws SQLException {
-        Log.i(TAG, "DeckPicker - onCreate");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
         super.onCreate(savedInstanceState);
 
         mSelf = this;
@@ -242,7 +240,7 @@ public class DeckPicker extends Activity implements Runnable {
 
     @Override
     public void onPause() {
-        Log.i(TAG, "DeckPicker - onPause");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
 
         super.onPause();
         waitForDeckLoaderThread();
@@ -252,7 +250,7 @@ public class DeckPicker extends Activity implements Runnable {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "DeckPicker - onDestroy()");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
@@ -320,12 +318,12 @@ public class DeckPicker extends Activity implements Runnable {
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
-                        Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
+                        Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Unmounted");
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                         String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
                         populateDeckList(deckPath);
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                        Log.i(TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
+                        Log.i(AnkiDroidApp.TAG, "DeckPicker - mUnmountReceiver, Action = Media Mounted");
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                         String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
                         mDeckIsSelected = false;
@@ -353,7 +351,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 
     private void populateDeckList(String location) {
-        Log.i(TAG, "DeckPicker - populateDeckList");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList");
 
         Resources res = getResources();
         int len = 0;
@@ -368,11 +366,11 @@ public class DeckPicker extends Activity implements Runnable {
         }
         mFileList = fileList;
         if (len > 0 && fileList != null) {
-            Log.i(TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
+            Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
             for (File file : fileList) {
                 String absPath = file.getAbsolutePath();
 
-                Log.i(TAG, "DeckPicker - populateDeckList, file:" + file.getName());
+                Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, file:" + file.getName());
 
                 try {
                     HashMap<String, String> data = new HashMap<String, String>();
@@ -386,7 +384,7 @@ public class DeckPicker extends Activity implements Runnable {
                     tree.add(data);
 
                 } catch (SQLException e) {
-                    Log.w(TAG, "DeckPicker - populateDeckList, File " + file.getName()
+                    Log.w(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, File " + file.getName()
                             + " is not a real anki file");
                 }
             }
@@ -396,11 +394,11 @@ public class DeckPicker extends Activity implements Runnable {
             Thread thread = new Thread(this);
             thread.start();
         } else {
-            Log.i(TAG, "populateDeckList - No decks found.");
+            Log.i(AnkiDroidApp.TAG, "populateDeckList - No decks found.");
             // There is no sd card attached (wrap this code in a function called something like isSdMounted()
             // and place it in a utils class
             if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-                Log.i(TAG, "populateDeckList - No sd card.");
+                Log.i(AnkiDroidApp.TAG, "populateDeckList - No sd card.");
                 setTitle(R.string.deckpicker_title_nosdcard);
                 showDialog(DIALOG_NO_SDCARD);
             }
@@ -420,25 +418,25 @@ public class DeckPicker extends Activity implements Runnable {
         mDeckList.addAll(tree);
         mDeckListView.clearChoices();
         mDeckListAdapter.notifyDataSetChanged();
-        Log.i(TAG, "DeckPicker - populateDeckList, Ending");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, Ending");
     }
 
 
     @Override
     public void run() {
-        Log.i(TAG, "Thread run - Beginning");
+        Log.i(AnkiDroidApp.TAG, "Thread run - Beginning");
 
         if (mFileList != null && mFileList.length > 0) {
             mLock.lock();
             try {
-                Log.i(TAG, "Thread run - Inside lock");
+                Log.i(AnkiDroidApp.TAG, "Thread run - Inside lock");
 
                 mIsFinished = false;
                 for (File file : mFileList) {
 
                     // Don't load any more decks if one has already been
                     // selected.
-                    Log.i(TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
+                    Log.i(AnkiDroidApp.TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
                     if (mDeckIsSelected) {
                         break;
                     }
@@ -449,7 +447,7 @@ public class DeckPicker extends Activity implements Runnable {
                     try {
                         deck = Deck.openDeck(path);
                     } catch (SQLException e) {
-                        Log.w(TAG, "Could not open database " + path);
+                        Log.w(AnkiDroidApp.TAG, "Could not open database " + path);
                         continue;
                     }
                     int dueCards = deck.failedSoonCount + deck.revCount;
@@ -487,7 +485,7 @@ public class DeckPicker extends Activity implements Runnable {
         deckFilename = data.get("filepath");
 
         if (deckFilename != null) {
-            Log.i(TAG, "Selected " + deckFilename);
+            Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
             Intent intent = this.getIntent();
             intent.putExtra(StudyOptions.OPT_DB, deckFilename);
             setResult(RESULT_OK, intent);
@@ -499,7 +497,7 @@ public class DeckPicker extends Activity implements Runnable {
 
     private void waitForDeckLoaderThread() {
         mDeckIsSelected = true;
-        Log.i(TAG, "DeckPicker - waitForDeckLoaderThread(), mDeckIsSelected set to true");
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - waitForDeckLoaderThread(), mDeckIsSelected set to true");
         mLock.lock();
         try {
             while (!mIsFinished) {

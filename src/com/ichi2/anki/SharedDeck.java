@@ -23,7 +23,6 @@ public class SharedDeck extends HashMap<String, Object> {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String TAG = "AnkidroidSharedDecks";
     protected int id;
     protected String username;
     protected String title;
@@ -154,16 +153,16 @@ public class SharedDeck extends HashMap<String, Object> {
 
 
     public void prettyLog() {
-        Log.i(TAG, "SHARED DECK:");
-        Log.i(TAG, "		username = " + username);
-        Log.i(TAG, "		title = " + title);
-        Log.i(TAG, "		description = " + description);
-        Log.i(TAG, "		tags = " + tags);
-        Log.i(TAG, "		version = " + version);
-        Log.i(TAG, "		facts = " + facts);
-        Log.i(TAG, "		size = " + size);
-        Log.i(TAG, "		count = " + count);
-        Log.i(TAG, "		modified = " + modified);
-        Log.i(TAG, "		fileName = " + fileName);
+        Log.i(AnkiDroidApp.TAG, "SHARED DECK:");
+        Log.i(AnkiDroidApp.TAG, "		username = " + username);
+        Log.i(AnkiDroidApp.TAG, "		title = " + title);
+        Log.i(AnkiDroidApp.TAG, "		description = " + description);
+        Log.i(AnkiDroidApp.TAG, "		tags = " + tags);
+        Log.i(AnkiDroidApp.TAG, "		version = " + version);
+        Log.i(AnkiDroidApp.TAG, "		facts = " + facts);
+        Log.i(AnkiDroidApp.TAG, "		size = " + size);
+        Log.i(AnkiDroidApp.TAG, "		count = " + count);
+        Log.i(AnkiDroidApp.TAG, "		modified = " + modified);
+        Log.i(AnkiDroidApp.TAG, "		fileName = " + fileName);
     }
 }

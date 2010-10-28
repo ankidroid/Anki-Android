@@ -52,8 +52,6 @@ import java.util.List;
 
 public class PersonalDeckPicker extends Activity {
 
-    private static final String TAG = "AnkiDroid";
-
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -111,7 +109,7 @@ public class PersonalDeckPicker extends Activity {
                     mDownloadManagerService.downloadFile(personalDeckDownload);
                 } catch (RemoteException e) {
                     // There is nothing special we need to do if the service has crashed
-                    Log.e(TAG, "RemoteException = " + e.getMessage());
+                    Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -125,14 +123,14 @@ public class PersonalDeckPicker extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume");
+        Log.i(AnkiDroidApp.TAG, "onResume");
         if (mDownloadManagerService != null) {
             try {
                 mDownloadManagerService.registerPersonalDeckCallback(mCallback);
                 setPersonalDeckDownloads(mDownloadManagerService.getPersonalDeckDownloads());
             } catch (RemoteException e) {
                 // There is nothing special we need to do if the service has crashed
-                Log.e(TAG, "RemoteException = " + e.getMessage());
+                Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -142,13 +140,13 @@ public class PersonalDeckPicker extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(TAG, "onpause kostas");
+        Log.i(AnkiDroidApp.TAG, "onpause kostas");
         if (mDownloadManagerService != null) {
             try {
                 mDownloadManagerService.unregisterPersonalDeckCallback(mCallback);
             } catch (RemoteException e) {
                 // There is nothing special we need to do if the service has crashed
-                Log.e(TAG, "RemoteException = " + e.getMessage());
+                Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -157,7 +155,7 @@ public class PersonalDeckPicker extends Activity {
 
     @Override
     public void onDestroy() {
-        Log.i(TAG, "onDestroy");
+        Log.i(AnkiDroidApp.TAG, "onDestroy");
         super.onDestroy();
         releaseService();
         releaseBroadcastReceiver();
@@ -181,7 +179,7 @@ public class PersonalDeckPicker extends Activity {
 
     private void releaseService() {
         if (mConnection != null) {
-            Log.i(TAG, "Unbinding Service...");
+            Log.i(AnkiDroidApp.TAG, "Unbinding Service...");
             unbindService(mConnection);
             mConnection = null;
         }
@@ -282,7 +280,7 @@ public class PersonalDeckPicker extends Activity {
 
 
     private void getPersonalDecks() {
-        Log.i(TAG, "getPersonalDecks");
+        Log.i(AnkiDroidApp.TAG, "getPersonalDecks");
         SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
         String username = pref.getString("username", "");
         String password = pref.getString("password", "");
@@ -321,7 +319,7 @@ public class PersonalDeckPicker extends Activity {
             // representation of that from the raw service object.
             mDownloadManagerService = IDownloadManagerService.Stub.asInterface(service);
 
-            Log.i(TAG, "onServiceConnected");
+            Log.i(AnkiDroidApp.TAG, "onServiceConnected");
             // We want to monitor the service for as long as we are
             // connected to it.
             try {
@@ -349,7 +347,7 @@ public class PersonalDeckPicker extends Activity {
 
         @Override
         public void onDisconnected() {
-            Log.i(TAG, "onDisconnected");
+            Log.i(AnkiDroidApp.TAG, "onDisconnected");
             if (mNoConnectionAlert != null) {
                 mNoConnectionAlert.show();
             }
@@ -359,7 +357,7 @@ public class PersonalDeckPicker extends Activity {
         @SuppressWarnings("unchecked")
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(TAG, "onPostExecute");
+            Log.i(AnkiDroidApp.TAG, "onPostExecute");
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }

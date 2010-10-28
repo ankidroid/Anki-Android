@@ -30,11 +30,6 @@ import java.util.LinkedList;
  */
 public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData> {
 
-    /**
-     * Tag for logging messages
-     */
-    private static final String TAG = "AnkiDroid";
-
     public static final int TASK_TYPE_LOAD_DECK = 0;
     public static final int TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS = 1;
     public static final int TASK_TYPE_ANSWER_CARD = 2;
@@ -89,7 +84,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 oldInstance.get();
             }
         } catch (Exception e) {
-            Log.e(TAG, "doInBackground - Got exception while waiting for thread to finish: " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "doInBackground - Got exception while waiting for thread to finish: " + e.getMessage());
         }
 
         switch (type) {
@@ -177,13 +172,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             if (oldCard != null) {
                 start = System.currentTimeMillis();
                 deck.answerCard(oldCard, ease);
-                Log.v(TAG, "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start)
+                Log.v(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start)
                         + " ms.");
             }
 
             start = System.currentTimeMillis();
             newCard = deck.getCard();
-            Log.v(TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
+            Log.v(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
             publishProgress(new TaskData(newCard));
 
             ankiDB.database.setTransactionSuccessful();
@@ -191,7 +186,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             ankiDB.database.endTransaction();
         }
 
-        Log.w(TAG, "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
+        Log.w(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
 
         return null;
     }
@@ -199,22 +194,22 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadDeck(TaskData... params) {
         String deckFilename = params[0].getString();
-        Log.i(TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
-        Log.i(TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
+        Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
         try {
             // Open the right deck.
             Deck deck = Deck.openDeck(deckFilename);
             // Start by getting the first card and displaying it.
             Card card = deck.getCard();
-            Log.i(TAG, "Deck loaded!");
+            Log.i(AnkiDroidApp.TAG, "Deck loaded!");
 
             return new TaskData(DECK_LOADED, deck, card);
         } catch (SQLException e) {
-            Log.i(TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+            Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
             return new TaskData(DECK_NOT_LOADED);
         } catch (CursorIndexOutOfBoundsException e) {
-            Log.i(TAG, "The deck has no cards = " + e.getMessage());
+            Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
             ;
             return new TaskData(DECK_EMPTY);
         }
@@ -234,13 +229,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 start = System.currentTimeMillis();
                 deck.suspendCard(oldCard.id);
                 stop = System.currentTimeMillis();
-                Log.v(TAG, "doInBackgroundSuspendCard - Suspended card in " + (stop - start) + " ms.");
+                Log.v(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - Suspended card in " + (stop - start) + " ms.");
             }
 
             start = System.currentTimeMillis();
             newCard = deck.getCard();
             stop = System.currentTimeMillis();
-            Log.v(TAG, "doInBackgroundSuspendCard - Loaded new card in " + (stop - start) + " ms.");
+            Log.v(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - Loaded new card in " + (stop - start) + " ms.");
             publishProgress(new TaskData(newCard));
             ankiDB.database.setTransactionSuccessful();
         } finally {
@@ -267,7 +262,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                     deck.addTag(currentCard.factId, Deck.TAG_MARKED);
                 }
                 stop = System.currentTimeMillis();
-                Log.v(TAG, "doInBackgroundMarkCard - Marked card in " + (stop - start) + " ms.");
+                Log.v(AnkiDroidApp.TAG, "doInBackgroundMarkCard - Marked card in " + (stop - start) + " ms.");
             }
 
             publishProgress(new TaskData(currentCard));

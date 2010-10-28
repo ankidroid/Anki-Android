@@ -52,8 +52,6 @@ import java.util.zip.Deflater;
  */
 public class Utils {
 
-    private static final String TAG = "AnkiDroid";
-
     private static final int CHUNK_SIZE = 32768;
 
     private static final long MILLIS_IN_A_DAY = 86400000;
@@ -127,7 +125,7 @@ public class Utils {
                     str += ids.get(i) + ",";
                 }
             } catch (JSONException e) {
-                Log.i(TAG, "JSONException = " + e.getMessage());
+                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
             }
         }
         str += ")";
@@ -241,7 +239,7 @@ public class Utils {
      */
     public static boolean writeToFile(InputStream source, String destination) {
         try {
-            Log.i(TAG, "Creating new file... = " + destination);
+            Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
             new File(destination).createNewFile();
 
             OutputStream output = new FileOutputStream(destination);
@@ -250,14 +248,14 @@ public class Utils {
             byte[] buf = new byte[CHUNK_SIZE];
             int len;
             if (source == null) {
-                Log.i(TAG, "source is null!");
+                Log.i(AnkiDroidApp.TAG, "source is null!");
             }
             while ((len = source.read(buf)) > 0) {
                 output.write(buf, 0, len);
-                Log.i(TAG, "Write...");
+                Log.i(AnkiDroidApp.TAG, "Write...");
             }
 
-            Log.i(TAG, "Finished writing!");
+            Log.i(AnkiDroidApp.TAG, "Finished writing!");
             output.close();
 
         } catch (Exception e) {
@@ -303,7 +301,7 @@ public class Utils {
                             buff.newLine();
                             buff.close();
                         }
-                        Log.i(TAG, "	" + indentation + key + " : ");
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
                         printJSONObject((JSONObject) value, indentation + "-", writeToFile);
                     } else {
                         if (writeToFile) {
@@ -312,22 +310,22 @@ public class Utils {
                             buff.newLine();
                             buff.close();
                         }
-                        Log.i(TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
                 } catch (JSONException e) {
-                    Log.i(TAG, "JSONException = " + e.getMessage());
+                    Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                 }
             }
 
         } catch (IOException e1) {
-            Log.i(TAG, "IOException = " + e1.getMessage());
+            Log.i(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
         }
 
     }
 
 
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
-        Log.i(TAG, "saveJSONObject");
+        Log.i(AnkiDroidApp.TAG, "saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();
@@ -365,23 +363,23 @@ public class Utils {
     // Test for dateToOrdinal and fromOrdintalToDate
     /*
      * boolean error = false; int year = 0; int month = 0; int day = 1; Calendar cal = Calendar.getInstance(); for(year
-     * = 0; year < 111; year++) { if(error) break; Log.i(TAG, "/--------------- YEAR: " + (year + 1900) +
+     * = 0; year < 111; year++) { if(error) break; Log.i(AnkiDroidApp.TAG, "/--------------- YEAR: " + (year + 1900) +
      * " -----------------/"); cal.set(Calendar.YEAR, year + 1900); for(month = 0; month < 12; month++) { if(error)
-     * break; cal.set(Calendar.MONTH, month); cal.set(Calendar.DAY_OF_MONTH, 1); Log.i(TAG, "/--------------- MONTH: " +
+     * break; cal.set(Calendar.MONTH, month); cal.set(Calendar.DAY_OF_MONTH, 1); Log.i(AnkiDroidApp.TAG, "/--------------- MONTH: " +
      * (month + 1) + " -----------------/"); int maxDaysOnMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-     * //Log.i(TAG, "Maxim days on this month = " + maxDaysOnMonth); for(day = 1; day <= maxDaysOnMonth; day++) {
-     * Log.i(TAG, "/--------------- DAY: " + day + " -----------------/"); cal.set(Calendar.DAY_OF_MONTH, day);
-     * Log.i(TAG, "Calendar = " + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" +
+     * //Log.i(AnkiDroidApp.TAG, "Maxim days on this month = " + maxDaysOnMonth); for(day = 1; day <= maxDaysOnMonth; day++) {
+     * Log.i(AnkiDroidApp.TAG, "/--------------- DAY: " + day + " -----------------/"); cal.set(Calendar.DAY_OF_MONTH, day);
+     * Log.i(AnkiDroidApp.TAG, "Calendar = " + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" +
      * cal.get(Calendar.DAY_OF_MONTH)); Date testDate = new Date(year,month,day); //Date testDate = new
-     * Date(System.currentTimeMillis()); //Log.i(TAG, "Current millis = " + System.currentTimeMillis()); Log.i(TAG,
-     * "Day = " + testDate); //Log.i(TAG, "Day of the month = " + testDate.getDate()); //Log.i(TAG, "Month = " +
-     * (testDate.getMonth() + 1)); //Log.i(TAG, "Year = " + (testDate.getYear() + 1900)); int ordinal =
-     * Utils.dateToOrdinal(testDate); Log.i(TAG, "Ordinal day = " + ordinal); Date date2 =
-     * Utils.fromOrdinalToDate(ordinal); Log.i(TAG, "Back to date = " + date2); //Log.i(TAG, "Day of the month = " +
-     * date2.getDate()); //Log.i(TAG, "Month = " + (date2.getMonth() + 1)); //Log.i(TAG, "Year = " + (date2.getYear() +
+     * Date(System.currentTimeMillis()); //Log.i(AnkiDroidApp.TAG, "Current millis = " + System.currentTimeMillis()); Log.i(AnkiDroidApp.TAG,
+     * "Day = " + testDate); //Log.i(AnkiDroidApp.TAG, "Day of the month = " + testDate.getDate()); //Log.i(AnkiDroidApp.TAG, "Month = " +
+     * (testDate.getMonth() + 1)); //Log.i(AnkiDroidApp.TAG, "Year = " + (testDate.getYear() + 1900)); int ordinal =
+     * Utils.dateToOrdinal(testDate); Log.i(AnkiDroidApp.TAG, "Ordinal day = " + ordinal); Date date2 =
+     * Utils.fromOrdinalToDate(ordinal); Log.i(AnkiDroidApp.TAG, "Back to date = " + date2); //Log.i(AnkiDroidApp.TAG, "Day of the month = " +
+     * date2.getDate()); //Log.i(AnkiDroidApp.TAG, "Month = " + (date2.getMonth() + 1)); //Log.i(AnkiDroidApp.TAG, "Year = " + (date2.getYear() +
      * 1900)); if(testDate.getDate() == date2.getDate() && testDate.getMonth() == date2.getMonth() && testDate.getYear()
-     * == date2.getYear()) { Log.i(TAG, "OK!"); } else { Log.e(TAG, "ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR!!!");
-     * error = true; break; } } } } Log.i(TAG, "PERFECT!!! ^^");
+     * == date2.getYear()) { Log.i(AnkiDroidApp.TAG, "OK!"); } else { Log.e(AnkiDroidApp.TAG, "ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR!!!");
+     * error = true; break; } } } } Log.i(AnkiDroidApp.TAG, "PERFECT!!! ^^");
      */
 
     /**

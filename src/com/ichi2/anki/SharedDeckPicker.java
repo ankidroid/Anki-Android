@@ -56,8 +56,6 @@ import java.util.List;
 
 public class SharedDeckPicker extends Activity {
 
-    private static final String TAG = "AnkiDroid";
-
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -138,7 +136,7 @@ public class SharedDeckPicker extends Activity {
                         mDownloadManagerService.downloadFile(sharedDeckDownload);
                     } catch (RemoteException e) {
                         // There is nothing special we need to do if the service has crashed
-                        Log.e(TAG, "RemoteException = " + e.getMessage());
+                        Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
                         e.printStackTrace();
                     }
                 }
@@ -184,7 +182,7 @@ public class SharedDeckPicker extends Activity {
                         mDownloadManagerService.resumeDownloadUpdating(download);
                     } catch (RemoteException e) {
                         // There is nothing special we need to do if the service has crashed
-                        Log.e(TAG, "RemoteException = " + e.getMessage());
+                        Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
                         e.printStackTrace();
                     }
                     break;
@@ -202,7 +200,7 @@ public class SharedDeckPicker extends Activity {
 
     @Override
     protected void onResume() {
-        Log.i(TAG, "onResume");
+        Log.i(AnkiDroidApp.TAG, "onResume");
         super.onResume();
         if (mDownloadManagerService != null) {
             try {
@@ -211,7 +209,7 @@ public class SharedDeckPicker extends Activity {
                 setSharedDeckDownloads(mDownloadManagerService.getSharedDeckDownloads());
             } catch (RemoteException e) {
                 // There is nothing special we need to do if the service has crashed
-                Log.e(TAG, "RemoteException = " + e.getMessage());
+                Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -226,7 +224,7 @@ public class SharedDeckPicker extends Activity {
                 mDownloadManagerService.unregisterSharedDeckCallback(mCallback);
             } catch (RemoteException e) {
                 // There is nothing special we need to do if the service has crashed
-                Log.e(TAG, "RemoteException = " + e.getMessage());
+                Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -387,7 +385,7 @@ public class SharedDeckPicker extends Activity {
             // representation of that from the raw service object.
             mDownloadManagerService = IDownloadManagerService.Stub.asInterface(service);
 
-            Log.i(TAG, "onServiceConnected");
+            Log.i(AnkiDroidApp.TAG, "onServiceConnected");
             // We want to monitor the service for as long as we are
             // connected to it.
             try {
@@ -415,7 +413,7 @@ public class SharedDeckPicker extends Activity {
 
         @Override
         public void onDisconnected() {
-            Log.i(TAG, "onDisconnected");
+            Log.i(AnkiDroidApp.TAG, "onDisconnected");
             if (mNoConnectionAlert != null) {
                 mNoConnectionAlert.show();
             }
@@ -472,7 +470,7 @@ public class SharedDeckPicker extends Activity {
          */
         @Override
         public void publishProgress(List<SharedDeckDownload> downloads) throws RemoteException {
-            Log.i(TAG, "publishProgress");
+            Log.i(AnkiDroidApp.TAG, "publishProgress");
             setSharedDeckDownloads(downloads);
         }
     };

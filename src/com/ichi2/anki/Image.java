@@ -27,11 +27,6 @@ import java.util.regex.Pattern;
 public class Image {
 
     /**
-     * Tag for logging messages
-     */
-    private static final String TAG = "AnkiDroid";
-
-    /**
      * Pattern used to identify img tags
      */
     private static Pattern sImagePattern = Pattern
@@ -58,11 +53,11 @@ public class Image {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
-        Log.i(TAG, "parseImages");
+        Log.i(AnkiDroidApp.TAG, "parseImages");
         Matcher matcher = sImagePattern.matcher(content);
         while (matcher.find()) {
             String img = matcher.group(1);
-            // Log.i(TAG, "Image " + matcher.groupCount() + ": " + img);
+            // Log.i(AnkiDroidApp.TAG, "Image " + matcher.groupCount() + ": " + img);
 
             String imgTag = matcher.group();
             int markerStart = contentLeft.indexOf(imgTag);
@@ -70,13 +65,13 @@ public class Image {
             stringBuilder.append("<img src=" + img + " onload=\"resizeImage();\">");
 
             contentLeft = contentLeft.substring(markerStart + imgTag.length());
-            // Log.i(TAG, "Content left = " + contentLeft);
+            // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
 
         stringBuilder.append(contentLeft);
 
         sFinishTime = System.currentTimeMillis();
-        Log.i(TAG, "Images parsed in " + (sFinishTime - sStartTime) + " milliseconds");
+        Log.i(AnkiDroidApp.TAG, "Images parsed in " + (sFinishTime - sStartTime) + " milliseconds");
 
         return stringBuilder.toString();
     }

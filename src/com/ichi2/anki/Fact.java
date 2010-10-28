@@ -36,11 +36,6 @@ public class Fact {
     // TODO: Finish porting from facts.py.
     // TODO: Methods to read/write from/to DB.
 
-    /**
-     * Tag for logging messages
-     */
-    private static String TAG = "AnkiDroid";
-
     long id;
     long modelId;
     double created;
@@ -92,7 +87,7 @@ public class Fact {
             cursor = ankiDB.database.rawQuery("SELECT id, modelId, created, modified, tags, spaceUntil "
                     + "FROM facts " + "WHERE id = " + id, null);
             if (!cursor.moveToFirst()) {
-                Log.w(TAG, "Fact.java (constructor): No result from query.");
+                Log.w(AnkiDroidApp.TAG, "Fact.java (constructor): No result from query.");
                 return false;
             }
 

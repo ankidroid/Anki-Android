@@ -23,8 +23,6 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final String TAG = "AnkiDroid";
-
     // Status codes
     public static final int START = -1;
     public static final int DOWNLOADING = 0;

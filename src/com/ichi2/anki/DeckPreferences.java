@@ -36,8 +36,6 @@ import java.util.Map.Entry;
  */
 public class DeckPreferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
-    static final String TAG = "AnkiDroid";
-
     public class DeckPreferenceHack implements SharedPreferences {
 
         protected Map<String, String> values = new HashMap<String, String>();
@@ -50,7 +48,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
 
         protected void cacheValues() {
-            Log.i(TAG, "DeckPreferences - CacheValues");
+            Log.i(AnkiDroidApp.TAG, "DeckPreferences - CacheValues");
             values.put("newCardsPDay", String.valueOf(AnkiDroidApp.deck().getNewCardsPerDay()));
             values.put("sessionQLimit", String.valueOf(AnkiDroidApp.deck().getSessionRepLimit()));
             values.put("sessionTLimit", String.valueOf(AnkiDroidApp.deck().getSessionTimeLimit() / 60));
@@ -66,7 +64,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public SharedPreferences.Editor clear() {
-                Log.d(TAG, "clear()");
+                Log.d(AnkiDroidApp.TAG, "clear()");
                 update = new ContentValues();
                 return this;
             }
@@ -74,7 +72,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public boolean commit() {
-                Log.d(TAG, "DeckPreferences - commit() changes back to database");
+                Log.d(AnkiDroidApp.TAG, "DeckPreferences - commit() changes back to database");
 
                 // make sure we refresh the parent cached values
                 // cacheValues();
@@ -231,7 +229,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
         super.onCreate(icicle);
 
         if (AnkiDroidApp.deck() == null) {
-            Log.i(TAG, "DeckPreferences - Selected Deck is NULL");
+            Log.i(AnkiDroidApp.TAG, "DeckPreferences - Selected Deck is NULL");
             finish();
         } else {
             // requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);

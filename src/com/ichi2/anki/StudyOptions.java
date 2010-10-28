@@ -54,11 +54,6 @@ public class StudyOptions extends Activity {
     public static final String OPT_DB = "com.ichi2.anki.deckFilename";
 
     /**
-     * Tag for logging messages
-     */
-    private static final String TAG = "Ankidroid";
-
-    /**
      * Filename of the sample deck to load
      */
     private static final String SAMPLE_DECK_NAME = "country-capitals.anki";
@@ -317,7 +312,7 @@ public class StudyOptions extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG, "StudyOptions Activity");
+        Log.i(AnkiDroidApp.TAG, "StudyOptions Activity");
 
         if (hasErrorFiles()) {
             Intent i = new Intent(this, ErrorReporter.class);
@@ -335,15 +330,15 @@ public class StudyOptions extends Activity {
         Intent intent = getIntent();
         if ("android.intent.action.VIEW".equalsIgnoreCase(intent.getAction()) && intent.getDataString() != null) {
             deckFilename = Uri.parse(intent.getDataString()).getPath();
-            Log.i(TAG, "onCreate - deckFilename from intent: " + deckFilename);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from intent: " + deckFilename);
         } else if (savedInstanceState != null) {
             // Use the same deck as last time Ankidroid was used.
             deckFilename = savedInstanceState.getString("deckFilename");
-            Log.i(TAG, "onCreate - deckFilename from savedInstanceState: " + deckFilename);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + deckFilename);
         } else {
-            Log.i(TAG, "onCreate - " + preferences.getAll().toString());
+            Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
             deckFilename = preferences.getString("deckFilename", null);
-            Log.i(TAG, "onCreate - deckFilename from preferences: " + deckFilename);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + deckFilename);
         }
 
         if (!sdCardAvailable) {
@@ -371,12 +366,12 @@ public class StudyOptions extends Activity {
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-                        Log.i(TAG, "mUnmountReceiver - Action = Media Eject");
+                        Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
                         closeOpenedDeck();
                         showContentView(CONTENT_NO_EXTERNAL_STORAGE);
                         sdCardAvailable = false;
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                        Log.i(TAG, "mUnmountReceiver - Action = Media Mounted");
+                        Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Mounted");
                         sdCardAvailable = true;
                         if (!inDeckPicker) {
                             loadPreviousDeck();
@@ -396,7 +391,7 @@ public class StudyOptions extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "StudyOptions - onDestroy()");
+        Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
@@ -619,12 +614,12 @@ public class StudyOptions extends Activity {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.i(TAG, "onSaveInstanceState: " + deckFilename);
+        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + deckFilename);
         // Remember current deck's filename.
         if (deckFilename != null) {
             outState.putString("deckFilename", deckFilename);
         }
-        Log.i(TAG, "onSaveInstanceState - Ending");
+        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
     }
 
 
@@ -669,7 +664,7 @@ public class StudyOptions extends Activity {
     /** Handles item selections */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(TAG, "Item = " + item.getItemId());
+        Log.i(AnkiDroidApp.TAG, "Item = " + item.getItemId());
         switch (item.getItemId()) {
             case MENU_OPEN:
                 openDeckPicker();
@@ -725,7 +720,7 @@ public class StudyOptions extends Activity {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         inDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-        // Log.i(TAG, "openDeckPicker - Ending");
+        // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
 
 
@@ -753,10 +748,10 @@ public class StudyOptions extends Activity {
                 stream.close();
                 if (!written) {
                     openDeckPicker();
-                    Log.i(TAG, "onCreate - The copy of country-capitals.anki to the sd card failed.");
+                    Log.i(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card failed.");
                     return;
                 }
-                Log.i(TAG, "onCreate - The copy of country-capitals.anki to the sd card was sucessful.");
+                Log.i(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card was sucessful.");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -777,7 +772,7 @@ public class StudyOptions extends Activity {
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = AnkiDroidApp.deck();
 
-            Log.i(TAG, "Synchronizing deck " + deckFilename + " with username " + username + " and password "
+            Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + deckFilename + " with username " + username + " and password "
                     + password);
             Connection.syncDeck(syncListener, new Connection.Payload(new Object[] { username, password, deck,
                     deckFilename }));
@@ -803,25 +798,25 @@ public class StudyOptions extends Activity {
             inDeckPicker = false;
 
             if (resultCode != RESULT_OK) {
-                Log.e(TAG, "onActivityResult - Deck browser returned with error");
+                Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
                 // Make sure we open the database again in onResume() if user pressed "back"
                 // deckSelected = false;
                 displayProgressDialogAndLoadDeck();
                 return;
             }
             if (intent == null) {
-                Log.e(TAG, "onActivityResult - Deck browser returned null intent");
+                Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned null intent");
                 // Make sure we open the database again in onResume()
                 // deckSelected = false;
                 displayProgressDialogAndLoadDeck();
                 return;
             }
             // A deck was picked. Save it in preferences and use it.
-            Log.i(TAG, "onActivityResult = OK");
+            Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
             deckFilename = intent.getExtras().getString(OPT_DB);
             savePreferences();
 
-            // Log.i(TAG, "onActivityResult - deckSelected = " + deckSelected);
+            // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
             displayProgressDialogAndLoadDeck(updateAllCards);
 
@@ -835,7 +830,7 @@ public class StudyOptions extends Activity {
             // showOrHideAnswerField();
             // }
         } else if (requestCode == REQUEST_REVIEW) {
-            Log.i(TAG, "Result code = " + resultCode);
+            Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
                     showContentView(CONTENT_SESSION_COMPLETE);
@@ -874,7 +869,7 @@ public class StudyOptions extends Activity {
 
 
     private void displayProgressDialogAndLoadDeck(boolean updateAllCards) {
-        Log.i(TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
+        Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
 
         // Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
         // deckSelected = true;
@@ -893,9 +888,9 @@ public class StudyOptions extends Activity {
             }
         } else {
             if (deckFilename == null) {
-                Log.i(TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
+                Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
             } else if (!new File(deckFilename).exists()) {
-                Log.i(TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + " does not exist.");
+                Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + " does not exist.");
             }
 
             // Show message informing that no deck has been loaded
@@ -903,9 +898,9 @@ public class StudyOptions extends Activity {
         }
         // } else
         // {
-        // Log.i(TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
+        // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
         // deckSelected = false;
-        // Log.i(TAG, "displayProgressDialogAndLoadDeck - deckSelected = " + deckSelected);
+        // Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - deckSelected = " + deckSelected);
         // displaySdError();
         // }
     }
@@ -960,7 +955,7 @@ public class StudyOptions extends Activity {
                 try {
                     mProgressDialog.dismiss();
                 } catch (Exception e) {
-                    Log.e(TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
             }
         }
@@ -984,7 +979,7 @@ public class StudyOptions extends Activity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(TAG, "onPostExecute");
+            Log.i(AnkiDroidApp.TAG, "onPostExecute");
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }

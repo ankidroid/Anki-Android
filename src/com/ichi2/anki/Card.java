@@ -34,11 +34,6 @@ public class Card {
 
     // TODO: Javadoc.
 
-    /**
-     * Tag for logging messages
-     */
-    private static String TAG = "AnkiDroid";
-
     /** Tags src constants */
     public static final int TAGS_FACT = 0;
     public static final int TAGS_MODEL = 1;

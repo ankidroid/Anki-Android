@@ -44,11 +44,6 @@ public class Deck {
     public static final int CARD_TYPE_FAILED = 0;
     public static final int CARD_TYPE_REV = 1;
     public static final int CARD_TYPE_NEW = 2;
-    
-    /**
-     * Tag for logging messages
-     */
-    private static String TAG = "AnkiDroid";
 
     /**
      * Priorities Auto priorities - High = 4 - Medium = 3 - Normal = 2 - Low = 1 - None = 0 Manual priorities - Review
@@ -229,7 +224,7 @@ public class Deck {
     public static synchronized Deck openDeck(String path) throws SQLException {
         Deck deck = null;
         Cursor cursor = null;
-        Log.i(TAG, "openDeck - Opening database " + path);
+        Log.i(AnkiDroidApp.TAG, "openDeck - Opening database " + path);
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
 
         try {
@@ -279,13 +274,13 @@ public class Deck {
             deck.newCount = cursor.getInt(34);
             deck.revCardOrder = cursor.getInt(35);
 
-            Log.i(TAG, "openDeck - Read " + cursor.getColumnCount() + " columns from decks table.");
+            Log.i(AnkiDroidApp.TAG, "openDeck - Read " + cursor.getColumnCount() + " columns from decks table.");
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-        Log.i(TAG,
+        Log.i(AnkiDroidApp.TAG,
                 String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.modified,
                         System.currentTimeMillis() / 1000.0));
 
@@ -361,7 +356,7 @@ public class Deck {
 
 
     public void commitToDB() {
-        Log.i(TAG, "commitToDB - Saving deck to DB...");
+        Log.i(AnkiDroidApp.TAG, "commitToDB - Saving deck to DB...");
         ContentValues values = new ContentValues();
         values.put("created", created);
         values.put("modified", modified);
@@ -406,7 +401,7 @@ public class Deck {
     public static double getLastModified(String deckPath) {
         double value;
         Cursor cursor = null;
-        // Log.i(TAG, "Deck - getLastModified from deck = " + deckPath);
+        // Log.i(AnkiDroidApp.TAG, "Deck - getLastModified from deck = " + deckPath);
 
         boolean dbAlreadyOpened = AnkiDatabaseManager.isDatabaseOpen(deckPath);
 
@@ -734,7 +729,7 @@ public class Deck {
         // "WHERE id != %d and factId = %d",
         // card.question, card.answer, now, card.id, card.factId));
         //
-        Log.v(TAG, "Update question and answer in card id# " + card.id);
+        Log.v(AnkiDroidApp.TAG, "Update question and answer in card id# " + card.id);
 
     }
 
@@ -755,7 +750,7 @@ public class Deck {
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_randomOrder");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_dueAsc");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_dueDesc");
-        Log.w(TAG, "BEFORE UPDATE = " + (System.currentTimeMillis() - now));
+        Log.w(AnkiDroidApp.TAG, "BEFORE UPDATE = " + (System.currentTimeMillis() - now));
     }
 
 
@@ -769,7 +764,7 @@ public class Deck {
         // ankiDB.database.execSQL("CREATE INDEX ix_cards_factId on cards (factId, type)");
         // updateDynamicIndices();
         ankiDB.database.execSQL("PRAGMA synchronous=FULL");
-        Log.w(TAG, "AFTER UPDATE = " + (System.currentTimeMillis() - now));
+        Log.w(AnkiDroidApp.TAG, "AFTER UPDATE = " + (System.currentTimeMillis() - now));
         // now = System.currentTimeMillis();
         // ankiDB.database.execSQL("ANALYZE");
         // Log.i("ANALYZE = " + System.currentTimeMillis() - now);
@@ -794,21 +789,21 @@ public class Deck {
                 // Get card
                 Card card = new Card(this);
                 card.fromDB(cursor.getLong(0));
-                Log.i(TAG, "Card id = " + card.id + ", numUpdatedCards = " + numUpdatedCards);
+                Log.i(AnkiDroidApp.TAG, "Card id = " + card.id + ", numUpdatedCards = " + numUpdatedCards);
 
                 // Load tags
                 card.loadTags();
 
                 // Get the related fact
                 Fact fact = card.getFact();
-                // Log.i(TAG, "Fact id = " + fact.id);
+                // Log.i(AnkiDroidApp.TAG, "Fact id = " + fact.id);
 
                 // Generate the question and answer for this card and update it
                 HashMap<String, String> newQA = CardModel.formatQA(fact, card.getCardModel(), card.splitTags());
                 card.question = newQA.get("question");
-                Log.i(TAG, "Question = " + card.question);
+                Log.i(AnkiDroidApp.TAG, "Question = " + card.question);
                 card.answer = newQA.get("answer");
-                Log.i(TAG, "Answer = " + card.answer);
+                Log.i(AnkiDroidApp.TAG, "Answer = " + card.answer);
                 card.modified = System.currentTimeMillis() / 1000.0;
 
                 card.updateQAfields();
@@ -831,7 +826,7 @@ public class Deck {
      */
 
     public void answerCard(Card card, int ease) {
-        Log.i(TAG, "answerCard");
+        Log.i(AnkiDroidApp.TAG, "answerCard");
 
         Cursor cursor = null;
         String undoName = "Answer Card";
@@ -918,9 +913,9 @@ public class Deck {
             cursor = ankiDB.database.rawQuery("SELECT type, count(type) " + "FROM cards " + "WHERE factId = "
                     + card.factId + " and " + "(isDue = 1 " + extra + ") " + "GROUP BY type", null);
             while (cursor.moveToNext()) {
-                Log.i(TAG, "failedSoonCount before = " + failedSoonCount);
-                Log.i(TAG, "revCount before = " + revCount);
-                Log.i(TAG, "newCount before = " + newCount);
+                Log.i(AnkiDroidApp.TAG, "failedSoonCount before = " + failedSoonCount);
+                Log.i(AnkiDroidApp.TAG, "revCount before = " + revCount);
+                Log.i(AnkiDroidApp.TAG, "newCount before = " + newCount);
                 if (cursor.getInt(0) == 0) {
                     failedSoonCount -= cursor.getInt(1);
                 } else if (cursor.getInt(0) == 1) {
@@ -928,9 +923,9 @@ public class Deck {
                 } else {
                     newCount -= cursor.getInt(1);
                 }
-                Log.i(TAG, "failedSoonCount after = " + failedSoonCount);
-                Log.i(TAG, "revCount after = " + revCount);
-                Log.i(TAG, "newCount after = " + newCount);
+                Log.i(AnkiDroidApp.TAG, "failedSoonCount after = " + failedSoonCount);
+                Log.i(AnkiDroidApp.TAG, "revCount after = " + revCount);
+                Log.i(AnkiDroidApp.TAG, "newCount after = " + newCount);
             }
         } finally {
             if (cursor != null) {
@@ -1121,8 +1116,8 @@ public class Deck {
 
 
     public void rebuildCounts(boolean full) {
-        Log.i(TAG, "rebuildCounts - Rebuilding global and due counts...");
-        Log.i(TAG, "Full review = " + full);
+        Log.i(AnkiDroidApp.TAG, "rebuildCounts - Rebuilding global and due counts...");
+        Log.i(AnkiDroidApp.TAG, "Full review = " + full);
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         // Need to check due first, so new due cards are not added later
@@ -1135,17 +1130,17 @@ public class Deck {
 
         // Due counts
         failedSoonCount = (int) ankiDB.queryScalar("SELECT count(id) FROM failedCards");
-        Log.i(TAG, "failedSoonCount = " + failedSoonCount);
+        Log.i(AnkiDroidApp.TAG, "failedSoonCount = " + failedSoonCount);
         failedNowCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 0 and "
                 + "isDue = 1 and " + "combinedDue <= "
                 + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
-        Log.i(TAG, "failedNowCount = " + failedNowCount);
+        Log.i(AnkiDroidApp.TAG, "failedNowCount = " + failedNowCount);
         revCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 1 and "
                 + "priority in (1,2,3,4) and " + "isDue = 1");
-        Log.i(TAG, "revCount = " + revCount);
+        Log.i(AnkiDroidApp.TAG, "revCount = " + revCount);
         newCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 2 and "
                 + "priority in (1,2,3,4) and " + "isDue = 1");
-        Log.i(TAG, "newCount = " + newCount);
+        Log.i(AnkiDroidApp.TAG, "newCount = " + newCount);
     }
 
 
@@ -1190,7 +1185,7 @@ public class Deck {
      * Mark expired cards due and update counts.
      */
     public void checkDue() {
-        Log.i(TAG, "Checking due cards...");
+        Log.i(AnkiDroidApp.TAG, "Checking due cards...");
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 
         checkDailyStats();
@@ -1235,7 +1230,7 @@ public class Deck {
         }
 
         newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0);
-        Log.i(TAG, "newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0) : "
+        Log.i(AnkiDroidApp.TAG, "newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsToday()), 0) : "
                 + newCountToday);
     }
 
@@ -1245,7 +1240,7 @@ public class Deck {
      */
     private void rebuildQueue() {
         Cursor cursor = null;
-        Log.i(TAG, "rebuildQueue - Rebuilding query...");
+        Log.i(AnkiDroidApp.TAG, "rebuildQueue - Rebuilding query...");
         // Setup global/daily stats
         globalStats = Stats.globalStats(this);
         dailyStats = Stats.dailyStats(this);
@@ -1268,7 +1263,7 @@ public class Deck {
         } else {
             newCardModulus = 0;
         }
-        Log.i(TAG, "newCardModulus set to " + newCardModulus);
+        Log.i(AnkiDroidApp.TAG, "newCardModulus set to " + newCardModulus);
 
         try {
             cursor = AnkiDatabaseManager.getDatabase(deckPath).database.rawQuery("SELECT avg(factor) " + "FROM cards "
@@ -1368,8 +1363,8 @@ public class Deck {
                     newTags += "," + tag;
                 }
             }
-            Log.i(TAG, "old tags = " + factTagsList.get(i));
-            Log.i(TAG, "new tags = " + newTags);
+            Log.i(AnkiDroidApp.TAG, "old tags = " + factTagsList.get(i));
+            Log.i(AnkiDroidApp.TAG, "new tags = " + newTags);
 
             if (newTags.length() > factTagsList.get(i).length()) {
                 ankiDB.database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
@@ -1432,8 +1427,8 @@ public class Deck {
                 // tag is the only element
                 newTags = "";
             }
-            Log.i(TAG, "old tags = " + factTags);
-            Log.i(TAG, "new tags = " + newTags);
+            Log.i(AnkiDroidApp.TAG, "old tags = " + factTags);
+            Log.i(AnkiDroidApp.TAG, "new tags = " + newTags);
 
             if (newTags.length() < factTags.length()) {
                 ankiDB.database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
@@ -1506,7 +1501,7 @@ public class Deck {
     void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         Cursor cursor = null;
-        Log.i(TAG, "updatePriorities - Updating priorities...");
+        Log.i(AnkiDroidApp.TAG, "updatePriorities - Updating priorities...");
         // Any tags to suspend
         if (suspend != null) {
             long[] ids = tagIds(suspend, false);
@@ -1622,7 +1617,7 @@ public class Deck {
      */
 
     public void deleteCards(List<String> ids) {
-        Log.i(TAG, "deleteCards = " + ids.toString());
+        Log.i(AnkiDroidApp.TAG, "deleteCards = " + ids.toString());
 
         // Bulk delete cards by ID
         int len = ids.size();
@@ -1630,7 +1625,7 @@ public class Deck {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             commitToDB();
             double now = System.currentTimeMillis() / 1000.0;
-            Log.i(TAG, "Now = " + now);
+            Log.i(AnkiDroidApp.TAG, "Now = " + now);
             String idsString = Utils.ids2str(ids);
 
             // Grab fact ids
@@ -1684,21 +1679,21 @@ public class Deck {
      */
 
     public void deleteFacts(List<String> ids) {
-        Log.i(TAG, "deleteFacts = " + ids.toString());
+        Log.i(AnkiDroidApp.TAG, "deleteFacts = " + ids.toString());
         int len = ids.size();
         if (len > 0) {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             commitToDB();
             double now = System.currentTimeMillis() / 1000.0;
             String idsString = Utils.ids2str(ids);
-            Log.i(TAG, "DELETE FROM facts WHERE id in " + idsString);
+            Log.i(AnkiDroidApp.TAG, "DELETE FROM facts WHERE id in " + idsString);
             ankiDB.database.execSQL("DELETE FROM facts WHERE id in " + idsString);
-            Log.i(TAG, "DELETE FROM fields WHERE factId in " + idsString);
+            Log.i(AnkiDroidApp.TAG, "DELETE FROM fields WHERE factId in " + idsString);
             ankiDB.database.execSQL("DELETE FROM fields WHERE factId in " + idsString);
             String sqlInsert = "INSERT INTO factsDeleted VALUES(?," + String.format(ENGLISH_LOCALE, "%f", now) + ")";
             SQLiteStatement statement = ankiDB.database.compileStatement(sqlInsert);
             for (String id : ids) {
-                Log.i(TAG, "inserting into factsDeleted");
+                Log.i(AnkiDroidApp.TAG, "inserting into factsDeleted");
                 statement.bindString(1, id);
                 statement.executeInsert();
             }
@@ -1715,7 +1710,7 @@ public class Deck {
      * @return ArrayList<String> list with the id of the deleted facts
      */
     public ArrayList<String> deleteDanglingFacts() {
-        Log.i(TAG, "deleteDanglingFacts");
+        Log.i(AnkiDroidApp.TAG, "deleteDanglingFacts");
         ArrayList<String> danglingFacts = AnkiDatabaseManager.getDatabase(deckPath).queryColumn(String.class,
                 "SELECT facts.id FROM facts WHERE facts.id NOT IN (SELECT DISTINCT factId from cards)", 0);
 
@@ -1733,7 +1728,7 @@ public class Deck {
 
     // TODO: Handling of the list of models and currentModel
     public void deleteModel(String id) {
-        Log.i(TAG, "deleteModel = " + id);
+        Log.i(AnkiDroidApp.TAG, "deleteModel = " + id);
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         Cursor cursor = ankiDB.database.rawQuery("SELECT * FROM models WHERE id = " + id, null);
         // Does the model exist?
@@ -1760,7 +1755,7 @@ public class Deck {
 
 
     public void deleteFieldModel(String modelId, String fieldModelId) {
-        Log.i(TAG, "deleteFieldModel, modelId = " + modelId + ", fieldModelId = " + fieldModelId);
+        Log.i(AnkiDroidApp.TAG, "deleteFieldModel, modelId = " + modelId + ", fieldModelId = " + fieldModelId);
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 
         long start, stop;
@@ -1817,12 +1812,12 @@ public class Deck {
         flushMod();
 
         stop = System.currentTimeMillis();
-        Log.v(TAG, "deleteFieldModel - deleted field models in " + (stop - start) + " ms.");
+        Log.v(AnkiDroidApp.TAG, "deleteFieldModel - deleted field models in " + (stop - start) + " ms.");
     }
 
 
     public void deleteCardModel(String modelId, String cardModelId) {
-        Log.i(TAG, "deleteCardModel, modelId = " + modelId + ", fieldModelId = " + cardModelId);
+        Log.i(AnkiDroidApp.TAG, "deleteCardModel, modelId = " + modelId + ", fieldModelId = " + cardModelId);
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 
         // Delete all cards that use card model from the deck
@@ -2033,7 +2028,7 @@ public class Deck {
      */
 
     public void updateDynamicIndices() {
-        Log.i(TAG, "updateDynamicIndices - Updating indices...");
+        Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
         HashMap<String, String> indices = new HashMap<String, String>();
         indices.put("intervalDesc", "(type, isDue, priority desc, interval desc)");
         indices.put("intervalAsc", "(type, isDue, priority desc, interval)");

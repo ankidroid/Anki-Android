@@ -38,6 +38,9 @@ import java.io.File;
  */
 public class AnkiDroidApp extends Application {
 
+    /**
+     * Tag for logging messages.
+     */
     public static final String TAG = "AnkiDroid";
 
     /**

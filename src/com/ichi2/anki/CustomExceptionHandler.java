@@ -36,7 +36,6 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
     private Thread.UncaughtExceptionHandler PreviousHandler;
     private static CustomExceptionHandler instance;
     private Context curContext;
-    private final static String TAG = "CustomExceptionHandler";
     // private Random randomGenerator = new Random();
 
     private HashMap<String, String> information = new HashMap<String, String>(20);
@@ -45,7 +44,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
     static CustomExceptionHandler getInstance() {
         if (instance == null) {
             instance = new CustomExceptionHandler();
-            Log.i(TAG, "New instance of custom exception handler");
+            Log.i(AnkiDroidApp.TAG, "New instance of custom exception handler");
         }
 
         return instance;
@@ -78,14 +77,14 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
 
     private void collectInformation() {
-        Log.i(TAG, "collectInformation");
+        Log.i(AnkiDroidApp.TAG, "collectInformation");
 
         if (curContext == null) {
             return;
         }
 
         try {
-            Log.i(TAG, "collecting information");
+            Log.i(AnkiDroidApp.TAG, "collecting information");
 
             PackageManager pm = curContext.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(curContext.getPackageName(), 0);
@@ -112,16 +111,16 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             information.put("TotalInternalMemory", Long.toString(getTotalInternalMemorySize()));
             information.put("AvailableInternalMemory", Long.toString(getAvailableInternalMemorySize()));
 
-            Log.i(TAG, "Information collected");
+            Log.i(AnkiDroidApp.TAG, "Information collected");
         } catch (Exception e) {
-            Log.i(TAG, e.toString());
+            Log.i(AnkiDroidApp.TAG, e.toString());
         }
     }
 
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        Log.i(TAG, "uncaughtException");
+        Log.i(AnkiDroidApp.TAG, "uncaughtException");
 
         collectInformation();
         Date currentDate = new Date();
@@ -160,7 +159,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
         printWriter.close();
 
-        Log.i(TAG, "report infomation string created");
+        Log.i(AnkiDroidApp.TAG, "report infomation string created");
         saveReportToFile(reportInformation.toString());
 
         PreviousHandler.uncaughtException(t, e);
@@ -169,20 +168,20 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     private void saveReportToFile(String reportInformation) {
         try {
-            Log.i(TAG, "saveReportFile");
+            Log.i(AnkiDroidApp.TAG, "saveReportFile");
 
             Date currentDate = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String filename = String.format("ad-%s.stacktrace", formatter.format(currentDate));
 
-            Log.i(TAG, "No external storage available");
+            Log.i(AnkiDroidApp.TAG, "No external storage available");
             FileOutputStream trace = curContext.openFileOutput(filename, Context.MODE_PRIVATE);
             trace.write(reportInformation.getBytes());
             trace.close();
 
-            Log.i(TAG, "report saved");
+            Log.i(AnkiDroidApp.TAG, "report saved");
         } catch (Exception e) {
-            Log.i(TAG, e.toString());
+            Log.i(AnkiDroidApp.TAG, e.toString());
         }
     }
 }

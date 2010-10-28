@@ -36,7 +36,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class ErrorReporter extends Activity {
-    public static String TAG = "ErrorReporter";
+
     private static final Locale ENGLISH_LOCALE = new Locale("en_US");
 
 
@@ -56,7 +56,7 @@ public class ErrorReporter extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "OnCreate");
+        Log.i(AnkiDroidApp.TAG, "OnCreate");
 
         super.onCreate(savedInstanceState);
         Context context = getBaseContext();
@@ -67,7 +67,7 @@ public class ErrorReporter extends Activity {
             try {
                 sendErrorReport();
             } catch (Exception e) {
-                Log.e(TAG, e.toString());
+                Log.e(AnkiDroidApp.TAG, e.toString());
             }
 
             deleteFiles();
@@ -96,7 +96,7 @@ public class ErrorReporter extends Activity {
                     try {
                         sendErrorReport();
                     } catch (Exception e) {
-                        Log.e(TAG, e.toString());
+                        Log.e(AnkiDroidApp.TAG, e.toString());
                     }
 
                     deleteFiles();
@@ -132,7 +132,7 @@ public class ErrorReporter extends Activity {
             try {
                 deleteFile(file);
             } catch (Exception e) {
-                Log.e(TAG, String.format("Could not delete file: %s", file));
+                Log.e(AnkiDroidApp.TAG, String.format("Could not delete file: %s", file));
             }
         }
     }
@@ -163,7 +163,7 @@ public class ErrorReporter extends Activity {
 
                 report.append(String.format("--> END REPORT %d <--", count++));
             } catch (Exception ex) {
-                Log.e(TAG, ex.toString());
+                Log.e(AnkiDroidApp.TAG, ex.toString());
             }
         }
 
