@@ -648,7 +648,7 @@ public class DownloadManagerService extends Service {
 
                 while (download.getStatus() == Download.DOWNLOADING) {
                     // Size buffer according to how much of the file is left to download
-                    Log.i(TAG, "Downloading... " + download.getDownloaded());
+                    Log.v(TAG, "Downloading... " + download.getDownloaded());
                     byte buffer[];
                     // if (size - downloaded > MAX_BUFFER_SIZE) {
                     buffer = new byte[MAX_BUFFER_SIZE];
@@ -668,16 +668,20 @@ public class DownloadManagerService extends Service {
                     publishProgress();
                 }
 
-                // Change status to complete if this point was reached because downloading has finished
                 if (download.getStatus() == Download.DOWNLOADING) {
+                    // Change status to complete if this point was reached because downloading has finished
                     download.setStatus(Download.COMPLETE);
                     new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").renameTo(new File(mDestination
                             + "/" + download.getTitle() + ".anki"));
-                    publishProgress();
+                    long finishTime = System.currentTimeMillis();
+                    Log.i(TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
+                    Log.i(TAG, "Downloaded = " + download.getDownloaded());
+                } else if (download.getStatus() == Download.CANCELLED) {
+                    // Cancelled download, clean up
+                    new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").delete();
+                    Log.i(TAG, "Download cancelled.");
                 }
-                long finishTime = System.currentTimeMillis();
-                Log.i(TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
-                Log.i(TAG, "Downloaded = " + download.getDownloaded());
+                publishProgress();
                 connection.disconnect();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -685,19 +689,25 @@ public class DownloadManagerService extends Service {
                 download.setStatus(Download.ERROR);
                 publishProgress();
             } finally {
+                Log.i(TAG, "finally");
                 // Close file
                 if (file != null) {
                     try {
+                        Log.i(TAG, "closing file");
                         file.close();
                     } catch (Exception e) {
+                        Log.i(TAG, "exception closing file");
                     }
                 }
 
                 // Close connection to server
                 if (iis != null) {
                     try {
+                        Log.i(TAG, "closing iis");
                         iis.close();
+                        Log.i(TAG, "closed iis");
                     } catch (Exception e) {
+                        Log.i(TAG, "exception closing iis: " + e.getMessage());
                     }
                 }
             }
@@ -714,9 +724,14 @@ public class DownloadManagerService extends Service {
 
         @Override
         protected void onPostExecute(Download download) {
-            // TODO: Error cases
+            Log.i(TAG, "on post execute");
             if (download.getStatus() == Download.COMPLETE) {
                 showNotification(download.getTitle());
+            } else if (download.getStatus() == Download.ERROR) {
+                // Error - Clean up
+                Log.i(TAG, "deleting file");
+                new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").delete();
+                Log.e(TAG, "Error while downloading personal deck.");
             }
             mPersonalDeckDownloads.remove(download);
             notifyPersonalDeckObservers();
@@ -814,17 +829,16 @@ public class DownloadManagerService extends Service {
                     download.setStatus(Download.COMPLETE);
                     new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId() + ".shared.zip.tmp")
                             .renameTo(new File(mDestination + "/tmp/" + download.getTitle() + ".zip"));
-                    publishProgress();
+                    long finishTime = System.currentTimeMillis();
+                    Log.i(TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
+                    Log.i(TAG, "Downloaded = " + download.getDownloaded());
                 } else if (download.getStatus() == Download.CANCELLED) {
                     // Cancelled download, clean up
                     new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId()
                             + ".shared.zip.tmp").delete();
+                    Log.i(TAG, "Download cancelled.");
                 }
-
-
-                long finishTime = System.currentTimeMillis();
-                Log.i(TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
-                Log.i(TAG, "Downloaded = " + download.getDownloaded());
+                publishProgress();
                 connection.disconnect();
             } catch (Exception e) {
                 e.printStackTrace();

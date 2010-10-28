@@ -557,6 +557,7 @@ public class StudyOptions extends Activity {
                 mTextNoDeckTitle.setText(R.string.studyoptions_deck_not_loaded_title);
                 mTextNoDeckMessage.setText(R.string.studyoptions_deck_not_loaded_message);
                 setContentView(mNoDeckView);
+                break;
             case CONTENT_STUDY_OPTIONS:
                 updateValuesFromDeck();
                 mButtonStart.setText(R.string.studyoptions_start);
