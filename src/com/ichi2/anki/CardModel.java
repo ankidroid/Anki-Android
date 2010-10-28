@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Sv√§rd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
