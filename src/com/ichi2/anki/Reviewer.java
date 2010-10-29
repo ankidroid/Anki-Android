@@ -99,8 +99,8 @@ public class Reviewer extends Activity {
     private static final int MENU_MARK = 5;
 
     /** Regex pattern used in removing tags from text before diff */
-    private static final Pattern spanPattern = Pattern.compile("</?span[^>]*>");
-    private static final Pattern brPattern = Pattern.compile("<br\\s?/?>");
+    private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
+    private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
 
     /** Hide Question In Answer choices */
     private static final int HQIA_DO_HIDE = 0;
@@ -294,16 +294,16 @@ public class Reviewer extends Activity {
     };
 
     private DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener() {
-        private boolean sessioncomplete;
-        private boolean nomorecards;
-        private long start;
-        private long start2;
+        private boolean mSessionComplete;
+        private boolean mNoMoreCards;
+        private long mStart;
+        private long mStart2;
 
 
         @Override
         public void onPreExecute() {
-            start = System.currentTimeMillis();
-            start2 = start;
+            mStart = System.currentTimeMillis();
+            mStart2 = mStart;
             Reviewer.this.setProgressBarIndeterminateVisibility(true);
             blockControls();
         }
@@ -312,8 +312,8 @@ public class Reviewer extends Activity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             Resources res = getResources();
-            sessioncomplete = false;
-            nomorecards = false;
+            mSessionComplete = false;
+            mNoMoreCards = false;
 
             // Check to see if session rep or time limit has been reached
             Deck deck = AnkiDroidApp.deck();
@@ -322,52 +322,52 @@ public class Reviewer extends Activity {
             Toast sessionMessage = null;
 
             if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
-                sessioncomplete = true;
+                mSessionComplete = true;
                 sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_question_limit_reached),
                         Toast.LENGTH_SHORT);
             } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
                 // session time limit reached, flag for halt once async task has completed.
-                sessioncomplete = true;
+                mSessionComplete = true;
                 sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_time_limit_reached),
                         Toast.LENGTH_SHORT);
 
             } else {
                 // session limits not reached, show next card
                 Card newCard = values[0].getCard();
-                Log.w(AnkiDroidApp.TAG, "answerCard - get card (phase 1) in " + (System.currentTimeMillis() - start) + " ms.");
-                start = System.currentTimeMillis();
+                Log.w(AnkiDroidApp.TAG, "answerCard - get card (phase 1) in " + (System.currentTimeMillis() - mStart) + " ms.");
+                mStart = System.currentTimeMillis();
 
                 // If the card is null means that there are no more cards scheduled for review.
                 if (newCard == null) {
-                    nomorecards = true;
+                    mNoMoreCards = true;
                     return;
                 }
 
-                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - checked null " + (System.currentTimeMillis() - start) + " ms.");
-                start = System.currentTimeMillis();
+                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - checked null " + (System.currentTimeMillis() - mStart) + " ms.");
+                mStart = System.currentTimeMillis();
                 // Start reviewing next card
                 mCurrentCard = newCard;
                 Reviewer.this.setProgressBarIndeterminateVisibility(false);
-                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - visibility " + (System.currentTimeMillis() - start) + " ms.");
-                start = System.currentTimeMillis();
+                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - visibility " + (System.currentTimeMillis() - mStart) + " ms.");
+                mStart = System.currentTimeMillis();
                 // Reviewer.this.enableControls();
                 Reviewer.this.unblockControls();
-                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - unblock ctrl " + (System.currentTimeMillis() - start) + " ms.");
-                start = System.currentTimeMillis();
+                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - unblock ctrl " + (System.currentTimeMillis() - mStart) + " ms.");
+                mStart = System.currentTimeMillis();
                 Reviewer.this.reviewNextCard();
-                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - review next " + (System.currentTimeMillis() - start) + " ms.");
-                start = System.currentTimeMillis();
+                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - review next " + (System.currentTimeMillis() - mStart) + " ms.");
+                mStart = System.currentTimeMillis();
             }
 
-            Log.w(AnkiDroidApp.TAG, "answerCard - Checked times (phase 3) in " + (System.currentTimeMillis() - start) + " ms.");
-            start = System.currentTimeMillis();
+            Log.w(AnkiDroidApp.TAG, "answerCard - Checked times (phase 3) in " + (System.currentTimeMillis() - mStart) + " ms.");
+            mStart = System.currentTimeMillis();
 
             // Show a message to user if a session limit has been reached.
             if (sessionMessage != null) {
                 sessionMessage.show();
             }
 
-            Log.w(AnkiDroidApp.TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - start2) + " ms.");
+            Log.w(AnkiDroidApp.TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - mStart2) + " ms.");
         }
 
 
@@ -375,10 +375,10 @@ public class Reviewer extends Activity {
         public void onPostExecute(DeckTask.TaskData result) {
             // Check for no more cards before session complete. If they are both true,
             // no more cards will take precedence when returning to study options.
-            if (nomorecards) {
+            if (mNoMoreCards) {
                 Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
                 Reviewer.this.finish();
-            } else if (sessioncomplete) {
+            } else if (mSessionComplete) {
                 Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
                 Reviewer.this.finish();
             }
@@ -783,7 +783,7 @@ public class Reviewer extends Activity {
 
 
     private boolean learningButtons() {
-        return mCurrentCard.successive == 0;
+        return mCurrentCard.getSuccessive() == 0;
     }
 
 
@@ -852,14 +852,14 @@ public class Reviewer extends Activity {
     private void updateCounts() {
         Deck deck = AnkiDroidApp.deck();
         String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
-        setTitle(String.format(unformattedTitle, deck.deckName, deck.revCount + deck.failedSoonCount, deck.cardCount));
+        setTitle(String.format(unformattedTitle, deck.getDeckName(), deck.getRevCount() + deck.getFailedSoonCount(), deck.getCardCount()));
 
-        SpannableString failedSoonCount = new SpannableString(String.valueOf(deck.failedSoonCount));
-        SpannableString revCount = new SpannableString(String.valueOf(deck.revCount));
-        SpannableString newCount = new SpannableString(String.valueOf(deck.newCountToday));
+        SpannableString failedSoonCount = new SpannableString(String.valueOf(deck.getFailedSoonCount()));
+        SpannableString revCount = new SpannableString(String.valueOf(deck.getRevCount()));
+        SpannableString newCount = new SpannableString(String.valueOf(deck.getNewCountToday()));
 
-        int isDue = mCurrentCard.isDue;
-        int type = mCurrentCard.type;
+        int isDue = mCurrentCard.getIsDue();
+        int type = mCurrentCard.getType();
 
         if ((isDue == 1) && (type == Deck.CARD_TYPE_NEW)) {
             newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
@@ -892,7 +892,7 @@ public class Reviewer extends Activity {
         mFlipCard.setVisibility(View.VISIBLE);
         mFlipCard.requestFocus();
 
-        String displayString = enrichWithQASpan(mCurrentCard.question, false);
+        String displayString = enrichWithQASpan(mCurrentCard.getQuestion(), false);
         // Show an horizontal line as separation when question is shown in answer
         // XXX Martin: is it really necessary on the question side?
         if (questionIsDisplayed()) {
@@ -918,9 +918,9 @@ public class Reviewer extends Activity {
             if (mCurrentCard != null) {
                 // Obtain the user answer and the correct answer
                 String userAnswer = mAnswerField.getText().toString();
-                Matcher spanMatcher = spanPattern.matcher(mCurrentCard.answer);
+                Matcher spanMatcher = sSpanPattern.matcher(mCurrentCard.getAnswer());
                 String correctAnswer = spanMatcher.replaceAll("");
-                Matcher brMatcher = brPattern.matcher(correctAnswer);
+                Matcher brMatcher = sBrPattern.matcher(correctAnswer);
                 correctAnswer = brMatcher.replaceAll("\n");
                 Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
 
@@ -928,20 +928,20 @@ public class Reviewer extends Activity {
                 DiffEngine diff = new DiffEngine();
 
                 displayString = enrichWithQASpan(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer))
-                        + "<br/>" + mCurrentCard.answer, true);
+                        + "<br/>" + mCurrentCard.getAnswer(), true);
             }
 
             // Hide soft keyboard
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
         } else {
-            displayString = enrichWithQASpan(mCurrentCard.answer, true);
+            displayString = enrichWithQASpan(mCurrentCard.getAnswer(), true);
         }
 
         // Depending on preferences do or do not show the question
         if (questionIsDisplayed()) {
             StringBuffer sb = new StringBuffer();
-            sb.append(enrichWithQASpan(mCurrentCard.question, false));
+            sb.append(enrichWithQASpan(mCurrentCard.getQuestion(), false));
             sb.append("<hr/>");
             sb.append(displayString);
             displayString = sb.toString();
@@ -974,8 +974,8 @@ public class Reviewer extends Activity {
         // Add CSS for font color and font size
         if (mCurrentCard != null) {
             Deck currentDeck = AnkiDroidApp.deck();
-            Model myModel = Model.getModel(currentDeck, mCurrentCard.cardModelId, false);
-            content = myModel.getCSSForFontColorSize(mCurrentCard.cardModelId, mDisplayFontSize) + content;
+            Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
+            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize) + content;
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
         }
@@ -999,8 +999,8 @@ public class Reviewer extends Activity {
                 return true;
 
             case HQIA_CARD_MODEL:
-                return (Model.getModel(AnkiDroidApp.deck(), mCurrentCard.cardModelId, false).getCardModel(
-                        mCurrentCard.cardModelId).questionInAnswer == 0);
+                return (Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getCardModel(
+                        mCurrentCard.getCardModelId()).getQuestionInAnswer() == 0);
 
             default:
                 return true;

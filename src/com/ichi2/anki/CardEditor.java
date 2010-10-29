@@ -166,26 +166,26 @@ public class CardEditor extends Activity {
     
     private class FieldEditText extends EditText {
 
-        Field pairField;
+        private Field mPairField;
 
 
         public FieldEditText(Context context, Field pairField) {
             super(context);
-            this.pairField = pairField;
-            this.setText(pairField.value);
+            mPairField = pairField;
+            this.setText(pairField.getValue());
             // TODO Auto-generated constructor stub
         }
 
 
         public TextView getLabel() {
             TextView label = new TextView(this.getContext());
-            label.setText(pairField.fieldModel.name);
+            label.setText(mPairField.getFieldModel().getName());
             return label;
         }
 
 
         public void updateField() {
-            pairField.value = this.getText().toString();
+            mPairField.setValue(this.getText().toString());
         }
     }
 

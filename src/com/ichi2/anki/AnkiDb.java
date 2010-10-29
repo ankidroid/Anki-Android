@@ -33,14 +33,14 @@ public class AnkiDb {
     /**
      * The deck, which is actually an SQLite database.
      */
-    public SQLiteDatabase database;
+    private SQLiteDatabase mDatabase;
 
 
     /**
      * Open a database connection to an ".anki" SQLite file.
      */
     public AnkiDb(String ankiFilename) throws SQLException {
-        database = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
+        mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
                 | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
     }
 
@@ -49,11 +49,16 @@ public class AnkiDb {
      * Closes a previously opened database connection.
      */
     public void closeDatabase() {
-        if (database != null) {
-            database.close();
-            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + database.getPath() + " closed = " + !database.isOpen());
-            database = null;
+        if (mDatabase != null) {
+            mDatabase.close();
+            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = " + !mDatabase.isOpen());
+            mDatabase = null;
         }
+    }
+
+
+    public SQLiteDatabase getDatabase() {
+        return mDatabase;
     }
 
 
@@ -67,7 +72,7 @@ public class AnkiDb {
         Cursor cursor = null;
         long scalar;
         try {
-            cursor = database.rawQuery(query, null);
+            cursor = mDatabase.rawQuery(query, null);
             if (!cursor.moveToFirst()) {
                 throw new SQLException("No result for query: " + query);
             }
@@ -97,7 +102,7 @@ public class AnkiDb {
         Cursor cursor = null;
 
         try {
-            cursor = database.rawQuery(query, null);
+            cursor = mDatabase.rawQuery(query, null);
             cursor.moveToFirst();
             String methodName = getCursorMethodName(type.getSimpleName());
             do {

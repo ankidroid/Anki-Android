@@ -36,16 +36,16 @@ public class Fact {
     // TODO: Finish porting from facts.py.
     // TODO: Methods to read/write from/to DB.
 
-    long id;
-    long modelId;
-    double created;
-    double modified;
-    String tags;
-    double spaceUntil;
+    private long mId;
+    private long mModelId;
+    private double mCreated;
+    private double mModified;
+    private String mTags;
+    private double mSpaceUntil;
 
-    Model model;
-    TreeSet<Field> fields;
-    Deck deck;
+    private Model mModel;
+    private TreeSet<Field> mFields;
+    private Deck mDeck;
 
 
     /*
@@ -56,7 +56,7 @@ public class Fact {
 
     // Generate fact object from its ID
     public Fact(Deck deck, long id) {
-        this.deck = deck;
+        mDeck = deck;
         fromDb(id);
         // TODO: load fields associated with this fact.
     }
@@ -66,7 +66,7 @@ public class Fact {
      * @return the fields
      */
     public TreeSet<Field> getFields() {
-        return fields;
+        return mFields;
     }
 
 
@@ -74,28 +74,28 @@ public class Fact {
      * @param fields the fields to set
      */
     public void setFields(TreeSet<Field> fields) {
-        this.fields = fields;
+        mFields = fields;
     }
 
 
     public boolean fromDb(long id) {
-        this.id = id;
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
+        mId = id;
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
         Cursor cursor = null;
 
         try {
-            cursor = ankiDB.database.rawQuery("SELECT id, modelId, created, modified, tags, spaceUntil "
+            cursor = ankiDB.getDatabase().rawQuery("SELECT id, modelId, created, modified, tags, spaceUntil "
                     + "FROM facts " + "WHERE id = " + id, null);
             if (!cursor.moveToFirst()) {
                 Log.w(AnkiDroidApp.TAG, "Fact.java (constructor): No result from query.");
                 return false;
             }
 
-            this.id = cursor.getLong(0);
-            modelId = cursor.getLong(1);
-            created = cursor.getDouble(2);
-            modified = cursor.getDouble(3);
-            tags = cursor.getString(4);
+            mId = cursor.getLong(0);
+            mModelId = cursor.getLong(1);
+            mCreated = cursor.getDouble(2);
+            mModified = cursor.getDouble(3);
+            mTags = cursor.getString(4);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -104,10 +104,10 @@ public class Fact {
 
         Cursor fieldsCursor = null;
         try {
-            fieldsCursor = ankiDB.database.rawQuery("SELECT id, factId, fieldModelId, value " + "FROM fields "
+            fieldsCursor = ankiDB.getDatabase().rawQuery("SELECT id, factId, fieldModelId, value " + "FROM fields "
                     + "WHERE factId = " + id, null);
 
-            fields = new TreeSet<Field>(new FieldOrdinalComparator());
+            mFields = new TreeSet<Field>(new FieldOrdinalComparator());
             while (fieldsCursor.moveToNext()) {
                 long fieldId = fieldsCursor.getLong(0);
                 long fieldModelId = fieldsCursor.getLong(2);
@@ -117,7 +117,7 @@ public class Fact {
                 FieldModel currentFieldModel = null;
                 try {
                     // Get the field model for this field
-                    fieldModelCursor = ankiDB.database.rawQuery("SELECT id, ordinal, modelId, name, description "
+                    fieldModelCursor = ankiDB.getDatabase().rawQuery("SELECT id, ordinal, modelId, name, description "
                             + "FROM fieldModels " + "WHERE id = " + fieldModelId, null);
 
                     fieldModelCursor.moveToFirst();
@@ -128,7 +128,7 @@ public class Fact {
                         fieldModelCursor.close();
                     }
                 }
-                fields.add(new Field(fieldId, id, currentFieldModel, fieldValue));
+                mFields.add(new Field(fieldId, id, currentFieldModel, fieldValue));
             }
         } finally {
             if (fieldsCursor != null) {
@@ -141,11 +141,11 @@ public class Fact {
 
 
     public String getFieldValue(String fieldModelName) {
-        Iterator<Field> iter = fields.iterator();
+        Iterator<Field> iter = mFields.iterator();
         while (iter.hasNext()) {
             Field f = iter.next();
-            if (f.fieldModel.name.equals(fieldModelName)) {
-                return f.value;
+            if (f.getFieldModel().getName().equals(fieldModelName)) {
+                return f.getValue();
             }
         }
         return null;
@@ -153,11 +153,11 @@ public class Fact {
 
 
     public long getFieldModelId(String fieldModelName) {
-        Iterator<Field> iter = fields.iterator();
+        Iterator<Field> iter = mFields.iterator();
         while (iter.hasNext()) {
             Field f = iter.next();
-            if (f.fieldModel.name.equals(fieldModelName)) {
-                return f.fieldModel.id;
+            if (f.getFieldModel().getName().equals(fieldModelName)) {
+                return f.getFieldModel().getId();
             }
         }
         return 0;
@@ -172,14 +172,14 @@ public class Fact {
         updateValues.put("modified", now);
 
         // update fields table
-        Iterator<Field> iter = fields.iterator();
+        Iterator<Field> iter = mFields.iterator();
         while (iter.hasNext()) {
             Field f = iter.next();
 
             updateValues = new ContentValues();
-            updateValues.put("value", f.value);
-            AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("fields", updateValues, "id = ?",
-                    new String[] { "" + f.id });
+            updateValues.put("value", f.getValue());
+            AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("fields", updateValues, "id = ?",
+                    new String[] { "" + f.mFieldId });
         }
     }
 
@@ -188,16 +188,16 @@ public class Fact {
         // TODO return instances of each card that is related to this fact
         LinkedList<Card> returnList = new LinkedList<Card>();
 
-        Cursor cardsCursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery("SELECT id, factId "
-                + "FROM cards " + "WHERE factId = " + id, null);
+        Cursor cardsCursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery("SELECT id, factId "
+                + "FROM cards " + "WHERE factId = " + mId, null);
 
         while (cardsCursor.moveToNext()) {
-            Card newCard = new Card(deck);
+            Card newCard = new Card(mDeck);
             newCard.fromDB(cardsCursor.getLong(0));
             newCard.loadTags();
             HashMap<String, String> newQA = CardModel.formatQA(this, newCard.getCardModel(), newCard.splitTags());
-            newCard.question = newQA.get("question");
-            newCard.answer = newQA.get("answer");
+            newCard.setQuestion(newQA.get("question"));
+            newCard.setAnswer(newQA.get("answer"));
 
             returnList.add(newCard);
         }
@@ -207,7 +207,7 @@ public class Fact {
     public static final class FieldOrdinalComparator implements Comparator<Field> {
         @Override
         public int compare(Field object1, Field object2) {
-            return object1.ordinal - object2.ordinal;
+            return object1.mOrdinal - object2.mOrdinal;
         }
     }
 
@@ -217,40 +217,64 @@ public class Fact {
         // Methods for reading/writing from/to DB.
 
         // BEGIN SQL table entries
-        long id; // Primary key
-        long factId; // Foreign key facts.id
-        long fieldModelId; // Foreign key fieldModel.id
-        int ordinal;
-        String value;
+        private long mFieldId; // Primary key id, but named fieldId to no hide Fact.id
+        private long mFactId; // Foreign key facts.id
+        private long mFieldModelId; // Foreign key fieldModel.id
+        private int mOrdinal;
+        private String mValue;
         // END SQL table entries
 
         // BEGIN JOINed entries
-        FieldModel fieldModel;
+        private FieldModel mFieldModel;
         // END JOINed entries
 
         // Backward reference
-        Fact fact;
+        private Fact mFact;
 
 
         // for creating instances of existing fields
         public Field(long id, long factId, FieldModel fieldModel, String value) {
-            this.id = id;
-            this.factId = factId;
-            this.fieldModel = fieldModel;
-            this.value = value;
-            this.fieldModel = fieldModel;
-            ordinal = fieldModel.ordinal;
+            mFieldId = id;
+            mFactId = factId;
+            mFieldModel = fieldModel;
+            mValue = value;
+            mFieldModel = fieldModel;
+            mOrdinal = fieldModel.getOrdinal();
         }
 
 
         // For creating new fields
         public Field(FieldModel fieldModel) {
             if (fieldModel != null) {
-                this.fieldModel = fieldModel;
-                ordinal = fieldModel.ordinal;
+                mFieldModel = fieldModel;
+                mOrdinal = fieldModel.getOrdinal();
             }
-            value = "";
-            id = Utils.genID();
+            mValue = "";
+            mFieldId = Utils.genID();
+        }
+
+
+        /**
+         * @param value the value to set
+         */
+        public void setValue(String value) {
+            mValue = value;
+        }
+
+
+        /**
+         * @return the value
+         */
+        public String getValue() {
+            return mValue;
+        }
+
+
+        /**
+         * @return the fieldModel
+         */
+        public FieldModel getFieldModel() {
+            return mFieldModel;
         }
     }
 

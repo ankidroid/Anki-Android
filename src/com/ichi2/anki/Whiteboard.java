@@ -45,7 +45,7 @@ public class Whiteboard extends View {
 
     private Paint mBitmapPaint;
 
-    public int mBackgroundColor, mForegroundColor, mExtraHeight;
+    private int mBackgroundColor, mForegroundColor, mExtraHeight;
 
     private boolean mLocked;
 

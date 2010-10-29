@@ -154,9 +154,9 @@ public class Model {
     	HashMap<Long, Model> mModels= new HashMap<Long, Model>() ;
     	
     	Cursor mCursor =null;
-    	AnkiDb ankiDB=AnkiDatabaseManager.getDatabase(deck.deckPath);
+    	AnkiDb ankiDB=AnkiDatabaseManager.getDatabase(deck.getDeckPath());
     	try{
-    		mCursor = ankiDB.database.rawQuery("SELECT id FROM models", null);
+    		mCursor = ankiDB.getDatabase().rawQuery("SELECT id FROM models", null);
     		if (!mCursor.moveToFirst()) {
     			return mModels;
     		}
@@ -201,7 +201,7 @@ public class Model {
         CardModel myCardModel = null;
         for (Map.Entry<Long, CardModel> entry : currentModel.cardModelsMap.entrySet()) {
             myCardModel = entry.getValue();
-            cardModelToModelMap.put(myCardModel.id, currentModel);
+            cardModelToModelMap.put(myCardModel.getId(), currentModel);
         }
     }
 
@@ -222,7 +222,7 @@ public class Model {
             query.append(", features, spacing, initialSpacing, source");
             query.append(" FROM models");
             query.append(" WHERE id = ").append(id);
-            cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(query.toString(), null);
+            cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(query.toString(), null);
 
             cursor.moveToFirst();
             model = new Model(deck);
@@ -255,8 +255,8 @@ public class Model {
         String cssString = null;
         for (Map.Entry<Long, CardModel> entry : cardModelsMap.entrySet()) {
             myCardModel = entry.getValue();
-            cssString = createCSSForFontColorSize(myCardModel.id, displayPercentage);
-            cssCardModelMap.put(myCardModel.id, cssString);
+            cssString = createCSSForFontColorSize(myCardModel.getId(), displayPercentage);
+            cssCardModelMap.put(myCardModel.getId(), cssString);
         }
     }
 
@@ -292,28 +292,28 @@ public class Model {
         CardModel myCardModel = cardModelsMap.get(myCardModelId);
 
         // body background
-        if (null != myCardModel.lastFontColour && 0 < myCardModel.lastFontColour.trim().length()) {
-            sb.append("body {background-color:").append(myCardModel.lastFontColour).append(";}\n");
+        if (null != myCardModel.getLastFontColour() && 0 < myCardModel.getLastFontColour().trim().length()) {
+            sb.append("body {background-color:").append(myCardModel.getLastFontColour()).append(";}\n");
         }
         // question
         sb.append(".").append(Reviewer.QUESTION_CLASS).append(" {\n");
-        sb.append(calculateDisplay(percentage, myCardModel.questionFontFamily, myCardModel.questionFontSize,
-                myCardModel.questionFontColour, myCardModel.questionAlign, false));
+        sb.append(calculateDisplay(percentage, myCardModel.getQuestionFontFamily(), myCardModel.getQuestionFontSize(),
+                myCardModel.getQuestionFontColour(), myCardModel.getQuestionAlign(), false));
         sb.append("}\n");
         // answer
         sb.append(".").append(Reviewer.ANSWER_CLASS).append(" {\n");
-        sb.append(calculateDisplay(percentage, myCardModel.answerFontFamily, myCardModel.answerFontSize,
-                myCardModel.answerFontColour, myCardModel.answerAlign, false));
+        sb.append(calculateDisplay(percentage, myCardModel.getAnswerFontFamily(), myCardModel.getAnswerFontSize(),
+                myCardModel.getAnswerFontColour(), myCardModel.getAnswerAlign(), false));
         sb.append("}\n");
         // css for fields. Gets css for all fields no matter whether they actually are used in a given card model
         FieldModel myFieldModel = null;
         String hexId = null; // a FieldModel id in unsigned hexa code for the class attribute
         for (Map.Entry<Long, FieldModel> entry : fieldModelsMap.entrySet()) {
             myFieldModel = entry.getValue();
-            hexId = "fm" + Long.toHexString(myFieldModel.id);
+            hexId = "fm" + Long.toHexString(myFieldModel.getId());
             sb.append(".").append(hexId).append(" {\n");
-            sb.append(calculateDisplay(percentage, myFieldModel.quizFontFamily, myFieldModel.quizFontSize,
-                    myFieldModel.quizFontColour, 0, true));
+            sb.append(calculateDisplay(percentage, myFieldModel.getQuizFontFamily(), myFieldModel.getQuizFontSize(),
+                    myFieldModel.getQuizFontColour(), 0, true));
             sb.append("}\n");
         }
 

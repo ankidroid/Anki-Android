@@ -23,11 +23,11 @@ public class SharedDeckDownload extends Download implements Parcelable {
 
     public static final int UPDATING = 5;
 
-    private int id;
-    private String filename;
-    private int numUpdatedCards;
-    private int numTotalCards;
-    private double estTimeToCompletion;
+    private int mId;
+    private String mFilename;
+    private int mNumUpdatedCards;
+    private int mNumTotalCards;
+    private double mEstTimeToCompletion;
 
 
     public SharedDeckDownload(String title) {
@@ -37,47 +37,27 @@ public class SharedDeckDownload extends Download implements Parcelable {
 
     public SharedDeckDownload(int id, String title) {
         super(title);
-        this.id = id;
+        mId = id;
     }
 
 
     public int getId() {
-        return id;
-    }
-
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-
-    public String getFilename() {
-        return filename;
-    }
-
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-
-    public int getNumTotalCards() {
-        return numTotalCards;
+        return mId;
     }
 
 
     public void setNumTotalCards(int numTotalCards) {
-        this.numTotalCards = numTotalCards;
+        mNumTotalCards = numTotalCards;
     }
 
 
     public int getNumUpdatedCards() {
-        return numUpdatedCards;
+        return mNumUpdatedCards;
     }
 
 
     public void setNumUpdatedCards(int numUpdatedCards) {
-        this.numUpdatedCards = numUpdatedCards;
+        mNumUpdatedCards = numUpdatedCards;
     }
 
 
@@ -85,12 +65,12 @@ public class SharedDeckDownload extends Download implements Parcelable {
     @Override
     public String getEstTimeToCompletion() {
 
-        if (estTimeToCompletion < 0.1) {
+        if (mEstTimeToCompletion < 0.1) {
             return "";
         }
 
         String estTimeStr;
-        long estTime = (long) estTimeToCompletion;
+        long estTime = (long) mEstTimeToCompletion;
         long hours = estTime / 3600;
         estTime %= 3600;
         long minutes = estTime / 60;
@@ -118,15 +98,15 @@ public class SharedDeckDownload extends Download implements Parcelable {
 
     @Override
     public void setEstTimeToCompletion(double estTime) {
-        estTimeToCompletion = estTime;
+        mEstTimeToCompletion = estTime;
     }
 
 
     @Override
     public int getProgress() {
-        if (status == UPDATING || status == PAUSED) {
-            if (numTotalCards > 0) {
-                return (int) (((float) numUpdatedCards / numTotalCards) * 100);
+        if (mStatus == UPDATING || mStatus == PAUSED) {
+            if (mNumTotalCards > 0) {
+                return (int) (((float) mNumUpdatedCards / mNumTotalCards) * 100);
             } else {
                 return 0;
             }
@@ -155,18 +135,18 @@ public class SharedDeckDownload extends Download implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(id);
-        dest.writeString(filename);
-        dest.writeInt(numUpdatedCards);
+        dest.writeInt(mId);
+        dest.writeString(mFilename);
+        dest.writeInt(mNumUpdatedCards);
     }
 
 
     @Override
     protected void readFromParcel(Parcel in) {
         super.readFromParcel(in);
-        id = in.readInt();
-        filename = in.readString();
-        numUpdatedCards = in.readInt();
+        mId = in.readInt();
+        mFilename = in.readString();
+        mNumUpdatedCards = in.readInt();
     }
 
     public static final Parcelable.Creator<SharedDeckDownload> CREATOR = new Parcelable.Creator<SharedDeckDownload>() {

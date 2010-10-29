@@ -29,43 +29,43 @@ import android.database.Cursor;
 public class FieldModel implements Comparator<FieldModel> {
 
     // BEGIN SQL table entries
-    long id;
-    int ordinal;
-    long modelId;
-    String name = "";
-    String description = "";
+    private long mId;
+    private int mOrdinal;
+    private long mModelId;
+    private String mName = "";
+    private String mDescription = "";
     // Reused as RTL marker
-    String features = "";
-    int required = 1;
-    int unique = 1;
-    int numeric = 0;
+    private String mFeatures = "";
+    private int mRequired = 1;
+    private int mUnique = 1;
+    private int mNumeric = 0;
     // Display
-    String quizFontFamily;
-    int quizFontSize;
-    String quizFontColour;
-    String editFontFamily;
-    int editFontSize = 20;
+    private String mQuizFontFamily;
+    private int mQuizFontSize;
+    private String mQuizFontColour;
+    private String mEditFontFamily;
+    private int mEditFontSize = 20;
     // END SQL table entries
 
     /**
      * Backward reference
      */
-    Model model;
+    private Model mModel;
 
 	public FieldModel(long id, int ordinal, long modelId, String name,
             String description) {
-        this.id = id;
-        this.ordinal = ordinal;
-        this.modelId = modelId;
-        this.name = name;
-        this.description = description;
+        mId = id;
+        mOrdinal = ordinal;
+        mModelId = modelId;
+        mName = name;
+        mDescription = description;
     }
 
     public FieldModel(String name, boolean required, boolean unique) {
-		this.name = name;
-		this.required = required ? 1 : 0;
-		this.unique = unique ? 1 : 0;
-		this.id = Utils.genID();
+		mName = name;
+		mRequired = required ? 1 : 0;
+		mUnique = unique ? 1 : 0;
+		mId = Utils.genID();
 	}
 
 	public FieldModel() {
@@ -93,20 +93,20 @@ public class FieldModel implements Comparator<FieldModel> {
 			query.append(" WHERE modelId = ");
 			query.append(modelId);
 
-			cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(query.toString(), null);
+			cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(query.toString(), null);
 			
 			if (cursor.moveToFirst()) {
 				do {
 					myFieldModel = new FieldModel();
 
-					myFieldModel.id = cursor.getLong(0);
-					myFieldModel.ordinal = cursor.getInt(1);
-					myFieldModel.modelId = cursor.getLong(2);
-					myFieldModel.name = cursor.getString(3);
-					myFieldModel.description = cursor.getString(4);
-					myFieldModel.quizFontSize = cursor.getInt(5);
-					myFieldModel.quizFontColour = cursor.getString(6);
-					models.put(myFieldModel.id, myFieldModel);
+					myFieldModel.mId = cursor.getLong(0);
+					myFieldModel.mOrdinal = cursor.getInt(1);
+					myFieldModel.mModelId = cursor.getLong(2);
+					myFieldModel.mName = cursor.getString(3);
+					myFieldModel.mDescription = cursor.getString(4);
+					myFieldModel.mQuizFontSize = cursor.getInt(5);
+					myFieldModel.mQuizFontColour = cursor.getString(6);
+					models.put(myFieldModel.mId, myFieldModel);
 				} while (cursor.moveToNext());
 			}
 		} finally {
@@ -118,20 +118,20 @@ public class FieldModel implements Comparator<FieldModel> {
 
 	public FieldModel copy() {
 		FieldModel fieldModel = new FieldModel(
-				this.name,
-				(this.required == 1) ? true : false,
-				(this.unique == 1) ? true : false);
-		fieldModel.ordinal = this.ordinal;
-		fieldModel.modelId = this.modelId;
-		fieldModel.description = this.description;
-		fieldModel.features = this.features;
-		fieldModel.numeric = this.numeric;
-		fieldModel.quizFontFamily = this.quizFontFamily;
-		fieldModel.quizFontSize = this.quizFontSize;
-		fieldModel.quizFontColour = this.quizFontColour;
-		fieldModel.editFontFamily = this.editFontFamily;
-		fieldModel.editFontSize = this.editFontSize;
-		fieldModel.model = null;
+				mName,
+				(mRequired == 1) ? true : false,
+				(mUnique == 1) ? true : false);
+		fieldModel.mOrdinal = mOrdinal;
+		fieldModel.mModelId = mModelId;
+		fieldModel.mDescription = mDescription;
+		fieldModel.mFeatures = mFeatures;
+		fieldModel.mNumeric = mNumeric;
+		fieldModel.mQuizFontFamily = mQuizFontFamily;
+		fieldModel.mQuizFontSize = mQuizFontSize;
+		fieldModel.mQuizFontColour = mQuizFontColour;
+		fieldModel.mEditFontFamily = mEditFontFamily;
+		fieldModel.mEditFontSize = mEditFontSize;
+		fieldModel.mModel = null;
 
 		return fieldModel;
 	}
@@ -143,7 +143,50 @@ public class FieldModel implements Comparator<FieldModel> {
 	 * @return 
 	 */
 	public int compare(FieldModel object1, FieldModel object2) {
-		return object1.ordinal - object2.ordinal;
+		return object1.mOrdinal - object2.mOrdinal;
 	}
+
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return mName;
+    }
+
+    /**
+     * @return the id
+     */
+    public long getId() {
+        return mId;
+    }
+
+    /**
+     * @return the ordinal
+     */
+    public int getOrdinal() {
+        return mOrdinal;
+    }
+
+    /**
+     * @return the quizFontFamily
+     */
+    public String getQuizFontFamily() {
+        return mQuizFontFamily;
+    }
+
+    /**
+     * @return the quizFontSize
+     */
+    public int getQuizFontSize() {
+        return mQuizFontSize;
+    }
+
+    /**
+     * @return the quizFontColour
+     */
+    public String getQuizFontColour() {
+        return mQuizFontColour;
+    }
 
 }

@@ -343,7 +343,7 @@ public class PersonalDeckPicker extends Activity {
      * Listeners *
      ********************************************************************/
 
-    Connection.TaskListener getPersonalDecksListener = new Connection.TaskListener() {
+    private Connection.TaskListener getPersonalDecksListener = new Connection.TaskListener() {
 
         @Override
         public void onDisconnected() {

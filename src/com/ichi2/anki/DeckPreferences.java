@@ -38,7 +38,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        protected Map<String, String> values = new HashMap<String, String>();
+        private Map<String, String> mValues = new HashMap<String, String>();
 
 
         public DeckPreferenceHack() {
@@ -49,12 +49,12 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
         protected void cacheValues() {
             Log.i(AnkiDroidApp.TAG, "DeckPreferences - CacheValues");
-            values.put("newCardsPDay", String.valueOf(AnkiDroidApp.deck().getNewCardsPerDay()));
-            values.put("sessionQLimit", String.valueOf(AnkiDroidApp.deck().getSessionRepLimit()));
-            values.put("sessionTLimit", String.valueOf(AnkiDroidApp.deck().getSessionTimeLimit() / 60));
-            values.put("newCardOrder", String.valueOf(AnkiDroidApp.deck().getNewCardOrder()));
-            values.put("newCardSpacing", String.valueOf(AnkiDroidApp.deck().getNewCardSpacing()));
-            values.put("revCardOrder", String.valueOf(AnkiDroidApp.deck().getRevCardOrder()));
+            mValues.put("newCardsPDay", String.valueOf(AnkiDroidApp.deck().getNewCardsPerDay()));
+            mValues.put("sessionQLimit", String.valueOf(AnkiDroidApp.deck().getSessionRepLimit()));
+            mValues.put("sessionTLimit", String.valueOf(AnkiDroidApp.deck().getSessionTimeLimit() / 60));
+            mValues.put("newCardOrder", String.valueOf(AnkiDroidApp.deck().getNewCardOrder()));
+            mValues.put("newCardSpacing", String.valueOf(AnkiDroidApp.deck().getNewCardSpacing()));
+            mValues.put("revCardOrder", String.valueOf(AnkiDroidApp.deck().getRevCardOrder()));
         }
 
         public class Editor implements SharedPreferences.Editor {
@@ -148,7 +148,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
         @Override
         public boolean contains(String key) {
-            return values.containsKey(key);
+            return mValues.containsKey(key);
         }
 
 
@@ -160,7 +160,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
         @Override
         public Map<String, ?> getAll() {
-            return values;
+            return mValues;
         }
 
 
@@ -192,10 +192,10 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
         public String getString(String key, String defValue) {
             Log.d(this.getClass().toString(), String.format("getString(key=%s, defValue=%s)", key, defValue));
 
-            if (!values.containsKey(key)) {
+            if (!mValues.containsKey(key)) {
                 return defValue;
             }
-            return values.get(key);
+            return mValues.get(key);
         }
 
         public List<OnSharedPreferenceChangeListener> listeners = new LinkedList<OnSharedPreferenceChangeListener>();
@@ -252,7 +252,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
     protected void updateSummaries() {
         // for all text preferences, set summary as current database value
-        for (String key : pref.values.keySet()) {
+        for (String key : pref.mValues.keySet()) {
             Preference pref = this.findPreference(key);
             if (pref == null) {
                 continue;

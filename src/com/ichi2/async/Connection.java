@@ -43,7 +43,7 @@ import java.util.HashMap;
 
 public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload> {
 
-    public static Context context;
+    private static Context sContext;
 
     public static final int TASK_TYPE_LOGIN = 0;
     public static final int TASK_TYPE_GET_SHARED_DECKS = 1;
@@ -52,8 +52,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final int TASK_TYPE_SYNC_DECK = 4;
     public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 5;
 
-    private static Connection instance;
-    private TaskListener listener;
+    private static Connection sInstance;
+    private TaskListener mListener;
 
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
@@ -65,17 +65,17 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         }
 
         try {
-            if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED)) {
-                instance.get();
+            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+                sInstance.get();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        instance = new Connection();
-        instance.listener = listener;
+        sInstance = new Connection();
+        sInstance.mListener = listener;
 
-        return (Connection) instance.execute(data);
+        return (Connection) sInstance.execute(data);
     }
 
 
@@ -84,8 +84,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     @Override
     protected void onPreExecute() {
-        if (listener != null) {
-            listener.onPreExecute();
+        if (mListener != null) {
+            mListener.onPreExecute();
         }
     }
 
@@ -95,8 +95,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     @Override
     public void onPostExecute(Payload data) {
-        if (listener != null) {
-            listener.onPostExecute(data);
+        if (mListener != null) {
+            mListener.onPostExecute(data);
         }
     }
 
@@ -106,8 +106,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     @Override
     public void onProgressUpdate(Object... values) {
-        if (listener != null) {
-            listener.onProgressUpdate(values);
+        if (mListener != null) {
+            mListener.onProgressUpdate(values);
         }
     }
 
@@ -254,7 +254,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 // Create sync changelog and add it to the list
                 HashMap<String, String> deckChangelog = new HashMap<String, String>();
                 deckChangelog.put("deckName", deckName);
-                deckChangelog.put("message", context.getResources().getString(R.string.sync_log_error_message));
+                deckChangelog.put("message", sContext.getResources().getString(R.string.sync_log_error_message));
 
                 decksChangelogs.add(deckChangelog);
             }
@@ -266,7 +266,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     private Payload doInBackgroundSyncDeck(Payload data) {
-        Resources res = context.getResources();
+        Resources res = sContext.getResources();
         HashMap<String, String> syncChangelog = new HashMap<String, String>();
         String username = (String) data.data[0];
         String password = (String) data.data[1];
@@ -282,7 +282,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         syncChangelog.put("deckName", syncName);
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        ankiDB.database.beginTransaction();
+        ankiDB.getDatabase().beginTransaction();
         try {
             Log.i(AnkiDroidApp.TAG, "Starting sync: username = " + username + ", password = " + password + ", deckPath = "
                     + deckPath + ", syncName = " + syncName);
@@ -323,8 +323,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
                         syncChangelog.put("message", res.getString(R.string.sync_log_downloading_message));
                     }
-                    ankiDB.database.setTransactionSuccessful();
-                    ankiDB.database.endTransaction();
+                    ankiDB.getDatabase().setTransactionSuccessful();
+                    ankiDB.getDatabase().endTransaction();
                     deck.closeDeck();
 
                     deck = Deck.openDeck(deckPath);
@@ -358,10 +358,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
                     client.applyPayloadReply(payloadReply);
 
-                    deck.lastLoaded = deck.modified;
+                    deck.setLastLoaded(deck.getModified());
                     deck.commitToDB();
 
-                    ankiDB.database.setTransactionSuccessful();
+                    ankiDB.getDatabase().setTransactionSuccessful();
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));
                 }
             } else {
@@ -376,8 +376,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             data.success = false;
             data.exception = e;
         } finally {
-            if (ankiDB.database != null && ankiDB.database.inTransaction()) {
-                ankiDB.database.endTransaction();
+            if (ankiDB.getDatabase() != null && ankiDB.getDatabase().inTransaction()) {
+                ankiDB.getDatabase().endTransaction();
             }
 
             if (deck != null) {
@@ -399,7 +399,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             bufPython = new BufferedReader(new FileReader("/sdcard/jsonObjectPython.txt"));
             JSONObject payloadReply = new JSONObject(bufPython.readLine());
             client.applyPayloadReply(payloadReply);
-            deck.lastLoaded = deck.modified;
+            deck.setLastLoaded(deck.getModified());
             deck.commitToDB();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -415,7 +415,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     public static boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) sContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (cm.getActiveNetworkInfo() != null) {
             return cm.getActiveNetworkInfo().isConnectedOrConnecting();
@@ -426,7 +426,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     public static void setContext(Context applicationContext) {
-        context = applicationContext;
+        sContext = applicationContext;
     }
 
     public static interface TaskListener {

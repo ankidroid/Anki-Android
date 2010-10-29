@@ -44,21 +44,21 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int DECK_NOT_LOADED = 1;
     public static final int DECK_EMPTY = 2;
 
-    private static DeckTask instance;
-    private static DeckTask oldInstance;
+    private static DeckTask sInstance;
+    private static DeckTask sOldInstance;
 
-    int type;
-    TaskListener listener;
+    private int mType;
+    private TaskListener mListener;
 
 
     public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params) {
-        oldInstance = instance;
+        sOldInstance = sInstance;
 
-        instance = new DeckTask();
-        instance.listener = listener;
-        instance.type = type;
+        sInstance = new DeckTask();
+        sInstance.mListener = listener;
+        sInstance.mType = type;
 
-        return (DeckTask) instance.execute(params);
+        return (DeckTask) sInstance.execute(params);
     }
 
 
@@ -67,8 +67,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
      */
     public static void waitToFinish() {
         try {
-            if ((instance != null) && (instance.getStatus() != AsyncTask.Status.FINISHED)) {
-                instance.get();
+            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+                sInstance.get();
             }
         } catch (Exception e) {
             return;
@@ -80,22 +80,22 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     protected TaskData doInBackground(TaskData... params) {
         // Wait for previous thread (if any) to finish before continuing
         try {
-            if ((oldInstance != null) && (oldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                oldInstance.get();
+            if ((sOldInstance != null) && (sOldInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+                sOldInstance.get();
             }
         } catch (Exception e) {
             Log.e(AnkiDroidApp.TAG, "doInBackground - Got exception while waiting for thread to finish: " + e.getMessage());
         }
 
-        switch (type) {
+        switch (mType) {
             case TASK_TYPE_LOAD_DECK:
                 return doInBackgroundLoadDeck(params);
 
             case TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS:
                 TaskData taskData = doInBackgroundLoadDeck(params);
-                if (taskData.integer == DECK_LOADED) {
-                    taskData.deck.updateAllCards();
-                    taskData.card = taskData.deck.getCurrentCard();
+                if (taskData.mInteger == DECK_LOADED) {
+                    taskData.mDeck.updateAllCards();
+                    taskData.mCard = taskData.mDeck.getCurrentCard();
                 }
                 return taskData;
 
@@ -119,19 +119,19 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     @Override
     protected void onPreExecute() {
-        listener.onPreExecute();
+        mListener.onPreExecute();
     }
 
 
     @Override
     protected void onProgressUpdate(TaskData... values) {
-        listener.onProgressUpdate(values);
+        mListener.onProgressUpdate(values);
     }
 
 
     @Override
     protected void onPostExecute(TaskData result) {
-        listener.onPostExecute(result);
+        mListener.onPostExecute(result);
     }
 
 
@@ -140,7 +140,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         // Save the fact
         Deck deck = params[0].getDeck();
         Card editCard = params[0].getCard();
-        Fact editFact = editCard.fact;
+        Fact editFact = editCard.getFact();
         editFact.toDb();
         LinkedList<Card> saveCards = editFact.getUpdatedRelatedCards();
 
@@ -166,8 +166,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         start2 = System.currentTimeMillis();
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
-        ankiDB.database.beginTransaction();
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
         try {
             if (oldCard != null) {
                 start = System.currentTimeMillis();
@@ -181,9 +181,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             Log.v(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
             publishProgress(new TaskData(newCard));
 
-            ankiDB.database.setTransactionSuccessful();
+            ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
-            ankiDB.database.endTransaction();
+            ankiDB.getDatabase().endTransaction();
         }
 
         Log.w(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
@@ -222,12 +222,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card oldCard = params[0].getCard();
         Card newCard;
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
-        ankiDB.database.beginTransaction();
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
         try {
             if (oldCard != null) {
                 start = System.currentTimeMillis();
-                deck.suspendCard(oldCard.id);
+                deck.suspendCard(oldCard.getId());
                 stop = System.currentTimeMillis();
                 Log.v(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - Suspended card in " + (stop - start) + " ms.");
             }
@@ -237,9 +237,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             stop = System.currentTimeMillis();
             Log.v(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - Loaded new card in " + (stop - start) + " ms.");
             publishProgress(new TaskData(newCard));
-            ankiDB.database.setTransactionSuccessful();
+            ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
-            ankiDB.database.endTransaction();
+            ankiDB.getDatabase().endTransaction();
         }
 
         return null;
@@ -251,24 +251,24 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Deck deck = params[0].getDeck();
         Card currentCard = params[0].getCard();
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
-        ankiDB.database.beginTransaction();
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
         try {
             if (currentCard != null) {
                 start = System.currentTimeMillis();
                 if (currentCard.hasTag(Deck.TAG_MARKED)) {
-                    deck.deleteTag(currentCard.factId, Deck.TAG_MARKED);
+                    deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 } else {
-                    deck.addTag(currentCard.factId, Deck.TAG_MARKED);
+                    deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 }
                 stop = System.currentTimeMillis();
                 Log.v(AnkiDroidApp.TAG, "doInBackgroundMarkCard - Marked card in " + (stop - start) + " ms.");
             }
 
             publishProgress(new TaskData(currentCard));
-            ankiDB.database.setTransactionSuccessful();
+            ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
-            ankiDB.database.endTransaction();
+            ankiDB.getDatabase().endTransaction();
         }
 
         return null;
@@ -285,51 +285,51 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
     public static class TaskData {
-        private Deck deck;
-        private Card card;
-        private int integer;
-        private String msg;
+        private Deck mDeck;
+        private Card mCard;
+        private int mInteger;
+        private String mMsg;
 
 
         public TaskData(int value, Deck deck, Card card) {
             this(value);
-            this.deck = deck;
-            this.card = card;
+            mDeck = deck;
+            mCard = card;
         }
 
 
         public TaskData(Card card) {
-            this.card = card;
+            mCard = card;
         }
 
 
         public TaskData(int value) {
-            integer = value;
+            mInteger = value;
         }
 
 
         public TaskData(String msg) {
-            this.msg = msg;
+            mMsg = msg;
         }
 
 
         public Deck getDeck() {
-            return deck;
+            return mDeck;
         }
 
 
         public Card getCard() {
-            return card;
+            return mCard;
         }
 
 
         public int getInt() {
-            return integer;
+            return mInteger;
         }
 
 
         public String getString() {
-            return msg;
+            return mMsg;
         }
 
     }

@@ -596,14 +596,14 @@ public class StudyOptions extends Activity {
         DeckTask.waitToFinish();
         if (deck != null) {
             deck.checkDue();
-            int reviewCount = deck.revCount + deck.failedSoonCount;
+            int reviewCount = deck.getRevCount() + deck.getFailedSoonCount();
             String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
-            setTitle(String.format(unformattedTitle, deck.deckName, reviewCount, deck.cardCount));
+            setTitle(String.format(unformattedTitle, deck.getDeckName(), reviewCount, deck.getCardCount()));
 
-            mTextDeckName.setText(deck.deckName);
+            mTextDeckName.setText(deck.getDeckName());
             mTextReviewsDue.setText(String.valueOf(reviewCount));
-            mTextNewToday.setText(String.valueOf(deck.newCountToday));
-            mTextNewTotal.setText(String.valueOf(deck.newCount));
+            mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
+            mTextNewTotal.setText(String.valueOf(deck.getNewCount()));
 
             mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
             mEditSessionTime.setText(String.valueOf(deck.getSessionTimeLimit() / 60));

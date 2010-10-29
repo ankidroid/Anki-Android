@@ -30,19 +30,19 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  */
 public class Preferences extends PreferenceActivity {
 
-    private boolean veecheckStatus;
-    private PreferenceManager pm;
+    private boolean mVeecheckStatus;
+    private PreferenceManager mPrefMan;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        pm = getPreferenceManager();
-        pm.setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
+        mPrefMan = getPreferenceManager();
+        mPrefMan.setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
 
         addPreferencesFromResource(R.xml.preferences);
-        veecheckStatus = pm.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, PrefSettings.DEFAULT_ENABLED);
+        mVeecheckStatus = mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, PrefSettings.DEFAULT_ENABLED);
     }
 
 
@@ -51,7 +51,7 @@ public class Preferences extends PreferenceActivity {
         super.onPause();
         // Reschedule the checking in case the user has changed the veecheck
         // switch
-        if (veecheckStatus ^ pm.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, veecheckStatus)) {
+        if (mVeecheckStatus ^ mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, mVeecheckStatus)) {
             sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
         }
     }

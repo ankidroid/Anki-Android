@@ -24,44 +24,44 @@ import android.content.ContentValues;
 public class CardHistoryEntry {
 
     // BEGIN: SQL table columns
-    long cardId;
-    double time;
-    double lastInterval;
-    double nextInterval;
-    int ease;
-    double delay;
-    double lastFactor;
-    double nextFactor;
-    double reps;
-    double thinkingTime;
-    double yesCount;
-    double noCount;
+    private long mCardId;
+    private double mTime;
+    private double mLastInterval;
+    private double mNextInterval;
+    private int mEase;
+    private double mDelay;
+    private double mLastFactor;
+    private double mNextFactor;
+    private double mReps;
+    private double mThinkingTime;
+    private double mYesCount;
+    private double mNoCount;
     // END: SQL table columns
 
-    Deck deck;
+    private Deck mDeck;
 
 
     /**
      * Constructor
      */
     public CardHistoryEntry(Deck deck, Card card, int ease, double delay) {
-        this.deck = deck;
+        mDeck = deck;
 
         if (card == null) {
             return;
         }
 
-        cardId = card.id;
-        lastInterval = card.lastInterval;
-        nextInterval = card.interval;
-        lastFactor = card.lastFactor;
-        nextFactor = card.factor;
-        reps = card.reps;
-        yesCount = card.yesCount;
-        noCount = card.noCount;
-        this.ease = ease;
-        this.delay = delay;
-        thinkingTime = card.thinkingTime();
+        mCardId = card.getId();
+        mLastInterval = card.getLastInterval();
+        mNextInterval = card.getInterval();
+        mLastFactor = card.getLastFactor();
+        mNextFactor = card.getFactor();
+        mReps = card.getReps();
+        mYesCount = card.getYesCount();
+        mNoCount = card.getNoCount();
+        mEase = ease;
+        mDelay = delay;
+        mThinkingTime = card.thinkingTime();
     }
 
 
@@ -70,19 +70,19 @@ public class CardHistoryEntry {
      */
     public void writeSQL() {
         ContentValues values = new ContentValues();
-        values.put("cardId", cardId);
-        values.put("lastInterval", lastInterval);
-        values.put("nextInterval", nextInterval);
-        values.put("ease", ease);
-        values.put("delay", delay);
-        values.put("lastFactor", lastFactor);
-        values.put("nextFactor", nextFactor);
-        values.put("reps", reps);
-        values.put("thinkingTime", thinkingTime);
-        values.put("yesCount", yesCount);
-        values.put("noCount", noCount);
+        values.put("cardId", mCardId);
+        values.put("lastInterval", mLastInterval);
+        values.put("nextInterval", mNextInterval);
+        values.put("ease", mEase);
+        values.put("delay", mDelay);
+        values.put("lastFactor", mLastFactor);
+        values.put("nextFactor", mNextFactor);
+        values.put("reps", mReps);
+        values.put("thinkingTime", mThinkingTime);
+        values.put("yesCount", mYesCount);
+        values.put("noCount", mNoCount);
         values.put("time", System.currentTimeMillis() / 1000.0);
 
-        AnkiDatabaseManager.getDatabase(deck.deckPath).database.insert("reviewHistory", null, values);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("reviewHistory", null, values);
     }
 }

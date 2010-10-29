@@ -62,32 +62,32 @@ public class AnkiDroidProxy {
      * private static final String SYNC_URL = "http://192.168.2.103:8001/sync/"; private static final String SYNC_HOST =
      * "192.168.2.103"; private static final String SYNC_PORT = "8001";
      */
-    private String username;
-    private String password;
-    private String deckName;
+    private String mUsername;
+    private String mPassword;
+    private String mDeckName;
 
-    private JSONObject decks;
-    private double timestamp;
+    private JSONObject mDecks;
+    private double mTimestamp;
 
     /**
      * Shared deck's fields
      */
-    private static final int R_ID = 0;
-    private static final int R_USERNAME = 1;
-    private static final int R_TITLE = 2;
-    private static final int R_DESCRIPTION = 3;
-    private static final int R_TAGS = 4;
-    private static final int R_VERSION = 5;
-    private static final int R_FACTS = 6;
-    private static final int R_SIZE = 7;
-    private static final int R_COUNT = 8;
-    private static final int R_MODIFIED = 9;
-    private static final int R_FNAME = 10;
+    private static final int SD_ID = 0;
+    private static final int SD_USERNAME = 1;
+    private static final int SD_TITLE = 2;
+    private static final int SD_DESCRIPTION = 3;
+    private static final int SD_TAGS = 4;
+    private static final int SD_VERSION = 5;
+    private static final int SD_FACTS = 6;
+    private static final int SD_SIZE = 7;
+    private static final int SD_COUNT = 8;
+    private static final int SD_MODIFIED = 9;
+    private static final int SD_FNAME = 10;
 
     /**
      * List to hold the shared decks
      */
-    private static List<SharedDeck> sharedDecks;
+    private static List<SharedDeck> sSharedDecks;
 
     /**
      * Synchronization
@@ -98,33 +98,33 @@ public class AnkiDroidProxy {
 
 
     public AnkiDroidProxy(String user, String password) {
-        username = user;
-        this.password = password;
-        deckName = "";
-        decks = null;
+        mUsername = user;
+        this.mPassword = password;
+        mDeckName = "";
+        mDecks = null;
     }
 
 
     public void setDeckName(String deckName) {
-        this.deckName = deckName;
+        this.mDeckName = deckName;
     }
 
 
     public double getTimestamp() {
-        return timestamp;
+        return mTimestamp;
     }
 
 
     public int connect() {
-        if (decks == null) {
+        if (mDecks == null) {
             String decksString = getDecks();
             try {
                 JSONObject jsonDecks = new JSONObject(decksString);
                 if ("OK".equalsIgnoreCase(jsonDecks.getString("status"))) {
-                    decks = jsonDecks.getJSONObject("decks");
-                    Log.i(AnkiDroidApp.TAG, "Server decks = " + decks.toString());
-                    timestamp = jsonDecks.getDouble("timestamp");
-                    Log.i(AnkiDroidApp.TAG, "Server timestamp = " + timestamp);
+                    mDecks = jsonDecks.getJSONObject("decks");
+                    Log.i(AnkiDroidApp.TAG, "Server decks = " + mDecks.toString());
+                    mTimestamp = jsonDecks.getDouble("timestamp");
+                    Log.i(AnkiDroidApp.TAG, "Server timestamp = " + mTimestamp);
                     return LOGIN_OK;
                 } else if ("invalidUserPass".equalsIgnoreCase(jsonDecks.getString("status"))) {
                     return LOGIN_INVALID_USER_PASS;
@@ -140,7 +140,7 @@ public class AnkiDroidProxy {
 
     public boolean hasDeck(String name) {
         connect();
-        Iterator decksIterator = decks.keys();
+        Iterator decksIterator = mDecks.keys();
         while (decksIterator.hasNext()) {
             String serverDeckName = (String) decksIterator.next();
             if (name.equalsIgnoreCase(serverDeckName)) {
@@ -157,7 +157,7 @@ public class AnkiDroidProxy {
 
         connect();
         try {
-            JSONArray deckInfo = decks.getJSONArray(deckName);
+            JSONArray deckInfo = mDecks.getJSONArray(mDeckName);
             lastModified = deckInfo.getDouble(0);
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -172,7 +172,7 @@ public class AnkiDroidProxy {
 
         connect();
         try {
-            JSONArray deckInfo = decks.getJSONArray(deckName);
+            JSONArray deckInfo = mDecks.getJSONArray(mDeckName);
             lastSync = deckInfo.getDouble(1);
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -186,8 +186,8 @@ public class AnkiDroidProxy {
         String decksServer = "{}";
 
         try {
-            String data = "p=" + URLEncoder.encode(password, "UTF-8") + "&client=ankidroid-0.4&u="
-                    + URLEncoder.encode(username, "UTF-8") + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8")
+            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&client=ankidroid-0.4&u="
+                    + URLEncoder.encode(mUsername, "UTF-8") + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8")
                     + "&libanki=0.9.9.8.6&pversion=5";
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
@@ -223,7 +223,7 @@ public class AnkiDroidProxy {
 
         connect();
 
-        Iterator decksIterator = decks.keys();
+        Iterator decksIterator = mDecks.keys();
         while (decksIterator.hasNext()) {
             personalDecks.add((String) decksIterator.next());
         }
@@ -237,7 +237,7 @@ public class AnkiDroidProxy {
         // Log.i(AnkiDroidApp.TAG, "user = " + username + ", password = " + password);
 
         try {
-            String data = "p=" + URLEncoder.encode(password, "UTF-8") + "&u=" + URLEncoder.encode(username, "UTF-8")
+            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
                     + "&d=None&name=" + URLEncoder.encode(name, "UTF-8");
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
@@ -256,7 +256,7 @@ public class AnkiDroidProxy {
             Log.i(AnkiDroidApp.TAG, "String content = " + Utils.convertStreamToString(new InflaterInputStream(content)));
 
             // Add created deck to the list of decks on server
-            decks.put(name, new JSONArray("[0,0]"));
+            mDecks.put(name, new JSONArray("[0,0]"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -287,11 +287,11 @@ public class AnkiDroidProxy {
         try {
             // FIXME: Try to do the connection without encoding the lastSync in Base 64
             String data = "p="
-                    + URLEncoder.encode(password, "UTF-8")
+                    + URLEncoder.encode(mPassword, "UTF-8")
                     + "&u="
-                    + URLEncoder.encode(username, "UTF-8")
+                    + URLEncoder.encode(mUsername, "UTF-8")
                     + "&d="
-                    + URLEncoder.encode(deckName, "UTF-8")
+                    + URLEncoder.encode(mDeckName, "UTF-8")
                     + "&lastSync="
                     + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(ENGLISH_LOCALE, "%f", lastSync)
                             .getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
@@ -338,8 +338,8 @@ public class AnkiDroidProxy {
 
         try {
             // FIXME: Try to do the connection without encoding the payload in Base 64
-            String data = "p=" + URLEncoder.encode(password, "UTF-8") + "&u=" + URLEncoder.encode(username, "UTF-8")
-                    + "&d=" + URLEncoder.encode(deckName, "UTF-8") + "&payload="
+            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
+                    + "&d=" + URLEncoder.encode(mDeckName, "UTF-8") + "&payload="
                     + URLEncoder.encode(Base64.encodeBytes(Utils.compress(payload.toString().getBytes())), "UTF-8")
                     + "&base64=" + URLEncoder.encode("true", "UTF-8");
 
@@ -382,8 +382,8 @@ public class AnkiDroidProxy {
     public static List<SharedDeck> getSharedDecks() throws Exception {
 
         try {
-            if (sharedDecks == null) {
-                sharedDecks = new ArrayList<SharedDeck>();
+            if (sSharedDecks == null) {
+                sSharedDecks = new ArrayList<SharedDeck>();
 
                 HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/search");
                 httpGet.setHeader("Accept-Encoding", "identity");
@@ -393,14 +393,14 @@ public class AnkiDroidProxy {
                 HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
                 String response = Utils.convertStreamToString(httpResponse.getEntity().getContent());
                 // Log.i(AnkiDroidApp.TAG, "Content = " + response);
-                sharedDecks.addAll(getSharedDecksListFromJSONArray(new JSONArray(response)));
+                sSharedDecks.addAll(getSharedDecksListFromJSONArray(new JSONArray(response)));
             }
         } catch (Exception e) {
-            sharedDecks = null;
+            sSharedDecks = null;
             throw new Exception();
         }
 
-        return sharedDecks;
+        return sSharedDecks;
     }
 
 
@@ -415,17 +415,17 @@ public class AnkiDroidProxy {
                 JSONArray jsonSharedDeck = jsonSharedDecks.getJSONArray(i);
 
                 SharedDeck sharedDeck = new SharedDeck();
-                sharedDeck.setId(jsonSharedDeck.getInt(R_ID));
-                sharedDeck.setUsername(jsonSharedDeck.getString(R_USERNAME));
-                sharedDeck.setTitle(jsonSharedDeck.getString(R_TITLE));
-                sharedDeck.setDescription(jsonSharedDeck.getString(R_DESCRIPTION));
-                sharedDeck.setTags(jsonSharedDeck.getString(R_TAGS));
-                sharedDeck.setVersion(jsonSharedDeck.getInt(R_VERSION));
-                sharedDeck.setFacts(jsonSharedDeck.getInt(R_FACTS));
-                sharedDeck.setSize(jsonSharedDeck.getInt(R_SIZE));
-                sharedDeck.setCount(jsonSharedDeck.getInt(R_COUNT));
-                sharedDeck.setModified(jsonSharedDeck.getDouble(R_MODIFIED));
-                sharedDeck.setFileName(jsonSharedDeck.getString(R_FNAME));
+                sharedDeck.setId(jsonSharedDeck.getInt(SD_ID));
+                sharedDeck.setUsername(jsonSharedDeck.getString(SD_USERNAME));
+                sharedDeck.setTitle(jsonSharedDeck.getString(SD_TITLE));
+                sharedDeck.setDescription(jsonSharedDeck.getString(SD_DESCRIPTION));
+                sharedDeck.setTags(jsonSharedDeck.getString(SD_TAGS));
+                sharedDeck.setVersion(jsonSharedDeck.getInt(SD_VERSION));
+                sharedDeck.setFacts(jsonSharedDeck.getInt(SD_FACTS));
+                sharedDeck.setSize(jsonSharedDeck.getInt(SD_SIZE));
+                sharedDeck.setCount(jsonSharedDeck.getInt(SD_COUNT));
+                sharedDeck.setModified(jsonSharedDeck.getDouble(SD_MODIFIED));
+                sharedDeck.setFileName(jsonSharedDeck.getString(SD_FNAME));
 
                 // sharedDeck.prettyLog();
 

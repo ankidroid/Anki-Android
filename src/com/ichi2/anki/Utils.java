@@ -57,8 +57,8 @@ public class Utils {
     private static final long MILLIS_IN_A_DAY = 86400000;
     private static final int DAYS_BEFORE_1970 = 719163;
 
-    private static TreeSet<Integer> idTree;
-    private static long idTime;
+    private static TreeSet<Integer> sIdTree;
+    private static long sIdTime;
 
 
     public static long genID() {
@@ -67,18 +67,18 @@ public class Utils {
         int rand;
         Random random = new Random();
 
-        if (idTree == null) {
-            idTree = new TreeSet<Integer>();
-            idTime = time;
-        } else if (idTime != time) {
-            idTime = time;
-            idTree.clear();
+        if (sIdTree == null) {
+            sIdTree = new TreeSet<Integer>();
+            sIdTime = time;
+        } else if (sIdTime != time) {
+            sIdTime = time;
+            sIdTree.clear();
         }
 
         while (true) {
             rand = random.nextInt(2 ^ 23);
-            if (!idTree.contains(new Integer(rand))) {
-                idTree.add(new Integer(rand));
+            if (!sIdTree.contains(new Integer(rand))) {
+                sIdTree.add(new Integer(rand));
                 break;
             }
         }

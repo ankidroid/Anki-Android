@@ -32,44 +32,44 @@ public class Download extends HashMap<String, Object> implements Parcelable {
     public static final int ERROR = 4;
 
     // Download's title
-    protected String title;
+    private String mTitle;
     // Download URL
-    protected String url;
+    private String mUrl;
     // Size of download in bytes
-    protected long size;
+    private long mSize;
     // Number of bytes downloaded
-    protected long downloaded;
+    private long mDownloaded;
     // Current status of download
-    protected int status;
+    protected int mStatus;
 
 
     public Download(String title) {
-        this.title = title;
+        mTitle = title;
         this.put(title, true);
-        size = -1;
-        downloaded = 0;
-        status = START;
+        mSize = -1;
+        mDownloaded = 0;
+        mStatus = START;
     }
 
 
     public String getUrl() {
-        return url;
+        return mUrl;
     }
 
 
     public void setUrl(String url) {
-        this.url = url;
+        mUrl = url;
         put("filename", url.toString());
     }
 
 
     public long getSize() {
-        return size;
+        return mSize;
     }
 
 
     public void setSize(long size) {
-        this.size = size;
+        mSize = size;
         /*
          * float sizeToShow = size; int divs = 0; while(sizeToShow > 1000) { sizeToShow = sizeToShow / 1000; divs++; }
          * DecimalFormat dec = new DecimalFormat("#.##"); switch(divs) { case 0: put("size", dec.format(sizeToShow) +
@@ -80,12 +80,12 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
 
     public long getDownloaded() {
-        return downloaded;
+        return mDownloaded;
     }
 
 
     public void setDownloaded(long downloaded) {
-        this.downloaded = downloaded;
+        mDownloaded = downloaded;
         /*
          * float downloadedToShow = downloaded; int divs = 0; while(downloadedToShow > 1000) { downloadedToShow =
          * downloadedToShow / 1000; divs++; } DecimalFormat dec = new DecimalFormat("#.##"); switch(divs) { case 0:
@@ -107,29 +107,29 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
 
     public int getProgress() {
-        return (int) (((float) downloaded / size) * 100);
+        return (int) (((float) mDownloaded / mSize) * 100);
     }
 
 
     public int getStatus() {
-        return status;
+        return mStatus;
     }
 
 
     public void setStatus(int status) {
-        this.status = status;
+        mStatus = status;
     }
 
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
 
     public void setTitle(String title) {
-        this.remove(this.title);
+        this.remove(mTitle);
         this.put(title, true);
-        this.title = title;
+        mTitle = title;
     }
 
 
@@ -150,20 +150,20 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(url);
-        dest.writeLong(size);
-        dest.writeLong(downloaded);
-        dest.writeInt(status);
-        dest.writeString(title);
+        dest.writeString(mUrl);
+        dest.writeLong(mSize);
+        dest.writeLong(mDownloaded);
+        dest.writeInt(mStatus);
+        dest.writeString(mTitle);
     }
 
 
     protected void readFromParcel(Parcel in) {
-        url = in.readString();
-        size = in.readLong();
-        downloaded = in.readLong();
-        status = in.readInt();
-        title = in.readString();
+        mUrl = in.readString();
+        mSize = in.readLong();
+        mDownloaded = in.readLong();
+        mStatus = in.readInt();
+        mTitle = in.readString();
     }
 
     public static final Parcelable.Creator<Download> CREATOR = new Parcelable.Creator<Download>() {

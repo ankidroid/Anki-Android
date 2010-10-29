@@ -20,73 +20,73 @@ import android.widget.TextView;
 
 public class DownloadViewWrapper {
 
-    private View base;
-    private TextView headerTitle = null;
-    private TextView downloadTitle = null;
-    private ProgressBar progressBar = null;
-    private TextView progressBarText = null;
-    private TextView estimatedTimeText = null;
-    private TextView deckTitle = null;
-    private TextView deckFacts = null;
+    private View mBase;
+    private TextView mHeaderTitle = null;
+    private TextView mDownloadTitle = null;
+    private ProgressBar mProgressBar = null;
+    private TextView mProgressBarText = null;
+    private TextView mEstimatedTimeText = null;
+    private TextView mDeckTitle = null;
+    private TextView mDeckFacts = null;
 
 
     DownloadViewWrapper(View base) {
-        this.base = base;
+        this.mBase = base;
     }
 
 
     TextView getHeaderTitle() {
-        if (headerTitle == null) {
-            headerTitle = (TextView) base.findViewById(R.id.header_title);
+        if (mHeaderTitle == null) {
+            mHeaderTitle = (TextView) mBase.findViewById(R.id.header_title);
         }
-        return headerTitle;
+        return mHeaderTitle;
     }
 
 
     TextView getDownloadTitle() {
-        if (downloadTitle == null) {
-            downloadTitle = (TextView) base.findViewById(R.id.download_title);
+        if (mDownloadTitle == null) {
+            mDownloadTitle = (TextView) mBase.findViewById(R.id.download_title);
         }
-        return downloadTitle;
+        return mDownloadTitle;
     }
 
 
     ProgressBar getProgressBar() {
-        if (progressBar == null) {
-            progressBar = (ProgressBar) base.findViewById(R.id.progress_bar);
+        if (mProgressBar == null) {
+            mProgressBar = (ProgressBar) mBase.findViewById(R.id.progress_bar);
         }
-        return progressBar;
+        return mProgressBar;
     }
 
 
     TextView getProgressBarText() {
-        if (progressBarText == null) {
-            progressBarText = (TextView) base.findViewById(R.id.progress_text);
+        if (mProgressBarText == null) {
+            mProgressBarText = (TextView) mBase.findViewById(R.id.progress_text);
         }
-        return progressBarText;
+        return mProgressBarText;
     }
 
 
     TextView getEstimatedTimeText() {
-        if (estimatedTimeText == null) {
-            estimatedTimeText = (TextView) base.findViewById(R.id.estimated_text);
+        if (mEstimatedTimeText == null) {
+            mEstimatedTimeText = (TextView) mBase.findViewById(R.id.estimated_text);
         }
-        return estimatedTimeText;
+        return mEstimatedTimeText;
     }
 
 
     TextView getDeckTitle() {
-        if (deckTitle == null) {
-            deckTitle = (TextView) base.findViewById(R.id.deck_title);
+        if (mDeckTitle == null) {
+            mDeckTitle = (TextView) mBase.findViewById(R.id.deck_title);
         }
-        return deckTitle;
+        return mDeckTitle;
     }
 
 
     TextView getDeckFacts() {
-        if (deckFacts == null) {
-            deckFacts = (TextView) base.findViewById(R.id.deck_facts);
+        if (mDeckFacts == null) {
+            mDeckFacts = (TextView) mBase.findViewById(R.id.deck_facts);
         }
-        return deckFacts;
+        return mDeckFacts;
     }
 }

@@ -79,8 +79,8 @@ public class DownloadManagerService extends Service {
     private static final String SYNC_URL = ANKI_URL + "/sync/";
 
     // Regex for finding incomplete downloads shared preferences
-    private static final Pattern numUpdatedCardsPattern = Pattern.compile("^numUpdatedCards:.*/([^/]+\\.anki\\.updating)$");
-    private static final Pattern pausedPattern = Pattern.compile("^paused:.*/([^/]+\\.anki\\.updating)$");
+    private static final Pattern sNumUpdatedCardsPattern = Pattern.compile("^numUpdatedCards:.*/([^/]+\\.anki\\.updating)$");
+    private static final Pattern sPausedPattern = Pattern.compile("^paused:.*/([^/]+\\.anki\\.updating)$");
 
     private String mUsername;
     private String mPassword;
@@ -248,14 +248,14 @@ public class DownloadManagerService extends Service {
         Editor editor = pref.edit();
         boolean sharedPreferencesChanged = false;
         for (String key : pref.getAll().keySet()) {
-            sharedPrefMatcher = numUpdatedCardsPattern.matcher(key);
+            sharedPrefMatcher = sNumUpdatedCardsPattern.matcher(key);
             if (sharedPrefMatcher.matches() && sharedPrefMatcher.groupCount() > 0) {
                 if (!filenames.contains(sharedPrefMatcher.group(1))) {
                     editor.remove(key);
                     sharedPreferencesChanged = true;
                 }
             }
-            sharedPrefMatcher = pausedPattern.matcher(key);
+            sharedPrefMatcher = sPausedPattern.matcher(key);
             if (sharedPrefMatcher.matches() && sharedPrefMatcher.groupCount() > 0) {
                 if (!filenames.contains(sharedPrefMatcher.group(1))) {
                     editor.remove(key);
@@ -937,7 +937,7 @@ public class DownloadManagerService extends Service {
                 SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
                 String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle()
                         + ".anki.updating";
-                long totalCards = deck.getCardCount();
+                long totalCards = deck.retrieveCardCount();
                 download.setNumTotalCards((int) totalCards);
                 long updatedCards = pref.getLong(updatedCardsPref, 0);
                 download.setNumUpdatedCards((int) updatedCards);

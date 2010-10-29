@@ -23,146 +23,111 @@ public class SharedDeck extends HashMap<String, Object> {
 
     private static final long serialVersionUID = 1L;
 
-    protected int id;
-    protected String username;
-    protected String title;
-    protected String description;
-    protected String tags;
-    protected int version;
-    protected int facts;
-    protected int size;
-    protected int count;
-    protected double modified;
-    protected String fileName;
+    private int mId;
+    private String mUsername;
+    private String mTitle;
+    private String mDescription;
+    private String mTags;
+    private int mVersion;
+    private int mFacts;
+    private int mSize;
+    private int mCount;
+    private double mModified;
+    private String mFileName;
 
 
     public int getId() {
-        return id;
+        return mId;
     }
 
 
     public void setId(int id) {
-        this.id = id;
-    }
-
-
-    public String getUsername() {
-        return username;
+        mId = id;
     }
 
 
     public void setUsername(String username) {
-        this.username = username;
+        mUsername = username;
     }
 
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
 
     public void setTitle(String title) {
-        this.title = title;
-        put("title", this.title);
-    }
-
-
-    public String getDescription() {
-        return description;
+        mTitle = title;
+        put("title", mTitle);
     }
 
 
     public void setDescription(String description) {
-        this.description = description;
-    }
-
-
-    public String getTags() {
-        return tags;
+        mDescription = description;
     }
 
 
     public void setTags(String tags) {
-        this.tags = tags;
-    }
-
-
-    public int getVersion() {
-        return version;
+        mTags = tags;
     }
 
 
     public void setVersion(int version) {
-        this.version = version;
+        mVersion = version;
     }
 
 
     public int getFacts() {
-        return facts;
+        return mFacts;
     }
 
 
     public void setFacts(int facts) {
-        this.facts = facts;
+        mFacts = facts;
         if (facts == 1) {
-            put("facts", this.facts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
+            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.fact));
         } else {
-            put("facts", this.facts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
+            put("facts", mFacts + " " + AnkiDroidApp.getAppResources().getString(R.string.facts));
         }
     }
 
 
     public int getSize() {
-        return size;
+        return mSize;
     }
 
 
     public void setSize(int size) {
-        this.size = size;
-    }
-
-
-    public int getCount() {
-        return count;
+        mSize = size;
     }
 
 
     public void setCount(int count) {
-        this.count = count;
-    }
-
-
-    public double getModified() {
-        return modified;
+        mCount = count;
     }
 
 
     public void setModified(double modified) {
-        this.modified = modified;
-    }
-
-
-    public String getFileName() {
-        return fileName;
+        mModified = modified;
     }
 
 
     public void setFileName(String fileName) {
-        this.fileName = fileName;
+        mFileName = fileName;
     }
 
 
     public void prettyLog() {
         Log.i(AnkiDroidApp.TAG, "SHARED DECK:");
-        Log.i(AnkiDroidApp.TAG, "		username = " + username);
-        Log.i(AnkiDroidApp.TAG, "		title = " + title);
-        Log.i(AnkiDroidApp.TAG, "		description = " + description);
-        Log.i(AnkiDroidApp.TAG, "		tags = " + tags);
-        Log.i(AnkiDroidApp.TAG, "		version = " + version);
-        Log.i(AnkiDroidApp.TAG, "		facts = " + facts);
-        Log.i(AnkiDroidApp.TAG, "		size = " + size);
-        Log.i(AnkiDroidApp.TAG, "		count = " + count);
-        Log.i(AnkiDroidApp.TAG, "		modified = " + modified);
-        Log.i(AnkiDroidApp.TAG, "		fileName = " + fileName);
+        Log.i(AnkiDroidApp.TAG, "		username = " + mUsername);
+        Log.i(AnkiDroidApp.TAG, "		title = " + mTitle);
+        Log.i(AnkiDroidApp.TAG, "		description = " + mDescription);
+        Log.i(AnkiDroidApp.TAG, "		tags = " + mTags);
+        Log.i(AnkiDroidApp.TAG, "		version = " + mVersion);
+        Log.i(AnkiDroidApp.TAG, "		facts = " + mFacts);
+        Log.i(AnkiDroidApp.TAG, "		size = " + mSize);
+        Log.i(AnkiDroidApp.TAG, "		count = " + mCount);
+        Log.i(AnkiDroidApp.TAG, "		modified = " + mModified);
+        Log.i(AnkiDroidApp.TAG, "		fileName = " + mFileName);
     }
 }

@@ -33,28 +33,28 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
-    private Thread.UncaughtExceptionHandler PreviousHandler;
-    private static CustomExceptionHandler instance;
-    private Context curContext;
+    private Thread.UncaughtExceptionHandler mPreviousHandler;
+    private static CustomExceptionHandler sInstance;
+    private Context mCurContext;
     // private Random randomGenerator = new Random();
 
-    private HashMap<String, String> information = new HashMap<String, String>(20);
+    private HashMap<String, String> mInformation = new HashMap<String, String>(20);
 
 
     static CustomExceptionHandler getInstance() {
-        if (instance == null) {
-            instance = new CustomExceptionHandler();
+        if (sInstance == null) {
+            sInstance = new CustomExceptionHandler();
             Log.i(AnkiDroidApp.TAG, "New instance of custom exception handler");
         }
 
-        return instance;
+        return sInstance;
     }
 
 
     public void Init(Context context) {
-        PreviousHandler = Thread.getDefaultUncaughtExceptionHandler();
+        mPreviousHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
-        curContext = context;
+        mCurContext = context;
     }
 
 
@@ -79,37 +79,37 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
     private void collectInformation() {
         Log.i(AnkiDroidApp.TAG, "collectInformation");
 
-        if (curContext == null) {
+        if (mCurContext == null) {
             return;
         }
 
         try {
             Log.i(AnkiDroidApp.TAG, "collecting information");
 
-            PackageManager pm = curContext.getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(curContext.getPackageName(), 0);
+            PackageManager pm = mCurContext.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(mCurContext.getPackageName(), 0);
 
-            information.put("VersionName", pi.versionName); // Version
-            information.put("PackageName", pi.packageName);// Package name
-            information.put("PhoneModel", android.os.Build.MODEL); // Device
+            mInformation.put("VersionName", pi.versionName); // Version
+            mInformation.put("PackageName", pi.packageName);// Package name
+            mInformation.put("PhoneModel", android.os.Build.MODEL); // Device
                                                                    // model
-            information.put("AndroidVersion", android.os.Build.VERSION.RELEASE);// Android
+            mInformation.put("AndroidVersion", android.os.Build.VERSION.RELEASE);// Android
                                                                                 // version
-            information.put("Board", android.os.Build.BOARD);
-            information.put("Brand", android.os.Build.BRAND);
-            information.put("Device", android.os.Build.DEVICE);
-            information.put("Display", android.os.Build.DISPLAY);
-            information.put("FingerPrint", android.os.Build.FINGERPRINT);
-            information.put("Host", android.os.Build.HOST);
-            information.put("ID", android.os.Build.ID);
-            information.put("Model", android.os.Build.MODEL);
-            information.put("Product", android.os.Build.PRODUCT);
-            information.put("Tags", android.os.Build.TAGS);
-            information.put("Time", Long.toString(android.os.Build.TIME));
-            information.put("Type", android.os.Build.TYPE);
-            information.put("User", android.os.Build.USER);
-            information.put("TotalInternalMemory", Long.toString(getTotalInternalMemorySize()));
-            information.put("AvailableInternalMemory", Long.toString(getAvailableInternalMemorySize()));
+            mInformation.put("Board", android.os.Build.BOARD);
+            mInformation.put("Brand", android.os.Build.BRAND);
+            mInformation.put("Device", android.os.Build.DEVICE);
+            mInformation.put("Display", android.os.Build.DISPLAY);
+            mInformation.put("FingerPrint", android.os.Build.FINGERPRINT);
+            mInformation.put("Host", android.os.Build.HOST);
+            mInformation.put("ID", android.os.Build.ID);
+            mInformation.put("Model", android.os.Build.MODEL);
+            mInformation.put("Product", android.os.Build.PRODUCT);
+            mInformation.put("Tags", android.os.Build.TAGS);
+            mInformation.put("Time", Long.toString(android.os.Build.TIME));
+            mInformation.put("Type", android.os.Build.TYPE);
+            mInformation.put("User", android.os.Build.USER);
+            mInformation.put("TotalInternalMemory", Long.toString(getTotalInternalMemorySize()));
+            mInformation.put("AvailableInternalMemory", Long.toString(getAvailableInternalMemorySize()));
 
             Log.i(AnkiDroidApp.TAG, "Information collected");
         } catch (Exception e) {
@@ -131,8 +131,8 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         reportInformation.append(String.format("Report Generated: %s%s%s\nBegin Collected Information\n\n",
                 df1.format(currentDate), tz.getID(), df2.format(currentDate)));
 
-        for (String key : information.keySet()) {
-            String value = information.get(key);
+        for (String key : mInformation.keySet()) {
+            String value = mInformation.get(key);
 
             reportInformation.append(String.format("%s = %s\n", key, value));
         }
@@ -162,7 +162,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         Log.i(AnkiDroidApp.TAG, "report infomation string created");
         saveReportToFile(reportInformation.toString());
 
-        PreviousHandler.uncaughtException(t, e);
+        mPreviousHandler.uncaughtException(t, e);
     }
 
 
@@ -175,7 +175,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             String filename = String.format("ad-%s.stacktrace", formatter.format(currentDate));
 
             Log.i(AnkiDroidApp.TAG, "No external storage available");
-            FileOutputStream trace = curContext.openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream trace = mCurContext.openFileOutput(filename, Context.MODE_PRIVATE);
             trace.write(reportInformation.getBytes());
             trace.close();
 

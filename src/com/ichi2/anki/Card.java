@@ -40,93 +40,92 @@ public class Card {
     public static final int TAGS_TEMPL = 2;
 
     // BEGIN SQL table entries
-    long id; // Primary key
-    long factId; // Foreign key facts.id
-    long cardModelId; // Foreign key cardModels.id
-    double created = System.currentTimeMillis() / 1000.0;
-    double modified = System.currentTimeMillis() / 1000.0;
-    String tags = "";
-    int ordinal;
+    private long mId; // Primary key
+    private long mFactId; // Foreign key facts.id
+    private long mCardModelId; // Foreign key cardModels.id
+    private double mCreated = System.currentTimeMillis() / 1000.0;
+    private double mModified = System.currentTimeMillis() / 1000.0;
+    private String mTags = "";
+    private int mOrdinal;
     // Cached - changed on fact update
-    String question = "";
-    String answer = "";
+    private String mQuestion = "";
+    private String mAnswer = "";
     // Default to 'normal' priority
     // This is indexed in deck.java as we need to create a reverse index
-    int priority = 2;
-    double interval = 0;
-    double lastInterval = 0;
-    double due = System.currentTimeMillis() / 1000.0;
-    double lastDue = 0;
-    double factor = 2.5;
-    double lastFactor = 2.5;
-    double firstAnswered = 0;
+    private int mPriority = 2;
+    private double mInterval = 0;
+    private double mLastInterval = 0;
+    private double mDue = System.currentTimeMillis() / 1000.0;
+    private double mLastDue = 0;
+    private double mFactor = 2.5;
+    private double mLastFactor = 2.5;
+    private double mFirstAnswered = 0;
     // Stats
-    int reps = 0;
-    int successive = 0;
-    double averageTime = 0;
-    double reviewTime = 0;
-    int youngEase0 = 0;
-    int youngEase1 = 0;
-    int youngEase2 = 0;
-    int youngEase3 = 0;
-    int youngEase4 = 0;
-    int matureEase0 = 0;
-    int matureEase1 = 0;
-    int matureEase2 = 0;
-    int matureEase3 = 0;
-    int matureEase4 = 0;
+    private int mReps = 0;
+    private int mSuccessive = 0;
+    private double mAverageTime = 0;
+    private double mReviewTime = 0;
+    private int mYoungEase0 = 0;
+    private int mYoungEase1 = 0;
+    private int mYoungEase2 = 0;
+    private int mYoungEase3 = 0;
+    private int mYoungEase4 = 0;
+    private int mMatureEase0 = 0;
+    private int mMatureEase1 = 0;
+    private int mMatureEase2 = 0;
+    private int mMatureEase3 = 0;
+    private int mMatureEase4 = 0;
     // This duplicates the above data, because there's no way to map imported
     // data to the above
-    int yesCount = 0;
-    int noCount = 0;
-    double spaceUntil = 0;
-    double relativeDelay = 0;
-    int isDue = 0;
-    int type = 2;
-    double combinedDue = 0;
+    private int mYesCount = 0;
+    private int mNoCount = 0;
+    private double mSpaceUntil = 0;
+    private double mRelativeDelay = 0;
+    private int mIsDue = 0;
+    private int mType = 2;
+    private double mCombinedDue = 0;
     // END SQL table entries
 
-    Deck deck;
+    private Deck mDeck;
 
     // BEGIN JOINed variables
-    @SuppressWarnings("unused")
-    private CardModel cardModel;
-    Fact fact;
-    private String[] tagsBySrc;
+    private CardModel mCardModel;
+    private Fact mFact;
+    private String[] mTagsBySrc;
     // END JOINed variables
 
-    double timerStarted;
-    double timerStopped;
-    double fuzz;
+    private double mTimerStarted;
+    private double mTimerStopped;
+    private double mFuzz;
 
 
     public Card(Deck deck, Fact fact, CardModel cardModel, double created) {
-        tags = "";
-        tagsBySrc = new String[3];
-        tagsBySrc[TAGS_FACT] = "";
-        tagsBySrc[TAGS_MODEL] = "";
-        tagsBySrc[TAGS_TEMPL] = "";
+        mTags = "";
+        mTagsBySrc = new String[3];
+        mTagsBySrc[TAGS_FACT] = "";
+        mTagsBySrc[TAGS_MODEL] = "";
+        mTagsBySrc[TAGS_TEMPL] = "";
 
-        id = Utils.genID();
+        mId = Utils.genID();
         // New cards start as new & due
-        type = 2;
-        isDue = 1;
-        timerStarted = Double.NaN;
-        timerStopped = Double.NaN;
-        modified = System.currentTimeMillis() / 1000.0;
+        mType = 2;
+        mIsDue = 1;
+        mTimerStarted = Double.NaN;
+        mTimerStopped = Double.NaN;
+        mModified = System.currentTimeMillis() / 1000.0;
         if (created != Double.NaN) {
-            this.created = created;
-            due = created;
+            mCreated = created;
+            mDue = created;
         } else {
-            due = modified;
+            mDue = mModified;
         }
-        combinedDue = due;
-        this.deck = deck;
-        this.fact = fact;
-        this.cardModel = cardModel;
+        mCombinedDue = mDue;
+        mDeck = deck;
+        mFact = fact;
+        mCardModel = cardModel;
         if (cardModel != null) {
-            cardModelId = cardModel.id;
-            ordinal = cardModel.ordinal;
+            mCardModelId = cardModel.getId();
+            mOrdinal = cardModel.getOrdinal();
             /*
              * FIXME: what is the code below used for? It is never persisted Additionally, cardModel has no accessor.
              * HashMap<String, HashMap<Long, String>> d = new HashMap<String, HashMap<Long, String>>();
@@ -147,47 +146,47 @@ public class Card {
 
 
     public Fact getFact() {
-        if (fact != null) {
-            return fact;
+        if (mFact != null) {
+            return mFact;
         } else {
-            fact = new Fact(deck, factId);
-            return fact;
+            mFact = new Fact(mDeck, mFactId);
+            return mFact;
         }
     }
 
 
     public void setModified() {
-        modified = System.currentTimeMillis() / 1000.0;
+        mModified = System.currentTimeMillis() / 1000.0;
     }
 
 
     public void startTimer() {
-        timerStarted = System.currentTimeMillis() / 1000.0;
+        mTimerStarted = System.currentTimeMillis() / 1000.0;
     }
 
 
     public void stopTimer() {
-        timerStopped = System.currentTimeMillis() / 1000.0;
+        mTimerStopped = System.currentTimeMillis() / 1000.0;
     }
 
 
     public double thinkingTime() {
-        if (Double.isNaN(timerStopped)) {
-            return (System.currentTimeMillis() / 1000.0) - timerStarted;
+        if (Double.isNaN(mTimerStopped)) {
+            return (System.currentTimeMillis() / 1000.0) - mTimerStarted;
         } else {
-            return timerStopped - timerStarted;
+            return mTimerStopped - mTimerStarted;
         }
     }
 
 
     public double totalTime() {
-        return (System.currentTimeMillis() / 1000.0) - timerStarted;
+        return (System.currentTimeMillis() / 1000.0) - mTimerStarted;
     }
 
 
     public void genFuzz() {
         Random rand = new Random();
-        fuzz = 0.95 + (0.1 * rand.nextDouble());
+        mFuzz = 0.95 + (0.1 * rand.nextDouble());
     }
 
 
@@ -202,21 +201,21 @@ public class Card {
 
 
     public void updateStats(int ease, String state) {
-        reps += 1;
+        mReps += 1;
         if (ease > 1) {
-            successive += 1;
+            mSuccessive += 1;
         } else {
-            successive = 0;
+            mSuccessive = 0;
         }
 
         double delay = totalTime();
         // Ignore any times over 60 seconds
         if (delay < 60) {
-            reviewTime += delay;
-            if (averageTime != 0) {
-                averageTime = (averageTime + delay) / 2.0;
+            mReviewTime += delay;
+            if (mAverageTime != 0) {
+                mAverageTime = (mAverageTime + delay) / 2.0;
             } else {
-                averageTime = delay;
+                mAverageTime = delay;
             }
         }
         // We don't track first answer for cards
@@ -233,30 +232,30 @@ public class Card {
         }
 
         if (ease < 2) {
-            noCount += 1;
+            mNoCount += 1;
         } else {
-            yesCount += 1;
+            mYesCount += 1;
         }
-        if (firstAnswered == 0) {
-            firstAnswered = System.currentTimeMillis() / 1000.0;
+        if (mFirstAnswered == 0) {
+            mFirstAnswered = System.currentTimeMillis() / 1000.0;
         }
         setModified();
     }
 
 
     public String[] splitTags() {
-        return tagsBySrc;
+        return mTagsBySrc;
     }
 
 
     public String allTags() {
         // Non-Canonified string of fact and model tags
-        if ((tagsBySrc[TAGS_FACT].length() > 0) && (tagsBySrc[TAGS_MODEL].length() > 0)) {
-            return tagsBySrc[TAGS_FACT] + "," + tagsBySrc[TAGS_MODEL];
-        } else if (tagsBySrc[TAGS_FACT].length() > 0) {
-            return tagsBySrc[TAGS_FACT];
+        if ((mTagsBySrc[TAGS_FACT].length() > 0) && (mTagsBySrc[TAGS_MODEL].length() > 0)) {
+            return mTagsBySrc[TAGS_FACT] + "," + mTagsBySrc[TAGS_MODEL];
+        } else if (mTagsBySrc[TAGS_FACT].length() > 0) {
+            return mTagsBySrc[TAGS_FACT];
         } else {
-            return tagsBySrc[TAGS_MODEL];
+            return mTagsBySrc[TAGS_MODEL];
         }
     }
 
@@ -268,8 +267,8 @@ public class Card {
 
     // FIXME: Should be removed. Calling code should directly interact with Model
     public CardModel getCardModel() {
-        Model myModel = Model.getModel(deck, cardModelId, false);
-        return myModel.getCardModel(cardModelId);
+        Model myModel = Model.getModel(mDeck, mCardModelId, false);
+        return myModel.getCardModel(mCardModelId);
     }
 
 
@@ -282,21 +281,21 @@ public class Card {
         int tagSrc = 0;
 
         // Flush tags
-        for (int i = 0; i < tagsBySrc.length; i++) {
-            tagsBySrc[i] = "";
+        for (int i = 0; i < mTagsBySrc.length; i++) {
+            mTagsBySrc[i] = "";
         }
 
         try {
-            cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery("SELECT tags.tag, cardTags.src "
-                    + "FROM cardTags JOIN tags ON cardTags.tagId = tags.id " + "WHERE cardTags.cardId = " + id
+            cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery("SELECT tags.tag, cardTags.src "
+                    + "FROM cardTags JOIN tags ON cardTags.tagId = tags.id " + "WHERE cardTags.cardId = " + mId
                     + " AND cardTags.src in (" + TAGS_FACT + ", " + TAGS_MODEL + "," + TAGS_TEMPL + ") "
                     + "ORDER BY cardTags.id", null);
             while (cursor.moveToNext()) {
                 tagSrc = cursor.getInt(1);
-                if (tagsBySrc[tagSrc].length() > 0) {
-                    tagsBySrc[tagSrc] += "," + cursor.getString(0);
+                if (mTagsBySrc[tagSrc].length() > 0) {
+                    mTagsBySrc[tagSrc] += "," + cursor.getString(0);
                 } else {
-                    tagsBySrc[tagSrc] += cursor.getString(0);
+                    mTagsBySrc[tagSrc] += cursor.getString(0);
                 }
             }
         } finally {
@@ -311,7 +310,7 @@ public class Card {
         Cursor cursor = null;
 
         try {
-            cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
+            cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                     "SELECT id, factId, cardModelId, created, modified, tags, "
                             + "ordinal, question, answer, priority, interval, lastInterval, "
                             + "due, lastDue, factor, lastFactor, firstAnswered, reps, "
@@ -324,43 +323,43 @@ public class Card {
                 return false;
             }
 
-            this.id = cursor.getLong(0);
-            factId = cursor.getLong(1);
-            cardModelId = cursor.getLong(2);
-            created = cursor.getDouble(3);
-            modified = cursor.getDouble(4);
-            tags = cursor.getString(5);
-            ordinal = cursor.getInt(6);
-            question = cursor.getString(7);
-            answer = cursor.getString(8);
-            priority = cursor.getInt(9);
-            interval = cursor.getDouble(10);
-            lastInterval = cursor.getDouble(11);
-            due = cursor.getDouble(12);
-            lastDue = cursor.getDouble(13);
-            factor = cursor.getDouble(14);
-            lastFactor = cursor.getDouble(15);
-            firstAnswered = cursor.getDouble(16);
-            reps = cursor.getInt(17);
-            successive = cursor.getInt(18);
-            averageTime = cursor.getDouble(19);
-            reviewTime = cursor.getDouble(20);
-            youngEase0 = cursor.getInt(21);
-            youngEase1 = cursor.getInt(22);
-            youngEase2 = cursor.getInt(23);
-            youngEase3 = cursor.getInt(24);
-            youngEase4 = cursor.getInt(25);
-            matureEase0 = cursor.getInt(26);
-            matureEase1 = cursor.getInt(27);
-            matureEase2 = cursor.getInt(28);
-            matureEase3 = cursor.getInt(29);
-            matureEase4 = cursor.getInt(30);
-            yesCount = cursor.getInt(31);
-            noCount = cursor.getInt(32);
-            spaceUntil = cursor.getDouble(33);
-            isDue = cursor.getInt(34);
-            type = cursor.getInt(35);
-            combinedDue = cursor.getDouble(36);
+            mId = cursor.getLong(0);
+            mFactId = cursor.getLong(1);
+            mCardModelId = cursor.getLong(2);
+            mCreated = cursor.getDouble(3);
+            mModified = cursor.getDouble(4);
+            mTags = cursor.getString(5);
+            mOrdinal = cursor.getInt(6);
+            mQuestion = cursor.getString(7);
+            mAnswer = cursor.getString(8);
+            mPriority = cursor.getInt(9);
+            mInterval = cursor.getDouble(10);
+            mLastInterval = cursor.getDouble(11);
+            mDue = cursor.getDouble(12);
+            mLastDue = cursor.getDouble(13);
+            mFactor = cursor.getDouble(14);
+            mLastFactor = cursor.getDouble(15);
+            mFirstAnswered = cursor.getDouble(16);
+            mReps = cursor.getInt(17);
+            mSuccessive = cursor.getInt(18);
+            mAverageTime = cursor.getDouble(19);
+            mReviewTime = cursor.getDouble(20);
+            mYoungEase0 = cursor.getInt(21);
+            mYoungEase1 = cursor.getInt(22);
+            mYoungEase2 = cursor.getInt(23);
+            mYoungEase3 = cursor.getInt(24);
+            mYoungEase4 = cursor.getInt(25);
+            mMatureEase0 = cursor.getInt(26);
+            mMatureEase1 = cursor.getInt(27);
+            mMatureEase2 = cursor.getInt(28);
+            mMatureEase3 = cursor.getInt(29);
+            mMatureEase4 = cursor.getInt(30);
+            mYesCount = cursor.getInt(31);
+            mNoCount = cursor.getInt(32);
+            mSpaceUntil = cursor.getDouble(33);
+            mIsDue = cursor.getInt(34);
+            mType = cursor.getInt(35);
+            mCombinedDue = cursor.getDouble(36);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -374,53 +373,53 @@ public class Card {
 
 
     public void toDB() {
-        if (reps == 0) {
-            type = 2;
-        } else if (successive != 0) {
-            type = 1;
+        if (mReps == 0) {
+            mType = 2;
+        } else if (mSuccessive != 0) {
+            mType = 1;
         } else {
-            type = 0;
+            mType = 0;
         }
 
         ContentValues values = new ContentValues();
-        values.put("factId", factId);
-        values.put("cardModelId", cardModelId);
-        values.put("created", created);
-        values.put("modified", modified);
-        values.put("tags", tags);
-        values.put("ordinal", ordinal);
-        values.put("question", question);
-        values.put("answer", answer);
-        values.put("priority", priority);
-        values.put("interval", interval);
-        values.put("lastInterval", lastInterval);
-        values.put("due", due);
-        values.put("lastDue", lastDue);
-        values.put("factor", factor);
-        values.put("lastFactor", lastFactor);
-        values.put("firstAnswered", firstAnswered);
-        values.put("reps", reps);
-        values.put("successive", successive);
-        values.put("averageTime", averageTime);
-        values.put("reviewTime", reviewTime);
-        values.put("youngEase0", youngEase0);
-        values.put("youngEase1", youngEase1);
-        values.put("youngEase2", youngEase2);
-        values.put("youngEase3", youngEase3);
-        values.put("youngEase4", youngEase4);
-        values.put("matureEase0", matureEase0);
-        values.put("matureEase1", matureEase1);
-        values.put("matureEase2", matureEase2);
-        values.put("matureEase3", matureEase3);
-        values.put("matureEase4", matureEase4);
-        values.put("yesCount", yesCount);
-        values.put("noCount", noCount);
-        values.put("spaceUntil", spaceUntil);
-        values.put("isDue", isDue);
-        values.put("type", type);
-        values.put("combinedDue", Math.max(spaceUntil, due));
+        values.put("factId", mFactId);
+        values.put("cardModelId", mCardModelId);
+        values.put("created", mCreated);
+        values.put("modified", mModified);
+        values.put("tags", mTags);
+        values.put("ordinal", mOrdinal);
+        values.put("question", mQuestion);
+        values.put("answer", mAnswer);
+        values.put("priority", mPriority);
+        values.put("interval", mInterval);
+        values.put("lastInterval", mLastInterval);
+        values.put("due", mDue);
+        values.put("lastDue", mLastDue);
+        values.put("factor", mFactor);
+        values.put("lastFactor", mLastFactor);
+        values.put("firstAnswered", mFirstAnswered);
+        values.put("reps", mReps);
+        values.put("successive", mSuccessive);
+        values.put("averageTime", mAverageTime);
+        values.put("reviewTime", mReviewTime);
+        values.put("youngEase0", mYoungEase0);
+        values.put("youngEase1", mYoungEase1);
+        values.put("youngEase2", mYoungEase2);
+        values.put("youngEase3", mYoungEase3);
+        values.put("youngEase4", mYoungEase4);
+        values.put("matureEase0", mMatureEase0);
+        values.put("matureEase1", mMatureEase1);
+        values.put("matureEase2", mMatureEase2);
+        values.put("matureEase3", mMatureEase3);
+        values.put("matureEase4", mMatureEase4);
+        values.put("yesCount", mYesCount);
+        values.put("noCount", mNoCount);
+        values.put("spaceUntil", mSpaceUntil);
+        values.put("isDue", mIsDue);
+        values.put("type", mType);
+        values.put("combinedDue", Math.max(mSpaceUntil, mDue));
         values.put("relativeDelay", 0.0);
-        AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("cards", values, "id = " + id, null);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("cards", values, "id = " + mId, null);
 
         // TODO: Should also write JOINED entries: CardModel and Fact.
     }
@@ -429,9 +428,159 @@ public class Card {
     // Method used for building downloaded decks
     public void updateQAfields() {
         ContentValues values = new ContentValues();
-        values.put("modified", modified);
-        values.put("question", question);
-        values.put("answer", answer);
-        AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("cards", values, "id = " + id, null);
+        values.put("modified", mModified);
+        values.put("question", mQuestion);
+        values.put("answer", mAnswer);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("cards", values, "id = " + mId, null);
+    }
+
+
+    public long getId() {
+        return mId;
+    }
+
+
+    public void setLastInterval(double lastInterval) {
+        mLastInterval = lastInterval;
+    }
+
+
+    public double getLastInterval() {
+        return mLastInterval;
+    }
+
+
+    public void setInterval(double interval) {
+        mInterval = interval;
+    }
+
+
+    public double getInterval() {
+        return mInterval;
+    }
+
+
+    public void setLastFactor(double lastFactor) {
+        mLastFactor = lastFactor;
+    }
+
+
+    public double getLastFactor() {
+        return mLastFactor;
+    }
+
+
+    public void setFactor(double factor) {
+        mFactor = factor;
+    }
+
+
+    public double getFactor() {
+        return mFactor;
+    }
+
+
+    public int getReps() {
+        return mReps;
+    }
+
+
+    public int getYesCount() {
+        return mYesCount;
+    }
+
+
+    public int getNoCount() {
+        return mNoCount;
+    }
+
+
+    public void setQuestion(String question) {
+        mQuestion = question;
+    }
+
+
+    public String getQuestion() {
+        return mQuestion;
+    }
+
+
+    public void setAnswer(String answer) {
+        mAnswer = answer;
+    }
+
+
+    public String getAnswer() {
+        return mAnswer;
+    }
+
+
+    public void setModified(double modified) {
+        mModified = modified;
+    }
+
+
+    public void setCombinedDue(double combinedDue) {
+        mCombinedDue = combinedDue;
+    }
+
+
+    public double getCombinedDue() {
+        return mCombinedDue;
+    }
+
+
+    public int getSuccessive() {
+        return mSuccessive;
+    }
+
+
+    public void setLastDue(double lastDue) {
+        mLastDue = lastDue;
+    }
+
+
+    public void setDue(double due) {
+        mDue = due;
+    }
+
+
+    public double getDue() {
+        return mDue;
+    }
+
+
+    public void setIsDue(int isDue) {
+        mIsDue = isDue;
+    }
+
+
+    public int getIsDue() {
+        return mIsDue;
+    }
+
+
+    public long getFactId() {
+        return mFactId;
+    }
+
+
+    public void setSpaceUntil(double spaceUntil) {
+        mSpaceUntil = spaceUntil;
+    }
+
+
+    public void setPriority(int priority) {
+        mPriority = priority;
+    }
+
+
+    public int getType() {
+        return mType;
+    }
+
+
+    public long getCardModelId() {
+        return mCardModelId;
     }
 }

@@ -54,37 +54,37 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
         // Simple class to hold the deck information for the widget
         public class DeckInformation {
-            private String deckName;
-            private int newCards;
-            private int dueCards;
-            private int failedCards;
+            private String mDeckName;
+            private int mNewCards;
+            private int mDueCards;
+            private int mFailedCards;
 
 
             public String getDeckName() {
-                return deckName;
+                return mDeckName;
             }
 
 
             public int getNewCards() {
-                return newCards;
+                return mNewCards;
             }
 
 
             public int getDueCards() {
-                return dueCards;
+                return mDueCards;
             }
 
 
             public int getFailedCards() {
-                return failedCards;
+                return mFailedCards;
             }
 
 
             public DeckInformation(String deckName, int newCards, int dueCards, int failedCards) {
-                this.deckName = deckName;
-                this.newCards = newCards; // Blue
-                this.dueCards = dueCards; // Black
-                this.failedCards = failedCards; // Red
+                this.mDeckName = deckName;
+                this.mNewCards = newCards; // Blue
+                this.mDueCards = dueCards; // Black
+                this.mFailedCards = failedCards; // Red
             }
 
 
@@ -274,9 +274,9 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     String deckName = file.getName().replaceAll(".anki", "");
 
                     Deck deck = Deck.openDeck(absPath);
-                    int dueCards = deck.failedSoonCount + deck.revCount;
-                    int newCards = deck.newCountToday;
-                    int failedCards = deck.failedSoonCount;
+                    int dueCards = deck.getFailedSoonCount() + deck.getRevCount();
+                    int newCards = deck.getNewCountToday();
+                    int failedCards = deck.getFailedSoonCount();
                     deck.closeDeck();
 
                     // Add the information about the deck
@@ -302,11 +302,11 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             @Override
             public int compare(DeckInformation deck1, DeckInformation deck2) {
 
-                if (deck1.dueCards == deck2.dueCards) {
+                if (deck1.mDueCards == deck2.mDueCards) {
                     return 0;
                 }
 
-                if (deck1.dueCards > deck2.dueCards) {
+                if (deck1.mDueCards > deck2.mDueCards) {
                     return 1;
                 }
 

@@ -48,13 +48,13 @@ public class FactAdder extends Activity {
 	 */
 	private BroadcastReceiver mUnmountReceiver = null;
 	
-    private LinearLayout fieldsLayoutContainer;
-    HashMap<Long, Model> models;
+    private LinearLayout mFieldsLayoutContainer;
+    private HashMap<Long, Model> mModels;
         
     private Button addButton, closeButton, modelButton;
-    static final int DIALOG_MODEL_SELECT = 0;
+    private static final int DIALOG_MODEL_SELECT = 0;
 
-    private Long currentSelectedModelId;
+    private Long mCurrentSelectedModelId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +63,7 @@ public class FactAdder extends Activity {
         
         setContentView(R.layout.fact_adder);
         
-        fieldsLayoutContainer = (LinearLayout) findViewById(R.id.FactAdderEditFieldsLayout);
+        mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.FactAdderEditFieldsLayout);
         
         addButton = (Button) findViewById(R.id.FactAdderAddButton);
         closeButton = (Button) findViewById(R.id.FactAdderCloseButton);
@@ -71,9 +71,9 @@ public class FactAdder extends Activity {
         Deck deck = AnkiDroidApp.deck();
         
         
-        models=Model.getModels(deck);
-        currentSelectedModelId=deck.currentModelId;
-        modelButton.setText(models.get(currentSelectedModelId).name);
+        mModels=Model.getModels(deck);
+        mCurrentSelectedModelId=deck.getCurrentModelId();
+        modelButton.setText(mModels.get(mCurrentSelectedModelId).name);
         addButton.setOnClickListener(new View.OnClickListener() 
         {
 
@@ -129,8 +129,8 @@ public class FactAdder extends Activity {
         	
         	AlertDialog.Builder builder = new AlertDialog.Builder(this);
         	builder.setTitle("Select Model:");
-        	for (Long i:models.keySet()){
-        		mModel=models.get(i);
+        	for (Long i:mModels.keySet()){
+        		mModel=mModels.get(i);
         		dialogItems.add(mModel.name);
         		dialogIds.add(i);
         	}
@@ -140,8 +140,8 @@ public class FactAdder extends Activity {
         	
         	builder.setItems(items, new DialogInterface.OnClickListener() {
         	    public void onClick(DialogInterface dialog, int item) {
-        	    	currentSelectedModelId=dialogIds.get(item);
-        	        modelButton.setText(models.get(currentSelectedModelId).name);
+        	    	mCurrentSelectedModelId=dialogIds.get(item);
+        	        modelButton.setText(mModels.get(mCurrentSelectedModelId).name);
         	    	Log.i("Debug: id: ",dialogIds.get(item).toString());
         	    }
         	});

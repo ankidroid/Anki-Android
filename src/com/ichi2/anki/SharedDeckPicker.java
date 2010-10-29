@@ -71,12 +71,12 @@ public class SharedDeckPicker extends Activity {
     // Service interface we will use to call the service
     private IDownloadManagerService mDownloadManagerService = null;
 
-    List<Download> mSharedDeckDownloads;
-    List<SharedDeck> mSharedDecks;
+    private List<Download> mSharedDeckDownloads;
+    private List<SharedDeck> mSharedDecks;
 
-    List<Object> mAllSharedDecks;
-    ListView mSharedDecksListView;
-    SharedDecksAdapter mSharedDecksAdapter;
+    private List<Object> mAllSharedDecks;
+    private ListView mSharedDecksListView;
+    private SharedDecksAdapter mSharedDecksAdapter;
 
     // Context menu options
     private static final int MENU_CANCEL = Menu.FIRST+1;
