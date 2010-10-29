@@ -85,8 +85,8 @@ public class Card {
     int yesCount = 0;
     int noCount = 0;
     double spaceUntil = 0;
-    double relativeDelay = 0;
-    int isDue = 0;
+    double relativeDelay = 0;   // obsolete in libanki 1.1
+    int isDue = 0;              // obsolete in libanki 1.1
     int type = 2;
     double combinedDue = 0;
     // END SQL table entries
@@ -115,7 +115,6 @@ public class Card {
         id = Utils.genID();
         // New cards start as new & due
         type = 2;
-        isDue = 1;
         timerStarted = Double.NaN;
         timerStopped = Double.NaN;
         modified = System.currentTimeMillis() / 1000.0;
@@ -421,7 +420,7 @@ public class Card {
         values.put("yesCount", yesCount);
         values.put("noCount", noCount);
         values.put("spaceUntil", spaceUntil);
-        values.put("isDue", isDue);
+        values.put("isDue", 0);
         values.put("type", type);
         values.put("combinedDue", Math.max(spaceUntil, due));
         values.put("relativeDelay", 0.0);

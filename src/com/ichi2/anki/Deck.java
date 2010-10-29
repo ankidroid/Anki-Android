@@ -40,6 +40,8 @@ import java.util.Stack;
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Deck
  */
 public class Deck {
+    // Various constants
+    public static final long ONEDAY_MS = 86400000; 
 
     public static final int CARD_TYPE_FAILED = 0;
     public static final int CARD_TYPE_REV = 1;
@@ -134,7 +136,7 @@ public class Deck {
 
     String lowPriority;
 
-    String suspended;
+    String suspended; // obsolete in libanki 1.1
 
     // 0 is random, 1 is by input date
     private int newCardOrder;
@@ -161,7 +163,7 @@ public class Deck {
 
     int factCount;
 
-    int failedNowCount;
+    int failedNowCount; // obsolete in libanki 1.1
 
     int failedSoonCount;
 
@@ -211,6 +213,59 @@ public class Deck {
 
     boolean undoEnabled = false;
 
+    /**
+     * deckVars class
+     */
+    private class DeckVars {
+        AnkiDb mDB;
+        public DeckVars(String path) {
+            mDB = AnkiDatabaseManager.getDatabase(path);
+        }
+        public boolean hasKey(String key) {
+            return mDB.database.rawQuery("SELECT 1 FROM deckVars WHERE key = '" + key "'", null).moveToNext();
+        }
+        public boolean getInt(String key, long value) {
+            Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+            if (cur.isFirst()) {
+                value = cur.getLong(0);
+                return true;
+            }
+            return false;
+        }
+        public boolean getBool(String key) {
+            Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+            if (cur.isFirst()) {
+                return (cur.getLong(0) != 0l);
+            }
+            return false;
+        
+        public String getVar(String key) {
+            Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+            if (cur.isFirst()) {
+                return cur.getString(0);
+            }
+            return null;
+        }
+        public void setVar(String key, String value, boolean mod=true) {
+            Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+            if (cur.isFirst()) {
+                if (cur.getBool(0)) {
+                    return;
+                } else {
+                    mDB.database.execSQL("update deckVars set value='" + value + "' where key = '" + key +"'", null);
+                }
+            } else {
+                mDB.database.execSQL("insert into deckVars (key, value) values ('" + value + "', '" + key +"')", null);
+            }
+        }
+        public void setVarDefault(String key, String value) {
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+            if (!hasKey(key)) {
+                mDB.database.execSQL("INSERT INTO deckVars (key, value) values ('" + key + "', '" + value + "')");
+            }
+        }
+    }
+    private deckVars;
 
     private void initVars() {
         // tmpMediaDir = null;
@@ -221,10 +276,152 @@ public class Deck {
         // sessionStartReps = 0;
         // sessionStartTime = 0;
         // lastSessionStart = 0;
-        newEarly = false;
-        reviewEarly = false;
+        queueLimit = 200;
+        // If most recent deck var not defined, make sure defaults are set
+        DeckVars deckVars(AnkiDatabaseManager.getDatabase(path));
+        if (!deckVars.hasKey("revInactive")) {
+            deckVars.setVarDefault("suspendLeeches", True);
+            deckVars.setVarDefault("leechFails", 16);
+            deckVars.setVarDefault("perDay", True);
+            deckVars.setVarDefault("newActive", "");
+            deckVars.setVarDefault("revActive", "");
+            deckVars.setVarDefault("newInactive", suspended);
+            deckVars.setVarDefault("revInactive", suspended);
+        }
+        updateCutoff();
+        setupStandardScheduler();
     }
 
+    /*
+     * Queue Management
+     */
+    private void setupStandardScheduler() {
+        Class cls = this.getClass();
+        getCardIdMethod = cls.getDeclaredMethod("_getCardId", new Class[] = {boolean.class});
+        fillFailedQueueMethod = cls.getDeclaredMethod("_fillFailedQueue", null);
+        fillRevQueueMethod = cls.getDeclaredMethod("_fillRevQueue", null);
+        fillNewQueueMethod = cls.getDeclaredMethod("_fillNewQueue", null);
+        rebuildFailedCountMethod = cls.getDeclaredMethod("_rebuildFailedCount", null);
+        rebuildRevCountMethod = cls.getDeclaredMethod("_rebuildRevCount", null);
+        rebuildNewCountMethod = cls.getDeclaredMethod("_rebuildNewCount", null);
+        requeueCardMethod = cls.getDeclaredMethod("_requeueCard", new Class[] = {Card.class, int.class});
+        timeForNewCardMethod = cls.getDeclaredMethod("_timeForNewCard", null);
+        updateNewCountTodayMethod = cls.getDeclaredMethod("_updateNewCountToday", null);
+        cardTypeMethod = cls.getDeclaredMethod("_cardType", new Class[] = {Card.class});
+        finishSchedulerMethod = null;
+        answerCardMethod = cls.getDeclaredMethod("_answerCard", new Class[] = {Card.class, int.class});
+        scheduler = "standard";
+    }
+
+    /*
+     * Scheduler related overridable methods
+     */
+    private long getCardId(boolean check=true) {
+        return getCardIdMethod.invoke(new Object[] = {check});
+    }
+    private void fillFailedQueue() {
+        fillFailedQueueMethod.invoke(null);
+    }
+    private void fillRevQueue() {
+        fillRevQueueMethod.invoke(null);
+    }
+    private void fillNewQueue() {
+        fillNewQueueMethod.invoke(null);
+    }
+    private void rebuildFailedQueue() {
+        rebuildFailedQueueMethod.invoke(null);
+    }
+    private void rebuildRevQueue() {
+        rebuildRevQueueMethod.invoke(null);
+    }
+    private void rebuildNewQueue() {
+        rebuildNewQueueMethod.invoke(null);
+    }
+    private void requeueCard(Card card, int oldSuc) {
+        requeueCardMethod.invoke(new Object[] = {card, oldSuc});
+    }
+    private boolean timeForNewCard() {
+        return timeForNewCardMethod.invoke(null);
+    }
+    private void updateNewCountToday() {
+        updateNewCountTodayMethod.invoke(null);
+    }
+    private int cardType(Card card) {
+        return cardTypeMethod.invoke(new Object[] = {card});
+    }
+    private void finishScheduler() {
+        finishSchedulerMethod.invoke(null);
+    }
+    private void answerCard(Card card, int ease) {
+        answerCardMethod.invoke(card, ease);
+    }
+
+    private void fillQueues() {
+        fillFailedQueue();
+        fillRevQueue();
+        fillNewQueue();
+    }
+
+    private void rebuildCounts() {
+        // global counts
+        cardCount = ankiDB.database.rawQuery("SELECT count(*) from cards").getLong(0);
+        factCount = ankiDB.database.rawQuery("SELECT count(*) from facts").getLong(0);
+        // due counts
+        rebuildFailedCount();
+        rebuildRevCount();
+        rebuildNewCount();
+    }
+
+    private String cardLimit(String active, String inactive, String sql) {
+        String yes = parseTags(deckVars.getVar(active));
+        String no = parseTags(deckVars.getVar(inactive));
+        String repl = "";
+        if (yes) {
+            long yids[] = tagIds(yes);
+            long nids[] = tagIds(no);
+            repl = "c.id = ct.cardId AND tagId IN " + ids2str(yids) + " AND tagId NOT IN " + ids2str(nids);
+        } else if (no) {
+            long nids[] = tagIds(no);
+            repl = "c.id = ct.cardId AND tagId NOT IN " + ids2str(nids);
+        } else {
+            return sql;
+        }
+        return sql.replace("FROM cards c WHERE", "FROM cards c, cardTags ct WHERE " + repl)
+    }
+
+    private void _rebuildFailedCount() {
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+        failedSoonCount = ankiDB.queryScalar(cardLimit("revActive", "revInactive",
+                    "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < " + dueCutoff));
+    }
+
+    private void _rebuildRevCount() {
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+        revCount = ankiDB.queryScalar(cardLimit("revActive", "revInactive",
+                    "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue < " + dueCutoff));
+    }
+
+    private void _rebuildNewCount() {
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+        newCount = ankiDB.queryScalar(cardLimit("revActive", "revInactive",
+                    "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < " + dueCutoff));
+    }
+
+    private void _updateNewCountToday() {
+        newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsDoneToday()), 0);
+    }
+
+    private void _fillFailedQueue() {
+        // TODO: Just continue coding - Stopped here for the day
+    }
+    
+    private void updateCutoff() {
+        if (deckVars.getBool("perDay")) {
+            dueCutoff = (Stats.genToday(this).getTime() + ONEDAY_MS) / 1000.0;
+        } else {
+            dueCutoff = System.currentTimeMillis() / 1000.0;
+        }
+    }
 
     public static synchronized Deck openDeck(String path) throws SQLException {
         Deck deck = null;
@@ -291,6 +488,7 @@ public class Deck {
 
         deck.deckPath = path;
         deck.deckName = (new File(path)).getName().replace(".anki", "");
+        deckVars = new DeckVars(path);
         deck.initVars();
 
         // Ensure necessary indices are available
@@ -561,50 +759,45 @@ public class Deck {
     }
 
 
-    private long getCardId() {
-        long id;
-        // Failed card due?
-        if ((delay0 != 0) && (failedNowCount != 0)) {
-            return AnkiDatabaseManager.getDatabase(deckPath).queryScalar("SELECT id FROM failedCards LIMIT 1");
-        }
-        // Failed card queue too big?
-        if ((failedCardMax != 0) && (failedSoonCount >= failedCardMax)) {
-            return AnkiDatabaseManager.getDatabase(deckPath).queryScalar("SELECT id FROM failedCards LIMIT 1");
+    private long _getCardId(boolean check) {
+        checkDailyStats();
+        fillQueues();
+        updateNewCountToday();
+        if (failedNoSpaced()) {
+            // Failed card due?
+            if ((delay0 != 0) && (failedQueue[-1][2] < System.currentTimeMillis()/1000)) {
+                return failedQueue[-1][0];
+            }
+            // Failed card queue too big?
+            if ((failedCardMax != 0) && (failedSoonCount >= failedCardMax)) {
+                return failedQueue[-1][0];
+            }
         }
         // Distribute new cards?
-        if (timeForNewCard()) {
-            id = maybeGetNewCard();
-            if (id != 0) {
-                return id;
-            }
+        if (newNoSpaced() && timeForNewCard()) {
+            return newQueue[-1][0];
         }
         // Card due for review?
-        if (revCount != 0) {
-            return getRevCard();
+        if (revNoSpaced()) {
+            return revQueue[-1][0];
         }
         // New cards left?
-        id = maybeGetNewCard();
-        if (id != 0) {
-            return id;
-        }
-        // Review ahead?
-        if (reviewEarly) {
-            id = getCardIdAhead();
-            if (id != 0) {
-                return id;
-            } else {
-                resetAfterReviewEarly();
-                checkDue();
-            }
+        if (newCountToday != 0) {
+            return newQueue[-1][0];
         }
         // Display failed cards early/last
-        if (showFailedLast()) {
-            try {
-                id = AnkiDatabaseManager.getDatabase(deckPath).queryScalar("SELECT id FROM failedCards LIMIT 1");
-            } catch (Exception e) {
-                return 0;
-            }
-            return id;
+        if (showFailedLast() && (failedQueue.size() != 0)) {
+            return failedQueue[-1][0];
+        if (check) {
+            // Check for expired cards, or new day rollover
+            updateCutoff();
+            return getCardId(false);
+        }
+        // If we're in a custom scheduler, we may need to switch back
+        if (finishSchedulerMethod != null) {
+            finishScheduler();
+            reset();
+            return getCardId();
         }
         return 0;
     }
@@ -2111,8 +2304,25 @@ public class Deck {
      * @param tags An array of the tags to get IDs for.
      * @return An array of IDs of the tags.
      */
-    private long[] tagIds(String[] tags, Boolean create) {
-        // TODO: Finish porting this method from tags.py.
+    private long[] tagIds(String[] tags, boolean create=true) {
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+
+        if (create) {
+            for (tag : tags) {
+                ankiDB.database.execSQL("INSERT OR IGNORE INTO tags (tag) VALUES ('" + tag + "')");
+            }
+        }
+        if (tags) {
+            String tagList = "";
+            for (int i = 0; i < tags.size(); i++) {
+                tagList += "'" + tag[i] + "'";
+                if (i < tags.size()-1) {
+                    tagList += ", ";
+                }
+            }
+            return ankiDB.database.queryColumn(long.class,
+                    "SELECT id FROM tags WHERE tag in (" + tagList +")", 0).toArray();
+        }
         return null;
     }
 }
