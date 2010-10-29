@@ -76,7 +76,7 @@ public class FactAdder extends Activity {
 
         mModels = Model.getModels(deck);
         mCurrentSelectedModelId = deck.getCurrentModelId();
-        mModelButton.setText(mModels.get(mCurrentSelectedModelId).name);
+        mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
         mAddButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -131,7 +131,7 @@ public class FactAdder extends Activity {
                 builder.setTitle("Select Model:");
                 for (Long i : mModels.keySet()) {
                     mModel = mModels.get(i);
-                    dialogItems.add(mModel.name);
+                    dialogItems.add(mModel.getName());
                     dialogIds.add(i);
                 }
                 // Convert to Array
@@ -141,7 +141,7 @@ public class FactAdder extends Activity {
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         mCurrentSelectedModelId = dialogIds.get(item);
-                        mModelButton.setText(mModels.get(mCurrentSelectedModelId).name);
+                        mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
                         Log.i("Debug: id: ", dialogIds.get(item).toString());
                     }
                 });

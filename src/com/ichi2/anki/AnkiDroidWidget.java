@@ -81,10 +81,10 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
 
             public DeckInformation(String deckName, int newCards, int dueCards, int failedCards) {
-                this.mDeckName = deckName;
-                this.mNewCards = newCards; // Blue
-                this.mDueCards = dueCards; // Black
-                this.mFailedCards = failedCards; // Red
+                mDeckName = deckName;
+                mNewCards = newCards; // Blue
+                mDueCards = dueCards; // Black
+                mFailedCards = failedCards; // Red
             }
 
 

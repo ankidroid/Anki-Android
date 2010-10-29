@@ -97,14 +97,14 @@ public class AnkiDroidProxy {
 
     public AnkiDroidProxy(String user, String password) {
         mUsername = user;
-        this.mPassword = password;
+        mPassword = password;
         mDeckName = "";
         mDecks = null;
     }
 
 
     public void setDeckName(String deckName) {
-        this.mDeckName = deckName;
+        mDeckName = deckName;
     }
 
 

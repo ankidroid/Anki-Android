@@ -31,7 +31,7 @@ public class DownloadViewWrapper {
 
 
     DownloadViewWrapper(View base) {
-        this.mBase = base;
+        mBase = base;
     }
 
 

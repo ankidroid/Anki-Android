@@ -214,13 +214,13 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
     }
 
-    protected DeckPreferenceHack pref;
+    private DeckPreferenceHack mPref;
 
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
         Log.d(this.getClass().toString(), String.format("getSharedPreferences(name=%s)", name));
-        return pref;
+        return mPref;
     }
 
 
@@ -234,8 +234,8 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
         } else {
             // requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-            pref = new DeckPreferenceHack();
-            pref.registerOnSharedPreferenceChangeListener(this);
+            mPref = new DeckPreferenceHack();
+            mPref.registerOnSharedPreferenceChangeListener(this);
 
             this.addPreferencesFromResource(R.layout.deck_preferences);
             // this.updateSummaries();
@@ -252,7 +252,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
     protected void updateSummaries() {
         // for all text preferences, set summary as current database value
-        for (String key : pref.mValues.keySet()) {
+        for (String key : mPref.mValues.keySet()) {
             Preference pref = this.findPreference(key);
             if (pref == null) {
                 continue;
@@ -260,7 +260,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
             if (pref instanceof CheckBoxPreference) {
                 continue;
             }
-            pref.setSummary(this.pref.getString(key, ""));
+            pref.setSummary(this.mPref.getString(key, ""));
         }
     }
 }

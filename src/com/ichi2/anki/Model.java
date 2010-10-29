@@ -40,6 +40,9 @@ public class Model {
     /** Singleton */
     // private static Model currentModel;
 
+    /** Text align constants */
+    private static final String[] align_text = { "center", "left", "right" };
+
     /**
      * A Map of the currently loaded Models. The Models are loaded from the database as soon as they are needed for the
      * first time. This is a compromise between RAM need, speed and the probability with which more than one Model is
@@ -47,53 +50,50 @@ public class Model {
      * variable. If more than one Model is needed, then more RAM is needed, but on the other hand side Model and its
      * related CardModel and FieldModel are not reloaded again and again. This Map uses the Model.id field as key
      */
-    private static HashMap<Long, Model> models = new HashMap<Long, Model>();
+    private static HashMap<Long, Model> sModels = new HashMap<Long, Model>();
 
     /**
      * As above but mapping from CardModel to related Model (because when one has a Card, then you need to jump from
      * CardModel to Model.
      */
-    private static HashMap<Long, Model> cardModelToModelMap = new HashMap<Long, Model>();
+    private static HashMap<Long, Model> sCardModelToModelMap = new HashMap<Long, Model>();
 
     // BEGIN SQL table entries
-    long id; // Primary key
-    long deckId; // Foreign key
-    double created = System.currentTimeMillis() / 1000.0;
-    double modified = System.currentTimeMillis() / 1000.0;
-    String tags = "";
-    String name;
-    String description = "";
-    String features = ""; // obsolete
-    double spacing = 0.1;
-    double initialSpacing = 60;
-    int source = 0;
+    private long mId; // Primary key
+    private long mDeckId; // Foreign key
+    private double mCreated = System.currentTimeMillis() / 1000.0;
+    private double mModified = System.currentTimeMillis() / 1000.0;
+    private String mTags = "";
+    private String mName;
+    private String mDescription = "";
+    private String mFeatures = ""; // obsolete
+    private double mSpacing = 0.1;
+    private double mInitialSpacing = 60;
+    private int mSource = 0;
     // BEGIN SQL table entries
 
-    Deck deck;
+    private Deck mDeck;
 
     /** Map for convenience and speed which contains CardModels from current model */
-    private TreeMap<Long, CardModel> cardModelsMap = new TreeMap<Long, CardModel>();
+    private TreeMap<Long, CardModel> mCardModelsMap = new TreeMap<Long, CardModel>();
 
     /** Map for convenience and speed which contains FieldModels from current model */
-    private TreeMap<Long, FieldModel> fieldModelsMap = new TreeMap<Long, FieldModel>();
+    private TreeMap<Long, FieldModel> mFieldModelsMap = new TreeMap<Long, FieldModel>();
 
     /** Map for convenience and speed which contains the CSS code related to a CardModel */
-    private HashMap<Long, String> cssCardModelMap = new HashMap<Long, String>();
+    private HashMap<Long, String> mCssCardModelMap = new HashMap<Long, String>();
 
     /**
      * The percentage chosen in preferences for font sizing at the time when the css for the CardModels related to this
-     * Model was calcualted in prepareCSSForCardModels.
+     * Model was calculated in prepareCSSForCardModels.
      */
-    private transient int displayPercentage = 0;
-
-    /** Text align constants */
-    private final static String[] align_text = { "center", "left", "right" };
+    private transient int mDisplayPercentage = 0;
 
 
     private Model(Deck deck, String name) {
-        this.deck = deck;
-        this.name = name;
-        id = Utils.genID();
+        mDeck = deck;
+        mName = name;
+        mId = Utils.genID();
     }
 
 
@@ -103,7 +103,7 @@ public class Model {
 
 
     public void setModified() {
-        modified = System.currentTimeMillis() / 1000.0;
+        mModified = System.currentTimeMillis() / 1000.0;
     }
 
 
@@ -111,8 +111,8 @@ public class Model {
      * FIXME: this should be called whenever the deck is changed. Otherwise unnecessary space will be used.
      */
     protected static final void reset() {
-        models = new HashMap<Long, Model>();
-        cardModelToModelMap = new HashMap<Long, Model>();
+        sModels = new HashMap<Long, Model>();
+        sCardModelToModelMap = new HashMap<Long, Model>();
     }
 
 
@@ -129,22 +129,22 @@ public class Model {
      * @return
      */
     protected static Model getModel(Deck deck, long identifier, boolean isModelId) {
-        if (false == isModelId) {
+        if (!isModelId) {
             // check whether the identifier is in the cardModelToModelMap
-            if (false == cardModelToModelMap.containsKey(identifier)) {
+            if (!sCardModelToModelMap.containsKey(identifier)) {
                 // get the modelId
                 long myModelId = CardModel.modelIdFromDB(deck, identifier);
                 // get the model
                 loadFromDBPlusRelatedModels(deck, myModelId);
             }
-            return cardModelToModelMap.get(identifier);
+            return sCardModelToModelMap.get(identifier);
         }
         // else it is a modelId
-        if (false == models.containsKey(identifier)) {
+        if (!sModels.containsKey(identifier)) {
             // get the model
             loadFromDBPlusRelatedModels(deck, identifier);
         }
-        return models.get(identifier);
+        return sModels.get(identifier);
     }
 
 
@@ -176,7 +176,7 @@ public class Model {
 
 
     protected final CardModel getCardModel(long identifier) {
-        return cardModelsMap.get(identifier);
+        return mCardModelsMap.get(identifier);
     }
 
 
@@ -190,17 +190,17 @@ public class Model {
         Model currentModel = fromDb(deck, modelId);
 
         // load related card models
-        CardModel.fromDb(deck, currentModel.id, currentModel.cardModelsMap);
+        CardModel.fromDb(deck, currentModel.mId, currentModel.mCardModelsMap);
 
         // load related field models
-        FieldModel.fromDb(deck, modelId, currentModel.fieldModelsMap);
+        FieldModel.fromDb(deck, modelId, currentModel.mFieldModelsMap);
 
         // make relations to maps
-        models.put(currentModel.id, currentModel);
+        sModels.put(currentModel.mId, currentModel);
         CardModel myCardModel = null;
-        for (Map.Entry<Long, CardModel> entry : currentModel.cardModelsMap.entrySet()) {
+        for (Map.Entry<Long, CardModel> entry : currentModel.mCardModelsMap.entrySet()) {
             myCardModel = entry.getValue();
-            cardModelToModelMap.put(myCardModel.getId(), currentModel);
+            sCardModelToModelMap.put(myCardModel.getId(), currentModel);
         }
     }
 
@@ -226,17 +226,17 @@ public class Model {
             cursor.moveToFirst();
             model = new Model(deck);
 
-            model.id = cursor.getLong(0); // Primary key
-            model.deckId = cursor.getLong(1); // Foreign key
-            model.created = cursor.getDouble(2);
-            model.modified = cursor.getDouble(3);
-            model.tags = cursor.getString(4);
-            model.name = cursor.getString(5);
-            model.description = cursor.getString(6);
-            model.features = cursor.getString(7);
-            model.spacing = cursor.getDouble(8);
-            model.initialSpacing = cursor.getDouble(9);
-            model.source = cursor.getInt(10);
+            model.mId = cursor.getLong(0); // Primary key
+            model.mDeckId = cursor.getLong(1); // Foreign key
+            model.mCreated = cursor.getDouble(2);
+            model.mModified = cursor.getDouble(3);
+            model.mTags = cursor.getString(4);
+            model.mName = cursor.getString(5);
+            model.mDescription = cursor.getString(6);
+            model.mFeatures = cursor.getString(7);
+            model.mSpacing = cursor.getDouble(8);
+            model.mInitialSpacing = cursor.getDouble(9);
+            model.mSource = cursor.getInt(10);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -252,10 +252,10 @@ public class Model {
     private final void prepareCSSForCardModels() {
         CardModel myCardModel = null;
         String cssString = null;
-        for (Map.Entry<Long, CardModel> entry : cardModelsMap.entrySet()) {
+        for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
             myCardModel = entry.getValue();
-            cssString = createCSSForFontColorSize(myCardModel.getId(), displayPercentage);
-            cssCardModelMap.put(myCardModel.getId(), cssString);
+            cssString = createCSSForFontColorSize(myCardModel.getId(), mDisplayPercentage);
+            mCssCardModelMap.put(myCardModel.getId(), cssString);
         }
     }
 
@@ -271,11 +271,11 @@ public class Model {
      */
     protected final String getCSSForFontColorSize(long myCardModelId, int percentage) {
         // tjek whether the percentage is this the same as last time
-        if (displayPercentage != percentage) {
-            displayPercentage = percentage;
+        if (mDisplayPercentage != percentage) {
+            mDisplayPercentage = percentage;
             prepareCSSForCardModels();
         }
-        return cssCardModelMap.get(myCardModelId);
+        return mCssCardModelMap.get(myCardModelId);
     }
 
 
@@ -288,7 +288,7 @@ public class Model {
         StringBuffer sb = new StringBuffer();
         sb.append("<!-- ").append(percentage).append(" % display font size-->");
         sb.append("<style type=\"text/css\">\n");
-        CardModel myCardModel = cardModelsMap.get(myCardModelId);
+        CardModel myCardModel = mCardModelsMap.get(myCardModelId);
 
         // body background
         if (null != myCardModel.getLastFontColour() && 0 < myCardModel.getLastFontColour().trim().length()) {
@@ -307,7 +307,7 @@ public class Model {
         // css for fields. Gets css for all fields no matter whether they actually are used in a given card model
         FieldModel myFieldModel = null;
         String hexId = null; // a FieldModel id in unsigned hexa code for the class attribute
-        for (Map.Entry<Long, FieldModel> entry : fieldModelsMap.entrySet()) {
+        for (Map.Entry<Long, FieldModel> entry : mFieldModelsMap.entrySet()) {
             myFieldModel = entry.getValue();
             hexId = "fm" + Long.toHexString(myFieldModel.getId());
             sb.append(".").append(hexId).append(" {\n");
@@ -346,6 +346,14 @@ public class Model {
         }
 
         return sb.toString();
+    }
+
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return mName;
     }
 
 }
