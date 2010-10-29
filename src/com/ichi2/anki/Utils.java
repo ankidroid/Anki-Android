@@ -61,6 +61,10 @@ public class Utils {
     private static long sIdTime;
 
 
+    /* Prevent class from being instantiated */
+    private Utils() { }
+
+
     public static long genID() {
         long time = System.currentTimeMillis();
         long id;

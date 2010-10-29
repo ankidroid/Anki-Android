@@ -24,6 +24,10 @@ public class AnkiDatabaseManager {
     private static HashMap<String, AnkiDb> sAnkiDatabases = new HashMap<String, AnkiDb>();
 
 
+    /* Prevent class from being instantiated */
+    private AnkiDatabaseManager() { }
+
+
     public static AnkiDb getDatabase(String pathDB) throws SQLException {
         // If the DB is already opened
         if (sAnkiDatabases.containsKey(pathDB)) {

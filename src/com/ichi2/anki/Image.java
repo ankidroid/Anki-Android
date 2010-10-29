@@ -39,6 +39,10 @@ public class Image {
     private static long sFinishTime;
 
 
+    /* Prevent class from being instantiated */
+    private Image() { }
+
+
     /**
      * Parses the content (belonging to deck deckFilename), adding an onload event to the img tags, that will be useful
      * in order to resize them.

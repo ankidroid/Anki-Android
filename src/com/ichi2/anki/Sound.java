@@ -63,6 +63,10 @@ public class Sound {
     private static long sFinishSoundTime;
 
 
+    /* Prevent class from being instantiated */
+    private Sound() { }
+
+
     public static String parseSounds(String deckFilename, String content) {
         sStartTime = System.currentTimeMillis();
 
