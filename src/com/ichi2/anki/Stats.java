@@ -205,6 +205,7 @@ public class Stats {
 
 
     public static void updateStats(Stats stats, Card card, int ease, String oldState) {
+        char[] newState = oldState.toCharArray();
         stats.mReps += 1;
         double delay = card.totalTime();
         if (delay >= 60) {
@@ -214,12 +215,14 @@ public class Stats {
             stats.mAverageTime = (stats.mReviewTime / stats.mReps);
         }
         // update eases
-        String attr = oldState + String.format("Ease%d", ease);
+        // We want attr to be of the form mYoungEase3
+        newState[0] = Character.toUpperCase(newState[0]);
+        String attr = "m" + String.valueOf(newState) + String.format("Ease%d", ease);
         try {
             Field f = stats.getClass().getDeclaredField(attr);
             f.setInt(stats, f.getInt(stats) + 1);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(AnkiDroidApp.TAG, "Failed to update " + attr + " : " + e.getMessage());
         }
 
         stats.toDB();

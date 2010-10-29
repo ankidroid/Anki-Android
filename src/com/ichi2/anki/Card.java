@@ -201,6 +201,7 @@ public class Card {
 
 
     public void updateStats(int ease, String state) {
+        char[] newState = state.toCharArray();
         mReps += 1;
         if (ease > 1) {
             mSuccessive += 1;
@@ -220,15 +221,18 @@ public class Card {
         }
         // We don't track first answer for cards
         if ("new".equalsIgnoreCase(state)) {
-            state = "young";
+            newState = "young".toCharArray();
         }
+
         // Update ease and yes/no count
-        String attr = state + String.format("Ease%d", ease);
+        // We want attr to be of the form mYoungEase3
+        newState[0] = Character.toUpperCase(newState[0]);
+        String attr = "m" + String.valueOf(newState) + String.format("Ease%d", ease);
         try {
             Field f = this.getClass().getDeclaredField(attr);
             f.setInt(this, f.getInt(this) + 1);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(AnkiDroidApp.TAG, "Failed to update " + attr + " : " + e.getMessage());
         }
 
         if (ease < 2) {
