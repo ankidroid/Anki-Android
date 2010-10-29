@@ -1441,7 +1441,7 @@ public class SyncClient {
                 + idsString, 0);
 
         // Note the media to delete (Insert the media to delete into mediaDeleted)
-        double now = System.currentTimeMillis() / 1000.0;
+        double now = Utils.now();
         String sqlInsert = "INSERT INTO mediaDeleted SELECT id, " + String.format(ENGLISH_LOCALE, "%f", now)
                 + " FROM media WHERE media.id = ?";
         SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sqlInsert);
@@ -2004,7 +2004,7 @@ public class SyncClient {
 
 
     public String prepareFullSync() {
-        mDeck.setLastSync(System.currentTimeMillis() / 1000.0);
+        mDeck.setLastSync(Utils.now());
         mDeck.commitToDB();
         // The deck is closed after the full sync it is completed
         // deck.closeDeck();

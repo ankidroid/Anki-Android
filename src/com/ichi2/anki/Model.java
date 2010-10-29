@@ -61,8 +61,8 @@ public class Model {
     // BEGIN SQL table entries
     private long mId; // Primary key
     private long mDeckId; // Foreign key
-    private double mCreated = System.currentTimeMillis() / 1000.0;
-    private double mModified = System.currentTimeMillis() / 1000.0;
+    private double mCreated = Utils.now();
+    private double mModified = Utils.now();
     private String mTags = "";
     private String mName;
     private String mDescription = "";
@@ -103,7 +103,7 @@ public class Model {
 
 
     public void setModified() {
-        mModified = System.currentTimeMillis() / 1000.0;
+        mModified = Utils.now();
     }
 
 

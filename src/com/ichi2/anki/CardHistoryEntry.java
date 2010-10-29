@@ -81,7 +81,7 @@ public class CardHistoryEntry {
         values.put("thinkingTime", mThinkingTime);
         values.put("yesCount", mYesCount);
         values.put("noCount", mNoCount);
-        values.put("time", System.currentTimeMillis() / 1000.0);
+        values.put("time", Utils.now());
 
         AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("reviewHistory", null, values);
     }

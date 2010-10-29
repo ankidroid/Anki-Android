@@ -43,8 +43,8 @@ public class Card {
     private long mId; // Primary key
     private long mFactId; // Foreign key facts.id
     private long mCardModelId; // Foreign key cardModels.id
-    private double mCreated = System.currentTimeMillis() / 1000.0;
-    private double mModified = System.currentTimeMillis() / 1000.0;
+    private double mCreated = Utils.now();
+    private double mModified = Utils.now();
     private String mTags = "";
     private int mOrdinal;
     // Cached - changed on fact update
@@ -55,7 +55,7 @@ public class Card {
     private int mPriority = 2;
     private double mInterval = 0;
     private double mLastInterval = 0;
-    private double mDue = System.currentTimeMillis() / 1000.0;
+    private double mDue = Utils.now();
     private double mLastDue = 0;
     private double mFactor = 2.5;
     private double mLastFactor = 2.5;
@@ -112,7 +112,7 @@ public class Card {
         mIsDue = 1;
         mTimerStarted = Double.NaN;
         mTimerStopped = Double.NaN;
-        mModified = System.currentTimeMillis() / 1000.0;
+        mModified = Utils.now();
         if (created != Double.NaN) {
             mCreated = created;
             mDue = created;
@@ -156,23 +156,23 @@ public class Card {
 
 
     public void setModified() {
-        mModified = System.currentTimeMillis() / 1000.0;
+        mModified = Utils.now();
     }
 
 
     public void startTimer() {
-        mTimerStarted = System.currentTimeMillis() / 1000.0;
+        mTimerStarted = Utils.now();
     }
 
 
     public void stopTimer() {
-        mTimerStopped = System.currentTimeMillis() / 1000.0;
+        mTimerStopped = Utils.now();
     }
 
 
     public double thinkingTime() {
         if (Double.isNaN(mTimerStopped)) {
-            return (System.currentTimeMillis() / 1000.0) - mTimerStarted;
+            return (Utils.now() - mTimerStarted);
         } else {
             return mTimerStopped - mTimerStarted;
         }
@@ -180,7 +180,7 @@ public class Card {
 
 
     public double totalTime() {
-        return (System.currentTimeMillis() / 1000.0) - mTimerStarted;
+        return (Utils.now() - mTimerStarted);
     }
 
 
@@ -241,7 +241,7 @@ public class Card {
             mYesCount += 1;
         }
         if (mFirstAnswered == 0) {
-            mFirstAnswered = System.currentTimeMillis() / 1000.0;
+            mFirstAnswered = Utils.now();
         }
         setModified();
     }

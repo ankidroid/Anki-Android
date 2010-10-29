@@ -170,7 +170,7 @@ public class Deck {
         // tmpMediaDir = null;
         // forceMediaDir = null;
         // lastTags = "";
-        mLastLoaded = (double) System.currentTimeMillis() / 1000.0;
+        mLastLoaded = Utils.now();
         // undoEnabled = false;
         // sessionStartReps = 0;
         // sessionStartTime = 0;
@@ -240,8 +240,7 @@ public class Deck {
             }
         }
         Log.i(AnkiDroidApp.TAG,
-                String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.mModified,
-                        System.currentTimeMillis() / 1000.0));
+                String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.mModified, Utils.now()));
 
         deck.mDeckPath = path;
         deck.mDeckName = (new File(path)).getName().replace(".anki", "");
@@ -309,7 +308,7 @@ public class Deck {
 
 
     private void setModified() {
-        mModified = System.currentTimeMillis() / 1000.0;
+        mModified = Utils.now();
     }
 
 
@@ -678,7 +677,7 @@ public class Deck {
      * @param card The modified version of a card from this deck to be saved.
      */
     public void updateCard(Card card) {
-        double now = System.currentTimeMillis() / 1000.0;
+        double now = Utils.now();
         ContentValues updateValues = new ContentValues();
         updateValues.put("question", card.getQuestion());
         updateValues.put("answer", card.getAnswer());
@@ -768,7 +767,7 @@ public class Deck {
                 Log.i(AnkiDroidApp.TAG, "Question = " + card.getQuestion());
                 card.setAnswer(newQA.get("answer"));
                 Log.i(AnkiDroidApp.TAG, "Answer = " + card.getAnswer());
-                card.setModified(System.currentTimeMillis() / 1000.0);
+                card.setModified(Utils.now());
 
                 card.updateQAfields();
 
@@ -795,12 +794,12 @@ public class Deck {
         Cursor cursor = null;
         String undoName = "Answer Card";
         setUndoStart(undoName);
-        double now = System.currentTimeMillis() / 1000.0;
+        double now = Utils.now();
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeckPath);
 
         // Old state
         String oldState = cardState(card);
-        double lastDelaySecs = System.currentTimeMillis() / 1000.0 - card.getCombinedDue();
+        double lastDelaySecs = Utils.now() - card.getCombinedDue();
         double start = System.currentTimeMillis();
         double lastDelay = lastDelaySecs / 86400.0;
         int oldSuc = card.getSuccessive();
@@ -862,7 +861,7 @@ public class Deck {
         }
         space = space * spaceFactor * 86400.0;
         space = Math.max(minSpacing, space);
-        space += System.currentTimeMillis() / 1000.0;
+        space += Utils.now();
         card.setCombinedDue(Math.max(card.getDue(), space));
 
         // check what other cards we've spaced
@@ -1035,7 +1034,7 @@ public class Deck {
         } else {
             due = card.getInterval() * 86400.0;
         }
-        return due + (System.currentTimeMillis() / 1000.0);
+        return (due + Utils.now());
     }
 
 
@@ -1059,7 +1058,7 @@ public class Deck {
 
 
     private double adjustedDelay(Card card, int ease) {
-        double now = System.currentTimeMillis() / 1000.0;
+        double now = Utils.now();
         if (cardIsNew(card)) {
             return 0;
         }
@@ -1103,7 +1102,7 @@ public class Deck {
         Log.i(AnkiDroidApp.TAG, "failedSoonCount = " + mFailedSoonCount);
         mFailedNowCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 0 and "
                 + "isDue = 1 and " + "combinedDue <= "
-                + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+                + String.format(ENGLISH_LOCALE, "%f", Utils.now()));
         Log.i(AnkiDroidApp.TAG, "failedNowCount = " + mFailedNowCount);
         mRevCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 1 and "
                 + "priority in (1,2,3,4) and " + "isDue = 1");
@@ -1128,7 +1127,7 @@ public class Deck {
     // "WHERE type = 0 and " +
     // "isDue = 1 and " +
     // "combinedDue <= " +
-    // String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)));
+    // String.format(ENGLISH_LOCALE, "%f", Utils.now()));
     // try {
     // cursor = AnkiDb.getDatabase().rawQuery(
     // "SELECT type, count(id) " +
@@ -1168,12 +1167,11 @@ public class Deck {
                 "priority in (1,2,3,4) and "
                         + "type in (0,1,2) and "
                         + "isDue = 0 and "
-                        + String.format(ENGLISH_LOCALE, "combinedDue <= %f",
-                                (double) ((System.currentTimeMillis() / 1000.0) + mDelay0)), null);
+                        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", Utils.now() + mDelay0), null);
 
         mFailedNowCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 0 and "
                 + "isDue = 1 and "
-                + String.format(ENGLISH_LOCALE, "combinedDue <= %f", (double) (System.currentTimeMillis() / 1000.0)));
+                + String.format(ENGLISH_LOCALE, "combinedDue <= %f", Utils.now()));
 
         Cursor cursor = null;
         try {
@@ -1338,7 +1336,7 @@ public class Deck {
 
             if (newTags.length() > factTagsList.get(i).length()) {
                 ankiDB.getDatabase().execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
-                        + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                        + String.format(ENGLISH_LOCALE, "%f", Utils.now())
                         + " where id = " + factIds[i]);
             }
         }
@@ -1402,7 +1400,7 @@ public class Deck {
 
             if (newTags.length() < factTags.length()) {
                 ankiDB.getDatabase().execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
-                        + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                        + String.format(ENGLISH_LOCALE, "%f", Utils.now())
                         + " where id = " + factIds[i]);
             }
         }
@@ -1439,7 +1437,7 @@ public class Deck {
     public void suspendCards(long[] ids) {
         AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL("UPDATE cards SET " + "isDue = 0, "
                 + "priority = -3, " + "modified = "
-                + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                + String.format(ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id IN " + Utils.ids2str(ids));
         rebuildCounts(false);
         flushMod();
@@ -1455,7 +1453,7 @@ public class Deck {
 
     public void unsuspendCards(long[] ids) {
         AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL("UPDATE cards SET " + "priority = 0, "
-                + "modified = " + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                + "modified = " + String.format(ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id IN " + Utils.ids2str(ids));
         updatePriorities(ids);
         rebuildCounts(false);
@@ -1499,7 +1497,7 @@ public class Deck {
                 String extra = "";
                 if (dirty) {
                     extra = ", modified = "
-                            + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0));
+                            + String.format(ENGLISH_LOCALE, "%f", Utils.now());
                 }
                 for (int pri = 0; pri < 5; pri++) {
                     int count = 0;
@@ -1592,7 +1590,7 @@ public class Deck {
         if (len > 0) {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeckPath);
             commitToDB();
-            double now = System.currentTimeMillis() / 1000.0;
+            double now = Utils.now();
             Log.i(AnkiDroidApp.TAG, "Now = " + now);
             String idsString = Utils.ids2str(ids);
 
@@ -1653,7 +1651,7 @@ public class Deck {
         if (len > 0) {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeckPath);
             commitToDB();
-            double now = System.currentTimeMillis() / 1000.0;
+            double now = Utils.now();
             String idsString = Utils.ids2str(ids);
             Log.i(AnkiDroidApp.TAG, "DELETE FROM facts WHERE id in " + idsString);
             ankiDB.getDatabase().execSQL("DELETE FROM facts WHERE id in " + idsString);
@@ -1713,7 +1711,7 @@ public class Deck {
             // Note deleted model
             ContentValues values = new ContentValues();
             values.put("modelId", id);
-            values.put("deletedTime", System.currentTimeMillis() / 1000.0);
+            values.put("deletedTime", Utils.now());
             ankiDB.getDatabase().insert("modelsDeleted", null, values);
 
             flushMod();
@@ -1734,7 +1732,7 @@ public class Deck {
 
         // Note like modified the facts that use this model
         ankiDB.getDatabase().execSQL("UPDATE facts SET modified = "
-                + String.format(ENGLISH_LOCALE, "%f", (System.currentTimeMillis() / 1000.0))
+                + String.format(ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE modelId = " + modelId);
 
         // TODO: remove field model from list
@@ -1775,7 +1773,7 @@ public class Deck {
 
         // Note the model like modified (TODO: We should use the object model instead handling the DB directly)
         ankiDB.getDatabase().execSQL("UPDATE models SET modified = "
-                + String.format(ENGLISH_LOCALE, "%f", System.currentTimeMillis() / 1000.0)
+                + String.format(ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id = " + modelId);
 
         flushMod();
@@ -1800,7 +1798,7 @@ public class Deck {
 
         // Note the model like modified (TODO: We should use the object model instead handling the DB directly)
         ankiDB.getDatabase().execSQL("UPDATE models SET modified = "
-                + String.format(ENGLISH_LOCALE, "%f", System.currentTimeMillis() / 1000.0)
+                + String.format(ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id = " + modelId);
 
         flushMod();

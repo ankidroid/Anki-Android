@@ -165,7 +165,7 @@ public class Fact {
 
 
     public void toDb() {
-        double now = System.currentTimeMillis() / 1000.0;
+        double now = Utils.now();
 
         // update facts table
         ContentValues updateValues = new ContentValues();

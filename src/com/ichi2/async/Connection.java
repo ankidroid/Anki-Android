@@ -29,6 +29,7 @@ import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Deck;
 import com.ichi2.anki.R;
 import com.ichi2.anki.SyncClient;
+import com.ichi2.anki.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -295,7 +296,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 Log.i(AnkiDroidApp.TAG, "AnkiOnline does not have this deck: Creating it...");
                 server.createDeck(syncName);
             }
-            int timediff = (int) (server.getTimestamp() - (System.currentTimeMillis() / 1000));
+            int timediff = (int) (server.getTimestamp() - Utils.now());
             if (timediff > 300) {
                 Log.i(AnkiDroidApp.TAG, "The clock is unsynchronized!");
                 // TODO: Control what happens when the clocks are unsynchronized

@@ -337,8 +337,16 @@ public class Utils {
 
 
     /**
-     * Returns the proleptic Gregorian ordinal of the date, where January 1 of year 1 has ordinal 1
-     * 
+     * Get the current time in seconds since January 1, 1970 UTC.
+     * @return the local system time in seconds
+     */
+    public static double now() {
+        return (System.currentTimeMillis() / 1000.0);
+    }
+
+
+    /**
+     * Returns the proleptic Gregorian ordinal of the date, where January 1 of year 1 has ordinal 1.
      * @param date Date to convert to ordinal, since 01/01/01
      * @return The ordinal representing the date
      */
