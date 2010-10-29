@@ -20,7 +20,6 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;

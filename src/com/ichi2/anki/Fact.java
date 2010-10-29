@@ -188,8 +188,8 @@ public class Fact {
         // TODO return instances of each card that is related to this fact
         LinkedList<Card> returnList = new LinkedList<Card>();
 
-        Cursor cardsCursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery("SELECT id, factId "
-                + "FROM cards " + "WHERE factId = " + mId, null);
+        Cursor cardsCursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+                "SELECT id, factId FROM cards " + "WHERE factId = " + mId, null);
 
         while (cardsCursor.moveToNext()) {
             Card newCard = new Card(mDeck);

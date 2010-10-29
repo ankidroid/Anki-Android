@@ -21,8 +21,6 @@ import java.util.HashMap;
 
 public class Download extends HashMap<String, Object> implements Parcelable {
 
-    private static final long serialVersionUID = 1L;
-
     // Status codes
     public static final int START = -1;
     public static final int DOWNLOADING = 0;
@@ -30,6 +28,8 @@ public class Download extends HashMap<String, Object> implements Parcelable {
     public static final int COMPLETE = 2;
     public static final int CANCELLED = 3;
     public static final int ERROR = 4;
+
+    private static final long serialVersionUID = 1L;
 
     // Download's title
     private String mTitle;

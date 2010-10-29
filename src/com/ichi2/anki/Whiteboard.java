@@ -33,29 +33,27 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  * Whiteboard allowing the user to draw the card's answer on the touchscreen. TODO Javadoc
  */
 public class Whiteboard extends View {
-    private Context mContext;
+
+    private static final float TOUCH_TOLERANCE = 4;
 
     private Paint mPaint;
-
     private Bitmap mBitmap;
-
     private Canvas mCanvas;
-
     private Path mPath;
-
     private Paint mBitmapPaint;
-
-    private int mBackgroundColor, mForegroundColor, mExtraHeight;
+    private int mBackgroundColor;
+    private int mForegroundColor;
+    private int mExtraHeight;
 
     private boolean mLocked;
-
     private boolean mRecreateBitmap = false;
+
+    private float mX;
+    private float mY;
 
 
     public Whiteboard(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        mContext = context;
 
         mBackgroundColor = context.getResources().getColor(R.color.wb_bg_color);
         mForegroundColor = context.getResources().getColor(R.color.wb_fg_color);
@@ -120,10 +118,6 @@ public class Whiteboard extends View {
         canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
         canvas.drawPath(mPath, mPaint);
     }
-
-    private float mX, mY;
-
-    private static final float TOUCH_TOLERANCE = 4;
 
 
     private void touch_start(float x, float y) {

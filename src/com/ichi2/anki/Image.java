@@ -42,7 +42,7 @@ public class Image {
     /**
      * Parses the content (belonging to deck deckFilename), adding an onload event to the img tags, that will be useful
      * in order to resize them.
-     * 
+     *
      * @param deckFilename Deck's filename whose content is being parsed
      * @param content HTML content of a card
      * @return content Content with the onload events for the img tags

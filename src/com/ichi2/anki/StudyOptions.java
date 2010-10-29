@@ -49,7 +49,7 @@ import java.io.InputStream;
 
 public class StudyOptions extends Activity {
     /**
-     * Default database
+     * Default database.
      */
     public static final String OPT_DB = "com.ichi2.anki.deckFilename";
 
@@ -62,51 +62,33 @@ public class StudyOptions extends Activity {
      * Menus
      */
     private static final int MENU_OPEN = 1;
-
     private static final int SUBMENU_DOWNLOAD = 2;
-
     private static final int MENU_DOWNLOAD_PERSONAL_DECK = 21;
-
     private static final int MENU_DOWNLOAD_SHARED_DECK = 22;
-
     private static final int MENU_SYNC = 3;
-
     private static final int MENU_MY_ACCOUNT = 4;
-
     private static final int MENU_PREFERENCES = 5;
-
 	private static final int MENU_ADD_FACT = 6;
-
     private static final int MENU_ABOUT = 7;
 
     /**
      * Available options performed by other activities
      */
     private static final int PICK_DECK_REQUEST = 0;
-
     private static final int PREFERENCES_UPDATE = 1;
-
     private static final int REQUEST_REVIEW = 2;
-
     private static final int DOWNLOAD_PERSONAL_DECK = 3;
-
     private static final int DOWNLOAD_SHARED_DECK = 4;
-
     private static final int REPORT_ERROR = 5;
 
     /**
      * Constants for selecting which content view to display
      */
     private static final int CONTENT_NO_DECK = 0;
-
     private static final int CONTENT_STUDY_OPTIONS = 1;
-
     private static final int CONTENT_CONGRATS = 2;
-
     private static final int CONTENT_DECK_NOT_LOADED = 3;
-
     private static final int CONTENT_SESSION_COMPLETE = 4;
-
     public static final int CONTENT_NO_EXTERNAL_STORAGE = 5;
 
     /**
@@ -125,13 +107,9 @@ public class StudyOptions extends Activity {
      * Preferences
      */
     private String prefDeckPath;
-
     private boolean prefStudyOptions;
-
     // private boolean deckSelected;
-
     private boolean inDeckPicker;
-
     private String deckFilename;
 
     private int mCurrentContentView;
@@ -140,68 +118,47 @@ public class StudyOptions extends Activity {
      * Alerts to inform the user about different situations
      */
     private ProgressDialog mProgressDialog;
-
     private AlertDialog mNoConnectionAlert;
-
     private AlertDialog mUserNotLoggedInAlert;
-
     private AlertDialog mConnectionErrorAlert;
 
     /**
      * UI elements for "Study Options" view
      */
     private View mStudyOptionsView;
-
     private Button mButtonStart;
-
     private TextView mTextTitle;
     private TextView mTextDeckName;
-
     private TextView mTextReviewsDue;
-
     private TextView mTextNewToday;
-
     private TextView mTextNewTotal;
-
     private EditText mEditNewPerDay;
-
     private EditText mEditSessionTime;
-
     private EditText mEditSessionQuestions;
 
     /**
      * UI elements for "More Options" dialog
      */
     private AlertDialog mDialogMoreOptions;
-
     private Spinner mSpinnerNewCardOrder;
-
     private Spinner mSpinnerNewCardSchedule;
-
     private Spinner mSpinnerRevCardOrder;
-
     private Spinner mSpinnerFailCardOption;
 
     /**
      * UI elements for "No Deck" view
      */
     private View mNoDeckView;
-
     private TextView mTextNoDeckTitle;
-
     private TextView mTextNoDeckMessage;
 
     /**
      * UI elements for "Congrats" view
      */
     private View mCongratsView;
-
     private TextView mTextCongratsMessage;
-
     private Button mButtonCongratsLearnMore;
-
     private Button mButtonCongratsReviewEarly;
-
     private Button mButtonCongratsFinish;
 
     /**
@@ -673,8 +630,7 @@ public class StudyOptions extends Activity {
             case MENU_DOWNLOAD_PERSONAL_DECK:
                 if (AnkiDroidApp.isUserLoggedIn()) {
                     startActivityForResult(
-                    		new Intent(StudyOptions.this, PersonalDeckPicker.class),
-                    		DOWNLOAD_PERSONAL_DECK);
+                            new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
                 } else {
                     mUserNotLoggedInAlert.show();
                 }
@@ -682,8 +638,7 @@ public class StudyOptions extends Activity {
 
             case MENU_DOWNLOAD_SHARED_DECK:
                 startActivityForResult(
-                		new Intent(StudyOptions.this, SharedDeckPicker.class),
-                		DOWNLOAD_SHARED_DECK);
+                        new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
                 return true;
 
             case MENU_SYNC:
@@ -772,8 +727,8 @@ public class StudyOptions extends Activity {
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = AnkiDroidApp.deck();
 
-            Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + deckFilename + " with username " + username + " and password "
-                    + password);
+            Log.i(AnkiDroidApp.TAG,
+                    "Synchronizing deck " + deckFilename + " with username " + username + " and password " + password);
             Connection.syncDeck(syncListener, new Connection.Payload(new Object[] { username, password, deck,
                     deckFilename }));
         } else {

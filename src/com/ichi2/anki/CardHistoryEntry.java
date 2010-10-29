@@ -42,7 +42,7 @@ public class CardHistoryEntry {
 
 
     /**
-     * Constructor
+     * Constructor.
      */
     public CardHistoryEntry(Deck deck, Card card, int ease, double delay) {
         mDeck = deck;

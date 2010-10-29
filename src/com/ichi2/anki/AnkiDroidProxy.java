@@ -43,31 +43,16 @@ import java.util.zip.InflaterInputStream;
 
 public class AnkiDroidProxy {
 
+    /**
+     * Synchronization.
+     */
+    public static final int LOGIN_OK = 0;
+    public static final int LOGIN_INVALID_USER_PASS = 1;
+
     // Used to format doubles with English's decimal separator system
     private static final Locale ENGLISH_LOCALE = new Locale("en_US");
 
     private static final int CHUNK_SIZE = 32768;
-
-    /**
-     * Connection settings
-     */
-
-    private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
-    // 78.46.104.28
-    private static final String SYNC_HOST = "anki.ichi2.net";
-    private static final String SYNC_PORT = "80";
-
-    // Test
-    /*
-     * private static final String SYNC_URL = "http://192.168.2.103:8001/sync/"; private static final String SYNC_HOST =
-     * "192.168.2.103"; private static final String SYNC_PORT = "8001";
-     */
-    private String mUsername;
-    private String mPassword;
-    private String mDeckName;
-
-    private JSONObject mDecks;
-    private double mTimestamp;
 
     /**
      * Shared deck's fields
@@ -90,11 +75,24 @@ public class AnkiDroidProxy {
     private static List<SharedDeck> sSharedDecks;
 
     /**
-     * Synchronization
+     * Connection settings
      */
+    private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
+    // 78.46.104.28
+    private static final String SYNC_HOST = "anki.ichi2.net";
+    private static final String SYNC_PORT = "80";
 
-    public static final int LOGIN_OK = 0;
-    public static final int LOGIN_INVALID_USER_PASS = 1;
+    // Test
+    /*
+     * private static final String SYNC_URL = "http://192.168.2.103:8001/sync/"; private static final String SYNC_HOST =
+     * "192.168.2.103"; private static final String SYNC_PORT = "8001";
+     */
+    private String mUsername;
+    private String mPassword;
+    private String mDeckName;
+
+    private JSONObject mDecks;
+    private double mTimestamp;
 
 
     public AnkiDroidProxy(String user, String password) {
@@ -376,9 +374,8 @@ public class AnkiDroidProxy {
 
 
     /**
-     * Get shared decks
+     * Get shared decks.
      */
-
     public static List<SharedDeck> getSharedDecks() throws Exception {
 
         try {

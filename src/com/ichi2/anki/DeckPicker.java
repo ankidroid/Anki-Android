@@ -71,9 +71,7 @@ public class DeckPicker extends Activity implements Runnable {
      * Dialogs
      */
     private static final int DIALOG_NO_SDCARD = 0;
-
     private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
-
     private static final int DIALOG_NO_CONNECTION = 2;
 
     private DeckPicker mSelf;
@@ -90,11 +88,9 @@ public class DeckPicker extends Activity implements Runnable {
     private File[] mFileList;
 
     private ReentrantLock mLock = new ReentrantLock();
-
     private Condition mCondFinished = mLock.newCondition();
 
     private boolean mIsFinished = true;
-
     private boolean mDeckIsSelected = false;
 
     private BroadcastReceiver mUnmountReceiver = null;

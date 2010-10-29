@@ -19,9 +19,9 @@ import android.os.Parcelable;
 
 public class SharedDeckDownload extends Download implements Parcelable {
 
-    private static final long serialVersionUID = 1L;
-
     public static final int UPDATING = 5;
+
+    private static final long serialVersionUID = 1L;
 
     private int mId;
     private String mFilename;

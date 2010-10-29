@@ -18,7 +18,6 @@
 package com.ichi2.anki;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -148,32 +147,32 @@ public class Model {
         return models.get(identifier);
     }
 
-    
+
     public static HashMap<Long, Model> getModels(Deck deck) {
-    	Model mModel ; 
-    	HashMap<Long, Model> mModels= new HashMap<Long, Model>() ;
-    	
-    	Cursor mCursor =null;
-    	AnkiDb ankiDB=AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-    	try{
-    		mCursor = ankiDB.getDatabase().rawQuery("SELECT id FROM models", null);
-    		if (!mCursor.moveToFirst()) {
-    			return mModels;
-    		}
-            do{
-            	Long id=mCursor.getLong(0);
-            	mModel=getModel(deck, id, true);
-            	mModels.put(id, mModel);
+        Model mModel;
+        HashMap<Long, Model> mModels = new HashMap<Long, Model>();
+
+        Cursor mCursor = null;
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        try {
+            mCursor = ankiDB.getDatabase().rawQuery("SELECT id FROM models", null);
+            if (!mCursor.moveToFirst()) {
+                return mModels;
+            }
+            do {
+                Long id = mCursor.getLong(0);
+                mModel = getModel(deck, id, true);
+                mModels.put(id, mModel);
 
             } while (mCursor.moveToNext());
 
-    	} finally {
+        } finally {
             if (mCursor != null) {
                 mCursor.close();
             }
         }
-		return mModels;
-	}
+        return mModels;
+    }
 
 
     protected final CardModel getCardModel(long identifier) {
@@ -183,7 +182,7 @@ public class Model {
 
     /**
      * Loads the Model from the database. then loads the related CardModels and FieldModels from the database.
-     * 
+     *
      * @param deck
      * @param modelId
      */
@@ -207,8 +206,8 @@ public class Model {
 
 
     /**
-     * Loads a model from the database based on the id FIXME: nothing is done in case of db error or no returned row
-     * 
+     * Loads a model from the database based on the id.
+     * FIXME: nothing is done in case of db error or no returned row
      * @param deck
      * @param id
      * @return
@@ -264,7 +263,7 @@ public class Model {
     /**
      * Returns a cached CSS for the font color and font size of a given CardModel taking into account the included
      * fields
-     * 
+     *
      * @param myCardModelId
      * @param percentage the preference factor to use for calculating the display font size from the cardmodel and
      *            fontmodel font size

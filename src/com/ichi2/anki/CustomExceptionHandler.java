@@ -33,8 +33,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
-    private Thread.UncaughtExceptionHandler mPreviousHandler;
+
     private static CustomExceptionHandler sInstance;
+    private Thread.UncaughtExceptionHandler mPreviousHandler;
     private Context mCurContext;
     // private Random randomGenerator = new Random();
 

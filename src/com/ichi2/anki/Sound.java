@@ -53,12 +53,14 @@ public class Sound {
     /**
      * Variables used to track the total time spent
      */
-    private static long sStartTime, sFinishTime;
+    private static long sStartTime;
+    private static long sFinishTime;
 
     /**
      * Variables used to track the time spent playing one particular sound
      */
-    private static long sStartSoundTime, sFinishSoundTime;
+    private static long sStartSoundTime;
+    private static long sFinishSoundTime;
 
 
     public static String parseSounds(String deckFilename, String content) {
@@ -105,7 +107,7 @@ public class Sound {
 
 
     /**
-     * Plays the sounds stored on the paths indicated by mSoundPaths
+     * Plays the sounds stored on the paths indicated by mSoundPaths.
      */
     public static void playSounds() {
         // If there are sounds to play for the current card, play the first one
@@ -118,8 +120,8 @@ public class Sound {
 
 
     /**
-     * Play the sound indicated by the path stored on the position soundToPlayIndex of the mSoundPaths array
-     * 
+     * Play the sound indicated by the path stored on the position soundToPlayIndex of the mSoundPaths array.
+     *
      * @param soundToPlayIndex
      */
     private static void playSound(int soundToPlayIndex) {
@@ -154,7 +156,8 @@ public class Sound {
 
             sMediaPlayer.start();
         } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + (soundToPlayIndex + 1) + " = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG,
+                    "playSounds - Error reproducing sound " + (soundToPlayIndex + 1) + " = " + e.getMessage());
             releaseSound();
         }
     }
@@ -174,13 +177,14 @@ public class Sound {
                 releaseSound();
             }
             sFinishSoundTime = System.currentTimeMillis();
-            Log.i(AnkiDroidApp.TAG, "Sound " + soundPath + " played in " + (sFinishSoundTime - sStartSoundTime) + " milliseconds");
+            Log.i(AnkiDroidApp.TAG,
+                    "Sound " + soundPath + " played in " + (sFinishSoundTime - sStartSoundTime) + " milliseconds");
         }
     }
 
 
     /**
-     * Releases the sound
+     * Releases the sound.
      */
     private static void releaseSound() {
         if (sMediaPlayer != null) {
@@ -191,7 +195,7 @@ public class Sound {
 
 
     /**
-     * Stops the playing sounds
+     * Stops the playing sounds.
      */
     public static void stopSounds() {
         if (sMediaPlayer != null) {

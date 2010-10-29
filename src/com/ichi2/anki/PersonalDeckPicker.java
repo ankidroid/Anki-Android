@@ -58,9 +58,7 @@ public class PersonalDeckPicker extends Activity {
     private BroadcastReceiver mUnmountReceiver = null;
 
     private ProgressDialog mProgressDialog;
-
     private AlertDialog mNoConnectionAlert;
-
     private AlertDialog mConnectionErrorAlert;
 
     private Intent mDownloadManagerServiceIntent;
@@ -69,7 +67,6 @@ public class PersonalDeckPicker extends Activity {
 
     private List<Download> mPersonalDeckDownloads;
     private List<String> mPersonalDecks;
-
     private List<Object> mAllPersonalDecks;
     private ListView mPersonalDecksListView;
     private PersonalDecksAdapter mPersonalDecksAdapter;

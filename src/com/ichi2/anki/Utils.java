@@ -89,7 +89,6 @@ public class Utils {
 
     /**
      * Returns a SQL string from an array of integers.
-     * 
      * @param ids The array of integers to include in the list.
      * @return An SQL compatible string in the format (ids[0],ids[1],..).
      */
@@ -110,7 +109,6 @@ public class Utils {
 
     /**
      * Returns a SQL string from an array of integers.
-     * 
      * @param ids The array of integers to include in the list.
      * @return An SQL compatible string in the format (ids[0],ids[1],..).
      */
@@ -135,7 +133,6 @@ public class Utils {
 
     /**
      * Returns a SQL string from an array of integers.
-     * 
      * @param ids The array of integers to include in the list.
      * @return An SQL compatible string in the format (ids[0],ids[1],..).
      */
@@ -178,8 +175,7 @@ public class Utils {
 
 
     /**
-     * Converts an InputStream to a String
-     * 
+     * Converts an InputStream to a String.
      * @param is InputStream to convert
      * @return String version of the InputStream
      */
@@ -204,7 +200,6 @@ public class Utils {
 
     /**
      * Compress data.
-     * 
      * @param bytesToCompress is the byte array to compress.
      * @return a compressed byte array.
      * @throws java.io.IOException
@@ -350,8 +345,7 @@ public class Utils {
 
 
     /**
-     * Return the date corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1
-     * 
+     * Return the date corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1.
      * @param ordinal representing the days since 01/01/01
      * @return Date converted from the ordinal
      */
@@ -360,33 +354,10 @@ public class Utils {
     }
 
 
-    // Test for dateToOrdinal and fromOrdintalToDate
-    /*
-     * boolean error = false; int year = 0; int month = 0; int day = 1; Calendar cal = Calendar.getInstance(); for(year
-     * = 0; year < 111; year++) { if(error) break; Log.i(AnkiDroidApp.TAG, "/--------------- YEAR: " + (year + 1900) +
-     * " -----------------/"); cal.set(Calendar.YEAR, year + 1900); for(month = 0; month < 12; month++) { if(error)
-     * break; cal.set(Calendar.MONTH, month); cal.set(Calendar.DAY_OF_MONTH, 1); Log.i(AnkiDroidApp.TAG, "/--------------- MONTH: " +
-     * (month + 1) + " -----------------/"); int maxDaysOnMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-     * //Log.i(AnkiDroidApp.TAG, "Maxim days on this month = " + maxDaysOnMonth); for(day = 1; day <= maxDaysOnMonth; day++) {
-     * Log.i(AnkiDroidApp.TAG, "/--------------- DAY: " + day + " -----------------/"); cal.set(Calendar.DAY_OF_MONTH, day);
-     * Log.i(AnkiDroidApp.TAG, "Calendar = " + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" +
-     * cal.get(Calendar.DAY_OF_MONTH)); Date testDate = new Date(year,month,day); //Date testDate = new
-     * Date(System.currentTimeMillis()); //Log.i(AnkiDroidApp.TAG, "Current millis = " + System.currentTimeMillis()); Log.i(AnkiDroidApp.TAG,
-     * "Day = " + testDate); //Log.i(AnkiDroidApp.TAG, "Day of the month = " + testDate.getDate()); //Log.i(AnkiDroidApp.TAG, "Month = " +
-     * (testDate.getMonth() + 1)); //Log.i(AnkiDroidApp.TAG, "Year = " + (testDate.getYear() + 1900)); int ordinal =
-     * Utils.dateToOrdinal(testDate); Log.i(AnkiDroidApp.TAG, "Ordinal day = " + ordinal); Date date2 =
-     * Utils.fromOrdinalToDate(ordinal); Log.i(AnkiDroidApp.TAG, "Back to date = " + date2); //Log.i(AnkiDroidApp.TAG, "Day of the month = " +
-     * date2.getDate()); //Log.i(AnkiDroidApp.TAG, "Month = " + (date2.getMonth() + 1)); //Log.i(AnkiDroidApp.TAG, "Year = " + (date2.getYear() +
-     * 1900)); if(testDate.getDate() == date2.getDate() && testDate.getMonth() == date2.getMonth() && testDate.getYear()
-     * == date2.getYear()) { Log.i(AnkiDroidApp.TAG, "OK!"); } else { Log.e(AnkiDroidApp.TAG, "ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR!!!");
-     * error = true; break; } } } } Log.i(AnkiDroidApp.TAG, "PERFECT!!! ^^");
-     */
-
     /**
      * Indicates whether the specified action can be used as an intent. This method queries the package manager for
      * installed packages that can respond to an intent with the specified action. If no suitable package is found, this
      * method returns false.
-     * 
      * @param context The application's environment.
      * @param action The Intent action to check for availability.
      * @return True if an Intent with the specified action can be sent and responded to, false otherwise.

@@ -59,7 +59,6 @@ public class SyncClient {
     /**
      * Connection settings
      */
-
     private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
     private static final String SYNC_HOST = "anki.ichi2.net"; // 78.46.104.28
     private static final String SYNC_PORT = "80";
@@ -79,35 +78,35 @@ public class SyncClient {
      * Constants used on the multipart message
      */
     private static final String MIME_BOUNDARY = "Anki-sync-boundary";
-    private final static String END = "\r\n";
-    private final static String TWO_HYPHENS = "--";
+    private static final String END = "\r\n";
+    private static final String TWO_HYPHENS = "--";
 
-    private Deck deck;
-    private AnkiDroidProxy server;
-    private double localTime;
-    private double remoteTime;
+    private Deck mDeck;
+    private AnkiDroidProxy mServer;
+    private double mLocalTime;
+    private double mRemoteTime;
 
 
     public SyncClient(Deck deck) {
-        this.deck = deck;
-        server = null;
-        localTime = 0;
-        remoteTime = 0;
+        mDeck = deck;
+        mServer = null;
+        mLocalTime = 0;
+        mRemoteTime = 0;
     }
 
 
     public AnkiDroidProxy getServer() {
-        return server;
+        return mServer;
     }
 
 
     public void setServer(AnkiDroidProxy server) {
-        this.server = server;
+        mServer = server;
     }
 
 
     public void setDeck(Deck deck) {
-        this.deck = deck;
+        mDeck = deck;
     }
 
 
@@ -117,41 +116,41 @@ public class SyncClient {
      * @return
      */
     public boolean prepareSync() {
-        Log.i(AnkiDroidApp.TAG, "prepareSync = " + String.format(ENGLISH_LOCALE, "%f", deck.getLastSync()));
+        Log.i(AnkiDroidApp.TAG, "prepareSync = " + String.format(ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
 
-        localTime = deck.getModified();
-        remoteTime = server.modified();
+        mLocalTime = mDeck.getModified();
+        mRemoteTime = mServer.modified();
 
-        Log.i(AnkiDroidApp.TAG, "localTime = " + localTime);
-        Log.i(AnkiDroidApp.TAG, "remoteTime = " + remoteTime);
+        Log.i(AnkiDroidApp.TAG, "localTime = " + mLocalTime);
+        Log.i(AnkiDroidApp.TAG, "remoteTime = " + mRemoteTime);
 
-        if (localTime == remoteTime) {
+        if (mLocalTime == mRemoteTime) {
             return false;
         }
 
-        double l = deck.getLastSync();
+        double l = mDeck.getLastSync();
         Log.i(AnkiDroidApp.TAG, "lastSync local = " + String.format(ENGLISH_LOCALE, "%f", l));
-        double r = server.lastSync();
+        double r = mServer.lastSync();
         Log.i(AnkiDroidApp.TAG, "lastSync remote = " + String.format(ENGLISH_LOCALE, "%f", r));
 
         if (l != r) {
-            deck.setLastSync(java.lang.Math.min(l, r) - 600);
+            mDeck.setLastSync(java.lang.Math.min(l, r) - 600);
             Log.i(AnkiDroidApp.TAG, "deck.lastSync = min(l,r) - 600");
         } else {
-            deck.setLastSync(l);
+            mDeck.setLastSync(l);
         }
 
-        Log.i(AnkiDroidApp.TAG, "deck.lastSync = " + deck.getLastSync());
+        Log.i(AnkiDroidApp.TAG, "deck.lastSync = " + mDeck.getLastSync());
         return true;
     }
 
 
     public JSONArray summaries() {
-        Log.i(AnkiDroidApp.TAG, "summaries = " + String.format(ENGLISH_LOCALE, "%f", deck.getLastSync()));
+        Log.i(AnkiDroidApp.TAG, "summaries = " + String.format(ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
 
         JSONArray summaries = new JSONArray();
-        summaries.put(summary(deck.getLastSync()));
-        summaries.put(server.summary(deck.getLastSync()));
+        summaries.put(summary(mDeck.getLastSync()));
+        summaries.put(mServer.summary(mDeck.getLastSync()));
 
         return summaries;
     }
@@ -164,22 +163,22 @@ public class SyncClient {
      */
     public JSONObject summary(double lastSync) {
         Log.i(AnkiDroidApp.TAG, "Summary Local");
-        deck.setLastSync(lastSync);
-        deck.commitToDB();
+        mDeck.setLastSync(lastSync);
+        mDeck.commitToDB();
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
         String lastSyncString = String.format(ENGLISH_LOCALE, "%f", lastSync);
         // Cards
-        JSONArray cards = cursorToJSONArray(ankiDB.getDatabase().rawQuery("SELECT id, modified FROM cards WHERE modified > "
-                + lastSyncString, null));
+        JSONArray cards = cursorToJSONArray(ankiDB.getDatabase().rawQuery(
+                "SELECT id, modified FROM cards WHERE modified > " + lastSyncString, null));
         // Cards - delcards
         JSONArray delcards = cursorToJSONArray(ankiDB.getDatabase().rawQuery(
                 "SELECT cardId, deletedTime FROM cardsDeleted WHERE deletedTime > " + lastSyncString, null));
 
         // Facts
-        JSONArray facts = cursorToJSONArray(ankiDB.getDatabase().rawQuery("SELECT id, modified FROM facts WHERE modified > "
-                + lastSyncString, null));
+        JSONArray facts = cursorToJSONArray(ankiDB.getDatabase().rawQuery(
+                "SELECT id, modified FROM facts WHERE modified > " + lastSyncString, null));
         // Facts - delfacts
         JSONArray delfacts = cursorToJSONArray(ankiDB.getDatabase().rawQuery(
                 "SELECT factId, deletedTime FROM factsDeleted WHERE deletedTime > " + lastSyncString, null));
@@ -192,8 +191,8 @@ public class SyncClient {
                 "SELECT modelId, deletedTime FROM modelsDeleted WHERE deletedTime > " + lastSyncString, null));
 
         // Media
-        JSONArray media = cursorToJSONArray(ankiDB.getDatabase().rawQuery("SELECT id, created FROM media WHERE created > "
-                + lastSyncString, null));
+        JSONArray media = cursorToJSONArray(ankiDB.getDatabase().rawQuery(
+                "SELECT id, created FROM media WHERE created > " + lastSyncString, null));
         // Media - delmedia
         JSONArray delmedia = cursorToJSONArray(ankiDB.getDatabase().rawQuery(
                 "SELECT mediaId, deletedTime FROM mediaDeleted WHERE deletedTime > " + lastSyncString, null));
@@ -267,14 +266,14 @@ public class SyncClient {
         }
 
         // If the last modified deck was the local one, handle the remainder
-        if (localTime > remoteTime) {
+        if (mLocalTime > mRemoteTime) {
 
             try {
                 payload.put("deck", bundleDeck());
                 payload.put("stats", bundleStats());
                 payload.put("history", bundleHistory());
                 payload.put("sources", bundleSources());
-                deck.setLastSync(deck.getModified());
+                mDeck.setLastSync(mDeck.getModified());
             } catch (JSONException e) {
                 Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
             }
@@ -301,7 +300,7 @@ public class SyncClient {
             h[4] = payload.getJSONArray("added-models").length();
             h[5] = payload.getJSONArray("missing-models").length();
 
-            if (localTime > remoteTime) {
+            if (mLocalTime > mRemoteTime) {
                 h[6] = "all";
                 h[7] = 0;
             } else {
@@ -345,7 +344,7 @@ public class SyncClient {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
 
-        deck.commitToDB();
+        mDeck.commitToDB();
 
         // Rebuild priorities on client
 
@@ -360,7 +359,7 @@ public class SyncClient {
             // TODO: updateCardTags
             rebuildPriorities(cardIds);
             // Rebuild due counts
-            deck.rebuildCounts(false);
+            mDeck.rebuildCounts(false);
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
@@ -371,7 +370,7 @@ public class SyncClient {
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - preSyncRefresh
      */
     private void preSyncRefresh() {
-        Stats.globalStats(deck);
+        Stats.globalStats(mDeck);
     }
 
 
@@ -379,7 +378,7 @@ public class SyncClient {
         try {
             // TODO: Implement updateAllPriorities
             // deck.updateAllPriorities(true, false);
-            deck.updatePriorities(cardIds, null, false);
+            mDeck.updatePriorities(cardIds, null, false);
         } catch (SQLException e) {
             Log.e(AnkiDroidApp.TAG, "SQLException e = " + e.getMessage());
         }
@@ -537,9 +536,9 @@ public class SyncClient {
         if ("models".equalsIgnoreCase(key)) {
             deleteModels(ids);
         } else if ("facts".equalsIgnoreCase(key)) {
-            deck.deleteFacts(Utils.jsonArrayToListString(ids));
+            mDeck.deleteFacts(Utils.jsonArrayToListString(ids));
         } else if ("cards".equalsIgnoreCase(key)) {
-            deck.deleteCards(Utils.jsonArrayToListString(ids));
+            mDeck.deleteCards(Utils.jsonArrayToListString(ids));
         } else if ("media".equalsIgnoreCase(key)) {
             deleteMedia(ids);
         }
@@ -604,7 +603,7 @@ public class SyncClient {
     private JSONObject bundleModel(Long id)// , boolean updateModified
     {
         JSONObject model = new JSONObject();
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                 "SELECT * FROM models WHERE id = " + id, null);
         if (cursor.moveToFirst()) {
             try {
@@ -643,7 +642,7 @@ public class SyncClient {
     private JSONArray bundleFieldModels(Long id) {
         JSONArray fieldModels = new JSONArray();
 
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                 "SELECT * FROM fieldModels WHERE modelId = " + id, null);
         while (cursor.moveToNext()) {
             JSONObject fieldModel = new JSONObject();
@@ -678,7 +677,7 @@ public class SyncClient {
     private JSONArray bundleCardModels(Long id) {
         JSONArray cardModels = new JSONArray();
 
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                 "SELECT * FROM cardModels WHERE modelId = " + id, null);
         while (cursor.moveToNext()) {
             JSONObject cardModel = new JSONObject();
@@ -730,7 +729,7 @@ public class SyncClient {
         int len = ids.length();
         for (int i = 0; i < len; i++) {
             try {
-                deck.deleteModel(ids.getString(i));
+                mDeck.deleteModel(ids.getString(i));
             } catch (JSONException e) {
                 Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
             }
@@ -740,9 +739,11 @@ public class SyncClient {
 
     private void updateModels(JSONArray models) {
         ArrayList<String> insertedModelsIds = new ArrayList<String>();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
-        String sql = "INSERT OR REPLACE INTO models (id, deckId, created, modified, tags, name, description, features, spacing, initialSpacing, source) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT OR REPLACE INTO models"
+                    + " (id, deckId, created, modified, tags, name, description, features, spacing, initialSpacing, source)"
+                    + " VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
         int len = models.length();
         for (int i = 0; i < len; i++) {
@@ -792,7 +793,7 @@ public class SyncClient {
 
     private void mergeFieldModels(String modelId, JSONArray fieldModels) {
         ArrayList<String> ids = new ArrayList<String>();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
         String sql = "INSERT OR REPLACE INTO fieldModels VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
@@ -862,7 +863,7 @@ public class SyncClient {
 
         for (String fieldModelId : fieldModelsIds) {
             if (!ids.contains(fieldModelId)) {
-                deck.deleteFieldModel(modelId, fieldModelId);
+                mDeck.deleteFieldModel(modelId, fieldModelId);
             }
         }
     }
@@ -870,12 +871,13 @@ public class SyncClient {
 
     private void mergeCardModels(String modelId, JSONArray cardModels) {
         ArrayList<String> ids = new ArrayList<String>();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
-        String sql = "INSERT OR REPLACE INTO cardModels (id, ordinal, modelId, name, description, active, qformat, aformat, lformat, "
-                + "qedformat, aedformat, questionInAnswer, questionFontFamily, questionFontSize, questionFontColour, questionAlign, "
-                + "answerFontFamily, answerFontSize, answerFontColour, answerAlign, lastFontFamily, lastFontSize, lastFontColour, "
-                + "editQuestionFontFamily, editQuestionFontSize, editAnswerFontFamily, editAnswerFontSize, allowEmptyAnswer, typeAnswer) "
+        String sql = "INSERT OR REPLACE INTO cardModels (id, ordinal, modelId, name, description, active, qformat, "
+                + "aformat, lformat, qedformat, aedformat, questionInAnswer, questionFontFamily, questionFontSize, "
+                + "questionFontColour, questionAlign, answerFontFamily, answerFontSize, answerFontColour, answerAlign, "
+                + "lastFontFamily, lastFontSize, lastFontColour, editQuestionFontFamily, editQuestionFontSize, "
+                + "editAnswerFontFamily, editAnswerFontSize, allowEmptyAnswer, typeAnswer) "
                 + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
         int len = cardModels.length();
@@ -989,7 +991,7 @@ public class SyncClient {
 
         for (String cardModelId : cardModelsIds) {
             if (!ids.contains(cardModelId)) {
-                deck.deleteCardModel(modelId, cardModelId);
+                mDeck.deleteCardModel(modelId, cardModelId);
             }
         }
     }
@@ -1043,7 +1045,7 @@ public class SyncClient {
 
         // TODO: Take into account the updateModified boolean (modified = time.time() or modified = "modified"... what
         // does exactly do that?)
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase()
+        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase()
                 .rawQuery("SELECT id, modelId, created, modified, tags, spaceUntil, lastCardId FROM facts WHERE id = "
                         + id, null);
         if (cursor.moveToFirst()) {
@@ -1066,7 +1068,7 @@ public class SyncClient {
 
 
     private void putFields(JSONArray fields, Long id) {
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                 "SELECT * FROM fields WHERE factId = " + id, null);
         while (cursor.moveToNext()) {
             JSONArray field = new JSONArray();
@@ -1085,7 +1087,7 @@ public class SyncClient {
 
     private void updateFacts(JSONObject factsDict) {
         try {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
             JSONArray facts = factsDict.getJSONArray("facts");
             int lenFacts = facts.length();
 
@@ -1102,11 +1104,12 @@ public class SyncClient {
                 String factIdsString = Utils.ids2str(factIds);
 
                 // Recalculate fact count
-                deck.setFactCount((int) (deck.getFactCount() + (lenFacts
+                mDeck.setFactCount((int) (mDeck.getFactCount() + (lenFacts
                         - ankiDB.queryScalar("SELECT COUNT(*) FROM facts WHERE id IN " + factIdsString))));
 
                 // Update facts
-                String sqlFact = "INSERT OR REPLACE INTO facts (id, modelId, created, modified, tags, spaceUntil, lastCardId) VALUES(?,?,?,?,?,?,?)";
+                String sqlFact = "INSERT OR REPLACE INTO facts (id, modelId, created, modified, tags, spaceUntil, lastCardId)"
+                                + " VALUES(?,?,?,?,?,?,?)";
                 SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sqlFact);
                 for (int i = 0; i < lenFacts; i++) {
                     JSONArray fact = facts.getJSONArray(i);
@@ -1183,7 +1186,7 @@ public class SyncClient {
         // matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, answer,
         // lastFactor, spaceUntil,
         // type, combinedDue FROM cards WHERE id IN " + ids2str(ids)
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                 "SELECT * FROM cards WHERE id IN " + Utils.ids2str(ids), null);
         while (cursor.moveToNext()) {
             try {
@@ -1276,7 +1279,7 @@ public class SyncClient {
     private void updateCards(JSONArray cards) {
         int len = cards.length();
         if (len > 0) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
             ArrayList<String> ids = new ArrayList<String>();
             for (int i = 0; i < len; i++) {
                 try {
@@ -1287,12 +1290,15 @@ public class SyncClient {
             }
             String idsString = Utils.ids2str(ids);
 
-            deck.setCardCount((int) (deck.getCardCount() + (len - ankiDB.queryScalar("SELECT COUNT(*) FROM cards WHERE id IN " + idsString))));
+            mDeck.setCardCount((int) (mDeck.getCardCount() + (len - ankiDB.queryScalar(
+                    "SELECT COUNT(*) FROM cards WHERE id IN " + idsString))));
 
-            String sql = "INSERT OR REPLACE INTO cards (id, factId, cardModelId, created, modified, tags, ordinal, priority, interval, lastInterval, due, lastDue, "
-                    + "factor, firstAnswered, reps, successive, averageTime, reviewTime, youngEase0, youngEase1, youngEase2, youngEase3, youngEase4, "
-                    + "matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, answer, lastFactor, spaceUntil, "
-                    + "type, combinedDue, relativeDelay, isDue) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 0, 0)";
+            String sql = "INSERT OR REPLACE INTO cards (id, factId, cardModelId, created, modified, tags, ordinal, "
+                    + "priority, interval, lastInterval, due, lastDue, factor, firstAnswered, reps, successive, "
+                    + "averageTime, reviewTime, youngEase0, youngEase1, youngEase2, youngEase3, youngEase4, "
+                    + "matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, "
+                    + "answer, lastFactor, spaceUntil, type, combinedDue, relativeDelay, isDue) "
+                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 0, 0)";
             SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
             for (int i = 0; i < len; i++) {
                 try {
@@ -1393,7 +1399,7 @@ public class SyncClient {
     private JSONArray getMedia(JSONArray ids) {
         JSONArray media = new JSONArray();
 
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                 "SELECT id, filename, size, created, originalPath, description FROM media WHERE id IN "
                         + Utils.ids2str(ids), null);
         while (cursor.moveToNext()) {
@@ -1426,7 +1432,7 @@ public class SyncClient {
 
     private void deleteMedia(JSONArray ids) {
         Log.i(AnkiDroidApp.TAG, "deleteMedia");
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
         String idsString = Utils.ids2str(ids);
 
@@ -1458,10 +1464,11 @@ public class SyncClient {
 
 
     private void updateMedia(JSONArray media) {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
         ArrayList<String> mediaIds = new ArrayList<String>();
 
-        String sql = "INSERT OR REPLACE INTO media (id, filename, size, created, originalPath, description) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT OR REPLACE INTO media (id, filename, size, created, originalPath, description) "
+                    + "VALUES(?,?,?,?,?,?)";
         SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
         int len = media.length();
         for (int i = 0; i < len; i++) {
@@ -1504,41 +1511,41 @@ public class SyncClient {
         JSONObject bundledDeck = new JSONObject();
 
         try {
-            bundledDeck.put("averageFactor", deck.getAverageFactor());
-            bundledDeck.put("cardCount", deck.getCardCount());
-            bundledDeck.put("collapseTime", deck.getCollapseTime());
-            bundledDeck.put("created", deck.getCreated());
+            bundledDeck.put("averageFactor", mDeck.getAverageFactor());
+            bundledDeck.put("cardCount", mDeck.getCardCount());
+            bundledDeck.put("collapseTime", mDeck.getCollapseTime());
+            bundledDeck.put("created", mDeck.getCreated());
             // bundledDeck.put("currentModelId", testDeck.currentModelId);
-            bundledDeck.put("delay0", deck.getDelay0());
-            bundledDeck.put("delay1", deck.getDelay1());
-            bundledDeck.put("delay2", deck.getDelay2());
-            bundledDeck.put("description", deck.getDescription());
-            bundledDeck.put("easyIntervalMax", deck.getEasyIntervalMax());
-            bundledDeck.put("easyIntervalMin", deck.getEasyIntervalMin());
-            bundledDeck.put("factCount", deck.getFactCount());
-            bundledDeck.put("failedCardMax", deck.getFailedCardMax());
-            bundledDeck.put("failedNowCount", deck.getFailedNowCount());
-            bundledDeck.put("failedSoonCount", deck.getFailedSoonCount());
-            bundledDeck.put("hardIntervalMax", deck.getHardIntervalMax());
-            bundledDeck.put("hardIntervalMin", deck.getHardIntervalMin());
-            bundledDeck.put("highPriority", deck.getHighPriority());
-            bundledDeck.put("id", deck.getId());
-            bundledDeck.put("lastLoaded", deck.getLastLoaded());
-            bundledDeck.put("lastSync", deck.getLastSync());
-            bundledDeck.put("lowPriority", deck.getLowPriority());
-            bundledDeck.put("medPriority", deck.getMedPriority());
-            bundledDeck.put("midIntervalMax", deck.getMidIntervalMax());
-            bundledDeck.put("midIntervalMin", deck.getMidIntervalMin());
-            bundledDeck.put("modified", deck.getModified());
-            bundledDeck.put("newCardModulus", deck.getNewCardModulus());
-            bundledDeck.put("newCount", deck.getNewCount());
-            bundledDeck.put("newCountToday", deck.getNewCountToday());
-            bundledDeck.put("newEarly", deck.isNewEarly());
-            bundledDeck.put("revCount", deck.getRevCount());
-            bundledDeck.put("reviewEarly", deck.isReviewEarly());
-            bundledDeck.put("suspended", deck.getSuspended());
-            bundledDeck.put("undoEnabled", deck.isUndoEnabled());
-            bundledDeck.put("utcOffset", deck.getUtcOffset());
+            bundledDeck.put("delay0", mDeck.getDelay0());
+            bundledDeck.put("delay1", mDeck.getDelay1());
+            bundledDeck.put("delay2", mDeck.getDelay2());
+            bundledDeck.put("description", mDeck.getDescription());
+            bundledDeck.put("easyIntervalMax", mDeck.getEasyIntervalMax());
+            bundledDeck.put("easyIntervalMin", mDeck.getEasyIntervalMin());
+            bundledDeck.put("factCount", mDeck.getFactCount());
+            bundledDeck.put("failedCardMax", mDeck.getFailedCardMax());
+            bundledDeck.put("failedNowCount", mDeck.getFailedNowCount());
+            bundledDeck.put("failedSoonCount", mDeck.getFailedSoonCount());
+            bundledDeck.put("hardIntervalMax", mDeck.getHardIntervalMax());
+            bundledDeck.put("hardIntervalMin", mDeck.getHardIntervalMin());
+            bundledDeck.put("highPriority", mDeck.getHighPriority());
+            bundledDeck.put("id", mDeck.getId());
+            bundledDeck.put("lastLoaded", mDeck.getLastLoaded());
+            bundledDeck.put("lastSync", mDeck.getLastSync());
+            bundledDeck.put("lowPriority", mDeck.getLowPriority());
+            bundledDeck.put("medPriority", mDeck.getMedPriority());
+            bundledDeck.put("midIntervalMax", mDeck.getMidIntervalMax());
+            bundledDeck.put("midIntervalMin", mDeck.getMidIntervalMin());
+            bundledDeck.put("modified", mDeck.getModified());
+            bundledDeck.put("newCardModulus", mDeck.getNewCardModulus());
+            bundledDeck.put("newCount", mDeck.getNewCount());
+            bundledDeck.put("newCountToday", mDeck.getNewCountToday());
+            bundledDeck.put("newEarly", mDeck.isNewEarly());
+            bundledDeck.put("revCount", mDeck.getRevCount());
+            bundledDeck.put("reviewEarly", mDeck.isReviewEarly());
+            bundledDeck.put("suspended", mDeck.getSuspended());
+            bundledDeck.put("undoEnabled", mDeck.isUndoEnabled());
+            bundledDeck.put("utcOffset", mDeck.getUtcOffset());
 
             // AnkiDroid Deck.java does not have:
             // css, forceMediaDir, lastSessionStart, lastTags, needLock, newCardOrder, newCardSpacing, newCardsPerDay,
@@ -1548,8 +1555,8 @@ public class SyncClient {
 
             // Add meta information of the deck (deckVars table)
             JSONArray meta = new JSONArray();
-            Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery("SELECT * FROM deckVars",
-                    null);
+            Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+                    "SELECT * FROM deckVars", null);
             while (cursor.moveToNext()) {
                 JSONArray deckVar = new JSONArray();
                 deckVar.put(cursor.getString(0));
@@ -1576,7 +1583,7 @@ public class SyncClient {
 
             // Update meta information
             String sqlMeta = "INSERT OR REPLACE INTO deckVars (key, value) VALUES(?,?)";
-            SQLiteStatement statement = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase()
+            SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase()
                     .compileStatement(sqlMeta);
             int lenMeta = meta.length();
             for (int i = 0; i < lenMeta; i++) {
@@ -1592,60 +1599,60 @@ public class SyncClient {
             statement.close();
 
             // Update deck
-            deck.setAverageFactor(deckPayload.getDouble("averageFactor"));
-            deck.setCardCount(deckPayload.getInt("cardCount"));
-            deck.setCollapseTime(deckPayload.getDouble("collapseTime"));
-            deck.setCreated(deckPayload.getDouble("created"));
+            mDeck.setAverageFactor(deckPayload.getDouble("averageFactor"));
+            mDeck.setCardCount(deckPayload.getInt("cardCount"));
+            mDeck.setCollapseTime(deckPayload.getDouble("collapseTime"));
+            mDeck.setCreated(deckPayload.getDouble("created"));
             // css
-            deck.setCurrentModelId(deckPayload.getLong("currentModelId"));
-            deck.setDelay0(deckPayload.getDouble("delay0"));
-            deck.setDelay1(deckPayload.getDouble("delay1"));
-            deck.setDelay2(deckPayload.getDouble("delay2"));
-            deck.setDescription(deckPayload.getString("description"));
-            deck.setEasyIntervalMax(deckPayload.getDouble("easyIntervalMax"));
-            deck.setEasyIntervalMin(deckPayload.getDouble("easyIntervalMin"));
-            deck.setFactCount(deckPayload.getInt("factCount"));
-            deck.setFailedCardMax(deckPayload.getInt("failedCardMax"));
-            deck.setFailedNowCount(deckPayload.getInt("failedNowCount"));
-            deck.setFailedSoonCount(deckPayload.getInt("failedSoonCount"));
+            mDeck.setCurrentModelId(deckPayload.getLong("currentModelId"));
+            mDeck.setDelay0(deckPayload.getDouble("delay0"));
+            mDeck.setDelay1(deckPayload.getDouble("delay1"));
+            mDeck.setDelay2(deckPayload.getDouble("delay2"));
+            mDeck.setDescription(deckPayload.getString("description"));
+            mDeck.setEasyIntervalMax(deckPayload.getDouble("easyIntervalMax"));
+            mDeck.setEasyIntervalMin(deckPayload.getDouble("easyIntervalMin"));
+            mDeck.setFactCount(deckPayload.getInt("factCount"));
+            mDeck.setFailedCardMax(deckPayload.getInt("failedCardMax"));
+            mDeck.setFailedNowCount(deckPayload.getInt("failedNowCount"));
+            mDeck.setFailedSoonCount(deckPayload.getInt("failedSoonCount"));
             // forceMediaDir
-            deck.setHardIntervalMax(deckPayload.getDouble("hardIntervalMax"));
-            deck.setHardIntervalMin(deckPayload.getDouble("hardIntervalMin"));
-            deck.setHighPriority(deckPayload.getString("highPriority"));
-            deck.setId(deckPayload.getLong("id"));
+            mDeck.setHardIntervalMax(deckPayload.getDouble("hardIntervalMax"));
+            mDeck.setHardIntervalMin(deckPayload.getDouble("hardIntervalMin"));
+            mDeck.setHighPriority(deckPayload.getString("highPriority"));
+            mDeck.setId(deckPayload.getLong("id"));
             // key
-            deck.setLastLoaded(deckPayload.getDouble("lastLoaded"));
+            mDeck.setLastLoaded(deckPayload.getDouble("lastLoaded"));
             // lastSessionStart
-            deck.setLastSync(deckPayload.getDouble("modified"));
+            mDeck.setLastSync(deckPayload.getDouble("modified"));
             // lastTags
-            deck.setLowPriority(deckPayload.getString("lowPriority"));
-            deck.setMedPriority(deckPayload.getString("medPriority"));
-            deck.setMidIntervalMax(deckPayload.getDouble("midIntervalMax"));
-            deck.setMidIntervalMin(deckPayload.getDouble("midIntervalMin"));
-            deck.setModified(deckPayload.getDouble("modified"));
+            mDeck.setLowPriority(deckPayload.getString("lowPriority"));
+            mDeck.setMedPriority(deckPayload.getString("medPriority"));
+            mDeck.setMidIntervalMax(deckPayload.getDouble("midIntervalMax"));
+            mDeck.setMidIntervalMin(deckPayload.getDouble("midIntervalMin"));
+            mDeck.setModified(deckPayload.getDouble("modified"));
             // needLock
-            deck.setNewCardModulus(deckPayload.getInt("newCardModulus"));
+            mDeck.setNewCardModulus(deckPayload.getInt("newCardModulus"));
             // newCardOrder
             // newCardSpacings
             // newCardsPerDay
-            deck.setNewCount(deckPayload.getInt("newCount"));
-            deck.setNewCountToday(deckPayload.getInt("newCountToday"));
-            deck.setNewEarly(deckPayload.getBoolean("newEarly"));
+            mDeck.setNewCount(deckPayload.getInt("newCount"));
+            mDeck.setNewCountToday(deckPayload.getInt("newCountToday"));
+            mDeck.setNewEarly(deckPayload.getBoolean("newEarly"));
             // revCardOrder
-            deck.setRevCount(deckPayload.getInt("revCount"));
-            deck.setReviewEarly(deckPayload.getBoolean("reviewEarly"));
+            mDeck.setRevCount(deckPayload.getInt("revCount"));
+            mDeck.setReviewEarly(deckPayload.getBoolean("reviewEarly"));
             // sessionRepLimit
             // sessionStartReps
             // sessionStartTime
             // sessionTimeLimit
-            deck.setSuspended(deckPayload.getString("suspended"));
+            mDeck.setSuspended(deckPayload.getString("suspended"));
             // tmpMediaDir
-            deck.setUndoEnabled(deckPayload.getBoolean("undoEnabled"));
-            deck.setUtcOffset(deckPayload.getDouble("utcOffset"));
+            mDeck.setUndoEnabled(deckPayload.getBoolean("undoEnabled"));
+            mDeck.setUtcOffset(deckPayload.getDouble("utcOffset"));
 
-            deck.commitToDB();
+            mDeck.commitToDB();
 
-            deck.updateDynamicIndices();
+            mDeck.updateDynamicIndices();
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
@@ -1659,15 +1666,15 @@ public class SyncClient {
         JSONObject bundledStats = new JSONObject();
 
         // Get daily stats since the last day the deck was synchronized
-        Date lastDay = new Date(java.lang.Math.max(0, (long) (deck.getLastSync() - 60 * 60 * 24) * 1000));
+        Date lastDay = new Date(java.lang.Math.max(0, (long) (mDeck.getLastSync() - 60 * 60 * 24) * 1000));
         Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString());
-        ArrayList<Long> ids = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).queryColumn(Long.class,
+        ArrayList<Long> ids = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).queryColumn(Long.class,
                 "SELECT id FROM stats WHERE type = 1 and day >= \"" + lastDay.toString() + "\"", 0);
 
         try {
-            Stats stat = new Stats(deck);
+            Stats stat = new Stats(mDeck);
             // Put global stats
-            bundledStats.put("global", bundleStat(Stats.globalStats(deck)));
+            bundledStats.put("global", bundleStat(Stats.globalStats(mDeck)));
             // Put daily stats
             JSONArray dailyStats = new JSONArray();
             for (Long id : ids) {
@@ -1728,11 +1735,11 @@ public class SyncClient {
     private void updateStats(JSONObject stats) {
         try {
             // Update global stats
-            Stats globalStats = Stats.globalStats(deck);
+            Stats globalStats = Stats.globalStats(mDeck);
             updateStat(globalStats, stats.getJSONObject("global"));
 
             // Update daily stats
-            Stats stat = new Stats(deck);
+            Stats stat = new Stats(mDeck);
             JSONArray remoteDailyStats = stats.getJSONArray("daily");
             int len = remoteDailyStats.length();
             for (int i = 0; i < len; i++) {
@@ -1742,7 +1749,7 @@ public class SyncClient {
 
                 // If exists a statistic for this day, get it
                 try {
-                    Long id = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).queryScalar(
+                    Long id = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).queryScalar(
                             "SELECT id FROM stats WHERE type = 1 AND day = \"" + dailyStatDate.toString() + "\"");
                     stat.fromDB(id);
                 } catch (SQLException e) {
@@ -1793,10 +1800,10 @@ public class SyncClient {
 
     private JSONArray bundleHistory() {
         JSONArray bundledHistory = new JSONArray();
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase()
-                .rawQuery(
-                        "SELECT cardId, time, lastInterval, nextInterval, ease, delay, lastFactor, nextFactor, reps, thinkingTime, yesCount, noCount FROM reviewHistory WHERE time > "
-                                + String.format(ENGLISH_LOCALE, "%f", deck.getLastSync()), null);
+        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+                        "SELECT cardId, time, lastInterval, nextInterval, ease, delay, lastFactor, nextFactor, reps, "
+                        + "thinkingTime, yesCount, noCount FROM reviewHistory "
+                        + "WHERE time > " + String.format(ENGLISH_LOCALE, "%f", mDeck.getLastSync()), null);
         while (cursor.moveToNext()) {
             try {
                 JSONArray review = new JSONArray();
@@ -1833,15 +1840,16 @@ public class SyncClient {
         }
         cursor.close();
 
-        Log.i(AnkiDroidApp.TAG, "Last sync = " + String.format(ENGLISH_LOCALE, "%f", deck.getLastSync()));
+        Log.i(AnkiDroidApp.TAG, "Last sync = " + String.format(ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
         Log.i(AnkiDroidApp.TAG, "Bundled history = " + bundledHistory.toString());
         return bundledHistory;
     }
 
 
     private void updateHistory(JSONArray history) {
-        String sql = "INSERT OR IGNORE INTO reviewHistory (cardId, time, lastInterval, nextInterval, ease, delay, lastFactor, nextFactor, reps, thinkingTime, yesCount, noCount) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-        SQLiteStatement statement = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().compileStatement(sql);
+        String sql = "INSERT OR IGNORE INTO reviewHistory (cardId, time, lastInterval, nextInterval, ease, delay, "
+                    + "lastFactor, nextFactor, reps, thinkingTime, yesCount, noCount) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().compileStatement(sql);
         int len = history.length();
         for (int i = 0; i < len; i++) {
             try {
@@ -1884,7 +1892,8 @@ public class SyncClient {
     private JSONArray bundleSources() {
         JSONArray bundledSources = new JSONArray();
 
-        Cursor cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery("SELECT * FROM sources", null);
+        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+                "SELECT * FROM sources", null);
         while (cursor.moveToNext()) {
             try {
                 JSONArray source = new JSONArray();
@@ -1914,7 +1923,7 @@ public class SyncClient {
 
     private void updateSources(JSONArray sources) {
         String sql = "INSERT OR REPLACE INTO sources VALUES(?,?,?,?,?)";
-        SQLiteStatement statement = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().compileStatement(sql);
+        SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().compileStatement(sql);
         int len = sources.length();
         for (int i = 0; i < len; i++) {
             try {
@@ -1945,9 +1954,9 @@ public class SyncClient {
      */
     @SuppressWarnings("unchecked")
     public boolean needFullSync(JSONArray sums) {
-        Log.i(AnkiDroidApp.TAG, "needFullSync - lastSync = " + deck.getLastSync());
+        Log.i(AnkiDroidApp.TAG, "needFullSync - lastSync = " + mDeck.getLastSync());
 
-        if (deck.getLastSync() <= 0) {
+        if (mDeck.getLastSync() <= 0) {
             Log.i(AnkiDroidApp.TAG, "deck.lastSync <= 0");
             return true;
         }
@@ -1972,13 +1981,13 @@ public class SyncClient {
 
         }
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
-        if (ankiDB.queryScalar("SELECT count() FROM reviewHistory WHERE time > " + deck.getLastSync()) > 500) {
+        if (ankiDB.queryScalar("SELECT count() FROM reviewHistory WHERE time > " + mDeck.getLastSync()) > 500) {
             Log.i(AnkiDroidApp.TAG, "reviewHistory since lastSync > 500");
             return true;
         }
-        Date lastDay = new Date(java.lang.Math.max(0, (long) (deck.getLastSync() - 60 * 60 * 24) * 1000));
+        Date lastDay = new Date(java.lang.Math.max(0, (long) (mDeck.getLastSync() - 60 * 60 * 24) * 1000));
 
         Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString() + ", lastDayInMillis = " + lastDay.getTime());
 
@@ -1995,12 +2004,12 @@ public class SyncClient {
 
 
     public String prepareFullSync() {
-        deck.setLastSync(System.currentTimeMillis() / 1000.0);
-        deck.commitToDB();
+        mDeck.setLastSync(System.currentTimeMillis() / 1000.0);
+        mDeck.commitToDB();
         // The deck is closed after the full sync it is completed
         // deck.closeDeck();
 
-        if (localTime > remoteTime) {
+        if (mLocalTime > mRemoteTime) {
             return "fromLocal";
         } else {
             return "fromServer";

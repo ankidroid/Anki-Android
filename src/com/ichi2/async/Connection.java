@@ -43,14 +43,14 @@ import java.util.HashMap;
 
 public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload> {
 
-    private static Context sContext;
-
     public static final int TASK_TYPE_LOGIN = 0;
     public static final int TASK_TYPE_GET_SHARED_DECKS = 1;
     public static final int TASK_TYPE_GET_PERSONAL_DECKS = 2;
     public static final int TASK_TYPE_SYNC_ALL_DECKS = 3;
     public static final int TASK_TYPE_SYNC_DECK = 4;
     public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 5;
+
+    private static Context sContext;
 
     private static Connection sInstance;
     private TaskListener mListener;
@@ -284,8 +284,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         ankiDB.getDatabase().beginTransaction();
         try {
-            Log.i(AnkiDroidApp.TAG, "Starting sync: username = " + username + ", password = " + password + ", deckPath = "
-                    + deckPath + ", syncName = " + syncName);
+            Log.i(AnkiDroidApp.TAG, "Starting sync: username = " + username + ", password = " + password
+                    + ", deckPath = " + deckPath + ", syncName = " + syncName);
             AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 
             publishProgress(syncName, res.getString(R.string.sync_connecting_message));

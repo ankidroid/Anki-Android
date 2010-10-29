@@ -36,7 +36,7 @@ import java.util.TreeSet;
  * Allows the user to edit a fact, for instance if there is a typo. A card is a presentation of a fact, and has two
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a fact to Anki, cards
  * which show that fact are generated. Some models generate one card, others generate more than one.
- * 
+ *
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  */
 public class CardEditor extends Activity {
@@ -57,7 +57,7 @@ public class CardEditor extends Activity {
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +132,7 @@ public class CardEditor extends Activity {
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
-    
+
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
      */
@@ -163,7 +163,7 @@ public class CardEditor extends Activity {
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
-    
+
     private class FieldEditText extends EditText {
 
         private Field mPairField;

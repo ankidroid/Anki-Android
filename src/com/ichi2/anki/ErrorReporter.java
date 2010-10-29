@@ -37,9 +37,6 @@ import java.util.TimeZone;
 
 public class ErrorReporter extends Activity {
 
-    private static final Locale ENGLISH_LOCALE = new Locale("en_US");
-
-
     private ArrayList<String> getErrorFiles() {
         ArrayList<String> files = new ArrayList<String>();
         String[] errors = fileList();

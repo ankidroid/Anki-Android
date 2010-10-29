@@ -30,10 +30,10 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -56,15 +56,18 @@ import java.util.List;
 
 public class SharedDeckPicker extends Activity {
 
+    // Context menu options
+    private static final int MENU_CANCEL = Menu.FIRST + 1;
+    private static final int MENU_PAUSE  = Menu.FIRST + 2;
+    private static final int MENU_RESUME = Menu.FIRST + 3;
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
     private ProgressDialog mProgressDialog;
-
     private AlertDialog mNoConnectionAlert;
-
     private AlertDialog mConnectionErrorAlert;
 
     private Intent mDownloadManagerServiceIntent;
@@ -73,15 +76,10 @@ public class SharedDeckPicker extends Activity {
 
     private List<Download> mSharedDeckDownloads;
     private List<SharedDeck> mSharedDecks;
-
     private List<Object> mAllSharedDecks;
     private ListView mSharedDecksListView;
     private SharedDecksAdapter mSharedDecksAdapter;
 
-    // Context menu options
-    private static final int MENU_CANCEL = Menu.FIRST+1;
-    private static final int MENU_PAUSE = Menu.FIRST+2;
-    private static final int MENU_RESUME = Menu.FIRST+3;
 
     /********************************************************************
      * Lifecycle methods *

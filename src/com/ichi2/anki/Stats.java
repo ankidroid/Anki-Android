@@ -30,57 +30,33 @@ import java.util.Calendar;
 public class Stats {
 
     public static final int STATS_LIFE = 0;
-
     public static final int STATS_DAY = 1;
 
     // BEGIN: SQL table columns
     private long mId;
-
     private int mType;
-
     private Date mDay;
-
     private int mReps;
-
     private double mAverageTime;
-
     private double mReviewTime;
-
     // Next two columns no longer used
     private double mDistractedTime;
-
     private int mDistractedReps;
-
     private int mNewEase0;
-
     private int mNewEase1;
-
     private int mNewEase2;
-
     private int mNewEase3;
-
     private int mNewEase4;
-
     private int mYoungEase0;
-
     private int mYoungEase1;
-
     private int mYoungEase2;
-
     private int mYoungEase3;
-
     private int mYoungEase4;
-
     private int mMatureEase0;
-
     private int mMatureEase1;
-
     private int mMatureEase2;
-
     private int mMatureEase3;
-
     private int mMatureEase4;
-
     // END: SQL table columns
 
     private Deck mDeck;
@@ -116,8 +92,8 @@ public class Stats {
 
         try {
             Log.i(AnkiDroidApp.TAG, "Reading stats from DB...");
-            cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery("SELECT * " + "FROM stats "
-                    + "WHERE id = " + String.valueOf(id), null);
+            cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+                    "SELECT * " + "FROM stats WHERE id = " + String.valueOf(id), null);
 
             if (!cursor.moveToFirst()) {
                 return;
@@ -258,8 +234,8 @@ public class Stats {
         Stats stats = null;
 
         try {
-            cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery("SELECT id " + "FROM stats "
-                    + "WHERE type = " + String.valueOf(type), null);
+            cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(
+                    "SELECT id " + "FROM stats WHERE type = " + String.valueOf(type), null);
 
             if (cursor.moveToFirst()) {
                 stats = new Stats(deck);
@@ -287,7 +263,8 @@ public class Stats {
 
         try {
             Log.i(AnkiDroidApp.TAG, "Trying to get stats for " + today.toString());
-            cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery("SELECT id " + "FROM stats "
+            cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(
+                    "SELECT id " + "FROM stats "
                     + "WHERE type = " + String.valueOf(type) + " and day = \"" + today.toString() + "\"", null);
 
             if (cursor.moveToFirst()) {

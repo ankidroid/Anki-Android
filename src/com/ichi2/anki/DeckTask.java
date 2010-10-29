@@ -38,7 +38,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_UPDATE_FACT = 5;
 
     /**
-     * Possible outputs trying to load a deck
+     * Possible outputs trying to load a deck.
      */
     public static final int DECK_LOADED = 0;
     public static final int DECK_NOT_LOADED = 1;
@@ -84,7 +84,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 sOldInstance.get();
             }
         } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackground - Got exception while waiting for thread to finish: " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG,
+                    "doInBackground - Got exception while waiting for thread to finish: " + e.getMessage());
         }
 
         switch (mType) {
@@ -172,13 +173,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             if (oldCard != null) {
                 start = System.currentTimeMillis();
                 deck.answerCard(oldCard, ease);
-                Log.v(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start)
-                        + " ms.");
+                Log.v(AnkiDroidApp.TAG,
+                        "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start) + " ms.");
             }
 
             start = System.currentTimeMillis();
             newCard = deck.getCard();
-            Log.v(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
+            Log.v(AnkiDroidApp.TAG,
+                    "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
             publishProgress(new TaskData(newCard));
 
             ankiDB.getDatabase().setTransactionSuccessful();
@@ -186,7 +188,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             ankiDB.getDatabase().endTransaction();
         }
 
-        Log.w(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
+        Log.w(AnkiDroidApp.TAG,
+                "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
 
         return null;
     }

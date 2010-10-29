@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * Card model. Card models are used to make question/answer pairs for the information you add to facts. You can display
  * any number of fields on the question side and answer side.
- * 
+ *
  * @see http://ichi2.net/anki/wiki/ModelProperties#Card_Templates
  */
 public class CardModel implements Comparator<CardModel> {
@@ -105,16 +105,9 @@ public class CardModel implements Comparator<CardModel> {
     }
 
     /** SELECT string with only those fields, which are used in AnkiDroid */
-    private final static String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, aformat" // lformat
-                                                                                                                           // left
-                                                                                                                           // out
-    // qedformat, aedformat left out
-            + ", questionInAnswer"
-            + ", questionFontFamily, questionFontSize, questionFontColour, questionAlign"
-            + ", answerFontFamily, answerFontSize, answerFontColour, answerAlign" + ", lastFontColour" // lastFontFamily,
-                                                                                                       // lastFontSize
-                                                                                                       // left out
-            // rest left out
+    private static final String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, "
+            + "aformat, questionInAnswer, questionFontFamily, questionFontSize, questionFontColour, questionAlign, "
+            + "answerFontFamily, answerFontSize, answerFontColour, answerAlign, lastFontColour"
             + " FROM cardModels";
 
 
@@ -291,7 +284,6 @@ public class CardModel implements Comparator<CardModel> {
 
     /**
      * Implements Comparator by comparing the field "ordinal".
-     * 
      * @param object1
      * @param object2
      * @return

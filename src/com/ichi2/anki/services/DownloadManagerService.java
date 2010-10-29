@@ -53,7 +53,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
-import java.lang.SecurityException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -61,11 +60,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 public class DownloadManagerService extends Service {
 
@@ -657,7 +656,7 @@ public class DownloadManagerService extends Service {
                 while (download.getStatus() == Download.DOWNLOADING) {
                     // Size buffer according to how much of the file is left to download
                     Log.v(AnkiDroidApp.TAG, "Downloading... " + download.getDownloaded());
-                    byte buffer[];
+                    byte[] buffer;
                     // if (size - downloaded > MAX_BUFFER_SIZE) {
                     buffer = new byte[MAX_BUFFER_SIZE];
                     // } else {
@@ -813,7 +812,7 @@ public class DownloadManagerService extends Service {
 
                 while (download.getStatus() == Download.DOWNLOADING) {
                     Log.i(AnkiDroidApp.TAG, "Downloading... " + download.getDownloaded());
-                    byte buffer[];
+                    byte[] buffer;
                     // if (size - downloaded > MAX_BUFFER_SIZE) {
                     buffer = new byte[MAX_BUFFER_SIZE];
                     // } else {
@@ -910,6 +909,11 @@ public class DownloadManagerService extends Service {
 
     private class UpdateDeckTask extends AsyncTask<Connection.Payload, Connection.Payload, Connection.Payload> {
 
+        private static final int sRunningAvgLength = 5;
+        private long[] mRecentBatchTimings;
+        private long mElapsedTime;
+        private double mTotalBatches;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -942,12 +946,12 @@ public class DownloadManagerService extends Service {
                 long updatedCards = pref.getLong(updatedCardsPref, 0);
                 download.setNumUpdatedCards((int) updatedCards);
                 long batchSize = Math.max(100, totalCards / 200);
-                recentBatchTimings = new long[runningAvgLength];
-                totalBatches = ((double) totalCards) / batchSize;
+                mRecentBatchTimings = new long[sRunningAvgLength];
+                mTotalBatches = ((double) totalCards) / batchSize;
                 int currentBatch = (int) (updatedCards / batchSize);
                 long runningAvgCount = 0;
                 long batchStart;
-                elapsedTime = 0;
+                mElapsedTime = 0;
                 while (updatedCards < totalCards && download.getStatus() == SharedDeckDownload.UPDATING) {
                     batchStart = System.currentTimeMillis();
                     updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
@@ -981,24 +985,19 @@ public class DownloadManagerService extends Service {
             return data;
         }
 
-        private static final int runningAvgLength = 5;
-        private long[] recentBatchTimings;
-        private long elapsedTime;
-        private double totalBatches;
-
 
         private void estimateTimeToCompletion(SharedDeckDownload download, long currentBatch, long runningAvgCount,
                 long lastBatchTime) {
             double avgBatchTime = 0.0;
             avgBatchTime = 0;
-            recentBatchTimings[((int) runningAvgCount) % runningAvgLength] = lastBatchTime;
-            elapsedTime += lastBatchTime;
-            int usedForAvg = Math.min(((int) runningAvgCount) + 1, runningAvgLength);
+            mRecentBatchTimings[((int) runningAvgCount) % sRunningAvgLength] = lastBatchTime;
+            mElapsedTime += lastBatchTime;
+            int usedForAvg = Math.min(((int) runningAvgCount) + 1, sRunningAvgLength);
             for (int i = 0; i < usedForAvg; i++) {
-                avgBatchTime += recentBatchTimings[i];
+                avgBatchTime += mRecentBatchTimings[i];
             }
             avgBatchTime /= usedForAvg;
-            download.setEstTimeToCompletion(Math.max(0, totalBatches - currentBatch - 1) * avgBatchTime / 1000.0);
+            download.setEstTimeToCompletion(Math.max(0, mTotalBatches - currentBatch - 1) * avgBatchTime / 1000.0);
             // Log.i(AnkiDroidApp.TAG, "TotalBatches: " + totalBatches + " Current: " + currentBatch + " LastBatch: " +
             // lastBatchTime/1000.0 + " RunningAvg: " + avgBatchTime/1000.0 + " Elapsed: " + elapsedTime/1000.0 +
             // " TotalEstimated: " + (elapsedTime + Math.max(0, totalBatches - currentBatch - 1) * avgBatchTime) /
