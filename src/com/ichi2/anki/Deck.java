@@ -282,8 +282,13 @@ public class Deck {
 
         // Create a temporary view for random new cards. Randomizing the cards by themselves
         // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
-        ankiDB.getDatabase().execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS " + "SELECT * FROM cards "
-                + "WHERE type = 2 AND isDue = 1 " + "ORDER BY RANDOM()");
+        try {
+            ankiDB.getDatabase().execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS " + "SELECT * FROM cards "
+                    + "WHERE type = 2 AND isDue = 1 " + "ORDER BY RANDOM()");
+        } catch (SQLException e) {
+            /* Temporary view may still be present if the DB has not been closed */
+            Log.i(AnkiDroidApp.TAG, "Failed to create temporary view: " + e.getMessage());
+        }
 
         return deck;
     }
