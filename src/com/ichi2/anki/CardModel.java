@@ -36,6 +36,12 @@ public class CardModel implements Comparator<CardModel> {
     // TODO: Javadoc.
     // TODO: Methods for reading/writing from/to DB.
 
+    public static final int DEFAULT_FONT_SIZE = 20;
+    public static final int DEFAULT_FONT_SIZE_RATIO = 100;
+    public static final String DEFAULT_FONT_FAMILY = "Arial";
+    public static final String DEFAULT_FONT_COLOR = "#000000";
+    public static final String DEFAULT_BACKGROUND_COLOR = "#FFFFFF";
+
     /** Regex pattern used in removing tags from text before diff */
     private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
     private static final Pattern sModelPattern = Pattern.compile("%\\(modelTags\\)s");
@@ -57,19 +63,19 @@ public class CardModel implements Comparator<CardModel> {
     private String mAedformat;
     private int mQuestionInAnswer = 0;
     // Display
-    private String mQuestionFontFamily = "Arial";
-    private int mQuestionFontSize = 20;
-    private String mQuestionFontColour = "#000000";
+    private String mQuestionFontFamily = DEFAULT_FONT_FAMILY;
+    private int mQuestionFontSize = DEFAULT_FONT_SIZE;
+    private String mQuestionFontColour = DEFAULT_FONT_COLOR;
     private int mQuestionAlign = 0;
-    private String mAnswerFontFamily = "Arial";
-    private int mAnswerFontSize = 20;
-    private String mAnswerFontColour = "#000000";
+    private String mAnswerFontFamily = DEFAULT_FONT_FAMILY;
+    private int mAnswerFontSize = DEFAULT_FONT_SIZE;
+    private String mAnswerFontColour = DEFAULT_FONT_COLOR;
     private int mAnswerAlign = 0;
     // Not used
-    private String mLastFontFamily = "Arial";
-    private int mLastFontSize = 20;
+    private String mLastFontFamily = DEFAULT_FONT_FAMILY;
+    private int mLastFontSize = DEFAULT_FONT_SIZE;
     // Used as background colour
-    private String mLastFontColour = "#FFFFFF";
+    private String mLastFontColour = DEFAULT_BACKGROUND_COLOR;
     private String mEditQuestionFontFamily = "";
     private int mEditQuestionFontSize = 0;
     private String mEditAnswerFontFamily = "";

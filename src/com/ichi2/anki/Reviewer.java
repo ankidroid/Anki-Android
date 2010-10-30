@@ -122,7 +122,7 @@ public class Reviewer extends Activity {
     private long mUpdateCardFinishTime;
 
     /** The percentage of the absolute font size specified in the deck. */
-    private int mDisplayFontSize = 100;
+    private int mDisplayFontSize = CardModel.DEFAULT_FONT_SIZE_RATIO;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -207,19 +207,19 @@ public class Reviewer extends Activity {
 
             switch (view.getId()) {
                 case R.id.ease1:
-                    mCurrentEase = 1;
+                    mCurrentEase = Card.EASE_FAILED;
                     break;
                 case R.id.ease2:
-                    mCurrentEase = 2;
+                    mCurrentEase = Card.EASE_HARD;
                     break;
                 case R.id.ease3:
-                    mCurrentEase = 3;
+                    mCurrentEase = Card.EASE_MID;
                     break;
                 case R.id.ease4:
-                    mCurrentEase = 4;
+                    mCurrentEase = Card.EASE_EASY;
                     break;
                 default:
-                    mCurrentEase = 0;
+                    mCurrentEase = Card.EASE_NONE;
                     return;
             }
 
@@ -796,7 +796,8 @@ public class Reviewer extends Activity {
         mDeckFilename = preferences.getString("deckFilename", "");
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
-        mDisplayFontSize = Integer.parseInt(preferences.getString("displayFontSize", "100"));
+        mDisplayFontSize = Integer.parseInt(preferences.getString("displayFontSize",
+                Integer.toString(CardModel.DEFAULT_FONT_SIZE_RATIO)));
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
 
@@ -861,13 +862,13 @@ public class Reviewer extends Activity {
         int isDue = mCurrentCard.getIsDue();
         int type = mCurrentCard.getType();
 
-        if ((isDue == 1) && (type == Deck.CARD_TYPE_NEW)) {
+        if ((isDue == 1) && (type == Card.TYPE_NEW)) {
             newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
         }
-        if ((isDue == 1) && (type == Deck.CARD_TYPE_REV)) {
+        if ((isDue == 1) && (type == Card.TYPE_REV)) {
             revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
         }
-        if ((isDue == 1) && (type == Deck.CARD_TYPE_FAILED)) {
+        if ((isDue == 1) && (type == Card.TYPE_FAILED)) {
             failedSoonCount.setSpan(new UnderlineSpan(), 0, failedSoonCount.length(), 0);
         }
 
@@ -1054,28 +1055,28 @@ public class Reviewer extends Activity {
         mFlipCard.setEnabled(true);
 
         switch (mCurrentEase) {
-            case 1:
+            case Card.EASE_FAILED:
                 mEase1.setClickable(true);
                 mEase2.setEnabled(true);
                 mEase3.setEnabled(true);
                 mEase4.setEnabled(true);
                 break;
 
-            case 2:
+            case Card.EASE_HARD:
                 mEase1.setEnabled(true);
                 mEase2.setClickable(true);
                 mEase3.setEnabled(true);
                 mEase4.setEnabled(true);
                 break;
 
-            case 3:
+            case Card.EASE_MID:
                 mEase1.setEnabled(true);
                 mEase2.setEnabled(true);
                 mEase3.setClickable(true);
                 mEase4.setEnabled(true);
                 break;
 
-            case 4:
+            case Card.EASE_EASY:
                 mEase1.setEnabled(true);
                 mEase2.setEnabled(true);
                 mEase3.setEnabled(true);
@@ -1109,28 +1110,28 @@ public class Reviewer extends Activity {
         mFlipCard.setEnabled(false);
 
         switch (mCurrentEase) {
-            case 1:
+            case Card.EASE_FAILED:
                 mEase1.setClickable(false);
                 mEase2.setEnabled(false);
                 mEase3.setEnabled(false);
                 mEase4.setEnabled(false);
                 break;
 
-            case 2:
+            case Card.EASE_HARD:
                 mEase1.setEnabled(false);
                 mEase2.setClickable(false);
                 mEase3.setEnabled(false);
                 mEase4.setEnabled(false);
                 break;
 
-            case 3:
+            case Card.EASE_MID:
                 mEase1.setEnabled(false);
                 mEase2.setEnabled(false);
                 mEase3.setClickable(false);
                 mEase4.setEnabled(false);
                 break;
 
-            case 4:
+            case Card.EASE_EASY:
                 mEase1.setEnabled(false);
                 mEase2.setEnabled(false);
                 mEase3.setEnabled(false);

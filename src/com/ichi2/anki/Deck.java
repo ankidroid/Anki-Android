@@ -41,15 +41,6 @@ import java.util.Stack;
  */
 public class Deck {
 
-    public static final int CARD_TYPE_FAILED = 0;
-    public static final int CARD_TYPE_REV = 1;
-    public static final int CARD_TYPE_NEW = 2;
-
-    /**
-     * Priorities Auto priorities - High = 4 - Medium = 3 - Normal = 2 - Low = 1 - None = 0 Manual priorities - Review
-     * early = -1 - Buried = -2 - Suspended = -3
-     **/
-
     // Rest
     private static final int MATURE_THRESHOLD = 21;
 
@@ -255,8 +246,10 @@ public class Deck {
 
         try {
             // Unsuspend reviewed early & buried
-            cursor = ankiDB.getDatabase().rawQuery("SELECT id " + "FROM cards " + "WHERE type in (0,1,2) and "
-                    + "isDue = 0 and " + "priority in (-1,-2)", null);
+            cursor = ankiDB.getDatabase().rawQuery(
+                    "SELECT id FROM cards WHERE isDue = 0 and "
+                    + "type in (" + Card.TYPE_FAILED + "," + Card.TYPE_REV + "," + Card.TYPE_NEW + ") and "
+                    + "priority in (" + Card.PRIORITY_REVIEW_EARLY + "," + Card.PRIORITY_BURIED + ")", null);
 
             if (cursor.moveToFirst()) {
                 int count = cursor.getCount();
@@ -282,8 +275,8 @@ public class Deck {
         // Create a temporary view for random new cards. Randomizing the cards by themselves
         // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
         try {
-            ankiDB.getDatabase().execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS " + "SELECT * FROM cards "
-                    + "WHERE type = 2 AND isDue = 1 " + "ORDER BY RANDOM()");
+            ankiDB.getDatabase().execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS SELECT * FROM cards "
+                    + "WHERE type = " + Card.TYPE_NEW + " AND isDue = 1 ORDER BY RANDOM()");
         } catch (SQLException e) {
             /* Temporary view may still be present if the DB has not been closed */
             Log.i(AnkiDroidApp.TAG, "Failed to create temporary view: " + e.getMessage());
@@ -572,8 +565,13 @@ public class Deck {
         long id = 0;
         try {
             id = AnkiDatabaseManager.getDatabase(mDeckPath).queryScalar(
-                    "SELECT id " + "FROM cards " + "WHERE type = 1 and " + "isDue = 0 and " + "priority in (1,2,3,4) "
-                            + "ORDER BY combinedDue " + "LIMIT 1");
+                    "SELECT id FROM cards WHERE isDue = 0 and type = " + Card.TYPE_REV
+                    + " and priority in ("
+                        + Card.PRIORITY_LOW + ","
+                        + Card.PRIORITY_NORMAL + ","
+                        + Card.PRIORITY_MEDIUM + ","
+                        + Card.PRIORITY_HIGH + ")"
+                    + " ORDER BY combinedDue LIMIT 1");
         } catch (SQLException e) {
             return 0;
         }
@@ -595,8 +593,8 @@ public class Deck {
         // Force old if there are very high priority cards
         try {
             AnkiDatabaseManager.getDatabase(mDeckPath).queryScalar(
-                    "SELECT 1 " + "FROM cards " + "WHERE type = 1 and " + "isDue = 1 and " + "priority = 4 "
-                            + "LIMIT 1");
+                    "SELECT 1 FROM cards WHERE isDue = 1 and type = " + Card.TYPE_REV
+                    + " and priority = " + Card.PRIORITY_HIGH + " LIMIT 1");
         } catch (Exception e) { // No result from query.
             if (mNewCardModulus == 0) {
                 return false;
@@ -907,7 +905,7 @@ public class Deck {
         // temp suspend if learning ahead
         if (mReviewEarly && lastDelay < 0) {
             if (oldSuc != 0 || lastDelaySecs > mDelay0 || !showFailedLast()) {
-                card.setPriority(-1);
+                card.setPriority(Card.PRIORITY_REVIEW_EARLY);
             }
         }
         // card stats
@@ -986,17 +984,17 @@ public class Deck {
         }
 
         // if interval is less than mid interval, use presets
-        if (ease == 1) {
+        if (ease == Card.EASE_FAILED) {
             interval *= mDelay2;
             if (interval < mHardIntervalMin) {
                 interval = 0;
             }
         } else if (interval == 0) {
-            if (ease == 2) {
+            if (ease == Card.EASE_HARD) {
                 interval = mHardIntervalMin + ((double) Math.random()) * (mHardIntervalMax - mHardIntervalMin);
-            } else if (ease == 3) {
+            } else if (ease == Card.EASE_MID) {
                 interval = mMidIntervalMin + ((double) Math.random()) * (mMidIntervalMax - mMidIntervalMin);
-            } else if (ease == 4) {
+            } else if (ease == Card.EASE_EASY) {
                 interval = mEasyIntervalMin + ((double) Math.random()) * (mEasyIntervalMax - mEasyIntervalMin);
             }
         } else {
@@ -1006,11 +1004,11 @@ public class Deck {
                 interval = mid / factor;
             }
             // multiply last interval by factor
-            if (ease == 2) {
+            if (ease == Card.EASE_HARD) {
                 interval = (interval + delay / 4.0) * 1.2;
-            } else if (ease == 3) {
+            } else if (ease == Card.EASE_MID) {
                 interval = (interval + delay / 2.0) * factor;
-            } else if (ease == 4) {
+            } else if (ease == Card.EASE_EASY) {
                 interval = (interval + delay) * factor * factorFour;
             }
             double fuzz = 0.95 + ((double) Math.random()) * (1.05 - 0.95);
@@ -1025,7 +1023,7 @@ public class Deck {
 
     private double nextDue(Card card, int ease, String oldState) {
         double due;
-        if (ease == 1) {
+        if (ease == Card.EASE_FAILED) {
             if (oldState.equals("mature")) {
                 due = mDelay1;
             } else {
@@ -1044,13 +1042,13 @@ public class Deck {
             card.setFactor(mAverageFactor); // card is new, inherit beginning factor
         }
         if (card.getSuccessive() != 0 && !cardIsBeingLearnt(card)) {
-            if (ease == 1) {
+            if (ease == Card.EASE_FAILED) {
                 card.setFactor(card.getFactor() - 0.20);
-            } else if (ease == 2) {
+            } else if (ease == Card.EASE_HARD) {
                 card.setFactor(card.getFactor() - 0.15);
             }
         }
-        if (ease == 4) {
+        if (ease == Card.EASE_EASY) {
             card.setFactor(card.getFactor() + 0.10);
         }
         card.setFactor(Math.max(1.3, card.getFactor()));
@@ -1100,15 +1098,28 @@ public class Deck {
         // Due counts
         mFailedSoonCount = (int) ankiDB.queryScalar("SELECT count(id) FROM failedCards");
         Log.i(AnkiDroidApp.TAG, "failedSoonCount = " + mFailedSoonCount);
-        mFailedNowCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 0 and "
-                + "isDue = 1 and " + "combinedDue <= "
-                + String.format(ENGLISH_LOCALE, "%f", Utils.now()));
+        mFailedNowCount = (int) ankiDB.queryScalar(
+                "SELECT count(id) FROM cards WHERE isDue = 1"
+                + " and type = " + Card.TYPE_FAILED
+                + " and combinedDue <= " + String.format(ENGLISH_LOCALE, "%f", Utils.now()));
         Log.i(AnkiDroidApp.TAG, "failedNowCount = " + mFailedNowCount);
-        mRevCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 1 and "
-                + "priority in (1,2,3,4) and " + "isDue = 1");
+        mRevCount = (int) ankiDB.queryScalar(
+                "SELECT count(id) FROM cards WHERE isDue = 1"
+                + " and type = " + Card.TYPE_REV
+                + " and priority in ("
+                    + Card.PRIORITY_LOW + ","
+                    + Card.PRIORITY_NORMAL + ","
+                    + Card.PRIORITY_MEDIUM + ","
+                    + Card.PRIORITY_HIGH + ")");
         Log.i(AnkiDroidApp.TAG, "revCount = " + mRevCount);
-        mNewCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 2 and "
-                + "priority in (1,2,3,4) and " + "isDue = 1");
+        mNewCount = (int) ankiDB.queryScalar(
+                "SELECT count(id) FROM cards WHERE isDue = 1"
+                + " and type = " + Card.TYPE_NEW
+                + " and priority in ("
+                    + Card.PRIORITY_LOW + ","
+                    + Card.PRIORITY_NORMAL + ","
+                    + Card.PRIORITY_MEDIUM + ","
+                    + Card.PRIORITY_HIGH + ")");
         Log.i(AnkiDroidApp.TAG, "newCount = " + mNewCount);
     }
 
@@ -1161,32 +1172,44 @@ public class Deck {
 
         ContentValues val = new ContentValues(1);
         val.put("isDue", 1);
-        ankiDB.getDatabase().update(
-                "cards",
-                val,
-                "priority in (1,2,3,4) and "
-                        + "type in (0,1,2) and "
-                        + "isDue = 0 and "
-                        + String.format(ENGLISH_LOCALE, "combinedDue <= %f", Utils.now() + mDelay0), null);
+        ankiDB.getDatabase().update("cards", val,
+                "isDue = 0"
+                + " and type in ("
+                    + Card.TYPE_FAILED + ","
+                    + Card.TYPE_REV + ","
+                    + Card.TYPE_NEW + ")"
+                + " and priority in ("
+                    + Card.PRIORITY_LOW + ","
+                    + Card.PRIORITY_NORMAL + ","
+                    + Card.PRIORITY_MEDIUM + ","
+                    + Card.PRIORITY_HIGH + ")"
+                + " combinedDue <= " + String.format(ENGLISH_LOCALE, "%f", Utils.now() + mDelay0), null);
 
-        mFailedNowCount = (int) ankiDB.queryScalar("SELECT count(id) " + "FROM cards " + "WHERE type = 0 and "
-                + "isDue = 1 and "
-                + String.format(ENGLISH_LOCALE, "combinedDue <= %f", Utils.now()));
+        mFailedNowCount = (int) ankiDB.queryScalar(
+                "SELECT count(id) FROM cards WHERE isDue = 1"
+                + " and type = " + Card.TYPE_FAILED
+                + " and combinedDue <= " + String.format(ENGLISH_LOCALE, "%f", Utils.now()));
 
         Cursor cursor = null;
         try {
-            cursor = ankiDB.getDatabase().rawQuery("SELECT type, count(id) " + "FROM cards "
-                    + "WHERE priority in (1,2,3,4) and " + "isDue = 1 " + "GROUP BY type", null);
+            cursor = ankiDB.getDatabase().rawQuery(
+                    "SELECT type, count(id) FROM cards WHERE isDue = 1"
+                    + " and priority in ("
+                        + Card.PRIORITY_LOW + ","
+                        + Card.PRIORITY_NORMAL + ","
+                        + Card.PRIORITY_MEDIUM + ","
+                        + Card.PRIORITY_HIGH + ")"
+                    + " GROUP BY type", null);
 
             while (cursor.moveToNext()) {
                 switch (cursor.getInt(0)) {
-                    case 0:
+                    case Card.TYPE_FAILED:
                         mFailedSoonCount = cursor.getInt(1);
                         break;
-                    case 1:
+                    case Card.TYPE_REV:
                         mRevCount = cursor.getInt(1);
                         break;
-                    case 2:
+                    case Card.TYPE_NEW:
                         mNewCount = cursor.getInt(1);
                         break;
                 }
@@ -1235,7 +1258,7 @@ public class Deck {
 
         try {
             cursor = AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().rawQuery(
-                    "SELECT avg(factor) " + "FROM cards WHERE type = 1", null);
+                    "SELECT avg(factor) FROM cards WHERE type = " + Card.TYPE_REV, null);
             if (!cursor.moveToFirst()) {
                 mAverageFactor = Deck.initialFactor;
             } else {
@@ -1268,7 +1291,7 @@ public class Deck {
         long[] ids = null;
         try {
             cursor = AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().rawQuery(
-                    "SELECT id " + "FROM cards WHERE priority = -1", null);
+                    "SELECT id FROM cards WHERE priority = " + Card.PRIORITY_REVIEW_EARLY, null);
             if (cursor.moveToFirst()) {
                 int count = cursor.getCount();
                 ids = new long[count];
@@ -1349,12 +1372,12 @@ public class Deck {
         for (String cardId : cardIdList) {
             try {
                 // Check if the tag already exists
-                ankiDB.queryScalar("select id from cardTags" + " where cardId = " + cardId + " and tagId = " + tagId
-                        + " and src = 0");
+                ankiDB.queryScalar("SELECT id FROM cardTags WHERE cardId = " + cardId + " and tagId = " + tagId
+                        + " and src = " + Card.TAGS_FACT);
             } catch (SQLException e) {
                 values.put("cardId", cardId);
                 values.put("tagId", tagId);
-                values.put("src", "0");
+                values.put("src", String.valueOf(Card.TAGS_FACT));
                 ankiDB.getDatabase().insert("cardTags", null, values);
             }
         }
@@ -1409,8 +1432,8 @@ public class Deck {
                 "select id from cards where factId in " + Utils.ids2str(factIds), 0);
 
         for (String cardId : cardIdList) {
-            ankiDB.getDatabase().execSQL("delete from cardTags" + " WHERE cardId = " + cardId + " and tagId = " + tagId
-                    + " and src = 0");
+            ankiDB.getDatabase().execSQL("DELETE FROM cardTags WHERE cardId = " + cardId + " and tagId = " + tagId
+                    + " and src = " + Card.TAGS_FACT);
         }
 
         // delete unused tags from tags table
@@ -1435,9 +1458,10 @@ public class Deck {
 
 
     public void suspendCards(long[] ids) {
-        AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL("UPDATE cards SET " + "isDue = 0, "
-                + "priority = -3, " + "modified = "
-                + String.format(ENGLISH_LOCALE, "%f", Utils.now())
+        AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL(
+                "UPDATE cards SET isDue = 0"
+                + ", priority = " + Card.PRIORITY_SUSPENDED
+                + ", modified = " + String.format(ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id IN " + Utils.ids2str(ids));
         rebuildCounts(false);
         flushMod();
@@ -1452,8 +1476,9 @@ public class Deck {
 
 
     public void unsuspendCards(long[] ids) {
-        AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL("UPDATE cards SET " + "priority = 0, "
-                + "modified = " + String.format(ENGLISH_LOCALE, "%f", Utils.now())
+        AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL(
+                "UPDATE cards SET priority = " + Card.PRIORITY_NONE
+                + ", modified = " + String.format(ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id IN " + Utils.ids2str(ids));
         updatePriorities(ids);
         rebuildCounts(false);
@@ -1473,14 +1498,17 @@ public class Deck {
         // Any tags to suspend
         if (suspend != null) {
             long[] ids = tagIds(suspend, false);
-            ankiDB.getDatabase().execSQL("UPDATE tags " + "SET priority = 0 " + "WHERE id in " + Utils.ids2str(ids));
+            ankiDB.getDatabase().execSQL(
+                    "UPDATE tags SET priority = " + Card.PRIORITY_NONE
+                    + " WHERE id in " + Utils.ids2str(ids));
         }
 
         String limit = "";
         if (cardIds.length <= 1000) {
             limit = "and cardTags.cardId in " + Utils.ids2str(cardIds);
         }
-        String query = "SELECT cardTags.cardId, " + "CASE " + "WHEN min(tags.priority) = 0 THEN 0 "
+        // TODO: use constants in this query
+        String query = "SELECT cardTags.cardId, CASE WHEN min(tags.priority) = 0 THEN 0 "
                 + "WHEN max(tags.priority) > 2 THEN max(tags.priority) " + "WHEN min(tags.priority) = 1 THEN 1 "
                 + "ELSE 2 END " + "FROM cardTags,tags " + "WHERE cardTags.tagId = tags.id " + limit + " "
                 + "GROUP BY cardTags.cardId";
@@ -1499,7 +1527,7 @@ public class Deck {
                     extra = ", modified = "
                             + String.format(ENGLISH_LOCALE, "%f", Utils.now());
                 }
-                for (int pri = 0; pri < 5; pri++) {
+                for (int pri = Card.PRIORITY_NONE; pri <= Card.PRIORITY_HIGH; pri++) {
                     int count = 0;
                     for (int i = 0; i < len; i++) {
                         if (cards[i][1] == pri) {
@@ -1515,8 +1543,8 @@ public class Deck {
                         }
                     }
                     // Catch review early & buried but not suspended cards
-                    ankiDB.getDatabase().execSQL("UPDATE cards " + "SET priority = " + pri + extra + " WHERE id in "
-                            + Utils.ids2str(cs) + " and " + "priority != " + pri + " and " + "priority >= -2");
+                    ankiDB.getDatabase().execSQL("UPDATE cards SET priority = " + pri + extra + " WHERE id in "
+                            + Utils.ids2str(cs) + " and priority != " + pri + " and priority >= " + Card.PRIORITY_BURIED);
                 }
             }
         } finally {
@@ -1527,8 +1555,10 @@ public class Deck {
 
         ContentValues val = new ContentValues(1);
         val.put("isDue", 0);
-        int cnt = ankiDB.getDatabase()
-                .update("cards", val, "type in (0,1,2) and " + "priority = 0 and " + "isDue = 1", null);
+        int cnt = ankiDB.getDatabase().update("cards", val,
+                "isDue = 1"
+                + " and type in (" + Card.TYPE_FAILED + "," + Card.TYPE_REV + "," + Card.TYPE_NEW + ")"
+                + " and priority = " + Card.PRIORITY_NONE, null);
         if (cnt > 0) {
             rebuildCounts(false);
         }
@@ -1550,11 +1580,11 @@ public class Deck {
 
     private String cardState(Card card) {
         if (cardIsNew(card)) {
-            return "new";
+            return Card.STATE_NEW;
         } else if (card.getInterval() > MATURE_THRESHOLD) {
-            return "mature";
+            return Card.STATE_MATURE;
         }
-        return "young";
+        return Card.STATE_YOUNG;
     }
 
 
@@ -1631,7 +1661,7 @@ public class Deck {
 
             // Delete unused tags
             ankiDB.getDatabase().execSQL(
-                    "DELETE FROM tags WHERE id in " + Utils.ids2str(unusedTags) + " and priority = 2");
+                    "DELETE FROM tags WHERE id in " + Utils.ids2str(unusedTags) + " and priority = " + Card.PRIORITY_NORMAL);
 
             // Remove any dangling fact
             deleteDanglingFacts();

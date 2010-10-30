@@ -34,6 +34,35 @@ public class Card {
 
     // TODO: Javadoc.
 
+    /** Card types. */
+    public static final int TYPE_FAILED = 0;
+    public static final int TYPE_REV = 1;
+    public static final int TYPE_NEW = 2;
+
+    /** Card states. */
+    public static final String STATE_NEW = "new";
+    public static final String STATE_YOUNG = "young";
+    public static final String STATE_MATURE = "mature";
+
+    /** Auto priorities. */
+    public static final int PRIORITY_NONE = 0;
+    public static final int PRIORITY_LOW = 1;
+    public static final int PRIORITY_NORMAL = 2;
+    public static final int PRIORITY_MEDIUM = 3;
+    public static final int PRIORITY_HIGH = 4;
+
+    /** Manual priorities. */
+    public static final int PRIORITY_REVIEW_EARLY = -1;
+    public static final int PRIORITY_BURIED = -2;
+    public static final int PRIORITY_SUSPENDED = -3;
+
+    /** Ease. */
+    public static final int EASE_NONE = 0;
+    public static final int EASE_FAILED = 1;
+    public static final int EASE_HARD = 2;
+    public static final int EASE_MID = 3;
+    public static final int EASE_EASY = 4;
+
     /** Tags src constants. */
     public static final int TAGS_FACT = 0;
     public static final int TAGS_MODEL = 1;
@@ -52,7 +81,7 @@ public class Card {
     private String mAnswer = "";
     // Default to 'normal' priority
     // This is indexed in deck.java as we need to create a reverse index
-    private int mPriority = 2;
+    private int mPriority = PRIORITY_NORMAL;
     private double mInterval = 0;
     private double mLastInterval = 0;
     private double mDue = Utils.now();
@@ -82,7 +111,7 @@ public class Card {
     private double mSpaceUntil = 0;
     private double mRelativeDelay = 0;
     private int mIsDue = 0;
-    private int mType = 2;
+    private int mType = TYPE_NEW;
     private double mCombinedDue = 0;
     // END SQL table entries
 
@@ -101,14 +130,14 @@ public class Card {
 
     public Card(Deck deck, Fact fact, CardModel cardModel, double created) {
         mTags = "";
-        mTagsBySrc = new String[3];
+        mTagsBySrc = new String[TAGS_TEMPL + 1];
         mTagsBySrc[TAGS_FACT] = "";
         mTagsBySrc[TAGS_MODEL] = "";
         mTagsBySrc[TAGS_TEMPL] = "";
 
         mId = Utils.genID();
         // New cards start as new & due
-        mType = 2;
+        mType = TYPE_NEW;
         mIsDue = 1;
         mTimerStarted = Double.NaN;
         mTimerStopped = Double.NaN;
@@ -203,7 +232,7 @@ public class Card {
     public void updateStats(int ease, String state) {
         char[] newState = state.toCharArray();
         mReps += 1;
-        if (ease > 1) {
+        if (ease > EASE_FAILED) {
             mSuccessive += 1;
         } else {
             mSuccessive = 0;
@@ -220,8 +249,8 @@ public class Card {
             }
         }
         // We don't track first answer for cards
-        if ("new".equalsIgnoreCase(state)) {
-            newState = "young".toCharArray();
+        if (STATE_NEW.equalsIgnoreCase(state)) {
+            newState = STATE_YOUNG.toCharArray();
         }
 
         // Update ease and yes/no count
@@ -235,7 +264,7 @@ public class Card {
             Log.e(AnkiDroidApp.TAG, "Failed to update " + attr + " : " + e.getMessage());
         }
 
-        if (ease < 2) {
+        if (ease < EASE_HARD) {
             mNoCount += 1;
         } else {
             mYesCount += 1;
@@ -290,7 +319,8 @@ public class Card {
         }
 
         try {
-            cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery("SELECT tags.tag, cardTags.src "
+            cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+                    "SELECT tags.tag, cardTags.src "
                     + "FROM cardTags JOIN tags ON cardTags.tagId = tags.id " + "WHERE cardTags.cardId = " + mId
                     + " AND cardTags.src in (" + TAGS_FACT + ", " + TAGS_MODEL + "," + TAGS_TEMPL + ") "
                     + "ORDER BY cardTags.id", null);
@@ -378,11 +408,11 @@ public class Card {
 
     public void toDB() {
         if (mReps == 0) {
-            mType = 2;
+            mType = TYPE_NEW;
         } else if (mSuccessive != 0) {
-            mType = 1;
+            mType = TYPE_REV;
         } else {
-            mType = 0;
+            mType = TYPE_FAILED;
         }
 
         ContentValues values = new ContentValues();
