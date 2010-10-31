@@ -724,16 +724,16 @@ public class Reviewer extends Activity {
         Resources res = getResources();
 
         // Set correct label for each button
-        if (learningButtons()) {
-            mEase1.setText(res.getString(R.string.ease1_learning));
-            mEase2.setText(res.getString(R.string.ease2_learning));
-            mEase3.setText(res.getString(R.string.ease3_learning));
-            mEase4.setText(res.getString(R.string.ease4_learning));
-        } else {
+        if (mCurrentCard.isRev()) {
             mEase1.setText(res.getString(R.string.ease1_successive));
             mEase2.setText(res.getString(R.string.ease2_successive));
             mEase3.setText(res.getString(R.string.ease3_successive));
             mEase4.setText(res.getString(R.string.ease4_successive));
+        } else {
+            mEase1.setText(res.getString(R.string.ease1_learning));
+            mEase2.setText(res.getString(R.string.ease2_learning));
+            mEase3.setText(res.getString(R.string.ease3_learning));
+            mEase4.setText(res.getString(R.string.ease4_learning));
         }
 
         // Show buttons
@@ -743,10 +743,10 @@ public class Reviewer extends Activity {
         mEase4.setVisibility(View.VISIBLE);
 
         // Focus default button
-        if (learningButtons()) {
-            mEase2.requestFocus();
-        } else {
+        if (mCurrentCard.isRev()) {
             mEase3.requestFocus();
+        } else {
+            mEase2.requestFocus();
         }
     }
 
@@ -779,11 +779,6 @@ public class Reviewer extends Activity {
         if (mPrefWriteAnswers) {
             mAnswerField.setVisibility(View.VISIBLE);
         }
-    }
-
-
-    private boolean learningButtons() {
-        return mCurrentCard.getSuccessive() == 0;
     }
 
 
@@ -853,22 +848,22 @@ public class Reviewer extends Activity {
     private void updateCounts() {
         Deck deck = AnkiDroidApp.deck();
         String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
-        setTitle(String.format(unformattedTitle, deck.getDeckName(), deck.getRevCount() + deck.getFailedSoonCount(), deck.getCardCount()));
+        setTitle(String.format(unformattedTitle, deck.getDeckName(), deck.getDueCount(), deck.getCardCount()));
 
         SpannableString failedSoonCount = new SpannableString(String.valueOf(deck.getFailedSoonCount()));
         SpannableString revCount = new SpannableString(String.valueOf(deck.getRevCount()));
         SpannableString newCount = new SpannableString(String.valueOf(deck.getNewCountToday()));
 
-        int isDue = mCurrentCard.getIsDue();
+        boolean isDue = mCurrentCard.isDue();
         int type = mCurrentCard.getType();
 
-        if ((isDue == 1) && (type == Card.TYPE_NEW)) {
+        if (isDue && (type == Card.TYPE_NEW)) {
             newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
         }
-        if ((isDue == 1) && (type == Card.TYPE_REV)) {
+        if (isDue && (type == Card.TYPE_REV)) {
             revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
         }
-        if ((isDue == 1) && (type == Card.TYPE_FAILED)) {
+        if (isDue && (type == Card.TYPE_FAILED)) {
             failedSoonCount.setSpan(new UnderlineSpan(), 0, failedSoonCount.length(), 0);
         }
 

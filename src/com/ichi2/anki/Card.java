@@ -68,6 +68,8 @@ public class Card {
     public static final int TAGS_MODEL = 1;
     public static final int TAGS_TEMPL = 2;
 
+    private static final int MATURE_THRESHOLD = 21;
+
     // BEGIN SQL table entries
     private long mId; // Primary key
     private long mFactId; // Foreign key facts.id
@@ -79,8 +81,6 @@ public class Card {
     // Cached - changed on fact update
     private String mQuestion = "";
     private String mAnswer = "";
-    // Default to 'normal' priority
-    // This is indexed in deck.java as we need to create a reverse index
     private int mPriority = PRIORITY_NORMAL;
     private double mInterval = 0;
     private double mLastInterval = 0;
@@ -276,6 +276,95 @@ public class Card {
     }
 
 
+    public void updateFactor(int ease, double averageFactor) {
+        mLastFactor = mFactor;
+        if (isNew()) {
+            mFactor = averageFactor; // card is new, inherit beginning factor
+        }
+        if (isRev() && !isBeingLearnt()) {
+            if (ease == EASE_FAILED) {
+                mFactor -= 0.20;
+            } else if (ease == EASE_HARD) {
+                mFactor -= 0.15;
+            }
+        }
+        if (ease == EASE_EASY) {
+            mFactor += 0.10;
+        }
+        mFactor = Math.max(1.3, mFactor);
+    }
+
+
+    public double adjustedDelay(int ease) {
+        double now = Utils.now();
+        if (isNew()) {
+            return 0;
+        }
+        if (mCombinedDue <= now) {
+            return (now -mDue) / 86400.0;
+        } else {
+            return (now - mCombinedDue) / 86400.0;
+        }
+    }
+
+
+    /**
+     * Suspend this card.
+     */
+    public void suspend() {
+        long[] ids = new long[1];
+        ids[0] = mId;
+        mDeck.suspendCards(ids);
+    }
+
+
+    /**
+     * Unsuspend this card.
+     */
+    public void unsuspend() {
+        long[] ids = new long[1];
+        ids[0] = mId;
+        mDeck.unsuspendCards(ids);
+    }
+
+
+    public String getState() {
+        if (isNew()) {
+            return STATE_NEW;
+        } else if (mInterval > MATURE_THRESHOLD) {
+            return STATE_MATURE;
+        }
+        return STATE_YOUNG;
+    }
+
+
+    /**
+     * Check if a card is a new card.
+     * @return True if a card has never been seen before.
+     */
+    public boolean isNew() {
+        return mReps == 0;
+    }
+
+
+    /**
+     * Check if this is a revision of a successfully answered card.
+     * @return True if the card was successfully answered last time.
+     */
+    public boolean isRev() {
+        return mSuccessive != 0;
+    }
+
+
+    /**
+     * Check if a card is being learnt.
+     * @return True if card should use present intervals.
+     */
+    public boolean isBeingLearnt() {
+        return mLastInterval < 7;
+    }
+
+
     public String[] splitTags() {
         return mTagsBySrc;
     }
@@ -407,9 +496,9 @@ public class Card {
 
 
     public void toDB() {
-        if (mReps == 0) {
+        if (isNew()) {
             mType = TYPE_NEW;
-        } else if (mSuccessive != 0) {
+        } else if (isRev()) {
             mType = TYPE_REV;
         } else {
             mType = TYPE_FAILED;
@@ -459,8 +548,11 @@ public class Card {
     }
 
 
-    // Method used for building downloaded decks
+    /**
+     * Commit question and answer fields to database.
+     */
     public void updateQAfields() {
+        setModified();
         ContentValues values = new ContentValues();
         values.put("modified", mModified);
         values.put("question", mQuestion);
@@ -501,11 +593,6 @@ public class Card {
 
     public double getLastFactor() {
         return mLastFactor;
-    }
-
-
-    public void setFactor(double factor) {
-        mFactor = factor;
     }
 
 
@@ -564,11 +651,6 @@ public class Card {
     }
 
 
-    public int getSuccessive() {
-        return mSuccessive;
-    }
-
-
     public void setLastDue(double lastDue) {
         mLastDue = lastDue;
     }
@@ -589,8 +671,12 @@ public class Card {
     }
 
 
-    public int getIsDue() {
-        return mIsDue;
+    /**
+     * Check whether the card is due.
+     * @return True if the card is due, false otherwise
+     */
+    public boolean isDue() {
+        return (mIsDue == 1);
     }
 
 

@@ -1511,41 +1511,7 @@ public class SyncClient {
         JSONObject bundledDeck = new JSONObject();
 
         try {
-            bundledDeck.put("averageFactor", mDeck.getAverageFactor());
-            bundledDeck.put("cardCount", mDeck.getCardCount());
-            bundledDeck.put("collapseTime", mDeck.getCollapseTime());
-            bundledDeck.put("created", mDeck.getCreated());
-            // bundledDeck.put("currentModelId", testDeck.currentModelId);
-            bundledDeck.put("delay0", mDeck.getDelay0());
-            bundledDeck.put("delay1", mDeck.getDelay1());
-            bundledDeck.put("delay2", mDeck.getDelay2());
-            bundledDeck.put("description", mDeck.getDescription());
-            bundledDeck.put("easyIntervalMax", mDeck.getEasyIntervalMax());
-            bundledDeck.put("easyIntervalMin", mDeck.getEasyIntervalMin());
-            bundledDeck.put("factCount", mDeck.getFactCount());
-            bundledDeck.put("failedCardMax", mDeck.getFailedCardMax());
-            bundledDeck.put("failedNowCount", mDeck.getFailedNowCount());
-            bundledDeck.put("failedSoonCount", mDeck.getFailedSoonCount());
-            bundledDeck.put("hardIntervalMax", mDeck.getHardIntervalMax());
-            bundledDeck.put("hardIntervalMin", mDeck.getHardIntervalMin());
-            bundledDeck.put("highPriority", mDeck.getHighPriority());
-            bundledDeck.put("id", mDeck.getId());
-            bundledDeck.put("lastLoaded", mDeck.getLastLoaded());
-            bundledDeck.put("lastSync", mDeck.getLastSync());
-            bundledDeck.put("lowPriority", mDeck.getLowPriority());
-            bundledDeck.put("medPriority", mDeck.getMedPriority());
-            bundledDeck.put("midIntervalMax", mDeck.getMidIntervalMax());
-            bundledDeck.put("midIntervalMin", mDeck.getMidIntervalMin());
-            bundledDeck.put("modified", mDeck.getModified());
-            bundledDeck.put("newCardModulus", mDeck.getNewCardModulus());
-            bundledDeck.put("newCount", mDeck.getNewCount());
-            bundledDeck.put("newCountToday", mDeck.getNewCountToday());
-            bundledDeck.put("newEarly", mDeck.isNewEarly());
-            bundledDeck.put("revCount", mDeck.getRevCount());
-            bundledDeck.put("reviewEarly", mDeck.isReviewEarly());
-            bundledDeck.put("suspended", mDeck.getSuspended());
-            bundledDeck.put("undoEnabled", mDeck.isUndoEnabled());
-            bundledDeck.put("utcOffset", mDeck.getUtcOffset());
+            bundledDeck = mDeck.bundleJson(bundledDeck);
 
             // AnkiDroid Deck.java does not have:
             // css, forceMediaDir, lastSessionStart, lastTags, needLock, newCardOrder, newCardSpacing, newCardsPerDay,
@@ -1599,60 +1565,7 @@ public class SyncClient {
             statement.close();
 
             // Update deck
-            mDeck.setAverageFactor(deckPayload.getDouble("averageFactor"));
-            mDeck.setCardCount(deckPayload.getInt("cardCount"));
-            mDeck.setCollapseTime(deckPayload.getDouble("collapseTime"));
-            mDeck.setCreated(deckPayload.getDouble("created"));
-            // css
-            mDeck.setCurrentModelId(deckPayload.getLong("currentModelId"));
-            mDeck.setDelay0(deckPayload.getDouble("delay0"));
-            mDeck.setDelay1(deckPayload.getDouble("delay1"));
-            mDeck.setDelay2(deckPayload.getDouble("delay2"));
-            mDeck.setDescription(deckPayload.getString("description"));
-            mDeck.setEasyIntervalMax(deckPayload.getDouble("easyIntervalMax"));
-            mDeck.setEasyIntervalMin(deckPayload.getDouble("easyIntervalMin"));
-            mDeck.setFactCount(deckPayload.getInt("factCount"));
-            mDeck.setFailedCardMax(deckPayload.getInt("failedCardMax"));
-            mDeck.setFailedNowCount(deckPayload.getInt("failedNowCount"));
-            mDeck.setFailedSoonCount(deckPayload.getInt("failedSoonCount"));
-            // forceMediaDir
-            mDeck.setHardIntervalMax(deckPayload.getDouble("hardIntervalMax"));
-            mDeck.setHardIntervalMin(deckPayload.getDouble("hardIntervalMin"));
-            mDeck.setHighPriority(deckPayload.getString("highPriority"));
-            mDeck.setId(deckPayload.getLong("id"));
-            // key
-            mDeck.setLastLoaded(deckPayload.getDouble("lastLoaded"));
-            // lastSessionStart
-            mDeck.setLastSync(deckPayload.getDouble("modified"));
-            // lastTags
-            mDeck.setLowPriority(deckPayload.getString("lowPriority"));
-            mDeck.setMedPriority(deckPayload.getString("medPriority"));
-            mDeck.setMidIntervalMax(deckPayload.getDouble("midIntervalMax"));
-            mDeck.setMidIntervalMin(deckPayload.getDouble("midIntervalMin"));
-            mDeck.setModified(deckPayload.getDouble("modified"));
-            // needLock
-            mDeck.setNewCardModulus(deckPayload.getInt("newCardModulus"));
-            // newCardOrder
-            // newCardSpacings
-            // newCardsPerDay
-            mDeck.setNewCount(deckPayload.getInt("newCount"));
-            mDeck.setNewCountToday(deckPayload.getInt("newCountToday"));
-            mDeck.setNewEarly(deckPayload.getBoolean("newEarly"));
-            // revCardOrder
-            mDeck.setRevCount(deckPayload.getInt("revCount"));
-            mDeck.setReviewEarly(deckPayload.getBoolean("reviewEarly"));
-            // sessionRepLimit
-            // sessionStartReps
-            // sessionStartTime
-            // sessionTimeLimit
-            mDeck.setSuspended(deckPayload.getString("suspended"));
-            // tmpMediaDir
-            mDeck.setUndoEnabled(deckPayload.getBoolean("undoEnabled"));
-            mDeck.setUtcOffset(deckPayload.getDouble("utcOffset"));
-
-            mDeck.commitToDB();
-
-            mDeck.updateDynamicIndices();
+            mDeck.updateFromJson(deckPayload);
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
@@ -1674,14 +1587,14 @@ public class SyncClient {
         try {
             Stats stat = new Stats(mDeck);
             // Put global stats
-            bundledStats.put("global", bundleStat(Stats.globalStats(mDeck)));
+            bundledStats.put("global", Stats.globalStats(mDeck).bundleJson());
             // Put daily stats
             JSONArray dailyStats = new JSONArray();
             for (Long id : ids) {
                 // Update stat with the values of the stat with id ids.get(i)
                 stat.fromDB(id);
                 // Bundle this stat and add it to dailyStats
-                dailyStats.put(bundleStat(stat));
+                dailyStats.put(stat.bundleJson());
             }
             bundledStats.put("daily", dailyStats);
         } catch (SQLException e) {
@@ -1697,46 +1610,11 @@ public class SyncClient {
     }
 
 
-    private JSONObject bundleStat(Stats stat) {
-        JSONObject bundledStat = new JSONObject();
-
-        try {
-            bundledStat.put("type", stat.getType());
-            bundledStat.put("day", Utils.dateToOrdinal(stat.getDay()));
-            bundledStat.put("reps", stat.getReps());
-            bundledStat.put("averageTime", stat.getAverageTime());
-            bundledStat.put("reviewTime", stat.getReviewTime());
-            bundledStat.put("distractedTime", stat.getDistractedTime());
-            bundledStat.put("distractedReps", stat.getDistractedReps());
-            bundledStat.put("newEase0", stat.getNewEase0());
-            bundledStat.put("newEase1", stat.getNewEase1());
-            bundledStat.put("newEase2", stat.getNewEase2());
-            bundledStat.put("newEase3", stat.getNewEase3());
-            bundledStat.put("newEase4", stat.getNewEase4());
-            bundledStat.put("youngEase0", stat.getYoungEase0());
-            bundledStat.put("youngEase1", stat.getYoungEase1());
-            bundledStat.put("youngEase2", stat.getYoungEase2());
-            bundledStat.put("youngEase3", stat.getYoungEase3());
-            bundledStat.put("youngEase4", stat.getYoungEase4());
-            bundledStat.put("matureEase0", stat.getMatureEase0());
-            bundledStat.put("matureEase1", stat.getMatureEase1());
-            bundledStat.put("matureEase2", stat.getMatureEase2());
-            bundledStat.put("matureEase3", stat.getMatureEase3());
-            bundledStat.put("matureEase4", stat.getMatureEase4());
-
-        } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-        }
-
-        return bundledStat;
-    }
-
-
     private void updateStats(JSONObject stats) {
         try {
             // Update global stats
             Stats globalStats = Stats.globalStats(mDeck);
-            updateStat(globalStats, stats.getJSONObject("global"));
+            globalStats.updateFromJson(stats.getJSONObject("global"));
 
             // Update daily stats
             Stats stat = new Stats(mDeck);
@@ -1758,40 +1636,8 @@ public class SyncClient {
                 }
 
                 // Update daily stat
-                updateStat(stat, remoteStat);
+                stat.updateFromJson(remoteStat);
             }
-        } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-        }
-    }
-
-
-    private void updateStat(Stats stat, JSONObject remoteStat) {
-        try {
-            stat.setAverageTime(remoteStat.getDouble("averageTime"));
-            stat.setDay(Utils.ordinalToDate(remoteStat.getInt("day")));
-            stat.setDistractedReps(remoteStat.getInt("distractedReps"));
-            stat.setDistractedTime(remoteStat.getDouble("distractedTime"));
-            stat.setMatureEase0(remoteStat.getInt("matureEase0"));
-            stat.setMatureEase1(remoteStat.getInt("matureEase1"));
-            stat.setMatureEase2(remoteStat.getInt("matureEase2"));
-            stat.setMatureEase3(remoteStat.getInt("matureEase3"));
-            stat.setMatureEase4(remoteStat.getInt("matureEase4"));
-            stat.setNewEase0(remoteStat.getInt("newEase0"));
-            stat.setNewEase1(remoteStat.getInt("newEase1"));
-            stat.setNewEase2(remoteStat.getInt("newEase2"));
-            stat.setNewEase3(remoteStat.getInt("newEase3"));
-            stat.setNewEase4(remoteStat.getInt("newEase4"));
-            stat.setReps(remoteStat.getInt("reps"));
-            stat.setReviewTime(remoteStat.getDouble("reviewTime"));
-            stat.setType(remoteStat.getInt("type"));
-            stat.setYoungEase0(remoteStat.getInt("youngEase0"));
-            stat.setYoungEase1(remoteStat.getInt("youngEase1"));
-            stat.setYoungEase2(remoteStat.getInt("youngEase2"));
-            stat.setYoungEase3(remoteStat.getInt("youngEase3"));
-            stat.setYoungEase4(remoteStat.getInt("youngEase4"));
-
-            stat.toDB();
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }

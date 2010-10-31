@@ -446,7 +446,7 @@ public class DeckPicker extends Activity implements Runnable {
                         Log.w(AnkiDroidApp.TAG, "Could not open database " + path);
                         continue;
                     }
-                    int dueCards = deck.getFailedSoonCount() + deck.getRevCount();
+                    int dueCards = deck.getDueCount();
                     int totalCards = deck.getCardCount();
                     int newCards = deck.getNewCountToday();
                     deck.closeDeck();

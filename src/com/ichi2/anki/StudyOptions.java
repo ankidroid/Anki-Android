@@ -553,7 +553,7 @@ public class StudyOptions extends Activity {
         DeckTask.waitToFinish();
         if (deck != null) {
             deck.checkDue();
-            int reviewCount = deck.getRevCount() + deck.getFailedSoonCount();
+            int reviewCount = deck.getDueCount();
             String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
             setTitle(String.format(unformattedTitle, deck.getDeckName(), reviewCount, deck.getCardCount()));
 

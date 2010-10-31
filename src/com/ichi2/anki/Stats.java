@@ -20,6 +20,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Field;
 import java.sql.Date;
 import java.util.Calendar;
@@ -229,6 +232,73 @@ public class Stats {
     }
 
 
+    public JSONObject bundleJson() {
+        JSONObject bundledStat = new JSONObject();
+
+        try {
+            bundledStat.put("type", mType);
+            bundledStat.put("day", Utils.dateToOrdinal(mDay));
+            bundledStat.put("reps", mReps);
+            bundledStat.put("averageTime", mAverageTime);
+            bundledStat.put("reviewTime", mReviewTime);
+            bundledStat.put("distractedTime", mDistractedTime);
+            bundledStat.put("distractedReps", mDistractedReps);
+            bundledStat.put("newEase0", mNewEase0);
+            bundledStat.put("newEase1", mNewEase1);
+            bundledStat.put("newEase2", mNewEase2);
+            bundledStat.put("newEase3", mNewEase3);
+            bundledStat.put("newEase4", mNewEase4);
+            bundledStat.put("youngEase0", mYoungEase0);
+            bundledStat.put("youngEase1", mYoungEase1);
+            bundledStat.put("youngEase2", mYoungEase2);
+            bundledStat.put("youngEase3", mYoungEase3);
+            bundledStat.put("youngEase4", mYoungEase4);
+            bundledStat.put("matureEase0", mMatureEase0);
+            bundledStat.put("matureEase1", mMatureEase1);
+            bundledStat.put("matureEase2", mMatureEase2);
+            bundledStat.put("matureEase3", mMatureEase3);
+            bundledStat.put("matureEase4", mMatureEase4);
+
+        } catch (JSONException e) {
+            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+        }
+
+        return bundledStat;
+    }
+
+
+    public void updateFromJson(JSONObject remoteStat) {
+        try {
+            mAverageTime = remoteStat.getDouble("averageTime");
+            mDay = Utils.ordinalToDate(remoteStat.getInt("day"));
+            mDistractedReps = remoteStat.getInt("distractedReps");
+            mDistractedTime = remoteStat.getDouble("distractedTime");
+            mMatureEase0 = remoteStat.getInt("matureEase0");
+            mMatureEase1 = remoteStat.getInt("matureEase1");
+            mMatureEase2 = remoteStat.getInt("matureEase2");
+            mMatureEase3 = remoteStat.getInt("matureEase3");
+            mMatureEase4 = remoteStat.getInt("matureEase4");
+            mNewEase0 = remoteStat.getInt("newEase0");
+            mNewEase1 = remoteStat.getInt("newEase1");
+            mNewEase2 = remoteStat.getInt("newEase2");
+            mNewEase3 = remoteStat.getInt("newEase3");
+            mNewEase4 = remoteStat.getInt("newEase4");
+            mReps = remoteStat.getInt("reps");
+            mReviewTime = remoteStat.getDouble("reviewTime");
+            mType = remoteStat.getInt("type");
+            mYoungEase0 = remoteStat.getInt("youngEase0");
+            mYoungEase1 = remoteStat.getInt("youngEase1");
+            mYoungEase2 = remoteStat.getInt("youngEase2");
+            mYoungEase3 = remoteStat.getInt("youngEase3");
+            mYoungEase4 = remoteStat.getInt("youngEase4");
+
+            toDB();
+        } catch (JSONException e) {
+            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+        }
+    }
+
+
     public static Stats globalStats(Deck deck) {
         Log.i(AnkiDroidApp.TAG, "Getting global stats...");
         int type = STATS_LIFE;
@@ -288,42 +358,10 @@ public class Stats {
 
 
     /**
-     * @param reps the reps to set
-     */
-    public void setReps(int reps) {
-        mReps = reps;
-    }
-
-
-    /**
      * @return the reps
      */
     public int getReps() {
         return mReps;
-    }
-
-
-    /**
-     * @param type the type to set
-     */
-    public void setType(int type) {
-        mType = type;
-    }
-
-
-    /**
-     * @return the type
-     */
-    public int getType() {
-        return mType;
-    }
-
-
-    /**
-     * @param day the day to set
-     */
-    public void setDay(Date day) {
-        mDay = day;
     }
 
 
@@ -336,305 +374,9 @@ public class Stats {
 
 
     /**
-     * @param distractedReps the distractedReps to set
+     * @return the total number of cards marked as new
      */
-    public void setDistractedReps(int distractedReps) {
-        mDistractedReps = distractedReps;
-    }
-
-
-    /**
-     * @return the distractedReps
-     */
-    public int getDistractedReps() {
-        return mDistractedReps;
-    }
-
-
-    /**
-     * @param distractedTime the distractedTime to set
-     */
-    public void setDistractedTime(double distractedTime) {
-        mDistractedTime = distractedTime;
-    }
-
-
-    /**
-     * @return the distractedTime
-     */
-    public double getDistractedTime() {
-        return mDistractedTime;
-    }
-
-
-    /**
-     * @param averageTime the averageTime to set
-     */
-    public void setAverageTime(double averageTime) {
-        mAverageTime = averageTime;
-    }
-
-
-    /**
-     * @return the averageTime
-     */
-    public double getAverageTime() {
-        return mAverageTime;
-    }
-
-
-    /**
-     * @param reviewTime the reviewTime to set
-     */
-    public void setReviewTime(double reviewTime) {
-        mReviewTime = reviewTime;
-    }
-
-
-    /**
-     * @return the reviewTime
-     */
-    public double getReviewTime() {
-        return mReviewTime;
-    }
-
-
-    /**
-     * @param newEase0 the newEase0 to set
-     */
-    public void setNewEase0(int newEase0) {
-        mNewEase0 = newEase0;
-    }
-
-
-    /**
-     * @return the newEase0
-     */
-    public int getNewEase0() {
-        return mNewEase0;
-    }
-
-
-    /**
-     * @param newEase1 the newEase1 to set
-     */
-    public void setNewEase1(int newEase1) {
-        mNewEase1 = newEase1;
-    }
-
-
-    /**
-     * @return the newEase1
-     */
-    public int getNewEase1() {
-        return mNewEase1;
-    }
-
-
-    /**
-     * @param newEase2 the newEase2 to set
-     */
-    public void setNewEase2(int newEase2) {
-        mNewEase2 = newEase2;
-    }
-
-
-    /**
-     * @return the newEase2
-     */
-    public int getNewEase2() {
-        return mNewEase2;
-    }
-
-
-    /**
-     * @param newEase3 the newEase3 to set
-     */
-    public void setNewEase3(int newEase3) {
-        mNewEase3 = newEase3;
-    }
-
-
-    /**
-     * @return the newEase3
-     */
-    public int getNewEase3() {
-        return mNewEase3;
-    }
-
-
-    /**
-     * @param newEase4 the newEase4 to set
-     */
-    public void setNewEase4(int newEase4) {
-        mNewEase4 = newEase4;
-    }
-
-
-    /**
-     * @return the newEase4
-     */
-    public int getNewEase4() {
-        return mNewEase4;
-    }
-
-
-    /**
-     * @param youngEase0 the youngEase0 to set
-     */
-    public void setYoungEase0(int youngEase0) {
-        mYoungEase0 = youngEase0;
-    }
-
-
-    /**
-     * @return the youngEase0
-     */
-    public int getYoungEase0() {
-        return mYoungEase0;
-    }
-
-
-    /**
-     * @param youngEase1 the youngEase1 to set
-     */
-    public void setYoungEase1(int youngEase1) {
-        mYoungEase1 = youngEase1;
-    }
-
-
-    /**
-     * @return the youngEase1
-     */
-    public int getYoungEase1() {
-        return mYoungEase1;
-    }
-
-
-    /**
-     * @param youngEase2 the youngEase2 to set
-     */
-    public void setYoungEase2(int youngEase2) {
-        mYoungEase2 = youngEase2;
-    }
-
-
-    /**
-     * @return the youngEase2
-     */
-    public int getYoungEase2() {
-        return mYoungEase2;
-    }
-
-
-    /**
-     * @param youngEase3 the youngEase3 to set
-     */
-    public void setYoungEase3(int youngEase3) {
-        mYoungEase3 = youngEase3;
-    }
-
-
-    /**
-     * @return the youngEase3
-     */
-    public int getYoungEase3() {
-        return mYoungEase3;
-    }
-
-
-    /**
-     * @param youngEase4 the youngEase4 to set
-     */
-    public void setYoungEase4(int youngEase4) {
-        mYoungEase4 = youngEase4;
-    }
-
-
-    /**
-     * @return the youngEase4
-     */
-    public int getYoungEase4() {
-        return mYoungEase4;
-    }
-
-
-    /**
-     * @param matureEase0 the matureEase0 to set
-     */
-    public void setMatureEase0(int matureEase0) {
-        mMatureEase0 = matureEase0;
-    }
-
-
-    /**
-     * @return the matureEase0
-     */
-    public int getMatureEase0() {
-        return mMatureEase0;
-    }
-
-
-    /**
-     * @param matureEase1 the matureEase1 to set
-     */
-    public void setMatureEase1(int matureEase1) {
-        mMatureEase1 = matureEase1;
-    }
-
-
-    /**
-     * @return the matureEase1
-     */
-    public int getMatureEase1() {
-        return mMatureEase1;
-    }
-
-
-    /**
-     * @param matureEase2 the matureEase2 to set
-     */
-    public void setMatureEase2(int matureEase2) {
-        mMatureEase2 = matureEase2;
-    }
-
-
-    /**
-     * @return the matureEase2
-     */
-    public int getMatureEase2() {
-        return mMatureEase2;
-    }
-
-
-    /**
-     * @param matureEase3 the matureEase3 to set
-     */
-    public void setMatureEase3(int matureEase3) {
-        mMatureEase3 = matureEase3;
-    }
-
-
-    /**
-     * @return the matureEase3
-     */
-    public int getMatureEase3() {
-        return mMatureEase3;
-    }
-
-
-    /**
-     * @param matureEase4 the matureEase4 to set
-     */
-    public void setMatureEase4(int matureEase4) {
-        mMatureEase4 = matureEase4;
-    }
-
-
-    /**
-     * @return the matureEase4
-     */
-    public int getMatureEase4() {
-        return mMatureEase4;
+    public int getNewCardsCount() {
+        return mNewEase0 + mNewEase1 + mNewEase2 + mNewEase3 + mNewEase4;
     }
 }

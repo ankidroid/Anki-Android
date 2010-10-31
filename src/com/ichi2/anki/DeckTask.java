@@ -148,7 +148,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Iterator<Card> iter = saveCards.iterator();
         while (iter.hasNext()) {
             Card modifyCard = iter.next();
-            deck.updateCard(modifyCard);
+            modifyCard.updateQAfields();
         }
         // Find all cards based on this fact and update them with the updateCard method.
 
@@ -213,7 +213,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             return new TaskData(DECK_NOT_LOADED);
         } catch (CursorIndexOutOfBoundsException e) {
             Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
-            ;
             return new TaskData(DECK_EMPTY);
         }
     }
@@ -230,7 +229,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
             if (oldCard != null) {
                 start = System.currentTimeMillis();
-                deck.suspendCard(oldCard.getId());
+                oldCard.suspend();
                 stop = System.currentTimeMillis();
                 Log.v(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - Suspended card in " + (stop - start) + " ms.");
             }

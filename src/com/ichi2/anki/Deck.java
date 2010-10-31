@@ -24,6 +24,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,9 +44,6 @@ import java.util.Stack;
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Deck
  */
 public class Deck {
-
-    // Rest
-    private static final int MATURE_THRESHOLD = 21;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -488,6 +489,134 @@ public class Deck {
     }
 
 
+    /**
+     * @return the failedSoonCount
+     */
+    public int getFailedSoonCount() {
+        return mFailedSoonCount;
+    }
+
+
+    /**
+     * @return the revCount
+     */
+    public int getRevCount() {
+        return mRevCount;
+    }
+
+
+    /**
+     * @return the newCountToday
+     */
+    public int getNewCountToday() {
+        return mNewCountToday;
+    }
+
+
+    /**
+     * @return the number of due cards in the deck
+     */
+    public int getDueCount() {
+        return mFailedSoonCount + mRevCount;
+    }
+
+
+    /**
+     * @param cardCount the cardCount to set
+     */
+    public void setCardCount(int cardCount) {
+        mCardCount = cardCount;
+    }
+
+
+    /**
+     * @return the cardCount
+     */
+    public int getCardCount() {
+        return mCardCount;
+    }
+
+
+    /**
+     * @return the currentModelId
+     */
+    public long getCurrentModelId() {
+        return mCurrentModelId;
+    }
+
+
+    /**
+     * @return the deckName
+     */
+    public String getDeckName() {
+        return mDeckName;
+    }
+
+
+    /**
+     * @return the utcOffset
+     */
+    public double getUtcOffset() {
+        return mUtcOffset;
+    }
+
+
+    /**
+     * @return the newCount
+     */
+    public int getNewCount() {
+        return mNewCount;
+    }
+
+
+    /**
+     * @return the modified
+     */
+    public double getModified() {
+        return mModified;
+    }
+
+
+    /**
+     * @param lastSync the lastSync to set
+     */
+    public void setLastSync(double lastSync) {
+        mLastSync = lastSync;
+    }
+
+
+    /**
+     * @return the lastSync
+     */
+    public double getLastSync() {
+        return mLastSync;
+    }
+
+
+    /**
+     * @param factCount the factCount to set
+     */
+    public void setFactCount(int factCount) {
+        mFactCount = factCount;
+    }
+
+
+    /**
+     * @return the factCount
+     */
+    public int getFactCount() {
+        return mFactCount;
+    }
+
+
+    /**
+     * @param lastLoaded the lastLoaded to set
+     */
+    public void setLastLoaded(double lastLoaded) {
+        mLastLoaded = lastLoaded;
+    }
+
+
     /*
      * Getting the next card*********************************************************
      */
@@ -669,32 +798,6 @@ public class Deck {
     }
 
 
-    /**
-     * Saves an updated card to the database.
-     * 
-     * @param card The modified version of a card from this deck to be saved.
-     */
-    public void updateCard(Card card) {
-        double now = Utils.now();
-        ContentValues updateValues = new ContentValues();
-        updateValues.put("question", card.getQuestion());
-        updateValues.put("answer", card.getAnswer());
-        updateValues.put("modified", now);
-        AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().update(
-                "cards", updateValues, "id = ?", new String[] { "" + card.getId() });
-        // AnkiDb.getDatabase().execSQL(String.format(NULL_LOCALE,
-        // "UPDATE cards " +
-        // "SET question = %s, " +
-        // "answer = %s, " +
-        // "modified = %f, " +
-        // "WHERE id != %d and factId = %d",
-        // card.question, card.answer, now, card.id, card.factId));
-        //
-        Log.v(AnkiDroidApp.TAG, "Update question and answer in card id# " + card.getId());
-
-    }
-
-
     // Optimization for updateAllCardsFromPosition and updateAllCards
     // Drops some indices and changes synchronous pragma
     public void beforeUpdateCards() {
@@ -765,7 +868,6 @@ public class Deck {
                 Log.i(AnkiDroidApp.TAG, "Question = " + card.getQuestion());
                 card.setAnswer(newQA.get("answer"));
                 Log.i(AnkiDroidApp.TAG, "Answer = " + card.getAnswer());
-                card.setModified(Utils.now());
 
                 card.updateQAfields();
 
@@ -796,11 +898,11 @@ public class Deck {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeckPath);
 
         // Old state
-        String oldState = cardState(card);
+        String oldState = card.getState();
         double lastDelaySecs = Utils.now() - card.getCombinedDue();
         double start = System.currentTimeMillis();
         double lastDelay = lastDelaySecs / 86400.0;
-        int oldSuc = card.getSuccessive();
+        boolean oldIsRev = card.isRev();
 
         // update card details
         double last = card.getInterval();
@@ -808,14 +910,14 @@ public class Deck {
         if (lastDelay >= 0) {
             card.setLastInterval(last); // keep last interval if reviewing early
         }
-        if (card.getReps() != 0) {
+        if (!card.isNew()) {
             card.setLastDue(card.getDue()); // only update if card was not new
         }
         card.setDue(nextDue(card, ease, oldState));
         card.setIsDue(0);
         card.setLastFactor(card.getFactor());
         if (lastDelay >= 0) {
-            updateFactor(card, ease); // don't update factor if learning ahead
+            card.updateFactor(ease, mAverageFactor); // don't update factor if learning ahead
         }
 
         // spacing
@@ -904,7 +1006,7 @@ public class Deck {
 
         // temp suspend if learning ahead
         if (mReviewEarly && lastDelay < 0) {
-            if (oldSuc != 0 || lastDelaySecs > mDelay0 || !showFailedLast()) {
+            if (oldIsRev || lastDelaySecs > mDelay0 || !showFailedLast()) {
                 card.setPriority(Card.PRIORITY_REVIEW_EARLY);
             }
         }
@@ -965,7 +1067,7 @@ public class Deck {
      */
 
     private double nextInterval(Card card, int ease) {
-        double delay = adjustedDelay(card, ease);
+        double delay = card.adjustedDelay(ease);
         return nextInterval(card, delay, ease);
     }
 
@@ -975,7 +1077,7 @@ public class Deck {
         double factor = card.getFactor();
 
         // if shown early and not failed
-        if ((delay < 0) && (card.getSuccessive() != 0)) {
+        if ((delay < 0) && card.isRev()) {
             interval = Math.max(card.getLastInterval(), card.getInterval() + delay);
             if (interval < mMidIntervalMin) {
                 interval = 0;
@@ -1024,7 +1126,7 @@ public class Deck {
     private double nextDue(Card card, int ease, String oldState) {
         double due;
         if (ease == Card.EASE_FAILED) {
-            if (oldState.equals("mature")) {
+            if (oldState.equals(Card.STATE_MATURE)) {
                 due = mDelay1;
             } else {
                 due = mDelay0;
@@ -1035,37 +1137,6 @@ public class Deck {
         return (due + Utils.now());
     }
 
-
-    private void updateFactor(Card card, int ease) {
-        card.setLastFactor(card.getFactor());
-        if (card.getReps() == 0) {
-            card.setFactor(mAverageFactor); // card is new, inherit beginning factor
-        }
-        if (card.getSuccessive() != 0 && !cardIsBeingLearnt(card)) {
-            if (ease == Card.EASE_FAILED) {
-                card.setFactor(card.getFactor() - 0.20);
-            } else if (ease == Card.EASE_HARD) {
-                card.setFactor(card.getFactor() - 0.15);
-            }
-        }
-        if (ease == Card.EASE_EASY) {
-            card.setFactor(card.getFactor() + 0.10);
-        }
-        card.setFactor(Math.max(1.3, card.getFactor()));
-    }
-
-
-    private double adjustedDelay(Card card, int ease) {
-        double now = Utils.now();
-        if (cardIsNew(card)) {
-            return 0;
-        }
-        if (card.getCombinedDue() <= now) {
-            return (now - card.getDue()) / 86400.0;
-        } else {
-            return (now - card.getCombinedDue()) / 86400.0;
-        }
-    }
 
 
     /*
@@ -1450,12 +1521,6 @@ public class Deck {
     /*
      * Priorities*********************************************************
      */
-    public void suspendCard(long cardId) {
-        long[] ids = new long[1];
-        ids[0] = cardId;
-        suspendCards(ids);
-    }
-
 
     public void suspendCards(long[] ids) {
         AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL(
@@ -1465,13 +1530,6 @@ public class Deck {
                 + " WHERE id IN " + Utils.ids2str(ids));
         rebuildCounts(false);
         flushMod();
-    }
-
-
-    public void unsuspendCard(long cardId) {
-        long[] ids = new long[1];
-        ids[0] = cardId;
-        unsuspendCards(ids);
     }
 
 
@@ -1570,42 +1628,9 @@ public class Deck {
      */
 
     private int newCardsToday() {
-        return (mDailyStats.getNewEase0() + mDailyStats.getNewEase1() + mDailyStats.getNewEase2() + mDailyStats.getNewEase3() + mDailyStats.getNewEase4());
+        return mDailyStats.getNewCardsCount();
     }
 
-
-    /*
-     * Card Predicates*********************************************************
-     */
-
-    private String cardState(Card card) {
-        if (cardIsNew(card)) {
-            return Card.STATE_NEW;
-        } else if (card.getInterval() > MATURE_THRESHOLD) {
-            return Card.STATE_MATURE;
-        }
-        return Card.STATE_YOUNG;
-    }
-
-
-    /**
-     * Check if a card is a new card.
-     * @param card The card to check.
-     * @return True if a card has never been seen before.
-     */
-    private boolean cardIsNew(Card card) {
-        return card.getReps() == 0;
-    }
-
-
-    /**
-     * Check if a card is a new card.
-     * @param card The card to check.
-     * @return True if card should use present intervals.
-     */
-    private boolean cardIsBeingLearnt(Card card) {
-        return card.getLastInterval() < 7;
-    }
 
 
     /*
@@ -2070,6 +2095,118 @@ public class Deck {
 
 
     /*
+     * JSON
+     */
+
+    public JSONObject bundleJson(JSONObject bundledDeck) {
+        try {
+            bundledDeck.put("averageFactor", mAverageFactor);
+            bundledDeck.put("cardCount", mCardCount);
+            bundledDeck.put("collapseTime", mCollapseTime);
+            bundledDeck.put("created", mCreated);
+            // bundledDeck.put("currentModelId", currentModelId);
+            bundledDeck.put("delay0", mDelay0);
+            bundledDeck.put("delay1", mDelay1);
+            bundledDeck.put("delay2", mDelay2);
+            bundledDeck.put("description", mDescription);
+            bundledDeck.put("easyIntervalMax", mEasyIntervalMax);
+            bundledDeck.put("easyIntervalMin", mEasyIntervalMin);
+            bundledDeck.put("factCount", mFactCount);
+            bundledDeck.put("failedCardMax", mFailedCardMax);
+            bundledDeck.put("failedNowCount", mFailedNowCount);
+            bundledDeck.put("failedSoonCount", mFailedSoonCount);
+            bundledDeck.put("hardIntervalMax", mHardIntervalMax);
+            bundledDeck.put("hardIntervalMin", mHardIntervalMin);
+            bundledDeck.put("highPriority", mHighPriority);
+            bundledDeck.put("id", mId);
+            bundledDeck.put("lastLoaded", mLastLoaded);
+            bundledDeck.put("lastSync", mLastSync);
+            bundledDeck.put("lowPriority", mLowPriority);
+            bundledDeck.put("medPriority", mMedPriority);
+            bundledDeck.put("midIntervalMax", mMidIntervalMax);
+            bundledDeck.put("midIntervalMin", mMidIntervalMin);
+            bundledDeck.put("modified", mModified);
+            bundledDeck.put("newCardModulus", mNewCardModulus);
+            bundledDeck.put("newCount", mNewCount);
+            bundledDeck.put("newCountToday", mNewCountToday);
+            bundledDeck.put("newEarly", mNewEarly);
+            bundledDeck.put("revCount", mRevCount);
+            bundledDeck.put("reviewEarly", mReviewEarly);
+            bundledDeck.put("suspended", mSuspended);
+            bundledDeck.put("undoEnabled", mUndoEnabled);
+            bundledDeck.put("utcOffset", mUtcOffset);
+        } catch (JSONException e) {
+            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+        }
+
+        return bundledDeck;
+    }
+
+
+    public void updateFromJson(JSONObject deckPayload) {
+        try {
+            // Update deck
+            mAverageFactor = deckPayload.getDouble("averageFactor");
+            mCardCount = deckPayload.getInt("cardCount");
+            mCollapseTime = deckPayload.getDouble("collapseTime");
+            mCreated = deckPayload.getDouble("created");
+            // css
+            mCurrentModelId = deckPayload.getLong("currentModelId");
+            mDelay0 = deckPayload.getDouble("delay0");
+            mDelay1 = deckPayload.getDouble("delay1");
+            mDelay2 = deckPayload.getDouble("delay2");
+            mDescription = deckPayload.getString("description");
+            mEasyIntervalMax = deckPayload.getDouble("easyIntervalMax");
+            mEasyIntervalMin = deckPayload.getDouble("easyIntervalMin");
+            mFactCount = deckPayload.getInt("factCount");
+            mFailedCardMax = deckPayload.getInt("failedCardMax");
+            mFailedNowCount = deckPayload.getInt("failedNowCount");
+            mFailedSoonCount = deckPayload.getInt("failedSoonCount");
+            // forceMediaDir
+            mHardIntervalMax = deckPayload.getDouble("hardIntervalMax");
+            mHardIntervalMin = deckPayload.getDouble("hardIntervalMin");
+            mHighPriority = deckPayload.getString("highPriority");
+            mId = deckPayload.getLong("id");
+            // key
+            mLastLoaded = deckPayload.getDouble("lastLoaded");
+            // lastSessionStart
+            mLastSync = deckPayload.getDouble("modified");
+            // lastTags
+            mLowPriority = deckPayload.getString("lowPriority");
+            mMedPriority = deckPayload.getString("medPriority");
+            mMidIntervalMax = deckPayload.getDouble("midIntervalMax");
+            mMidIntervalMin = deckPayload.getDouble("midIntervalMin");
+            mModified = deckPayload.getDouble("modified");
+            // needLock
+            mNewCardModulus = deckPayload.getInt("newCardModulus");
+            // newCardOrder
+            // newCardSpacings
+            // newCardsPerDay
+            mNewCount = deckPayload.getInt("newCount");
+            mNewCountToday = deckPayload.getInt("newCountToday");
+            mNewEarly = deckPayload.getBoolean("newEarly");
+            // revCardOrder
+            mRevCount = deckPayload.getInt("revCount");
+            mReviewEarly = deckPayload.getBoolean("reviewEarly");
+            // sessionRepLimit
+            // sessionStartReps
+            // sessionStartTime
+            // sessionTimeLimit
+            mSuspended = deckPayload.getString("suspended");
+            // tmpMediaDir
+            mUndoEnabled = deckPayload.getBoolean("undoEnabled");
+            mUtcOffset = deckPayload.getDouble("utcOffset");
+
+            commitToDB();
+
+            updateDynamicIndices();
+        } catch (JSONException e) {
+            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+        }
+    }
+
+
+    /*
      * Utility functions (might be better in a separate class) *********************************************************
      */
 
@@ -2106,565 +2243,5 @@ public class Deck {
     private long[] tagIds(String[] tags, Boolean create) {
         // TODO: Finish porting this method from tags.py.
         return null;
-    }
-
-
-    /**
-     * @param failedSoonCount the failedSoonCount to set
-     */
-    public void setFailedSoonCount(int failedSoonCount) {
-        mFailedSoonCount = failedSoonCount;
-    }
-
-
-    /**
-     * @return the failedSoonCount
-     */
-    public int getFailedSoonCount() {
-        return mFailedSoonCount;
-    }
-
-
-    /**
-     * @param revCount the revCount to set
-     */
-    public void setRevCount(int revCount) {
-        mRevCount = revCount;
-    }
-
-
-    /**
-     * @return the revCount
-     */
-    public int getRevCount() {
-        return mRevCount;
-    }
-
-
-    /**
-     * @param newCountToday the newCountToday to set
-     */
-    public void setNewCountToday(int newCountToday) {
-        mNewCountToday = newCountToday;
-    }
-
-
-    /**
-     * @return the newCountToday
-     */
-    public int getNewCountToday() {
-        return mNewCountToday;
-    }
-
-
-    /**
-     * @param cardCount the cardCount to set
-     */
-    public void setCardCount(int cardCount) {
-        mCardCount = cardCount;
-    }
-
-
-    /**
-     * @return the cardCount
-     */
-    public int getCardCount() {
-        return mCardCount;
-    }
-
-
-    /**
-     * @param currentModelId the currentModelId to set
-     */
-    public void setCurrentModelId(long currentModelId) {
-        mCurrentModelId = currentModelId;
-    }
-
-
-    /**
-     * @return the currentModelId
-     */
-    public long getCurrentModelId() {
-        return mCurrentModelId;
-    }
-
-
-    /**
-     * @return the deckName
-     */
-    public String getDeckName() {
-        return mDeckName;
-    }
-
-
-    /**
-     * @param utcOffset the utcOffset to set
-     */
-    public void setUtcOffset(double utcOffset) {
-        mUtcOffset = utcOffset;
-    }
-
-
-    /**
-     * @return the utcOffset
-     */
-    public double getUtcOffset() {
-        return mUtcOffset;
-    }
-
-
-    /**
-     * @param newCount the newCount to set
-     */
-    public void setNewCount(int newCount) {
-        mNewCount = newCount;
-    }
-
-
-    /**
-     * @return the newCount
-     */
-    public int getNewCount() {
-        return mNewCount;
-    }
-
-
-    /**
-     * @param modified the modified to set
-     */
-    public void setModified(double modified) {
-        mModified = modified;
-    }
-
-
-    /**
-     * @return the modified
-     */
-    public double getModified() {
-        return mModified;
-    }
-
-
-    /**
-     * @param lastSync the lastSync to set
-     */
-    public void setLastSync(double lastSync) {
-        mLastSync = lastSync;
-    }
-
-
-    /**
-     * @return the lastSync
-     */
-    public double getLastSync() {
-        return mLastSync;
-    }
-
-
-    /**
-     * @param factCount the factCount to set
-     */
-    public void setFactCount(int factCount) {
-        mFactCount = factCount;
-    }
-
-
-    /**
-     * @return the factCount
-     */
-    public int getFactCount() {
-        return mFactCount;
-    }
-
-
-    /**
-     * @param averageFactor the averageFactor to set
-     */
-    public void setAverageFactor(double averageFactor) {
-        mAverageFactor = averageFactor;
-    }
-
-
-    /**
-     * @return the averageFactor
-     */
-    public double getAverageFactor() {
-        return mAverageFactor;
-    }
-
-
-    /**
-     * @param collapseTime the collapseTime to set
-     */
-    public void setCollapseTime(double collapseTime) {
-        mCollapseTime = collapseTime;
-    }
-
-
-    /**
-     * @return the collapseTime
-     */
-    public double getCollapseTime() {
-        return mCollapseTime;
-    }
-
-
-    /**
-     * @param created the created to set
-     */
-    public void setCreated(double created) {
-        mCreated = created;
-    }
-
-
-    /**
-     * @return the created
-     */
-    public double getCreated() {
-        return mCreated;
-    }
-
-
-    /**
-     * @param delay0 the delay0 to set
-     */
-    public void setDelay0(double delay0) {
-        mDelay0 = delay0;
-    }
-
-
-    /**
-     * @return the delay0
-     */
-    public double getDelay0() {
-        return mDelay0;
-    }
-
-
-    /**
-     * @param delay1 the delay1 to set
-     */
-    public void setDelay1(double delay1) {
-        mDelay1 = delay1;
-    }
-
-
-    /**
-     * @return the delay1
-     */
-    public double getDelay1() {
-        return mDelay1;
-    }
-
-
-    /**
-     * @param delay2 the delay2 to set
-     */
-    public void setDelay2(double delay2) {
-        mDelay2 = delay2;
-    }
-
-
-    /**
-     * @return the delay2
-     */
-    public double getDelay2() {
-        return mDelay2;
-    }
-
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        mDescription = description;
-    }
-
-
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return mDescription;
-    }
-
-
-    /**
-     * @param easyIntervalMax the easyIntervalMax to set
-     */
-    public void setEasyIntervalMax(double easyIntervalMax) {
-        mEasyIntervalMax = easyIntervalMax;
-    }
-
-
-    /**
-     * @return the easyIntervalMax
-     */
-    public double getEasyIntervalMax() {
-        return mEasyIntervalMax;
-    }
-
-
-    /**
-     * @param easyIntervalMin the easyIntervalMin to set
-     */
-    public void setEasyIntervalMin(double easyIntervalMin) {
-        mEasyIntervalMin = easyIntervalMin;
-    }
-
-
-    /**
-     * @return the easyIntervalMin
-     */
-    public double getEasyIntervalMin() {
-        return mEasyIntervalMin;
-    }
-
-
-    /**
-     * @param failedCardMax the failedCardMax to set
-     */
-    public void setFailedCardMax(int failedCardMax) {
-        mFailedCardMax = failedCardMax;
-    }
-
-
-    /**
-     * @return the failedCardMax
-     */
-    public int getFailedCardMax() {
-        return mFailedCardMax;
-    }
-
-
-    /**
-     * @param failedNowCount the failedNowCount to set
-     */
-    public void setFailedNowCount(int failedNowCount) {
-        mFailedNowCount = failedNowCount;
-    }
-
-
-    /**
-     * @return the failedNowCount
-     */
-    public int getFailedNowCount() {
-        return mFailedNowCount;
-    }
-
-
-    /**
-     * @param hardIntervalMax the hardIntervalMax to set
-     */
-    public void setHardIntervalMax(double hardIntervalMax) {
-        mHardIntervalMax = hardIntervalMax;
-    }
-
-
-    /**
-     * @return the hardIntervalMax
-     */
-    public double getHardIntervalMax() {
-        return mHardIntervalMax;
-    }
-
-
-    /**
-     * @param hardIntervalMin the hardIntervalMin to set
-     */
-    public void setHardIntervalMin(double hardIntervalMin) {
-        mHardIntervalMin = hardIntervalMin;
-    }
-
-
-    /**
-     * @return the hardIntervalMin
-     */
-    public double getHardIntervalMin() {
-        return mHardIntervalMin;
-    }
-
-
-    /**
-     * @param highPriority the highPriority to set
-     */
-    public void setHighPriority(String highPriority) {
-        mHighPriority = highPriority;
-    }
-
-
-    /**
-     * @return the highPriority
-     */
-    public String getHighPriority() {
-        return mHighPriority;
-    }
-
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(long id) {
-        mId = id;
-    }
-
-
-    /**
-     * @return the id
-     */
-    public long getId() {
-        return mId;
-    }
-
-
-    /**
-     * @param lastLoaded the lastLoaded to set
-     */
-    public void setLastLoaded(double lastLoaded) {
-        mLastLoaded = lastLoaded;
-    }
-
-
-    /**
-     * @return the lastLoaded
-     */
-    public double getLastLoaded() {
-        return mLastLoaded;
-    }
-
-
-    /**
-     * @param lowPriority the lowPriority to set
-     */
-    public void setLowPriority(String lowPriority) {
-        mLowPriority = lowPriority;
-    }
-
-
-    /**
-     * @return the lowPriority
-     */
-    public String getLowPriority() {
-        return mLowPriority;
-    }
-
-
-    /**
-     * @param medPriority the medPriority to set
-     */
-    public void setMedPriority(String medPriority) {
-        mMedPriority = medPriority;
-    }
-
-
-    /**
-     * @return the medPriority
-     */
-    public String getMedPriority() {
-        return mMedPriority;
-    }
-
-
-    /**
-     * @param midIntervalMax the midIntervalMax to set
-     */
-    public void setMidIntervalMax(double midIntervalMax) {
-        mMidIntervalMax = midIntervalMax;
-    }
-
-
-    /**
-     * @return the midIntervalMax
-     */
-    public double getMidIntervalMax() {
-        return mMidIntervalMax;
-    }
-
-
-    /**
-     * @param midIntervalMin the midIntervalMin to set
-     */
-    public void setMidIntervalMin(double midIntervalMin) {
-        mMidIntervalMin = midIntervalMin;
-    }
-
-
-    /**
-     * @return the midIntervalMin
-     */
-    public double getMidIntervalMin() {
-        return mMidIntervalMin;
-    }
-
-
-    /**
-     * @param newCardModulus the newCardModulus to set
-     */
-    public void setNewCardModulus(int newCardModulus) {
-        mNewCardModulus = newCardModulus;
-    }
-
-
-    /**
-     * @return the newCardModulus
-     */
-    public int getNewCardModulus() {
-        return mNewCardModulus;
-    }
-
-
-    /**
-     * @param newEarly the newEarly to set
-     */
-    public void setNewEarly(boolean newEarly) {
-        mNewEarly = newEarly;
-    }
-
-
-    /**
-     * @return the newEarly
-     */
-    public boolean isNewEarly() {
-        return mNewEarly;
-    }
-
-
-    /**
-     * @return the reviewEarly
-     */
-    public boolean isReviewEarly() {
-        return mReviewEarly;
-    }
-
-
-    /**
-     * @param suspended the suspended to set
-     */
-    public void setSuspended(String suspended) {
-        mSuspended = suspended;
-    }
-
-
-    /**
-     * @return the suspended
-     */
-    public String getSuspended() {
-        return mSuspended;
-    }
-
-
-    /**
-     * @param undoEnabled the undoEnabled to set
-     */
-    public void setUndoEnabled(boolean undoEnabled) {
-        mUndoEnabled = undoEnabled;
-    }
-
-
-    /**
-     * @return the undoEnabled
-     */
-    public boolean isUndoEnabled() {
-        return mUndoEnabled;
     }
 }

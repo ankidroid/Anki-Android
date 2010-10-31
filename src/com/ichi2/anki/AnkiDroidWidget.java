@@ -274,7 +274,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     String deckName = file.getName().replaceAll(".anki", "");
 
                     Deck deck = Deck.openDeck(absPath);
-                    int dueCards = deck.getFailedSoonCount() + deck.getRevCount();
+                    int dueCards = deck.getDueCount();
                     int newCards = deck.getNewCountToday();
                     int failedCards = deck.getFailedSoonCount();
                     deck.closeDeck();
