@@ -175,6 +175,16 @@ public class Model {
 		return mModels;
 	}
 
+    public TreeMap<Long, FieldModel> getFieldModels() {
+
+    	FieldModel mFieldModel ; 
+    	TreeMap<Long, FieldModel> mFieldModels= new TreeMap<Long, FieldModel>() ;
+    	FieldModel.fromDb(deck, id, mFieldModels);
+    	return mFieldModels;
+
+	}
+
+
 
     protected final CardModel getCardModel(long identifier) {
         return cardModelsMap.get(identifier);
