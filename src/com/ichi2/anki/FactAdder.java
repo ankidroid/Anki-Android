@@ -26,18 +26,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
+import java.util.LinkedList;
+import java.util.TreeMap;
 
 /**
  * Allows the user to add a fact. A card is a presentation of a fact, and has two sides: a question and an answer. Any
  * number of fields can appear on each side. When you add a fact to Anki, cards which show that fact are generated. Some
  * models generate one card, others generate more than one.
- *
+ * 
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  */
 public class FactAdder extends Activity {
@@ -56,7 +58,10 @@ public class FactAdder extends Activity {
     private Button mCloseButton;
     private Button mModelButton;
 
+    private Deck deck;
     private Long mCurrentSelectedModelId;
+
+    private LinkedList<FieldEditText> mEditFields;
 
 
     @Override
@@ -72,15 +77,18 @@ public class FactAdder extends Activity {
         mAddButton = (Button) findViewById(R.id.FactAdderAddButton);
         mCloseButton = (Button) findViewById(R.id.FactAdderCloseButton);
         mModelButton = (Button) findViewById(R.id.FactAdderModelButton);
-        Deck deck = AnkiDroidApp.deck();
+        deck = AnkiDroidApp.deck();
 
         mModels = Model.getModels(deck);
         mCurrentSelectedModelId = deck.getCurrentModelId();
         mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
+        populateEditFields();
         mAddButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
 
+                Fact f = deck.newFact();
+                Log.i("Debug", Long.toString(f.getId()));
                 setResult(RESULT_OK);
                 finish();
             }
@@ -116,6 +124,7 @@ public class FactAdder extends Activity {
     }
 
 
+    @Override
     protected Dialog onCreateDialog(int id) {
         Dialog dialog;
 
@@ -142,7 +151,6 @@ public class FactAdder extends Activity {
                     public void onClick(DialogInterface dialog, int item) {
                         mCurrentSelectedModelId = dialogIds.get(item);
                         mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
-                        Log.i("Debug: id: ", dialogIds.get(item).toString());
                     }
                 });
                 AlertDialog alert = builder.create();
@@ -151,6 +159,21 @@ public class FactAdder extends Activity {
                 dialog = null;
         }
         return dialog;
+    }
+
+
+    private void populateEditFields() {
+        FieldModel mFieldModel;
+        mEditFields = new LinkedList<FieldEditText>();
+        TreeMap<Long, FieldModel> fields = mModels.get(mCurrentSelectedModelId).getFieldModels();
+        for (Long i : fields.keySet()) {
+            mFieldModel = fields.get(i);
+            FieldEditText newTextbox = new FieldEditText(this, mFieldModel);
+            TextView label = newTextbox.getLabel();
+            mEditFields.add(newTextbox);
+            mFieldsLayoutContainer.addView(label);
+            mFieldsLayoutContainer.addView(newTextbox);
+        }
     }
 
 
@@ -181,4 +204,23 @@ public class FactAdder extends Activity {
         finish();
     }
 
+    private class FieldEditText extends EditText {
+
+        FieldModel pairFieldModel;
+
+
+        public FieldEditText(Context context, FieldModel pairFieldModel) {
+            super(context);
+            this.pairFieldModel = pairFieldModel;
+            this.setMinimumWidth(400);
+        }
+
+
+        public TextView getLabel() {
+            TextView label = new TextView(this.getContext());
+            label.setText(pairFieldModel.getName());
+            return label;
+        }
+
+    }
 }

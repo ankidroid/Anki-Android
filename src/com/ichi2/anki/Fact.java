@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -48,11 +49,34 @@ public class Fact {
     private Deck mDeck;
 
 
-    /*
-     * public Fact(Deck deck, Model model) { this.deck = deck; this.model = model; this.id = Utils.genID(); if (model !=
-     * null) { Iterator<FieldModel> iter = model.fieldModels.iterator(); while (iter.hasNext()) { this.fields.add(new
-     * Field(iter.next())); } } }
+    public Fact(Deck deck, Model model) {
+        Long mModelId;
+        mDeck = deck;
+        mModel = model;
+        mId = Utils.genID();
+        if (model == null) {
+            mModelId = deck.getCurrentModelId();
+        } else {
+            mModelId = model.getId();
+        }
+        TreeMap<Long, FieldModel> mFieldModels = new TreeMap<Long, FieldModel>();
+        FieldModel.fromDb(deck, mModelId, mFieldModels);
+        mFields = new TreeSet<Field>(new FieldOrdinalComparator());
+        for (Long i : mFieldModels.keySet()) {
+            mFields.add(new Field(mFieldModels.get(i)));
+
+        }
+
+    }
+
+
+    /**
+     * @return the mId
      */
+    public long getId() {
+        return mId;
+    }
+
 
     // Generate fact object from its ID
     public Fact(Deck deck, long id) {
