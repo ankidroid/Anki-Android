@@ -108,7 +108,7 @@ public class FactAdder extends Activity {
 
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
@@ -116,6 +116,7 @@ public class FactAdder extends Activity {
     }
 
 
+    @Override
     protected Dialog onCreateDialog(int id) {
         Dialog dialog;
 
@@ -157,7 +158,7 @@ public class FactAdder extends Activity {
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.
      */
-    public void registerExternalStorageListener() {
+    private void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
                 @Override

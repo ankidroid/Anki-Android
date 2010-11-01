@@ -37,22 +37,8 @@ import java.util.TimeZone;
 
 public class ErrorReporter extends Activity {
 
-    private ArrayList<String> getErrorFiles() {
-        ArrayList<String> files = new ArrayList<String>();
-        String[] errors = fileList();
-
-        for (String file : errors) {
-            if (file.endsWith(".stacktrace")) {
-                files.add(file);
-            }
-        }
-
-        return files;
-    }
-
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         Log.i(AnkiDroidApp.TAG, "OnCreate");
 
         super.onCreate(savedInstanceState);
@@ -119,6 +105,20 @@ public class ErrorReporter extends Activity {
             }
             tvErrorText.setText(errorText);
         }
+    }
+
+
+    private ArrayList<String> getErrorFiles() {
+        ArrayList<String> files = new ArrayList<String>();
+        String[] errors = fileList();
+
+        for (String file : errors) {
+            if (file.endsWith(".stacktrace")) {
+                files.add(file);
+            }
+        }
+
+        return files;
     }
 
 

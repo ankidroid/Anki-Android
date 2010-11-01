@@ -45,7 +45,7 @@ public class FieldModel implements Comparator<FieldModel> {
     private int mQuizFontSize;
     private String mQuizFontColour;
     private String mEditFontFamily;
-    private int mEditFontSize = 20;
+    private int mEditFontSize = CardModel.DEFAULT_FONT_SIZE;
     // END SQL table entries
 
     /**
@@ -76,7 +76,7 @@ public class FieldModel implements Comparator<FieldModel> {
     }
 
     /** SELECT string with only those fields, which are used in AnkiDroid */
-    private final static String SELECT_STRING = "SELECT id, ordinal, modelId, name, description"
+    private static final String SELECT_STRING = "SELECT id, ordinal, modelId, name, description"
             + ", quizFontSize, quizFontColour"
             + " FROM fieldModels";
 
@@ -119,22 +119,23 @@ public class FieldModel implements Comparator<FieldModel> {
     }
 
 
-    public FieldModel copy() {
-        FieldModel fieldModel = new FieldModel(mName, (mRequired == 1) ? true : false, (mUnique == 1) ? true : false);
-        fieldModel.mOrdinal = mOrdinal;
-        fieldModel.mModelId = mModelId;
-        fieldModel.mDescription = mDescription;
-        fieldModel.mFeatures = mFeatures;
-        fieldModel.mNumeric = mNumeric;
-        fieldModel.mQuizFontFamily = mQuizFontFamily;
-        fieldModel.mQuizFontSize = mQuizFontSize;
-        fieldModel.mQuizFontColour = mQuizFontColour;
-        fieldModel.mEditFontFamily = mEditFontFamily;
-        fieldModel.mEditFontSize = mEditFontSize;
-        fieldModel.mModel = null;
-
-        return fieldModel;
-    }
+    // XXX Unused
+//    public FieldModel copy() {
+//        FieldModel fieldModel = new FieldModel(mName, (mRequired == 1) ? true : false, (mUnique == 1) ? true : false);
+//        fieldModel.mOrdinal = mOrdinal;
+//        fieldModel.mModelId = mModelId;
+//        fieldModel.mDescription = mDescription;
+//        fieldModel.mFeatures = mFeatures;
+//        fieldModel.mNumeric = mNumeric;
+//        fieldModel.mQuizFontFamily = mQuizFontFamily;
+//        fieldModel.mQuizFontSize = mQuizFontSize;
+//        fieldModel.mQuizFontColour = mQuizFontColour;
+//        fieldModel.mEditFontFamily = mEditFontFamily;
+//        fieldModel.mEditFontSize = mEditFontSize;
+//        fieldModel.mModel = null;
+//
+//        return fieldModel;
+//    }
 
 
     /**

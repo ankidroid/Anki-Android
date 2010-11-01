@@ -141,7 +141,7 @@ public class SharedDeckPicker extends Activity {
             }
         });
 
-        Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+        Connection.getSharedDecks(mGetSharedDecksListener, new Connection.Payload(new Object[] {}));
     }
 
     @Override
@@ -230,7 +230,7 @@ public class SharedDeckPicker extends Activity {
 
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         releaseBroadcastReceiver();
         releaseService();
@@ -265,7 +265,7 @@ public class SharedDeckPicker extends Activity {
      * closeExternalStorageFiles() if the external media is going to be ejected, so applications can clean up any files
      * they have open.
      */
-    public void registerExternalStorageListener() {
+    private void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
                 @Override
@@ -321,7 +321,7 @@ public class SharedDeckPicker extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Connection.getSharedDecks(getSharedDecksListener, new Connection.Payload(new Object[] {}));
+                Connection.getSharedDecks(mGetSharedDecksListener, new Connection.Payload(new Object[] {}));
             }
         });
         builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
@@ -407,7 +407,7 @@ public class SharedDeckPicker extends Activity {
      * Listeners *
      ********************************************************************/
 
-    Connection.TaskListener getSharedDecksListener = new Connection.TaskListener() {
+    private Connection.TaskListener mGetSharedDecksListener = new Connection.TaskListener() {
 
         @Override
         public void onDisconnected() {

@@ -187,39 +187,40 @@ public class CardModel implements Comparator<CardModel> {
     }
 
 
-    /**
-     * Return a copy of this object.
-     */
-    public CardModel copy() {
-        CardModel cardModel = new CardModel(mName, mQformat, mAformat, (mActive == 1) ? true : false);
-        cardModel.mOrdinal = mOrdinal;
-        cardModel.mModelId = mModelId;
-        cardModel.mDescription = mDescription;
-        cardModel.mLformat = mLformat;
-        cardModel.mQedformat = mQedformat;
-        cardModel.mAedformat = mAedformat;
-        cardModel.mQuestionInAnswer = mQuestionInAnswer;
-        cardModel.mQuestionFontFamily = mQuestionFontFamily;
-        cardModel.mQuestionFontSize = mQuestionFontSize;
-        cardModel.mQuestionFontColour = mQuestionFontColour;
-        cardModel.mQuestionAlign = mQuestionAlign;
-        cardModel.mAnswerFontFamily = mAnswerFontFamily;
-        cardModel.mAnswerFontSize = mAnswerFontSize;
-        cardModel.mAnswerFontColour = mAnswerFontColour;
-        cardModel.mAnswerAlign = mAnswerAlign;
-        cardModel.mLastFontFamily = mLastFontFamily;
-        cardModel.mLastFontSize = mLastFontSize;
-        cardModel.mLastFontColour = mLastFontColour;
-        cardModel.mEditQuestionFontFamily = mEditQuestionFontFamily;
-        cardModel.mEditQuestionFontSize = mEditQuestionFontSize;
-        cardModel.mEditAnswerFontFamily = mEditAnswerFontFamily;
-        cardModel.mEditAnswerFontSize = mEditAnswerFontSize;
-        cardModel.mAllowEmptyAnswer = mAllowEmptyAnswer;
-        cardModel.mTypeAnswer = mTypeAnswer;
-        cardModel.mModel = null;
-
-        return cardModel;
-    }
+    // XXX Unused
+//    /**
+//     * Return a copy of this object.
+//     */
+//    public CardModel copy() {
+//        CardModel cardModel = new CardModel(mName, mQformat, mAformat, (mActive == 1) ? true : false);
+//        cardModel.mOrdinal = mOrdinal;
+//        cardModel.mModelId = mModelId;
+//        cardModel.mDescription = mDescription;
+//        cardModel.mLformat = mLformat;
+//        cardModel.mQedformat = mQedformat;
+//        cardModel.mAedformat = mAedformat;
+//        cardModel.mQuestionInAnswer = mQuestionInAnswer;
+//        cardModel.mQuestionFontFamily = mQuestionFontFamily;
+//        cardModel.mQuestionFontSize = mQuestionFontSize;
+//        cardModel.mQuestionFontColour = mQuestionFontColour;
+//        cardModel.mQuestionAlign = mQuestionAlign;
+//        cardModel.mAnswerFontFamily = mAnswerFontFamily;
+//        cardModel.mAnswerFontSize = mAnswerFontSize;
+//        cardModel.mAnswerFontColour = mAnswerFontColour;
+//        cardModel.mAnswerAlign = mAnswerAlign;
+//        cardModel.mLastFontFamily = mLastFontFamily;
+//        cardModel.mLastFontSize = mLastFontSize;
+//        cardModel.mLastFontColour = mLastFontColour;
+//        cardModel.mEditQuestionFontFamily = mEditQuestionFontFamily;
+//        cardModel.mEditQuestionFontSize = mEditQuestionFontSize;
+//        cardModel.mEditAnswerFontFamily = mEditAnswerFontFamily;
+//        cardModel.mEditAnswerFontSize = mEditAnswerFontSize;
+//        cardModel.mAllowEmptyAnswer = mAllowEmptyAnswer;
+//        cardModel.mTypeAnswer = mTypeAnswer;
+//        cardModel.mModel = null;
+//
+//        return cardModel;
+//    }
 
 
     public static HashMap<String, String> formatQA(Fact fact, CardModel cm, String[] tags) {

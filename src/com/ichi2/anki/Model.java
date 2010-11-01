@@ -102,13 +102,15 @@ public class Model {
     }
 
 
-    public void setModified() {
-        mModified = Utils.now();
-    }
+    // XXX: Unused
+//    public void setModified() {
+//        mModified = Utils.now();
+//    }
 
 
     /**
      * FIXME: this should be called whenever the deck is changed. Otherwise unnecessary space will be used.
+     * XXX: Unused
      */
     protected static final void reset() {
         sModels = new HashMap<Long, Model>();
@@ -122,7 +124,7 @@ public class Model {
      * currentModel. If a cardModel id is submitted, then the related Model data and all related CardModel and
      * FieldModel data are loaded unless the cardModel id is already in the cardModel map. FIXME: nothing is done to
      * treat db failure or non-existing identifiers
-     * 
+     *
      * @param deck The deck we are working with
      * @param identifier a cardModel id or a model id
      * @param isModelId if true then the submitted identifier is a model id; otherwise the identifier is a cardModel id
@@ -186,7 +188,7 @@ public class Model {
      * @param deck
      * @param modelId
      */
-    private static final void loadFromDBPlusRelatedModels(Deck deck, long modelId) {
+    private static void loadFromDBPlusRelatedModels(Deck deck, long modelId) {
         Model currentModel = fromDb(deck, modelId);
 
         // load related card models
@@ -212,7 +214,7 @@ public class Model {
      * @param id
      * @return
      */
-    private static final Model fromDb(Deck deck, long id) {
+    private static Model fromDb(Deck deck, long id) {
         Cursor cursor = null;
         Model model = null;
         try {
@@ -249,7 +251,7 @@ public class Model {
     /**
      * Prepares the CSS for all CardModels in this Model
      */
-    private final void prepareCSSForCardModels() {
+    private void prepareCSSForCardModels() {
         CardModel myCardModel = null;
         String cssString = null;
         for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
@@ -284,7 +286,7 @@ public class Model {
      * @param percentage the factor to apply to the font size in card model to the display size (in %)
      * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
      */
-    private final String createCSSForFontColorSize(long myCardModelId, int percentage) {
+    private String createCSSForFontColorSize(long myCardModelId, int percentage) {
         StringBuffer sb = new StringBuffer();
         sb.append("<!-- ").append(percentage).append(" % display font size-->");
         sb.append("<style type=\"text/css\">\n");
@@ -322,7 +324,7 @@ public class Model {
     }
 
 
-    private final static String calculateDisplay(int percentage, String fontFamily, int fontSize, String fontColour,
+    private static String calculateDisplay(int percentage, String fontFamily, int fontSize, String fontColour,
             int align, boolean isField) {
         StringBuffer sb = new StringBuffer();
         if (null != fontFamily && 0 < fontFamily.trim().length()) {

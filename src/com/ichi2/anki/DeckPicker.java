@@ -177,7 +177,7 @@ public class DeckPicker extends Activity implements Runnable {
 
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) throws SQLException {
+    protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
         super.onCreate(savedInstanceState);
 
@@ -235,7 +235,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
 
         super.onPause();
@@ -244,7 +244,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
         if (mUnmountReceiver != null) {
@@ -307,7 +307,7 @@ public class DeckPicker extends Activity implements Runnable {
      * closeExternalStorageFiles() if the external media is going to be ejected, so applications can clean up any files
      * they have open.
      */
-    public void registerExternalStorageListener() {
+    private void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
                 @Override

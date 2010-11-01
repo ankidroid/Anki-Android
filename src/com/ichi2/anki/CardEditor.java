@@ -54,6 +54,7 @@ public class CardEditor extends Activity {
 
     private LinkedList<FieldEditText> mEditFields;
 
+
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
@@ -121,7 +122,7 @@ public class CardEditor extends Activity {
 
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
@@ -173,7 +174,6 @@ public class CardEditor extends Activity {
             super(context);
             mPairField = pairField;
             this.setText(pairField.getValue());
-            // TODO Auto-generated constructor stub
         }
 
 

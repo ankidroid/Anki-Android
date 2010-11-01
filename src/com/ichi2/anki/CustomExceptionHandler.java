@@ -92,10 +92,8 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
             mInformation.put("VersionName", pi.versionName); // Version
             mInformation.put("PackageName", pi.packageName);// Package name
-            mInformation.put("PhoneModel", android.os.Build.MODEL); // Device
-                                                                   // model
-            mInformation.put("AndroidVersion", android.os.Build.VERSION.RELEASE);// Android
-                                                                                // version
+            mInformation.put("PhoneModel", android.os.Build.MODEL); // Device model
+            mInformation.put("AndroidVersion", android.os.Build.VERSION.RELEASE);// Android version
             mInformation.put("Board", android.os.Build.BOARD);
             mInformation.put("Brand", android.os.Build.BRAND);
             mInformation.put("Device", android.os.Build.DEVICE);

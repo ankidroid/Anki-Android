@@ -82,13 +82,13 @@ public class Whiteboard extends View {
     }
 
 
-    public void createBitmap() {
+    private void createBitmap() {
         createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ARGB_8888);
     }
 
 
     @Override
-    public void onSizeChanged(int w, int h, int oldw, int oldh) {
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         // We want to create the bitmap again only when the screen has been rotated, not when the size changes in the
         // transition
         // between the front and the back of a card (that would made the Whiteboard to disappear)

@@ -31,7 +31,7 @@ import android.webkit.WebView;
 public class About extends Activity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setTitle(getAboutTitle());

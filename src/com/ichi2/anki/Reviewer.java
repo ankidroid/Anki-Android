@@ -441,7 +441,7 @@ public class Reviewer extends Activity {
 
     // Saves deck each time Reviewer activity loses focus
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
         // Save changes
@@ -453,7 +453,7 @@ public class Reviewer extends Activity {
 
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onDestroy()");
         if (mUnmountReceiver != null) {
@@ -636,7 +636,7 @@ public class Reviewer extends Activity {
      * closeExternalStorageFiles() if the external media is going to be ejected, so applications can clean up any files
      * they have open.
      */
-    public void registerExternalStorageListener() {
+    private void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
                 @Override
@@ -890,7 +890,6 @@ public class Reviewer extends Activity {
 
         String displayString = enrichWithQASpan(mCurrentCard.getQuestion(), false);
         // Show an horizontal line as separation when question is shown in answer
-        // XXX Martin: is it really necessary on the question side?
         if (questionIsDisplayed()) {
             displayString = displayString + "<hr/>";
         }
@@ -1221,8 +1220,7 @@ public class Reviewer extends Activity {
 
     public final class JavaScriptInterface {
 
-        JavaScriptInterface() {
-        }
+        JavaScriptInterface() { }
 
 
         /**

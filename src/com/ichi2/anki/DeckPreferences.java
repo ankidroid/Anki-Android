@@ -43,7 +43,6 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
         public DeckPreferenceHack() {
             this.cacheValues();
-
         }
 
 
@@ -59,13 +58,13 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
         public class Editor implements SharedPreferences.Editor {
 
-            public ContentValues update = new ContentValues();
+            private ContentValues mUpdate = new ContentValues();
 
 
             @Override
             public SharedPreferences.Editor clear() {
                 Log.d(AnkiDroidApp.TAG, "clear()");
-                update = new ContentValues();
+                mUpdate = new ContentValues();
                 return this;
             }
 
@@ -77,7 +76,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
                 // make sure we refresh the parent cached values
                 // cacheValues();
 
-                for (Entry<String, Object> entry : update.valueSet()) {
+                for (Entry<String, Object> entry : mUpdate.valueSet()) {
                     if (entry.getKey().equals("newCardsPDay")) {
                         AnkiDroidApp.deck().setNewCardsPerDay(Integer.parseInt(entry.getValue().toString()));
                     } else if (entry.getKey().equals("sessionQLimit")) {
@@ -105,41 +104,41 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
 
             @Override
-            public android.content.SharedPreferences.Editor putBoolean(String key, boolean value) {
+            public SharedPreferences.Editor putBoolean(String key, boolean value) {
                 return this.putString(key, Boolean.toString(value));
             }
 
 
             @Override
-            public android.content.SharedPreferences.Editor putFloat(String key, float value) {
+            public SharedPreferences.Editor putFloat(String key, float value) {
                 return this.putString(key, Float.toString(value));
             }
 
 
             @Override
-            public android.content.SharedPreferences.Editor putInt(String key, int value) {
+            public SharedPreferences.Editor putInt(String key, int value) {
                 return this.putString(key, Integer.toString(value));
             }
 
 
             @Override
-            public android.content.SharedPreferences.Editor putLong(String key, long value) {
+            public SharedPreferences.Editor putLong(String key, long value) {
                 return this.putString(key, Long.toString(value));
             }
 
 
             @Override
-            public android.content.SharedPreferences.Editor putString(String key, String value) {
+            public SharedPreferences.Editor putString(String key, String value) {
                 Log.d(this.getClass().toString(), String.format("Editor.putString(key=%s, value=%s)", key, value));
-                update.put(key, value);
+                mUpdate.put(key, value);
                 return this;
             }
 
 
             @Override
-            public android.content.SharedPreferences.Editor remove(String key) {
+            public SharedPreferences.Editor remove(String key) {
                 Log.d(this.getClass().toString(), String.format("Editor.remove(key=%s)", key));
-                update.remove(key);
+                mUpdate.remove(key);
                 return this;
             }
 
@@ -225,7 +224,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
 
 
     @Override
-    public void onCreate(Bundle icicle) {
+    protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
         if (AnkiDroidApp.deck() == null) {
@@ -250,6 +249,9 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
     }
 
 
+    /**
+     * XXX Currently unused.
+     */
     protected void updateSummaries() {
         // for all text preferences, set summary as current database value
         for (String key : mPref.mValues.keySet()) {

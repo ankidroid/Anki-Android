@@ -151,7 +151,7 @@ public class PersonalDeckPicker extends Activity {
 
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         Log.i(AnkiDroidApp.TAG, "onDestroy");
         super.onDestroy();
         releaseService();

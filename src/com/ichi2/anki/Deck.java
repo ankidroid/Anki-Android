@@ -24,7 +24,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -146,8 +145,10 @@ public class Deck {
     // Not in Anki Desktop
     private String mDeckPath;
     private String mDeckName;
+
     private Stats mGlobalStats;
     private Stats mDailyStats;
+
     private Card mCurrentCard;
 
     /**
@@ -1522,6 +1523,10 @@ public class Deck {
      * Priorities*********************************************************
      */
 
+    /**
+     * Suspend a set of cards.
+     * @param ids the identifiers of the cards to be suspended
+     */
     public void suspendCards(long[] ids) {
         AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL(
                 "UPDATE cards SET isDue = 0"
@@ -1533,6 +1538,10 @@ public class Deck {
     }
 
 
+    /**
+     * Unsuspend a set of cards.
+     * @param ids the identifiers of the cards to be unsuspended
+     */
     public void unsuspendCards(long[] ids) {
         AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL(
                 "UPDATE cards SET priority = " + Card.PRIORITY_NONE
@@ -1632,7 +1641,6 @@ public class Deck {
     }
 
 
-
     /*
      * Cards CRUD*********************************************************
      */
@@ -1730,7 +1738,7 @@ public class Deck {
      * Delete any fact without cards.
      * @return ArrayList<String> list with the id of the deleted facts
      */
-    public ArrayList<String> deleteDanglingFacts() {
+    private ArrayList<String> deleteDanglingFacts() {
         Log.i(AnkiDroidApp.TAG, "deleteDanglingFacts");
         ArrayList<String> danglingFacts = AnkiDatabaseManager.getDatabase(mDeckPath).queryColumn(String.class,
                 "SELECT facts.id FROM facts WHERE facts.id NOT IN (SELECT DISTINCT factId from cards)", 0);
@@ -1939,14 +1947,17 @@ public class Deck {
     }
 
 
-    public void setUndoBarrier() {
+    /**
+     * XXX Unused
+     */
+    private void setUndoBarrier() {
         if (mUndoStack.isEmpty() || mUndoStack.peek() != null) {
             mUndoStack.push(null);
         }
     }
 
 
-    public void setUndoStart(String name) {
+    private void setUndoStart(String name) {
         setUndoStart(name, false);
     }
 
@@ -1959,7 +1970,7 @@ public class Deck {
     }
 
 
-    public void setUndoStart(String name, boolean merge) {
+    private void setUndoStart(String name, boolean merge) {
         if (!mUndoEnabled) {
             return;
         }
@@ -1973,7 +1984,7 @@ public class Deck {
     }
 
 
-    public void setUndoEnd(String name) {
+    private void setUndoEnd(String name) {
         if (!mUndoEnabled) {
             return;
         }
@@ -2032,13 +2043,18 @@ public class Deck {
     }
 
 
+    /**
+     * XXX Unused
+     */
     public void undo() {
         undoredo(mUndoStack, mRedoStack);
         commitToDB();
         rebuildCounts(true);
     }
 
-
+    /**
+     * XXX Unused
+     */
     public void redo() {
         undoredo(mRedoStack, mUndoStack);
         commitToDB();
@@ -2050,7 +2066,7 @@ public class Deck {
      * Dynamic indices*********************************************************
      */
 
-    public void updateDynamicIndices() {
+    private void updateDynamicIndices() {
         Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
         HashMap<String, String> indices = new HashMap<String, String>();
         indices.put("intervalDesc", "(type, isDue, priority desc, interval desc)");

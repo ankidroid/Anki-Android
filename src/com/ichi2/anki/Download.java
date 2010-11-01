@@ -52,15 +52,17 @@ public class Download extends HashMap<String, Object> implements Parcelable {
     }
 
 
-    public String getUrl() {
-        return mUrl;
-    }
+    // XXX Unused
+//    public String getUrl() {
+//        return mUrl;
+//    }
 
 
-    public void setUrl(String url) {
-        mUrl = url;
-        put("filename", url.toString());
-    }
+    // XXX Unused
+//    public void setUrl(String url) {
+//        mUrl = url;
+//        put("filename", url.toString());
+//    }
 
 
     public long getSize() {
@@ -70,12 +72,30 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
     public void setSize(long size) {
         mSize = size;
-        /*
-         * float sizeToShow = size; int divs = 0; while(sizeToShow > 1000) { sizeToShow = sizeToShow / 1000; divs++; }
-         * DecimalFormat dec = new DecimalFormat("#.##"); switch(divs) { case 0: put("size", dec.format(sizeToShow) +
-         * "B"); break; case 1: put("size", dec.format(sizeToShow) + "KB"); break; case 2: put("size",
-         * dec.format(sizeToShow) + "MB"); break; case 3: put("size", dec.format(sizeToShow) + "GB"); break; }
-         */
+        
+        // TODO Remove this code...
+//        float sizeToShow = size;
+//        int divs = 0;
+//        while (sizeToShow > 1000) {
+//            sizeToShow = sizeToShow / 1000;
+//            divs++;
+//        }
+//        DecimalFormat dec = new DecimalFormat("#.##");
+//        switch (divs) {
+//            case 0:
+//                put("size", dec.format(sizeToShow) + "B");
+//                break;
+//            case 1:
+//                put("size", dec.format(sizeToShow) + "KB");
+//                break;
+//            case 2:
+//                put("size", dec.format(sizeToShow) + "MB");
+//                break;
+//            case 3:
+//                put("size", dec.format(sizeToShow) + "GB");
+//                break;
+//        }
+
     }
 
 
@@ -86,13 +106,29 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
     public void setDownloaded(long downloaded) {
         mDownloaded = downloaded;
-        /*
-         * float downloadedToShow = downloaded; int divs = 0; while(downloadedToShow > 1000) { downloadedToShow =
-         * downloadedToShow / 1000; divs++; } DecimalFormat dec = new DecimalFormat("#.##"); switch(divs) { case 0:
-         * put("downloaded", dec.format(downloadedToShow) + "B"); break; case 1: put("downloaded",
-         * dec.format(downloadedToShow) + "KB"); break; case 2: put("downloaded", dec.format(downloadedToShow) + "MB");
-         * break; case 3: put("downloaded", dec.format(downloadedToShow) + "GB"); break; }
-         */
+
+        // TODO Remove this code...
+//        float downloadedToShow = downloaded;
+//        int divs = 0;
+//        while (downloadedToShow > 1000) {
+//            downloadedToShow = downloadedToShow / 1000;
+//            divs++;
+//        }
+//        DecimalFormat dec = new DecimalFormat("#.##");
+//        switch (divs) {
+//            case 0:
+//                put("downloaded", dec.format(downloadedToShow) + "B");
+//                break;
+//            case 1:
+//                put("downloaded", dec.format(downloadedToShow) + "KB");
+//                break;
+//            case 2:
+//                put("downloaded", dec.format(downloadedToShow) + "MB");
+//                break;
+//            case 3:
+//                put("downloaded", dec.format(downloadedToShow) + "GB");
+//                break;
+//        }
     }
 
 

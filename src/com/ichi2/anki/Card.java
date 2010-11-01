@@ -175,16 +175,14 @@ public class Card {
 
 
     public Fact getFact() {
-        if (mFact != null) {
-            return mFact;
-        } else {
+        if (mFact == null) {
             mFact = new Fact(mDeck, mFactId);
-            return mFact;
         }
+        return mFact;
     }
 
 
-    public void setModified() {
+    private void setModified() {
         mModified = Utils.now();
     }
 
@@ -203,7 +201,7 @@ public class Card {
         if (Double.isNaN(mTimerStopped)) {
             return (Utils.now() - mTimerStarted);
         } else {
-            return mTimerStopped - mTimerStarted;
+            return (mTimerStopped - mTimerStarted);
         }
     }
 
@@ -219,14 +217,15 @@ public class Card {
     }
 
 
-    public String htmlQuestion(String type, boolean align) {
-        return null;
-    }
-
-
-    public String htmlAnswer(boolean align) {
-        return htmlQuestion("answer", align);
-    }
+    // XXX Unused
+//    public String htmlQuestion(String type, boolean align) {
+//        return null;
+//    }
+//
+//
+//    public String htmlAnswer(boolean align) {
+//        return htmlQuestion("answer", align);
+//    }
 
 
     public void updateStats(int ease, String state) {
@@ -320,6 +319,7 @@ public class Card {
 
     /**
      * Unsuspend this card.
+     * XXX Unused
      */
     public void unsuspend() {
         long[] ids = new long[1];
@@ -370,7 +370,7 @@ public class Card {
     }
 
 
-    public String allTags() {
+    private String allTags() {
         // Non-Canonified string of fact and model tags
         if ((mTagsBySrc[TAGS_FACT].length() > 0) && (mTagsBySrc[TAGS_MODEL].length() > 0)) {
             return mTagsBySrc[TAGS_FACT] + "," + mTagsBySrc[TAGS_MODEL];

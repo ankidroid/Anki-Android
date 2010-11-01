@@ -70,15 +70,7 @@ public class Fact {
     }
 
 
-    /**
-     * @param fields the fields to set
-     */
-    public void setFields(TreeSet<Field> fields) {
-        mFields = fields;
-    }
-
-
-    public boolean fromDb(long id) {
+    private boolean fromDb(long id) {
         mId = id;
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
         Cursor cursor = null;
@@ -144,8 +136,8 @@ public class Fact {
         Iterator<Field> iter = mFields.iterator();
         while (iter.hasNext()) {
             Field f = iter.next();
-            if (f.getFieldModel().getName().equals(fieldModelName)) {
-                return f.getValue();
+            if (f.mFieldModel.getName().equals(fieldModelName)) {
+                return f.mValue;
             }
         }
         return null;
@@ -156,8 +148,8 @@ public class Fact {
         Iterator<Field> iter = mFields.iterator();
         while (iter.hasNext()) {
             Field f = iter.next();
-            if (f.getFieldModel().getName().equals(fieldModelName)) {
-                return f.getFieldModel().getId();
+            if (f.mFieldModel.getName().equals(fieldModelName)) {
+                return f.mFieldModel.getId();
             }
         }
         return 0;
@@ -177,7 +169,7 @@ public class Fact {
             Field f = iter.next();
 
             updateValues = new ContentValues();
-            updateValues.put("value", f.getValue());
+            updateValues.put("value", f.mValue);
             AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("fields", updateValues, "id = ?",
                     new String[] { "" + f.mFieldId });
         }
@@ -201,6 +193,10 @@ public class Fact {
 
             returnList.add(newCard);
         }
+        if (cardsCursor != null) {
+            cardsCursor.close();
+        }
+
         return returnList;
     }
 
@@ -233,6 +229,7 @@ public class Fact {
 
 
         // for creating instances of existing fields
+        // XXX Unused
         public Field(long id, long factId, FieldModel fieldModel, String value) {
             mFieldId = id;
             mFactId = factId;

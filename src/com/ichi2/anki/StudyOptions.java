@@ -68,7 +68,7 @@ public class StudyOptions extends Activity {
     private static final int MENU_SYNC = 3;
     private static final int MENU_MY_ACCOUNT = 4;
     private static final int MENU_PREFERENCES = 5;
-	private static final int MENU_ADD_FACT = 6;
+    private static final int MENU_ADD_FACT = 6;
     private static final int MENU_ABOUT = 7;
 
     /**
@@ -346,7 +346,7 @@ public class StudyOptions extends Activity {
 
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
         if (mUnmountReceiver != null) {
@@ -570,7 +570,7 @@ public class StudyOptions extends Activity {
 
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + deckFilename);
         // Remember current deck's filename.
         if (deckFilename != null) {
