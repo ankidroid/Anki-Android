@@ -378,13 +378,6 @@ public class Card {
 
 
     public void toDB() {
-        if (reps == 0) {
-            type = 2;
-        } else if (successive != 0) {
-            type = 1;
-        } else {
-            type = 0;
-        }
 
         ContentValues values = new ContentValues();
         values.put("factId", factId);

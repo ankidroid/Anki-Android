@@ -207,8 +207,6 @@ public class Deck {
     
     double dueCutoff;
     
-    int queueLimit;
-
     String scheduler;
     
     // Queues
@@ -217,6 +215,7 @@ public class Deck {
     LinkedList<QueueItem> newQueue;
     LinkedList<QueueItem> failedCramQueue;
     HashMap<Long, Double> spacedFacts;
+    int queueLimit;
     
     // Cramming
     private String activeCramTags;
@@ -445,6 +444,9 @@ public class Deck {
         return modified > lastLoaded;
     }
 
+    /*
+     * Queue Management
+     *******************************/
 
     private class QueueItem {
         private long cardID;
@@ -462,9 +464,6 @@ public class Deck {
         }
     }
 
-    /*
-     * Queue Management
-     */
     private void setupStandardScheduler() {
         getCardIdMethod = Deck.class.getDeclaredMethod("_getCardId", boolean.class);
         fillFailedQueueMethod = Deck.class.getDeclaredMethod("_fillFailedQueue");
@@ -476,10 +475,18 @@ public class Deck {
         requeueCardMethod = Deck.class.getDeclaredMethod("_requeueCard", Card.class, int.class);
         timeForNewCardMethod = Deck.class.getDeclaredMethod("_timeForNewCard");
         updateNewCountTodayMethod = Deck.class.getDeclaredMethod("_updateNewCountToday");
-        cardTypeMethod = Deck.class.getDeclaredMethod("_cardType", Card.class);
+        cardQueueMethod = Deck.class.getDeclaredMethod("_cardQueue", Card.class);
         finishSchedulerMethod = null;
         answerCardMethod = Deck.class.getDeclaredMethod("_answerCard", Card.class, int.class);
+        cardLimitMethod = Deck.class.getDeclaredMethod("_cardLimit", String.class, String.class, String.class);
+        answerPreSaveMethod = null;
         scheduler = "standard";
+        // Restore any cards temporarily suspended by alternate schedulers
+        try {
+            resetAfterReviewEarly();
+        } catch (Exception e) {
+            // Will fail if deck hasn't been upgraded yet
+        }
     }
 
     /*
@@ -495,9 +502,11 @@ public class Deck {
     private Method requeueCardMethod;
     private Method timeForNewCardMethod;
     private Method updateNewCountTodayMethod;
-    private Method cardTypeMethod;
+    private Method cardQueueMethod;
     private Method finishSchedulerMethod;
     private Method answerCardMethod;
+    private Method cardLimitMethod;
+    private Method answerPreSaveMethod;
     private long getCardId() {
         return ((Long)getCardIdMethod.invoke(true)).longValue();
     }
@@ -531,14 +540,20 @@ public class Deck {
     private void updateNewCountToday() {
         updateNewCountTodayMethod.invoke(null);
     }
-    private int cardType(Card card) {
-        return ((Integer)cardTypeMethod.invoke(card)).intValue();
+    private int cardQueue(Card card) {
+        return ((Integer)cardQueueMethod.invoke(card)).intValue();
     }
     private void finishScheduler() {
         finishSchedulerMethod.invoke(null);
     }
     private void answerCard(Card card, int ease) {
         answerCardMethod.invoke(card, ease);
+    }
+    private String cardLimit(String active, String inactive, String sql) {
+        return ((String)answerCardMethod.invoke(active, inactive, sql));
+    }
+    private void answerPreSave(Card card, int ease) {
+        answerPreSaveMethod.invoke(card, ease);
     }
 
     private void fillQueues() {
@@ -558,21 +573,24 @@ public class Deck {
         rebuildNewCount();
     }
 
-    private String cardLimit(String active, String inactive, String sql) {
+    private String _cardLimit(String active, String inactive, String sql) {
         String[] yes = Utils.parseTags(deckVars.getVar(active));
         String[] no = Utils.parseTags(deckVars.getVar(inactive));
         String repl = "";
         if (yes.length > 0) {
             long yids[] = tagIds(yes);
             long nids[] = tagIds(no);
-            repl = "c.id = ct.cardId AND tagId IN " + Utils.ids2str(yids) + " AND tagId NOT IN " + Utils.ids2str(nids);
+            return sql.replace("WHERE ",
+                    "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " +
+                    "tagId IN " + Utils.ids2str(yids) + " AND tagId NOT IN " + Utils.ids2str(nids) + ") AND ");
         } else if (no.length > 0) {
             long nids[] = tagIds(no);
-            repl = "c.id = ct.cardId AND tagId NOT IN " + Utils.ids2str(nids);
+            return sql.replace("WHERE ",
+                    "WHERE +c.id NOT IN (SELECT cardId FROM cardTags WHERE " +
+                    "tagId IN " + Utils.ids2str(nids) + ") AND ");
         } else {
             return sql;
         }
-        return sql.replace("FROM cards c WHERE", "FROM cards c, cardTags ct WHERE " + repl);
     }
 
 
@@ -665,10 +683,6 @@ public class Deck {
         }
     }
 
-    private boolean failedNoSpaced() {
-        return queueNotEmpty(failedQueue, fillFailedQueueMethod);
-    }
-
     private boolean revNoSpaced() {
         return queueNotEmpty(revQueue, fillRevQueueMethod);
     }
@@ -700,6 +714,12 @@ public class Deck {
         rebuildTypes("");
     }
     private void rebuildTypes(String where) {
+        String lim = "type >= 0"; // Don't touch suspended cards
+        if (where != "") {
+            where += " AND " + lim;
+        } else {
+            where = " WHERE " + lim;
+        }
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         ankiDB.database.execSQL("UPDATE cards " +
                 "SET type = (CASE " +
@@ -707,17 +727,22 @@ public class Deck {
                 "WHEN successive != 0 AND reps != 0 THEN 1 -- review " +
                 "ELSE 2 -- new " +
                 "END)" + where);
-        ankiDB.database.execSQL("UPDATE cards SET type = type + 3 WHERE priority <= 0");
+        // old-style suspended cards
+        ankiDB.database.execSQL("UPDATE cards SET type = type - 3 WHERE priority = 0 AND type >= 0");
+    }
+
+    private int _cardQueue(Card card) {
+        return cardType(card);
     }
 
     // Return the type of the current card (what queue it's in)
-    private int _cardType(Card card) {
-        if (cardIsNew(card)) {
-            return 2;
-        } else if (card.successive == 0) {
+    private int cardType(Card card) {
+        if (card.successive != 0) {
+            return 1;
+        } else if (card.reps != 0) {
             return 0;
         } else {
-            return 1;
+            return 2;
         }
     }
 
