@@ -218,10 +218,10 @@ public class Deck {
     LinkedList<QueueItem> failedCramQueue;
     HashMap<Long, Double> spacedFacts;
     
-    //Cramming
+    // Cramming
     private String activeCramTags;
     private String cramOrder;
-
+    
     // Not in Anki Desktop
     String deckPath;
 
@@ -499,18 +499,7 @@ public class Deck {
     private Method finishSchedulerMethod;
     private Method answerCardMethod;
     private long getCardId() {
-        try {
-            return ((Long)getCardIdMethod.invoke(true)).longValue();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        return ((Long)getCardIdMethod.invoke(true)).longValue();
     }
     private long getCardId(boolean check) {
         return ((Long)getCardIdMethod.invoke(check)).longValue();
@@ -907,7 +896,6 @@ public class Deck {
             reset();
             return getCardId();
         }
-        return 0L;
     }
 
     private int _cramCardType(Card card) {
