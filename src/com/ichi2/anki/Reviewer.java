@@ -23,7 +23,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,7 +42,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
@@ -109,17 +107,6 @@ public class Reviewer extends Activity {
 
     private static Card sEditorCard; // To be assigned as the currentCard or a new card to be sent to and from editor
 
-    /**
-     * Variables used to track the time spent displaying a card.
-     */
-    private long mDisplayCardStartTime;
-    private long mDisplayCardFinishTime;
-
-    /**
-     * Variables used to track the time spent updating and displaying a card.
-     */
-    private long mUpdateCardStartTime;
-    private long mUpdateCardFinishTime;
 
     /** The percentage of the absolute font size specified in the deck. */
     private int mDisplayFontSize = CardModel.DEFAULT_FONT_SIZE_RATIO;
@@ -296,14 +283,10 @@ public class Reviewer extends Activity {
     private DeckTask.TaskListener mAnswerCardHandler = new DeckTask.TaskListener() {
         private boolean mSessionComplete;
         private boolean mNoMoreCards;
-        private long mStart;
-        private long mStart2;
 
 
         @Override
         public void onPreExecute() {
-            mStart = System.currentTimeMillis();
-            mStart2 = mStart;
             Reviewer.this.setProgressBarIndeterminateVisibility(true);
             blockControls();
         }
@@ -334,8 +317,6 @@ public class Reviewer extends Activity {
             } else {
                 // session limits not reached, show next card
                 Card newCard = values[0].getCard();
-                Log.w(AnkiDroidApp.TAG, "answerCard - get card (phase 1) in " + (System.currentTimeMillis() - mStart) + " ms.");
-                mStart = System.currentTimeMillis();
 
                 // If the card is null means that there are no more cards scheduled for review.
                 if (newCard == null) {
@@ -343,31 +324,18 @@ public class Reviewer extends Activity {
                     return;
                 }
 
-                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - checked null " + (System.currentTimeMillis() - mStart) + " ms.");
-                mStart = System.currentTimeMillis();
                 // Start reviewing next card
                 mCurrentCard = newCard;
                 Reviewer.this.setProgressBarIndeterminateVisibility(false);
-                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - visibility " + (System.currentTimeMillis() - mStart) + " ms.");
-                mStart = System.currentTimeMillis();
                 // Reviewer.this.enableControls();
                 Reviewer.this.unblockControls();
-                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - unblock ctrl " + (System.currentTimeMillis() - mStart) + " ms.");
-                mStart = System.currentTimeMillis();
                 Reviewer.this.reviewNextCard();
-                Log.w(AnkiDroidApp.TAG, "onProgressUpdate - review next " + (System.currentTimeMillis() - mStart) + " ms.");
-                mStart = System.currentTimeMillis();
             }
-
-            Log.w(AnkiDroidApp.TAG, "answerCard - Checked times (phase 3) in " + (System.currentTimeMillis() - mStart) + " ms.");
-            mStart = System.currentTimeMillis();
 
             // Show a message to user if a session limit has been reached.
             if (sessionMessage != null) {
                 sessionMessage.show();
             }
-
-            Log.w(AnkiDroidApp.TAG, "onProgressUpdate - New card received in " + (System.currentTimeMillis() - mStart2) + " ms.");
         }
 
 
@@ -670,7 +638,6 @@ public class Reviewer extends Activity {
         mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         mCard.getSettings().setBuiltInZoomControls(true);
         mCard.getSettings().setJavaScriptEnabled(true);
-        mCard.setWebViewClient(new AnkiDroidWebViewClient());
         mCard.setWebChromeClient(new AnkiDroidWebChromeClient());
         mCard.addJavascriptInterface(new JavaScriptInterface(), "interface");
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
@@ -815,33 +782,22 @@ public class Reviewer extends Activity {
 
 
     private void reviewNextCard() {
-        long start = System.currentTimeMillis();
         updateCounts();
-        Log.w(AnkiDroidApp.TAG, "reviewNextCard - update counts in " + (System.currentTimeMillis() - start) + " ms.");
-        start = System.currentTimeMillis();
         mFlipCard.setChecked(false);
-        Log.w(AnkiDroidApp.TAG, "reviewNextCard - check flipcard in " + (System.currentTimeMillis() - start) + " ms.");
-        start = System.currentTimeMillis();
 
         // Clean answer field
         if (mPrefWriteAnswers) {
             mAnswerField.setText("");
         }
-        Log.w(AnkiDroidApp.TAG, "reviewNextCard - clear answer field in " + (System.currentTimeMillis() - start) + " ms.");
-        start = System.currentTimeMillis();
 
         if (mPrefWhiteboard) {
             mWhiteboard.clear();
         }
-        Log.w(AnkiDroidApp.TAG, "reviewNextCard - clear whiteboard in " + (System.currentTimeMillis() - start) + " ms.");
-        start = System.currentTimeMillis();
 
         if (mPrefTimer) {
             mCardTimer.setBase(SystemClock.elapsedRealtime());
             mCardTimer.start();
         }
-        Log.w(AnkiDroidApp.TAG, "reviewNextCard - reset timer in " + (System.currentTimeMillis() - start) + " ms.");
-        start = System.currentTimeMillis();
     }
 
 
@@ -950,7 +906,6 @@ public class Reviewer extends Activity {
 
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
-        mUpdateCardStartTime = System.currentTimeMillis();
 
         // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
         // content = Image.parseImages(deckFilename, content);
@@ -1186,25 +1141,6 @@ public class Reviewer extends Activity {
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
-
-    public final class AnkiDroidWebViewClient extends WebViewClient {
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            mDisplayCardStartTime = System.currentTimeMillis();
-        }
-
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            mDisplayCardFinishTime = System.currentTimeMillis();
-            mUpdateCardFinishTime = System.currentTimeMillis();
-
-            Log.i(AnkiDroidApp.TAG, "Time spent displaying card = " + (mDisplayCardFinishTime - mDisplayCardStartTime)
-                    + " milliseconds");
-            Log.i(AnkiDroidApp.TAG, "Time spent updating card = " + (mUpdateCardFinishTime - mUpdateCardStartTime) + " milliseconds");
-        }
-    }
 
     /**
      * Provides a hook for calling "alert" from javascript. Useful for debugging your javascript.

@@ -805,7 +805,6 @@ public class Deck {
     // Optimization for updateAllCardsFromPosition and updateAllCards
     // Drops some indices and changes synchronous pragma
     public void beforeUpdateCards() {
-        long now = System.currentTimeMillis();
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeckPath);
         ankiDB.getDatabase().execSQL("PRAGMA synchronous=NORMAL");
         // ankiDB.getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_duePriority");
@@ -818,12 +817,10 @@ public class Deck {
         // ankiDB.getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_randomOrder");
         // ankiDB.getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_dueAsc");
         // ankiDB.getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_dueDesc");
-        Log.w(AnkiDroidApp.TAG, "BEFORE UPDATE = " + (System.currentTimeMillis() - now));
     }
 
 
     public void afterUpdateCards() {
-        long now = System.currentTimeMillis();
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeckPath);
         // ankiDB.getDatabase().execSQL("CREATE INDEX ix_cards_duePriority on cards (type, isDue, combinedDue, priority)");
         // ankiDB.getDatabase().execSQL("CREATE INDEX ix_cards_priorityDue on cards (type, isDue, priority, combinedDue)");
@@ -832,10 +829,7 @@ public class Deck {
         // ankiDB.getDatabase().execSQL("CREATE INDEX ix_cards_factId on cards (factId, type)");
         // updateDynamicIndices();
         ankiDB.getDatabase().execSQL("PRAGMA synchronous=FULL");
-        Log.w(AnkiDroidApp.TAG, "AFTER UPDATE = " + (System.currentTimeMillis() - now));
-        // now = System.currentTimeMillis();
         // ankiDB.getDatabase().execSQL("ANALYZE");
-        // Log.i("ANALYZE = " + System.currentTimeMillis() - now);
     }
 
 
@@ -905,7 +899,6 @@ public class Deck {
         // Old state
         String oldState = card.getState();
         double lastDelaySecs = Utils.now() - card.getCombinedDue();
-        double start = System.currentTimeMillis();
         double lastDelay = lastDelaySecs / 86400.0;
         boolean oldIsRev = card.isRev();
 
@@ -1790,9 +1783,6 @@ public class Deck {
         Log.i(AnkiDroidApp.TAG, "deleteFieldModel, modelId = " + modelId + ", fieldModelId = " + fieldModelId);
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeckPath);
 
-        long start, stop;
-        start = System.currentTimeMillis();
-
         // Delete field model
         ankiDB.getDatabase().execSQL("DELETE FROM fields WHERE fieldModel = " + fieldModelId);
 
@@ -1843,9 +1833,6 @@ public class Deck {
                 + " WHERE id = " + modelId);
 
         flushMod();
-
-        stop = System.currentTimeMillis();
-        Log.v(AnkiDroidApp.TAG, "deleteFieldModel - deleted field models in " + (stop - start) + " ms.");
     }
 
 

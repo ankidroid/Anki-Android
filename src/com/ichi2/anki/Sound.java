@@ -50,25 +50,12 @@ public class Sound {
      */
     private static int sNumSoundsPlayed;
 
-    /**
-     * Variables used to track the total time spent
-     */
-    private static long sStartTime;
-    private static long sFinishTime;
-
-    /**
-     * Variables used to track the time spent playing one particular sound
-     */
-    private static long sStartSoundTime;
-    private static long sFinishSoundTime;
-
 
     /* Prevent class from being instantiated */
     private Sound() { }
 
 
     public static String parseSounds(String deckFilename, String content) {
-        sStartTime = System.currentTimeMillis();
 
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
@@ -103,9 +90,6 @@ public class Sound {
 
         stringBuilder.append(contentLeft);
 
-        sFinishTime = System.currentTimeMillis();
-        Log.i(AnkiDroidApp.TAG, sSoundPaths.size() + " sounds parsed in " + (sFinishTime - sStartTime) + " milliseconds");
-
         return stringBuilder.toString();
     }
 
@@ -117,7 +101,6 @@ public class Sound {
         // If there are sounds to play for the current card, play the first one
         if (sSoundPaths != null && sSoundPaths.size() > 0) {
             sNumSoundsPlayed = 0;
-            sStartTime = System.currentTimeMillis();
             playSound(sNumSoundsPlayed);
         }
     }
@@ -129,7 +112,6 @@ public class Sound {
      * @param soundToPlayIndex
      */
     private static void playSound(int soundToPlayIndex) {
-        sStartSoundTime = System.currentTimeMillis();
         sMediaPlayer = new MediaPlayer();
         try {
             sMediaPlayer.setDataSource(sSoundPaths.get(soundToPlayIndex));
@@ -142,18 +124,9 @@ public class Sound {
                     releaseSound();
                     sNumSoundsPlayed++;
 
-                    sFinishSoundTime = System.currentTimeMillis();
-                    // Log.i(AnkiDroidApp.TAG, "Sound " + numSoundsPlayed + " played in " + (mFinishSoundTime - mStartSoundTime) +
-                    // " milliseconds");
-
                     // If there is still more sounds to play for the current card, play the next one
                     if (sNumSoundsPlayed < sSoundPaths.size()) {
                         playSound(sNumSoundsPlayed);
-                    } else {
-                        // If it was the last sound, annotate the total time taken
-                        sFinishTime = System.currentTimeMillis();
-                        // Log.i(AnkiDroidApp.TAG, numSoundsPlayed + " sounds played in " + (mFinishTime - mStartTime) +
-                        // " milliseconds");
                     }
                 }
             });
@@ -169,7 +142,6 @@ public class Sound {
 
     public static void playSound(String soundPath) {
         if (sSoundPaths.contains(soundPath)) {
-            sStartSoundTime = System.currentTimeMillis();
             sMediaPlayer = new MediaPlayer();
             try {
                 sMediaPlayer.setDataSource(soundPath);
@@ -180,9 +152,6 @@ public class Sound {
                 Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
                 releaseSound();
             }
-            sFinishSoundTime = System.currentTimeMillis();
-            Log.i(AnkiDroidApp.TAG,
-                    "Sound " + soundPath + " played in " + (sFinishSoundTime - sStartSoundTime) + " milliseconds");
         }
     }
 

@@ -159,37 +159,25 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundAnswerCard(TaskData... params) {
-        long start, start2;
         Deck deck = params[0].getDeck();
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard;
 
-        start2 = System.currentTimeMillis();
-
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
             if (oldCard != null) {
-                start = System.currentTimeMillis();
                 deck.answerCard(oldCard, ease);
-                Log.v(AnkiDroidApp.TAG,
-                        "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start) + " ms.");
             }
 
-            start = System.currentTimeMillis();
             newCard = deck.getCard();
-            Log.v(AnkiDroidApp.TAG,
-                    "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
             publishProgress(new TaskData(newCard));
 
             ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
             ankiDB.getDatabase().endTransaction();
         }
-
-        Log.w(AnkiDroidApp.TAG,
-                "doInBackgroundAnswerCard - DB operations in " + (System.currentTimeMillis() - start2) + " ms.");
 
         return null;
     }
@@ -220,7 +208,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundSuspendCard(TaskData... params) {
-        long start, stop;
         Deck deck = params[0].getDeck();
         Card oldCard = params[0].getCard();
         Card newCard;
@@ -229,16 +216,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         ankiDB.getDatabase().beginTransaction();
         try {
             if (oldCard != null) {
-                start = System.currentTimeMillis();
                 oldCard.suspend();
-                stop = System.currentTimeMillis();
-                Log.v(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - Suspended card in " + (stop - start) + " ms.");
             }
 
-            start = System.currentTimeMillis();
             newCard = deck.getCard();
-            stop = System.currentTimeMillis();
-            Log.v(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - Loaded new card in " + (stop - start) + " ms.");
             publishProgress(new TaskData(newCard));
             ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
@@ -250,7 +231,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundMarkCard(TaskData... params) {
-        long start, stop;
         Deck deck = params[0].getDeck();
         Card currentCard = params[0].getCard();
 
@@ -258,14 +238,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         ankiDB.getDatabase().beginTransaction();
         try {
             if (currentCard != null) {
-                start = System.currentTimeMillis();
                 if (currentCard.hasTag(Deck.TAG_MARKED)) {
                     deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 } else {
                     deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 }
-                stop = System.currentTimeMillis();
-                Log.v(AnkiDroidApp.TAG, "doInBackgroundMarkCard - Marked card in " + (stop - start) + " ms.");
             }
 
             publishProgress(new TaskData(currentCard));

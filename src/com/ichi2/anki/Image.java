@@ -32,12 +32,6 @@ public class Image {
     private static Pattern sImagePattern = Pattern
             .compile("(?i)<img[^<>(src)]*src\\s*=\\s*(\"[^\"]*\"|'[^']*'|[^'\">]+)[^<>]*>");
 
-    /**
-     * Variables used to track the total time spent
-     */
-    private static long sStartTime;
-    private static long sFinishTime;
-
 
     /* Prevent class from being instantiated */
     private Image() { }
@@ -52,7 +46,6 @@ public class Image {
      * @return content Content with the onload events for the img tags
      */
     public static String parseImages(String deckFilename, String content) {
-        sStartTime = System.currentTimeMillis();
 
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
@@ -73,9 +66,6 @@ public class Image {
         }
 
         stringBuilder.append(contentLeft);
-
-        sFinishTime = System.currentTimeMillis();
-        Log.i(AnkiDroidApp.TAG, "Images parsed in " + (sFinishTime - sStartTime) + " milliseconds");
 
         return stringBuilder.toString();
     }
