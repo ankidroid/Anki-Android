@@ -1255,7 +1255,7 @@ public class Deck {
                     + Card.PRIORITY_NORMAL + ","
                     + Card.PRIORITY_MEDIUM + ","
                     + Card.PRIORITY_HIGH + ")"
-                + " combinedDue <= " + String.format(ENGLISH_LOCALE, "%f", Utils.now() + mDelay0), null);
+                + " and combinedDue <= " + String.format(ENGLISH_LOCALE, "%f", Utils.now() + mDelay0), null);
 
         mFailedNowCount = (int) ankiDB.queryScalar(
                 "SELECT count(id) FROM cards WHERE isDue = 1"
