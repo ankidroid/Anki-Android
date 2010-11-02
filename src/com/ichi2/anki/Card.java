@@ -68,6 +68,7 @@ public class Card {
     public static final int TAGS_MODEL = 1;
     public static final int TAGS_TEMPL = 2;
 
+    private static final int LEARNT_THRESHOLD = 7;
     private static final int MATURE_THRESHOLD = 21;
 
     // BEGIN SQL table entries
@@ -86,8 +87,8 @@ public class Card {
     private double mLastInterval = 0;
     private double mDue = Utils.now();
     private double mLastDue = 0;
-    private double mFactor = 2.5;
-    private double mLastFactor = 2.5;
+    private double mFactor = Deck.INITIAL_FACTOR;
+    private double mLastFactor = Deck.INITIAL_FACTOR;
     private double mFirstAnswered = 0;
     // Stats
     private int mReps = 0;
@@ -290,7 +291,7 @@ public class Card {
         if (ease == EASE_EASY) {
             mFactor += 0.10;
         }
-        mFactor = Math.max(1.3, mFactor);
+        mFactor = Math.max(Deck.FACTOR_FOUR, mFactor);
     }
 
 
@@ -361,7 +362,7 @@ public class Card {
      * @return True if card should use present intervals.
      */
     public boolean isBeingLearnt() {
-        return mLastInterval < 7;
+        return mLastInterval < LEARNT_THRESHOLD;
     }
 
 

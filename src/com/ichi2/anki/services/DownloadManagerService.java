@@ -33,6 +33,7 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Card;
 import com.ichi2.anki.Deck;
 import com.ichi2.anki.DeckTask;
@@ -73,9 +74,6 @@ public class DownloadManagerService extends Service {
 
     // Max size of download buffer.
     private static final int MAX_BUFFER_SIZE = 1024;
-
-    private static final String ANKI_URL = "http://anki.ichi2.net";
-    private static final String SYNC_URL = ANKI_URL + "/sync/";
 
     // Regex for finding incomplete downloads shared preferences
     private static final Pattern sNumUpdatedCardsPattern = Pattern.compile("^numUpdatedCards:.*/([^/]+\\.anki\\.updating)$");
@@ -225,8 +223,10 @@ public class DownloadManagerService extends Service {
         stopIfFinished();
     }
 
-    // Cleans up the SharedPreferences space from numUpdatedCards records of downloads that have been
-    // completed or cancelled
+    /**
+     * Cleans up the SharedPreferences space from numUpdatedCards records of downloads that have been
+     * completed or cancelled.
+     */
     public void removeCompletedDownloadsPrefs() {
         Log.i(AnkiDroidApp.TAG, "DownloadManagerService - Removing shared preferences of completed or cancelled downloads");
 
@@ -593,7 +593,7 @@ public class DownloadManagerService extends Service {
             InflaterInputStream iis = null;
 
             try {
-                url = new URL(SYNC_URL + "fulldown");
+                url = new URL(AnkiDroidProxy.SYNC_URL + "fulldown");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setDoInput(true);
@@ -757,7 +757,7 @@ public class DownloadManagerService extends Service {
             InputStream is = null;
 
             try {
-                url = new URL(ANKI_URL + "/file/get?id=" + download.getId());
+                url = new URL("http://" + AnkiDroidProxy.SYNC_HOST + "/file/get?id=" + download.getId());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setDoInput(true);
@@ -768,7 +768,7 @@ public class DownloadManagerService extends Service {
                 // FIXME: Seems that Range property is also not working well here -> TEST IT!
                 // connection.setRequestProperty("Range","bytes=" + download.getDownloaded() + "-");
                 connection.setRequestProperty("Accept-Encoding", "identity");
-                connection.setRequestProperty("Host", "anki.ichi2.net");
+                connection.setRequestProperty("Host", AnkiDroidProxy.SYNC_HOST);
                 connection.setRequestProperty("Connection", "close");
 
                 connection.connect();
@@ -1034,6 +1034,7 @@ public class DownloadManagerService extends Service {
                 data.exception = e;
                 return data;
             } catch (CursorIndexOutOfBoundsException e) {
+                // XXX: Where is this exception thrown?
                 Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
                 data.success = false;
                 data.returnType = DeckTask.DECK_EMPTY;

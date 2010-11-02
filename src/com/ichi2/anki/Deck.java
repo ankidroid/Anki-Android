@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
@@ -40,7 +39,7 @@ import java.util.Stack;
 /**
  * A deck stores all of the cards and scheduling information. It is saved in a file with a name ending in .anki
  *
- * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Deck
+ * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Deck
  */
 public class Deck {
 
@@ -59,13 +58,10 @@ public class Deck {
     private static final int REV_CARDS_DUE_FIRST = 2;
     private static final int REV_CARDS_RANDOM = 3;
 
-    private static final double factorFour = 1.3;
-    private static final double initialFactor = 2.5;
-    private static final double minimumAverage = 1.7;
-    private static final double maxScheduleTime = 36500.0;
-
-    // Used to format doubles with English's decimal separator system
-    private static final Locale ENGLISH_LOCALE = new Locale("en_US");
+    public static final double FACTOR_FOUR = 1.3;
+    public static final double INITIAL_FACTOR = 2.5;
+    private static final double MINIMUM_AVERAGE = 1.7;
+    private static final double MAX_SCHEDULE_TIME = 36500.0;
 
     // BEGIN: SQL table columns
     private long mId;
@@ -235,7 +231,7 @@ public class Deck {
             }
         }
         Log.i(AnkiDroidApp.TAG,
-                String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.mModified, Utils.now()));
+                String.format(Utils.ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.mModified, Utils.now()));
 
         deck.mDeckPath = path;
         deck.mDeckName = (new File(path)).getName().replace(".anki", "");
@@ -529,11 +525,13 @@ public class Deck {
      */
     public void setCardCount(int cardCount) {
         mCardCount = cardCount;
+        // XXX: Need to flushmod() ?
     }
 
 
     /**
-     * @return the cardCount
+     * Get the cached total number of cards of the deck.
+     * @return The number of cards contained in the deck
      */
     public int getCardCount() {
         return mCardCount;
@@ -557,7 +555,7 @@ public class Deck {
 
 
     /**
-     * @return the utcOffset
+     * @return the deck UTC offset in number seconds
      */
     public double getUtcOffset() {
         return mUtcOffset;
@@ -585,6 +583,7 @@ public class Deck {
      */
     public void setLastSync(double lastSync) {
         mLastSync = lastSync;
+        // XXX: Need to flushmod() ?
     }
 
 
@@ -601,6 +600,7 @@ public class Deck {
      */
     public void setFactCount(int factCount) {
         mFactCount = factCount;
+        // XXX: Need to flushmod() ?
     }
 
 
@@ -617,6 +617,7 @@ public class Deck {
      */
     public void setLastLoaded(double lastLoaded) {
         mLastLoaded = lastLoaded;
+        // XXX: Need to flushmod() ?
     }
 
 
@@ -892,6 +893,7 @@ public class Deck {
      */
 
     public void answerCard(Card card, int ease) {
+        // TODO: part of this method, if not all, should be in Card.java
         Log.i(AnkiDroidApp.TAG, "answerCard");
 
         Cursor cursor = null;
@@ -1005,7 +1007,7 @@ public class Deck {
         }
 
         // space other cards
-        ankiDB.getDatabase().execSQL(String.format(ENGLISH_LOCALE, "UPDATE cards " + "SET spaceUntil = %f, "
+        ankiDB.getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "UPDATE cards " + "SET spaceUntil = %f, "
                 + "combinedDue = max(%f, due), " + "modified = %f, " + "isDue = 0 " + "WHERE id != %d and factId = %d",
                 space, space, now, card.getId(), card.getFactId()));
         card.setSpaceUntil(0);
@@ -1117,14 +1119,12 @@ public class Deck {
             } else if (ease == Card.EASE_MID) {
                 interval = (interval + delay / 2.0) * factor;
             } else if (ease == Card.EASE_EASY) {
-                interval = (interval + delay) * factor * factorFour;
+                interval = (interval + delay) * factor * FACTOR_FOUR;
             }
             double fuzz = 0.95 + ((double) Math.random()) * (1.05 - 0.95);
             interval *= fuzz;
         }
-        if (maxScheduleTime != 0) {
-            interval = Math.min(interval, maxScheduleTime);
-        }
+        interval = Math.min(interval, MAX_SCHEDULE_TIME);
         return interval;
     }
 
@@ -1178,7 +1178,7 @@ public class Deck {
         mFailedNowCount = (int) ankiDB.queryScalar(
                 "SELECT count(id) FROM cards WHERE isDue = 1"
                 + " and type = " + Card.TYPE_FAILED
-                + " and combinedDue <= " + String.format(ENGLISH_LOCALE, "%f", Utils.now()));
+                + " and combinedDue <= " + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
         Log.i(AnkiDroidApp.TAG, "failedNowCount = " + mFailedNowCount);
         mRevCount = (int) ankiDB.queryScalar(
                 "SELECT count(id) FROM cards WHERE isDue = 1"
@@ -1215,7 +1215,7 @@ public class Deck {
     // "WHERE type = 0 and " +
     // "isDue = 1 and " +
     // "combinedDue <= " +
-    // String.format(ENGLISH_LOCALE, "%f", Utils.now()));
+    // String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
     // try {
     // cursor = AnkiDb.getDatabase().rawQuery(
     // "SELECT type, count(id) " +
@@ -1260,12 +1260,12 @@ public class Deck {
                     + Card.PRIORITY_NORMAL + ","
                     + Card.PRIORITY_MEDIUM + ","
                     + Card.PRIORITY_HIGH + ")"
-                + " and combinedDue <= " + String.format(ENGLISH_LOCALE, "%f", Utils.now() + mDelay0), null);
+                + " and combinedDue <= " + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now() + mDelay0), null);
 
         mFailedNowCount = (int) ankiDB.queryScalar(
                 "SELECT count(id) FROM cards WHERE isDue = 1"
                 + " and type = " + Card.TYPE_FAILED
-                + " and combinedDue <= " + String.format(ENGLISH_LOCALE, "%f", Utils.now()));
+                + " and combinedDue <= " + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
 
         Cursor cursor = null;
         try {
@@ -1337,7 +1337,7 @@ public class Deck {
             cursor = AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().rawQuery(
                     "SELECT avg(factor) FROM cards WHERE type = " + Card.TYPE_REV, null);
             if (!cursor.moveToFirst()) {
-                mAverageFactor = Deck.initialFactor;
+                mAverageFactor = INITIAL_FACTOR;
             } else {
                 mAverageFactor = cursor.getDouble(0);
             }
@@ -1346,7 +1346,7 @@ public class Deck {
                 cursor.close();
             }
         }
-        mAverageFactor = Math.max(mAverageFactor, minimumAverage);
+        mAverageFactor = Math.max(mAverageFactor, MINIMUM_AVERAGE);
 
         // Recache CSS
         // rebuildCSS();
@@ -1434,7 +1434,7 @@ public class Deck {
 
             if (newTags.length() > factTagsList.get(i).length()) {
                 ankiDB.getDatabase().execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
-                        + String.format(ENGLISH_LOCALE, "%f", Utils.now())
+                        + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                         + " where id = " + factIds[i]);
             }
         }
@@ -1498,7 +1498,7 @@ public class Deck {
 
             if (newTags.length() < factTags.length()) {
                 ankiDB.getDatabase().execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
-                        + String.format(ENGLISH_LOCALE, "%f", Utils.now())
+                        + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                         + " where id = " + factIds[i]);
             }
         }
@@ -1534,7 +1534,7 @@ public class Deck {
         AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL(
                 "UPDATE cards SET isDue = 0"
                 + ", priority = " + Card.PRIORITY_SUSPENDED
-                + ", modified = " + String.format(ENGLISH_LOCALE, "%f", Utils.now())
+                + ", modified = " + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id IN " + Utils.ids2str(ids));
         rebuildCounts(false);
         flushMod();
@@ -1548,7 +1548,7 @@ public class Deck {
     public void unsuspendCards(long[] ids) {
         AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().execSQL(
                 "UPDATE cards SET priority = " + Card.PRIORITY_NONE
-                + ", modified = " + String.format(ENGLISH_LOCALE, "%f", Utils.now())
+                + ", modified = " + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id IN " + Utils.ids2str(ids));
         updatePriorities(ids);
         rebuildCounts(false);
@@ -1595,7 +1595,7 @@ public class Deck {
                 String extra = "";
                 if (dirty) {
                     extra = ", modified = "
-                            + String.format(ENGLISH_LOCALE, "%f", Utils.now());
+                            + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now());
                 }
                 for (int pri = Card.PRIORITY_NONE; pri <= Card.PRIORITY_HIGH; pri++) {
                     int count = 0;
@@ -1669,7 +1669,7 @@ public class Deck {
             ankiDB.getDatabase().execSQL("DELETE FROM cards WHERE id in " + idsString);
 
             // Note deleted cards
-            String sqlInsert = "INSERT INTO cardsDeleted values (?," + String.format(ENGLISH_LOCALE, "%f", now) + ")";
+            String sqlInsert = "INSERT INTO cardsDeleted values (?," + String.format(Utils.ENGLISH_LOCALE, "%f", now) + ")";
             SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sqlInsert);
             for (String id : ids) {
                 statement.bindString(1, id);
@@ -1723,7 +1723,7 @@ public class Deck {
             ankiDB.getDatabase().execSQL("DELETE FROM facts WHERE id in " + idsString);
             Log.i(AnkiDroidApp.TAG, "DELETE FROM fields WHERE factId in " + idsString);
             ankiDB.getDatabase().execSQL("DELETE FROM fields WHERE factId in " + idsString);
-            String sqlInsert = "INSERT INTO factsDeleted VALUES(?," + String.format(ENGLISH_LOCALE, "%f", now) + ")";
+            String sqlInsert = "INSERT INTO factsDeleted VALUES(?," + String.format(Utils.ENGLISH_LOCALE, "%f", now) + ")";
             SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sqlInsert);
             for (String id : ids) {
                 Log.i(AnkiDroidApp.TAG, "inserting into factsDeleted");
@@ -1798,7 +1798,7 @@ public class Deck {
 
         // Note like modified the facts that use this model
         ankiDB.getDatabase().execSQL("UPDATE facts SET modified = "
-                + String.format(ENGLISH_LOCALE, "%f", Utils.now())
+                + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE modelId = " + modelId);
 
         // TODO: remove field model from list
@@ -1839,7 +1839,7 @@ public class Deck {
 
         // Note the model like modified (TODO: We should use the object model instead handling the DB directly)
         ankiDB.getDatabase().execSQL("UPDATE models SET modified = "
-                + String.format(ENGLISH_LOCALE, "%f", Utils.now())
+                + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id = " + modelId);
 
         flushMod();
@@ -1864,7 +1864,7 @@ public class Deck {
 
         // Note the model like modified (TODO: We should use the object model instead handling the DB directly)
         ankiDB.getDatabase().execSQL("UPDATE models SET modified = "
-                + String.format(ENGLISH_LOCALE, "%f", Utils.now())
+                + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                 + " WHERE id = " + modelId);
 
         flushMod();
@@ -1910,9 +1910,9 @@ public class Deck {
             // Insert trigger
             String sql = "CREATE TEMP TRIGGER _undo_%s_it " + "AFTER INSERT ON %s BEGIN "
                     + "INSERT INTO undoLog VALUES " + "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
-            ankiDB.getDatabase().execSQL(String.format(ENGLISH_LOCALE, sql, table, table, table));
+            ankiDB.getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, sql, table, table, table));
             // Update trigger
-            sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " + "AFTER UPDATE ON %s BEGIN "
+            sql = String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " + "AFTER UPDATE ON %s BEGIN "
                     + "INSERT INTO undoLog VALUES " + "(null, 'UPDATE %s ", table, table, table);
             String sep = "SET ";
             Iterator<String> columnIter = columns.iterator();
@@ -1921,18 +1921,18 @@ public class Deck {
                 if (column.equals("unique")) {
                     continue;
                 }
-                sql += String.format(ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
+                sql += String.format(Utils.ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
                 sep = ",";
             }
             sql += "WHERE rowid = ' || old.rowid); END";
             ankiDB.getDatabase().execSQL(sql);
             // Delete trigger
-            sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " + "BEFORE DELETE ON %s BEGIN "
+            sql = String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " + "BEFORE DELETE ON %s BEGIN "
                     + "INSERT INTO undoLog VALUES " + "(null, 'INSERT INTO %s (rowid", table, table, table);
             columnIter = columns.iterator();
             while (columnIter.hasNext()) {
                 String column = columnIter.next();
-                sql += String.format(ENGLISH_LOCALE, ",\"%s\"", column);
+                sql += String.format(Utils.ENGLISH_LOCALE, ",\"%s\"", column);
             }
             sql += ") VALUES (' || old.rowid ||'";
             columnIter = columns.iterator();
@@ -1942,7 +1942,7 @@ public class Deck {
                     sql += ",1";
                     continue;
                 }
-                sql += String.format(ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column);
+                sql += String.format(Utils.ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column);
             }
             sql += ")'); END";
             ankiDB.getDatabase().execSQL(sql);
@@ -2033,7 +2033,7 @@ public class Deck {
         if (end == null) {
             end = latestUndoRow();
         }
-        ArrayList<String> sql = ankiDB.queryColumn(String.class, String.format(ENGLISH_LOCALE,
+        ArrayList<String> sql = ankiDB.queryColumn(String.class, String.format(Utils.ENGLISH_LOCALE,
                 "SELECT sql FROM undoLog " + "WHERE seq > %d and seq <= %d " + "ORDER BY seq DESC", start, end), 0);
         Long newstart = latestUndoRow();
         Iterator<String> iter = sql.iterator();

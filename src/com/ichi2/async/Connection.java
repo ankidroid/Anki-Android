@@ -95,7 +95,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      * Runs on GUI thread
      */
     @Override
-    public void onPostExecute(Payload data) {
+    protected void onPostExecute(Payload data) {
         if (mListener != null) {
             mListener.onPostExecute(data);
         }
@@ -106,7 +106,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      * Runs on GUI thread
      */
     @Override
-    public void onProgressUpdate(Object... values) {
+    protected void onProgressUpdate(Object... values) {
         if (mListener != null) {
             mListener.onProgressUpdate(values);
         }
