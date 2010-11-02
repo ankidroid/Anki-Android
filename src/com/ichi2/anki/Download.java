@@ -22,12 +22,12 @@ import java.util.HashMap;
 public class Download extends HashMap<String, Object> implements Parcelable {
 
     // Status codes
-    public static final int START = -1;
-    public static final int DOWNLOADING = 0;
-    public static final int PAUSED = 1;
-    public static final int COMPLETE = 2;
-    public static final int CANCELLED = 3;
-    public static final int ERROR = 4;
+    public static final int STATUS_STARTED = -1;
+    public static final int STATUS_DOWNLOADING = 0;
+    public static final int STATUS_PAUSED = 1;
+    public static final int STATUS_COMPLETE = 2;
+    public static final int STATUS_CANCELLED = 3;
+    public static final int STATUS_ERROR = 4;
 
     private static final long serialVersionUID = 1L;
 
@@ -48,7 +48,7 @@ public class Download extends HashMap<String, Object> implements Parcelable {
         this.put(title, true);
         mSize = -1;
         mDownloaded = 0;
-        mStatus = START;
+        mStatus = STATUS_STARTED;
     }
 
 

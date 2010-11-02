@@ -46,29 +46,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
 public class SyncClient {
-
-    // Used to format doubles with English's decimal separator system
-    private static final Locale ENGLISH_LOCALE = new Locale("en_US");
-
-    /**
-     * Connection settings
-     */
-    private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
-    private static final String SYNC_HOST = "anki.ichi2.net"; // 78.46.104.28
-    private static final String SYNC_PORT = "80";
-
-    // Test
-    /*
-     * private static final String SYNC_URL = "http://192.168.2.103:8001/sync/"; private static final String SYNC_HOST =
-     * "192.168.2.103"; private static final String SYNC_PORT = "8001";
-     */
-    private static final int CHUNK_SIZE = 32768;
 
     private enum Keys {
         models, facts, cards, media
@@ -116,7 +98,7 @@ public class SyncClient {
      * @return
      */
     public boolean prepareSync() {
-        Log.i(AnkiDroidApp.TAG, "prepareSync = " + String.format(ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
+        Log.i(AnkiDroidApp.TAG, "prepareSync = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
 
         mLocalTime = mDeck.getModified();
         mRemoteTime = mServer.modified();
@@ -129,9 +111,9 @@ public class SyncClient {
         }
 
         double l = mDeck.getLastSync();
-        Log.i(AnkiDroidApp.TAG, "lastSync local = " + String.format(ENGLISH_LOCALE, "%f", l));
+        Log.i(AnkiDroidApp.TAG, "lastSync local = " + String.format(Utils.ENGLISH_LOCALE, "%f", l));
         double r = mServer.lastSync();
-        Log.i(AnkiDroidApp.TAG, "lastSync remote = " + String.format(ENGLISH_LOCALE, "%f", r));
+        Log.i(AnkiDroidApp.TAG, "lastSync remote = " + String.format(Utils.ENGLISH_LOCALE, "%f", r));
 
         if (l != r) {
             mDeck.setLastSync(java.lang.Math.min(l, r) - 600);
@@ -146,7 +128,7 @@ public class SyncClient {
 
 
     public JSONArray summaries() {
-        Log.i(AnkiDroidApp.TAG, "summaries = " + String.format(ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
+        Log.i(AnkiDroidApp.TAG, "summaries = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
 
         JSONArray summaries = new JSONArray();
         summaries.put(summary(mDeck.getLastSync()));
@@ -168,7 +150,7 @@ public class SyncClient {
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
-        String lastSyncString = String.format(ENGLISH_LOCALE, "%f", lastSync);
+        String lastSyncString = String.format(Utils.ENGLISH_LOCALE, "%f", lastSync);
         // Cards
         JSONArray cards = cursorToJSONArray(ankiDB.getDatabase().rawQuery(
                 "SELECT id, modified FROM cards WHERE modified > " + lastSyncString, null));
@@ -327,7 +309,7 @@ public class SyncClient {
         for (int i = 0; i < keys.length; i++) {
             String key = keys[i].name();
             updateObjsFromKey(payloadReply, key);
-            JSONObject crasher = null;
+            // JSONObject crasher = null;
             // crasher.get("nothing");
         }
 
@@ -1442,7 +1424,7 @@ public class SyncClient {
 
         // Note the media to delete (Insert the media to delete into mediaDeleted)
         double now = Utils.now();
-        String sqlInsert = "INSERT INTO mediaDeleted SELECT id, " + String.format(ENGLISH_LOCALE, "%f", now)
+        String sqlInsert = "INSERT INTO mediaDeleted SELECT id, " + String.format(Utils.ENGLISH_LOCALE, "%f", now)
                 + " FROM media WHERE media.id = ?";
         SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sqlInsert);
         int len = ids.length();
@@ -1649,7 +1631,7 @@ public class SyncClient {
         Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                         "SELECT cardId, time, lastInterval, nextInterval, ease, delay, lastFactor, nextFactor, reps, "
                         + "thinkingTime, yesCount, noCount FROM reviewHistory "
-                        + "WHERE time > " + String.format(ENGLISH_LOCALE, "%f", mDeck.getLastSync()), null);
+                        + "WHERE time > " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()), null);
         while (cursor.moveToNext()) {
             try {
                 JSONArray review = new JSONArray();
@@ -1686,7 +1668,7 @@ public class SyncClient {
         }
         cursor.close();
 
-        Log.i(AnkiDroidApp.TAG, "Last sync = " + String.format(ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
+        Log.i(AnkiDroidApp.TAG, "Last sync = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
         Log.i(AnkiDroidApp.TAG, "Bundled history = " + bundledHistory.toString());
         return bundledHistory;
     }
@@ -1867,7 +1849,7 @@ public class SyncClient {
         URL url;
         try {
             Log.i(AnkiDroidApp.TAG, "Fullup");
-            url = new URL(SYNC_URL + "fullup");
+            url = new URL(AnkiDroidProxy.SYNC_URL + "fullup");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setDoInput(true);
@@ -1879,7 +1861,7 @@ public class SyncClient {
             conn.setRequestProperty("Charset", "UTF-8");
             // conn.setRequestProperty("Content-Length", "8494662");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + MIME_BOUNDARY);
-            conn.setRequestProperty("Host", SYNC_HOST);
+            conn.setRequestProperty("Host", AnkiDroidProxy.SYNC_HOST);
 
             DataOutputStream ds = new DataOutputStream(conn.getOutputStream());
             Log.i(AnkiDroidApp.TAG, "Pass");
@@ -1898,7 +1880,7 @@ public class SyncClient {
             ds.writeBytes(END);
 
             FileInputStream fStream = new FileInputStream(deckPath);
-            byte[] buffer = new byte[CHUNK_SIZE];
+            byte[] buffer = new byte[Utils.CHUNK_SIZE];
             int length = -1;
 
             Deflater deflater = new Deflater(Deflater.BEST_SPEED);
@@ -1960,7 +1942,7 @@ public class SyncClient {
                     + "&d=" + URLEncoder.encode(deckName, "UTF-8");
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
-            HttpPost httpPost = new HttpPost(SYNC_URL + "fulldown");
+            HttpPost httpPost = new HttpPost(AnkiDroidProxy.SYNC_URL + "fulldown");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");

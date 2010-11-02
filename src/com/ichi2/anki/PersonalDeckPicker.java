@@ -470,19 +470,19 @@ public class PersonalDeckPicker extends Activity {
                 downloadingSharedDeckTitle.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
                 switch (download.getStatus()) {
-                    case Download.START:
+                    case Download.STATUS_STARTED:
                         progressText.setText(res.getString(R.string.starting_download));
                         break;
 
-                    case Download.DOWNLOADING:
+                    case Download.STATUS_DOWNLOADING:
                         progressText.setText(res.getString(R.string.downloading));
                         break;
 
-                    case Download.PAUSED:
+                    case Download.STATUS_PAUSED:
                         progressText.setText(res.getString(R.string.paused));
                         break;
 
-                    case Download.COMPLETE:
+                    case Download.STATUS_COMPLETE:
                         progressText.setText(res.getString(R.string.downloaded));
                         break;
 

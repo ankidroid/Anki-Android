@@ -212,9 +212,9 @@ public class DownloadManagerService extends Service {
                     SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
                     String pausedPref = "paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
                     if (pref.getBoolean(pausedPref, false)) {
-                        download.setStatus(SharedDeckDownload.PAUSED);
+                        download.setStatus(SharedDeckDownload.STATUS_PAUSED);
                     } else {
-                        download.setStatus(SharedDeckDownload.UPDATING);
+                        download.setStatus(SharedDeckDownload.STATUS_UPDATING);
                     }
                     mSharedDeckDownloads.add(download);
                 }
@@ -303,8 +303,8 @@ public class DownloadManagerService extends Service {
             SharedDeckDownload sharedDeckDownload = (SharedDeckDownload) download;
             // We need to go through UpdateDeckTask even when the download is paused, in order for
             // numUpdatedCards and numTotalCards to get updated, so that progress is displayed correctly
-            if (sharedDeckDownload.getStatus() == SharedDeckDownload.PAUSED ||
-                 sharedDeckDownload.getStatus() == SharedDeckDownload.UPDATING) {
+            if (sharedDeckDownload.getStatus() == SharedDeckDownload.STATUS_PAUSED ||
+                 sharedDeckDownload.getStatus() == SharedDeckDownload.STATUS_UPDATING) {
                 new UpdateDeckTask().execute(new Payload(new Object[] { sharedDeckDownload }));
             } else {
                 new DownloadSharedDeckTask().execute(sharedDeckDownload);
@@ -622,10 +622,10 @@ public class DownloadManagerService extends Service {
 
                 // Make sure response code is in the 200 range.
                 if (connection.getResponseCode() / 100 != 2) {
-                    download.setStatus(Download.ERROR);
+                    download.setStatus(Download.STATUS_ERROR);
                     publishProgress();
                 } else {
-                    download.setStatus(Download.DOWNLOADING);
+                    download.setStatus(Download.STATUS_DOWNLOADING);
                     publishProgress();
                 }
 
@@ -653,7 +653,7 @@ public class DownloadManagerService extends Service {
 
                 iis = new InflaterInputStream(connection.getInputStream());
 
-                while (download.getStatus() == Download.DOWNLOADING) {
+                while (download.getStatus() == Download.STATUS_DOWNLOADING) {
                     // Size buffer according to how much of the file is left to download
                     Log.v(AnkiDroidApp.TAG, "Downloading... " + download.getDownloaded());
                     byte[] buffer;
@@ -675,15 +675,15 @@ public class DownloadManagerService extends Service {
                     publishProgress();
                 }
 
-                if (download.getStatus() == Download.DOWNLOADING) {
+                if (download.getStatus() == Download.STATUS_DOWNLOADING) {
                     // Change status to complete if this point was reached because downloading has finished
-                    download.setStatus(Download.COMPLETE);
+                    download.setStatus(Download.STATUS_COMPLETE);
                     new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").renameTo(new File(mDestination
                             + "/" + download.getTitle() + ".anki"));
                     long finishTime = System.currentTimeMillis();
                     Log.i(AnkiDroidApp.TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
                     Log.i(AnkiDroidApp.TAG, "Downloaded = " + download.getDownloaded());
-                } else if (download.getStatus() == Download.CANCELLED) {
+                } else if (download.getStatus() == Download.STATUS_CANCELLED) {
                     // Cancelled download, clean up
                     new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").delete();
                     Log.i(AnkiDroidApp.TAG, "Download cancelled.");
@@ -693,7 +693,7 @@ public class DownloadManagerService extends Service {
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.i(AnkiDroidApp.TAG, "Exception Error = " + e.getMessage());
-                download.setStatus(Download.ERROR);
+                download.setStatus(Download.STATUS_ERROR);
                 publishProgress();
             } finally {
                 Log.i(AnkiDroidApp.TAG, "finally");
@@ -732,9 +732,9 @@ public class DownloadManagerService extends Service {
         @Override
         protected void onPostExecute(Download download) {
             Log.i(AnkiDroidApp.TAG, "on post execute");
-            if (download.getStatus() == Download.COMPLETE) {
+            if (download.getStatus() == Download.STATUS_COMPLETE) {
                 showNotification(download.getTitle());
-            } else if (download.getStatus() == Download.ERROR) {
+            } else if (download.getStatus() == Download.STATUS_ERROR) {
                 // Error - Clean up
                 Log.i(AnkiDroidApp.TAG, "deleting file");
                 new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").delete();
@@ -777,10 +777,10 @@ public class DownloadManagerService extends Service {
 
                 // Make sure response code is in the 200 range.
                 if (connection.getResponseCode() / 100 != 2) {
-                    download.setStatus(Download.ERROR);
+                    download.setStatus(Download.STATUS_ERROR);
                     publishProgress();
                 } else {
-                    download.setStatus(Download.DOWNLOADING);
+                    download.setStatus(Download.STATUS_DOWNLOADING);
                     publishProgress();
                 }
 
@@ -810,7 +810,7 @@ public class DownloadManagerService extends Service {
 
                 is = connection.getInputStream();
 
-                while (download.getStatus() == Download.DOWNLOADING) {
+                while (download.getStatus() == Download.STATUS_DOWNLOADING) {
                     Log.i(AnkiDroidApp.TAG, "Downloading... " + download.getDownloaded());
                     byte[] buffer;
                     // if (size - downloaded > MAX_BUFFER_SIZE) {
@@ -831,15 +831,15 @@ public class DownloadManagerService extends Service {
                     publishProgress();
                 }
 
-                if (download.getStatus() == Download.DOWNLOADING) {
+                if (download.getStatus() == Download.STATUS_DOWNLOADING) {
                     // Change status to complete if this point was reached because downloading has finished
-                    download.setStatus(Download.COMPLETE);
+                    download.setStatus(Download.STATUS_COMPLETE);
                     new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId() + ".shared.zip.tmp")
                             .renameTo(new File(mDestination + "/tmp/" + download.getTitle() + ".zip"));
                     long finishTime = System.currentTimeMillis();
                     Log.i(AnkiDroidApp.TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
                     Log.i(AnkiDroidApp.TAG, "Downloaded = " + download.getDownloaded());
-                } else if (download.getStatus() == Download.CANCELLED) {
+                } else if (download.getStatus() == Download.STATUS_CANCELLED) {
                     // Cancelled download, clean up
                     new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId()
                             + ".shared.zip.tmp").delete();
@@ -850,7 +850,7 @@ public class DownloadManagerService extends Service {
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.i(AnkiDroidApp.TAG, "Exception Error = " + e.getMessage());
-                download.setStatus(Download.ERROR);
+                download.setStatus(Download.STATUS_ERROR);
                 publishProgress();
             } finally {
                 // Close file
@@ -882,8 +882,8 @@ public class DownloadManagerService extends Service {
         @Override
         protected void onPostExecute(SharedDeckDownload download) {
             Log.i(AnkiDroidApp.TAG, "onPostExecute");
-            if (download.getStatus() == Download.COMPLETE) {
-                download.setStatus(SharedDeckDownload.UPDATING);
+            if (download.getStatus() == Download.STATUS_COMPLETE) {
+                download.setStatus(SharedDeckDownload.STATUS_UPDATING);
                 notifySharedDeckObservers();
 
                 // Unzip deck and media
@@ -899,7 +899,7 @@ public class DownloadManagerService extends Service {
 
                 new UpdateDeckTask().execute(new Payload(new Object[] { download }));
 
-            } else if (download.getStatus() == Download.CANCELLED) {
+            } else if (download.getStatus() == Download.STATUS_CANCELLED) {
                 mSharedDeckDownloads.remove(download);
                 notifySharedDeckObservers();
                 stopIfFinished();
@@ -952,7 +952,7 @@ public class DownloadManagerService extends Service {
                 long runningAvgCount = 0;
                 long batchStart;
                 mElapsedTime = 0;
-                while (updatedCards < totalCards && download.getStatus() == SharedDeckDownload.UPDATING) {
+                while (updatedCards < totalCards && download.getStatus() == SharedDeckDownload.STATUS_UPDATING) {
                     batchStart = System.currentTimeMillis();
                     updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
                     Editor editor = pref.edit();
@@ -965,16 +965,16 @@ public class DownloadManagerService extends Service {
                     currentBatch++;
                     runningAvgCount++;
                 }
-                if (download.getStatus() == SharedDeckDownload.UPDATING) {
+                if (download.getStatus() == SharedDeckDownload.STATUS_UPDATING) {
                     data.success = true;
-                } else if (download.getStatus() == SharedDeckDownload.PAUSED) {
+                } else if (download.getStatus() == SharedDeckDownload.STATUS_PAUSED) {
                     Editor editor = pref.edit();
                     String pausedPref = "paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
                     editor.putBoolean(pausedPref, true);
                     editor.commit();
                     data.success = false;
                     Log.i(AnkiDroidApp.TAG, "pausing deck " + download.getTitle());
-                } else if (download.getStatus() == SharedDeckDownload.CANCELLED) {
+                } else if (download.getStatus() == SharedDeckDownload.STATUS_CANCELLED) {
                     data.success = false;
                 }
                 // Log.i(AnkiDroidApp.TAG, "Time to update deck = " + download.getEstTimeToCompletion() + " sec.");
@@ -1071,7 +1071,7 @@ public class DownloadManagerService extends Service {
                 showNotification(download.getTitle());
             } else {
                 // If paused do nothing, if cancelled clean up
-                if (download.getStatus() == Download.CANCELLED) {
+                if (download.getStatus() == Download.STATUS_CANCELLED) {
                     try {
                         new File(mDestination + "/tmp/" + download.getTitle() + ".anki.updating").delete();
                         File mediaFolder = new File(mDestination + "/tmp/" + download.getTitle() + ".media/");

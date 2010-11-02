@@ -995,7 +995,7 @@ public class Reviewer extends Activity {
 
             case HQIA_CARD_MODEL:
                 return (Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getCardModel(
-                        mCurrentCard.getCardModelId()).getQuestionInAnswer() == 0);
+                        mCurrentCard.getCardModelId()).isQuestionInAnswer());
 
             default:
                 return true;
@@ -1171,8 +1171,8 @@ public class Reviewer extends Activity {
 
 
     /**
-     * Select Text in the webview and automatically sends the selected text to the clipboard From
-     * http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
+     * Select Text in the webview and automatically sends the selected text to the clipboard.
+     * From http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
      */
     private void selectAndCopyText() {
         try {

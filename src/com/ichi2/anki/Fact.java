@@ -27,8 +27,9 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 /**
- * Anki fact. A fact is a single piece of information, made up of a number of fields. See
- * http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Facts
+ * Anki fact.
+ * A fact is a single piece of information, made up of a number of fields.
+ * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Facts
  */
 public class Fact {
 
@@ -48,11 +49,18 @@ public class Fact {
     private Deck mDeck;
 
 
-    /*
-     * public Fact(Deck deck, Model model) { this.deck = deck; this.model = model; this.id = Utils.genID(); if (model !=
-     * null) { Iterator<FieldModel> iter = model.fieldModels.iterator(); while (iter.hasNext()) { this.fields.add(new
-     * Field(iter.next())); } } }
-     */
+//    public Fact(Deck deck, Model model) {
+//        this.deck = deck;
+//        this.model = model;
+//        this.id = Utils.genID();
+//        if (model != null) {
+//            Iterator<FieldModel> iter = model.fieldModels.iterator();
+//            while (iter.hasNext()) {
+//                this.fields.add(new Field(iter.next()));
+//            }
+//        }
+//    }
+
 
     // Generate fact object from its ID
     public Fact(Deck deck, long id) {

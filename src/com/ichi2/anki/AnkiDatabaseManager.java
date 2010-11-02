@@ -14,8 +14,6 @@
 
 package com.ichi2.anki;
 
-import android.database.SQLException;
-
 import java.util.HashMap;
 import java.util.Set;
 
@@ -23,12 +21,15 @@ public class AnkiDatabaseManager {
 
     private static HashMap<String, AnkiDb> sAnkiDatabases = new HashMap<String, AnkiDb>();
 
-
     /* Prevent class from being instantiated */
     private AnkiDatabaseManager() { }
 
-
-    public static AnkiDb getDatabase(String pathDB) throws SQLException {
+    /**
+     * Get a reference over an Anki database, creating the connection if needed.
+     * @param pathDB the path to the database.
+     * @return the Anki database.
+     */
+    public static AnkiDb getDatabase(String pathDB) {
         // If the DB is already opened
         if (sAnkiDatabases.containsKey(pathDB)) {
             return sAnkiDatabases.get(pathDB);
@@ -44,6 +45,10 @@ public class AnkiDatabaseManager {
     }
 
 
+    /**
+     * Close connection to a given database.
+     * @param pathDB the path to the database to close.
+     */
     public static void closeDatabase(String pathDB) {
         AnkiDb ankiDB = sAnkiDatabases.remove(pathDB);
         if (ankiDB != null) {
@@ -52,6 +57,10 @@ public class AnkiDatabaseManager {
     }
 
 
+    /**
+     * Close connections to all opened databases.
+     * XXX Currently unused.
+     */
     public static void closeAllDatabases() {
         Set<String> databases = sAnkiDatabases.keySet();
         for (String pathDB : databases) {
@@ -60,11 +69,12 @@ public class AnkiDatabaseManager {
     }
 
 
+    /**
+     * Check if there is a valid connection to the given database.
+     * @param pathDB the path to the database we want to check.
+     * @return True if the database is already opened, false otherwise.
+     */
     public static boolean isDatabaseOpen(String pathDB) {
-        if (sAnkiDatabases.containsKey(pathDB)) {
-            return true;
-        }
-
-        return false;
+        return sAnkiDatabases.containsKey(pathDB);
     }
 }

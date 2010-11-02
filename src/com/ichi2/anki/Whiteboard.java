@@ -30,7 +30,7 @@ import android.view.View;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
- * Whiteboard allowing the user to draw the card's answer on the touchscreen. TODO Javadoc
+ * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
 public class Whiteboard extends View {
 
@@ -41,9 +41,9 @@ public class Whiteboard extends View {
     private Canvas mCanvas;
     private Path mPath;
     private Paint mBitmapPaint;
+
     private int mBackgroundColor;
     private int mForegroundColor;
-    private int mExtraHeight;
 
     private boolean mLocked;
     private boolean mRecreateBitmap = false;
@@ -75,28 +75,61 @@ public class Whiteboard extends View {
     }
 
 
-    protected void createBitmap(int w, int h, Bitmap.Config conf) {
-        mBitmap = Bitmap.createBitmap(w, h, conf);
-        mCanvas = new Canvas(mBitmap);
-        clear();
-    }
-
-
-    private void createBitmap() {
-        createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ARGB_8888);
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawColor(mBackgroundColor);
+        canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
+        canvas.drawPath(mPath, mPaint);
     }
 
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        // We want to create the bitmap again only when the screen has been rotated, not when the size changes in the
-        // transition
-        // between the front and the back of a card (that would made the Whiteboard to disappear)
+        // We want to create the bitmap again only when the screen has been rotated,
+        // not when the size changes in the transition between the front and the back
+        // of a card (that would made the Whiteboard to disappear)
         if (mRecreateBitmap) {
             createBitmap();
             super.onSizeChanged(w, h, oldw, oldh);
             mRecreateBitmap = false;
         }
+    }
+
+
+    /**
+     * Handle touch screen motion events.
+     * @param event The motion event.
+     * @return True if the event was handled, false otherwise.
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean handled = false;
+
+        if (!mLocked) {
+            float x = event.getX();
+            float y = event.getY();
+            handled = true;
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    touchStart(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    touchMove(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    touchUp();
+                    invalidate();
+                    break;
+                default:
+                    handled = false;
+            }
+        }
+
+        return handled;
     }
 
 
@@ -111,16 +144,30 @@ public class Whiteboard extends View {
     }
 
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        canvas.drawColor(mBackgroundColor);
-        canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-        canvas.drawPath(mPath, mPaint);
+    private void unlock() {
+        mLocked = false;
+    }
+
+    // XXX: Unused
+    // If we don't need to lock the whiteboard, then we should remove mLocked too
+//    public void lock() {
+//        mLocked = true;
+//    }
+
+
+    private void createBitmap(int w, int h, Bitmap.Config conf) {
+        mBitmap = Bitmap.createBitmap(w, h, conf);
+        mCanvas = new Canvas(mBitmap);
+        clear();
     }
 
 
-    private void touch_start(float x, float y) {
+    private void createBitmap() {
+        createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ARGB_8888);
+    }
+
+
+    private void touchStart(float x, float y) {
         mPath.reset();
         mPath.moveTo(x, y);
         mX = x;
@@ -128,7 +175,7 @@ public class Whiteboard extends View {
     }
 
 
-    private void touch_move(float x, float y) {
+    private void touchMove(float x, float y) {
         float dx = Math.abs(x - mX);
         float dy = Math.abs(y - mY);
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
@@ -139,47 +186,11 @@ public class Whiteboard extends View {
     }
 
 
-    private void touch_up() {
+    private void touchUp() {
         mPath.lineTo(mX, mY);
         // commit the path to our offscreen
         mCanvas.drawPath(mPath, mPaint);
         // kill this so we don't double draw
         mPath.reset();
-    }
-
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (!mLocked) {
-            float x = event.getX();
-            float y = event.getY();
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    touch_start(x, y);
-                    invalidate();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    touch_move(x, y);
-                    invalidate();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    touch_up();
-                    invalidate();
-                    break;
-            }
-        }
-
-        return true;
-    }
-
-
-    public void unlock() {
-        mLocked = false;
-    }
-
-
-    public void lock() {
-        mLocked = true;
     }
 }

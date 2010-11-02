@@ -152,9 +152,9 @@ public class SharedDeckPicker extends Activity {
         if (obj instanceof Download) {
             Download download = (Download) obj;
             menu.add(Menu.NONE, MENU_CANCEL, Menu.NONE, res.getString(R.string.cancel_download));
-            if (download.getStatus() == SharedDeckDownload.PAUSED) {
+            if (download.getStatus() == SharedDeckDownload.STATUS_PAUSED) {
                 menu.add(Menu.NONE, MENU_RESUME, Menu.NONE, res.getString(R.string.resume_download));
-            } else if (download.getStatus() == SharedDeckDownload.UPDATING) {
+            } else if (download.getStatus() == SharedDeckDownload.STATUS_UPDATING) {
                 menu.add(Menu.NONE, MENU_PAUSE, Menu.NONE, res.getString(R.string.pause_download));
             }
        }
@@ -171,10 +171,10 @@ public class SharedDeckPicker extends Activity {
 
             switch (item.getItemId()) {
                 case MENU_CANCEL:
-                    download.setStatus(SharedDeckDownload.CANCELLED);
+                    download.setStatus(SharedDeckDownload.STATUS_CANCELLED);
                     break;
                 case MENU_RESUME:
-                    download.setStatus(SharedDeckDownload.UPDATING);
+                    download.setStatus(SharedDeckDownload.STATUS_UPDATING);
                     try {
                         startService(mDownloadManagerServiceIntent);
                         mDownloadManagerService.resumeDownloadUpdating(download);
@@ -185,7 +185,7 @@ public class SharedDeckPicker extends Activity {
                     }
                     break;
                 case MENU_PAUSE:
-                    download.setStatus(Download.PAUSED);
+                    download.setStatus(Download.STATUS_PAUSED);
                     break;
             }
             mSharedDecksAdapter.notifyDataSetChanged();
@@ -542,37 +542,37 @@ public class SharedDeckPicker extends Activity {
                 downloadingSharedDeckTitle.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
                 switch (download.getStatus()) {
-                    case Download.START:
+                    case Download.STATUS_STARTED:
                         progressText.setText(res.getString(R.string.starting_download));
                         estimatedText.setText("");
                         progressBar.setProgress(0);
                         break;
 
-                    case Download.DOWNLOADING:
+                    case Download.STATUS_DOWNLOADING:
                         progressText.setText(res.getString(R.string.downloading));
                         estimatedText.setText("");
                         progressBar.setProgress(download.getProgress());
                         break;
 
-                    case Download.PAUSED:
+                    case Download.STATUS_PAUSED:
                         progressText.setText(res.getString(R.string.paused));
                         estimatedText.setText("");
                         progressBar.setProgress(download.getProgress());
                         break;
 
-                    case Download.COMPLETE:
+                    case Download.STATUS_COMPLETE:
                         progressText.setText(res.getString(R.string.downloaded));
                         estimatedText.setText("");
                         progressBar.setProgress(0);
                         break;
 
-                    case SharedDeckDownload.UPDATING:
+                    case SharedDeckDownload.STATUS_UPDATING:
                         progressText.setText(res.getString(R.string.updating));
                         estimatedText.setText(download.getEstTimeToCompletion());
                         progressBar.setProgress(download.getProgress());
                         break;
 
-                    case Download.CANCELLED:
+                    case Download.STATUS_CANCELLED:
                         progressText.setText(res.getString(R.string.cancelling));
                         estimatedText.setText("");
                         progressBar.setProgress(download.getProgress());

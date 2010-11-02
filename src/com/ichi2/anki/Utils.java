@@ -41,8 +41,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.TreeSet;
 import java.util.zip.Deflater;
@@ -52,7 +54,10 @@ import java.util.zip.Deflater;
  */
 public class Utils {
 
-    private static final int CHUNK_SIZE = 32768;
+    // Used to format doubles with English's decimal separator system
+    public static final Locale ENGLISH_LOCALE = new Locale("en_US");
+
+    public static final int CHUNK_SIZE = 32768;
 
     private static final long MILLIS_IN_A_DAY = 86400000;
     private static final int DAYS_BEFORE_1970 = 719163;
@@ -342,6 +347,19 @@ public class Utils {
      */
     public static double now() {
         return (System.currentTimeMillis() / 1000.0);
+    }
+
+
+    /**
+     * @param utcOffset The UTC offset in seconds.
+     * @return a new Date object 
+     */
+    public static Date genToday(double utcOffset) {
+        // Get timezone offset in milliseconds
+        Calendar now = Calendar.getInstance();
+        int timezoneOffset = (now.get(Calendar.ZONE_OFFSET) + now.get(Calendar.DST_OFFSET));
+
+        return new Date((long) (System.currentTimeMillis() - utcOffset * 1000 - timezoneOffset));
     }
 
 

@@ -22,8 +22,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -157,5 +160,43 @@ public class AnkiDroidApp extends Application {
         Display display = ((WindowManager) sInstance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay();
         return display.getWidth();
+    }
+
+
+    /**
+     * Get package name as defined in the manifest.
+     * @return the package name.
+     */
+    public static String getPkgName() {
+        String pkgName = TAG;
+        Context context = sInstance.getApplicationContext();
+
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            pkgName = context.getString(pInfo.applicationInfo.labelRes);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+        }
+
+        return pkgName;
+    }
+
+
+    /**
+     * Get the package version as defined in the manifest.
+     * @return the package version.
+     */
+    public static String getPkgVersion() {
+        String pkgVersion = "?";
+        Context context = sInstance.getApplicationContext();
+
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            pkgVersion = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+        }
+
+        return pkgVersion;
     }
 }

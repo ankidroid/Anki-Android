@@ -44,6 +44,8 @@ import java.util.Stack;
  */
 public class Deck {
 
+    public static final String TAG_MARKED = "Marked";
+
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
     private static final int NEW_CARDS_FIRST = 2;
@@ -922,7 +924,10 @@ public class Deck {
         }
 
         // spacing
-        double space, spaceFactor, minSpacing, minOfOtherCards;
+        double space;
+        double spaceFactor;
+        double minSpacing;
+        double minOfOtherCards;
         try {
             cursor = ankiDB.getDatabase().rawQuery(
                     "SELECT models.initialSpacing, models.spacing " + "FROM facts, models "
@@ -1352,7 +1357,7 @@ public class Deck {
      * Checks if the day has rolled over.
      */
     private void checkDailyStats() {
-        if (!Stats.genToday(this).toString().equals(mDailyStats.getDay().toString())) {
+        if (!Utils.genToday(mUtcOffset).toString().equals(mDailyStats.getDay().toString())) {
             mDailyStats = Stats.dailyStats(this);
         }
     }
@@ -1392,8 +1397,6 @@ public class Deck {
     /*
      * Tags: adding/removing in bulk*********************************************************
      */
-    public static final String TAG_MARKED = "Marked";
-
 
     public ArrayList<String> factTags(long[] factIds) {
         return AnkiDatabaseManager.getDatabase(mDeckPath).queryColumn(String.class,

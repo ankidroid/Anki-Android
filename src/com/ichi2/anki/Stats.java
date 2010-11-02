@@ -25,7 +25,6 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.sql.Date;
-import java.util.Calendar;
 
 /**
  * Deck statistics.
@@ -192,15 +191,6 @@ public class Stats {
     }
 
 
-    public static Date genToday(Deck deck) {
-        // Get timezone offset in milliseconds
-        Calendar now = Calendar.getInstance();
-        int timezoneOffset = (now.get(Calendar.ZONE_OFFSET) + now.get(Calendar.DST_OFFSET));
-
-        return new Date((long) (System.currentTimeMillis() - deck.getUtcOffset() * 1000 - timezoneOffset));
-    }
-
-
     public static void updateAllStats(Stats global, Stats daily, Card card, int ease, String oldState) {
         updateStats(global, card, ease, oldState);
         updateStats(daily, card, ease, oldState);
@@ -302,7 +292,7 @@ public class Stats {
     public static Stats globalStats(Deck deck) {
         Log.i(AnkiDroidApp.TAG, "Getting global stats...");
         int type = STATS_LIFE;
-        Date today = genToday(deck);
+        Date today = Utils.genToday(deck.getUtcOffset());
         Cursor cursor = null;
         Stats stats = null;
 
@@ -330,7 +320,7 @@ public class Stats {
     public static Stats dailyStats(Deck deck) {
         Log.i(AnkiDroidApp.TAG, "Getting daily stats...");
         int type = STATS_DAY;
-        Date today = genToday(deck);
+        Date today = Utils.genToday(deck.getUtcOffset());
         Stats stats = null;
         Cursor cursor = null;
 

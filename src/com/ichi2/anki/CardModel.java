@@ -320,8 +320,9 @@ public class CardModel implements Comparator<CardModel> {
     /**
      * @return the questionInAnswer
      */
-    public int getQuestionInAnswer() {
-        return mQuestionInAnswer;
+    public boolean isQuestionInAnswer() {
+        // FIXME hmmm, is that correct?
+        return (mQuestionInAnswer == 0);
     }
 
 

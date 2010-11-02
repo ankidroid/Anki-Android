@@ -101,16 +101,16 @@ public class StudyOptions extends Activity {
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
+    private boolean mSdCardAvailable = AnkiDroidApp.isSdCardMounted();
 
     /**
      * Preferences
      */
-    private String prefDeckPath;
-    private boolean prefStudyOptions;
+    private String mPrefDeckPath;
+    private boolean mPrefStudyOptions;
     // private boolean deckSelected;
-    private boolean inDeckPicker;
-    private String deckFilename;
+    private boolean mInDeckPicker;
+    private String mDeckFilename;
 
     private int mCurrentContentView;
 
@@ -176,7 +176,7 @@ public class StudyOptions extends Activity {
                 case R.id.studyoptions_start:
                     // finish();
                     Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
-                    reviewer.putExtra("deckFilename", deckFilename);
+                    reviewer.putExtra("deckFilename", mDeckFilename);
                     startActivityForResult(reviewer, REQUEST_REVIEW);
                     return;
                 case R.id.studyoptions_more:
@@ -286,22 +286,22 @@ public class StudyOptions extends Activity {
 
         Intent intent = getIntent();
         if ("android.intent.action.VIEW".equalsIgnoreCase(intent.getAction()) && intent.getDataString() != null) {
-            deckFilename = Uri.parse(intent.getDataString()).getPath();
-            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from intent: " + deckFilename);
+            mDeckFilename = Uri.parse(intent.getDataString()).getPath();
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from intent: " + mDeckFilename);
         } else if (savedInstanceState != null) {
             // Use the same deck as last time Ankidroid was used.
-            deckFilename = savedInstanceState.getString("deckFilename");
-            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + deckFilename);
+            mDeckFilename = savedInstanceState.getString("deckFilename");
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + mDeckFilename);
         } else {
             Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
-            deckFilename = preferences.getString("deckFilename", null);
-            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + deckFilename);
+            mDeckFilename = preferences.getString("deckFilename", null);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + mDeckFilename);
         }
 
-        if (!sdCardAvailable) {
+        if (!mSdCardAvailable) {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
         } else {
-            if (deckFilename == null || !new File(deckFilename).exists()) {
+            if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
             } else {
                 // Load previous deck.
@@ -326,11 +326,11 @@ public class StudyOptions extends Activity {
                         Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Eject");
                         closeOpenedDeck();
                         showContentView(CONTENT_NO_EXTERNAL_STORAGE);
-                        sdCardAvailable = false;
+                        mSdCardAvailable = false;
                     } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                         Log.i(AnkiDroidApp.TAG, "mUnmountReceiver - Action = Media Mounted");
-                        sdCardAvailable = true;
-                        if (!inDeckPicker) {
+                        mSdCardAvailable = true;
+                        if (!mInDeckPicker) {
                             loadPreviousDeck();
                         }
                     }
@@ -357,13 +357,13 @@ public class StudyOptions extends Activity {
 
     private void loadPreviousDeck() {
         Intent deckLoadIntent = new Intent();
-        deckLoadIntent.putExtra(OPT_DB, deckFilename);
+        deckLoadIntent.putExtra(OPT_DB, mDeckFilename);
         onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
     }
 
 
     private void closeOpenedDeck() {
-        if (AnkiDroidApp.deck() != null && sdCardAvailable) {
+        if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
             AnkiDroidApp.deck().closeDeck();
             AnkiDroidApp.setDeck(null);
         }
@@ -515,7 +515,7 @@ public class StudyOptions extends Activity {
                 setTitle(R.string.app_name);
                 mTextNoDeckTitle.setText(R.string.studyoptions_nodeck_title);
                 mTextNoDeckMessage.setText(String.format(
-                        getResources().getString(R.string.studyoptions_nodeck_message), prefDeckPath));
+                        getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
                 setContentView(mNoDeckView);
                 break;
             case CONTENT_DECK_NOT_LOADED:
@@ -571,10 +571,10 @@ public class StudyOptions extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + deckFilename);
+        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + mDeckFilename);
         // Remember current deck's filename.
-        if (deckFilename != null) {
-            outState.putString("deckFilename", deckFilename);
+        if (mDeckFilename != null) {
+            outState.putString("deckFilename", mDeckFilename);
         }
         Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
     }
@@ -610,10 +610,10 @@ public class StudyOptions extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean deckLoaded = AnkiDroidApp.deck() != null;
-        menu.findItem(MENU_OPEN).setEnabled(sdCardAvailable);
-        menu.findItem(SUBMENU_DOWNLOAD).setEnabled(sdCardAvailable);
+        menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
+        menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
         // menu.findItem(MENU_DECK_PROPERTIES).setEnabled(deckLoaded && sdCardAvailable);
-        menu.findItem(MENU_SYNC).setEnabled(deckLoaded && sdCardAvailable);
+        menu.findItem(MENU_SYNC).setEnabled(deckLoaded && mSdCardAvailable);
         return true;
     }
 
@@ -673,7 +673,7 @@ public class StudyOptions extends Activity {
         closeOpenedDeck();
         // deckLoaded = false;
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
-        inDeckPicker = true;
+        mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
@@ -692,7 +692,7 @@ public class StudyOptions extends Activity {
 
 
     private void loadSampleDeck() {
-        File sampleDeckFile = new File(prefDeckPath, SAMPLE_DECK_NAME);
+        File sampleDeckFile = new File(mPrefDeckPath, SAMPLE_DECK_NAME);
 
         if (!sampleDeckFile.exists()) {
             // Create the deck.
@@ -728,9 +728,9 @@ public class StudyOptions extends Activity {
             Deck deck = AnkiDroidApp.deck();
 
             Log.i(AnkiDroidApp.TAG,
-                    "Synchronizing deck " + deckFilename + " with username " + username + " and password " + password);
+                    "Synchronizing deck " + mDeckFilename + " with username " + username + " and password " + password);
             Connection.syncDeck(syncListener, new Connection.Payload(new Object[] { username, password, deck,
-                    deckFilename }));
+                    mDeckFilename }));
         } else {
             mUserNotLoggedInAlert.show();
         }
@@ -750,7 +750,7 @@ public class StudyOptions extends Activity {
             // updateCard("");
             // hideSdError();
             // hideDeckErrors();
-            inDeckPicker = false;
+            mInDeckPicker = false;
 
             if (resultCode != RESULT_OK) {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
@@ -768,7 +768,7 @@ public class StudyOptions extends Activity {
             }
             // A deck was picked. Save it in preferences and use it.
             Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
-            deckFilename = intent.getExtras().getString(OPT_DB);
+            mDeckFilename = intent.getExtras().getString(OPT_DB);
             savePreferences();
 
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
@@ -804,15 +804,15 @@ public class StudyOptions extends Activity {
     private void savePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
-        editor.putString("deckFilename", deckFilename);
+        editor.putString("deckFilename", mDeckFilename);
         editor.commit();
     }
 
 
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-        prefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
-        prefStudyOptions = preferences.getBoolean("study_options", true);
+        mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+        mPrefStudyOptions = preferences.getBoolean("study_options", true);
 
         return preferences;
     }
@@ -824,28 +824,28 @@ public class StudyOptions extends Activity {
 
 
     private void displayProgressDialogAndLoadDeck(boolean updateAllCards) {
-        Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - Loading deck " + deckFilename);
+        Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - Loading deck " + mDeckFilename);
 
         // Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
         // deckSelected = true;
 
         // if(isSdCardMounted())
         // {
-        if (deckFilename != null && new File(deckFilename).exists()) {
+        if (mDeckFilename != null && new File(mDeckFilename).exists()) {
             // showControls(false);
 
             if (updateAllCards) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
-                        new DeckTask.TaskData(deckFilename));
+                        new DeckTask.TaskData(mDeckFilename));
             } else {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(
-                        deckFilename));
+                        mDeckFilename));
             }
         } else {
-            if (deckFilename == null) {
+            if (mDeckFilename == null) {
                 Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - SD card unmounted.");
-            } else if (!new File(deckFilename).exists()) {
-                Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - The deck " + deckFilename + " does not exist.");
+            } else if (!new File(mDeckFilename).exists()) {
+                Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - The deck " + mDeckFilename + " does not exist.");
             }
 
             // Show message informing that no deck has been loaded
@@ -887,7 +887,7 @@ public class StudyOptions extends Activity {
                     // Set the deck in the application instance, so other activities
                     // can access the loaded deck.
                     AnkiDroidApp.setDeck(result.getDeck());
-                    if (prefStudyOptions) {
+                    if (mPrefStudyOptions) {
                         showContentView(CONTENT_STUDY_OPTIONS);
                     } else {
                         startActivityForResult(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
@@ -947,7 +947,7 @@ public class StudyOptions extends Activity {
                 // }
 
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(
-                        deckFilename));
+                        mDeckFilename));
             } else {
                 // connectionFailedAlert.show();
                 if (mConnectionErrorAlert != null) {

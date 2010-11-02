@@ -32,7 +32,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -391,9 +390,7 @@ public class DeckPicker extends Activity implements Runnable {
             thread.start();
         } else {
             Log.i(AnkiDroidApp.TAG, "populateDeckList - No decks found.");
-            // There is no sd card attached (wrap this code in a function called something like isSdMounted()
-            // and place it in a utils class
-            if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            if (!AnkiDroidApp.isSdCardMounted()) {
                 Log.i(AnkiDroidApp.TAG, "populateDeckList - No sd card.");
                 setTitle(R.string.deckpicker_title_nosdcard);
                 showDialog(DIALOG_NO_SDCARD);

@@ -38,21 +38,23 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.zip.InflaterInputStream;
 
 public class AnkiDroidProxy {
+
+    /**
+     * Connection settings
+     */
+    // anki.ichi2.net hosted at 78.46.104.28
+    public static final String SYNC_HOST = "anki.ichi2.net";
+    public static final String SYNC_URL = "http://" + SYNC_HOST + "/sync/";
+    public static final String SYNC_SEARCH = "http://" + SYNC_HOST + "/file/search";
 
     /**
      * Synchronization.
      */
     public static final int LOGIN_OK = 0;
     public static final int LOGIN_INVALID_USER_PASS = 1;
-
-    // Used to format doubles with English's decimal separator system
-    private static final Locale ENGLISH_LOCALE = new Locale("en_US");
-
-    private static final int CHUNK_SIZE = 32768;
 
     /**
      * Shared deck's fields
@@ -74,19 +76,6 @@ public class AnkiDroidProxy {
      */
     private static List<SharedDeck> sSharedDecks;
 
-    /**
-     * Connection settings
-     */
-    private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
-    // 78.46.104.28
-    private static final String SYNC_HOST = "anki.ichi2.net";
-    private static final String SYNC_PORT = "80";
-
-    // Test
-    /*
-     * private static final String SYNC_URL = "http://192.168.2.103:8001/sync/"; private static final String SYNC_HOST =
-     * "192.168.2.103"; private static final String SYNC_PORT = "8001";
-     */
     private String mUsername;
     private String mPassword;
     private String mDeckName;
@@ -184,6 +173,7 @@ public class AnkiDroidProxy {
         String decksServer = "{}";
 
         try {
+            // FIXME: Client is hardcoded.
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&client=ankidroid-0.4&u="
                     + URLEncoder.encode(mUsername, "UTF-8") + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8")
                     + "&libanki=0.9.9.8.6&pversion=5";
@@ -291,7 +281,7 @@ public class AnkiDroidProxy {
                     + "&d="
                     + URLEncoder.encode(mDeckName, "UTF-8")
                     + "&lastSync="
-                    + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(ENGLISH_LOCALE, "%f", lastSync)
+                    + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(Utils.ENGLISH_LOCALE, "%f", lastSync)
                             .getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
@@ -326,12 +316,13 @@ public class AnkiDroidProxy {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, HttpSyncServerProxy - applyPayload
-     * 
-     * @param lastSync
+     *
+     * @param payload
      */
     public JSONObject applyPayload(JSONObject payload) {
         Log.i(AnkiDroidApp.TAG, "applyPayload");
-        // Log.i(AnkiDroidApp.TAG, "user = " + username + ", password = " + password + ", payload = " + payload.toString());
+        // Log.i(AnkiDroidApp.TAG, "user = " + username + ", password = " + password + ", payload = " +
+        // payload.toString());
         JSONObject payloadReply = new JSONObject();
 
         try {
@@ -382,9 +373,9 @@ public class AnkiDroidProxy {
             if (sSharedDecks == null) {
                 sSharedDecks = new ArrayList<SharedDeck>();
 
-                HttpGet httpGet = new HttpGet("http://anki.ichi2.net/file/search");
+                HttpGet httpGet = new HttpGet(SYNC_SEARCH);
                 httpGet.setHeader("Accept-Encoding", "identity");
-                httpGet.setHeader("Host", "anki.ichi2.net");
+                httpGet.setHeader("Host", SYNC_HOST);
                 DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
 
                 HttpResponse httpResponse = defaultHttpClient.execute(httpGet);

@@ -19,7 +19,7 @@ import android.os.Parcelable;
 
 public class SharedDeckDownload extends Download implements Parcelable {
 
-    public static final int UPDATING = 5;
+    public static final int STATUS_UPDATING = 5;
 
     private static final long serialVersionUID = 1L;
 
@@ -69,7 +69,6 @@ public class SharedDeckDownload extends Download implements Parcelable {
             return "";
         }
 
-        String estTimeStr;
         long estTime = (long) mEstTimeToCompletion;
         long hours = estTime / 3600;
         estTime %= 3600;
@@ -104,7 +103,7 @@ public class SharedDeckDownload extends Download implements Parcelable {
 
     @Override
     public int getProgress() {
-        if (mStatus == UPDATING || mStatus == PAUSED) {
+        if (mStatus == STATUS_UPDATING || mStatus == STATUS_PAUSED) {
             if (mNumTotalCards > 0) {
                 return (int) (((float) mNumUpdatedCards / mNumTotalCards) * 100);
             } else {

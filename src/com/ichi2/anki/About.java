@@ -18,10 +18,7 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.WebView;
 
 /**
@@ -45,21 +42,11 @@ public class About extends Activity {
 
     private String getAboutTitle() {
         StringBuilder appName = new StringBuilder();
-        String pkgName = "AnkiDroid";
-        String pkgVersion = "?";
-
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
-            pkgName = getString(pInfo.applicationInfo.labelRes);
-            pkgVersion = pInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, "Couldn't find package named " + this.getPackageName(), e);
-        }
 
         appName.append("About ");
-        appName.append(pkgName);
+        appName.append(AnkiDroidApp.getPkgName());
         appName.append(" v");
-        appName.append(pkgVersion);
+        appName.append(AnkiDroidApp.getPkgVersion());
         return appName.toString();
     }
 }
