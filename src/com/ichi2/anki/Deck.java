@@ -210,6 +210,13 @@ public class Deck {
 
     String scheduler;
     
+    // Queues
+    LinkedList<QueueItem> failedQueue;
+    LinkedList<QueueItem> revQueue;
+    LinkedList<QueueItem> newQueue;
+    //LinkedList<QueueItem> refailedQueue;
+    HashMap<Long, Double> spacedFacts;
+    
     // Not in Anki Desktop
     String deckPath;
 
@@ -589,12 +596,12 @@ public class Deck {
 
     private void _fillFailedQueue() {
         if ((failedSoonCount != 0) && failedQueue.isEmpty()) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " +
                 dueCutoff + " ORDER BY combinedDue LIMIT " + queueLimit;
-            Cursor cur = ankiDB.database.rawQuery(cardLimit("revActive", "revInactive", sql));
+            Cursor cur = ankiDB.database.rawQuery(cardLimit("revActive", "revInactive", sql), null);
             while (cur.moveToNext()) {
-                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
+                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 failedQueue.add(0, qi); // Add to front, so list is reversed as it is built
             }
         }
@@ -602,12 +609,12 @@ public class Deck {
 
     private void _fillRevQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 1 AND combinedDue < " +
                 dueCutoff + " ORDER BY " + revOrder() + " LIMIT " + queueLimit;
-            Cursor cur = ankiDB.database.rawQuery(cardLimit("revActive", "revInactive", sql));
+            Cursor cur = ankiDB.database.rawQuery(cardLimit("revActive", "revInactive", sql), null);
             while (cur.moveToNext()) {
-                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
+                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 revQueue.add(0, qi); // Add to front, so list is reversed as it is built
             }
         }
@@ -615,12 +622,12 @@ public class Deck {
 
     private void _fillNewQueue() {
         if ((newCount != 0) && newQueue.isEmpty()) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 2 AND combinedDue < " +
                 dueCutoff + " ORDER BY " + newOrder() + " LIMIT " + queueLimit;
-            Cursor cur = ankiDB.database.rawQuery(cardLimit("newActive", "newInactive", sql));
+            Cursor cur = ankiDB.database.rawQuery(cardLimit("newActive", "newInactive", sql), null);
             while (cur.moveToNext()) {
-                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
+                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 newQueue.addFirst(qi); // Add to front, so list is reversed as it is built
             }
         }
@@ -641,9 +648,9 @@ public class Deck {
 
     private void removeSpaced(LinkedList<QueueItem> queue) {
         while (!queue.isEmpty()) {
-            long fid = (QueueItem)(queue.getLast()).getFactID();
+            long fid = ((QueueItem)queue.getLast()).getFactID();
             if (spacedFacts.containsKey(fid)) {
-                if (System.currentTimeMillis() / 1000.0 > spacedFacts.get(fid)) {
+                if ((double) System.currentTimeMillis() / 1000.0 > spacedFacts.get(fid)) {
                     spacedFacts.remove(fid);
                 } else {
                     queue.removeLast();
@@ -684,9 +691,12 @@ public class Deck {
         return newOrderStrings[newCardOrder];
     }
 
-    // Rebuild the type cache. Only necessary on updgrade.
-    private void rebuildTypes(String where="") {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+    // Rebuild the type cache. Only necessary on upgrade.
+    private void rebuildTypes() {
+        rebuildTypes("");
+    }
+    private void rebuildTypes(String where) {
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         ankiDB.database.execSQL("UPDATE cards " +
                 "SET type = (CASE " +
                 "WHEN successive = 0 AND reps != 0 THEN 0 -- failed " +
@@ -698,7 +708,7 @@ public class Deck {
 
     // Return the type of the current card (what queue it's in)
     private int _cardType(Card card) {
-        if (cardIsNew(card) {
+        if (cardIsNew(card)) {
             return 2;
         } else if (card.successive == 0) {
             return 0;
@@ -711,7 +721,7 @@ public class Deck {
         if (deckVars.getBool("perDay")) {
             dueCutoff = (Stats.genToday(this).getTime() + ONEDAY_MS) / 1000.0;
         } else {
-            dueCutoff = System.currentTimeMillis() / 1000.0;
+            dueCutoff = (double) System.currentTimeMillis() / 1000.0;
         }
     }
 
@@ -1911,7 +1921,7 @@ public class Deck {
      * Counts related to due cards *********************************************************
      */
 
-    private int newCardsToday() {
+    private int newCardsDoneToday() {
         return (dailyStats.newEase0 + dailyStats.newEase1 + dailyStats.newEase2 + dailyStats.newEase3 + dailyStats.newEase4);
     }
 
