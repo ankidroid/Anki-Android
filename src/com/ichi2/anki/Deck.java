@@ -25,6 +25,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -214,9 +215,13 @@ public class Deck {
     LinkedList<QueueItem> failedQueue;
     LinkedList<QueueItem> revQueue;
     LinkedList<QueueItem> newQueue;
-    //LinkedList<QueueItem> refailedQueue;
+    LinkedList<QueueItem> failedCramQueue;
     HashMap<Long, Double> spacedFacts;
     
+    //Cramming
+    private String activeCramTags;
+    private String cramOrder;
+
     // Not in Anki Desktop
     String deckPath;
 
@@ -461,20 +466,19 @@ public class Deck {
      * Queue Management
      */
     private void setupStandardScheduler() {
-        Class cls = this.getClass();
-        getCardIdMethod = cls.getDeclaredMethod("_getCardId", boolean.class);
-        fillFailedQueueMethod = cls.getDeclaredMethod("_fillFailedQueue", null);
-        fillRevQueueMethod = cls.getDeclaredMethod("_fillRevQueue", null);
-        fillNewQueueMethod = cls.getDeclaredMethod("_fillNewQueue", null);
-        rebuildFailedCountMethod = cls.getDeclaredMethod("_rebuildFailedCount", null);
-        rebuildRevCountMethod = cls.getDeclaredMethod("_rebuildRevCount", null);
-        rebuildNewCountMethod = cls.getDeclaredMethod("_rebuildNewCount", null);
-        requeueCardMethod = cls.getDeclaredMethod("_requeueCard", Card.class, int.class);
-        timeForNewCardMethod = cls.getDeclaredMethod("_timeForNewCard", null);
-        updateNewCountTodayMethod = cls.getDeclaredMethod("_updateNewCountToday", null);
-        cardTypeMethod = cls.getDeclaredMethod("_cardType", Card.class);
+        getCardIdMethod = Deck.class.getDeclaredMethod("_getCardId", boolean.class);
+        fillFailedQueueMethod = Deck.class.getDeclaredMethod("_fillFailedQueue");
+        fillRevQueueMethod = Deck.class.getDeclaredMethod("_fillRevQueue");
+        fillNewQueueMethod = Deck.class.getDeclaredMethod("_fillNewQueue");
+        rebuildFailedCountMethod = Deck.class.getDeclaredMethod("_rebuildFailedCount");
+        rebuildRevCountMethod = Deck.class.getDeclaredMethod("_rebuildRevCount");
+        rebuildNewCountMethod = Deck.class.getDeclaredMethod("_rebuildNewCount");
+        requeueCardMethod = Deck.class.getDeclaredMethod("_requeueCard", Card.class, int.class);
+        timeForNewCardMethod = Deck.class.getDeclaredMethod("_timeForNewCard");
+        updateNewCountTodayMethod = Deck.class.getDeclaredMethod("_updateNewCountToday");
+        cardTypeMethod = Deck.class.getDeclaredMethod("_cardType", Card.class);
         finishSchedulerMethod = null;
-        answerCardMethod = cls.getDeclaredMethod("_answerCard", Card.class, int.class);
+        answerCardMethod = Deck.class.getDeclaredMethod("_answerCard", Card.class, int.class);
         scheduler = "standard";
     }
 
@@ -495,7 +499,18 @@ public class Deck {
     private Method finishSchedulerMethod;
     private Method answerCardMethod;
     private long getCardId() {
-        return ((Long)getCardIdMethod.invoke(true)).longValue();
+        try {
+            return ((Long)getCardIdMethod.invoke(true)).longValue();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     private long getCardId(boolean check) {
         return ((Long)getCardIdMethod.invoke(check)).longValue();
@@ -639,7 +654,7 @@ public class Deck {
             if (!queue.isEmpty()) {
                 return true;
             }
-            fillFunc.invoke(null);
+            fillFunc.invoke(fillFunc, null);
             if (queue.isEmpty()) {
                 return false;
             }
@@ -727,8 +742,8 @@ public class Deck {
 
     private void reset() {
         // Setup global/daily stats
-        _globalStats = globalStats();
-        _dailyStats = dailyStats();
+        globalStats = Stats.globalStats(this);
+        dailyStats = Stats.dailyStats(this);
         // Recheck counts
         rebuildCounts();
         // Empty queues; will be refilled by getCard()
@@ -766,19 +781,19 @@ public class Deck {
      */
 
     private void setupReviewEarlyScheduler() {
-        fillRevQueueMethod = cls.getDeclaredMethod("_fillRevEarlyQueue", null);
-        rebuildRevCountMethod = cls.getDeclaredMethod("_rebuildRevEarlyCount", null);
-        finishSchedulerMethod = cls.getDeclaredMethod("_onReviewEarlyFinished", null);
+        fillRevQueueMethod = Deck.class.getDeclaredMethod("_fillRevEarlyQueue");
+        rebuildRevCountMethod = Deck.class.getDeclaredMethod("_rebuildRevEarlyCount");
+        finishSchedulerMethod = Deck.class.getDeclaredMethod("_onReviewEarlyFinished");
         scheduler = "reviewEarly";
     }
     
     private void resetAfterReviewEarly() {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 
-        ArrayList<long> ids = ankiDB.queryColumn(long.class, "SELECT id FROM cards WHERE priority = -1", 0);
+        ArrayList<Long> ids = ankiDB.queryColumn(long.class, "SELECT id FROM cards WHERE priority = -1", 0);
 
         if (ids != null) {
-           updatePriorities(ids.toArray());
+           updatePriorities(Utils.toPrimitive((Long[]) ids.toArray()));
            flushMod();
         }
     }
@@ -795,17 +810,17 @@ public class Deck {
         String extraLim = ""; // In the future it would be nice to skip the first x days of due cards
 
         String sql = "SELECT count() FROM cards WHERE type = 1 AND combinedDue > " + dueCutoff + extraLim;
-        revCount = ankiDB.queryScalar(sql);
+        revCount = (int) ankiDB.queryScalar(sql);
     }
     
     private void _fillRevEarlyQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             String sql = "SELECT id, factId FROM cards WHERE type = 1 AND combinedDue > " +
                 dueCutoff + " ORDER BY combinedDue LIMIT " + queueLimit;
-            Cursor cur = ankiDB.database.rawQuery(sql);
+            Cursor cur = ankiDB.database.rawQuery(sql, null);
             while (cur.moveToNext()) {
-                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), 0.0);
+                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 revQueue.add(0, qi); // Add to front, so list is reversed as it is built
             }
         }
@@ -817,40 +832,40 @@ public class Deck {
      */
 
     private void setupLearnMoreScheduler() {
-        rebuildNewCountMethod = cls.getDeclaredMethod("_rebuildLearnMoreCount", null);
-        updateNewCountTodayMethod = cls.getDeclaredMethod("_updateLearnMoreCountToday", null);
-        finishSchedulerMethod = cls.getDeclaredMethod("setupStandardScheduler", null);
+        rebuildNewCountMethod = Deck.class.getDeclaredMethod("_rebuildLearnMoreCount");
+        updateNewCountTodayMethod = Deck.class.getDeclaredMethod("_updateLearnMoreCountToday");
+        finishSchedulerMethod = Deck.class.getDeclaredMethod("setupStandardScheduler");
         scheduler = "learnMore";
     }
 
     private void _rebuildLearnMoreCount() {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        newCount = ankiDB.queryScalar("SELECT count() FROM cards WHERE type = 2 AND combinedDue < " + dueCutoff);
+        newCount = (int) ankiDB.queryScalar("SELECT count() FROM cards WHERE type = 2 AND combinedDue < " + dueCutoff);
     }
 
-    private void _updateLearnMoreCountToday()
+    private void _updateLearnMoreCountToday() {
         newCountToday = newCount;
     }
 
 
     /*
      * Cramming
-     */
+     ***************************/
 
     private void setupCramScheduler(String active, String order) {
-        getCardIdMethod = cls.getDeclaredMethod("_getCramCardId", new Class[] = {boolean.class});
+        getCardIdMethod = Deck.class.getDeclaredMethod("_getCramCardId", boolean.class);
         activeCramTags = active;
         cramOrder = order;
-        rebuildFailedCountMethod = cls.getDeclaredMethod("_rebuildFailedCramCount", null);
-        rebuildRevCountMethod = cls.getDeclaredMethod("_rebuildCramCount", null);
-        rebuildNewCountMethod = cls.getDeclaredMethod("_rebuildNewCramCount", null);
-        fillFailedQueueMethod = cls.getDeclaredMethod("_fillFailedCramQueue", null);
-        fillRevQueueMethod = cls.getDeclaredMethod("_fillCramQueue", null);
-        finishSchedulerMethod = cls.getDeclaredMethod("setupStandardScheduler", null);
+        rebuildFailedCountMethod = Deck.class.getDeclaredMethod("_rebuildFailedCramCount");
+        rebuildRevCountMethod = Deck.class.getDeclaredMethod("_rebuildCramCount");
+        rebuildNewCountMethod = Deck.class.getDeclaredMethod("_rebuildNewCramCount");
+        fillFailedQueueMethod = Deck.class.getDeclaredMethod("_fillFailedCramQueue");
+        fillRevQueueMethod = Deck.class.getDeclaredMethod("_fillCramQueue");
+        finishSchedulerMethod = Deck.class.getDeclaredMethod("setupStandardScheduler");
         failedCramQueue.clear();
-        requeueCardMethod = cls.getDeclaredMethod("_requeueCramCard", new Class[] = {Card.class, int.class});
-        cardTypeMethod = cls.getDeclaredMethod("_cramCardType", new Class[] = {Card.class});
-        answerCardMethod = cls.getDeclaredMethod("_answerCramCard", new Class[] = {Card.class, int.class});
+        requeueCardMethod = Deck.class.getDeclaredMethod("_requeueCramCard", Card.class, int.class);
+        cardTypeMethod = Deck.class.getDeclaredMethod("_cramCardType", Card.class);
+        answerCardMethod = Deck.class.getDeclaredMethod("_answerCramCard", Card.class, int.class);
         scheduler = "cram";
     }
 
@@ -872,14 +887,14 @@ public class Deck {
         fillQueues();
 
         if (failedSoonCount >= failedCardMax) {
-            return ((QueueItem)failedQueue.getLast()).getCardId();
+            return ((QueueItem)failedQueue.getLast()).getCardID();
         }
         // Card due for review?
         if (revNoSpaced()) {
-            return ((QueueItem)revQueue.getLast()).getCardId();
+            return ((QueueItem)revQueue.getLast()).getCardID();
         }
         if (!failedQueue.isEmpty()) {
-            return ((QueueItem)failedQueue.getLast()).getCardId();
+            return ((QueueItem)failedQueue.getLast()).getCardID();
         }
         if (check) {
             // Check for expired cards, or new rollover
@@ -892,10 +907,11 @@ public class Deck {
             reset();
             return getCardId();
         }
+        return 0L;
     }
 
     private int _cramCardType(Card card) {
-        if ((!revQueue.isEmpty()) && (((QueueItem)revQueue.getLast()).getCardId == card.id)) {
+        if ((!revQueue.isEmpty()) && (((QueueItem)revQueue.getLast()).getCardID() == card.id)) {
             return 1;
         } else {
             return 0;
@@ -2476,14 +2492,11 @@ public class Deck {
                     tagList += ", ";
                 }
             }
-            Cursor cur = ankiDB.database.rawQuery("SELECT id FROM tags WHERE tag in (" + tagList +")", null);
-            long[] results = new long[cur.getCount()];
-            int i = 0;
-            while (cur.moveToNext()) {
-                results[i++] = cur.getLong(0);
-            }
-            return results;
+            ArrayList<Long> results = ankiDB.queryColumn(long.class, "SELECT id FROM tags WHERE tag in (" + tagList +")", 0);
+            return Utils.toPrimitive((Long[]) results.toArray());
         }
         return null;
     }
+    
+    
 }

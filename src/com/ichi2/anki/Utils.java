@@ -400,4 +400,25 @@ public class Utils {
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
+    
+    public static long[] toPrimitive(Long[] array) {
+        long[] results = new long[array.length];
+        for (int i = 0; i < array.length; i++) {
+            results[i] = array[i].longValue();
+        }
+        return results;
+    }
+    /*
+     * Tags
+     **************************************/
+    
+    /**
+     * Parse a string and return a list of tags.
+     * 
+     * @param tags A string containing tags separated by space or comma (optionally followed by space)
+     * @return An array of Strings containing the individual tags 
+     */
+    public static String[] parseTags(String tags) {
+        return tags.split(" +|, *");
+    }
 }
