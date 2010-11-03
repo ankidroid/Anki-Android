@@ -361,10 +361,17 @@ public class SyncClient {
             }
             // TODO: updateCardTags
             rebuildPriorities(cardIds);
-            // Rebuild due counts
-            deck.rebuildCounts(false);
         } catch (JSONException e) {
             Log.i(TAG, "JSONException = " + e.getMessage());
+        }
+        assert missingFacts() == 0;
+    }
+
+    private long missingFacts() {
+        try {
+            return deck.getDB().queryScalar("SELECT count() FROM cards WHERE factId NOT IN (SELECT id FROM facts)");
+        } catch (Exception e) {
+            return 0;
         }
     }
 
@@ -1545,6 +1552,8 @@ public class SyncClient {
             // progressHandlerCalled,
             // progressHandlerEnabled, revCardOrder, sessionRepLimit, sessionStartReps, sessionStartTime,
             // sessionTimeLimit, tmpMediaDir
+
+            // Our bundleDeck also doesn't need all those fields that store the scheduler Methods
 
             // Add meta information of the deck (deckVars table)
             JSONArray meta = new JSONArray();

@@ -46,18 +46,25 @@ public class Fact {
     double created;
     double modified;
     String tags;
-    double spaceUntil;
+    double spaceUntil; // Once obsolete, under libanki1.1 spaceUntil is reused as a html-stripped cache of the fields
 
     Model model;
     TreeSet<Field> fields;
     Deck deck;
 
 
-    /*
-     * public Fact(Deck deck, Model model) { this.deck = deck; this.model = model; this.id = Utils.genID(); if (model !=
-     * null) { Iterator<FieldModel> iter = model.fieldModels.iterator(); while (iter.hasNext()) { this.fields.add(new
-     * Field(iter.next())); } } }
-     */
+    //public Fact(Deck deck, Model model) {
+    //    this.deck = deck;
+    //    this.model = model;
+    //    this.id = Utils.genID();
+    //    if (model != null) {
+    //        Iterator<FieldModel> iter = model.fieldModels.iterator();
+    //        while (iter.hasNext()) {
+    //            this.fields.add(new Field(iter.next()));
+    //        }
+    //    }
+    //}
+     
 
     // Generate fact object from its ID
     public Fact(Deck deck, long id) {

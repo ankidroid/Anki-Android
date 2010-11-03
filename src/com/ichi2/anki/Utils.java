@@ -335,6 +335,12 @@ public class Utils {
     }
 
 
+    /**
+     * Returns 1 if true, 0 if false
+     *
+     * @param b The boolean to convert to integer
+     * @return 1 if b is true, 0 otherwise
+     */
     public static int booleanToInt(boolean b) {
         return (b) ? 1 : 0;
     }
@@ -364,26 +370,55 @@ public class Utils {
 
 
     // Test for dateToOrdinal and fromOrdintalToDate
-    /*
-     * boolean error = false; int year = 0; int month = 0; int day = 1; Calendar cal = Calendar.getInstance(); for(year
-     * = 0; year < 111; year++) { if(error) break; Log.i(TAG, "/--------------- YEAR: " + (year + 1900) +
-     * " -----------------/"); cal.set(Calendar.YEAR, year + 1900); for(month = 0; month < 12; month++) { if(error)
-     * break; cal.set(Calendar.MONTH, month); cal.set(Calendar.DAY_OF_MONTH, 1); Log.i(TAG, "/--------------- MONTH: " +
-     * (month + 1) + " -----------------/"); int maxDaysOnMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-     * //Log.i(TAG, "Maxim days on this month = " + maxDaysOnMonth); for(day = 1; day <= maxDaysOnMonth; day++) {
-     * Log.i(TAG, "/--------------- DAY: " + day + " -----------------/"); cal.set(Calendar.DAY_OF_MONTH, day);
-     * Log.i(TAG, "Calendar = " + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" +
-     * cal.get(Calendar.DAY_OF_MONTH)); Date testDate = new Date(year,month,day); //Date testDate = new
-     * Date(System.currentTimeMillis()); //Log.i(TAG, "Current millis = " + System.currentTimeMillis()); Log.i(TAG,
-     * "Day = " + testDate); //Log.i(TAG, "Day of the month = " + testDate.getDate()); //Log.i(TAG, "Month = " +
-     * (testDate.getMonth() + 1)); //Log.i(TAG, "Year = " + (testDate.getYear() + 1900)); int ordinal =
-     * Utils.dateToOrdinal(testDate); Log.i(TAG, "Ordinal day = " + ordinal); Date date2 =
-     * Utils.fromOrdinalToDate(ordinal); Log.i(TAG, "Back to date = " + date2); //Log.i(TAG, "Day of the month = " +
-     * date2.getDate()); //Log.i(TAG, "Month = " + (date2.getMonth() + 1)); //Log.i(TAG, "Year = " + (date2.getYear() +
-     * 1900)); if(testDate.getDate() == date2.getDate() && testDate.getMonth() == date2.getMonth() && testDate.getYear()
-     * == date2.getYear()) { Log.i(TAG, "OK!"); } else { Log.e(TAG, "ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR!!!");
-     * error = true; break; } } } } Log.i(TAG, "PERFECT!!! ^^");
-     */
+    //boolean error = false;
+    //int year = 0;
+    //int month = 0;
+    //int day = 1;
+    //Calendar cal = Calendar.getInstance();
+    //for(year = 0; year < 111; year++) {
+    //    if(error) break;
+    //    Log.i(TAG, "/--------------- YEAR: " + (year + 1900) + " -----------------/");
+    //    cal.set(Calendar.YEAR, year + 1900);
+    //    for(month = 0; month < 12; month++) {
+    //        if(error) break;
+    //        cal.set(Calendar.MONTH, month);
+    //        cal.set(Calendar.DAY_OF_MONTH, 1);
+    //        Log.i(TAG, "/--------------- MONTH: " + (month + 1) + " -----------------/");
+    //        int maxDaysOnMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+    //        //Log.i(TAG, "Maxim days on this month = " + maxDaysOnMonth);
+    //        for(day = 1; day <= maxDaysOnMonth; day++) {
+    //            Log.i(TAG, "/--------------- DAY: " + day + " -----------------/");
+    //            cal.set(Calendar.DAY_OF_MONTH, day);
+    //            Log.i(TAG, "Calendar = " + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) +
+    //                    "-" + cal.get(Calendar.DAY_OF_MONTH));
+    //            Date testDate = new Date(year,month,day);
+    //            //Date testDate = new Date(System.currentTimeMillis());
+    //            //Log.i(TAG, "Current millis = " + System.currentTimeMillis());
+    //            //Log.i(TAG, "Day = " + testDate);
+    //            //Log.i(TAG, "Day of the month = " + testDate.getDate());
+    //            //Log.i(TAG, "Month = " + (testDate.getMonth() + 1));
+    //            //Log.i(TAG, "Year = " + (testDate.getYear() + 1900));
+    //            int ordinal = Utils.dateToOrdinal(testDate);
+    //            Log.i(TAG, "Ordinal day = " + ordinal);
+    //            Date date2 = Utils.fromOrdinalToDate(ordinal);
+    //            Log.i(TAG, "Back to date = " + date2);
+    //            //Log.i(TAG, "Day of the month = " + date2.getDate());
+    //            //Log.i(TAG, "Month = " + (date2.getMonth() + 1));
+    //            //Log.i(TAG, "Year = " + (date2.getYear() + 1900));
+    //            if(testDate.getDate() == date2.getDate() &&
+    //                    testDate.getMonth() == date2.getMonth() &&
+    //                    testDate.getYear() == date2.getYear()) {
+    //                Log.i(TAG, "OK!");
+    //            } else {
+    //                Log.e(TAG, "ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR!!!");
+    //                error = true;
+    //                break;
+    //            }
+    //        }
+    //    }
+    //}
+    //Log.i(TAG, "PERFECT!!! ^^");
+     
 
     /**
      * Indicates whether the specified action can be used as an intent. This method queries the package manager for

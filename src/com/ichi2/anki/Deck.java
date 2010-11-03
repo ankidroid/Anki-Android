@@ -312,38 +312,56 @@ public class Deck {
         deck.initVars();
 
         double oldMod = deck.modified;
+
         // Ensure necessary indices are available
         deck.updateDynamicIndices();
         
-        // FIXME: temporary code for upgrade - ensure cards suspended on older clients are recognized
-        // TODO: Continue coding - Stopped here for today
-
-
-
+        // FIXME: Temporary code for upgrade - ensure cards suspended on older clients are recognized
+        // Ensure cards suspended on older clients are recognized
         try {
-            // Unsuspend reviewed early & buried
-            cursor = ankiDB.database.rawQuery("SELECT id " + "FROM cards " + "WHERE type in (0,1,2) and "
-                    + "isDue = 0 and " + "priority in (-1,-2)", null);
-
-            if (cursor.moveToFirst()) {
-                int count = cursor.getCount();
-                long[] ids = new long[count];
-                for (int i = 0; i < count; i++) {
-                    ids[i] = cursor.getLong(0);
-                    cursor.moveToNext();
-                }
-                deck.updatePriorities(ids);
-                deck.checkDue();
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            deck.getDeck().database.execSQL(
+                    "UPDATE cards SET type = type - 3 WHERE type IN (0,1,2) AND priority = -3", null);
+        } catch (Exception e) {
+            // TODO: Report error and abort
         }
 
-        // Save deck to database if it has been modified
-        if ((oldCount != (deck.failedSoonCount + deck.revCount + deck.newCount)) || deck.modifiedSinceSave()) {
-            deck.commitToDB();
+        // Ensure hard scheduling over a day if per day
+        if (deck.deckVars.getBool("perDay")) {
+            deck.hardIntervalMin = Math.max(1.0, deck.hardIntervalMin);
+            deck.hardIntervalMax = Math.max(1.1, deck.hardIntervalMax);
+        }
+
+        ArrayList<Long> ids = new ArrayList(0);
+        try {
+            // Unsuspend buried - can remove priorities in the future
+            ids = deck.getDB().queryColumn(long.class,
+                    "SELECT id FROM cards WHERE type in (3,4,5) OR priority IN (-1,-2)", 0);
+            if (!ids.isEmpty()) {
+                deck.updatePriorities(Utils.toPrimitive((Long[]) ids.toArray()));
+                deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type IN (3,4,5)", null);
+                // Save deck to database
+                deck.commitToDB();
+            }
+        } catch (Exception e) {
+            // TODO: Error in query, do something about it?
+        }
+
+        // Determine starting factor for new cards
+        Cursor cur = null;
+        try {
+            cur = deck.getDB().database.rawQuery("SELECT avg(factor) FROM cards WHERE type = 1", null);
+            if (cur.moveToNext()) {
+                deck.averageFactor = cur.getDouble(0);
+            } else {
+                deck.averageFactor = Deck.initialFactor;
+            }
+            if (deck.averageFactor == 0.0) {
+                deck.averageFactor = Deck.initialFactor;
+            }
+        } catch (Exception e) {
+            deck.averageFactor = Deck.initialFactor;
+        } finally {
+            cur.close();
         }
 
         // Rebuild queue is not rebuild already
@@ -354,7 +372,7 @@ public class Deck {
         assert deck.modified == oldMod;
         // Create a temporary view for random new cards. Randomizing the cards by themselves
         // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
-        ankiDB.database.execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS " + "SELECT * FROM cards "
+        deck.getDB().database.execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS " + "SELECT * FROM cards "
                 + "WHERE type = 2 AND isDue = 1 " + "ORDER BY RANDOM()");
 
         return deck;
@@ -369,7 +387,7 @@ public class Deck {
         AnkiDatabaseManager.closeDatabase(deckPath);
     }
 
-        /**
+    /**
      * deckVars class
      */
     private class DeckVars {
@@ -778,7 +796,6 @@ public class Deck {
             cal.set(Calendar.SECOND, 0);      // But if you can improve this bit and
             cal.set(Calendar.MILLISECOND, 0); // collapse it to one statement please do
            
-            // Should I subtract or add the timezone?
             int newday = (int) utcOffset - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
             Log.d(TAG, "New day happening at " + newday + " sec after 00:00 UTC");
             cal.add(Calendar.SECOND, newday);
@@ -1507,13 +1524,8 @@ public class Deck {
         double space = spaceUntilTime(card);
         spaceCards(card, ease);
         // Adjust counts for current card
-        if (ease == 1) {
-            failedSoonCount += 1;
-        }
         if (oldQueue == 0) {
-            if (ease == 1) {
-                failedSoonCount -= 1;
-            } else {
+            if (ease != 1) {
                 failedSoonCount -= 1;
             }
         } else if (oldQueue == 1) {
