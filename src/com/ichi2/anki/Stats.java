@@ -218,12 +218,20 @@ public class Stats {
     }
 
 
+    /**
+     * Returns the effective date of the present moment
+     * If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
+     * otherwise today
+     * Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
+     *
+     * @param deck A deck whose cut-off time we are going to use to determine today or yesterday
+     * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
+     */
     public static Date genToday(Deck deck) {
-        // Get timezone offset in milliseconds
-        Calendar now = Calendar.getInstance();
-        int timezoneOffset = (now.get(Calendar.ZONE_OFFSET) + now.get(Calendar.DST_OFFSET));
-
-        return new Date((long) (System.currentTimeMillis() - deck.utcOffset * 1000 - timezoneOffset));
+        // The result is not adjusted for timezone anymore, following libanki model
+        // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
+        Date today = new Date(System.currentTimeMillis() - (long) deck.utcOffset * 1000l);
+        return today;
     }
 
 
