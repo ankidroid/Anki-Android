@@ -267,6 +267,7 @@ public class StudyOptions extends Activity {
                     case R.id.studyoptions_session_minutes:
                         if (isValidLong(inputText)) {
                             deck.setSessionTimeLimit(Long.parseLong(inputText) * 60);
+                            updateValuesFromDeck();
                         } else {
                             ((EditText) v).setText(Long.toString(deck.getSessionTimeLimit() / 60));
                         }
@@ -275,6 +276,7 @@ public class StudyOptions extends Activity {
                     case R.id.studyoptions_session_questions:
                         if (isValidLong(inputText)) {
                             deck.setSessionRepLimit(Long.parseLong(inputText));
+                            updateValuesFromDeck();
                         } else {
                             ((EditText) v).setText(Long.toString(deck.getSessionRepLimit()));
                         }
@@ -586,7 +588,8 @@ public class StudyOptions extends Activity {
         Deck deck = AnkiDroidApp.deck();
         DeckTask.waitToFinish();
         if (deck != null) {
-            deck.checkDue();
+            deck.reset();
+            // TODO: updateActives() from anqiqt/ui/main.py
             int reviewCount = deck.revCount + deck.failedSoonCount;
             String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
             setTitle(String.format(unformattedTitle, deck.deckName, reviewCount, deck.cardCount));

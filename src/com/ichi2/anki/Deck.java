@@ -308,7 +308,6 @@ public class Deck {
 
         deck.deckPath = path;
         deck.deckName = (new File(path)).getName().replace(".anki", "");
-        deck.deckVars = new DeckVars(path);
         deck.initVars();
 
         double oldMod = deck.modified;
@@ -319,7 +318,7 @@ public class Deck {
         // FIXME: Temporary code for upgrade - ensure cards suspended on older clients are recognized
         // Ensure cards suspended on older clients are recognized
         try {
-            deck.getDeck().database.execSQL(
+            deck.getDB().database.execSQL(
                     "UPDATE cards SET type = type - 3 WHERE type IN (0,1,2) AND priority = -3", null);
         } catch (Exception e) {
             // TODO: Report error and abort
@@ -806,7 +805,7 @@ public class Deck {
         }
     }
 
-    private void reset() {
+    public void reset() {
         // Setup global/daily stats
         globalStats = Stats.globalStats(this);
         dailyStats = Stats.dailyStats(this);
@@ -982,6 +981,7 @@ public class Deck {
             reset();
             return getCardId();
         }
+        return 0l;
     }
 
     private int _cramCardQueue(Card card) {
@@ -1213,6 +1213,7 @@ public class Deck {
         if (num >= 0) {
             newCardsPerDay = num;
             flushMod();
+            reset();
         }
     }
 
@@ -2186,27 +2187,37 @@ public class Deck {
     // TODO: Handling of the list of models and currentModel
     public void deleteModel(String id) {
         Log.i(TAG, "deleteModel = " + id);
-        Cursor cursor = getDB().database.rawQuery("SELECT * FROM models WHERE id = " + id, null);
-        // Does the model exist?
-        if (cursor.moveToFirst()) {
+        Cursor cursor = null;
+        boolean modelExists = false;
+        
+        try {
+            cursor = getDB().database.rawQuery("SELECT * FROM models WHERE id = " + id, null);
+            // Does the model exist?
+            if (cursor.moveToFirst()) {
+                modelExists = true;
+            }
+        } finally {
+            cursor.close();
+        }
+
+        if (modelExists) {
             // Delete the cards that use the model id, through fact
-            ArrayList<String> cardsToDelete = ankiDB
-                    .queryColumn(String.class, "SELECT cards.id FROM cards, facts WHERE facts.modelId = " + id
-                            + " AND facts.id = cards.factId", 0);
+            ArrayList<String> cardsToDelete = getDB().queryColumn(String.class,
+                    "SELECT cards.id FROM cards, facts WHERE facts.modelId = " + id +
+                    " AND facts.id = cards.factId", 0);
             deleteCards(cardsToDelete);
 
             // Delete model
-            ankiDB.database.execSQL("DELETE FROM models WHERE id = " + id);
+            getDB().database.execSQL("DELETE FROM models WHERE id = " + id);
 
             // Note deleted model
             ContentValues values = new ContentValues();
             values.put("modelId", id);
             values.put("deletedTime", System.currentTimeMillis() / 1000.0);
-            ankiDB.database.insert("modelsDeleted", null, values);
+            getDB().database.insert("modelsDeleted", null, values);
 
             flushMod();
         }
-        cursor.close();
     }
 
 
