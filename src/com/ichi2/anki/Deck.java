@@ -286,6 +286,19 @@ public class Deck {
     }
 
 
+    public Fact newFact(Model m) {
+        Fact mFact = new Fact(this, m);
+        return mFact;
+    }
+
+
+    public Fact newFact() {
+        Model m = Model.getModel(this, getCurrentModelId(), true);
+        Fact mFact = new Fact(this, m);
+        return mFact;
+    }
+
+
     public synchronized void closeDeck() {
         DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
         if (modifiedSinceSave()) {

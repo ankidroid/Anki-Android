@@ -177,6 +177,16 @@ public class Model {
     }
 
 
+    public TreeMap<Long, FieldModel> getFieldModels() {
+
+        FieldModel mFieldModel;
+        TreeMap<Long, FieldModel> mFieldModels = new TreeMap<Long, FieldModel>();
+        FieldModel.fromDb(mDeck, mId, mFieldModels);
+        return mFieldModels;
+
+    }
+
+
     protected final CardModel getCardModel(long identifier) {
         return mCardModelsMap.get(identifier);
     }
@@ -245,6 +255,14 @@ public class Model {
             }
         }
         return model;
+    }
+
+
+    /**
+     * @return the ID
+     */
+    public long getId() {
+        return mId;
     }
 
 
