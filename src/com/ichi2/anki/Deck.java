@@ -302,9 +302,15 @@ public class Deck {
                 cursor.close();
             }
         }
-        Log.i(TAG,
-                String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.modified,
+        Log.i(TAG, String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.modified,
                         System.currentTimeMillis() / 1000.0));
+
+        // Initialise queues
+        deck.failedQueue = new LinkedList<QueueItem>();
+        deck.revQueue = new LinkedList<QueueItem>();
+        deck.newQueue = new LinkedList<QueueItem>();
+        deck.failedCramQueue = new LinkedList<QueueItem>();
+        deck.spacedFacts = new HashMap<Long, Double>();
 
         deck.deckPath = path;
         deck.deckName = (new File(path)).getName().replace(".anki", "");
@@ -317,12 +323,7 @@ public class Deck {
 
         // FIXME: Temporary code for upgrade - ensure cards suspended on older clients are recognized
         // Ensure cards suspended on older clients are recognized
-        try {
-            deck.getDB().database.execSQL(
-                    "UPDATE cards SET type = type - 3 WHERE type IN (0,1,2) AND priority = -3", null);
-        } catch (Exception e) {
-            // TODO: Report error and abort
-        }
+        deck.getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE type IN (0,1,2) AND priority = -3", null);
 
         // Ensure hard scheduling over a day if per day
         if (deck.deckVars.getBool("perDay")) {
@@ -453,7 +454,7 @@ public class Deck {
         // lastSessionStart = 0;
         queueLimit = 200;
         // If most recent deck var not defined, make sure defaults are set
-        DeckVars deckVars = new DeckVars(deckPath);
+        deckVars = new DeckVars(deckPath);
         if (!deckVars.hasKey("revInactive")) {
             deckVars.setVarDefault("suspendLeeches", "1");
             deckVars.setVarDefault("leechFails", "16");
@@ -500,6 +501,215 @@ public class Deck {
         }
     }
 
+    /*
+     * Scheduler related overridable methods
+     ********************************/
+    private Method getCardIdMethod;
+    private Method fillFailedQueueMethod;
+    private Method fillRevQueueMethod;
+    private Method fillNewQueueMethod;
+    private Method rebuildFailedCountMethod;
+    private Method rebuildRevCountMethod;
+    private Method rebuildNewCountMethod;
+    private Method requeueCardMethod;
+    private Method timeForNewCardMethod;
+    private Method updateNewCountTodayMethod;
+    private Method cardQueueMethod;
+    private Method finishSchedulerMethod;
+    private Method answerCardMethod;
+    private Method cardLimitMethod;
+    private Method answerPreSaveMethod;
+    private long getCardId() {
+        try {
+            return ((Long)getCardIdMethod.invoke(true)).longValue();
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private long getCardId(boolean check) {
+        try {
+            return ((Long)getCardIdMethod.invoke(check)).longValue();
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void fillFailedQueue() {
+        try {
+            fillFailedQueueMethod.invoke(null);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void fillRevQueue() {
+        try {
+            fillRevQueueMethod.invoke(null);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void fillNewQueue() {
+        try {
+            fillNewQueueMethod.invoke(null);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void rebuildFailedCount() {
+        try {
+            rebuildFailedCountMethod.invoke(null);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void rebuildRevCount() {
+        try {
+            rebuildRevCountMethod.invoke(null);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void rebuildNewCount() {
+        try {
+            rebuildNewCountMethod.invoke(null);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void requeueCard(Card card, int oldSuc) {
+        try {
+            requeueCardMethod.invoke(card, oldSuc);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private boolean timeForNewCard() {
+        try {
+            return ((Boolean)timeForNewCardMethod.invoke(null)).booleanValue();
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void updateNewCountToday() {
+        try {
+            updateNewCountTodayMethod.invoke(null);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private int cardQueue(Card card) {
+        try {
+            return ((Integer)cardQueueMethod.invoke(card)).intValue();
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void finishScheduler() {
+        try {
+            finishSchedulerMethod.invoke(null);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void answerCard(Card card, int ease) {
+        try {
+            answerCardMethod.invoke(card, ease);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private String cardLimit(String active, String inactive, String sql) {
+        try {
+            return ((String)cardLimitMethod.invoke(active, inactive, sql));
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private String cardLimit(String[] active, String sql) {
+        try {
+            return ((String)cardLimitMethod.invoke(active, sql));
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void answerPreSave(Card card, int ease) {
+        try {
+            answerPreSaveMethod.invoke(card, ease);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /*
+     * Standard Scheduling
+     *******************************/
     private void setupStandardScheduler() {
         try {
             getCardIdMethod = Deck.class.getDeclaredMethod("_getCardId", boolean.class);
@@ -517,9 +727,8 @@ public class Deck {
             answerCardMethod = Deck.class.getDeclaredMethod("_answerCard", Card.class, int.class);
             cardLimitMethod = Deck.class.getDeclaredMethod("_cardLimit", String.class, String.class, String.class);
             answerPreSaveMethod = null;
-        } catch (Exception e) {
-            Log.e(TAG, "Standard scheduler: Error in overridable methods: " + e.toString());
-            return;
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
         scheduler = "standard";
         // Restore any cards temporarily suspended by alternate schedulers
@@ -527,154 +736,11 @@ public class Deck {
             resetAfterReviewEarly();
         } catch (Exception e) {
             // Will fail if deck hasn't been upgraded yet
+            // FIXME: Using exceptions for flow control is bad practice
             return;
         }
     }
 
-    /*
-     * Scheduler related overridable methods
-     */
-    private Method getCardIdMethod;
-    private Method fillFailedQueueMethod;
-    private Method fillRevQueueMethod;
-    private Method fillNewQueueMethod;
-    private Method rebuildFailedCountMethod;
-    private Method rebuildRevCountMethod;
-    private Method rebuildNewCountMethod;
-    private Method requeueCardMethod;
-    private Method timeForNewCardMethod;
-    private Method updateNewCountTodayMethod;
-    private Method cardQueueMethod;
-    private Method finishSchedulerMethod;
-    private Method answerCardMethod;
-    private Method cardLimitMethod;
-    private Method answerPreSaveMethod;
-
-    private long getCardId() {
-        try {
-            return ((Long)getCardIdMethod.invoke(true)).longValue();
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method getCardId(boolean): " + e.toString());
-            return 0l;
-        }
-    }
-    private long getCardId(boolean check) {
-        try {
-            return ((Long)getCardIdMethod.invoke(check)).longValue();
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method getCardId(boolean): " + e.toString());
-            return 0l;
-        }
-    }
-    private void fillFailedQueue() {
-        try {
-            fillFailedQueueMethod.invoke(null);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method fillFailedQueue(): " + e.toString());
-        }
-    }
-    private void fillRevQueue() {
-        try {
-            fillRevQueueMethod.invoke(null);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method fillRevQueue(): " + e.toString());
-        }
-    }
-    private void fillNewQueue() {
-        try {
-            fillNewQueueMethod.invoke(null);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method fillNewQueue(): " + e.toString());
-        }
-    }
-    private void rebuildFailedCount() {
-        try {
-            rebuildFailedCountMethod.invoke(null);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method rebuildFailedCount(): " + e.toString());
-        }
-    }
-    private void rebuildRevCount() {
-        try {
-            rebuildRevCountMethod.invoke(null);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method rebuildRevCount(): " + e.toString());
-        }
-    }
-    private void rebuildNewCount() {
-        try {
-            rebuildNewCountMethod.invoke(null);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method rebuildNewCount(): " + e.toString());
-        }
-    }
-    private void requeueCard(Card card, int oldSuc) {
-        try {
-            requeueCardMethod.invoke(card, oldSuc);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method requeueCard(Card, int): " + e.toString());
-        }
-    }
-    private boolean timeForNewCard() {
-        try {
-            return ((Boolean)timeForNewCardMethod.invoke(null)).booleanValue();
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method timeForNewCard(): " + e.toString());
-            return false;
-        }
-    }
-    private void updateNewCountToday() {
-        try {
-            updateNewCountTodayMethod.invoke(null);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method updateNewCountToday(): " + e.toString());
-        }
-    }
-    private int cardQueue(Card card) {
-        try {
-            return ((Integer)cardQueueMethod.invoke(card)).intValue();
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method cardQueue(Card): " + e.toString());
-            return -1;
-        }
-    }
-    private void finishScheduler() {
-        try {
-            finishSchedulerMethod.invoke(null);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method finishScheduler(): " + e.toString());
-        }
-    }
-    private void answerCard(Card card, int ease) {
-        try {
-            answerCardMethod.invoke(card, ease);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method answerCard(Card, int): " + e.toString());
-        }
-    }
-    private String cardLimit(String active, String inactive, String sql) {
-        try {
-            return ((String)cardLimitMethod.invoke(active, inactive, sql));
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method cardLimit(String, String, String): " + e.toString());
-            return sql;
-        }
-    }
-    private String cardLimit(String[] active, String sql) {
-        try {
-            return ((String)cardLimitMethod.invoke(active, sql));
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method cardLimit(String[], String): " + e.toString());
-            return sql;
-        }
-    }
-    private void answerPreSave(Card card, int ease) {
-        try {
-            answerPreSaveMethod.invoke(card, ease);
-        } catch (Exception e) {
-            Log.e(TAG, "Error in overridable method answerPreSave(Card, int): " + e.toString());
-        }
-    }
 
     private void fillQueues() {
         fillFailedQueue();
@@ -683,10 +749,15 @@ public class Deck {
     }
 
     private void rebuildCounts() {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         // global counts
-        cardCount = ankiDB.database.rawQuery("SELECT count(*) from cards", null).getInt(0);
-        factCount = ankiDB.database.rawQuery("SELECT count(*) from facts", null).getInt(0);
+        try {
+            cardCount = (int) getDB().queryScalar("SELECT count(*) from cards");
+            factCount = (int) getDB().queryScalar("SELECT count(*) from facts");
+        } catch (SQLException e) {
+            Log.e(TAG, "rebuildCounts: Error while getting global counts: " + e.toString());
+            cardCount = 0;
+            factCount = 0;
+        }
         // due counts
         rebuildFailedCount();
         rebuildRevCount();
@@ -781,7 +852,7 @@ public class Deck {
                 return true;
             }
             try {
-                fillFunc.invoke(fillFunc, null);
+                fillFunc.invoke(null);
             } catch (Exception e) {
                 Log.e(TAG, "queueNotEmpty: Error while invoking overridable fill method:" + e.toString());
                 return false;
@@ -936,9 +1007,8 @@ public class Deck {
             rebuildRevCountMethod = Deck.class.getDeclaredMethod("_rebuildRevEarlyCount");
             finishSchedulerMethod = Deck.class.getDeclaredMethod("_onReviewEarlyFinished");
             answerPreSaveMethod = Deck.class.getDeclaredMethod("_reviewEarlyPreSave", Card.class, int.class);
-        } catch (Exception e) {
-            Log.e(TAG, "Review Early scheduler: Error in overridable methods: " + e.toString());
-            return;
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
         scheduler = "reviewEarly";
     }
@@ -1001,9 +1071,8 @@ public class Deck {
             rebuildNewCountMethod = Deck.class.getDeclaredMethod("_rebuildLearnMoreCount");
             updateNewCountTodayMethod = Deck.class.getDeclaredMethod("_updateLearnMoreCountToday");
             finishSchedulerMethod = Deck.class.getDeclaredMethod("setupStandardScheduler");
-        } catch (Exception e) {
-            Log.e(TAG, "Learn More scheduler: Error in overridable methods: " + e.toString());
-            return;
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
         scheduler = "learnMore";
     }
@@ -1020,7 +1089,7 @@ public class Deck {
 
     /*
      * Cramming
-     ***************************/
+     *******************************/
 
     private void setupCramScheduler(String[] active, String order) {
         try {
@@ -1040,9 +1109,8 @@ public class Deck {
             // Reuse review early's code
             answerPreSaveMethod = Deck.class.getDeclaredMethod("_reviewEarlyPreSave", Card.class, int.class);
             cardLimitMethod = Deck.class.getDeclaredMethod("_cramCardLimit", String[].class, String.class, String.class);
-        } catch (Exception e) {
-            Log.e(TAG, "Cram scheduler: Error in overridable methods: " + e.toString());
-            return;
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
         scheduler = "cram";
     }

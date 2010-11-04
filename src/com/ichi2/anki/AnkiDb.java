@@ -109,6 +109,15 @@ public class AnkiDb {
                 // The magical line. Almost as illegible as python code ;)
                 results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
             } while (cursor.moveToNext());
+        } catch (NoSuchMethodException e) {
+            // This is really coding error, so it should be revealed if it ever happens
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            // This is really coding error, so it should be revealed if it ever happens
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            // This is really coding error, so it should be revealed if it ever happens
+            throw new RuntimeException(e);
         } catch (Exception e) {
             Log.e(TAG, "queryColumn: Got Exception: " + e.getMessage());
             // There was no results and therefore the invocation of the correspondent method with cursor null raises an
