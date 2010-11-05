@@ -47,6 +47,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.zip.Deflater;
 
@@ -111,8 +112,6 @@ public class Utils {
         str += ")";
         return str;
     }
-
-
     /**
      * Returns a SQL string from an array of integers.
      * 
@@ -449,6 +448,14 @@ public class Utils {
         long[] results = new long[array.length];
         for (int i = 0; i < array.length; i++) {
             results[i] = array[i].longValue();
+        }
+        return results;
+    }
+    public static long[] toPrimitive(Collection<Long> array) {
+        long[] results = new long[array.size()];
+        int i = 0;
+        for (Long item : array) {
+            results[i++] = item.longValue();
         }
         return results;
     }

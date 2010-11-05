@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 import java.util.Map.Entry;
 
 /**
@@ -330,13 +331,13 @@ public class Deck {
             deck.hardIntervalMax = Math.max(1.1, deck.hardIntervalMax);
         }
 
-        ArrayList<Long> ids = new ArrayList<Long>(0);
+        ArrayList<Long> ids = new ArrayList<Long>();
         try {
             // Unsuspend buried - can remove priorities in the future
             ids = deck.getDB().queryColumn(long.class,
                     "SELECT id FROM cards WHERE type in (3,4,5) OR priority IN (-1,-2)", 0);
             if (!ids.isEmpty()) {
-                deck.updatePriorities(Utils.toPrimitive((Long[]) ids.toArray()));
+                deck.updatePriorities(Utils.toPrimitive(ids));
                 deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type IN (3,4,5)", null);
                 // Save deck to database
                 deck.commitToDB();
@@ -548,7 +549,7 @@ public class Deck {
     private Method answerCardMethod;
     private Method cardLimitMethod;
     private Method answerPreSaveMethod;
-
+    private Method spaceCardsMethod;
 
     private long getCardId() {
         try {
@@ -719,7 +720,7 @@ public class Deck {
     }
 
 
-    private void answerCard(Card card, int ease) {
+    public void answerCard(Card card, int ease) {
         try {
             answerCardMethod.invoke(card, ease);
         } catch (IllegalArgumentException e) {
@@ -770,6 +771,17 @@ public class Deck {
         }
     }
 
+    private void spaceCards(Card card, double space) {
+        try {
+            spaceCardsMethod.invoke(card, space);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /*
      * Standard Scheduling*****************************
@@ -791,6 +803,7 @@ public class Deck {
             answerCardMethod = Deck.class.getDeclaredMethod("_answerCard", Card.class, int.class);
             cardLimitMethod = Deck.class.getDeclaredMethod("_cardLimit", String.class, String.class, String.class);
             answerPreSaveMethod = null;
+            spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCards", Card.class, double.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -810,6 +823,10 @@ public class Deck {
         fillFailedQueue();
         fillRevQueue();
         fillNewQueue();
+    }
+
+    public long getCardCount() {
+        return getDB().queryScalar("SELECT count(*) from cards");
     }
 
 
@@ -835,12 +852,12 @@ public class Deck {
         String[] yes = Utils.parseTags(deckVars.getVar(active));
         String[] no = Utils.parseTags(deckVars.getVar(inactive));
         if (yes.length > 0) {
-            long yids[] = tagIds(yes);
-            long nids[] = tagIds(no);
+            long yids[] = Utils.toPrimitive(tagIds(yes).values());
+            long nids[] = Utils.toPrimitive(tagIds(no).values());
             return sql.replace("WHERE ", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
                     + Utils.ids2str(yids) + " AND tagId NOT IN " + Utils.ids2str(nids) + ") AND ");
         } else if (no.length > 0) {
-            long nids[] = tagIds(no);
+            long nids[] = Utils.toPrimitive(tagIds(no).values());
             return sql.replace("WHERE ", "WHERE +c.id NOT IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
                     + Utils.ids2str(nids) + ") AND ");
         } else {
@@ -971,12 +988,24 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _requeueCard(Card card, int oldSuc) {
-        if (card.reps == 1) {
-            newQueue.removeLast();
-        } else if (oldSuc == 0) {
-            failedQueue.removeLast();
-        } else {
-            revQueue.removeLast();
+        try{
+            if (card.reps == 1) {
+                newQueue.removeLast();
+            } else if (oldSuc == 0) {
+                failedQueue.removeLast();
+            } else {
+                revQueue.removeLast();
+            }
+        } catch (Exception e) {
+            int type = 1;
+            if (card.reps != 0) {
+                type = 2;
+            } else if (oldSuc == 0) {
+                type = 0;
+            }
+            throw new RuntimeException("requeueCard() failed. Counts: " + 
+                    failedSoonCount + " " + revCount + " " + newCountToday + ", Queue: " +
+                    failedQueue.size() + " " + revQueue.size() + " " + newQueue.size() + " " + type);
         }
     }
 
@@ -1124,7 +1153,7 @@ public class Deck {
                 "SELECT id FROM cards WHERE type IN (6,7,8) OR priority = -1", 0);
 
         if (ids != null) {
-            updatePriorities(Utils.toPrimitive((Long[]) ids.toArray()));
+            updatePriorities(Utils.toPrimitive(ids));
             ankiDB.database.execSQL("UPDATE cards SET type = type -6 WHERE type IN (6,7,8)", null);
             flushMod();
         }
@@ -1213,6 +1242,7 @@ public class Deck {
             requeueCardMethod = Deck.class.getDeclaredMethod("_requeueCramCard", Card.class, int.class);
             cardQueueMethod = Deck.class.getDeclaredMethod("_cramCardQueue", Card.class);
             answerCardMethod = Deck.class.getDeclaredMethod("_answerCramCard", Card.class, int.class);
+            spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCramCards", Card.class, double.class);
             // Reuse review early's code
             answerPreSaveMethod = Deck.class.getDeclaredMethod("_reviewEarlyPreSave", Card.class, int.class);
             cardLimitMethod = Deck.class
@@ -1253,6 +1283,11 @@ public class Deck {
         }
         if (!failedQueue.isEmpty()) {
             return ((QueueItem) failedQueue.getLast()).getCardID();
+        }
+        if (check) {
+            // Collapse spaced cards before reverting back to old scheduler
+            reset();
+            return getCardId(false);
         }
         // If we're in a custom scheduler, we may need to switch back
         if (finishSchedulerMethod != null) {
@@ -1299,7 +1334,7 @@ public class Deck {
         } else if (active.length == 1) {
             String[] yes = Utils.parseTags(active[0]);
             if (yes.length > 0) {
-                long yids[] = tagIds(yes);
+                long yids[] = Utils.toPrimitive(tagIds(yes).values());
                 return sql.replace("WHERE ", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
                         + Utils.ids2str(yids) + ") AND ");
             } else {
@@ -1344,6 +1379,13 @@ public class Deck {
         failedQueue = failedCramQueue;
     }
 
+    @SuppressWarnings("unused")
+    private void _spaceCramCards(Card card, double space) {
+        // If non-zero spacing, limit to 10 minutes or queue refill
+        if (space > System.currentTimeMillis()) {
+            spacedFacts.put(card.factId, System.currentTimeMillis() + 600.0);
+        }
+    }
 
     private void setModified() {
         modified = System.currentTimeMillis() / 1000.0;
@@ -1606,6 +1648,7 @@ public class Deck {
         if (check) {
             // Check for expired cards, or new day rollover
             updateCutoff();
+            reset();
             return getCardId(false);
         }
         // If we're in a custom scheduler, we may need to switch back
@@ -1914,7 +1957,8 @@ public class Deck {
     }
 
 
-    private void spaceCards(Card card, double space) {
+    @SuppressWarnings("unused")
+    private void _spaceCards(Card card, double space) {
         Cursor cursor = null;
         // Adjust counts
         try {
@@ -1979,7 +2023,7 @@ public class Deck {
         tags = Utils.addTags("Leech", tags);
         scard.getFact().tags = Utils.canonifyTags(tags);
         scard.getFact().setModified(true);
-        updateFactTags(scard.fact.id);
+        updateFactTags(new long[] {scard.fact.id});
         scard.toDB();
         if (deckVars.getBool("suspendLeeches")) {
             suspendCards(new long[]{card.id});
@@ -2096,19 +2140,113 @@ public class Deck {
     }
 
     /*
+     * Tags: Querying
+     *******************************/
+
+    /**
+     * Get a map of card IDs to their associated tags (fact, model and template)
+     *
+     * @param where SQL restriction on the query. If empty, then returns tags for all the cards
+     * @return The map of card IDs to an array of strings with 3 elements representing the triad
+     * {card tags, model tags, template tags}
+     */
+    private HashMap<Long, List<String>> splitTagsList() {
+        return splitTagsList("");
+    }
+    private HashMap<Long, List<String>> splitTagsList(String where) {
+        Cursor cur = null;
+        HashMap<Long, List<String>> results = new HashMap<Long, List<String>>();
+        try {
+            cur = getDB().database.rawQuery("SELECT cards.id, facts.tags, models.tags, cardModels.name " +
+                    "FROM cards, facts, models, cardModels " +
+                    "WHERE cards.factId == facts.id AND facts.modelId == models.id " +
+                    "AND cards.cardModelId = cardModels.id " + where, null);
+            while (cur.moveToNext()) {
+                ArrayList<String> tags = new ArrayList<String>();
+                tags.add(cur.getString(1));
+                tags.add(cur.getString(2));
+                tags.add(cur.getString(3));
+                results.put(cur.getLong(0), tags);
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "splitTagsList: Error while retrieving tags from DB: " + e.toString());
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        return results;
+    }
+
+    /**
+     * Returns all model tags, all template tags and a filtered set of fact tags
+     *
+     * @param where Optional, SQL filter for fact tags. If skipped, returns all fact tags
+     * @return All the distinct individual tags, sorted, as an array of string
+     */
+    private String[] allTags_() {
+        return allTags_("");
+    }
+    private String[] allTags_(String where) {
+        ArrayList<String> t = new ArrayList<String>();
+        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts " + where, 0));
+        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM models", 0));
+        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM cardModels", 0));
+
+        return (String[]) (new TreeSet<String>(Arrays.asList(Utils.parseTags(Utils.joinTags(t)))).toArray());
+    }
+
+
+    /*
      * Tags: Caching 
      *******************************/
     
-    private void updateFactTags(long[] factIds) {
-        updateCardTags(getDB().queryColumn(long.class,
-                "SELECT id FROM cards WHERE factId IN " + Utils.ids2str(factIds), 0));
+    public void updateFactTags(long[] factIds) {
+        updateCardTags(Utils.toPrimitive(getDB().queryColumn(long.class,
+                "SELECT id FROM cards WHERE factId IN " + Utils.ids2str(factIds), 0)));
     }
     
-    private void updateCardTags() {
-    
+    public void updateCardTags() {
+        updateCardTags(null);
     }
-    private void updateCardTags(long[] cardIds) {
-        
+    public void updateCardTags(long[] cardIds) {
+        HashMap<String, Long> tids = new HashMap<String, Long>();
+        HashMap<Long, List<String>> rows = new HashMap<Long, List<String>>();
+        if (cardIds == null) {
+            getDB().database.execSQL("DELETE FROM cardTags");
+            getDB().database.execSQL("DELETE FROM tags");
+            tids = tagIds(allTags_());
+            rows = splitTagsList();
+        } else {
+            getDB().database.execSQL("DELETE FROM cardTags WHERE cardId IN " + Utils.ids2str(cardIds));
+            String fids = Utils.ids2str(Utils.toPrimitive(getDB().queryColumn(long.class,
+                            "SELECT factId FROM cards WHERE id IN " + Utils.ids2str(cardIds), 0)));
+            tids = tagIds(allTags_("WHERE id IN " + fids));
+            rows = splitTagsList("AND facts.id IN " + fids);
+        }
+
+        ArrayList<HashMap<String, Long>> d = new ArrayList<HashMap<String, Long>>();
+
+        for (Long id : rows.keySet()) {
+            for (int src = 0; src < 3; src++) { // src represents the tag type, fact: 0, model: 1, template: 2
+                HashMap<String, Long> ditem = new HashMap<String, Long>();
+                for (String tag : Utils.parseTags(rows.get(id).get(src))) {
+                    ditem.put("cardId", id);
+                    ditem.put("tagId", tids.get(tag.toLowerCase()));
+                    ditem.put("src", new Long(src));
+                }
+                d.add(ditem);
+            }
+        }
+
+        for (HashMap<String, Long> ditem : d) {
+            getDB().database.execSQL("INSERT INTO cardTags (cardId, tagId, src) VALUES " +
+                    "(" + ditem.get("cardId") + ", " +
+                    ditem.get("tagId") + ", " +
+                    ditem.get("src") + ")");
+        }
+        getDB().database.execSQL("DELETE FROM tags WHERE priority = 2 AND id NOT IN " +
+                "(SELECT DISTINCT tagId FROM cardTags)");
     }
     
     
@@ -2277,19 +2415,129 @@ public class Deck {
     }
 
 
-    private void updatePriorities(long[] cardIds) {
-        updatePriorities(cardIds, null, true);
+    /**
+     * Priorities
+     *******************************/
+
+    /**
+     * Update all card priorities if changed.
+     * If partial is true, only updates cards with tags defined as priority low, med or high in the deck,
+     * or with tags whose priority is set to 2 and they are not found in the priority tags of the deck.
+     * If false, it updates all card priorities
+     *
+     * @param partial Partial update (true) or not (false)
+     * @param dirty Passed to updatePriorities(), if true it updates the modified field of the cards
+     */
+    public void updateAllPriorities() {
+        updateAllPriorities(false, true);
+    }
+    public void updateAllPriorities(boolean partial) {
+        updateAllPriorities(partial, true);
+    }
+    public void updateAllPriorities(boolean partial, boolean dirty) {
+        HashMap<Long, Integer> newPriorities = updateTagPriorities();
+        if (!partial) {
+            newPriorities.clear();
+            Cursor cur = null;
+            try {
+                cur = getDB().database.rawQuery("SELECT id, priority AS pri FROM tags", null);
+                while (cur.moveToNext()) {
+                    newPriorities.put(cur.getLong(0), cur.getInt(1));
+                }
+            } catch (SQLException e) {
+                Log.e(TAG, "updateAllPriorities: Error while getting all tags: " + e.toString());
+            } finally {
+                if (cur != null) {
+                    cur.close();
+                }
+            }
+            ArrayList<Long> cids = getDB().queryColumn(long.class,
+                    "SELECT DISTINCT cardId FROM cardTags WHERE tagId in " +
+                    Utils.ids2str(Utils.toPrimitive(newPriorities.keySet())), 0);
+            updatePriorities(Utils.toPrimitive(cids), null, dirty);
+        }
+    }
+
+    /**
+     * Update priority setting on tags table
+     */
+    private HashMap<Long, Integer> updateTagPriorities() {
+        // Make sure all priority tags exist
+        for (String s : new String[] {lowPriority, medPriority, highPriority, suspended}) {
+            tagIds(Utils.parseTags(s));
+        }
+
+        HashMap<Long, Integer> newPriorities = new HashMap<Long, Integer>();
+        Cursor cur = null;
+            ArrayList<String> tagNames = null;
+            ArrayList<Long> tagIdList = null;
+            ArrayList<Integer> tagPriorities = null;
+        try {
+            tagNames = new ArrayList<String>();
+            tagIdList = new ArrayList<Long>();
+            tagPriorities = new ArrayList<Integer>();
+            cur = getDB().database.rawQuery("SELECT tag, id, priority FROM tags", null);
+            while (cur.moveToNext()) {
+                tagNames.add(cur.getString(0).toLowerCase());
+                tagIdList.add(cur.getLong(1));
+                tagPriorities.add(cur.getInt(2));
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "updateTagPriorities: Error while tag priorities: " + e.toString());
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        HashMap<String, Integer> typeAndPriorities = new HashMap<String, Integer>();
+        typeAndPriorities.put(lowPriority, 1);
+        typeAndPriorities.put(medPriority, 3);
+        typeAndPriorities.put(highPriority, 4);
+        HashMap<String, Integer> up = new HashMap<String, Integer>();
+        for (String type : typeAndPriorities.keySet()) {
+            for (String tag : Utils.parseTags(type.toLowerCase())) {
+                up.put(tag, typeAndPriorities.get(type));
+            }
+        }
+        String tag = null;
+        long tagId = 0l;
+        for (int i = 0; i < tagNames.size(); i++) {
+            tag = tagNames.get(i);
+            tagId = tagIdList.get(i).longValue();
+            if (up.containsKey(tag) && (up.get(tag).compareTo(tagPriorities.get(i)) == 0)) {
+                newPriorities.put(tagId, up.get(tag));
+            } else if ((!up.containsKey(tag)) && (tagPriorities.get(i).intValue() != 2)) {
+                newPriorities.put(tagId, 2);
+            } else {
+                continue;
+            }
+            try {
+                getDB().database.execSQL("UPDATE tags SET priority = " + newPriorities.get(tagId)
+                        + " WHERE id = " + tagId);
+            } catch (SQLException e) {
+                Log.e(TAG, "updatePriorities: Error while updating tag priorities for tag " +
+                        tag + ": " + e.toString());
+                continue;
+            }
+        }
+        return newPriorities;
     }
 
 
+    private void updatePriorities(long[] cardIds) {
+        updatePriorities(cardIds, null, true);
+    }
+    private void updatePriorities(long[] cardIds, String[] suspend) {
+        updatePriorities(cardIds, suspend, true);
+    }
     void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         Cursor cursor = null;
         Log.i(TAG, "updatePriorities - Updating priorities...");
         // Any tags to suspend
         if (suspend != null) {
-            long[] ids = tagIds(suspend, false);
-            ankiDB.database.execSQL("UPDATE tags " + "SET priority = 0 " + "WHERE id in " + Utils.ids2str(ids));
+            long ids[] = Utils.toPrimitive(tagIds(suspend, false).values());
+            ankiDB.database.execSQL("UPDATE tags SET priority = 0 WHERE id in " + Utils.ids2str(ids));
         }
 
         String limit = "";
@@ -2894,17 +3142,15 @@ public class Deck {
      * @param create Whether to create the tag if it doesn't exist in the database. Default = true
      * @return An array of IDs of the tags.
      */
-    private long[] tagIds(String[] tags) {
+    private HashMap<String, Long> tagIds(String[] tags) {
         return tagIds(tags, true);
     }
-
-
-    private long[] tagIds(String[] tags, boolean create) {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+    private HashMap<String, Long> tagIds(String[] tags, boolean create) {
+        HashMap<String, Long> results = new HashMap<String, Long>();
 
         if (create) {
             for (String tag : tags) {
-                ankiDB.database.execSQL("INSERT OR IGNORE INTO tags (tag) VALUES ('" + tag + "')");
+                getDB().database.execSQL("INSERT OR IGNORE INTO tags (tag) VALUES ('" + tag + "')");
             }
         }
         if (tags.length != 0) {
@@ -2915,11 +3161,14 @@ public class Deck {
                     tagList += ", ";
                 }
             }
-            ArrayList<Long> results = ankiDB.queryColumn(long.class, "SELECT id FROM tags WHERE tag in (" + tagList
-                    + ")", 0);
-            return Utils.toPrimitive((Long[]) results.toArray());
+            Cursor cur = getDB().database.rawQuery("SELECT tag, id FROM tags WHERE tag in (" +
+                    tagList + ")", null);
+            while (cur.moveToNext()) {
+                results.put(cur.getString(0).toLowerCase(), cur.getLong(1));
+            }
+            cur.close();
         }
-        return null;
+        return results;
     }
 
 }

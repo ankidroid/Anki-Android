@@ -232,7 +232,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
             if (oldCard != null) {
                 start = System.currentTimeMillis();
-                deck.suspendCard(oldCard.id);
+                deck.suspendCards(new long[] {oldCard.id});
                 stop = System.currentTimeMillis();
                 Log.v(TAG, "doInBackgroundSuspendCard - Suspended card in " + (stop - start) + " ms.");
             }

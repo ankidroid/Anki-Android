@@ -359,7 +359,7 @@ public class SyncClient {
             for (int i = 0; i < len; i++) {
                 cardIds[i] = cards.getJSONArray(i).getLong(0);
             }
-            // TODO: updateCardTags
+            deck.updateCardTags(cardIds);
             rebuildPriorities(cardIds);
         } catch (JSONException e) {
             Log.i(TAG, "JSONException = " + e.getMessage());
@@ -385,13 +385,15 @@ public class SyncClient {
 
 
     private void rebuildPriorities(long[] cardIds) {
-        try {
-            // TODO: Implement updateAllPriorities
-            // deck.updateAllPriorities(true, false);
-            deck.updatePriorities(cardIds, null, false);
-        } catch (SQLException e) {
-            Log.e(TAG, "SQLException e = " + e.getMessage());
-        }
+        rebuildPriorities(cardIds, null);
+    }
+    private void rebuildPriorities(long[] cardIds, String[] suspend) {
+        //try {
+            deck.updateAllPriorities(true, false);
+            deck.updatePriorities(cardIds, suspend, false);
+        //} catch (SQLException e) {
+        //    Log.e(TAG, "SQLException e = " + e.getMessage());
+        //}
     }
 
 
