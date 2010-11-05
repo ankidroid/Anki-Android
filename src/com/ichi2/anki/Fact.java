@@ -46,7 +46,7 @@ public class Fact {
     double created;
     double modified;
     String tags;
-    double spaceUntil; // Once obsolete, under libanki1.1 spaceUntil is reused as a html-stripped cache of the fields
+    String spaceUntil; // Once obsolete, under libanki1.1 spaceUntil is reused as a html-stripped cache of the fields
 
     Model model;
     TreeSet<Field> fields;
@@ -215,6 +215,22 @@ public class Fact {
         }
         return returnList;
     }
+  
+    public void setModified(boolean textChanged) {
+        modified = System.currentTimeMillis();
+        if (textChanged) {
+            spaceUntil = "";
+            for (Field f : getFields()) {
+                spaceUntil += f.value + " ";
+            }
+            spaceUntil.substring(0, spaceUntil.length()-1);
+            Log.d(TAG, "spaceUntil = " + spaceUntil);
+            for (Card card : getUpdatedRelatedCards()) {
+                card.setModified();
+                card.toDB();
+            }
+        }
+    }
 
     public static final class FieldOrdinalComparator implements Comparator<Field> {
         @Override
@@ -265,5 +281,4 @@ public class Fact {
             id = Utils.genID();
         }
     }
-
 }

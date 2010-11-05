@@ -21,6 +21,7 @@ package com.ichi2.anki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
@@ -41,7 +42,7 @@ import java.util.Map.Entry;
 
 /**
  * A deck stores all of the cards and scheduling information. It is saved in a file with a name ending in .anki
- *
+ * 
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Deck
  */
 public class Deck {
@@ -94,13 +95,10 @@ public class Deck {
     private static final Locale ENGLISH_LOCALE = new Locale("en_US");
 
     // Card order strings for building SQL statements
-    private static final String revOrderStrings[] = {"priority desc, interval desc",
-        "priority desc, interval",
-        "priority desc, combinedDue",
-    "priority desc, factId, ordinal"};
-    private static final String newOrderStrings[] = {"priority desc, combinedDue",
-        "priority desc, combinedDue",
-    "priority desc, combinedDue desc"};
+    private static final String revOrderStrings[] = { "priority desc, interval desc", "priority desc, interval",
+            "priority desc, combinedDue", "priority desc, factId, ordinal" };
+    private static final String newOrderStrings[] = { "priority desc, combinedDue", "priority desc, combinedDue",
+            "priority desc, combinedDue desc" };
 
     // BEGIN: SQL table columns
     long id;
@@ -243,6 +241,7 @@ public class Deck {
 
     boolean undoEnabled = false;
 
+
     public static synchronized Deck openDeck(String path) throws SQLException {
         Deck deck = null;
         Cursor cursor = null;
@@ -302,8 +301,8 @@ public class Deck {
                 cursor.close();
             }
         }
-        Log.i(TAG, String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.modified,
-                        System.currentTimeMillis() / 1000.0));
+        Log.i(TAG, String.format(ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.modified, System
+                .currentTimeMillis() / 1000.0));
 
         // Initialise queues
         deck.failedQueue = new LinkedList<QueueItem>();
@@ -331,7 +330,7 @@ public class Deck {
             deck.hardIntervalMax = Math.max(1.1, deck.hardIntervalMax);
         }
 
-        ArrayList<Long> ids = new ArrayList(0);
+        ArrayList<Long> ids = new ArrayList<Long>(0);
         try {
             // Unsuspend buried - can remove priorities in the future
             ids = deck.getDB().queryColumn(long.class,
@@ -363,6 +362,7 @@ public class Deck {
         } finally {
             cur.close();
         }
+        deck.averageFactor = Math.max(deck.averageFactor, Deck.minimumAverage);
 
         // Rebuild queue is not rebuild already
         if (ids.isEmpty()) {
@@ -392,20 +392,28 @@ public class Deck {
      */
     private class DeckVars {
         AnkiDb mDB;
+
+
         public DeckVars(String path) {
             mDB = AnkiDatabaseManager.getDatabase(path);
         }
+
+
         public boolean hasKey(String key) {
             return mDB.database.rawQuery("SELECT 1 FROM deckVars WHERE key = '" + key + "'", null).moveToNext();
         }
-        public boolean getInt(String key, long value) {
+
+
+        public int getInt(String key) throws SQLException {
             Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.isFirst()) {
-                value = cur.getLong(0);
-                return true;
+            if (cur.moveToFirst()) {
+                return cur.getInt(0);
+            } else {
+                throw new SQLException("DeckVars.getInt: could not retrieve value for " + key);
             }
-            return false;
         }
+
+
         public boolean getBool(String key) {
             Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
             if (cur.isFirst()) {
@@ -413,6 +421,8 @@ public class Deck {
             }
             return false;
         }
+
+
         public String getVar(String key) {
             Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
             if (cur.isFirst()) {
@@ -420,28 +430,36 @@ public class Deck {
             }
             return null;
         }
+
+
         public void setVar(String key, String value) {
             setVar(key, value, true);
         }
+
+
         public void setVar(String key, String value, boolean mod) {
             Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
             if (cur.isFirst()) {
                 if (cur.getString(0).equals(value)) {
                     return;
                 } else {
-                    mDB.database.execSQL("update deckVars set value='" + value + "' where key = '" + key +"'", null);
+                    mDB.database.execSQL("update deckVars set value='" + value + "' where key = '" + key + "'", null);
                 }
             } else {
-                mDB.database.execSQL("insert into deckVars (key, value) values ('" + value + "', '" + key +"')", null);
+                mDB.database.execSQL("insert into deckVars (key, value) values ('" + value + "', '" + key + "')", null);
             }
         }
+
+
         public void setVarDefault(String key, String value) {
             if (!hasKey(key)) {
                 mDB.database.execSQL("INSERT INTO deckVars (key, value) values ('" + key + "', '" + value + "')");
             }
         }
     }
+
     private DeckVars deckVars;
+
 
     private void initVars() {
         // tmpMediaDir = null;
@@ -468,42 +486,53 @@ public class Deck {
         setupStandardScheduler();
     }
 
+
     private boolean modifiedSinceSave() {
         return modified > lastLoaded;
     }
 
     /*
-     * Queue Management
-     *******************************/
+     * Queue Management*****************************
+     */
 
     private class QueueItem {
         private long cardID;
         private long factID;
         private double due;
+
+
         QueueItem(long _cardID, long _factID) {
             cardID = _cardID;
             factID = _factID;
             due = 0.0;
         }
+
+
         QueueItem(long _cardID, long _factID, double _due) {
             cardID = _cardID;
             factID = _factID;
             due = _due;
         }
+
+
         long getCardID() {
             return cardID;
         }
+
+
         long getFactID() {
             return factID;
         }
+
+
         double getDue() {
             return due;
         }
     }
 
     /*
-     * Scheduler related overridable methods
-     ********************************/
+     * Scheduler related overridable methods******************************
+     */
     private Method getCardIdMethod;
     private Method fillFailedQueueMethod;
     private Method fillRevQueueMethod;
@@ -519,9 +548,11 @@ public class Deck {
     private Method answerCardMethod;
     private Method cardLimitMethod;
     private Method answerPreSaveMethod;
+
+
     private long getCardId() {
         try {
-            return ((Long)getCardIdMethod.invoke(true)).longValue();
+            return ((Long) getCardIdMethod.invoke(true)).longValue();
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -530,9 +561,11 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private long getCardId(boolean check) {
         try {
-            return ((Long)getCardIdMethod.invoke(check)).longValue();
+            return ((Long) getCardIdMethod.invoke(check)).longValue();
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -541,6 +574,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void fillFailedQueue() {
         try {
             fillFailedQueueMethod.invoke(null);
@@ -552,6 +587,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void fillRevQueue() {
         try {
             fillRevQueueMethod.invoke(null);
@@ -563,6 +600,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void fillNewQueue() {
         try {
             fillNewQueueMethod.invoke(null);
@@ -574,6 +613,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void rebuildFailedCount() {
         try {
             rebuildFailedCountMethod.invoke(null);
@@ -585,6 +626,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void rebuildRevCount() {
         try {
             rebuildRevCountMethod.invoke(null);
@@ -596,6 +639,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void rebuildNewCount() {
         try {
             rebuildNewCountMethod.invoke(null);
@@ -607,6 +652,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void requeueCard(Card card, int oldSuc) {
         try {
             requeueCardMethod.invoke(card, oldSuc);
@@ -618,9 +665,11 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private boolean timeForNewCard() {
         try {
-            return ((Boolean)timeForNewCardMethod.invoke(null)).booleanValue();
+            return ((Boolean) timeForNewCardMethod.invoke(null)).booleanValue();
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -629,6 +678,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void updateNewCountToday() {
         try {
             updateNewCountTodayMethod.invoke(null);
@@ -640,9 +691,11 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private int cardQueue(Card card) {
         try {
-            return ((Integer)cardQueueMethod.invoke(card)).intValue();
+            return ((Integer) cardQueueMethod.invoke(card)).intValue();
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -651,6 +704,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void finishScheduler() {
         try {
             finishSchedulerMethod.invoke(null);
@@ -662,6 +717,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void answerCard(Card card, int ease) {
         try {
             answerCardMethod.invoke(card, ease);
@@ -673,9 +730,11 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private String cardLimit(String active, String inactive, String sql) {
         try {
-            return ((String)cardLimitMethod.invoke(active, inactive, sql));
+            return ((String) cardLimitMethod.invoke(active, inactive, sql));
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -684,9 +743,11 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private String cardLimit(String[] active, String sql) {
         try {
-            return ((String)cardLimitMethod.invoke(active, sql));
+            return ((String) cardLimitMethod.invoke(active, sql));
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -695,6 +756,8 @@ public class Deck {
             throw new RuntimeException(e);
         }
     }
+
+
     private void answerPreSave(Card card, int ease) {
         try {
             answerPreSaveMethod.invoke(card, ease);
@@ -707,9 +770,10 @@ public class Deck {
         }
     }
 
+
     /*
-     * Standard Scheduling
-     *******************************/
+     * Standard Scheduling*****************************
+     */
     private void setupStandardScheduler() {
         try {
             getCardIdMethod = Deck.class.getDeclaredMethod("_getCardId", boolean.class);
@@ -748,6 +812,7 @@ public class Deck {
         fillNewQueue();
     }
 
+
     private void rebuildCounts() {
         // global counts
         try {
@@ -764,53 +829,62 @@ public class Deck {
         rebuildNewCount();
     }
 
+
+    @SuppressWarnings("unused")
     private String _cardLimit(String active, String inactive, String sql) {
         String[] yes = Utils.parseTags(deckVars.getVar(active));
         String[] no = Utils.parseTags(deckVars.getVar(inactive));
         if (yes.length > 0) {
             long yids[] = tagIds(yes);
             long nids[] = tagIds(no);
-            return sql.replace("WHERE ",
-                    "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " +
-                    "tagId IN " + Utils.ids2str(yids) + " AND tagId NOT IN " + Utils.ids2str(nids) + ") AND ");
+            return sql.replace("WHERE ", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
+                    + Utils.ids2str(yids) + " AND tagId NOT IN " + Utils.ids2str(nids) + ") AND ");
         } else if (no.length > 0) {
             long nids[] = tagIds(no);
-            return sql.replace("WHERE ",
-                    "WHERE +c.id NOT IN (SELECT cardId FROM cardTags WHERE " +
-                    "tagId IN " + Utils.ids2str(nids) + ") AND ");
+            return sql.replace("WHERE ", "WHERE +c.id NOT IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
+                    + Utils.ids2str(nids) + ") AND ");
         } else {
             return sql;
         }
     }
 
 
+    @SuppressWarnings("unused")
     private void _rebuildFailedCount() {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         failedSoonCount = (int) ankiDB.queryScalar(cardLimit("revActive", "revInactive",
                 "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < " + dueCutoff));
     }
 
+
+    @SuppressWarnings("unused")
     private void _rebuildRevCount() {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         revCount = (int) ankiDB.queryScalar(cardLimit("revActive", "revInactive",
                 "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue < " + dueCutoff));
     }
 
+
+    @SuppressWarnings("unused")
     private void _rebuildNewCount() {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         newCount = (int) ankiDB.queryScalar(cardLimit("newActive", "newInactive",
                 "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < " + dueCutoff));
     }
 
+
+    @SuppressWarnings("unused")
     private void _updateNewCountToday() {
         newCountToday = Math.max(Math.min(newCount, newCardsPerDay - newCardsDoneToday()), 0);
     }
 
+
+    @SuppressWarnings("unused")
     private void _fillFailedQueue() {
         if ((failedSoonCount != 0) && failedQueue.isEmpty()) {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " +
-            dueCutoff + " ORDER BY combinedDue LIMIT " + queueLimit;
+            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " + dueCutoff
+                    + " ORDER BY combinedDue LIMIT " + queueLimit;
             Cursor cur = ankiDB.database.rawQuery(cardLimit("revActive", "revInactive", sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
@@ -819,11 +893,13 @@ public class Deck {
         }
     }
 
+
+    @SuppressWarnings("unused")
     private void _fillRevQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 1 AND combinedDue < " +
-            dueCutoff + " ORDER BY " + revOrder() + " LIMIT " + queueLimit;
+            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 1 AND combinedDue < " + dueCutoff
+                    + " ORDER BY " + revOrder() + " LIMIT " + queueLimit;
             Cursor cur = ankiDB.database.rawQuery(cardLimit("revActive", "revInactive", sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
@@ -832,11 +908,13 @@ public class Deck {
         }
     }
 
+
+    @SuppressWarnings("unused")
     private void _fillNewQueue() {
         if ((newCount != 0) && newQueue.isEmpty()) {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 2 AND combinedDue < " +
-            dueCutoff + " ORDER BY " + newOrder() + " LIMIT " + queueLimit;
+            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 2 AND combinedDue < " + dueCutoff
+                    + " ORDER BY " + newOrder() + " LIMIT " + queueLimit;
             Cursor cur = ankiDB.database.rawQuery(cardLimit("newActive", "newInactive", sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
@@ -844,6 +922,7 @@ public class Deck {
             }
         }
     }
+
 
     private boolean queueNotEmpty(LinkedList<QueueItem> queue, Method fillFunc) {
         while (true) {
@@ -863,9 +942,10 @@ public class Deck {
         }
     }
 
+
     private void removeSpaced(LinkedList<QueueItem> queue) {
         while (!queue.isEmpty()) {
-            long fid = ((QueueItem)queue.getLast()).getFactID();
+            long fid = ((QueueItem) queue.getLast()).getFactID();
             if (spacedFacts.containsKey(fid)) {
                 if ((double) System.currentTimeMillis() / 1000.0 > spacedFacts.get(fid)) {
                     spacedFacts.remove(fid);
@@ -878,14 +958,18 @@ public class Deck {
         }
     }
 
+
     private boolean revNoSpaced() {
         return queueNotEmpty(revQueue, fillRevQueueMethod);
     }
+
 
     private boolean newNoSpaced() {
         return queueNotEmpty(newQueue, fillNewQueueMethod);
     }
 
+
+    @SuppressWarnings("unused")
     private void _requeueCard(Card card, int oldSuc) {
         if (card.reps == 1) {
             newQueue.removeLast();
@@ -896,18 +980,23 @@ public class Deck {
         }
     }
 
+
     private String revOrder() {
         return revOrderStrings[revCardOrder];
     }
+
 
     private String newOrder() {
         return newOrderStrings[newCardOrder];
     }
 
+
     // Rebuild the type cache. Only necessary on upgrade.
     private void rebuildTypes() {
         rebuildTypes("");
     }
+
+
     private void rebuildTypes(String where) {
         String lim = "type >= 0"; // Don't touch suspended cards
         if (where != "") {
@@ -916,19 +1005,21 @@ public class Deck {
             where = " WHERE " + lim;
         }
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        ankiDB.database.execSQL("UPDATE cards " +
-                "SET type = (CASE " +
-                "WHEN successive = 0 AND reps != 0 THEN 0 -- failed " +
-                "WHEN successive != 0 AND reps != 0 THEN 1 -- review " +
-                "ELSE 2 -- new " +
-                "END)" + where);
+        ankiDB.database.execSQL("UPDATE cards SET type = (CASE " 
+                + "WHEN successive = 0 AND reps != 0 THEN 0 " // failed
+                + "WHEN successive != 0 AND reps != 0 THEN 1 " // review
+                + "ELSE 2 " // new
+                + "END)" + where);
         // old-style suspended cards
         ankiDB.database.execSQL("UPDATE cards SET type = type - 3 WHERE priority = 0 AND type >= 0");
     }
 
+
+    @SuppressWarnings("unused")
     private int _cardQueue(Card card) {
         return cardType(card);
     }
+
 
     // Return the type of the current card (what queue it's in)
     private int cardType(Card card) {
@@ -941,13 +1032,14 @@ public class Deck {
         }
     }
 
+
     private void updateCutoff() {
         if (deckVars.getBool("perDay")) {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.SECOND, (int) -utcOffset + SECS_IN_ONE_DAY);
-            cal.set(Calendar.HOUR, 0);        // Yes, verbose but crystal clear
-            cal.set(Calendar.MINUTE, 0);      // Apologies for that, here was my rant
-            cal.set(Calendar.SECOND, 0);      // But if you can improve this bit and
+            cal.set(Calendar.HOUR, 0); // Yes, verbose but crystal clear
+            cal.set(Calendar.MINUTE, 0); // Apologies for that, here was my rant
+            cal.set(Calendar.SECOND, 0); // But if you can improve this bit and
             cal.set(Calendar.MILLISECOND, 0); // collapse it to one statement please do
 
             int newday = (int) utcOffset - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
@@ -959,6 +1051,7 @@ public class Deck {
             dueCutoff = (double) System.currentTimeMillis() / 1000.0;
         }
     }
+
 
     public void reset() {
         // Setup global/daily stats
@@ -989,6 +1082,7 @@ public class Deck {
         // rebuildCSS();
     }
 
+
     // Checks if the day has rolled over.
     private void checkDailyStats() {
         if (!Stats.genToday(this).toString().equals(dailyStats.day.toString())) {
@@ -998,8 +1092,8 @@ public class Deck {
 
 
     /*
-     * Review early
-     *******************************/
+     * Review early*****************************
+     */
 
     private void setupReviewEarlyScheduler() {
         try {
@@ -1013,12 +1107,15 @@ public class Deck {
         scheduler = "reviewEarly";
     }
 
+
+    @SuppressWarnings("unused")
     private void _reviewEarlyPreSave(Card card, int ease) {
         if (ease > 1) {
             // Prevent it from appearing in next queue fill
             card.type += 6;
         }
     }
+
 
     private void resetAfterReviewEarly() {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
@@ -1033,6 +1130,8 @@ public class Deck {
         }
     }
 
+
+    @SuppressWarnings("unused")
     private void _onReviewEarlyFinished() {
         // Clean up buried cards
         resetAfterReviewEarly();
@@ -1040,6 +1139,8 @@ public class Deck {
         setupStandardScheduler();
     }
 
+
+    @SuppressWarnings("unused")
     private void _rebuildRevEarlyCount() {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         String extraLim = ""; // In the future it would be nice to skip the first x days of due cards
@@ -1048,11 +1149,13 @@ public class Deck {
         revCount = (int) ankiDB.queryScalar(sql);
     }
 
+
+    @SuppressWarnings("unused")
     private void _fillRevEarlyQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-            String sql = "SELECT id, factId FROM cards WHERE type = 1 AND combinedDue > " +
-            dueCutoff + " ORDER BY combinedDue LIMIT " + queueLimit;
+            String sql = "SELECT id, factId FROM cards WHERE type = 1 AND combinedDue > " + dueCutoff
+                    + " ORDER BY combinedDue LIMIT " + queueLimit;
             Cursor cur = ankiDB.database.rawQuery(sql, null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
@@ -1063,8 +1166,8 @@ public class Deck {
 
 
     /*
-     * Learn more
-     *******************************/
+     * Learn more*****************************
+     */
 
     private void setupLearnMoreScheduler() {
         try {
@@ -1077,19 +1180,23 @@ public class Deck {
         scheduler = "learnMore";
     }
 
+
+    @SuppressWarnings("unused")
     private void _rebuildLearnMoreCount() {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         newCount = (int) ankiDB.queryScalar("SELECT count() FROM cards WHERE type = 2 AND combinedDue < " + dueCutoff);
     }
 
+
+    @SuppressWarnings("unused")
     private void _updateLearnMoreCountToday() {
         newCountToday = newCount;
     }
 
 
     /*
-     * Cramming
-     *******************************/
+     * Cramming*****************************
+     */
 
     private void setupCramScheduler(String[] active, String order) {
         try {
@@ -1108,39 +1215,44 @@ public class Deck {
             answerCardMethod = Deck.class.getDeclaredMethod("_answerCramCard", Card.class, int.class);
             // Reuse review early's code
             answerPreSaveMethod = Deck.class.getDeclaredMethod("_reviewEarlyPreSave", Card.class, int.class);
-            cardLimitMethod = Deck.class.getDeclaredMethod("_cramCardLimit", String[].class, String.class, String.class);
+            cardLimitMethod = Deck.class
+                    .getDeclaredMethod("_cramCardLimit", String[].class, String.class, String.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
         scheduler = "cram";
     }
 
+
+    @SuppressWarnings("unused")
     private void _answerCramCard(Card card, int ease) {
         if (ease == 1) {
             if (cardQueue(card) != 0) {
                 failedSoonCount += 1;
                 revCount -= 1;
             }
-            requeueCard(card, 0); 
+            requeueCard(card, 0);
             failedCramQueue.addFirst(new QueueItem(card.id, card.factId));
         } else {
             _answerCard(card, ease);
         }
     }
 
+
+    @SuppressWarnings("unused")
     private long _getCramCardId(boolean check) {
         checkDailyStats();
         fillQueues();
 
         if (failedSoonCount >= failedCardMax) {
-            return ((QueueItem)failedQueue.getLast()).getCardID();
+            return ((QueueItem) failedQueue.getLast()).getCardID();
         }
         // Card due for review?
         if (revNoSpaced()) {
-            return ((QueueItem)revQueue.getLast()).getCardID();
+            return ((QueueItem) revQueue.getLast()).getCardID();
         }
         if (!failedQueue.isEmpty()) {
-            return ((QueueItem)failedQueue.getLast()).getCardID();
+            return ((QueueItem) failedQueue.getLast()).getCardID();
         }
         // If we're in a custom scheduler, we may need to switch back
         if (finishSchedulerMethod != null) {
@@ -1151,14 +1263,18 @@ public class Deck {
         return 0l;
     }
 
+
+    @SuppressWarnings("unused")
     private int _cramCardQueue(Card card) {
-        if ((!revQueue.isEmpty()) && (((QueueItem)revQueue.getLast()).getCardID() == card.id)) {
+        if ((!revQueue.isEmpty()) && (((QueueItem) revQueue.getLast()).getCardID() == card.id)) {
             return 1;
         } else {
             return 0;
         }
     }
 
+
+    @SuppressWarnings("unused")
     private void _requeueCramCard(Card card, int oldSuc) {
         if (cardQueue(card) == 1) {
             revQueue.removeLast();
@@ -1167,22 +1283,25 @@ public class Deck {
         }
     }
 
+
+    @SuppressWarnings("unused")
     private void _rebuildNewCramCount() {
         newCount = 0;
         newCountToday = 0;
     }
 
+
+    @SuppressWarnings("unused")
     private String _cramCardLimit(String active[], String sql) {
         if (active.length > 1) {
-            return sql.replace("WHERE ", "WHERE +c.id IN " +
-                    Utils.ids2str(new ArrayList<String>(Arrays.asList(active))));
-        } else if (active.length == 1){
+            return sql.replace("WHERE ", "WHERE +c.id IN "
+                    + Utils.ids2str(new ArrayList<String>(Arrays.asList(active))));
+        } else if (active.length == 1) {
             String[] yes = Utils.parseTags(active[0]);
             if (yes.length > 0) {
                 long yids[] = tagIds(yes);
-                return sql.replace("WHERE ",
-                        "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " +
-                        "tagId IN " + Utils.ids2str(yids) + ") AND ");
+                return sql.replace("WHERE ", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
+                        + Utils.ids2str(yids) + ") AND ");
             } else {
                 return sql;
             }
@@ -1191,11 +1310,13 @@ public class Deck {
         }
     }
 
+
+    @SuppressWarnings("unused")
     private void _fillCramQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-            String sql = "SELECT id, factId FROM cards WHERE type IN (0,1,2) ORDER BY "
-                + cramOrder + " LIMIT " + queueLimit;
+            String sql = "SELECT id, factId FROM cards WHERE type IN (0,1,2) ORDER BY " + cramOrder + " LIMIT "
+                    + queueLimit;
             Cursor cur = ankiDB.database.rawQuery(cardLimit(activeCramTags, sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
@@ -1204,18 +1325,25 @@ public class Deck {
         }
     }
 
+
+    @SuppressWarnings("unused")
     private void _rebuildCramCount() {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        revCount = (int) ankiDB.queryScalar("SELECT count(*) FROM cards WHERE type IN (0,1,2)"); 
+        revCount = (int) ankiDB.queryScalar("SELECT count(*) FROM cards WHERE type IN (0,1,2)");
     }
 
+
+    @SuppressWarnings("unused")
     private void _rebuildFailedCramCount() {
         failedSoonCount = failedCramQueue.size();
     }
 
+
+    @SuppressWarnings("unused")
     private void _fillFailedCramQueue() {
         failedQueue = failedCramQueue;
     }
+
 
     private void setModified() {
         modified = System.currentTimeMillis() / 1000.0;
@@ -1310,6 +1438,7 @@ public class Deck {
         // TODO: Make this a reference to a member variable
         return AnkiDatabaseManager.getDatabase(deckPath);
     }
+
 
     public String getDeckPath() {
         return deckPath;
@@ -1412,8 +1541,8 @@ public class Deck {
 
 
     /*
-     * Getting the next card
-     *******************************/
+     * Getting the next card*****************************
+     */
 
     /**
      * Return the next card object.
@@ -1436,18 +1565,21 @@ public class Deck {
         return cardFromId(currentCard.id);
     }
 
+
     /**
      * Return the next due card Id, or 0
+     * 
      * @param check Check for expired, or new day rollover
      * @return The Id of the next card, or 0 in case of error
      */
+    @SuppressWarnings("unused")
     private long _getCardId(boolean check) {
         checkDailyStats();
         fillQueues();
         updateNewCountToday();
         if (!failedQueue.isEmpty()) {
             // Failed card due?
-            if ((delay0 != 0) && (((QueueItem)failedQueue.getLast()).getDue() < System.currentTimeMillis()/1000)) {
+            if ((delay0 != 0) && (((QueueItem) failedQueue.getLast()).getDue() < System.currentTimeMillis() / 1000)) {
                 return failedQueue.getLast().getCardID();
             }
             // Failed card queue too big?
@@ -1487,9 +1619,10 @@ public class Deck {
 
 
     /*
-     * Get card: helper functions
-     *******************************/
+     * Get card: helper functions*****************************
+     */
 
+    @SuppressWarnings("unused")
     private boolean _timeForNewCard() {
         // True if it's time to display a new card when distributing.
         if (newCountToday == 0) {
@@ -1504,8 +1637,8 @@ public class Deck {
         // Force review if there are very high priority cards
         try {
             if (!revQueue.isEmpty()) {
-                if (getDB().queryScalar("SELECT 1 FROM cards WHERE id = " + revQueue.getLast().getCardID() +
-                " AND priority = 4") == 1) {
+                if (getDB().queryScalar(
+                        "SELECT 1 FROM cards WHERE id = " + revQueue.getLast().getCardID() + " AND priority = 4") == 1) {
                     return false;
                 }
             }
@@ -1519,10 +1652,17 @@ public class Deck {
         }
     }
 
+
     private boolean showFailedLast() {
         // FIXME: Isn't the check collapseTime != 0.0 always going to return true?
         return ((collapseTime != 0.0) || (delay0 == 0));
     }
+
+    /**
+     * Given a card ID, return a card and start the card timer.
+     * 
+     * @param id The ID of the card to be returned
+     */
 
     private Card cardFromId(long id) {
         if (id == 0) {
@@ -1654,12 +1794,11 @@ public class Deck {
 
 
     /*
-     * Answering a card*********************************************************
-     */
+     * Answering a card
+     *******************************/
 
     public void _answerCard(Card card, int ease) {
         Log.i(TAG, "answerCard");
-        Cursor cursor = null;
         String undoName = "Answer Card";
         setUndoStart(undoName);
         double now = System.currentTimeMillis() / 1000.0;
@@ -1668,7 +1807,6 @@ public class Deck {
         String oldState = cardState(card);
         int oldQueue = cardQueue(card);
         double lastDelaySecs = System.currentTimeMillis() / 1000.0 - card.combinedDue;
-        double start = System.currentTimeMillis();
         double lastDelay = lastDelaySecs / 86400.0;
         int oldSuc = card.successive;
 
@@ -1690,7 +1828,7 @@ public class Deck {
 
         // Spacing
         double space = spaceUntilTime(card);
-        spaceCards(card, ease);
+        spaceCards(card, space);
         // Adjust counts for current card
         if (oldQueue == 0) {
             if (ease != 1) {
@@ -1726,19 +1864,21 @@ public class Deck {
         // Remove form queue
         requeueCard(card, oldSuc);
 
-        // // TODO: Fix leech handling
-        // if (isLeech(card))
-        // card = handleLeech(card);
+        // Leech handling - we need to do this after the queue, as it may cause a reset
+        if (isLeech(card)) {
+            handleLeech(card);
+        }
         setUndoEnd(undoName);
     }
+
 
     private double spaceUntilTime(Card card) {
         Cursor cursor = null;
         double space, spaceFactor, minSpacing, minOfOtherCards;
 
         try {
-            cursor = getDB().database.rawQuery("SELECT models.initialSpacing, models.spacing " +
-                    "FROM facts, models WHERE facts.modelId = models.id and facts.id = " + card.factId, null);
+            cursor = getDB().database.rawQuery("SELECT models.initialSpacing, models.spacing "
+                    + "FROM facts, models WHERE facts.modelId = models.id and facts.id = " + card.factId, null);
             if (!cursor.moveToFirst()) {
                 minSpacing = 0;
                 spaceFactor = 0;
@@ -1753,8 +1893,8 @@ public class Deck {
         }
 
         try {
-            minOfOtherCards = getDB().queryScalar("SELECT min(interval) FROM cards WHERE factId = " + card.factId +
-                    " AND id != " + card.id);
+            minOfOtherCards = getDB().queryScalar(
+                    "SELECT min(interval) FROM cards WHERE factId = " + card.factId + " AND id != " + card.id);
         } finally {
             minOfOtherCards = 0;
             if (cursor != null) {
@@ -1773,17 +1913,18 @@ public class Deck {
         return space;
     }
 
+
     private void spaceCards(Card card, double space) {
         Cursor cursor = null;
         // Adjust counts
         try {
-            cursor = getDB().database.rawQuery("SELECT type, count(type) FROM cards WHERE factId = " +
-                    card.factId + " AND combinedDue < " + dueCutoff + " id != " + card.id + ") GROUP BY type", null);
+            cursor = getDB().database.rawQuery("SELECT type, count(type) FROM cards WHERE factId = " + card.factId
+                    + " AND combinedDue < " + dueCutoff + " id != " + card.id + ") GROUP BY type", null);
             while (cursor.moveToNext()) {
                 Log.i(TAG, "failedSoonCount before = " + failedSoonCount);
                 Log.i(TAG, "revCount before = " + revCount);
                 Log.i(TAG, "newCount before = " + newCount);
-                int type = cursor.getInt(0); 
+                int type = cursor.getInt(0);
                 int count = cursor.getInt(1);
                 if (type == 0) {
                     failedSoonCount -= count;
@@ -1804,43 +1945,46 @@ public class Deck {
 
         // space other cards
         getDB().database.execSQL(String.format(ENGLISH_LOCALE, "UPDATE cards SET spaceUntil = %f, "
-                + "combinedDue = max(%f, due), modified = %f, isDue = 0 WHERE id != %ld and factId = %ld",
-                space, space, ((double) System.currentTimeMillis() / 1000.0), card.id, card.factId));
+                + "combinedDue = max(%f, due), modified = %f, isDue = 0 WHERE id != %ld and factId = %ld", space,
+                space, ((double) System.currentTimeMillis() / 1000.0), card.id, card.factId));
         // Update local cache of seen facts
         spacedFacts.put(card.factId, space);
     }
 
-    // private boolean isLeech(Card card)
-    // {
-    // int no = card.noCount;
-    // int fmax = getInt("leechFails");
-    // if (fmax == 0)
-    // return false;
-    // return (
-    // // failed
-    // (card.successive == 0) &&
-    // // greater than fail threshold
-    // (no >= fmax) &&
-    // // at least threshold/2 reps since last time
-    // (fmax - no) % (Math.max(fmax/2, 1)) == 0);
-    // }
-    //
-    // // TODO: not sure how this is supposed to affect the DB.
-    // private Card handleLeech(Card card)
-    // {
-    // this.refresh();
-    // Card scard = cardFromId(card.id, true);
-    // tags = scard.fact.tags;
-    // tags = addTags("Leech", tags);
-    // scard.fact.tags = canonifyTags(tags);
-    // scard.fact.setModified(textChanged=True);
-    // self.updateFactTags(scard.fact.id);
-    // self.s.flush();
-    // self.s.expunge(scard);
-    // if (getBool("suspendLeeches"))
-    // suspendCards(card.id);
-    // this.refresh();
-    // }
+
+    private boolean isLeech(Card card) {
+        int no = card.noCount;
+        int fmax = 0;
+        try {
+            fmax = deckVars.getInt("leechFails");
+        } catch (SQLException e) {
+            // No leech threshold found in DeckVars
+            return false;
+        }
+        // Return true if:
+        // - The card failed AND
+        // - The number of failures exceeds the leech threshold AND
+        // - There were at least threshold/2 reps since last time
+        if ((card.successive != 0) && (no >= fmax) &&     
+                ((fmax - no) % Math.max(fmax/2, 1) == 0)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void handleLeech(Card card) {
+        Card scard = cardFromId(card.id);
+        String tags = scard.fact.tags;
+        tags = Utils.addTags("Leech", tags);
+        scard.getFact().tags = Utils.canonifyTags(tags);
+        scard.getFact().setModified(true);
+        updateFactTags(scard.fact.id);
+        scard.toDB();
+        if (deckVars.getBool("suspendLeeches")) {
+            suspendCards(new long[]{card.id});
+        }
+    }
 
     /*
      * Interval management*********************************************************
@@ -1952,14 +2096,30 @@ public class Deck {
     }
 
     /*
+     * Tags: Caching 
+     *******************************/
+    
+    private void updateFactTags(long[] factIds) {
+        updateCardTags(getDB().queryColumn(long.class,
+                "SELECT id FROM cards WHERE factId IN " + Utils.ids2str(factIds), 0));
+    }
+    
+    private void updateCardTags() {
+    
+    }
+    private void updateCardTags(long[] cardIds) {
+        
+    }
+    
+    
+    /*
      * Tags: adding/removing in bulk*********************************************************
      */
     public static final String TAG_MARKED = "Marked";
 
 
     public ArrayList<String> factTags(long[] factIds) {
-        return getDB().queryColumn(String.class,
-                "SELECT tags FROM facts WHERE id IN " + Utils.ids2str(factIds), 0);
+        return getDB().queryColumn(String.class, "SELECT tags FROM facts WHERE id IN " + Utils.ids2str(factIds), 0);
     }
 
 
@@ -1997,8 +2157,8 @@ public class Deck {
             }
         }
 
-        ArrayList<String> cardIdList = ankiDB.queryColumn(String.class,
-                "select id from cards where factId in " + Utils.ids2str(factIds), 0);
+        ArrayList<String> cardIdList = ankiDB.queryColumn(String.class, "select id from cards where factId in "
+                + Utils.ids2str(factIds), 0);
 
         ContentValues values = new ContentValues();
 
@@ -2061,8 +2221,8 @@ public class Deck {
             }
         }
 
-        ArrayList<String> cardIdList = ankiDB.queryColumn(String.class,
-                "select id from cards where factId in " + Utils.ids2str(factIds), 0);
+        ArrayList<String> cardIdList = ankiDB.queryColumn(String.class, "select id from cards where factId in "
+                + Utils.ids2str(factIds), 0);
 
         for (int i = 0; i < cardIdList.size(); i++) {
             String cardId = cardIdList.get(i);
@@ -2082,38 +2242,35 @@ public class Deck {
 
 
     /*
-     * Suspending
-     *******************************/
+     * Suspending*****************************
+     */
 
-    //public void suspendCard(long cardId) {
-    //    long[] ids = new long[1];
-    //    ids[0] = cardId;
-    //    suspendCards(ids);
-    //}
-
+    // public void suspendCard(long cardId) {
+    // long[] ids = new long[1];
+    // ids[0] = cardId;
+    // suspendCards(ids);
+    // }
 
     public void suspendCards(long[] ids) {
-        getDB().database.execSQL("UPDATE cards SET type = (CASE " +
-                "WHEN successive = 0 THEN -2 WHEN reps THEN -3 ELSE -1 END), " +
-                "priority = -3, modified = " +
-                String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
-                ", isDue = 0 WHERE type >= 0 AND id IN " + Utils.ids2str(ids));
+        getDB().database.execSQL("UPDATE cards SET type = (CASE "
+                + "WHEN successive = 0 THEN -2 WHEN reps THEN -3 ELSE -1 END), " + "priority = -3, modified = "
+                + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                + ", isDue = 0 WHERE type >= 0 AND id IN " + Utils.ids2str(ids));
         flushMod();
         reset();
     }
 
 
-    //public void unsuspendCard(long cardId) {
-    //    long[] ids = new long[1];
-    //    ids[0] = cardId;
-    //    unsuspendCards(ids);
-    //}
-
+    // public void unsuspendCard(long cardId) {
+    // long[] ids = new long[1];
+    // ids[0] = cardId;
+    // unsuspendCards(ids);
+    // }
 
     public void unsuspendCards(long[] ids) {
-        getDB().database.execSQL("UPDATE cards SET type = type + 3, priority = 0, " +
-                "modified = " + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0)) +
-                " WHERE type < 0 AND id IN " + Utils.ids2str(ids));
+        getDB().database.execSQL("UPDATE cards SET type = type + 3, priority = 0, " + "modified = "
+                + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                + " WHERE type < 0 AND id IN " + Utils.ids2str(ids));
         updatePriorities(ids);
         flushMod();
         reset();
@@ -2139,10 +2296,9 @@ public class Deck {
         if (cardIds.length <= 1000) {
             limit = "and cardTags.cardId in " + Utils.ids2str(cardIds);
         }
-        String query = "SELECT cardTags.cardId, " + "CASE "
-        + "WHEN max(tags.priority) > 2 THEN max(tags.priority) " + "WHEN min(tags.priority) = 1 THEN 1 "
-        + "ELSE 2 END " + "FROM cardTags,tags " + "WHERE cardTags.tagId = tags.id " + limit + " "
-        + "GROUP BY cardTags.cardId";
+        String query = "SELECT cardTags.cardId, " + "CASE " + "WHEN max(tags.priority) > 2 THEN max(tags.priority) "
+                + "WHEN min(tags.priority) = 1 THEN 1 " + "ELSE 2 END " + "FROM cardTags,tags "
+                + "WHERE cardTags.tagId = tags.id " + limit + " " + "GROUP BY cardTags.cardId";
         try {
             cursor = ankiDB.database.rawQuery(query, null);
             if (cursor.moveToFirst()) {
@@ -2156,7 +2312,7 @@ public class Deck {
                 String extra = "";
                 if (dirty) {
                     extra = ", modified = "
-                        + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0));
+                            + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0));
                 }
                 for (int pri = 0; pri < 5; pri++) {
                     int count = 0;
@@ -2192,11 +2348,7 @@ public class Deck {
      */
 
     private int newCardsDoneToday() {
-        return (dailyStats.newEase0 +
-                dailyStats.newEase1 +
-                dailyStats.newEase2 +
-                dailyStats.newEase3 +
-                dailyStats.newEase4);
+        return (dailyStats.newEase0 + dailyStats.newEase1 + dailyStats.newEase2 + dailyStats.newEase3 + dailyStats.newEase4);
     }
 
 
@@ -2369,9 +2521,11 @@ public class Deck {
 
         if (modelExists) {
             // Delete the cards that use the model id, through fact
-            ArrayList<String> cardsToDelete = getDB().queryColumn(String.class,
-                    "SELECT cards.id FROM cards, facts WHERE facts.modelId = " + id +
-                    " AND facts.id = cards.factId", 0);
+            ArrayList<String> cardsToDelete = getDB()
+                    .queryColumn(
+                            String.class,
+                            "SELECT cards.id FROM cards, facts WHERE facts.modelId = " + id
+                                    + " AND facts.id = cards.factId", 0);
             deleteCards(cardsToDelete);
 
             // Delete model
@@ -2509,7 +2663,7 @@ public class Deck {
             ArrayList<String> columns = ankiDB.queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
             // Insert trigger
             String sql = "CREATE TEMP TRIGGER _undo_%s_it " + "AFTER INSERT ON %s BEGIN "
-            + "INSERT INTO undoLog VALUES " + "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
+                    + "INSERT INTO undoLog VALUES " + "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
             ankiDB.database.execSQL(String.format(ENGLISH_LOCALE, sql, table, table, table));
             // Update trigger
             sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " + "AFTER UPDATE ON %s BEGIN "
@@ -2693,8 +2847,8 @@ public class Deck {
         while (iter.hasNext()) {
             Entry<String, String> entry = iter.next();
             if (required.contains(entry.getKey())) {
-                getDB().database.execSQL("CREATE INDEX IF NOT EXISTS " + "ix_cards_"
-                        + entry.getKey() + "2 ON cards " + entry.getValue());
+                getDB().database.execSQL("CREATE INDEX IF NOT EXISTS " + "ix_cards_" + entry.getKey() + "2 ON cards "
+                        + entry.getValue());
             } else {
                 // Leave old indices for older clients
                 getDB().database.execSQL("DROP INDEX IF EXISTS " + "ix_cards_" + entry.getKey() + "2");
@@ -2743,6 +2897,8 @@ public class Deck {
     private long[] tagIds(String[] tags) {
         return tagIds(tags, true);
     }
+
+
     private long[] tagIds(String[] tags, boolean create) {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 
@@ -2755,15 +2911,15 @@ public class Deck {
             String tagList = "";
             for (int i = 0; i < tags.length; i++) {
                 tagList += "'" + tags[i] + "'";
-                if (i < tags.length-1) {
+                if (i < tags.length - 1) {
                     tagList += ", ";
                 }
             }
-            ArrayList<Long> results = ankiDB.queryColumn(long.class, "SELECT id FROM tags WHERE tag in (" + tagList +")", 0);
+            ArrayList<Long> results = ankiDB.queryColumn(long.class, "SELECT id FROM tags WHERE tag in (" + tagList
+                    + ")", 0);
             return Utils.toPrimitive((Long[]) results.toArray());
         }
         return null;
     }
-
 
 }

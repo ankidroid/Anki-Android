@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.text.TextUtils.StringSplitter;
 import android.util.Log;
 
 import com.mindprod.common11.BigDate;
@@ -41,6 +42,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -436,6 +439,12 @@ public class Utils {
         return list.size() > 0;
     }
     
+    /**
+     * Take an array of Long and return an array of long
+     * 
+     * @param array The input with type Long[]
+     * @return The output with type long[]
+     */
     public static long[] toPrimitive(Long[] array) {
         long[] results = new long[array.length];
         for (int i = 0; i < array.length; i++) {
@@ -443,6 +452,8 @@ public class Utils {
         }
         return results;
     }
+    
+    
     /*
      * Tags
      **************************************/
@@ -455,5 +466,63 @@ public class Utils {
      */
     public static String[] parseTags(String tags) {
         return tags.split(" +|, *");
+    }
+    
+    /**
+     * Join a list of tags to a string, using spaces as separators
+     * 
+     * @param tags The list of tags to join
+     * @return The joined tags in a single string 
+     */
+    public static String joinTags(Collection<String> tags) {
+        String result = "";
+        for (String tag : tags) {
+            result += tag + " ";
+        }
+        return result.trim();
+    }
+    
+    /**
+     * Strip leading/trailing/superfluous spaces/commas from a tags string. Remove duplicates and sort.
+     * 
+     * @param tags The string containing the tags, separated by spaces or commas
+     * @return The canonified string, as described above
+     */
+    public static String canonifyTags(String tags) {
+        return joinTags(new TreeSet<String>(Arrays.asList(parseTags(tags))));
+    }
+    /**
+     * Find if tag exists in a set of tags. The search is not case-sensitive
+     * 
+     * @param tag The tag to look for
+     * @param tags The set of tags
+     * @return True is the tag is found in the set, false otherwise
+     */
+    public static boolean findTag(String tag, List<String> tags) {
+        String lowercase = tag.toLowerCase();
+        for (String t : tags) {
+            if (t.toLowerCase().compareTo(lowercase) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Add tags if they don't exist.
+     * Both parameters are in string format, the tags being separated by space or comma, as in parseTags
+     * 
+     * @param tagStr The new tag(s) that are to be added
+     * @param tags The set of tags where the new ones will be added
+     * @return A string containing the union of tags of the input parameters
+     */
+    public static String addTags(String tagStr, String tags) {
+        ArrayList<String> currentTags = new ArrayList<String>(Arrays.asList(parseTags(tags)));
+        for (String tag : currentTags) {
+            if (!findTag(tag, currentTags)) {
+                currentTags.add(tag);
+            }
+        }
+        return joinTags(currentTags);
     }
 }
