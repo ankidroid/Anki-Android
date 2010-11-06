@@ -800,10 +800,9 @@ public class SyncClient {
 
     private void mergeFieldModels(String modelId, JSONArray fieldModels) {
         ArrayList<String> ids = new ArrayList<String>();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
-
+        
         String sql = "INSERT OR REPLACE INTO fieldModels VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        SQLiteStatement statement = ankiDB.database.compileStatement(sql);
+        SQLiteStatement statement = deck.getDB().database.compileStatement(sql);
         int len = fieldModels.length();
         for (int i = 0; i < len; i++) {
             try {
@@ -865,13 +864,13 @@ public class SyncClient {
         statement.close();
 
         // Delete field models that were not returned by the server
-        ArrayList<String> fieldModelsIds = ankiDB.queryColumn(String.class,
+        ArrayList<String> fieldModelsIds = deck.getDB().queryColumn(String.class,
                 "SELECT id FROM fieldModels WHERE modelId = " + modelId, 0);
-        int lenFieldModelsIds = fieldModelsIds.size();
-        for (int i = 0; i < lenFieldModelsIds; i++) {
-            String fieldModelId = fieldModelsIds.get(i);
-            if (!ids.contains(fieldModelId)) {
-                deck.deleteFieldModel(modelId, fieldModelId);
+        if (fieldModelsIds != null) {
+            for (String fieldModelId : fieldModelsIds) {
+                if (!ids.contains(fieldModelId)) {
+                    deck.deleteFieldModel(modelId, fieldModelId);
+                }
             }
         }
     }
@@ -879,14 +878,13 @@ public class SyncClient {
 
     private void mergeCardModels(String modelId, JSONArray cardModels) {
         ArrayList<String> ids = new ArrayList<String>();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
-
+        
         String sql = "INSERT OR REPLACE INTO cardModels (id, ordinal, modelId, name, description, active, qformat, aformat, lformat, "
                 + "qedformat, aedformat, questionInAnswer, questionFontFamily, questionFontSize, questionFontColour, questionAlign, "
                 + "answerFontFamily, answerFontSize, answerFontColour, answerAlign, lastFontFamily, lastFontSize, lastFontColour, "
                 + "editQuestionFontFamily, editQuestionFontSize, editAnswerFontFamily, editAnswerFontSize, allowEmptyAnswer, typeAnswer) "
                 + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        SQLiteStatement statement = ankiDB.database.compileStatement(sql);
+        SQLiteStatement statement = deck.getDB().database.compileStatement(sql);
         int len = cardModels.length();
         for (int i = 0; i < len; i++) {
             try {
@@ -993,13 +991,13 @@ public class SyncClient {
         statement.close();
 
         // Delete card models that were not returned by the server
-        ArrayList<String> cardModelsIds = ankiDB.queryColumn(String.class, "SELECT id FROM cardModels WHERE modelId = "
+        ArrayList<String> cardModelsIds = deck.getDB().queryColumn(String.class, "SELECT id FROM cardModels WHERE modelId = "
                 + modelId, 0);
-        int lenCardModelsIds = cardModelsIds.size();
-        for (int i = 0; i < lenCardModelsIds; i++) {
-            String cardModelId = cardModelsIds.get(i);
-            if (!ids.contains(cardModelId)) {
-                deck.deleteCardModel(modelId, cardModelId);
+        if (cardModelsIds != null) {
+            for (String cardModelId : cardModelsIds) {
+                if (!ids.contains(cardModelId)) {
+                    deck.deleteCardModel(modelId, cardModelId);
+                }
             }
         }
     }
@@ -1435,19 +1433,19 @@ public class SyncClient {
 
     private void deleteMedia(JSONArray ids) {
         Log.i(TAG, "deleteMedia");
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
 
         String idsString = Utils.ids2str(ids);
 
         // Get filenames
-        ArrayList<String> files = ankiDB.queryColumn(String.class, "SELECT filename FROM media WHERE id IN "
+        // FIXME: How come files is never used?
+        ArrayList<String> files = deck.getDB().queryColumn(String.class, "SELECT filename FROM media WHERE id IN "
                 + idsString, 0);
 
         // Note the media to delete (Insert the media to delete into mediaDeleted)
         double now = System.currentTimeMillis() / 1000.0;
         String sqlInsert = "INSERT INTO mediaDeleted SELECT id, " + String.format(ENGLISH_LOCALE, "%f", now)
                 + " FROM media WHERE media.id = ?";
-        SQLiteStatement statement = ankiDB.database.compileStatement(sqlInsert);
+        SQLiteStatement statement = deck.getDB().database.compileStatement(sqlInsert);
         int len = ids.length();
         for (int i = 0; i < len; i++) {
             try {
@@ -1462,7 +1460,7 @@ public class SyncClient {
 
         // Delete media
         Log.i(TAG, "Deleting media in = " + idsString);
-        ankiDB.database.execSQL("DELETE FROM media WHERE id IN " + idsString);
+        deck.getDB().database.execSQL("DELETE FROM media WHERE id IN " + idsString);
     }
 
 
@@ -1672,7 +1670,7 @@ public class SyncClient {
         // Get daily stats since the last day the deck was synchronized
         Date lastDay = new Date(java.lang.Math.max(0, (long) (deck.lastSync - 60 * 60 * 24) * 1000));
         Log.i(TAG, "lastDay = " + lastDay.toString());
-        ArrayList<Long> ids = AnkiDatabaseManager.getDatabase(deck.deckPath).queryColumn(Long.class,
+        ArrayList<Long> ids = deck.getDB().queryColumn(Long.class,
                 "SELECT id FROM stats WHERE type = 1 and day >= \"" + lastDay.toString() + "\"", 0);
 
         try {
@@ -1681,12 +1679,13 @@ public class SyncClient {
             bundledStats.put("global", bundleStat(Stats.globalStats(deck)));
             // Put daily stats
             JSONArray dailyStats = new JSONArray();
-            int len = ids.size();
-            for (int i = 0; i < len; i++) {
-                // Update stat with the values of the stat with id ids.get(i)
-                stat.fromDB(ids.get(i));
-                // Bundle this stat and add it to dailyStats
-                dailyStats.put(bundleStat(stat));
+            if (ids != null) {
+                for (Long id : ids) {
+                    // Update stat with the values of the stat with id ids.get(i)
+                    stat.fromDB(id);
+                    // Bundle this stat and add it to dailyStats
+                    dailyStats.put(bundleStat(stat));
+                }
             }
             bundledStats.put("daily", dailyStats);
         } catch (SQLException e) {

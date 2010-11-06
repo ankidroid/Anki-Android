@@ -98,7 +98,7 @@ public class AnkiDb {
      * @return An ArrayList with the contents of the specified column.
      */
     public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
-        ArrayList<T> results = new ArrayList<T>();
+        ArrayList<T> results = null;
         Cursor cursor = null;
 
         try {
@@ -107,6 +107,7 @@ public class AnkiDb {
             String methodName = getCursorMethodName(type.getSimpleName());
             do {
                 // The magical line. Almost as illegible as python code ;)
+                results = new ArrayList<T>();
                 results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
             } while (cursor.moveToNext());
         } catch (NoSuchMethodException e) {

@@ -446,16 +446,20 @@ public class Utils {
      */
     public static long[] toPrimitive(Long[] array) {
         long[] results = new long[array.length];
-        for (int i = 0; i < array.length; i++) {
-            results[i] = array[i].longValue();
+        if (array != null) {
+            for (int i = 0; i < array.length; i++) {
+                results[i] = array[i].longValue();
+            }
         }
         return results;
     }
     public static long[] toPrimitive(Collection<Long> array) {
         long[] results = new long[array.size()];
-        int i = 0;
-        for (Long item : array) {
-            results[i++] = item.longValue();
+        if (array != null) {
+            int i = 0;
+            for (Long item : array) {
+                results[i++] = item.longValue();
+            }
         }
         return results;
     }

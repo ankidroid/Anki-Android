@@ -21,7 +21,6 @@ package com.ichi2.anki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
@@ -332,18 +331,14 @@ public class Deck {
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();
-        try {
-            // Unsuspend buried - can remove priorities in the future
-            ids = deck.getDB().queryColumn(long.class,
-                    "SELECT id FROM cards WHERE type in (3,4,5) OR priority IN (-1,-2)", 0);
-            if (!ids.isEmpty()) {
-                deck.updatePriorities(Utils.toPrimitive(ids));
-                deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type IN (3,4,5)", null);
-                // Save deck to database
-                deck.commitToDB();
-            }
-        } catch (Exception e) {
-            // TODO: Error in query, do something about it?
+        // Unsuspend buried - can remove priorities in the future
+        ids = deck.getDB().queryColumn(long.class,
+                "SELECT id FROM cards WHERE type in (3,4,5) OR priority IN (-1,-2)", 0);
+        if ((ids != null) && (!ids.isEmpty())) {
+            deck.updatePriorities(Utils.toPrimitive(ids));
+            deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type IN (3,4,5)", null);
+            // Save deck to database
+            deck.commitToDB();
         }
 
         // Determine starting factor for new cards
@@ -868,24 +863,21 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildFailedCount() {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        failedSoonCount = (int) ankiDB.queryScalar(cardLimit("revActive", "revInactive",
+        failedSoonCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive",
                 "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < " + dueCutoff));
     }
 
 
     @SuppressWarnings("unused")
     private void _rebuildRevCount() {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        revCount = (int) ankiDB.queryScalar(cardLimit("revActive", "revInactive",
+        revCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive",
                 "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue < " + dueCutoff));
     }
 
 
     @SuppressWarnings("unused")
     private void _rebuildNewCount() {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        newCount = (int) ankiDB.queryScalar(cardLimit("newActive", "newInactive",
+        newCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive",
                 "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < " + dueCutoff));
     }
 
@@ -899,10 +891,9 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillFailedQueue() {
         if ((failedSoonCount != 0) && failedQueue.isEmpty()) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " + dueCutoff
                     + " ORDER BY combinedDue LIMIT " + queueLimit;
-            Cursor cur = ankiDB.database.rawQuery(cardLimit("revActive", "revInactive", sql), null);
+            Cursor cur = getDB().database.rawQuery(cardLimit("revActive", "revInactive", sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
                 failedQueue.add(0, qi); // Add to front, so list is reversed as it is built
@@ -914,10 +905,9 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillRevQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 1 AND combinedDue < " + dueCutoff
                     + " ORDER BY " + revOrder() + " LIMIT " + queueLimit;
-            Cursor cur = ankiDB.database.rawQuery(cardLimit("revActive", "revInactive", sql), null);
+            Cursor cur = getDB().database.rawQuery(cardLimit("revActive", "revInactive", sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
                 revQueue.add(0, qi); // Add to front, so list is reversed as it is built
@@ -929,10 +919,9 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillNewQueue() {
         if ((newCount != 0) && newQueue.isEmpty()) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 2 AND combinedDue < " + dueCutoff
                     + " ORDER BY " + newOrder() + " LIMIT " + queueLimit;
-            Cursor cur = ankiDB.database.rawQuery(cardLimit("newActive", "newInactive", sql), null);
+            Cursor cur = getDB().database.rawQuery(cardLimit("newActive", "newInactive", sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
                 newQueue.addFirst(qi); // Add to front, so list is reversed as it is built
@@ -1033,14 +1022,13 @@ public class Deck {
         } else {
             where = " WHERE " + lim;
         }
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        ankiDB.database.execSQL("UPDATE cards SET type = (CASE " 
+        getDB().database.execSQL("UPDATE cards SET type = (CASE " 
                 + "WHEN successive = 0 AND reps != 0 THEN 0 " // failed
                 + "WHEN successive != 0 AND reps != 0 THEN 1 " // review
                 + "ELSE 2 " // new
                 + "END)" + where);
         // old-style suspended cards
-        ankiDB.database.execSQL("UPDATE cards SET type = type - 3 WHERE priority = 0 AND type >= 0");
+        getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE priority = 0 AND type >= 0");
     }
 
 
@@ -1147,14 +1135,13 @@ public class Deck {
 
 
     private void resetAfterReviewEarly() {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-
-        ArrayList<Long> ids = ankiDB.queryColumn(long.class,
+        // FIXME: Can ignore priorities in the future (following libanki)
+        ArrayList<Long> ids = getDB().queryColumn(long.class,
                 "SELECT id FROM cards WHERE type IN (6,7,8) OR priority = -1", 0);
 
         if (ids != null) {
             updatePriorities(Utils.toPrimitive(ids));
-            ankiDB.database.execSQL("UPDATE cards SET type = type -6 WHERE type IN (6,7,8)", null);
+            getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type IN (6,7,8)", null);
             flushMod();
         }
     }
@@ -1171,21 +1158,19 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildRevEarlyCount() {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         String extraLim = ""; // In the future it would be nice to skip the first x days of due cards
 
         String sql = "SELECT count() FROM cards WHERE type = 1 AND combinedDue > " + dueCutoff + extraLim;
-        revCount = (int) ankiDB.queryScalar(sql);
+        revCount = (int) getDB().queryScalar(sql);
     }
 
 
     @SuppressWarnings("unused")
     private void _fillRevEarlyQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             String sql = "SELECT id, factId FROM cards WHERE type = 1 AND combinedDue > " + dueCutoff
                     + " ORDER BY combinedDue LIMIT " + queueLimit;
-            Cursor cur = ankiDB.database.rawQuery(sql, null);
+            Cursor cur = getDB().database.rawQuery(sql, null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 revQueue.add(0, qi); // Add to front, so list is reversed as it is built
@@ -1212,8 +1197,7 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildLearnMoreCount() {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        newCount = (int) ankiDB.queryScalar("SELECT count() FROM cards WHERE type = 2 AND combinedDue < " + dueCutoff);
+        newCount = (int) getDB().queryScalar("SELECT count() FROM cards WHERE type = 2 AND combinedDue < " + dueCutoff);
     }
 
 
@@ -1349,10 +1333,9 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillCramQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             String sql = "SELECT id, factId FROM cards WHERE type IN (0,1,2) ORDER BY " + cramOrder + " LIMIT "
                     + queueLimit;
-            Cursor cur = ankiDB.database.rawQuery(cardLimit(activeCramTags, sql), null);
+            Cursor cur = getDB().database.rawQuery(cardLimit(activeCramTags, sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 revQueue.add(0, qi); // Add to front, so list is reversed as it is built
@@ -1363,8 +1346,7 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildCramCount() {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        revCount = (int) ankiDB.queryScalar("SELECT count(*) FROM cards WHERE type IN (0,1,2)");
+        revCount = (int) getDB().queryScalar("SELECT count(*) FROM cards WHERE type IN (0,1,2)");
     }
 
 
@@ -1437,7 +1419,7 @@ public class Deck {
         values.put("newCount", newCount);
         values.put("revCardOrder", revCardOrder);
 
-        AnkiDatabaseManager.getDatabase(deckPath).database.update("decks", values, "id = " + id, null);
+        getDB().database.update("decks", values, "id = " + id, null);
     }
 
 
@@ -1734,7 +1716,7 @@ public class Deck {
         updateValues.put("question", card.question);
         updateValues.put("answer", card.answer);
         updateValues.put("modified", now);
-        AnkiDatabaseManager.getDatabase(deckPath).database.update("cards", updateValues, "id = ?", new String[] { ""
+        getDB().database.update("cards", updateValues, "id = ?", new String[] { ""
                 + card.id });
         // AnkiDb.database.execSQL(String.format(NULL_LOCALE,
         // "UPDATE cards " +
@@ -1753,33 +1735,31 @@ public class Deck {
     // Drops some indices and changes synchronous pragma
     public void beforeUpdateCards() {
         long now = System.currentTimeMillis();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-        ankiDB.database.execSQL("PRAGMA synchronous=NORMAL");
+        // getDB().database.execSQL("PRAGMA synchronous=NORMAL");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_duePriority");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_priorityDue");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_factor");
-        ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_sort");
+        // getDB().database.execSQL("DROP INDEX IF EXISTS ix_cards_sort");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_factId");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_intervalDesc");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_intervalAsc");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_randomOrder");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_dueAsc");
         // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_dueDesc");
-        Log.w(TAG, "BEFORE UPDATE = " + (System.currentTimeMillis() - now));
+        Log.i(TAG, "BEFORE UPDATE = " + (System.currentTimeMillis() - now));
     }
 
 
     public void afterUpdateCards() {
         long now = System.currentTimeMillis();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         // ankiDB.database.execSQL("CREATE INDEX ix_cards_duePriority on cards (type, isDue, combinedDue, priority)");
         // ankiDB.database.execSQL("CREATE INDEX ix_cards_priorityDue on cards (type, isDue, priority, combinedDue)");
         // ankiDB.database.execSQL("CREATE INDEX ix_cards_factor on cards 			(type, factor)");
-        ankiDB.database.execSQL("CREATE INDEX ix_cards_sort on cards (answer collate nocase)");
+        // getDB().database.execSQL("CREATE INDEX ix_cards_sort on cards (answer collate nocase)");
         // ankiDB.database.execSQL("CREATE INDEX ix_cards_factId on cards (factId, type)");
         // updateDynamicIndices();
-        ankiDB.database.execSQL("PRAGMA synchronous=FULL");
-        Log.w(TAG, "AFTER UPDATE = " + (System.currentTimeMillis() - now));
+        // getDB().database.execSQL("PRAGMA synchronous=FULL");
+        Log.i(TAG, "AFTER UPDATE = " + (System.currentTimeMillis() - now));
         // now = System.currentTimeMillis();
         // ankiDB.database.execSQL("ANALYZE");
         // Log.i("ANALYZE = " + System.currentTimeMillis() - now);
@@ -1793,12 +1773,11 @@ public class Deck {
 
 
     public long updateAllCardsFromPosition(long numUpdatedCards, long limitCards) {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         // TODO: Cache this query, order by FactId, Id
-        Cursor cursor = ankiDB.database.rawQuery("SELECT id, factId " + "FROM cards " + "ORDER BY factId, id "
+        Cursor cursor = getDB().database.rawQuery("SELECT id, factId " + "FROM cards " + "ORDER BY factId, id "
                 + "LIMIT " + limitCards + " OFFSET " + numUpdatedCards, null);
 
-        ankiDB.database.beginTransaction();
+        getDB().database.beginTransaction();
         try {
             while (cursor.moveToNext()) {
                 // Get card
@@ -1827,9 +1806,9 @@ public class Deck {
 
             }
             cursor.close();
-            ankiDB.database.setTransactionSuccessful();
+            getDB().database.setTransactionSuccessful();
         } finally {
-            ankiDB.database.endTransaction();
+            getDB().database.endTransaction();
         }
 
         return numUpdatedCards;
@@ -2269,48 +2248,51 @@ public class Deck {
 
 
     public void addTag(long[] factIds, String tag) {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         ArrayList<String> factTagsList = factTags(factIds);
 
         // Create tag if necessary
         long tagId = tagId(tag, true);
 
-        for (int i = 0; i < factTagsList.size(); i++) {
-            String newTags = factTagsList.get(i);
-
-            if (newTags.indexOf(tag) == -1) {
-                if (newTags.length() == 0) {
-                    newTags += tag;
-                } else {
-                    newTags += "," + tag;
+        if (factTagsList != null) {
+            for (int i = 0; i < factTagsList.size(); i++) {
+                String newTags = factTagsList.get(i);
+    
+                if (newTags.indexOf(tag) == -1) {
+                    if (newTags.length() == 0) {
+                        newTags += tag;
+                    } else {
+                        newTags += "," + tag;
+                    }
                 }
-            }
-            Log.i(TAG, "old tags = " + factTagsList.get(i));
-            Log.i(TAG, "new tags = " + newTags);
-
-            if (newTags.length() > factTagsList.get(i).length()) {
-                ankiDB.database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
-                        + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
-                        + " where id = " + factIds[i]);
+                Log.i(TAG, "old tags = " + factTagsList.get(i));
+                Log.i(TAG, "new tags = " + newTags);
+    
+                if (newTags.length() > factTagsList.get(i).length()) {
+                    getDB().database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
+                            + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                            + " where id = " + factIds[i]);
+                }
             }
         }
 
-        ArrayList<String> cardIdList = ankiDB.queryColumn(String.class, "select id from cards where factId in "
+        ArrayList<String> cardIdList = getDB().queryColumn(String.class, "select id from cards where factId in "
                 + Utils.ids2str(factIds), 0);
 
         ContentValues values = new ContentValues();
 
-        for (int i = 0; i < cardIdList.size(); i++) {
-            String cardId = cardIdList.get(i);
-            try {
-                // Check if the tag already exists
-                ankiDB.queryScalar("select id from cardTags" + " where cardId = " + cardId + " and tagId = " + tagId
-                        + " and src = 0");
-            } catch (SQLException e) {
-                values.put("cardId", cardId);
-                values.put("tagId", tagId);
-                values.put("src", "0");
-                ankiDB.database.insert("cardTags", null, values);
+        if (cardIdList != null) {
+            for (int i = 0; i < cardIdList.size(); i++) {
+                String cardId = cardIdList.get(i);
+                try {
+                    // Check if the tag already exists
+                    getDB().queryScalar("select id from cardTags" + " where cardId = " + cardId + " and tagId = " + tagId
+                            + " and src = 0");
+                } catch (SQLException e) {
+                    values.put("cardId", cardId);
+                    values.put("tagId", tagId);
+                    values.put("src", "0");
+                    getDB().database.insert("cardTags", null, values);
+                }
             }
         }
 
@@ -2326,53 +2308,56 @@ public class Deck {
 
 
     public void deleteTag(long[] factIds, String tag) {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         ArrayList<String> factTagsList = factTags(factIds);
 
         long tagId = tagId(tag, false);
 
-        for (int i = 0; i < factTagsList.size(); i++) {
-            String factTags = factTagsList.get(i);
-            String newTags = factTags;
-
-            int tagIdx = factTags.indexOf(tag);
-            if ((tagIdx == 0) && (factTags.length() > tag.length())) {
-                // tag is the first element of many, remove "tag,"
-                newTags = factTags.substring(tag.length() + 1, factTags.length());
-            } else if ((tagIdx > 0) && (tagIdx + tag.length() == factTags.length())) {
-                // tag is the last of many elements, remove ",tag"
-                newTags = factTags.substring(0, tagIdx - 1);
-            } else if (tagIdx > 0) {
-                // tag is enclosed between other elements, remove ",tag"
-                newTags = factTags.substring(0, tagIdx - 1) + factTags.substring(tag.length(), factTags.length());
-            } else if (tagIdx == 0) {
-                // tag is the only element
-                newTags = "";
-            }
-            Log.i(TAG, "old tags = " + factTags);
-            Log.i(TAG, "new tags = " + newTags);
-
-            if (newTags.length() < factTags.length()) {
-                ankiDB.database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
-                        + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
-                        + " where id = " + factIds[i]);
+        if (factTagsList != null) {
+            for (int i = 0; i < factTagsList.size(); i++) {
+                String factTags = factTagsList.get(i);
+                String newTags = factTags;
+    
+                int tagIdx = factTags.indexOf(tag);
+                if ((tagIdx == 0) && (factTags.length() > tag.length())) {
+                    // tag is the first element of many, remove "tag,"
+                    newTags = factTags.substring(tag.length() + 1, factTags.length());
+                } else if ((tagIdx > 0) && (tagIdx + tag.length() == factTags.length())) {
+                    // tag is the last of many elements, remove ",tag"
+                    newTags = factTags.substring(0, tagIdx - 1);
+                } else if (tagIdx > 0) {
+                    // tag is enclosed between other elements, remove ",tag"
+                    newTags = factTags.substring(0, tagIdx - 1) + factTags.substring(tag.length(), factTags.length());
+                } else if (tagIdx == 0) {
+                    // tag is the only element
+                    newTags = "";
+                }
+                Log.i(TAG, "old tags = " + factTags);
+                Log.i(TAG, "new tags = " + newTags);
+    
+                if (newTags.length() < factTags.length()) {
+                    getDB().database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
+                            + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                            + " where id = " + factIds[i]);
+                }
             }
         }
 
-        ArrayList<String> cardIdList = ankiDB.queryColumn(String.class, "select id from cards where factId in "
+        ArrayList<String> cardIdList = getDB().queryColumn(String.class, "select id from cards where factId in "
                 + Utils.ids2str(factIds), 0);
 
-        for (int i = 0; i < cardIdList.size(); i++) {
-            String cardId = cardIdList.get(i);
-            ankiDB.database.execSQL("delete from cardTags" + " WHERE cardId = " + cardId + " and tagId = " + tagId
-                    + " and src = 0");
+        if (cardIdList != null) {
+            for (int i = 0; i < cardIdList.size(); i++) {
+                String cardId = cardIdList.get(i);
+                getDB().database.execSQL("delete from cardTags" + " WHERE cardId = " + cardId + " and tagId = " + tagId
+                        + " and src = 0");
+            }
         }
 
         // delete unused tags from tags table
         try {
-            ankiDB.queryScalar("select id from cardTags where tagId = " + tagId + " limit 1");
+            getDB().queryScalar("select id from cardTags where tagId = " + tagId + " limit 1");
         } catch (SQLException e) {
-            ankiDB.database.execSQL("delete from tags" + " where id = " + tagId);
+            getDB().database.execSQL("delete from tags" + " where id = " + tagId);
         }
 
         flushMod();
@@ -2531,13 +2516,12 @@ public class Deck {
         updatePriorities(cardIds, suspend, true);
     }
     void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         Cursor cursor = null;
         Log.i(TAG, "updatePriorities - Updating priorities...");
         // Any tags to suspend
         if (suspend != null) {
             long ids[] = Utils.toPrimitive(tagIds(suspend, false).values());
-            ankiDB.database.execSQL("UPDATE tags SET priority = 0 WHERE id in " + Utils.ids2str(ids));
+            getDB().database.execSQL("UPDATE tags SET priority = 0 WHERE id in " + Utils.ids2str(ids));
         }
 
         String limit = "";
@@ -2548,7 +2532,7 @@ public class Deck {
                 + "WHEN min(tags.priority) = 1 THEN 1 " + "ELSE 2 END " + "FROM cardTags,tags "
                 + "WHERE cardTags.tagId = tags.id " + limit + " " + "GROUP BY cardTags.cardId";
         try {
-            cursor = ankiDB.database.rawQuery(query, null);
+            cursor = getDB().database.rawQuery(query, null);
             if (cursor.moveToFirst()) {
                 int len = cursor.getCount();
                 long[][] cards = new long[len][2];
@@ -2578,7 +2562,7 @@ public class Deck {
                         }
                     }
                     // Catch review early & buried but not suspended cards
-                    ankiDB.database.execSQL("UPDATE cards " + "SET priority = " + pri + extra + " WHERE id in "
+                    getDB().database.execSQL("UPDATE cards " + "SET priority = " + pri + extra + " WHERE id in "
                             + Utils.ids2str(cs) + " and " + "priority != " + pri + " and " + "priority >= -2");
                 }
             }
@@ -2644,9 +2628,7 @@ public class Deck {
         Log.i(TAG, "deleteCards = " + ids.toString());
 
         // Bulk delete cards by ID
-        int len = ids.size();
-        if (len > 0) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+        if (ids != null && ids.size() > 0) {
             commitToDB();
             double now = System.currentTimeMillis() / 1000.0;
             Log.i(TAG, "Now = " + now);
@@ -2658,38 +2640,40 @@ public class Deck {
             // 0);
 
             // Delete cards
-            ankiDB.database.execSQL("DELETE FROM cards WHERE id in " + idsString);
+            getDB().database.execSQL("DELETE FROM cards WHERE id in " + idsString);
 
             // Note deleted cards
             String sqlInsert = "INSERT INTO cardsDeleted values (?," + String.format(ENGLISH_LOCALE, "%f", now) + ")";
-            SQLiteStatement statement = ankiDB.database.compileStatement(sqlInsert);
-            for (int i = 0; i < len; i++) {
+            SQLiteStatement statement = getDB().database.compileStatement(sqlInsert);
+            for (int i = 0; i < ids.size(); i++) {
                 statement.bindString(1, ids.get(i));
                 statement.executeInsert();
             }
             statement.close();
 
             // Gather affected tags (before we delete the corresponding cardTags)
-            ArrayList<String> tags = ankiDB.queryColumn(String.class, "SELECT tagId FROM cardTags WHERE cardId in "
+            ArrayList<String> tags = getDB().queryColumn(String.class, "SELECT tagId FROM cardTags WHERE cardId in "
                     + idsString, 0);
 
             // Delete cardTags
-            ankiDB.database.execSQL("DELETE FROM cardTags WHERE cardId in " + idsString);
+            getDB().database.execSQL("DELETE FROM cardTags WHERE cardId in " + idsString);
 
             // Find out if this tags are used by anything else
             ArrayList<String> unusedTags = new ArrayList<String>();
-            for (int i = 0; i < tags.size(); i++) {
-                String tagId = tags.get(i);
-                Cursor cursor = ankiDB.database.rawQuery("SELECT * FROM cardTags WHERE tagId = " + tagId + " LIMIT 1",
-                        null);
-                if (!cursor.moveToFirst()) {
-                    unusedTags.add(tagId);
+            if (tags != null) {
+                for (int i = 0; i < tags.size(); i++) {
+                    String tagId = tags.get(i);
+                    Cursor cursor = getDB().database.rawQuery("SELECT * FROM cardTags WHERE tagId = " + tagId + " LIMIT 1",
+                            null);
+                    if (!cursor.moveToFirst()) {
+                        unusedTags.add(tagId);
+                    }
+                    cursor.close();
                 }
-                cursor.close();
             }
 
             // Delete unused tags
-            ankiDB.database.execSQL("DELETE FROM tags WHERE id in " + Utils.ids2str(unusedTags) + " and priority = 2");
+            getDB().database.execSQL("DELETE FROM tags WHERE id in " + Utils.ids2str(unusedTags) + " and priority = 2");
 
             // Remove any dangling fact
             deleteDanglingFacts();
@@ -2707,16 +2691,15 @@ public class Deck {
         Log.i(TAG, "deleteFacts = " + ids.toString());
         int len = ids.size();
         if (len > 0) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
             commitToDB();
             double now = System.currentTimeMillis() / 1000.0;
             String idsString = Utils.ids2str(ids);
             Log.i(TAG, "DELETE FROM facts WHERE id in " + idsString);
-            ankiDB.database.execSQL("DELETE FROM facts WHERE id in " + idsString);
+            getDB().database.execSQL("DELETE FROM facts WHERE id in " + idsString);
             Log.i(TAG, "DELETE FROM fields WHERE factId in " + idsString);
-            ankiDB.database.execSQL("DELETE FROM fields WHERE factId in " + idsString);
+            getDB().database.execSQL("DELETE FROM fields WHERE factId in " + idsString);
             String sqlInsert = "INSERT INTO factsDeleted VALUES(?," + String.format(ENGLISH_LOCALE, "%f", now) + ")";
-            SQLiteStatement statement = ankiDB.database.compileStatement(sqlInsert);
+            SQLiteStatement statement = getDB().database.compileStatement(sqlInsert);
             for (int i = 0; i < len; i++) {
                 Log.i(TAG, "inserting into factsDeleted");
                 statement.bindString(1, ids.get(i));
@@ -2736,10 +2719,10 @@ public class Deck {
      */
     public ArrayList<String> deleteDanglingFacts() {
         Log.i(TAG, "deleteDanglingFacts");
-        ArrayList<String> danglingFacts = AnkiDatabaseManager.getDatabase(deckPath).queryColumn(String.class,
+        ArrayList<String> danglingFacts = getDB().queryColumn(String.class,
                 "SELECT facts.id FROM facts WHERE facts.id NOT IN (SELECT DISTINCT factId from cards)", 0);
 
-        if (danglingFacts.size() > 0) {
+        if ((danglingFacts != null) && (danglingFacts.size() > 0)) {
             deleteFacts(danglingFacts);
         }
 
@@ -2769,9 +2752,7 @@ public class Deck {
 
         if (modelExists) {
             // Delete the cards that use the model id, through fact
-            ArrayList<String> cardsToDelete = getDB()
-                    .queryColumn(
-                            String.class,
+            ArrayList<String> cardsToDelete = getDB().queryColumn(String.class,
                             "SELECT cards.id FROM cards, facts WHERE facts.modelId = " + id
                                     + " AND facts.id = cards.factId", 0);
             deleteCards(cardsToDelete);
@@ -2792,16 +2773,15 @@ public class Deck {
 
     public void deleteFieldModel(String modelId, String fieldModelId) {
         Log.i(TAG, "deleteFieldModel, modelId = " + modelId + ", fieldModelId = " + fieldModelId);
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 
         long start, stop;
         start = System.currentTimeMillis();
 
         // Delete field model
-        ankiDB.database.execSQL("DELETE FROM fields WHERE fieldModel = " + fieldModelId);
+        getDB().database.execSQL("DELETE FROM fields WHERE fieldModel = " + fieldModelId);
 
         // Note like modified the facts that use this model
-        ankiDB.database.execSQL("UPDATE facts SET modified = "
+        getDB().database.execSQL("UPDATE facts SET modified = "
                 + String.format(ENGLISH_LOCALE, "%f", (System.currentTimeMillis() / 1000.0)) + " WHERE modelId = "
                 + modelId);
 
@@ -2810,16 +2790,16 @@ public class Deck {
         // Update Question/Answer formats
         // TODO: All these should be done with the field object
         String fieldName = "";
-        Cursor cursor = ankiDB.database.rawQuery("SELECT name FROM fieldModels WHERE id = " + fieldModelId, null);
+        Cursor cursor = getDB().database.rawQuery("SELECT name FROM fieldModels WHERE id = " + fieldModelId, null);
         if (cursor.moveToNext()) {
             fieldName = cursor.getString(0);
         }
         cursor.close();
 
-        cursor = ankiDB.database.rawQuery("SELECT id, qformat, aformat FROM cardModels WHERE modelId = " + modelId,
+        cursor = getDB().database.rawQuery("SELECT id, qformat, aformat FROM cardModels WHERE modelId = " + modelId,
                 null);
         String sql = "UPDATE cardModels SET qformat = ?, aformat = ? WHERE id = ?";
-        SQLiteStatement statement = ankiDB.database.compileStatement(sql);
+        SQLiteStatement statement = getDB().database.compileStatement(sql);
         while (cursor.moveToNext()) {
             String id = cursor.getString(0);
             String newQFormat = cursor.getString(1);
@@ -2842,7 +2822,7 @@ public class Deck {
         // TODO: updateCardsFromModel();
 
         // Note the model like modified (TODO: We should use the object model instead handling the DB directly)
-        ankiDB.database.execSQL("UPDATE models SET modified = "
+        getDB().database.execSQL("UPDATE models SET modified = "
                 + String.format(ENGLISH_LOCALE, "%f", System.currentTimeMillis() / 1000.0) + " WHERE id = " + modelId);
 
         flushMod();
@@ -2854,19 +2834,18 @@ public class Deck {
 
     public void deleteCardModel(String modelId, String cardModelId) {
         Log.i(TAG, "deleteCardModel, modelId = " + modelId + ", fieldModelId = " + cardModelId);
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
-
+        
         // Delete all cards that use card model from the deck
-        ArrayList<String> cardIds = ankiDB.queryColumn(String.class, "SELECT id FROM cards WHERE cardModelId = "
+        ArrayList<String> cardIds = getDB().queryColumn(String.class, "SELECT id FROM cards WHERE cardModelId = "
                 + cardModelId, 0);
         deleteCards(cardIds);
 
         // I assume that the line "model.cardModels.remove(cardModel)" actually deletes cardModel from DB (I might be
         // wrong)
-        ankiDB.database.execSQL("DELETE FROM cardModels WHERE id = " + cardModelId);
+        getDB().database.execSQL("DELETE FROM cardModels WHERE id = " + cardModelId);
 
         // Note the model like modified (TODO: We should use the object model instead handling the DB directly)
-        ankiDB.database.execSQL("UPDATE models SET modified = "
+        getDB().database.execSQL("UPDATE models SET modified = "
                 + String.format(ENGLISH_LOCALE, "%f", System.currentTimeMillis() / 1000.0) + " WHERE id = " + modelId);
 
         flushMod();
@@ -2896,58 +2875,58 @@ public class Deck {
         redoStack = new Stack<UndoRow>();
         undoEnabled = true;
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
+        getDB().database.execSQL("CREATE TEMPORARY TABLE undoLog (seq INTEGER PRIMARY KEY NOT NULL, sql TEXT)");
 
-        ankiDB.database.execSQL("CREATE TEMPORARY TABLE undoLog (seq INTEGER PRIMARY KEY NOT NULL, sql TEXT)");
-
-        ArrayList<String> tables = ankiDB.queryColumn(String.class,
+        ArrayList<String> tables = getDB().queryColumn(String.class,
                 "SELECT name FROM sqlite_master WHERE type = 'table'", 0);
-        Iterator<String> iter = tables.iterator();
-        while (iter.hasNext()) {
-            String table = iter.next();
-            if (table.equals("undoLog") || table.equals("sqlite_stat1")) {
-                continue;
-            }
-            ArrayList<String> columns = ankiDB.queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
-            // Insert trigger
-            String sql = "CREATE TEMP TRIGGER _undo_%s_it " + "AFTER INSERT ON %s BEGIN "
-                    + "INSERT INTO undoLog VALUES " + "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
-            ankiDB.database.execSQL(String.format(ENGLISH_LOCALE, sql, table, table, table));
-            // Update trigger
-            sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " + "AFTER UPDATE ON %s BEGIN "
-                    + "INSERT INTO undoLog VALUES " + "(null, 'UPDATE %s ", table, table, table);
-            String sep = "SET ";
-            Iterator<String> columnIter = columns.iterator();
-            while (columnIter.hasNext()) {
-                String column = columnIter.next();
-                if (column.equals("unique")) {
+        if (tables != null) {
+            Iterator<String> iter = tables.iterator();
+            while (iter.hasNext()) {
+                String table = iter.next();
+                if (table.equals("undoLog") || table.equals("sqlite_stat1")) {
                     continue;
                 }
-                sql += String.format(ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
-                sep = ",";
-            }
-            sql += "WHERE rowid = ' || old.rowid); END";
-            ankiDB.database.execSQL(sql);
-            // Delete trigger
-            sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " + "BEFORE DELETE ON %s BEGIN "
-                    + "INSERT INTO undoLog VALUES " + "(null, 'INSERT INTO %s (rowid", table, table, table);
-            columnIter = columns.iterator();
-            while (columnIter.hasNext()) {
-                String column = columnIter.next();
-                sql += String.format(ENGLISH_LOCALE, ",\"%s\"", column);
-            }
-            sql += ") VALUES (' || old.rowid ||'";
-            columnIter = columns.iterator();
-            while (columnIter.hasNext()) {
-                String column = columnIter.next();
-                if (column.equals("unique")) {
-                    sql += ",1";
-                    continue;
+                ArrayList<String> columns = getDB().queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
+                // Insert trigger
+                String sql = "CREATE TEMP TRIGGER _undo_%s_it " + "AFTER INSERT ON %s BEGIN "
+                        + "INSERT INTO undoLog VALUES " + "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
+                getDB().database.execSQL(String.format(ENGLISH_LOCALE, sql, table, table, table));
+                // Update trigger
+                sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " + "AFTER UPDATE ON %s BEGIN "
+                        + "INSERT INTO undoLog VALUES " + "(null, 'UPDATE %s ", table, table, table);
+                String sep = "SET ";
+                if (columns != null) {
+                    for (String column : columns) {
+                        if (column.equals("unique")) {
+                            continue;
+                        }
+                        sql += String.format(ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
+                        sep = ",";
+                    }
                 }
-                sql += String.format(ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column);
+                sql += "WHERE rowid = ' || old.rowid); END";
+                getDB().database.execSQL(sql);
+                // Delete trigger
+                sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " + "BEFORE DELETE ON %s BEGIN "
+                        + "INSERT INTO undoLog VALUES " + "(null, 'INSERT INTO %s (rowid", table, table, table);
+                if (columns != null) {
+                    for (String column : columns) {
+                        sql += String.format(ENGLISH_LOCALE, ",\"%s\"", column);
+                    }
+                }
+                sql += ") VALUES (' || old.rowid ||'";
+                if (columns != null) {
+                    for (String column : columns) {
+                        if (column.equals("unique")) {
+                            sql += ",1";
+                            continue;
+                        }
+                        sql += String.format(ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column);
+                    }
+                }
+                sql += ")'); END";
+                getDB().database.execSQL(sql);
             }
-            sql += ")'); END";
-            ankiDB.database.execSQL(sql);
         }
     }
 
@@ -3008,7 +2987,7 @@ public class Deck {
     private long latestUndoRow() {
         long result;
         try {
-            result = AnkiDatabaseManager.getDatabase(deckPath).queryScalar("SELECT MAX(rowid) FROM undoLog");
+            result = getDB().queryScalar("SELECT MAX(rowid) FROM undoLog");
         } catch (SQLException e) {
             result = 0;
         }
@@ -3017,7 +2996,6 @@ public class Deck {
 
 
     private void undoredo(Stack<UndoRow> src, Stack<UndoRow> dst) {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 
         UndoRow row;
         commitToDB();
@@ -3032,12 +3010,13 @@ public class Deck {
         if (end == null) {
             end = latestUndoRow();
         }
-        ArrayList<String> sql = ankiDB.queryColumn(String.class, String.format(ENGLISH_LOCALE,
+        ArrayList<String> sql = getDB().queryColumn(String.class, String.format(ENGLISH_LOCALE,
                 "SELECT sql FROM undoLog " + "WHERE seq > %d and seq <= %d " + "ORDER BY seq DESC", start, end), 0);
         Long newstart = latestUndoRow();
-        Iterator<String> iter = sql.iterator();
-        while (iter.hasNext()) {
-            ankiDB.database.execSQL(iter.next());
+        if (sql != null) {
+            for (String s : sql) {
+                getDB().database.execSQL(s);
+            }
         }
 
         Long newend = latestUndoRow();
@@ -3118,15 +3097,14 @@ public class Deck {
      */
     private long tagId(String tag, Boolean create) {
         long id = 0;
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
 
         try {
-            id = ankiDB.queryScalar("select id from tags where tag = \"" + tag + "\"");
+            id = getDB().queryScalar("select id from tags where tag = \"" + tag + "\"");
         } catch (SQLException e) {
             if (create) {
                 ContentValues value = new ContentValues();
                 value.put("tag", tag);
-                id = ankiDB.database.insert("tags", null, value);
+                id = getDB().database.insert("tags", null, value);
             } else {
                 id = 0;
             }
