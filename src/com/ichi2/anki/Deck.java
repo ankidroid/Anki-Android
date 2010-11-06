@@ -322,7 +322,8 @@ public class Deck {
 
         // FIXME: Temporary code for upgrade - ensure cards suspended on older clients are recognized
         // Ensure cards suspended on older clients are recognized
-        deck.getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE type IN (0,1,2) AND priority = -3", null);
+        deck.getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE type BETWEEN 0 AND 2 AND priority = -3",
+                null);
 
         // Ensure hard scheduling over a day if per day
         if (deck.deckVars.getBool("perDay")) {
@@ -331,12 +332,13 @@ public class Deck {
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();
-        // Unsuspend buried - can remove priorities in the future
+        // Unsuspend buried/rev early - can remove priorities in the future
         ids = deck.getDB().queryColumn(long.class,
-                "SELECT id FROM cards WHERE type in (3,4,5) OR priority IN (-1,-2)", 0);
+                "SELECT id FROM cards WHERE type > 2 OR priority BETWEEN -2 AND -1", 0);
         if ((ids != null) && (!ids.isEmpty())) {
             deck.updatePriorities(Utils.toPrimitive(ids));
-            deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type IN (3,4,5)", null);
+            deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type BETWEEN 3 AND 5", null);
+            deck.getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8", null);
             // Save deck to database
             deck.commitToDB();
         }
@@ -986,15 +988,10 @@ public class Deck {
                 revQueue.removeLast();
             }
         } catch (Exception e) {
-            int type = 1;
-            if (card.reps != 0) {
-                type = 2;
-            } else if (oldSuc == 0) {
-                type = 0;
-            }
             throw new RuntimeException("requeueCard() failed. Counts: " + 
                     failedSoonCount + " " + revCount + " " + newCountToday + ", Queue: " +
-                    failedQueue.size() + " " + revQueue.size() + " " + newQueue.size() + " " + type);
+                    failedQueue.size() + " " + revQueue.size() + " " + newQueue.size() + ", Card info: " +
+                    card.reps + " " + card.successive + " " + oldSuc);
         }
     }
 
@@ -1137,11 +1134,11 @@ public class Deck {
     private void resetAfterReviewEarly() {
         // FIXME: Can ignore priorities in the future (following libanki)
         ArrayList<Long> ids = getDB().queryColumn(long.class,
-                "SELECT id FROM cards WHERE type IN (6,7,8) OR priority = -1", 0);
+                "SELECT id FROM cards WHERE type BETWEEN 6 AND 8 OR priority = -1", 0);
 
         if (ids != null) {
             updatePriorities(Utils.toPrimitive(ids));
-            getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type IN (6,7,8)", null);
+            getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8", null);
             flushMod();
         }
     }
@@ -1333,7 +1330,7 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillCramQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
-            String sql = "SELECT id, factId FROM cards WHERE type IN (0,1,2) ORDER BY " + cramOrder + " LIMIT "
+            String sql = "SELECT id, factId FROM cards WHERE type BETWEEN 0 AND 2 ORDER BY " + cramOrder + " LIMIT "
                     + queueLimit;
             Cursor cur = getDB().database.rawQuery(cardLimit(activeCramTags, sql), null);
             while (cur.moveToNext()) {
@@ -1346,7 +1343,7 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildCramCount() {
-        revCount = (int) getDB().queryScalar("SELECT count(*) FROM cards WHERE type IN (0,1,2)");
+        revCount = (int) getDB().queryScalar("SELECT count(*) FROM cards WHERE type BETWEEN 0 AND 2");
     }
 
 

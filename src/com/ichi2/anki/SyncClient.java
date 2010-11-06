@@ -1129,7 +1129,11 @@ public class SyncClient {
                     // tags
                     statement.bindString(5, fact.getString(4));
                     // spaceUntil
-                    statement.bindDouble(6, fact.getDouble(5));
+                    if (fact.getString(5) == null) {
+                        statement.bindString(6, "");
+                    } else {
+                        statement.bindString(6, fact.getString(5));
+                    }
                     // lastCardId
                     if (!fact.isNull(6)) {
                         statement.bindLong(7, fact.getLong(6));
@@ -1138,6 +1142,7 @@ public class SyncClient {
                     }
 
                     statement.execute();
+                    
                 }
                 statement.close();
 
