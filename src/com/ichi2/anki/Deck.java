@@ -536,7 +536,7 @@ public class Deck {
             commitToDB();
         }
         if (version < 48) {
-            updateFieldCache(Utils.toPrimitive(getDB().queryColumn(long.class, "SELECT id FROM facts", 0)));
+            updateFieldCache(Utils.toPrimitive(getDB().queryColumn(Long.class, "SELECT id FROM facts", 0)));
             version = 48;
             commitToDB();
         }
@@ -930,12 +930,8 @@ public class Deck {
         }
         scheduler = "standard";
         // Restore any cards temporarily suspended by alternate schedulers
-        try {
+        if (version == DECK_VERSION) {
             resetAfterReviewEarly();
-        } catch (Exception e) {
-            // Will fail if deck hasn't been upgraded yet
-            // FIXME: Using exceptions for flow control is bad practice
-            return;
         }
     }
 
@@ -1005,6 +1001,7 @@ public class Deck {
     private void _rebuildNewCount() {
         newCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive",
                 "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < " + dueCutoff));
+        updateNewCountToday();
     }
 
 
@@ -1261,7 +1258,7 @@ public class Deck {
                 "SELECT id FROM cards WHERE type BETWEEN 6 AND 8 OR priority = -1", 0);
 
         updatePriorities(Utils.toPrimitive(ids));
-        getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8", null);
+        getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8");
         flushMod();
     }
 
