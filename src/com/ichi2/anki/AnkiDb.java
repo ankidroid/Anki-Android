@@ -99,12 +99,11 @@ public class AnkiDb {
      * @return An ArrayList with the contents of the specified column.
      */
     public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
-        ArrayList<T> results = null;
+        ArrayList<T> results = new ArrayList<T>();;
         Cursor cursor = null;
 
         try {
             cursor = database.rawQuery(query, null);
-            results = new ArrayList<T>();
             String methodName = getCursorMethodName(type.getSimpleName());
             while (cursor.moveToFirst()) {
                 // The magical line. Almost as illegible as python code ;)

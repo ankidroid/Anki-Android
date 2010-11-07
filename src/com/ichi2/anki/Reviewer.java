@@ -90,7 +90,7 @@ public class Reviewer extends Activity {
     private static final int MENU_SEARCH = 4;
     private static final int MENU_MARK = 5;
 
-    /** Regex pattern used in removing tags from text before diff */
+    // Regex pattern used in removing tags from text before diff
     private static final Pattern spanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern brPattern = Pattern.compile("<br\\s?/?>");
 

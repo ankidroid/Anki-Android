@@ -49,6 +49,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.Deflater;
 
 /**
@@ -66,6 +68,8 @@ public class Utils {
     private static TreeSet<Integer> idTree;
     private static long idTime;
 
+    // Regex pattern used in removing tags from text before diff
+    private static final Pattern imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>");
 
     public static long genID() {
         long time = System.currentTimeMillis();
@@ -101,12 +105,14 @@ public class Utils {
      */
     public static String ids2str(long[] ids) {
         String str = "(";
-        int len = ids.length;
-        for (int i = 0; i < len; i++) {
-            if (i == (len - 1)) {
-                str += ids[i];
-            } else {
-                str += ids[i] + ",";
+        if (ids != null) {
+            int len = ids.length;
+            for (int i = 0; i < len; i++) {
+                if (i == (len - 1)) {
+                    str += ids[i];
+                } else {
+                    str += ids[i] + ",";
+                }
             }
         }
         str += ")";
@@ -120,16 +126,18 @@ public class Utils {
      */
     public static String ids2str(JSONArray ids) {
         String str = "(";
-        int len = ids.length();
-        for (int i = 0; i < len; i++) {
-            try {
-                if (i == (len - 1)) {
-                    str += ids.get(i);
-                } else {
-                    str += ids.get(i) + ",";
+        if (ids != null) {
+            int len = ids.length();
+            for (int i = 0; i < len; i++) {
+                try {
+                    if (i == (len - 1)) {
+                        str += ids.get(i);
+                    } else {
+                        str += ids.get(i) + ",";
+                    }
+                } catch (JSONException e) {
+                    Log.i(TAG, "JSONException = " + e.getMessage());
                 }
-            } catch (JSONException e) {
-                Log.i(TAG, "JSONException = " + e.getMessage());
             }
         }
         str += ")";
@@ -145,12 +153,14 @@ public class Utils {
      */
     public static String ids2str(List<String> ids) {
         String str = "(";
-        int len = ids.size();
-        for (int i = 0; i < len; i++) {
-            if (i == (len - 1)) {
-                str += ids.get(i);
-            } else {
-                str += ids.get(i) + ",";
+        if (ids != null) {
+            int len = ids.size();
+            for (int i = 0; i < len; i++) {
+                if (i == (len - 1)) {
+                    str += ids.get(i);
+                } else {
+                    str += ids.get(i) + ",";
+                }
             }
         }
         str += ")";
@@ -181,6 +191,19 @@ public class Utils {
         return list;
     }
 
+    /**
+     * Strip HTML but keep media filenames
+     */
+    public static String stripHTMLMedia(String s) {
+        Matcher imgMatcher = imgPattern.matcher(s);
+        return stripHTML(imgMatcher.replaceAll("$1"));
+    }
+    public static String stripHTML(String s) {
+        s.replaceAll("(?s)<style.*?>.*?</style>", "");
+        s.replaceAll("(?s)<script.*?>.*?</script>", "");
+        s.replaceAll("<.*?>", "");
+        return s;
+    }
 
     /**
      * Converts an InputStream to a String

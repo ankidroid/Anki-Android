@@ -64,6 +64,8 @@ public class Deck {
      **/
 
     // Rest
+    private static final int DECK_VERSION = 49;
+    
     private static final int MATURE_THRESHOLD = 21;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
@@ -313,7 +315,11 @@ public class Deck {
 
         deck.deckPath = path;
         deck.deckName = (new File(path)).getName().replace(".anki", "");
+        
         deck.initVars();
+        
+        // Upgrade to latest version
+        deck.upgradeDeck();
 
         double oldMod = deck.modified;
 
@@ -334,7 +340,7 @@ public class Deck {
         // Unsuspend buried/rev early - can remove priorities in the future
         ids = deck.getDB().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE type > 2 OR (priority BETWEEN -2 AND -1)", 0);
-        if ((ids != null) && (!ids.isEmpty())) {
+        if (!ids.isEmpty()) {
             deck.updatePriorities(Utils.toPrimitive(ids));
             deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type BETWEEN 3 AND 5");
             deck.getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8");
@@ -479,7 +485,127 @@ public class Deck {
         updateCutoff();
         setupStandardScheduler();
     }
-
+    
+    /**
+     * Upgrade deck to latest version
+     * 
+     * @return True if the upgrade is supported, false if the upgrade needs to be performed by Anki Desktop
+     */
+    private boolean upgradeDeck() {
+        // Oldest versions in existence are 31 as of 11/07/2010
+        // We support upgrading from 39 and up.
+        // Unsupported are about 135 decks, missing about 6% as of 11/07/2010
+        
+        if (version < 39) {
+            // Unsupported version
+            return false;
+        }
+        if (version < 40) {
+            // Now stores media url
+            getDB().database.execSQL("UPDATE models SET features = ''");
+            version = 40;
+            commitToDB();
+        }
+        // skip 41
+        if (version < 42) {
+            version = 42;
+            commitToDB();
+        }
+        if (version < 43) {
+            getDB().database.execSQL("UPDATE fieldModels SET features = ''");
+            version = 43;
+            commitToDB();
+        }
+        if (version < 44) {
+            // Leaner indices
+            getDB().database.execSQL("DROP INDEX IF EXISTS ix_cards_factId");
+            addIndices();
+            // Per-day scheduling necessitates an increase here
+            hardIntervalMin = 1.0;
+            hardIntervalMax = 1.1;
+            version = 44;
+            commitToDB();
+        }
+        if (version < 47) {
+            // Add an index for (type, combinedDue)
+            addIndices();
+            // Add new indices that exclude isDue - we'll clean up the old ones later
+            updateDynamicIndices();
+            getDB().database.execSQL("ANALYZE");
+            version = 47;
+            commitToDB();
+        }
+        if (version < 48) {
+            updateFieldCache(Utils.toPrimitive(getDB().queryColumn(long.class, "SELECT id FROM facts", 0)));
+            version = 48;
+            commitToDB();
+        }
+        if (version < 49) {
+            rebuildTypes();
+            version = 49;
+            commitToDB();
+        }
+        // Executing a pragma here is very slow on large decks, so we store our own record
+        if (getInt("pageSize") != 4096) {
+            commitToDB();
+            getDB().database.execSQL("PRAGMA page_size = 4096");
+            getDB().database.execSQL("PRAGMA legacy_file_format = 0");
+            getDB().database.execSQL("VACUUM");
+            setVar("pageSize", "4096", false);
+            commitToDB();
+        }
+        return true;
+    }
+    
+    /**
+     * Add indices to the DB.
+     */
+    private void addIndices() {
+        // Counts, failed cards
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cards_typeCombined ON cards (type, combinedDue)");
+        // Failed cards, review early
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cards_duePriority " +
+                "ON cards (type, isDue, combinedDue, priority)");
+        // Check due
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cards_priorityDue " +
+                "ON cards (type, isDue, priority, combinedDue)");
+        // Average factor
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cards_factor ON cards (type, factor)");
+        // Card spacing
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cards_factId ON cards (factId)");
+        // Stats
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_stats_typeDay ON stats (type, day)");
+        // Fields
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_fields_factId ON fields (factId)");
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_fields_fieldModelId ON fields (fieldModelId)");
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_fields_value ON fields (value)");
+        // Media
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_media_filename ON media (filename)");
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_media_originalPath ON media (originalPath)");
+        // Deletion tracking
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cardsDeleted_cardId ON cardsDeleted (cardId)");
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_modelsDeleted_modelId ON modelsDeleted (modelId)");
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_factsDeleted_factId ON factsDeleted (factId)");
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_mediaDeleted_factId ON mediaDeleted (mediaId)");
+        // Tags
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_tags_tag ON tags (tag)");
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_tagCard ON cardTags (tagId, cardId)");
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_cardId ON cardTags (cardId)");
+    }
+    
+    /*
+     * Add stripped HTML cache for sorting/searching.
+     * Currently needed as part of the upgradeDeck, the cache is not really used, yet.
+     */
+    private void updateFieldCache(long[] fids) {
+        Cursor cur = getDB().database.rawQuery("SELECT factId, group_concat(value, ' ') FROM fields " +
+                "WHERE factId IN " + Utils.ids2str(fids) + "GROUP BY factId" , null);
+        while (cur.moveToNext()) {
+            getDB().database.execSQL("UPDATE facts SET spaceUntil='" + 
+                    Utils.stripHTMLMedia(cur.getString(1)) + "' WHERE id =" + cur.getLong(0));
+        }
+        cur.close();
+    }
 
     private boolean modifiedSinceSave() {
         return modified > lastLoaded;
@@ -1134,11 +1260,9 @@ public class Deck {
         ArrayList<Long> ids = getDB().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE type BETWEEN 6 AND 8 OR priority = -1", 0);
 
-        if (ids != null) {
-            updatePriorities(Utils.toPrimitive(ids));
-            getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8", null);
-            flushMod();
-        }
+        updatePriorities(Utils.toPrimitive(ids));
+        getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8", null);
+        flushMod();
     }
 
 
@@ -2250,25 +2374,23 @@ public class Deck {
         // Create tag if necessary
         long tagId = tagId(tag, true);
 
-        if (factTagsList != null) {
-            for (int i = 0; i < factTagsList.size(); i++) {
-                String newTags = factTagsList.get(i);
-    
-                if (newTags.indexOf(tag) == -1) {
-                    if (newTags.length() == 0) {
-                        newTags += tag;
-                    } else {
-                        newTags += "," + tag;
-                    }
+        for (int i = 0; i < factTagsList.size(); i++) {
+            String newTags = factTagsList.get(i);
+
+            if (newTags.indexOf(tag) == -1) {
+                if (newTags.length() == 0) {
+                    newTags += tag;
+                } else {
+                    newTags += "," + tag;
                 }
-                Log.i(TAG, "old tags = " + factTagsList.get(i));
-                Log.i(TAG, "new tags = " + newTags);
-    
-                if (newTags.length() > factTagsList.get(i).length()) {
-                    getDB().database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
-                            + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
-                            + " where id = " + factIds[i]);
-                }
+            }
+            Log.i(TAG, "old tags = " + factTagsList.get(i));
+            Log.i(TAG, "new tags = " + newTags);
+
+            if (newTags.length() > factTagsList.get(i).length()) {
+                getDB().database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
+                        + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                        + " where id = " + factIds[i]);
             }
         }
 
@@ -2277,19 +2399,17 @@ public class Deck {
 
         ContentValues values = new ContentValues();
 
-        if (cardIdList != null) {
-            for (int i = 0; i < cardIdList.size(); i++) {
-                String cardId = cardIdList.get(i);
-                try {
-                    // Check if the tag already exists
-                    getDB().queryScalar("select id from cardTags" + " where cardId = " + cardId + " and tagId = " + tagId
-                            + " and src = 0");
-                } catch (SQLException e) {
-                    values.put("cardId", cardId);
-                    values.put("tagId", tagId);
-                    values.put("src", "0");
-                    getDB().database.insert("cardTags", null, values);
-                }
+        for (int i = 0; i < cardIdList.size(); i++) {
+            String cardId = cardIdList.get(i);
+            try {
+                // Check if the tag already exists
+                getDB().queryScalar("select id from cardTags" + " where cardId = " + cardId + " and tagId = " + tagId
+                        + " and src = 0");
+            } catch (SQLException e) {
+                values.put("cardId", cardId);
+                values.put("tagId", tagId);
+                values.put("src", "0");
+                getDB().database.insert("cardTags", null, values);
             }
         }
 
@@ -2309,45 +2429,41 @@ public class Deck {
 
         long tagId = tagId(tag, false);
 
-        if (factTagsList != null) {
-            for (int i = 0; i < factTagsList.size(); i++) {
-                String factTags = factTagsList.get(i);
-                String newTags = factTags;
-    
-                int tagIdx = factTags.indexOf(tag);
-                if ((tagIdx == 0) && (factTags.length() > tag.length())) {
-                    // tag is the first element of many, remove "tag,"
-                    newTags = factTags.substring(tag.length() + 1, factTags.length());
-                } else if ((tagIdx > 0) && (tagIdx + tag.length() == factTags.length())) {
-                    // tag is the last of many elements, remove ",tag"
-                    newTags = factTags.substring(0, tagIdx - 1);
-                } else if (tagIdx > 0) {
-                    // tag is enclosed between other elements, remove ",tag"
-                    newTags = factTags.substring(0, tagIdx - 1) + factTags.substring(tag.length(), factTags.length());
-                } else if (tagIdx == 0) {
-                    // tag is the only element
-                    newTags = "";
-                }
-                Log.i(TAG, "old tags = " + factTags);
-                Log.i(TAG, "new tags = " + newTags);
-    
-                if (newTags.length() < factTags.length()) {
-                    getDB().database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
-                            + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
-                            + " where id = " + factIds[i]);
-                }
+        for (int i = 0; i < factTagsList.size(); i++) {
+            String factTags = factTagsList.get(i);
+            String newTags = factTags;
+
+            int tagIdx = factTags.indexOf(tag);
+            if ((tagIdx == 0) && (factTags.length() > tag.length())) {
+                // tag is the first element of many, remove "tag,"
+                newTags = factTags.substring(tag.length() + 1, factTags.length());
+            } else if ((tagIdx > 0) && (tagIdx + tag.length() == factTags.length())) {
+                // tag is the last of many elements, remove ",tag"
+                newTags = factTags.substring(0, tagIdx - 1);
+            } else if (tagIdx > 0) {
+                // tag is enclosed between other elements, remove ",tag"
+                newTags = factTags.substring(0, tagIdx - 1) + factTags.substring(tag.length(), factTags.length());
+            } else if (tagIdx == 0) {
+                // tag is the only element
+                newTags = "";
+            }
+            Log.i(TAG, "old tags = " + factTags);
+            Log.i(TAG, "new tags = " + newTags);
+
+            if (newTags.length() < factTags.length()) {
+                getDB().database.execSQL("update facts set " + "tags = \"" + newTags + "\", " + "modified = "
+                        + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
+                        + " where id = " + factIds[i]);
             }
         }
 
         ArrayList<String> cardIdList = getDB().queryColumn(String.class, "select id from cards where factId in "
                 + Utils.ids2str(factIds), 0);
 
-        if (cardIdList != null) {
-            for (int i = 0; i < cardIdList.size(); i++) {
-                String cardId = cardIdList.get(i);
-                getDB().database.execSQL("delete from cardTags" + " WHERE cardId = " + cardId + " and tagId = " + tagId
-                        + " and src = 0");
-            }
+        for (int i = 0; i < cardIdList.size(); i++) {
+            String cardId = cardIdList.get(i);
+            getDB().database.execSQL("delete from cardTags" + " WHERE cardId = " + cardId + " and tagId = " + tagId
+                    + " and src = 0");
         }
 
         // delete unused tags from tags table
@@ -2516,7 +2632,7 @@ public class Deck {
         Cursor cursor = null;
         Log.i(TAG, "updatePriorities - Updating priorities...");
         // Any tags to suspend
-        if (suspend != null) {
+        if (suspend != null && suspend.length > 0) {
             long ids[] = Utils.toPrimitive(tagIds(suspend, false).values());
             getDB().database.execSQL("UPDATE tags SET priority = 0 WHERE id in " + Utils.ids2str(ids));
         }
@@ -2525,9 +2641,9 @@ public class Deck {
         if (cardIds.length <= 1000) {
             limit = "and cardTags.cardId in " + Utils.ids2str(cardIds);
         }
-        String query = "SELECT cardTags.cardId, " + "CASE " + "WHEN max(tags.priority) > 2 THEN max(tags.priority) "
-                + "WHEN min(tags.priority) = 1 THEN 1 " + "ELSE 2 END " + "FROM cardTags,tags "
-                + "WHERE cardTags.tagId = tags.id " + limit + " " + "GROUP BY cardTags.cardId";
+        String query = "SELECT cardTags.cardId, CASE WHEN max(tags.priority) > 2 THEN max(tags.priority) "
+                + "WHEN min(tags.priority) = 1 THEN 1 ELSE 2 END FROM cardTags,tags "
+                + "WHERE cardTags.tagId = tags.id " + limit + " GROUP BY cardTags.cardId";
         try {
             cursor = getDB().database.rawQuery(query, null);
             if (cursor.moveToFirst()) {
@@ -2657,16 +2773,14 @@ public class Deck {
 
             // Find out if this tags are used by anything else
             ArrayList<String> unusedTags = new ArrayList<String>();
-            if (tags != null) {
-                for (int i = 0; i < tags.size(); i++) {
-                    String tagId = tags.get(i);
-                    Cursor cursor = getDB().database.rawQuery("SELECT * FROM cardTags WHERE tagId = " + tagId + " LIMIT 1",
-                            null);
-                    if (!cursor.moveToFirst()) {
-                        unusedTags.add(tagId);
-                    }
-                    cursor.close();
+            for (int i = 0; i < tags.size(); i++) {
+                String tagId = tags.get(i);
+                Cursor cursor = getDB().database.rawQuery("SELECT * FROM cardTags WHERE tagId = " + tagId + " LIMIT 1",
+                        null);
+                if (!cursor.moveToFirst()) {
+                    unusedTags.add(tagId);
                 }
+                cursor.close();
             }
 
             // Delete unused tags
@@ -2719,7 +2833,7 @@ public class Deck {
         ArrayList<String> danglingFacts = getDB().queryColumn(String.class,
                 "SELECT facts.id FROM facts WHERE facts.id NOT IN (SELECT DISTINCT factId from cards)", 0);
 
-        if ((danglingFacts != null) && (danglingFacts.size() > 0)) {
+        if (danglingFacts.size() > 0) {
             deleteFacts(danglingFacts);
         }
 
@@ -2876,54 +2990,46 @@ public class Deck {
 
         ArrayList<String> tables = getDB().queryColumn(String.class,
                 "SELECT name FROM sqlite_master WHERE type = 'table'", 0);
-        if (tables != null) {
-            Iterator<String> iter = tables.iterator();
-            while (iter.hasNext()) {
-                String table = iter.next();
-                if (table.equals("undoLog") || table.equals("sqlite_stat1")) {
+        Iterator<String> iter = tables.iterator();
+        while (iter.hasNext()) {
+            String table = iter.next();
+            if (table.equals("undoLog") || table.equals("sqlite_stat1")) {
+                continue;
+            }
+            ArrayList<String> columns = getDB().queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
+            // Insert trigger
+            String sql = "CREATE TEMP TRIGGER _undo_%s_it " + "AFTER INSERT ON %s BEGIN "
+                    + "INSERT INTO undoLog VALUES " + "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
+            getDB().database.execSQL(String.format(ENGLISH_LOCALE, sql, table, table, table));
+            // Update trigger
+            sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " + "AFTER UPDATE ON %s BEGIN "
+                    + "INSERT INTO undoLog VALUES " + "(null, 'UPDATE %s ", table, table, table);
+            String sep = "SET ";
+            for (String column : columns) {
+                if (column.equals("unique")) {
                     continue;
                 }
-                ArrayList<String> columns = getDB().queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
-                // Insert trigger
-                String sql = "CREATE TEMP TRIGGER _undo_%s_it " + "AFTER INSERT ON %s BEGIN "
-                        + "INSERT INTO undoLog VALUES " + "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
-                getDB().database.execSQL(String.format(ENGLISH_LOCALE, sql, table, table, table));
-                // Update trigger
-                sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " + "AFTER UPDATE ON %s BEGIN "
-                        + "INSERT INTO undoLog VALUES " + "(null, 'UPDATE %s ", table, table, table);
-                String sep = "SET ";
-                if (columns != null) {
-                    for (String column : columns) {
-                        if (column.equals("unique")) {
-                            continue;
-                        }
-                        sql += String.format(ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
-                        sep = ",";
-                    }
-                }
-                sql += "WHERE rowid = ' || old.rowid); END";
-                getDB().database.execSQL(sql);
-                // Delete trigger
-                sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " + "BEFORE DELETE ON %s BEGIN "
-                        + "INSERT INTO undoLog VALUES " + "(null, 'INSERT INTO %s (rowid", table, table, table);
-                if (columns != null) {
-                    for (String column : columns) {
-                        sql += String.format(ENGLISH_LOCALE, ",\"%s\"", column);
-                    }
-                }
-                sql += ") VALUES (' || old.rowid ||'";
-                if (columns != null) {
-                    for (String column : columns) {
-                        if (column.equals("unique")) {
-                            sql += ",1";
-                            continue;
-                        }
-                        sql += String.format(ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column);
-                    }
-                }
-                sql += ")'); END";
-                getDB().database.execSQL(sql);
+                sql += String.format(ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
+                sep = ",";
             }
+            sql += "WHERE rowid = ' || old.rowid); END";
+            getDB().database.execSQL(sql);
+            // Delete trigger
+            sql = String.format(ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " + "BEFORE DELETE ON %s BEGIN "
+                    + "INSERT INTO undoLog VALUES " + "(null, 'INSERT INTO %s (rowid", table, table, table);
+            for (String column : columns) {
+                sql += String.format(ENGLISH_LOCALE, ",\"%s\"", column);
+            }
+            sql += ") VALUES (' || old.rowid ||'";
+            for (String column : columns) {
+                if (column.equals("unique")) {
+                    sql += ",1";
+                    continue;
+                }
+                sql += String.format(ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column);
+            }
+            sql += ")'); END";
+            getDB().database.execSQL(sql);
         }
     }
 
@@ -3010,10 +3116,8 @@ public class Deck {
         ArrayList<String> sql = getDB().queryColumn(String.class, String.format(ENGLISH_LOCALE,
                 "SELECT sql FROM undoLog " + "WHERE seq > %d and seq <= %d " + "ORDER BY seq DESC", start, end), 0);
         Long newstart = latestUndoRow();
-        if (sql != null) {
-            for (String s : sql) {
-                getDB().database.execSQL(s);
-            }
+        for (String s : sql) {
+            getDB().database.execSQL(s);
         }
 
         Long newend = latestUndoRow();
