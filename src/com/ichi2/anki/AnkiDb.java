@@ -23,6 +23,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -103,13 +104,12 @@ public class AnkiDb {
 
         try {
             cursor = database.rawQuery(query, null);
-            cursor.moveToFirst();
+            results = new ArrayList<T>();
             String methodName = getCursorMethodName(type.getSimpleName());
-            do {
+            while (cursor.moveToFirst()) {
                 // The magical line. Almost as illegible as python code ;)
-                results = new ArrayList<T>();
                 results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
-            } while (cursor.moveToNext());
+            }
         } catch (NoSuchMethodException e) {
             // This is really coding error, so it should be revealed if it ever happens
             throw new RuntimeException(e);
@@ -119,11 +119,8 @@ public class AnkiDb {
         } catch (IllegalAccessException e) {
             // This is really coding error, so it should be revealed if it ever happens
             throw new RuntimeException(e);
-        } catch (Exception e) {
-            Log.e(TAG, "queryColumn: Got Exception: " + e.getMessage());
-            // There was no results and therefore the invocation of the correspondent method with cursor null raises an
-            // exception
-            // Just return results empty
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -141,6 +138,7 @@ public class AnkiDb {
      * @return The name of the Cursor method to be called.
      */
     private static String getCursorMethodName(String typeName) {
+        Log.d(TAG, "Type name: " + typeName);
         if (typeName.equals("String")) {
             return "getString";
         } else if (typeName.equals("Long")) {

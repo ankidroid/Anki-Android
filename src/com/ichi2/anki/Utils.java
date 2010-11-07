@@ -476,7 +476,11 @@ public class Utils {
      * @return An array of Strings containing the individual tags 
      */
     public static String[] parseTags(String tags) {
-        return tags.split(" +|, *");
+        if (tags != null && tags.length() != 0) {
+            return tags.split(" +|, *");
+        } else {
+            return new String[] {};
+        }
     }
     
     /**

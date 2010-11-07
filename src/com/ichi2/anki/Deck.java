@@ -322,23 +322,22 @@ public class Deck {
 
         // FIXME: Temporary code for upgrade - ensure cards suspended on older clients are recognized
         // Ensure cards suspended on older clients are recognized
-        deck.getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE type BETWEEN 0 AND 2 AND priority = -3",
-                null);
+        deck.getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE type BETWEEN 0 AND 2 AND priority = -3");
 
         // Ensure hard scheduling over a day if per day
-        if (deck.deckVars.getBool("perDay")) {
+        if (deck.getBool("perDay")) {
             deck.hardIntervalMin = Math.max(1.0, deck.hardIntervalMin);
             deck.hardIntervalMax = Math.max(1.1, deck.hardIntervalMax);
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();
         // Unsuspend buried/rev early - can remove priorities in the future
-        ids = deck.getDB().queryColumn(long.class,
-                "SELECT id FROM cards WHERE type > 2 OR priority BETWEEN -2 AND -1", 0);
+        ids = deck.getDB().queryColumn(Long.class,
+                "SELECT id FROM cards WHERE type > 2 OR (priority BETWEEN -2 AND -1)", 0);
         if ((ids != null) && (!ids.isEmpty())) {
             deck.updatePriorities(Utils.toPrimitive(ids));
-            deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type BETWEEN 3 AND 5", null);
-            deck.getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8", null);
+            deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type BETWEEN 3 AND 5");
+            deck.getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8");
             // Save deck to database
             deck.commitToDB();
         }
@@ -370,8 +369,8 @@ public class Deck {
         assert deck.modified == oldMod;
         // Create a temporary view for random new cards. Randomizing the cards by themselves
         // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
-        deck.getDB().database.execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS " + "SELECT * FROM cards "
-                + "WHERE type = 2 AND isDue = 1 " + "ORDER BY RANDOM()");
+        deck.getDB().database.execSQL("CREATE TEMPORARY VIEW acqCardsRandom AS SELECT * FROM cards "
+                + "WHERE type = 2 AND isDue = 1 ORDER BY RANDOM()");
 
         return deck;
     }
@@ -386,77 +385,75 @@ public class Deck {
     }
 
     /**
-     * deckVars class
+     * deckVars methods
      */
-    private class DeckVars {
-        AnkiDb mDB;
+    public boolean hasKey(String key) {
+        return getDB().database.rawQuery("SELECT 1 FROM deckVars WHERE key = '" + key + "'", null).moveToNext();
+    }
 
 
-        public DeckVars(String path) {
-            mDB = AnkiDatabaseManager.getDatabase(path);
-        }
-
-
-        public boolean hasKey(String key) {
-            return mDB.database.rawQuery("SELECT 1 FROM deckVars WHERE key = '" + key + "'", null).moveToNext();
-        }
-
-
-        public int getInt(String key) throws SQLException {
-            Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.moveToFirst()) {
-                return cur.getInt(0);
-            } else {
-                throw new SQLException("DeckVars.getInt: could not retrieve value for " + key);
-            }
-        }
-
-
-        public boolean getBool(String key) {
-            Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.isFirst()) {
-                return (cur.getInt(0) != 0);
-            }
-            return false;
-        }
-
-
-        public String getVar(String key) {
-            Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.isFirst()) {
-                return cur.getString(0);
-            }
-            return null;
-        }
-
-
-        public void setVar(String key, String value) {
-            setVar(key, value, true);
-        }
-
-
-        public void setVar(String key, String value, boolean mod) {
-            Cursor cur = mDB.database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.isFirst()) {
-                if (cur.getString(0).equals(value)) {
-                    return;
-                } else {
-                    mDB.database.execSQL("update deckVars set value='" + value + "' where key = '" + key + "'", null);
-                }
-            } else {
-                mDB.database.execSQL("insert into deckVars (key, value) values ('" + value + "', '" + key + "')", null);
-            }
-        }
-
-
-        public void setVarDefault(String key, String value) {
-            if (!hasKey(key)) {
-                mDB.database.execSQL("INSERT INTO deckVars (key, value) values ('" + key + "', '" + value + "')");
-            }
+    public int getInt(String key) throws SQLException {
+        Cursor cur = getDB().database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+        if (cur.moveToFirst()) {
+            return cur.getInt(0);
+        } else {
+            throw new SQLException("DeckVars.getInt: could not retrieve value for " + key);
         }
     }
 
-    private DeckVars deckVars;
+
+    public boolean getBool(String key) {
+        Cursor cur = getDB().database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+        if (cur.moveToFirst()) {
+            return (cur.getInt(0) != 0);
+        }
+        return false;
+    }
+
+
+    public String getVar(String key) {
+        Cursor cur = null;
+        try {
+            cur = getDB().database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+            if (cur.moveToFirst()) {
+                return cur.getString(0);
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "getVar: " + e.toString());
+            throw new RuntimeException(e);
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        return null;
+    }
+
+
+    public void setVar(String key, String value) {
+        setVar(key, value, true);
+    }
+
+
+    public void setVar(String key, String value, boolean mod) {
+        Cursor cur = getDB().database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+        if (cur.isFirst()) {
+            if (cur.getString(0).equals(value)) {
+                return;
+            } else {
+                getDB().database.execSQL("update deckVars set value='" + value + "' where key = '" + key + "'", null);
+            }
+        } else {
+            getDB().database.execSQL("insert into deckVars (key, value) values ('" + value + "', '" + key + "')", null);
+        }
+    }
+
+
+    public void setVarDefault(String key, String value) {
+        if (!hasKey(key)) {
+            getDB().database.execSQL("INSERT INTO deckVars (key, value) values ('" + key + "', '" + value + "')");
+        }
+    }
 
 
     private void initVars() {
@@ -470,15 +467,14 @@ public class Deck {
         // lastSessionStart = 0;
         queueLimit = 200;
         // If most recent deck var not defined, make sure defaults are set
-        deckVars = new DeckVars(deckPath);
-        if (!deckVars.hasKey("revInactive")) {
-            deckVars.setVarDefault("suspendLeeches", "1");
-            deckVars.setVarDefault("leechFails", "16");
-            deckVars.setVarDefault("perDay", "1");
-            deckVars.setVarDefault("newActive", "");
-            deckVars.setVarDefault("revActive", "");
-            deckVars.setVarDefault("newInactive", suspended);
-            deckVars.setVarDefault("revInactive", suspended);
+        if (!hasKey("revInactive")) {
+            setVarDefault("suspendLeeches", "1");
+            setVarDefault("leechFails", "16");
+            setVarDefault("perDay", "1");
+            setVarDefault("newActive", "");
+            setVarDefault("revActive", "");
+            setVarDefault("newInactive", suspended);
+            setVarDefault("revInactive", suspended);
         }
         updateCutoff();
         setupStandardScheduler();
@@ -550,7 +546,7 @@ public class Deck {
 
     private long getCardId() {
         try {
-            return ((Long) getCardIdMethod.invoke(true)).longValue();
+            return ((Long) getCardIdMethod.invoke(Deck.this, true)).longValue();
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -563,7 +559,7 @@ public class Deck {
 
     private long getCardId(boolean check) {
         try {
-            return ((Long) getCardIdMethod.invoke(check)).longValue();
+            return ((Long) getCardIdMethod.invoke(Deck.this, check)).longValue();
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -576,7 +572,8 @@ public class Deck {
 
     private void fillFailedQueue() {
         try {
-            fillFailedQueueMethod.invoke(null);
+            fillFailedQueueMethod.invoke(Deck.this);
+            Log.e(TAG, "made it!");
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -589,7 +586,7 @@ public class Deck {
 
     private void fillRevQueue() {
         try {
-            fillRevQueueMethod.invoke(null);
+            fillRevQueueMethod.invoke(Deck.this);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -602,7 +599,7 @@ public class Deck {
 
     private void fillNewQueue() {
         try {
-            fillNewQueueMethod.invoke(null);
+            fillNewQueueMethod.invoke(Deck.this);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -615,7 +612,8 @@ public class Deck {
 
     private void rebuildFailedCount() {
         try {
-            rebuildFailedCountMethod.invoke(null);
+            rebuildFailedCountMethod.invoke(Deck.this);
+            Log.e(TAG, "aaaaa");
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -628,7 +626,7 @@ public class Deck {
 
     private void rebuildRevCount() {
         try {
-            rebuildRevCountMethod.invoke(null);
+            rebuildRevCountMethod.invoke(Deck.this);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -641,7 +639,7 @@ public class Deck {
 
     private void rebuildNewCount() {
         try {
-            rebuildNewCountMethod.invoke(null);
+            rebuildNewCountMethod.invoke(Deck.this);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -654,7 +652,7 @@ public class Deck {
 
     private void requeueCard(Card card, int oldSuc) {
         try {
-            requeueCardMethod.invoke(card, oldSuc);
+            requeueCardMethod.invoke(Deck.this, card, oldSuc);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -667,7 +665,7 @@ public class Deck {
 
     private boolean timeForNewCard() {
         try {
-            return ((Boolean) timeForNewCardMethod.invoke(null)).booleanValue();
+            return ((Boolean) timeForNewCardMethod.invoke(Deck.this)).booleanValue();
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -680,7 +678,7 @@ public class Deck {
 
     private void updateNewCountToday() {
         try {
-            updateNewCountTodayMethod.invoke(null);
+            updateNewCountTodayMethod.invoke(Deck.this);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -693,7 +691,7 @@ public class Deck {
 
     private int cardQueue(Card card) {
         try {
-            return ((Integer) cardQueueMethod.invoke(card)).intValue();
+            return ((Integer) cardQueueMethod.invoke(Deck.this, card)).intValue();
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -706,7 +704,7 @@ public class Deck {
 
     private void finishScheduler() {
         try {
-            finishSchedulerMethod.invoke(null);
+            finishSchedulerMethod.invoke(Deck.this);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -719,7 +717,7 @@ public class Deck {
 
     public void answerCard(Card card, int ease) {
         try {
-            answerCardMethod.invoke(card, ease);
+            answerCardMethod.invoke(Deck.this, card, ease);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -732,7 +730,7 @@ public class Deck {
 
     private String cardLimit(String active, String inactive, String sql) {
         try {
-            return ((String) cardLimitMethod.invoke(active, inactive, sql));
+            return ((String) cardLimitMethod.invoke(Deck.this, active, inactive, sql));
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -745,7 +743,7 @@ public class Deck {
 
     private String cardLimit(String[] active, String sql) {
         try {
-            return ((String) cardLimitMethod.invoke(active, sql));
+            return ((String) cardLimitMethod.invoke(Deck.this, active, sql));
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -758,7 +756,7 @@ public class Deck {
 
     private void answerPreSave(Card card, int ease) {
         try {
-            answerPreSaveMethod.invoke(card, ease);
+            answerPreSaveMethod.invoke(Deck.this, card, ease);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -770,7 +768,7 @@ public class Deck {
 
     private void spaceCards(Card card, double space) {
         try {
-            spaceCardsMethod.invoke(card, space);
+            spaceCardsMethod.invoke(Deck.this, card, space);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -846,8 +844,8 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private String _cardLimit(String active, String inactive, String sql) {
-        String[] yes = Utils.parseTags(deckVars.getVar(active));
-        String[] no = Utils.parseTags(deckVars.getVar(inactive));
+        String[] yes = Utils.parseTags(getVar(active));
+        String[] no = Utils.parseTags(getVar(inactive));
         if (yes.length > 0) {
             long yids[] = Utils.toPrimitive(tagIds(yes).values());
             long nids[] = Utils.toPrimitive(tagIds(no).values());
@@ -939,7 +937,7 @@ public class Deck {
                 return true;
             }
             try {
-                fillFunc.invoke(null);
+                fillFunc.invoke(Deck.this);
             } catch (Exception e) {
                 Log.e(TAG, "queueNotEmpty: Error while invoking overridable fill method:" + e.toString());
                 return false;
@@ -1048,7 +1046,7 @@ public class Deck {
 
 
     private void updateCutoff() {
-        if (deckVars.getBool("perDay")) {
+        if (getBool("perDay")) {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.SECOND, (int) -utcOffset + SECS_IN_ONE_DAY);
             cal.set(Calendar.HOUR, 0); // Yes, verbose but crystal clear
@@ -1133,7 +1131,7 @@ public class Deck {
 
     private void resetAfterReviewEarly() {
         // FIXME: Can ignore priorities in the future (following libanki)
-        ArrayList<Long> ids = getDB().queryColumn(long.class,
+        ArrayList<Long> ids = getDB().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE type BETWEEN 6 AND 8 OR priority = -1", 0);
 
         if (ids != null) {
@@ -1841,6 +1839,7 @@ public class Deck {
         card.due = nextDue(card, ease, oldState);
         card.isDue = 0;
         card.lastFactor = card.factor;
+        card.spaceUntil = 0;
         if (lastDelay >= 0) {
             updateFactor(card, ease); // don't update factor if learning ahead
         }
@@ -1861,8 +1860,9 @@ public class Deck {
 
         // card stats
         card.updateStats(ease, oldState);
-        // Update type
+        // Update type & ensure past cutoff
         card.type = cardType(card);
+        card.due = Math.max(card.due, dueCutoff+1);
 
         // Allow custom schedulers to munge the card
         if (answerPreSaveMethod != null) {
@@ -1976,7 +1976,7 @@ public class Deck {
         int no = card.noCount;
         int fmax = 0;
         try {
-            fmax = deckVars.getInt("leechFails");
+            fmax = getInt("leechFails");
         } catch (SQLException e) {
             // No leech threshold found in DeckVars
             return false;
@@ -2001,7 +2001,7 @@ public class Deck {
         scard.getFact().setModified(true);
         updateFactTags(new long[] {scard.fact.id});
         scard.toDB();
-        if (deckVars.getBool("suspendLeeches")) {
+        if (getBool("suspendLeeches")) {
             suspendCards(new long[]{card.id});
         }
     }
@@ -2178,7 +2178,7 @@ public class Deck {
      *******************************/
     
     public void updateFactTags(long[] factIds) {
-        updateCardTags(Utils.toPrimitive(getDB().queryColumn(long.class,
+        updateCardTags(Utils.toPrimitive(getDB().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE factId IN " + Utils.ids2str(factIds), 0)));
     }
     
@@ -2195,7 +2195,7 @@ public class Deck {
             rows = splitTagsList();
         } else {
             getDB().database.execSQL("DELETE FROM cardTags WHERE cardId IN " + Utils.ids2str(cardIds));
-            String fids = Utils.ids2str(Utils.toPrimitive(getDB().queryColumn(long.class,
+            String fids = Utils.ids2str(Utils.toPrimitive(getDB().queryColumn(Long.class,
                             "SELECT factId FROM cards WHERE id IN " + Utils.ids2str(cardIds), 0)));
             tids = tagIds(allTags_("WHERE id IN " + fids));
             rows = splitTagsList("AND facts.id IN " + fids);
@@ -2433,7 +2433,7 @@ public class Deck {
                     cur.close();
                 }
             }
-            ArrayList<Long> cids = getDB().queryColumn(long.class,
+            ArrayList<Long> cids = getDB().queryColumn(Long.class,
                     "SELECT DISTINCT cardId FROM cardTags WHERE tagId in " +
                     Utils.ids2str(Utils.toPrimitive(newPriorities.keySet())), 0);
             updatePriorities(Utils.toPrimitive(cids), null, dirty);
