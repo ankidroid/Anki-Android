@@ -66,7 +66,7 @@ public class Model {
     private String mTags = "";
     private String mName;
     private String mDescription = "";
-    private String mFeatures = ""; // obsolete
+    private String mFeatures = ""; // used as the media url
     private double mSpacing = 0.1;
     private double mInitialSpacing = 60;
     private int mSource = 0;
@@ -374,6 +374,10 @@ public class Model {
      */
     public String getName() {
         return mName;
+    }
+    
+    public String getFeatures() {
+    	return mFeatures;
     }
 
 }

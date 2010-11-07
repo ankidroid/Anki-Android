@@ -966,19 +966,23 @@ public class Reviewer extends Activity {
             content = RubyParser.ankiRubyToMarkup(content);
         }
 
+        String baseUrl = "";
         // Add CSS for font color and font size
         if (mCurrentCard != null) {
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
+            baseUrl = Utils.getBaseUrl(myModel, mDeckFilename);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize) + content;
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
+            baseUrl = "file://" + mDeckFilename.replace(".anki", ".media/");
         }
 
         // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         String card = mCardTemplate.replace("::content::", content);
         Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
-        mCard.loadDataWithBaseURL("file://" + mDeckFilename.replace(".anki", ".media/"), card, "text/html", "utf-8",
+        Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
+        mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8",
                 null);
 
         Sound.playSounds();
