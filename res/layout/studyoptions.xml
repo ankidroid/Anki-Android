@@ -5,7 +5,7 @@
 	android:layout_height="wrap_content"
 	android:paddingRight="10dip"
 	android:paddingLeft="10dip"
-	android:layout_gravity="center"
+	android:gravity="center"
 	android:orientation="vertical">
 	
 	<TextView android:id="@+id/studyoptions_deck_name"
