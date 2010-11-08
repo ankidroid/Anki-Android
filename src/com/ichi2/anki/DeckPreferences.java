@@ -236,7 +236,7 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
             mPref = new DeckPreferenceHack();
             mPref.registerOnSharedPreferenceChangeListener(this);
 
-            this.addPreferencesFromResource(R.layout.deck_preferences);
+            this.addPreferencesFromResource(R.xml.deck_preferences);
             // this.updateSummaries();
         }
     }
