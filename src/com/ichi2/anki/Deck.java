@@ -605,9 +605,13 @@ public class Deck {
             cur = getDB().database.rawQuery("SELECT factId, group_concat(value, ' ') FROM fields " +
                 "WHERE factId IN " + Utils.ids2str(fids) + " GROUP BY factId" , null);
             while (cur.moveToNext()) {
-                String stripped = Utils.stripHTMLMedia(cur.getString(1));
-                // TODO: strip space if first char
-                r.put(cur.getLong(0), stripped);
+                String values = cur.getString(1);
+                if (values.charAt(0) == ' ') {
+                    // Fix for a slight difference between how Android SQLite and python sqlite work.
+                    // Inconsequential difference in this context, but messes up any effort for automated testing.
+                    values = values.substring(1);
+                }
+                r.put(cur.getLong(0), Utils.stripHTMLMedia(values));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -1237,7 +1241,7 @@ public class Deck {
             newCardModulus = 0;
         }
         // TODO: Recache css
-        // rebuildCSS();
+        rebuildCSS();
     }
 
 
@@ -2981,6 +2985,33 @@ public class Deck {
 
         flushMod();
     }
+
+    private void rebuildCSS() {
+
+    }
+    private String _genCSS(String prefix, List<String> row) {
+        String t = "";
+        String fam = row.getString(1);
+        int siz = row.getInt(2);
+        String col = row.getString(3);
+        int align = row.getInt(4);
+        String rtl = row.getString(5);
+        if (fam != null) {
+            t += "font-family:\"" + toPlatformFont(fam) + "\";";
+        }
+        if (siz != null) {
+            t += "font-size:" + siz + "px;";
+        }
+        if (col != null) {
+
+        }
+
+
+    }
+
+
+
+
 
     /*
      * Undo/Redo*********************************************************
