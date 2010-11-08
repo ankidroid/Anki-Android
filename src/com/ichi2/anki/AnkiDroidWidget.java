@@ -139,7 +139,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             Log.i(AnkiDroidApp.TAG, "buildUpdate");
 
             // Resources res = context.getResources();
-            RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.ankidroid_widget_view);
+            RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
             Deck currentDeck = AnkiDroidApp.deck();
 
             if (!AnkiDroidApp.isSdCardMounted()) {

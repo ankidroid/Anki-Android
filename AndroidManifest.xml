@@ -78,7 +78,7 @@
 			<intent-filter>
 			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
-			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_ankidroid" />
+			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider" />
 		</receiver>
 	
 		<!-- Service to perform web API queries -->

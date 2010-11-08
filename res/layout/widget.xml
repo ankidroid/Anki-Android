@@ -16,5 +16,6 @@
         android:ellipsize="end"
         android:textColor="#000000"
         android:lines="3"
+        android:text="Widget Loading"
         />
 </RelativeLayout>
