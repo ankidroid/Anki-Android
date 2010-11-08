@@ -606,6 +606,7 @@ public class Deck {
                 "WHERE factId IN " + Utils.ids2str(fids) + " GROUP BY factId" , null);
             while (cur.moveToNext()) {
                 String stripped = Utils.stripHTMLMedia(cur.getString(1));
+                // TODO: strip space if first char
                 r.put(cur.getLong(0), stripped);
             }
         } catch (SQLException e) {
@@ -1235,7 +1236,7 @@ public class Deck {
         } else {
             newCardModulus = 0;
         }
-        // Recache css
+        // TODO: Recache css
         // rebuildCSS();
     }
 
