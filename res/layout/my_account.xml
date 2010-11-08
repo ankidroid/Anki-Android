@@ -43,7 +43,7 @@
 		android:layout_marginTop="20dp">
 		
 		<TextView android:id="@+id/no_account_text"
-			android:layout_width="wrap_content"
+			android:layout_width="0dip"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
 			android:layout_weight="2"

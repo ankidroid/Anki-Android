@@ -14,20 +14,18 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="@string/pref_cat_sync">
 
-	<PreferenceCategory android:title="@string/pref_cat_sync">
-		<CheckBoxPreference
-			android:title="@string/sync_on"
-			android:defaultValue="false"
-			android:disableDependentsState="false"
-			android:key="isSyncOn" />
-			
-		<EditTextPreference
-			android:title="@string/sync_name"
-			android:defaultValue=""
-			android:dependency="isSyncOn"
-			android:key="syncName" />
-	</PreferenceCategory>
-	
-</PreferenceScreen>
+	<CheckBoxPreference
+		android:title="@string/sync_on"
+		android:defaultValue="false"
+		android:disableDependentsState="false"
+		android:key="isSyncOn" />
+		
+	<EditTextPreference
+		android:title="@string/sync_name"
+		android:defaultValue=""
+		android:dependency="isSyncOn"
+		android:key="syncName" />
+</PreferenceCategory>

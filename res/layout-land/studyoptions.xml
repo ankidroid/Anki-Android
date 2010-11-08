@@ -1,176 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
 	
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:paddingRight="10dip"
+	android:paddingLeft="10dip"
+	android:layout_gravity="center"
+	android:orientation="vertical">
+	
+	<TextView android:id="@+id/studyoptions_deck_name"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:lines="1"
+		android:ellipsize="end"
+		android:text="@string/studyoptions_deck_name"
+		android:textColor="#ffffff"
+		android:textSize="26sp"
+		android:textStyle="bold" />
+
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:paddingRight="10dip"
-		android:paddingLeft="10dip"
-		android:layout_gravity="center"
-		android:orientation="vertical">
-		
-		<TextView android:id="@+id/studyoptions_deck_name"
-			android:layout_width="fill_parent"
+		android:layout_marginTop="5dip"
+		android:layout_marginBottom="5dip"
+		android:gravity="center"
+		android:orientation="horizontal">
+
+		<TextView android:id="@+id/studyoptions_title"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:lines="1"
-			android:ellipsize="end"
-			android:text="@string/studyoptions_deck_name"
+			android:layout_marginRight="60dip"
+			android:text="@string/studyoptions_title"
 			android:textColor="#ffffff"
-			android:textSize="26sp"
+			android:textSize="26dip"
 			android:textStyle="bold" />
-
+		
 		<LinearLayout
-			android:layout_width="fill_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="5dip"
-			android:layout_marginBottom="5dip"
-			android:gravity="center"
-			android:orientation="horizontal">
-
-			<TextView android:id="@+id/studyoptions_title"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginRight="60dip"
-				android:text="@string/studyoptions_title"
-				android:textColor="#ffffff"
-				android:textSize="26dip"
-				android:textStyle="bold" />
-			
+			android:orientation="vertical">
 			<LinearLayout
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:orientation="vertical">
-				<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/studyoptions_reviews_due"
+					android:textColor="#ffffff"/>
+				<TextView android:id="@+id/studyoptions_reviews_due"
 					android:layout_width="fill_parent"
-					android:layout_height="wrap_content">
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/studyoptions_reviews_due"
-						android:textColor="#ffffff"/>
-					<TextView android:id="@+id/studyoptions_reviews_due"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginLeft="10dip"
-						android:gravity="right"
-						android:text="99999"
-						android:textColor="#ffffff"/>
-				</LinearLayout>
-				<LinearLayout
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content">
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/studyoptions_new_today"
-						android:textColor="#ffffff"/>
-					<TextView android:id="@+id/studyoptions_new_today"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginLeft="10dip"
-						android:gravity="right"
-						android:text="99999"
-						android:textColor="#ffffff"/>
-				</LinearLayout>
-				<LinearLayout
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content">
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/studyoptions_new_total"
-						android:textColor="#ffffff"/>
-					<TextView android:id="@+id/studyoptions_new_total"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginLeft="10dip"
-						android:gravity="right"
-						android:text="99999"
-						android:textColor="#ffffff"/>
-				</LinearLayout>
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dip"
+					android:gravity="right"
+					android:text="99999"
+					android:textColor="#ffffff"/>
 			</LinearLayout>
-
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/studyoptions_new_today"
+					android:textColor="#ffffff"/>
+				<TextView android:id="@+id/studyoptions_new_today"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dip"
+					android:gravity="right"
+					android:text="99999"
+					android:textColor="#ffffff"/>
+			</LinearLayout>
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/studyoptions_new_total"
+					android:textColor="#ffffff"/>
+				<TextView android:id="@+id/studyoptions_new_total"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dip"
+					android:gravity="right"
+					android:text="99999"
+					android:textColor="#ffffff"/>
+			</LinearLayout>
 		</LinearLayout>
 
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal">
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:text="@string/studyoptions_new_cards_per_day"
-				android:textSize="14dip"/>
-			<EditText android:id="@+id/studyoptions_new_cards_per_day"
-				android:layout_width="fill_parent"
-				android:layout_height="38dip"
-				android:layout_weight="3"
-				android:gravity="center"
-				android:inputType="number"
-				android:lines="1"
-				android:text="50"
-				android:textSize="14dip"/>
-		</LinearLayout>
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal">
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:text="@string/studyoptions_session_minutes"
-				android:textSize="14dip"/>
-			<EditText android:id="@+id/studyoptions_session_minutes"
-				android:layout_width="fill_parent"
-				android:layout_height="38dip"
-				android:layout_weight="3"
-				android:gravity="center"
-				android:inputType="number"
-				android:lines="1"
-				android:text="10"
-				android:textSize="14dip"/>
-		</LinearLayout>
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal">
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:text="@string/studyoptions_session_questions"
-				android:textSize="14dip"/>
-			<EditText android:id="@+id/studyoptions_session_questions"
-				android:layout_width="fill_parent"
-				android:layout_height="38dip"
-				android:layout_weight="3"
-				android:gravity="center"
-				android:inputType="number"
-				android:lines="1"
-				android:text="30"
-				android:textSize="14dip"/>
-		</LinearLayout>
-
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<Button android:id="@+id/studyoptions_start"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="1" 
-				android:text="@string/studyoptions_start"
-				android:drawableLeft="@drawable/chronometer"/>
-			<Button android:id="@+id/studyoptions_more" 
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="3"
-					android:text="@string/studyoptions_more"/>
-		</LinearLayout>
 	</LinearLayout>
-	
-</FrameLayout>
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/studyoptions_new_cards_per_day"
+			android:textSize="14dip"/>
+		<EditText android:id="@+id/studyoptions_new_cards_per_day"
+			android:layout_width="fill_parent"
+			android:layout_height="38dip"
+			android:layout_weight="3"
+			android:gravity="center"
+			android:inputType="number"
+			android:lines="1"
+			android:text="50"
+			android:textSize="14dip"/>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/studyoptions_session_minutes"
+			android:textSize="14dip"/>
+		<EditText android:id="@+id/studyoptions_session_minutes"
+			android:layout_width="fill_parent"
+			android:layout_height="38dip"
+			android:layout_weight="3"
+			android:gravity="center"
+			android:inputType="number"
+			android:lines="1"
+			android:text="10"
+			android:textSize="14dip"/>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/studyoptions_session_questions"
+			android:textSize="14dip"/>
+		<EditText android:id="@+id/studyoptions_session_questions"
+			android:layout_width="fill_parent"
+			android:layout_height="38dip"
+			android:layout_weight="3"
+			android:gravity="center"
+			android:inputType="number"
+			android:lines="1"
+			android:text="30"
+			android:textSize="14dip"/>
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<Button android:id="@+id/studyoptions_start"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1" 
+			android:text="@string/studyoptions_start"
+			android:drawableLeft="@drawable/chronometer"/>
+		<Button android:id="@+id/studyoptions_more" 
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="3"
+				android:text="@string/studyoptions_more"/>
+	</LinearLayout>
+</LinearLayout>

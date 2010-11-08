@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent"
-	android:layout_width="fill_parent">
-	<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+	android:layout_gravity="center"
+	android:orientation="vertical">
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="@string/studyoptions_no_external_storage_title"
+		android:textColor="#ffffff"
+		android:textStyle="bold"
+		android:textSize="28dip"
+		android:gravity="center"
+		android:layout_width="fill_parent" />
+	<TextView
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
-		android:layout_gravity="center"
-		android:orientation="vertical">
-		<TextView
-			android:layout_height="wrap_content"
-			android:text="@string/studyoptions_no_external_storage_title"
-			android:textColor="#ffffff"
-			android:textStyle="bold"
-			android:textSize="28dip"
-			android:gravity="center"
-			android:layout_width="fill_parent" />
-		<TextView
-			android:layout_height="wrap_content"
-			android:layout_width="fill_parent"
-			android:text="@string/studyoptions_no_external_storage_message"
-			android:layout_marginTop="10dip"
-			android:paddingLeft="20dip"
-			android:paddingRight="20dip" />
-	</LinearLayout>
-</FrameLayout>
+		android:text="@string/studyoptions_no_external_storage_message"
+		android:layout_marginTop="10dip"
+		android:paddingLeft="20dip"
+		android:paddingRight="20dip" />
+</LinearLayout>

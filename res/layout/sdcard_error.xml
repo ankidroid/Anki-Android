@@ -20,23 +20,17 @@
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:paddingTop="100dip"
-	android:visibility="gone">	
-     <ImageView
-        android:id="@+id/sd_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/sd_card"
-        android:visibility="gone" />
+	android:visibility="gone">
 
     <TextView
         android:id="@+id/sd_message"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
         android:padding="8dip"
         android:text="@string/sdcard_missing_message"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:drawableTop="@drawable/sd_card"
         android:visibility="gone" />
 
 </LinearLayout>

@@ -67,7 +67,7 @@
 
 	<FrameLayout android:id="@+id/card_whiteboard_layout"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
+		android:layout_height="0dip"
 		android:layout_weight="5">
 		<WebView android:id="@+id/flashcard" 
 			android:layout_width="fill_parent"
