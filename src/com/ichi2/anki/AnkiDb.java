@@ -105,9 +105,10 @@ public class AnkiDb {
         try {
             cursor = database.rawQuery(query, null);
             String methodName = getCursorMethodName(type.getSimpleName());
-            while (cursor.moveToFirst()) {
+            while (cursor.moveToNext()) {
                 // The magical line. Almost as illegible as python code ;)
                 results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+                Log.i(TAG, "results num: " + results.size());
             }
         } catch (NoSuchMethodException e) {
             // This is really coding error, so it should be revealed if it ever happens

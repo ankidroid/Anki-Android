@@ -598,13 +598,35 @@ public class Deck {
      * Currently needed as part of the upgradeDeck, the cache is not really used, yet.
      */
     private void updateFieldCache(long[] fids) {
-        Cursor cur = getDB().database.rawQuery("SELECT factId, group_concat(value, ' ') FROM fields " +
-                "WHERE factId IN " + Utils.ids2str(fids) + "GROUP BY factId" , null);
-        while (cur.moveToNext()) {
-            getDB().database.execSQL("UPDATE facts SET spaceUntil='" + 
-                    Utils.stripHTMLMedia(cur.getString(1)) + "' WHERE id =" + cur.getLong(0));
+        HashMap<Long, String> r = new HashMap<Long, String>();
+        Cursor cur = null;
+        
+        try {
+            cur = getDB().database.rawQuery("SELECT factId, group_concat(value, ' ') FROM fields " +
+                "WHERE factId IN " + Utils.ids2str(fids) + " GROUP BY factId" , null);
+            while (cur.moveToNext()) {
+                String stripped = Utils.stripHTMLMedia(cur.getString(1));
+                r.put(cur.getLong(0), stripped);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
         }
-        cur.close();
+        
+        if (r.size() > 0) {
+            getDB().database.beginTransaction();
+            SQLiteStatement st = getDB().database.compileStatement("UPDATE facts SET spaceUntil=? WHERE id=?");
+            for (Long fid : r.keySet()) {
+                st.bindString(1, r.get(fid));
+                st.bindLong(2, fid.longValue());
+                st.execute();
+            }
+            getDB().database.setTransactionSuccessful();
+            getDB().database.endTransaction();
+        }
     }
 
     private boolean modifiedSinceSave() {
