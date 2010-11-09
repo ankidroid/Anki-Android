@@ -24,6 +24,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -442,15 +445,25 @@ public class Deck {
 
 
     public void setVar(String key, String value, boolean mod) {
-        Cursor cur = getDB().database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-        if (cur.isFirst()) {
-            if (cur.getString(0).equals(value)) {
-                return;
+        Cursor cur = null;
+        try {
+            cur = getDB().database.rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+            if (cur.moveToNext()) {
+                if (cur.getString(0).equals(value)) {
+                    return;
+                } else {
+                    getDB().database.execSQL("UPDATE deckVars SET value='" + value + "' WHERE key = '" + key + "'");
+                }
             } else {
-                getDB().database.execSQL("update deckVars set value='" + value + "' where key = '" + key + "'", null);
+                getDB().database.execSQL("INSERT INTO deckVars (key, value) VALUES ('" + key + "', '" + value + "')");
             }
-        } else {
-            getDB().database.execSQL("insert into deckVars (key, value) values ('" + value + "', '" + key + "')", null);
+        } catch (SQLException e) {
+            Log.e(TAG, "setVar: " + e.toString());
+            throw new RuntimeException(e);
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
         }
     }
 
@@ -606,11 +619,11 @@ public class Deck {
                 "WHERE factId IN " + Utils.ids2str(fids) + " GROUP BY factId" , null);
             while (cur.moveToNext()) {
                 String values = cur.getString(1);
-                if (values.charAt(0) == ' ') {
+                //if (values.charAt(0) == ' ') {
                     // Fix for a slight difference between how Android SQLite and python sqlite work.
                     // Inconsequential difference in this context, but messes up any effort for automated testing.
-                    values = values.substring(1);
-                }
+                    values = values.replaceFirst("^ *", "");
+                //}
                 r.put(cur.getLong(0), Utils.stripHTMLMedia(values));
             }
         } catch (SQLException e) {
@@ -1240,7 +1253,6 @@ public class Deck {
         } else {
             newCardModulus = 0;
         }
-        // TODO: Recache css
         rebuildCSS();
     }
 
@@ -2986,27 +2998,89 @@ public class Deck {
         flushMod();
     }
 
-    private void rebuildCSS() {
 
+    // CSS for all the fields
+    private String rebuildCSS() {
+        String css = "";
+        Cursor cur = null;
+        
+        cur = getDB().database.rawQuery(
+                "SELECT id, quizFontFamily, quizFontSize, quizFontColour, -1, features FROM fieldModels", null);
+        while (cur.moveToNext()) {
+            css += _genCSS(".fm", cur);
+        }
+        cur.close();
+        cur = getDB().database.rawQuery(
+                "SELECT id, questionFontFamily, questionFontSize, questionFontColour, " +
+                "questionAlign, 0 FROM cardModels", null);
+        while (cur.moveToNext()) {
+            css += _genCSS("#cmq", cur);
+        }
+        cur.close();
+        cur = getDB().database.rawQuery(
+                "SELECT id, answerFontFamily, answerFontSize, answerFontColour, " +
+                "answerAlign, 0 FROM cardModels", null);
+        while (cur.moveToNext()) {
+            css += _genCSS("#cma", cur);
+        }
+        cur.close();
+        cur = getDB().database.rawQuery("SELECT id, lastFontColour FROM cardModels", null);
+        while (cur.moveToNext()) {
+            css += ".cmb" + Utils.hexifyID(cur.getLong(0)) + " {background:" + cur.getString(1) + ";}\n";
+        }
+        cur.close();
+        setVar("cssCache", css, false);
+        addHexCache();
+        
+        return css;
     }
-    private String _genCSS(String prefix, List<String> row) {
+    private String _genCSS(String prefix, Cursor row) {
         String t = "";
+        long id = row.getLong(0); 
         String fam = row.getString(1);
         int siz = row.getInt(2);
         String col = row.getString(3);
         int align = row.getInt(4);
         String rtl = row.getString(5);
         if (fam != null) {
-            t += "font-family:\"" + toPlatformFont(fam) + "\";";
+            t += "font-family:\"" + fam + "\";";
         }
-        if (siz != null) {
+        if (siz != 0) {
             t += "font-size:" + siz + "px;";
         }
         if (col != null) {
-
+            t += "color:" + col + ";";
         }
-
-
+        if (rtl != null && rtl.compareTo("rtl") == 0) {
+            t += "direction:rtl;unicode-bidi:embed;";
+        }
+        if (align != -1) {
+            if (align == 0) {
+                t += "text-align:center;";
+            } else if (align == 1) {
+                t += "text-align:left;";
+            } else {
+                t += "text-align:right;";
+            }
+        }
+        if (t.length() > 0) {
+            t = prefix + Utils.hexifyID(id) + " {" + t + "}\n";
+        }
+        return t;
+    }
+    private void addHexCache() {
+        ArrayList<Long> ids = getDB().queryColumn(Long.class,
+                "SELECT id FROM fieldModels UNION SELECT id FROM cardModels UNION SELECT id FROM models", 0);
+        JSONObject jsonObject = new JSONObject();
+        for (Long id : ids) {
+            try {
+                jsonObject.put(id.toString(), Utils.hexifyID(id.longValue()));
+            } catch (JSONException e) {
+                Log.e(TAG, "addHexCache: Error while generating JSONObject: " + e.toString());
+                throw new RuntimeException(e);
+            }
+        }
+        setVar("hexCache", jsonObject.toString(), false);
     }
 
 

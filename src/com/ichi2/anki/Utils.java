@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.text.TextUtils.StringSplitter;
 import android.util.Log;
 
 import com.mindprod.common11.BigDate;
@@ -40,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,6 +98,23 @@ public class Utils {
         return id;
     }
 
+    private static final BigInteger shiftID = new BigInteger("18446744073709551616");
+    private static final BigInteger maxID = new BigInteger("9223372036854775808");
+    public static String hexifyID(long id) {
+        if (id < 0) {
+            BigInteger bid = BigInteger.valueOf(id);
+            return bid.add(shiftID).toString(16);
+        }
+        return Long.toHexString(id);
+    }
+    
+    public static long dehexifyID(String id) {
+        BigInteger bid = new BigInteger(id, 16);
+        if (bid.compareTo(maxID) >= 0) {
+            bid.subtract(shiftID);
+        }
+        return bid.longValue();
+    }
 
     /**
      * Returns a SQL string from an array of integers.
