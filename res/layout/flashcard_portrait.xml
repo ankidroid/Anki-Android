@@ -24,9 +24,6 @@
 	android:orientation="vertical"
 	android:background="#ffffff">
 
-	<include layout="@layout/sdcard_error" />
-	<include layout="@layout/deck_error" />
-
 	<LinearLayout android:id="@+id/bar_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
