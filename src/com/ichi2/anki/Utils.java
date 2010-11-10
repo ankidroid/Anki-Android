@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 
 import com.mindprod.common11.BigDate;
@@ -72,6 +74,7 @@ public class Utils {
     private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
+    private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
     
     public static long genID() {
         long time = System.currentTimeMillis();
@@ -229,8 +232,19 @@ public class Utils {
         s = scriptMatcher.replaceAll("");
         Matcher tagMatcher = tagPattern.matcher(s);
         s = tagMatcher.replaceAll("");
-        // TODO: Implement the utils.entsToTxt function 
-        return s;
+        return entsToTxt(s);
+    }
+    private static String entsToTxt(String s) {
+        Matcher htmlEntities = htmlEntitiesPattern.matcher(s);
+        StringBuilder s2 = new StringBuilder(s);
+        while(htmlEntities.find()) {
+            String text = htmlEntities.group();
+            text = Html.fromHtml(text).toString();
+            // TODO: inefficiency below, can get rid of multiple regex searches
+            s2.replace(htmlEntities.start(), htmlEntities.end(), text);
+            htmlEntities = htmlEntitiesPattern.matcher(s2);
+        }
+        return s2.toString();
     }
 
 
