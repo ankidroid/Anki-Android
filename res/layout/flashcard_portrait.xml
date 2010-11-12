@@ -17,117 +17,109 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/main_layout" 
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical"
 	android:background="#ffffff">
 
-	<LinearLayout android:id="@+id/bar_layout"
+	<!-- Top bar -->
+	<TextView android:id="@+id/red_number"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="9dp"
+		android:layout_marginTop="4dp"
+		android:text="Failed"
+		android:textColor="#ff0000" />
+	<TextView android:id="@+id/black_number"
+		android:layout_toRightOf="@+id/red_number"
+		android:layout_alignTop="@+id/red_number"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="8dp"
+		android:text="Due"
+		android:textColor="#000000" />
+	<TextView android:id="@+id/blue_number"
+		android:layout_toRightOf="@+id/black_number"
+		android:layout_alignTop="@+id/red_number"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="8dp"
+		android:text="New today"
+		android:textColor="#0000ff" />
+	<Chronometer android:id="@+id/card_time"
+		android:layout_toRightOf="@+id/blue_number"
+		android:layout_alignTop="@+id/red_number"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:paddingLeft="5dp"
-		android:orientation="horizontal">
-		<LinearLayout android:id="@+id/counts"
+		android:gravity="right"
+		android:paddingRight="5dp"
+		android:textColor="#000000"
+		android:visibility="gone" />
+
+	<!-- Card and whiteboard -->
+	<WebView android:id="@+id/flashcard"
+		android:layout_below="@+id/red_number"
+		android:layout_above="@+id/answer_field"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:textSize="15sp" />
+	<view class="com.ichi2.anki.Whiteboard" android:id="@+id/whiteboard"
+		android:layout_below="@+id/red_number"
+		android:layout_above="@+id/answer_field"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:visibility="gone" />
+
+	<!-- Answer bar -->
+	<EditText android:id="@+id/answer_field"
+		android:layout_above="@+id/flip_card"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:maxLines="2"
+		android:visibility="gone" />
+
+	<LinearLayout android:id="@+id/answer_options_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true" >
+
+		<Button android:id="@+id/ease1"
+			android:padding="3dip"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1">
-			<TextView android:id="@+id/red_number"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:padding="4dp"
-				android:text="Failed"
-				android:textColor="#ff0000" />
-			<TextView android:id="@+id/black_number"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:padding="4dp"
-				android:text="Due"
-				android:textColor="#000000" />
-			<TextView android:id="@+id/blue_number"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:padding="4dp"
-				android:text="New today"
-				android:textColor="#0000ff" />
-		</LinearLayout>
-		<Chronometer android:id="@+id/card_time"
-			android:layout_width="fill_parent"
 			android:layout_weight="1"
-			android:layout_height="fill_parent"
-			android:gravity="center_vertical|right"
-			android:paddingRight="5dp"
-			android:textColor="#000000"
-			android:visibility="gone" />
-	</LinearLayout>
-
-	<FrameLayout android:id="@+id/card_whiteboard_layout"
-		android:layout_width="fill_parent"
-		android:layout_height="0dip"
-		android:layout_weight="5">
-		<WebView android:id="@+id/flashcard" 
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:gravity="center_vertical|center_horizontal"
-			android:fadeScrollbars="false"
-			android:hint="@string/card_hint"
-			android:textSize="15sp" />
-		<view class="com.ichi2.anki.Whiteboard" android:id="@+id/whiteboard"
-			android:layout_width="fill_parent" 
-			android:layout_height="fill_parent"
-			android:visibility="gone" />
-	</FrameLayout>
-	
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical">
-
-		<LinearLayout android:id="@+id/answer_options_layout"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-			<EditText android:id="@+id/answer_field"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:maxLines="2"
-				android:visibility="gone" />
-			<Button android:id="@+id/ease1"
-				android:padding="3dip"
-				android:layout_width="fill_parent"
-				android:layout_weight="1.2"
-				android:background="@android:drawable/btn_default_small"
-				android:layout_height="fill_parent"
-				android:text="@string/again" />
-			<Button android:id="@+id/ease2"
-				android:padding="3dip"
-				android:layout_width="fill_parent"
-				android:layout_weight="1.2"
-				android:background="@android:drawable/btn_default_small"
-				android:layout_height="fill_parent"
-				android:text="@string/hard" />
-			<Button android:id="@+id/ease3"
-				android:padding="3dip"
-				android:layout_width="fill_parent"
-				android:layout_weight="1.2"
-				android:background="@android:drawable/btn_default_small"
-				android:layout_height="fill_parent"
-				android:text="@string/good" />
-			<Button android:id="@+id/ease4"
-				android:padding="3dip"
-				android:layout_width="fill_parent"
-				android:layout_weight="1.2"
-				android:background="@android:drawable/btn_default_small"
-				android:layout_height="fill_parent"
-				android:text="@string/easy" />
-		</LinearLayout>
-
-		<ToggleButton android:id="@+id/flip_card"
+			android:background="@android:drawable/btn_default_small"
+			android:text="@string/again" />
+		<Button android:id="@+id/ease2"
+			android:padding="3dip"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
+			android:layout_weight="1"
 			android:background="@android:drawable/btn_default_small"
-			android:textOn="@string/show_question" 
-			android:textOff="@string/show_answer" />
-
+			android:text="@string/hard" />
+		<Button android:id="@+id/ease3"
+			android:padding="3dip"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:background="@android:drawable/btn_default_small"
+			android:text="@string/good" />
+		<Button android:id="@+id/ease4"
+			android:padding="3dip"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:background="@android:drawable/btn_default_small"
+			android:text="@string/easy" />
 	</LinearLayout>
-</LinearLayout>
+
+	<Button android:id="@+id/flip_card"
+		android:layout_alignParentBottom="true"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:drawable/btn_default_small"
+		android:text="@string/show_answer"
+		android:visibility="gone" />
+
+	</RelativeLayout>

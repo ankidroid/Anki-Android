@@ -44,11 +44,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
@@ -107,6 +105,7 @@ public class Reviewer extends Activity {
 
     private static Card sEditorCard; // To be assigned as the currentCard or a new card to be sent to and from editor
 
+    private static boolean sDisplayAnswer =  false; // Indicate if "show answer" button has been pressed
 
     /** The percentage of the absolute font size specified in the deck. */
     private int mDisplayFontSize = CardModel.DEFAULT_FONT_SIZE_RATIO;
@@ -140,7 +139,7 @@ public class Reviewer extends Activity {
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
-    private ToggleButton mFlipCard;
+    private Button mFlipCard;
     private EditText mAnswerField;
     private Button mEase1;
     private Button mEase2;
@@ -173,17 +172,13 @@ public class Reviewer extends Activity {
 
     // Handler for the flip toggle button, between the question and the answer
     // of a card
-    private CompoundButton.OnCheckedChangeListener mFlipCardHandler = new CompoundButton.OnCheckedChangeListener() {
+    private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean showAnswer) {
+        public void onClick(View view) {
             Log.i(AnkiDroidApp.TAG, "Flip card changed:");
             Sound.stopSounds();
 
-            if (showAnswer) {
-                displayCardAnswer();
-            } else {
-                displayCardQuestion();
-            }
+            displayCardAnswer();
         }
     };
 
@@ -262,11 +257,6 @@ public class Reviewer extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-
-            // Set the correct value for the flip card button - That triggers the
-            // listener which displays the question of the card
-            mFlipCard.setChecked(false);
-
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
             }
@@ -277,6 +267,8 @@ public class Reviewer extends Activity {
             }
 
             mProgressDialog.dismiss();
+
+            displayCardQuestion();
         }
     };
 
@@ -552,7 +544,6 @@ public class Reviewer extends Activity {
                 return true;
 
             case MENU_SUSPEND:
-                mFlipCard.setChecked(true);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
                 return true;
@@ -586,7 +577,6 @@ public class Reviewer extends Activity {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
                 // TODO: code to save the changes made to the current card.
-                mFlipCard.setChecked(true);
                 displayCardQuestion();
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
@@ -664,9 +654,8 @@ public class Reviewer extends Activity {
         mEase4 = (Button) findViewById(R.id.ease4);
         mEase4.setOnClickListener(mSelectEaseHandler);
 
-        mFlipCard = (ToggleButton) findViewById(R.id.flip_card);
-        mFlipCard.setChecked(true); // Fix for mFlipCardHandler not being called on first deck load.
-        mFlipCard.setOnCheckedChangeListener(mFlipCardHandler);
+        mFlipCard = (Button) findViewById(R.id.flip_card);
+        mFlipCard.setOnClickListener(mFlipCardListener);
 
         mTextBarRed = (TextView) findViewById(R.id.red_number);
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
@@ -763,27 +752,21 @@ public class Reviewer extends Activity {
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
 
-        // Redraw screen with new preferences
-        refreshCard();
-
         return preferences;
     }
 
 
     private void refreshCard() {
-        if (mFlipCard != null) {
-            if (mFlipCard.isChecked()) {
-                displayCardAnswer();
-            } else {
-                displayCardQuestion();
-            }
+        if (sDisplayAnswer) {
+            displayCardAnswer();
+        } else {
+            displayCardQuestion();
         }
     }
 
 
     private void reviewNextCard() {
         updateCounts();
-        mFlipCard.setChecked(false);
 
         // Clean answer field
         if (mPrefWriteAnswers) {
@@ -798,6 +781,8 @@ public class Reviewer extends Activity {
             mCardTimer.setBase(SystemClock.elapsedRealtime());
             mCardTimer.start();
         }
+
+        displayCardQuestion();
     }
 
 
@@ -830,6 +815,7 @@ public class Reviewer extends Activity {
 
 
     private void displayCardQuestion() {
+        sDisplayAnswer = false;
         hideEaseButtons();
 
         // If the user wants to write the answer
@@ -856,6 +842,7 @@ public class Reviewer extends Activity {
 
     private void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
+        sDisplayAnswer = true;
 
         if (mPrefTimer) {
             mCardTimer.stop();
@@ -932,7 +919,7 @@ public class Reviewer extends Activity {
 
         // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         String card = mCardTemplate.replace("::content::", content);
-        Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
+//        Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         mCard.loadDataWithBaseURL("file://" + mDeckFilename.replace(".anki", ".media/"), card, "text/html", "utf-8",
                 null);
 
