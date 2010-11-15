@@ -62,8 +62,8 @@ public class SyncClient {
      * Connection settings
      */
 
-    private static final String SYNC_URL = "http://anki.ichi2.net/sync/";
-    private static final String SYNC_HOST = "anki.ichi2.net"; // 78.46.104.28
+    private static final String SYNC_URL = "http://ankiweb.net/sync/";
+    private static final String SYNC_HOST = "ankiweb.net"; // 78.46.104.28
     private static final String SYNC_PORT = "80";
 
     // Test
@@ -1108,10 +1108,6 @@ public class SyncClient {
                 }
                 String factIdsString = Utils.ids2str(factIds);
 
-                // Recalculate fact count
-                deck.factCount += lenFacts
-                        - ankiDB.queryScalar("SELECT COUNT(*) FROM facts WHERE id IN " + factIdsString);
-
                 // Update facts
                 String sqlFact = "INSERT OR REPLACE INTO facts (id, modelId, created, modified, tags, spaceUntil, lastCardId) VALUES(?,?,?,?,?,?,?)";
                 SQLiteStatement statement = ankiDB.database.compileStatement(sqlFact);
@@ -1193,7 +1189,7 @@ public class SyncClient {
         // firstAnswered, reps, successive, averageTime, reviewTime, youngEase0, youngEase1, youngEase2, youngEase3,
         // youngEase4,
         // matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, answer,
-        // lastFactor, spaceUntil,
+        // lastFactor, spaceUntil, relativeDelay,
         // type, combinedDue FROM cards WHERE id IN " + ids2str(ids)
         Cursor cursor = AnkiDatabaseManager.getDatabase(deck.deckPath).database.rawQuery(
                 "SELECT * FROM cards WHERE id IN " + Utils.ids2str(ids), null);
@@ -1273,6 +1269,8 @@ public class SyncClient {
                 card.put(cursor.getInt(36));
                 // combinedDue
                 card.put(cursor.getInt(37));
+                // relativeDelay
+                card.put(cursor.getInt(34));
 
                 cards.put(card);
             } catch (JSONException e) {
@@ -1288,6 +1286,7 @@ public class SyncClient {
     private void updateCards(JSONArray cards) {
         int len = cards.length();
         if (len > 0) {
+            
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.deckPath);
             ArrayList<String> ids = new ArrayList<String>();
             for (int i = 0; i < len; i++) {
@@ -1299,12 +1298,10 @@ public class SyncClient {
             }
             String idsString = Utils.ids2str(ids);
 
-            deck.cardCount += len - ankiDB.queryScalar("SELECT COUNT(*) FROM cards WHERE id IN " + idsString);
-
             String sql = "INSERT OR REPLACE INTO cards (id, factId, cardModelId, created, modified, tags, ordinal, priority, interval, lastInterval, due, lastDue, "
                     + "factor, firstAnswered, reps, successive, averageTime, reviewTime, youngEase0, youngEase1, youngEase2, youngEase3, youngEase4, "
                     + "matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, answer, lastFactor, spaceUntil, "
-                    + "type, combinedDue, relativeDelay, isDue) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 0, 0)";
+                    + "type, combinedDue, relativeDelay, isDue) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 0)";
             SQLiteStatement statement = ankiDB.database.compileStatement(sql);
             for (int i = 0; i < len; i++) {
                 try {
@@ -1382,6 +1379,8 @@ public class SyncClient {
                     statement.bindString(35, card.getString(34));
                     // combinedDue
                     statement.bindString(36, card.getString(35));
+                    // relativeDelay
+                    statement.bindString(37, genType(card));
 
                     statement.execute();
                 } catch (JSONException e) {
@@ -1392,6 +1391,17 @@ public class SyncClient {
 
             ankiDB.database.execSQL("DELETE FROM cardsDeleted WHERE cardId IN " + idsString);
         }
+    }
+    private String genType(JSONArray row) throws JSONException {
+        if (row.length() > 37) {
+            return row.getString(37);
+        }
+        if (row.getString(15).compareTo("0") != 0) {
+            return "1";
+        } else if (row.getString(14).compareTo("0") != 0) {
+            return "0";
+        }
+        return "2";
     }
 
 
@@ -1612,8 +1622,8 @@ public class SyncClient {
             deck.created = deckPayload.getDouble("created");
             // css
             deck.currentModelId = deckPayload.getLong("currentModelId");
-            deck.delay0 = deckPayload.getDouble("delay0");
-            deck.delay1 = deckPayload.getDouble("delay1");
+            deck.delay0 = deckPayload.getLong("delay0");
+            deck.delay1 = deckPayload.getLong("delay1");
             deck.delay2 = deckPayload.getDouble("delay2");
             deck.description = deckPayload.getString("description");
             deck.easyIntervalMax = deckPayload.getDouble("easyIntervalMax");

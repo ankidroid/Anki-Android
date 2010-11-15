@@ -85,7 +85,8 @@ public class Card {
     int yesCount = 0;
     int noCount = 0;
     double spaceUntil = 0;
-    double relativeDelay = 0;   // obsolete in libanki 1.1
+    // relativeDelay is reused as type without scheduling (ie, it remains 0-2 even if card is suspended, etc)
+    int relativeDelay = 0;
     int isDue = 0;              // obsolete in libanki 1.1
     int type = 2;
     double combinedDue = 0;
@@ -115,6 +116,7 @@ public class Card {
         id = Utils.genID();
         // New cards start as new & due
         type = 2;
+        relativeDelay = type;
         timerStarted = Double.NaN;
         timerStopped = Double.NaN;
         modified = System.currentTimeMillis() / 1000.0;

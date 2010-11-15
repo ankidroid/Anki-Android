@@ -49,8 +49,6 @@ import java.util.Map.Entry;
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Deck
  */
 public class Deck {
-    // Various constants
-    private static final int SECS_IN_ONE_DAY = 86400;
 
     public static final int CARD_TYPE_FAILED = 0;
     public static final int CARD_TYPE_REV = 1;
@@ -67,7 +65,7 @@ public class Deck {
      **/
 
     // Rest
-    private static final int DECK_VERSION = 49;
+    private static final int DECK_VERSION = 50;
     
     private static final int MATURE_THRESHOLD = 21;
 
@@ -137,9 +135,10 @@ public class Deck {
     double easyIntervalMax;
 
     // Delays on failure
-    double delay0;
+    long delay0;
 
-    double delay1;
+    // Days to delay mature fails
+    long delay1;
 
     double delay2;
 
@@ -277,8 +276,8 @@ public class Deck {
             deck.midIntervalMax = cursor.getDouble(11);
             deck.easyIntervalMin = cursor.getDouble(12);
             deck.easyIntervalMax = cursor.getDouble(13);
-            deck.delay0 = cursor.getDouble(14);
-            deck.delay1 = cursor.getDouble(15);
+            deck.delay0 = cursor.getLong(14);
+            deck.delay1 = cursor.getLong(15);
             deck.delay2 = cursor.getDouble(16);
             deck.collapseTime = cursor.getDouble(17);
             deck.highPriority = cursor.getString(18);
@@ -338,6 +337,15 @@ public class Deck {
             deck.hardIntervalMin = Math.max(1.0, deck.hardIntervalMin);
             deck.hardIntervalMax = Math.max(1.1, deck.hardIntervalMax);
         }
+        
+        // - New delay1 handling
+        if (deck.delay0 == deck.delay1) {
+            deck.delay1 = 0l;
+        } else if (deck.delay1 >= 28800l) {
+            deck.delay1 = 1l;
+        } else {
+            deck.delay1 = 0l;
+        }
 
         ArrayList<Long> ids = new ArrayList<Long>();
         // Unsuspend buried/rev early - can remove priorities in the future
@@ -345,8 +353,7 @@ public class Deck {
                 "SELECT id FROM cards WHERE type > 2 OR (priority BETWEEN -2 AND -1)", 0);
         if (!ids.isEmpty()) {
             deck.updatePriorities(Utils.toPrimitive(ids));
-            deck.getDB().database.execSQL("UPDATE cards SET type = type -3 WHERE type BETWEEN 3 AND 5");
-            deck.getDB().database.execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8");
+            deck.getDB().database.execSQL("UPDATE cards SET type = relativeDelay WHERE type > 2");
             // Save deck to database
             deck.commitToDB();
         }
@@ -558,6 +565,14 @@ public class Deck {
             version = 49;
             commitToDB();
         }
+        if (version < 50) {
+            // more new type handling
+            rebuildTypes();
+            // Add an index for relativeDelay (type cache)
+            addIndices();
+            version = 50;
+            commitToDB();
+        }
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
             commitToDB();
@@ -576,10 +591,12 @@ public class Deck {
     private void addIndices() {
         // Counts, failed cards
         getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cards_typeCombined ON cards (type, combinedDue)");
-        // Failed cards, review early
+        // Scheduler-agnostic type
+        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cards_relativeDelay ON cards (relativeDelay)");
+        // Failed cards, review early - obsolete
         getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cards_duePriority " +
-                "ON cards (type, isDue, combinedDue, priority)");
-        // Check due
+        "ON cards (type, isDue, combinedDue, priority)");
+        // Check due - obsolete
         getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cards_priorityDue " +
                 "ON cards (type, isDue, priority, combinedDue)");
         // Average factor
@@ -907,9 +924,9 @@ public class Deck {
     }
 
 
-    private String cardLimit(String[] active, String sql) {
+    private String cardLimit(String[] active, String[] inactive, String sql) {
         try {
-            return ((String) cardLimitMethod.invoke(Deck.this, active, sql));
+            return ((String) cardLimitMethod.invoke(Deck.this, active, inactive, sql));
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -1026,7 +1043,7 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _rebuildFailedCount() {
         failedSoonCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive",
-                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < " + dueCutoff));
+                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < " + failedCutoff));
     }
 
 
@@ -1054,8 +1071,8 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillFailedQueue() {
         if ((failedSoonCount != 0) && failedQueue.isEmpty()) {
-            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " + dueCutoff
-                    + " ORDER BY combinedDue LIMIT " + queueLimit;
+            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " +
+            failedCutoff + " ORDER BY combinedDue LIMIT " + queueLimit;
             Cursor cur = getDB().database.rawQuery(cardLimit("revActive", "revInactive", sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
@@ -1180,11 +1197,11 @@ public class Deck {
         } else {
             where = " WHERE " + lim;
         }
-        getDB().database.execSQL("UPDATE cards SET type = (CASE " 
-                + "WHEN successive = 0 AND reps != 0 THEN 0 " // failed
-                + "WHEN successive != 0 AND reps != 0 THEN 1 " // review
-                + "ELSE 2 " // new
-                + "END)" + where);
+        getDB().database.execSQL("UPDATE cards SET "
+                + "type = (CASE " 
+                + "WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END), "
+                + "relativeDelay = (CASE "
+                + "WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END)");
         // old-style suspended cards
         getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE priority = 0 AND type >= 0");
     }
@@ -1209,19 +1226,25 @@ public class Deck {
 
 
     private void updateCutoff() {
-        if (getBool("perDay")) {
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.SECOND, (int) -utcOffset + SECS_IN_ONE_DAY);
-            cal.set(Calendar.HOUR, 0); // Yes, verbose but crystal clear
-            cal.set(Calendar.MINUTE, 0); // Apologies for that, here was my rant
-            cal.set(Calendar.SECOND, 0); // But if you can improve this bit and
-            cal.set(Calendar.MILLISECOND, 0); // collapse it to one statement please do
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND, (int) -utcOffset + 86400);
+        cal.set(Calendar.HOUR, 0); // Yes, verbose but crystal clear
+        cal.set(Calendar.MINUTE, 0); // Apologies for that, here was my rant
+        cal.set(Calendar.SECOND, 0); // But if you can improve this bit and
+        cal.set(Calendar.MILLISECOND, 0); // collapse it to one statement please do
 
-            int newday = (int) utcOffset - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
-            Log.d(TAG, "New day happening at " + newday + " sec after 00:00 UTC");
-            cal.add(Calendar.SECOND, newday);
-            dueCutoff = cal.getTimeInMillis() / 1000.0;
-            assert dueCutoff > System.currentTimeMillis();
+        int newday = (int) utcOffset - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+        Log.d(TAG, "New day happening at " + newday + " sec after 00:00 UTC");
+        cal.add(Calendar.SECOND, newday);
+        long cutoff = cal.getTimeInMillis() / 1000;
+        // Cutoff must not be in the past
+        while (cutoff < System.currentTimeMillis() / 1000) {
+            cutoff += 86400.0;
+        }
+        // Cutoff must not be more than 24 hours in the future
+        cutoff = Math.min(System.currentTimeMillis() / 1000 + 86400, cutoff);
+        if (getBool("perDay")) {
+            dueCutoff = (double) cutoff;
         } else {
             dueCutoff = (double) System.currentTimeMillis() / 1000.0;
         }
@@ -1384,8 +1407,8 @@ public class Deck {
             spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCramCards", Card.class, double.class);
             // Reuse review early's code
             answerPreSaveMethod = Deck.class.getDeclaredMethod("_reviewEarlyPreSave", Card.class, int.class);
-            cardLimitMethod = Deck.class
-                    .getDeclaredMethod("_cramCardLimit", String[].class, String.class, String.class);
+            cardLimitMethod = Deck.class.
+                getDeclaredMethod("_cramCardLimit", String[].class, String[].class, String.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -1466,7 +1489,8 @@ public class Deck {
 
 
     @SuppressWarnings("unused")
-    private String _cramCardLimit(String active[], String sql) {
+    private String _cramCardLimit(String active[], String inactive[], String sql) {
+        // inactive is (currently) ignored
         if (active.length > 1) {
             return sql.replace("WHERE ", "WHERE +c.id IN "
                     + Utils.ids2str(new ArrayList<String>(Arrays.asList(active))));
@@ -1490,7 +1514,7 @@ public class Deck {
         if ((revCount != 0) && revQueue.isEmpty()) {
             String sql = "SELECT id, factId FROM cards WHERE type BETWEEN 0 AND 2 ORDER BY " + cramOrder + " LIMIT "
                     + queueLimit;
-            Cursor cur = getDB().database.rawQuery(cardLimit(activeCramTags, sql), null);
+            Cursor cur = getDB().database.rawQuery(cardLimit(activeCramTags, null, sql), null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 revQueue.add(0, qi); // Add to front, so list is reversed as it is built
@@ -1501,7 +1525,8 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildCramCount() {
-        revCount = (int) getDB().queryScalar("SELECT count(*) FROM cards WHERE type BETWEEN 0 AND 2");
+        revCount = (int) getDB().queryScalar(cardLimit(activeCramTags, null,
+                "SELECT count(*) FROM cards WHERE type BETWEEN 0 AND 2"));
     }
 
 
@@ -1758,8 +1783,10 @@ public class Deck {
         updateNewCountToday();
         if (!failedQueue.isEmpty()) {
             // Failed card due?
-            if ((delay0 != 0) && (((QueueItem) failedQueue.getLast()).getDue() < System.currentTimeMillis() / 1000)) {
-                return failedQueue.getLast().getCardID();
+            if (delay0 != 0l) {
+                if ((long) ((QueueItem) failedQueue.getLast()).getDue() < System.currentTimeMillis() / 1000 + delay0) {
+                    return failedQueue.getLast().getCardID();
+                }
             }
             // Failed card queue too big?
             if ((failedCardMax != 0) && (failedSoonCount >= failedCardMax)) {
@@ -1834,7 +1861,6 @@ public class Deck {
 
 
     private boolean showFailedLast() {
-        // FIXME: Isn't the check collapseTime != 0.0 always going to return true?
         return ((collapseTime != 0.0) || (delay0 == 0));
     }
 
@@ -2022,7 +2048,10 @@ public class Deck {
         card.updateStats(ease, oldState);
         // Update type & ensure past cutoff
         card.type = cardType(card);
-        card.due = Math.max(card.due, dueCutoff+1);
+        card.relativeDelay = card.type;
+        if (ease != 1) {
+            card.due = Math.max(card.due, dueCutoff+1);
+        }
 
         // Allow custom schedulers to munge the card
         if (answerPreSaveMethod != null) {
@@ -2233,9 +2262,9 @@ public class Deck {
         double due;
         if (ease == 1) {
             if (oldState.equals("mature")) {
-                due = delay1;
+                due = delay1 * 86400.0;
             } else {
-                due = delay0;
+                due = 0.0;
             }
         } else {
             due = card.interval * 86400.0;
@@ -2524,8 +2553,7 @@ public class Deck {
     // }
 
     public void suspendCards(long[] ids) {
-        getDB().database.execSQL("UPDATE cards SET type = (CASE "
-                + "WHEN successive = 0 THEN -2 WHEN reps THEN -3 ELSE -1 END), " + "priority = -3, modified = "
+        getDB().database.execSQL("UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
                 + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
                 + ", isDue = 0 WHERE type >= 0 AND id IN " + Utils.ids2str(ids));
         flushMod();
@@ -2540,7 +2568,7 @@ public class Deck {
     // }
 
     public void unsuspendCards(long[] ids) {
-        getDB().database.execSQL("UPDATE cards SET type = type + 3, priority = 0, " + "modified = "
+        getDB().database.execSQL("UPDATE cards SET type = relativeDelay, priority = 0, " + "modified = "
                 + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
                 + " WHERE type < 0 AND id IN " + Utils.ids2str(ids));
         updatePriorities(ids);
