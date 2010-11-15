@@ -1028,12 +1028,12 @@ public class Deck {
         if (yes.length > 0) {
             long yids[] = Utils.toPrimitive(tagIds(yes).values());
             long nids[] = Utils.toPrimitive(tagIds(no).values());
-            return sql.replace("WHERE ", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
-                    + Utils.ids2str(yids) + " AND tagId NOT IN " + Utils.ids2str(nids) + ") AND ");
+            return sql.replace("WHERE", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE tagId IN " +
+                    Utils.ids2str(yids) + " AND tagId NOT IN " + Utils.ids2str(nids) + ") AND");
         } else if (no.length > 0) {
             long nids[] = Utils.toPrimitive(tagIds(no).values());
-            return sql.replace("WHERE ", "WHERE +c.id NOT IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
-                    + Utils.ids2str(nids) + ") AND ");
+            return sql.replace("WHERE", "WHERE +c.id NOT IN (SELECT cardId FROM cardTags WHERE tagId IN "
+                    + Utils.ids2str(nids) + ") AND");
         } else {
             return sql;
         }
@@ -1784,7 +1784,7 @@ public class Deck {
         if (!failedQueue.isEmpty()) {
             // Failed card due?
             if (delay0 != 0l) {
-                if ((long) ((QueueItem) failedQueue.getLast()).getDue() < System.currentTimeMillis() / 1000 + delay0) {
+                if ((long) ((QueueItem) failedQueue.getLast()).getDue() + delay0 < System.currentTimeMillis() / 1000) {
                     return failedQueue.getLast().getCardID();
                 }
             }
@@ -2034,10 +2034,13 @@ public class Deck {
         double space = spaceUntilTime(card);
         spaceCards(card, space);
         // Adjust counts for current card
-        if (oldQueue == 0) {
-            if (ease != 1) {
-                failedSoonCount -= 1;
+        if (ease == 1) {
+            if (!(oldState.compareTo("mature") == 0 && delay1 != 0)) {
+                failedSoonCount += 1;
             }
+        }
+        if (oldQueue == 0) {
+            failedSoonCount -= 1;
         } else if (oldQueue == 1) {
             revCount -= 1;
         } else {
