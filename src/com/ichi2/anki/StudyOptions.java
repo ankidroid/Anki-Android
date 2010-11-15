@@ -172,6 +172,8 @@ public class StudyOptions extends Activity {
     private Spinner mSpinnerRevCardOrder;
 
     private Spinner mSpinnerFailCardOption;
+    
+    private CheckBox mCheckBoxPerDay;
 
     /**
      * UI elements for "No Deck" view
@@ -295,6 +297,8 @@ public class StudyOptions extends Activity {
             deck.setNewCardOrder(mSpinnerNewCardOrder.getSelectedItemPosition());
             deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
             deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
+            // TODO: mSpinnerFailCardOption
+            deck.setPerDay(mCheckBoxPerDay.isChecked());
 
             dialog.dismiss();
         }
@@ -319,6 +323,23 @@ public class StudyOptions extends Activity {
 
         initAllContentViews();
         initAllDialogs();
+
+        // Timeboxing only supported using the standard scheduler
+        if (deck.hasFinishScheduler()) {
+            mEditNewPerDay.setEnabled(false);
+            mEditSessionTime.setEnabled(false);
+            mEditSessionQuestions.setEnabled(false);
+            mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(false);
+        } else {
+            mEditNewPerDay.setEnabled(true);
+            mEditSessionTime.setEnabled(true);
+            mEditSessionQuestions.setEnabled(true);
+            mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
+        }
+
+        if (deck.hasFinishScheduler()) {
+            deck.finishScheduler();
+        }
 
         Intent intent = getIntent();
         if ("android.intent.action.VIEW".equalsIgnoreCase(intent.getAction()) && intent.getDataString() != null) {
@@ -516,6 +537,7 @@ public class StudyOptions extends Activity {
         mSpinnerNewCardSchedule = (Spinner) contentView.findViewById(R.id.studyoptions_new_card_schedule);
         mSpinnerRevCardOrder = (Spinner) contentView.findViewById(R.id.studyoptions_rev_card_order);
         mSpinnerFailCardOption = (Spinner) contentView.findViewById(R.id.studyoptions_fail_card_option);
+        mCheckBoxPerDay = (CheckBox) contentView.findViewById(R.id.studyoptions_per_day);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.studyoptions_more_dialog_title);
@@ -533,6 +555,7 @@ public class StudyOptions extends Activity {
         mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
         mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
         mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
+        mCheckBoxPerDay.setChecked(deck.getPerDay());
 
         mDialogMoreOptions.show();
     }
@@ -605,6 +628,19 @@ public class StudyOptions extends Activity {
         }
     }
 
+    /*
+     * Switch schedulers
+     */
+
+    private void reset() {
+        reset(false);
+    }
+    private void reset(boolean priorities) {
+        if (priorities) {
+            deck.updateAllPriorities();
+        }
+        deck.reset();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

@@ -31,7 +31,12 @@
 			android:layout_width="fill_parent"
 			android:id="@+id/studyoptions_fail_card_option"
 			android:entries="@array/studyoptions_more_fail_card_option" />
-
+		<CheckBox
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/studyoptions_per_day"
+			android:text="Per Day"
+			android:checked="true" />
 	</LinearLayout>
 	
 </ScrollView>

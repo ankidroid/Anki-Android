@@ -961,6 +961,10 @@ public class Deck {
         }
     }
 
+    public boolean hasFinishScheduler() {
+        return !(finishSchedulerMethod == null);
+    }
+
     /*
      * Standard Scheduling*****************************
      */
@@ -1693,6 +1697,13 @@ public class Deck {
         }
     }
 
+    public boolean getPerDay() {
+        return getBool("perDay");
+    }
+
+    public void setPerDay(boolean perDay) {
+        setVar("perDay", perDay;
+    }
 
     public int getNewCardsPerDay() {
         return newCardsPerDay;
