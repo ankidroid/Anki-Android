@@ -965,6 +965,10 @@ public class Deck {
         return !(finishSchedulerMethod == null);
     }
 
+    public String name() {
+        return scheduler;
+    }
+
     /*
      * Standard Scheduling*****************************
      */
@@ -2353,7 +2357,7 @@ public class Deck {
      * @param where Optional, SQL filter for fact tags. If skipped, returns all fact tags
      * @return All the distinct individual tags, sorted, as an array of string
      */
-    private String[] allTags_() {
+    public String[] allTags_() {
         return allTags_("");
     }
     private String[] allTags_(String where) {

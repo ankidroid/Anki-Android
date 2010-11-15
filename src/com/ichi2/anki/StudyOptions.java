@@ -138,12 +138,20 @@ public class StudyOptions extends Activity {
 
     private AlertDialog mConnectionErrorAlert;
 
+    /*
+     * Cram related
+     */
+    private AlertDialog mCramTagsDialog;
+    private String allCramTags[];
+    private Set<String> activeCramTags;
+
     /**
      * UI elements for "Study Options" view
      */
     private View mStudyOptionsView;
 
     private Button mButtonStart;
+    private ToggleButton mToggleCram;
 
     private TextView mTextTitle;
     private TextView mTextDeckName;
@@ -215,6 +223,14 @@ public class StudyOptions extends Activity {
                     reviewer.putExtra("deckFilename", deckFilename);
                     startActivityForResult(reviewer, REQUEST_REVIEW);
                     return;
+                case R.id.studyoptions_cram:
+                    if (mToggleCram.isChecked()) {
+                        allCramTags = AnkiDroidApp.deck().allTags_();
+                        activeCramTags.clear();
+                        mCramTagsDialog.show();
+                    } else {
+                        onCramStop();
+                    }
                 case R.id.studyoptions_more:
                     showMoreOptionsDialog();
                     return;
@@ -446,6 +462,7 @@ public class StudyOptions extends Activity {
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
+        mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
         mStudyOptionsView.findViewById(R.id.studyoptions_more).setOnClickListener(mButtonClickListener);
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
@@ -457,6 +474,7 @@ public class StudyOptions extends Activity {
         mEditSessionQuestions = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_questions);
 
         mButtonStart.setOnClickListener(mButtonClickListener);
+        mToggleCram.setOnClickListener(mButtonClickListener);
         mEditNewPerDay.setOnFocusChangeListener(mEditFocusListener);
         mEditSessionTime.setOnFocusChangeListener(mEditFocusListener);
         mEditSessionQuestions.setOnFocusChangeListener(mEditFocusListener);
@@ -527,6 +545,29 @@ public class StudyOptions extends Activity {
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mConnectionErrorAlert = builder.create();
+
+        // Dialog for selecting the cram tags
+        activeCramTags = new Set<String>();
+        builder.setTitle(res.getString(R.string.tags_to_cram_title));
+        builder.setMessage(res.getString(R.string.tags_to_cram_message));
+        builder.setMultiChoiceItems(allTags, null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                if (isChecked) {
+                    activeCramTags.add(allCramTags[which]);
+                } else {
+                    activeCramTags.remove(allCramTags[which]);
+                }
+            }
+        });
+        builder.setPositiveButton(res.getString(R.string.begin_cram), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onCram();
+            }
+        });
+        builder.setNegativeButton(res.getString(R.string.cancel), null);
+        mCramTagsDialog = builder.create();
     }
 
 
@@ -586,6 +627,7 @@ public class StudyOptions extends Activity {
             case CONTENT_STUDY_OPTIONS:
                 updateValuesFromDeck();
                 mButtonStart.setText(R.string.studyoptions_start);
+                mToggleCram.setChecked(false);
                 mTextTitle.setText(R.string.studyoptions_title);
                 setContentView(mStudyOptionsView);
                 break;
@@ -640,6 +682,22 @@ public class StudyOptions extends Activity {
             deck.updateAllPriorities();
         }
         deck.reset();
+    }
+
+    /**
+     * Enter cramming mode.
+     * Currently not supporting cramming from selection of cards, as we don't have a card list view anyway.
+     */
+    private void onCram() {
+        // TODO: continue coding stopped here for now.
+        
+    }
+
+    /**
+     * Exit cramming mode.
+     */
+    private void onCramStop() {
+
     }
 
     @Override

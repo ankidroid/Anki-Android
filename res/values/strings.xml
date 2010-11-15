@@ -59,6 +59,7 @@
 <string name="clear_whiteboard">Clear Whiteboard</string>
 <string name="session_question_limit_reached">Session question limit reached</string>
 <string name="session_time_limit_reached">Session time limit reached</string>
+<string name="cram_edit_warning">Card editing not allowed while cramming</string>
 
 <!-- deck_preferences.xml -->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
@@ -308,6 +309,10 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="connection_error_message">A network error has ocurred.</string>
 <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
 <string name="sync_progress_bar_title">Syncing %s</string>
+<string name="tags_to_cram_title">Tags to cram</string>
+<string name="tags_to_cram_message">Select which tags to include for cramming. Use blank for all facts.</string>
+<string name="begin_cram">Start Cram mode</string>
+<string name="end_cram">Stop Cram mode</string>
 
 <!-- Connection.java -->
 <string name="sync_connecting_message">Connecting...</string>

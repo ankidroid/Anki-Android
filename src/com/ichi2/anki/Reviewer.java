@@ -570,11 +570,17 @@ public class Reviewer extends Activity {
                 return true;
 
             case MENU_EDIT:
-                sEditorCard = mCurrentCard;
-                Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-                startActivityForResult(editCard, EDIT_CURRENT_CARD);
-                return true;
-
+                if (isCramming()) {
+                    Toast cramEditWarning = 
+                        Toast.makeText(Reviewer.this, res.getString(R.string.cram_edit_warning), Toast.LENGTH_SHORT);
+                    cramEditWarning.show();
+                    return false;
+                } else {
+                    sEditorCard = mCurrentCard;
+                    Intent editCard = new Intent(Reviewer.this, CardEditor.class);
+                    startActivityForResult(editCard, EDIT_CURRENT_CARD);
+                    return true;
+                }
             case MENU_SUSPEND:
                 mFlipCard.setChecked(true);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
@@ -618,6 +624,9 @@ public class Reviewer extends Activity {
         }
     }
 
+    private boolean isCramming() {
+        return (AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().name().compareTo("cram") == 0);
+    }
 
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
