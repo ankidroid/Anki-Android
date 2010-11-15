@@ -1186,24 +1186,14 @@ public class Deck {
 
     // Rebuild the type cache. Only necessary on upgrade.
     private void rebuildTypes() {
-        rebuildTypes("");
-    }
-
-
-    private void rebuildTypes(String where) {
-        String lim = "type >= 0"; // Don't touch suspended cards
-        if (where != "") {
-            where += " AND " + lim;
-        } else {
-            where = " WHERE " + lim;
-        }
         getDB().database.execSQL("UPDATE cards SET "
                 + "type = (CASE " 
                 + "WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END), "
                 + "relativeDelay = (CASE "
-                + "WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END)");
+                + "WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END) "
+                + "WHERE type >= 0");
         // old-style suspended cards
-        getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE priority = 0 AND type >= 0");
+        getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE priority = -3 AND type >= 0");
     }
 
 
