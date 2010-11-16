@@ -572,7 +572,8 @@ public class Reviewer extends Activity {
             case MENU_EDIT:
                 if (isCramming()) {
                     Toast cramEditWarning = 
-                        Toast.makeText(Reviewer.this, res.getString(R.string.cram_edit_warning), Toast.LENGTH_SHORT);
+                        Toast.makeText(Reviewer.this, 
+                                getResources().getString(R.string.cram_edit_warning), Toast.LENGTH_SHORT);
                     cramEditWarning.show();
                     return false;
                 } else {

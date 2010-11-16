@@ -210,6 +210,8 @@ public class Deck {
     boolean reviewEarly;
 
     double dueCutoff;
+    
+    double failedCutoff;
 
     String scheduler;
 
@@ -885,7 +887,7 @@ public class Deck {
     }
 
 
-    private void finishScheduler() {
+    public void finishScheduler() {
         try {
             finishSchedulerMethod.invoke(Deck.this);
         } catch (IllegalArgumentException e) {
@@ -972,7 +974,7 @@ public class Deck {
     /*
      * Standard Scheduling*****************************
      */
-    private void setupStandardScheduler() {
+    public void setupStandardScheduler() {
         try {
             getCardIdMethod = Deck.class.getDeclaredMethod("_getCardId", boolean.class);
             fillFailedQueueMethod = Deck.class.getDeclaredMethod("_fillFailedQueue");
@@ -1223,7 +1225,7 @@ public class Deck {
     }
 
 
-    private void updateCutoff() {
+    public void updateCutoff() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, (int) -utcOffset + 86400);
         cal.set(Calendar.HOUR, 0); // Yes, verbose but crystal clear
@@ -1241,6 +1243,7 @@ public class Deck {
         }
         // Cutoff must not be more than 24 hours in the future
         cutoff = Math.min(System.currentTimeMillis() / 1000 + 86400, cutoff);
+        failedCutoff = cutoff;
         if (getBool("perDay")) {
             dueCutoff = (double) cutoff;
         } else {
@@ -1387,7 +1390,7 @@ public class Deck {
      * Cramming*****************************
      */
 
-    private void setupCramScheduler(String[] active, String order) {
+    public void setupCramScheduler(String[] active, String order) {
         try {
             getCardIdMethod = Deck.class.getDeclaredMethod("_getCramCardId", boolean.class);
             activeCramTags = active;
@@ -1706,7 +1709,11 @@ public class Deck {
     }
 
     public void setPerDay(boolean perDay) {
-        setVar("perDay", perDay;
+        if (perDay) {
+            setVar("perDay", "true");
+        } else {
+            setVar("perDay", "false");
+        }
     }
 
     public int getNewCardsPerDay() {
@@ -1914,41 +1921,6 @@ public class Deck {
         //
         Log.v(TAG, "Update question and answer in card id# " + card.id);
 
-    }
-
-
-    // Optimization for updateAllCardsFromPosition and updateAllCards
-    // Drops some indices and changes synchronous pragma
-    public void beforeUpdateCards() {
-        long now = System.currentTimeMillis();
-        // getDB().database.execSQL("PRAGMA synchronous=NORMAL");
-        // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_duePriority");
-        // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_priorityDue");
-        // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_factor");
-        // getDB().database.execSQL("DROP INDEX IF EXISTS ix_cards_sort");
-        // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_factId");
-        // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_intervalDesc");
-        // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_intervalAsc");
-        // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_randomOrder");
-        // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_dueAsc");
-        // ankiDB.database.execSQL("DROP INDEX IF EXISTS ix_cards_dueDesc");
-        Log.i(TAG, "BEFORE UPDATE = " + (System.currentTimeMillis() - now));
-    }
-
-
-    public void afterUpdateCards() {
-        long now = System.currentTimeMillis();
-        // ankiDB.database.execSQL("CREATE INDEX ix_cards_duePriority on cards (type, isDue, combinedDue, priority)");
-        // ankiDB.database.execSQL("CREATE INDEX ix_cards_priorityDue on cards (type, isDue, priority, combinedDue)");
-        // ankiDB.database.execSQL("CREATE INDEX ix_cards_factor on cards 			(type, factor)");
-        // getDB().database.execSQL("CREATE INDEX ix_cards_sort on cards (answer collate nocase)");
-        // ankiDB.database.execSQL("CREATE INDEX ix_cards_factId on cards (factId, type)");
-        // updateDynamicIndices();
-        // getDB().database.execSQL("PRAGMA synchronous=FULL");
-        Log.i(TAG, "AFTER UPDATE = " + (System.currentTimeMillis() - now));
-        // now = System.currentTimeMillis();
-        // ankiDB.database.execSQL("ANALYZE");
-        // Log.i("ANALYZE = " + System.currentTimeMillis() - now);
     }
 
 
@@ -2364,9 +2336,12 @@ public class Deck {
         ArrayList<String> t = new ArrayList<String>();
         t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts " + where, 0));
         t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM models", 0));
-        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM cardModels", 0));
-
-        return (String[]) (new TreeSet<String>(Arrays.asList(Utils.parseTags(Utils.joinTags(t)))).toArray());
+        t.addAll(getDB().queryColumn(String.class, "SELECT name FROM cardModels", 0));
+        String joined = Utils.joinTags(t);
+        String[] parsed = Utils.parseTags(joined);
+        List<String> joinedList = Arrays.asList(parsed);
+        TreeSet<String> joinedSet = new TreeSet<String>(joinedList);
+        return joinedSet.toArray(new String[joinedSet.size()]);
     }
 
 

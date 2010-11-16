@@ -21,9 +21,11 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
@@ -32,6 +34,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 
 public class StudyOptions extends Activity {
     /**
@@ -143,7 +146,9 @@ public class StudyOptions extends Activity {
      */
     private AlertDialog mCramTagsDialog;
     private String allCramTags[];
-    private Set<String> activeCramTags;
+    private HashSet<String> activeCramTags;
+    private String cramOrder;
+    private static final String[] cramOrderList = {"modified", "created", "random()"};
 
     /**
      * UI elements for "Study Options" view
@@ -228,9 +233,11 @@ public class StudyOptions extends Activity {
                         allCramTags = AnkiDroidApp.deck().allTags_();
                         activeCramTags.clear();
                         mCramTagsDialog.show();
+                        cramOrder = cramOrderList[0];
                     } else {
                         onCramStop();
                     }
+                    return;
                 case R.id.studyoptions_more:
                     showMoreOptionsDialog();
                     return;
@@ -341,7 +348,7 @@ public class StudyOptions extends Activity {
         initAllDialogs();
 
         // Timeboxing only supported using the standard scheduler
-        if (deck.hasFinishScheduler()) {
+        if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
             mEditNewPerDay.setEnabled(false);
             mEditSessionTime.setEnabled(false);
             mEditSessionQuestions.setEnabled(false);
@@ -353,8 +360,8 @@ public class StudyOptions extends Activity {
             mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
         }
 
-        if (deck.hasFinishScheduler()) {
-            deck.finishScheduler();
+        if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
+            AnkiDroidApp.deck().finishScheduler();
         }
 
         Intent intent = getIntent();
@@ -499,6 +506,7 @@ public class StudyOptions extends Activity {
         mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
         mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
 
+        
         // The view to use when there is no external storage available
         mNoExternalStorageView = getLayoutInflater().inflate(R.layout.studyoptions_nostorage, null);
     }
@@ -547,10 +555,10 @@ public class StudyOptions extends Activity {
         mConnectionErrorAlert = builder.create();
 
         // Dialog for selecting the cram tags
-        activeCramTags = new Set<String>();
+        activeCramTags = new HashSet<String>();
         builder.setTitle(res.getString(R.string.tags_to_cram_title));
         builder.setMessage(res.getString(R.string.tags_to_cram_message));
-        builder.setMultiChoiceItems(allTags, null, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setMultiChoiceItems(allCramTags, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 if (isChecked) {
@@ -558,6 +566,12 @@ public class StudyOptions extends Activity {
                 } else {
                     activeCramTags.remove(allCramTags[which]);
                 }
+            }
+        });
+        builder.setSingleChoiceItems(R.array.cramReviewOrder, 0,  new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cramOrder = cramOrderList[which];
             }
         });
         builder.setPositiveButton(res.getString(R.string.begin_cram), new OnClickListener() {
@@ -679,9 +693,9 @@ public class StudyOptions extends Activity {
     }
     private void reset(boolean priorities) {
         if (priorities) {
-            deck.updateAllPriorities();
+            AnkiDroidApp.deck().updateAllPriorities();
         }
-        deck.reset();
+        AnkiDroidApp.deck().reset();
     }
 
     /**
@@ -689,15 +703,14 @@ public class StudyOptions extends Activity {
      * Currently not supporting cramming from selection of cards, as we don't have a card list view anyway.
      */
     private void onCram() {
-        // TODO: continue coding stopped here for now.
-        
+        AnkiDroidApp.deck().setupCramScheduler((String[]) activeCramTags.toArray(), cramOrder);
     }
 
     /**
      * Exit cramming mode.
      */
     private void onCramStop() {
-
+        AnkiDroidApp.deck().setupStandardScheduler();
     }
 
     @Override
@@ -918,6 +931,8 @@ public class StudyOptions extends Activity {
             // }
         } else if (requestCode == REQUEST_REVIEW) {
             Log.i(TAG, "Result code = " + resultCode);
+            AnkiDroidApp.deck().updateCutoff();
+            AnkiDroidApp.deck().reset();
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
                     showContentView(CONTENT_SESSION_COMPLETE);

@@ -145,4 +145,9 @@
 		<item>200</item>
 		<item>1000000</item>
 	</string-array>
+	<string-array name="cramReviewOrder">
+		<item>Show oldest modified first</item>
+		<item>Show in order added</item>
+		<item>Show in random order</item>
+	</string-array>
 </resources>
