@@ -798,7 +798,6 @@ public class Deck {
     private void rebuildFailedCount() {
         try {
             rebuildFailedCountMethod.invoke(Deck.this);
-            Log.e(TAG, "aaaaa");
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -2108,7 +2107,7 @@ public class Deck {
         // Adjust counts
         try {
             cursor = getDB().database.rawQuery("SELECT type, count(type) FROM cards WHERE factId = " + card.factId
-                    + " AND combinedDue < " + dueCutoff + " id != " + card.id + ") GROUP BY type", null);
+                    + " AND combinedDue < " + dueCutoff + " AND id != " + card.id + ") GROUP BY type", null);
             while (cursor.moveToNext()) {
                 Log.i(TAG, "failedSoonCount before = " + failedSoonCount);
                 Log.i(TAG, "revCount before = " + revCount);

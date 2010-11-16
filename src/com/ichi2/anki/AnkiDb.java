@@ -108,7 +108,6 @@ public class AnkiDb {
             while (cursor.moveToNext()) {
                 // The magical line. Almost as illegible as python code ;)
                 results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
-                Log.i(TAG, "results num: " + results.size());
             }
         } catch (NoSuchMethodException e) {
             // This is really coding error, so it should be revealed if it ever happens
@@ -138,7 +137,6 @@ public class AnkiDb {
      * @return The name of the Cursor method to be called.
      */
     private static String getCursorMethodName(String typeName) {
-        Log.d(TAG, "Type name: " + typeName);
         if (typeName.equals("String")) {
             return "getString";
         } else if (typeName.equals("Long")) {

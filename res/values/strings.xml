@@ -310,7 +310,6 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
 <string name="sync_progress_bar_title">Syncing %s</string>
 <string name="tags_to_cram_title">Tags to cram</string>
-<string name="tags_to_cram_message">Select which tags to include for cramming. Use blank for all facts.</string>
 <string name="begin_cram">Start Cram mode</string>
 <string name="end_cram">Stop Cram mode</string>
 

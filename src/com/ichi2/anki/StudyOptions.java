@@ -34,6 +34,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class StudyOptions extends Activity {
@@ -45,7 +46,7 @@ public class StudyOptions extends Activity {
     /**
      * Tag for logging messages
      */
-    private static final String TAG = "Ankidroid";
+    private static final String TAG = "AnkiDroid";
 
     /**
      * Filename of the sample deck to load
@@ -230,8 +231,10 @@ public class StudyOptions extends Activity {
                     return;
                 case R.id.studyoptions_cram:
                     if (mToggleCram.isChecked()) {
-                        allCramTags = AnkiDroidApp.deck().allTags_();
                         activeCramTags.clear();
+                        Log.i(TAG, "starting dialog");
+                        recreateCramTagsDialog();
+                        Log.i(TAG, "ending dialog");
                         mCramTagsDialog.show();
                         cramOrder = cramOrderList[0];
                     } else {
@@ -343,6 +346,8 @@ public class StudyOptions extends Activity {
         registerExternalStorageListener();
 
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+        activeCramTags = new HashSet<String>();
 
         initAllContentViews();
         initAllDialogs();
@@ -486,7 +491,7 @@ public class StudyOptions extends Activity {
         mEditSessionTime.setOnFocusChangeListener(mEditFocusListener);
         mEditSessionQuestions.setOnFocusChangeListener(mEditFocusListener);
 
-        mDialogMoreOptions = createDialog();
+        mDialogMoreOptions = createMoreOptionsDialog();
 
         // The view to use when there is no deck loaded yet.
         // TODO: Add and init view here.
@@ -553,12 +558,42 @@ public class StudyOptions extends Activity {
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mConnectionErrorAlert = builder.create();
+    }
+
+
+    // This has to be called every time we open a new deck AND whenever we edit any tags.
+    private void recreateCramTagsDialog() {
+        Resources res = getResources();
 
         // Dialog for selecting the cram tags
-        activeCramTags = new HashSet<String>();
-        builder.setTitle(res.getString(R.string.tags_to_cram_title));
-        builder.setMessage(res.getString(R.string.tags_to_cram_message));
-        builder.setMultiChoiceItems(allCramTags, null, new DialogInterface.OnMultiChoiceClickListener() {
+        activeCramTags.clear();
+        allCramTags = AnkiDroidApp.deck().allTags_();
+        Log.i(TAG, "all cram tags: " + Arrays.toString(allCramTags));
+
+        View contentView = getLayoutInflater().inflate(R.layout.studyoptions_cram_dialog_contents, null);
+        mCramTagsListView = (ListView) contentView.findViewById(R.id.cram_tags_list);
+        mCramTagsListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,
+                    allCramTags));
+        mCramTagsListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (((CheckedTextView)view).isChecked()) {
+                    Log.i(TAG, "checked tag: " + allCramTags[position]);
+                    activeCramTags.add(allCramTags[position]);
+                } else {
+                    Log.i(TAG, "unchecked tag: " + allCramTags[position]);
+                    activeCramTags.remove(allCramTags[position]);
+                }
+            }
+        mSpinnerCramOrder = (Spinner) contentView.findViewById(R.id.cram_order_spinner);
+        mSpinnerCramOrder.setSelection(0);
+        mSpinnerCramOrder.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void 
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(res.getString(R.string.tags_to_cram_title))
+        .setMultiChoiceItems(allCramTags, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                 if (isChecked) {
@@ -566,26 +601,20 @@ public class StudyOptions extends Activity {
                 } else {
                     activeCramTags.remove(allCramTags[which]);
                 }
+                Log.i(TAG, "cram tags: " + Arrays.toString(activeCramTags.toArray(new String[activeCramTags.size()])));
             }
-        });
-        builder.setSingleChoiceItems(R.array.cramReviewOrder, 0,  new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                cramOrder = cramOrderList[which];
-            }
-        });
-        builder.setPositiveButton(res.getString(R.string.begin_cram), new OnClickListener() {
+        })
+        .setPositiveButton(res.getString(R.string.begin_cram), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 onCram();
             }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), null);
+        })
+        .setNegativeButton(res.getString(R.string.cancel), null);
         mCramTagsDialog = builder.create();
     }
 
-
-    private AlertDialog createDialog() {
+    private AlertDialog createMoreOptionsDialog() {
         // Custom view for the dialog content.
         View contentView = getLayoutInflater().inflate(R.layout.studyoptions_more_dialog_contents, null);
         mSpinnerNewCardOrder = (Spinner) contentView.findViewById(R.id.studyoptions_new_card_order);
