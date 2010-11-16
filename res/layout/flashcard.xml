@@ -76,6 +76,12 @@
 		android:layout_height="wrap_content"
 		android:maxLines="2" />
 
+	<include android:id="@+id/flip_card"
+		layout="@layout/bottom_button"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/answer_options_layout" />
+
 	<LinearLayout android:id="@+id/answer_options_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -87,6 +93,4 @@
 		<include android:id="@+id/ease4" layout="@layout/bottom_button" />
 	</LinearLayout>
 
-	<include android:id="@+id/flip_card" layout="@layout/bottom_button" />
-
-	</RelativeLayout>
+</RelativeLayout>
