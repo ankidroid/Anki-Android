@@ -29,7 +29,7 @@ public class Image {
     /**
      * Pattern used to identify img tags
      */
-    private static Pattern sImagePattern = Pattern
+    public static Pattern sImagePattern = Pattern
             .compile("(?i)<img[^<>(src)]*src\\s*=\\s*(\"[^\"]*\"|'[^']*'|[^'\">]+)[^<>]*>");
 
 

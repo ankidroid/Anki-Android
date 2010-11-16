@@ -859,10 +859,14 @@ public class Reviewer extends Activity {
             if (mCurrentCard != null) {
                 // Obtain the user answer and the correct answer
                 String userAnswer = mAnswerField.getText().toString();
-                Matcher spanMatcher = sSpanPattern.matcher(mCurrentCard.getAnswer());
-                String correctAnswer = spanMatcher.replaceAll("");
-                Matcher brMatcher = sBrPattern.matcher(correctAnswer);
-                correctAnswer = brMatcher.replaceAll("\n");
+                Matcher matcher = sSpanPattern.matcher(mCurrentCard.getAnswer());
+                String correctAnswer = matcher.replaceAll("");
+                matcher = sBrPattern.matcher(correctAnswer);
+                correctAnswer = matcher.replaceAll("\n");
+                matcher = Sound.sSoundPattern.matcher(correctAnswer);
+                correctAnswer = matcher.replaceAll("");
+                matcher = Image.sImagePattern.matcher(correctAnswer);
+                correctAnswer = matcher.replaceAll("");
                 Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
 
                 // Obtain the diff and send it to updateCard

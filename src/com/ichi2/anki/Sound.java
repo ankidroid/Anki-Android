@@ -33,7 +33,7 @@ public class Sound {
     /**
      * Pattern used to identify the markers for sound files
      */
-    private static Pattern sSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
+    public static Pattern sSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
 
     /**
      * Media player used to play the sounds
