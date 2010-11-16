@@ -133,11 +133,18 @@ public class Whiteboard extends View {
     }
 
 
+    /**
+     * Create a new bitmap that fits the new screen layout.
+     * The content of the whiteboard does not survive screen rotation.
+     */
     public void rotate() {
         mRecreateBitmap = true;
     }
 
 
+    /**
+     * Clear the whiteboard.
+     */
     public void clear() {
         mBitmap.eraseColor(mBackgroundColor);
         unlock();

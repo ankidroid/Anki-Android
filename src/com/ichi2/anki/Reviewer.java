@@ -170,8 +170,7 @@ public class Reviewer extends Activity {
         }
     };
 
-    // Handler for the flip toggle button, between the question and the answer
-    // of a card
+    // Handler for the "show answer" button
     private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -374,7 +373,7 @@ public class Reviewer extends Activity {
 
             registerExternalStorageListener();
 
-            initLayout(R.layout.flashcard_portrait);
+            initLayout(R.layout.flashcard);
 
             // Load the template for the card and set on it the available width for images
             try {
@@ -428,11 +427,27 @@ public class Reviewer extends Activity {
 
         Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
 
+        long savedTimer = mCardTimer.getBase();
+        CharSequence savedAnswerField = mAnswerField.getText();
+
+        // Reload layout
+        initLayout(R.layout.flashcard);
+
         // Modify the card template to indicate the new available width and refresh card
         mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
                 + getAvailableWidthInCard() + ";");
+
         refreshCard();
 
+        updateScreenCounts();
+
+        if (mPrefTimer) {
+            mCardTimer.setBase(savedTimer);
+            mCardTimer.start();
+        }
+        if (mPrefWriteAnswers) {
+            mAnswerField.setText(savedAnswerField);
+        }
         if (mPrefWhiteboard) {
             mWhiteboard.rotate();
         }
@@ -509,8 +524,9 @@ public class Reviewer extends Activity {
             }
 
             // Restore fullscreen preference
-            getWindow()
-                    .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
@@ -656,23 +672,17 @@ public class Reviewer extends Activity {
 
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setOnClickListener(mFlipCardListener);
+        mFlipCard.setText(getResources().getString(R.string.show_answer));
 
         mTextBarRed = (TextView) findViewById(R.id.red_number);
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
         mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 
-        if (mPrefTimer) {
-            mCardTimer = (Chronometer) findViewById(R.id.card_time);
-        }
-        if (mPrefWhiteboard) {
-            mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
-        }
-        if (mPrefWriteAnswers) {
-            mAnswerField = (EditText) findViewById(R.id.answer_field);
-        }
+        mCardTimer = (Chronometer) findViewById(R.id.card_time);
+        mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
+        mAnswerField = (EditText) findViewById(R.id.answer_field);
 
-        hideEaseButtons();
-        showControls();
+        initControls();
     }
 
 
@@ -699,6 +709,7 @@ public class Reviewer extends Activity {
         mEase4.setVisibility(View.VISIBLE);
 
         // Focus default button
+        // XXX Is it really working?
         if (mCurrentCard.isRev()) {
             mEase3.requestFocus();
         } else {
@@ -717,24 +728,16 @@ public class Reviewer extends Activity {
     }
 
 
-    private void showControls() {
+    private void initControls() {
         mCard.setVisibility(View.VISIBLE);
         mTextBarRed.setVisibility(View.VISIBLE);
         mTextBarBlack.setVisibility(View.VISIBLE);
         mTextBarBlue.setVisibility(View.VISIBLE);
         mFlipCard.setVisibility(View.VISIBLE);
 
-        if (mPrefTimer) {
-            mCardTimer.setVisibility(View.VISIBLE);
-        }
-
-        if (mPrefWhiteboard && mShowWhiteboard) {
-            mWhiteboard.setVisibility(View.VISIBLE);
-        }
-
-        if (mPrefWriteAnswers) {
-            mAnswerField.setVisibility(View.VISIBLE);
-        }
+        mCardTimer.setVisibility((mPrefTimer) ? View.VISIBLE : View.GONE);
+        mWhiteboard.setVisibility((mPrefWhiteboard && mShowWhiteboard) ? View.VISIBLE : View.GONE);
+        mAnswerField.setVisibility((mPrefWriteAnswers) ? View.VISIBLE : View.GONE);
     }
 
 
@@ -766,7 +769,7 @@ public class Reviewer extends Activity {
 
 
     private void reviewNextCard() {
-        updateCounts();
+        updateScreenCounts();
 
         // Clean answer field
         if (mPrefWriteAnswers) {
@@ -786,7 +789,7 @@ public class Reviewer extends Activity {
     }
 
 
-    private void updateCounts() {
+    private void updateScreenCounts() {
         Deck deck = AnkiDroidApp.deck();
         String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
         setTitle(String.format(unformattedTitle, deck.getDeckName(), deck.getDueCount(), deck.getCardCount()));
@@ -832,7 +835,7 @@ public class Reviewer extends Activity {
 
         String displayString = enrichWithQASpan(mCurrentCard.getQuestion(), false);
         // Show an horizontal line as separation when question is shown in answer
-        if (questionIsDisplayed()) {
+        if (isQuestionDisplayed()) {
             displayString = displayString + "<hr/>";
         }
 
@@ -877,7 +880,7 @@ public class Reviewer extends Activity {
         }
 
         // Depending on preferences do or do not show the question
-        if (questionIsDisplayed()) {
+        if (isQuestionDisplayed()) {
             StringBuffer sb = new StringBuffer();
             sb.append(enrichWithQASpan(mCurrentCard.getQuestion(), false));
             sb.append("<hr/>");
@@ -927,7 +930,7 @@ public class Reviewer extends Activity {
     }
 
 
-    private boolean questionIsDisplayed() {
+    private boolean isQuestionDisplayed() {
         switch (mPrefHideQuestionInAnswer) {
             case HQIA_DO_HIDE:
                 return false;
