@@ -66,7 +66,7 @@ public class Model {
     private String mTags = "";
     private String mName;
     private String mDescription = "";
-    private String mFeatures = ""; // obsolete
+    private String mFeatures = ""; // used as the media url
     private double mSpacing = 0.1;
     private double mInitialSpacing = 60;
     private int mSource = 0;
@@ -177,6 +177,16 @@ public class Model {
     }
 
 
+    public TreeMap<Long, FieldModel> getFieldModels() {
+
+        FieldModel mFieldModel;
+        TreeMap<Long, FieldModel> mFieldModels = new TreeMap<Long, FieldModel>();
+        FieldModel.fromDb(mDeck, mId, mFieldModels);
+        return mFieldModels;
+
+    }
+
+
     protected final CardModel getCardModel(long identifier) {
         return mCardModelsMap.get(identifier);
     }
@@ -245,6 +255,14 @@ public class Model {
             }
         }
         return model;
+    }
+
+
+    /**
+     * @return the ID
+     */
+    public long getId() {
+        return mId;
     }
 
 
@@ -356,6 +374,10 @@ public class Model {
      */
     public String getName() {
         return mName;
+    }
+    
+    public String getFeatures() {
+    	return mFeatures;
     }
 
 }

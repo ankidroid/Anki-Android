@@ -398,4 +398,11 @@ public class Utils {
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
+    
+    public static String getBaseUrl(Model model, String deckFileName) {
+    	String base = model.getFeatures().trim();
+    	if( base.length() == 0 )
+    		base = "file://" + deckFileName.replace(".anki", ".media/");
+    	return base;
+    }
 }
