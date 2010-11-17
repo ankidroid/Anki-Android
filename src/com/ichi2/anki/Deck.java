@@ -1512,7 +1512,7 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillCramQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
-            String sql = "SELECT id, factId FROM cards WHERE type BETWEEN 0 AND 2 ORDER BY " + cramOrder + " LIMIT "
+            String sql = "SELECT id, factId FROM cards c WHERE type BETWEEN 0 AND 2 ORDER BY " + cramOrder + " LIMIT "
                     + queueLimit;
             Cursor cur = getDB().database.rawQuery(cardLimit(activeCramTags, null, sql), null);
             while (cur.moveToNext()) {
@@ -1526,7 +1526,7 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _rebuildCramCount() {
         revCount = (int) getDB().queryScalar(cardLimit(activeCramTags, null,
-                "SELECT count(*) FROM cards WHERE type BETWEEN 0 AND 2"));
+                "SELECT count(*) FROM cards c WHERE type BETWEEN 0 AND 2"));
     }
 
 
@@ -2107,7 +2107,7 @@ public class Deck {
         // Adjust counts
         try {
             cursor = getDB().database.rawQuery("SELECT type, count(type) FROM cards WHERE factId = " + card.factId
-                    + " AND combinedDue < " + dueCutoff + " AND id != " + card.id + ") GROUP BY type", null);
+                    + " AND combinedDue < " + dueCutoff + " AND id != " + card.id + " GROUP BY type", null);
             while (cursor.moveToNext()) {
                 Log.i(TAG, "failedSoonCount before = " + failedSoonCount);
                 Log.i(TAG, "revCount before = " + revCount);
@@ -2133,7 +2133,7 @@ public class Deck {
 
         // space other cards
         getDB().database.execSQL(String.format(ENGLISH_LOCALE, "UPDATE cards SET spaceUntil = %f, "
-                + "combinedDue = max(%f, due), modified = %f, isDue = 0 WHERE id != %ld and factId = %ld", space,
+                + "combinedDue = max(%f, due), modified = %f, isDue = 0 WHERE id != %d and factId = %d", space,
                 space, ((double) System.currentTimeMillis() / 1000.0), card.id, card.factId));
         // Update local cache of seen facts
         spacedFacts.put(card.factId, space);

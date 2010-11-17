@@ -20,9 +20,13 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -217,6 +221,12 @@ public class StudyOptions extends Activity {
     private View mNoExternalStorageView;
 
     /**
+     * UI elements for "Cram Tags" view
+     */
+    private ListView mCramTagsListView;
+    private Spinner mSpinnerCramOrder;
+    
+    /**
      * Callbacks for UI events
      */
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
@@ -232,11 +242,9 @@ public class StudyOptions extends Activity {
                 case R.id.studyoptions_cram:
                     if (mToggleCram.isChecked()) {
                         activeCramTags.clear();
-                        Log.i(TAG, "starting dialog");
-                        recreateCramTagsDialog();
-                        Log.i(TAG, "ending dialog");
-                        mCramTagsDialog.show();
                         cramOrder = cramOrderList[0];
+                        recreateCramTagsDialog();
+                        mCramTagsDialog.show();
                     } else {
                         onCramStop();
                     }
@@ -352,19 +360,11 @@ public class StudyOptions extends Activity {
         initAllContentViews();
         initAllDialogs();
 
-        // Timeboxing only supported using the standard scheduler
-        if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
-            mEditNewPerDay.setEnabled(false);
-            mEditSessionTime.setEnabled(false);
-            mEditSessionQuestions.setEnabled(false);
-            mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(false);
-        } else {
-            mEditNewPerDay.setEnabled(true);
-            mEditSessionTime.setEnabled(true);
-            mEditSessionQuestions.setEnabled(true);
-            mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
-        }
-
+        // Enable timeboxing in case it was disabled from the previous deck
+        mEditNewPerDay.setEnabled(true);
+        mEditSessionTime.setEnabled(true);
+        mEditSessionQuestions.setEnabled(true);
+        mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
         if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
             AnkiDroidApp.deck().finishScheduler();
         }
@@ -572,45 +572,48 @@ public class StudyOptions extends Activity {
 
         View contentView = getLayoutInflater().inflate(R.layout.studyoptions_cram_dialog_contents, null);
         mCramTagsListView = (ListView) contentView.findViewById(R.id.cram_tags_list);
-        mCramTagsListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,
+        mCramTagsListView.setAdapter(new ArrayAdapter<String>(this, R.layout.studyoptions_cram_dialog_item,
                     allCramTags));
-        mCramTagsListView.setOnItemClickListener(new OnItemClickListener() {
+        mCramTagsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (((CheckedTextView)view).isChecked()) {
-                    Log.i(TAG, "checked tag: " + allCramTags[position]);
-                    activeCramTags.add(allCramTags[position]);
-                } else {
                     Log.i(TAG, "unchecked tag: " + allCramTags[position]);
                     activeCramTags.remove(allCramTags[position]);
+                } else {
+                    Log.i(TAG, "checked tag: " + allCramTags[position]);
+                    activeCramTags.add(allCramTags[position]);
                 }
             }
+        });
+        mCramTagsListView.setItemsCanFocus(false);
         mSpinnerCramOrder = (Spinner) contentView.findViewById(R.id.cram_order_spinner);
         mSpinnerCramOrder.setSelection(0);
-        mSpinnerCramOrder.setOnItemSelectedListener(new OnItemSelectedListener() {
+        mSpinnerCramOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void 
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(res.getString(R.string.tags_to_cram_title))
-        .setMultiChoiceItems(allCramTags, null, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                if (isChecked) {
-                    activeCramTags.add(allCramTags[which]);
-                } else {
-                    activeCramTags.remove(allCramTags[which]);
-                }
-                Log.i(TAG, "cram tags: " + Arrays.toString(activeCramTags.toArray(new String[activeCramTags.size()])));
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cramOrder = cramOrderList[position];
             }
-        })
-        .setPositiveButton(res.getString(R.string.begin_cram), new OnClickListener() {
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                return;
+            }
+        });
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.studyoptions_cram_dialog_title);
+        builder.setPositiveButton(res.getString(R.string.begin_cram), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 onCram();
             }
-        })
-        .setNegativeButton(res.getString(R.string.cancel), null);
+        });
+        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mToggleCram.setChecked(false);
+            }
+        });
+        builder.setView(contentView);
         mCramTagsDialog = builder.create();
     }
 
@@ -732,7 +735,13 @@ public class StudyOptions extends Activity {
      * Currently not supporting cramming from selection of cards, as we don't have a card list view anyway.
      */
     private void onCram() {
-        AnkiDroidApp.deck().setupCramScheduler((String[]) activeCramTags.toArray(), cramOrder);
+        AnkiDroidApp.deck().setupCramScheduler(activeCramTags.toArray(new String[activeCramTags.size()]), cramOrder);
+        // Timeboxing only supported using the standard scheduler
+        mEditNewPerDay.setEnabled(false);
+        mEditSessionTime.setEnabled(false);
+        mEditSessionQuestions.setEnabled(false);
+        mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(false);
+        updateValuesFromDeck();
     }
 
     /**
@@ -740,6 +749,11 @@ public class StudyOptions extends Activity {
      */
     private void onCramStop() {
         AnkiDroidApp.deck().setupStandardScheduler();
+        mEditNewPerDay.setEnabled(true);
+        mEditSessionTime.setEnabled(true);
+        mEditSessionQuestions.setEnabled(true);
+        mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
+        updateValuesFromDeck();
     }
 
     @Override
