@@ -110,8 +110,9 @@ public class Card {
     private int mYesCount = 0;
     private int mNoCount = 0;
     private double mSpaceUntil = 0;
+    // relativeDelay is reused as type without scheduling (ie, it remains 0-2 even if card is suspended, etc)
     private double mRelativeDelay = 0;
-    private int mIsDue = 0;
+    private int mIsDue = 0;              // obsolete in libanki 1.1
     private int mType = TYPE_NEW;
     private double mCombinedDue = 0;
     // END SQL table entries
@@ -139,7 +140,7 @@ public class Card {
         mId = Utils.genID();
         // New cards start as new & due
         mType = TYPE_NEW;
-        mIsDue = 1;
+        mRelativeDelay = mType;
         mTimerStarted = Double.NaN;
         mTimerStopped = Double.NaN;
         mModified = Utils.now();
@@ -183,7 +184,7 @@ public class Card {
     }
 
 
-    private void setModified() {
+    public void setModified() {
         mModified = Utils.now();
     }
 
@@ -497,13 +498,6 @@ public class Card {
 
 
     public void toDB() {
-        if (isNew()) {
-            mType = TYPE_NEW;
-        } else if (isRev()) {
-            mType = TYPE_REV;
-        } else {
-            mType = TYPE_FAILED;
-        }
 
         ContentValues values = new ContentValues();
         values.put("factId", mFactId);
@@ -539,7 +533,7 @@ public class Card {
         values.put("yesCount", mYesCount);
         values.put("noCount", mNoCount);
         values.put("spaceUntil", mSpaceUntil);
-        values.put("isDue", mIsDue);
+        values.put("isDue", 0);
         values.put("type", mType);
         values.put("combinedDue", Math.max(mSpaceUntil, mDue));
         values.put("relativeDelay", 0.0);

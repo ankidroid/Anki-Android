@@ -338,12 +338,19 @@ public class SyncClient {
             for (int i = 0; i < len; i++) {
                 cardIds[i] = cards.getJSONArray(i).getLong(0);
             }
-            // TODO: updateCardTags
+            mDeck.updateCardTags(cardIds);
             rebuildPriorities(cardIds);
-            // Rebuild due counts
-            mDeck.rebuildCounts(false);
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+        }
+        assert missingFacts() == 0;
+    }
+
+    private long missingFacts() {
+        try {
+            return mDeck.getDB().queryScalar("SELECT count() FROM cards WHERE factId NOT IN (SELECT id FROM facts)");
+        } catch (Exception e) {
+            return 0;
         }
     }
 
@@ -357,13 +364,15 @@ public class SyncClient {
 
 
     private void rebuildPriorities(long[] cardIds) {
-        try {
-            // TODO: Implement updateAllPriorities
-            // deck.updateAllPriorities(true, false);
-            mDeck.updatePriorities(cardIds, null, false);
-        } catch (SQLException e) {
-            Log.e(AnkiDroidApp.TAG, "SQLException e = " + e.getMessage());
-        }
+        rebuildPriorities(cardIds, null);
+    }
+    private void rebuildPriorities(long[] cardIds, String[] suspend) {
+        //try {
+            mDeck.updateAllPriorities(true, false);
+            mDeck.updatePriorities(cardIds, suspend, false);
+        //} catch (SQLException e) {
+        //    Log.e(TAG, "SQLException e = " + e.getMessage());
+        //}
     }
 
 
@@ -775,10 +784,9 @@ public class SyncClient {
 
     private void mergeFieldModels(String modelId, JSONArray fieldModels) {
         ArrayList<String> ids = new ArrayList<String>();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
-
+        
         String sql = "INSERT OR REPLACE INTO fieldModels VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
+        SQLiteStatement statement = mDeck.getDB().getDatabase().compileStatement(sql);
         int len = fieldModels.length();
         for (int i = 0; i < len; i++) {
             try {
@@ -840,12 +848,13 @@ public class SyncClient {
         statement.close();
 
         // Delete field models that were not returned by the server
-        ArrayList<String> fieldModelsIds = ankiDB.queryColumn(String.class,
+        ArrayList<String> fieldModelsIds = mDeck.getDB().queryColumn(String.class,
                 "SELECT id FROM fieldModels WHERE modelId = " + modelId, 0);
-
-        for (String fieldModelId : fieldModelsIds) {
-            if (!ids.contains(fieldModelId)) {
-                mDeck.deleteFieldModel(modelId, fieldModelId);
+        if (fieldModelsIds != null) {
+            for (String fieldModelId : fieldModelsIds) {
+                if (!ids.contains(fieldModelId)) {
+                    mDeck.deleteFieldModel(modelId, fieldModelId);
+                }
             }
         }
     }
@@ -853,7 +862,6 @@ public class SyncClient {
 
     private void mergeCardModels(String modelId, JSONArray cardModels) {
         ArrayList<String> ids = new ArrayList<String>();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
         String sql = "INSERT OR REPLACE INTO cardModels (id, ordinal, modelId, name, description, active, qformat, "
                 + "aformat, lformat, qedformat, aedformat, questionInAnswer, questionFontFamily, questionFontSize, "
@@ -861,7 +869,7 @@ public class SyncClient {
                 + "lastFontFamily, lastFontSize, lastFontColour, editQuestionFontFamily, editQuestionFontSize, "
                 + "editAnswerFontFamily, editAnswerFontSize, allowEmptyAnswer, typeAnswer) "
                 + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
+        SQLiteStatement statement = mDeck.getDB().getDatabase().compileStatement(sql);
         int len = cardModels.length();
         for (int i = 0; i < len; i++) {
             try {
@@ -968,12 +976,13 @@ public class SyncClient {
         statement.close();
 
         // Delete card models that were not returned by the server
-        ArrayList<String> cardModelsIds = ankiDB.queryColumn(String.class, "SELECT id FROM cardModels WHERE modelId = "
+        ArrayList<String> cardModelsIds = mDeck.getDB().queryColumn(String.class, "SELECT id FROM cardModels WHERE modelId = "
                 + modelId, 0);
-
-        for (String cardModelId : cardModelsIds) {
-            if (!ids.contains(cardModelId)) {
-                mDeck.deleteCardModel(modelId, cardModelId);
+        if (cardModelsIds != null) {
+            for (String cardModelId : cardModelsIds) {
+                if (!ids.contains(cardModelId)) {
+                    mDeck.deleteCardModel(modelId, cardModelId);
+                }
             }
         }
     }
@@ -1085,10 +1094,6 @@ public class SyncClient {
                 }
                 String factIdsString = Utils.ids2str(factIds);
 
-                // Recalculate fact count
-                mDeck.setFactCount((int) (mDeck.getFactCount() + (lenFacts
-                        - ankiDB.queryScalar("SELECT COUNT(*) FROM facts WHERE id IN " + factIdsString))));
-
                 // Update facts
                 String sqlFact = "INSERT OR REPLACE INTO facts (id, modelId, created, modified, tags, spaceUntil, lastCardId)"
                                 + " VALUES(?,?,?,?,?,?,?)";
@@ -1107,7 +1112,11 @@ public class SyncClient {
                     // tags
                     statement.bindString(5, fact.getString(4));
                     // spaceUntil
-                    statement.bindDouble(6, fact.getDouble(5));
+                    if (fact.getString(5) == null) {
+                        statement.bindString(6, "");
+                    } else {
+                        statement.bindString(6, fact.getString(5));
+                    }
                     // lastCardId
                     if (!fact.isNull(6)) {
                         statement.bindLong(7, fact.getLong(6));
@@ -1116,6 +1125,7 @@ public class SyncClient {
                     }
 
                     statement.execute();
+                    
                 }
                 statement.close();
 
@@ -1166,7 +1176,7 @@ public class SyncClient {
         // firstAnswered, reps, successive, averageTime, reviewTime, youngEase0, youngEase1, youngEase2, youngEase3,
         // youngEase4,
         // matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, answer,
-        // lastFactor, spaceUntil,
+        // lastFactor, spaceUntil, relativeDelay,
         // type, combinedDue FROM cards WHERE id IN " + ids2str(ids)
         Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                 "SELECT * FROM cards WHERE id IN " + Utils.ids2str(ids), null);
@@ -1242,6 +1252,8 @@ public class SyncClient {
                 card.put(cursor.getDouble(15));
                 // spaceUntil
                 card.put(cursor.getDouble(33));
+                // relativeDelay
+                card.put(cursor.getInt(34));
                 // type
                 card.put(cursor.getInt(36));
                 // combinedDue
@@ -1272,15 +1284,12 @@ public class SyncClient {
             }
             String idsString = Utils.ids2str(ids);
 
-            mDeck.setCardCount((int) (mDeck.getCardCount() + (len - ankiDB.queryScalar(
-                    "SELECT COUNT(*) FROM cards WHERE id IN " + idsString))));
-
             String sql = "INSERT OR REPLACE INTO cards (id, factId, cardModelId, created, modified, tags, ordinal, "
                     + "priority, interval, lastInterval, due, lastDue, factor, firstAnswered, reps, successive, "
                     + "averageTime, reviewTime, youngEase0, youngEase1, youngEase2, youngEase3, youngEase4, "
                     + "matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, "
                     + "answer, lastFactor, spaceUntil, type, combinedDue, relativeDelay, isDue) "
-                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 0, 0)";
+                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 0)";
             SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
             for (int i = 0; i < len; i++) {
                 try {
@@ -1358,6 +1367,8 @@ public class SyncClient {
                     statement.bindString(35, card.getString(34));
                     // combinedDue
                     statement.bindString(36, card.getString(35));
+                    // relativeDelay
+                    statement.bindString(37, genType(card));
 
                     statement.execute();
                 } catch (JSONException e) {
@@ -1368,6 +1379,17 @@ public class SyncClient {
 
             ankiDB.getDatabase().execSQL("DELETE FROM cardsDeleted WHERE cardId IN " + idsString);
         }
+    }
+    private String genType(JSONArray row) throws JSONException {
+        if (row.length() > 37) {
+            return row.getString(37);
+        }
+        if (row.getString(15).compareTo("0") != 0) {
+            return "1";
+        } else if (row.getString(14).compareTo("0") != 0) {
+            return "0";
+        }
+        return "2";
     }
 
 
@@ -1414,19 +1436,19 @@ public class SyncClient {
 
     private void deleteMedia(JSONArray ids) {
         Log.i(AnkiDroidApp.TAG, "deleteMedia");
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
         String idsString = Utils.ids2str(ids);
 
         // Get filenames
-        ArrayList<String> files = ankiDB.queryColumn(String.class, "SELECT filename FROM media WHERE id IN "
+        // FIXME: How come files is never used?
+        ArrayList<String> files = mDeck.getDB().queryColumn(String.class, "SELECT filename FROM media WHERE id IN "
                 + idsString, 0);
 
         // Note the media to delete (Insert the media to delete into mediaDeleted)
         double now = Utils.now();
         String sqlInsert = "INSERT INTO mediaDeleted SELECT id, " + String.format(Utils.ENGLISH_LOCALE, "%f", now)
                 + " FROM media WHERE media.id = ?";
-        SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sqlInsert);
+        SQLiteStatement statement = mDeck.getDB().getDatabase().compileStatement(sqlInsert);
         int len = ids.length();
         for (int i = 0; i < len; i++) {
             try {
@@ -1441,7 +1463,7 @@ public class SyncClient {
 
         // Delete media
         Log.i(AnkiDroidApp.TAG, "Deleting media in = " + idsString);
-        ankiDB.getDatabase().execSQL("DELETE FROM media WHERE id IN " + idsString);
+        mDeck.getDB().getDatabase().execSQL("DELETE FROM media WHERE id IN " + idsString);
     }
 
 
@@ -1500,6 +1522,8 @@ public class SyncClient {
             // progressHandlerCalled,
             // progressHandlerEnabled, revCardOrder, sessionRepLimit, sessionStartReps, sessionStartTime,
             // sessionTimeLimit, tmpMediaDir
+
+            // Our bundleDeck also doesn't need all those fields that store the scheduler Methods
 
             // Add meta information of the deck (deckVars table)
             JSONArray meta = new JSONArray();
@@ -1563,7 +1587,7 @@ public class SyncClient {
         // Get daily stats since the last day the deck was synchronized
         Date lastDay = new Date(java.lang.Math.max(0, (long) (mDeck.getLastSync() - 60 * 60 * 24) * 1000));
         Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString());
-        ArrayList<Long> ids = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).queryColumn(Long.class,
+        ArrayList<Long> ids = mDeck.getDB().queryColumn(Long.class,
                 "SELECT id FROM stats WHERE type = 1 and day >= \"" + lastDay.toString() + "\"", 0);
 
         try {
@@ -1572,11 +1596,13 @@ public class SyncClient {
             bundledStats.put("global", Stats.globalStats(mDeck).bundleJson());
             // Put daily stats
             JSONArray dailyStats = new JSONArray();
-            for (Long id : ids) {
-                // Update stat with the values of the stat with id ids.get(i)
-                stat.fromDB(id);
-                // Bundle this stat and add it to dailyStats
-                dailyStats.put(stat.bundleJson());
+            if (ids != null) {
+                for (Long id : ids) {
+                    // Update stat with the values of the stat with id ids.get(i)
+                    stat.fromDB(id);
+                    // Bundle this stat and add it to dailyStats
+                    dailyStats.put(stat.bundleJson());
+                }
             }
             bundledStats.put("daily", dailyStats);
         } catch (SQLException e) {

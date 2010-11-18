@@ -43,7 +43,7 @@ public class Fact {
     private double mCreated;
     private double mModified;
     private String mTags;
-    private double mSpaceUntil;
+    private String mSpaceUntil; // Once obsolete, under libanki1.1 spaceUntil is reused as a html-stripped cache of the fields
 
     private Model mModel;
     private TreeSet<Field> mFields;
@@ -225,6 +225,24 @@ public class Fact {
         return returnList;
     }
 
+
+    public void setModified(boolean textChanged) {
+        mModified = System.currentTimeMillis();
+        if (textChanged) {
+            mSpaceUntil = "";
+            for (Field f : getFields()) {
+                mSpaceUntil += f.getValue() + " ";
+            }
+            mSpaceUntil.substring(0, mSpaceUntil.length()-1);
+            Log.d(AnkiDroidApp.TAG, "spaceUntil = " + mSpaceUntil);
+            for (Card card : getUpdatedRelatedCards()) {
+                card.setModified();
+                card.toDB();
+            }
+        }
+    }
+
+
     public static final class FieldOrdinalComparator implements Comparator<Field> {
         @Override
         public int compare(Field object1, Field object2) {
@@ -299,5 +317,4 @@ public class Fact {
             return mFieldModel;
         }
     }
-
 }

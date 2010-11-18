@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 
 import com.mindprod.common11.BigDate;
@@ -39,14 +41,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.Deflater;
 
 /**
@@ -69,7 +76,13 @@ public class Utils {
     /* Prevent class from being instantiated */
     private Utils() { }
 
-
+    // Regex pattern used in removing tags from text before diff
+    private static final Pattern imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>");
+    private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
+    private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
+    private static final Pattern tagPattern = Pattern.compile("<.*?>");
+    private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
+    
     public static long genID() {
         long time = System.currentTimeMillis();
         long id;
@@ -95,6 +108,23 @@ public class Utils {
         return id;
     }
 
+    private static final BigInteger shiftID = new BigInteger("18446744073709551616");
+    private static final BigInteger maxID = new BigInteger("9223372036854775808");
+    public static String hexifyID(long id) {
+        if (id < 0) {
+            BigInteger bid = BigInteger.valueOf(id);
+            return bid.add(shiftID).toString(16);
+        }
+        return Long.toHexString(id);
+    }
+    
+    public static long dehexifyID(String id) {
+        BigInteger bid = new BigInteger(id, 16);
+        if (bid.compareTo(maxID) >= 0) {
+            bid.subtract(shiftID);
+        }
+        return bid.longValue();
+    }
 
     /**
      * Returns a SQL string from an array of integers.
@@ -102,16 +132,11 @@ public class Utils {
      * @return An SQL compatible string in the format (ids[0],ids[1],..).
      */
     public static String ids2str(long[] ids) {
-        String str = "(";
-        int len = ids.length;
-        for (int i = 0; i < len; i++) {
-            if (i == (len - 1)) {
-                str += ids[i];
-            } else {
-                str += ids[i] + ",";
-            }
+        String str = "()";
+        if (ids != null) {
+            str = Arrays.toString(ids);
+            str = "(" + str.substring(1, str.length()-1) + ")";
         }
-        str += ")";
         return str;
     }
 
@@ -123,16 +148,18 @@ public class Utils {
      */
     public static String ids2str(JSONArray ids) {
         String str = "(";
-        int len = ids.length();
-        for (int i = 0; i < len; i++) {
-            try {
-                if (i == (len - 1)) {
-                    str += ids.get(i);
-                } else {
-                    str += ids.get(i) + ",";
+        if (ids != null) {
+            int len = ids.length();
+            for (int i = 0; i < len; i++) {
+                try {
+                    if (i == (len - 1)) {
+                        str += ids.get(i);
+                    } else {
+                        str += ids.get(i) + ",";
+                    }
+                } catch (JSONException e) {
+                    Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                 }
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
             }
         }
         str += ")";
@@ -147,12 +174,14 @@ public class Utils {
      */
     public static String ids2str(List<String> ids) {
         String str = "(";
-        int len = ids.size();
-        for (int i = 0; i < len; i++) {
-            if (i == (len - 1)) {
-                str += ids.get(i);
-            } else {
-                str += ids.get(i) + ",";
+        if (ids != null) {
+            int len = ids.size();
+            for (int i = 0; i < len; i++) {
+                if (i == (len - 1)) {
+                    str += ids.get(i);
+                } else {
+                    str += ids.get(i) + ",";
+                }
             }
         }
         str += ")";
@@ -181,6 +210,36 @@ public class Utils {
 
         return list;
     }
+
+    /**
+     * Strip HTML but keep media filenames
+     */
+    public static String stripHTMLMedia(String s) {
+        Matcher imgMatcher = imgPattern.matcher(s);
+        return stripHTML(imgMatcher.replaceAll(" $1 "));
+    }
+    private static String stripHTML(String s) {
+        Matcher styleMatcher = stylePattern.matcher(s);
+        s = styleMatcher.replaceAll("");
+        Matcher scriptMatcher = scriptPattern.matcher(s);
+        s = scriptMatcher.replaceAll("");
+        Matcher tagMatcher = tagPattern.matcher(s);
+        s = tagMatcher.replaceAll("");
+        return entsToTxt(s);
+    }
+    private static String entsToTxt(String s) {
+        Matcher htmlEntities = htmlEntitiesPattern.matcher(s);
+        StringBuilder s2 = new StringBuilder(s);
+        while(htmlEntities.find()) {
+            String text = htmlEntities.group();
+            text = Html.fromHtml(text).toString();
+            // TODO: inefficiency below, can get rid of multiple regex searches
+            s2.replace(htmlEntities.start(), htmlEntities.end(), text);
+            htmlEntities = htmlEntitiesPattern.matcher(s2);
+        }
+        return s2.toString();
+    }
+
 
 
     /**
@@ -336,6 +395,12 @@ public class Utils {
     }
 
 
+    /**
+     * Returns 1 if true, 0 if false
+     *
+     * @param b The boolean to convert to integer
+     * @return 1 if b is true, 0 otherwise
+     */
     public static int booleanToInt(boolean b) {
         return (b) ? 1 : 0;
     }
@@ -351,15 +416,20 @@ public class Utils {
 
 
     /**
-     * @param utcOffset The UTC offset in seconds.
-     * @return a new Date object 
+     *  Returns the effective date of the present moment.
+     *  If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
+     *  otherwise today
+     *  Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
+     *
+     * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
+     * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
      */
-    public static Date genToday(double utcOffset) {
-        // Get timezone offset in milliseconds
-        Calendar now = Calendar.getInstance();
-        int timezoneOffset = (now.get(Calendar.ZONE_OFFSET) + now.get(Calendar.DST_OFFSET));
+    public static Date genToday(long utcOffset) {
+        // The result is not adjusted for timezone anymore, following libanki model
+        // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
 
-        return new Date((long) (System.currentTimeMillis() - utcOffset * 1000 - timezoneOffset));
+        Date today = new Date(System.currentTimeMillis() - (long) utcOffset * 1000l);
+        return today;
     }
 
 
@@ -398,11 +468,117 @@ public class Utils {
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
-    
+
+
     public static String getBaseUrl(Model model, String deckFileName) {
-    	String base = model.getFeatures().trim();
-    	if( base.length() == 0 )
-    		base = "file://" + deckFileName.replace(".anki", ".media/");
-    	return base;
+        String base = model.getFeatures().trim();
+        if (base.length() == 0) {
+            base = "file://" + deckFileName.replace(".anki", ".media/");
+        }
+        return base;
+    }
+
+
+    /**
+     * Take an array of Long and return an array of long
+     * 
+     * @param array The input with type Long[]
+     * @return The output with type long[]
+     */
+    public static long[] toPrimitive(Long[] array) {
+        long[] results = new long[array.length];
+        if (array != null) {
+            for (int i = 0; i < array.length; i++) {
+                results[i] = array[i].longValue();
+            }
+        }
+        return results;
+    }
+    public static long[] toPrimitive(Collection<Long> array) {
+        long[] results = new long[array.size()];
+        if (array != null) {
+            int i = 0;
+            for (Long item : array) {
+                results[i++] = item.longValue();
+            }
+        }
+        return results;
+    }
+    
+    
+    /*
+     * Tags
+     **************************************/
+    
+    /**
+     * Parse a string and return a list of tags.
+     * 
+     * @param tags A string containing tags separated by space or comma (optionally followed by space)
+     * @return An array of Strings containing the individual tags 
+     */
+    public static String[] parseTags(String tags) {
+        if (tags != null && tags.length() != 0) {
+            return tags.split(" +|, *");
+        } else {
+            return new String[] {};
+        }
+    }
+    
+    /**
+     * Join a list of tags to a string, using spaces as separators
+     * 
+     * @param tags The list of tags to join
+     * @return The joined tags in a single string 
+     */
+    public static String joinTags(Collection<String> tags) {
+        String result = "";
+        for (String tag : tags) {
+            result += tag + " ";
+        }
+        return result.trim();
+    }
+    
+    /**
+     * Strip leading/trailing/superfluous spaces/commas from a tags string. Remove duplicates and sort.
+     * 
+     * @param tags The string containing the tags, separated by spaces or commas
+     * @return The canonified string, as described above
+     */
+    public static String canonifyTags(String tags) {
+        return joinTags(new TreeSet<String>(Arrays.asList(parseTags(tags))));
+    }
+    /**
+     * Find if tag exists in a set of tags. The search is not case-sensitive
+     * 
+     * @param tag The tag to look for
+     * @param tags The set of tags
+     * @return True is the tag is found in the set, false otherwise
+     */
+    public static boolean findTag(String tag, List<String> tags) {
+        String lowercase = tag.toLowerCase();
+        for (String t : tags) {
+            if (t.toLowerCase().compareTo(lowercase) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Add tags if they don't exist.
+     * Both parameters are in string format, the tags being separated by space or comma, as in parseTags
+     * 
+     * @param tagStr The new tag(s) that are to be added
+     * @param tags The set of tags where the new ones will be added
+     * @return A string containing the union of tags of the input parameters
+     */
+    public static String addTags(String tagStr, String tags) {
+        ArrayList<String> currentTags = new ArrayList<String>(Arrays.asList(parseTags(tags)));
+        for (String tag : currentTags) {
+            if (!findTag(tag, currentTags)) {
+                currentTags.add(tag);
+            }
+        }
+        return joinTags(currentTags);
     }
 }

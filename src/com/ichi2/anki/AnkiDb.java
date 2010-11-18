@@ -23,6 +23,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -99,22 +100,27 @@ public class AnkiDb {
      * @return An ArrayList with the contents of the specified column.
      */
     public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
-        ArrayList<T> results = new ArrayList<T>();
+        ArrayList<T> results = new ArrayList<T>();;
         Cursor cursor = null;
 
         try {
             cursor = mDatabase.rawQuery(query, null);
-            cursor.moveToFirst();
             String methodName = getCursorMethodName(type.getSimpleName());
-            do {
+            while (cursor.moveToNext()) {
                 // The magical line. Almost as illegible as python code ;)
                 results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
-            } while (cursor.moveToNext());
-        } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG, "queryColumn: Got Exception: " + e.getMessage());
-            // There was no results and therefore the invocation of the correspondent method with cursor null raises an
-            // exception
-            // Just return results empty
+            }
+        } catch (NoSuchMethodException e) {
+            // This is really coding error, so it should be revealed if it ever happens
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            // This is really coding error, so it should be revealed if it ever happens
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            // This is really coding error, so it should be revealed if it ever happens
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
         } finally {
             if (cursor != null) {
                 cursor.close();

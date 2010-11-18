@@ -554,11 +554,18 @@ public class Reviewer extends Activity {
                 return true;
 
             case MENU_EDIT:
-                sEditorCard = mCurrentCard;
-                Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-                startActivityForResult(editCard, EDIT_CURRENT_CARD);
-                return true;
-
+                if (isCramming()) {
+                    Toast cramEditWarning = 
+                        Toast.makeText(Reviewer.this, 
+                                getResources().getString(R.string.cram_edit_warning), Toast.LENGTH_SHORT);
+                    cramEditWarning.show();
+                    return false;
+                } else {
+                    sEditorCard = mCurrentCard;
+                    Intent editCard = new Intent(Reviewer.this, CardEditor.class);
+                    startActivityForResult(editCard, EDIT_CURRENT_CARD);
+                    return true;
+                }
             case MENU_SUSPEND:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
@@ -600,6 +607,9 @@ public class Reviewer extends Activity {
         }
     }
 
+    private boolean isCramming() {
+        return (AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().name().compareTo("cram") == 0);
+    }
 
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
@@ -709,7 +719,6 @@ public class Reviewer extends Activity {
         mEase4.setVisibility(View.VISIBLE);
 
         // Focus default button
-        // XXX Is it really working?
         if (mCurrentCard.isRev()) {
             mEase3.requestFocus();
         } else {

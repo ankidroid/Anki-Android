@@ -461,6 +461,8 @@ public class DeckPicker extends Activity implements Runnable {
                 }
                 mIsFinished = true;
                 mCondFinished.signal();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             } finally {
                 mLock.unlock();
             }
