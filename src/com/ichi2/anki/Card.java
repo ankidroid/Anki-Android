@@ -105,6 +105,8 @@ public class Card {
     double timerStopped;
     double fuzz;
 
+    // Leech flag, not read from database, only set to true during the actual suspension
+    private boolean isLeechSuspended;
 
     public Card(Deck deck, Fact fact, CardModel cardModel, double created) {
         tags = "";
@@ -126,6 +128,7 @@ public class Card {
         } else {
             due = modified;
         }
+        isLeechSuspended = false;
         combinedDue = due;
         this.deck = deck;
         this.fact = fact;
@@ -432,5 +435,13 @@ public class Card {
         values.put("question", question);
         values.put("answer", answer);
         AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("cards", values, "id = " + id, null);
+    }
+
+    // Leech flag
+    public boolean getLeechFlag() {
+        return isLeechSuspended;
+    }
+    public void setLeechFlag(boolean flag) {
+        isLeechSuspended = flag;
     }
 }

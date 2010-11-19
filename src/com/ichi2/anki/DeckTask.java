@@ -179,12 +179,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 deck.answerCard(oldCard, ease);
                 Log.v(TAG, "doInBackgroundAnswerCard - Answered card in " + (System.currentTimeMillis() - start)
                         + " ms.");
+                Log.i(TAG, "leech flag: " + oldCard.getLeechFlag());
             }
 
             start = System.currentTimeMillis();
             newCard = deck.getCard();
             Log.v(TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
-            publishProgress(new TaskData(newCard));
+            if (oldCard != null) {
+                publishProgress(new TaskData(newCard, oldCard.getLeechFlag()));
+            } else {
+                publishProgress(new TaskData(newCard));
+            }
 
             ankiDB.database.setTransactionSuccessful();
         } finally {
@@ -294,6 +299,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private Card card;
         private int integer;
         private String msg;
+        private boolean previousCardLeech;
 
 
         public TaskData(int value, Deck deck, Card card) {
@@ -305,6 +311,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(Card card) {
             this.card = card;
+            this.previousCardLeech = false;
+        }
+
+        public TaskData(Card card, boolean markedLeech) {
+            this.card = card;
+            this.previousCardLeech = markedLeech;
         }
 
 
@@ -337,6 +349,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             return msg;
         }
 
+        public boolean isPreviousCardLeech() {
+            return previousCardLeech;
+        }
     }
 
 }

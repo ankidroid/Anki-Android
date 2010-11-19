@@ -108,6 +108,7 @@ public class Fact {
             created = cursor.getDouble(2);
             modified = cursor.getDouble(3);
             tags = cursor.getString(4);
+            spaceUntil = cursor.getString(5);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -182,6 +183,10 @@ public class Fact {
         // update facts table
         ContentValues updateValues = new ContentValues();
         updateValues.put("modified", now);
+        updateValues.put("tags", tags);
+        updateValues.put("spaceUntil", spaceUntil);
+        AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("facts", updateValues, "id = ?",
+                new String[] { "" + id });
 
         // update fields table
         Iterator<Field> iter = fields.iterator();

@@ -2038,6 +2038,7 @@ public class Deck {
         }
 
         // Save
+        card.combinedDue = card.due;
         card.toDB();
 
         // global/daily stats
@@ -2053,6 +2054,7 @@ public class Deck {
 
         // Leech handling - we need to do this after the queue, as it may cause a reset
         if (isLeech(card)) {
+            Log.i(TAG, "card is leech!");
             handleLeech(card);
         }
         setUndoEnd(undoName);
@@ -2149,11 +2151,12 @@ public class Deck {
             // No leech threshold found in DeckVars
             return false;
         }
+        Log.i(TAG, "leech handling: " + card.successive + " successive fails and " + no + " total fails, threshold at " + fmax); 
         // Return true if:
         // - The card failed AND
         // - The number of failures exceeds the leech threshold AND
         // - There were at least threshold/2 reps since last time
-        if ((card.successive != 0) && (no >= fmax) &&     
+        if ((card.successive == 0) && (no >= fmax) &&     
                 ((fmax - no) % Math.max(fmax/2, 1) == 0)) {
             return true;
         } else {
@@ -2163,14 +2166,17 @@ public class Deck {
 
     private void handleLeech(Card card) {
         Card scard = cardFromId(card.id);
-        String tags = scard.fact.tags;
+        String tags = scard.getFact().tags;
         tags = Utils.addTags("Leech", tags);
         scard.getFact().tags = Utils.canonifyTags(tags);
         scard.getFact().setModified(true);
-        updateFactTags(new long[] {scard.fact.id});
+        scard.getFact().toDb();
+        updateFactTags(new long[] {scard.getFact().id});
         scard.toDB();
         if (getBool("suspendLeeches")) {
             suspendCards(new long[]{card.id});
+            card.setLeechFlag(true);
+            Log.i(TAG, "card is leech!");
         }
     }
 
@@ -2365,24 +2371,36 @@ public class Deck {
             tids = tagIds(allTags_());
             rows = splitTagsList();
         } else {
+            Log.i(TAG, "updateCardTags cardIds: " + Arrays.toString(cardIds));
             getDB().database.execSQL("DELETE FROM cardTags WHERE cardId IN " + Utils.ids2str(cardIds));
             String fids = Utils.ids2str(Utils.toPrimitive(getDB().queryColumn(Long.class,
                             "SELECT factId FROM cards WHERE id IN " + Utils.ids2str(cardIds), 0)));
+            Log.i(TAG, "updateCardTags fids: " + fids);
             tids = tagIds(allTags_("WHERE id IN " + fids));
+            Log.i(TAG, "updateCardTags tids keys: " + Arrays.toString(tids.keySet().toArray(new String[tids.size()])));
+            Log.i(TAG, "updateCardTags tids values: " + Arrays.toString(tids.values().toArray(new Long[tids.size()])));
             rows = splitTagsList("AND facts.id IN " + fids);
+            Log.i(TAG, "updateCardTags rows keys: " + Arrays.toString(rows.keySet().toArray(new Long[rows.size()])));
+            for (List<String> l : rows.values()) {
+                Log.i(TAG, "updateCardTags rows values: ");
+                for (String v :  l) {
+                    Log.i(TAG, "updateCardTags row item: " + v);
+                }
+            }
         }
 
         ArrayList<HashMap<String, Long>> d = new ArrayList<HashMap<String, Long>>();
 
         for (Long id : rows.keySet()) {
             for (int src = 0; src < 3; src++) { // src represents the tag type, fact: 0, model: 1, template: 2
-                HashMap<String, Long> ditem = new HashMap<String, Long>();
                 for (String tag : Utils.parseTags(rows.get(id).get(src))) {
+                    HashMap<String, Long> ditem = new HashMap<String, Long>();
                     ditem.put("cardId", id);
                     ditem.put("tagId", tids.get(tag.toLowerCase()));
                     ditem.put("src", new Long(src));
+                    Log.i(TAG, "populating ditem " + src + " " + tag);
+                    d.add(ditem);
                 }
-                d.add(ditem);
             }
         }
 

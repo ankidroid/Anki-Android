@@ -600,7 +600,7 @@ public class Utils {
      */
     public static String addTags(String tagStr, String tags) {
         ArrayList<String> currentTags = new ArrayList<String>(Arrays.asList(parseTags(tags)));
-        for (String tag : currentTags) {
+        for (String tag : parseTags(tagStr)) {
             if (!findTag(tag, currentTags)) {
                 currentTags.add(tag);
             }
