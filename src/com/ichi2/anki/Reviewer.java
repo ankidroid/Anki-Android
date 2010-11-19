@@ -317,7 +317,7 @@ public class Reviewer extends Activity {
 
             if (values[0].isPreviousCardLeech()) {
                 leechMessage = Toast.makeText(Reviewer.this, res.getString(R.string.leech_notification),
-                        Toast.LENGTH_SHORT);
+                        Toast.LENGTH_LONG);
                 leechMessage.show();
             }
 
