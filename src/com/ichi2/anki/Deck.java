@@ -33,6 +33,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
@@ -1051,22 +1053,25 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildFailedCount() {
-        failedSoonCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive",
-                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < " + failedCutoff));
+        String sql = String.format(ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < %f", failedCutoff);
+        failedSoonCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
 
     @SuppressWarnings("unused")
     private void _rebuildRevCount() {
-        revCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive",
-                "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue < " + dueCutoff));
+        String sql = String.format(ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue < %f", dueCutoff);
+        revCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
 
     @SuppressWarnings("unused")
     private void _rebuildNewCount() {
-        newCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive",
-                "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < " + dueCutoff));
+        String sql = String.format(ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < %f", dueCutoff);
+        newCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive", sql));
         updateNewCountToday();
     }
 
@@ -1226,13 +1231,16 @@ public class Deck {
 
     public void updateCutoff() {
         Calendar cal = Calendar.getInstance();
+        int newday = (int) utcOffset + (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+        cal.add(Calendar.MILLISECOND, -cal.get(Calendar.ZONE_OFFSET) - cal.get(Calendar.DST_OFFSET));
         cal.add(Calendar.SECOND, (int) -utcOffset + 86400);
+        cal.set(Calendar.AM_PM, Calendar.AM);
         cal.set(Calendar.HOUR, 0); // Yes, verbose but crystal clear
         cal.set(Calendar.MINUTE, 0); // Apologies for that, here was my rant
         cal.set(Calendar.SECOND, 0); // But if you can improve this bit and
         cal.set(Calendar.MILLISECOND, 0); // collapse it to one statement please do
+        cal.getTimeInMillis();
 
-        int newday = (int) utcOffset - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
         Log.d(TAG, "New day happening at " + newday + " sec after 00:00 UTC");
         cal.add(Calendar.SECOND, newday);
         long cutoff = cal.getTimeInMillis() / 1000;
