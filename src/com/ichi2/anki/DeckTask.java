@@ -186,7 +186,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             newCard = deck.getCard();
             Log.v(TAG, "doInBackgroundAnswerCard - Loaded new card in " + (System.currentTimeMillis() - start) + " ms.");
             if (oldCard != null) {
-                publishProgress(new TaskData(newCard, oldCard.getLeechFlag()));
+                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
             } else {
                 publishProgress(new TaskData(newCard));
             }
@@ -299,7 +299,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private Card card;
         private int integer;
         private String msg;
-        private boolean previousCardLeech;
+        private boolean previousCardLeech;     // answer card resulted in card marked as leech
+        private boolean previousCardSuspended; // answer card resulted in card marked as leech and suspended
 
 
         public TaskData(int value, Deck deck, Card card) {
@@ -312,11 +313,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         public TaskData(Card card) {
             this.card = card;
             this.previousCardLeech = false;
+            this.previousCardSuspended = false;
         }
 
-        public TaskData(Card card, boolean markedLeech) {
+        public TaskData(Card card, boolean markedLeech, boolean suspendedLeech) {
             this.card = card;
             this.previousCardLeech = markedLeech;
+            this.previousCardSuspended = suspendedLeech;
         }
 
 
@@ -351,6 +354,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public boolean isPreviousCardLeech() {
             return previousCardLeech;
+        }
+        public boolean isPreviousCardSuspended() {
+            return previousCardSuspended;
         }
     }
 

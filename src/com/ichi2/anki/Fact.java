@@ -229,6 +229,7 @@ public class Fact {
                 spaceUntil += f.value + " ";
             }
             spaceUntil.substring(0, spaceUntil.length()-1);
+            spaceUntil = Utils.stripHTMLMedia(spaceUntil.substring(0, spaceUntil.length()-1));
             Log.d(TAG, "spaceUntil = " + spaceUntil);
             for (Card card : getUpdatedRelatedCards()) {
                 card.setModified();

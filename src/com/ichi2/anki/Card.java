@@ -105,7 +105,8 @@ public class Card {
     double timerStopped;
     double fuzz;
 
-    // Leech flag, not read from database, only set to true during the actual suspension
+    // Leech flags, not read from database, only set to true during the actual suspension
+    private boolean isLeechMarked;
     private boolean isLeechSuspended;
 
     public Card(Deck deck, Fact fact, CardModel cardModel, double created) {
@@ -254,7 +255,12 @@ public class Card {
 
 
     public String[] splitTags() {
-        return tagsBySrc;
+        String[] tags = new String[]{
+            getFact().tags,
+            Model.getModel(deck, getFact().modelId, true).tags,
+            getCardModel().name
+        };
+        return tags;
     }
 
 
@@ -439,9 +445,16 @@ public class Card {
 
     // Leech flag
     public boolean getLeechFlag() {
-        return isLeechSuspended;
+        return isLeechMarked;
     }
     public void setLeechFlag(boolean flag) {
+        isLeechMarked = flag;
+    }
+    // Suspended flag
+    public boolean getSuspendedFlag() {
+        return isLeechSuspended;
+    }
+    public void setSuspendedFlag(boolean flag) {
         isLeechSuspended = flag;
     }
 }

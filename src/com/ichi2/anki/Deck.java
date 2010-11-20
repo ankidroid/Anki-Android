@@ -2169,14 +2169,17 @@ public class Deck {
         String tags = scard.getFact().tags;
         tags = Utils.addTags("Leech", tags);
         scard.getFact().tags = Utils.canonifyTags(tags);
+        // FIXME: Inefficient, we need to save the fact so that the modified tags can be used in setModified,
+        // then after setModified we need to save again! Just make setModified to use the tags from the fact,
+        // not reload them from the DB.
+        scard.getFact().toDb();
         scard.getFact().setModified(true);
         scard.getFact().toDb();
         updateFactTags(new long[] {scard.getFact().id});
-        scard.toDB();
+        card.setLeechFlag(true);
         if (getBool("suspendLeeches")) {
             suspendCards(new long[]{card.id});
-            card.setLeechFlag(true);
-            Log.i(TAG, "card is leech!");
+            card.setSuspendedFlag(true);
         }
     }
 
