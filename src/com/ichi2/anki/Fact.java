@@ -43,6 +43,13 @@ public class Fact {
     private double mCreated;
     private double mModified;
     private String mTags;
+    /**
+     * @return the mModelId
+     */
+    public long getModelId() {
+        return mModelId;
+    }
+
     private double mSpaceUntil;
 
     private Model mModel;
@@ -51,7 +58,6 @@ public class Fact {
 
 
     public Fact(Deck deck, Model model) {
-        Long mModelId;
         mDeck = deck;
         mModel = model;
         mId = Utils.genID();
@@ -64,7 +70,7 @@ public class Fact {
         FieldModel.fromDb(deck, mModelId, mFieldModels);
         mFields = new TreeSet<Field>(new FieldOrdinalComparator());
         for (Long i : mFieldModels.keySet()) {
-            mFields.add(new Field(mFieldModels.get(i)));
+            mFields.add(new Field(mId, mFieldModels.get(i)));
 
         }
 
@@ -266,6 +272,18 @@ public class Fact {
 
 
         // For creating new fields
+        public Field(long factId, FieldModel fieldModel) {
+            if (fieldModel != null) {
+                mFieldModel = fieldModel;
+                mOrdinal = fieldModel.getOrdinal();
+            }
+            mFactId=factId;
+            mFieldModelId=fieldModel.getId();
+            mValue = "";
+            mFieldId = Utils.genID();
+        }
+
+        // For creating new fields
         public Field(FieldModel fieldModel) {
             if (fieldModel != null) {
                 mFieldModel = fieldModel;
@@ -273,6 +291,30 @@ public class Fact {
             }
             mValue = "";
             mFieldId = Utils.genID();
+        }
+
+        
+        /**
+         * @return the FactId
+         */
+        public long getFactId() {
+            return mFactId;
+        }
+
+
+        /**
+         * @return the FieldModelId
+         */
+        public long getFieldModelId() {
+            return mFieldModelId;
+        }
+
+
+        /**
+         * @return the Ordinal
+         */
+        public int getOrdinal() {
+            return mOrdinal;
         }
 
 
@@ -289,6 +331,14 @@ public class Fact {
          */
         public String getValue() {
             return mValue;
+        }
+
+
+        /**
+         * @return the Field's Id
+         */
+        public long getId() {
+            return mFieldId;
         }
 
 

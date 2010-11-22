@@ -30,10 +30,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ichi2.anki.Fact.Field;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Allows the user to add a fact. A card is a presentation of a fact, and has two sides: a question and an answer. Any
@@ -63,6 +66,8 @@ public class FactAdder extends Activity {
 
     private LinkedList<FieldEditText> mEditFields;
 
+    private Fact mNewFact;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,13 +87,19 @@ public class FactAdder extends Activity {
         mModels = Model.getModels(deck);
         mCurrentSelectedModelId = deck.getCurrentModelId();
         mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
+        mNewFact = deck.newFact();
         populateEditFields();
         mAddButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
 
-                Fact f = deck.newFact();
-                Log.i("Debug", Long.toString(f.getId()));
+                Log.i("Debug", Long.toString(mNewFact.getId()));
+                Iterator<FieldEditText> iter = mEditFields.iterator();
+                while (iter.hasNext()) {
+                    FieldEditText current = iter.next();
+                    current.updateField();
+                }
+                deck.addFact(mNewFact);
                 setResult(RESULT_OK);
                 finish();
             }
@@ -149,7 +160,7 @@ public class FactAdder extends Activity {
 
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
-                        Long oldModelId = mCurrentSelectedModelId;
+                        long oldModelId = mCurrentSelectedModelId;
                         mCurrentSelectedModelId = dialogIds.get(item);
                         mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
 
@@ -168,18 +179,22 @@ public class FactAdder extends Activity {
 
 
     private void populateEditFields() {
-        FieldModel mFieldModel;
+
         mFieldsLayoutContainer.removeAllViews();
         mEditFields = new LinkedList<FieldEditText>();
-        TreeMap<Long, FieldModel> fields = mModels.get(mCurrentSelectedModelId).getFieldModels();
-        for (Long i : fields.keySet()) {
-            mFieldModel = fields.get(i);
-            FieldEditText newTextbox = new FieldEditText(this, mFieldModel);
+        TreeSet<Field> fields = mNewFact.getFields();
+        Iterator<Field> iter = fields.iterator();
+        while (iter.hasNext()) {
+            FieldEditText newTextbox = new FieldEditText(this, iter.next());
             TextView label = newTextbox.getLabel();
             mEditFields.add(newTextbox);
+
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(newTextbox);
+            // Generate a new EditText for each field
+
         }
+
     }
 
 
@@ -210,23 +225,29 @@ public class FactAdder extends Activity {
         finish();
     }
 
+    // TODO: remove redundance with CardEditor.java::FieldEditText
     private class FieldEditText extends EditText {
 
-        FieldModel pairFieldModel;
+        Field mPairField;
 
 
-        public FieldEditText(Context context, FieldModel pairFieldModel) {
+        public FieldEditText(Context context, Field pairField) {
             super(context);
-            this.pairFieldModel = pairFieldModel;
+            mPairField = pairField;
             this.setMinimumWidth(400);
         }
 
 
         public TextView getLabel() {
             TextView label = new TextView(this.getContext());
-            label.setText(pairFieldModel.getName());
+            label.setText(mPairField.getFieldModel().getName());
             return label;
         }
 
+
+        public void updateField() {
+            mPairField.setValue(this.getText().toString());
+        }
     }
+
 }

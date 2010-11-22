@@ -24,6 +24,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.ichi2.anki.Fact.Field;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +34,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
@@ -291,7 +296,22 @@ public class Deck {
         return mFact;
     }
 
-
+    
+    public TreeMap<Long, CardModel> availableCardModels(Fact fact){
+        TreeMap<Long, CardModel> cardModels= new TreeMap<Long, CardModel>();
+        TreeMap<Long, CardModel> availableCardModels= new TreeMap<Long, CardModel>();
+        CardModel.fromDb(this, fact.getModelId(), cardModels);
+        for (Map.Entry<Long, CardModel> entry : cardModels.entrySet()) {
+            CardModel cardmodel = entry.getValue();
+            if (cardmodel.isActive()){
+                //TODO: check for emptiness
+                availableCardModels.put(cardmodel.getId(), cardmodel);
+            }
+        }
+        return availableCardModels;
+    }
+    
+    
     public Fact newFact() {
         Model m = Model.getModel(this, getCurrentModelId(), true);
         Fact mFact = new Fact(this, m);
@@ -405,7 +425,67 @@ public class Deck {
     public String getDeckPath() {
         return mDeckPath;
     }
+    
+    
+    /*
+     * addFact
+     * Add a fact to the deck. Return list of new cards
+     */
+    public Fact addFact(Fact fact) {
+        // TODO: assert fact is Valid
+        // TODO: assert fact is Unique
+        double now = Utils.now();
+        // add fact to fact table
+        ContentValues values = new ContentValues();
+        values.put("id", fact.getId());
+        values.put("modelId", fact.getModelId());
+        values.put("created", now);
+        values.put("modified", now);
+        values.put("tags", "");
+        values.put("spaceUntil", 0);
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeckPath);
+        ankiDB.getDatabase().insert("facts", null, values);
+        
+        // get cardmodels for the new fact
+        TreeMap<Long, CardModel> availableCardModels = availableCardModels(fact);
+        if (availableCardModels.isEmpty()){
+            Log.e("Ankidroid", "Error while adding fact: No cardmodels for the new fact");
+            return null;
+        }
+        // update counts
+        mFactCount=mFactCount+1;
+        
+        TreeSet<Field> fields=fact.getFields();
+        Iterator<Field> iter=fields.iterator();
+        
+        // add fields to fields table
+        while (iter.hasNext()) {
+            Field f = iter.next();
 
+            ContentValues fieldValues = new ContentValues();
+            fieldValues.put("value", f.getValue());
+            fieldValues.put("id", f.getId());
+            fieldValues.put("factId", f.getFactId());
+            fieldValues.put("fieldModelId", f.getFieldModelId());
+            fieldValues.put("ordinal", f.getOrdinal());
+            AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().insert("fields", null, fieldValues);
+        }
+
+        
+        for (Map.Entry<Long, CardModel> entry : availableCardModels.entrySet()) {
+            CardModel cardModel = entry.getValue();
+            Card newCard = new Card(this, fact, cardModel, Utils.now());
+            newCard.addToDb();
+            mCardCount=mCardCount+1;
+            mNewCount=mNewCount+1;
+            Log.i("debug",entry.getKey().toString());
+        }
+        commitToDB();
+        // TODO: code related to random in newCardOrder
+        // TODO: update tags
+        // TODO: update priorities?
+        return fact;
+    }
 
     public void setDeckPath(String path) {
         mDeckPath = path;
