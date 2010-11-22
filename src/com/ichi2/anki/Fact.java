@@ -79,6 +79,22 @@ public class Fact {
     }
 
 
+    /**
+     * @return the mTags
+     */
+    public String getTags() {
+        return mTags;
+    }
+
+
+    /**
+     * @param tags the tags to set
+     */
+    public void setTags(String tags) {
+        mTags = tags;
+    }
+
+
     // Generate fact object from its ID
     public Fact(Deck deck, long id) {
         mDeck = deck;
@@ -233,7 +249,7 @@ public class Fact {
             for (Field f : getFields()) {
                 mSpaceUntil += f.getValue() + " ";
             }
-            mSpaceUntil.substring(0, mSpaceUntil.length()-1);
+            mSpaceUntil.substring(0, mSpaceUntil.length() - 1);
             Log.d(AnkiDroidApp.TAG, "spaceUntil = " + mSpaceUntil);
             for (Card card : getUpdatedRelatedCards()) {
                 card.setModified();

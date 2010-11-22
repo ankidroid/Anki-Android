@@ -685,6 +685,11 @@ public class Card {
     }
 
 
+    public void setRelativeDelay(double relativeDelay) {
+        mRelativeDelay = relativeDelay;
+    }
+
+
     public void setPriority(int priority) {
         mPriority = priority;
     }
@@ -692,6 +697,11 @@ public class Card {
 
     public int getType() {
         return mType;
+    }
+
+
+    public void setType(int type) {
+        mType = type;
     }
 
 

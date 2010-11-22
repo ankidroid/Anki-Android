@@ -424,10 +424,9 @@ public class Utils {
      * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
      * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
      */
-    public static Date genToday(long utcOffset) {
+    public static Date genToday(double utcOffset) {
         // The result is not adjusted for timezone anymore, following libanki model
         // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
-
         Date today = new Date(System.currentTimeMillis() - (long) utcOffset * 1000l);
         return today;
     }
