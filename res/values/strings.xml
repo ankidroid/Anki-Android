@@ -352,4 +352,9 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="model">Model</string>
 <string name="add">Add</string>
 <string name="close">Close</string>
+<string name="day_p">days</string>
+<string name="day_s">day</string>
+<string name="soon">Soon</string>
+<string name="show_next_review_time">Show next review time</string>
+<string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
 </resources>

@@ -1160,7 +1160,7 @@ public class Deck {
      * Interval management*********************************************************
      */
 
-    private double nextInterval(Card card, int ease) {
+    public double nextInterval(Card card, int ease) {
         double delay = card.adjustedDelay(ease);
         return nextInterval(card, delay, ease);
     }

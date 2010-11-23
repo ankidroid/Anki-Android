@@ -46,9 +46,14 @@
 			android:entries="@array/hideQuestionInAnswerLabels"
 			android:entryValues="@array/hideQuestionInAnswerVals" />
 		<CheckBoxPreference
-			android:title="@string/use_ruby_support"
-			android:defaultValue="false"
-			android:summary="@string/use_ruby_support_summ"
+			android:title="@string/show_next_review_time"
+			android:defaultValue="true"
+			android:summary="@string/show_next_review_time_summ"
+			android:key="showNextReviewTime" />
+		<CheckBoxPreference 
+			android:title="@string/use_ruby_support" 
+			android:defaultValue="false" 
+			android:summary="@string/use_ruby_support_summ" 
 			android:key="useRubySupport" />
 	</PreferenceCategory>
 	

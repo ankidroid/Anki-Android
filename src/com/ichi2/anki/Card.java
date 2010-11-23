@@ -758,4 +758,9 @@ public class Card {
     public long getCardModelId() {
         return mCardModelId;
     }
+    
+    
+    public double nextInterval(Card card, int ease) {
+    	return mDeck.nextInterval(card, ease);
+    }
 }

@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -123,6 +124,7 @@ public class Reviewer extends Activity {
     private boolean mPrefWriteAnswers;
     private boolean mPrefTextSelection;
     private boolean mPrefFullscreenReview;
+    private boolean mshowNextReviewTime;
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
@@ -139,6 +141,10 @@ public class Reviewer extends Activity {
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
+    private TextView mNext1;
+    private TextView mNext2;
+    private TextView mNext3;
+    private TextView mNext4; 
     private Button mFlipCard;
     private EditText mAnswerField;
     private Button mEase1;
@@ -670,6 +676,11 @@ public class Reviewer extends Activity {
         mEase4 = (Button) findViewById(R.id.ease4);
         mEase4.setOnClickListener(mSelectEaseHandler);
 
+        mNext1 = (TextView) findViewById(R.id.nextTime1);
+        mNext2 = (TextView) findViewById(R.id.nextTime2);
+        mNext3 = (TextView) findViewById(R.id.nextTime3);
+        mNext4 = (TextView) findViewById(R.id.nextTime4);
+                
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setOnClickListener(mFlipCardListener);
         mFlipCard.setText(getResources().getString(R.string.show_answer));
@@ -695,11 +706,20 @@ public class Reviewer extends Activity {
             mEase2.setText(res.getString(R.string.ease2_successive));
             mEase3.setText(res.getString(R.string.ease3_successive));
             mEase4.setText(res.getString(R.string.ease4_successive));
+            mNext1.setText(res.getString(R.string.soon));
+            mNext2.setText(nextInterval(2));
+            mNext3.setText(nextInterval(3));
+            mNext4.setText(nextInterval(4));
+            
         } else {
             mEase1.setText(res.getString(R.string.ease1_learning));
             mEase2.setText(res.getString(R.string.ease2_learning));
             mEase3.setText(res.getString(R.string.ease3_learning));
             mEase4.setText(res.getString(R.string.ease4_learning));
+            mNext1.setText(res.getString(R.string.soon));
+            mNext2.setText(nextInterval(2));
+            mNext3.setText(nextInterval(3));
+            mNext4.setText(nextInterval(4));
         }
 
         // Show buttons
@@ -707,13 +727,25 @@ public class Reviewer extends Activity {
         mEase2.setVisibility(View.VISIBLE);
         mEase3.setVisibility(View.VISIBLE);
         mEase4.setVisibility(View.VISIBLE);
-
+       
+        // Show next review time
+        if (mshowNextReviewTime) {
+        mNext1.setVisibility(View.VISIBLE);
+        mNext2.setVisibility(View.VISIBLE);
+        mNext3.setVisibility(View.VISIBLE);
+        mNext4.setVisibility(View.VISIBLE);
+        }
+        
         // Focus default button
         // XXX Is it really working?
         if (mCurrentCard.isRev()) {
             mEase3.requestFocus();
+            mNext2.setTextColor(Color.BLACK);
+            mNext3.setTextColor(Color.GREEN);
         } else {
             mEase2.requestFocus();
+            mNext2.setTextColor(Color.GREEN);
+            mNext3.setTextColor(Color.BLACK);
         }
     }
 
@@ -725,6 +757,10 @@ public class Reviewer extends Activity {
         mEase2.setVisibility(View.GONE);
         mEase3.setVisibility(View.GONE);
         mEase4.setVisibility(View.GONE);
+        mNext1.setVisibility(View.GONE);
+        mNext2.setVisibility(View.GONE);
+        mNext3.setVisibility(View.GONE);
+        mNext4.setVisibility(View.GONE);
     }
 
 
@@ -750,6 +786,7 @@ public class Reviewer extends Activity {
         mDeckFilename = preferences.getString("deckFilename", "");
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
+        mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mDisplayFontSize = Integer.parseInt(preferences.getString("displayFontSize",
                 Integer.toString(CardModel.DEFAULT_FONT_SIZE_RATIO)));
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
@@ -1165,5 +1202,19 @@ public class Reviewer extends Activity {
             msg.obj = soundPath;
             mHandler.sendMessage(msg);
         }
+    }
+    
+    private String nextInterval(int ease) {
+        Resources res = getResources();
+
+        int nextInt = (int)Math.ceil(mCurrentCard.nextInterval(mCurrentCard,ease));
+    	String str;
+    	
+    	if (nextInt == 1){
+    		str = String.valueOf(nextInt) + " " + res.getString(R.string.day_s);
+    	} else {
+    		str = String.valueOf(nextInt) + " " + res.getString(R.string.day_p);    		
+    	}
+    	return str;
     }
 }

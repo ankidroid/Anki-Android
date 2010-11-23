@@ -81,6 +81,40 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_above="@+id/answer_options_layout" />
+		
+	<LinearLayout android:id="@+id/answer_nextTime_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/answer_options_layout" >
+		<TextView 
+		  android:textColor="#ff0000"
+          android:gravity="center_horizontal"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+  		  android:id="@+id/nextTime1" />
+		<TextView 
+		  android:textColor="#000000"
+          android:gravity="center_horizontal"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+  		  android:id="@+id/nextTime2" />
+		<TextView 
+		  android:textColor="#000000"
+          android:gravity="center_horizontal"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+  		  android:id="@+id/nextTime3" />
+		<TextView 
+		  android:textColor="#000000"
+          android:gravity="center_horizontal"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+  		  android:id="@+id/nextTime4" />
+	</LinearLayout>
 
 	<LinearLayout android:id="@+id/answer_options_layout"
 		android:layout_width="fill_parent"
