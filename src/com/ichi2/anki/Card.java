@@ -21,7 +21,10 @@ import android.database.Cursor;
 import android.util.Log;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.TreeMap;
 
 /**
  * A card is a presentation of a fact, and has two sides: a question and an answer. Any number of fields can appear on
@@ -153,20 +156,19 @@ public class Card {
         mCombinedDue = mDue;
         mDeck = deck;
         mFact = fact;
+        if (fact != null){
+            mFactId=fact.getId();
+        }
         mCardModel = cardModel;
         if (cardModel != null) {
             mCardModelId = cardModel.getId();
             mOrdinal = cardModel.getOrdinal();
-            /*
-             * FIXME: what is the code below used for? It is never persisted Additionally, cardModel has no accessor.
-             * HashMap<String, HashMap<Long, String>> d = new HashMap<String, HashMap<Long, String>>();
-             * Iterator<FieldModel> iter = fact.model.fieldModels.iterator(); while (iter.hasNext()) { FieldModel fm =
-             * iter.next(); HashMap<Long, String> field = new HashMap<Long, String>(); field.put(fm.id,
-             * fact.getFieldValue(fm.name)); d.put(fm.name, field); }
-             */
-            // HashMap<String, String> qa = CardModel.formatQA(id, fact.modelId, d, splitTags(), cardModel);
-            // question = qa.get("question");
-            // answer = qa.get("answer");
+            
+            if (fact != null){
+                HashMap<String, String> qa = CardModel.formatQA(fact, cardModel, splitTags());
+                mQuestion = qa.get("question");
+                mAnswer = qa.get("answer");
+            }
         }
     }
 
@@ -496,6 +498,58 @@ public class Card {
         return true;
     }
 
+    // TODO: Remove Redundancies
+    // I did a separated method because I don't want to interfere with other code while fact adding is not tested.
+    public void addToDb(){
+        if (isNew()) {
+            mType = TYPE_NEW;
+        } else if (isRev()) {
+            mType = TYPE_REV;
+        } else {
+            mType = TYPE_FAILED;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put("factId", mFactId);
+        values.put("cardModelId", mCardModelId);
+        values.put("created", mCreated);
+        values.put("modified", mModified);
+        values.put("tags", mTags);
+        values.put("ordinal", mOrdinal);
+        values.put("question", mQuestion);
+        values.put("answer", mAnswer);
+        values.put("priority", mPriority);
+        values.put("interval", mInterval);
+        values.put("lastInterval", mLastInterval);
+        values.put("due", mDue);
+        values.put("lastDue", mLastDue);
+        values.put("factor", mFactor);
+        values.put("lastFactor", mLastFactor);
+        values.put("firstAnswered", mFirstAnswered);
+        values.put("reps", mReps);
+        values.put("successive", mSuccessive);
+        values.put("averageTime", mAverageTime);
+        values.put("reviewTime", mReviewTime);
+        values.put("youngEase0", mYoungEase0);
+        values.put("youngEase1", mYoungEase1);
+        values.put("youngEase2", mYoungEase2);
+        values.put("youngEase3", mYoungEase3);
+        values.put("youngEase4", mYoungEase4);
+        values.put("matureEase0", mMatureEase0);
+        values.put("matureEase1", mMatureEase1);
+        values.put("matureEase2", mMatureEase2);
+        values.put("matureEase3", mMatureEase3);
+        values.put("matureEase4", mMatureEase4);
+        values.put("yesCount", mYesCount);
+        values.put("noCount", mNoCount);
+        values.put("spaceUntil", mSpaceUntil);
+        values.put("isDue", mIsDue);
+        values.put("type", mType);
+        values.put("combinedDue", Math.max(mSpaceUntil, mDue));
+        values.put("relativeDelay", 0.0);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("cards", null, values);
+        
+    }
 
     public void toDB() {
 
@@ -707,5 +761,10 @@ public class Card {
 
     public long getCardModelId() {
         return mCardModelId;
+    }
+    
+    
+    public double nextInterval(Card card, int ease) {
+    	return mDeck.nextInterval(card, ease);
     }
 }
