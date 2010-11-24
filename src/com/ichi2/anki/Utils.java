@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -606,5 +607,30 @@ public class Utils {
             }
         }
         return joinTags(currentTags);
+    }
+
+    // Misc
+    // *************
+
+    /**
+     * MD5 checksum.
+     * Equivalent to python md5.hexdigest()
+     *
+     * @param data the string to generate hash from
+     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of data.
+     */
+    public static String checksum(String data) {
+        String result = "";
+        if (data != null) {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] digest = md.digest(data.getBytes("UTF-8"));
+            BigInteger biginteger = new BigInteger(1, digest);
+            result = biginteger.toString(16);
+            // pad with zeros to length of 32
+            if (result.length() < 32) {
+                result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
+            }
+        }
+        return result;
     }
 }

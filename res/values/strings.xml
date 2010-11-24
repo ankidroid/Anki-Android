@@ -128,6 +128,12 @@
 <string name="fullscreen_review">Review in fullscreen</string>
 <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
 
+<!-- Deck.java upgrade deck notes -->
+<string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
+<string name="deck_upgrade_52_note">Upgrade to version 52 notes:
+When syncing, AnkiDroid now uses the same deck name on the server as the deck name on your computer. Because you had \'%s\' set to sync to \'%s\' on the server, syncing has been temporarily disabled.
+To resolve this issue and enable syncing, please open this deck with Anki desktop version and follow any instructions there.</string>
+
 <!-- deck_properties.xml -->
 <string name="deck_properties">Deck properties</string>
 <string name="sync_on">Synchronize this deck</string>

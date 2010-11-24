@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+import android.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,7 +68,7 @@ public class Deck {
      **/
 
     // Rest
-    private static final int DECK_VERSION = 50;
+    public static final int DECK_VERSION = 52;
     
     private static final int MATURE_THRESHOLD = 21;
 
@@ -118,6 +119,9 @@ public class Deck {
 
     long currentModelId;
 
+    // syncName stores an md5sum of the deck path when syncing is enabled.
+    // If it doesn't match the current deck path, the deck has been moved,
+    // and syncing is disabled on load.
     String syncName;
 
     double lastSync;
@@ -216,6 +220,9 @@ public class Deck {
     double failedCutoff;
 
     String scheduler;
+
+    // Any comments resulting from upgrading the deck should be stored here, both in success and failure
+    private String upgradeNotes;
 
     // Queues
     LinkedList<QueueItem> failedQueue;
@@ -325,7 +332,7 @@ public class Deck {
         deck.initVars();
         
         // Upgrade to latest version
-        deck.upgradeDeck();
+        deck.upgradeDeck(res);
 
         double oldMod = deck.modified;
 
@@ -361,6 +368,9 @@ public class Deck {
             // Save deck to database
             deck.commitToDB();
         }
+
+        // Check if deck has been moved and disable syncing
+        deck.checkSyncHash();
 
         // Determine starting factor for new cards
         Cursor cur = null;
@@ -402,6 +412,11 @@ public class Deck {
             commitToDB();
         }
         AnkiDatabaseManager.closeDatabase(deckPath);
+    }
+
+    public static synchronized int getDeckVersion(String path) throws SQLException {
+        int version = (int) AnkiDatabaseManager.getDatabase(path).queryScalar("SELECT version FROM decks LIMIT 1");
+        return version;
     }
 
     /**
@@ -511,17 +526,20 @@ public class Deck {
     }
     
     /**
-     * Upgrade deck to latest version
+     * Upgrade deck to latest version.
+     * Any comments resulting from the upgrade, should be stored in upgradeNotes, successful or not.
      * 
      * @return True if the upgrade is supported, false if the upgrade needs to be performed by Anki Desktop
      */
-    private boolean upgradeDeck() {
+    private boolean upgradeDeck(Resources res) {
         // Oldest versions in existence are 31 as of 11/07/2010
         // We support upgrading from 39 and up.
         // Unsupported are about 135 decks, missing about 6% as of 11/07/2010
         
+        upgradeNotes = "";
         if (version < 39) {
             // Unsupported version
+            upgradeNotes = res.getString(R.deck_upgrade_too_old_version);
             return false;
         }
         if (version < 40) {
@@ -544,9 +562,6 @@ public class Deck {
             // Leaner indices
             getDB().database.execSQL("DROP INDEX IF EXISTS ix_cards_factId");
             addIndices();
-            // Per-day scheduling necessitates an increase here
-            hardIntervalMin = 1.0;
-            hardIntervalMax = 1.1;
             version = 44;
             commitToDB();
         }
@@ -577,6 +592,20 @@ public class Deck {
             version = 50;
             commitToDB();
         }
+        // skip 51
+        if (version < 52) {
+            String dname = deck.name();
+            String sname = deck.syncName;
+            if (!dname.equals(sname)) {
+                upgradeNotes = upgradeNotes.concat(String.format(res.getString(R.string.deck_upgrade_52_note),
+                            dname, sname));
+                disableSyncing();
+            } else {
+                enableSyncing();
+            }
+            version = 52;
+            commitToDB();
+        }
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
             commitToDB();
@@ -587,6 +616,10 @@ public class Deck {
             commitToDB();
         }
         return true;
+    }
+
+    public String getUpgradeNotes() {
+        return upgradeNotes;
     }
     
     /**
@@ -1050,7 +1083,11 @@ public class Deck {
         }
     }
 
-
+    /**
+     * This is a count of all failed cards within the current day cutoff.
+     * The cards may not be ready for review yet, but can still be displayed
+     * if failedCardsMax is reached.
+     */
     @SuppressWarnings("unused")
     private void _rebuildFailedCount() {
         String sql = String.format(ENGLISH_LOCALE,
@@ -1323,6 +1360,7 @@ public class Deck {
 
 
     private void resetAfterReviewEarly() {
+        // Put temporarily suspended cards back into play. Caller must .reset()
         // FIXME: Can ignore priorities in the future (following libanki)
         ArrayList<Long> ids = getDB().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE type BETWEEN 6 AND 8 OR priority = -1", 0);
@@ -1414,7 +1452,7 @@ public class Deck {
             answerCardMethod = Deck.class.getDeclaredMethod("_answerCramCard", Card.class, int.class);
             spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCramCards", Card.class, double.class);
             // Reuse review early's code
-            answerPreSaveMethod = Deck.class.getDeclaredMethod("_reviewEarlyPreSave", Card.class, int.class);
+            answerPreSaveMethod = Deck.class.getDeclaredMethod("_cramPreSave", Card.class, int.class);
             cardLimitMethod = Deck.class.
                 getDeclaredMethod("_cramCardLimit", String[].class, String[].class, String.class);
         } catch (NoSuchMethodException e) {
@@ -1426,15 +1464,9 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _answerCramCard(Card card, int ease) {
+        _answerCard(card, ease);
         if (ease == 1) {
-            if (cardQueue(card) != 0) {
-                failedSoonCount += 1;
-                revCount -= 1;
-            }
-            requeueCard(card, 0);
             failedCramQueue.addFirst(new QueueItem(card.id, card.factId));
-        } else {
-            _answerCard(card, ease);
         }
     }
 
@@ -1501,7 +1533,7 @@ public class Deck {
         // inactive is (currently) ignored
         if (active.length > 1) {
             return sql.replace("WHERE ", "WHERE +c.id IN "
-                    + Utils.ids2str(new ArrayList<String>(Arrays.asList(active))));
+                    + Utils.ids2str(new ArrayList<String>(Arrays.asList(active))) + " AND");
         } else if (active.length == 1) {
             String[] yes = Utils.parseTags(active[0]);
             if (yes.length > 0) {
@@ -1555,6 +1587,12 @@ public class Deck {
         if (space > System.currentTimeMillis()) {
             spacedFacts.put(card.factId, System.currentTimeMillis() + 600.0);
         }
+    }
+
+    @SuppressWarnings("unused")
+    private void _cramPreSave(Card card, int ease) {
+        // prevent it from appearing in next queue fill
+        card.type += 6;
     }
 
     private void setModified() {
@@ -2019,7 +2057,7 @@ public class Deck {
         spaceCards(card, space);
         // Adjust counts for current card
         if (ease == 1) {
-            if (!(oldState.compareTo("mature") == 0 && delay1 != 0)) {
+            if (card.due < failedCutoff) {
                 failedSoonCount += 1;
             }
         }
@@ -2189,6 +2227,7 @@ public class Deck {
             suspendCards(new long[]{card.id});
             card.setSuspendedFlag(true);
         }
+        reset();
     }
 
     /*
@@ -2563,12 +2602,17 @@ public class Deck {
     // suspendCards(ids);
     // }
 
+    /**
+     * Suspend cards.
+     * Caller must .reset()
+     *
+     * @param ids List of card IDs of the cards that are to be suspended.
+     */
     public void suspendCards(long[] ids) {
         getDB().database.execSQL("UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
                 + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
                 + ", isDue = 0 WHERE type >= 0 AND id IN " + Utils.ids2str(ids));
         flushMod();
-        reset();
     }
 
 
@@ -2578,13 +2622,18 @@ public class Deck {
     // unsuspendCards(ids);
     // }
 
+    /**
+     * Unsuspend cards.
+     * Caller must .reset()
+     *
+     * @param ids List of card IDs of the cards that are to be unsuspended.
+     */
     public void unsuspendCards(long[] ids) {
         getDB().database.execSQL("UPDATE cards SET type = relativeDelay, priority = 0, " + "modified = "
                 + String.format(ENGLISH_LOCALE, "%f", (double) (System.currentTimeMillis() / 1000.0))
                 + " WHERE type < 0 AND id IN " + Utils.ids2str(ids));
         updatePriorities(ids);
         flushMod();
-        reset();
     }
 
 
@@ -2597,6 +2646,7 @@ public class Deck {
      * If partial is true, only updates cards with tags defined as priority low, med or high in the deck,
      * or with tags whose priority is set to 2 and they are not found in the priority tags of the deck.
      * If false, it updates all card priorities
+     * Caller must .reset()
      *
      * @param partial Partial update (true) or not (false)
      * @param dirty Passed to updatePriorities(), if true it updates the modified field of the cards
@@ -2696,7 +2746,14 @@ public class Deck {
         return newPriorities;
     }
 
-
+    /**
+     * Update priorities for cardIds.
+     * Caller must .reset().
+     *
+     * @param cardIds List of card IDs identifying whose cards' priorities to update.
+     * @param suspend List of tags. The cards from the above list that have those tags will be suspended.
+     * @param dirty If true will update the modified value of each card handled.
+     */
     private void updatePriorities(long[] cardIds) {
         updatePriorities(cardIds, null, true);
     }
@@ -2759,7 +2816,6 @@ public class Deck {
                 cursor.close();
             }
         }
-        reset();
     }
 
 
@@ -2812,6 +2868,12 @@ public class Deck {
      * Cards CRUD*********************************************************
      */
 
+    /**
+     * Bulk delete cards by ID.
+     * Caller must .reset()
+     *
+     * @param ids List of card IDs of the cards to be deleted.
+     */
     public void deleteCards(List<String> ids) {
         Log.i(TAG, "deleteCards = " + ids.toString());
 
@@ -2864,7 +2926,6 @@ public class Deck {
             // Remove any dangling fact
             deleteDanglingFacts();
             flushMod();
-            reset();
         }
     }
 
@@ -2873,6 +2934,13 @@ public class Deck {
      * Facts CRUD*********************************************************
      */
 
+    /**
+     * Bulk delete facts by ID.
+     * Don't touch cards, assume any cards have already been removed.
+     * Caller must .reset().
+     *
+     * @param ids List of fact IDs of the facts to be removed.
+     */
     public void deleteFacts(List<String> ids) {
         Log.i(TAG, "deleteFacts = " + ids.toString());
         int len = ids.size();
@@ -2893,7 +2961,6 @@ public class Deck {
             }
             statement.close();
             setModified();
-            reset();
         }
     }
 
@@ -2920,7 +2987,13 @@ public class Deck {
      * Models CRUD*********************************************************
      */
 
-    // TODO: Handling of the list of models and currentModel
+    /**
+     * Delete MODEL, and all its cards/facts.
+     * Caller must .reset()
+     * TODO: Handling of the list of models and currentModel
+     *
+     * @param id The ID of the model to be deleted.
+     */
     public void deleteModel(String id) {
         Log.i(TAG, "deleteModel = " + id);
         Cursor cursor = null;
@@ -3123,7 +3196,32 @@ public class Deck {
     }
 
 
+    //
+    // Syncing
+    // *************************
+    // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
+    
+    private void enableSyncing() {
+        syncName = Utils.checksum(deckPath);
+        lastSync = 0;
+        commitToDB();
+    }
 
+    private void disableSyncing() {
+        syncName = "";
+        lastSync = 0;
+        commitToDB();
+    }
+
+    public boolean syncingEnabled() {
+        return (syncName != null) && !(syncName.equals(""));
+    }
+
+    private void checkSyncHash() {
+        if ((syncName != null) && !syncName.equals(Utils.checksum(deckPath))) {
+            disableSyncing();
+        }
+    }
 
 
     /*
@@ -3289,17 +3387,23 @@ public class Deck {
     }
 
 
+    /**
+     * Undo the last action(s).
+     * Caller must .reset()
+     */
     public void undo() {
         undoredo(undoStack, redoStack);
         commitToDB();
-        reset();
     }
 
 
+    /**
+     * Redo the last action(s).
+     * Caller must .reset()
+     */
     public void redo() {
         undoredo(redoStack, undoStack);
         commitToDB();
-        reset();
     }
 
 

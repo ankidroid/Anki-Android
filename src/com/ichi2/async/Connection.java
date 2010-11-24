@@ -356,6 +356,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
                     client.applyPayloadReply(payloadReply);
+                    deck.reset();
 
                     deck.lastLoaded = deck.modified;
                     deck.commitToDB();
