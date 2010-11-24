@@ -1,27 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Generated with crowdin.net-->
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <resources>
-  <string-array name="newCardOrderLabels">
+	<!-- WARNING: Many values here match static values defined in Deck.java
+				  DO NOT edit them, unless you change their corresponding values -->
+	<!-- Used in deck preferences -->
+	<string-array name="newCardOrderLabels">
     <item>In zufälliger Reihenfolge</item>
-    <item>In Hinzufügungsreihenfolge</item>
-    <item>In umgekehrter Hinzufügungsreihenfolge</item>
+    <item>In Reihenfolge des Hinzufügens</item>
+    <item>In umgekehrter Reihenfolge des Hinzufügens</item>
   </string-array>
-  <string-array name="newCardSchedulingLabels">
-    <item>Verteilt über Abfrage</item>
-    <item>Nach Abfrage</item>
-    <item>Vor Abfrage</item>
-  </string-array>
-  <string-array name="revCardOrderLabels">
-    <item>Größtes Intervall zuerst</item>
-    <item>Kleinstes Intervall zuerst</item>
-    <item>Reihenfolge fälliger Karten</item>
-    <item>Zufällige Reihenfolge</item>
-  </string-array>
-  <string-array name="failedCardOptionLabels">
-    <item>Zeige nichtgewusste Karten bald</item>
-    <item>Zeige nichtgewusste Karten am Schluß</item>
-    <item>Zeige nichtgewusste Karten in 10 Minuten</item>
-    <item>Zeige nichtgewusste Karten in 8 Stunden</item>
-    <item>Zeige nichtgewusste Karten in 3 Tagen</item>
-  </string-array>
+
+	<string-array name="newCardSchedulingLabels">
+	    <item>Verteilt über Wiederholungen</item>
+	    <item>Nach Wiederholungen</item>
+	    <item>Vor Wiederholungen</item>
+	</string-array>
+
+	<string-array name="revCardOrderLabels">
+	    <item>Größtes Intervall zuerst</item>
+	    <item>Kleinstes Intervall zuerst</item>
+	    <item>Reihenfolge fälliger Karten</item>
+	    <item>Zufällige Reihenfolge</item>
+	</string-array>
+
+	<string-array name="failedCardOptionLabels">
+	    <item>Zeige nicht gewusste Karten bald</item>
+	    <item>Zeige nicht gewusste Karten am Schluss</item>
+    	<item>Zeige nicht gewusste Karten in 10 Minuten</item>
+	    <item>Zeige nicht gewusste Karten in 8 Stunden</item>
+	    <item>Zeige nicht gewusste Karten in 3 Tagen</item>
+  	</string-array>
+
+	<string-array name="hideQuestionInAnswerLabels">
+		<item>Verstecke die Frage während der Antwort</item>
+		<item>Zeige die Frage während der Antwort</item>
+		<item>Wie im Kartenmodell definiert</item>
+	</string-array>
+
+	<string-array name="error_reporting_choice_labels">
+		<item>Immer berichten</item>
+		<item>Niemals berichten</item>
+		<item>Nachfragen</item>
+	</string-array>
+	
+	<string-array name="cram_review_order_labels">
+		<item>Älteste zuerst</item>
+		<item>In der Reihenfolge des Hinzufügens</item>
+		<item>In umgekehrter Reihenfolge des Hinzufügens</item>
+	</string-array>
+	<string-array name="next_review_s">
+		<item>Stunde</item>
+		<item>Tag</item>
+		<item>Monat</item>
+		<item>Jahr</item>
+	</string-array>
+	<string-array name="next_review_p">
+		<item>Stunden</item>
+		<item>Tage</item>
+		<item>Monate</item>
+		<item>Jahre</item>
+	</string-array>
 </resources>
+
