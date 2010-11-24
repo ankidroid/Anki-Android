@@ -716,7 +716,7 @@ public class Reviewer extends Activity {
             mEase2.setText(res.getString(R.string.ease2_successive));
             mEase3.setText(res.getString(R.string.ease3_successive));
             mEase4.setText(res.getString(R.string.ease4_successive));
-            mNext1.setText(res.getString(R.string.soon));
+            mNext1.setText(nextInterval(1));
             mNext2.setText(nextInterval(2));
             mNext3.setText(nextInterval(3));
             mNext4.setText(nextInterval(4));
@@ -726,7 +726,7 @@ public class Reviewer extends Activity {
             mEase2.setText(res.getString(R.string.ease2_learning));
             mEase3.setText(res.getString(R.string.ease3_learning));
             mEase4.setText(res.getString(R.string.ease4_learning));
-            mNext1.setText(res.getString(R.string.soon));
+            mNext1.setText(nextInterval(1));
             mNext2.setText(nextInterval(2));
             mNext3.setText(nextInterval(3));
             mNext4.setText(nextInterval(4));
@@ -1213,17 +1213,55 @@ public class Reviewer extends Activity {
         }
     }
     
+    private int optimalPeriod(double numberOfDays) {
+    	if (numberOfDays < 1) {
+    		return 0;
+    	} else if (numberOfDays < 30) {
+    		return 1;
+    	} else if (numberOfDays < 365) {
+    		return 2;
+    	} else {
+    		return 3;
+    	}
+    }    
+
     private String nextInterval(int ease) {
         Resources res = getResources();
 
-        int nextInt = (int)Math.ceil(mCurrentCard.nextInterval(mCurrentCard,ease));
-    	String str;
-    	
-    	if (nextInt == 1){
-    		str = String.valueOf(nextInt) + " " + res.getString(R.string.day_s);
-    	} else {
-    		str = String.valueOf(nextInt) + " " + res.getString(R.string.day_p);    		
-    	}
-    	return str;
+        if (ease = 1){
+        	return res.getString(R.string.soon);
+        } else {
+        	double  nextInt = mCurrentCard.nextInterval(mCurrentCard,ease);
+        	double adInt;
+        	int period = optimalPeriod(nextInt); 
+        	
+        	switch(period){
+        	case 0: 
+        		adInt = Math.max(1, Math.round(nextInt * 24));
+        		break;
+        	case 1: 
+        		adInt = Math.round(nextInt);
+        		break;
+        	case 2:
+        		adInt = Math.round(nextInt/3)/10;
+        		break;
+        	case 3:
+        		adInt = Math.round(nextInt/36.5)/10;
+        		break;
+        	}
+        	if (adInt == 1){
+        		if (period <= 1){
+            		return String.valueOf((int)adInt) + " " + res.getString(R.string.next_review_s[period]);        			   			
+        		} else {
+            		return String.valueOf(adInt) + " " + res.getString(R.string.next_review_s[period]);        			
+        		}
+        	} else {
+        		if (period <= 1){
+            		return String.valueOf((int)adInt) + " " + res.getString(R.string.next_review_p[period]);        			   			
+        		} else {
+            		return String.valueOf(adInt) + " " + res.getString(R.string.next_review_p[period]);        			
+        		}
+        	}
+        }
     }
 }
