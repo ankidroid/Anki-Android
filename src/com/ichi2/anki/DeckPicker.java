@@ -89,6 +89,7 @@ public class DeckPicker extends Activity implements Runnable {
 
     private ProgressDialog mProgressDialog;
     private AlertDialog mSyncLogAlert;
+    private AlertDialog mUpgradeNotesAlert;
     private RelativeLayout mSyncAllBar;
     private Button mSyncAllButton;
 
@@ -122,17 +123,18 @@ public class DeckPicker extends Activity implements Runnable {
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Bundle data = msg.getData();
             Resources res = mSelf.getResources();
+            Bundle data = msg.getData();
             String dueString = "";
             String newString = "";
             String showProgress = "false";
+            String notes = data.getString("notes");
 
             String path = data.getString("absPath");
             int msgtype = data.getInt("msgtype");
+                        
             if (msgtype == DeckPicker.MSG_UPGRADE_NEEDED) {
-                // TODO: add messages as needed and a dialog for notes.
-                dueString = "Upgrading...";
+                dueString = res.getString(R.string.deckpicker_upgrading);
                 newString = "";
                 showProgress = "true";
             } else if (msgtype == DeckPicker.MSG_UPGRADE_FAILURE) {
@@ -154,6 +156,7 @@ public class DeckPicker extends Activity implements Runnable {
                     map.put("due", dueString);
                     map.put("new", newString);
                     map.put("showProgress", showProgress);
+                    map.put("notes", notes);
                 }
             }
 
@@ -234,13 +237,18 @@ public class DeckPicker extends Activity implements Runnable {
             }
 
         });
-
+        
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
         mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "due", "new",
-                "showProgress" }, new int[] { R.id.DeckPickerName, R.id.DeckPickerDue, R.id.DeckPickerNew,
-                R.id.DeckPickerProgress });
+                "showProgress", "notes" }, new int[] { R.id.DeckPickerName, R.id.DeckPickerDue, R.id.DeckPickerNew,
+                R.id.DeckPickerProgress, R.id.DeckPickerUpgradeNotesButton });
+/*
+        mUpgradeNotesButton = (Button) findViewById(R.id.DeckPickerUpgradeNotesButton);
+        mUpgradeNotesButton.
+*/
 
+        
         mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data, String text) {
@@ -249,6 +257,26 @@ public class DeckPicker extends Activity implements Runnable {
                         view.setVisibility(View.VISIBLE);
                     } else {
                         view.setVisibility(View.GONE);
+                    }
+                    return true;
+                }
+                if (view.getId() == R.id.DeckPickerUpgradeNotesButton) {
+                    if (text.equals("")) {
+                        view.setVisibility(View.GONE);
+                    } else {
+                        view.setVisibility(View.VISIBLE);
+                        view.setTag(text);
+                        view.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String tag = (String) v.getTag();
+                                if (tag == null) {
+                                    tag = "";
+                                }
+                                mUpgradeNotesAlert.setMessage(tag);
+                                mUpgradeNotesAlert.show();
+                            }
+                        });
                     }
                     return true;
                 }
@@ -372,6 +400,11 @@ public class DeckPicker extends Activity implements Runnable {
         builder.setTitle(getResources().getString(R.string.sync_log_tite));
         builder.setPositiveButton(getResources().getString(R.string.ok), null);
         mSyncLogAlert = builder.create();
+        // Upgrade notes dialog
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.deckpicker_upgrade_notes_title));
+        builder.setPositiveButton(getResources().getString(R.string.ok), null);
+        mUpgradeNotesAlert = builder.create();
     }
 
 
@@ -488,14 +521,15 @@ public class DeckPicker extends Activity implements Runnable {
                         data.putString("absPath", path);
                         data.putInt("msgtype", MSG_UPGRADE_NEEDED);
                         data.putInt("version", version);
+                        data.putString("notes", "");
                         Message msg = Message.obtain();
                         msg.setData(data);
                         mHandler.sendMessage(msg);
                     }
 
                     try {
-                        deck = Deck.openDeck(path, mSelf.getResources(););
-                        version = Deck.getDeckVersion(path);
+                        deck = Deck.openDeck(path);
+                        version = deck.version;
                     } catch (SQLException e) {
                         Log.w(TAG, "Could not open database " + path);
                         continue;
@@ -506,10 +540,11 @@ public class DeckPicker extends Activity implements Runnable {
 
                     // Check if the upgrade failed
                     if (version < Deck.DECK_VERSION) {
-                        deck.closeDeck();
                         data.putString("absPath", path);
                         data.putInt("msgtype", MSG_UPGRADE_FAILURE);
                         data.putInt("version", version);
+                        data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
+                        deck.closeDeck();
                         msg.setData(data);
                         mHandler.sendMessage(msg);
                     } else {
@@ -524,6 +559,7 @@ public class DeckPicker extends Activity implements Runnable {
                         data.putInt("due", dueCards);
                         data.putInt("total", totalCards);
                         data.putInt("new", newCards);
+                        data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
                         msg.setData(data);
 
                         mHandler.sendMessage(msg);

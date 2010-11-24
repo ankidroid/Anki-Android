@@ -19,6 +19,7 @@
 package com.ichi2.anki;
 
 import android.content.ContentValues;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
@@ -222,7 +223,7 @@ public class Deck {
     String scheduler;
 
     // Any comments resulting from upgrading the deck should be stored here, both in success and failure
-    private String upgradeNotes;
+    private ArrayList<Integer> upgradeNotes;
 
     // Queues
     LinkedList<QueueItem> failedQueue;
@@ -332,7 +333,7 @@ public class Deck {
         deck.initVars();
         
         // Upgrade to latest version
-        deck.upgradeDeck(res);
+        deck.upgradeDeck();
 
         double oldMod = deck.modified;
 
@@ -531,15 +532,15 @@ public class Deck {
      * 
      * @return True if the upgrade is supported, false if the upgrade needs to be performed by Anki Desktop
      */
-    private boolean upgradeDeck(Resources res) {
+    private boolean upgradeDeck() {
         // Oldest versions in existence are 31 as of 11/07/2010
         // We support upgrading from 39 and up.
         // Unsupported are about 135 decks, missing about 6% as of 11/07/2010
         
-        upgradeNotes = "";
+        upgradeNotes = new ArrayList<Integer>();
         if (version < 39) {
             // Unsupported version
-            upgradeNotes = res.getString(R.deck_upgrade_too_old_version);
+            upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_too_old_version);
             return false;
         }
         if (version < 40) {
@@ -594,11 +595,8 @@ public class Deck {
         }
         // skip 51
         if (version < 52) {
-            String dname = deck.name();
-            String sname = deck.syncName;
-            if (!dname.equals(sname)) {
-                upgradeNotes = upgradeNotes.concat(String.format(res.getString(R.string.deck_upgrade_52_note),
-                            dname, sname));
+            if (!deckName.equals(syncName)) {
+                upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_52_note);
                 disableSyncing();
             } else {
                 enableSyncing();
@@ -618,8 +616,19 @@ public class Deck {
         return true;
     }
 
-    public String getUpgradeNotes() {
-        return upgradeNotes;
+    public static String upgradeNotesToMessages(Deck deck, Resources res) {
+        String notes = "";
+        for (Integer note : deck.upgradeNotes) {
+            if (note == com.ichi2.anki.R.string.deck_upgrade_too_old_version) {
+                // Unsupported version
+                notes = notes.concat(res.getString(note.intValue()));
+            } else if (note == com.ichi2.anki.R.string.deck_upgrade_52_note) {
+                // Upgrade note for version 52 regarding syncName
+                notes = notes.concat(String.format(res.getString(note.intValue()),
+                        deck.deckName, deck.syncName));
+            }
+        }
+        return notes;
     }
     
     /**
@@ -3202,7 +3211,7 @@ public class Deck {
     // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
     
     private void enableSyncing() {
-        syncName = Utils.checksum(deckPath);
+        syncName = Utils.checksum(deckName);
         lastSync = 0;
         commitToDB();
     }
@@ -3218,7 +3227,7 @@ public class Deck {
     }
 
     private void checkSyncHash() {
-        if ((syncName != null) && !syncName.equals(Utils.checksum(deckPath))) {
+        if ((syncName != null) && !syncName.equals(Utils.checksum(deckName))) {
             disableSyncing();
         }
     }

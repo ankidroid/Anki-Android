@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 
 import com.mindprod.common11.BigDate;
@@ -41,8 +40,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -622,8 +623,18 @@ public class Utils {
     public static String checksum(String data) {
         String result = "";
         if (data != null) {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digest = md.digest(data.getBytes("UTF-8"));
+            MessageDigest md = null;
+            byte[] digest = null;
+            try {
+                md = MessageDigest.getInstance("MD5");
+                digest = md.digest(data.getBytes("UTF-8"));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e(TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                Log.e(TAG, "Utils.checksum: " + e.getMessage());
+                e.printStackTrace();
+            }
             BigInteger biginteger = new BigInteger(1, digest);
             result = biginteger.toString(16);
             // pad with zeros to length of 32
