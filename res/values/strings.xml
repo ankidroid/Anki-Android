@@ -361,16 +361,4 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="soon">Soon</string>
 <string name="show_next_review_time">Show next review time</string>
 <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
-<string-array name="next_review_s">
-<item>hour</item>
-<item>day</item>
-<item>month</item>
-<item>year</item>
-</string-array>
-<string-array name="next_review_p">
-<item>hours</item>
-<item>days</item>
-<item>months</item>
-<item>years</item>
-</string-array>
 </resources>

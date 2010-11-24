@@ -49,6 +49,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ichi2.anki.R.color;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -1228,39 +1229,41 @@ public class Reviewer extends Activity {
     private String nextInterval(int ease) {
         Resources res = getResources();
 
-        if (ease = 1){
+        if (ease == 1){
         	return res.getString(R.string.soon);
         } else {
         	double  nextInt = mCurrentCard.nextInterval(mCurrentCard,ease);
-        	double adInt;
+        	double adInt = 0;
         	int period = optimalPeriod(nextInt); 
+        	String[] namePeriod;
         	
-        	switch(period){
-        	case 0: 
-        		adInt = Math.max(1, Math.round(nextInt * 24));
-        		break;
-        	case 1: 
-        		adInt = Math.round(nextInt);
-        		break;
-        	case 2:
-        		adInt = Math.round(nextInt/3)/10;
-        		break;
-        	case 3:
-        		adInt = Math.round(nextInt/36.5)/10;
-        		break;
+         	switch(period){
+    		case 0: 
+    			adInt = Math.max(1, Math.round(nextInt * 24));
+    			break;
+    		case 1: 
+    			adInt = Math.round(nextInt);
+    			break;
+    		case 2:
+    			adInt = Math.round(nextInt / 3);
+    			adInt = adInt / 10;
+    			break;
+    		case 3:
+    			adInt = Math.round(nextInt/36.5);
+    			adInt = adInt / 10;
+    			break;
         	}
-        	if (adInt == 1){
-        		if (period <= 1){
-            		return String.valueOf((int)adInt) + " " + res.getString(R.string.next_review_s[period]);        			   			
-        		} else {
-            		return String.valueOf(adInt) + " " + res.getString(R.string.next_review_s[period]);        			
-        		}
-        	} else {
-        		if (period <= 1){
-            		return String.valueOf((int)adInt) + " " + res.getString(R.string.next_review_p[period]);        			   			
-        		} else {
-            		return String.valueOf(adInt) + " " + res.getString(R.string.next_review_p[period]);        			
-        		}
+
+	       	if (adInt == 1){
+	       		namePeriod = res.getStringArray(R.array.next_review_s);
+	       	} else {
+	       		namePeriod = res.getStringArray(R.array.next_review_p);
+        	}
+		
+		if (period <= 1){
+    			return String.valueOf((int)adInt) + " " + namePeriod[period];        			   			
+		} else {
+           		return String.valueOf(adInt) + " " + namePeriod[period]; 	
         	}
         }
     }

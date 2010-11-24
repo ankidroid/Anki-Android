@@ -150,4 +150,16 @@
 		<item>Show in order added</item>
 		<item>Show in random order</item>
 	</string-array>
+	<string-array name="next_review_s">
+		<item>hour</item>
+		<item>day</item>
+		<item>month</item>
+		<item>year</item>
+	</string-array>
+	<string-array name="next_review_p">
+		<item>hours</item>
+		<item>days</item>
+		<item>months</item>
+		<item>years</item>
+	</string-array>
 </resources>
