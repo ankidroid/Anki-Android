@@ -243,11 +243,6 @@ public class DeckPicker extends Activity implements Runnable {
         mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "due", "new",
                 "showProgress", "notes" }, new int[] { R.id.DeckPickerName, R.id.DeckPickerDue, R.id.DeckPickerNew,
                 R.id.DeckPickerProgress, R.id.DeckPickerUpgradeNotesButton });
-/*
-        mUpgradeNotesButton = (Button) findViewById(R.id.DeckPickerUpgradeNotesButton);
-        mUpgradeNotesButton.
-*/
-
         
         mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
@@ -514,7 +509,6 @@ public class DeckPicker extends Activity implements Runnable {
                         Log.w(TAG, "Could not open database " + path);
                         continue;
                     }
-                    AnkiDatabaseManager.closeDatabase(path);
 
                     if (version < Deck.DECK_VERSION) {
                         Bundle data = new Bundle();
@@ -551,7 +545,7 @@ public class DeckPicker extends Activity implements Runnable {
                         int dueCards = deck.failedSoonCount + deck.revCount;
                         int totalCards = deck.cardCount;
                         int newCards = deck.newCountToday;
-//                        String upgradeNotes = deck.getUpgradeNotes();
+                        String upgradeNotes = deck.upgradeNotesToMessages(deck, getResources());
                         deck.closeDeck();
 
                         data.putString("absPath", path);
@@ -559,7 +553,7 @@ public class DeckPicker extends Activity implements Runnable {
                         data.putInt("due", dueCards);
                         data.putInt("total", totalCards);
                         data.putInt("new", newCards);
-                        data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
+                        data.putString("notes", upgradeNotes);
                         msg.setData(data);
 
                         mHandler.sendMessage(msg);

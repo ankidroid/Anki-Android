@@ -43,6 +43,8 @@
 			android:layout_weight="4"
 			android:paddingLeft="10dip"
 			android:textSize="14sp"
+			android:focusable="false"
+			android:focusableInTouchMode="false"
 			android:text="@string/deckpicker_upgrade_notes_button"/>
 	</LinearLayout>
 

@@ -528,7 +528,13 @@ public class Deck {
     
     /**
      * Upgrade deck to latest version.
-     * Any comments resulting from the upgrade, should be stored in upgradeNotes, successful or not.
+     * Any comments resulting from the upgrade, should be stored in upgradeNotes, as R.string.id, successful or not.
+     * The idea is to have Deck.java generate the notes from upgrading and not the UI. Still we need access to
+     * a Resources object and it's messy to pass that in openDeck.
+     * Instead we store the ids for the messages and make a separate call from the UI to static upgradeNotesToMessages
+     * in order to properly translate the IDs to messages for viewing.
+     * We shouldn't do this directly from the UI, as the messages contain %s variables that need to be populated from
+     * deck values, and it's better to contain the libanki logic to the relevant classes.
      * 
      * @return True if the upgrade is supported, false if the upgrade needs to be performed by Anki Desktop
      */
@@ -595,7 +601,7 @@ public class Deck {
         }
         // skip 51
         if (version < 52) {
-            if (!deckName.equals(syncName)) {
+            if ((syncName != null) && !syncName.equals("") && !deckName.equals(syncName)) {
                 upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_52_note);
                 disableSyncing();
             } else {
@@ -617,6 +623,8 @@ public class Deck {
     }
 
     public static String upgradeNotesToMessages(Deck deck, Resources res) {
+        // FIXME: upgradeNotes should be a list of HashMaps<Integer, ArrayList<String>> containing any values
+        // necessary for generating the messages. In the case of upgrade 52, name and syncName. 
         String notes = "";
         for (Integer note : deck.upgradeNotes) {
             if (note == com.ichi2.anki.R.string.deck_upgrade_too_old_version) {
@@ -1593,8 +1601,8 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _spaceCramCards(Card card, double space) {
         // If non-zero spacing, limit to 10 minutes or queue refill
-        if (space > System.currentTimeMillis()) {
-            spacedFacts.put(card.factId, System.currentTimeMillis() + 600.0);
+        if (space > System.currentTimeMillis() / 1000.0) {
+            spacedFacts.put(card.factId, System.currentTimeMillis() / 1000.0 + 600.0);
         }
     }
 
