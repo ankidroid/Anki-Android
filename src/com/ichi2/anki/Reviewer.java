@@ -1212,18 +1212,19 @@ public class Reviewer extends Activity {
             mHandler.sendMessage(msg);
         }
     }
-    
+
+
     private String nextInterval(int ease) {
         Resources res = getResources();
 
-        int nextInt = (int)Math.ceil(mCurrentCard.nextInterval(mCurrentCard,ease));
-    	String str;
-    	
-    	if (nextInt == 1){
-    		str = String.valueOf(nextInt) + " " + res.getString(R.string.day_s);
-    	} else {
-    		str = String.valueOf(nextInt) + " " + res.getString(R.string.day_p);    		
-    	}
-    	return str;
+        int nextInt = (int) Math.ceil(mCurrentCard.nextInterval(mCurrentCard, ease));
+        String str;
+
+        if (nextInt == 1) {
+            str = String.valueOf(nextInt) + " " + res.getString(R.string.day_s);
+        } else {
+            str = String.valueOf(nextInt) + " " + res.getString(R.string.day_p);
+        }
+        return str;
     }
 }

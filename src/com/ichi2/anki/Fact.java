@@ -22,7 +22,6 @@ import android.util.Log;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -50,6 +49,14 @@ public class Fact {
     private Deck mDeck;
 
 
+    // Generate fact object from its ID
+    public Fact(Deck deck, long id) {
+        mDeck = deck;
+        fromDb(id);
+        // TODO: load fields associated with this fact.
+    }
+
+
     public Fact(Deck deck, Model model) {
         mDeck = deck;
         mModel = model;
@@ -64,9 +71,7 @@ public class Fact {
         mFields = new TreeSet<Field>(new FieldOrdinalComparator());
         for (Long i : mFieldModels.keySet()) {
             mFields.add(new Field(mId, mFieldModels.get(i)));
-
         }
-
     }
 
 
@@ -99,14 +104,6 @@ public class Fact {
      */
     public long getModelId() {
         return mModelId;
-    }
-
-
-    // Generate fact object from its ID
-    public Fact(Deck deck, long id) {
-        mDeck = deck;
-        fromDb(id);
-        // TODO: load fields associated with this fact.
     }
 
 
@@ -180,10 +177,25 @@ public class Fact {
     }
 
 
+    public void toDb() {
+        double now = Utils.now();
+
+        // update facts table
+        ContentValues updateValues = new ContentValues();
+        updateValues.put("modified", now);
+
+        // update fields table
+        for (Field f : mFields) {
+            updateValues = new ContentValues();
+            updateValues.put("value", f.mValue);
+            AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("fields", updateValues, "id = ?",
+                    new String[] { "" + f.mFieldId });
+        }
+    }
+
+
     public String getFieldValue(String fieldModelName) {
-        Iterator<Field> iter = mFields.iterator();
-        while (iter.hasNext()) {
-            Field f = iter.next();
+        for (Field f : mFields) {
             if (f.mFieldModel.getName().equals(fieldModelName)) {
                 return f.mValue;
             }
@@ -193,34 +205,12 @@ public class Fact {
 
 
     public long getFieldModelId(String fieldModelName) {
-        Iterator<Field> iter = mFields.iterator();
-        while (iter.hasNext()) {
-            Field f = iter.next();
+        for (Field f : mFields) {
             if (f.mFieldModel.getName().equals(fieldModelName)) {
                 return f.mFieldModel.getId();
             }
         }
         return 0;
-    }
-
-
-    public void toDb() {
-        double now = Utils.now();
-
-        // update facts table
-        ContentValues updateValues = new ContentValues();
-        updateValues.put("modified", now);
-
-        // update fields table
-        Iterator<Field> iter = mFields.iterator();
-        while (iter.hasNext()) {
-            Field f = iter.next();
-
-            updateValues = new ContentValues();
-            updateValues.put("value", f.mValue);
-            AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("fields", updateValues, "id = ?",
-                    new String[] { "" + f.mFieldId });
-        }
     }
 
 
@@ -295,7 +285,6 @@ public class Fact {
 
 
         // for creating instances of existing fields
-        // XXX Unused
         public Field(long id, long factId, FieldModel fieldModel, String value) {
             mFieldId = id;
             mFactId = factId;
@@ -312,23 +301,13 @@ public class Fact {
                 mFieldModel = fieldModel;
                 mOrdinal = fieldModel.getOrdinal();
             }
-            mFactId=factId;
-            mFieldModelId=fieldModel.getId();
+            mFactId = factId;
+            mFieldModelId = fieldModel.getId();
             mValue = "";
             mFieldId = Utils.genID();
         }
 
-        // For creating new fields
-        public Field(FieldModel fieldModel) {
-            if (fieldModel != null) {
-                mFieldModel = fieldModel;
-                mOrdinal = fieldModel.getOrdinal();
-            }
-            mValue = "";
-            mFieldId = Utils.genID();
-        }
 
-        
         /**
          * @return the FactId
          */

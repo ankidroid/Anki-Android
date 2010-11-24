@@ -22,9 +22,6 @@ import android.database.SQLException;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
@@ -137,20 +134,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundUpdateFact(TaskData[] params) {
-
         // Save the fact
         Deck deck = params[0].getDeck();
         Card editCard = params[0].getCard();
         Fact editFact = editCard.getFact();
         editFact.toDb();
-        LinkedList<Card> saveCards = editFact.getUpdatedRelatedCards();
 
-        Iterator<Card> iter = saveCards.iterator();
-        while (iter.hasNext()) {
-            Card modifyCard = iter.next();
+        // Find all cards based on this fact and update them with the updateCard method.
+        for (Card modifyCard : editFact.getUpdatedRelatedCards()) {
             modifyCard.updateQAfields();
         }
-        // Find all cards based on this fact and update them with the updateCard method.
 
         publishProgress(new TaskData(deck.getCurrentCard()));
 
