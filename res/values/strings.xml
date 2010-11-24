@@ -185,6 +185,8 @@
 <string name="resume_download">Resume Download</string>
 <string name="pause_download">Pause Download</string>
 <string name="duplicate_download">This deck is already downloading</string>
+<string name="sync_all">Sync all</string>
+
 
 <!-- SharedDeck.java -->
 <string name="fact">fact</string>
@@ -357,8 +359,10 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="add">Add</string>
 <string name="close">Close</string>
 
-
 <string name="soon">Soon</string>
 <string name="show_next_review_time">Show next review time</string>
 <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
+
+<string name="per_day">Per Day</string>
+
 </resources>

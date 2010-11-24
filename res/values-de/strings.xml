@@ -65,7 +65,7 @@
 <string name="ease1_learning">Nochmal</string>
 <string name="ease2_learning">Gut</string>
 <string name="ease3_learning">Einfach</string>
-<string name="ease4_learning">Sehr einfach</string>
+<string name="ease4_learning">Spielend</string>
 <string name="ease1_successive">Nochmal</string>
 <string name="ease2_successive">Schwer</string>
 <string name="ease3_successive">Gut</string>
@@ -155,6 +155,7 @@
 <string name="resume_download">Herunterladen fortsetzen</string>
 <string name="pause_download">Herunterladen pausieren</string>
 <string name="duplicate_download">Dieser Stapel wird gerade heruntergeladen</string>
+<string name="sync_all">Alle synchronisieren</string>
 
 <!-- SharedDeck.java -->
 <string name="fact">Fakt</string>
@@ -249,7 +250,7 @@
 <string name="studyoptions_continue">Setze Lernen fort</string>
 <string name="studyoptions_well_done">Gut gemacht!</string>
 <string name="studyoptions_congrats_title">Herzlichen Glückwunsch!</string>
-<string name="studyoptions_congrats_message">Sie sind für's erste fertig.</string>
+<string name="studyoptions_congrats_message">Sie sind für\'s erste fertig.</string>
 <string name="studyoptions_congrats_learnmore">Mehr Lernen</string>
 <string name="studyoptions_congrats_reviewearly">Früher Wiederholen</string>
 <string name="studyoptions_congrats_finish">Beenden</string>
@@ -276,8 +277,8 @@
 <string name="no_user_password_error_message">Um fortzufahren, brauchen Sie einen AnkiOnline-Account und müssen eingeloggt sein.</string>
 <string name="sync_progress_bar_title">Synchronisiere %s</string>
 <string name="studyoptions_cram_dialog_title">Stichwörter, die gepaukt werden sollen</string>
-<string name="begin_cram">Starte Pauk-Modus</string>
-<string name="end_cram">Beende Pauk-Modus</string>
+<string name="begin_cram">Pauken starten</string>
+<string name="end_cram">Beende Pauken</string>
 
 <!-- Connection.java -->
 <string name="sync_connecting_message">Verbinde...</string>
@@ -325,4 +326,7 @@
 <string name="soon">Bald</string>
 <string name="show_next_review_time">Zeige Zeit bis zum nächsten Lernen</string>
 <string name="show_next_review_time_summ">Zeigt während des Lernens das nächste Auftauchen der Karte abhängig von der Wahl des Schwierigkeitsgrades</string>
+
+<string name="per_day">Pro Tag</string>
 </resources>
+

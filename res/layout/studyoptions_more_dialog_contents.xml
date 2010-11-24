@@ -35,7 +35,7 @@
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
 			android:id="@+id/studyoptions_per_day"
-			android:text="Per Day"
+			android:text="@string/per_day"
 			android:checked="true" />
 	</LinearLayout>
 	
