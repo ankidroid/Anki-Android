@@ -23,7 +23,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +33,6 @@ import com.ichi2.anki.Fact.Field;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
@@ -61,7 +59,7 @@ public class FactAdder extends Activity {
     private Button mCloseButton;
     private Button mModelButton;
 
-    private Deck deck;
+    private Deck mDeck;
     private Long mCurrentSelectedModelId;
 
     private LinkedList<FieldEditText> mEditFields;
@@ -82,24 +80,20 @@ public class FactAdder extends Activity {
         mAddButton = (Button) findViewById(R.id.FactAdderAddButton);
         mCloseButton = (Button) findViewById(R.id.FactAdderCloseButton);
         mModelButton = (Button) findViewById(R.id.FactAdderModelButton);
-        deck = AnkiDroidApp.deck();
+        mDeck = AnkiDroidApp.deck();
 
-        mModels = Model.getModels(deck);
-        mCurrentSelectedModelId = deck.getCurrentModelId();
+        mModels = Model.getModels(mDeck);
+        mCurrentSelectedModelId = mDeck.getCurrentModelId();
         mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
-        mNewFact = deck.newFact();
+        mNewFact = mDeck.newFact();
         populateEditFields();
         mAddButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-
-                Log.i("Debug", Long.toString(mNewFact.getId()));
-                Iterator<FieldEditText> iter = mEditFields.iterator();
-                while (iter.hasNext()) {
-                    FieldEditText current = iter.next();
+                for (FieldEditText current : mEditFields) {
                     current.updateField();
                 }
-                deck.addFact(mNewFact);
+                mDeck.addFact(mNewFact);
                 setResult(RESULT_OK);
                 finish();
             }
@@ -179,22 +173,18 @@ public class FactAdder extends Activity {
 
 
     private void populateEditFields() {
-
         mFieldsLayoutContainer.removeAllViews();
         mEditFields = new LinkedList<FieldEditText>();
         TreeSet<Field> fields = mNewFact.getFields();
-        Iterator<Field> iter = fields.iterator();
-        while (iter.hasNext()) {
-            FieldEditText newTextbox = new FieldEditText(this, iter.next());
+        for (Field f : fields) {
+            FieldEditText newTextbox = new FieldEditText(this, f);
             TextView label = newTextbox.getLabel();
             mEditFields.add(newTextbox);
 
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(newTextbox);
             // Generate a new EditText for each field
-
         }
-
     }
 
 
@@ -228,7 +218,7 @@ public class FactAdder extends Activity {
     // TODO: remove redundance with CardEditor.java::FieldEditText
     private class FieldEditText extends EditText {
 
-        Field mPairField;
+        private Field mPairField;
 
 
         public FieldEditText(Context context, Field pairField) {

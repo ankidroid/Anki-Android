@@ -166,14 +166,11 @@ public class CardModel implements Comparator<CardModel> {
     }
 
 
-    public boolean isActive(){
-        if (mActive == 0){
-            return false;
-        }else{
-            return true;
-        }
+    public boolean isActive() {
+        return (mActive != 0);
     }
-    
+
+
     /**
      * @param cardModelId
      * @return the modelId for a given cardModel or 0, if it cannot be found

@@ -22,9 +22,7 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.TreeMap;
 
 /**
  * A card is a presentation of a fact, and has two sides: a question and an answer. Any number of fields can appear on
@@ -156,15 +154,15 @@ public class Card {
         mCombinedDue = mDue;
         mDeck = deck;
         mFact = fact;
-        if (fact != null){
-            mFactId=fact.getId();
+        if (fact != null) {
+            mFactId = fact.getId();
         }
         mCardModel = cardModel;
         if (cardModel != null) {
             mCardModelId = cardModel.getId();
             mOrdinal = cardModel.getOrdinal();
-            
-            if (fact != null){
+
+            if (fact != null) {
                 HashMap<String, String> qa = CardModel.formatQA(fact, cardModel, splitTags());
                 mQuestion = qa.get("question");
                 mAnswer = qa.get("answer");
@@ -446,7 +444,7 @@ public class Card {
                             + "matureEase2, matureEase3, matureEase4, yesCount, noCount, "
                             + "spaceUntil, isDue, type, combinedDue " + "FROM cards " + "WHERE id = " + id, null);
             if (!cursor.moveToFirst()) {
-                Log.w("anki", "Card.java (fromDB(id)): No result from query.");
+                Log.w(AnkiDroidApp.TAG, "Card.java (fromDB(id)): No result from query.");
                 return false;
             }
 
@@ -762,9 +760,9 @@ public class Card {
     public long getCardModelId() {
         return mCardModelId;
     }
-    
-    
+
+
     public double nextInterval(Card card, int ease) {
-    	return mDeck.nextInterval(card, ease);
+        return mDeck.nextInterval(card, ease);
     }
 }
