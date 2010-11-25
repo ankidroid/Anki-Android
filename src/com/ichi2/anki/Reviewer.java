@@ -717,20 +717,12 @@ public class Reviewer extends Activity {
             mEase2.setText(res.getString(R.string.ease2_successive));
             mEase3.setText(res.getString(R.string.ease3_successive));
             mEase4.setText(res.getString(R.string.ease4_successive));
-            mNext1.setText(nextInterval(1));
-            mNext2.setText(nextInterval(2));
-            mNext3.setText(nextInterval(3));
-            mNext4.setText(nextInterval(4));
             
         } else {
             mEase1.setText(res.getString(R.string.ease1_learning));
             mEase2.setText(res.getString(R.string.ease2_learning));
             mEase3.setText(res.getString(R.string.ease3_learning));
             mEase4.setText(res.getString(R.string.ease4_learning));
-            mNext1.setText(nextInterval(1));
-            mNext2.setText(nextInterval(2));
-            mNext3.setText(nextInterval(3));
-            mNext4.setText(nextInterval(4));
         }
 
         // Show buttons
@@ -741,6 +733,10 @@ public class Reviewer extends Activity {
        
         // Show next review time
         if (mshowNextReviewTime) {
+        mNext1.setText(nextInterval(1));
+        mNext2.setText(nextInterval(2));
+        mNext3.setText(nextInterval(3));
+        mNext4.setText(nextInterval(4));
         mNext1.setVisibility(View.VISIBLE);
         mNext2.setVisibility(View.VISIBLE);
         mNext3.setVisibility(View.VISIBLE);
@@ -1249,7 +1245,7 @@ public class Reviewer extends Activity {
     			adInt = adInt / 10;
     			break;
     		case 3:
-    			adInt = Math.round(nextInt/36.5);
+    			adInt = Math.round(nextInt / 36.5);
     			adInt = adInt / 10;
     			break;
         	}
