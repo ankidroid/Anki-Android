@@ -573,8 +573,16 @@ public class Utils {
      * @return The canonified string, as described above
      */
     public static String canonifyTags(String tags) {
-        return joinTags(new TreeSet<String>(Arrays.asList(parseTags(tags))));
+        List<String> taglist = Arrays.asList(parseTags(tags));
+        for (int i = 0; i < taglist.size(); i++) {
+            String t = taglist.get(i);
+            if (t.startsWith(":")) {
+                taglist.set(i, t.replace("^:+", ""));
+            }
+        }
+        return joinTags(new TreeSet<String>(taglist));
     }
+
     /**
      * Find if tag exists in a set of tags. The search is not case-sensitive
      * 

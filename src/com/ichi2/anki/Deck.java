@@ -69,7 +69,7 @@ public class Deck {
      **/
 
     // Rest
-    public static final int DECK_VERSION = 52;
+    public static final int DECK_VERSION = 53;
     
     private static final int MATURE_THRESHOLD = 21;
 
@@ -344,12 +344,6 @@ public class Deck {
         // Ensure cards suspended on older clients are recognized
         deck.getDB().database.execSQL("UPDATE cards SET type = type - 3 WHERE type BETWEEN 0 AND 2 AND priority = -3");
 
-        // Ensure hard scheduling over a day if per day
-        if (deck.getBool("perDay")) {
-            deck.hardIntervalMin = Math.max(1.0, deck.hardIntervalMin);
-            deck.hardIntervalMax = Math.max(1.1, deck.hardIntervalMax);
-        }
-        
         // - New delay1 handling
         if (deck.delay0 == deck.delay1) {
             deck.delay1 = 0l;
@@ -608,6 +602,16 @@ public class Deck {
                 enableSyncing();
             }
             version = 52;
+            commitToDB();
+        }
+        if (version < 53) {
+            if (getBool("perDay")) {
+                if (Math.abs(hardIntervalMin - 0.333) < 0.001) {
+                    hardIntervalMin = Math.max(1.0, hardIntervalMin);
+                    hardIntervalMax = Math.max(1.1, hardIntervalMax);
+                }
+            }
+            version = 53;
             commitToDB();
         }
         // Executing a pragma here is very slow on large decks, so we store our own record
@@ -2703,7 +2707,7 @@ public class Deck {
      */
     private HashMap<Long, Integer> updateTagPriorities() {
         // Make sure all priority tags exist
-        for (String s : new String[] {lowPriority, medPriority, highPriority, suspended}) {
+        for (String s : new String[] {lowPriority, medPriority, highPriority}) {
             tagIds(Utils.parseTags(s));
         }
 

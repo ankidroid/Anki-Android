@@ -241,9 +241,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             try {
                 Deck deck = Deck.openDeck(deckPath);
 
-                Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath });
-                syncDeckData = doInBackgroundSyncDeck(syncDeckData);
-                decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
+                if (deck.syncingEnabled()) {
+                    Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath });
+                    syncDeckData = doInBackgroundSyncDeck(syncDeckData);
+                    decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
+                }
             } catch (Exception e) {
                 Log.e(TAG, "Exception e = " + e.getMessage());
                 // Probably, there was an error trying to open the deck, so we can not retrieve the deck name from it
