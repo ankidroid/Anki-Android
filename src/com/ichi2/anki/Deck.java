@@ -347,10 +347,8 @@ public class Deck {
         // - New delay1 handling
         if (deck.delay0 == deck.delay1) {
             deck.delay1 = 0l;
-        } else if (deck.delay1 >= 28800l) {
-            deck.delay1 = 1l;
         } else {
-            deck.delay1 = 0l;
+            deck.delay1 = Math.min(deck.delay1, 7);
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();
@@ -403,6 +401,10 @@ public class Deck {
 
     public synchronized void closeDeck() {
         DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
+        if (finishSchedulerMethod != null) {
+            finishScheduler();
+            reset();
+        }
         if (modifiedSinceSave()) {
             commitToDB();
         }
