@@ -218,12 +218,12 @@ public class StudyOptions extends Activity {
                     return;
                 case R.id.studyoptions_congrats_learnmore:
                     onLearnMore();
-                    reviewer.putExtra("deckFilename", deckFilename);
+                    reviewer.putExtra("deckFilename", mDeckFilename);
                     startActivityForResult(reviewer, REQUEST_REVIEW);
                     return;
                 case R.id.studyoptions_congrats_reviewearly:
                     onReviewEarly();
-                    reviewer.putExtra("deckFilename", deckFilename);
+                    reviewer.putExtra("deckFilename", mDeckFilename);
                     startActivityForResult(reviewer, REQUEST_REVIEW);
                     return;
                 case R.id.studyoptions_congrats_finish:

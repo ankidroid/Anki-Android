@@ -1411,7 +1411,7 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillRevEarlyQueue() {
         if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            String sql = "SELECT id, factId, combinedDue FROM cards WHERE type = 1 AND combinedDue > " + dueCutoff
+            String sql = "SELECT id, factId, combinedDue FROM cards WHERE type = 1 AND combinedDue > " + mDueCutoff
                     + " ORDER BY combinedDue LIMIT " + mQueueLimit;
             Cursor cur = getDB().getDatabase().rawQuery(sql, null);
             while (cur.moveToNext()) {
