@@ -19,10 +19,12 @@
 package com.ichi2.anki;
 
 import android.content.ContentValues;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+import android.R;
 
 import com.ichi2.anki.Fact.Field;
 
@@ -35,6 +37,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -43,6 +46,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -55,7 +59,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    private static final int DECK_VERSION = 50;
+    private static final int DECK_VERSION = 53;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -88,6 +92,10 @@ public class Deck {
     private String mDescription;
     private int mVersion;
     private long mCurrentModelId;
+
+    // syncName stores an md5sum of the deck path when syncing is enabled.
+    // If it doesn't match the current deck path, the deck has been moved,
+    // and syncing is disabled on load.
     private String mSyncName;
     private double mLastSync;
 
@@ -163,6 +171,9 @@ public class Deck {
     private double mFailedCutoff;
 
     private String mScheduler;
+
+    // Any comments resulting from upgrading the deck should be stored here, both in success and failure
+    private ArrayList<Integer> upgradeNotes;
 
     // Queues
     private LinkedList<QueueItem> mFailedQueue;
@@ -279,19 +290,11 @@ public class Deck {
         // Ensure cards suspended on older clients are recognized
         deck.getDB().getDatabase().execSQL("UPDATE cards SET type = type - 3 WHERE type BETWEEN 0 AND 2 AND priority = -3");
 
-        // Ensure hard scheduling over a day if per day
-        if (deck.getBool("perDay")) {
-            deck.mHardIntervalMin = Math.max(1.0, deck.mHardIntervalMin);
-            deck.mHardIntervalMax = Math.max(1.1, deck.mHardIntervalMax);
-        }
-
         // - New delay1 handling
         if (deck.mDelay0 == deck.mDelay1) {
             deck.mDelay1 = 0l;
-        } else if (deck.mDelay1 >= 28800l) {
-            deck.mDelay1 = 1l;
         } else {
-            deck.mDelay1 = 0l;
+            deck.mDelay1 = Math.min(deck.mDelay1, 7);
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();
@@ -304,6 +307,9 @@ public class Deck {
             // Save deck to database
             deck.commitToDB();
         }
+
+        // Check if deck has been moved and disable syncing
+        deck.checkSyncHash();
 
         // Determine starting factor for new cards
         Cursor cur = null;
@@ -346,10 +352,20 @@ public class Deck {
 
     public synchronized void closeDeck() {
         DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
+        if (finishSchedulerMethod != null) {
+            finishScheduler();
+            reset();
+        }
         if (modifiedSinceSave()) {
             commitToDB();
         }
         AnkiDatabaseManager.closeDatabase(mDeckPath);
+    }
+
+
+    public static synchronized int getDeckVersion(String path) throws SQLException {
+        int version = (int) AnkiDatabaseManager.getDatabase(path).queryScalar("SELECT version FROM decks LIMIT 1");
+        return version;
     }
 
 
@@ -489,7 +505,14 @@ public class Deck {
 
 
     /**
-     * Upgrade deck to latest version
+     * Upgrade deck to latest version.
+     * Any comments resulting from the upgrade, should be stored in upgradeNotes, as R.string.id, successful or not.
+     * The idea is to have Deck.java generate the notes from upgrading and not the UI. Still we need access to
+     * a Resources object and it's messy to pass that in openDeck.
+     * Instead we store the ids for the messages and make a separate call from the UI to static upgradeNotesToMessages
+     * in order to properly translate the IDs to messages for viewing.
+     * We shouldn't do this directly from the UI, as the messages contain %s variables that need to be populated from
+     * deck values, and it's better to contain the libanki logic to the relevant classes.
      * 
      * @return True if the upgrade is supported, false if the upgrade needs to be performed by Anki Desktop
      */
@@ -498,8 +521,10 @@ public class Deck {
         // We support upgrading from 39 and up.
         // Unsupported are about 135 decks, missing about 6% as of 11/07/2010
 
+        upgradeNotes = new ArrayList<Integer>();
         if (mVersion < 39) {
             // Unsupported version
+            upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_too_old_version);
             return false;
         }
         if (mVersion < 40) {
@@ -522,9 +547,6 @@ public class Deck {
             // Leaner indices
             getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_factId");
             addIndices();
-            // Per-day scheduling necessitates an increase here
-            mHardIntervalMin = 1.0;
-            mHardIntervalMax = 1.1;
             mVersion = 44;
             commitToDB();
         }
@@ -555,6 +577,29 @@ public class Deck {
             mVersion = 50;
             commitToDB();
         }
+        // skip 51
+        if (version < 52) {
+            if ((syncName != null) && !syncName.equals("")) {
+                if (!deckName.equals(syncName)) {
+                    upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_52_note);
+                    disableSyncing();
+                } else {
+                    enableSyncing();
+                }
+            }
+            version = 52;
+            commitToDB();
+        }
+        if (version < 53) {
+            if (getBool("perDay")) {
+                if (Math.abs(hardIntervalMin - 0.333) < 0.001) {
+                    hardIntervalMin = Math.max(1.0, hardIntervalMin);
+                    hardIntervalMax = Math.max(1.1, hardIntervalMax);
+                }
+            }
+            version = 53;
+            commitToDB();
+        }
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
             commitToDB();
@@ -565,6 +610,24 @@ public class Deck {
             commitToDB();
         }
         return true;
+    }
+
+
+    public static String upgradeNotesToMessages(Deck deck, Resources res) {
+        // FIXME: upgradeNotes should be a list of HashMaps<Integer, ArrayList<String>> containing any values
+        // necessary for generating the messages. In the case of upgrade 52, name and syncName. 
+        String notes = "";
+        for (Integer note : deck.upgradeNotes) {
+            if (note == com.ichi2.anki.R.string.deck_upgrade_too_old_version) {
+                // Unsupported version
+                notes = notes.concat(res.getString(note.intValue()));
+            } else if (note == com.ichi2.anki.R.string.deck_upgrade_52_note) {
+                // Upgrade note for version 52 regarding syncName
+                notes = notes.concat(String.format(res.getString(note.intValue()),
+                        deck.deckName, deck.syncName));
+            }
+        }
+        return notes;
     }
 
 
@@ -593,7 +656,7 @@ public class Deck {
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_fields_fieldModelId ON fields (fieldModelId)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_fields_value ON fields (value)");
         // Media
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_media_filename ON media (filename)");
+        getDB().getDatabase().execSQL("CREATE UNIQUE INDEX IF NOT EXISTS ix_media_filename ON media (filename)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_media_originalPath ON media (originalPath)");
         // Deletion tracking
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardsDeleted_cardId ON cardsDeleted (cardId)");
@@ -988,6 +1051,15 @@ public class Deck {
         fillFailedQueue();
         fillRevQueue();
         fillNewQueue();
+        for (QueueItem i : failedQueue) {
+            Log.i(TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: " + i.getDue());
+        }
+        for (QueueItem i : revQueue) {
+            Log.i(TAG, "rev queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
+        }
+        for (QueueItem i : newQueue) {
+            Log.i(TAG, "new queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
+        }
     }
 
     public long retrieveCardCount() {
@@ -1030,25 +1102,32 @@ public class Deck {
         }
     }
 
-
+    /**
+     * This is a count of all failed cards within the current day cutoff.
+     * The cards may not be ready for review yet, but can still be displayed
+     * if failedCardsMax is reached.
+     */
     @SuppressWarnings("unused")
     private void _rebuildFailedCount() {
-        mFailedSoonCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive",
-                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < " + mFailedCutoff));
+        String sql = String.format(ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < %f", failedCutoff);
+        failedSoonCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
 
     @SuppressWarnings("unused")
     private void _rebuildRevCount() {
-        mRevCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive",
-                "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue < " + mDueCutoff));
+        String sql = String.format(ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue < %f", dueCutoff);
+        revCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
 
     @SuppressWarnings("unused")
     private void _rebuildNewCount() {
-        mNewCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive",
-                "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < " + mDueCutoff));
+        String sql = String.format(ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < %f", dueCutoff);
+        newCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive", sql));
         updateNewCountToday();
     }
 
@@ -1208,13 +1287,16 @@ public class Deck {
 
     public void updateCutoff() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, (int) - mUtcOffset + 86400);
+        int newday = (int) utcOffset + (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+        cal.add(Calendar.MILLISECOND, -cal.get(Calendar.ZONE_OFFSET) - cal.get(Calendar.DST_OFFSET));
+        cal.add(Calendar.SECOND, (int) -utcOffset + 86400);
+        cal.set(Calendar.AM_PM, Calendar.AM);
         cal.set(Calendar.HOUR, 0); // Yes, verbose but crystal clear
         cal.set(Calendar.MINUTE, 0); // Apologies for that, here was my rant
         cal.set(Calendar.SECOND, 0); // But if you can improve this bit and
         cal.set(Calendar.MILLISECOND, 0); // collapse it to one statement please do
+        cal.getTimeInMillis();
 
-        int newday = (int) mUtcOffset - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
         Log.d(AnkiDroidApp.TAG, "New day happening at " + newday + " sec after 00:00 UTC");
         cal.add(Calendar.SECOND, newday);
         long cutoff = cal.getTimeInMillis() / 1000;
@@ -1297,6 +1379,7 @@ public class Deck {
 
 
     private void resetAfterReviewEarly() {
+        // Put temporarily suspended cards back into play. Caller must .reset()
         // FIXME: Can ignore priorities in the future (following libanki)
         ArrayList<Long> ids = getDB().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE type BETWEEN 6 AND 8 OR priority = -1", 0);
@@ -1388,7 +1471,7 @@ public class Deck {
             answerCardMethod = Deck.class.getDeclaredMethod("_answerCramCard", Card.class, int.class);
             spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCramCards", Card.class, double.class);
             // Reuse review early's code
-            answerPreSaveMethod = Deck.class.getDeclaredMethod("_reviewEarlyPreSave", Card.class, int.class);
+            answerPreSaveMethod = Deck.class.getDeclaredMethod("_cramPreSave", Card.class, int.class);
             cardLimitMethod = Deck.class.
                 getDeclaredMethod("_cramCardLimit", String[].class, String[].class, String.class);
         } catch (NoSuchMethodException e) {
@@ -1400,15 +1483,9 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _answerCramCard(Card card, int ease) {
+        _answerCard(card, ease);
         if (ease == 1) {
-            if (cardQueue(card) != 0) {
-                mFailedSoonCount += 1;
-                mRevCount -= 1;
-            }
-            requeueCard(card, false);
             mFailedCramQueue.addFirst(new QueueItem(card.getId(), card.getFactId()));
-        } else {
-            _answerCard(card, ease);
         }
     }
 
@@ -1475,7 +1552,7 @@ public class Deck {
         // inactive is (currently) ignored
         if (active.length > 1) {
             return sql.replace("WHERE ", "WHERE +c.id IN "
-                    + Utils.ids2str(new ArrayList<String>(Arrays.asList(active))));
+                    + Utils.ids2str(new ArrayList<String>(Arrays.asList(active))) + " AND");
         } else if (active.length == 1) {
             String[] yes = Utils.parseTags(active[0]);
             if (yes.length > 0) {
@@ -1494,9 +1571,12 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillCramQueue() {
         if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            String sql = "SELECT id, factId FROM cards c WHERE type BETWEEN 0 AND 2 ORDER BY " + mCramOrder + " LIMIT "
+            Log.i(TAG, "fill cram queue: " + activeCramTags + " " + cramOrder + " " + queueLimit);
+            String sql = "SELECT id, factId FROM cards c WHERE type BETWEEN 0 AND 2 ORDER BY " + cramOrder + " LIMIT "
                     + mQueueLimit;
-            Cursor cur = getDB().getDatabase().rawQuery(cardLimit(mActiveCramTags, null, sql), null);
+            sql = cardLimit(activeCramTags, null, sql);
+            Log.i(TAG, "SQL: " + sql);
+            Cursor cur = getDB().database.rawQuery(sql, null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
@@ -1526,9 +1606,15 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _spaceCramCards(Card card, double space) {
         // If non-zero spacing, limit to 10 minutes or queue refill
-        if (space > System.currentTimeMillis()) {
-            mSpacedFacts.put(card.getFactId(), System.currentTimeMillis() + 600.0);
+        if (space > System.currentTimeMillis() / 1000.0) {
+            spacedFacts.put(card.factId, System.currentTimeMillis() / 1000.0 + 600.0);
         }
+    }
+
+    @SuppressWarnings("unused")
+    private void _cramPreSave(Card card, int ease) {
+        // prevent it from appearing in next queue fill
+        card.type += 6;
     }
 
     private void setModified() {
@@ -2101,8 +2187,8 @@ public class Deck {
         spaceCards(card, space);
         // Adjust counts for current card
         if (ease == 1) {
-            if (!(oldState.compareTo("mature") == 0 && mDelay1 != 0)) {
-                mFailedSoonCount += 1;
+            if (card.due < failedCutoff) {
+                failedSoonCount += 1;
             }
         }
         if (oldQueue == 0) {
@@ -2128,6 +2214,7 @@ public class Deck {
         }
 
         // Save
+        card.combinedDue = card.due;
         card.toDB();
 
         // global/daily stats
@@ -2143,6 +2230,7 @@ public class Deck {
 
         // Leech handling - we need to do this after the queue, as it may cause a reset
         if (isLeech(card)) {
+            Log.i(TAG, "card is leech!");
             handleLeech(card);
         }
         setUndoEnd(undoName);
@@ -2239,11 +2327,12 @@ public class Deck {
             // No leech threshold found in DeckVars
             return false;
         }
+        Log.i(TAG, "leech handling: " + card.successive + " successive fails and " + no + " total fails, threshold at " + fmax); 
         // Return true if:
         // - The card failed AND
         // - The number of failures exceeds the leech threshold AND
         // - There were at least threshold/2 reps since last time
-        if (card.isRev() && (no >= fmax) &&
+        if (!card.isRev() && (no >= fmax) &&
                 ((fmax - no) % Math.max(fmax/2, 1) == 0)) {
             return true;
         } else {
@@ -2256,12 +2345,19 @@ public class Deck {
         String tags = scard.getFact().getTags();
         tags = Utils.addTags("Leech", tags);
         scard.getFact().setTags(Utils.canonifyTags(tags));
+        // FIXME: Inefficient, we need to save the fact so that the modified tags can be used in setModified,
+        // then after setModified we need to save again! Just make setModified to use the tags from the fact,
+        // not reload them from the DB.
+        scard.getFact().toDb();
         scard.getFact().setModified(true);
+        scard.getFact().toDb();
         updateFactTags(new long[] {scard.getFact().getId()});
-        scard.toDB();
+        card.setLeechFlag(true);
         if (getBool("suspendLeeches")) {
             suspendCards(new long[]{card.getId()});
+            card.setSuspendedFlag(true);
         }
+        reset();
     }
 
     /*
@@ -2422,24 +2518,36 @@ public class Deck {
             tids = tagIds(allTags_());
             rows = splitTagsList();
         } else {
+            Log.i(TAG, "updateCardTags cardIds: " + Arrays.toString(cardIds));
             getDB().getDatabase().execSQL("DELETE FROM cardTags WHERE cardId IN " + Utils.ids2str(cardIds));
             String fids = Utils.ids2str(Utils.toPrimitive(getDB().queryColumn(Long.class,
                             "SELECT factId FROM cards WHERE id IN " + Utils.ids2str(cardIds), 0)));
+            Log.i(TAG, "updateCardTags fids: " + fids);
             tids = tagIds(allTags_("WHERE id IN " + fids));
+            Log.i(TAG, "updateCardTags tids keys: " + Arrays.toString(tids.keySet().toArray(new String[tids.size()])));
+            Log.i(TAG, "updateCardTags tids values: " + Arrays.toString(tids.values().toArray(new Long[tids.size()])));
             rows = splitTagsList("AND facts.id IN " + fids);
+            Log.i(TAG, "updateCardTags rows keys: " + Arrays.toString(rows.keySet().toArray(new Long[rows.size()])));
+            for (List<String> l : rows.values()) {
+                Log.i(TAG, "updateCardTags rows values: ");
+                for (String v :  l) {
+                    Log.i(TAG, "updateCardTags row item: " + v);
+                }
+            }
         }
 
         ArrayList<HashMap<String, Long>> d = new ArrayList<HashMap<String, Long>>();
 
         for (Long id : rows.keySet()) {
             for (int src = 0; src < 3; src++) { // src represents the tag type, fact: 0, model: 1, template: 2
-                HashMap<String, Long> ditem = new HashMap<String, Long>();
                 for (String tag : Utils.parseTags(rows.get(id).get(src))) {
+                    HashMap<String, Long> ditem = new HashMap<String, Long>();
                     ditem.put("cardId", id);
                     ditem.put("tagId", tids.get(tag.toLowerCase()));
                     ditem.put("src", new Long(src));
+                    Log.i(TAG, "populating ditem " + src + " " + tag);
+                    d.add(ditem);
                 }
-                d.add(ditem);
             }
         }
 
@@ -2583,22 +2691,26 @@ public class Deck {
      * Suspending*****************************
      */
 
+<<<<<<< HEAD
     /**
-     * Suspend a set of cards.
-     * @param ids the identifiers of the cards to be suspended
+     * Suspend cards in bulk.
+     * Caller must .reset()
+     *
+     * @param ids List of card IDs of the cards that are to be suspended.
      */
     public void suspendCards(long[] ids) {
         getDB().getDatabase().execSQL("UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
                 + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                 + ", isDue = 0 WHERE type >= 0 AND id IN " + Utils.ids2str(ids));
         flushMod();
-        reset();
     }
 
 
     /**
-     * Unsuspend a set of cards.
-     * @param ids the identifiers of the cards to be unsuspended
+     * Unsuspend cards in bulk.
+     * Caller must .reset()
+     *
+     * @param ids List of card IDs of the cards that are to be unsuspended.
      */
     public void unsuspendCards(long[] ids) {
         getDB().getDatabase().execSQL("UPDATE cards SET type = relativeDelay, priority = 0, " + "modified = "
@@ -2606,7 +2718,6 @@ public class Deck {
                 + " WHERE type < 0 AND id IN " + Utils.ids2str(ids));
         updatePriorities(ids);
         flushMod();
-        reset();
     }
 
 
@@ -2619,6 +2730,7 @@ public class Deck {
      * If partial is true, only updates cards with tags defined as priority low, med or high in the deck,
      * or with tags whose priority is set to 2 and they are not found in the priority tags of the deck.
      * If false, it updates all card priorities
+     * Caller must .reset()
      *
      * @param partial Partial update (true) or not (false)
      * @param dirty Passed to updatePriorities(), if true it updates the modified field of the cards
@@ -2658,7 +2770,7 @@ public class Deck {
      */
     private HashMap<Long, Integer> updateTagPriorities() {
         // Make sure all priority tags exist
-        for (String s : new String[] {mLowPriority, mMedPriority, mHighPriority, mSuspended}) {
+        for (String s : new String[] {mLowPriority, mMedPriority, mHighPriority}) {
             tagIds(Utils.parseTags(s));
         }
 
@@ -2719,6 +2831,14 @@ public class Deck {
     }
 
 
+    /**
+     * Update priorities for cardIds in bulk.
+     * Caller must .reset().
+     *
+     * @param cardIds List of card IDs identifying whose cards' priorities to update.
+     * @param suspend List of tags. The cards from the above list that have those tags will be suspended.
+     * @param dirty If true will update the modified value of each card handled.
+     */
     private void updatePriorities(long[] cardIds) {
         updatePriorities(cardIds, null, true);
     }
@@ -2781,7 +2901,6 @@ public class Deck {
                 cursor.close();
             }
         }
-        reset();
     }
 
 
@@ -2798,6 +2917,12 @@ public class Deck {
      * Cards CRUD*********************************************************
      */
 
+    /**
+     * Bulk delete cards by ID.
+     * Caller must .reset()
+     *
+     * @param ids List of card IDs of the cards to be deleted.
+     */
     public void deleteCards(List<String> ids) {
         Log.i(AnkiDroidApp.TAG, "deleteCards = " + ids.toString());
 
@@ -2850,7 +2975,6 @@ public class Deck {
             // Remove any dangling fact
             deleteDanglingFacts();
             flushMod();
-            reset();
         }
     }
 
@@ -2914,6 +3038,13 @@ public class Deck {
     }
 
 
+    /**
+     * Bulk delete facts by ID.
+     * Don't touch cards, assume any cards have already been removed.
+     * Caller must .reset().
+     *
+     * @param ids List of fact IDs of the facts to be removed.
+     */
     public void deleteFacts(List<String> ids) {
         Log.i(AnkiDroidApp.TAG, "deleteFacts = " + ids.toString());
         int len = ids.size();
@@ -2934,7 +3065,6 @@ public class Deck {
             }
             statement.close();
             setModified();
-            reset();
         }
     }
 
@@ -2960,7 +3090,13 @@ public class Deck {
      * Models CRUD*********************************************************
      */
 
-    // TODO: Handling of the list of models and currentModel
+    /**
+     * Delete MODEL, and all its cards/facts.
+     * Caller must .reset()
+     * TODO: Handling of the list of models and currentModel
+     *
+     * @param id The ID of the model to be deleted.
+     */
     public void deleteModel(String id) {
         Log.i(AnkiDroidApp.TAG, "deleteModel = " + id);
         Cursor cursor = null;
@@ -3161,6 +3297,33 @@ public class Deck {
     }
 
 
+    //
+    // Syncing
+    // *************************
+    // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
+    
+    private void enableSyncing() {
+        syncName = Utils.checksum(deckName);
+        lastSync = 0;
+        commitToDB();
+    }
+
+    private void disableSyncing() {
+        syncName = "";
+        lastSync = 0;
+        commitToDB();
+    }
+
+    public boolean syncingEnabled() {
+        return (syncName != null) && !(syncName.equals(""));
+    }
+
+    private void checkSyncHash() {
+        if ((syncName != null) && !syncName.equals(Utils.checksum(deckName))) {
+            disableSyncing();
+        }
+    }
+
 
     /*
      * Undo/Redo*********************************************************
@@ -3330,21 +3493,24 @@ public class Deck {
 
 
     /**
+     * Undo the last action(s).
+     * Caller must .reset()
      * XXX Unused
      */
     public void undo() {
         undoredo(mUndoStack, mRedoStack);
         commitToDB();
-        reset();
     }
 
+
     /**
+     * Redo the last action(s).
+     * Caller must .reset()
      * XXX Unused
      */
     public void redo() {
         undoredo(mRedoStack, mUndoStack);
         commitToDB();
-        reset();
     }
 
 

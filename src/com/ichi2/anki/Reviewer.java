@@ -301,6 +301,20 @@ public class Reviewer extends Activity {
             long sessionRepLimit = deck.getSessionRepLimit();
             long sessionTime = deck.getSessionTimeLimit();
             Toast sessionMessage = null;
+            Toast leechMessage = null;
+            Log.i(TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() +
+                    " " + values[0].isPreviousCardSuspended());
+
+            if (values[0].isPreviousCardLeech()) {
+                if (values[0].isPreviousCardSuspended()) {
+                    leechMessage = Toast.makeText(Reviewer.this, res.getString(R.string.leech_suspend_notification),
+                        Toast.LENGTH_LONG);
+                } else {
+                    leechMessage = Toast.makeText(Reviewer.this, res.getString(R.string.leech_notification),
+                            Toast.LENGTH_LONG);
+                }
+                leechMessage.show();
+            }
 
             if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
                 mSessionComplete = true;

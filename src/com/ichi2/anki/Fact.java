@@ -133,6 +133,7 @@ public class Fact {
             mCreated = cursor.getDouble(2);
             mModified = cursor.getDouble(3);
             mTags = cursor.getString(4);
+            spaceUntil = cursor.getString(5);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -183,6 +184,10 @@ public class Fact {
         // update facts table
         ContentValues updateValues = new ContentValues();
         updateValues.put("modified", now);
+        updateValues.put("tags", tags);
+        updateValues.put("spaceUntil", spaceUntil);
+        AnkiDatabaseManager.getDatabase(deck.deckPath).database.update("facts", updateValues, "id = ?",
+                new String[] { "" + id });
 
         // update fields table
         for (Field f : mFields) {
@@ -247,6 +252,7 @@ public class Fact {
                 mSpaceUntil += f.getValue() + " ";
             }
             mSpaceUntil.substring(0, mSpaceUntil.length() - 1);
+            spaceUntil = Utils.stripHTMLMedia(spaceUntil.substring(0, spaceUntil.length()-1));
             Log.d(AnkiDroidApp.TAG, "spaceUntil = " + mSpaceUntil);
             for (Card card : getUpdatedRelatedCards()) {
                 card.setModified();

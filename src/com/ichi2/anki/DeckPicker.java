@@ -73,10 +73,18 @@ public class DeckPicker extends Activity implements Runnable {
     private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
     private static final int DIALOG_NO_CONNECTION = 2;
 
+    /**
+     * Message types
+     */
+    private static final int MSG_UPGRADE_NEEDED = 0;
+    private static final int MSG_UPGRADE_SUCCESS = 1;
+    private static final int MSG_UPGRADE_FAILURE = 2;
+
     private DeckPicker mSelf;
 
     private ProgressDialog mProgressDialog;
     private AlertDialog mSyncLogAlert;
+    private AlertDialog mUpgradeNotesAlert;
     private RelativeLayout mSyncAllBar;
     private Button mSyncAllButton;
 
@@ -108,13 +116,30 @@ public class DeckPicker extends Activity implements Runnable {
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Bundle data = msg.getData();
             Resources res = mSelf.getResources();
+            Bundle data = msg.getData();
+            String dueString = "";
+            String newString = "";
+            String showProgress = "false";
+            String notes = data.getString("notes");
 
             String path = data.getString("absPath");
-            String dueString = String.format(res.getString(R.string.deckpicker_due), data.getInt("due"),
-                    data.getInt("total"));
-            String newString = String.format(res.getString(R.string.deckpicker_new), data.getInt("new"));
+            int msgtype = data.getInt("msgtype");
+
+            if (msgtype == DeckPicker.MSG_UPGRADE_NEEDED) {
+                dueString = res.getString(R.string.deckpicker_upgrading);
+                newString = "";
+                showProgress = "true";
+            } else if (msgtype == DeckPicker.MSG_UPGRADE_FAILURE) {
+                dueString = "Upgrade failed!";
+                newString = "";
+                showProgress = "false";
+            } else if (msgtype == DeckPicker.MSG_UPGRADE_SUCCESS) {
+                dueString = String.format(res.getString(R.string.deckpicker_due), data.getInt("due"),
+                        data.getInt("total"));
+                newString = String.format(res.getString(R.string.deckpicker_new), data.getInt("new"));
+                showProgress = "false";
+            }
 
             int count = mDeckListAdapter.getCount();
             for (int i = 0; i < count; i++) {
@@ -123,7 +148,8 @@ public class DeckPicker extends Activity implements Runnable {
                 if (map.get("filepath").equals(path)) {
                     map.put("due", dueString);
                     map.put("new", newString);
-                    map.put("showProgress", "false");
+                    map.put("showProgress", showProgress);
+                    map.put("notes", notes);
                 }
             }
 
@@ -204,13 +230,13 @@ public class DeckPicker extends Activity implements Runnable {
             }
 
         });
-
+        
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
         mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "due", "new",
-                "showProgress" }, new int[] { R.id.DeckPickerName, R.id.DeckPickerDue, R.id.DeckPickerNew,
-                R.id.DeckPickerProgress });
-
+                "showProgress", "notes" }, new int[] { R.id.DeckPickerName, R.id.DeckPickerDue, R.id.DeckPickerNew,
+                R.id.DeckPickerProgress, R.id.DeckPickerUpgradeNotesButton });
+        
         mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data, String text) {
@@ -219,6 +245,26 @@ public class DeckPicker extends Activity implements Runnable {
                         view.setVisibility(View.VISIBLE);
                     } else {
                         view.setVisibility(View.GONE);
+                    }
+                    return true;
+                }
+                if (view.getId() == R.id.DeckPickerUpgradeNotesButton) {
+                    if (text.equals("")) {
+                        view.setVisibility(View.GONE);
+                    } else {
+                        view.setVisibility(View.VISIBLE);
+                        view.setTag(text);
+                        view.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String tag = (String) v.getTag();
+                                if (tag == null) {
+                                    tag = "";
+                                }
+                                mUpgradeNotesAlert.setMessage(tag);
+                                mUpgradeNotesAlert.show();
+                            }
+                        });
                     }
                     return true;
                 }
@@ -342,6 +388,11 @@ public class DeckPicker extends Activity implements Runnable {
         builder.setTitle(getResources().getString(R.string.sync_log_tite));
         builder.setPositiveButton(getResources().getString(R.string.ok), null);
         mSyncLogAlert = builder.create();
+        // Upgrade notes dialog
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.deckpicker_upgrade_notes_title));
+        builder.setPositiveButton(getResources().getString(R.string.ok), null);
+        mUpgradeNotesAlert = builder.create();
     }
 
 
@@ -437,27 +488,63 @@ public class DeckPicker extends Activity implements Runnable {
                     String path = file.getAbsolutePath();
                     Deck deck;
 
+                    // See if we need to upgrade the deck
+                    int version = 0;
+                    try {
+                        version = Deck.getDeckVersion(path);
+                    } catch (SQLException e) {
+                        Log.w(TAG, "Could not open database " + path);
+                        continue;
+                    }
+
+                    if (version < Deck.DECK_VERSION) {
+                        Bundle data = new Bundle();
+                        data.putString("absPath", path);
+                        data.putInt("msgtype", MSG_UPGRADE_NEEDED);
+                        data.putInt("version", version);
+                        data.putString("notes", "");
+                        Message msg = Message.obtain();
+                        msg.setData(data);
+                        mHandler.sendMessage(msg);
+                    }
+
                     try {
                         deck = Deck.openDeck(path);
+                        version = deck.version;
                     } catch (SQLException e) {
                         Log.w(AnkiDroidApp.TAG, "Could not open database " + path);
                         continue;
                     }
-                    int dueCards = deck.getDueCount();
-                    int totalCards = deck.getCardCount();
-                    int newCards = deck.getNewCountToday();
-                    deck.closeDeck();
 
                     Bundle data = new Bundle();
-                    data.putString("absPath", path);
-                    data.putInt("due", dueCards);
-                    data.putInt("total", totalCards);
-                    data.putInt("new", newCards);
                     Message msg = Message.obtain();
-                    msg.setData(data);
 
-                    mHandler.sendMessage(msg);
+                    // Check if the upgrade failed
+                    if (version < Deck.DECK_VERSION) {
+                        data.putString("absPath", path);
+                        data.putInt("msgtype", MSG_UPGRADE_FAILURE);
+                        data.putInt("version", version);
+                        data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
+                        deck.closeDeck();
+                        msg.setData(data);
+                        mHandler.sendMessage(msg);
+                    } else {
+                        int dueCards = deck.getDueCount();
+                        int totalCards = deck.getCardCount();
+                        int newCards = deck.getNewCountToday();
+                        String upgradeNotes = deck.upgradeNotesToMessages(deck, getResources());
+                        deck.closeDeck();
 
+                        data.putString("absPath", path);
+                        data.putInt("msgtype", MSG_UPGRADE_SUCCESS);
+                        data.putInt("due", dueCards);
+                        data.putInt("total", totalCards);
+                        data.putInt("new", newCards);
+                        data.putString("notes", upgradeNotes);
+                        msg.setData(data);
+
+                        mHandler.sendMessage(msg);
+                    }
                 }
                 mIsFinished = true;
                 mCondFinished.signal();

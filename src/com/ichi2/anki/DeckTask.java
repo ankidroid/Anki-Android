@@ -162,10 +162,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
             if (oldCard != null) {
                 deck.answerCard(oldCard, ease);
+                Log.i(TAG, "leech flag: " + oldCard.getLeechFlag());
             }
 
             newCard = deck.getCard();
-            publishProgress(new TaskData(newCard));
+            if (oldCard != null) {
+                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
+            } else {
+                publishProgress(new TaskData(newCard));
+            }
 
             ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
@@ -262,6 +267,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private Card mCard;
         private int mInteger;
         private String mMsg;
+        private boolean previousCardLeech;     // answer card resulted in card marked as leech
+        private boolean previousCardSuspended; // answer card resulted in card marked as leech and suspended
 
 
         public TaskData(int value, Deck deck, Card card) {
@@ -273,6 +280,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(Card card) {
             mCard = card;
+            previousCardLeech = false;
+            previousCardSuspended = false;
+        }
+
+        public TaskData(Card card, boolean markedLeech, boolean suspendedLeech) {
+            mCard = card;
+            previousCardLeech = markedLeech;
+            previousCardSuspended = suspendedLeech;
         }
 
 
@@ -305,6 +320,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             return mMsg;
         }
 
+
+        public boolean isPreviousCardLeech() {
+            return previousCardLeech;
+        }
+
+
+        public boolean isPreviousCardSuspended() {
+            return previousCardSuspended;
+        }
     }
 
 }

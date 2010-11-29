@@ -19,16 +19,34 @@
 	android:layout_height="wrap_content" 
 	android:layout_width="fill_parent" 
 	android:orientation="vertical">
-		
-	<TextView 
-		android:id="@+id/DeckPickerName" 
+
+	<LinearLayout 
+		android:id="@+id/DeckPickerHoriz" 
 		android:layout_height="wrap_content" 
-		android:layout_width="fill_parent"
-		android:padding="10dip"
-		android:gravity="center_horizontal"
-		android:textSize="24sp"
-		android:textColor="#ffffff">
-	</TextView>
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent">
+
+		<TextView 
+			android:id="@+id/DeckPickerName" 
+			android:layout_height="wrap_content" 
+			android:layout_width="fill_parent"
+			android:gravity="center_horizontal"
+			android:layout_weight="1"
+			android:padding="10dip"
+			android:textSize="24sp"
+			android:textColor="#ffffff">
+		</TextView>
+		<Button
+			android:id="@+id/DeckPickerUpgradeNotesButton"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_weight="4"
+			android:paddingLeft="10dip"
+			android:textSize="14sp"
+			android:focusable="false"
+			android:focusableInTouchMode="false"
+			android:text="@string/deckpicker_upgrade_notes_button"/>
+	</LinearLayout>
 
 	<LinearLayout 
 		android:id="@+id/DeckPickerHoriz" 
@@ -64,8 +82,12 @@
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:indeterminate="true" 
+			android:paddingRight="10dip"
+			android:paddingLeft="5dip"
+			android:paddingBottom="5dip"
 			style="?android:attr/progressBarStyleSmall">
 		</ProgressBar>
-	
+		
+
 	</LinearLayout>
 </LinearLayout>

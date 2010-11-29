@@ -137,7 +137,7 @@ public class StudyOptions extends Activity {
     private String allCramTags[];
     private HashSet<String> activeCramTags;
     private String cramOrder;
-    private static final String[] cramOrderList = {"modified", "created", "random()"};
+    private static final String[] cramOrderList = {"type, modified", "created", "random()"};
 
     /**
      * UI elements for "Study Options" view
@@ -762,10 +762,15 @@ public class StudyOptions extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean deckLoaded = AnkiDroidApp.deck() != null;
+        boolean syncingEnabled = false;
+        
+        if (deckLoaded) {
+            syncingEnabled = AnkiDroidApp.deck().syncingEnabled();
+        }
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
         menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
         // menu.findItem(MENU_DECK_PROPERTIES).setEnabled(deckLoaded && sdCardAvailable);
-        menu.findItem(MENU_SYNC).setEnabled(deckLoaded && mSdCardAvailable);
+        menu.findItem(MENU_SYNC).setEnabled(deckLoaded && mSdCardAvailable && syncingEnabled);
         return true;
     }
 

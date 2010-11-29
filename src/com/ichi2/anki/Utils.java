@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 
 import com.mindprod.common11.BigDate;
@@ -41,7 +40,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -427,7 +429,11 @@ public class Utils {
     public static Date genToday(double utcOffset) {
         // The result is not adjusted for timezone anymore, following libanki model
         // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
-        Date today = new Date(System.currentTimeMillis() - (long) utcOffset * 1000l);
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+        cal.setTimeInMillis(System.currentTimeMillis() - (long) utcOffset * 1000l);
+        Date today = Date.valueOf(df.format(cal.getTime()));
         return today;
     }
 
@@ -544,8 +550,16 @@ public class Utils {
      * @return The canonified string, as described above
      */
     public static String canonifyTags(String tags) {
-        return joinTags(new TreeSet<String>(Arrays.asList(parseTags(tags))));
+        List<String> taglist = Arrays.asList(parseTags(tags));
+        for (int i = 0; i < taglist.size(); i++) {
+            String t = taglist.get(i);
+            if (t.startsWith(":")) {
+                taglist.set(i, t.replace("^:+", ""));
+            }
+        }
+        return joinTags(new TreeSet<String>(taglist));
     }
+
     /**
      * Find if tag exists in a set of tags. The search is not case-sensitive
      * 
@@ -573,11 +587,46 @@ public class Utils {
      */
     public static String addTags(String tagStr, String tags) {
         ArrayList<String> currentTags = new ArrayList<String>(Arrays.asList(parseTags(tags)));
-        for (String tag : currentTags) {
+        for (String tag : parseTags(tagStr)) {
             if (!findTag(tag, currentTags)) {
                 currentTags.add(tag);
             }
         }
         return joinTags(currentTags);
+    }
+
+    // Misc
+    // *************
+
+    /**
+     * MD5 checksum.
+     * Equivalent to python md5.hexdigest()
+     *
+     * @param data the string to generate hash from
+     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of data.
+     */
+    public static String checksum(String data) {
+        String result = "";
+        if (data != null) {
+            MessageDigest md = null;
+            byte[] digest = null;
+            try {
+                md = MessageDigest.getInstance("MD5");
+                digest = md.digest(data.getBytes("UTF-8"));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e(TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                Log.e(TAG, "Utils.checksum: " + e.getMessage());
+                e.printStackTrace();
+            }
+            BigInteger biginteger = new BigInteger(1, digest);
+            result = biginteger.toString(16);
+            // pad with zeros to length of 32
+            if (result.length() < 32) {
+                result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
+            }
+        }
+        return result;
     }
 }

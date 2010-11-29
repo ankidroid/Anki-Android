@@ -130,6 +130,9 @@ public class Card {
     private double mTimerStopped;
     private double mFuzz;
 
+    // Leech flags, not read from database, only set to true during the actual suspension
+    private boolean isLeechMarked;
+    private boolean isLeechSuspended;
 
     public Card(Deck deck, Fact fact, CardModel cardModel, double created) {
         mTags = "";
@@ -151,6 +154,7 @@ public class Card {
         } else {
             mDue = mModified;
         }
+        isLeechSuspended = false;
         mCombinedDue = mDue;
         mDeck = deck;
         mFact = fact;
@@ -368,7 +372,12 @@ public class Card {
 
 
     public String[] splitTags() {
-        return mTagsBySrc;
+        String[] tags = new String[]{
+            getFact().tags,
+            Model.getModel(deck, getFact().modelId, true).tags,
+            getCardModel().name
+        };
+        return tags;
     }
 
 
@@ -764,5 +773,20 @@ public class Card {
 
     public double nextInterval(Card card, int ease) {
         return mDeck.nextInterval(card, ease);
+    }
+
+    // Leech flag
+    public boolean getLeechFlag() {
+        return isLeechMarked;
+    }
+    public void setLeechFlag(boolean flag) {
+        isLeechMarked = flag;
+    }
+    // Suspended flag
+    public boolean getSuspendedFlag() {
+        return isLeechSuspended;
+    }
+    public void setSuspendedFlag(boolean flag) {
+        isLeechSuspended = flag;
     }
 }
