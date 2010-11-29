@@ -324,8 +324,8 @@
 
 
 <string name="soon">Bald</string>
-<string name="show_next_review_time">Zeige Zeit bis zum nächsten Lernen</string>
-<string name="show_next_review_time_summ">Zeigt während des Lernens das nächste Auftauchen der Karte abhängig von der Wahl des Schwierigkeitsgrades</string>
+<string name="show_next_review_time">Nächstes Auftauchen</string>
+<string name="show_next_review_time_summ">Zeigt während des Lernens die Zeit bis zum nächsten Auftauchen der Karte abhängig von der Wahl des Schwierigkeitsgrades</string>
 
 <string name="per_day">Pro Tag</string>
 </resources>

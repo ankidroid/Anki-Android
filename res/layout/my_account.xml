@@ -30,7 +30,7 @@
 		android:inputType="textPassword"/>
 		
 	<Button android:id="@+id/login_button"
-		android:layout_width="80dp"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="10dp"
 		android:layout_gravity="right"
@@ -52,7 +52,7 @@
 			android:textSize="16dp"/>
 			
 		<Button android:id="@+id/sign_up_button"
-			android:layout_width="80dp"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/sign_up"/>
 		

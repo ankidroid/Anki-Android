@@ -373,7 +373,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="close">Close</string>
 
 <string name="soon">Soon</string>
-<string name="show_next_review_time">Show next review time</string>
+<string name="show_next_review_time">Next review time</string>
 <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
 
 <string name="per_day">Per Day</string>
