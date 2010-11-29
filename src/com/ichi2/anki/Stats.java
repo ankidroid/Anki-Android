@@ -22,7 +22,10 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Deck statistics.
@@ -230,7 +233,11 @@ public class Stats {
     public static Date genToday(Deck deck) {
         // The result is not adjusted for timezone anymore, following libanki model
         // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
-        Date today = new Date(System.currentTimeMillis() - (long) deck.utcOffset * 1000l);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+        cal.setTimeInMillis(System.currentTimeMillis() - (long) deck.utcOffset * 1000l);
+        Date today = Date.valueOf(df.format(cal.getTime()));
         return today;
     }
 

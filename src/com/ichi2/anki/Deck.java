@@ -597,11 +597,13 @@ public class Deck {
         }
         // skip 51
         if (version < 52) {
-            if ((syncName != null) && !syncName.equals("") && !deckName.equals(syncName)) {
-                upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_52_note);
-                disableSyncing();
-            } else {
-                enableSyncing();
+            if ((syncName != null) && !syncName.equals("")) {
+                if (!deckName.equals(syncName)) {
+                    upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_52_note);
+                    disableSyncing();
+                } else {
+                    enableSyncing();
+                }
             }
             version = 52;
             commitToDB();
@@ -670,7 +672,7 @@ public class Deck {
         getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_fields_fieldModelId ON fields (fieldModelId)");
         getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_fields_value ON fields (value)");
         // Media
-        getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_media_filename ON media (filename)");
+        getDB().database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS ix_media_filename ON media (filename)");
         getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_media_originalPath ON media (originalPath)");
         // Deletion tracking
         getDB().database.execSQL("CREATE INDEX IF NOT EXISTS ix_cardsDeleted_cardId ON cardsDeleted (cardId)");
@@ -1064,6 +1066,15 @@ public class Deck {
         fillFailedQueue();
         fillRevQueue();
         fillNewQueue();
+        for (QueueItem i : failedQueue) {
+            Log.i(TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: " + i.getDue());
+        }
+        for (QueueItem i : revQueue) {
+            Log.i(TAG, "rev queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
+        }
+        for (QueueItem i : newQueue) {
+            Log.i(TAG, "new queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
+        }
     }
 
     public long getCardCount() {
@@ -1575,9 +1586,12 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillCramQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
+            Log.i(TAG, "fill cram queue: " + activeCramTags + " " + cramOrder + " " + queueLimit);
             String sql = "SELECT id, factId FROM cards c WHERE type BETWEEN 0 AND 2 ORDER BY " + cramOrder + " LIMIT "
                     + queueLimit;
-            Cursor cur = getDB().database.rawQuery(cardLimit(activeCramTags, null, sql), null);
+            sql = cardLimit(activeCramTags, null, sql);
+            Log.i(TAG, "SQL: " + sql);
+            Cursor cur = getDB().database.rawQuery(sql, null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 revQueue.add(0, qi); // Add to front, so list is reversed as it is built
