@@ -279,6 +279,9 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
 <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
 <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the sdcard in order to read and load your Anki decks. Check that your sdcard is mounted and try again.</string>
+<string name="studyoptions_load_other_deck">Load Other Deck</string>
+<string name="studyoptions_load_sample_deck">Load Sample Deck</string>
+
 <string name="menu_open_deck">Open Deck</string>
 <string name="menu_sync">Sync</string>
 <string name="menu_download_deck">Download deck</string>

@@ -49,7 +49,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ichi2.anki.R.color;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -761,10 +760,10 @@ public class Reviewer extends Activity {
         if (mCurrentCard.isRev()) {
             mEase3.requestFocus();
             mNext2.setTextColor(Color.BLACK);
-            mNext3.setTextColor(Color.GREEN);
+            mNext3.setTextColor(Color.parseColor("#007700"));
         } else {
             mEase2.requestFocus();
-            mNext2.setTextColor(Color.GREEN);
+            mNext2.setTextColor(Color.parseColor("#007700"));
             mNext3.setTextColor(Color.BLACK);
         }
     }
