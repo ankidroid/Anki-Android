@@ -1356,7 +1356,7 @@ public class Deck {
      * Review early*****************************
      */
 
-    private void setupReviewEarlyScheduler() {
+    public void setupReviewEarlyScheduler() {
         try {
             fillRevQueueMethod = Deck.class.getDeclaredMethod("_fillRevEarlyQueue");
             rebuildRevCountMethod = Deck.class.getDeclaredMethod("_rebuildRevEarlyCount");
@@ -1411,7 +1411,7 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillRevEarlyQueue() {
         if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            String sql = "SELECT id, factId FROM cards WHERE type = 1 AND combinedDue > " + mDueCutoff
+            String sql = "SELECT id, factId, combinedDue FROM cards WHERE type = 1 AND combinedDue > " + dueCutoff
                     + " ORDER BY combinedDue LIMIT " + mQueueLimit;
             Cursor cur = getDB().getDatabase().rawQuery(sql, null);
             while (cur.moveToNext()) {
@@ -1426,7 +1426,7 @@ public class Deck {
      * Learn more*****************************
      */
 
-    private void setupLearnMoreScheduler() {
+    public void setupLearnMoreScheduler() {
         try {
             rebuildNewCountMethod = Deck.class.getDeclaredMethod("_rebuildLearnMoreCount");
             updateNewCountTodayMethod = Deck.class.getDeclaredMethod("_updateLearnMoreCountToday");
@@ -3307,7 +3307,7 @@ public class Deck {
     // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
     
     private void enableSyncing() {
-        mSyncName = Utils.checksum(mDeckName);
+        mSyncName = Utils.checksum(mDeckPath);
         mLastSync = 0;
         commitToDB();
     }
@@ -3323,7 +3323,7 @@ public class Deck {
     }
 
     private void checkSyncHash() {
-        if ((mSyncName != null) && !mSyncName.equals(Utils.checksum(mDeckName))) {
+        if ((mSyncName != null) && !mSyncName.equals(Utils.checksum(mDeckPath))) {
             disableSyncing();
         }
     }

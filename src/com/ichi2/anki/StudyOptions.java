@@ -198,10 +198,10 @@ public class StudyOptions extends Activity {
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             switch (v.getId()) {
                 case R.id.studyoptions_start:
                     // finish();
-                    Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
                     reviewer.putExtra("deckFilename", mDeckFilename);
                     startActivityForResult(reviewer, REQUEST_REVIEW);
                     return;
@@ -213,7 +213,21 @@ public class StudyOptions extends Activity {
                         mCramTagsDialog.show();
                     } else {
                         onCramStop();
+                        updateValuesFromDeck();
                     }
+                    return;
+                case R.id.studyoptions_congrats_learnmore:
+                    onLearnMore();
+                    reviewer.putExtra("deckFilename", deckFilename);
+                    startActivityForResult(reviewer, REQUEST_REVIEW);
+                    return;
+                case R.id.studyoptions_congrats_reviewearly:
+                    onReviewEarly();
+                    reviewer.putExtra("deckFilename", deckFilename);
+                    startActivityForResult(reviewer, REQUEST_REVIEW);
+                    return;
+                case R.id.studyoptions_congrats_finish:
+                    showContentView(CONTENT_SESSION_COMPLETE);
                     return;
                 case R.id.studyoptions_more:
                     showMoreOptionsDialog();
@@ -326,11 +340,6 @@ public class StudyOptions extends Activity {
         initAllContentViews();
         initAllDialogs();
 
-        // Enable timeboxing in case it was disabled from the previous deck
-        mEditNewPerDay.setEnabled(true);
-        mEditSessionTime.setEnabled(true);
-        mEditSessionQuestions.setEnabled(true);
-        mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
         if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
             AnkiDroidApp.deck().finishScheduler();
         }
@@ -477,6 +486,10 @@ public class StudyOptions extends Activity {
         mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
         mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
 
+        mButtonCongratsLearnMore.setOnClickListener(mButtonClickListener);
+        mButtonCongratsReviewEarly.setOnClickListener(mButtonClickListener);
+        mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
+        
         // The view to use when there is no external storage available
         mNoExternalStorageView = getLayoutInflater().inflate(R.layout.studyoptions_nostorage, null);
     }
@@ -636,16 +649,27 @@ public class StudyOptions extends Activity {
                 setContentView(mNoDeckView);
                 break;
             case CONTENT_STUDY_OPTIONS:
-                updateValuesFromDeck();
-                mButtonStart.setText(R.string.studyoptions_start);
-                mToggleCram.setChecked(false);
-                mTextTitle.setText(R.string.studyoptions_title);
-                setContentView(mStudyOptionsView);
-                break;
             case CONTENT_SESSION_COMPLETE:
+                // Enable timeboxing in case it was disabled from the previous deck
+                if (AnkiDroidApp.deck().name().equals("cram")) {
+                    mToggleCram.setChecked(false);
+                    mEditNewPerDay.setEnabled(true);
+                    mEditSessionTime.setEnabled(true);
+                    mEditSessionQuestions.setEnabled(true);
+                    mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
+                }
+                // Return to standard scheduler
+                if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
+                    AnkiDroidApp.deck().finishScheduler();
+                }
                 updateValuesFromDeck();
-                mButtonStart.setText(R.string.studyoptions_continue);
-                mTextTitle.setText(R.string.studyoptions_well_done);
+                if (mCurrentContentView == CONTENT_STUDY_OPTIONS) {
+                    mButtonStart.setText(R.string.studyoptions_start);
+                    mTextTitle.setText(R.string.studyoptions_title);
+                } else {
+                    mButtonStart.setText(R.string.studyoptions_continue);
+                    mTextTitle.setText(R.string.studyoptions_well_done);
+                }
                 setContentView(mStudyOptionsView);
                 break;
             case CONTENT_CONGRATS:
@@ -695,6 +719,25 @@ public class StudyOptions extends Activity {
         AnkiDroidApp.deck().reset();
     }
 
+
+    private void onLearnMore() {
+        Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+            deck.setupLearnMoreScheduler();
+            deck.reset();
+        }
+    }
+
+
+    private void onReviewEarly() {
+        Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+            deck.setupReviewEarlyScheduler();
+            deck.reset();
+        }
+    }
+
+
     /**
      * Enter cramming mode.
      * Currently not supporting cramming from selection of cards, as we don't have a card list view anyway.
@@ -718,7 +761,6 @@ public class StudyOptions extends Activity {
         mEditSessionTime.setEnabled(true);
         mEditSessionQuestions.setEnabled(true);
         mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
-        updateValuesFromDeck();
     }
 
     @Override
