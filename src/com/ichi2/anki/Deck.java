@@ -3239,7 +3239,7 @@ public class Deck {
     // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
     
     private void enableSyncing() {
-        syncName = Utils.checksum(deckName);
+        syncName = Utils.checksum(deckPath);
         lastSync = 0;
         commitToDB();
     }
@@ -3255,7 +3255,7 @@ public class Deck {
     }
 
     private void checkSyncHash() {
-        if ((syncName != null) && !syncName.equals(Utils.checksum(deckName))) {
+        if ((syncName != null) && !syncName.equals(Utils.checksum(deckPath))) {
             disableSyncing();
         }
     }
