@@ -1371,7 +1371,7 @@ public class Deck {
      * Review early*****************************
      */
 
-    private void setupReviewEarlyScheduler() {
+    public void setupReviewEarlyScheduler() {
         try {
             fillRevQueueMethod = Deck.class.getDeclaredMethod("_fillRevEarlyQueue");
             rebuildRevCountMethod = Deck.class.getDeclaredMethod("_rebuildRevEarlyCount");
@@ -1426,7 +1426,7 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillRevEarlyQueue() {
         if ((revCount != 0) && revQueue.isEmpty()) {
-            String sql = "SELECT id, factId FROM cards WHERE type = 1 AND combinedDue > " + dueCutoff
+            String sql = "SELECT id, factId, combinedDue FROM cards WHERE type = 1 AND combinedDue > " + dueCutoff
                     + " ORDER BY combinedDue LIMIT " + queueLimit;
             Cursor cur = getDB().database.rawQuery(sql, null);
             while (cur.moveToNext()) {
@@ -1441,7 +1441,7 @@ public class Deck {
      * Learn more*****************************
      */
 
-    private void setupLearnMoreScheduler() {
+    public void setupLearnMoreScheduler() {
         try {
             rebuildNewCountMethod = Deck.class.getDeclaredMethod("_rebuildLearnMoreCount");
             updateNewCountTodayMethod = Deck.class.getDeclaredMethod("_updateLearnMoreCountToday");
