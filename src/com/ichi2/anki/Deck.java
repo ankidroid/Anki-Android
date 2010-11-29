@@ -308,9 +308,6 @@ public class Deck {
             deck.commitToDB();
         }
 
-        // Check if deck has been moved and disable syncing
-        deck.checkSyncHash();
-
         // Determine starting factor for new cards
         Cursor cur = null;
         try {
@@ -3306,7 +3303,7 @@ public class Deck {
     // *************************
     // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
     
-    private void enableSyncing() {
+    public void enableSyncing() {
         mSyncName = Utils.checksum(mDeckPath);
         mLastSync = 0;
         commitToDB();

@@ -804,15 +804,11 @@ public class StudyOptions extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean deckLoaded = AnkiDroidApp.deck() != null;
-        boolean syncingEnabled = false;
         
-        if (deckLoaded) {
-            syncingEnabled = AnkiDroidApp.deck().syncingEnabled();
-        }
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
         menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
         // menu.findItem(MENU_DECK_PROPERTIES).setEnabled(deckLoaded && sdCardAvailable);
-        menu.findItem(MENU_SYNC).setEnabled(deckLoaded && mSdCardAvailable && syncingEnabled);
+        menu.findItem(MENU_SYNC).setEnabled(deckLoaded && mSdCardAvailable);
         return true;
     }
 
@@ -925,6 +921,10 @@ public class StudyOptions extends Activity {
 
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = AnkiDroidApp.deck();
+            String syncName = deck.getSyncName();
+            if ((syncName == null) || syncName.equals("")) {
+                deck.enableSyncing();
+            }
 
             Log.i(AnkiDroidApp.TAG,
                     "Synchronizing deck " + mDeckFilename + " with username " + username + " and password " + password);

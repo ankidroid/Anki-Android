@@ -157,12 +157,13 @@
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
-		<Button android:id="@+id/studyoptions_start"
+		<ToggleButton android:id="@+id/studyoptions_cram"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_weight="1" 
-			android:text="@string/studyoptions_start"
-			android:drawableLeft="@drawable/chronometer"/>
+			android:layout_weight="1"
+			android:layout_gravity="center_vertical"
+			android:textOff="@string/begin_cram"
+			android:textOn="@string/end_cram"/>
 		<Button android:id="@+id/studyoptions_more" 
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
@@ -172,11 +173,11 @@
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
-		<ToggleButton android:id="@+id/studyoptions_cram"
+		<Button android:id="@+id/studyoptions_start"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_weight="1" 
-			android:textOff="@string/begin_cram"
-			android:textOn="@string/end_cram"/>
+			android:text="@string/studyoptions_start"
+			android:drawableLeft="@drawable/chronometer"/>
 	</LinearLayout>
 </LinearLayout>

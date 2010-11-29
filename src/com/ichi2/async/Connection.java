@@ -242,12 +242,14 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             String deckPath = deckToSync.get("filepath");
             try {
                 Deck deck = Deck.openDeck(deckPath);
-
-                if (deck.syncingEnabled()) {
-                    Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath });
-                    syncDeckData = doInBackgroundSyncDeck(syncDeckData);
-                    decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
+                String syncName = deck.getSyncName();
+                if ((syncName == null) || syncName.equals("")) {
+                    deck.enableSyncing();
                 }
+
+                Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath });
+                syncDeckData = doInBackgroundSyncDeck(syncDeckData);
+                decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "Exception e = " + e.getMessage());
                 // Probably, there was an error trying to open the deck, so we can not retrieve the deck name from it

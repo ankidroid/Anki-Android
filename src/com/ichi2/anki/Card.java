@@ -320,6 +320,7 @@ public class Card {
         long[] ids = new long[1];
         ids[0] = mId;
         mDeck.suspendCards(ids);
+        mDeck.reset();
     }
 
 
