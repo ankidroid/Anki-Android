@@ -124,7 +124,7 @@
 
 <!-- AnkiDroid.java -->
 <string name="loading_new_card">Neue Karte wird geladen...</string>
-<string name="loading_deck">Stapel wird geladen. Bitte warten...</string>
+<string name="loading_deck">Stapel wird geladen.\nBitte warten...</string>
 <string name="connection_unsuccessful">Die Verbindung ist fehlgeschlagen. Überprüfen Sie ihre Internet-Verbindung und versuchen sie es erneut.</string>
 <string name="connection_needed">Sie sind momentan offline.</string>
 <string name="study_options">Lern-Einstellungen</string>
