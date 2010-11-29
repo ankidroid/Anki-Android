@@ -493,7 +493,7 @@ public class DeckPicker extends Activity implements Runnable {
                     try {
                         version = Deck.getDeckVersion(path);
                     } catch (SQLException e) {
-                        Log.w(TAG, "Could not open database " + path);
+                        Log.w(AnkiDroidApp.TAG, "Could not open database " + path);
                         continue;
                     }
 
@@ -510,7 +510,7 @@ public class DeckPicker extends Activity implements Runnable {
 
                     try {
                         deck = Deck.openDeck(path);
-                        version = deck.version;
+                        version = deck.getVersion();
                     } catch (SQLException e) {
                         Log.w(AnkiDroidApp.TAG, "Could not open database " + path);
                         continue;

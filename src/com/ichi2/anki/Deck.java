@@ -59,7 +59,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    private static final int DECK_VERSION = 53;
+    public static final int DECK_VERSION = 53;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -578,26 +578,26 @@ public class Deck {
             commitToDB();
         }
         // skip 51
-        if (version < 52) {
-            if ((syncName != null) && !syncName.equals("")) {
-                if (!deckName.equals(syncName)) {
+        if (mVersion < 52) {
+            if ((mSyncName != null) && !mSyncName.equals("")) {
+                if (!mDeckName.equals(mSyncName)) {
                     upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_52_note);
                     disableSyncing();
                 } else {
                     enableSyncing();
                 }
             }
-            version = 52;
+            mVersion = 52;
             commitToDB();
         }
-        if (version < 53) {
+        if (mVersion < 53) {
             if (getBool("perDay")) {
-                if (Math.abs(hardIntervalMin - 0.333) < 0.001) {
-                    hardIntervalMin = Math.max(1.0, hardIntervalMin);
-                    hardIntervalMax = Math.max(1.1, hardIntervalMax);
+                if (Math.abs(mHardIntervalMin - 0.333) < 0.001) {
+                    mHardIntervalMin = Math.max(1.0, mHardIntervalMin);
+                    mHardIntervalMax = Math.max(1.1, mHardIntervalMax);
                 }
             }
-            version = 53;
+            mVersion = 53;
             commitToDB();
         }
         // Executing a pragma here is very slow on large decks, so we store our own record
@@ -624,7 +624,7 @@ public class Deck {
             } else if (note == com.ichi2.anki.R.string.deck_upgrade_52_note) {
                 // Upgrade note for version 52 regarding syncName
                 notes = notes.concat(String.format(res.getString(note.intValue()),
-                        deck.deckName, deck.syncName));
+                        deck.getDeckName(), deck.getSyncName()));
             }
         }
         return notes;
@@ -1051,14 +1051,14 @@ public class Deck {
         fillFailedQueue();
         fillRevQueue();
         fillNewQueue();
-        for (QueueItem i : failedQueue) {
-            Log.i(TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: " + i.getDue());
+        for (QueueItem i : mFailedQueue) {
+            Log.i(AnkiDroidApp.TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: " + i.getDue());
         }
-        for (QueueItem i : revQueue) {
-            Log.i(TAG, "rev queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
+        for (QueueItem i : mRevQueue) {
+            Log.i(AnkiDroidApp.TAG, "rev queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
         }
-        for (QueueItem i : newQueue) {
-            Log.i(TAG, "new queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
+        for (QueueItem i : mNewQueue) {
+            Log.i(AnkiDroidApp.TAG, "new queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
         }
     }
 
@@ -1109,25 +1109,25 @@ public class Deck {
      */
     @SuppressWarnings("unused")
     private void _rebuildFailedCount() {
-        String sql = String.format(ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < %f", failedCutoff);
-        failedSoonCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
+        String sql = String.format(Utils.ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue < %f", mFailedCutoff);
+        mFailedSoonCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
 
     @SuppressWarnings("unused")
     private void _rebuildRevCount() {
-        String sql = String.format(ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue < %f", dueCutoff);
-        revCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
+        String sql = String.format(Utils.ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue < %f", mDueCutoff);
+        mRevCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
 
     @SuppressWarnings("unused")
     private void _rebuildNewCount() {
-        String sql = String.format(ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < %f", dueCutoff);
-        newCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive", sql));
+        String sql = String.format(Utils.ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < %f", mDueCutoff);
+        mNewCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive", sql));
         updateNewCountToday();
     }
 
@@ -1287,9 +1287,9 @@ public class Deck {
 
     public void updateCutoff() {
         Calendar cal = Calendar.getInstance();
-        int newday = (int) utcOffset + (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+        int newday = (int) mUtcOffset + (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
         cal.add(Calendar.MILLISECOND, -cal.get(Calendar.ZONE_OFFSET) - cal.get(Calendar.DST_OFFSET));
-        cal.add(Calendar.SECOND, (int) -utcOffset + 86400);
+        cal.add(Calendar.SECOND, (int) -mUtcOffset + 86400);
         cal.set(Calendar.AM_PM, Calendar.AM);
         cal.set(Calendar.HOUR, 0); // Yes, verbose but crystal clear
         cal.set(Calendar.MINUTE, 0); // Apologies for that, here was my rant
@@ -1571,12 +1571,12 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillCramQueue() {
         if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            Log.i(TAG, "fill cram queue: " + activeCramTags + " " + cramOrder + " " + queueLimit);
-            String sql = "SELECT id, factId FROM cards c WHERE type BETWEEN 0 AND 2 ORDER BY " + cramOrder + " LIMIT "
+            Log.i(AnkiDroidApp.TAG, "fill cram queue: " + mActiveCramTags + " " + mCramOrder + " " + mQueueLimit);
+            String sql = "SELECT id, factId FROM cards c WHERE type BETWEEN 0 AND 2 ORDER BY " + mCramOrder + " LIMIT "
                     + mQueueLimit;
-            sql = cardLimit(activeCramTags, null, sql);
-            Log.i(TAG, "SQL: " + sql);
-            Cursor cur = getDB().database.rawQuery(sql, null);
+            sql = cardLimit(mActiveCramTags, null, sql);
+            Log.i(AnkiDroidApp.TAG, "SQL: " + sql);
+            Cursor cur = getDB().getDatabase().rawQuery(sql, null);
             while (cur.moveToNext()) {
                 QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                 mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
@@ -1607,14 +1607,14 @@ public class Deck {
     private void _spaceCramCards(Card card, double space) {
         // If non-zero spacing, limit to 10 minutes or queue refill
         if (space > System.currentTimeMillis() / 1000.0) {
-            spacedFacts.put(card.factId, System.currentTimeMillis() / 1000.0 + 600.0);
+            mSpacedFacts.put(card.getFactId(), System.currentTimeMillis() / 1000.0 + 600.0);
         }
     }
 
     @SuppressWarnings("unused")
     private void _cramPreSave(Card card, int ease) {
         // prevent it from appearing in next queue fill
-        card.type += 6;
+        card.setType(card.getType() + 6);
     }
 
     private void setModified() {
@@ -1954,8 +1954,13 @@ public class Deck {
         mLastLoaded = lastLoaded;
         // XXX: Need to flushmod() ?
     }
+    
+    
+    public int getVersion() {
+        return mVersion;
+    }
 
-
+    
     /*
      * Getting the next card*****************************
      */
@@ -2187,8 +2192,8 @@ public class Deck {
         spaceCards(card, space);
         // Adjust counts for current card
         if (ease == 1) {
-            if (card.due < failedCutoff) {
-                failedSoonCount += 1;
+            if (card.getDue() < mFailedCutoff) {
+                mFailedSoonCount += 1;
             }
         }
         if (oldQueue == 0) {
@@ -2214,7 +2219,7 @@ public class Deck {
         }
 
         // Save
-        card.combinedDue = card.due;
+        card.setCombinedDue(card.getDue());
         card.toDB();
 
         // global/daily stats
@@ -2230,7 +2235,7 @@ public class Deck {
 
         // Leech handling - we need to do this after the queue, as it may cause a reset
         if (isLeech(card)) {
-            Log.i(TAG, "card is leech!");
+            Log.i(AnkiDroidApp.TAG, "card is leech!");
             handleLeech(card);
         }
         setUndoEnd(undoName);
@@ -2327,7 +2332,7 @@ public class Deck {
             // No leech threshold found in DeckVars
             return false;
         }
-        Log.i(TAG, "leech handling: " + card.successive + " successive fails and " + no + " total fails, threshold at " + fmax); 
+        Log.i(AnkiDroidApp.TAG, "leech handling: " + card.getSuccessive() + " successive fails and " + no + " total fails, threshold at " + fmax); 
         // Return true if:
         // - The card failed AND
         // - The number of failures exceeds the leech threshold AND
@@ -2518,20 +2523,20 @@ public class Deck {
             tids = tagIds(allTags_());
             rows = splitTagsList();
         } else {
-            Log.i(TAG, "updateCardTags cardIds: " + Arrays.toString(cardIds));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags cardIds: " + Arrays.toString(cardIds));
             getDB().getDatabase().execSQL("DELETE FROM cardTags WHERE cardId IN " + Utils.ids2str(cardIds));
             String fids = Utils.ids2str(Utils.toPrimitive(getDB().queryColumn(Long.class,
                             "SELECT factId FROM cards WHERE id IN " + Utils.ids2str(cardIds), 0)));
-            Log.i(TAG, "updateCardTags fids: " + fids);
+            Log.i(AnkiDroidApp.TAG, "updateCardTags fids: " + fids);
             tids = tagIds(allTags_("WHERE id IN " + fids));
-            Log.i(TAG, "updateCardTags tids keys: " + Arrays.toString(tids.keySet().toArray(new String[tids.size()])));
-            Log.i(TAG, "updateCardTags tids values: " + Arrays.toString(tids.values().toArray(new Long[tids.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags tids keys: " + Arrays.toString(tids.keySet().toArray(new String[tids.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags tids values: " + Arrays.toString(tids.values().toArray(new Long[tids.size()])));
             rows = splitTagsList("AND facts.id IN " + fids);
-            Log.i(TAG, "updateCardTags rows keys: " + Arrays.toString(rows.keySet().toArray(new Long[rows.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags rows keys: " + Arrays.toString(rows.keySet().toArray(new Long[rows.size()])));
             for (List<String> l : rows.values()) {
-                Log.i(TAG, "updateCardTags rows values: ");
+                Log.i(AnkiDroidApp.TAG, "updateCardTags rows values: ");
                 for (String v :  l) {
-                    Log.i(TAG, "updateCardTags row item: " + v);
+                    Log.i(AnkiDroidApp.TAG, "updateCardTags row item: " + v);
                 }
             }
         }
@@ -2545,7 +2550,7 @@ public class Deck {
                     ditem.put("cardId", id);
                     ditem.put("tagId", tids.get(tag.toLowerCase()));
                     ditem.put("src", new Long(src));
-                    Log.i(TAG, "populating ditem " + src + " " + tag);
+                    Log.i(AnkiDroidApp.TAG, "populating ditem " + src + " " + tag);
                     d.add(ditem);
                 }
             }
@@ -2691,7 +2696,6 @@ public class Deck {
      * Suspending*****************************
      */
 
-<<<<<<< HEAD
     /**
      * Suspend cards in bulk.
      * Caller must .reset()
@@ -3303,23 +3307,23 @@ public class Deck {
     // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
     
     private void enableSyncing() {
-        syncName = Utils.checksum(deckName);
-        lastSync = 0;
+        mSyncName = Utils.checksum(mDeckName);
+        mLastSync = 0;
         commitToDB();
     }
 
     private void disableSyncing() {
-        syncName = "";
-        lastSync = 0;
+        mSyncName = "";
+        mLastSync = 0;
         commitToDB();
     }
 
     public boolean syncingEnabled() {
-        return (syncName != null) && !(syncName.equals(""));
+        return (mSyncName != null) && !(mSyncName.equals(""));
     }
 
     private void checkSyncHash() {
-        if ((syncName != null) && !syncName.equals(Utils.checksum(deckName))) {
+        if ((mSyncName != null) && !mSyncName.equals(Utils.checksum(mDeckName))) {
             disableSyncing();
         }
     }

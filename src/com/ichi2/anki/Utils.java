@@ -45,14 +45,17 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -429,7 +432,7 @@ public class Utils {
     public static Date genToday(double utcOffset) {
         // The result is not adjusted for timezone anymore, following libanki model
         // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
-	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         df.setTimeZone(TimeZone.getTimeZone("GMT"));
         Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
         cal.setTimeInMillis(System.currentTimeMillis() - (long) utcOffset * 1000l);
@@ -614,10 +617,10 @@ public class Utils {
                 md = MessageDigest.getInstance("MD5");
                 digest = md.digest(data.getBytes("UTF-8"));
             } catch (NoSuchAlgorithmException e) {
-                Log.e(TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+                Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {
-                Log.e(TAG, "Utils.checksum: " + e.getMessage());
+                Log.e(AnkiDroidApp.TAG, "Utils.checksum: " + e.getMessage());
                 e.printStackTrace();
             }
             BigInteger biginteger = new BigInteger(1, digest);

@@ -162,7 +162,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
             if (oldCard != null) {
                 deck.answerCard(oldCard, ease);
-                Log.i(TAG, "leech flag: " + oldCard.getLeechFlag());
+                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
             }
 
             newCard = deck.getCard();

@@ -376,6 +376,13 @@ public class Model {
         return mName;
     }
     
+    /**
+     * @return the tags
+     */
+    public String getTags() {
+        return mTags;
+    }
+    
     public String getFeatures() {
     	return mFeatures;
     }

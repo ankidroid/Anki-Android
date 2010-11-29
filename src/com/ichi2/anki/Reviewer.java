@@ -302,7 +302,7 @@ public class Reviewer extends Activity {
             long sessionTime = deck.getSessionTimeLimit();
             Toast sessionMessage = null;
             Toast leechMessage = null;
-            Log.i(TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() +
+            Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() +
                     " " + values[0].isPreviousCardSuspended());
 
             if (values[0].isPreviousCardLeech()) {

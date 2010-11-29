@@ -373,9 +373,9 @@ public class Card {
 
     public String[] splitTags() {
         String[] tags = new String[]{
-            getFact().tags,
-            Model.getModel(deck, getFact().modelId, true).tags,
-            getCardModel().name
+            getFact().getTags(),
+            Model.getModel(mDeck, getFact().getModelId(), true).getTags(),
+            getCardModel().getName()
         };
         return tags;
     }
@@ -788,5 +788,9 @@ public class Card {
     }
     public void setSuspendedFlag(boolean flag) {
         isLeechSuspended = flag;
+    }
+
+    public int getSuccessive() {
+        return mSuccessive;
     }
 }

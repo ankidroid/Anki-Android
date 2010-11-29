@@ -400,4 +400,12 @@ public class CardModel implements Comparator<CardModel> {
     public int getAnswerAlign() {
         return mAnswerAlign;
     }
+
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return mName;
+    }
 }
