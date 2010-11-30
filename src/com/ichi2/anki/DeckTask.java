@@ -145,7 +145,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             modifyCard.updateQAfields();
         }
 
-        deck.reset();
+        // deck.reset();
         publishProgress(new TaskData(deck.getCurrentCard()));
 
         return null;
