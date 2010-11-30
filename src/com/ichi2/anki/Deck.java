@@ -3215,24 +3215,20 @@ public class Deck {
         Cursor cur = null;
 
         cur = getDB().getDatabase().rawQuery(
-                "SELECT id, quizFontFamily, quizFontSize, quizFontColour, -1, features FROM fieldModels", null);
+                "SELECT id, quizFontFamily, quizFontSize, quizFontColour, -1, " +
+                "features, editFontFamily FROM fieldModels", null);
         while (cur.moveToNext()) {
             css += _genCSS(".fm", cur);
         }
         cur.close();
         cur = getDB().getDatabase().rawQuery(
-                "SELECT id, questionFontFamily, questionFontSize, questionFontColour, " +
-                "questionAlign, 0 FROM cardModels", null);
+                "SELECT id, null, null, null, questionAlign, 0, 0 FROM cardModels", null);
+        String cssAnswer = "";
         while (cur.moveToNext()) {
             css += _genCSS("#cmq", cur);
+            cssAnswer += _genCSS("#cma", cur);
         }
-        cur.close();
-        cur = getDB().getDatabase().rawQuery(
-                "SELECT id, answerFontFamily, answerFontSize, answerFontColour, " +
-                "answerAlign, 0 FROM cardModels", null);
-        while (cur.moveToNext()) {
-            css += _genCSS("#cma", cur);
-        }
+        css += cssAnswer;
         cur.close();
         cur = getDB().getDatabase().rawQuery("SELECT id, lastFontColour FROM cardModels", null);
         while (cur.moveToNext()) {
@@ -3254,6 +3250,7 @@ public class Deck {
         String col = row.getString(3);
         int align = row.getInt(4);
         String rtl = row.getString(5);
+        int pre = row.getInt(4);
         if (fam != null) {
             t += "font-family:\"" + fam + "\";";
         }
@@ -3265,6 +3262,9 @@ public class Deck {
         }
         if (rtl != null && rtl.compareTo("rtl") == 0) {
             t += "direction:rtl;unicode-bidi:embed;";
+        }
+        if (pre != 0) {
+            t += "white-space:pre-wrap;";
         }
         if (align != -1) {
             if (align == 0) {
