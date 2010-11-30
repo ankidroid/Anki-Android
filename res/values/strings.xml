@@ -34,11 +34,6 @@
 <string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your sd card.</string>
 <string name="deck_empty">Deck is empty.</string>
 <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-<string name="deck_upgrade_52_note">Upgrade to version 52 notes:
-
-When syncing, AnkiDroid now uses the same deck name on the server as the deck name on your computer. Because you had \'%s\' set to sync to \'%s\' on the server, syncing has been temporarily disabled.
-
-To resolve this issue and enable syncing, please open this deck with Anki desktop version and follow any instructions there.</string>
 
 <color name="wb_fg_color">#B00000FF</color>
 <color name="wb_bg_color">#0000</color>
