@@ -921,10 +921,6 @@ public class StudyOptions extends Activity {
 
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = AnkiDroidApp.deck();
-            String syncName = deck.getSyncName();
-            if ((syncName == null) || syncName.equals("")) {
-                deck.enableSyncing();
-            }
 
             Log.i(AnkiDroidApp.TAG,
                     "Synchronizing deck " + mDeckFilename + " with username " + username + " and password " + password);

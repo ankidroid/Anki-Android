@@ -194,7 +194,7 @@ public class Deck {
     private Stats mGlobalStats;
     private Stats mDailyStats;
 
-    private Card mCurrentCard;
+    private long mCurrentCardId;
 
     /**
      * Undo/Redo variables.
@@ -576,14 +576,16 @@ public class Deck {
         }
         // skip 51
         if (mVersion < 52) {
-            if ((mSyncName != null) && !mSyncName.equals("")) {
-                if (!mDeckName.equals(mSyncName)) {
-                    upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_52_note);
-                    disableSyncing();
-                } else {
-                    enableSyncing();
-                }
-            }
+            // The commented code below follows libanki by setting the syncName to the MD5 hash of the path.
+            // The problem with that is that it breaks syncing with already uploaded decks.
+            //if ((mSyncName != null) && !mSyncName.equals("")) {
+            //    if (!mDeckName.equals(mSyncName)) {
+            //        upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_52_note);
+            //        disableSyncing();
+            //    } else {
+            //        enableSyncing();
+            //    }
+            //}
             mVersion = 52;
             commitToDB();
         }
@@ -618,10 +620,10 @@ public class Deck {
             if (note == com.ichi2.anki.R.string.deck_upgrade_too_old_version) {
                 // Unsupported version
                 notes = notes.concat(res.getString(note.intValue()));
-            } else if (note == com.ichi2.anki.R.string.deck_upgrade_52_note) {
-                // Upgrade note for version 52 regarding syncName
-                notes = notes.concat(String.format(res.getString(note.intValue()),
-                        deck.getDeckName(), deck.getSyncName()));
+            //} else if (note == com.ichi2.anki.R.string.deck_upgrade_52_note) {
+            //    // Upgrade note for version 52 regarding syncName
+            //    notes = notes.concat(String.format(res.getString(note.intValue()),
+            //            deck.getDeckName(), deck.getSyncName()));
             }
         }
         return notes;
@@ -1968,9 +1970,9 @@ public class Deck {
      * @return The next due card or null if nothing is due.
      */
     public Card getCard() {
-        long id = getCardId();
-        if (id != 0l) {
-            return cardFromId(id);
+        mCurrentCardId = getCardId();
+        if (mCurrentCardId != 0l) {
+            return cardFromId(mCurrentCardId);
         } else {
             return null;
         }
@@ -1978,9 +1980,8 @@ public class Deck {
 
 
     // Refreshes the current card and returns it (used when editing cards)
-    // TODO find a less lame way to do this.
     public Card getCurrentCard() {
-        return cardFromId(mCurrentCard.getId());
+        return cardFromId(mCurrentCardId);
     }
 
 

@@ -242,10 +242,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             String deckPath = deckToSync.get("filepath");
             try {
                 Deck deck = Deck.openDeck(deckPath);
-                String syncName = deck.getSyncName();
-                if ((syncName == null) || syncName.equals("")) {
-                    deck.enableSyncing();
-                }
 
                 Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath });
                 syncDeckData = doInBackgroundSyncDeck(syncDeckData);
