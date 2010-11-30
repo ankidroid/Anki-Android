@@ -39,6 +39,8 @@
 <string name="session_question_limit_reached">Sitzungs-Fragenlimit erreicht</string>
 <string name="session_time_limit_reached">Sitzungs-Zeitlimit erreicht</string>
 <string name="cram_edit_warning">Kartenbearbeitung während des Paukens nicht erlaubt</string>
+<string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
+<string name="leech_notification">Karte als Lernbremse markiert</string>
 
 <!-- deck_preferences.xml -->
 <string name="newcards_day_summ">Maximale Anzahl neuer Karten pro Tag wurde abgefragt.</string>
@@ -122,7 +124,7 @@
 
 <!-- AnkiDroid.java -->
 <string name="loading_new_card">Neue Karte wird geladen...</string>
-<string name="loading_deck">Stapel wird geladen. Bitte warten...</string>
+<string name="loading_deck">Stapel wird geladen.\nBitte warten...</string>
 <string name="connection_unsuccessful">Die Verbindung ist fehlgeschlagen. Überprüfen Sie ihre Internet-Verbindung und versuchen sie es erneut.</string>
 <string name="connection_needed">Sie sind momentan offline.</string>
 <string name="study_options">Lern-Einstellungen</string>
@@ -229,6 +231,9 @@
 <string name="studyoptions_deck_not_loaded_message">Der ausgewählte Stapel ist kein gültiger Anki-Stapel. Erstellen Sie Stapel mit Anki-Desktop oder laden Sie öffentlich freigegebene Stapel herunter.</string>
 <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
 <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid braucht Zugang zur SD-Karte um Stapel zu öffnen oder zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist und versuchen Sie es erneut.</string>
+<string name="studyoptions_load_other_deck">Öffne anderen Stapel</string>
+<string name="studyoptions_load_sample_deck">Öffne Beispielstapel</string>
+
 <string name="menu_open_deck">Öffne Stapel</string>
 <string name="menu_sync">Synchronisiere</string>
 <string name="menu_download_deck">Lade Stapel herunter</string>

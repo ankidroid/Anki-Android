@@ -30,13 +30,11 @@
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
 			android:layout_weight="1"
-			android:text="Load Sample Deck"
 			android:id="@+id/studyoptions_load_sample_deck" />
 		<Button
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
 			android:layout_weight="1"
-			android:text="Load Other Deck"
 			android:id="@+id/studyoptions_load_other_deck" />
 	</LinearLayout>
 </LinearLayout>
