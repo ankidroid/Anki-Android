@@ -62,16 +62,17 @@ public class CardModel implements Comparator<CardModel> {
     private String mQedformat;
     private String mAedformat;
     private int mQuestionInAnswer = 0;
-    // Display
+    // Unused
     private String mQuestionFontFamily = DEFAULT_FONT_FAMILY;
     private int mQuestionFontSize = DEFAULT_FONT_SIZE;
     private String mQuestionFontColour = DEFAULT_FONT_COLOR;
+    // Used for both question & answer
     private int mQuestionAlign = 0;
+    // Unused
     private String mAnswerFontFamily = DEFAULT_FONT_FAMILY;
     private int mAnswerFontSize = DEFAULT_FONT_SIZE;
     private String mAnswerFontColour = DEFAULT_FONT_COLOR;
     private int mAnswerAlign = 0;
-    // Not used
     private String mLastFontFamily = DEFAULT_FONT_FAMILY;
     private int mLastFontSize = DEFAULT_FONT_SIZE;
     // Used as background colour

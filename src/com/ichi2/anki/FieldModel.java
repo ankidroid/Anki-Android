@@ -42,9 +42,9 @@ public class FieldModel implements Comparator<FieldModel> {
     private int mNumeric = 0;
     // Display
     private String mQuizFontFamily;
-    private int mQuizFontSize;
+    private int mQuizFontSize = CardModel.DEFAULT_FONT_SIZE;
     private String mQuizFontColour;
-    private String mEditFontFamily;
+    private boolean mEditFontFamily = true; // reused as <pre> toggle
     private int mEditFontSize = CardModel.DEFAULT_FONT_SIZE;
     // END SQL table entries
 
