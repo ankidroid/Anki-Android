@@ -245,7 +245,7 @@ public class Fact {
 
 
     public void setModified(boolean textChanged) {
-        mModified = System.currentTimeMillis();
+        mModified = Utils.now();
         if (textChanged) {
             mSpaceUntil = "";
             for (Field f : getFields()) {
