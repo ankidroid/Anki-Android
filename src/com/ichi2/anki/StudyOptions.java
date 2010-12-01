@@ -781,7 +781,7 @@ public class StudyOptions extends Activity {
         item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
         item.setIcon(R.drawable.ic_menu_refresh);
         item = menu.add(Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card);
-        item.setIcon(R.drawable.ic_input_add);
+        item.setIcon(R.drawable.ic_menu_add);
         item = menu.add(Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more);
         item.setIcon(R.drawable.ic_menu_archive);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);

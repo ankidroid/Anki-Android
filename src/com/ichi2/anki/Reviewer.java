@@ -484,9 +484,9 @@ public class Reviewer extends Activity {
             item.setIcon(R.drawable.ic_menu_clear_playlist);
         }
         item = menu.add(Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card);
-        item.setIcon(android.R.drawable.ic_menu_edit);
+        item.setIcon(R.drawable.ic_menu_edit);
         item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
-        item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+        item.setIcon(R.drawable.ic_menu_close_clear_cancel);
         if (mPrefTextSelection) {
             item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, R.string.menu_search);
             item.setIcon(R.drawable.ic_menu_search);
@@ -499,13 +499,16 @@ public class Reviewer extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(MENU_MARK);
+        if (mCurrentCard == null){
+        	return false;
+        }
         mCurrentCard.loadTags();
         if (mCurrentCard.hasTag(Deck.TAG_MARKED)) {
             item.setTitle(R.string.menu_marked);
-            item.setIcon(R.drawable.star_big_on);
+            item.setIcon(R.drawable.ic_menu_star_on);
         } else {
             item.setTitle(R.string.menu_mark_card);
-            item.setIcon(R.drawable.ic_menu_star);
+            item.setIcon(R.drawable.ic_menu_star_off);
         }
         if (mPrefTextSelection) {
             item = menu.findItem(MENU_SEARCH);
