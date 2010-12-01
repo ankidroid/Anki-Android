@@ -231,7 +231,7 @@
 <string name="studyoptions_deck_not_loaded_message">Der ausgewählte Stapel ist kein gültiger Anki-Stapel. Erstellen Sie Stapel mit Anki-Desktop oder laden Sie öffentlich freigegebene Stapel herunter.</string>
 <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
 <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid braucht Zugang zur SD-Karte um Stapel zu öffnen oder zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist und versuchen Sie es erneut.</string>
-<string name="studyoptions_load_other_deck">Öffne anderen Stapel</string>
+<string name="studyoptions_load_other_deck">Öffne Stapel</string>
 <string name="studyoptions_load_sample_deck">Öffne Beispielstapel</string>
 
 <string name="menu_open_deck">Öffne Stapel</string>
@@ -331,6 +331,8 @@
 <string name="soon">Bald</string>
 <string name="show_next_review_time">Nächstes Auftauchen</string>
 <string name="show_next_review_time_summ">Zeigt während des Lernens die Zeit bis zum nächsten Auftauchen der Karte abhängig von der Wahl des Schwierigkeitsgrades</string>
+<string name="update_notification">Aktualisierungsbenachrichtigung</string>
+<string name="update_notification_summ">Benachrichtigung, wenn es Aktualisierungen von AnkiDroid gibt</string>
 
 <string name="per_day">Pro Tag</string>
 </resources>

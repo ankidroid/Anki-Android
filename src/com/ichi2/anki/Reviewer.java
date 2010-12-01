@@ -946,9 +946,9 @@ public class Reviewer extends Activity {
             sb.append("<hr/>");
             sb.append(displayString);
             displayString = sb.toString();
-            mFlipCard.setVisibility(View.GONE);
         }
 
+        mFlipCard.setVisibility(View.GONE);
         showEaseButtons();
         updateCard(displayString);
     }
