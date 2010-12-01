@@ -1226,7 +1226,7 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _requeueCard(Card card, boolean oldIsRev) {
-        try {
+        //try {
             if (card.getReps() == 1) {
                 mNewQueue.removeLast();
             } else if (!oldIsRev) {
@@ -1234,12 +1234,12 @@ public class Deck {
             } else {
                 mRevQueue.removeLast();
             }
-        } catch (Exception e) {
-            throw new RuntimeException("requeueCard() failed. Counts: " + 
-                    mFailedSoonCount + " " + mRevCount + " " + mNewCountToday + ", Queue: " +
-                    mFailedQueue.size() + " " + mRevQueue.size() + " " + mNewQueue.size() + ", Card info: " +
-                    card.getReps() + " " + card.isRev() + " " + oldIsRev);
-        }
+        //} catch (Exception e) {
+        //    throw new RuntimeException("requeueCard() failed. Counts: " + 
+        //            mFailedSoonCount + " " + mRevCount + " " + mNewCountToday + ", Queue: " +
+        //            mFailedQueue.size() + " " + mRevQueue.size() + " " + mNewQueue.size() + ", Card info: " +
+        //            card.getReps() + " " + card.isRev() + " " + oldIsRev);
+        //}
     }
 
 
