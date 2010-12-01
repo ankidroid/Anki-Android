@@ -264,7 +264,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="studyoptions_session_minutes">Session limit (minutes):</string>
 <string name="studyoptions_session_questions">Session limit (questions):</string>
 <string name="studyoptions_start">Start Reviewing</string>
-<string name="studyoptions_more">More</string>
+<string name="studyoptions_more">Study Options</string>
 <string name="studyoptions_window_title">%s (%d of %d due)</string>
 <string name="studyoptions_more_dialog_title">More Options</string>
 <string name="studyoptions_more_save">Save</string>
@@ -327,6 +327,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="studyoptions_cram_dialog_title">Tags to cram</string>
 <string name="begin_cram">Start Cram mode</string>
 <string name="end_cram">Stop Cram mode</string>
+<string name="cram">Cram</string>
 
 <!-- Connection.java -->
 <string name="sync_connecting_message">Connecting...</string>

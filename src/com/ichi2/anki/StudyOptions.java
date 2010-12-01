@@ -1,16 +1,16 @@
 /***************************************************************************************
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+* This program is free software; you can redistribute it and/or modify it under *
+* the terms of the GNU General Public License as published by the Free Software *
+* Foundation; either version 3 of the License, or (at your option) any later *
+* version. *
+* *
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY *
+* WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A *
+* PARTICULAR PURPOSE. See the GNU General Public License for more details. *
+* *
+* You should have received a copy of the GNU General Public License along with *
+* this program. If not, see <http://www.gnu.org/licenses/>. *
+****************************************************************************************/
 
 package com.ichi2.anki;
 
@@ -57,18 +57,18 @@ import java.util.HashSet;
 
 public class StudyOptions extends Activity {
     /**
-     * Default database.
-     */
+* Default database.
+*/
     public static final String OPT_DB = "com.ichi2.anki.deckFilename";
 
     /**
-     * Filename of the sample deck to load
-     */
+* Filename of the sample deck to load
+*/
     private static final String SAMPLE_DECK_NAME = "country-capitals.anki";
 
     /**
-     * Menus
-     */
+* Menus
+*/
     private static final int MENU_OPEN = 1;
     private static final int SUBMENU_DOWNLOAD = 2;
     private static final int MENU_DOWNLOAD_PERSONAL_DECK = 21;
@@ -78,10 +78,10 @@ public class StudyOptions extends Activity {
     private static final int MENU_PREFERENCES = 5;
     private static final int MENU_ADD_FACT = 6;
     private static final int MENU_ABOUT = 7;
-
+    private static final int MENU_MORE_OPTIONS = 8;
     /**
-     * Available options performed by other activities
-     */
+* Available options performed by other activities
+*/
     private static final int PICK_DECK_REQUEST = 0;
     private static final int PREFERENCES_UPDATE = 1;
     private static final int REQUEST_REVIEW = 2;
@@ -90,8 +90,8 @@ public class StudyOptions extends Activity {
     private static final int REPORT_ERROR = 5;
 
     /**
-     * Constants for selecting which content view to display
-     */
+* Constants for selecting which content view to display
+*/
     private static final int CONTENT_NO_DECK = 0;
     private static final int CONTENT_STUDY_OPTIONS = 1;
     private static final int CONTENT_CONGRATS = 2;
@@ -100,20 +100,20 @@ public class StudyOptions extends Activity {
     public static final int CONTENT_NO_EXTERNAL_STORAGE = 5;
 
     /**
-     * Download Manager Service stub
-     */
+* Download Manager Service stub
+*/
     // private IDownloadManagerService mService = null;
 
     /**
-     * Broadcast that informs us when the sd card is about to be unmounted
-     */
+* Broadcast that informs us when the sd card is about to be unmounted
+*/
     private BroadcastReceiver mUnmountReceiver = null;
 
     private boolean mSdCardAvailable = AnkiDroidApp.isSdCardMounted();
 
     /**
-     * Preferences
-     */
+* Preferences
+*/
     private String mPrefDeckPath;
     private boolean mPrefStudyOptions;
     // private boolean deckSelected;
@@ -123,16 +123,16 @@ public class StudyOptions extends Activity {
     private int mCurrentContentView;
 
     /**
-     * Alerts to inform the user about different situations
-     */
+* Alerts to inform the user about different situations
+*/
     private ProgressDialog mProgressDialog;
     private AlertDialog mNoConnectionAlert;
     private AlertDialog mUserNotLoggedInAlert;
     private AlertDialog mConnectionErrorAlert;
 
     /*
-     * Cram related
-     */
+* Cram related
+*/
     private AlertDialog mCramTagsDialog;
     private String allCramTags[];
     private HashSet<String> activeCramTags;
@@ -140,8 +140,8 @@ public class StudyOptions extends Activity {
     private static final String[] cramOrderList = {"type, modified", "created", "random()"};
 
     /**
-     * UI elements for "Study Options" view
-     */
+* UI elements for "Study Options" view
+*/
     private View mStudyOptionsView;
     private Button mButtonStart;
     private ToggleButton mToggleCram;
@@ -155,8 +155,8 @@ public class StudyOptions extends Activity {
     private EditText mEditSessionQuestions;
 
     /**
-     * UI elements for "More Options" dialog
-     */
+* UI elements for "More Options" dialog
+*/
     private AlertDialog mDialogMoreOptions;
     private Spinner mSpinnerNewCardOrder;
     private Spinner mSpinnerNewCardSchedule;
@@ -166,15 +166,15 @@ public class StudyOptions extends Activity {
     private CheckBox mCheckBoxPerDay;
 
     /**
-     * UI elements for "No Deck" view
-     */
+* UI elements for "No Deck" view
+*/
     private View mNoDeckView;
     private TextView mTextNoDeckTitle;
     private TextView mTextNoDeckMessage;
 
     /**
-     * UI elements for "Congrats" view
-     */
+* UI elements for "Congrats" view
+*/
     private View mCongratsView;
     private TextView mTextCongratsMessage;
     private Button mButtonCongratsLearnMore;
@@ -182,19 +182,19 @@ public class StudyOptions extends Activity {
     private Button mButtonCongratsFinish;
 
     /**
-     * UI elements for "No External Storage Available" view
-     */
+* UI elements for "No External Storage Available" view
+*/
     private View mNoExternalStorageView;
 
     /**
-     * UI elements for "Cram Tags" view
-     */
+* UI elements for "Cram Tags" view
+*/
     private ListView mCramTagsListView;
     private Spinner mSpinnerCramOrder;
     
     /**
-     * Callbacks for UI events
-     */
+* Callbacks for UI events
+*/
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -228,9 +228,6 @@ public class StudyOptions extends Activity {
                     return;
                 case R.id.studyoptions_congrats_finish:
                     showContentView(CONTENT_SESSION_COMPLETE);
-                    return;
-                case R.id.studyoptions_more:
-                    showMoreOptionsDialog();
                     return;
                 case R.id.studyoptions_load_sample_deck:
                     loadSampleDeck();
@@ -372,10 +369,10 @@ public class StudyOptions extends Activity {
 
 
     /**
-     * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The intent will call
-     * closeExternalStorageFiles() if the external media is going to be ejected, so applications can clean up any files
-     * they have open.
-     */
+* Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The intent will call
+* closeExternalStorageFiles() if the external media is going to be ejected, so applications can clean up any files
+* they have open.
+*/
     public void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
             mUnmountReceiver = new BroadcastReceiver() {
@@ -450,7 +447,6 @@ public class StudyOptions extends Activity {
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
         mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
-        mStudyOptionsView.findViewById(R.id.studyoptions_more).setOnClickListener(mButtonClickListener);
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
@@ -496,8 +492,8 @@ public class StudyOptions extends Activity {
 
 
     /**
-     * Create AlertDialogs used on all the activity
-     */
+* Create AlertDialogs used on all the activity
+*/
     private void initAllDialogs() {
         Resources res = getResources();
 
@@ -656,7 +652,6 @@ public class StudyOptions extends Activity {
                     mEditNewPerDay.setEnabled(true);
                     mEditSessionTime.setEnabled(true);
                     mEditSessionQuestions.setEnabled(true);
-                    mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
                 }
                 // Return to standard scheduler
                 if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
@@ -706,8 +701,8 @@ public class StudyOptions extends Activity {
     }
 
     /*
-     * Switch schedulers
-     */
+* Switch schedulers
+*/
 
     private void reset() {
         reset(false);
@@ -739,28 +734,26 @@ public class StudyOptions extends Activity {
 
 
     /**
-     * Enter cramming mode.
-     * Currently not supporting cramming from selection of cards, as we don't have a card list view anyway.
-     */
+* Enter cramming mode.
+* Currently not supporting cramming from selection of cards, as we don't have a card list view anyway.
+*/
     private void onCram() {
         AnkiDroidApp.deck().setupCramScheduler(activeCramTags.toArray(new String[activeCramTags.size()]), cramOrder);
         // Timeboxing only supported using the standard scheduler
         mEditNewPerDay.setEnabled(false);
         mEditSessionTime.setEnabled(false);
         mEditSessionQuestions.setEnabled(false);
-        mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(false);
         updateValuesFromDeck();
     }
 
     /**
-     * Exit cramming mode.
-     */
+* Exit cramming mode.
+*/
     private void onCramStop() {
         AnkiDroidApp.deck().setupStandardScheduler();
         mEditNewPerDay.setEnabled(true);
         mEditSessionTime.setEnabled(true);
         mEditSessionQuestions.setEnabled(true);
-        mStudyOptionsView.findViewById(R.id.studyoptions_more).setEnabled(true);
     }
 
     @Override
@@ -787,13 +780,14 @@ public class StudyOptions extends Activity {
         downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
         item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
         item.setIcon(R.drawable.ic_menu_refresh);
-        item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
-        item.setIcon(R.drawable.ic_menu_home);
-        item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
-        item.setIcon(R.drawable.ic_menu_preferences);
-        item.setIcon(R.drawable.ic_menu_archive);
         item = menu.add(Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card);
         item.setIcon(R.drawable.ic_input_add);
+        item = menu.add(Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more);
+        item.setIcon(R.drawable.ic_menu_archive);
+        item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
+        item.setIcon(R.drawable.ic_menu_preferences);
+        item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
+        item.setIcon(R.drawable.ic_menu_home);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
 
@@ -809,6 +803,7 @@ public class StudyOptions extends Activity {
         menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
         // menu.findItem(MENU_DECK_PROPERTIES).setEnabled(deckLoaded && sdCardAvailable);
         menu.findItem(MENU_SYNC).setEnabled(deckLoaded && mSdCardAvailable);
+        menu.findItem(MENU_MORE_OPTIONS).setEnabled(!mToggleCram.isChecked());
         return true;
     }
 
@@ -844,6 +839,10 @@ public class StudyOptions extends Activity {
                 startActivity(new Intent(StudyOptions.this, MyAccount.class));
                 return true;
 
+            case MENU_MORE_OPTIONS:
+                showMoreOptionsDialog();
+                return true;
+                
             case MENU_PREFERENCES:
                 startActivityForResult(
                         new Intent(StudyOptions.this, Preferences.class),

@@ -164,15 +164,11 @@
 			android:drawableLeft="@drawable/chronometer"/>
 		<ToggleButton android:id="@+id/studyoptions_cram"
 			android:layout_width="0px"
-			android:layout_height="wrap_content"
-			android:layout_weight="37.5"
-			android:layout_gravity="center_vertical"
-			android:textOff="@string/begin_cram"
-			android:textOn="@string/end_cram"/>
-		<Button android:id="@+id/studyoptions_more" 
-			android:layout_width="0px"
-			android:layout_height="wrap_content"
+			android:layout_height="fill_parent"
 			android:layout_weight="25"
-				android:text="@string/studyoptions_more"/>
+			android:layout_gravity="center_vertical"
+			android:textOff="@string/cram"
+			android:textOn="@string/cram"/>
 	</LinearLayout>
+	
 </LinearLayout>

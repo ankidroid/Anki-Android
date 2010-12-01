@@ -221,7 +221,7 @@
 <string name="studyoptions_session_minutes">Sitzungslimit (Minuten):</string>
 <string name="studyoptions_session_questions">Sitzungslimit (Fragen):</string>
 <string name="studyoptions_start">Lernen starten</string>
-<string name="studyoptions_more">Mehr</string>
+<string name="studyoptions_more">Lernoptionen</string>
 <string name="studyoptions_window_title">%s (%d von %d fällig)</string>
 <string name="studyoptions_more_dialog_title">Mehr Optionen</string>
 <string name="studyoptions_more_save">Speichern</string>
@@ -284,6 +284,7 @@
 <string name="studyoptions_cram_dialog_title">Stichwörter, die gepaukt werden sollen</string>
 <string name="begin_cram">Pauken starten</string>
 <string name="end_cram">Beende Pauken</string>
+<string name="cram">Pauken</string>
 
 <!-- Connection.java -->
 <string name="sync_connecting_message">Verbinde...</string>
