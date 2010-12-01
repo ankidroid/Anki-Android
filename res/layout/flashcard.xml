@@ -59,33 +59,20 @@
 	<!-- Card and whiteboard -->
 	<WebView android:id="@+id/flashcard"
 		android:layout_below="@+id/red_number"
-		android:layout_above="@+id/answer_field"
+		android:layout_above="@+id/answer_nextTime_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:textSize="15sp" />
 	<view class="com.ichi2.anki.Whiteboard" android:id="@+id/whiteboard"
 		android:layout_below="@+id/red_number"
-		android:layout_above="@+id/answer_field"
+		android:layout_above="@+id/answer_nextTime_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent" />
 
-	<!-- Answer bar -->
-	<EditText android:id="@+id/answer_field"
-		android:layout_above="@+id/flip_card"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:maxLines="2" />
-
-	<include android:id="@+id/flip_card"
-		layout="@layout/bottom_button"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_above="@+id/answer_options_layout" />
-		
 	<LinearLayout android:id="@+id/answer_nextTime_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_above="@+id/answer_options_layout" >
+		android:layout_above="@+id/bottom_area_layout" >
 		<TextView 
 		  android:textColor="#ff0000"
           android:gravity="center_horizontal"
@@ -115,16 +102,36 @@
           android:layout_weight="1"
   		  android:id="@+id/nextTime4" />
 	</LinearLayout>
-
-	<LinearLayout android:id="@+id/answer_options_layout"
+	
+	<LinearLayout android:id="@+id/bottom_area_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:orientation="vertical"
 		android:layout_alignParentBottom="true" >
+		
+			<!-- Answer bar -->
+		<EditText android:id="@+id/answer_field"
+			android:layout_above="@+id/flip_card"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:maxLines="2" />
 
-		<include android:id="@+id/ease1" layout="@layout/bottom_button" />
-		<include android:id="@+id/ease2" layout="@layout/bottom_button" />
-		<include android:id="@+id/ease3" layout="@layout/bottom_button" />
-		<include android:id="@+id/ease4" layout="@layout/bottom_button" />
+		<include android:id="@+id/flip_card"
+			layout="@layout/bottom_button"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/answer_options_layout" />
+		
+		<LinearLayout android:id="@+id/answer_options_layout"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true" >
+
+			<include android:id="@+id/ease1" layout="@layout/bottom_button" />
+			<include android:id="@+id/ease2" layout="@layout/bottom_button" />
+			<include android:id="@+id/ease3" layout="@layout/bottom_button" />
+			<include android:id="@+id/ease4" layout="@layout/bottom_button" />
+		</LinearLayout>
 	</LinearLayout>
 
 </RelativeLayout>

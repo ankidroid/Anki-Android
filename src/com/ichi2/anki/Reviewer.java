@@ -484,9 +484,9 @@ public class Reviewer extends Activity {
             item.setIcon(R.drawable.ic_menu_clear_playlist);
         }
         item = menu.add(Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card);
-        item.setIcon(android.R.drawable.ic_menu_edit);
+        item.setIcon(R.drawable.ic_menu_edit);
         item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
-        item.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+        item.setIcon(R.drawable.ic_menu_close_clear_cancel);
         if (mPrefTextSelection) {
             item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, R.string.menu_search);
             item.setIcon(R.drawable.ic_menu_search);
@@ -499,13 +499,16 @@ public class Reviewer extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(MENU_MARK);
+        if (mCurrentCard == null){
+        	return false;
+        }
         mCurrentCard.loadTags();
         if (mCurrentCard.hasTag(Deck.TAG_MARKED)) {
             item.setTitle(R.string.menu_marked);
-            item.setIcon(R.drawable.star_big_on);
+            item.setIcon(R.drawable.ic_menu_star_on);
         } else {
             item.setTitle(R.string.menu_mark_card);
-            item.setIcon(R.drawable.ic_menu_star);
+            item.setIcon(R.drawable.ic_menu_star_off);
         }
         if (mPrefTextSelection) {
             item = menu.findItem(MENU_SEARCH);
@@ -776,10 +779,10 @@ public class Reviewer extends Activity {
         mEase2.setVisibility(View.GONE);
         mEase3.setVisibility(View.GONE);
         mEase4.setVisibility(View.GONE);
-        mNext1.setVisibility(View.GONE);
-        mNext2.setVisibility(View.GONE);
-        mNext3.setVisibility(View.GONE);
-        mNext4.setVisibility(View.GONE);
+        mNext1.setVisibility(View.INVISIBLE);
+        mNext2.setVisibility(View.INVISIBLE);
+        mNext3.setVisibility(View.INVISIBLE);
+        mNext4.setVisibility(View.INVISIBLE);
     }
 
 
@@ -946,9 +949,9 @@ public class Reviewer extends Activity {
             sb.append("<hr/>");
             sb.append(displayString);
             displayString = sb.toString();
-            mFlipCard.setVisibility(View.GONE);
         }
 
+        mFlipCard.setVisibility(View.GONE);
         showEaseButtons();
         updateCard(displayString);
     }

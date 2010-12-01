@@ -97,9 +97,9 @@
 			android:summary="@string/text_selection_summ"
 			android:key="textSelection" />
 		<CheckBoxPreference
-			android:title="Update notifications"
+			android:title="@string/update_notification"
 			android:defaultValue="true"
-			android:summary="Notify me when AnkiDroid is updated"
+			android:summary="@string/update_notification_summ"
 			android:key="enabled"/>
 		<ListPreference
 			android:title="@string/error_reporting_choice"
