@@ -3251,7 +3251,7 @@ public class Deck {
         String col = row.getString(3);
         int align = row.getInt(4);
         String rtl = row.getString(5);
-        int pre = row.getInt(4);
+        int pre = row.getInt(6);
         if (fam != null) {
             t += "font-family:\"" + fam + "\";";
         }
