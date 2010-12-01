@@ -19,13 +19,13 @@
 				  DO NOT edit them, unless you change their corresponding values -->
 	<!-- Used in deck preferences -->
 	<string-array name="newCardOrderLabels">
-    <item>In zufälliger Reihenfolge</item>
-    <item>In Reihenfolge des Hinzufügens</item>
-    <item>In umgekehrter Reihenfolge des Hinzufügens</item>
+    <item>Zufällige Reihenfolge</item>
+    <item>Reihenfolge des Hinzufügens</item>
+    <item>Umgekehrte Reihenfolge des Hinzufügens</item>
   </string-array>
 
 	<string-array name="newCardSchedulingLabels">
-	    <item>Verteilt über Wiederholungen</item>
+	    <item>Über Wiederholungen verteilt</item>
 	    <item>Nach Wiederholungen</item>
 	    <item>Vor Wiederholungen</item>
 	</string-array>

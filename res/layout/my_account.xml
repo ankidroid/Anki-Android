@@ -21,7 +21,6 @@
 	<TextView android:id="@+id/password_title"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="15dp"
 		android:text="@string/password"/>
 		
 	<EditText android:id="@+id/password"
@@ -29,33 +28,40 @@
 		android:layout_height="wrap_content"
 		android:inputType="textPassword"/>
 		
-	<Button android:id="@+id/login_button"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="10dp"
-		android:layout_gravity="right"
-		android:text="@string/log_in"/>
-	
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:layout_marginTop="20dp">
-		
+		android:layout_marginTop="10dp">
+
 		<TextView android:id="@+id/no_account_text"
-			android:layout_width="0dip"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical"
-			android:layout_weight="2"
+			android:layout_gravity="bottom"
 			android:text="@string/sign_up_description"
-			android:textStyle="bold"
+         	android:layout_weight="1"
+         	android:textStyle="bold"
 			android:textSize="16dp"/>
-			
-		<Button android:id="@+id/sign_up_button"
-			android:layout_width="wrap_content"
+
+		<LinearLayout
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/sign_up"/>
-		
+			android:layout_weight="2"
+			android:orientation="vertical">
+					
+			<Button android:id="@+id/login_button"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="right"
+				android:text="@string/log_in"/>
+			
+			<Button android:id="@+id/sign_up_button"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/sign_up"
+				android:layout_gravity="right"
+				android:layout_marginTop="10dp"/>
+		</LinearLayout>	
 	</LinearLayout>
 	
 </LinearLayout>
