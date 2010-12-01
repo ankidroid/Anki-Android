@@ -1,62 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-android:id="@+id/FactAdderScroll"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
->
-   <LinearLayout
-   android:id="@+id/FactAdderLayout"
-   android:layout_width="fill_parent"
-   android:layout_height="wrap_content"
-   android:orientation="vertical"
-   >
-      <LinearLayout
-      android:id="@+id/FactAdderSelectModelLayout"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      >
-         <TextView
-         android:id="@+id/FactAdderModelTextView"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="@string/model"
-         >
-         </TextView>
-         <Button
-         android:id="@+id/FactAdderModelButton"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Teste"
-         >
-         </Button>
-      </LinearLayout>
-      <LinearLayout
-      android:id="@+id/FactAdderEditFieldsLayout"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      >
-      </LinearLayout>
-      <LinearLayout
-      android:id="@+id/FactAdderButtons"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      >
-         <Button
-         android:id="@+id/FactAdderAddButton"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="@string/add"
-         >
-         </Button>
-         <Button
-         android:id="@+id/FactAdderCloseButton"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="@string/close"
-         >
-         </Button>
-      </LinearLayout>
-   </LinearLayout>
+
+<ScrollView android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/FactAdderScroll">
+	<LinearLayout android:id="@+id/FactAdderLayout"
+		android:orientation="vertical" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		   	 
+      	<LinearLayout
+      	android:id="@+id/FactAdderSelectModelLayout"
+      	android:layout_width="fill_parent"
+      	android:layout_height="wrap_content">
+   		   	<LinearLayout
+	      	android:id="@+id/FactAdderSelectModelLayout"
+    	  	android:layout_width="fill_parent"
+      		android:layout_height="wrap_content"
+      		android:layout_weight="1">
+        	<TextView
+        		android:id="@+id/FactAdderModelTextView"
+	        	android:layout_width="wrap_content"
+    	    	android:layout_height="wrap_content"
+        		android:text="@string/model">
+        	</TextView>
+        	<Button
+	        	android:id="@+id/FactAdderModelButton"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content">
+        	</Button>
+        	</LinearLayout>
+   		   	<LinearLayout
+	      	android:id="@+id/FactAdderSelectTemplateLayout"
+    	  	android:layout_width="fill_parent"
+      		android:layout_height="wrap_content"
+			android:layout_weight="1">
+        	<TextView
+        		android:id="@+id/FactAdderTemplateTextView"
+	        	android:layout_width="wrap_content"
+    	    	android:layout_height="wrap_content"
+        		android:text="@string/card">
+        	</TextView>
+        	<Button
+	        	android:id="@+id/FactAdderTemplateButton"
+        		android:layout_width="fill_parent"
+        		android:layout_height="wrap_content"
+        		android:text="Template">
+        	</Button>
+        	</LinearLayout>
+      	</LinearLayout>
+		
+        <LinearLayout
+        android:id="@+id/FactAdderEditFieldsLayout"
+		android:orientation="vertical" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+        </LinearLayout>
+
+ 	    <LinearLayout
+   		android:id="@+id/FactAdderButtons"
+  		android:layout_height="wrap_content" 
+       	android:layout_width="fill_parent"
+	  	android:orientation="horizontal"
+	  	android:layout_gravity="right" >
+        <Button
+        	android:id="@+id/FactAdderAddButton"
+         	android:layout_width="fill_parent"
+         	android:layout_height="wrap_content"
+         	android:text="@string/add"
+         	android:layout_weight="1">
+        </Button>
+        <Button
+         	android:id="@+id/FactAdderCloseButton"
+         	android:layout_width="fill_parent"
+         	android:layout_height="wrap_content"
+         	android:text="@string/close" 
+         	android:layout_weight="1">
+        </Button>
+      	</LinearLayout>
+	</LinearLayout>
 </ScrollView>
