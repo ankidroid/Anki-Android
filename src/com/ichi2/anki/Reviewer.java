@@ -779,10 +779,10 @@ public class Reviewer extends Activity {
         mEase2.setVisibility(View.GONE);
         mEase3.setVisibility(View.GONE);
         mEase4.setVisibility(View.GONE);
-        mNext1.setVisibility(View.GONE);
-        mNext2.setVisibility(View.GONE);
-        mNext3.setVisibility(View.GONE);
-        mNext4.setVisibility(View.GONE);
+        mNext1.setVisibility(View.INVISIBLE);
+        mNext2.setVisibility(View.INVISIBLE);
+        mNext3.setVisibility(View.INVISIBLE);
+        mNext4.setVisibility(View.INVISIBLE);
     }
 
 
