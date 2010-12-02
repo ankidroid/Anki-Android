@@ -258,7 +258,8 @@
 <string name="studyoptions_congrats_message">Sie sind für\'s erste fertig.</string>
 <string name="studyoptions_congrats_learnmore">Mehr Lernen</string>
 <string name="studyoptions_congrats_reviewearly">Früher Wiederholen</string>
-<string name="studyoptions_congrats_finish">Beenden</string>
+<string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>
+<string name="studyoptions_congrats_finish">Zurück zu den Lerneinstellungen</string>
 
 <!-- MyAccount.java -->
 <string name="username">Benutzername</string>

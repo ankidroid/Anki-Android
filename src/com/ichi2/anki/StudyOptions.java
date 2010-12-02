@@ -179,6 +179,7 @@ public class StudyOptions extends Activity {
     private TextView mTextCongratsMessage;
     private Button mButtonCongratsLearnMore;
     private Button mButtonCongratsReviewEarly;
+    private Button mButtonCongratsOpenOtherDeck;
     private Button mButtonCongratsFinish;
 
     /**
@@ -225,6 +226,9 @@ public class StudyOptions extends Activity {
                     onReviewEarly();
                     reviewer.putExtra("deckFilename", mDeckFilename);
                     startActivityForResult(reviewer, REQUEST_REVIEW);
+                    return;
+                case R.id.studyoptions_congrats_open_other_deck:
+                    openDeckPicker();
                     return;
                 case R.id.studyoptions_congrats_finish:
                     showContentView(CONTENT_SESSION_COMPLETE);
@@ -309,8 +313,8 @@ public class StudyOptions extends Activity {
             deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
             deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
             // TODO: mSpinnerFailCardOption
-            deck.setPerDay(mCheckBoxPerDay.isChecked());
-
+          	deck.setPerDay(mCheckBoxPerDay.isChecked());
+            // TODO: Update number of due cards after change of per day scheduling 
             dialog.dismiss();
         }
     };
@@ -480,10 +484,12 @@ public class StudyOptions extends Activity {
         mTextCongratsMessage = (TextView) mCongratsView.findViewById(R.id.studyoptions_congrats_message);
         mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
         mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
+        mButtonCongratsOpenOtherDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_open_other_deck);
         mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
 
         mButtonCongratsLearnMore.setOnClickListener(mButtonClickListener);
         mButtonCongratsReviewEarly.setOnClickListener(mButtonClickListener);
+        mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
         
         // The view to use when there is no external storage available
