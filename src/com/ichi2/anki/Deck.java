@@ -1776,9 +1776,9 @@ public class Deck {
 
     public void setPerDay(boolean perDay) {
         if (perDay) {
-            setVar("perDay", "true");
+            setVar("perDay", "1");
         } else {
-            setVar("perDay", "false");
+            setVar("perDay", "0");
         }
     }
 
