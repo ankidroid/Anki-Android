@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.content.res.Resources;
 
 import com.ichi2.anki.Fact.Field;
 
@@ -58,6 +59,7 @@ public class FactAdder extends Activity {
     private Button mAddButton;
     private Button mCloseButton;
     private Button mModelButton;
+    private TextView mCardTemplates;
 
     private Deck mDeck;
     private Long mCurrentSelectedModelId;
@@ -71,6 +73,8 @@ public class FactAdder extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Resources res = getResources();
+        
         registerExternalStorageListener();
 
         setContentView(R.layout.fact_adder);
@@ -80,11 +84,16 @@ public class FactAdder extends Activity {
         mAddButton = (Button) findViewById(R.id.FactAdderAddButton);
         mCloseButton = (Button) findViewById(R.id.FactAdderCloseButton);
         mModelButton = (Button) findViewById(R.id.FactAdderModelButton);
+        mCardTemplates = (TextView) findViewById(R.id.FactAdderTemplates);
+        
         mDeck = AnkiDroidApp.deck();
 
         mModels = Model.getModels(mDeck);
         mCurrentSelectedModelId = mDeck.getCurrentModelId();
         mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
+        //res.getString(R.string.card)
+        mCardTemplates.setText(res.getString(R.string.card) + " " + mModels.get(mCurrentSelectedModelId).getCardModelNames());
+        
         mNewFact = mDeck.newFact();
         populateEditFields();
         mAddButton.setOnClickListener(new View.OnClickListener() {

@@ -34,24 +34,16 @@
         		android:layout_height="wrap_content">
         	</Button>
         	</LinearLayout>
-   		   	<LinearLayout
-	      	android:id="@+id/FactAdderSelectTemplateLayout"
-    	  	android:layout_width="fill_parent"
-      		android:layout_height="wrap_content"
-			android:layout_weight="1">
+
         	<TextView
-        		android:id="@+id/FactAdderTemplateTextView"
-	        	android:layout_width="wrap_content"
-    	    	android:layout_height="wrap_content"
+        		android:id="@+id/FactAdderTemplates"
+	        	android:layout_width="fill_parent"
+    	    	android:layout_height="fill_parent"
+    			android:gravity="center"
+				android:layout_weight="1"
         		android:text="@string/card">
         	</TextView>
-        	<Button
-	        	android:id="@+id/FactAdderTemplateButton"
-        		android:layout_width="fill_parent"
-        		android:layout_height="wrap_content"
-        		android:text="Template">
-        	</Button>
-        	</LinearLayout>
+
       	</LinearLayout>
 		
         <LinearLayout

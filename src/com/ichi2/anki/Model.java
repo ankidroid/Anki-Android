@@ -386,5 +386,16 @@ public class Model {
     public String getFeatures() {
     	return mFeatures;
     }
+    
+    public String getCardModelNames(){
+        String cardModelNames = "";
+    	for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
+    		CardModel myCardModel = entry.getValue();
+    		cardModelNames = cardModelNames + myCardModel.getName() + ", ";
+        }
+    	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
+    	
+    	return cardModelNames;
+    } 
 
 }

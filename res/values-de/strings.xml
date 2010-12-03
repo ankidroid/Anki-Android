@@ -113,13 +113,13 @@
 <string name="sync_name">Name auf dem Server</string>
 
 <!-- AndroidManifest.xml -->
-<string name="personaldeckpicker_title">Lade Online-Stapel herunter</string>
+<string name="personaldeckpicker_title">Online-Stapel herunterladen</string>
 <string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
 <string name="preferences_title">Voreinstellungen</string>
 <string name="deckpreferences_title">Stapel-Einstellungen</string>
 <string name="deckproperties_title">Stapel-Eigenschaften</string>
 <string name="about_title">Über</string>
-<string name="cardeditor_title">Karteneditor</string>
+<string name="cardeditor_title">Fakteneditor</string>
 <string name="factadder_title">Karten hinzufügen</string>
 
 <!-- AnkiDroid.java -->
@@ -133,7 +133,7 @@
 <string name="switch_another_deck">Einen anderen Stapel öffnen</string>
 
 <!-- PersonalDeckPicker.java -->
-<string name="currently_downloading">Lädt gerade herunter</string>
+<string name="currently_downloading">Wird gerade heruntergeladen</string>
 <string name="personal_decks">Eigene Stapel</string>
 <string name="starting_download">Starte Herunterladen...</string>
 <string name="downloading">Herunterladen...</string>
@@ -327,7 +327,7 @@
 <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-Karten fällig</string>
 <string name="model">Modell:</string>
 <string name="select_model">Modell</string>
-<string name="card">Karte:</string>
+<string name="card">Karte(n):</string>
 <string name="add">Hinzufügen</string>
 <string name="close">Schließen</string>
 

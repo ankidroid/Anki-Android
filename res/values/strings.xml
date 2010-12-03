@@ -147,7 +147,7 @@
 <string name="deckpreferences_title">Deck Preferences</string>
 <string name="deckproperties_title">Deck Properties</string>
 <string name="about_title">About</string>
-<string name="cardeditor_title">Card Editor</string>
+<string name="cardeditor_title">Fact Editor</string>
 <string name="factadder_title">Card Adder</string>
 
 <!-- AnkiDroid.java -->
@@ -370,7 +370,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
 <string name="model">Model:</string>
 <string name="select_model">Model</string>
-<string name="card">Card:</string>
+<string name="card">Card(s):</string>
 <string name="add">Add</string>
 <string name="close">Close</string>
 

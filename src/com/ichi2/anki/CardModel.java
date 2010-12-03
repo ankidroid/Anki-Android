@@ -258,13 +258,21 @@ public class CardModel implements Comparator<CardModel> {
 
         int replaceAt = question.indexOf("%(");
         while (replaceAt != -1) {
-            question = replaceField(question, fact, replaceAt, true);
+        	if (question.substring(replaceAt + 2,replaceAt + 7).equals("text:")){
+            	question = replaceHtmlField(question, fact, replaceAt);        	
+            } else {
+            	question = replaceField(question, fact, replaceAt, true);        	
+            }
             replaceAt = question.indexOf("%(");
         }
 
         replaceAt = answer.indexOf("%(");
         while (replaceAt != -1) {
-            answer = replaceField(answer, fact, replaceAt, true);
+            if (answer.substring(replaceAt + 2,replaceAt + 7).equals("text:")){
+             	answer = replaceHtmlField(answer, fact, replaceAt);       	
+            } else {
+            	answer = replaceField(answer, fact, replaceAt, true);       	
+            }
             replaceAt = answer.indexOf("%(");
         }
 
@@ -291,6 +299,16 @@ public class CardModel implements Comparator<CardModel> {
                     "<span class=\"fma" + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">"
                             + fact.getFieldValue(fieldName) + "</span");
         }
+        return replaceFrom;
+    }
+    
+    private static String replaceHtmlField(String replaceFrom, Fact fact, int replaceAt) {
+        int endIndex = replaceFrom.indexOf(")", replaceAt);
+        String fieldName = replaceFrom.substring(replaceAt + 7, endIndex);
+        char fieldType = replaceFrom.charAt(endIndex + 1);
+        String replace = "%(text:" + fieldName + ")" + fieldType;
+        String with = fact.getFieldValue(fieldName);
+        replaceFrom = replaceFrom.replace(replace, with);
         return replaceFrom;
     }
 
