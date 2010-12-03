@@ -2,22 +2,35 @@
 
 <ScrollView android:layout_width="fill_parent"
 	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/CardEditorScroll">
+	android:id="@+id/CardEditorScroll"
+	android:paddingLeft="10dp"
+	android:paddingTop="15dp"
+	android:paddingRight="10dp"
+	android:paddingBottom="15dp">
 	<LinearLayout android:id="@+id/CardEditorLayout"
-		android:orientation="vertical" android:layout_width="fill_parent"
+		android:orientation="vertical" 
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
-		<LinearLayout android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/CardEditorEditFieldsLayout"
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:id="@+id/CardEditorEditFieldsLayout"
 			android:orientation="vertical"></LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:orientation="horizontal"
-			android:layout_gravity="right" android:id="@+id/CardEditorButtons">
-			<Button android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/CardEditorSaveButton"
-				android:text="@string/CardEditorSaveButton"></Button>
-			<Button android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/CardEditorCancelButton"
-				android:text="@string/CardEditorCancelButton"></Button>
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp"
+			android:layout_gravity="right" 
+			android:id="@+id/CardEditorButtons">
+			<Button android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:id="@+id/CardEditorSaveButton"
+				android:text="@string/CardEditorSaveButton"
+				android:layout_weight="1"></Button>
+			<Button android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:id="@+id/CardEditorCancelButton"
+				android:text="@string/CardEditorCancelButton"
+				android:layout_weight="1"></Button>
 		</LinearLayout>
 	</LinearLayout>
 </ScrollView>

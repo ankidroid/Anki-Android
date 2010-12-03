@@ -142,7 +142,7 @@ public class FactAdder extends Activity {
                 Model mModel;
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Select Model:");
+                builder.setTitle(R.string.select_model);
                 for (Long i : mModels.keySet()) {
                     mModel = mModels.get(i);
                     dialogItems.add(mModel.getName());
