@@ -67,8 +67,8 @@ public class Model {
     private String mName;
     private String mDescription = "";
     private String mFeatures = ""; // used as the media url
-    private double mSpacing = 0.1;
-    private double mInitialSpacing = 60;
+    private double mSpacing = 0.1; // obsolete as of libanki 1.1.4
+    private double mInitialSpacing = 60; // obsolete as of libanki 1.1.4
     private int mSource = 0;
     // BEGIN SQL table entries
 
