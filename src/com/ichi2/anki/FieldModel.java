@@ -41,10 +41,10 @@ public class FieldModel implements Comparator<FieldModel> {
     private int mUnique = 1;
     private int mNumeric = 0;
     // Display
-    private String mQuizFontFamily;
+    private String mQuizFontFamily = CardModel.DEFAULT_FONT_FAMILY;
     private int mQuizFontSize = CardModel.DEFAULT_FONT_SIZE;
     private String mQuizFontColour;
-    private boolean mEditFontFamily = true; // reused as <pre> toggle
+    private String mEditFontFamily = "1"; // reused as <pre> toggle
     private int mEditFontSize = CardModel.DEFAULT_FONT_SIZE;
     // END SQL table entries
 

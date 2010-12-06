@@ -110,7 +110,7 @@ public class Card {
     // data to the above
     private int mYesCount = 0;
     private int mNoCount = 0;
-    private double mSpaceUntil = 0;
+    private double mSpaceUntil = 0;      // obsolete in libanki 1.1.4
     // relativeDelay is reused as type without scheduling (ie, it remains 0-2 even if card is suspended, etc)
     private double mRelativeDelay = 0;
     private int mIsDue = 0;              // obsolete in libanki 1.1
@@ -597,7 +597,7 @@ public class Card {
         values.put("spaceUntil", mSpaceUntil);
         values.put("isDue", 0);
         values.put("type", mType);
-        values.put("combinedDue", Math.max(mSpaceUntil, mDue));
+        values.put("combinedDue", mCombinedDue);
         values.put("relativeDelay", 0.0);
         AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("cards", values, "id = " + mId, null);
 

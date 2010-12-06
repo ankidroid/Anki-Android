@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -59,7 +60,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 53;
+    public static final int DECK_VERSION = 55;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -128,6 +129,10 @@ public class Deck {
 
     // When to show new cards
     private int mNewCardSpacing;
+    
+    // New card spacing global variable
+    private double mNewSpacing;
+    private boolean mNewFromCache;
 
     // Limit the number of failed cards in play
     private int mFailedCardMax;
@@ -181,6 +186,7 @@ public class Deck {
     private LinkedList<QueueItem> mNewQueue;
     private LinkedList<QueueItem> mFailedCramQueue;
     private HashMap<Long, Double> mSpacedFacts;
+    private LinkedList<SpacedCardsItem> mSpacedCards;
     private int mQueueLimit;
 
     // Cramming
@@ -212,7 +218,7 @@ public class Deck {
 
         try {
             // Read in deck table columns
-            cursor = ankiDB.getDatabase().rawQuery("SELECT *" + " FROM decks" + " LIMIT 1", null);
+            cursor = ankiDB.getDatabase().rawQuery("SELECT * FROM decks LIMIT 1", null);
 
             if (!cursor.moveToFirst()) {
                 return null;
@@ -272,7 +278,8 @@ public class Deck {
         deck.mNewQueue = new LinkedList<QueueItem>();
         deck.mFailedCramQueue = new LinkedList<QueueItem>();
         deck.mSpacedFacts = new HashMap<Long, Double>();
-
+        deck.mSpacedCards = new LinkedList<SpacedCardsItem>();
+        
         deck.mDeckPath = path;
         deck.mDeckName = (new File(path)).getName().replace(".anki", "");
 
@@ -410,6 +417,14 @@ public class Deck {
             throw new SQLException("DeckVars.getInt: could not retrieve value for " + key);
         }
     }
+    public double getFloat(String key) throws SQLException {
+        Cursor cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+        if (cur.moveToFirst()) {
+            return cur.getFloat(0);
+        } else {
+            throw new SQLException("DeckVars.getFloat: could not retrieve value for " + key);
+        }
+    }
 
 
     public boolean getBool(String key) {
@@ -487,7 +502,7 @@ public class Deck {
         // lastSessionStart = 0;
         mQueueLimit = 200;
         // If most recent deck var not defined, make sure defaults are set
-        if (!hasKey("revInactive")) {
+        if (!hasKey("newSpacing")) {
             setVarDefault("suspendLeeches", "1");
             setVarDefault("leechFails", "16");
             setVarDefault("perDay", "1");
@@ -495,6 +510,7 @@ public class Deck {
             setVarDefault("revActive", "");
             setVarDefault("newInactive", mSuspended);
             setVarDefault("revInactive", mSuspended);
+            setVarDefault("newSpacing", "60");
         }
         updateCutoff();
         setupStandardScheduler();
@@ -597,6 +613,19 @@ public class Deck {
                 }
             }
             mVersion = 53;
+            commitToDB();
+        }
+        if (mVersion < 54) {
+            // editFontFamily now used as a boolean, but in integer type, so set to 1 == true
+            getDB().getDatabase().execSQL("UPDATE fieldModels SET editFontFamily = 1");
+            mVersion = 54;
+            commitToDB();
+        }
+        if (mVersion < 55) {
+            // Set a default font for unset fonts
+            getDB().getDatabase().execSQL("UPDATE fieldModels SET quizFontFamily = 'Arial' " +
+                    "WHERE NOT quizFontFamily OR quizFontFamily IS null");
+            mVersion = 55;
             commitToDB();
         }
         // Executing a pragma here is very slow on large decks, so we store our own record
@@ -750,6 +779,25 @@ public class Deck {
 
         double getDue() {
             return due;
+        }
+    }
+    private class SpacedCardsItem {
+        private double space;
+        private ArrayList<Long> cards;
+
+
+        SpacedCardsItem(double _space, ArrayList<Long> _cards) {
+            space = _space;
+            cards = _cards;
+        }
+
+        double getSpace() {
+            return space;
+        }
+
+
+        ArrayList<Long> getCards() {
+            return cards;
         }
     }
 
@@ -994,9 +1042,9 @@ public class Deck {
         }
     }
 
-    private void spaceCards(Card card, double space) {
+    private void spaceCards(Card card) {
         try {
-            spaceCardsMethod.invoke(Deck.this, card, space);
+            spaceCardsMethod.invoke(Deck.this, card);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -1034,7 +1082,7 @@ public class Deck {
             answerCardMethod = Deck.class.getDeclaredMethod("_answerCard", Card.class, int.class);
             cardLimitMethod = Deck.class.getDeclaredMethod("_cardLimit", String.class, String.class, String.class);
             answerPreSaveMethod = null;
-            spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCards", Card.class, double.class);
+            spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCards", Card.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -1128,6 +1176,7 @@ public class Deck {
                 "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < %f", mDueCutoff);
         mNewCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive", sql));
         updateNewCountToday();
+        mSpacedCards.clear();
     }
 
 
@@ -1167,7 +1216,7 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _fillNewQueue() {
-        if ((mNewCount != 0) && mNewQueue.isEmpty()) {
+        if ((mNewCountToday != 0) && mNewQueue.isEmpty() && mSpacedCards.isEmpty()) {
             String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 2 AND combinedDue < " + mDueCutoff
                     + " ORDER BY " + newOrder() + " LIMIT " + mQueueLimit;
             Cursor cur = getDB().getDatabase().rawQuery(cardLimit("newActive", "newInactive", sql), null);
@@ -1180,8 +1229,11 @@ public class Deck {
 
 
     private boolean queueNotEmpty(LinkedList<QueueItem> queue, Method fillFunc) {
+        return queueNotEmpty(queue, fillFunc, false);
+    }
+    private boolean queueNotEmpty(LinkedList<QueueItem> queue, Method fillFunc, boolean _new) {
         while (true) {
-            removeSpaced(queue);
+            removeSpaced(queue, _new);
             if (!queue.isEmpty()) {
                 return true;
             }
@@ -1199,15 +1251,25 @@ public class Deck {
 
 
     private void removeSpaced(LinkedList<QueueItem> queue) {
+        removeSpaced(queue, false);
+    }
+    private void removeSpaced(LinkedList<QueueItem> queue, boolean _new) {
+        ArrayList<Long> popped = new ArrayList<Long>();
+        double delay = 0.0;
         while (!queue.isEmpty()) {
             long fid = ((QueueItem) queue.getLast()).getFactID();
             if (mSpacedFacts.containsKey(fid)) {
-                if (Utils.now() > mSpacedFacts.get(fid)) {
-                    mSpacedFacts.remove(fid);
-                } else {
-                    queue.removeLast();
+                // Still spaced
+                long id = queue.remove().getCardID();
+                // Assuming 10 cards/minute, track id if likely to expire before queue refilled
+                if (_new && (mNewSpacing < (double) mQueueLimit * 6.0)) {
+                    popped.add(id);
+                    delay = mSpacedFacts.get(fid);
                 }
             } else {
+                if (!popped.isEmpty()) {
+                    mSpacedCards.add(new SpacedCardsItem(delay, popped));
+                }
                 return;
             }
         }
@@ -1220,15 +1282,29 @@ public class Deck {
 
 
     private boolean newNoSpaced() {
-        return queueNotEmpty(mNewQueue, fillNewQueueMethod);
+        return queueNotEmpty(mNewQueue, fillNewQueueMethod, true);
     }
 
 
     @SuppressWarnings("unused")
     private void _requeueCard(Card card, boolean oldIsRev) {
+        int newType = 0;
         //try {
             if (card.getReps() == 1) {
-                mNewQueue.removeLast();
+                if (mNewFromCache) {
+                    // Fetched from spaced cache
+                    newType = 2;
+                    ArrayList<Long> cards = mSpacedCards.remove().getCards();
+                    // Reschedule the siblings
+                    if (cards.size() > 1) {
+                        cards.remove(0);
+                        mSpacedCards.addLast(new SpacedCardsItem(Utils.now() + mNewSpacing, cards));
+                    }
+                } else {
+                    // Fetched from normal queue
+                    newType = 1;
+                    mNewQueue.removeLast();
+                }
             } else if (!oldIsRev) {
                 mFailedQueue.removeLast();
             } else {
@@ -1339,7 +1415,11 @@ public class Deck {
         } else {
             mNewCardModulus = 0;
         }
+        // Recache css
         rebuildCSS();
+
+        // Spacing for delayed cards - not to be confused with newCardSpacing above
+        mNewSpacing = getFloat("newSpacing");
     }
 
 
@@ -1439,7 +1519,9 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildLearnMoreCount() {
-        mNewCount = (int) getDB().queryScalar("SELECT count() FROM cards WHERE type = 2 AND combinedDue < " + mDueCutoff);
+        mNewCount = (int) getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE, 
+                "SELECT count() FROM cards WHERE type = 2 AND combinedDue < %f", mDueCutoff));
+        mSpacedCards.clear();
     }
 
 
@@ -1603,11 +1685,8 @@ public class Deck {
     }
 
     @SuppressWarnings("unused")
-    private void _spaceCramCards(Card card, double space) {
-        // If non-zero spacing, limit to 10 minutes or queue refill
-        if (space > System.currentTimeMillis() / 1000.0) {
-            mSpacedFacts.put(card.getFactId(), System.currentTimeMillis() / 1000.0 + 600.0);
-        }
+    private void _spaceCramCards(Card card) {
+        mSpacedFacts.put(card.getFactId(), Utils.now() + mNewSpacing);
     }
 
     @SuppressWarnings("unused")
@@ -2010,7 +2089,7 @@ public class Deck {
         }
         // Distribute new cards?
         if (newNoSpaced() && timeForNewCard()) {
-            return mNewQueue.getLast().getCardID();
+            return getNewCard();
         }
         // Card due for review?
         if (revNoSpaced()) {
@@ -2018,7 +2097,7 @@ public class Deck {
         }
         // New cards left?
         if (mNewCountToday != 0) {
-            return mNewQueue.getLast().getCardID();
+            return getNewCard();
         }
         // Display failed cards early/last
         if (showFailedLast() && (!mFailedQueue.isEmpty())) {
@@ -2074,6 +2153,14 @@ public class Deck {
         }
     }
 
+    private long getNewCard() {
+        if (mNewQueue.isEmpty() || (!mSpacedCards.isEmpty() && mSpacedCards.get(0).getSpace() < Utils.now())) {
+            mNewFromCache = true;
+            return mSpacedCards.get(0).getCards().get(0); 
+        }
+        mNewFromCache = false;
+        return mNewQueue.getLast().getCardID(); 
+    }
 
     private boolean showFailedLast() {
         return ((mCollapseTime != 0.0) || (mDelay0 == 0));
@@ -2178,6 +2265,7 @@ public class Deck {
             card.setLastDue(card.getDue()); // only update if card was not new
         }
         card.setDue(nextDue(card, ease, oldState));
+        card.setCombinedDue(card.getDue());
         card.setIsDue(0);
         card.setLastFactor(card.getFactor());
         card.setSpaceUntil(0);
@@ -2186,8 +2274,7 @@ public class Deck {
         }
 
         // Spacing
-        double space = spaceUntilTime(card);
-        spaceCards(card, space);
+        spaceCards(card);
         // Adjust counts for current card
         if (ease == 1) {
             if (card.getDue() < mFailedCutoff) {
@@ -2240,84 +2327,28 @@ public class Deck {
     }
 
 
-    private double spaceUntilTime(Card card) {
-        Cursor cursor = null;
-        double space, spaceFactor, minSpacing, minOfOtherCards;
-
-        try {
-            cursor = getDB().getDatabase().rawQuery("SELECT models.initialSpacing, models.spacing "
-                    + "FROM facts, models WHERE facts.modelId = models.id and facts.id = " + card.getFactId(), null);
-            if (!cursor.moveToFirst()) {
-                minSpacing = 0;
-                spaceFactor = 0;
-            } else {
-                minSpacing = cursor.getDouble(0);
-                spaceFactor = cursor.getDouble(1);
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        try {
-            minOfOtherCards = getDB().queryScalar(
-                    "SELECT min(interval) FROM cards WHERE factId = " + card.getFactId() + " AND id != " + card.getId());
-        } finally {
-            minOfOtherCards = 0;
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        if (minOfOtherCards != 0) {
-            space = Math.min(minOfOtherCards, card.getInterval());
-        } else {
-            space = 0;
-        }
-        space = space * spaceFactor * 86400.0;
-        space = Math.max(minSpacing, space);
-        space += Utils.now();
-        return space;
-    }
-
-
     @SuppressWarnings("unused")
-    private void _spaceCards(Card card, double space) {
-        Cursor cursor = null;
-        // Adjust counts
-        try {
-            cursor = getDB().getDatabase().rawQuery("SELECT type, count(type) FROM cards WHERE factId = " + card.getFactId()
-                    + " AND combinedDue < " + mDueCutoff + " AND id != " + card.getId() + " GROUP BY type", null);
-            while (cursor.moveToNext()) {
-                Log.i(AnkiDroidApp.TAG, "failedSoonCount before = " + mFailedSoonCount);
-                Log.i(AnkiDroidApp.TAG, "revCount before = " + mRevCount);
-                Log.i(AnkiDroidApp.TAG, "newCount before = " + mNewCount);
-                int type = cursor.getInt(0);
-                int count = cursor.getInt(1);
-                if (type == 0) {
-                    mFailedSoonCount -= count;
-                } else if (type == 1) {
-                    mRevCount -= count;
-                } else if (type == 2) {
-                    mNewCount -= count;
-                }
-                Log.i(AnkiDroidApp.TAG, "failedSoonCount after = " + mFailedSoonCount);
-                Log.i(AnkiDroidApp.TAG, "revCount after = " + mRevCount);
-                Log.i(AnkiDroidApp.TAG, "newCount after = " + mNewCount);
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+    private void _spaceCards(Card card) {
+        // Update new counts
+        double _new = Utils.now() + mNewSpacing;
+        if (_new > mDueCutoff) {
+            mNewCount -= getDB().queryScalar(
+                    String.format(Utils.ENGLISH_LOCALE, "SELECT count() FROM cards WHERE factId = %d AND id != %d " +
+                            "AND combinedDue < %f AND type = 2", card.getFactId(), card.getId(), mDueCutoff));
         }
-
-        // space other cards
-        getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET spaceUntil = %f, "
-                + "combinedDue = max(%f, due), modified = %f, isDue = 0 WHERE id != %d and factId = %d", space,
-                space, Utils.now(), card.getId(), card.getFactId()));
+        // Space cards
+        getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET " +
+                "combinedDue = (CASE " +
+                "WHEN type = 1 THEN %f " +
+                "WHEN type = 2 THEN %f " +
+                "END), " +
+                "modified = %f, isDue = 0 " +
+                "WHERE id != %d AND factId = %d " +
+                "AND combinedDue < %f " +
+                "AND type BETWEEN 1 AND 2",
+                mDueCutoff - 1.0, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff));
         // Update local cache of seen facts
-        mSpacedFacts.put(card.getFactId(), space);
+        mSpacedFacts.put(card.getFactId(), Utils.now() + mNewSpacing);
     }
 
 
