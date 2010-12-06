@@ -391,7 +391,10 @@ public class Model {
         String cardModelNames = "";
     	for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
     		CardModel myCardModel = entry.getValue();
-    		cardModelNames = cardModelNames + myCardModel.getName() + ", ";
+    		
+    		if (myCardModel.isActive()){
+                cardModelNames = cardModelNames + myCardModel.getName() + ", ";
+    		}
         }
     	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
     	

@@ -92,7 +92,13 @@ public class FactAdder extends Activity {
         mCurrentSelectedModelId = mDeck.getCurrentModelId();
         mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
         //res.getString(R.string.card)
-        mCardTemplates.setText(res.getString(R.string.card) + " " + mModels.get(mCurrentSelectedModelId).getCardModelNames());
+        
+        String templates = mModels.get(mCurrentSelectedModelId).getCardModelNames();
+        if (templates.indexOf(", ") == -1){
+        	mCardTemplates.setText(res.getString(R.string.card) + " " + templates);        	
+        } else {
+        	mCardTemplates.setText(res.getString(R.string.cards) + " " + templates);
+        }
         
         mNewFact = mDeck.newFact();
         populateEditFields();

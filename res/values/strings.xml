@@ -370,7 +370,8 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
 <string name="model">Model:</string>
 <string name="select_model">Model</string>
-<string name="card">Card(s):</string>
+<string name="card">Card:</string>
+<string name="cards">Cards:</string>
 <string name="add">Add</string>
 <string name="close">Close</string>
 

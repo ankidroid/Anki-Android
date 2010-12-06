@@ -327,7 +327,8 @@
 <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-Karten fällig</string>
 <string name="model">Modell:</string>
 <string name="select_model">Modell</string>
-<string name="card">Karte(n):</string>
+<string name="card">Karte:</string>
+<string name="cards">Karten:</string>
 <string name="add">Hinzufügen</string>
 <string name="close">Schließen</string>
 
