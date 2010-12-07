@@ -410,29 +410,52 @@ public class Deck {
 
 
     public int getInt(String key) throws SQLException {
-        Cursor cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-        if (cur.moveToFirst()) {
-            return cur.getInt(0);
-        } else {
-            throw new SQLException("DeckVars.getInt: could not retrieve value for " + key);
+        Cursor cur = null; 
+        try {
+            cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+            if (cur.moveToFirst()) {
+                return cur.getInt(0);
+            } else {
+                throw new SQLException("DeckVars.getInt: could not retrieve value for " + key);
+            }        	
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }	
         }
     }
+    
+    
     public double getFloat(String key) throws SQLException {
-        Cursor cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-        if (cur.moveToFirst()) {
-            return cur.getFloat(0);
-        } else {
-            throw new SQLException("DeckVars.getFloat: could not retrieve value for " + key);
-        }
+        Cursor cur = null;
+    	try {
+    		cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+    		if (cur.moveToFirst()) {
+    			return cur.getFloat(0);
+    		} else {
+    			throw new SQLException("DeckVars.getFloat: could not retrieve value for " + key);
+    		}
+    	} finally {
+            if (cur != null) {
+                cur.close();
+            }	    		
+    	}
     }
 
 
     public boolean getBool(String key) {
-        Cursor cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-        if (cur.moveToFirst()) {
-            return (cur.getInt(0) != 0);
-        }
-        return false;
+        Cursor cur = null;
+    	try {
+    		cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
+    		if (cur.moveToFirst()) {
+    			return (cur.getInt(0) != 0);
+    		}
+    	} finally {
+            if (cur != null) {
+                cur.close();
+            }	    		    		
+    	}
+    	return false;
     }
 
 
@@ -1189,26 +1212,40 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillFailedQueue() {
         if ((mFailedSoonCount != 0) && mFailedQueue.isEmpty()) {
-            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " +
-            mFailedCutoff + " ORDER BY combinedDue LIMIT " + mQueueLimit;
-            Cursor cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
-            while (cur.moveToNext()) {
-                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
-                mFailedQueue.add(0, qi); // Add to front, so list is reversed as it is built
-            }
+            Cursor cur = null;
+        	try {
+        		String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " +
+        		mFailedCutoff + " ORDER BY combinedDue LIMIT " + mQueueLimit;
+        		cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
+        		while (cur.moveToNext()) {
+        			QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
+        			mFailedQueue.add(0, qi); // Add to front, so list is reversed as it is built
+        		}
+            } finally {
+                if (cur != null) {
+                    cur.close();
+                }
+            }        		
         }
     }
 
 
     @SuppressWarnings("unused")
     private void _fillRevQueue() {
-        if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 1 AND combinedDue < " + mDueCutoff
-                    + " ORDER BY " + revOrder() + " LIMIT " + mQueueLimit;
-            Cursor cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
-            while (cur.moveToNext()) {
-                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
-                mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
+    	if ((mRevCount != 0) && mRevQueue.isEmpty()) {
+            Cursor cur = null;
+        	try {
+        		String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 1 AND combinedDue < " + mDueCutoff
+        					+ " ORDER BY " + revOrder() + " LIMIT " + mQueueLimit;
+        		cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
+        		while (cur.moveToNext()) {
+        			QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
+        			mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
+        		}
+            } finally {
+                if (cur != null) {
+                    cur.close();
+                }
             }
         }
     }
@@ -1217,12 +1254,19 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillNewQueue() {
         if ((mNewCountToday != 0) && mNewQueue.isEmpty() && mSpacedCards.isEmpty()) {
-            String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 2 AND combinedDue < " + mDueCutoff
-                    + " ORDER BY " + newOrder() + " LIMIT " + mQueueLimit;
-            Cursor cur = getDB().getDatabase().rawQuery(cardLimit("newActive", "newInactive", sql), null);
-            while (cur.moveToNext()) {
-                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
-                mNewQueue.addFirst(qi); // Add to front, so list is reversed as it is built
+            Cursor cur = null;
+        	try {
+            	String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 2 AND combinedDue < " + mDueCutoff
+            				+ " ORDER BY " + newOrder() + " LIMIT " + mQueueLimit;
+            	cur = getDB().getDatabase().rawQuery(cardLimit("newActive", "newInactive", sql), null);
+            	while (cur.moveToNext()) {
+            		QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
+            		mNewQueue.addFirst(qi); // Add to front, so list is reversed as it is built
+            	}
+            } finally {
+                if (cur != null) {
+                    cur.close();
+                }
             }
         }
     }
@@ -1652,16 +1696,24 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillCramQueue() {
         if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            Log.i(AnkiDroidApp.TAG, "fill cram queue: " + mActiveCramTags + " " + mCramOrder + " " + mQueueLimit);
-            String sql = "SELECT id, factId FROM cards c WHERE type BETWEEN 0 AND 2 ORDER BY " + mCramOrder + " LIMIT "
-                    + mQueueLimit;
-            sql = cardLimit(mActiveCramTags, null, sql);
-            Log.i(AnkiDroidApp.TAG, "SQL: " + sql);
-            Cursor cur = getDB().getDatabase().rawQuery(sql, null);
-            while (cur.moveToNext()) {
-                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
-                mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
-            }
+            Cursor cur = null;
+            try {
+        		Log.i(AnkiDroidApp.TAG, "fill cram queue: " + mActiveCramTags + " " + mCramOrder + " " + mQueueLimit);
+            	String sql = "SELECT id, factId FROM cards c WHERE type BETWEEN 0 AND 2 ORDER BY " + mCramOrder + " LIMIT "
+            		+ mQueueLimit;
+            	sql = cardLimit(mActiveCramTags, null, sql);
+            	Log.i(AnkiDroidApp.TAG, "SQL: " + sql);
+            	cur = getDB().getDatabase().rawQuery(sql, null);
+            	while (cur.moveToNext()) {
+                	QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
+                	mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
+            	}
+        	} finally {
+            	if (cur != null) {
+                	cur.close();
+            	}
+        	}
+
         }
     }
 
