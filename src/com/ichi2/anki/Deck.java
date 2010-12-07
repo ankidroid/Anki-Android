@@ -1534,16 +1534,22 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _fillRevEarlyQueue() {
         if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            String sql = "SELECT id, factId, combinedDue FROM cards WHERE type = 1 AND combinedDue > " + mDueCutoff
-                    + " ORDER BY combinedDue LIMIT " + mQueueLimit;
-            Cursor cur = getDB().getDatabase().rawQuery(sql, null);
-            while (cur.moveToNext()) {
-                QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
-                mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
+            Cursor cur = null;
+            try {
+            	String sql = "SELECT id, factId, combinedDue FROM cards WHERE type = 1 AND combinedDue > " + mDueCutoff
+            				+ " ORDER BY combinedDue LIMIT " + mQueueLimit;
+            	cur = getDB().getDatabase().rawQuery(sql, null);
+            	while (cur.moveToNext()) {
+            		QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
+            		mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
+            	}
+            } finally {
+            	if (cur != null) {
+                	cur.close();
+            	}
             }
         }
     }
-
 
     /*
      * Learn more*****************************
