@@ -405,7 +405,15 @@ public class Deck {
      * deckVars methods
      */
     public boolean hasKey(String key) {
-        return getDB().getDatabase().rawQuery("SELECT 1 FROM deckVars WHERE key = '" + key + "'", null).moveToNext();
+        Cursor cur = null;
+        try {
+            cur = getDB().getDatabase().rawQuery("SELECT 1 FROM deckVars WHERE key = '" + key + "'", null);
+            return cur.moveToNext();
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }	
+        }
     }
 
 
