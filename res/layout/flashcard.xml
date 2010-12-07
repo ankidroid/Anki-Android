@@ -72,35 +72,18 @@
 	<LinearLayout android:id="@+id/answer_nextTime_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_above="@+id/bottom_area_layout" >
-		<TextView 
-		  android:textColor="#ff0000"
-          android:gravity="center_horizontal"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-  		  android:id="@+id/nextTime1" />
-		<TextView 
-		  android:textColor="#000000"
-          android:gravity="center_horizontal"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-  		  android:id="@+id/nextTime2" />
-		<TextView 
-		  android:textColor="#000000"
-          android:gravity="center_horizontal"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-  		  android:id="@+id/nextTime3" />
-		<TextView 
-		  android:textColor="#000000"
-          android:gravity="center_horizontal"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-  		  android:id="@+id/nextTime4" />
+		android:layout_above="@+id/bottom_area_layout">
+		<TextView android:id="@+id/nextTime1"
+			android:textColor="#ff0000"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:visibility="gone"
+			android:maxLines="1"/>		
+		<include android:id="@+id/nextTime2" layout="@layout/next_time_textview" />
+		<include android:id="@+id/nextTime3" layout="@layout/next_time_textview" />
+		<include android:id="@+id/nextTime4" layout="@layout/next_time_textview" />
 	</LinearLayout>
 	
 	<LinearLayout android:id="@+id/bottom_area_layout"
@@ -127,7 +110,13 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true" >
 
-			<include android:id="@+id/ease1" layout="@layout/bottom_button" />
+			<Button android:id="@+id/ease1" 
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:layout_gravity="bottom"
+			android:visibility="gone"
+			android:gravity="center"/>
 			<include android:id="@+id/ease2" layout="@layout/bottom_button" />
 			<include android:id="@+id/ease3" layout="@layout/bottom_button" />
 			<include android:id="@+id/ease4" layout="@layout/bottom_button" />
