@@ -94,6 +94,8 @@ public class Reviewer extends Activity {
     private static final int MENU_SUSPEND = 3;
     private static final int MENU_SEARCH = 4;
     private static final int MENU_MARK = 5;
+    private static final int MENU_UNDO = 6;
+    private static final int MENU_REDO = 7;
 
     /** Regex pattern used in removing tags from text before diff */
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
@@ -231,9 +233,9 @@ public class Reviewer extends Activity {
     private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(Reviewer.this, "", "Saving changes...", true);
+        	Resources res = getResources();
+            mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
         }
-
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
@@ -247,10 +249,32 @@ public class Reviewer extends Activity {
         }
     };
 
+    
+    private DeckTask.TaskListener mUndoHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+        	Resources res = getResources();
+            mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
+        }
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            mCurrentCard = values[0].getCard();
+            refreshCard();
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            mProgressDialog.dismiss();
+        }
+    };
+    
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(Reviewer.this, "", "Saving changes...", true);
+        	Resources res = getResources();
+        	mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
         }
 
 
@@ -492,9 +516,12 @@ public class Reviewer extends Activity {
             item.setIcon(R.drawable.ic_menu_search);
         }
         item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
+        item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
+        item.setIcon(R.drawable.ic_menu_revert);
+        item = menu.add(Menu.NONE, MENU_REDO, Menu.NONE, R.string.redo);
+        item.setIcon(R.drawable.ic_menu_redo);        	
         return true;
     }
-
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -531,6 +558,8 @@ public class Reviewer extends Activity {
 
             getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+        menu.findItem(MENU_UNDO).setEnabled(AnkiDroidApp.deck().undoAvailable());
+        menu.findItem(MENU_REDO).setEnabled(AnkiDroidApp.deck().redoAvailable());
         return true;
     }
 
@@ -607,6 +636,17 @@ public class Reviewer extends Activity {
             case MENU_MARK:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
+                return true;
+
+            case MENU_UNDO:
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler, new DeckTask.TaskData(0,
+                        AnkiDroidApp.deck(), mCurrentCard));
+                return true;
+
+            case MENU_REDO:
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUndoHandler, new DeckTask.TaskData(0,
+                        AnkiDroidApp.deck(), mCurrentCard));
+                refreshCard();
                 return true;
         }
         return false;

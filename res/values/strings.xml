@@ -383,4 +383,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 
 <string name="per_day">Per Day</string>
 
+<string name="undo">Undo</string>
+<string name="redo">Redo</string>
+
 </resources>

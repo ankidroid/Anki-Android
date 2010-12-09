@@ -358,7 +358,6 @@ public class StudyOptions extends Activity {
             mDeckFilename = preferences.getString("deckFilename", null);
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + mDeckFilename);
         }
-
         if (!mSdCardAvailable) {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
         } else {

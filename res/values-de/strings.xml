@@ -339,5 +339,8 @@
 <string name="update_notification_summ">Benachrichtigung, wenn es Aktualisierungen von AnkiDroid gibt</string>
 
 <string name="per_day">Einteilung pro Tag</string>
+
+<string name="undo">Rückgängig</string>
+<string name="redo">Wiederholen</string>
 </resources>
 

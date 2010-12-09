@@ -349,7 +349,8 @@ public class Deck {
             /* Temporary view may still be present if the DB has not been closed */
             Log.i(AnkiDroidApp.TAG, "Failed to create temporary view: " + e.getMessage());
         }
-
+        // Initialize Undo
+        deck.initUndo();
         return deck;
     }
 
@@ -2680,6 +2681,8 @@ public class Deck {
 
     public void addTag(long[] factIds, String tag) {
         ArrayList<String> factTagsList = factTags(factIds);
+    	String undoName = "Add Card";
+        setUndoStart(undoName);
 
         // Create tag if necessary
         long tagId = tagId(tag, true);
@@ -2724,13 +2727,17 @@ public class Deck {
         }
 
         flushMod();
+        setUndoEnd(undoName);
     }
 
 
     public void deleteTag(long factId, String tag) {
+    	String undoName = "Delete Card";
+        setUndoStart(undoName);
         long[] ids = new long[1];
         ids[0] = factId;
         deleteTag(ids, tag);
+        setUndoEnd(undoName);
     }
 
 
@@ -2798,9 +2805,12 @@ public class Deck {
      * @param ids List of card IDs of the cards that are to be suspended.
      */
     public void suspendCards(long[] ids) {
-        getDB().getDatabase().execSQL("UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
+        String undoName = "Suspend Card";
+        setUndoStart(undoName);
+    	getDB().getDatabase().execSQL("UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
                 + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                 + ", isDue = 0 WHERE type >= 0 AND id IN " + Utils.ids2str(ids));
+        setUndoEnd(undoName);
         flushMod();
     }
 
@@ -3442,7 +3452,6 @@ public class Deck {
     }
 
 
-    // FIXME: Where should this be called from?
     @SuppressWarnings("unused")
     private void initUndo() {
         mUndoStack = new Stack<UndoRow>();
@@ -3475,7 +3484,7 @@ public class Deck {
                 sql += String.format(Utils.ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
                 sep = ",";
             }
-            sql += "WHERE rowid = ' || old.rowid); END";
+            sql += " WHERE rowid = ' || old.rowid); END";
             getDB().getDatabase().execSQL(sql);
             // Delete trigger
             sql = String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " + "BEFORE DELETE ON %s BEGIN "
@@ -3497,9 +3506,37 @@ public class Deck {
     }
 
 
-    /**
-     * XXX Unused
-     */
+    public String undoName(){
+    	return mUndoStack.peek().mName;
+    }
+
+    
+    public String redoName(){
+    	return mRedoStack.peek().mName;
+    }
+
+    
+    public boolean undoAvailable() {
+       	return (mUndoEnabled && !mUndoStack.isEmpty());
+    }
+
+    
+    public boolean redoAvailable() {
+    	return (mUndoEnabled && !mRedoStack.isEmpty());
+    }
+
+    
+    public void resetUndo(){
+    	try {
+    		getDB().getDatabase().execSQL("delete from undoLog");
+        } catch (SQLException e) {
+                		
+        }
+        mUndoStack.clear();
+        mRedoStack.clear();
+    }
+    
+
     private void setUndoBarrier() {
         if (mUndoStack.isEmpty() || mUndoStack.peek() != null) {
             mUndoStack.push(null);
@@ -3507,7 +3544,7 @@ public class Deck {
     }
 
 
-    private void setUndoStart(String name) {
+    public void setUndoStart(String name) {
         setUndoStart(name, false);
     }
 
@@ -3520,13 +3557,14 @@ public class Deck {
     }
 
 
-    private void setUndoStart(String name, boolean merge) {
+    public void setUndoStart(String name, boolean merge) {
         if (!mUndoEnabled) {
             return;
         }
         commitToDB();
         if (merge && !mUndoStack.isEmpty()) {
             if ((mUndoStack.peek() != null) && (mUndoStack.peek().mName.equals(name))) {
+            	// libanki: merge with last entry?
                 return;
             }
         }
@@ -3554,11 +3592,11 @@ public class Deck {
 
 
     private long latestUndoRow() {
-        long result;
+        long result = 0;
         try {
             result = getDB().queryScalar("SELECT MAX(rowid) FROM undoLog");
         } catch (SQLException e) {
-            result = 0;
+            Log.i(AnkiDroidApp.TAG, e.getMessage());
         }
         return result;
     }
@@ -3594,22 +3632,25 @@ public class Deck {
     /**
      * Undo the last action(s).
      * Caller must .reset()
-     * XXX Unused
      */
     public void undo() {
-        undoredo(mUndoStack, mRedoStack);
-        commitToDB();
+        if (!mUndoStack.isEmpty()){
+    	undoredo(mUndoStack, mRedoStack);
+    	commitToDB();
+    	reset();
+        }
     }
-
 
     /**
      * Redo the last action(s).
      * Caller must .reset()
-     * XXX Unused
      */
     public void redo() {
+        if (!mRedoStack.isEmpty()){
         undoredo(mRedoStack, mUndoStack);
         commitToDB();
+    	reset();
+        }
     }
 
 

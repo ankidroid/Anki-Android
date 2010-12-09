@@ -33,6 +33,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_SUSPEND_CARD = 3;
     public static final int TASK_TYPE_MARK_CARD = 4;
     public static final int TASK_TYPE_UPDATE_FACT = 5;
+    public static final int TASK_TYPE_UNDO = 6;
+    public static final int TASK_TYPE_REDO = 7;
 
     /**
      * Possible outputs trying to load a deck.
@@ -48,6 +50,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskListener mListener;
 
 
+    
     public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params) {
         sOldInstance = sInstance;
 
@@ -108,6 +111,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_UPDATE_FACT:
                 return doInBackgroundUpdateFact(params);
+                
+            case TASK_TYPE_UNDO:
+                return doInBackgroundUndo(params);                
+
+            case TASK_TYPE_REDO:
+                return doInBackgroundRedo(params);                
 
             default:
                 return null;
@@ -193,7 +202,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             // Start by getting the first card and displaying it.
             Card card = deck.getCard();
             Log.i(AnkiDroidApp.TAG, "Deck loaded!");
-
+            
             return new TaskData(DECK_LOADED, deck, card);
         } catch (SQLException e) {
             Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
@@ -237,7 +246,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         ankiDB.getDatabase().beginTransaction();
         try {
             if (currentCard != null) {
-                if (currentCard.hasTag(Deck.TAG_MARKED)) {
+            	if (currentCard.hasTag(Deck.TAG_MARKED)) {
                     deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 } else {
                     deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
@@ -252,6 +261,44 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         return null;
     }
+
+    private TaskData doInBackgroundUndo(TaskData... params) {
+        Deck deck = params[0].getDeck();
+        Card newCard;
+
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
+        try {
+        	deck.undo();
+            newCard = deck.getCard();
+            publishProgress(new TaskData(newCard));
+            ankiDB.getDatabase().setTransactionSuccessful();
+        } finally {
+            ankiDB.getDatabase().endTransaction();
+        }
+
+        return null;
+    }
+
+    
+    private TaskData doInBackgroundRedo(TaskData... params) {
+        Deck deck = params[0].getDeck();
+        Card newCard;
+
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
+        try {
+        	deck.redo();
+            newCard = deck.getCard();
+            publishProgress(new TaskData(newCard));
+            ankiDB.getDatabase().setTransactionSuccessful();
+        } finally {
+            ankiDB.getDatabase().endTransaction();
+        }
+
+        return null;
+    }
+    
 
     public static interface TaskListener {
         public void onPreExecute();
