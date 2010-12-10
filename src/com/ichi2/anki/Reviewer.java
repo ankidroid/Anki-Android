@@ -273,7 +273,7 @@ public class Reviewer extends Activity {
                 mCardTimer.setBase(SystemClock.elapsedRealtime());
                 mCardTimer.start();
             }
-            displayCardQuestion();
+            reviewNextCard();
             mProgressDialog.dismiss();
 
         }
