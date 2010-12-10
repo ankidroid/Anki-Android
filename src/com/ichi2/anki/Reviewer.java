@@ -934,8 +934,8 @@ public class Reviewer extends Activity {
             mAnswerField.setVisibility(View.GONE);
             if (mCurrentCard != null) {
                 // Obtain the user answer and the correct answer
-                String userAnswer = mAnswerField.getText().toString();
-                Matcher matcher = sSpanPattern.matcher(mCurrentCard.getAnswer());
+                String userAnswer = mAnswerField.getText().toString();         
+                Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(mCurrentCard.getAnswer()));
                 String correctAnswer = matcher.replaceAll("");
                 matcher = sBrPattern.matcher(correctAnswer);
                 correctAnswer = matcher.replaceAll("\n");
