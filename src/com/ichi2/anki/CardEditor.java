@@ -107,7 +107,7 @@ public class CardEditor extends Activity {
                     FieldEditText current = iter.next();
                     current.updateField();
                 }
-                AnkiDroidApp.deck().setUndoStart(undoName);
+                AnkiDroidApp.deck().setUndoEnd(undoName);
                 setResult(RESULT_OK);
                 finish();
             }

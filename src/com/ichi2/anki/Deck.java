@@ -3557,7 +3557,7 @@ public class Deck {
     }
 
 
-    public void setUndoStart(String name, boolean merge) {
+    private void setUndoStart(String name, boolean merge) {
         if (!mUndoEnabled) {
             return;
         }
@@ -3572,7 +3572,7 @@ public class Deck {
     }
 
 
-    private void setUndoEnd(String name) {
+    public void setUndoEnd(String name) {
         if (!mUndoEnabled) {
             return;
         }
