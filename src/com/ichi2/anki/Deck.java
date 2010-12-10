@@ -2681,7 +2681,7 @@ public class Deck {
 
     public void addTag(long[] factIds, String tag) {
         ArrayList<String> factTagsList = factTags(factIds);
-    	String undoName = "Add Card";
+    	String undoName = "Add Tag";
         setUndoStart(undoName);
 
         // Create tag if necessary
@@ -2732,7 +2732,7 @@ public class Deck {
 
 
     public void deleteTag(long factId, String tag) {
-    	String undoName = "Delete Card";
+    	String undoName = "Delete Tag";
         setUndoStart(undoName);
         long[] ids = new long[1];
         ids[0] = factId;

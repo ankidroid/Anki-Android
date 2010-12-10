@@ -409,6 +409,7 @@ public class StudyOptions extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
+        closeOpenedDeck();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
