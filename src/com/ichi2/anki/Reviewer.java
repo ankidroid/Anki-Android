@@ -249,27 +249,6 @@ public class Reviewer extends Activity {
         }
     };
 
-    
-    private DeckTask.TaskListener mUndoHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-        	Resources res = getResources();
-            mProgressDialog = ProgressDialog.show(Reviewer.this, "", res.getString(R.string.saving_changes), true);
-        }
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            mCurrentCard = values[0].getCard();
-            refreshCard();
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            mProgressDialog.dismiss();
-        }
-    };
-    
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
@@ -294,10 +273,9 @@ public class Reviewer extends Activity {
                 mCardTimer.setBase(SystemClock.elapsedRealtime());
                 mCardTimer.start();
             }
-
+            displayCardQuestion();
             mProgressDialog.dismiss();
 
-            displayCardQuestion();
         }
     };
 
@@ -613,7 +591,7 @@ public class Reviewer extends Activity {
                     cramEditWarning.show();
                     return false;
                 } else {
-                    sEditorCard = mCurrentCard;
+                    sEditorCard = mCurrentCard; 
                     Intent editCard = new Intent(Reviewer.this, CardEditor.class);
                     startActivityForResult(editCard, EDIT_CURRENT_CARD);
                     return true;
@@ -639,14 +617,13 @@ public class Reviewer extends Activity {
                 return true;
 
             case MENU_UNDO:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoHandler, new DeckTask.TaskData(0,
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
                 return true;
 
             case MENU_REDO:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUndoHandler, new DeckTask.TaskData(0,
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
-                refreshCard();
                 return true;
         }
         return false;
