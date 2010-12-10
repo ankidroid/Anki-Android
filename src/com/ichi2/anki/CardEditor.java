@@ -101,13 +101,10 @@ public class CardEditor extends Activity {
             @Override
             public void onClick(View v) {
             	Iterator<FieldEditText> iter = mEditFields.iterator();
-                String undoName = "Edit Card";
-                AnkiDroidApp.deck().setUndoStart(undoName);
                 while (iter.hasNext()) {
                     FieldEditText current = iter.next();
                     current.updateField();
                 }
-                AnkiDroidApp.deck().setUndoEnd(undoName);
                 setResult(RESULT_OK);
                 finish();
             }

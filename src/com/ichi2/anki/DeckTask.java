@@ -109,7 +109,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_MARK_CARD:
                 return doInBackgroundMarkCard(params);
 
-            case TASK_TYPE_UPDATE_FACT:
+		case TASK_TYPE_UPDATE_FACT:
                 return doInBackgroundUpdateFact(params);
                 
             case TASK_TYPE_UNDO:
@@ -147,6 +147,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Deck deck = params[0].getDeck();
         Card editCard = params[0].getCard();
         Fact editFact = editCard.getFact();
+        
+        // Start undo routine
+        String undoName = "Update Fact";
+        deck.setUndoStart(undoName);
+
         editFact.toDb();
 
         // Find all cards based on this fact and update them with the updateCard method.
@@ -155,6 +160,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
         // deck.reset();
+        deck.setUndoEnd(undoName);
         publishProgress(new TaskData(deck.getCurrentCard()));
 
         return null;
