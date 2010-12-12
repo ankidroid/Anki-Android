@@ -164,7 +164,7 @@
 <string name="facts">Fakten</string>
 
 <!-- SyncClient.java -->
-<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Hinzugefügt/Geändert&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Karten&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Fakten&lt;/td&gt;&lt;td&gt;%s&lt;/td>&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
+<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Hinzugefügt/Geändert&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Karten&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Fakten&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
 
 <!-- Progress bar communicates -->
 <string name="determining_task">Ermittle Aufgabenumfang</string>
@@ -222,7 +222,7 @@
 <string name="studyoptions_session_questions">Sitzungslimit (Fragen):</string>
 <string name="studyoptions_start">Lernen starten</string>
 <string name="studyoptions_more">Lernoptionen</string>
-<string name="studyoptions_window_title">%s (%d von %d fällig)</string>
+<string name="studyoptions_window_title">%1$s (%2$d von %3$d fällig)</string>
 <string name="studyoptions_more_dialog_title">Lernoptionen</string>
 <string name="studyoptions_more_save">Speichern</string>
 <string name="studyoptions_nodeck_title">Kein Stapel geladen</string>
