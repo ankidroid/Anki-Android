@@ -2265,11 +2265,12 @@ public class Deck {
 
     public long updateAllCardsFromPosition(long numUpdatedCards, long limitCards) {
         // TODO: Cache this query, order by FactId, Id
-        Cursor cursor = getDB().getDatabase().rawQuery("SELECT id, factId " + "FROM cards " + "ORDER BY factId, id "
-                + "LIMIT " + limitCards + " OFFSET " + numUpdatedCards, null);
-
-        getDB().getDatabase().beginTransaction();
+    	Cursor cursor = null;
         try {
+            cursor = getDB().getDatabase().rawQuery("SELECT id, factId " + "FROM cards " + "ORDER BY factId, id "
+                    + "LIMIT " + limitCards + " OFFSET " + numUpdatedCards, null);
+
+            getDB().getDatabase().beginTransaction();
             while (cursor.moveToNext()) {
                 // Get card
                 Card card = new Card(this);
@@ -2295,10 +2296,12 @@ public class Deck {
                 numUpdatedCards++;
 
             }
-            cursor.close();
             getDB().getDatabase().setTransactionSuccessful();
         } finally {
             getDB().getDatabase().endTransaction();
+            if (cursor != null) {
+            	cursor.close();
+            }
         }
 
         return numUpdatedCards;
@@ -3218,7 +3221,9 @@ public class Deck {
                 modelExists = true;
             }
         } finally {
-            cursor.close();
+        	if (cursor != null) {
+        		cursor.close();
+        	}
         }
 
         if (modelExists) {
@@ -3452,13 +3457,17 @@ public class Deck {
     }
 
 
-    @SuppressWarnings("unused")
     private void initUndo() {
         mUndoStack = new Stack<UndoRow>();
         mRedoStack = new Stack<UndoRow>();
         mUndoEnabled = true;
-
-        getDB().getDatabase().execSQL("CREATE TEMPORARY TABLE undoLog (seq INTEGER PRIMARY KEY NOT NULL, sql TEXT)");
+        
+        try {        
+        	getDB().getDatabase().execSQL("CREATE TEMPORARY TABLE undoLog (seq INTEGER PRIMARY KEY NOT NULL, sql TEXT)");
+        } catch (SQLException e) {
+            /* Temporary table may still be present if the DB has not been closed */
+            Log.i(AnkiDroidApp.TAG, "Failed to create temporary table: " + e.getMessage());
+        }
 
         ArrayList<String> tables = getDB().queryColumn(String.class,
                 "SELECT name FROM sqlite_master WHERE type = 'table'", 0);
