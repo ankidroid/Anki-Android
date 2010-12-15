@@ -57,6 +57,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.TreeSet;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.Deflater;
@@ -74,7 +75,7 @@ public class Utils {
     private static final long MILLIS_IN_A_DAY = 86400000;
     private static final int DAYS_BEFORE_1970 = 719163;
 
-    private static TreeSet<Integer> sIdTree;
+    private static TreeSet<Long> sIdTree;
     private static long sIdTime;
 
 
@@ -91,11 +92,10 @@ public class Utils {
     public static long genID() {
         long time = System.currentTimeMillis();
         long id;
-        int rand;
-        Random random = new Random();
+        long rand;
 
         if (sIdTree == null) {
-            sIdTree = new TreeSet<Integer>();
+            sIdTree = new TreeSet<Long>();
             sIdTime = time;
         } else if (sIdTime != time) {
             sIdTime = time;
@@ -103,9 +103,9 @@ public class Utils {
         }
 
         while (true) {
-            rand = random.nextInt(2 ^ 23);
-            if (!sIdTree.contains(new Integer(rand))) {
-                sIdTree.add(new Integer(rand));
+            rand = UUID.randomUUID().getMostSignificantBits();
+            if (!sIdTree.contains(new Long(rand))) {
+                sIdTree.add(new Long(rand));
                 break;
             }
         }
