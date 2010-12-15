@@ -23,7 +23,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -164,6 +163,9 @@ public class Reviewer extends Activity {
     private int mSessionCurrReps;
     private float mScaleInPercent;
     private boolean mShowWhiteboard = false;
+    
+    private int mNextTimeTextColor;
+    private int mNextTimeTextRecomColor;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -374,6 +376,9 @@ public class Reviewer extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
+        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);
 
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
@@ -779,12 +784,12 @@ public class Reviewer extends Activity {
         // Focus default button
         if (mCurrentCard.isRev()) {
             mEase3.requestFocus();
-            mNext2.setTextColor(Color.BLACK);
-            mNext3.setTextColor(Color.parseColor("#007700"));
+            mNext2.setTextColor(mNextTimeTextColor);
+            mNext3.setTextColor(mNextTimeTextRecomColor);
         } else {
             mEase2.requestFocus();
-            mNext2.setTextColor(Color.parseColor("#007700"));
-            mNext3.setTextColor(Color.BLACK);
+            mNext2.setTextColor(mNextTimeTextRecomColor);
+            mNext3.setTextColor(mNextTimeTextColor);
         }
     }
 

@@ -30,13 +30,18 @@
 
 
 <!-- Deck.java upgrade deck notes -->
-<string name="deck_not_loaded">Failed to load deck.</string>
-<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your sd card.</string>
-<string name="deck_empty">Deck is empty.</string>
+<!--<string name="deck_not_loaded">Failed to load deck.</string>-->
+<!--<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your sd card.</string>-->
+<!--<string name="deck_empty">Deck is empty.</string>-->
 <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
 
+<!-- Colors for Whiteboard and Next Review Time -->
 <color name="wb_fg_color">#B00000FF</color>
 <color name="wb_bg_color">#0000</color>
+<color name="next_time_usual_color">#000000</color>
+<color name="next_time_failed_color">#FF0000</color>
+<color name="next_time_recommended_color">#007700</color>
+
 
 <!-- DeckPicker.java -->
 <string name="deckpicker_title">Select a deck you copied to your SD card</string>
@@ -45,7 +50,7 @@
 <string name="deckpicker_new">%d new today</string>
 <string name="deckpicker_loaddeck">Loading deck...</string>
 <string name="deckpicker_nodeck">No decks found.</string>
-<string name="sync_log_tite">Sync Log</string>
+<string name="sync_log_title">Sync Log</string>
 <string name="deckpicker_upgrading">Upgrading deck...</string>
 <string name="deckpicker_upgrade_failed">Upgrading failed!</string>
 <string name="deckpicker_upgrade_notes_title">Upgrade deck results</string>
@@ -118,8 +123,8 @@
 <string name="whiteboard_stroke_width_summ">Select the width of the stroke</string>
 <string name="sample_deck">Sample deck</string>
 <string name="sample_deck_summ">Generate capitals deck if none found</string>
-<string name="corporal_punishments">Corporal punishments</string>
-<string name="corporal_punishments_summ">Vibrate on error, that will teach you</string>
+<!--<string name="corporal_punishments">Corporal punishments</string>-->
+<!--<string name="corporal_punishments_summ">Vibrate on error, that will teach you</string>-->
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
 <string name="text_selection">Allow text selection</string>
@@ -136,29 +141,29 @@
 <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
 
 <!-- deck_properties.xml -->
-<string name="deck_properties">Deck properties</string>
-<string name="sync_on">Synchronize this deck</string>
-<string name="sync_name">Name on server</string>
+<!--<string name="deck_properties">Deck properties</string>-->
+<!--<string name="sync_on">Synchronize this deck</string>-->
+<!--<string name="sync_name">Name on server</string>-->
 
 <!-- AndroidManifest.xml -->
 <string name="personaldeckpicker_title">Open Online Deck</string>
 <string name="shareddeckpicker_title">Select the deck you want to download</string>
 <string name="preferences_title">Preferences</string>
 <string name="deckpreferences_title">Deck Preferences</string>
-<string name="deckproperties_title">Deck Properties</string>
+<!--<string name="deckproperties_title">Deck Properties</string>-->
 <string name="about_title">About</string>
 <string name="cardeditor_title">Fact Editor</string>
 <string name="factadder_title">Card Adder</string>
 
 <!-- AnkiDroid.java -->
-<string name="loading_new_card">Loading new card...</string>
+<!--<string name="loading_new_card">Loading new card...</string>-->
 <string name="loading_deck">Loading deck. Please wait...</string>
-<string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>
+<!--<string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>-->
 <string name="connection_needed">You are currently offline.</string>
-<string name="study_options">Study Options</string>
-<string name="suspend">Suspend</string>
-<string name="edit_card">Edit Card</string>
-<string name="switch_another_deck">Switch to another deck</string>
+<!--<string name="study_options">Study Options</string>-->
+<!--<string name="suspend">Suspend</string>-->
+<!--<string name="edit_card">Edit Card</string>-->
+<!--<string name="switch_another_deck">Switch to another deck</string>-->
 
 <!-- PersonalDeckPicker.java -->
 <string name="currently_downloading">Currently downloading</string>
@@ -204,25 +209,25 @@
 <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
 
 <!-- Progress bar communicates -->
-<string name="determining_task">Determining task</string>
-<string name="connecting_to_server">Connecting to server</string>
-<string name="starting_db_transaction">Starting DB transaction</string>
-<string name="creating_deck_at_server">Creating deck @ server</string>
-<string name="calculating_summaries">Calculating summaries</string>
-<string name="determining_sync_type">Determining sync type</string>
-<string name="performing_full_sync">Performing full sync</string>
-<string name="setting_db_transaction_success">Setting DB transaction success</string>
-<string name="finishing_db_transaction">Finishing DB transaction</string>
-<string name="closing_deck">Closing deck</string>
-<string name="opening_deck_after_sync">Opening deck after sync</string>
-<string name="setting_deck_as_current">Setting deck as current</string>
-<string name="generating_payload">Generating payload</string>
-<string name="getting_payload_reply">Getting payload reply</string>
-<string name="applying_payload_reply">Applying payload reply</string>
-<string name="commiting_payload_to_db">Commiting payload to DB</string>
+<!--<string name="determining_task">Determining task</string>-->
+<!--<string name="connecting_to_server">Connecting to server</string>-->
+<!--<string name="starting_db_transaction">Starting DB transaction</string>-->
+<!--<string name="creating_deck_at_server">Creating deck @ server</string>-->
+<!--<string name="calculating_summaries">Calculating summaries</string>-->
+<!--<string name="determining_sync_type">Determining sync type</string>-->
+<!--<string name="performing_full_sync">Performing full sync</string>-->
+<!--<string name="setting_db_transaction_success">Setting DB transaction success</string>-->
+<!--<string name="finishing_db_transaction">Finishing DB transaction</string>-->
+<!--<string name="closing_deck">Closing deck</string>-->
+<!--<string name="opening_deck_after_sync">Opening deck after sync</string>-->
+<!--<string name="setting_deck_as_current">Setting deck as current</string>-->
+<!--<string name="generating_payload">Generating payload</string>-->
+<!--<string name="getting_payload_reply">Getting payload reply</string>-->
+<!--<string name="applying_payload_reply">Applying payload reply</string>-->
+<!--<string name="commiting_payload_to_db">Commiting payload to DB</string>-->
 
 <string name="saving_changes">Saving changes...</string>
-<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck.</string>
+<!--<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck.</string>-->
 <string name="about_content">&lt;html&gt;
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
@@ -235,7 +240,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 &lt;p&gt;AnkiDroid is released under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href=&quot;http://github.com/nicolas-raoul/Anki-Android&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
-<string name="review_early">Review Early</string>
+<!--<string name="review_early">Review Early</string>-->
 <string-array name="studyoptions_more_new_card_order"><item>New cards in random order</item>
 <item>New cards in order added</item>
 <item>New cards in reverse order added</item>

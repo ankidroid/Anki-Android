@@ -53,20 +53,20 @@
 		<item>3</item>
 	</string-array>
 
-	<string-array name="failedCardOptionLabels">
-		<item>Show failed cards soon</item>
-		<item>Show failed cards at end</item>
-		<item>Show failed cards in 10 minutes</item>
-		<item>Show failed cards in 8 hours</item>
-		<item>Show failed cards in 3 days</item>
-	</string-array>
-	<string-array name="failedCardOptionVals">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-	</string-array>
+<!--	<string-array name="failedCardOptionLabels">-->
+<!--		<item>Show failed cards soon</item>-->
+<!--		<item>Show failed cards at end</item>-->
+<!--		<item>Show failed cards in 10 minutes</item>-->
+<!--		<item>Show failed cards in 8 hours</item>-->
+<!--		<item>Show failed cards in 3 days</item>-->
+<!--	</string-array>-->
+<!--	<string-array name="failedCardOptionVals">-->
+<!--		<item>0</item>-->
+<!--		<item>1</item>-->
+<!--		<item>2</item>-->
+<!--		<item>3</item>-->
+<!--		<item>4</item>-->
+<!--	</string-array>-->
 
 	<string-array name="displayFontSizeLabels">
 		<item>10 %</item>
