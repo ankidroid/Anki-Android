@@ -982,6 +982,9 @@ public class Reviewer extends Activity {
         // Log.i(AnkiDroidApp.TAG, "content after parsing images = \n" + content);
         content = Sound.parseSounds(mDeckFilename, content);
 
+        // Parse out the LaTeX images
+        content = LaTeX.parseLaTeX(mDeckFilename, content);
+        
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
         content = content.replace("font-weight:600;", "font-weight:700;");
