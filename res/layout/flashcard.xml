@@ -74,7 +74,7 @@
 		android:layout_height="wrap_content"
 		android:layout_above="@+id/bottom_area_layout">
 		<TextView android:id="@+id/nextTime1"
-			android:textColor="#ff0000"
+			android:textColor="@color/next_time_failed_color"
 			android:layout_width="0dip"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"

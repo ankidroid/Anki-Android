@@ -385,7 +385,7 @@ public class DeckPicker extends Activity implements Runnable {
     private void initDialogs() {
         // Sync Log dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.sync_log_tite));
+        builder.setTitle(getResources().getString(R.string.sync_log_title));
         builder.setPositiveButton(getResources().getString(R.string.ok), null);
         mSyncLogAlert = builder.create();
         // Upgrade notes dialog
