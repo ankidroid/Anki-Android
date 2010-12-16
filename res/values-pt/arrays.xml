@@ -1,4 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
 <!--Generated with crowdin.net-->
 <resources>
   <string-array name="newCardOrderLabels">
@@ -6,51 +24,122 @@
     <item>Ordem de Adição</item>
     <item>Ordem inversa de à de Adição</item>
   </string-array>
-    <string-array name="newCardOrderVals">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>  
-    </string-array>
-    
+  <string-array name="newCardOrderVals">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Espalhar entre revisões</item>
     <item>Depois das revisões</item>
     <item>Antes das revisões</item>
   </string-array>
-    
-    <string-array name="newCardSchedulingVals">
+  <string-array name="newCardSchedulingVals">
     <item>0</item>
     <item>1</item>
-    <item>2</item>  
-    </string-array>
-    
+    <item>2</item>
+  </string-array>
   <string-array name="revCardOrderLabels">
     <item>Intervalo maior primeiro</item>
     <item>Intervalo menor primeiro</item>
     <item>Ordem Programada</item>
     <item>Ordem aleatória</item>
   </string-array>
-    
-    <string-array name="revCardOrderVals">
+  <string-array name="revCardOrderVals">
     <item>0</item>
     <item>1</item>
     <item>2</item>
     <item>3</item>
-    </string-array>
-    
-  <string-array name="failedCardOptionLabels">
-    <item>Mostrar cards errados logo</item>
-    <item>Mostrar cards errados no final</item>
-    <item>Mostrar cards errados em 10 minutos</item>
-    <item>Mostrar cards errados em 8 horas</item>  
-    <item>Mostrar cards errados em 3 dias</item>   
-    </string-array>
-    
-    <string-array name="failedCardOptionVals">
+  </string-array>
+  <string-array name="displayFontSizeLabels">
+    <item>10 %</item>
+    <item>20 %</item>
+    <item>30 %</item>
+    <item>40 %</item>
+    <item>50 %</item>
+    <item>60 %</item>
+    <item>70 %</item>
+    <item>80 %</item>
+    <item>90 %</item>
+    <item>100 %</item>
+    <item>110 %</item>
+    <item>120 %</item>
+    <item>130 %</item>
+    <item>140 %</item>
+    <item>150 %</item>
+  </string-array>
+  <string-array name="displayFontSizeVals">
+    <item>10</item>
+    <item>20</item>
+    <item>30</item>
+    <item>40</item>
+    <item>50</item>
+    <item>60</item>
+    <item>70</item>
+    <item>80</item>
+    <item>90</item>
+    <item>100</item>
+    <item>110</item>
+    <item>120</item>
+    <item>130</item>
+    <item>140</item>
+    <item>150</item>
+  </string-array>
+  <string-array name="hideQuestionInAnswerLabels">
+    <item>Hide the question in answer</item>
+    <item>Show the question in answer</item>
+    <item>As defined in CardModel</item>
+  </string-array>
+  <string-array name="hideQuestionInAnswerVals">
     <item>0</item>
     <item>1</item>
     <item>2</item>
-    <item>3</item>
-    <item>4</item>
+  </string-array>
+  <string-array name="error_reporting_choice_labels">
+    <item>Always report</item>
+    <item>Never report</item>
+    <item>Ask me</item>
+  </string-array>
+  <string-array name="error_reporting_choice_values">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
+  <string-array name="widget_minimum_cards_due_labels">
+    <item>10</item>
+    <item>25</item>
+    <item>50</item>
+    <item>75</item>
+    <item>100</item>
+    <item>150</item>
+    <item>200</item>
+    <item>Never</item>
+  </string-array>
+  <string-array name="widget_minimum_cards_due_values">
+    <item>10</item>
+    <item>25</item>
+    <item>50</item>
+    <item>75</item>
+    <item>100</item>
+    <item>150</item>
+    <item>200</item>
+    <item>1000000</item>
+  </string-array>
+  <string-array name="cram_review_order_labels">
+    <item>Show oldest modified first</item>
+    <item>Show in order added</item>
+    <item>Show in random order</item>
+  </string-array>
+  <string-array name="next_review_s">
+    <item>hour</item>
+    <item>day</item>
+    <item>month</item>
+    <item>year</item>
+  </string-array>
+  <string-array name="next_review_p">
+    <item>hours</item>
+    <item>days</item>
+    <item>months</item>
+    <item>years</item>
   </string-array>
 </resources>

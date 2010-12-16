@@ -1,4 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
 <!--Generated with crowdin.net-->
 <resources>
   <string-array name="newCardOrderLabels">
@@ -6,51 +24,122 @@
     <item>Ordre d\'ajout</item>
     <item>Ordre d\'ajout inverse</item>
   </string-array>
-    <string-array name="newCardOrderVals">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>  
-    </string-array>
-    
+  <string-array name="newCardOrderVals">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Distribuer parmi les révisions</item>
     <item>Après les révisions</item>
     <item>Avant les révisions</item>
   </string-array>
-    
-    <string-array name="newCardSchedulingVals">
+  <string-array name="newCardSchedulingVals">
     <item>0</item>
     <item>1</item>
-    <item>2</item>  
-    </string-array>
-    
+    <item>2</item>
+  </string-array>
   <string-array name="revCardOrderLabels">
     <item>Longs intervalles d\'abord</item>
     <item>Courts intervalles d\'abord</item>
     <item>Ordre dû</item>
     <item>Ordre aléatoire</item>
   </string-array>
-    
-    <string-array name="revCardOrderVals">
+  <string-array name="revCardOrderVals">
     <item>0</item>
     <item>1</item>
     <item>2</item>
     <item>3</item>
-    </string-array>
-    
-  <string-array name="failedCardOptionLabels">
-    <item>Revoir les cartes ratées bientot</item>
-    <item>Revoir les cartes ratées à la fin</item>
-    <item>Revoir les cartes ratées dans 10 minutes</item>
-    <item>Revoir les cartes ratées dans 8 heures</item>
-    <item>Revoir les cartes ratées dans 3 jours</item>
-    </string-array>
-    
-    <string-array name="failedCardOptionVals">
+  </string-array>
+  <string-array name="displayFontSizeLabels">
+    <item>10 %</item>
+    <item>20 %</item>
+    <item>30 %</item>
+    <item>40 %</item>
+    <item>50 %</item>
+    <item>60 %</item>
+    <item>70 %</item>
+    <item>80 %</item>
+    <item>90 %</item>
+    <item>100 %</item>
+    <item>110 %</item>
+    <item>120 %</item>
+    <item>130 %</item>
+    <item>140 %</item>
+    <item>150 %</item>
+  </string-array>
+  <string-array name="displayFontSizeVals">
+    <item>10</item>
+    <item>20</item>
+    <item>30</item>
+    <item>40</item>
+    <item>50</item>
+    <item>60</item>
+    <item>70</item>
+    <item>80</item>
+    <item>90</item>
+    <item>100</item>
+    <item>110</item>
+    <item>120</item>
+    <item>130</item>
+    <item>140</item>
+    <item>150</item>
+  </string-array>
+  <string-array name="hideQuestionInAnswerLabels">
+    <item>Masquer la question lors de la réponse</item>
+    <item>Afficher la question lors de la réponse</item>
+    <item>Tel que défini dans le modèle de la carte</item>
+  </string-array>
+  <string-array name="hideQuestionInAnswerVals">
     <item>0</item>
     <item>1</item>
     <item>2</item>
-    <item>3</item>
-    <item>4</item>
+  </string-array>
+  <string-array name="error_reporting_choice_labels">
+    <item>Toujours envoyer un rapport d\'erreur</item>
+    <item>Ne jamais envoyer de rapport d\'erreur</item>
+    <item>Me demander</item>
+  </string-array>
+  <string-array name="error_reporting_choice_values">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
+  <string-array name="widget_minimum_cards_due_labels">
+    <item>10</item>
+    <item>25</item>
+    <item>50</item>
+    <item>75</item>
+    <item>100</item>
+    <item>150</item>
+    <item>200</item>
+    <item>Never</item>
+  </string-array>
+  <string-array name="widget_minimum_cards_due_values">
+    <item>10</item>
+    <item>25</item>
+    <item>50</item>
+    <item>75</item>
+    <item>100</item>
+    <item>150</item>
+    <item>200</item>
+    <item>1000000</item>
+  </string-array>
+  <string-array name="cram_review_order_labels">
+    <item>Show oldest modified first</item>
+    <item>Show in order added</item>
+    <item>Show in random order</item>
+  </string-array>
+  <string-array name="next_review_s">
+    <item>hour</item>
+    <item>day</item>
+    <item>month</item>
+    <item>year</item>
+  </string-array>
+  <string-array name="next_review_p">
+    <item>hours</item>
+    <item>days</item>
+    <item>months</item>
+    <item>years</item>
   </string-array>
 </resources>

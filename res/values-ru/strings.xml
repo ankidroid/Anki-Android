@@ -1,4 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
 <!--Generated with crowdin.net-->
 <resources>
   <string name="CardEditorCancelButton">Отмена</string>
@@ -7,15 +25,18 @@
   <string name="yes">Да</string>
   <string name="no">Нет</string>
   <string name="ok">OK</string>
-  <string name="deck_not_loaded">Не удалось загрузить рабочую панель.</string>
-  <string name="deck_not_loaded_detail">Пожалуйста, меню нажмите и выберите один из панели, хранящихся в Вашей SD карте.</string>
-  <string name="deck_empty">Рабочая панель пуста.</string>
+  <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
   <string name="deckpicker_title">Выберите рабочую панель которую вы скопировали на SD карту</string>
   <string name="deckpicker_title_nosdcard">SD карта размонтирована</string>
   <string name="deckpicker_due">%1$d of %2$d к получению</string>
   <string name="deckpicker_new">%d новых сегодня</string>
   <string name="deckpicker_loaddeck">Загрузка рабочей панели ...</string>
   <string name="deckpicker_nodeck">Не найдено ни одной рабочей панели.</string>
+  <string name="sync_log_title">Sync Log</string>
+  <string name="deckpicker_upgrading">Upgrading deck...</string>
+  <string name="deckpicker_upgrade_failed">Upgrading failed!</string>
+  <string name="deckpicker_upgrade_notes_title">Upgrade deck results</string>
+  <string name="deckpicker_upgrade_notes_button">Notes</string>
   <string name="notify_ticker">Обновление приложения</string>
   <string name="notify_title">Ankidroid обновлен</string>
   <string name="notify_message">Скачать новую версию</string>
@@ -23,6 +44,14 @@
   <string name="notification_message">Новая версия Ankidroid доступна в Android Market. \n\nВы хотите его установить?</string>
   <string name="notification_stop">Не уведомлять меня об этом обновлении снова</string>
   <string name="sdcard_missing_message">SD-карта отсутствует, поскольку он используется в качестве хранилища USB. Отключите USB для доступа к рабочей панели.</string>
+  <string name="show_whiteboard">Показать таймер / доска</string>
+  <string name="hide_whiteboard">Hide Whiteboard</string>
+  <string name="clear_whiteboard">Clear Whiteboard</string>
+  <string name="session_question_limit_reached">Достигнут лимит сеанса вопросов</string>
+  <string name="session_time_limit_reached">Достигнут лимит сеанса</string>
+  <string name="cram_edit_warning">Card editing not allowed while cramming</string>
+  <string name="leech_suspend_notification">Card marked as leech and suspended</string>
+  <string name="leech_notification">Card marked as leech</string>
   <string name="newcards_day_summ">Максимальное количество новых карт, показано в день.</string>
   <string name="newcards_day">Новых карт в день</string>
   <string name="session_time_limit">Срок сеанса</string>
@@ -38,31 +67,36 @@
   <string name="review_cards_order">Порядок обзора карточек</string>
   <string name="review_cards_in">Обзор карточек в...</string>
   <string name="review_cards_order_summ">Порядок, в котором показать обзор карточек.</string>
-  <string name="overlay_on">Доска включена</string>
-  <string name="overlay_off">Доска отключена</string>
   <string name="show_answer">Показать ответ</string>
   <string name="show_question">Показать Вопрос</string>
   <string name="card_hint">Флеш-Карта</string>
-  <string name="again">Снова</string>
-  <string name="hard">Сложно</string>
-  <string name="good">Хорошо</string>
-  <string name="easy">Легко</string>
+  <string name="ease1_learning">Again</string>
+  <string name="ease2_learning">Good</string>
+  <string name="ease3_learning">Easy</string>
+  <string name="ease4_learning">Very Easy</string>
+  <string name="ease1_successive">Again</string>
+  <string name="ease2_successive">Hard</string>
+  <string name="ease3_successive">Good</string>
+  <string name="ease4_successive">Easy</string>
   <string name="pref_cat_decks">Decks</string>
   <string name="pref_cat_sync">Synchronization</string>
-  <string name="pref_cat_study">Study options</string>
+  <string name="pref_cat_advanced">Advanced</string>
   <string name="pref_cat_qadisplay">Question and answer display</string>
-  <string name="username">Username</string>
-  <string name="password">Password</string>
   <string name="sync_on_open">Sync on open</string>
   <string name="sync_on_close">Sync on close</string>
-  <string name="show_whiteboard">Показать таймер / доска</string>
+  <string name="show_study_options_on_deck_load">Study options on load</string>
+  <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
+  <string name="show_timer">Show timer</string>
+  <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>
+  <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
+  <string name="whiteboard_stroke_width_summ">Select the width of the stroke</string>
   <string name="sample_deck">Пример рабочей панели</string>
   <string name="sample_deck_summ">Генерировать главние рабочие панели, если нечего не найдено</string>
-  <string name="corporal_punishments">Экзекуция</string>
-  <string name="corporal_punishments_summ">Вибрировать при ошибке, что научит Вас</string>
   <string name="write_answers">Писать ответы</string>
   <string name="write_answers_summ">Позволяет вам написать ответ и сравнивать с правильными</string>
+  <string name="text_selection">Allow text selection</string>
+  <string name="text_selection_summ">Lets you select and copy text from cards with a long click, and perform lookup in external dictionnary</string>
   <string name="use_ruby_support">Provide ruby annotation support</string>
   <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
   <string name="display_font_size">Relative display font size</string>
@@ -71,30 +105,42 @@
   <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
   <string name="deck_path">Путь рабочей панели</string>
   <string name="deck_path_summ">Путь к где хранятся ваши рабочие панели</string>
+  <string name="fullscreen_review">Review in fullscreen</string>
+  <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
+  <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Select the deck you want to download</string>
   <string name="preferences_title">Preferences</string>
   <string name="deckpreferences_title">Deck Preferences</string>
   <string name="about_title">About</string>
   <string name="cardeditor_title">Card Editor</string>
-  <string name="loading_new_card">Загрузка новой карты...</string>
+  <string name="factadder_title">Card Adder</string>
   <string name="loading_deck">Загрузка рабочей панели. Подождите...</string>
-  <string name="loading_shared_decks">Loading available shared decks...</string>
-  <string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>
   <string name="connection_needed">No Internet connection</string>
-  <string name="preferences">Настройки</string>
-  <string name="about">О программе</string>
-  <string name="study_options">Функции Исследования</string>
-  <string name="suspend">Приостановить</string>
-  <string name="edit_card">Редактировать карты</string>
-  <string name="switch_another_deck">Переключиться на другую рабочую панель</string>
-  <string name="get_shared_deck">Get shared deck</string>
-  <string name="downloading_shared_deck">Downloading shared deck...</string>
+  <string name="currently_downloading">Currently downloading</string>
+  <string name="personal_decks">Personal Decks</string>
+  <string name="starting_download">Starting download...</string>
+  <string name="downloading">Downloading...</string>
+  <string name="paused">Paused</string>
+  <string name="downloaded">Downloaded</string>
+  <string name="error">Error</string>
+  <string name="cancelling">Cancelling...</string>
+  <string name="loading_personal_decks">Loading available personal decks...</string>
+  <string name="connection_error_title">Attention</string>
+  <string name="connection_error_return_message">A network error has ocurred. Retry, or cancel and return to the previous screen.</string>
+  <string name="retry">Retry</string>
+  <string name="cancel">Cancel</string>
+  <string name="shared_decks">Shared Decks</string>
+  <string name="updating">Updating...</string>
+  <string name="loading_shared_decks">Loading available shared decks...</string>
+  <string name="cancel_download">Cancel Download</string>
+  <string name="resume_download">Resume Download</string>
+  <string name="pause_download">Pause Download</string>
+  <string name="duplicate_download">This deck is already downloading</string>
+  <string name="sync_all">Sync all</string>
   <string name="fact">fact</string>
   <string name="facts">facts</string>
+  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Сохранение изменений...</string>
-  <string name="session_question_limit_reached">Достигнут лимит сеанса вопросов</string>
-  <string name="session_time_limit_reached">Достигнут лимит сеанса</string>
-  <string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck. Shared decks can be downloaded using the Anki software.</string>
   <string name="about_content">&lt;html&gt;
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
@@ -107,9 +153,139 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 &lt;p&gt;AnkiDroid is released under the &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
-  <string name="review_early">Review Early</string>
+  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_deck_name">Deck name</string>
+  <string name="studyoptions_reviews_due">Reviews due:</string>
+  <string name="studyoptions_new_today">New today:</string>
+  <string name="studyoptions_new_total">New total:</string>
+  <string name="studyoptions_new_cards_per_day">New cards per day:</string>
+  <string name="studyoptions_session_minutes">Session limit (minutes):</string>
+  <string name="studyoptions_session_questions">Session limit (questions):</string>
+  <string name="studyoptions_start">Start Reviewing</string>
+  <string name="studyoptions_more">Study Options</string>
+  <string name="studyoptions_window_title">%1$s (%2$d of %3$d due)</string>
+  <string name="studyoptions_more_dialog_title">More Options</string>
+  <string name="studyoptions_more_save">Save</string>
+  <string name="studyoptions_nodeck_title">No Deck Loaded</string>
+  <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored on your SD card and are read from the location specified in the preferences (currently this is set to: \"%s\"). The preferences can be reached by pressing your device\'s \"Menu\" button and then selecting \"Preferences\".\n\nTo load a deck, press your device\'s \"Menu\" button and then select \"Open Deck\" or press one of the buttons below.</string>
+  <string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
+  <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
+  <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
+  <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the sdcard in order to read and load your Anki decks. Check that your sdcard is mounted and try again.</string>
+  <string name="studyoptions_load_other_deck">Load Other Deck</string>
+  <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
+  <string name="menu_open_deck">Open Deck</string>
+  <string name="menu_sync">Sync</string>
+  <string name="menu_download_deck">Download deck</string>
+  <string name="menu_download_shared_deck">Shared deck</string>
+  <string name="menu_download_personal_deck">Personal deck</string>
+  <string name="menu_synchronize">Synchronize</string>
+  <string name="menu_my_account">My Account</string>
+  <string name="menu_preferences">Preferences</string>
+  <string name="menu_deck_properties">Deck Properties</string>
+  <string name="menu_add_card">Add card</string>
+  <string name="menu_about">About</string>
+  <string name="menu_suspend_card">Suspend Card</string>
+  <string name="menu_edit_card">Edit Card</string>
+  <string name="menu_search">Lookup in Aedict</string>
+  <string name="menu_mark_card">Mark Card</string>
+  <string name="menu_marked">Marked</string>
+  <string name="loading">Loading...</string>
+  <string name="studyoptions_continue">Continue Reviewing</string>
+  <string name="studyoptions_well_done">Well Done!</string>
+  <string name="studyoptions_congrats_title">Congratulations!</string>
+  <string name="studyoptions_congrats_message">You have finished for now.</string>
+  <string name="studyoptions_congrats_learnmore">Learn More</string>
+  <string name="studyoptions_congrats_reviewearly">Review Early</string>
+  <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
+  <string name="studyoptions_congrats_finish">Back to Study Screen</string>
+  <string name="username">Username</string>
+  <string name="password">Password</string>
+  <string name="log_in">Log in</string>
+  <string name="sign_up_description">Don\'t have an AnkiOnline account? It\'s free!</string>
+  <string name="sign_up">Sign up</string>
+  <string name="logged_as">Logged as</string>
+  <string name="log_out">Log out</string>
+  <string name="alert_logging_message">Logging in, please wait...</string>
+  <string name="invalid_username_password">Invalid username or password.</string>
+  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
+  <string name="download_finished">Download finished</string>
+  <string name="deck_downloaded">Deck downloaded</string>
+  <string name="connection_error_message">A network error has ocurred.</string>
+  <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
+  <string name="sync_progress_bar_title">Syncing %s</string>
+  <string name="studyoptions_cram_dialog_title">Tags to cram</string>
+  <string name="begin_cram">Start Cram mode</string>
+  <string name="end_cram">Stop Cram mode</string>
+  <string name="cram">Cram</string>
+  <string name="sync_connecting_message">Connecting...</string>
+  <string name="sync_syncing_message">Syncing %s</string>
+  <string name="sync_summary_from_server_message">Fetching summary from server...</string>
+  <string name="sync_preparing_full_sync_message">Preparing full sync...</string>
+  <string name="sync_uploading_message">Uploading...</string>
+  <string name="sync_downloading_message">Downloading...</string>
+  <string name="sync_complete_message">Sync complete.</string>
+  <string name="sync_determining_differences_message">Determining differences...</string>
+  <string name="sync_transferring_payload_message">Transferring payload...</string>
+  <string name="sync_applying_reply_message">Applying reply...</string>
+  <string name="sync_no_changes_message">No changes found.</string>
+  <string name="sync_log_error_message">Error: Deck not synchronized</string>
+  <string name="sync_log_no_changes_message">No changes found</string>
+  <string name="sync_log_uploading_message">No deck on server</string>
+  <string name="sync_log_downloading_message">Full sync from server</string>
+  <string name="sync_log_fact_to_server_message">1 fact to server</string>
+  <string name="sync_log_facts_to_server_message">%d facts to server</string>
+  <string name="sync_log_fact_from_server_message">1 fact from server</string>
+  <string name="sync_log_facts_from_server_message">%d facts from server</string>
   <string name="error_message">There are %d errors to report</string>
+  <string name="errors_message">There are %d errors to report</string>
   <string name="error_ok">Report errors</string>
   <string name="error_cancel">Do not report errors</string>
-  <string name="error_email">ankidroid@gmail.com</string>
+  <string name="error_email">report@example.org</string>
+  <string name="error_reporting_choice">Error reporting mode</string>
+  <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
+  <string name="widget_pref">Widget</string>
+  <string name="widget_minimum_cards_due">Widget notification threshold</string>
+  <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised</string>
+  <string name="widget_minimum_cards_due_vibrate">Vibrate</string>
+  <string name="widget_minimum_cards_due_blink">Blink light</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
+  <string name="model">Model:</string>
+  <string name="select_model">Model</string>
+  <string name="card">Card:</string>
+  <string name="cards">Cards:</string>
+  <string name="add">Add</string>
+  <string name="close">Close</string>
+  <string name="soon">Soon</string>
+  <string name="show_next_review_time">Next review time</string>
+  <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
+  <string name="update_notification">Update notifications</string>
+  <string name="update_notification_summ">Notify me when AnkiDroid is updated</string>
+  <string name="per_day">Per Day</string>
+  <string name="undo">Undo</string>
+  <string name="redo">Redo</string>
+  <string-array name="studyoptions_more_new_card_order">
+    <item>New cards in random order</item>
+    <item>New cards in order added</item>
+    <item>New cards in reverse order added</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_schedule">
+    <item>Spread new cards through reviews</item>
+    <item>New cards after reviews</item>
+    <item>New cards before reviews</item>
+  </string-array>
+  <string-array name="studyoptions_more_rev_card_order">
+    <item>Review cards from largest interval</item>
+    <item>Review cards from smallest interval</item>
+    <item>Review cards in order due</item>
+    <item>Review cards in random order</item>
+  </string-array>
+  <string-array name="studyoptions_more_fail_card_option">
+    <item>Show failed cards soon</item>
+    <item>Show failed cards at end</item>
+    <item>Show failed cards in 10 minutes</item>
+    <item>Show failed cards in 8 hours</item>
+    <item>Show failed cards in 3 days</item>
+  </string-array>
 </resources>
