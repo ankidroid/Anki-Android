@@ -241,7 +241,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="errors_message">There are %d errors to report</string>
   <string name="error_ok">Signaler les erreurs</string>
   <string name="error_cancel">Ne pas signaler les erreurs</string>
-  <string name="error_email">report@example.org</string>
+  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Error reporting mode</string>
   <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
   <string name="widget_pref">Widget</string>
