@@ -40,6 +40,7 @@ import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -109,6 +110,7 @@ public class DeckPicker extends Activity implements Runnable {
 	private BroadcastReceiver mUnmountReceiver = null;
 
 	private String mRemoveDeckFilename = null;
+	private String mRemoveDeckPath = null;
 
 	// ----------------------------------------------------------------------------
 	// LISTENERS
@@ -358,18 +360,35 @@ public class DeckPicker extends Activity implements Runnable {
 		case DIALOG_DELETE_DECK:
 			builder.setTitle(res.getString(R.string.delete_deck_title));
 			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setMessage(res.getString(R.string.delete_deck_message));
-			builder.setPositiveButton(res
-					.getString(R.string.delete_deck_confirm),
+			builder.setMessage(String.format(res.getString(R.string.delete_deck_message), mRemoveDeckFilename));
+			builder.setPositiveButton(res.getString(R.string.delete_deck_confirm),
 					new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							removeDeck(mRemoveDeckFilename);
+							removeDeck(mRemoveDeckPath);
+							mRemoveDeckPath = null;
 							mRemoveDeckFilename = null;
 						}
 					});
-			builder.setNegativeButton(res.getString(R.string.cancel), null);
+			builder.setNegativeButton(res.getString(R.string.cancel),
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mRemoveDeckPath = null;
+						mRemoveDeckFilename = null;
+					}
+				});
+			builder.setOnCancelListener(
+					new DialogInterface.OnCancelListener() {
+
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							mRemoveDeckPath = null;
+							mRemoveDeckFilename = null;
+						}
+					});					
 			dialog = builder.create();
 			break;
 
@@ -379,27 +398,41 @@ public class DeckPicker extends Activity implements Runnable {
 
 		return dialog;
 	}
+	
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		Resources res = getResources();
+		switch (id) {
+		case DIALOG_DELETE_DECK:
+			AlertDialog ad = (AlertDialog)dialog;
+			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), mRemoveDeckFilename));
+		}		
+	}
+
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
+		int selectedPosition = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+		mRemoveDeckFilename = mDeckList.get(selectedPosition).get("name");
+		menu.setHeaderTitle(mRemoveDeckFilename);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.contextmenu_deckpicker, menu);
 	}
 
+	
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		switch (item.getItemId()) {
 		case R.id.delete_deck:
-			mRemoveDeckFilename = null;
+			mRemoveDeckPath = null;
 			waitForDeckLoaderThread();
 			
 			@SuppressWarnings("unchecked")
 			HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter
 					.getItem(info.position);
-			mRemoveDeckFilename = data.get("filepath");
+			mRemoveDeckPath = data.get("filepath");
 			showDialog(DIALOG_DELETE_DECK);
 			return true;
 		default:
