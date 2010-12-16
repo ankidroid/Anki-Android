@@ -391,4 +391,9 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="undo">Undo</string>
 <string name="redo">Redo</string>
 
+<string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
+<string name="delete_deck_title">Delete Deck</string>
+<string name="delete_deck_message">Do you really want to delete this deck?</string>
+<string name="delete_deck_confirm">Delete it</string>
+
 </resources>
