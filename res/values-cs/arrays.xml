@@ -20,9 +20,9 @@
 <!--Generated with crowdin.net-->
 <resources>
   <string-array name="newCardOrderLabels">
-    <item>Orden aleatorio</item>
-    <item>Orden añadido</item>
-    <item>Orden inverso del añadido</item>
+    <item>Náhodné pořadí</item>
+    <item>V pořádí přidání</item>
+    <item>V opačném pořadí přidání</item>
   </string-array>
   <string-array name="newCardOrderVals">
     <item>0</item>
@@ -30,9 +30,9 @@
     <item>2</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
-    <item>Distribuir entre repasos</item>
-    <item>Después de los repasos</item>
-    <item>Antes de los repasos</item>
+    <item>Rozprostřít v průběhu opakování</item>
+    <item>Po opakování</item>
+    <item>Před opakováním</item>
   </string-array>
   <string-array name="newCardSchedulingVals">
     <item>0</item>
@@ -40,10 +40,10 @@
     <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
-    <item>Mayor intervalo primero</item>
-    <item>Menor intervalo primero</item>
-    <item>Orden programado</item>
-    <item>Orden aleatorio</item>
+    <item>Nejdelší interval nejdříve</item>
+    <item>Nejkratší interval nejdříve</item>
+    <item>V pořadí přidání</item>
+    <item>Náhodné pořadí</item>
   </string-array>
   <string-array name="revCardOrderVals">
     <item>0</item>
@@ -86,9 +86,9 @@
     <item>150</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Ocultar la pregunta en la respuesta</item>
-    <item>Mostrar la pregunta en la respuesta</item>
-    <item>Tal como se define en el modelo</item>
+    <item>Nezobrazit otázku v odpovědi</item>
+    <item>Zobrazit otázku v odpovědi</item>
+    <item>Podle nastavení modelu karet</item>
   </string-array>
   <string-array name="hideQuestionInAnswerVals">
     <item>0</item>
@@ -96,9 +96,9 @@
     <item>2</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Vždy hlásit</item>
+    <item>Nikdy nehlásit</item>
+    <item>Zeptat se mě</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
     <item>0</item>
@@ -113,7 +113,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Nikdy</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_values">
     <item>10</item>
@@ -126,20 +126,20 @@
     <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Zobrazit poslední upravenou nejdříve</item>
+    <item>Zobrazit v pořadí přidání</item>
+    <item>Zobrazit v náhodném pořadí</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hour</item>
-    <item>day</item>
-    <item>month</item>
-    <item>year</item>
+    <item>hodina</item>
+    <item>den</item>
+    <item>měsíc</item>
+    <item>rok</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>hours</item>
-    <item>days</item>
-    <item>months</item>
-    <item>years</item>
+    <item>hodin(y)</item>
+    <item>dnů</item>
+    <item>měsíců</item>
+    <item>let</item>
   </string-array>
 </resources>

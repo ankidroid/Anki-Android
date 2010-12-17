@@ -1,346 +1,280 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
 <!--Generated with crowdin.net-->
 <resources>
-
-<string name="CardEditorCancelButton">Abbrechen</string>
-<string name="CardEditorSaveButton">Speichern</string>
-
-<string name="app_name">AnkiDroid</string>
-
-<string name="yes">Ja</string>
-<string name="no">Nein</string>
-<string name="ok">OK</string>
-
-
-<string name="deck_not_loaded">Fehler beim Laden des Stapels.</string>
-<string name="deck_not_loaded_detail">Bitte drücken Sie Menü und wählen Sie einen Stapel von der SD-Karte aus.</string>
-<string name="deck_empty">Stapel ist leer.</string>
-
-<string name="deckpicker_title">Wählen Sie einen Stapel</string>
-<string name="deckpicker_title_nosdcard">SD-Karte ist ausgehängt</string>
-<string name="deckpicker_due">%1$d von %2$d offen</string>
-<string name="deckpicker_new">%d neue heute</string>
-<string name="deckpicker_loaddeck">Stapel wird geladen...</string>
-<string name="deckpicker_nodeck">Keine Stapel gefunden.</string>
-
-<string name="notify_ticker">Anwendungsaktualisierung</string>
-<string name="notify_title">Ankidroid aktualisiert</string>
-<string name="notify_message">Eine neue Version herunterladen</string>
-<string name="notification_title">Ankidroid Aktualisierung bestätigen</string>
-<string name="notification_message">Eine neue Version von Ankidroid ist im Android Market verfügbar. \n\nMöchten Sie diese installieren?</string>
-<string name="notification_stop">Nicht erneut über Aktualisierung benachrichtigen</string>
-
-<string name="sdcard_missing_message">SD-Karte ist nicht verfügbar, da sie als USB-Speicher verwendet wird. Trennen Sie die Verbindung, um auf Ihre Stapel zuzugreifen.</string>
-
-<!-- Reviewer.java -->
-<string name="show_whiteboard">Whiteboard an</string>
-<string name="hide_whiteboard">Whiteboard aus</string>
-<string name="clear_whiteboard">Tafel säubern</string>
-<string name="session_question_limit_reached">Sitzungs-Fragenlimit erreicht</string>
-<string name="session_time_limit_reached">Sitzungs-Zeitlimit erreicht</string>
-<string name="cram_edit_warning">Kartenbearbeitung während des Paukens nicht erlaubt</string>
-<string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
-<string name="leech_notification">Karte als Lernbremse markiert</string>
-
-<!-- deck_preferences.xml -->
-<string name="newcards_day_summ">Maximale Anzahl neuer Karten pro Tag wurde abgefragt.</string>
-<string name="newcards_day">Neue Karten pro Tag</string>
-<string name="session_time_limit">Zeitlimit der Sitzung</string>
-<string name="session_time_limit_summ">Maximale Länge pro Sitzung in Minuten. Wählen Sie 0 für keine Beschränkung.</string>
-<string name="session_question_limit">Fragenlimit der Sitzung</string>
-<string name="session_question_limit_summ">Maximale Anzahl an Fragen pro Sitzung. Wählen Sie 0 für keine Beschränkung.</string>
-<string name="new_cards_order">Reihenfolge neuer Karten</string>
-<string name="new_cards_order_summ">Reihenfolge, in der neue Karten gezeigt werden sollen.</string>
-<string name="show_new_cards_in">Zeige neue Karten in...</string>
-<string name="new_card_spacing">Abstand zwischen neuen Karten</string>
-<string name="new_card_spacing_summ">Wie sollen neue Karten während des Abfragens verteilt werden?</string>
-<string name="show_new_cards">Zeige neue Karten ...</string>
-<string name="review_cards_order">Abfrageanordnung der Karten</string>
-<string name="review_cards_in">Abfrageanordnung</string>
-<string name="review_cards_order_summ">Die Reihenfolge in der Karten anzeigt werden sollen.</string>
-
-
-<!-- flashcard_portrait.xml -->
-<string name="show_answer">Antwort anzeigen</string>
-<string name="show_question">Frage anzeigen</string>
-<string name="card_hint">Flashcard</string>
-<string name="ease1_learning">Nochmal</string>
-<string name="ease2_learning">Gut</string>
-<string name="ease3_learning">Einfach</string>
-<string name="ease4_learning">Spielend</string>
-<string name="ease1_successive">Nochmal</string>
-<string name="ease2_successive">Schwer</string>
-<string name="ease3_successive">Gut</string>
-<string name="ease4_successive">Einfach</string>
-
-<!-- preferences.xml -->
-<string name="pref_cat_decks">Stapel</string>
-<string name="pref_cat_sync">Synchronisierung</string>
-<string name="pref_cat_advanced">Fortgeschritten</string>
-<string name="pref_cat_qadisplay">Anzeige</string>
-<string name="sync_on_open">Beim Start synchronisieren</string>
-<string name="sync_on_close">Beim Beenden synchronisieren</string>
-<string name="show_study_options_on_deck_load">Lerneinstellungen zeigen</string>
-<string name="show_study_options_on_deck_load_summ">Lerneinstellungen beim Laden eines Stapels zeigen</string>
-<string name="show_timer">Timer anzeigen</string>
-<string name="show_timer_summ">Zeigt die Zeit bis zum Beantworten der Frage</string>
-<!-- show_whiteboard -> Reviewer.java -->
-<string name="show_whiteboard_summ">Erlaubt es, auf den Bildschirm zu schreiben</string>
-<string name="whiteboard_stroke_width">Whiteboard-Pinsel</string>
-<string name="whiteboard_stroke_width_summ">Dicke des Whiteboard-Pinsels</string>
-<string name="sample_deck">Beispielstapel</string>
-<string name="sample_deck_summ">Hauptstadtkartenstapel generieren falls keine anderen Stapel gefunden werden</string>
-<string name="corporal_punishments">Körperstrafen</string>
-<string name="corporal_punishments_summ">Bei Fehler vibrieren. Das wird Ihnen eine Lehre sein.</string>
-<string name="write_answers">Antworten eingeben</string>
-<string name="write_answers_summ">Erlaubt das Eingeben von Antworten und vergleicht die Eingabe mit der richtigen Antwort</string>
-<string name="text_selection">Text markieren</string>
-<string name="text_selection_summ">Per Langklick kann Text ausgewählt, kopiert und in einem externen Wörterbuch nachgeschlagen werden</string>
-<string name="use_ruby_support">Ruby-Anmerkungen</string>
-<string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
-<string name="display_font_size">Relative Schriftgröße</string>
-<string name="display_font_size_summ">Die Schriftgröße in der Anzeige relativ zu den Definitionen im Stapel verwenden</string>
-<string name="hide_question_in_answer">Frage ausblenden</string>
-<string name="hide_question_in_answer_summ">Bestimmt, ob die Frage ausgeblendet werden soll, wenn die Antwort angezeigt wird</string>
-<string name="deck_path">Stapelverzeichnis</string>
-<string name="deck_path_summ">Verzeichnis in dem Stapel gespeichert werden</string>
-<string name="fullscreen_review">Vollbildmodus</string>
-<string name="fullscreen_review_summ">Nutzt sämtlichen vorhandenen Platz auf dem Bildschirm</string>
-
-<!-- deck_properties.xml -->
-<string name="deck_properties">Stapeleigenschaften</string>
-<string name="sync_on">Diesen Stapel synchronisieren</string>
-<string name="sync_name">Name auf dem Server</string>
-
-<!-- AndroidManifest.xml -->
-<string name="personaldeckpicker_title">Online-Stapel herunterladen</string>
-<string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
-<string name="preferences_title">Voreinstellungen</string>
-<string name="deckpreferences_title">Stapel-Einstellungen</string>
-<string name="deckproperties_title">Stapel-Eigenschaften</string>
-<string name="about_title">Über</string>
-<string name="cardeditor_title">Fakteneditor</string>
-<string name="factadder_title">Karten hinzufügen</string>
-
-<!-- AnkiDroid.java -->
-<string name="loading_new_card">Neue Karte wird geladen...</string>
-<string name="loading_deck">Stapel wird geladen.\nBitte warten...</string>
-<string name="connection_unsuccessful">Die Verbindung ist fehlgeschlagen. Überprüfen Sie ihre Internet-Verbindung und versuchen sie es erneut.</string>
-<string name="connection_needed">Sie sind momentan offline.</string>
-<string name="study_options">Lern-Einstellungen</string>
-<string name="suspend">aussetzen</string>
-<string name="edit_card">Karte bearbeiten</string>
-<string name="switch_another_deck">Einen anderen Stapel öffnen</string>
-
-<!-- PersonalDeckPicker.java -->
-<string name="currently_downloading">Wird gerade heruntergeladen</string>
-<string name="personal_decks">Eigene Stapel</string>
-<string name="starting_download">Starte Herunterladen...</string>
-<string name="downloading">Herunterladen...</string>
-<string name="paused">Pausiert</string>
-<string name="downloaded">Heruntergeladen</string>
-<string name="error">Fehler</string>
-<string name="cancelling">Bricht ab...</string>
-<string name="loading_personal_decks">Verfügbare eigene Stapel laden...</string>
-<string name="connection_error_title">Vorsicht</string>
-<string name="connection_error_return_message">Ein Netzwerkfehler ist aufgetreten. Versuchen Sie es erneut oder brechen Sie ab und kehren zum vorherigen Fenster zurück.</string>
-<string name="retry">Erneut versuchen</string>
-<string name="cancel">Abbrechen</string>
-
-<!-- SharedDeckPicker.java -->
-<string name="shared_decks">Öffentliche Stapel</string>
-<string name="updating">Aktualisiere...</string>
-
-<string name="loading_shared_decks">Verfügbare öffentliche Stapel werden geladen...</string>
-
-<string name="cancel_download">Herunterladen abbrechen</string>
-<string name="resume_download">Herunterladen fortsetzen</string>
-<string name="pause_download">Herunterladen pausieren</string>
-<string name="duplicate_download">Dieser Stapel wird gerade heruntergeladen</string>
-<string name="sync_all">Alle synchronisieren</string>
-
-<!-- SharedDeck.java -->
-<string name="fact">Fakt</string>
-<string name="facts">Fakten</string>
-
-<!-- SyncClient.java -->
-<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Hinzugefügt/Geändert&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Karten&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Fakten&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
-
-<!-- Progress bar communicates -->
-<string name="determining_task">Ermittle Aufgabenumfang</string>
-<string name="connecting_to_server">Verbinde zum Server</string>
-<string name="starting_db_transaction">Starte Datenbank-Operation</string>
-<string name="creating_deck_at_server">Erzeuge Stapel auf dem Server</string>
-<string name="calculating_summaries">Berechne Zusammenfassung</string>
-<string name="determining_sync_type">Ermittle Synchronisierungs-Typ</string>
-<string name="performing_full_sync">Führe Voll-Synchronisierung durch</string>
-<string name="setting_db_transaction_success">Datenbank-Operation erfolgreich</string>
-<string name="finishing_db_transaction">Beende Datenbank-Operation</string>
-<string name="closing_deck">Schließe Stapel</string>
-<string name="opening_deck_after_sync">Öffne Stapel nach Synchronisierung</string>
-<string name="setting_deck_as_current">Setze diesen Stapel als geöffneten Stapel</string>
-<string name="generating_payload">Erzeuge Übertragungsmenge</string>
-<string name="getting_payload_reply">Beziehe Übertragungsmenge</string>
-<string name="applying_payload_reply">Sende Übertragungsmenge</string>
-<string name="commiting_payload_to_db">Pflege Übertragungsmenge in die Datenbank ein</string>
-
-<string name="saving_changes">Änderungen werden gespeichert...</string>
-<string name="congratulations_finished_for_now">Gratulation. Du bist erstmal fertig. Bitte mache morgen weiter oder wechsle zu einem anderen Kartenstapel. Freigebene Stapel können mit Hilfe der Anki-Software heruntergeladen werden.</string>
-<string name="about_content">&lt;html&gt;&lt;body&gt;&lt;h2&gt; AnkiDroid: &lt;br/&gt; Flashcards für Android &lt;/h2&gt;&lt;p&gt; AnkiDroid kann Stapel-Dateien, die durch durch die &lt;a href="http://ankisrs.net/"&gt;Anki&lt;/a&gt;-Desktop-Software erzeugt wurden, lesen und bearbeiten. &lt;/p&gt;&lt;p&gt; Um uns zu helfen ein besseres AnkiDroid machen, melden Sie Fehler bitte &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;hier&lt;/a&gt;, Ideen für neue Programmfähigkeiten sind sehr willkommen! Bitte nutzen Sie das &lt;a href="http://code.google.com/p/ankidroid/wiki/Index"&gt;Wiki&lt;/a&gt; und sagen Sie "Hallo" im &lt;a href="http://groups.google.com/group/anki-android"&gt;Forum&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; AnkiDroid ist &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;Open Source Software&lt;/a&gt;, so ist jeder aufgefordert, &lt;a href="http://code.google.com/p/ankidroid/wiki/Contribution"&gt;beizutreten&lt;/a&gt; um einen &lt;a href="http://code.google.com/p/ankidroid/wiki/Contribution"&gt;Beitrag zu leisten&lt;/a&gt; :-) Auch Nicht-Entwickler können helfen, zum Beispiel durch eine Aktualisierung des Wikis und der Screenshots, durch eine &lt;a href="http://ankisrs.net/support/"&gt;Spende&lt;/a&gt; an Anki oder durch Blogging über AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid ist freigegeben unter der &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-Lizenz GPL v3&lt;/a&gt; und der Quellcode ist verfügbar &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;hier&lt;/a&gt;  verfügbar. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-
-<string name="review_early">Vorzeitiges Abfragen</string>
-<string-array name="studyoptions_more_new_card_order">
+  <string name="CardEditorCancelButton">Abbrechen</string>
+  <string name="CardEditorSaveButton">Speichern</string>
+  <string name="app_name">AnkiDroid</string>
+  <string name="yes">Ja</string>
+  <string name="no">Nein</string>
+  <string name="ok">OK</string>
+  <string name="deck_upgrade_too_old_version">Stapel mit einer älteren Version als 39 werden nicht durch AnkiDroid unterstützt. Öffnen Sie den Stapel mit Anki Desktop um ihn auf die neueste Version zu aktualisieren.</string>
+  <string name="deckpicker_title">Wählen Sie einen Stapel</string>
+  <string name="deckpicker_title_nosdcard">SD-Karte ist ausgehängt</string>
+  <string name="deckpicker_due">%1$d von %2$d offen</string>
+  <string name="deckpicker_new">%d neue heute</string>
+  <string name="deckpicker_loaddeck">Stapel wird geladen...</string>
+  <string name="deckpicker_nodeck">Keine Stapel gefunden.</string>
+  <string name="sync_log_title">Sync Log</string>
+  <string name="deckpicker_upgrading">Stapel wird aktualisiert...</string>
+  <string name="deckpicker_upgrade_failed">Aktualisieren fehlgeschlagen!</string>
+  <string name="deckpicker_upgrade_notes_title">Ergebnis der Stapelaktulisierung</string>
+  <string name="deckpicker_upgrade_notes_button">Hinweise</string>
+  <string name="notify_ticker">Anwendungsaktualisierung</string>
+  <string name="notify_title">Ankidroid aktualisiert</string>
+  <string name="notify_message">Eine neue Version herunterladen</string>
+  <string name="notification_title">Ankidroid Aktualisierung bestätigen</string>
+  <string name="notification_message">Eine neue Version von Ankidroid ist im Android Market verfügbar. \n\nMöchten Sie diese installieren?</string>
+  <string name="notification_stop">Nicht erneut über Aktualisierung benachrichtigen</string>
+  <string name="sdcard_missing_message">SD-Karte ist nicht verfügbar, da sie als USB-Speicher verwendet wird. Trennen Sie die Verbindung, um auf Ihre Stapel zuzugreifen.</string>
+  <string name="show_whiteboard">Whiteboard an</string>
+  <string name="hide_whiteboard">Whiteboard aus</string>
+  <string name="clear_whiteboard">Tafel säubern</string>
+  <string name="session_question_limit_reached">Sitzungs-Fragenlimit erreicht</string>
+  <string name="session_time_limit_reached">Sitzungs-Zeitlimit erreicht</string>
+  <string name="cram_edit_warning">Kartenbearbeitung während des Paukens nicht erlaubt</string>
+  <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
+  <string name="leech_notification">Karte als Lernbremse markiert</string>
+  <string name="newcards_day_summ">Maximale Anzahl neuer Karten pro Tag wurde abgefragt.</string>
+  <string name="newcards_day">Neue Karten pro Tag</string>
+  <string name="session_time_limit">Zeitlimit der Sitzung</string>
+  <string name="session_time_limit_summ">Maximale Länge pro Sitzung in Minuten. Wählen Sie 0 für keine Beschränkung.</string>
+  <string name="session_question_limit">Fragenlimit der Sitzung</string>
+  <string name="session_question_limit_summ">Maximale Anzahl an Fragen pro Sitzung. Wählen Sie 0 für keine Beschränkung.</string>
+  <string name="new_cards_order">Reihenfolge neuer Karten</string>
+  <string name="new_cards_order_summ">Reihenfolge, in der neue Karten gezeigt werden sollen.</string>
+  <string name="show_new_cards_in">Zeige neue Karten in...</string>
+  <string name="new_card_spacing">Abstand zwischen neuen Karten</string>
+  <string name="new_card_spacing_summ">Wie sollen neue Karten während des Abfragens verteilt werden?</string>
+  <string name="show_new_cards">Zeige neue Karten ...</string>
+  <string name="review_cards_order">Abfrageanordnung der Karten</string>
+  <string name="review_cards_in">Abfrageanordnung</string>
+  <string name="review_cards_order_summ">Die Reihenfolge in der Karten anzeigt werden sollen.</string>
+  <string name="show_answer">Antwort anzeigen</string>
+  <string name="show_question">Frage anzeigen</string>
+  <string name="card_hint">Karteikarte</string>
+  <string name="ease1_learning">Nochmal</string>
+  <string name="ease2_learning">Gut</string>
+  <string name="ease3_learning">Einfach</string>
+  <string name="ease4_learning">Spielend</string>
+  <string name="ease1_successive">Nochmal</string>
+  <string name="ease2_successive">Schwer</string>
+  <string name="ease3_successive">Gut</string>
+  <string name="ease4_successive">Einfach</string>
+  <string name="pref_cat_decks">Stapel</string>
+  <string name="pref_cat_sync">Synchronisierung</string>
+  <string name="pref_cat_advanced">Fortgeschritten</string>
+  <string name="pref_cat_qadisplay">Anzeige</string>
+  <string name="sync_on_open">Beim Start synchronisieren</string>
+  <string name="sync_on_close">Beim Beenden synchronisieren</string>
+  <string name="show_study_options_on_deck_load">Lerneinstellungen zeigen</string>
+  <string name="show_study_options_on_deck_load_summ">Lerneinstellungen beim Laden eines Stapels zeigen</string>
+  <string name="show_timer">Timer anzeigen</string>
+  <string name="show_timer_summ">Zeigt die Zeit bis zum Beantworten der Frage</string>
+  <string name="show_whiteboard_summ">Erlaubt es, auf den Bildschirm zu schreiben</string>
+  <string name="whiteboard_stroke_width">Whiteboard-Pinsel</string>
+  <string name="whiteboard_stroke_width_summ">Dicke des Whiteboard-Pinsels</string>
+  <string name="sample_deck">Beispielstapel</string>
+  <string name="sample_deck_summ">Hauptstadtkartenstapel generieren falls keine anderen Stapel gefunden werden</string>
+  <string name="write_answers">Antworten eingeben</string>
+  <string name="write_answers_summ">Erlaubt das Eingeben von Antworten und vergleicht die Eingabe mit der richtigen Antwort</string>
+  <string name="text_selection">Text markieren</string>
+  <string name="text_selection_summ">Per Langklick kann Text ausgewählt, kopiert und in einem externen Wörterbuch nachgeschlagen werden</string>
+  <string name="use_ruby_support">Ruby-Anmerkungen</string>
+  <string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
+  <string name="display_font_size">Relative Schriftgröße</string>
+  <string name="display_font_size_summ">Die Schriftgröße in der Anzeige relativ zu den Definitionen im Stapel verwenden</string>
+  <string name="hide_question_in_answer">Frage ausblenden</string>
+  <string name="hide_question_in_answer_summ">Bestimmt, ob die Frage ausgeblendet werden soll, wenn die Antwort angezeigt wird</string>
+  <string name="deck_path">Stapelverzeichnis</string>
+  <string name="deck_path_summ">Verzeichnis in dem Stapel gespeichert werden</string>
+  <string name="fullscreen_review">Vollbildmodus</string>
+  <string name="fullscreen_review_summ">Nutzt sämtlichen vorhandenen Platz auf dem Bildschirm</string>
+  <string name="personaldeckpicker_title">Online-Stapel herunterladen</string>
+  <string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
+  <string name="preferences_title">Voreinstellungen</string>
+  <string name="deckpreferences_title">Stapel-Einstellungen</string>
+  <string name="about_title">Über</string>
+  <string name="cardeditor_title">Fakteneditor</string>
+  <string name="factadder_title">Karten hinzufügen</string>
+  <string name="loading_deck">Stapel wird geladen.\nBitte warten...</string>
+  <string name="connection_needed">Sie sind momentan offline.</string>
+  <string name="currently_downloading">Wird gerade heruntergeladen</string>
+  <string name="personal_decks">Eigene Stapel</string>
+  <string name="starting_download">Starte Herunterladen...</string>
+  <string name="downloading">Herunterladen...</string>
+  <string name="paused">Pausiert</string>
+  <string name="downloaded">Heruntergeladen</string>
+  <string name="error">Fehler</string>
+  <string name="cancelling">Bricht ab...</string>
+  <string name="loading_personal_decks">Verfügbare eigene Stapel laden...</string>
+  <string name="connection_error_title">Vorsicht</string>
+  <string name="connection_error_return_message">Ein Netzwerkfehler ist aufgetreten. Versuchen Sie es erneut oder brechen Sie ab und kehren zum vorherigen Fenster zurück.</string>
+  <string name="retry">Erneut versuchen</string>
+  <string name="cancel">Abbrechen</string>
+  <string name="shared_decks">Öffentliche Stapel</string>
+  <string name="updating">Aktualisiere...</string>
+  <string name="loading_shared_decks">Verfügbare öffentliche Stapel werden geladen...</string>
+  <string name="cancel_download">Herunterladen abbrechen</string>
+  <string name="resume_download">Herunterladen fortsetzen</string>
+  <string name="pause_download">Herunterladen pausieren</string>
+  <string name="duplicate_download">Dieser Stapel wird gerade heruntergeladen</string>
+  <string name="sync_all">Alle synchronisieren</string>
+  <string name="fact">Fakt</string>
+  <string name="facts">Fakten</string>
+  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Hinzugefügt/Geändert&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Karten&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Fakten&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
+  <string name="saving_changes">Änderungen werden gespeichert...</string>
+  <string name="about_content">&lt;html&gt;&lt;body&gt;&lt;h2&gt; AnkiDroid: &lt;br/&gt; Flashcards für Android &lt;/h2&gt;&lt;p&gt; AnkiDroid kann Stapel-Dateien, die durch durch die &lt;a href="http://ankisrs.net/"&gt;Anki&lt;/a&gt;-Desktop-Software erzeugt wurden, lesen und bearbeiten. &lt;/p&gt;&lt;p&gt; Um uns zu helfen ein besseres AnkiDroid machen, melden Sie Fehler bitte &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;hier&lt;/a&gt;, Ideen für neue Programmfähigkeiten sind sehr willkommen! Bitte nutzen Sie das &lt;a href="http://code.google.com/p/ankidroid/wiki/Index"&gt;Wiki&lt;/a&gt; und sagen Sie "Hallo" im &lt;a href="http://groups.google.com/group/anki-android"&gt;Forum&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; AnkiDroid ist &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;Open Source Software&lt;/a&gt;, so ist jeder aufgefordert, &lt;a href="http://code.google.com/p/ankidroid/wiki/Contribution"&gt;beizutreten&lt;/a&gt; um einen &lt;a href="http://code.google.com/p/ankidroid/wiki/Contribution"&gt;Beitrag zu leisten&lt;/a&gt; :-) Auch Nicht-Entwickler können helfen, zum Beispiel durch eine Aktualisierung des Wikis und der Screenshots, durch eine &lt;a href="http://ankisrs.net/support/"&gt;Spende&lt;/a&gt; an Anki oder durch Blogging über AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid ist freigegeben unter der &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-Lizenz GPL v3&lt;/a&gt; und der Quellcode ist verfügbar &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;hier&lt;/a&gt;  verfügbar. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+  <string name="studyoptions_title">Lerneinstellungen</string>
+  <string name="studyoptions_deck_name">Stapelname</string>
+  <string name="studyoptions_reviews_due">Fällige Wiederholungen:</string>
+  <string name="studyoptions_new_today">Heute neu:</string>
+  <string name="studyoptions_new_total">Neu insgesamt:</string>
+  <string name="studyoptions_new_cards_per_day">Neue Karten pro Tag:</string>
+  <string name="studyoptions_session_minutes">Sitzungslimit (Minuten):</string>
+  <string name="studyoptions_session_questions">Sitzungslimit (Fragen):</string>
+  <string name="studyoptions_start">Lernen starten</string>
+  <string name="studyoptions_more">Lernoptionen</string>
+  <string name="studyoptions_window_title">%s (%d von %d fällig)</string>
+  <string name="studyoptions_more_dialog_title">Lernoptionen</string>
+  <string name="studyoptions_more_save">Speichern</string>
+  <string name="studyoptions_nodeck_title">Kein Stapel geladen</string>
+  <string name="studyoptions_nodeck_message">Momentan ist kein Stapel geladen. Anki-Stapel sind auf der SD-Karte in dem in den Einstellungen angegebenen Ordner (momentan dieser: \"%s\") gespeichert. Um diesen zu ändern, drücken Sie die \"Menü\"-Taste und wählen \"Einstellungen\".\n\n Um einen Stapel zu laden, drücken Sie die \"Menü\"-Taste und wählen \"Stapel öffnen\" oder klicken auf einen der unteren Schalter.</string>
+  <string name="studyoptions_deck_not_loaded_title">Stapel konnte nicht geladen werden</string>
+  <string name="studyoptions_deck_not_loaded_message">Der ausgewählte Stapel ist kein gültiger Anki-Stapel. Erstellen Sie Stapel mit Anki-Desktop oder laden Sie öffentlich freigegebene Stapel herunter.</string>
+  <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
+  <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid braucht Zugang zur SD-Karte um Stapel zu öffnen oder zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist und versuchen Sie es erneut.</string>
+  <string name="studyoptions_load_other_deck">Stapel öffnen</string>
+  <string name="studyoptions_load_sample_deck">Beispielstapel öffnen</string>
+  <string name="menu_open_deck">Stapel öffnen</string>
+  <string name="menu_sync">Synchronisieren</string>
+  <string name="menu_download_deck">Stapel herunterladen</string>
+  <string name="menu_download_shared_deck">Öffentlicher Stapel</string>
+  <string name="menu_download_personal_deck">Eigener Stapel</string>
+  <string name="menu_synchronize">Synchronisieren</string>
+  <string name="menu_my_account">Mein Account</string>
+  <string name="menu_preferences">Einstellungen</string>
+  <string name="menu_deck_properties">Stapeleinstellungen</string>
+  <string name="menu_add_card">Karte hinzufügen</string>
+  <string name="menu_about">Über</string>
+  <string name="menu_suspend_card">Karte aussetzen</string>
+  <string name="menu_edit_card">Karte bearbeiten</string>
+  <string name="menu_search">Karte in Aedict nachschlagen</string>
+  <string name="menu_mark_card">Karte markieren</string>
+  <string name="menu_marked">Markiert</string>
+  <string name="loading">Lade...</string>
+  <string name="studyoptions_continue">Lernen fortsetzen</string>
+  <string name="studyoptions_well_done">Gut gemacht!</string>
+  <string name="studyoptions_congrats_title">Herzlichen Glückwunsch!</string>
+  <string name="studyoptions_congrats_message">Sie sind für\'s erste fertig.</string>
+  <string name="studyoptions_congrats_learnmore">Mehr Lernen</string>
+  <string name="studyoptions_congrats_reviewearly">Früher Wiederholen</string>
+  <string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>
+  <string name="studyoptions_congrats_finish">Zurück zu den Lerneinstellungen</string>
+  <string name="username">Benutzername</string>
+  <string name="password">Passwort</string>
+  <string name="log_in">Einloggen</string>
+  <string name="sign_up_description">Haben Sie keinen AnkiOnline-Account? Er ist kostenlos!</string>
+  <string name="sign_up">Registrieren</string>
+  <string name="logged_as">Eingeloggt als</string>
+  <string name="log_out">Ausloggen</string>
+  <string name="alert_logging_message">Einloggen, bitte warten...</string>
+  <string name="invalid_username_password">Ungültiger Benutzername oder Passwort.</string>
+  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
+  <string name="download_finished">Herunterladen beendet</string>
+  <string name="deck_downloaded">Stapel heruntergeladen</string>
+  <string name="connection_error_message">Ein Netzwerkfehler ist aufgetreten.</string>
+  <string name="no_user_password_error_message">Um fortzufahren, benötigen Sie einen AnkiOnline-Account und müssen eingeloggt sein.</string>
+  <string name="sync_progress_bar_title">Synchronisiere %s</string>
+  <string name="studyoptions_cram_dialog_title">Stichwörter, die gepaukt werden sollen</string>
+  <string name="begin_cram">Pauken starten</string>
+  <string name="end_cram">Beende Pauken</string>
+  <string name="cram">Pauken</string>
+  <string name="sync_connecting_message">Verbinde...</string>
+  <string name="sync_syncing_message">Synchronisiere %s</string>
+  <string name="sync_summary_from_server_message">Rufe Zusammenfassung vom Server ab...</string>
+  <string name="sync_preparing_full_sync_message">Bereite Synchronisierung vor...</string>
+  <string name="sync_uploading_message">Lade hoch...</string>
+  <string name="sync_downloading_message">Lade herunter...</string>
+  <string name="sync_complete_message">Synchronisierung vollständig.</string>
+  <string name="sync_determining_differences_message">Ermittle Unterschiede...</string>
+  <string name="sync_transferring_payload_message">Übertrage Daten...</string>
+  <string name="sync_applying_reply_message">Antworte...</string>
+  <string name="sync_no_changes_message">Keine Veränderungen gefunden.</string>
+  <string name="sync_log_error_message">Fehler: Stapel nicht synchronisiert</string>
+  <string name="sync_log_no_changes_message">Keine Veränderungen gefunden</string>
+  <string name="sync_log_uploading_message">Kein Stapel auf dem Server</string>
+  <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
+  <string name="sync_log_fact_to_server_message">Ein Fakt hochgeladen</string>
+  <string name="sync_log_facts_to_server_message">%d Fakten hochgeladen</string>
+  <string name="sync_log_fact_from_server_message">Ein Fakt heruntergeladen</string>
+  <string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
+  <string name="error_message">Es ist ein Fehler zu melden</string>
+  <string name="errors_message">Es ist %d Fehler zu melden</string>
+  <string name="error_ok">Fehlermeldung</string>
+  <string name="error_cancel">Melde keine Fehler</string>
+  <string name="error_email">ankidroid@gmail.com</string>
+  <string name="error_reporting_choice">Fehlermeldungs-Modus</string>
+  <string name="error_reporting_choice_summary">Fehler können automatisch, nie oder nach Nachfrage gemeldet werden</string>
+  <string name="widget_pref">Widget</string>
+  <string name="widget_minimum_cards_due">Benachrichtigungsschwelle</string>
+  <string name="widget_minimum_cards_due_summary">Mindestzahl an fälligen Karten, ab der eine Benachrichtigung angezeigt wird</string>
+  <string name="widget_minimum_cards_due_vibrate">Vibrieren</string>
+  <string name="widget_minimum_cards_due_blink">Blinken</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Fällige Karten</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-Karten fällig</string>
+  <string name="model">Modell:</string>
+  <string name="select_model">Modell</string>
+  <string name="card">Karte:</string>
+  <string name="cards">Karten:</string>
+  <string name="add">Hinzufügen</string>
+  <string name="close">Schließen</string>
+  <string name="soon">Bald</string>
+  <string name="show_next_review_time">Intervall anzeigen</string>
+  <string name="show_next_review_time_summ">Zeigt während des Lernens die Zeit bis zur nächsten Fälligkeit der Karte abhängig von der Wahl des Schwierigkeitsgrades</string>
+  <string name="update_notification">Aktualisierungsbenachrichtigung</string>
+  <string name="update_notification_summ">Benachrichtigung, wenn es Aktualisierungen von AnkiDroid gibt</string>
+  <string name="per_day">Einteilung pro Tag</string>
+  <string name="undo">Rückgängig</string>
+  <string name="redo">Wiederholen</string>
+  <string-array name="studyoptions_more_new_card_order">
     <item>Neue Karten in zufälliger Reihenfolge</item>
     <item>Neue Karten in Reihenfolge des Hinzufügens</item>
     <item>Neue Karten in umgekehrter Reihenfolge des Hinzufügens</item>
-</string-array>
-<string-array name="studyoptions_more_new_card_schedule">
-	    <item>Neue Karten über Wiederholungen verteilen</item>
-	    <item>Neue Karten nach Wiederholungen</item>
-	    <item>Neue Karten vor Wiederholungen</item>
-</string-array>
-<string-array name="studyoptions_more_rev_card_order">
-	    <item>Karten mit größtem Intervall zuerst</item>
-	    <item>Karten mit kleinstem Intervall zuerst</item>
-	    <item>Karten mit in der Reihenfolge der Fälligkeit</item>
-	    <item>Karten in zufälliger Reihenfolge</item>
-</string-array>
-<string-array name="studyoptions_more_fail_card_option">
-	    <item>Zeige nicht gewusste Karten bald</item>
-	    <item>Zeige nicht gewusste Karten am Schluss</item>
-    	<item>Zeige nicht gewusste Karten in 10 Minuten</item>
-	    <item>Zeige nicht gewusste Karten in 8 Stunden</item>
-	    <item>Zeige nicht gewusste Karten in 3 Tagen</item>
-</string-array>
-<string name="studyoptions_title">Lerneinstellungen</string>
-<string name="studyoptions_deck_name">Stapelname</string>
-<string name="studyoptions_reviews_due">Fällige Wiederholungen:</string>
-<string name="studyoptions_new_today">Heute neu:</string>
-<string name="studyoptions_new_total">Neu insgesamt:</string>
-<string name="studyoptions_new_cards_per_day">Neue Karten pro Tag:</string>
-<string name="studyoptions_session_minutes">Sitzungslimit (Minuten):</string>
-<string name="studyoptions_session_questions">Sitzungslimit (Fragen):</string>
-<string name="studyoptions_start">Lernen starten</string>
-<string name="studyoptions_more">Lernoptionen</string>
-<string name="studyoptions_window_title">%1$s (%2$d von %3$d fällig)</string>
-<string name="studyoptions_more_dialog_title">Lernoptionen</string>
-<string name="studyoptions_more_save">Speichern</string>
-<string name="studyoptions_nodeck_title">Kein Stapel geladen</string>
-<string name="studyoptions_nodeck_message">Momentan ist kein Stapel geladen. Anki-Stapel sind auf der SD-Karte in dem in den Einstellungen angegebenen Ordner (momentan dieser: \&quot;%s\&quot;) gespeichert. Um diesen zu ändern, drücken Sie die \&quot;Menü\&quot;-Taste und wählen \&quot;Einstellungen\&quot;.\n\n Um einen Stapel zu laden, drücken Sie die \&quot;Menü\&quot;-Taste und wählen \&quot;Stapel öffnen\&quot; oder klicken auf einen der unteren Schalter.</string>
-<string name="studyoptions_deck_not_loaded_title">Stapel konnte nicht geladen werden</string>
-<string name="studyoptions_deck_not_loaded_message">Der ausgewählte Stapel ist kein gültiger Anki-Stapel. Erstellen Sie Stapel mit Anki-Desktop oder laden Sie öffentlich freigegebene Stapel herunter.</string>
-<string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
-<string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid braucht Zugang zur SD-Karte um Stapel zu öffnen oder zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist und versuchen Sie es erneut.</string>
-<string name="studyoptions_load_other_deck">Stapel öffnen</string>
-<string name="studyoptions_load_sample_deck">Beispielstapel öffnen</string>
-
-<string name="menu_open_deck">Stapel öffnen</string>
-<string name="menu_sync">Synchronisieren</string>
-<string name="menu_download_deck">Stapel herunterladen</string>
-<string name="menu_download_shared_deck">Öffentlicher Stapel</string>
-<string name="menu_download_personal_deck">Eigener Stapel</string>
-<string name="menu_synchronize">Synchronisieren</string>
-<string name="menu_my_account">Mein Account</string>
-<string name="menu_preferences">Einstellungen</string>
-<string name="menu_deck_properties">Stapeleinstellungen</string>
-<string name="menu_add_card">Karte hinzufügen</string>
-<string name="menu_about">Über</string>
-<string name="menu_suspend_card">Karte aussetzen</string>
-<string name="menu_edit_card">Karte bearbeiten</string>
-<string name="menu_search">Karte in Aedict nachschlagen</string>
-<string name="menu_mark_card">Karte markieren</string>
-<string name="menu_marked">Markiert</string>
-
-<string name="loading">Lade...</string>
-<string name="studyoptions_continue">Lernen fortsetzen</string>
-<string name="studyoptions_well_done">Gut gemacht!</string>
-<string name="studyoptions_congrats_title">Herzlichen Glückwunsch!</string>
-<string name="studyoptions_congrats_message">Sie sind für\'s erste fertig.</string>
-<string name="studyoptions_congrats_learnmore">Mehr Lernen</string>
-<string name="studyoptions_congrats_reviewearly">Früher Wiederholen</string>
-<string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>
-<string name="studyoptions_congrats_finish">Zurück zu den Lerneinstellungen</string>
-
-<!-- MyAccount.java -->
-<string name="username">Benutzername</string>
-<string name="password">Passwort</string>
-<string name="log_in">Einloggen</string>
-<string name="sign_up_description">Haben Sie keinen AnkiOnline-Account? Er ist kostenlos!</string>
-<string name="sign_up">Registrieren</string>
-
-<string name="logged_as">Eingeloggt als</string>
-<string name="log_out">Ausloggen</string>
-<string name="alert_logging_message">Einloggen, bitte warten...</string>
-<string name="invalid_username_password">Ungültiger Benutzername oder Passwort.</string>
-<string name="ankionline_sign_up_url">http://ankiweb.net/</string>
-
-<!-- DownloadManagerService.java -->
-<string name="download_finished">Herunterladen beendet</string>
-<string name="deck_downloaded">Stapel heruntergeladen</string>
-
-<!-- StudyOptions.java -->
-<string name="connection_error_message">Ein Netzwerkfehler ist aufgetreten.</string>
-<string name="no_user_password_error_message">Um fortzufahren, benötigen Sie einen AnkiOnline-Account und müssen eingeloggt sein.</string>
-<string name="sync_progress_bar_title">Synchronisiere %s</string>
-<string name="studyoptions_cram_dialog_title">Stichwörter, die gepaukt werden sollen</string>
-<string name="begin_cram">Pauken starten</string>
-<string name="end_cram">Beende Pauken</string>
-<string name="cram">Pauken</string>
-
-<!-- Connection.java -->
-<string name="sync_connecting_message">Verbinde...</string>
-<string name="sync_syncing_message">Synchronisiere %s</string>
-<string name="sync_summary_from_server_message">Rufe Zusammenfassung vom Server ab...</string>
-<string name="sync_preparing_full_sync_message">Bereite Synchronisierung vor...</string>
-<string name="sync_uploading_message">Lade hoch...</string>
-<string name="sync_downloading_message">Lade herunter...</string>
-<string name="sync_complete_message">Synchronisierung vollständig.</string>
-<string name="sync_determining_differences_message">Ermittle Unterschiede...</string>
-<string name="sync_transferring_payload_message">Übertrage Daten...</string>
-<string name="sync_applying_reply_message">Antworte...</string>
-<string name="sync_no_changes_message">Keine Veränderungen gefunden.</string>
-<string name="sync_log_error_message">Fehler: Stapel nicht synchronisiert</string>
-<string name="sync_log_no_changes_message">Keine Veränderungen gefunden</string>
-<string name="sync_log_uploading_message">Kein Stapel auf dem Server</string>
-<string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
-<string name="sync_log_fact_to_server_message">Ein Fakt hochgeladen</string>
-<string name="sync_log_facts_to_server_message">%d Fakten hochgeladen</string>
-<string name="sync_log_fact_from_server_message">Ein Fakt heruntergeladen</string>
-<string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
-
-<!-- ErrorReporter.java -->
-<string name="error_message">Es ist ein Fehler zu melden</string>
-<string name="errors_message">Es ist %d Fehler zu melden</string>
-<string name="error_ok">Fehlermeldung</string>
-<string name="error_cancel">Melde keine Fehler</string>
-<string name="error_email">ankidroid@gmail.com</string>
-<string name="error_reporting_choice">Fehlermeldungs-Modus</string>
-<string name="error_reporting_choice_summary">Fehler können automatisch, nie oder nach Nachfrage gemeldet werden</string>
-
-<!--  Widget -->
-<string name="widget_pref">Widget</string>
-<string name="widget_minimum_cards_due">Benachrichtigungsschwelle</string>
-<string name="widget_minimum_cards_due_summary">Mindestzahl an fälligen Karten, ab der eine Benachrichtigung angezeigt wird</string>
-<string name="widget_minimum_cards_due_vibrate">Vibrieren</string>
-<string name="widget_minimum_cards_due_blink">Blinken</string>
-<string name="widget_minimum_cards_due_notification_ticker_title">Fällige Karten</string>
-<string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-Karten fällig</string>
-<string name="model">Modell:</string>
-<string name="select_model">Modell</string>
-<string name="card">Karte:</string>
-<string name="cards">Karten:</string>
-<string name="add">Hinzufügen</string>
-<string name="close">Schließen</string>
-
-<string name="soon">Bald</string>
-<string name="show_next_review_time">Intervall anzeigen</string>
-<string name="show_next_review_time_summ">Zeigt während des Lernens die Zeit bis zur nächsten Fälligkeit der Karte abhängig von der Wahl des Schwierigkeitsgrades</string>
-<string name="update_notification">Aktualisierungsbenachrichtigung</string>
-<string name="update_notification_summ">Benachrichtigung, wenn es Aktualisierungen von AnkiDroid gibt</string>
-
-<string name="per_day">Einteilung pro Tag</string>
-
-<string name="undo">Rückgängig</string>
-<string name="redo">Wiederholen</string>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_schedule">
+    <item>Neue Karten über Wiederholungen verteilen</item>
+    <item>Neue Karten nach Wiederholungen</item>
+    <item>Neue Karten vor Wiederholungen</item>
+  </string-array>
+  <string-array name="studyoptions_more_rev_card_order">
+    <item>Karten mit größtem Intervall zuerst</item>
+    <item>Karten mit kleinstem Intervall zuerst</item>
+    <item>Karten mit in der Reihenfolge der Fälligkeit</item>
+    <item>Karten in zufälliger Reihenfolge</item>
+  </string-array>
+  <string-array name="studyoptions_more_fail_card_option">
+    <item>Zeige nicht gewusste Karten bald</item>
+    <item>Zeige nicht gewusste Karten am Schluss</item>
+    <item>Zeige nicht gewusste Karten in 10 Minuten</item>
+    <item>Zeige nicht gewusste Karten in 8 Stunden</item>
+    <item>Zeige nicht gewusste Karten in 3 Tagen</item>
+  </string-array>
 </resources>
-
