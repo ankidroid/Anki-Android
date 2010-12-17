@@ -882,7 +882,7 @@ public class Deck {
     private void fillFailedQueue() {
         try {
             fillFailedQueueMethod.invoke(Deck.this);
-            Log.e(AnkiDroidApp.TAG, "made it!");
+            Log.i(AnkiDroidApp.TAG, "fillFailedQueueMethod invoked");
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
