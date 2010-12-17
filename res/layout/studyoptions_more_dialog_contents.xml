@@ -37,6 +37,12 @@
 			android:id="@+id/studyoptions_per_day"
 			android:text="@string/per_day"
 			android:checked="true" />
+		<CheckBox
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/studyoptions_suspend_leeches"
+			android:text="@string/suspend_leeches"
+			android:checked="true" />
 	</LinearLayout>
 	
 </ScrollView>

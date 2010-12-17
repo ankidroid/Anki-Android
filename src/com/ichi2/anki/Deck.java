@@ -1928,6 +1928,18 @@ public class Deck {
         }
     }
 
+    public boolean getSuspendLeeches() {
+        return getBool("suspendLeeches");
+    }
+
+    public void setSuspendLeeches(boolean suspendLeeches) {
+        if (suspendLeeches) {
+            setVar("suspendLeeches", "1");
+        } else {
+            setVar("suspendLeeches", "0");
+        }
+    }
+
     public int getNewCardsPerDay() {
         return mNewCardsPerDay;
     }

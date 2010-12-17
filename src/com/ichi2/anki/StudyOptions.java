@@ -164,6 +164,7 @@ public class StudyOptions extends Activity {
     private Spinner mSpinnerFailCardOption;
     
     private CheckBox mCheckBoxPerDay;
+    private CheckBox mCheckBoxSuspendLeeches;
 
     /**
 * UI elements for "No Deck" view
@@ -314,6 +315,7 @@ public class StudyOptions extends Activity {
             deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
             // TODO: mSpinnerFailCardOption
           	deck.setPerDay(mCheckBoxPerDay.isChecked());
+          	deck.setSuspendLeeches(mCheckBoxSuspendLeeches.isChecked());
             // TODO: Update number of due cards after change of per day scheduling 
             dialog.dismiss();
         }
@@ -605,6 +607,7 @@ public class StudyOptions extends Activity {
         mSpinnerRevCardOrder = (Spinner) contentView.findViewById(R.id.studyoptions_rev_card_order);
         mSpinnerFailCardOption = (Spinner) contentView.findViewById(R.id.studyoptions_fail_card_option);
         mCheckBoxPerDay = (CheckBox) contentView.findViewById(R.id.studyoptions_per_day);
+        mCheckBoxSuspendLeeches = (CheckBox) contentView.findViewById(R.id.studyoptions_suspend_leeches);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.studyoptions_more_dialog_title);
@@ -623,6 +626,7 @@ public class StudyOptions extends Activity {
         mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
         mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
         mCheckBoxPerDay.setChecked(deck.getPerDay());
+        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());
 
         mDialogMoreOptions.show();
     }

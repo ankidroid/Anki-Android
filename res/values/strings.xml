@@ -72,6 +72,7 @@
 <string name="session_question_limit_reached">Session question limit reached</string>
 <string name="session_time_limit_reached">Session time limit reached</string>
 <string name="cram_edit_warning">Card editing not allowed while cramming</string>
+<string name="suspend_leeches">Suspend Leeches</string>
 <string name="leech_suspend_notification">Card marked as leech and suspended</string>
 <string name="leech_notification">Card marked as leech</string>
 
