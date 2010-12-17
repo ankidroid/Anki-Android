@@ -248,9 +248,11 @@ public class Fact {
         mModified = Utils.now();
         if (textChanged) {
             mSpaceUntil = "";
+            StringBuilder str = new StringBuilder(1024);
             for (Field f : getFields()) {
-                mSpaceUntil += f.getValue() + " ";
+                str.append(f.getValue()).append(" ");
             }
+            mSpaceUntil = str.toString();
             mSpaceUntil.substring(0, mSpaceUntil.length() - 1);
             mSpaceUntil = Utils.stripHTMLMedia(mSpaceUntil.substring(0, mSpaceUntil.length()-1));
             Log.d(AnkiDroidApp.TAG, "spaceUntil = " + mSpaceUntil);

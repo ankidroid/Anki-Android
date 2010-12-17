@@ -330,7 +330,9 @@ public class Deck {
         } catch (Exception e) {
             deck.mAverageFactor = INITIAL_FACTOR;
         } finally {
-            cur.close();
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
         }
         deck.mAverageFactor = Math.max(deck.mAverageFactor, MINIMUM_AVERAGE);
 
@@ -411,7 +413,7 @@ public class Deck {
             cur = getDB().getDatabase().rawQuery("SELECT 1 FROM deckVars WHERE key = '" + key + "'", null);
             return cur.moveToNext();
         } finally {
-            if (cur != null) {
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
             }	
         }
@@ -428,7 +430,7 @@ public class Deck {
                 throw new SQLException("DeckVars.getInt: could not retrieve value for " + key);
             }        	
         } finally {
-            if (cur != null) {
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
             }	
         }
@@ -445,7 +447,7 @@ public class Deck {
     			throw new SQLException("DeckVars.getFloat: could not retrieve value for " + key);
     		}
     	} finally {
-            if (cur != null) {
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
             }	    		
     	}
@@ -460,7 +462,7 @@ public class Deck {
     			return (cur.getInt(0) != 0);
     		}
     	} finally {
-            if (cur != null) {
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
             }	    		    		
     	}
@@ -479,7 +481,7 @@ public class Deck {
             Log.e(AnkiDroidApp.TAG, "getVar: " + e.toString());
             throw new RuntimeException(e);
         } finally {
-            if (cur != null) {
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
             }
         }
@@ -509,7 +511,7 @@ public class Deck {
             Log.e(AnkiDroidApp.TAG, "setVar: " + e.toString());
             throw new RuntimeException(e);
         } finally {
-            if (cur != null) {
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
             }
         }
@@ -738,6 +740,7 @@ public class Deck {
         HashMap<Long, String> r = new HashMap<Long, String>();
         Cursor cur = null;
 
+        Log.i(AnkiDroidApp.TAG, "updatefieldCache fids: " + Utils.ids2str(fids));
         try {
             cur = getDB().getDatabase().rawQuery("SELECT factId, group_concat(value, ' ') FROM fields " +
                 "WHERE factId IN " + Utils.ids2str(fids) + " GROUP BY factId" , null);
@@ -750,10 +753,8 @@ public class Deck {
                 //}
                 r.put(cur.getLong(0), Utils.stripHTMLMedia(values));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         } finally {
-            if (cur != null) {
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
             }
         }
@@ -1231,7 +1232,7 @@ public class Deck {
         			mFailedQueue.add(0, qi); // Add to front, so list is reversed as it is built
         		}
             } finally {
-                if (cur != null) {
+                if (cur != null && !cur.isClosed()) {
                     cur.close();
                 }
             }        		
@@ -1252,7 +1253,7 @@ public class Deck {
         			mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
         		}
             } finally {
-                if (cur != null) {
+                if (cur != null && !cur.isClosed()) {
                     cur.close();
                 }
             }
@@ -1273,7 +1274,7 @@ public class Deck {
             		mNewQueue.addFirst(qi); // Add to front, so list is reversed as it is built
             	}
             } finally {
-                if (cur != null) {
+                if (cur != null && !cur.isClosed()) {
                     cur.close();
                 }
             }
@@ -1553,7 +1554,7 @@ public class Deck {
             		mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
             	}
             } finally {
-            	if (cur != null) {
+            	if (cur != null && !cur.isClosed()) {
                 	cur.close();
             	}
             }
@@ -1724,7 +1725,7 @@ public class Deck {
                 	mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
             	}
         	} finally {
-            	if (cur != null) {
+            	if (cur != null && !cur.isClosed()) {
                 	cur.close();
             	}
         	}
@@ -1833,7 +1834,7 @@ public class Deck {
                 value = cursor.getDouble(0);
             }
         } finally {
-            if (cursor != null) {
+            if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
         }
@@ -2311,7 +2312,7 @@ public class Deck {
             getDB().getDatabase().setTransactionSuccessful();
         } finally {
             getDB().getDatabase().endTransaction();
-            if (cursor != null) {
+            if (cursor != null && !cursor.isClosed()) {
             	cursor.close();
             }
         }
@@ -2584,7 +2585,7 @@ public class Deck {
         } catch (SQLException e) {
             Log.e(AnkiDroidApp.TAG, "splitTagsList: Error while retrieving tags from DB: " + e.toString());
         } finally {
-            if (cur != null) {
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
             }
         }
@@ -2878,7 +2879,7 @@ public class Deck {
             } catch (SQLException e) {
                 Log.e(AnkiDroidApp.TAG, "updateAllPriorities: Error while getting all tags: " + e.toString());
             } finally {
-                if (cur != null) {
+                if (cur != null && !cur.isClosed()) {
                     cur.close();
                 }
             }
@@ -2916,7 +2917,7 @@ public class Deck {
         } catch (SQLException e) {
             Log.e(AnkiDroidApp.TAG, "updateTagPriorities: Error while tag priorities: " + e.toString());
         } finally {
-            if (cur != null) {
+            if (cur != null && !cur.isClosed()) {
                 cur.close();
             }
         }
@@ -3021,7 +3022,7 @@ public class Deck {
                 }
             }
         } finally {
-            if (cursor != null) {
+            if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
         }
@@ -3084,12 +3085,18 @@ public class Deck {
             // Find out if this tags are used by anything else
             ArrayList<String> unusedTags = new ArrayList<String>();
             for (String tagId : tags) {
-                Cursor cursor = getDB().getDatabase().rawQuery(
-                        "SELECT * FROM cardTags WHERE tagId = " + tagId + " LIMIT 1", null);
-                if (!cursor.moveToFirst()) {
-                    unusedTags.add(tagId);
+                Cursor cursor = null;
+                try {
+                    cursor = getDB().getDatabase().rawQuery(
+                            "SELECT * FROM cardTags WHERE tagId = " + tagId + " LIMIT 1", null);
+                    if (!cursor.moveToFirst()) {
+                        unusedTags.add(tagId);
+                    }
+                } finally {
+                    if (cursor != null && !cursor.isClosed()) {
+                        cursor.close();
+                    }
                 }
-                cursor.close();
             }
 
             // Delete unused tags
@@ -3233,7 +3240,7 @@ public class Deck {
                 modelExists = true;
             }
         } finally {
-        	if (cursor != null) {
+        	if (cursor != null && !cursor.isClosed()) {
         		cursor.close();
         	}
         }
@@ -3275,33 +3282,45 @@ public class Deck {
         // Update Question/Answer formats
         // TODO: All these should be done with the field object
         String fieldName = "";
-        Cursor cursor = getDB().getDatabase().rawQuery("SELECT name FROM fieldModels WHERE id = " + fieldModelId, null);
-        if (cursor.moveToNext()) {
-            fieldName = cursor.getString(0);
+        Cursor cursor = null;
+        try {
+            cursor = getDB().getDatabase().rawQuery("SELECT name FROM fieldModels WHERE id = " + fieldModelId, null);
+            if (cursor.moveToNext()) {
+                fieldName = cursor.getString(0);
+            }
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
-        cursor.close();
 
-        cursor = getDB().getDatabase().rawQuery("SELECT id, qformat, aformat FROM cardModels WHERE modelId = " + modelId,
-                null);
-        String sql = "UPDATE cardModels SET qformat = ?, aformat = ? WHERE id = ?";
-        SQLiteStatement statement = getDB().getDatabase().compileStatement(sql);
-        while (cursor.moveToNext()) {
-            String id = cursor.getString(0);
-            String newQFormat = cursor.getString(1);
-            String newAFormat = cursor.getString(2);
+        SQLiteStatement statement = null;
+        try {
+            cursor = getDB().getDatabase().rawQuery("SELECT id, qformat, aformat FROM cardModels WHERE modelId = " +
+                    modelId, null);
+            String sql = "UPDATE cardModels SET qformat = ?, aformat = ? WHERE id = ?";
+            statement = getDB().getDatabase().compileStatement(sql);
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(0);
+                String newQFormat = cursor.getString(1);
+                String newAFormat = cursor.getString(2);
 
-            newQFormat = newQFormat.replace("%%(" + fieldName + ")s", "");
-            newQFormat = newQFormat.replace("%%(text:" + fieldName + ")s", "");
-            newAFormat = newAFormat.replace("%%(" + fieldName + ")s", "");
-            newAFormat = newAFormat.replace("%%(text:" + fieldName + ")s", "");
+                newQFormat = newQFormat.replace("%%(" + fieldName + ")s", "");
+                newQFormat = newQFormat.replace("%%(text:" + fieldName + ")s", "");
+                newAFormat = newAFormat.replace("%%(" + fieldName + ")s", "");
+                newAFormat = newAFormat.replace("%%(text:" + fieldName + ")s", "");
 
-            statement.bindString(1, newQFormat);
-            statement.bindString(2, newAFormat);
-            statement.bindString(3, id);
+                statement.bindString(1, newQFormat);
+                statement.bindString(2, newAFormat);
+                statement.bindString(3, id);
 
-            statement.execute();
+                statement.execute();
+            }
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
-        cursor.close();
         statement.close();
 
         // TODO: updateCardsFromModel();
@@ -3336,39 +3355,45 @@ public class Deck {
 
     // CSS for all the fields
     private String rebuildCSS() {
-        String css = "";
+        StringBuilder css = new StringBuilder(512);
         Cursor cur = null;
 
-        cur = getDB().getDatabase().rawQuery(
-                "SELECT id, quizFontFamily, quizFontSize, quizFontColour, -1, " +
-                "features, editFontFamily FROM fieldModels", null);
-        while (cur.moveToNext()) {
-            css += _genCSS(".fm", cur);
+        try {
+            cur = getDB().getDatabase().rawQuery(
+                    "SELECT id, quizFontFamily, quizFontSize, quizFontColour, -1, " +
+                    "features, editFontFamily FROM fieldModels", null);
+            while (cur.moveToNext()) {
+                css.append(_genCSS(".fm", cur));
+            }
+            cur.close();
+            cur = getDB().getDatabase().rawQuery(
+                    "SELECT id, null, null, null, questionAlign, 0, 0 FROM cardModels", null);
+            StringBuilder cssAnswer = new StringBuilder(512);
+            while (cur.moveToNext()) {
+                css.append(_genCSS("#cmq", cur));
+                cssAnswer.append(_genCSS("#cma", cur));
+            }
+            css.append(cssAnswer.toString());
+            cur.close();
+            cur = getDB().getDatabase().rawQuery("SELECT id, lastFontColour FROM cardModels", null);
+            while (cur.moveToNext()) {
+                css.append(".cmb").append(Utils.hexifyID(cur.getLong(0))).append(" {background:")
+                    .append(cur.getString(1)).append(";}\n");
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
         }
-        cur.close();
-        cur = getDB().getDatabase().rawQuery(
-                "SELECT id, null, null, null, questionAlign, 0, 0 FROM cardModels", null);
-        String cssAnswer = "";
-        while (cur.moveToNext()) {
-            css += _genCSS("#cmq", cur);
-            cssAnswer += _genCSS("#cma", cur);
-        }
-        css += cssAnswer;
-        cur.close();
-        cur = getDB().getDatabase().rawQuery("SELECT id, lastFontColour FROM cardModels", null);
-        while (cur.moveToNext()) {
-            css += ".cmb" + Utils.hexifyID(cur.getLong(0)) + " {background:" + cur.getString(1) + ";}\n";
-        }
-        cur.close();
-        setVar("cssCache", css, false);
+        setVar("cssCache", css.toString(), false);
         addHexCache();
 
-        return css;
+        return css.toString();
     }
 
 
     private String _genCSS(String prefix, Cursor row) {
-        String t = "";
+        StringBuilder t = new StringBuilder(256);
         long id = row.getLong(0);
         String fam = row.getString(1);
         int siz = row.getInt(2);
@@ -3377,33 +3402,33 @@ public class Deck {
         String rtl = row.getString(5);
         int pre = row.getInt(6);
         if (fam != null) {
-            t += "font-family:\"" + fam + "\";";
+            t.append("font-family:\"").append(fam).append("\";");
         }
         if (siz != 0) {
-            t += "font-size:" + siz + "px;";
+            t.append("font-size:").append(siz).append("px;");
         }
         if (col != null) {
-            t += "color:" + col + ";";
+            t.append("color:").append(col).append(";");
         }
         if (rtl != null && rtl.compareTo("rtl") == 0) {
-            t += "direction:rtl;unicode-bidi:embed;";
+            t.append("direction:rtl;unicode-bidi:embed;");
         }
         if (pre != 0) {
-            t += "white-space:pre-wrap;";
+            t.append("white-space:pre-wrap;");
         }
         if (align != -1) {
             if (align == 0) {
-                t += "text-align:center;";
+                t.append("text-align:center;");
             } else if (align == 1) {
-                t += "text-align:left;";
+                t.append("text-align:left;");
             } else {
-                t += "text-align:right;";
+                t.append("text-align:right;");
             }
         }
         if (t.length() > 0) {
-            t = prefix + Utils.hexifyID(id) + " {" + t + "}\n";
+            t.insert(0, prefix + Utils.hexifyID(id) + " {").append("}\n");
         }
-        return t;
+        return t.toString();
     }
 
 
@@ -3491,38 +3516,41 @@ public class Deck {
             }
             ArrayList<String> columns = getDB().queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
             // Insert trigger
-            String sql = "CREATE TEMP TRIGGER _undo_%s_it " + "AFTER INSERT ON %s BEGIN "
-                    + "INSERT INTO undoLog VALUES " + "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END";
-            getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, sql, table, table, table));
+            StringBuilder sql = new StringBuilder(512);
+            sql.append("CREATE TEMP TRIGGER _undo_%s_it AFTER INSERT ON %s BEGIN INSERT INTO undoLog VALUES ")
+                    .append("(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END");
+            getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, sql.toString(), table, table, table));
             // Update trigger
-            sql = String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut " + "AFTER UPDATE ON %s BEGIN "
-                    + "INSERT INTO undoLog VALUES " + "(null, 'UPDATE %s ", table, table, table);
+            sql = new StringBuilder(512);
+            sql.append(String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut AFTER UPDATE ON %s BEGIN "
+                    + "INSERT INTO undoLog VALUES (null, 'UPDATE %s ", table, table, table));
             String sep = "SET ";
             for (String column : columns) {
                 if (column.equals("unique")) {
                     continue;
                 }
-                sql += String.format(Utils.ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column);
+                sql.append(String.format(Utils.ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column));
                 sep = ",";
             }
-            sql += " WHERE rowid = ' || old.rowid); END";
-            getDB().getDatabase().execSQL(sql);
+            sql.append(" WHERE rowid = ' || old.rowid); END");
+            getDB().getDatabase().execSQL(sql.toString());
             // Delete trigger
-            sql = String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt " + "BEFORE DELETE ON %s BEGIN "
-                    + "INSERT INTO undoLog VALUES " + "(null, 'INSERT INTO %s (rowid", table, table, table);
+            sql = new StringBuilder(512);
+            sql.append(String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt BEFORE DELETE ON %s BEGIN "
+                    + "INSERT INTO undoLog VALUES (null, 'INSERT INTO %s (rowid", table, table, table));
             for (String column : columns) {
-                sql += String.format(Utils.ENGLISH_LOCALE, ",\"%s\"", column);
+                sql.append(String.format(Utils.ENGLISH_LOCALE, ",\"%s\"", column));
             }
-            sql += ") VALUES (' || old.rowid ||'";
+            sql.append(") VALUES (' || old.rowid ||'");
             for (String column : columns) {
                 if (column.equals("unique")) {
-                    sql += ",1";
+                    sql.append(",1");
                     continue;
                 }
-                sql += String.format(Utils.ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column);
+                sql.append(String.format(Utils.ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column));
             }
-            sql += ")'); END";
-            getDB().getDatabase().execSQL(sql);
+            sql.append(")'); END");
+            getDB().getDatabase().execSQL(sql.toString());
         }
     }
 
@@ -3879,19 +3907,25 @@ public class Deck {
             }
         }
         if (tags.length != 0) {
-            String tagList = "";
+            StringBuilder tagList = new StringBuilder(128);
             for (int i = 0; i < tags.length; i++) {
-                tagList += "'" + tags[i] + "'";
+                tagList.append("'").append(tags[i]).append("'");
                 if (i < tags.length - 1) {
-                    tagList += ", ";
+                    tagList.append(", ");
                 }
             }
-            Cursor cur = getDB().getDatabase().rawQuery("SELECT tag, id FROM tags WHERE tag in (" +
-                    tagList + ")", null);
-            while (cur.moveToNext()) {
-                results.put(cur.getString(0).toLowerCase(), cur.getLong(1));
+            Cursor cur = null;
+            try {
+                cur = getDB().getDatabase().rawQuery("SELECT tag, id FROM tags WHERE tag in (" +
+                        tagList.toString() + ")", null);
+                while (cur.moveToNext()) {
+                    results.put(cur.getString(0).toLowerCase(), cur.getLong(1));
+                }
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
             }
-            cur.close();
         }
         return results;
     }

@@ -152,23 +152,24 @@ public class Utils {
      * @return An SQL compatible string in the format (ids[0],ids[1],..).
      */
     public static String ids2str(JSONArray ids) {
-        String str = "(";
+        StringBuilder str = new StringBuilder(512);
+        str.append("(");
         if (ids != null) {
             int len = ids.length();
             for (int i = 0; i < len; i++) {
                 try {
                     if (i == (len - 1)) {
-                        str += ids.get(i);
+                        str.append(ids.get(i));
                     } else {
-                        str += ids.get(i) + ",";
+                        str.append(ids.get(i)).append(",");
                     }
                 } catch (JSONException e) {
                     Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                 }
             }
         }
-        str += ")";
-        return str;
+        str.append(")");
+        return str.toString();
     }
 
 
@@ -178,19 +179,20 @@ public class Utils {
      * @return An SQL compatible string in the format (ids[0],ids[1],..).
      */
     public static String ids2str(List<String> ids) {
-        String str = "(";
+        StringBuilder str = new StringBuilder(512);
+        str.append("(");
         if (ids != null) {
             int len = ids.size();
             for (int i = 0; i < len; i++) {
                 if (i == (len - 1)) {
-                    str += ids.get(i);
+                    str.append(ids.get(i));
                 } else {
-                    str += ids.get(i) + ",";
+                    str.append(ids.get(i)).append(",");
                 }
             }
         }
-        str += ")";
-        return str;
+        str.append(")");
+        return str.toString();
     }
 
 
@@ -539,11 +541,11 @@ public class Utils {
      * @return The joined tags in a single string 
      */
     public static String joinTags(Collection<String> tags) {
-        String result = "";
+        StringBuilder result = new StringBuilder(128);
         for (String tag : tags) {
-            result += tag + " ";
+            result.append(tag).append(" ");
         }
-        return result.trim();
+        return result.toString().trim();
     }
     
     /**
