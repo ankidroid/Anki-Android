@@ -254,6 +254,10 @@
   <string name="per_day">Za den</string>
   <string name="undo">Vrátit zpět</string>
   <string name="redo">Zrušit vrácení</string>
+  <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
+  <string name="delete_deck_title">Smazat balíček</string>
+  <string name="delete_deck_message">Opravdu chcete smazat tento balíček?</string>
+  <string name="delete_deck_confirm">Smazat</string>
   <string-array name="studyoptions_more_new_card_order">
     <item>Nové karty v náhodném pořadí</item>
     <item>Nové karty v pořadí přidání</item>

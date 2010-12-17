@@ -50,7 +50,7 @@ languages = ['pt-PT', 'fr', 'ru', 'ca', 'es-ES', 'el', 'it', 'pl', 'de', 'ro', '
 zipname = 'ankidroid.zip'
 
 print "downloading crowdin-file"
-req = urllib.urlopen('http://crowdin.net/api/project/ankidroidv0-5/download/all.zip?key=0e54d112854fd69514d6e25856234621')
+req = urllib.urlopen('http://crowdin.net/download/project/ankidroidv0-5.zip')
 file(zipname, 'w').write(req.read())
 req.close()
 

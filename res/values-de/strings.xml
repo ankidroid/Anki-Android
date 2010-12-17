@@ -50,7 +50,6 @@
   <string name="session_question_limit_reached">Sitzungs-Fragenlimit erreicht</string>
   <string name="session_time_limit_reached">Sitzungs-Zeitlimit erreicht</string>
   <string name="cram_edit_warning">Kartenbearbeitung während des Paukens nicht erlaubt</string>
-  <string name="suspend_leeches">Lernbremsen aussetzen</string>
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="newcards_day_summ">Maximale Anzahl neuer Karten pro Tag wurde abgefragt.</string>
@@ -255,6 +254,10 @@
   <string name="per_day">Einteilung pro Tag</string>
   <string name="undo">Rückgängig</string>
   <string name="redo">Wiederholen</string>
+  <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
+  <string name="delete_deck_title">Stapel löschen</string>
+  <string name="delete_deck_message">Möchten Sie den Stapel %s wirklich löschen?</string>
+  <string name="delete_deck_confirm">Löschen</string>
   <string-array name="studyoptions_more_new_card_order">
     <item>Neue Karten in zufälliger Reihenfolge</item>
     <item>Neue Karten in Reihenfolge des Hinzufügens</item>
