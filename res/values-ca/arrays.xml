@@ -52,21 +52,21 @@
     <item>3</item>
   </string-array>
   <string-array name="displayFontSizeLabels">
-    <item>10 %</item>
-    <item>20 %</item>
-    <item>30 %</item>
-    <item>40 %</item>
-    <item>50 %</item>
-    <item>60 %</item>
-    <item>70 %</item>
-    <item>80 %</item>
-    <item>90 %</item>
-    <item>100 %</item>
-    <item>110 %</item>
-    <item>120 %</item>
-    <item>130 %</item>
-    <item>140 %</item>
-    <item>150 %</item>
+    <item>10%</item>
+    <item>20%</item>
+    <item>30%</item>
+    <item>40%</item>
+    <item>50%</item>
+    <item>60%</item>
+    <item>70%</item>
+    <item>80%</item>
+    <item>90%</item>
+    <item>100%</item>
+    <item>110%</item>
+    <item>120%</item>
+    <item>130%</item>
+    <item>140%</item>
+    <item>150%</item>
   </string-array>
   <string-array name="displayFontSizeVals">
     <item>10</item>
@@ -86,9 +86,9 @@
     <item>150</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Hide the question in answer</item>
-    <item>Show the question in answer</item>
-    <item>As defined in CardModel</item>
+    <item>Amaga la pregunta en mostrar la resposta</item>
+    <item>Mostra la pregunta amb la resposta</item>
+    <item>D\'acord amb el model de fitxa</item>
   </string-array>
   <string-array name="hideQuestionInAnswerVals">
     <item>0</item>
@@ -96,9 +96,9 @@
     <item>2</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Informa sempre</item>
+    <item>No informis mai</item>
+    <item>Demana-m\'ho</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
     <item>0</item>
@@ -131,15 +131,15 @@
     <item>Show in random order</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hour</item>
-    <item>day</item>
-    <item>month</item>
-    <item>year</item>
+    <item>hora</item>
+    <item>dia</item>
+    <item>mes</item>
+    <item>any</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>hours</item>
-    <item>days</item>
-    <item>months</item>
-    <item>years</item>
+    <item>hores</item>
+    <item>dies</item>
+    <item>mesos</item>
+    <item>anys</item>
   </string-array>
 </resources>

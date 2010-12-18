@@ -68,17 +68,17 @@
   <string name="review_cards_in">Repassar targetes en...</string>
   <string name="review_cards_order_summ">L\'ordre en el que mostrar les targetes a repassar.</string>
   <string name="show_answer">Mostrar resposta</string>
-  <string name="show_question">Show Question</string>
+  <string name="show_question">Mostra la pregunta</string>
   <string name="card_hint">Flashcard</string>
   <string name="ease1_learning">Again</string>
   <string name="ease2_learning">Good</string>
   <string name="ease3_learning">Easy</string>
-  <string name="ease4_learning">Very Easy</string>
+  <string name="ease4_learning">Molt fàcil</string>
   <string name="ease1_successive">Again</string>
-  <string name="ease2_successive">Hard</string>
+  <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Good</string>
   <string name="ease4_successive">Easy</string>
-  <string name="pref_cat_decks">Decks</string>
+  <string name="pref_cat_decks">Baralles</string>
   <string name="pref_cat_sync">Synchronization</string>
   <string name="pref_cat_advanced">Advanced</string>
   <string name="pref_cat_qadisplay">Question and answer display</string>
@@ -111,7 +111,7 @@
   <string name="shareddeckpicker_title">Select the deck you want to download</string>
   <string name="preferences_title">Preferences</string>
   <string name="deckpreferences_title">Deck Preferences</string>
-  <string name="about_title">About</string>
+  <string name="about_title">Quant a…</string>
   <string name="cardeditor_title">Card Editor</string>
   <string name="factadder_title">Card Adder</string>
   <string name="loading_deck">Carregant baralla. Si us plau, esperi...</string>
@@ -265,6 +265,10 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
   <string name="per_day">Per Day</string>
   <string name="undo">Undo</string>
   <string name="redo">Redo</string>
+  <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
+  <string name="delete_deck_title">Delete Deck</string>
+  <string name="delete_deck_message">Do you really want to delete this deck?</string>
+  <string name="delete_deck_confirm">Delete it</string>
   <string-array name="studyoptions_more_new_card_order">
     <item>New cards in random order</item>
     <item>New cards in order added</item>
