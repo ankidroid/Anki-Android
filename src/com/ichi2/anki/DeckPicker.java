@@ -720,6 +720,7 @@ public class DeckPicker extends Activity implements Runnable {
 			boolean deleted = file.delete();
 			if (deleted) {
 				SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+				mDeckIsSelected = false;
 				populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
 				//TODO: reset if the active deck is deleted
 			} else {
