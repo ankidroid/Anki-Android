@@ -26,9 +26,9 @@
   <string name="no">Nein</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Stapel mit einer älteren Version als 39 werden nicht durch AnkiDroid unterstützt. Öffnen Sie den Stapel mit Anki Desktop um ihn auf die neueste Version zu aktualisieren.</string>
-  <string name="deckpicker_title">Wählen Sie einen Stapel</string>
+  <string name="deckpicker_title">Stapel wählen (%1$d von %2$d fällig)</string>
   <string name="deckpicker_title_nosdcard">SD-Karte ist ausgehängt</string>
-  <string name="deckpicker_due">%1$d von %2$d offen</string>
+  <string name="deckpicker_due">%1$d von %2$d fällig</string>
   <string name="deckpicker_new">%d neue heute</string>
   <string name="deckpicker_loaddeck">Stapel wird geladen...</string>
   <string name="deckpicker_nodeck">Keine Stapel gefunden.</string>
@@ -50,6 +50,7 @@
   <string name="session_question_limit_reached">Sitzungs-Fragenlimit erreicht</string>
   <string name="session_time_limit_reached">Sitzungs-Zeitlimit erreicht</string>
   <string name="cram_edit_warning">Kartenbearbeitung während des Paukens nicht erlaubt</string>
+  <string name="suspend_leeches">Lernbremsen aussetzen</string>
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="newcards_day_summ">Maximale Anzahl neuer Karten pro Tag wurde abgefragt.</string>

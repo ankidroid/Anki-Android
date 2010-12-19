@@ -30,7 +30,7 @@
     <item>2</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
-    <item>Распространение через отзовы</item>
+    <item>Распространение через отзывы</item>
     <item>После отзывов</item>
     <item>Перед отзывами</item>
   </string-array>
@@ -40,7 +40,7 @@
     <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
-    <item>Большый интервал первым</item>
+    <item>Наибольший интервал первым</item>
     <item>Наименьший интервал первым</item>
     <item>Соответствующий порядок</item>
     <item>В случайном порядке</item>
@@ -52,21 +52,21 @@
     <item>3</item>
   </string-array>
   <string-array name="displayFontSizeLabels">
-    <item>10 %</item>
-    <item>20 %</item>
-    <item>30 %</item>
-    <item>40 %</item>
-    <item>50 %</item>
-    <item>60 %</item>
-    <item>70 %</item>
-    <item>80 %</item>
-    <item>90 %</item>
-    <item>100 %</item>
-    <item>110 %</item>
-    <item>120 %</item>
-    <item>130 %</item>
-    <item>140 %</item>
-    <item>150 %</item>
+    <item>10%</item>
+    <item>20%</item>
+    <item>30%</item>
+    <item>40%</item>
+    <item>50%</item>
+    <item>60%</item>
+    <item>70%</item>
+    <item>80%</item>
+    <item>90%</item>
+    <item>100%</item>
+    <item>110%</item>
+    <item>120%</item>
+    <item>130%</item>
+    <item>140%</item>
+    <item>150%</item>
   </string-array>
   <string-array name="displayFontSizeVals">
     <item>10</item>
@@ -86,9 +86,9 @@
     <item>150</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Hide the question in answer</item>
-    <item>Show the question in answer</item>
-    <item>As defined in CardModel</item>
+    <item>Скрыть вопрос в ответе</item>
+    <item>Показать вопрос в ответе</item>
+    <item>Как определено в модели карты</item>
   </string-array>
   <string-array name="hideQuestionInAnswerVals">
     <item>0</item>
@@ -96,9 +96,9 @@
     <item>2</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Всегда сообщать</item>
+    <item>Никогда не сообщать</item>
+    <item>Спросите меня</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
     <item>0</item>
@@ -113,7 +113,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Никогда</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_values">
     <item>10</item>
@@ -126,20 +126,20 @@
     <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Показывать сначала последние изменённые</item>
+    <item>Показывать в порядке добавления</item>
+    <item>Показывать в случайном порядке</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hour</item>
-    <item>day</item>
-    <item>month</item>
-    <item>year</item>
+    <item>час</item>
+    <item>День</item>
+    <item>Месяц</item>
+    <item>Год</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>hours</item>
-    <item>days</item>
-    <item>months</item>
-    <item>years</item>
+    <item>часов</item>
+    <item>дней</item>
+    <item>месяцев</item>
+    <item>лет</item>
   </string-array>
 </resources>

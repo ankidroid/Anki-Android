@@ -50,6 +50,7 @@
   <string name="session_question_limit_reached">Osiągnięto limit pytań w sesji</string>
   <string name="session_time_limit_reached">Osiągnięto limit czasu w sesji</string>
   <string name="cram_edit_warning">Card editing not allowed while cramming</string>
+  <string name="suspend_leeches">Suspend Leeches</string>
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
   <string name="leech_notification">Card marked as leech</string>
   <string name="newcards_day_summ">Maksymalna dzienna liczba nowych kart.</string>
@@ -267,7 +268,7 @@ Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i
   <string name="redo">Redo</string>
   <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
   <string name="delete_deck_title">Delete Deck</string>
-  <string name="delete_deck_message">Do you really want to delete this deck?</string>
+  <string name="delete_deck_message">Do you really want to delete deck %s?</string>
   <string name="delete_deck_confirm">Delete it</string>
   <string-array name="studyoptions_more_new_card_order">
     <item>New cards in random order</item>

@@ -34,7 +34,7 @@
 				<data android:mimeType="application/vnd.anki" />
 			</intent-filter>
 		</activity>
-		<activity android:name="DeckPicker" android:label="@string/deckpicker_title" />
+		<activity android:name="DeckPicker" android:label="DeckPicker" />
 		<activity android:name="PersonalDeckPicker" android:label="@string/personaldeckpicker_title" />
 		<activity android:name="SharedDeckPicker" android:label="@string/shareddeckpicker_title" />
 		<activity android:name="Reviewer" android:label="Reviewer" android:configChanges="keyboardHidden|orientation" />

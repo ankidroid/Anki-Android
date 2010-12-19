@@ -35,6 +35,8 @@ def replacechars(filename):
 			# crowdin doesn't seem to fill in the right email-adress, thus this workaround			
 			if line.startswith("  <string name=\"error_email\">report@example.org"):
 				line = "  <string name=\"error_email\">ankidroid@gmail.com</string>\n"
+			if line.startswith("    <item>0 </item>"):
+				line = "    <item>0</item>\n"
 			line = string.replace(line, '\'', '\\\'')
 			line = string.replace(line, '\\\\\'', '\\\'')
 		print line		

@@ -44,7 +44,7 @@
 
 
 <!-- DeckPicker.java -->
-<string name="deckpicker_title">Select a deck you copied to your SD card</string>
+<string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
 <string name="deckpicker_title_nosdcard">SD card is unmounted</string>
 <string name="deckpicker_due">%1$d of %2$d due</string>
 <string name="deckpicker_new">%d new today</string>

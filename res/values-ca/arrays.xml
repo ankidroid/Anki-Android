@@ -20,9 +20,9 @@
 <!--Generated with crowdin.net-->
 <resources>
   <string-array name="newCardOrderLabels">
-    <item>Ordre aleatori</item>
-    <item>Ordre afegit</item>
-    <item>Ordre invers de l\'afegit</item>
+    <item>Desordenat</item>
+    <item>S\'ha ordenat</item>
+    <item>S\'ha invertit l\'ordre</item>
   </string-array>
   <string-array name="newCardOrderVals">
     <item>0</item>
@@ -30,7 +30,7 @@
     <item>2</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
-    <item>Distribuir entre repassades</item>
+    <item>Posa-les entre les ja repassades</item>
     <item>Després de les repassades</item>
     <item>Abans de les repassades</item>
   </string-array>
@@ -40,10 +40,10 @@
     <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
-    <item>Major interval primer</item>
-    <item>Menor interval primer</item>
-    <item>Ordre programat</item>
-    <item>Ordre aleatori</item>
+    <item>Primer les de fa més temps</item>
+    <item>Primer les de fa menys temps</item>
+    <item>Per venciment</item>
+    <item>Desordenat</item>
   </string-array>
   <string-array name="revCardOrderVals">
     <item>0</item>
@@ -88,7 +88,7 @@
   <string-array name="hideQuestionInAnswerLabels">
     <item>Amaga la pregunta en mostrar la resposta</item>
     <item>Mostra la pregunta amb la resposta</item>
-    <item>D\'acord amb el model de fitxa</item>
+    <item>D\'acord amb la plantilla</item>
   </string-array>
   <string-array name="hideQuestionInAnswerVals">
     <item>0</item>
@@ -113,7 +113,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Mai</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_values">
     <item>10</item>
@@ -126,9 +126,9 @@
     <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Mostra primer els més antics modificats</item>
+    <item>Mostra primer per ordre en que s\'han afegit</item>
+    <item>Mostra\'ls desordenats</item>
   </string-array>
   <string-array name="next_review_s">
     <item>hora</item>

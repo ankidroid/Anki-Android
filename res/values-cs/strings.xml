@@ -50,6 +50,7 @@
   <string name="session_question_limit_reached">Dosaženo limitu otázek v sezení</string>
   <string name="session_time_limit_reached">Dosaženo časového limitu pro sezení</string>
   <string name="cram_edit_warning">Úprava karet není během šprtání povolena</string>
+  <string name="suspend_leeches">Suspend Leeches</string>
   <string name="leech_suspend_notification">Karta byla označena jako pijavice a byla vyřazena</string>
   <string name="leech_notification">Karta byla označena jako pijavice</string>
   <string name="newcards_day_summ">Maximální počet nových karet na den.</string>
@@ -254,10 +255,10 @@
   <string name="per_day">Za den</string>
   <string name="undo">Vrátit zpět</string>
   <string name="redo">Zrušit vrácení</string>
-  <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
-  <string name="delete_deck_title">Smazat balíček</string>
-  <string name="delete_deck_message">Opravdu chcete smazat tento balíček?</string>
-  <string name="delete_deck_confirm">Smazat</string>
+  <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
+  <string name="delete_deck_title">Delete Deck</string>
+  <string name="delete_deck_message">Do you really want to delete deck %s?</string>
+  <string name="delete_deck_confirm">Delete it</string>
   <string-array name="studyoptions_more_new_card_order">
     <item>Nové karty v náhodném pořadí</item>
     <item>Nové karty v pořadí přidání</item>

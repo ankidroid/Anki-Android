@@ -40,7 +40,6 @@ import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -112,6 +111,9 @@ public class DeckPicker extends Activity implements Runnable {
 	private String mRemoveDeckFilename = null;
 	private String mRemoveDeckPath = null;
 
+	private int mTotalDueCards = 0;
+	private int mTotalCards = 0;
+	
 	// ----------------------------------------------------------------------------
 	// LISTENERS
 	// ----------------------------------------------------------------------------
@@ -170,6 +172,7 @@ public class DeckPicker extends Activity implements Runnable {
 			mDeckListAdapter.notifyDataSetChanged();
 			Log.i(AnkiDroidApp.TAG,
 					"DeckPicker - mDeckList notified of changes");
+			setTitleText();
 		}
 	};
 
@@ -219,6 +222,8 @@ public class DeckPicker extends Activity implements Runnable {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
 
+		setTitleText();
+		
 		mSelf = this;
 		setContentView(R.layout.deck_picker);
 
@@ -474,7 +479,7 @@ public class DeckPicker extends Activity implements Runnable {
 						String deckPath = preferences.getString("deckPath",
 								AnkiDroidApp.getStorageDirectory());
 						mDeckIsSelected = false;
-						setTitle(R.string.deckpicker_title);
+						setTitleText();
 						populateDeckList(deckPath);
 					}
 				}
@@ -503,7 +508,11 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private void populateDeckList(String location) {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList");
-
+		
+		mTotalDueCards = 0;
+		mTotalCards = 0;
+		setTitleText();
+		
 		Resources res = getResources();
 		int len = 0;
 		File[] fileList;
@@ -661,6 +670,9 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("new", newCards);
 						data.putString("notes", upgradeNotes);
 						msg.setData(data);
+						
+						mTotalDueCards += dueCards;
+						mTotalCards += totalCards;
 
 						mHandler.sendMessage(msg);
 					}
@@ -674,7 +686,13 @@ public class DeckPicker extends Activity implements Runnable {
 			}
 		}
 	}
-
+	
+	
+	private void setTitleText(){
+		setTitle(String.format(getResources().getString(R.string.deckpicker_title), mTotalDueCards, mTotalCards));
+	}
+	
+	
 	private void handleDeckSelection(int id) {
 		String deckFilename = null;
 
