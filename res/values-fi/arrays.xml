@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+<!--Generated with crowdin.net-->
+<resources>
+  <string-array name="newCardOrderLabels">
+    <item>Satunnaisessa järjestyksessä</item>
+    <item>Lisäämisjärjestyksessä</item>
+    <item>Käänteisessä lisäämisjärjestyksessä</item>
+  </string-array>
+  <string-array name="newCardOrderVals">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
+  <string-array name="newCardSchedulingLabels">
+    <item>Jaa tarkastelujen kesken</item>
+    <item>Tarkastelun jälkeen</item>
+    <item>Ennen tarkastelua</item>
+  </string-array>
+  <string-array name="newCardSchedulingVals">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
+  <string-array name="revCardOrderLabels">
+    <item>Suurin väliaika ensin</item>
+    <item>Pienin väliaika ensin</item>
+    <item>Erääntyvien järjestyksessä</item>
+    <item>Satunnainen järjestys</item>
+  </string-array>
+  <string-array name="revCardOrderVals">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+  </string-array>
+  <string-array name="displayFontSizeLabels">
+    <item>10 %</item>
+    <item>20 %</item>
+    <item>30 %</item>
+    <item>40 %</item>
+    <item>50 %</item>
+    <item>60 %</item>
+    <item>70 %</item>
+    <item>80 %</item>
+    <item>90 %</item>
+    <item>100 %</item>
+    <item>110 %</item>
+    <item>120 %</item>
+    <item>130 %</item>
+    <item>140 %</item>
+    <item>150 %</item>
+  </string-array>
+  <string-array name="displayFontSizeVals">
+    <item>10</item>
+    <item>20</item>
+    <item>30</item>
+    <item>40</item>
+    <item>50</item>
+    <item>60</item>
+    <item>70</item>
+    <item>80</item>
+    <item>90</item>
+    <item>100</item>
+    <item>110</item>
+    <item>120</item>
+    <item>130</item>
+    <item>140</item>
+    <item>150</item>
+  </string-array>
+  <string-array name="hideQuestionInAnswerLabels">
+    <item>Piilota kysymys vastatessa</item>
+    <item>Näytä kysymys vastatessa</item>
+    <item>CardModelin mukaan</item>
+  </string-array>
+  <string-array name="hideQuestionInAnswerVals">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
+  <string-array name="error_reporting_choice_labels">
+    <item>Raportoi aina</item>
+    <item>Älä raportoi koskaan</item>
+    <item>Kysy</item>
+  </string-array>
+  <string-array name="error_reporting_choice_values">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
+  <string-array name="widget_minimum_cards_due_labels">
+    <item>10</item>
+    <item>25</item>
+    <item>50</item>
+    <item>75</item>
+    <item>100</item>
+    <item>150</item>
+    <item>200</item>
+    <item>Ei koskaan</item>
+  </string-array>
+  <string-array name="widget_minimum_cards_due_values">
+    <item>10</item>
+    <item>25</item>
+    <item>50</item>
+    <item>75</item>
+    <item>100</item>
+    <item>150</item>
+    <item>200</item>
+    <item>1000000</item>
+  </string-array>
+  <string-array name="cram_review_order_labels">
+    <item>Näytä vanhin muutettu ensimmäisenä</item>
+    <item>Näytä lisätyt järjestyksessä</item>
+    <item>Näytä satunnaisessa järjestyksessä</item>
+  </string-array>
+  <string-array name="next_review_s">
+    <item>tunti</item>
+    <item>päivä</item>
+    <item>kuukausi</item>
+    <item>vuosi</item>
+  </string-array>
+  <string-array name="next_review_p">
+    <item>tuntia</item>
+    <item>päivää</item>
+    <item>Kuukautta</item>
+    <item>vuotta</item>
+  </string-array>
+</resources>

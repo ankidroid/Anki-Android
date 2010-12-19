@@ -18,6 +18,12 @@
 # http://crowdin.net/download/project/ankidroid.zip
 # Unfortunately, the arrays.xml files' 0,1,2,3,4,5 values must be fixed manually (Linux command: meld git) --> seems to work now
 
+# Below is the list of official AnkiDroid localizations.
+# Add a language if it is more than 50% translated.
+languages = ['pt-PT', 'fr', 'ru', 'ca', 'es-ES', 'el', 'it', 'pl', 'de', 'ro', 'sv-SE', 'zh-CN', 'zh-TW', 'cs', 'ru', 'fi'];
+
+
+
 
 import os
 import zipfile
@@ -45,10 +51,6 @@ def replacechars(filename):
 	fin.close()
 	os.rename(newfilename, filename)
 	
-
-# Below is the list of official AnkiDroid localizations.
-# Add a language if it is more than 50% translated.
-languages = ['pt-PT', 'fr', 'ru', 'ca', 'es-ES', 'el', 'it', 'pl', 'de', 'ro', 'sv-SE', 'zh-CN', 'zh-TW', 'cs'];
 zipname = 'ankidroid.zip'
 
 print "downloading crowdin-file"
