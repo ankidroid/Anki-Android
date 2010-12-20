@@ -20,7 +20,7 @@
 
 # Below is the list of official AnkiDroid localizations.
 # Add a language if it is more than 50% translated.
-languages = ['pt-PT', 'fr', 'ru', 'ca', 'es-ES', 'el', 'it', 'pl', 'de', 'ro', 'sv-SE', 'zh-CN', 'zh-TW', 'cs', 'ru', 'fi'];
+languages = ['pt-PT', 'fr', 'ru', 'ca', 'es-ES', 'el', 'it', 'pl', 'de', 'ro', 'sv-SE', 'zh-CN', 'zh-TW', 'cs', 'fi'];
 
 
 
@@ -41,7 +41,8 @@ def replacechars(filename):
 			# crowdin doesn't seem to fill in the right email-adress, thus this workaround			
 			if line.startswith("  <string name=\"error_email\">report@example.org"):
 				line = "  <string name=\"error_email\">ankidroid@gmail.com</string>\n"
-			if line.startswith("    <item>0 </item>"):
+			# some people outwitted crowdin's "0"-bug by filling in "0 ", this changes it back:
+			if line.startswith("    <item>0 </item>"): 
 				line = "    <item>0</item>\n"
 			line = string.replace(line, '\'', '\\\'')
 			line = string.replace(line, '\\\\\'', '\\\'')

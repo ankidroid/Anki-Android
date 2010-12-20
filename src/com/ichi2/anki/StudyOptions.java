@@ -342,7 +342,7 @@ public class StudyOptions extends Activity {
 
         initAllContentViews();
         initAllDialogs();
-
+        
         if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
             AnkiDroidApp.deck().finishScheduler();
         }
@@ -808,12 +808,11 @@ public class StudyOptions extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean deckLoaded = AnkiDroidApp.deck() != null;
-        
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
         menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
-        // menu.findItem(MENU_DECK_PROPERTIES).setEnabled(deckLoaded && sdCardAvailable);
+        menu.findItem(MENU_ADD_FACT).setEnabled(mDeckFilename != null && mSdCardAvailable);
+        menu.findItem(MENU_MORE_OPTIONS).setEnabled(mDeckFilename != null && mSdCardAvailable && !mToggleCram.isChecked());
         menu.findItem(MENU_SYNC).setEnabled(deckLoaded && mSdCardAvailable);
-        menu.findItem(MENU_MORE_OPTIONS).setEnabled(!mToggleCram.isChecked());
         return true;
     }
 
