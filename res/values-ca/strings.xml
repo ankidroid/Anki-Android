@@ -26,7 +26,7 @@
   <string name="no">No</string>
   <string name="ok">D\'acord</string>
   <string name="deck_upgrade_too_old_version">Els paquets de les versions anteriors a la 39 no són compatibles amb AnkiDroid, si us plau, obriu el paquet amb la versió d\'Anki d\'escriptori per actualitzar el paquet a la versió actual.</string>
-  <string name="deckpicker_title">Trieu un paquet de la targeta SD</string>
+  <string name="deckpicker_title">Trieu un paquet (%1$d de %2$d pendents)</string>
   <string name="deckpicker_title_nosdcard">La targeta SD no està muntada</string>
   <string name="deckpicker_due">%1$d de %2$d pendents</string>
   <string name="deckpicker_new">%d noves avui</string>
@@ -36,7 +36,7 @@
   <string name="deckpicker_upgrading">S\'està actualitzant el paquet ...</string>
   <string name="deckpicker_upgrade_failed">No ha estat possible actualitzar!</string>
   <string name="deckpicker_upgrade_notes_title">Resultats de l\'actualització del paquet</string>
-  <string name="deckpicker_upgrade_notes_button">Anotacions</string>
+  <string name="deckpicker_upgrade_notes_button">Més informació</string>
   <string name="notify_ticker">Actualització de l\'aplicació</string>
   <string name="notify_title">S\'ha actualitzat Ankidroid</string>
   <string name="notify_message">Baixa una nova versió</string>
@@ -103,7 +103,7 @@
   <string name="display_font_size">Tipus de lletra de mida definida</string>
   <string name="display_font_size_summ">Es farà servir el tipus de lletra de mida definida al paquet</string>
   <string name="hide_question_in_answer">Amaga la pregunta a la resposta?</string>
-  <string name="hide_question_in_answer_summ">Indica si la pregunta s\'ha mostrar quan es mostri la resposta.</string>
+  <string name="hide_question_in_answer_summ">Indica si la pregunta s\'ha de mostrar quan es mostri la resposta.</string>
   <string name="deck_path">Carpeta dels paquets</string>
   <string name="deck_path_summ">Ruta de la carpeta dels vostres paquets</string>
   <string name="fullscreen_review">Mostra a pantalla completa</string>
@@ -134,7 +134,7 @@
   <string name="updating">S\'està actualitzant...</string>
   <string name="loading_shared_decks">S\està carregant els paquets compartits...</string>
   <string name="cancel_download">Atura la baixada</string>
-  <string name="resume_download">Segueix baixant</string>
+  <string name="resume_download">Reprèn la baixada</string>
   <string name="pause_download">Fes una pausa a la baixada</string>
   <string name="duplicate_download">Aquest paquet ja s\'està baixant</string>
   <string name="sync_all">Sincronitza-ho tot</string>
@@ -145,18 +145,18 @@
   <string name="about_content">&lt;html&gt;
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Fitxes per a Android &lt;/ h2&gt;
-&lt;p&gt;AnkiDroid pot llegir els arxius .anki preparats pel programari &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/ a&gt;&lt;/ p&gt;
-&lt;p&gt;Per ajudar-nos a millorar AnkiDroid, si us plau comuniqueu qualsevol error &lt;a href="http://code.google.com/p/ankidroid/issues"&gt; aquí &lt;/ a&gt;, també ens agradaria rebre noves característiques que hi voldrieu afegir!
-Si us plau, utilitzeu el &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; i saludeu al &lt;a href = "http://groups.google.com/group/anki-android"&gt;fòrum&lt;/a&gt;.&lt;/ p&gt;
-&lt;p&gt;AnkiDroid és &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;programari de codi obert&lt;/ a&gt;, així que animem a tothom a &lt;a href = "http://ichi2.net/anki/wiki/ContributeToAnkiDroid "&gt;unir-se&lt;/a&gt; als &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;cool·laboradors&lt;/a&gt; :-)
-Els que no són desenvolupadors també poden ajudar, per exemple mitjançant l\'actualització de la wiki, captures de pantalla, &lt;a href = "http://ichi2.net/anki/donate.html"&gt;fent una donació&lt;/a&gt; a Anki, o parlant de AnkiDroid al vostre blog!&lt;/ p&gt;
-&lt;p&gt;AnkiDroid es distribueix sota la &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;llicència GNU-GPL v3&lt;/a&gt; i el codi font està disponible &lt;a href = "http://github.com/nicolas-raoul/Anki-Android &gt;aquí&lt;/a&gt;.&lt;/ p&gt;
+Fitxes per memoritzar per a Android &lt;/h2&gt;
+&lt;p&gt;L\'AnkiDroid pot llegir els fitxers .anki preparats pel programari &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Per ajudar-nos a millorar l\'AnkiDroid, si us plau comuniqueu qualsevol error &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;aquí&lt;/a&gt;, també ens agradaria rebre noves característiques que hi voldrieu afegir!
+Si us plau, utilitzeu el &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; i saludeu al &lt;a href="http://groups.google.com/group/anki-android"&gt;fòrum&lt;/a&gt;.&lt;/ p&gt;
+&lt;p&gt;L\'AnkiDroid és &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;programari de codi obert&lt;/a&gt;, així que animem a tothom a &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid "&gt;unir-se&lt;/a&gt; als &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;col·laboradors&lt;/a&gt; :-)
+Els que no sou desenvolupadors també podeu ajudar, per exemple actualitzant el wiki, fent captures de pantalla, &lt;a href="http://ichi2.net/anki/donate.html"&gt;fent una donació&lt;/a&gt; a l\'Anki, o parlant de l\'AnkiDroid al vostre blog!&lt;/ p&gt;
+&lt;p&gt;L\'AnkiDroid es distribueix sota la &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;llicència GNU-GPL v3&lt;/a&gt; i el codi font està disponible &lt;a href = "http://github.com/nicolas-raoul/Anki-Android"&gt;aquí&lt;/a&gt;.&lt;/ p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
   <string name="studyoptions_title">Opcions d\'aprenentatge</string>
   <string name="studyoptions_deck_name">Nom del paquet</string>
-  <string name="studyoptions_reviews_due">A revisar el dia:</string>
+  <string name="studyoptions_reviews_due">Pendents de revisar:</string>
   <string name="studyoptions_new_today">Noves avui:</string>
   <string name="studyoptions_new_total">Total de noves:</string>
   <string name="studyoptions_new_cards_per_day">Fitxes noves per dia:</string>

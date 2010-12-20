@@ -26,7 +26,7 @@
   <string name="no">Ne</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Balíčky verze starší jako 39 nejsou AnkdiDroidem podporovány. Prosím otevřete je v desktopové verzi Anki a aktualizujte je na nejnovější verzi.</string>
-  <string name="deckpicker_title">Vyberte balík zkopírovaný na kartu SD</string>
+  <string name="deckpicker_title">Vyberte balík (%1$d z %2$d k zopakování)</string>
   <string name="deckpicker_title_nosdcard">SD karta je odpojena</string>
   <string name="deckpicker_due">zbývá %1$d / %2$d </string>
   <string name="deckpicker_new">%d nových karet na den</string>

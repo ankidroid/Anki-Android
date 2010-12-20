@@ -20,8 +20,8 @@
 <!--Generated with crowdin.net-->
 <resources>
   <string-array name="newCardOrderLabels">
-    <item>Случайно</item>
-    <item>Порядок добавлен</item>
+    <item>В случайном порядке</item>
+    <item>Порядок просмотра добавлен</item>
     <item>Обратный порядок добавлен</item>
   </string-array>
   <string-array name="newCardOrderVals">
@@ -31,8 +31,8 @@
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Распространение через отзывы</item>
-    <item>После отзывов</item>
-    <item>Перед отзывами</item>
+    <item>После просмотра</item>
+    <item>Перед просмотром</item>
   </string-array>
   <string-array name="newCardSchedulingVals">
     <item>0</item>
@@ -86,8 +86,8 @@
     <item>150</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Скрыть вопрос в ответе</item>
-    <item>Показать вопрос в ответе</item>
+    <item>Скрыть вопрос при ответе</item>
+    <item>Показать вопрос при ответе</item>
     <item>Как определено в модели карты</item>
   </string-array>
   <string-array name="hideQuestionInAnswerVals">

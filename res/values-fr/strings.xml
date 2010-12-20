@@ -26,7 +26,7 @@
   <string name="no">Non</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Les paquets dont la version est antérieure à 39 ne sont pas pris en charge par AnkiDroid, veuillez ouvrir ce paquet avec l\'application de bureau Anki pour mettre à jour le paquet à la dernière version.</string>
-  <string name="deckpicker_title">Sélectionnez un des paquets stockés sur votre carte SD</string>
+  <string name="deckpicker_title">Sélectionnez un des paquets (%1$d parmi %2$d dûes)</string>
   <string name="deckpicker_title_nosdcard">La carte SD n\'est pas montée</string>
   <string name="deckpicker_due">%1$d parmi %2$d dûes</string>
   <string name="deckpicker_new">%d nouvelles aujourd\'hui</string>

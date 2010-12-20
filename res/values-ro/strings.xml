@@ -26,7 +26,7 @@
   <string name="no">Nu</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-  <string name="deckpicker_title">Selectaţi un pachet copiat pe cardul SD</string>
+  <string name="deckpicker_title">Selectaţi un pachet (%1$d din %2$d scadente)</string>
   <string name="deckpicker_title_nosdcard">Cardul SD nu este montat.</string>
   <string name="deckpicker_due">%1$d din %2$d scadente</string>
   <string name="deckpicker_new">%d noi astăzi</string>

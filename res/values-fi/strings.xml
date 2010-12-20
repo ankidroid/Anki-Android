@@ -36,7 +36,7 @@
   <string name="deckpicker_upgrading">Päivitetään pakkaa...</string>
   <string name="deckpicker_upgrade_failed">Päivitys epäonnistui!</string>
   <string name="deckpicker_upgrade_notes_title">Upgrade deck results</string>
-  <string name="deckpicker_upgrade_notes_button">Notes</string>
+  <string name="deckpicker_upgrade_notes_button">Huomautukset</string>
   <string name="notify_ticker">Sovelluksen päivitys</string>
   <string name="notify_title">Ankidroid on päivitetty</string>
   <string name="notify_message">Lataa uusin versio</string>
@@ -49,7 +49,7 @@
   <string name="clear_whiteboard">Tyhjennä Valkotaulu</string>
   <string name="session_question_limit_reached">Istunnon kysymysten raja saavutettu</string>
   <string name="session_time_limit_reached">Istunnon aikaraja saavutettu</string>
-  <string name="cram_edit_warning">Card editing not allowed while cramming</string>
+  <string name="cram_edit_warning">Kortin muokkaaminen ei ole pänttäämisen aikana</string>
   <string name="suspend_leeches">Suspend Leeches</string>
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
   <string name="leech_notification">Card marked as leech</string>
@@ -90,8 +90,8 @@
   <string name="show_timer">Näytä ajastin</string>
   <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
   <string name="show_whiteboard_summ">Voit kirjoittaa ruudulle</string>
-  <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
-  <string name="whiteboard_stroke_width_summ">Select the width of the stroke</string>
+  <string name="whiteboard_stroke_width">Valkotaulun reunanleveys</string>
+  <string name="whiteboard_stroke_width_summ">Valitse reunan leveys</string>
   <string name="sample_deck">Esimerkkipakka</string>
   <string name="sample_deck_summ">Luo pakka pääkaupungeista, jos pakkaa ei löydy</string>
   <string name="write_answers">Kirjoita vastaukset</string>
@@ -108,7 +108,7 @@
   <string name="deck_path_summ">Polku jonne pakkasi on tallennettu</string>
   <string name="fullscreen_review">Review in fullscreen</string>
   <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
-  <string name="personaldeckpicker_title">Open Online Deck</string>
+  <string name="personaldeckpicker_title">Avaa Online-pakka</string>
   <string name="shareddeckpicker_title">Valitse pakka jonka haluat ladata</string>
   <string name="preferences_title">Asetukset</string>
   <string name="deckpreferences_title">Pakan asetukset</string>
@@ -119,108 +119,109 @@
   <string name="connection_needed">Ei ole internet-yhteyttä</string>
   <string name="currently_downloading">Nyt ladataan</string>
   <string name="personal_decks">Henkilökohtaiset Pakat</string>
-  <string name="starting_download">Starting download...</string>
+  <string name="starting_download">Aloitetaan lataaminen...</string>
   <string name="downloading">Ladataan...</string>
   <string name="paused">Pysäytetty</string>
   <string name="downloaded">Ladattu</string>
   <string name="error">Virhe</string>
   <string name="cancelling">Peruutetaan...</string>
-  <string name="loading_personal_decks">Loading available personal decks...</string>
+  <string name="loading_personal_decks">Ladataan käytettävissä henkilökohtaisia pakkoja...</string>
   <string name="connection_error_title">Huomio</string>
   <string name="connection_error_return_message">A network error has ocurred. Retry, or cancel and return to the previous screen.</string>
   <string name="retry">Yritä uudelleen</string>
   <string name="cancel">Peru</string>
-  <string name="shared_decks">Shared Decks</string>
+  <string name="shared_decks">Jaetut Pakat</string>
   <string name="updating">Päivitetään...</string>
   <string name="loading_shared_decks">Saatavilla olevia jaettuja pakkoja ladataan...</string>
   <string name="cancel_download">Peruuta Lataus</string>
   <string name="resume_download">Jatka Lataamista</string>
   <string name="pause_download">Keskeytä lataaminen</string>
-  <string name="duplicate_download">This deck is already downloading</string>
+  <string name="duplicate_download">Tämä pakka on jo latauksessa</string>
   <string name="sync_all">Synkronoi kaikki</string>
   <string name="fact">tosiasia</string>
   <string name="facts">tosiasiaa</string>
   <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Lisätty/Muutettu&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Täällä&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Serveri&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Kortit&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Faktat&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Mallit&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Tallennetaan muutokset ...</string>
-  <string name="about_content">&lt;html&gt;
+  <string name="about_content">
+&lt;html&gt;
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Flashcards for Android&lt;/h2&gt;
-&lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
-&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;here&lt;/a&gt;, new feature ideas are very welcome too!
-Please use the &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid is &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;join&lt;/a&gt; the &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contributors&lt;/a&gt; :-)
-Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
-&lt;p&gt;AnkiDroid is released under the &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;here&lt;/a&gt;.&lt;/p&gt;
+Kysymyskorttit Androidille&lt;/h2&gt;
+&lt;p&gt;AnkiDroid pystyy lukemaan .anki -tiedostoja, jotka on luotu &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;-ohjelmistolla.&lt;/p&gt;
+&lt;p&gt;Auta meitä tekemään AnkiDroidista parempi, ilmoita virheistä &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;täällä&lt;/a&gt;, uudet ideat ovat erittäin tervetulleita myös!
+Käytä &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wikiä&lt;/a&gt; ja sano terveiset &lt;a href="http://groups.google.com/group/anki-android"&gt;foorumissa&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid on &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;avoimen lähdekoodin ohjelmisto&lt;/a&gt;, joten kaikkia kehotetaan &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;liittymöön&lt;/a&gt; the &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;avustajiksi&lt;/a&gt; :-)
+Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaappauksia, &lt;a href="http://ichi2.net/anki/donate.html"&gt;lahoittaa &lt;/a&gt;, kirjoitaa blogiin AnkiDroidista!&lt;/p&gt;
+&lt;p&gt;AnkiDroidista on julkaistu &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU GPLv3 lisenssillä&lt;/a&gt; ja lähdekoodi on saatavilla täältä &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;täältä&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">Opiskelu Asetukset</string>
   <string name="studyoptions_deck_name">Pakan nimi</string>
   <string name="studyoptions_reviews_due">Reviews due:</string>
-  <string name="studyoptions_new_today">New today:</string>
+  <string name="studyoptions_new_today">Uutta tänään:</string>
   <string name="studyoptions_new_total">New total:</string>
   <string name="studyoptions_new_cards_per_day">New cards per day:</string>
   <string name="studyoptions_session_minutes">Session limit (minutes):</string>
   <string name="studyoptions_session_questions">Session limit (questions):</string>
   <string name="studyoptions_start">Aloita tarkistaminen</string>
-  <string name="studyoptions_more">Study Options</string>
+  <string name="studyoptions_more">Opiskelu Asetukset</string>
   <string name="studyoptions_window_title">%1$s (%2$d of %3$d due)</string>
   <string name="studyoptions_more_dialog_title">Lisää Valintoja</string>
   <string name="studyoptions_more_save">Tallenna</string>
-  <string name="studyoptions_nodeck_title">No Deck Loaded</string>
+  <string name="studyoptions_nodeck_title">Pakkaa Ei Ole Ladattu</string>
   <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored on your SD card and are read from the location specified in the preferences (currently this is set to: \"%s\"). The preferences can be reached by pressing your device\'s \"Menu\" button and then selecting \"Preferences\".\n\nTo load a deck, press your device\'s \"Menu\" button and then select \"Open Deck\" or press one of the buttons below.</string>
-  <string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
+  <string name="studyoptions_deck_not_loaded_title">Pakkaa ei voitu ladata</string>
   <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
   <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
   <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the sdcard in order to read and load your Anki decks. Check that your sdcard is mounted and try again.</string>
   <string name="studyoptions_load_other_deck">Load Other Deck</string>
-  <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
-  <string name="menu_open_deck">Open Deck</string>
+  <string name="studyoptions_load_sample_deck">Lataa Näytekappale Pakasta</string>
+  <string name="menu_open_deck">Avaa Pakka</string>
   <string name="menu_sync">Synkronointi</string>
   <string name="menu_download_deck">Lataa pakka</string>
-  <string name="menu_download_shared_deck">Shared deck</string>
+  <string name="menu_download_shared_deck">Jaettu Pakka</string>
   <string name="menu_download_personal_deck">Henkilökohtainen pakka</string>
   <string name="menu_synchronize">Synkronoi</string>
   <string name="menu_my_account">Oma Tili</string>
   <string name="menu_preferences">Asetukset</string>
-  <string name="menu_deck_properties">Deck Properties</string>
+  <string name="menu_deck_properties">Kannen Ominaisuudet</string>
   <string name="menu_add_card">Lisää kortti</string>
   <string name="menu_about">Tietoja</string>
-  <string name="menu_suspend_card">Suspend Card</string>
+  <string name="menu_suspend_card">Keskeytä</string>
   <string name="menu_edit_card">Muokkaa Korttia</string>
   <string name="menu_search">Lookup in Aedict</string>
   <string name="menu_mark_card">Merkitse Kortti</string>
   <string name="menu_marked">Merkitty</string>
   <string name="loading">Ladataan...</string>
-  <string name="studyoptions_continue">Continue Reviewing</string>
+  <string name="studyoptions_continue">Jatka Tarkastelua</string>
   <string name="studyoptions_well_done">Hyvin Tehty!</string>
   <string name="studyoptions_congrats_title">Onneksi olkoon!</string>
-  <string name="studyoptions_congrats_message">You have finished for now.</string>
+  <string name="studyoptions_congrats_message">Olet valmis nyt.</string>
   <string name="studyoptions_congrats_learnmore">Opi Lisää</string>
   <string name="studyoptions_congrats_reviewearly">Review Early</string>
-  <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
-  <string name="studyoptions_congrats_finish">Back to Study Screen</string>
+  <string name="studyoptions_congrats_open_other_deck">Avaa Muu Pakka</string>
+  <string name="studyoptions_congrats_finish">Takaisin Opiskelu Näyttöön</string>
   <string name="username">Käyttäjätunnus</string>
   <string name="password">Salasana</string>
   <string name="log_in">Kirjaudu sisään</string>
-  <string name="sign_up_description">Don\'t have an AnkiOnline account? It\'s free!</string>
+  <string name="sign_up_description">Etkö omista AnkiOnline-tiliä? Se on ilmaista!</string>
   <string name="sign_up">Rekisteröidy</string>
-  <string name="logged_as">Logged as</string>
+  <string name="logged_as">Kirjautunut</string>
   <string name="log_out">Kirjaudu ulos</string>
-  <string name="alert_logging_message">Logging in, please wait...</string>
+  <string name="alert_logging_message">Kirjaudutaan sisälle, odota hetki...</string>
   <string name="invalid_username_password">Virheellinen käyttäjätunnus tai salasana.</string>
   <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
   <string name="download_finished">Lataaminen valmistui</string>
   <string name="deck_downloaded">Pakka ladattu</string>
-  <string name="connection_error_message">A network error has ocurred.</string>
-  <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
-  <string name="sync_progress_bar_title">Syncing %s</string>
-  <string name="studyoptions_cram_dialog_title">Tags to cram</string>
-  <string name="begin_cram">Start Cram mode</string>
-  <string name="end_cram">Stop Cram mode</string>
+  <string name="connection_error_message">Verkkovirhe on tapahtunut.</string>
+  <string name="no_user_password_error_message">Jotta voit jatkaa toimintoa, sinun täytyy olla AnkiOnline-tili ja olla kirjautunut sisälle.</string>
+  <string name="sync_progress_bar_title">Synkronoidaan %s</string>
+  <string name="studyoptions_cram_dialog_title">Päntäämisen tagit</string>
+  <string name="begin_cram">Aloita Opiskelutila</string>
+  <string name="end_cram">Lopeta Opiskelutila</string>
   <string name="cram">Päntätä</string>
   <string name="sync_connecting_message">Yhdistetään...</string>
-  <string name="sync_syncing_message">Syncing %s</string>
+  <string name="sync_syncing_message">Synkronoidaan %s</string>
   <string name="sync_summary_from_server_message">Fetching summary from server...</string>
   <string name="sync_preparing_full_sync_message">Preparing full sync...</string>
   <string name="sync_uploading_message">Lähetetään...</string>
