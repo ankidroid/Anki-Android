@@ -209,6 +209,9 @@ public class DeckPicker extends Activity implements Runnable {
 			mSyncLogAlert
 					.setMessage(getSyncLogMessage((ArrayList<HashMap<String, String>>) data.result));
 			mSyncLogAlert.show();
+			mDeckIsSelected = false;
+			SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+			populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
 		}
 	};
 
@@ -717,10 +720,11 @@ public class DeckPicker extends Activity implements Runnable {
 		if (deckFilename != null) {
 			Log.i(AnkiDroidApp.TAG, "Deleting " + deckFilename);
 			File file = new File(deckFilename);
+			String selectedDeckPath = "";
 			boolean deleted = file.delete();
 			if (deleted) {
-				SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 				mDeckIsSelected = false;
+				SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 				populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
 				//TODO: reset if the active deck is deleted
 			} else {

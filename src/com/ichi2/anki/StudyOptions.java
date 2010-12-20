@@ -88,6 +88,7 @@ public class StudyOptions extends Activity {
     private static final int DOWNLOAD_PERSONAL_DECK = 3;
     private static final int DOWNLOAD_SHARED_DECK = 4;
     private static final int REPORT_ERROR = 5;
+    private static final int ADD_FACT = 6;
 
     /**
 * Constants for selecting which content view to display
@@ -314,10 +315,14 @@ public class StudyOptions extends Activity {
             deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
             deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
             // TODO: mSpinnerFailCardOption
+            boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked(); 
           	deck.setPerDay(mCheckBoxPerDay.isChecked());
           	deck.setSuspendLeeches(mCheckBoxSuspendLeeches.isChecked());
             // TODO: Update number of due cards after change of per day scheduling 
             dialog.dismiss();
+            if (perDayChanged){
+            	reloadDeck();
+            }
         }
     };
 
@@ -810,7 +815,7 @@ public class StudyOptions extends Activity {
         boolean deckLoaded = AnkiDroidApp.deck() != null;
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
         menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
-        menu.findItem(MENU_ADD_FACT).setEnabled(mDeckFilename != null && mSdCardAvailable);
+        menu.findItem(MENU_ADD_FACT).setEnabled(mDeckFilename != null && mSdCardAvailable && !mToggleCram.isChecked());
         menu.findItem(MENU_MORE_OPTIONS).setEnabled(mDeckFilename != null && mSdCardAvailable && !mToggleCram.isChecked());
         menu.findItem(MENU_SYNC).setEnabled(deckLoaded && mSdCardAvailable);
         return true;
@@ -859,7 +864,7 @@ public class StudyOptions extends Activity {
                 return true;
 
             case MENU_ADD_FACT:
-                startActivity(new Intent(StudyOptions.this, FactAdder.class));
+            	startActivityForResult(new Intent(StudyOptions.this, FactAdder.class), ADD_FACT);
                 return true;
 
             case MENU_ABOUT:
@@ -939,6 +944,15 @@ public class StudyOptions extends Activity {
         }
     }
 
+    private void reloadDeck() {
+    	Deck deck = AnkiDroidApp.deck(); 
+    	if (deck != null){
+    		deck.closeDeck();
+    		AnkiDroidApp.setDeck(null);
+    	}
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(
+                mDeckFilename));
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -959,9 +973,15 @@ public class StudyOptions extends Activity {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
                 // Make sure we open the database again in onResume() if user pressed "back"
                 // deckSelected = false;
+                boolean mFileNotDeleted = mDeckFilename != null && new File(mDeckFilename).exists();
+            	if (!mFileNotDeleted) {
+                    AnkiDroidApp.setDeck(null);
+                    showContentView(CONTENT_NO_DECK);
+            	}
                 displayProgressDialogAndLoadDeck();
                 return;
             }
+
             if (intent == null) {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned null intent");
                 // Make sure we open the database again in onResume()
@@ -1002,6 +1022,8 @@ public class StudyOptions extends Activity {
                     showContentView(CONTENT_STUDY_OPTIONS);
                     break;
             }
+        } else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
+            reloadDeck();
         }
     }
 
@@ -1144,15 +1166,7 @@ public class StudyOptions extends Activity {
                 mProgressDialog.dismiss();
             }
             if (data.success) {
-                // closeDeck();
-                // if(AnkiDroidApp.deck() != null )//&& sdCardAvailable)
-                // {
-                // AnkiDroidApp.deck().closeDeck();
-                AnkiDroidApp.setDeck(null);
-                // }
-
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(
-                        mDeckFilename));
+            	reloadDeck();
             } else {
                 // connectionFailedAlert.show();
                 if (mConnectionErrorAlert != null) {
