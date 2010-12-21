@@ -30,12 +30,15 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -70,6 +73,7 @@ public class PersonalDeckPicker extends Activity {
     private List<Object> mAllPersonalDecks;
     private ListView mPersonalDecksListView;
     private PersonalDecksAdapter mPersonalDecksAdapter;
+    private EditText mSearchEditText;
 
 
     /********************************************************************
@@ -92,7 +96,7 @@ public class PersonalDeckPicker extends Activity {
         mAllPersonalDecks = new ArrayList<Object>();
         mPersonalDecksAdapter = new PersonalDecksAdapter();
         mPersonalDecksListView = (ListView) findViewById(R.id.list);
-        mPersonalDecksListView.setAdapter(mPersonalDecksAdapter);
+        mPersonalDecksListView.setAdapter(mPersonalDecksAdapter);     
         mPersonalDecksListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -113,6 +117,26 @@ public class PersonalDeckPicker extends Activity {
 
         });
 
+        mSearchEditText = (EditText) findViewById(R.id.shared_deck_download_search);
+        mSearchEditText.addTextChangedListener(new TextWatcher() {
+        	public void afterTextChanged(Editable s) {
+    			List<String> foundDecks = new ArrayList<String>();
+            	foundDecks.clear();
+            	for (int i = 0; i < mPersonalDecks.size(); i++) {
+            		if (mPersonalDecks.get(i).toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1) { 
+            			foundDecks.add(mPersonalDecks.get(i));
+            		}
+            	}
+                mAllPersonalDecks.clear();
+                mAllPersonalDecks.addAll(mPersonalDeckDownloads);
+                mAllPersonalDecks.addAll(foundDecks);
+                mPersonalDecksAdapter.notifyDataSetChanged();
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
+
+        
         getPersonalDecks();
     }
 

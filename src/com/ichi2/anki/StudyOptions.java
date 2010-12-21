@@ -832,17 +832,11 @@ public class StudyOptions extends Activity {
                 return true;
 
             case MENU_DOWNLOAD_PERSONAL_DECK:
-                if (AnkiDroidApp.isUserLoggedIn()) {
-                    startActivityForResult(
-                            new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
-                } else {
-                    mUserNotLoggedInAlert.show();
-                }
+            	openPersonalDeckPicker();
                 return true;
 
             case MENU_DOWNLOAD_SHARED_DECK:
-                startActivityForResult(
-                        new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
+            	openSharedDeckPicker();
                 return true;
 
             case MENU_SYNC:
@@ -886,6 +880,20 @@ public class StudyOptions extends Activity {
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
 
+    public void openPersonalDeckPicker() {
+        if (AnkiDroidApp.isUserLoggedIn()) {
+            if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
+            {
+                AnkiDroidApp.deck().closeDeck();
+                AnkiDroidApp.setDeck(null);
+            }
+            startActivityForResult(
+                    new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
+        } else {
+            mUserNotLoggedInAlert.show();
+        }
+    }
+
 
     public void openSharedDeckPicker() {
         if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
@@ -894,8 +902,7 @@ public class StudyOptions extends Activity {
             AnkiDroidApp.setDeck(null);
         }
         // deckLoaded = false;
-        Intent intent = new Intent(StudyOptions.this, SharedDeckPicker.class);
-        startActivityForResult(intent, DOWNLOAD_SHARED_DECK);
+        startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
     }
 
 

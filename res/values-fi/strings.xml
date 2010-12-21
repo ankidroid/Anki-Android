@@ -264,7 +264,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
   <string name="update_notification">Update notifications</string>
   <string name="update_notification_summ">Notify me when AnkiDroid is updated</string>
-  <string name="per_day">Per Day</string>
+  <string name="per_day">Per Päivä</string>
   <string name="undo">Kumoa</string>
   <string name="redo">Tee uudelleen</string>
   <string name="contextmenu_deckpicker_delete_deck">Poista Pakka</string>

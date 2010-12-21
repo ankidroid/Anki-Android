@@ -29,6 +29,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -40,6 +42,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -79,6 +82,7 @@ public class SharedDeckPicker extends Activity {
     private List<Object> mAllSharedDecks;
     private ListView mSharedDecksListView;
     private SharedDecksAdapter mSharedDecksAdapter;
+    private EditText mSearchEditText;
 
 
     /********************************************************************
@@ -103,6 +107,25 @@ public class SharedDeckPicker extends Activity {
         mSharedDecksListView = (ListView) findViewById(R.id.list);
         mSharedDecksListView.setAdapter(mSharedDecksAdapter);
         registerForContextMenu(mSharedDecksListView);
+        
+        mSearchEditText = (EditText) findViewById(R.id.shared_deck_download_search);
+        mSearchEditText.addTextChangedListener(new TextWatcher() {
+        	public void afterTextChanged(Editable s) {
+    			List<SharedDeck> foundDecks = new ArrayList<SharedDeck>();
+            	foundDecks.clear();
+            	for (int i = 0; i < mSharedDecks.size(); i++) {
+            		if (mSharedDecks.get(i).get("title").toString().toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1) { 
+            			foundDecks.add(mSharedDecks.get(i));
+            		}
+            	}
+                mAllSharedDecks.clear();
+                mAllSharedDecks.addAll(mSharedDeckDownloads);
+                mAllSharedDecks.addAll(foundDecks);
+                mSharedDecksAdapter.notifyDataSetChanged();
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
 
         mSharedDecksListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -453,6 +476,7 @@ public class SharedDeckPicker extends Activity {
 
     };
 
+    
     /********************************************************************
      * Callbacks *
      ********************************************************************/

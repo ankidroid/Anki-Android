@@ -3,10 +3,13 @@
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
   	android:orientation="vertical">
-  	
-  <ListView android:id="@+id/list"
-  	android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:fastScrollEnabled="true"/>
-    
+	<EditText android:id="@+id/shared_deck_download_search"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:lines="1"/>
+ 	
+  	<ListView android:id="@+id/list"
+  		android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:fastScrollEnabled="true"/>
 </LinearLayout>
