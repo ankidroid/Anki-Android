@@ -259,6 +259,9 @@
   <string name="delete_deck_title">Stapel löschen</string>
   <string name="delete_deck_message">Möchten Sie den Stapel %s wirklich löschen?</string>
   <string name="delete_deck_confirm">Löschen</string>
+  <string name="zoom">Zoom aktivieren</string>
+	<string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
+  
   <string-array name="studyoptions_more_new_card_order">
     <item>Neue Karten in zufälliger Reihenfolge</item>
     <item>Neue Karten in Reihenfolge des Hinzufügens</item>

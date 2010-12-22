@@ -140,6 +140,9 @@
 <string name="deck_path_summ">Path to where the your decks are stored</string>
 <string name="fullscreen_review">Review in fullscreen</string>
 <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
+<string name="zoom">Enable Zoom</string>
+<string name="zoom_summ">Show Zoom Controls when reviewing</string>
+
 
 <!-- deck_properties.xml -->
 <!--<string name="deck_properties">Deck properties</string>-->

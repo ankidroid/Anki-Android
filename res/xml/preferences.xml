@@ -97,6 +97,11 @@
 			android:summary="@string/text_selection_summ"
 			android:key="textSelection" />
 		<CheckBoxPreference
+			android:title="@string/zoom"
+			android:defaultValue="true"
+			android:summary="@string/zoom_summ"
+			android:key="zoom" />
+		<CheckBoxPreference
 			android:title="@string/update_notification"
 			android:defaultValue="true"
 			android:summary="@string/update_notification_summ"

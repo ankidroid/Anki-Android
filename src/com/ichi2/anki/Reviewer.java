@@ -126,6 +126,7 @@ public class Reviewer extends Activity {
     private boolean mPrefTextSelection;
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
+    private boolean mZoomEnabled;    
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
@@ -697,7 +698,9 @@ public class Reviewer extends Activity {
 
         mCard = (WebView) findViewById(R.id.flashcard);
         mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        mCard.getSettings().setBuiltInZoomControls(true);
+        if (mZoomEnabled) {
+        	mCard.getSettings().setBuiltInZoomControls(true);
+        }
         mCard.getSettings().setJavaScriptEnabled(true);
         mCard.setWebChromeClient(new AnkiDroidWebChromeClient());
         mCard.addJavascriptInterface(new JavaScriptInterface(), "interface");
@@ -831,6 +834,7 @@ public class Reviewer extends Activity {
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
+        mZoomEnabled = preferences.getBoolean("zoom", true);
         mDisplayFontSize = Integer.parseInt(preferences.getString("displayFontSize",
                 Integer.toString(CardModel.DEFAULT_FONT_SIZE_RATIO)));
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
