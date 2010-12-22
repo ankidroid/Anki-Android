@@ -716,19 +716,39 @@ public class DeckPicker extends Activity implements Runnable {
 		}
 	}
 
+	
+	public boolean removeDir(File dir){
+		if (dir.isDirectory()){
+			File[] files = dir.listFiles();
+			for (File aktFile: files){
+				removeDir(aktFile);
+			}
+		}
+		return dir.delete();
+	} 
+	
+	
 	private void removeDeck(String deckFilename) {
 		if (deckFilename != null) {
-			Log.i(AnkiDroidApp.TAG, "Deleting " + deckFilename);
 			File file = new File(deckFilename);
-			String selectedDeckPath = "";
 			boolean deleted = file.delete();
 			if (deleted) {
+				Log.i(AnkiDroidApp.TAG, "DeckPicker - " + deckFilename + " deleted");
 				mDeckIsSelected = false;
+				
+				// remove media directory
+				String mediaDir = deckFilename.replace(".anki", ".media");
+				boolean mediadeleted = removeDir(new File(mediaDir));
+				if (mediadeleted) {
+					Log.i(AnkiDroidApp.TAG, "DeckPicker - " + mediaDir + " deleted");					
+				} else {
+					Log.e(AnkiDroidApp.TAG, "Error: Could not delete " + mediaDir);										
+				}
+				
 				SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 				populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
-				//TODO: reset if the active deck is deleted
 			} else {
-				Log.i(AnkiDroidApp.TAG, "Error: Could not delete "
+				Log.e(AnkiDroidApp.TAG, "Error: Could not delete "
 						+ deckFilename);
 			}
 		}
