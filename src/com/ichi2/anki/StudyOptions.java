@@ -600,6 +600,12 @@ public class StudyOptions extends Activity {
                 mToggleCram.setChecked(false);
             }
         });
+		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+                mToggleCram.setChecked(false);
+			}
+		});					
         builder.setView(contentView);
         mCramTagsDialog = builder.create();
     }

@@ -42,7 +42,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -1610,7 +1609,7 @@ public class Deck {
             requeueCardMethod = Deck.class.getDeclaredMethod("_requeueCramCard", Card.class, boolean.class);
             cardQueueMethod = Deck.class.getDeclaredMethod("_cramCardQueue", Card.class);
             answerCardMethod = Deck.class.getDeclaredMethod("_answerCramCard", Card.class, int.class);
-            spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCramCards", Card.class, double.class);
+            spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCramCards", Card.class);
             // Reuse review early's code
             answerPreSaveMethod = Deck.class.getDeclaredMethod("_cramPreSave", Card.class, int.class);
             cardLimitMethod = Deck.class.
