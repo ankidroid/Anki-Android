@@ -1313,10 +1313,10 @@ public class Deck {
             long fid = ((QueueItem) queue.getLast()).getFactID();
             if (mSpacedFacts.containsKey(fid)) {
                 // Still spaced
-                long id = queue.remove().getCardID();
+                long id = queue.removeLast().getCardID();
                 // Assuming 10 cards/minute, track id if likely to expire before queue refilled
                 if (_new && (mNewSpacing < (double) mQueueLimit * 6.0)) {
-                    popped.add(id);
+                	popped.add(id);
                     delay = mSpacedFacts.get(fid);
                 }
             } else {
