@@ -22,7 +22,8 @@
 	android:versionName="0.5alpha14" android:versionCode="13"
 	android:installLocation="auto">
 	<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
-		<activity android:name="StudyOptions">
+		<activity android:name="StudyOptions" 
+			android:configChanges="keyboardHidden|orientation">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -34,17 +35,35 @@
 				<data android:mimeType="application/vnd.anki" />
 			</intent-filter>
 		</activity>
-		<activity android:name="DeckPicker" android:label="DeckPicker" />
-		<activity android:name="PersonalDeckPicker" android:label="@string/personaldeckpicker_title" />
-		<activity android:name="SharedDeckPicker" android:label="@string/shareddeckpicker_title" />
-		<activity android:name="Reviewer" android:label="Reviewer" android:configChanges="keyboardHidden|orientation" />
-		<activity android:name="MyAccount" android:label="My Account"/>
-		<activity android:name="Preferences" android:label="@string/preferences_title" />
+		<activity android:name="DeckPicker" 
+			android:label="DeckPicker"
+			android:configChanges="keyboardHidden|orientation"/>
+		<activity android:name="PersonalDeckPicker" 
+			android:label="@string/personaldeckpicker_title"
+			android:configChanges="keyboardHidden|orientation"/>
+		<activity android:name="SharedDeckPicker" 
+			android:label="@string/shareddeckpicker_title"
+			android:configChanges="keyboardHidden|orientation"/>
+		<activity android:name="Reviewer" 
+			android:label="Reviewer"	
+			android:configChanges="keyboardHidden|orientation"/>
+		<activity android:name="MyAccount" 
+			android:label="My Account"
+			android:configChanges="keyboardHidden|orientation"/>
+		<activity android:name="Preferences" 
+			android:label="@string/preferences_title"
+			android:configChanges="keyboardHidden|orientation"/>
 		<activity android:name="DeckPreferences" android:label="@string/deckpreferences_title" />
-		<activity android:name="About" android:label="@string/about_title" />
-		<activity android:name="CardEditor" android:label="@string/cardeditor_title"></activity>
-		<activity android:name="FactAdder" android:label="@string/factadder_title"></activity>
-		<activity android:name="ErrorReporter" android:label="Error Reporter"></activity>
+		<activity android:name="About" 
+			android:label="@string/about_title" />
+		<activity android:name="CardEditor" 
+			android:label="@string/cardeditor_title"
+			android:configChanges="keyboardHidden|orientation"/>
+		<activity android:name="FactAdder" 
+			android:label="@string/factadder_title"
+			android:configChanges="keyboardHidden|orientation"/>
+		<activity android:name="ErrorReporter" 
+			android:label="Error Reporter"/>
 		<activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
 		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
 					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">

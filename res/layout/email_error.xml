@@ -3,22 +3,30 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
-	>
+	android:paddingLeft="10dp"
+	android:paddingTop="15dp"
+	android:paddingRight="10dp"
+	android:paddingBottom="15dp">
 	<TextView 
 		android:text="@+id/TextView01" 
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/tvErrorText">
-	</TextView>
+		android:id="@+id/tvErrorText"
+		android:paddingBottom="15dp" 
+		android:gravity="center"/>
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
 	<Button android:text="@string/error_ok" 
 			android:id="@+id/btnSendEmail" 
-			android:layout_width="wrap_content" 
+			android:layout_width="0dip" 
 			android:layout_height="wrap_content"
-			>
-	</Button>
+			android:layout_weight="1"/>
 	<Button android:text="@string/error_cancel" 
 			android:id="@+id/btnIgnoreError" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content">
-	</Button>
+			android:layout_width="0dip" 
+			android:layout_height="wrap_content"
+			android:layout_weight="1"/>
+	</LinearLayout>
 </LinearLayout>
