@@ -883,7 +883,7 @@ public class Reviewer extends Activity {
         SpannableString revCount = new SpannableString(String.valueOf(deck.getRevCount()));
         SpannableString newCount = new SpannableString(String.valueOf(deck.getNewCountToday()));
 
-        boolean isDue = mCurrentCard.isDue();
+        boolean isDue = true; // mCurrentCard.isDue();
         int type = mCurrentCard.getType();
 
         if (isDue && (type == Card.TYPE_NEW)) {
