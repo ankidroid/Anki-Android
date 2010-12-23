@@ -828,12 +828,12 @@ public class StudyOptions extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean deckLoaded = AnkiDroidApp.deck() != null;
+        boolean deckChangable = (AnkiDroidApp.deck() != null) && mSdCardAvailable && !mToggleCram.isChecked(); 
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
         menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
-        menu.findItem(MENU_ADD_FACT).setEnabled(mDeckFilename != null && mSdCardAvailable && !mToggleCram.isChecked());
-        menu.findItem(MENU_MORE_OPTIONS).setEnabled(mDeckFilename != null && mSdCardAvailable && !mToggleCram.isChecked());
-        menu.findItem(MENU_SYNC).setEnabled(deckLoaded && mSdCardAvailable);
+        menu.findItem(MENU_ADD_FACT).setEnabled(deckChangable);
+        menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangable);
+        menu.findItem(MENU_SYNC).setEnabled(deckChangable);
         return true;
     }
 
@@ -1084,6 +1084,11 @@ public class StudyOptions extends Activity {
         if (mDeckFilename != null && new File(mDeckFilename).exists()) {
             // showControls(false);
 
+        	mToggleCram.setChecked(false);
+            mEditNewPerDay.setEnabled(true);
+            mEditSessionTime.setEnabled(true);
+            mEditSessionQuestions.setEnabled(true);
+            
             if (updateAllCards) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
                         new DeckTask.TaskData(mDeckFilename));
