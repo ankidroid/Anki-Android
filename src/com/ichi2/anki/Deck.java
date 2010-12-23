@@ -1690,20 +1690,12 @@ public class Deck {
     @SuppressWarnings("unused")
     private String _cramCardLimit(String active[], String inactive[], String sql) {
         // inactive is (currently) ignored
-        if (active.length > 1) {
-            return sql.replace("WHERE ", "WHERE +c.id IN "
-                    + Utils.ids2str(new ArrayList<String>(Arrays.asList(active))) + " AND");
-        } else if (active.length == 1) {
-            String[] yes = Utils.parseTags(active[0]);
-            if (yes.length > 0) {
-                long yids[] = Utils.toPrimitive(tagIds(yes).values());
-                return sql.replace("WHERE ", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
+        if (active.length > 0) {
+        	long yids[] = Utils.toPrimitive(tagIds(active).values());
+            return sql.replace("WHERE ", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
                         + Utils.ids2str(yids) + ") AND ");
-            } else {
-                return sql;
-            }
         } else {
-            return sql;
+        	return sql;
         }
     }
 
@@ -1735,7 +1727,7 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildCramCount() {
-        mRevCount = (int) getDB().queryScalar(cardLimit(mActiveCramTags, null,
+    	mRevCount = (int) getDB().queryScalar(cardLimit(mActiveCramTags, null,
                 "SELECT count(*) FROM cards c WHERE type BETWEEN 0 AND 2"));
     }
 

@@ -21,7 +21,7 @@
 <resources>
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Guardar</string>
-  <string name="app_name">Ankidroid</string>
+  <string name="app_name">AnkiDroid</string>
   <string name="yes">Sí</string>
   <string name="no">No</string>
   <string name="ok">Aceptar</string>
@@ -36,7 +36,7 @@
   <string name="deckpicker_upgrading">Upgrading deck...</string>
   <string name="deckpicker_upgrade_failed">Upgrading failed!</string>
   <string name="deckpicker_upgrade_notes_title">Upgrade deck results</string>
-  <string name="deckpicker_upgrade_notes_button">Notes</string>
+  <string name="deckpicker_upgrade_notes_button">Notas</string>
   <string name="notify_ticker">Actualización de la aplicación</string>
   <string name="notify_title">Ankidroid actualizado</string>
   <string name="notify_message">Descargar una nueva versión</string>
@@ -71,14 +71,14 @@
   <string name="show_answer">Mostrar respuesta</string>
   <string name="show_question">Mostrar pregunta</string>
   <string name="card_hint">Flashcard</string>
-  <string name="ease1_learning">Again</string>
-  <string name="ease2_learning">Good</string>
-  <string name="ease3_learning">Easy</string>
-  <string name="ease4_learning">Very Easy</string>
-  <string name="ease1_successive">Again</string>
-  <string name="ease2_successive">Hard</string>
-  <string name="ease3_successive">Good</string>
-  <string name="ease4_successive">Easy</string>
+  <string name="ease1_learning">Una vez más</string>
+  <string name="ease2_learning">Bien</string>
+  <string name="ease3_learning">Fácil</string>
+  <string name="ease4_learning">Muy fácil</string>
+  <string name="ease1_successive">Una vez más</string>
+  <string name="ease2_successive">Difícil</string>
+  <string name="ease3_successive">Bien</string>
+  <string name="ease4_successive">Fácil</string>
   <string name="pref_cat_decks">Barajas</string>
   <string name="pref_cat_sync">Sincronización</string>
   <string name="pref_cat_advanced">Advanced</string>
@@ -108,6 +108,8 @@
   <string name="deck_path_summ">Directorio donde tus mazos están almacenados</string>
   <string name="fullscreen_review">Review in fullscreen</string>
   <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
+  <string name="zoom">Enable Zoom</string>
+  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Selecciona la baraja que desea descargar</string>
   <string name="preferences_title">Preferencias</string>
@@ -165,7 +167,7 @@ Los no-desarrolladores tambien pueden ayudar, por ejemplo actualizando la wiki y
   <string name="studyoptions_start">Start Reviewing</string>
   <string name="studyoptions_more">Study Options</string>
   <string name="studyoptions_window_title">%1$s (%2$d of %3$d due)</string>
-  <string name="studyoptions_more_dialog_title">More Options</string>
+  <string name="studyoptions_more_dialog_title">Opciones de estudio</string>
   <string name="studyoptions_more_save">Save</string>
   <string name="studyoptions_nodeck_title">No Deck Loaded</string>
   <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored on your SD card and are read from the location specified in the preferences (currently this is set to: \"%s\"). The preferences can be reached by pressing your device\'s \"Menu\" button and then selecting \"Preferences\".\n\nTo load a deck, press your device\'s \"Menu\" button and then select \"Open Deck\" or press one of the buttons below.</string>
@@ -186,7 +188,7 @@ Los no-desarrolladores tambien pueden ayudar, por ejemplo actualizando la wiki y
   <string name="menu_deck_properties">Deck Properties</string>
   <string name="menu_add_card">Add card</string>
   <string name="menu_about">About</string>
-  <string name="menu_suspend_card">Suspend Card</string>
+  <string name="menu_suspend_card">Suspender</string>
   <string name="menu_edit_card">Edit Card</string>
   <string name="menu_search">Lookup in Aedict</string>
   <string name="menu_mark_card">Mark Card</string>

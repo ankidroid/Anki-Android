@@ -108,6 +108,8 @@
   <string name="deck_path_summ">Percorso dove sono salvati i tuoi mazzi</string>
   <string name="fullscreen_review">Review in fullscreen</string>
   <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
+  <string name="zoom">Enable Zoom</string>
+  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Select the deck you want to download</string>
   <string name="preferences_title">Preferences</string>

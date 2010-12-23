@@ -108,6 +108,8 @@
   <string name="deck_path_summ">設定儲存牌組的目錄</string>
   <string name="fullscreen_review">Review in fullscreen</string>
   <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
+  <string name="zoom">Enable Zoom</string>
+  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">選擇你想下載的牌組</string>
   <string name="preferences_title">偏好設定</string>
