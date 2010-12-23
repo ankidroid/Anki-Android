@@ -879,20 +879,24 @@ public class Reviewer extends Activity {
         String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
         setTitle(String.format(unformattedTitle, deck.getDeckName(), deck.getDueCount(), deck.getCardCount()));
 
-        SpannableString failedSoonCount = new SpannableString(String.valueOf(deck.getFailedSoonCount()));
-        SpannableString revCount = new SpannableString(String.valueOf(deck.getRevCount()));
-        SpannableString newCount = new SpannableString(String.valueOf(deck.getNewCountToday()));
+        int _failedSoonCount = deck.getFailedSoonCount();
+        int _revCount = deck.getRevCount();
+        int _newCount = deck.getNewCountToday();
+        
+        SpannableString failedSoonCount = new SpannableString(String.valueOf(_failedSoonCount));
+        SpannableString revCount = new SpannableString(String.valueOf(_revCount));
+        SpannableString newCount = new SpannableString(String.valueOf(_newCount));
 
         boolean isDue = true; // mCurrentCard.isDue();
         int type = mCurrentCard.getType();
 
-        if (isDue && (type == Card.TYPE_NEW)) {
+        if (isDue && (type == Card.TYPE_NEW) && (_failedSoonCount + _revCount != 0)) {
             newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
         }
-        if (isDue && (type == Card.TYPE_REV)) {
+        if (isDue && (type == Card.TYPE_REV) && (_failedSoonCount + _newCount != 0)) {
             revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
         }
-        if (isDue && (type == Card.TYPE_FAILED)) {
+        if (isDue && (type == Card.TYPE_FAILED) && (_revCount + _revCount != 0)) {
             failedSoonCount.setSpan(new UnderlineSpan(), 0, failedSoonCount.length(), 0);
         }
 
