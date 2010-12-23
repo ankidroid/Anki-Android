@@ -377,6 +377,16 @@ public class StudyOptions extends Activity {
         }
     }
 
+    
+//    @Override 
+//    public void onConfigurationChanged(Configuration newConfig){
+//    	super.onConfigurationChanged(newConfig); 
+//    	
+//    	// TODO: Change layout without reloading deck
+//    	//setContentView(R.layout.studyoptions); 
+//    	//initAllContentViews();
+//    }
+
 
     /**
 * Registers an intent to listen for ACTION_MEDIA_EJECT notifications. The intent will call
