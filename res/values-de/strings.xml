@@ -108,6 +108,8 @@
   <string name="deck_path_summ">Verzeichnis in dem Stapel gespeichert werden</string>
   <string name="fullscreen_review">Vollbildmodus</string>
   <string name="fullscreen_review_summ">Nutzt sämtlichen vorhandenen Platz auf dem Bildschirm</string>
+  <string name="zoom">Zoom aktivieren</string>
+  <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
   <string name="personaldeckpicker_title">Online-Stapel herunterladen</string>
   <string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
   <string name="preferences_title">Voreinstellungen</string>
@@ -259,9 +261,6 @@
   <string name="delete_deck_title">Stapel löschen</string>
   <string name="delete_deck_message">Möchten Sie den Stapel %s wirklich löschen?</string>
   <string name="delete_deck_confirm">Löschen</string>
-  <string name="zoom">Zoom aktivieren</string>
-	<string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
-  
   <string-array name="studyoptions_more_new_card_order">
     <item>Neue Karten in zufälliger Reihenfolge</item>
     <item>Neue Karten in Reihenfolge des Hinzufügens</item>

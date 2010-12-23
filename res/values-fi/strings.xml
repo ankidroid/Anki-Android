@@ -35,7 +35,7 @@
   <string name="sync_log_title">Synkronointiloki</string>
   <string name="deckpicker_upgrading">Päivitetään pakkaa...</string>
   <string name="deckpicker_upgrade_failed">Päivitys epäonnistui!</string>
-  <string name="deckpicker_upgrade_notes_title">Upgrade deck results</string>
+  <string name="deckpicker_upgrade_notes_title">Päivitää pakan tulokset</string>
   <string name="deckpicker_upgrade_notes_button">Huomautukset</string>
   <string name="notify_ticker">Sovelluksen päivitys</string>
   <string name="notify_title">Ankidroid on päivitetty</string>
@@ -85,8 +85,8 @@
   <string name="pref_cat_qadisplay">Kysymys ja vastaus -näyttö</string>
   <string name="sync_on_open">Synkronoi avattaessa</string>
   <string name="sync_on_close">Synkronoi suljettaessa</string>
-  <string name="show_study_options_on_deck_load">Study options on load</string>
-  <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
+  <string name="show_study_options_on_deck_load">Opiskelu asetukset latauksessa</string>
+  <string name="show_study_options_on_deck_load_summ">Näytä opiskelu asetukset näyttö ladattaessa pakkaa</string>
   <string name="show_timer">Näytä ajastin</string>
   <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
   <string name="show_whiteboard_summ">Voit kirjoittaa ruudulle</string>
@@ -106,8 +106,10 @@
   <string name="hide_question_in_answer_summ">Määrittää piilotetaanko kysymys kun vastaus näytetään.</string>
   <string name="deck_path">Pakan polku</string>
   <string name="deck_path_summ">Polku jonne pakkasi on tallennettu</string>
-  <string name="fullscreen_review">Review in fullscreen</string>
+  <string name="fullscreen_review">Tarkastele kokoruudulla</string>
   <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
+  <string name="zoom">Ota Zoomaus Käyttöön</string>
+  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Avaa Online-pakka</string>
   <string name="shareddeckpicker_title">Valitse pakka jonka haluat ladata</string>
   <string name="preferences_title">Asetukset</string>
@@ -157,13 +159,13 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
 &lt;/html&gt;</string>
   <string name="studyoptions_title">Opiskelu Asetukset</string>
   <string name="studyoptions_deck_name">Pakan nimi</string>
-  <string name="studyoptions_reviews_due">Reviews due:</string>
+  <string name="studyoptions_reviews_due">Tarkastelujen määrä:</string>
   <string name="studyoptions_new_today">Uutta tänään:</string>
   <string name="studyoptions_new_total">New total:</string>
-  <string name="studyoptions_new_cards_per_day">New cards per day:</string>
+  <string name="studyoptions_new_cards_per_day">Uudet kortit per päivä:</string>
   <string name="studyoptions_session_minutes">Istunnon raja (minuuttia):</string>
   <string name="studyoptions_session_questions">Istunnon raja (kysymykset):</string>
-  <string name="studyoptions_start">Aloita tarkistaminen</string>
+  <string name="studyoptions_start">Aloita Tarkistaminen</string>
   <string name="studyoptions_more">Opiskelu Asetukset</string>
   <string name="studyoptions_window_title">%1$s (%2$d %3$d asianmukaista)</string>
   <string name="studyoptions_more_dialog_title">Lisää Valintoja</string>
@@ -198,7 +200,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="studyoptions_congrats_title">Onneksi olkoon!</string>
   <string name="studyoptions_congrats_message">Olet valmis nyt.</string>
   <string name="studyoptions_congrats_learnmore">Opi Lisää</string>
-  <string name="studyoptions_congrats_reviewearly">Review Early</string>
+  <string name="studyoptions_congrats_reviewearly">Tarkista Etuajassa</string>
   <string name="studyoptions_congrats_open_other_deck">Avaa Muu Pakka</string>
   <string name="studyoptions_congrats_finish">Takaisin Opiskelu Näyttöön</string>
   <string name="username">Käyttäjätunnus</string>
@@ -223,11 +225,11 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="sync_connecting_message">Yhdistetään...</string>
   <string name="sync_syncing_message">Synkronoidaan %s</string>
   <string name="sync_summary_from_server_message">Fetching summary from server...</string>
-  <string name="sync_preparing_full_sync_message">Preparing full sync...</string>
+  <string name="sync_preparing_full_sync_message">Valmistellaan koko synkronointiin...</string>
   <string name="sync_uploading_message">Lähetetään...</string>
   <string name="sync_downloading_message">Ladataan...</string>
   <string name="sync_complete_message">Synkronointi valmis.</string>
-  <string name="sync_determining_differences_message">Determining differences...</string>
+  <string name="sync_determining_differences_message">Määritellään erot...</string>
   <string name="sync_transferring_payload_message">Transferring payload...</string>
   <string name="sync_applying_reply_message">Applying reply...</string>
   <string name="sync_no_changes_message">Muutoksia ei löytynyt.</string>
@@ -240,19 +242,19 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="sync_log_fact_from_server_message">1 fact from server</string>
   <string name="sync_log_facts_from_server_message">%d facts from server</string>
   <string name="error_message">%d virhettä odottaa ilmoittamista</string>
-  <string name="errors_message">There are %d errors to report</string>
+  <string name="errors_message">On %d raportoitavaa virhettä</string>
   <string name="error_ok">Ilmoita virheistä</string>
   <string name="error_cancel">Älä ilmoita virheistä</string>
   <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Error reporting mode</string>
-  <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
+  <string name="error_reporting_choice_summary">Virheitä voidaan raportoida automaattisesti, ei koskaan, tai pyytää luvan sinulta</string>
   <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widget notification threshold</string>
+  <string name="widget_minimum_cards_due">Widgetin ilmoituksen kynnys</string>
   <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised</string>
   <string name="widget_minimum_cards_due_vibrate">Värähdellä</string>
   <string name="widget_minimum_cards_due_blink">Blink light</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Kortien Määrä</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
   <string name="model">Malli:</string>
   <string name="select_model">Malli</string>
   <string name="card">Kortti:</string>
@@ -260,10 +262,10 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="add">Lisää</string>
   <string name="close">Sulje</string>
   <string name="soon">Pian</string>
-  <string name="show_next_review_time">Next review time</string>
+  <string name="show_next_review_time">Seuraava tarkastelun aika</string>
   <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
   <string name="update_notification">Update notifications</string>
-  <string name="update_notification_summ">Notify me when AnkiDroid is updated</string>
+  <string name="update_notification_summ">Ilmoita minulle, kun AnkiDroid päivitetään</string>
   <string name="per_day">Per Päivä</string>
   <string name="undo">Kumoa</string>
   <string name="redo">Tee uudelleen</string>
@@ -278,14 +280,14 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
     <item>Spread new cards through reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Uudet kortit jälkeen tarkastelun</item>
+    <item>Uudet kortit ennen tarkastelua</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
     <item>Review cards from largest interval</item>
     <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
-    <item>Review cards in random order</item>
+    <item>Tarkista kortit järjestyksessä</item>
+    <item>Tarkastele kortteja satunnaisessa järjestyksessä</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
     <item>Näytä väärin vastatut kortit pian</item>

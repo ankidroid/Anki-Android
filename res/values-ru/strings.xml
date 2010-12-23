@@ -82,7 +82,7 @@
   <string name="pref_cat_decks">Колоды</string>
   <string name="pref_cat_sync">Синхронизация</string>
   <string name="pref_cat_advanced">Дополнительно</string>
-  <string name="pref_cat_qadisplay">Показывать вопрос и ответ</string>
+  <string name="pref_cat_qadisplay">Отображение полей \"Вопрос\" и \"Ответ\"</string>
   <string name="sync_on_open">Синхронизация при открытии</string>
   <string name="sync_on_close">Синхронизация при закрытии</string>
   <string name="show_study_options_on_deck_load">Параметры обучения при загрузке колоды</string>
@@ -102,12 +102,14 @@
   <string name="use_ruby_support_summ">Если найдены символы \'[\' и \']\', то заключенный в них текст будет рассмотрен как Ruby-аннотация</string>
   <string name="display_font_size">Относительный размер шрифта</string>
   <string name="display_font_size_summ">Размер шрифта в процентах относительно к размеру шрифта, сохранённому в колоде</string>
-  <string name="hide_question_in_answer">Скрыть вопрос при ответе?</string>
+  <string name="hide_question_in_answer">Скрыть \"Вопрос\" при ответе?</string>
   <string name="hide_question_in_answer_summ">Должен ли быть вопрос скрыт, когда ответ показан.</string>
-  <string name="deck_path">Путь к колоде</string>
+  <string name="deck_path">Путь к колодам</string>
   <string name="deck_path_summ">Путь, где хранятся ваши колоды</string>
   <string name="fullscreen_review">Просмотр в полный экран</string>
   <string name="fullscreen_review_summ">Вы можете решить, хотите ли вы использовать все доступное место экрана для просмотра</string>
+  <string name="zoom">Включить масштабирование</string>
+  <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
   <string name="shareddeckpicker_title">Выберите колоду, которую вы хотите загрузить</string>
   <string name="preferences_title">Настройки</string>
@@ -160,8 +162,8 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="studyoptions_new_today">Сегодня новых:</string>
   <string name="studyoptions_new_total">Новые всего:</string>
   <string name="studyoptions_new_cards_per_day">Новых карт в день:</string>
-  <string name="studyoptions_session_minutes">Лимит сессии (в минутах):</string>
-  <string name="studyoptions_session_questions">Лимит сессии (вопросов):</string>
+  <string name="studyoptions_session_minutes">Длина урока (минут):</string>
+  <string name="studyoptions_session_questions">Вопросов в уроке:</string>
   <string name="studyoptions_start">Начать Просмотр</string>
   <string name="studyoptions_more">Параметры обучения</string>
   <string name="studyoptions_window_title">%1$s (%2$d из %3$d)</string>
@@ -169,8 +171,8 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="studyoptions_more_save">Сохранить</string>
   <string name="studyoptions_nodeck_title">Колоды не загружены</string>
   <string name="studyoptions_nodeck_message">В настоящий момент не загружена колода. Колоды Anki сохраняются в каталоге на вашей SD-карточке, путь к которому указан в "Настройках" (текущее значение: \"%s\"). Чтобы Anki автоматически открывала этот каталог - установите его (нажмите кнопку \"Меню\" вашего аппарата, и выберите \"Настройки\").\n\nЧтобы сейчас загрузить колоду нажмите кнопку \"Меню\" вашего аппарата и выберите \"Открыть колоду\" или нажмите одну из клавиш внизу.</string>
-  <string name="studyoptions_deck_not_loaded_title">Колода не может быть загружена</string>
-  <string name="studyoptions_deck_not_loaded_message">Колода, которую вы выбрали, возможно повреждена. Пожалуйста, откройте ее с помощью десктоп-версии Anki и проверьте (и/или восстановите) для использования ее в Ankidroid.\n\n Сейчас вы можете выбрать другую колоду или создать колоду с примерами с помощью клавиш ниже.</string>
+  <string name="studyoptions_deck_not_loaded_title">Колода не может быть открыта</string>
+  <string name="studyoptions_deck_not_loaded_message">Колода, которую вы выбрали, возможно повреждена. Пожалуйста, откройте ее с помощью десктоп-версии Anki и проверьте (или восстановите) для использования ее в Ankidroid.\n\nСейчас вы можете выбрать другую колоду или создать колоду с примерами с помощью клавиш ниже.</string>
   <string name="studyoptions_no_external_storage_title">Нет доступа ко внешнему хранилищу</string>
   <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
   <string name="studyoptions_load_other_deck">Загружать другие колоды</string>
@@ -239,7 +241,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="sync_log_fact_from_server_message">1 факт с сервера</string>
   <string name="sync_log_facts_from_server_message">%d факт(ов) с сервера</string>
   <string name="error_message">Найдено %d ошибок для отчета</string>
-  <string name="errors_message">Найдено %d ошибок для отчета</string>
+  <string name="errors_message">Найдено %d ошибки для отчета</string>
   <string name="error_ok">Отправить отчёт об ошибках</string>
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
   <string name="error_email">ankidroid@gmail.com</string>

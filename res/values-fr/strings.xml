@@ -108,6 +108,8 @@
   <string name="deck_path_summ">Chemin où vos paquets sont stockés</string>
   <string name="fullscreen_review">Réviser en plein écran</string>
   <string name="fullscreen_review_summ">Vous pouvez décider si vous voulez utiliser tout l\'écran pendant la révision</string>
+  <string name="zoom">Enable Zoom</string>
+  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Ouvrir un paquet en ligne</string>
   <string name="shareddeckpicker_title">Sélectionnez le paquet que vous voulez télécharger</string>
   <string name="preferences_title">Préférences</string>

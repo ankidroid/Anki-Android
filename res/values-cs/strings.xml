@@ -108,6 +108,8 @@
   <string name="deck_path_summ">Misto, kde jsou uloženy vaše balíky</string>
   <string name="fullscreen_review">Opakovat v celoobrazovkovém režimu</string>
   <string name="fullscreen_review_summ">Můžete se rozhodnout, zda chcete použít celý dostupný prostor obrazovky během opakování</string>
+  <string name="zoom">Enable Zoom</string>
+  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Otevřít online balíček</string>
   <string name="shareddeckpicker_title">Vyberte balík, který chcete stáhnout</string>
   <string name="preferences_title">Nastavení</string>

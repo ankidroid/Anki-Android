@@ -108,6 +108,8 @@
   <string name="deck_path_summ">Ruta de la carpeta dels vostres paquets</string>
   <string name="fullscreen_review">Mostra a pantalla completa</string>
   <string name="fullscreen_review_summ">Podeu fer servit tota la pantalla al revisar les fitxes</string>
+  <string name="zoom">Enable Zoom</string>
+  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Obre un paquet de la xarxa</string>
   <string name="shareddeckpicker_title">Trieu el paquet que voleu baixar</string>
   <string name="preferences_title">Preferències</string>
