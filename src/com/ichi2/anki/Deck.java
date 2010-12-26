@@ -59,7 +59,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 55;
+    public static final int DECK_VERSION = 58;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -210,6 +210,9 @@ public class Deck {
 
 
     public static synchronized Deck openDeck(String path) throws SQLException {
+		return openDeck(path, true);
+	}
+    public static synchronized Deck openDeck(String path, boolean rebuild) throws SQLException {
         Deck deck = null;
         Cursor cursor = null;
         Log.i(AnkiDroidApp.TAG, "openDeck - Opening database " + path);
@@ -282,11 +285,21 @@ public class Deck {
         deck.mDeckPath = path;
         deck.mDeckName = (new File(path)).getName().replace(".anki", "");
 
+		if (deck.mVersion < DECK_VERSION) {
+			deck.createMetadata();
+		}
+
         deck.initVars();
 
         // Upgrade to latest version
         deck.upgradeDeck();
 
+		if (!rebuild) {
+			// Minimal startup
+			deck.mGlobalStats = Stats.globalStats(deck);
+			deck.mDailyStats = Stats.dailyStats(deck);
+			return deck;
+		}
         double oldMod = deck.mModified;
 
         // Ensure necessary indices are available
@@ -355,6 +368,12 @@ public class Deck {
         return deck;
     }
 
+
+	public createMetadata() {
+		// Just create table deckvars for now
+		getDB().getDatabase().execSQL("CREATE TABLE IF NOT EXISTS deckVars (\"key\" TEXT NOT NULL, value TEXT, "
+				+ "PRIMARY KEY (\"key\"))");
+	}
 
     public synchronized void closeDeck() {
         DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
@@ -661,6 +680,22 @@ public class Deck {
             mVersion = 55;
             commitToDB();
         }
+		if (mVersion < 57) {
+			// Add an index for priority & modified
+			addIndices();
+			getDB().getDatabase().execSQL("ANALYZE");
+			mVersion = 57;
+			commitToDB();
+		}
+		if (mVersion < 58) {
+			// orderNewCards() had a bug in older versions where combinedDue was not updated, and since we're sorting
+			// on combinedDue now we need to make sure it's correct. This will discard any spacing the cards had.
+			if (mNewCardOrder != 0) {
+				getDB().getDatabase().execSQL("UPDATE cards SET due = created, combinedDue = created "
+						+ "WHERE relativeDelay = 2");
+			mVersion = 58;
+			commitToDB();
+		}
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
             commitToDB();
@@ -700,9 +735,15 @@ public class Deck {
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_typeCombined ON cards (type, combinedDue)");
         // Scheduler-agnostic type
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_relativeDelay ON cards (relativeDelay)");
+		// Index on modified, to speed up sync summaries
+		getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_modified ON cards (modified)");
+		getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_facts_modified ON facts (modified)");
         // Failed cards, review early - obsolete
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_duePriority " +
         "ON cards (type, isDue, combinedDue, priority)");
+		// Priority - temporary index to make compat code faster. This can be removed when all clients are on 1.2,
+		// as can the ones below
+		getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_priority ON cards (priority)");
         // Check due - obsolete
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_priorityDue " +
                 "ON cards (type, isDue, priority, combinedDue)");
@@ -2410,6 +2451,10 @@ public class Deck {
                     String.format(Utils.ENGLISH_LOCALE, "SELECT count() FROM cards WHERE factId = %d AND id != %d " +
                             "AND combinedDue < %f AND type = 2", card.getFactId(), card.getId(), mDueCutoff));
         }
+        // Update due counts
+		mRevCount -= getDB().queryScalar(
+				String.format(Utils.ENGLISH_LOCALE, "SELECT count() FROM cards WHERE factId = %d AND id != %d " +
+					"AND combinedDue < %f AND type = 1", card.getFactId(), card.getId(), mDueCutoff));
         // Space cards
         getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET " +
                 "combinedDue = (CASE " +
@@ -3844,8 +3889,6 @@ public class Deck {
             mUtcOffset = deckPayload.getDouble("utcOffset");
 
             commitToDB();
-
-            updateDynamicIndices();
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
