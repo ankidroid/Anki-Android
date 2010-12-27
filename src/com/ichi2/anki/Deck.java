@@ -2578,7 +2578,12 @@ public class Deck {
         double due;
         if (ease == Card.EASE_FAILED) {
             if (oldState.equals(Card.STATE_MATURE)) {
-                due = mDelay1 * 86400.0;
+				// FIXME: magic value until we have old clients updated
+				long d = 0;
+				if (mDelay1 != 600) {
+					d = mDelay1;
+				}
+                due = d * 86400.0;
             } else {
                 due = 0.0;
             }
