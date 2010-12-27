@@ -102,14 +102,14 @@
   <string name="use_ruby_support_summ">El text inclòs entre corxets  \'[\' i \']\' es tractarà con una anotació de ruby</string>
   <string name="display_font_size">Tipus de lletra de mida definida</string>
   <string name="display_font_size_summ">Es farà servir el tipus de lletra de mida definida al paquet</string>
-  <string name="hide_question_in_answer">Amaga la pregunta a la resposta?</string>
+  <string name="hide_question_in_answer">Voleu amagar la pregunta a la resposta?</string>
   <string name="hide_question_in_answer_summ">Indica si la pregunta s\'ha de mostrar quan es mostri la resposta.</string>
   <string name="deck_path">Carpeta dels paquets</string>
   <string name="deck_path_summ">Ruta de la carpeta dels vostres paquets</string>
   <string name="fullscreen_review">Mostra a pantalla completa</string>
   <string name="fullscreen_review_summ">Podeu fer servit tota la pantalla al revisar les fitxes</string>
-  <string name="zoom">Enable Zoom</string>
-  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
+  <string name="zoom">Activa l\'ampliació</string>
+  <string name="zoom_summ">Mostra els botons d\'ampliació a les fitxes</string>
   <string name="personaldeckpicker_title">Obre un paquet de la xarxa</string>
   <string name="shareddeckpicker_title">Trieu el paquet que voleu baixar</string>
   <string name="preferences_title">Preferències</string>
@@ -242,7 +242,7 @@ Els que no sou desenvolupadors també podeu ajudar, per exemple actualitzant el 
   <string name="sync_log_facts_from_server_message">%d fets del servidor</string>
   <string name="error_message">Hi ha %d errors per informar</string>
   <string name="errors_message">Hi ha %d errors per informar</string>
-  <string name="error_ok">Informa  dels errors</string>
+  <string name="error_ok">Informa dels errors</string>
   <string name="error_cancel">No informis dels errors</string>
   <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Tipus d\'informes d\'errors</string>

@@ -896,7 +896,7 @@ public class Reviewer extends Activity {
         if (isDue && (type == Card.TYPE_REV) && (_failedSoonCount + _newCount != 0)) {
             revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
         }
-        if (isDue && (type == Card.TYPE_FAILED) && (_revCount + _revCount != 0)) {
+        if (isDue && (type == Card.TYPE_FAILED) && (_revCount + _newCount != 0)) {
             failedSoonCount.setSpan(new UnderlineSpan(), 0, failedSoonCount.length(), 0);
         }
 

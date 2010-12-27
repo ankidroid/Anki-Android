@@ -20,9 +20,9 @@
 <!--Generated with crowdin.net-->
 <resources>
   <string-array name="newCardOrderLabels">
-    <item>Orden aleatorio</item>
-    <item>Orden añadido</item>
-    <item>Orden inverso del añadido</item>
+    <item>Slučajan redosled</item>
+    <item>Redosled dodat</item>
+    <item>Dodato u obrnutom redosledu</item>
   </string-array>
   <string-array name="newCardOrderVals">
     <item>0</item>
@@ -30,9 +30,9 @@
     <item>2</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
-    <item>Distribuir entre repasos</item>
-    <item>Después de los repasos</item>
-    <item>Antes de los repasos</item>
+    <item>Razbacaj po pregledu</item>
+    <item>Posle pregleda</item>
+    <item>Pre pregleda</item>
   </string-array>
   <string-array name="newCardSchedulingVals">
     <item>0</item>
@@ -40,10 +40,10 @@
     <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
-    <item>Mayor intervalo primero</item>
-    <item>Menor intervalo primero</item>
-    <item>Orden programado</item>
-    <item>Orden aleatorio</item>
+    <item>Najduži interval prvo</item>
+    <item>Najkraći interval prvo</item>
+    <item>Redosled sledi</item>
+    <item>Slučajan redosled</item>
   </string-array>
   <string-array name="revCardOrderVals">
     <item>0</item>
@@ -52,21 +52,21 @@
     <item>3</item>
   </string-array>
   <string-array name="displayFontSizeLabels">
-    <item>10%</item>
-    <item>20%</item>
-    <item>30%</item>
-    <item>40%</item>
-    <item>50%</item>
-    <item>60%</item>
-    <item>70%</item>
-    <item>80%</item>
-    <item>90%</item>
-    <item>100%</item>
-    <item>110%</item>
-    <item>120%</item>
-    <item>130%</item>
-    <item>140%</item>
-    <item>150%</item>
+    <item>10 %</item>
+    <item>20 %</item>
+    <item>30 %</item>
+    <item>40 %</item>
+    <item>50 %</item>
+    <item>60 %</item>
+    <item>70 %</item>
+    <item>80 %</item>
+    <item>90 %</item>
+    <item>100 %</item>
+    <item>110 %</item>
+    <item>120 %</item>
+    <item>130 %</item>
+    <item>140 %</item>
+    <item>150 %</item>
   </string-array>
   <string-array name="displayFontSizeVals">
     <item>10</item>
@@ -86,9 +86,9 @@
     <item>150</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Ocultar la pregunta en la respuesta</item>
-    <item>Mostrar la pregunta en la respuesta</item>
-    <item>Tal como se define en el modelo</item>
+    <item>Sakrij pitanje u odgovoru</item>
+    <item>Prikaži pitanje u odgovoru</item>
+    <item>Kao što je definisano u Špil modelu</item>
   </string-array>
   <string-array name="hideQuestionInAnswerVals">
     <item>0</item>
@@ -98,7 +98,7 @@
   <string-array name="error_reporting_choice_labels">
     <item>Always report</item>
     <item>Never report</item>
-    <item>Preguntarme</item>
+    <item>Ask me</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
     <item>0</item>
@@ -113,7 +113,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Nunca</item>
+    <item>Never</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_values">
     <item>10</item>
@@ -131,15 +131,15 @@
     <item>Show in random order</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hora</item>
-    <item>día</item>
-    <item>mes</item>
-    <item>año</item>
+    <item>hour</item>
+    <item>day</item>
+    <item>month</item>
+    <item>year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>horas</item>
-    <item>días</item>
-    <item>meses</item>
-    <item>años</item>
+    <item>hours</item>
+    <item>days</item>
+    <item>months</item>
+    <item>years</item>
   </string-array>
 </resources>

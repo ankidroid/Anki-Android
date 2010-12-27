@@ -37,6 +37,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -785,17 +786,17 @@ public class Deck {
         private double due;
 
 
-        QueueItem(long _cardID, long _factID) {
-            cardID = _cardID;
-            factID = _factID;
-            due = 0.0;
+        QueueItem(long cardID, long factID) {
+            this.cardID = cardID;
+            this.factID = factID;
+            this.due = 0.0;
         }
 
 
-        QueueItem(long _cardID, long _factID, double _due) {
-            cardID = _cardID;
-            factID = _factID;
-            due = _due;
+        QueueItem(long cardID, long factID, double due) {
+            this.cardID = cardID;
+            this.factID = factID;
+            this.due = due;
         }
 
 
@@ -818,18 +819,17 @@ public class Deck {
         private ArrayList<Long> cards;
 
 
-        SpacedCardsItem(double _space, ArrayList<Long> _cards) {
-            space = _space;
-            cards = _cards;
+        SpacedCardsItem(double space, ArrayList<Long> cards) {
+            this.space = space;
+            this.cards = cards;
         }
 
         double getSpace() {
             return space;
         }
 
-
         ArrayList<Long> getCards() {
-            return cards;
+           return cards;
         }
     }
 
@@ -1285,7 +1285,7 @@ public class Deck {
         return queueNotEmpty(queue, fillFunc, false);
     }
     private boolean queueNotEmpty(LinkedList<QueueItem> queue, Method fillFunc, boolean _new) {
-        while (true) {
+     	while (true) {
             removeSpaced(queue, _new);
             if (!queue.isEmpty()) {
                 return true;
@@ -1297,7 +1297,9 @@ public class Deck {
                 return false;
             }
             if (queue.isEmpty()) {
-                return false;
+            	return false;
+            } else {
+            	return true;
             }
         }
     }
@@ -1323,7 +1325,7 @@ public class Deck {
                 if (!popped.isEmpty()) {
                     mSpacedCards.add(new SpacedCardsItem(delay, popped));
                 }
-                return;
+                break;
             }
         }
     }
