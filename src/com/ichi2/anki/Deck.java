@@ -1292,14 +1292,13 @@ public class Deck {
             }
             try {
                 fillFunc.invoke(Deck.this);
+                mSpacedFacts.clear();
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "queueNotEmpty: Error while invoking overridable fill method:" + e.toString());
                 return false;
             }
             if (queue.isEmpty()) {
             	return false;
-            } else {
-            	return true;
             }
         }
     }
