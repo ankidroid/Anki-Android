@@ -59,6 +59,11 @@
 	
 	<PreferenceCategory android:title="@string/pref_cat_advanced">
 		<CheckBoxPreference
+			android:title="@string/show_deckpicker_on_startup"
+			android:defaultValue="false"
+			android:summary="@string/show_deckpicker_on_startup_summ"
+			android:key="show_deckpicker_on_startup" />
+		<CheckBoxPreference
 			android:title="@string/show_study_options_on_deck_load"
 			android:defaultValue="true"
 			android:summary="@string/show_study_options_on_deck_load_summ"

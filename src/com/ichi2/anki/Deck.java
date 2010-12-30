@@ -24,7 +24,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
-import android.R;
 
 import com.ichi2.anki.Fact.Field;
 
@@ -37,8 +36,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -47,7 +44,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
-import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -1292,7 +1288,7 @@ public class Deck {
             }
             try {
                 fillFunc.invoke(Deck.this);
-                mSpacedFacts.clear();
+                mSpacedFacts.clear(); // workaround for freezing cards problem. remove this when the code is up to date with libanki
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "queueNotEmpty: Error while invoking overridable fill method:" + e.toString());
                 return false;

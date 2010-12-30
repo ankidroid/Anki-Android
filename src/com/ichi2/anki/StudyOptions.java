@@ -120,7 +120,8 @@ public class StudyOptions extends Activity {
     // private boolean deckSelected;
     private boolean mInDeckPicker;
     private String mDeckFilename;
-
+    private boolean mShowDeckPickerOnStartup;
+    
     private int mCurrentContentView;
 
     /**
@@ -371,8 +372,12 @@ public class StudyOptions extends Activity {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
             } else {
-                // Load previous deck.
-                loadPreviousDeck();
+            	if (mShowDeckPickerOnStartup) {
+            		openDeckPicker();
+            	} else {
+            		// Load previous deck.
+            		loadPreviousDeck();
+            	}
             }
         }
     }
@@ -1063,7 +1068,8 @@ public class StudyOptions extends Activity {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
         mPrefStudyOptions = preferences.getBoolean("study_options", true);
-
+        mShowDeckPickerOnStartup = preferences.getBoolean("show_deckpicker_on_startup", false);
+        	
         return preferences;
     }
 
