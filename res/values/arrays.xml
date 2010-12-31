@@ -114,6 +114,17 @@
 		<item>2</item>
 	</string-array>
 	
+	<string-array name="startup_mode_labels">
+		<item>Show study options</item>
+		<item>Show deck picker</item>
+		<item>Show deck picker on first start of the day</item>
+	</string-array>
+	<string-array name="startup_mode_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	
 	<string-array name="error_reporting_choice_labels">
 		<item>Always report</item>
 		<item>Never report</item>

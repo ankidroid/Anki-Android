@@ -53,6 +53,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
 
 public class StudyOptions extends Activity {
@@ -100,6 +101,13 @@ public class StudyOptions extends Activity {
     private static final int CONTENT_SESSION_COMPLETE = 4;
     public static final int CONTENT_NO_EXTERNAL_STORAGE = 5;
 
+    
+    /** Startup Mode choices */
+    private static final int SUM_STUDY_OPTIONS = 0;
+    private static final int SUM_DECKPICKER = 1;
+    private static final int SUM_DECKPICKER_ON_FIRST_START = 2;
+
+    
     /**
 * Download Manager Service stub
 */
@@ -120,10 +128,13 @@ public class StudyOptions extends Activity {
     // private boolean deckSelected;
     private boolean mInDeckPicker;
     private String mDeckFilename;
-    private boolean mShowDeckPickerOnStartup;
+    private int mStartupMode;
     
     private int mCurrentContentView;
-
+    
+    private int mNewDayStartsAt = 4;
+    private long mLastTimeOpened;
+    
     /**
 * Alerts to inform the user about different situations
 */
@@ -372,7 +383,7 @@ public class StudyOptions extends Activity {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
             } else {
-            	if (mShowDeckPickerOnStartup) {
+            	if (showDeckPickerOnStartup()) {
             		openDeckPicker();
             	} else {
             		// Load previous deck.
@@ -435,6 +446,7 @@ public class StudyOptions extends Activity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
+        savePreferences("lastOpened");
     }
 
 
@@ -1020,7 +1032,7 @@ public class StudyOptions extends Activity {
             // A deck was picked. Save it in preferences and use it.
             Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
             mDeckFilename = intent.getExtras().getString(OPT_DB);
-            savePreferences();
+            savePreferences("deckFilename");
 
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
@@ -1055,11 +1067,39 @@ public class StudyOptions extends Activity {
         }
     }
 
-
-    private void savePreferences() {
+    private boolean showDeckPickerOnStartup() {
+    	switch (mStartupMode) {
+    	case SUM_STUDY_OPTIONS:
+            return false;
+    	
+    	case SUM_DECKPICKER:
+    		return true;
+    	
+    	case SUM_DECKPICKER_ON_FIRST_START:
+            
+    		Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) + mNewDayStartsAt);
+            cal.add(Calendar.MINUTE, -cal.get(Calendar.MINUTE));
+            cal.add(Calendar.SECOND, -cal.get(Calendar.SECOND));
+            Calendar muh = Calendar.getInstance();
+            if (cal.getTimeInMillis() > mLastTimeOpened) {
+            	return true;
+            } else {
+            	return false;
+            }
+    	default:
+    		return false;
+    	}        
+    }
+        
+    private void savePreferences(String str) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
-        editor.putString("deckFilename", mDeckFilename);
+        if (str == "deckFilename") {
+            editor.putString("deckFilename", mDeckFilename);        
+        } else if (str == "lastOpened") {
+            editor.putLong("lastTimeOpened", System.currentTimeMillis());        	
+        }
         editor.commit();
     }
 
@@ -1068,8 +1108,9 @@ public class StudyOptions extends Activity {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
         mPrefStudyOptions = preferences.getBoolean("study_options", true);
-        mShowDeckPickerOnStartup = preferences.getBoolean("show_deckpicker_on_startup", false);
-        	
+        mStartupMode = Integer.parseInt(preferences.getString("startup_mode",
+                Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
+        mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
         return preferences;
     }
 

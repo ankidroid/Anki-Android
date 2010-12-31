@@ -58,11 +58,14 @@
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_advanced">
-		<CheckBoxPreference
-			android:title="@string/show_deckpicker_on_startup"
-			android:defaultValue="false"
-			android:summary="@string/show_deckpicker_on_startup_summ"
-			android:key="show_deckpicker_on_startup" />
+		<ListPreference
+			android:title="@string/startup_mode"
+			android:summary="@string/startup_mode_summ"
+			android:key="startup_mode"
+			android:defaultValue="2"
+			android:entries="@array/startup_mode_labels"
+			android:entryValues="@array/startup_mode_values" />
+	
 		<CheckBoxPreference
 			android:title="@string/show_study_options_on_deck_load"
 			android:defaultValue="true"
