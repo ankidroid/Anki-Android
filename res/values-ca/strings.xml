@@ -87,6 +87,8 @@
   <string name="sync_on_close">Sincronitza-ho en tancar</string>
   <string name="show_study_options_on_deck_load">Mostra les opcions d\'aprenentatge en carregar el paquet</string>
   <string name="show_study_options_on_deck_load_summ">Mostra les opcions d\'aprenentatge en carregar un paquet</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Mostra el temps</string>
   <string name="show_timer_summ">Mostra el temps que trigueu a contestar</string>
   <string name="show_whiteboard_summ">Permet escriure a la pantalla</string>

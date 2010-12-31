@@ -87,6 +87,8 @@
   <string name="sync_on_close">Синхронизация при закрытии</string>
   <string name="show_study_options_on_deck_load">Параметры обучения при загрузке колоды</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Показать таймер</string>
   <string name="show_timer_summ">Таймер показывает сколько времени Вам дается для ответа</string>
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>

@@ -87,6 +87,8 @@
   <string name="sync_on_close">Synkronoi suljettaessa</string>
   <string name="show_study_options_on_deck_load">Opiskelu asetukset latauksessa</string>
   <string name="show_study_options_on_deck_load_summ">Näytä opiskelu asetukset näyttö ladattaessa pakkaa</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Näytä ajastin</string>
   <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
   <string name="show_whiteboard_summ">Voit kirjoittaa ruudulle</string>

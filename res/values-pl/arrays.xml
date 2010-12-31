@@ -20,19 +20,19 @@
 <!--Generated with crowdin.net-->
 <resources>
   <string-array name="newCardOrderLabels">
-    <item>Pokaż nowe karty w losowej kolejności</item>
-    <item>Pokaż nowe karty w kolejności dodania</item>
-    <item>Pokaż nowe karty w odwróconej kolejności dodania</item>
+    <item>Kolejność losowa</item>
+    <item>W kolejności dodania</item>
+    <item>W odwróconej kolejności dodania</item>
   </string-array>
   <string-array name="newCardOrderVals">
-    <item>0</item>
+    <item>= </item>
     <item>1</item>
     <item>2</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
-    <item>Rozprosz nowe karty między powtórkami</item>
-    <item>Pokaż nowe karty po wszystkich innych kartach</item>
-    <item>Pokaż nowe karty przed powtórką</item>
+    <item>Rozprosz pomiędzy powtórkami</item>
+    <item>Po powtórkach</item>
+    <item>Przed powtórkami</item>
   </string-array>
   <string-array name="newCardSchedulingVals">
     <item>0</item>
@@ -42,7 +42,7 @@
   <string-array name="revCardOrderLabels">
     <item>Zacznij od kart o największej przerwie</item>
     <item>Zacznij od kart o najmniejszej przerwie</item>
-    <item>Przeglądaj karty w kolejnośc daty pojawienia się</item>
+    <item>Przeglądaj karty w kolejności daty pojawienia się</item>
     <item>Pokaż karty w losowej kolejności</item>
   </string-array>
   <string-array name="revCardOrderVals">
@@ -52,21 +52,21 @@
     <item>3</item>
   </string-array>
   <string-array name="displayFontSizeLabels">
-    <item>10 %</item>
-    <item>20 %</item>
-    <item>30 %</item>
-    <item>40 %</item>
-    <item>50 %</item>
-    <item>60 %</item>
-    <item>70 %</item>
-    <item>80 %</item>
-    <item>90 %</item>
-    <item>100 %</item>
-    <item>110 %</item>
-    <item>120 %</item>
-    <item>130 %</item>
-    <item>140 %</item>
-    <item>150 %</item>
+    <item>10%</item>
+    <item>20%</item>
+    <item>30%</item>
+    <item>40%</item>
+    <item>50%</item>
+    <item>60%</item>
+    <item>70%</item>
+    <item>80%</item>
+    <item>90%</item>
+    <item>100%</item>
+    <item>110%</item>
+    <item>120%</item>
+    <item>130%</item>
+    <item>140%</item>
+    <item>150%</item>
   </string-array>
   <string-array name="displayFontSizeVals">
     <item>10</item>
@@ -95,10 +95,20 @@
     <item>1</item>
     <item>2</item>
   </string-array>
+  <string-array name="startup_mode_labels">
+    <item>Show study options</item>
+    <item>Show deck picker</item>
+    <item>Show deck picker on first start of the day</item>
+  </string-array>
+  <string-array name="startup_mode_values">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Zawsze</item>
+    <item>Nigdy</item>
+    <item>Zapytaj mnie</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
     <item>0</item>
@@ -113,7 +123,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Nigdy</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_values">
     <item>10</item>
@@ -126,20 +136,20 @@
     <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Najpierw pokaż najstarsze zmodyfikowane</item>
+    <item>Pokaż w kolejności dodania</item>
+    <item>Pokaż w losowej kolejności</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hour</item>
-    <item>day</item>
-    <item>month</item>
-    <item>year</item>
+    <item>godzina</item>
+    <item>dzień</item>
+    <item>miesiąc</item>
+    <item>rok</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>hours</item>
-    <item>days</item>
-    <item>months</item>
-    <item>years</item>
+    <item>godziny</item>
+    <item>dni</item>
+    <item>miesiące</item>
+    <item>lata</item>
   </string-array>
 </resources>

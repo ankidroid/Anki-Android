@@ -1081,7 +1081,6 @@ public class StudyOptions extends Activity {
             cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) + mNewDayStartsAt);
             cal.add(Calendar.MINUTE, -cal.get(Calendar.MINUTE));
             cal.add(Calendar.SECOND, -cal.get(Calendar.SECOND));
-            Calendar muh = Calendar.getInstance();
             if (cal.getTimeInMillis() > mLastTimeOpened) {
             	return true;
             } else {

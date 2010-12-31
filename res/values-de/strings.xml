@@ -87,6 +87,8 @@
   <string name="sync_on_close">Beim Beenden synchronisieren</string>
   <string name="show_study_options_on_deck_load">Lerneinstellungen zeigen</string>
   <string name="show_study_options_on_deck_load_summ">Lerneinstellungen beim Laden eines Stapels zeigen</string>
+  <string name="startup_mode">Startmodus</string>
+  <string name="startup_mode_summ">Bestimmt, ob zuerst die Stapelübersicht angezeigt wird oder der zuletzt gelernte Stapel geladen wird</string>
   <string name="show_timer">Timer anzeigen</string>
   <string name="show_timer_summ">Zeigt die Zeit bis zum Beantworten der Frage</string>
   <string name="show_whiteboard_summ">Erlaubt es, auf den Bildschirm zu schreiben</string>

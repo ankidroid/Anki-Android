@@ -95,6 +95,16 @@
     <item>1</item>
     <item>2</item>
   </string-array>
+  <string-array name="startup_mode_labels">
+    <item>Lade zuletzt gelernten Stapel</item>
+    <item>Zeige Stapelübersicht</item>
+    <item>Zeige Stapelübersicht beim ersten Start des Tages</item>
+  </string-array>
+  <string-array name="startup_mode_values">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Immer berichten</item>
     <item>Niemals berichten</item>

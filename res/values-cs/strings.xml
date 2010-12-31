@@ -87,6 +87,8 @@
   <string name="sync_on_close">Synchronizovat při ukončení programu</string>
   <string name="show_study_options_on_deck_load">Studijní možnosti při načtení</string>
   <string name="show_study_options_on_deck_load_summ">Během načítání balíčku zobrazí obrazovku se studijními možnostmi</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Zobrazit časovač</string>
   <string name="show_timer_summ">Časovač zobrazující jak dlouho vám trvá odpovědět</string>
   <string name="show_whiteboard_summ">Umožňuje psát na obrazovku</string>
