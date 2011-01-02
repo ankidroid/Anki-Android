@@ -130,6 +130,7 @@ public class Reviewer extends Activity {
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
+    private int mRelativeButtonSize;
 
     @SuppressWarnings("unused")
     private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
@@ -167,6 +168,8 @@ public class Reviewer extends Activity {
     
     private int mNextTimeTextColor;
     private int mNextTimeTextRecomColor;
+    
+    private int mButtonHeight = 0;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -299,7 +302,6 @@ public class Reviewer extends Activity {
             Resources res = getResources();
             mSessionComplete = false;
             mNoMoreCards = false;
-
             // Check to see if session rep or time limit has been reached
             Deck deck = AnkiDroidApp.deck();
             long sessionRepLimit = deck.getSessionRepLimit();
@@ -460,6 +462,14 @@ public class Reviewer extends Activity {
 
         // Reload layout
         initLayout(R.layout.flashcard);
+        
+       	if (mRelativeButtonSize != 100) {
+       		mFlipCard.setHeight(mButtonHeight);
+       		mEase1.setHeight(mButtonHeight);
+       		mEase2.setHeight(mButtonHeight);
+       		mEase3.setHeight(mButtonHeight);
+       		mEase4.setHeight(mButtonHeight);        	
+       	}
 
         // Modify the card template to indicate the new available width and refresh card
         mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
@@ -732,7 +742,7 @@ public class Reviewer extends Activity {
         mNext2 = (TextView) findViewById(R.id.nextTime2);
         mNext3 = (TextView) findViewById(R.id.nextTime3);
         mNext4 = (TextView) findViewById(R.id.nextTime4);
-                
+
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setOnClickListener(mFlipCardListener);
         mFlipCard.setText(getResources().getString(R.string.show_answer));
@@ -817,7 +827,7 @@ public class Reviewer extends Activity {
         mTextBarBlack.setVisibility(View.VISIBLE);
         mTextBarBlue.setVisibility(View.VISIBLE);
         mFlipCard.setVisibility(View.VISIBLE);
-
+        
         mCardTimer.setVisibility((mPrefTimer) ? View.VISIBLE : View.GONE);
         mWhiteboard.setVisibility((mPrefWhiteboard && mShowWhiteboard) ? View.VISIBLE : View.GONE);
         mAnswerField.setVisibility((mPrefWriteAnswers) ? View.VISIBLE : View.GONE);
@@ -837,6 +847,7 @@ public class Reviewer extends Activity {
         mZoomEnabled = preferences.getBoolean("zoom", true);
         mDisplayFontSize = Integer.parseInt(preferences.getString("displayFontSize",
                 Integer.toString(CardModel.DEFAULT_FONT_SIZE_RATIO)));
+        mRelativeButtonSize = Integer.parseInt(preferences.getString("buttonSize", "100"));
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
 
@@ -909,7 +920,16 @@ public class Reviewer extends Activity {
     private void displayCardQuestion() {
         sDisplayAnswer = false;
         hideEaseButtons();
-
+        
+        if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
+        	mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
+        	mFlipCard.setHeight(mButtonHeight);
+        	mEase1.setHeight(mButtonHeight);
+        	mEase2.setHeight(mButtonHeight);
+        	mEase3.setHeight(mButtonHeight);
+        	mEase4.setHeight(mButtonHeight);        	
+        }
+        
         // If the user wants to write the answer
         if (mPrefWriteAnswers) {
             mAnswerField.setVisibility(View.VISIBLE);

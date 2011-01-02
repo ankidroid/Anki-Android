@@ -109,6 +109,13 @@
 			android:defaultValue="true"
 			android:summary="@string/zoom_summ"
 			android:key="zoom" />
+		<ListPreference
+			android:title="@string/button_size"
+			android:summary="@string/button_size_summ"
+			android:key="buttonSize"
+			android:defaultValue="100"
+			android:entries="@array/button_size_labels"
+			android:entryValues="@array/button_size_values" />
 		<CheckBoxPreference
 			android:title="@string/update_notification"
 			android:defaultValue="true"
