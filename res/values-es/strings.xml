@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">En caso de encontrarse los caracteres \'[\' y \']\', el texto es tratado como una anotación Ruby</string>
   <string name="display_font_size">Tamaño de letra relativo</string>
   <string name="display_font_size_summ">El tamaño de fuente en % relativo al definido en el mazo</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">¿Ocultar la pregunta en la respuesa?</string>
   <string name="hide_question_in_answer_summ">Determina si la pregunta debería de ocultarse cuando la respuesta se muestra.</string>
   <string name="deck_path">Directorio mazos</string>

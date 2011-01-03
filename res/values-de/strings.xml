@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
   <string name="display_font_size">Relative Schriftgröße</string>
   <string name="display_font_size_summ">Die Schriftgröße in der Anzeige relativ zu den Definitionen im Stapel verwenden</string>
+  <string name="button_size">Relative Schaltflächengröße</string>
+  <string name="button_size_summ">Relative Größe der Schaltflächen des Lern-Bildschirms</string>
   <string name="hide_question_in_answer">Frage ausblenden</string>
   <string name="hide_question_in_answer_summ">Bestimmt, ob die Frage ausgeblendet werden soll, wenn die Antwort angezeigt wird</string>
   <string name="deck_path">Stapelverzeichnis</string>

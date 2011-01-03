@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">Merkkien \'[\' ja \']\' välissä olevaa tekstiä käsitellään ruby-huomautuksena</string>
   <string name="display_font_size">Näyttöfontin suhteellinen koko</string>
   <string name="display_font_size_summ">Näytön fonttikoko suhteessa pakan määritelmiin</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Piilota kysymys vastauksen yhteydessä?</string>
   <string name="hide_question_in_answer_summ">Määrittää piilotetaanko kysymys kun vastaus näytetään.</string>
   <string name="deck_path">Pakan polku</string>

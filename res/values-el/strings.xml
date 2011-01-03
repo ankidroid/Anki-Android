@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">Αν βρεθούν οι χαρακτήρες \'[\' and \']\', τότε το εσώκλειστο κείμενο θα χρησιμοποιηθεί ως οδηγεία για ruby</string>
   <string name="display_font_size">Σχετικό μέγεθος γραμματοσειράς</string>
   <string name="display_font_size_summ">Το μέγεθος της γραμματοσειράς στην οθόνη σε σχέση με τους ορισμούς της τράπουλας</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Απόκρυψη ερώτησης στην απάντηση;</string>
   <string name="hide_question_in_answer_summ">Καθορίζει αν η ερώτηση θα κρύβεται όταν εμφανίζεται η απάντηση.</string>
   <string name="deck_path">Διαδρομή για τράπουλες</string>

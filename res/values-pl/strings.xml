@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">W razie znalezienia znaków \'[\' i \']\', tekst zawarty między nimi będzie traktowany jako notacja ruby</string>
   <string name="display_font_size">Względna wielkość czcionki wyświetlacza</string>
   <string name="display_font_size_summ">Rozmiar czcionki do wykorzystania na wyświetlaczu w stosunku do definicji w talii</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Ukryć pytanie przy odpowiedzi?</string>
   <string name="hide_question_in_answer_summ">Określa, czy pytanie powinno być ukryte, gdy odpowiedź jest widoczna.</string>
   <string name="deck_path">Ścieżka talii</string>

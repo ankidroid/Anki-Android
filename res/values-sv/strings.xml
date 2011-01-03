@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">Om tecknet \'[\' och  \']\' hittas så hanteras inramad text som ruby-anteckning</string>
   <string name="display_font_size">Relativ teckenstorlek</string>
   <string name="display_font_size_summ">Teckenstorleken anpassas relativt till inställningarna i kortleken</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Dölj frågan vid svar?</string>
   <string name="hide_question_in_answer_summ">Anger om frågan ska döljas när svaret visas.</string>
   <string name="deck_path">Sökväg till kortlekarna</string>

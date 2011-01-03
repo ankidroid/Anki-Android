@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">Si les caractères \'[\' et \']\' sont trouvés, considérer le texte comme une annotation ruby</string>
   <string name="display_font_size">Fonte d\'affichage en taille relative</string>
   <string name="display_font_size_summ">Utiliser la taille de fonte relativement à la taille définie dans le paquet</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Ne pas montrer la question dans la réponse ?</string>
   <string name="hide_question_in_answer_summ">Détermine si la question doit être montrée en même temps que la réponse.</string>
   <string name="deck_path">Chemin d\'accès au paquet</string>

@@ -85,6 +85,22 @@
     <item>140</item>
     <item>150</item>
   </string-array>
+  <string-array name="button_size_labels">
+    <item>100 %</item>
+    <item>110 %</item>
+    <item>120 %</item>
+    <item>130 %</item>
+    <item>140 %</item>
+    <item>150 %</item>
+  </string-array>
+  <string-array name="button_size_values">
+    <item>100</item>
+    <item>110</item>
+    <item>120</item>
+    <item>130</item>
+    <item>140</item>
+    <item>150</item>
+  </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>Amaga la pregunta en mostrar la resposta</item>
     <item>Mostra la pregunta amb la resposta</item>

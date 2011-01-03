@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">El text inclòs entre corxets  \'[\' i \']\' es tractarà con una anotació de ruby</string>
   <string name="display_font_size">Tipus de lletra de mida definida</string>
   <string name="display_font_size_summ">Es farà servir el tipus de lletra de mida definida al paquet</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Voleu amagar la pregunta a la resposta?</string>
   <string name="hide_question_in_answer_summ">Indica si la pregunta s\'ha de mostrar quan es mostri la resposta.</string>
   <string name="deck_path">Carpeta dels paquets</string>

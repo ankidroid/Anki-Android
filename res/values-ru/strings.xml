@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">Если найдены символы \'[\' и \']\', то заключенный в них текст будет рассмотрен как Ruby-аннотация</string>
   <string name="display_font_size">Относительный размер шрифта</string>
   <string name="display_font_size_summ">Размер шрифта в процентах относительно к размеру шрифта, сохранённому в колоде</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Скрыть \"Вопрос\" при ответе?</string>
   <string name="hide_question_in_answer_summ">Должен ли быть вопрос скрыт, когда ответ показан.</string>
   <string name="deck_path">Путь к колодам</string>

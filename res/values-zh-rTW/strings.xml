@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">如果包含\'[\'或\']\'符號，當作Ruby語言處理</string>
   <string name="display_font_size">相對顯示字型大小</string>
   <string name="display_font_size_summ">相對於牌組中定義的字型大小</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">隱藏題目？</string>
   <string name="hide_question_in_answer_summ">顯示答案時是否隱藏題目。</string>
   <string name="deck_path">牌組路徑</string>

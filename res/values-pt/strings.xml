@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">Se os caracteres \'[\' e \']\' forem encontrados, então o texto delimitado é tratado como anotação ruby</string>
   <string name="display_font_size">Tamanho relativo de fonte de exibição</string>
   <string name="display_font_size_summ">O tamanho da fonte para usar no display relativo às definições do deck</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Ocultar questão ao exibir resposta?</string>
   <string name="hide_question_in_answer_summ">Determina se a questão deveria ser ocultada quando a resposta é mostrada.</string>
   <string name="deck_path">Pasta dos Deck </string>

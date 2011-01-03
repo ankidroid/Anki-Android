@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">Dacă gasesc caracterele \'[\' şi \']\', tratez textul cuprins intre ele ca o anotare Ruby</string>
   <string name="display_font_size">Dimensiunea relativă a fontului de afişare</string>
   <string name="display_font_size_summ">Dimensiunea fontului utilizata la afisare in comparatie cu definitiile din pachet</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Ascunde întrebarea în răspuns?</string>
   <string name="hide_question_in_answer_summ">Determină dacă întrebarea va fi ascunsa când se afiseaza răspunsul.</string>
   <string name="deck_path">Director pachet</string>

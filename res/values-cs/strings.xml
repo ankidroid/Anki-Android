@@ -104,6 +104,8 @@
   <string name="use_ruby_support_summ">Pokud jsou nalezeny znaky \ \' [\ \' a \ \'] \ \', pak je text mezi nimi zpracován jako ruby anotace </string>
   <string name="display_font_size">Relativní velikost fontu</string>
   <string name="display_font_size_summ">Velikost písma relativně k definicím uvedeným v balíku</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Skrýt otázku v odpovědi?</string>
   <string name="hide_question_in_answer_summ">Určuje, zda má být při ukázání odpovědi skryto pole s otázkou.</string>
   <string name="deck_path">Umístění balíčku</string>
