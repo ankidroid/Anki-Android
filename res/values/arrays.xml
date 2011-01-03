@@ -104,19 +104,19 @@
 	</string-array>
 	<string-array name="button_size_labels">
 		<item>100 %</item>
-		<item>110 %</item>
-		<item>120 %</item>
+		<item>115 %</item>
 		<item>130 %</item>
-		<item>140 %</item>
-		<item>150 %</item>
+		<item>145 %</item>
+		<item>160 %</item>
+		<item>175 %</item>
 	</string-array>
 	<string-array name="button_size_values">
 		<item>100</item>
-		<item>110</item>
-		<item>120</item>
+		<item>115</item>
 		<item>130</item>
-		<item>140</item>
-		<item>150</item>
+		<item>145</item>
+		<item>160</item>
+		<item>175</item>
 	</string-array>
 	<string-array name="hideQuestionInAnswerLabels">
 		<item>Hide the question in answer</item>
