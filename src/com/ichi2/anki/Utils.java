@@ -634,4 +634,34 @@ public class Utils {
         }
         return result;
     }
+
+    
+    // Media support
+    //***************
+
+    private static final Pattern mMediaRegexps[] = {
+        Pattern.compile("(\\[sound:([^]]+)\\])"),
+        Pattern.compile("(<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>)")
+    };
+
+    public static Arraylist<String> mediaFiles(String string) {
+        return mediaFiles(string, false);
+    }
+    public static Arraylist<String> mediaFiles(String string, boolean remote) {
+        boolean isLocal = false;
+        ArrayList<String> l = new ArrayList<String>();
+        for (String reg : mMediaRegexps) {
+            Matcher m = reg.matcher(string);
+            while (m.find()) {
+                isLocal = m.group(2).toLowerCase.matches("(https?|ftp)://.*");
+                if (!remote && isLocal) {
+                    l.add(m.group(2));
+                } else if (remote && !isLocal) {
+                    l.add(m.group(2));
+                }
+            }
+        }
+        return l;
+    }
+
 }

@@ -175,10 +175,46 @@ public class Card {
 		rebuildQA(deck, true);
 	}
 	public void requildQA(Deck deck, boolean media) {
+        // Format qa
 		if (mFact != null && mCardModel != null) {
 			HashMap<String, String> qa = CardModel.formatQA(mFact, mCardModel, splitTags());
-			mQuestion = qa.get("question");
-			mAnswer = qa.get("answer");
+
+            if (media) {
+                // Find old media references
+                Map<String, Integer> files = new Map<String, Integer>();
+                ArrayList<String> filesFromQA = Utils.mediaFiles(mQuestion);
+                filesFromQA.add(Utils.mediaFiles(mAnswer));
+                for (String f : filesFromQA) {
+                    if (files.containsKey(f)) {
+                        files.put(f, files.get(f) - 1);
+                    } else {
+                        files.put(f, -1);
+                    }
+                }
+                // Update q/a
+                mQuestion = qa.get("question");
+                mAnswer = qa.get("answer");
+                // Determine media delta
+                filesFromQA = Utils.mediaFiles(mQuestion);
+                filesFromQA.add(Utils.mediaFiles(mAnswer));
+                for (String f : filesFromQA) {
+                    if (files.containsKey(f)) {
+                        files.put(f, files.get(f) + 1);
+                    } else {
+                        files.put(f, 1);
+                    }
+                }
+                // Update media counts if we're attached to deck
+                Set<String> filesKeys = files.keySet();
+                for (f : filesKeys) {
+                    deck.updateMediaCount(f, files.get(f));
+                }
+            } else {
+                // Update q/a
+                mQuestion = qa.get("question");
+                mAnswer = qa.get("answer");
+            }
+            setModified();
 		}
 	}
 
