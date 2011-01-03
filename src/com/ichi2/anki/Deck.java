@@ -310,10 +310,9 @@ public class Deck {
         deck.getDB().getDatabase().execSQL("UPDATE cards SET type = type - 3 WHERE type BETWEEN 0 AND 2 AND priority = -3");
 
         // - New delay1 handling
-        if (deck.mDelay0 == deck.mDelay1) {
-            deck.mDelay1 = 0l;
-        } else {
-            deck.mDelay1 = Math.min(deck.mDelay1, 7);
+        if (deck.mDelay1 > 7l) {
+			// We treat 600==0 to avoid breaking older clients
+            deck.mDelay1 = 600l;
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();

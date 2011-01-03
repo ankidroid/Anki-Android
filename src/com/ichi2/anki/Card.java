@@ -165,15 +165,22 @@ public class Card {
         if (cardModel != null) {
             mCardModelId = cardModel.getId();
             mOrdinal = cardModel.getOrdinal();
-
-            if (fact != null) {
-                HashMap<String, String> qa = CardModel.formatQA(fact, cardModel, splitTags());
-                mQuestion = qa.get("question");
-                mAnswer = qa.get("answer");
-            }
         }
     }
 
+	/**
+	 * Format qa
+	 */
+	public void rebuildQA(Deck deck) {
+		rebuildQA(deck, true);
+	}
+	public void requildQA(Deck deck, boolean media) {
+		if (mFact != null && mCardModel != null) {
+			HashMap<String, String> qa = CardModel.formatQA(mFact, mCardModel, splitTags());
+			mQuestion = qa.get("question");
+			mAnswer = qa.get("answer");
+		}
+	}
 
     public Card(Deck deck) {
         this(deck, null, null, Double.NaN);
