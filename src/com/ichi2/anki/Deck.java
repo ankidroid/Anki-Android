@@ -59,7 +59,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 58;
+    public static final int DECK_VERSION = 60;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -553,7 +553,7 @@ public class Deck {
         // lastSessionStart = 0;
         mQueueLimit = 200;
         // If most recent deck var not defined, make sure defaults are set
-        if (!hasKey("newSpacing")) {
+        if (!hasKey("mediaURL")) {
             setVarDefault("suspendLeeches", "1");
             setVarDefault("leechFails", "16");
             setVarDefault("perDay", "1");
@@ -562,6 +562,7 @@ public class Deck {
             setVarDefault("newInactive", mSuspended);
             setVarDefault("revInactive", mSuspended);
             setVarDefault("newSpacing", "60");
+            setVarDefault("mediaURL", "");
         }
         updateCutoff();
         setupStandardScheduler();
@@ -584,6 +585,8 @@ public class Deck {
         // Oldest versions in existence are 31 as of 11/07/2010
         // We support upgrading from 39 and up.
         // Unsupported are about 135 decks, missing about 6% as of 11/07/2010
+        //
+        double oldmod = deck.mModified;
 
         upgradeNotes = new ArrayList<Integer>();
         if (mVersion < 39) {
@@ -597,7 +600,6 @@ public class Deck {
             mVersion = 40;
             commitToDB();
         }
-        // skip 41
         if (mVersion < 42) {
             mVersion = 42;
             commitToDB();
@@ -641,7 +643,6 @@ public class Deck {
             mVersion = 50;
             commitToDB();
         }
-        // skip 51
         if (mVersion < 52) {
             // The commented code below follows libanki by setting the syncName to the MD5 hash of the path.
             // The problem with that is that it breaks syncing with already uploaded decks.
@@ -695,6 +696,11 @@ public class Deck {
 			mVersion = 58;
 			commitToDB();
 		}
+		if (mVersion < 60) {
+            // Rebuild the media db based on new format
+            rebuildMediaDir(false);
+            mVersion = 60;
+            commitToDB();
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
             commitToDB();
@@ -704,6 +710,7 @@ public class Deck {
             setVar("pageSize", "4096", false);
             commitToDB();
         }
+        assert (mModified == oldmod);
         return true;
     }
 
@@ -2293,6 +2300,7 @@ public class Deck {
         if (!result) {
             return null;
         }
+        card.mDeck = this;
         card.genFuzz();
         card.startTimer();
         return card;
@@ -2501,7 +2509,7 @@ public class Deck {
         // then after setModified we need to save again! Just make setModified to use the tags from the fact,
         // not reload them from the DB.
         scard.getFact().toDb();
-        scard.getFact().setModified(true);
+        scard.getFact().setModified(true, this);
         scard.getFact().toDb();
         updateFactTags(new long[] {scard.getFact().getId()});
         card.setLeechFlag(true);
@@ -3203,6 +3211,7 @@ public class Deck {
         }
         commitToDB();
         // TODO: code related to random in newCardOrder
+        // TODO: code for updating card q/a
         // TODO: update tags
         // TODO: update priorities?
         return fact;

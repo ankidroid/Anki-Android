@@ -244,9 +244,19 @@ public class Fact {
     }
 
 
+    public void setModified() {
+        setModified(false, null, true);
+    }
     public void setModified(boolean textChanged) {
+        setModified(textChanged, null, true);
+    }
+    public void setModified(boolean textChanged, Deck deck) {
+        setModified(textChanged, deck, true);
+    }
+    public void setModified(boolean textChanged, Deck deck, boolean media) {
         mModified = Utils.now();
         if (textChanged) {
+            assert (deck != null);
             mSpaceUntil = "";
             StringBuilder str = new StringBuilder(1024);
             for (Field f : getFields()) {
@@ -254,11 +264,10 @@ public class Fact {
             }
             mSpaceUntil = str.toString();
             mSpaceUntil.substring(0, mSpaceUntil.length() - 1);
-            mSpaceUntil = Utils.stripHTMLMedia(mSpaceUntil.substring(0, mSpaceUntil.length()-1));
+            mSpaceUntil = Utils.stripHTMLMedia(mSpaceUntil);
             Log.d(AnkiDroidApp.TAG, "spaceUntil = " + mSpaceUntil);
             for (Card card : getUpdatedRelatedCards()) {
-                card.setModified();
-                card.toDB();
+                card.rebuildQA(deck);
             }
         }
     }
