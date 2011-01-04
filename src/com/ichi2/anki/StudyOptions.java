@@ -28,6 +28,8 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -279,45 +281,6 @@ public class StudyOptions extends Activity {
         }
     }
 
-    private View.OnFocusChangeListener mEditFocusListener = new View.OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            Deck deck = AnkiDroidApp.deck();
-            if (!hasFocus) {
-                String inputText = ((EditText) v).getText().toString();
-
-                switch (v.getId()) {
-                    case R.id.studyoptions_new_cards_per_day:
-                        if (isValidInt(inputText)) {
-                            deck.setNewCardsPerDay(Integer.parseInt(inputText));
-                            updateValuesFromDeck();
-                        } else {
-                            ((EditText) v).setText(Integer.toString(deck.getNewCardsPerDay()));
-                        }
-                        return;
-                    case R.id.studyoptions_session_minutes:
-                        if (isValidLong(inputText)) {
-                            deck.setSessionTimeLimit(Long.parseLong(inputText) * 60);
-                            updateValuesFromDeck();
-                        } else {
-                            ((EditText) v).setText(Long.toString(deck.getSessionTimeLimit() / 60));
-                        }
-
-                        return;
-                    case R.id.studyoptions_session_questions:
-                        if (isValidLong(inputText)) {
-                            deck.setSessionRepLimit(Long.parseLong(inputText));
-                            updateValuesFromDeck();
-                        } else {
-                            ((EditText) v).setText(Long.toString(deck.getSessionRepLimit()));
-                        }
-                        return;
-                    default:
-                        return;
-                }
-            }
-        }
-    };
 
     private DialogInterface.OnClickListener mDialogSaveListener = new DialogInterface.OnClickListener() {
         @Override
@@ -496,9 +459,63 @@ public class StudyOptions extends Activity {
 
         mButtonStart.setOnClickListener(mButtonClickListener);
         mToggleCram.setOnClickListener(mButtonClickListener);
-        mEditNewPerDay.setOnFocusChangeListener(mEditFocusListener);
-        mEditSessionTime.setOnFocusChangeListener(mEditFocusListener);
-        mEditSessionQuestions.setOnFocusChangeListener(mEditFocusListener);
+
+        mEditNewPerDay.addTextChangedListener(new TextWatcher() {
+        	public void afterTextChanged(Editable s) {
+                Deck deck = AnkiDroidApp.deck();
+                String inputText = mEditNewPerDay.getText().toString();
+                if (!inputText.equals(Integer.toString(deck.getNewCardsPerDay()))) {
+                	if (inputText.equals("")) {
+                		deck.setNewCardsPerDay(0);                		
+                	} else if (isValidInt(inputText)) {
+                		deck.setNewCardsPerDay(Integer.parseInt(inputText));
+                	} else {
+                		mEditNewPerDay.setText("0");
+                	}
+            		updateValuesFromDeck();
+                }
+        	}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+        public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
+        
+        mEditSessionTime.addTextChangedListener(new TextWatcher() {
+        	public void afterTextChanged(Editable s) {
+                Deck deck = AnkiDroidApp.deck();
+                String inputText = mEditSessionTime.getText().toString();
+                if (!inputText.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
+                	if (inputText.equals("")) {
+                		deck.setSessionTimeLimit(0);                		
+                	} else if (isValidLong(inputText)) {
+                		deck.setSessionTimeLimit(Long.parseLong(inputText) * 60);
+                	} else {
+                		mEditSessionTime.setText("0");
+                	}
+            		updateValuesFromDeck();
+                }
+        	}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+        public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
+        
+        mEditSessionQuestions.addTextChangedListener(new TextWatcher() {
+        	public void afterTextChanged(Editable s) {
+                Deck deck = AnkiDroidApp.deck();
+                String inputText = mEditSessionQuestions.getText().toString();
+                if (!inputText.equals(Long.toString(deck.getSessionRepLimit()))) {
+                	if (inputText.equals("")) {
+                		deck.setSessionRepLimit(0);                		
+                	} else if (isValidLong(inputText)) {
+                		deck.setSessionRepLimit(Long.parseLong(inputText));
+                	} else {
+                		mEditSessionQuestions.setText("0");
+                	}
+            		updateValuesFromDeck();
+                }
+        	}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+        public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
 
         mDialogMoreOptions = createMoreOptionsDialog();
 
@@ -742,9 +759,15 @@ public class StudyOptions extends Activity {
             mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
             mTextNewTotal.setText(String.valueOf(deck.getNewCount()));
 
-            mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
-            mEditSessionTime.setText(String.valueOf(deck.getSessionTimeLimit() / 60));
-            mEditSessionQuestions.setText(String.valueOf(deck.getSessionRepLimit()));
+            if (!mEditNewPerDay.getText().toString().equals(String.valueOf(deck.getNewCardsPerDay())) && !mEditNewPerDay.getText().toString().equals("")) {
+            	mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
+            }
+            if (!mEditSessionTime.getText().toString().equals(String.valueOf(deck.getSessionTimeLimit() / 60)) && !mEditSessionTime.getText().toString().equals("")) {
+            	mEditSessionTime.setText(String.valueOf(deck.getSessionTimeLimit() / 60));
+            }
+            if (!mEditSessionQuestions.getText().toString().equals(String.valueOf(deck.getSessionRepLimit())) && !mEditSessionQuestions.getText().toString().equals("")) {
+            	mEditSessionQuestions.setText(String.valueOf(deck.getSessionRepLimit()));
+            }
         }
     }
 
