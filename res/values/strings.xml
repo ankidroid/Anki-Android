@@ -4,6 +4,7 @@
 ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
 ~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
 ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
 ~
 ~ This program is free software; you can redistribute it and/or modify it under
 ~ the terms of the GNU General Public License as published by the Free Software
@@ -156,6 +157,8 @@
 <!-- AndroidManifest.xml -->
 <string name="personaldeckpicker_title">Open Online Deck</string>
 <string name="shareddeckpicker_title">Select the deck you want to download</string>
+<string name="downloaddeck_search">Search</string>
+<string name="downloaddeck_downloading">Downloading...</string>
 <string name="preferences_title">Preferences</string>
 <string name="deckpreferences_title">Deck Preferences</string>
 <!--<string name="deckproperties_title">Deck Properties</string>-->

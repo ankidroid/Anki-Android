@@ -19,7 +19,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ichi2.anki"
-	android:versionName="0.5alpha14" android:versionCode="13"
+	android:versionName="0.5alpha17" 
+	android:versionCode="17"
 	android:installLocation="auto">
 	<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
 		<activity android:name="StudyOptions" 

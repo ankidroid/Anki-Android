@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -87,19 +88,19 @@
   </string-array>
   <string-array name="button_size_labels">
     <item>100 %</item>
-    <item>110 %</item>
-    <item>120 %</item>
+    <item>115 %</item>
     <item>130 %</item>
-    <item>140 %</item>
-    <item>150 %</item>
+    <item>145 %</item>
+    <item>160 %</item>
+    <item>175 %</item>
   </string-array>
   <string-array name="button_size_values">
     <item>100</item>
-    <item>110</item>
-    <item>120</item>
+    <item>115</item>
     <item>130</item>
-    <item>140</item>
-    <item>150</item>
+    <item>145</item>
+    <item>160</item>
+    <item>175</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>Hide the question in answer</item>

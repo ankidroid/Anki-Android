@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -26,7 +27,7 @@
   <string name="no">Ei</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Pakkojen joiden versiot vanhempi kuin 39 eivät tue AnkiDroidia. Avaa pakka Anki-työpöytä versiolla ja päivitä pakka uusimpaan versioon.</string>
-  <string name="deckpicker_title">Valitse SD-kortille kopioimasi pakka</string>
+  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">SD-kortti on irrotettu</string>
   <string name="deckpicker_due">%1$d / %2$d jäljellä</string>
   <string name="deckpicker_new">%d uutta tänään</string>
