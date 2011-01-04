@@ -466,7 +466,13 @@ public class SharedDeckPicker extends Activity {
         public void onPreExecute() {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = ProgressDialog.show(SharedDeckPicker.this, "",
-                        getResources().getString(R.string.loading_shared_decks));
+                        getResources().getString(R.string.loading_shared_decks), true, true, new DialogInterface.OnCancelListener() {
+                	@Override
+        			public void onCancel(DialogInterface dialog) {
+        				Connection.cancelGetDecks();
+        				finish();
+        			}
+                });
             }
         }
 

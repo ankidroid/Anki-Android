@@ -401,7 +401,13 @@ public class PersonalDeckPicker extends Activity {
         public void onPreExecute() {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = ProgressDialog.show(PersonalDeckPicker.this, "",
-                        getResources().getString(R.string.loading_personal_decks));
+                        getResources().getString(R.string.loading_personal_decks), true, true, new DialogInterface.OnCancelListener() {
+                	@Override
+                	public void onCancel(DialogInterface dialog) {
+                		Connection.cancelGetDecks();
+                		finish();
+                	}
+                });
             }
         }
 
