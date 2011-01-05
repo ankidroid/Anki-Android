@@ -258,7 +258,7 @@ public class CardModel implements Comparator<CardModel> {
 
         int replaceAt = question.indexOf("%(");
         while (replaceAt != -1) {
-        	if (question.substring(replaceAt + 2,replaceAt + 7).equals("text:")){
+        	if (question.substring(replaceAt, replaceAt + 7).equals("%(text:")){
             	question = replaceHtmlField(question, fact, replaceAt);        	
             } else {
             	question = replaceField(question, fact, replaceAt, true);        	
@@ -268,7 +268,7 @@ public class CardModel implements Comparator<CardModel> {
 
         replaceAt = answer.indexOf("%(");
         while (replaceAt != -1) {
-            if (answer.substring(replaceAt + 2,replaceAt + 7).equals("text:")){
+            if (answer.substring(replaceAt, replaceAt + 7).equals("%(text:")){
              	answer = replaceHtmlField(answer, fact, replaceAt);       	
             } else {
             	answer = replaceField(answer, fact, replaceAt, true);       	
