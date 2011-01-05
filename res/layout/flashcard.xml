@@ -4,6 +4,7 @@
 ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
 ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
 ~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com> 
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
 ~
 ~ This program is free software; you can redistribute it and/or modify it under
 ~ the terms of the GNU General Public License as published by the Free Software
@@ -76,11 +77,11 @@
 		<TextView android:id="@+id/nextTime1"
 			android:textColor="@color/next_time_failed_color"
 			android:layout_width="0dip"
-			android:layout_height="wrap_content"
+			android:layout_height="fill_parent"
 			android:layout_weight="1"
-			android:gravity="center"
+			android:layout_gravity="center"
 			android:visibility="gone"
-			android:maxLines="1"/>		
+			android:gravity="bottom|center_horizontal"/>
 		<include android:id="@+id/nextTime2" layout="@layout/next_time_textview" />
 		<include android:id="@+id/nextTime3" layout="@layout/next_time_textview" />
 		<include android:id="@+id/nextTime4" layout="@layout/next_time_textview" />
@@ -109,14 +110,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true" >
-
-			<Button android:id="@+id/ease1" 
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:layout_gravity="bottom"
-			android:visibility="gone"
-			android:gravity="center"/>
+			<include android:id="@+id/ease1" layout="@layout/bottom_button" />
 			<include android:id="@+id/ease2" layout="@layout/bottom_button" />
 			<include android:id="@+id/ease3" layout="@layout/bottom_button" />
 			<include android:id="@+id/ease4" layout="@layout/bottom_button" />

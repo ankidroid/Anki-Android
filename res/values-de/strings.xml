@@ -20,8 +20,6 @@
  
 <!--Generated with crowdin.net-->
 <resources>
-<string name="downloaddeck_search">Suchen</string>
-
   <string name="CardEditorCancelButton">Abbrechen</string>
   <string name="CardEditorSaveButton">Speichern</string>
   <string name="app_name">AnkiDroid</string>

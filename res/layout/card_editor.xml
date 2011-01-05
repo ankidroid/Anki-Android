@@ -21,16 +21,20 @@
 			android:layout_marginTop="10dp"
 			android:layout_gravity="right" 
 			android:id="@+id/CardEditorButtons">
-			<Button android:layout_width="fill_parent"
-				android:layout_height="wrap_content" 
+			<Button android:layout_width="0dip"
+				android:layout_height="fill_parent" 
 				android:id="@+id/CardEditorSaveButton"
 				android:text="@string/CardEditorSaveButton"
-				android:layout_weight="1"></Button>
-			<Button android:layout_width="fill_parent"
-				android:layout_height="wrap_content" 
+				android:layout_gravity="center"
+				android:gravity="center"
+				android:layout_weight="1"/>
+			<Button android:layout_width="0dip"
+				android:layout_height="fill_parent" 
 				android:id="@+id/CardEditorCancelButton"
 				android:text="@string/CardEditorCancelButton"
-				android:layout_weight="1"></Button>
+				android:layout_gravity="center"
+				android:gravity="center"
+				android:layout_weight="1"/>
 		</LinearLayout>
 	</LinearLayout>
 </ScrollView>

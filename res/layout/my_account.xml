@@ -35,31 +35,34 @@
 		android:layout_marginTop="10dp">
 
 		<TextView android:id="@+id/no_account_text"
-			android:layout_width="fill_parent"
+			android:layout_width="0dip"
 			android:layout_height="wrap_content"
 			android:layout_gravity="bottom"
 			android:text="@string/sign_up_description"
-         	android:layout_weight="1"
+         	android:layout_weight="2"
          	android:textStyle="bold"
-			android:textSize="16dp"/>
+			android:textSize="16dp"
+			android:layout_marginBottom="5dp"/>
 
 		<LinearLayout
-			android:layout_width="fill_parent"
+			android:layout_width="0dip"
 			android:layout_height="wrap_content"
-			android:layout_weight="2"
+			android:layout_weight="1"
 			android:orientation="vertical">
 					
 			<Button android:id="@+id/login_button"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:layout_gravity="right"
+				android:layout_gravity="center"
+				android:gravity="center"
 				android:text="@string/log_in"/>
 			
 			<Button android:id="@+id/sign_up_button"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/sign_up"
-				android:layout_gravity="right"
+				android:layout_gravity="center"
+				android:gravity="center"
 				android:layout_marginTop="10dp"/>
 		</LinearLayout>	
 	</LinearLayout>

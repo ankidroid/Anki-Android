@@ -19,31 +19,33 @@
       	android:layout_height="wrap_content">
    		   	<LinearLayout
 	      	android:id="@+id/FactAdderSelectModelLayout"
-    	  	android:layout_width="fill_parent"
-      		android:layout_height="wrap_content"
+    	  	android:layout_width="0dip"
+      		android:layout_height="fill_parent"
       		android:layout_weight="1">
         	<TextView
         		android:id="@+id/FactAdderModelTextView"
-	        	android:layout_width="wrap_content"
-    	    	android:layout_height="wrap_content"
-        		android:text="@string/model">
-        	</TextView>
+         		android:layout_height="fill_parent"
+         		android:layout_width="0dip"
+         		android:layout_weight="1"
+         		android:layout_gravity="center"
+				android:gravity="center"
+        		android:text="@string/model"/>
         	<Button
 	        	android:id="@+id/FactAdderModelButton"
-        		android:layout_width="fill_parent"
-        		android:layout_height="wrap_content">
-        	</Button>
+  		       	android:layout_height="fill_parent"
+   		      	android:layout_width="0dip"
+    		    android:layout_weight="1"
+      		   	android:layout_gravity="center"
+				android:gravity="center"/>
         	</LinearLayout>
-
-        	<TextView
-        		android:id="@+id/FactAdderTemplates"
-	        	android:layout_width="fill_parent"
-    	    	android:layout_height="fill_parent"
-    			android:gravity="center"
-				android:layout_weight="1"
-        		android:text="@string/card">
-        	</TextView>
-
+        <TextView
+        	android:id="@+id/FactAdderTemplates"
+         	android:layout_height="fill_parent"
+         	android:layout_width="0dip"
+         	android:layout_weight="1"
+         	android:layout_gravity="center"
+			android:gravity="center"
+        	android:text="@string/card"/>
       	</LinearLayout>
 		
         <LinearLayout
@@ -62,18 +64,20 @@
 	  	android:layout_gravity="right" >
         <Button
         	android:id="@+id/FactAdderAddButton"
-         	android:layout_width="fill_parent"
-         	android:layout_height="wrap_content"
-         	android:text="@string/add"
-         	android:layout_weight="1">
-        </Button>
-        <Button
+         	android:layout_height="fill_parent"
+         	android:layout_width="0dip"
+         	android:layout_weight="1"
+         	android:layout_gravity="center"
+			android:gravity="center"
+         	android:text="@string/add"/>
+		<Button
          	android:id="@+id/FactAdderCloseButton"
-         	android:layout_width="fill_parent"
-         	android:layout_height="wrap_content"
-         	android:text="@string/close" 
-         	android:layout_weight="1">
-        </Button>
+         	android:layout_height="fill_parent"
+         	android:layout_width="0dip"
+         	android:layout_weight="1"
+         	android:layout_gravity="center"
+			android:gravity="center"
+         	android:text="@string/close"/> 
       	</LinearLayout>
 	</LinearLayout>
 </ScrollView>

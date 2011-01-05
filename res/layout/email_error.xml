@@ -21,12 +21,16 @@
 	<Button android:text="@string/error_ok" 
 			android:id="@+id/btnSendEmail" 
 			android:layout_width="0dip" 
-			android:layout_height="wrap_content"
+			android:layout_height="fill_parent"
+			android:layout_gravity="center"
+			android:gravity="center"
 			android:layout_weight="1"/>
 	<Button android:text="@string/error_cancel" 
 			android:id="@+id/btnIgnoreError" 
 			android:layout_width="0dip" 
-			android:layout_height="wrap_content"
+			android:layout_height="fill_parent"
+			android:layout_gravity="center"
+			android:gravity="center"
 			android:layout_weight="1"/>
 	</LinearLayout>
 </LinearLayout>
