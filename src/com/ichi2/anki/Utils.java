@@ -635,4 +635,26 @@ public class Utils {
         return result;
     }
 
+    /**
+     * MD5 sum of file.
+     * Equivalent to checksum(open(os.path.join(mdir, file), "rb").read()))
+     *
+     * @param path The full path to the file
+     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of the contents
+     * of the file
+     */
+    public static String fileChecksum(String path) {
+        byte[] bytes = null;
+        File file = new File(path);
+        if (file != null && file.isFile()) {
+            bytes = new byte[file.length()];
+            FileInputStream fin = new FileInputStream(file);
+            fin.read(bytes);
+        }
+        if (bytes == null) {
+            Log.w(AnkiDroidApp.TAG, "Media file " + path + " appears to be empty");
+            return "";
+        }
+        return checksum(new String(bytes));
+    }
 }
