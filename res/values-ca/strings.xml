@@ -117,6 +117,7 @@
   <string name="zoom_summ">Mostra els botons d\'ampliació a les fitxes</string>
   <string name="personaldeckpicker_title">Obre un paquet de la xarxa</string>
   <string name="shareddeckpicker_title">Trieu el paquet que voleu baixar</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Preferències</string>
   <string name="deckpreferences_title">Preferències del paquet</string>
   <string name="about_title">Quant a…</string>

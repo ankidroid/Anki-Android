@@ -113,9 +113,9 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>Näytä opiskelu asetukset</item>
+    <item>Näytä pakan kerääjä</item>
+    <item>Näytä pakan kerääjä päivän ensimmäisen käynnistyksen yhteydessä</item>
   </string-array>
   <string-array name="startup_mode_values">
     <item>0</item>

@@ -117,6 +117,7 @@
   <string name="zoom_summ">Prikaži Kontrole za Zumiranje tokom pregledavanja</string>
   <string name="personaldeckpicker_title">Otvori Internet Špil</string>
   <string name="shareddeckpicker_title">Izaberite špil koji želite skinuti</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Postavke</string>
   <string name="deckpreferences_title">Podešavanje Špila</string>
   <string name="about_title">O programu</string>

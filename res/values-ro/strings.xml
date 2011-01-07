@@ -117,6 +117,7 @@
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Selectaţi pachetul pe care doriţi il să descărcaţi</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Preferinţe</string>
   <string name="deckpreferences_title">Preferinţe pachet</string>
   <string name="about_title">Despre</string>

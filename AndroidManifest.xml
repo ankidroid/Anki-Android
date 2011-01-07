@@ -50,7 +50,7 @@
 			android:label="Reviewer"	
 			android:configChanges="keyboardHidden|orientation"/>
 		<activity android:name="MyAccount" 
-			android:label="My Account"
+			android:label="@string/menu_my_account"
 			android:configChanges="keyboardHidden|orientation"/>
 		<activity android:name="Preferences" 
 			android:label="@string/preferences_title"

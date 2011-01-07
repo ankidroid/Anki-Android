@@ -117,6 +117,7 @@
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Selecciona la baraja que desea descargar</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Preferencias</string>
   <string name="deckpreferences_title">Preferencias de baraja</string>
   <string name="about_title">Acerca de</string>
