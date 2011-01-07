@@ -16,31 +16,22 @@
 
 package com.ichi2.anki;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
-import java.lang.reflect.Field;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Class with static functions related with media handling (images and sounds).
  */
 public class Media {
     // TODO: Javadoc.
-
-    private int mId;
-    private String mFilename;
-    // Reused as reference count
-    private int mCount;
-    // Treated as modification date, not creation date
-    private double mCreated;
-    // Reused as md5sum. Empty string if file doesn't exist on disk
-    private String mOriginal = "";
-    // Older versions stored original filename here, so we'll leave it for now in case we add a feature to rename media
-    // back to its original name. In the future we may want to zero this to save space
-    private String mDescription = "";
 
     private static final Pattern mMediaRegexps[] = {
         Pattern.compile("(\\[sound:([^]]+)\\])"),
@@ -66,8 +57,8 @@ public class Media {
         String newpath = null;
         Cursor cursor = null;
         try {
-            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename FROM media WHERE originalPath = " +
-                    Utils.fileChecksum(path), null);
+            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename FROM media WHERE originalPath = '" +
+                    Utils.fileChecksum(path) + "'", null);
             if (cursor.moveToNext()) {
                 newpath = cursor.getString(0);
             }
@@ -80,7 +71,7 @@ public class Media {
             File file = new File(path);
             String base = file.getName();
             String mdir = deck.mediaDir(true);
-            newpath = uniquePAth(mdir, base);
+            newpath = uniquePath(mdir, base);
             if (!file.renameTo(new File(newpath))) {
                 Log.e(AnkiDroidApp.TAG, "Couldn't move media file " + path + " to " + newpath);
             }
@@ -97,15 +88,15 @@ public class Media {
      * @param dir The path to the media file, excluding the filename
      * @param base The filename of the file without the path
      */
-    private String uniquePath(String dir, base) {
+    private static String uniquePath(String dir, String base) {
         // Remove any dangerous characters
         base = base.replaceAll("[][<>:/\\", "");
         // Find a unique name
-        int extensionOffset = base.lastIndexOf(".")
+        int extensionOffset = base.lastIndexOf(".");
         String root = base.substring(0, extensionOffset);
         String ext = base.substring(extensionOffset);
         File file = null;
-        while (1) {
+        while (true) {
             file = new File(dir, root + ext);
             if (!file.exists()) {
                 break;
@@ -133,19 +124,19 @@ public class Media {
      * @param deck The deck that contains the media we are dealing with
      * @param file The full path of the media in question
      */
-    public void updateMediaCount(Deck deck, String file) {
+    public static void updateMediaCount(Deck deck, String file) {
         updateMediaCount(deck, file, 1);
     }
-    public void updateMediaCount(Deck deck, String file, int count) {
+    public static void updateMediaCount(Deck deck, String file, int count) {
         String mdir = deck.mediaDir();
-        if (deck.getDB().queryScalar("SELECT 1 FROM media WHERE filename = " + file) == 1l) {
+        if (deck.getDB().queryScalar("SELECT 1 FROM media WHERE filename = '" + file + "'") == 1l) {
             deck.getDB().execSQL(String.format(Utils.ENGLISH_LOCALE, "UPDATE media SET size = size + %d, " +
-                       "created = %f WHERE filename = %s", count, Utils.now(), file));
+                       "created = %f WHERE filename = '%s'", count, Utils.now(), file));
         } else if (count > 0) {
             String sum = Utils.fileChecksum(file);
             deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "INSERT INTO media " +
                     "(id, filename, size, created, originalPath, description) " +
-                    "VALUES (%d, %s, %d, %f, %s, '')", genID(), file, count, Utils.now(), sum));
+                    "VALUES (%d, '%s', %d, %f, '%s', '')", genID(), file, count, Utils.now(), sum));
         }
     }
 
@@ -155,7 +146,7 @@ public class Media {
      *
      * @param deck The deck that this operation will be performed on
      */
-    public void removeUnusedMedia(Deck deck) {
+    public static void removeUnusedMedia(Deck deck) {
         ArrayList<Long> ids = deck.getDB().queryColumn(Long.class, "SELECT id FROM media WHERE size = 0", 0);
         for (Long id : ids) {
             deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "INSERT INTO mediaDeleted " +
@@ -167,10 +158,10 @@ public class Media {
     // String manipulation
     // *******************
 
-    public static Arraylist<String> mediaFiles(String string) {
+    public static ArrayList<String> mediaFiles(String string) {
         return mediaFiles(string, false);
     }
-    public static Arraylist<String> mediaFiles(String string, boolean remote) {
+    public static ArrayList<String> mediaFiles(String string, boolean remote) {
         boolean isLocal = false;
         ArrayList<String> l = new ArrayList<String>();
         for (Pattern reg : mMediaRegexps) {
@@ -201,6 +192,125 @@ public class Media {
         return txt;
     }
 
+    // Rebuilding DB
+    // *************
 
+    /**
+     * Rebuilds the reference counts, potentially deletes unused media files, 
+     *
+     * @param deck The deck to perform the operation on
+     * @param delete If true, then unused (unreferenced in question/answer fields) media files will be deleted
+     * @param dirty If true, then the modified field of deck will be updated
+     * @return Nothing, but the original python code returns a list of unreferenced media files and a list
+     * of missing media files (referenced in question/answer fields, but with the actual files missing)
+     */
+    public static void rebuildMediaDir(Deck deck) {
+        rebuildMediaDir(deck, false, true);
+    }
+    public static void rebuildMediaDir(Deck deck, boolean delete) {
+        rebuildMediaDir(deck, delete, true);
+    }
+    public static void rebuildMediaDir(Deck deck, boolean delete, boolean dirty) {
+        String mdir = deck.mediaDir(true);
+        //Set all ref counts to 0
+        deck.getDB().getDatabase().execSQL("UPDATE media SET size = 0");
 
+        // Look through the cards for media references
+        Cursor cursor = null;
+        String txt = null;
+        Map<String, Integer> refs = new HashMap<String, Integer>();
+        try {
+            cursor = deck.getDB().getDatabase().rawQuery("SELECT question, answer FROM cards");
+            while (cursor.moveToNext()) {
+                for (int i = 0; i < 2; i++) {
+                    txt = cursor.getString(i);
+                    for (String f : mediaFiles(txt)) {
+                        if (refs.containsKey(f)) {
+                            refs.setValue(f, refs.getValue(f) + 1);
+                        } else {
+                            refs.setValue(f, 1);
+                        }
+                    }
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        // Update ref counts
+        for (String fname : refs.keySet()) {
+            updateMediaCount(deck, fname, refs.getValue(fname));
+        }
+
+        // Find unused media
+        Set<String> unused = new Set<String>();
+        File mdirfile = new File(mdir);
+        String fname = null;
+        for (File f : mdirfile.listFiles()) {
+            if (!f.isFile()) {
+                // Ignore directories
+                continue;
+            }
+            fname = f.getName();
+            if (!refs.containsKey(fname)) {
+                unused.add(fname);
+            }
+        }
+        // Optionally delete
+        if (delete) {
+            for (String fn : unused) {
+                File file = new File(mdir + "/" + fn);
+                try {
+                    file.delete();
+                } catch (IOException e) {
+                    Log.e(AnkiDroidApp.TAG, "Couldn't delete unused media file " + mdir + "/" + fn);
+                }
+            }
+        }
+        // Remove entries in db for unused media
+        removeUnusedMedia(deck);
+
+        // Check md5s are up to date
+        cursor = null;
+        String path = null;
+        String fname = null;
+        String md5 = null;
+        deck.getDB().getDatabase().beginTransaction();
+        try {
+            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename, created, originalPath FROM media");
+            while (cursor.moveToNext()) {
+                fname = cursor.getString(0);
+                md5 = cursor.getString(2);
+                String path = mdir + "/" + fname;
+                File file = new File(path);
+                if (!file.exists()) {
+                   if (!md5.equals("")) {
+                       deck.getDB().getDatabase().execSQL("UPDATE media SET originalPath = '', created = " +
+                               cursor.getString(1) + ", filename = '" + fname + "'");
+                   }
+                } else {
+                    String sum = Utils.fileChecksum(path);
+                    if (!md5.equals(sum)) {
+                       deck.getDB().getDatabase().execSQL("UPDATE media SET originalPath = '" + sum +
+                               "', created = " + cursor.getString(1) + ", filename = '" + fname + "'");
+                    }
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        deck.getDB().getDatabase().setTransactionSuccessful();
+        deck.getDB().getDatabase().endTransaction();
+
+        // Update deck and get return info
+        if (dirty) {
+            deck.flushMod();
+        }
+        // In contrast to the python code we don't return anything. In the original python code, the return
+        // values are used in a function (media.onCheckMediaDB()) that we don't have in AnkiDroid.
+    }
 }

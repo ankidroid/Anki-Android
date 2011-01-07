@@ -34,6 +34,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -647,7 +648,7 @@ public class Utils {
         byte[] bytes = null;
         File file = new File(path);
         if (file != null && file.isFile()) {
-            bytes = new byte[file.length()];
+            bytes = new byte[(int)file.length()];
             FileInputStream fin = new FileInputStream(file);
             fin.read(bytes);
         }

@@ -1949,7 +1949,7 @@ public class SyncClient {
             is.close();
             String response = new String(bytesReceived);
 			
-			if (response.substring(0,2).equal("OK")) {
+			if (response.substring(0,2).equals("OK")) {
 				// Update local modification time
 				mDeck.getDB().getDatabase().execSQL("UPDATE decks SET lastSync = " +
 					   response.substring(3, response.length()-3));

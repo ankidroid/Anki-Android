@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -118,7 +119,7 @@ public class Card {
     private double mCombinedDue = 0;
     // END SQL table entries
 
-    private Deck mDeck;
+    public Deck mDeck;
 
     // BEGIN JOINed variables
     private CardModel mCardModel;
@@ -174,16 +175,16 @@ public class Card {
 	public void rebuildQA(Deck deck) {
 		rebuildQA(deck, true);
 	}
-	public void requildQA(Deck deck, boolean media) {
+	public void rebuildQA(Deck deck, boolean media) {
         // Format qa
 		if (mFact != null && mCardModel != null) {
 			HashMap<String, String> qa = CardModel.formatQA(mFact, mCardModel, splitTags());
 
             if (media) {
                 // Find old media references
-                Map<String, Integer> files = new Map<String, Integer>();
-                ArrayList<String> filesFromQA = Utils.mediaFiles(mQuestion);
-                filesFromQA.add(Utils.mediaFiles(mAnswer));
+                HashMap<String, Integer> files = new HashMap<String, Integer>();
+                ArrayList<String> filesFromQA = Media.mediaFiles(mQuestion);
+                filesFromQA.addAll(Media.mediaFiles(mAnswer));
                 for (String f : filesFromQA) {
                     if (files.containsKey(f)) {
                         files.put(f, files.get(f) - 1);
@@ -195,8 +196,8 @@ public class Card {
                 mQuestion = qa.get("question");
                 mAnswer = qa.get("answer");
                 // Determine media delta
-                filesFromQA = Utils.mediaFiles(mQuestion);
-                filesFromQA.add(Utils.mediaFiles(mAnswer));
+                filesFromQA = Media.mediaFiles(mQuestion);
+                filesFromQA.addAll(Media.mediaFiles(mAnswer));
                 for (String f : filesFromQA) {
                     if (files.containsKey(f)) {
                         files.put(f, files.get(f) + 1);
@@ -205,9 +206,8 @@ public class Card {
                     }
                 }
                 // Update media counts if we're attached to deck
-                Set<String> filesKeys = files.keySet();
-                for (f : filesKeys) {
-                    deck.updateMediaCount(f, files.get(f));
+                for (String f : files.keySet()) {
+                    Media.updateMediaCount(deck, f, files.get(f));
                 }
             } else {
                 // Update q/a

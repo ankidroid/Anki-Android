@@ -16,6 +16,8 @@
 
 package com.ichi2.anki;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.ichi2.utils.Base64;
@@ -180,10 +182,10 @@ public class AnkiDroidProxy {
 
         try {
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&client="
-				+ URLEncoder("ankidroid-" + pi.versionName, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
-			   	+ "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=None&sources="
-			   	+ URLEncoder.encode("[]", "UTF-8") + "&libanki=" + URLEncoder(AnkiDroidApp.LIBANKI_VERSION, "UTF-8")
-			   	+ "&pversion=5";
+				+ URLEncoder.encode("ankidroid-" + pi.versionName, "UTF-8") + "&u="
+                + URLEncoder.encode(mUsername, "UTF-8") + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8")
+                + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8") + "&libanki="
+                + URLEncoder.encode(AnkiDroidApp.LIBANKI_VERSION, "UTF-8") + "&pversion=5";
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "getDecks");
