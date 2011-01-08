@@ -406,6 +406,14 @@ public class StudyOptions extends Activity {
         super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
         closeOpenedDeck();
+    }
+
+
+    @Override
+	public void onBackPressed() {
+        super.onBackPressed();
+        Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
+        closeOpenedDeck();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
