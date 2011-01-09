@@ -406,6 +406,10 @@ public class StudyOptions extends Activity {
         super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
         closeOpenedDeck();
+        if (mUnmountReceiver != null) {
+            unregisterReceiver(mUnmountReceiver);
+        }
+        savePreferences("lastOpened");
     }
 
 
@@ -414,10 +418,6 @@ public class StudyOptions extends Activity {
         super.onBackPressed();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
         closeOpenedDeck();
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver);
-        }
-        savePreferences("lastOpened");
     }
 
 
