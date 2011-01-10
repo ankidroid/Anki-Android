@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -25,8 +26,8 @@
   <string name="yes">Kyllä</string>
   <string name="no">Ei</string>
   <string name="ok">OK</string>
-  <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-  <string name="deckpicker_title">Valitse SD-kortille kopioimasi pakka</string>
+  <string name="deck_upgrade_too_old_version">Pakkojen joiden versiot vanhempi kuin 39 eivät tue AnkiDroidia. Avaa pakka Anki-työpöytä versiolla ja päivitä pakka uusimpaan versioon.</string>
+  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">SD-kortti on irrotettu</string>
   <string name="deckpicker_due">%1$d / %2$d jäljellä</string>
   <string name="deckpicker_new">%d uutta tänään</string>
@@ -40,13 +41,13 @@
   <string name="notify_ticker">Sovelluksen päivitys</string>
   <string name="notify_title">Ankidroid on päivitetty</string>
   <string name="notify_message">Lataa uusin versio</string>
-  <string name="notification_title">Vahvista Android-päivitys</string>
+  <string name="notification_title">Vahvista AnkiDroid-päivitys</string>
   <string name="notification_message">Uusi versio Ankidroidista on saatavilla Android Marketista.\n\nHaluatko asentaa sen?</string>
   <string name="notification_stop">Älä ilmoita tästä päivityksestä uudelleen</string>
   <string name="sdcard_missing_message">SD-kortti ei ole käytettävissä, koska se on kytketty USB-tilassa. Irrota USB käyttääksesi pakkojasi.</string>
   <string name="show_whiteboard">Näytä ajastin / valkotaulu</string>
-  <string name="hide_whiteboard">Piilota Valkotaulu</string>
-  <string name="clear_whiteboard">Tyhjennä Valkotaulu</string>
+  <string name="hide_whiteboard">Piilota valkotaulu</string>
+  <string name="clear_whiteboard">Tyhjennä valkotaulu</string>
   <string name="session_question_limit_reached">Istunnon kysymysten raja saavutettu</string>
   <string name="session_time_limit_reached">Istunnon aikaraja saavutettu</string>
   <string name="cram_edit_warning">Kortin muokkaaminen ei ole pänttäämisen aikana</string>
@@ -54,7 +55,7 @@
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
   <string name="leech_notification">Card marked as leech</string>
   <string name="newcards_day_summ">Montako uutta korttia näytetään korkeintaan päivässä.</string>
-  <string name="newcards_day">Uusia Kortteja / Päivä</string>
+  <string name="newcards_day">Uusia korttia / päivä</string>
   <string name="session_time_limit">Istunnon aikaraja</string>
   <string name="session_time_limit_summ">Yhteen istuntoon käytettävä minuuttimäärä. 0 tarkoittaa ei rajoitusta.</string>
   <string name="session_question_limit">Istunnon kysymysraja</string>
@@ -74,7 +75,7 @@
   <string name="ease1_learning">Uudestaan</string>
   <string name="ease2_learning">Hyvä</string>
   <string name="ease3_learning">Helppo</string>
-  <string name="ease4_learning">Erittäin Helppo</string>
+  <string name="ease4_learning">Erittäin helppo</string>
   <string name="ease1_successive">Uudestaan</string>
   <string name="ease2_successive">Vaikea</string>
   <string name="ease3_successive">Hyvä</string>
@@ -87,6 +88,8 @@
   <string name="sync_on_close">Synkronoi suljettaessa</string>
   <string name="show_study_options_on_deck_load">Opiskelu asetukset latauksessa</string>
   <string name="show_study_options_on_deck_load_summ">Näytä opiskelu asetukset näyttö ladattaessa pakkaa</string>
+  <string name="startup_mode">Käynnistystila</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Näytä ajastin</string>
   <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
   <string name="show_whiteboard_summ">Voit kirjoittaa ruudulle</string>
@@ -102,16 +105,19 @@
   <string name="use_ruby_support_summ">Merkkien \'[\' ja \']\' välissä olevaa tekstiä käsitellään ruby-huomautuksena</string>
   <string name="display_font_size">Näyttöfontin suhteellinen koko</string>
   <string name="display_font_size_summ">Näytön fonttikoko suhteessa pakan määritelmiin</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Piilota kysymys vastauksen yhteydessä?</string>
   <string name="hide_question_in_answer_summ">Määrittää piilotetaanko kysymys kun vastaus näytetään.</string>
   <string name="deck_path">Pakan polku</string>
   <string name="deck_path_summ">Polku jonne pakkasi on tallennettu</string>
   <string name="fullscreen_review">Tarkastele kokoruudulla</string>
-  <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
-  <string name="zoom">Ota Zoomaus Käyttöön</string>
-  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
+  <string name="fullscreen_review_summ">Voit päättää, halutako käyttää kaikkia käytettävissä olevaa näytön tilaa kortin tarkastamisen aikana</string>
+  <string name="zoom">Ota zoomaus käyttöön</string>
+  <string name="zoom_summ">Näytä zoomaussäätimet tarjastekun aikana</string>
   <string name="personaldeckpicker_title">Avaa Online-pakka</string>
   <string name="shareddeckpicker_title">Valitse pakka jonka haluat ladata</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Asetukset</string>
   <string name="deckpreferences_title">Pakan asetukset</string>
   <string name="about_title">Tietoja</string>
@@ -120,7 +126,7 @@
   <string name="loading_deck">Ladataan pakkaa. Odota hetki...</string>
   <string name="connection_needed">Ei ole internet-yhteyttä</string>
   <string name="currently_downloading">Nyt ladataan</string>
-  <string name="personal_decks">Henkilökohtaiset Pakat</string>
+  <string name="personal_decks">Henkilökohtaiset pakat</string>
   <string name="starting_download">Aloitetaan lataaminen...</string>
   <string name="downloading">Ladataan...</string>
   <string name="paused">Pysäytetty</string>
@@ -129,14 +135,14 @@
   <string name="cancelling">Peruutetaan...</string>
   <string name="loading_personal_decks">Ladataan käytettävissä henkilökohtaisia pakkoja...</string>
   <string name="connection_error_title">Huomio</string>
-  <string name="connection_error_return_message">A network error has ocurred. Retry, or cancel and return to the previous screen.</string>
+  <string name="connection_error_return_message">Verkko virhe. Yritä uudelleen tai peruuta muutokset ja palaa edelliseen näyttöön.</string>
   <string name="retry">Yritä uudelleen</string>
   <string name="cancel">Peru</string>
-  <string name="shared_decks">Jaetut Pakat</string>
+  <string name="shared_decks">Jaetut pakat</string>
   <string name="updating">Päivitetään...</string>
   <string name="loading_shared_decks">Saatavilla olevia jaettuja pakkoja ladataan...</string>
-  <string name="cancel_download">Peruuta Lataus</string>
-  <string name="resume_download">Jatka Lataamista</string>
+  <string name="cancel_download">Peruuta lataus</string>
+  <string name="resume_download">Jatka lataamista</string>
   <string name="pause_download">Keskeytä lataaminen</string>
   <string name="duplicate_download">Tämä pakka on jo latauksessa</string>
   <string name="sync_all">Synkronoi kaikki</string>
@@ -161,48 +167,48 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="studyoptions_deck_name">Pakan nimi</string>
   <string name="studyoptions_reviews_due">Tarkastelujen määrä:</string>
   <string name="studyoptions_new_today">Uutta tänään:</string>
-  <string name="studyoptions_new_total">New total:</string>
-  <string name="studyoptions_new_cards_per_day">Uudet kortit per päivä:</string>
+  <string name="studyoptions_new_total">Uusia yhteensä:</string>
+  <string name="studyoptions_new_cards_per_day">Uusia kortteja per päivä:</string>
   <string name="studyoptions_session_minutes">Istunnon raja (minuuttia):</string>
   <string name="studyoptions_session_questions">Istunnon raja (kysymykset):</string>
-  <string name="studyoptions_start">Aloita Tarkistaminen</string>
+  <string name="studyoptions_start">Aloita tarkistaminen</string>
   <string name="studyoptions_more">Opiskelu Asetukset</string>
-  <string name="studyoptions_window_title">%1$s (%2$d %3$d asianmukaista)</string>
-  <string name="studyoptions_more_dialog_title">Lisää Valintoja</string>
+  <string name="studyoptions_window_title">%1$s (%2$d %3$d määrä)</string>
+  <string name="studyoptions_more_dialog_title">Lisää valintoja</string>
   <string name="studyoptions_more_save">Tallenna</string>
-  <string name="studyoptions_nodeck_title">Pakkaa Ei Ole Ladattu</string>
+  <string name="studyoptions_nodeck_title">Pakkaa ei ole ladattu</string>
   <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored on your SD card and are read from the location specified in the preferences (currently this is set to: \"%s\"). The preferences can be reached by pressing your device\'s \"Menu\" button and then selecting \"Preferences\".\n\nTo load a deck, press your device\'s \"Menu\" button and then select \"Open Deck\" or press one of the buttons below.</string>
   <string name="studyoptions_deck_not_loaded_title">Pakkaa ei voitu ladata</string>
-  <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
+  <string name="studyoptions_deck_not_loaded_message">Valitsemasi pakka ei ole kelvollinen Anki-pakka. Luo kelvollinen Anki-pakka tietokoneella ennen kuin lataat sen AnkiDroid:in.\n\nSillä välin voit valita toisen pakan tai ladat näytepakan alla olevista painikkeista.</string>
   <string name="studyoptions_no_external_storage_title">Ulkoista Muistia Ei Ole Saatavilla</string>
   <string name="studyoptions_no_external_storage_message">Ulkoista muistia ei ole tällä hetkellä saatavilla. AnkiDroid tarvitsee saada käyttöönsä SD-kortti voidaksesi lukea ja ladata Anki-pakat. Tarkista, että SD-kortti on asennettu ja yritä uudelleen.</string>
-  <string name="studyoptions_load_other_deck">Ladaa Muu Pakka</string>
-  <string name="studyoptions_load_sample_deck">Lataa Näytekappale Pakasta</string>
-  <string name="menu_open_deck">Avaa Pakka</string>
+  <string name="studyoptions_load_other_deck">Lataa muu pakka</string>
+  <string name="studyoptions_load_sample_deck">Lataa näytekappalepakka</string>
+  <string name="menu_open_deck">Avaa pakka</string>
   <string name="menu_sync">Synkronointi</string>
   <string name="menu_download_deck">Lataa pakka</string>
   <string name="menu_download_shared_deck">Jaettu Pakka</string>
   <string name="menu_download_personal_deck">Henkilökohtainen pakka</string>
   <string name="menu_synchronize">Synkronoi</string>
-  <string name="menu_my_account">Oma Tili</string>
+  <string name="menu_my_account">Oma tili</string>
   <string name="menu_preferences">Asetukset</string>
-  <string name="menu_deck_properties">Kannen Ominaisuudet</string>
+  <string name="menu_deck_properties">Pakan ominaisuudet</string>
   <string name="menu_add_card">Lisää kortti</string>
   <string name="menu_about">Tietoja</string>
-  <string name="menu_suspend_card">Keskeytä</string>
-  <string name="menu_edit_card">Muokkaa Korttia</string>
+  <string name="menu_suspend_card">Keskeytä kortti</string>
+  <string name="menu_edit_card">Muokkaa korttia</string>
   <string name="menu_search">Etsi Aedictista</string>
-  <string name="menu_mark_card">Merkitse Kortti</string>
+  <string name="menu_mark_card">Merkitse kortti</string>
   <string name="menu_marked">Merkitty</string>
   <string name="loading">Ladataan...</string>
-  <string name="studyoptions_continue">Jatka Tarkastelua</string>
-  <string name="studyoptions_well_done">Hyvin Tehty!</string>
+  <string name="studyoptions_continue">Jatka tarkistamista</string>
+  <string name="studyoptions_well_done">Hyvin tehty!</string>
   <string name="studyoptions_congrats_title">Onneksi olkoon!</string>
   <string name="studyoptions_congrats_message">Olet valmis nyt.</string>
-  <string name="studyoptions_congrats_learnmore">Opi Lisää</string>
-  <string name="studyoptions_congrats_reviewearly">Tarkista Etuajassa</string>
-  <string name="studyoptions_congrats_open_other_deck">Avaa Muu Pakka</string>
-  <string name="studyoptions_congrats_finish">Takaisin Opiskelu Näyttöön</string>
+  <string name="studyoptions_congrats_learnmore">Opi lisää</string>
+  <string name="studyoptions_congrats_reviewearly">Tarkista etuajassa</string>
+  <string name="studyoptions_congrats_open_other_deck">Avaa muu pakka</string>
+  <string name="studyoptions_congrats_finish">Takaisin opiskelu-näyttöön</string>
   <string name="username">Käyttäjätunnus</string>
   <string name="password">Salasana</string>
   <string name="log_in">Kirjaudu sisään</string>
@@ -216,43 +222,43 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="download_finished">Lataaminen valmistui</string>
   <string name="deck_downloaded">Pakka ladattu</string>
   <string name="connection_error_message">Verkkovirhe on tapahtunut.</string>
-  <string name="no_user_password_error_message">Jotta voit jatkaa toimintoa, sinun täytyy olla AnkiOnline-tili ja olla kirjautunut sisälle.</string>
+  <string name="no_user_password_error_message">Jotta voit jatkaa toimintoa, sinulla täytyy olla AnkiOnline-tili ja olla kirjautunut sisälle.</string>
   <string name="sync_progress_bar_title">Synkronoidaan %s</string>
   <string name="studyoptions_cram_dialog_title">Päntäämisen tagit</string>
-  <string name="begin_cram">Aloita Opiskelutila</string>
-  <string name="end_cram">Lopeta Opiskelutila</string>
+  <string name="begin_cram">Aloita pänttäystila</string>
+  <string name="end_cram">Lopeta pänttäystila</string>
   <string name="cram">Päntätä</string>
   <string name="sync_connecting_message">Yhdistetään...</string>
   <string name="sync_syncing_message">Synkronoidaan %s</string>
-  <string name="sync_summary_from_server_message">Fetching summary from server...</string>
+  <string name="sync_summary_from_server_message">Haetaan yhteenvetoa palvelimelta...</string>
   <string name="sync_preparing_full_sync_message">Valmistellaan koko synkronointiin...</string>
   <string name="sync_uploading_message">Lähetetään...</string>
   <string name="sync_downloading_message">Ladataan...</string>
   <string name="sync_complete_message">Synkronointi valmis.</string>
   <string name="sync_determining_differences_message">Määritellään erot...</string>
-  <string name="sync_transferring_payload_message">Transferring payload...</string>
+  <string name="sync_transferring_payload_message">Siirretään hyötykuormaa...</string>
   <string name="sync_applying_reply_message">Applying reply...</string>
   <string name="sync_no_changes_message">Muutoksia ei löytynyt.</string>
   <string name="sync_log_error_message">Virhe: Pakkaa ei ole synkronoitu</string>
   <string name="sync_log_no_changes_message">Muutoksia ei löytynyt</string>
   <string name="sync_log_uploading_message">Ei ole pakkaa palvelimella</string>
   <string name="sync_log_downloading_message">Täysi synkronointi palvelimesta</string>
-  <string name="sync_log_fact_to_server_message">1 fact to server</string>
-  <string name="sync_log_facts_to_server_message">%d facts to server</string>
-  <string name="sync_log_fact_from_server_message">1 fact from server</string>
-  <string name="sync_log_facts_from_server_message">%d facts from server</string>
+  <string name="sync_log_fact_to_server_message">1 seikka palvelimelle</string>
+  <string name="sync_log_facts_to_server_message">%d seikkaa palvelimelle</string>
+  <string name="sync_log_fact_from_server_message">1 seikka palvelimelta</string>
+  <string name="sync_log_facts_from_server_message">%d seikkaa palvelimelta</string>
   <string name="error_message">%d virhettä odottaa ilmoittamista</string>
   <string name="errors_message">On %d raportoitavaa virhettä</string>
   <string name="error_ok">Ilmoita virheistä</string>
   <string name="error_cancel">Älä ilmoita virheistä</string>
   <string name="error_email">ankidroid@gmail.com</string>
-  <string name="error_reporting_choice">Error reporting mode</string>
+  <string name="error_reporting_choice">Virheraportointitila</string>
   <string name="error_reporting_choice_summary">Virheitä voidaan raportoida automaattisesti, ei koskaan, tai pyytää luvan sinulta</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Widgetin ilmoituksen kynnys</string>
-  <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised</string>
+  <string name="widget_minimum_cards_due_summary">Korttien vähimmäismäärä, jolloin ilmoitus on esitetty</string>
   <string name="widget_minimum_cards_due_vibrate">Värähdellä</string>
-  <string name="widget_minimum_cards_due_blink">Blink light</string>
+  <string name="widget_minimum_cards_due_blink">Valon vilkkuminen</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Kortien Määrä</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
   <string name="model">Malli:</string>
@@ -263,25 +269,25 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="close">Sulje</string>
   <string name="soon">Pian</string>
   <string name="show_next_review_time">Seuraava tarkastelun aika</string>
-  <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
-  <string name="update_notification">Update notifications</string>
+  <string name="show_next_review_time_summ">Näyttää seuraavan tarkistuken kerran, riippuen valinnastasi</string>
+  <string name="update_notification">Päivitysilmoitukset</string>
   <string name="update_notification_summ">Ilmoita minulle, kun AnkiDroid päivitetään</string>
-  <string name="per_day">Per Päivä</string>
+  <string name="per_day">Päivässä</string>
   <string name="undo">Kumoa</string>
   <string name="redo">Tee uudelleen</string>
-  <string name="contextmenu_deckpicker_delete_deck">Poista Pakka</string>
-  <string name="delete_deck_title">Poista Pakka</string>
+  <string name="contextmenu_deckpicker_delete_deck">Poista pakka</string>
+  <string name="delete_deck_title">Poista pakka</string>
   <string name="delete_deck_message">Haluatko varmasti poistaa pakan %s?</string>
   <string name="delete_deck_confirm">Poista se</string>
   <string-array name="studyoptions_more_new_card_order">
     <item>Uudet kortit satunnaisessa järjestyksessä</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
+    <item>Uudet kortin lisätyt järjestyksessä</item>
+    <item>Uudet kortit päinvastaisessa lisätyt järjestyksessä</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
     <item>Spread new cards through reviews</item>
-    <item>Uudet kortit jälkeen tarkastelun</item>
-    <item>Uudet kortit ennen tarkastelua</item>
+    <item>Uudet kortit tarkastelun jälkeen</item>
+    <item>Uudet kortit tarkastelua ennen</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
     <item>Review cards from largest interval</item>

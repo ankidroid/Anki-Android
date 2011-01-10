@@ -58,6 +58,14 @@
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_advanced">
+		<ListPreference
+			android:title="@string/startup_mode"
+			android:summary="@string/startup_mode_summ"
+			android:key="startup_mode"
+			android:defaultValue="2"
+			android:entries="@array/startup_mode_labels"
+			android:entryValues="@array/startup_mode_values" />
+	
 		<CheckBoxPreference
 			android:title="@string/show_study_options_on_deck_load"
 			android:defaultValue="true"
@@ -101,6 +109,13 @@
 			android:defaultValue="true"
 			android:summary="@string/zoom_summ"
 			android:key="zoom" />
+		<ListPreference
+			android:title="@string/button_size"
+			android:summary="@string/button_size_summ"
+			android:key="buttonSize"
+			android:defaultValue="100"
+			android:entries="@array/button_size_labels"
+			android:entryValues="@array/button_size_values" />
 		<CheckBoxPreference
 			android:title="@string/update_notification"
 			android:defaultValue="true"

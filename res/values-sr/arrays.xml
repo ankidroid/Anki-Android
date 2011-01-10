@@ -21,9 +21,9 @@
 <!--Generated with crowdin.net-->
 <resources>
   <string-array name="newCardOrderLabels">
-    <item>Ordre aléatoire</item>
-    <item>Ordre d\'ajout</item>
-    <item>Ordre d\'ajout inverse</item>
+    <item>Slučajan redosled</item>
+    <item>Redosled dodat</item>
+    <item>Dodato u obrnutom redosledu</item>
   </string-array>
   <string-array name="newCardOrderVals">
     <item>0</item>
@@ -31,9 +31,9 @@
     <item>2</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
-    <item>Distribuer parmi les révisions</item>
-    <item>Après les révisions</item>
-    <item>Avant les révisions</item>
+    <item>Razbacaj po pregledu</item>
+    <item>Posle pregleda</item>
+    <item>Pre pregleda</item>
   </string-array>
   <string-array name="newCardSchedulingVals">
     <item>0</item>
@@ -41,10 +41,10 @@
     <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
-    <item>Longs intervalles d\'abord</item>
-    <item>Courts intervalles d\'abord</item>
-    <item>Ordre dû</item>
-    <item>Ordre aléatoire</item>
+    <item>Najduži interval prvo</item>
+    <item>Najkraći interval prvo</item>
+    <item>Redosled sledi</item>
+    <item>Slučajan redosled</item>
   </string-array>
   <string-array name="revCardOrderVals">
     <item>0</item>
@@ -103,9 +103,9 @@
     <item>175</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Masquer la question lors de la réponse</item>
-    <item>Afficher la question lors de la réponse</item>
-    <item>Tel que défini dans le modèle de la carte</item>
+    <item>Sakrij pitanje u odgovoru</item>
+    <item>Prikaži pitanje u odgovoru</item>
+    <item>Kao što je definisano u Špil modelu</item>
   </string-array>
   <string-array name="hideQuestionInAnswerVals">
     <item>0</item>
@@ -113,9 +113,9 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Montrer la première carte du paquet lors du premier démarrage de la journée</item>
+    <item>Prikaži opcije za učenje</item>
+    <item>Prikaži listu špilova</item>
+    <item>Prikaži listu špilova na početku dana</item>
   </string-array>
   <string-array name="startup_mode_values">
     <item>0</item>
@@ -123,9 +123,9 @@
     <item>2</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Toujours envoyer un rapport d\'erreur</item>
-    <item>Ne jamais envoyer de rapport d\'erreur</item>
-    <item>Me demander</item>
+    <item>Uvek prijavljuj</item>
+    <item>Nikada ne prijavljuj</item>
+    <item>Pitaj me</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
     <item>0</item>
@@ -140,7 +140,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Jamais</item>
+    <item>Nikada</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_values">
     <item>10</item>
@@ -153,20 +153,20 @@
     <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Montrer dans l\'ordre de modification</item>
-    <item>Montrer dans l\'ordre d\'ajout</item>
-    <item>Montrer dans un ordre aléatoire</item>
+    <item>Prikaži najstariji modifikovani prvo</item>
+    <item>Prikaži u redosledu po kojem su dodane</item>
+    <item>Prikaži u slučajnom redosledu</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>heure</item>
-    <item>jour</item>
-    <item>mois</item>
-    <item>année</item>
+    <item>sat</item>
+    <item>dan</item>
+    <item>mesec</item>
+    <item>godina</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>heures</item>
-    <item>jours</item>
-    <item>mois</item>
-    <item>années</item>
+    <item>sati</item>
+    <item>dana</item>
+    <item>meseci</item>
+    <item>godina</item>
   </string-array>
 </resources>

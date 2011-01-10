@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -21,20 +22,20 @@
 <resources>
   <string name="CardEditorCancelButton">Anuluj</string>
   <string name="CardEditorSaveButton">Zapisz</string>
-  <string name="app_name">Ankidroid</string>
+  <string name="app_name">AnkiDroid</string>
   <string name="yes">Tak</string>
   <string name="no">Nie</string>
   <string name="ok">OK</string>
-  <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-  <string name="deckpicker_title">Wybierz talię skopiowaną na Twoją kartę SD</string>
+  <string name="deck_upgrade_too_old_version">Talie starsze niż w wersji 39tej nie są obsługiwane przez AnkiDroid, proszę otworzyć talię w kliencie Anki na PC żeby uaktualnić talię do najnowszej wersji.</string>
+  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">Karta SD jest niezainstalowana</string>
   <string name="deckpicker_due">%1$d z %2$d zaległych</string>
   <string name="deckpicker_new">%d nowe dzisiaj</string>
   <string name="deckpicker_loaddeck">Ładowanie talii...</string>
   <string name="deckpicker_nodeck">Nie znaleziono talii.</string>
-  <string name="sync_log_title">Sync Log</string>
-  <string name="deckpicker_upgrading">Upgrading deck...</string>
-  <string name="deckpicker_upgrade_failed">Upgrading failed!</string>
+  <string name="sync_log_title">Dziennik synchronizacji</string>
+  <string name="deckpicker_upgrading">Aktualizacja talii...</string>
+  <string name="deckpicker_upgrade_failed">Aktualizacja nie powiodła się!</string>
   <string name="deckpicker_upgrade_notes_title">Upgrade deck results</string>
   <string name="deckpicker_upgrade_notes_button">Notes</string>
   <string name="notify_ticker">Aktualizacja aplikacji</string>
@@ -70,7 +71,7 @@
   <string name="review_cards_order_summ">Kolejność, w której mają być wyświetlane przeglądane karty.</string>
   <string name="show_answer">Pokaż Odpowiedź</string>
   <string name="show_question">Pokaż Pytanie</string>
-  <string name="card_hint">Flashcard</string>
+  <string name="card_hint">Fiszka</string>
   <string name="ease1_learning">Again</string>
   <string name="ease2_learning">Good</string>
   <string name="ease3_learning">Easy</string>
@@ -87,6 +88,8 @@
   <string name="sync_on_close">Synchronizuj przy zamykaniu</string>
   <string name="show_study_options_on_deck_load">Study options on load</string>
   <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Show timer</string>
   <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
   <string name="show_whiteboard_summ">Umożliwia pisanie na ekranie</string>
@@ -102,6 +105,8 @@
   <string name="use_ruby_support_summ">W razie znalezienia znaków \'[\' i \']\', tekst zawarty między nimi będzie traktowany jako notacja ruby</string>
   <string name="display_font_size">Względna wielkość czcionki wyświetlacza</string>
   <string name="display_font_size_summ">Rozmiar czcionki do wykorzystania na wyświetlaczu w stosunku do definicji w talii</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Ukryć pytanie przy odpowiedzi?</string>
   <string name="hide_question_in_answer_summ">Określa, czy pytanie powinno być ukryte, gdy odpowiedź jest widoczna.</string>
   <string name="deck_path">Ścieżka talii</string>
@@ -112,6 +117,7 @@
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Wybierz talię do pobrania</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Ustawienia</string>
   <string name="deckpreferences_title">Ustawienia talii</string>
   <string name="about_title">O programie</string>

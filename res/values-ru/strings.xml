@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -30,7 +31,7 @@
   <string name="deckpicker_title_nosdcard">SD-карта отмонтирована</string>
   <string name="deckpicker_due">%1$d из %2$d к получению</string>
   <string name="deckpicker_new">%d новых сегодня</string>
-  <string name="deckpicker_loaddeck">Загрузка колоды...</string>
+  <string name="deckpicker_loaddeck">Открытие колоды...</string>
   <string name="deckpicker_nodeck">Не найдено ни одной колоды.</string>
   <string name="sync_log_title">Ход выполнения синхронизации</string>
   <string name="deckpicker_upgrading">Обновление колоды...</string>
@@ -49,7 +50,7 @@
   <string name="clear_whiteboard">Очистка доски</string>
   <string name="session_question_limit_reached">Достигнут лимит вопросов сеансов</string>
   <string name="session_time_limit_reached">Достигнут лимит времени сеанса</string>
-  <string name="cram_edit_warning">Редактирование карты заблокировано во время Заучивания</string>
+  <string name="cram_edit_warning">Редактирование карты заблокировано во время \`Зубрёжки\`</string>
   <string name="suspend_leeches">Приостановить получение</string>
   <string name="leech_suspend_notification">Карта помечена лишняя и не связанная</string>
   <string name="leech_notification">Карта помечена как лишняя</string>
@@ -74,7 +75,7 @@
   <string name="ease1_learning">Снова</string>
   <string name="ease2_learning">Хорошо</string>
   <string name="ease3_learning">Легко</string>
-  <string name="ease4_learning">Очень легко</string>
+  <string name="ease4_learning">Оч.легко</string>
   <string name="ease1_successive">Снова</string>
   <string name="ease2_successive">Трудно</string>
   <string name="ease3_successive">Хорошо</string>
@@ -87,6 +88,8 @@
   <string name="sync_on_close">Синхронизация при закрытии</string>
   <string name="show_study_options_on_deck_load">Параметры обучения при загрузке колоды</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Показать таймер</string>
   <string name="show_timer_summ">Таймер показывает сколько времени Вам дается для ответа</string>
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>
@@ -102,6 +105,8 @@
   <string name="use_ruby_support_summ">Если найдены символы \'[\' и \']\', то заключенный в них текст будет рассмотрен как Ruby-аннотация</string>
   <string name="display_font_size">Относительный размер шрифта</string>
   <string name="display_font_size_summ">Размер шрифта в процентах относительно к размеру шрифта, сохранённому в колоде</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Скрыть \"Вопрос\" при ответе?</string>
   <string name="hide_question_in_answer_summ">Должен ли быть вопрос скрыт, когда ответ показан.</string>
   <string name="deck_path">Путь к колодам</string>
@@ -112,12 +117,13 @@
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
   <string name="shareddeckpicker_title">Выберите колоду, которую вы хотите загрузить</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Настройки</string>
   <string name="deckpreferences_title">Настройки колоды</string>
   <string name="about_title">О программе</string>
   <string name="cardeditor_title">Редактор карты</string>
   <string name="factadder_title">Автор карты</string>
-  <string name="loading_deck">Загрузка колоды. Пожалуйста, подождите...</string>
+  <string name="loading_deck">Открытие колоды. Пожалуйста, подождите...</string>
   <string name="connection_needed">Нет подключения к Интернету</string>
   <string name="currently_downloading">Загружается</string>
   <string name="personal_decks">Личные колоды</string>
@@ -158,11 +164,11 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
 &lt;/html&gt;</string>
   <string name="studyoptions_title">Параметры обучения</string>
   <string name="studyoptions_deck_name">Название колоды</string>
-  <string name="studyoptions_reviews_due">Просмотров точно:</string>
+  <string name="studyoptions_reviews_due">Повторов:</string>
   <string name="studyoptions_new_today">Сегодня новых:</string>
   <string name="studyoptions_new_total">Новые всего:</string>
   <string name="studyoptions_new_cards_per_day">Новых карт в день:</string>
-  <string name="studyoptions_session_minutes">Длина урока (минут):</string>
+  <string name="studyoptions_session_minutes">Продолжительность урока (минут):</string>
   <string name="studyoptions_session_questions">Вопросов в уроке:</string>
   <string name="studyoptions_start">Начать Просмотр</string>
   <string name="studyoptions_more">Параметры обучения</string>
@@ -217,10 +223,10 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="connection_error_message">Ошибка сети.</string>
   <string name="no_user_password_error_message">Для того, чтобы продолжить эту операцию, вы должны иметь AnkiOnline-аккаунт (это бесплатно) и войти в него.</string>
   <string name="sync_progress_bar_title">Синхронизировано %s</string>
-  <string name="studyoptions_cram_dialog_title">Тэги для Заучивания</string>
-  <string name="begin_cram">Начало Заучивания</string>
-  <string name="end_cram">Конец Заучивания</string>
-  <string name="cram">Заучивание</string>
+  <string name="studyoptions_cram_dialog_title">Что \`Зубрить\`</string>
+  <string name="begin_cram">Старт \`Зубрёжки\`</string>
+  <string name="end_cram">Стоп \`Зубрёжки\`</string>
+  <string name="cram">Зубрёжка</string>
   <string name="sync_connecting_message">Соединение...</string>
   <string name="sync_syncing_message">Синхронизировано %s</string>
   <string name="sync_summary_from_server_message">Получение с сервера...</string>
@@ -273,14 +279,14 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="delete_deck_message">Вы действительно хотите удалить колоду %s?</string>
   <string name="delete_deck_confirm">Удалить</string>
   <string-array name="studyoptions_more_new_card_order">
-    <item>Новые карты в случайном порядке</item>
-    <item>Новые карты, добавленные в очередь</item>
-    <item>Новые карты в обратном порядке добавлены</item>
+    <item>Нов.карты в случайном порядке</item>
+    <item>Нов.карты, как были добавлены</item>
+    <item>Нов.карты, в обрат.порядке добавления</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Распределять новые карточки по Просмотрам</item>
-    <item>Новые карты после просмотров</item>
-    <item>Новые карты до просмотров</item>
+    <item>Нов.карты на несколько \`Просмотров\`</item>
+    <item>Нов.карты добавлять после \`Просмотра\`</item>
+    <item>Нов.карты до \`Просмотра\`</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
     <item>Просмотр карт с наибольшим интервалом</item>

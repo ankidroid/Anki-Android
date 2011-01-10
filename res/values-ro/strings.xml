@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -26,7 +27,7 @@
   <string name="no">Nu</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-  <string name="deckpicker_title">Selectaţi un pachet (%1$d din %2$d scadente)</string>
+  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">Cardul SD nu este montat.</string>
   <string name="deckpicker_due">%1$d din %2$d scadente</string>
   <string name="deckpicker_new">%d noi astăzi</string>
@@ -87,6 +88,8 @@
   <string name="sync_on_close">Sincronizați la închidere</string>
   <string name="show_study_options_on_deck_load">Study options on load</string>
   <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Show timer</string>
   <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
   <string name="show_whiteboard_summ">Vă permite să scrieţi pe ecran</string>
@@ -102,6 +105,8 @@
   <string name="use_ruby_support_summ">Dacă gasesc caracterele \'[\' şi \']\', tratez textul cuprins intre ele ca o anotare Ruby</string>
   <string name="display_font_size">Dimensiunea relativă a fontului de afişare</string>
   <string name="display_font_size_summ">Dimensiunea fontului utilizata la afisare in comparatie cu definitiile din pachet</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Ascunde întrebarea în răspuns?</string>
   <string name="hide_question_in_answer_summ">Determină dacă întrebarea va fi ascunsa când se afiseaza răspunsul.</string>
   <string name="deck_path">Director pachet</string>
@@ -112,6 +117,7 @@
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Selectaţi pachetul pe care doriţi il să descărcaţi</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Preferinţe</string>
   <string name="deckpreferences_title">Preferinţe pachet</string>
   <string name="about_title">Despre</string>

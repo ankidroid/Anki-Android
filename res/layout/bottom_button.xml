@@ -4,6 +4,7 @@
 	android:layout_height="fill_parent"
 	android:layout_weight="1"
 	android:visibility="gone"
+	android:layout_gravity="center"
 	android:gravity="center"
 	android:layout_alignParentBottom="true"/>
 

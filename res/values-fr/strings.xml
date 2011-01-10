@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -26,7 +27,7 @@
   <string name="no">Non</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Les paquets dont la version est antérieure à 39 ne sont pas pris en charge par AnkiDroid, veuillez ouvrir ce paquet avec l\'application de bureau Anki pour mettre à jour le paquet à la dernière version.</string>
-  <string name="deckpicker_title">Sélectionnez un des paquets (%1$d parmi %2$d dûes)</string>
+  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">La carte SD n\'est pas montée</string>
   <string name="deckpicker_due">%1$d parmi %2$d dûes</string>
   <string name="deckpicker_new">%d nouvelles aujourd\'hui</string>
@@ -87,6 +88,8 @@
   <string name="sync_on_close">Synchro à la fermeture</string>
   <string name="show_study_options_on_deck_load">Study options on load</string>
   <string name="show_study_options_on_deck_load_summ">Montrer les options d\'études pendant le chargement d\'un paquet</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Montrer la minuterie</string>
   <string name="show_timer_summ">Minuterie indiquant le temps qu\'il vous faut pour répondre</string>
   <string name="show_whiteboard_summ">Vous permet d\'écrire sur l\'écran</string>
@@ -102,6 +105,8 @@
   <string name="use_ruby_support_summ">Si les caractères \'[\' et \']\' sont trouvés, considérer le texte comme une annotation ruby</string>
   <string name="display_font_size">Fonte d\'affichage en taille relative</string>
   <string name="display_font_size_summ">Utiliser la taille de fonte relativement à la taille définie dans le paquet</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Ne pas montrer la question dans la réponse ?</string>
   <string name="hide_question_in_answer_summ">Détermine si la question doit être montrée en même temps que la réponse.</string>
   <string name="deck_path">Chemin d\'accès au paquet</string>
@@ -112,6 +117,7 @@
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Ouvrir un paquet en ligne</string>
   <string name="shareddeckpicker_title">Sélectionnez le paquet que vous voulez télécharger</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Préférences</string>
   <string name="deckpreferences_title">Préférences du paquet</string>
   <string name="about_title">À propos</string>

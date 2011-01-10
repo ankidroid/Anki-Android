@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -26,7 +27,7 @@
   <string name="no">Όχι</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-  <string name="deckpicker_title">Επιλέξτε την τράπουλα που αντιγράψατε στην SD κάρτα σας</string>
+  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">Η SD κάρτα δεν είναι προσαρτημένη</string>
   <string name="deckpicker_due">%1$d από %2$d σε αναμονή</string>
   <string name="deckpicker_new">%d νέες σήμερα</string>
@@ -87,6 +88,8 @@
   <string name="sync_on_close">Συγχρονισμός στο κλείσιμο</string>
   <string name="show_study_options_on_deck_load">Study options on load</string>
   <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Show timer</string>
   <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
   <string name="show_whiteboard_summ">Σας επιτρέπει να γράψετε στην οθόνη</string>
@@ -102,6 +105,8 @@
   <string name="use_ruby_support_summ">Αν βρεθούν οι χαρακτήρες \'[\' and \']\', τότε το εσώκλειστο κείμενο θα χρησιμοποιηθεί ως οδηγεία για ruby</string>
   <string name="display_font_size">Σχετικό μέγεθος γραμματοσειράς</string>
   <string name="display_font_size_summ">Το μέγεθος της γραμματοσειράς στην οθόνη σε σχέση με τους ορισμούς της τράπουλας</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Απόκρυψη ερώτησης στην απάντηση;</string>
   <string name="hide_question_in_answer_summ">Καθορίζει αν η ερώτηση θα κρύβεται όταν εμφανίζεται η απάντηση.</string>
   <string name="deck_path">Διαδρομή για τράπουλες</string>
@@ -112,6 +117,7 @@
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Επιλέξτε την τράπουλα που θέλετε να κατεβάσετε</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Προτιμήσεις</string>
   <string name="deckpreferences_title">Προτιμήσεις τράπουλας</string>
   <string name="about_title">Σχετικά</string>

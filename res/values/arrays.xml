@@ -102,13 +102,39 @@
 		<item>140</item>
 		<item>150</item>
 	</string-array>
-	
+	<string-array name="button_size_labels">
+		<item>100 %</item>
+		<item>115 %</item>
+		<item>130 %</item>
+		<item>145 %</item>
+		<item>160 %</item>
+		<item>175 %</item>
+	</string-array>
+	<string-array name="button_size_values">
+		<item>100</item>
+		<item>115</item>
+		<item>130</item>
+		<item>145</item>
+		<item>160</item>
+		<item>175</item>
+	</string-array>
 	<string-array name="hideQuestionInAnswerLabels">
 		<item>Hide the question in answer</item>
 		<item>Show the question in answer</item>
 		<item>As defined in CardModel</item>
 	</string-array>
 	<string-array name="hideQuestionInAnswerVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	
+	<string-array name="startup_mode_labels">
+		<item>Show study options</item>
+		<item>Show deck picker</item>
+		<item>Show deck picker on first start of the day</item>
+	</string-array>
+	<string-array name="startup_mode_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>

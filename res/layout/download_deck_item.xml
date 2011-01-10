@@ -60,7 +60,7 @@
 			android:layout_height="fill_parent"
 			android:paddingLeft="10dip"
 			android:paddingBottom="5dip"
-			android:text="Downloading..."
+			android:text="@string/downloaddeck_downloading"
 			android:textColor="#ffffff"
 			android:visibility="gone"/>
 

@@ -4,6 +4,7 @@
 ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
 ~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
 ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
 ~
 ~ This program is free software; you can redistribute it and/or modify it under
 ~ the terms of the GNU General Public License as published by the Free Software
@@ -116,6 +117,8 @@
 <string name="sync_on_close">Sync on close</string>
 <string name="show_study_options_on_deck_load">Study options on load</string>
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
+<string name="startup_mode">Startup Mode</string>
+<string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
 <string name="show_timer">Show timer</string>
 <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
 <!-- show_whiteboard -> Reviewer.java -->
@@ -134,6 +137,8 @@
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative display font size</string>
 <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck</string>
+<string name="button_size">Relative button size</string>
+<string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
 <string name="hide_question_in_answer">Hide question in answer?</string>
 <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown.</string>
 <string name="deck_path">Deck path</string>
@@ -152,6 +157,8 @@
 <!-- AndroidManifest.xml -->
 <string name="personaldeckpicker_title">Open Online Deck</string>
 <string name="shareddeckpicker_title">Select the deck you want to download</string>
+<string name="downloaddeck_search">Search</string>
+<string name="downloaddeck_downloading">Downloading...</string>
 <string name="preferences_title">Preferences</string>
 <string name="deckpreferences_title">Deck Preferences</string>
 <!--<string name="deckproperties_title">Deck Properties</string>-->

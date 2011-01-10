@@ -35,6 +35,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -135,7 +136,7 @@ public class PersonalDeckPicker extends Activity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}
         });
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         
         getPersonalDecks();
     }
@@ -400,7 +401,13 @@ public class PersonalDeckPicker extends Activity {
         public void onPreExecute() {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = ProgressDialog.show(PersonalDeckPicker.this, "",
-                        getResources().getString(R.string.loading_personal_decks));
+                        getResources().getString(R.string.loading_personal_decks), true, true, new DialogInterface.OnCancelListener() {
+                	@Override
+                	public void onCancel(DialogInterface dialog) {
+                		Connection.cancelGetDecks();
+                		finish();
+                	}
+                });
             }
         }
 

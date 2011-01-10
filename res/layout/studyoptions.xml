@@ -11,7 +11,7 @@
 	<TextView android:id="@+id/studyoptions_deck_name"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:paddingBottom="10sp"
+		android:layout_marginTop="15dip"
 		android:gravity="center"
 		android:lines="2"
 		android:ellipsize="end"
@@ -25,6 +25,7 @@
 		android:layout_height="wrap_content"
 		android:gravity="center"
 		android:text="@string/studyoptions_title"
+		android:layout_marginBottom="15dip"
 		android:textColor="#ffffff"
 		android:textSize="26dip"
 		android:textStyle="bold" />
@@ -32,8 +33,7 @@
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="10dip"
-		android:layout_marginBottom="10dip"
+		android:layout_marginBottom="15dip"
 		android:gravity="center"
 		android:orientation="horizontal">
 
@@ -98,15 +98,16 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
 		<TextView
-			android:layout_width="fill_parent"
+			android:layout_width="0dip"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
+			android:layout_weight="3"
+			android:layout_marginLeft="4dip"
 			android:text="@string/studyoptions_new_cards_per_day"
 			android:textSize="14dip"/>
 		<EditText android:id="@+id/studyoptions_new_cards_per_day"
-			android:layout_width="fill_parent"
+			android:layout_width="0dip"
 			android:layout_height="38dip"
-			android:layout_weight="3"
+			android:layout_weight="1"
 			android:gravity="center"
 			android:inputType="number"
 			android:lines="1"
@@ -118,15 +119,16 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
 		<TextView
-			android:layout_width="fill_parent"
+			android:layout_width="0dip"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
+			android:layout_weight="3"
+			android:layout_marginLeft="4dip"
 			android:text="@string/studyoptions_session_minutes"
 			android:textSize="14dip"/>
 		<EditText android:id="@+id/studyoptions_session_minutes"
-			android:layout_width="fill_parent"
+			android:layout_width="0dip"
 			android:layout_height="38dip"
-			android:layout_weight="3"
+			android:layout_weight="1"
 			android:gravity="center"
 			android:inputType="number"
 			android:lines="1"
@@ -138,15 +140,16 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
 		<TextView
-			android:layout_width="fill_parent"
+			android:layout_width="0dip"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
+			android:layout_marginLeft="4dip"
+			android:layout_weight="3"
 			android:text="@string/studyoptions_session_questions"
 			android:textSize="14dip"/>
 		<EditText android:id="@+id/studyoptions_session_questions"
-			android:layout_width="fill_parent"
+			android:layout_width="0dip"
 			android:layout_height="38dip"
-			android:layout_weight="3"
+			android:layout_weight="1"
 			android:gravity="center"
 			android:inputType="number"
 			android:lines="1"
@@ -158,17 +161,21 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<Button android:id="@+id/studyoptions_start"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="1" 
+         	android:layout_height="fill_parent"
+         	android:layout_width="0dip"
+         	android:layout_weight="3"
+         	android:layout_gravity="center"
+			android:gravity="center"
 			android:text="@string/studyoptions_start"
 			android:drawableLeft="@drawable/chronometer"/>
 		<ToggleButton android:id="@+id/studyoptions_cram"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:layout_weight="3"
-			android:layout_gravity="center_vertical"
+         	android:layout_height="fill_parent"
+         	android:layout_width="0dip"
+         	android:layout_weight="1"
+         	android:layout_gravity="center"
+			android:gravity="center"
 			android:textOff="@string/cram"
-			android:textOn="@string/cram"/>
+			android:textOn="@string/cram" 
+			android:layout_marginBottom="2dip"/>
 	</LinearLayout>
 </LinearLayout>

@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -85,6 +86,22 @@
     <item>140</item>
     <item>150</item>
   </string-array>
+  <string-array name="button_size_labels">
+    <item>100 %</item>
+    <item>115 %</item>
+    <item>130 %</item>
+    <item>145 %</item>
+    <item>160 %</item>
+    <item>175 %</item>
+  </string-array>
+  <string-array name="button_size_values">
+    <item>100</item>
+    <item>115</item>
+    <item>130</item>
+    <item>145</item>
+    <item>160</item>
+    <item>175</item>
+  </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>Ocultar la pregunta en la respuesta</item>
     <item>Mostrar la pregunta en la respuesta</item>
@@ -95,10 +112,20 @@
     <item>1</item>
     <item>2</item>
   </string-array>
+  <string-array name="startup_mode_labels">
+    <item>Show study options</item>
+    <item>Show deck picker</item>
+    <item>Show deck picker on first start of the day</item>
+  </string-array>
+  <string-array name="startup_mode_values">
+    <item>0</item>
+    <item>1</item>
+    <item>2</item>
+  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Always report</item>
     <item>Never report</item>
-    <item>Ask me</item>
+    <item>Preguntarme</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
     <item>0</item>
@@ -113,7 +140,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Nunca</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_values">
     <item>10</item>
@@ -131,15 +158,15 @@
     <item>Show in random order</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hour</item>
-    <item>day</item>
-    <item>month</item>
-    <item>year</item>
+    <item>hora</item>
+    <item>día</item>
+    <item>mes</item>
+    <item>año</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>hours</item>
-    <item>days</item>
-    <item>months</item>
-    <item>years</item>
+    <item>horas</item>
+    <item>días</item>
+    <item>meses</item>
+    <item>años</item>
   </string-array>
 </resources>

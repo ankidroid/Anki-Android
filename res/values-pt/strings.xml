@@ -4,6 +4,7 @@
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
  ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
  ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -26,7 +27,7 @@
   <string name="no">Não</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-  <string name="deckpicker_title">Selecione um deck que você copiou para seu cartão SD.</string>
+  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">O cartão SD está desmontado.</string>
   <string name="deckpicker_due">%1$d de %2$d programados </string>
   <string name="deckpicker_new">%d Novos hoje</string>
@@ -87,6 +88,8 @@
   <string name="sync_on_close">Sincronizar ao sair</string>
   <string name="show_study_options_on_deck_load">Study options on load</string>
   <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
+  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
   <string name="show_timer">Show timer</string>
   <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
   <string name="show_whiteboard_summ">Te permite escrever na Tela</string>
@@ -102,6 +105,8 @@
   <string name="use_ruby_support_summ">Se os caracteres \'[\' e \']\' forem encontrados, então o texto delimitado é tratado como anotação ruby</string>
   <string name="display_font_size">Tamanho relativo de fonte de exibição</string>
   <string name="display_font_size_summ">O tamanho da fonte para usar no display relativo às definições do deck</string>
+  <string name="button_size">Relative button size</string>
+  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Ocultar questão ao exibir resposta?</string>
   <string name="hide_question_in_answer_summ">Determina se a questão deveria ser ocultada quando a resposta é mostrada.</string>
   <string name="deck_path">Pasta dos Deck </string>
@@ -112,6 +117,7 @@
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Selecione a deck que você deseja baixar</string>
+  <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Preferências</string>
   <string name="deckpreferences_title">Preferências do Deck</string>
   <string name="about_title">Sobre</string>
@@ -244,7 +250,7 @@ Não-desenvolvedores conseguem ajudar também, por exemplo atualizando a wiki e 
   <string name="errors_message">There are %d errors to report</string>
   <string name="error_ok">Relatório de erros</string>
   <string name="error_cancel">Não reportar erros</string>
-  <string name="error_email">report@exemplo.org</string>
+  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Error reporting mode</string>
   <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
   <string name="widget_pref">Widget</string>
