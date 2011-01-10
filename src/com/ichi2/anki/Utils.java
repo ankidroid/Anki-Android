@@ -35,6 +35,7 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -646,14 +647,20 @@ public class Utils {
      */
     public static String fileChecksum(String path) {
         byte[] bytes = null;
-        File file = new File(path);
-        if (file != null && file.isFile()) {
-            bytes = new byte[(int)file.length()];
-            FileInputStream fin = new FileInputStream(file);
-            fin.read(bytes);
+        try {
+            File file = new File(path);
+            if (file != null && file.isFile()) {
+                bytes = new byte[(int)file.length()];
+                FileInputStream fin = new FileInputStream(file);
+                fin.read(bytes);
+            }
+        } catch (FileNotFoundException e) {
+            Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
         }
         if (bytes == null) {
-            Log.w(AnkiDroidApp.TAG, "Media file " + path + " appears to be empty");
+            Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
             return "";
         }
         return checksum(new String(bytes));

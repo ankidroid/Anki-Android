@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -130,13 +132,14 @@ public class Media {
     public static void updateMediaCount(Deck deck, String file, int count) {
         String mdir = deck.mediaDir();
         if (deck.getDB().queryScalar("SELECT 1 FROM media WHERE filename = '" + file + "'") == 1l) {
-            deck.getDB().execSQL(String.format(Utils.ENGLISH_LOCALE, "UPDATE media SET size = size + %d, " +
-                       "created = %f WHERE filename = '%s'", count, Utils.now(), file));
+            deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE,
+                        "UPDATE media SET size = size + %d, created = %f WHERE filename = '%s'",
+                        count, Utils.now(), file));
         } else if (count > 0) {
             String sum = Utils.fileChecksum(file);
             deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "INSERT INTO media " +
                     "(id, filename, size, created, originalPath, description) " +
-                    "VALUES (%d, '%s', %d, %f, '%s', '')", genID(), file, count, Utils.now(), sum));
+                    "VALUES (%d, '%s', %d, %f, '%s', '')", Utils.genID(), file, count, Utils.now(), sum));
         }
     }
 
@@ -167,7 +170,7 @@ public class Media {
         for (Pattern reg : mMediaRegexps) {
             Matcher m = reg.matcher(string);
             while (m.find()) {
-                isLocal = m.group(2).toLowerCase.matches("(https?|ftp)://.*");
+                isLocal = m.group(2).toLowerCase().matches("(https?|ftp)://.*");
                 if (!remote && isLocal) {
                     l.add(m.group(2));
                 } else if (remote && !isLocal) {
@@ -186,8 +189,7 @@ public class Media {
      */
     public static String stripMedia(String txt) {
         for (Pattern reg : mMediaRegexps) {
-            Matcher m = reg.matcher(string);
-            txt = replaceAll("");
+            txt = reg.matcher(txt).replaceAll("");
         }
         return txt;
     }
@@ -220,15 +222,15 @@ public class Media {
         String txt = null;
         Map<String, Integer> refs = new HashMap<String, Integer>();
         try {
-            cursor = deck.getDB().getDatabase().rawQuery("SELECT question, answer FROM cards");
+            cursor = deck.getDB().getDatabase().rawQuery("SELECT question, answer FROM cards", null);
             while (cursor.moveToNext()) {
                 for (int i = 0; i < 2; i++) {
                     txt = cursor.getString(i);
                     for (String f : mediaFiles(txt)) {
                         if (refs.containsKey(f)) {
-                            refs.setValue(f, refs.getValue(f) + 1);
+                            refs.put(f, refs.get(f) + 1);
                         } else {
-                            refs.setValue(f, 1);
+                            refs.put(f, 1);
                         }
                     }
                 }
@@ -241,11 +243,11 @@ public class Media {
 
         // Update ref counts
         for (String fname : refs.keySet()) {
-            updateMediaCount(deck, fname, refs.getValue(fname));
+            updateMediaCount(deck, fname, refs.get(fname));
         }
 
         // Find unused media
-        Set<String> unused = new Set<String>();
+        Set<String> unused = new HashSet<String>();
         File mdirfile = new File(mdir);
         String fname = null;
         for (File f : mdirfile.listFiles()) {
@@ -263,9 +265,11 @@ public class Media {
             for (String fn : unused) {
                 File file = new File(mdir + "/" + fn);
                 try {
-                    file.delete();
-                } catch (IOException e) {
-                    Log.e(AnkiDroidApp.TAG, "Couldn't delete unused media file " + mdir + "/" + fn);
+                    if (!file.delete()) {
+                        Log.e(AnkiDroidApp.TAG, "Couldn't delete unused media file " + mdir + "/" + fn);
+                    }
+                } catch (SecurityException e) {
+                    Log.e(AnkiDroidApp.TAG, "Security exception while deleting unused media file " + mdir + "/" + fn);
                 }
             }
         }
@@ -275,15 +279,15 @@ public class Media {
         // Check md5s are up to date
         cursor = null;
         String path = null;
-        String fname = null;
+        fname = null;
         String md5 = null;
         deck.getDB().getDatabase().beginTransaction();
         try {
-            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename, created, originalPath FROM media");
+            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename, created, originalPath FROM media", null);
             while (cursor.moveToNext()) {
                 fname = cursor.getString(0);
                 md5 = cursor.getString(2);
-                String path = mdir + "/" + fname;
+                path = mdir + "/" + fname;
                 File file = new File(path);
                 if (!file.exists()) {
                    if (!md5.equals("")) {

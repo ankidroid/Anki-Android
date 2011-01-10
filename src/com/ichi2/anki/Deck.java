@@ -1861,7 +1861,7 @@ public class Deck {
     }
 
 
-    private void flushMod() {
+    public void flushMod() {
         setModified();
         commitToDB();
     }

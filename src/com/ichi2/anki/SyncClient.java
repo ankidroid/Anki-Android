@@ -1951,10 +1951,13 @@ public class SyncClient {
 			
 			if (response.substring(0,2).equals("OK")) {
 				// Update local modification time
-				mDeck.getDB().getDatabase().execSQL("UPDATE decks SET lastSync = " +
-					   response.substring(3, response.length()-3));
-				mDeck.commitToDB();
-				// mDeck.closeDeck();
+                boolean wasDbOpen = AnkiDatabaseManager.isDatabaseOpen(deckPath);
+				AnkiDb db = AnkiDatabaseManager.getDatabase(deckPath);
+                AnkiDatabaseManager.getDatabase(deckPath).getDatabase().execSQL("UPDATE decks SET lastSync = " +
+                        response.substring(3, response.length()-3));
+                if (!wasDbOpen) {
+				    AnkiDatabaseManager.closeDatabase(deckPath);
+                }
 			}
             Log.i(AnkiDroidApp.TAG, "Finished!");
         } catch (MalformedURLException e) {
