@@ -15,9 +15,11 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -417,10 +419,12 @@ public class Reviewer extends Activity {
             initLayout(R.layout.flashcard);
 
             switch (mDictionary) {
-            case DICTIONARY_AEDICT:
-            	mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
-            case DICTIONARY_LEO:
-            	mDictionaryAction = "android.intent.action.VIEW";
+            	case DICTIONARY_AEDICT:
+            		mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
+            		break;
+            	case DICTIONARY_LEO:
+            		mDictionaryAction = "android.intent.action.VIEW";
+            		break;
             }
             mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
             Log.i(AnkiDroidApp.TAG, "Is intent available = " + mIsDictionaryAvailable);
@@ -638,16 +642,27 @@ public class Reviewer extends Activity {
             case MENU_SEARCH:
                 
             	if (mPrefTextSelection && mClipboard.hasText() && mIsDictionaryAvailable) {
-            		Intent searchIntent = null;
             		switch (mDictionary) {
-                    case DICTIONARY_AEDICT:
-                    	searchIntent = new Intent(mDictionaryAction);
-                        searchIntent.putExtra("kanjis", mClipboard.getText());
-                    case DICTIONARY_LEO:
-                        searchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=ende&search=" + mClipboard.getText()));
-                		}
-            		startActivity(searchIntent);
-                    mClipboard.setText("");
+                    	case DICTIONARY_AEDICT:
+                    		Intent aedictSearchIntent = new Intent(mDictionaryAction);
+                    		aedictSearchIntent.putExtra("kanjis", mClipboard.getText());
+                    		startActivity(aedictSearchIntent);
+                            mClipboard.setText("");
+                    		break;
+                    	case DICTIONARY_LEO:                  		
+                    		final CharSequence[] items = {"ende", "frde", "esde", "itde", "chde", "rude"};
+                    		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    		builder.setItems(items, new DialogInterface.OnClickListener() {
+                    			public void onClick(DialogInterface dialog, int item) {
+                    		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + items[item] + "&search=" + mClipboard.getText()));
+                            		startActivity(leoSearchIntent);
+                                    mClipboard.setText("");
+                    		    }
+                    		});
+                    		AlertDialog alert = builder.create();
+                    		alert.show();
+                    		break;
+                	}
                 }
                 return true;
 
