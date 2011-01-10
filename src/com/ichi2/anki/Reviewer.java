@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -131,12 +132,22 @@ public class Reviewer extends Activity {
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
     private int mRelativeButtonSize;
+    private String mDictionaryAction;
+    private int mDictionary;
+    
+    private boolean mIsDictionaryAvailable;
 
     @SuppressWarnings("unused")
     private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
 
     private String mCardTemplate;
 
+    /**
+     * Searches
+     */
+    private static final int DICTIONARY_AEDICT = 0;
+    private static final int DICTIONARY_LEO = 1;
+    
     /**
      * Variables to hold layout objects that we need to update or handle events for
      */
@@ -405,6 +416,15 @@ public class Reviewer extends Activity {
 
             initLayout(R.layout.flashcard);
 
+            switch (mDictionary) {
+            case DICTIONARY_AEDICT:
+            	mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
+            case DICTIONARY_LEO:
+            	mDictionaryAction = "android.intent.action.VIEW";
+            }
+            mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
+            Log.i(AnkiDroidApp.TAG, "Is intent available = " + mIsDictionaryAvailable);
+
             // Load the template for the card and set on it the available width for images
             try {
                 mCardTemplate = Utils.convertStreamToString(getAssets().open("card_template.html"));
@@ -495,6 +515,7 @@ public class Reviewer extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
+        Resources res = getResources();
         if (mPrefWhiteboard) {
             item = menu.add(Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.show_whiteboard);
             item.setIcon(R.drawable.ic_menu_compose);
@@ -506,7 +527,8 @@ public class Reviewer extends Activity {
         item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
         item.setIcon(R.drawable.ic_menu_close_clear_cancel);
         if (mPrefTextSelection) {
-            item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, R.string.menu_search);
+            item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, String.format(getString(R.string.menu_search), 
+            			res.getStringArray(R.array.dictionary_labels)[mDictionary]));
             item.setIcon(R.drawable.ic_menu_search);
         }
         item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
@@ -534,11 +556,7 @@ public class Reviewer extends Activity {
         if (mPrefTextSelection) {
             item = menu.findItem(MENU_SEARCH);
             Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + mClipboard.hasText());
-            Log.i(AnkiDroidApp.TAG,
-                    "Is intent available = "
-                            + Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT"));
-            boolean lookupPossible = mClipboard.hasText()
-                    && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT");
+            boolean lookupPossible = mClipboard.hasText() && mIsDictionaryAvailable;
             item.setEnabled(lookupPossible);
         }
         if (mPrefFullscreenReview) {
@@ -618,11 +636,17 @@ public class Reviewer extends Activity {
                 return true;
 
             case MENU_SEARCH:
-                if (mPrefTextSelection && mClipboard.hasText()
-                        && Utils.isIntentAvailable(this, "sk.baka.aedict.action.ACTION_SEARCH_EDICT")) {
-                    Intent aedictIntent = new Intent("sk.baka.aedict.action.ACTION_SEARCH_EDICT");
-                    aedictIntent.putExtra("kanjis", mClipboard.getText());
-                    startActivity(aedictIntent);
+                
+            	if (mPrefTextSelection && mClipboard.hasText() && mIsDictionaryAvailable) {
+            		Intent searchIntent = null;
+            		switch (mDictionary) {
+                    case DICTIONARY_AEDICT:
+                    	searchIntent = new Intent(mDictionaryAction);
+                        searchIntent.putExtra("kanjis", mClipboard.getText());
+                    case DICTIONARY_LEO:
+                        searchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=ende&search=" + mClipboard.getText()));
+                		}
+            		startActivity(searchIntent);
                     mClipboard.setText("");
                 }
                 return true;
@@ -850,6 +874,8 @@ public class Reviewer extends Activity {
         mRelativeButtonSize = Integer.parseInt(preferences.getString("buttonSize", "100"));
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
+        mDictionary = Integer.parseInt(preferences.getString("dictionary",
+                Integer.toString(DICTIONARY_AEDICT)));
 
         return preferences;
     }
