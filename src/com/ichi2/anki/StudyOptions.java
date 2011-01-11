@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -413,16 +414,16 @@ public class StudyOptions extends Activity {
     }
 
 
-/*
-TODO Commented out because it makes AnkiDroid crash when starting on Android 1.5, needs to find a way to avoid the crash.
     @Override
-	public void onBackPressed() {
-        super.onBackPressed();
-        Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-        closeOpenedDeck();
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
+            closeOpenedDeck();
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
-*/
-    
+
 
     private void loadPreviousDeck() {
         Intent deckLoadIntent = new Intent();
