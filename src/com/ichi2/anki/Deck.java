@@ -59,7 +59,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 60;
+    public static final int DECK_VERSION = 62;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -82,8 +82,8 @@ public class Deck {
     // Card order strings for building SQL statements
     private static final String[] revOrderStrings = { "priority desc, interval desc", "priority desc, interval",
             "priority desc, combinedDue", "priority desc, factId, ordinal" };
-    private static final String[] newOrderStrings = { "priority desc, combinedDue", "priority desc, combinedDue",
-            "priority desc, combinedDue desc" };
+    private static final String[] newOrderStrings = { "priority desc, due", "priority desc, due",
+            "priority desc, due desc" };
 
     // BEGIN: SQL table columns
     private long mId;
@@ -348,10 +348,8 @@ public class Deck {
         }
         deck.mAverageFactor = Math.max(deck.mAverageFactor, MINIMUM_AVERAGE);
 
-        // Rebuild queue is not rebuild already
-        if (ids.isEmpty()) {
-            deck.reset();
-        }
+        // Rebuild queue
+        deck.reset();
         // Make sure we haven't accidentally bumped the modification time
         assert deck.mModified == oldMod;
         // Create a temporary view for random new cards. Randomizing the cards by themselves
@@ -554,7 +552,7 @@ public class Deck {
         // lastSessionStart = 0;
         mQueueLimit = 200;
         // If most recent deck var not defined, make sure defaults are set
-        if (!hasKey("mediaURL")) {
+        if (!hasKey("latexPost")) {
             setVarDefault("suspendLeeches", "1");
             setVarDefault("leechFails", "16");
             setVarDefault("perDay", "1");
@@ -564,6 +562,13 @@ public class Deck {
             setVarDefault("revInactive", mSuspended);
             setVarDefault("newSpacing", "60");
             setVarDefault("mediaURL", "");
+            setVarDefault("latexPre", "\\documentclass[12pt]{article}\n" +
+                    "\\special{papersize=3in,5in}\n" +
+                    "\\usepackage[utf8]{inputenc}\n" +
+                    "\\usepackage{amssymb,amsmath}\n" +
+                    "\\pagestyle{empty}\n" +
+                    "\\begin{document}");
+            setVarDefault("latexPost", "\\end{document}");
         }
         updateCutoff();
         setupStandardScheduler();
@@ -653,10 +658,6 @@ public class Deck {
             mVersion = 40;
             commitToDB();
         }
-        if (mVersion < 42) {
-            mVersion = 42;
-            commitToDB();
-        }
         if (mVersion < 43) {
             getDB().getDatabase().execSQL("UPDATE fieldModels SET features = ''");
             mVersion = 43;
@@ -665,17 +666,7 @@ public class Deck {
         if (mVersion < 44) {
             // Leaner indices
             getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_factId");
-            addIndices();
             mVersion = 44;
-            commitToDB();
-        }
-        if (mVersion < 47) {
-            // Add an index for (type, combinedDue)
-            addIndices();
-            // Add new indices that exclude isDue - we'll clean up the old ones later
-            updateDynamicIndices();
-            getDB().getDatabase().execSQL("ANALYZE");
-            mVersion = 47;
             commitToDB();
         }
         if (mVersion < 48) {
@@ -683,16 +674,9 @@ public class Deck {
             mVersion = 48;
             commitToDB();
         }
-        if (mVersion < 49) {
-            rebuildTypes();
-            mVersion = 49;
-            commitToDB();
-        }
         if (mVersion < 50) {
             // more new type handling
             rebuildTypes();
-            // Add an index for relativeDelay (type cache)
-            addIndices();
             mVersion = 50;
             commitToDB();
         }
@@ -735,26 +719,30 @@ public class Deck {
         }
         if (mVersion < 57) {
             // Add an index for priority & modified
-            addIndices();
-            getDB().getDatabase().execSQL("ANALYZE");
             mVersion = 57;
             commitToDB();
         }
-        if (mVersion < 58) {
-            // orderNewCards() had a bug in older versions where combinedDue was not updated, and since we're sorting
-            // on combinedDue now we need to make sure it's correct. This will discard any spacing the cards had.
-            if (mNewCardOrder != 0) {
-                getDB().getDatabase().execSQL("UPDATE cards SET due = created, combinedDue = created "
-                        + "WHERE relativeDelay = 2");
-            }
-            mVersion = 58;
-            commitToDB();
-        }
-        if (mVersion < 60) {
+        if (mVersion < 61) {
+            // TODO: Normally the python code rebuilds the latex images here, but we don't do that in AD.
+            // Do we need to notify the user?
+            
             // Rebuild the media db based on new format
             Media.rebuildMediaDir(this, false);
-            mVersion = 60;
+            mVersion = 61;
             commitToDB();
+        }
+        if (mVersion < 62) {
+            // Updated Indices
+            String[] indices = new String[]({"intervalDesc", "intervalAsc", "randomOrder", "dueAsc", "dueDesc"});
+            for (String d in indices) {
+                getDB().getDatabase.execSQL("DROP INDEX IF EXISTS ix_cards_" + d + "2");
+            }
+            getDB().getDatabase.execSQL("DROP INDEX IF EXISTS ix_cards_typeCombined");
+            addIndices();
+            updateDynamicIndices();
+            getDB().getDatabase().execSQL("VACUUM");
+            mVersion = 62;
+            commitToDB()
         }
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
@@ -793,7 +781,8 @@ public class Deck {
      */
     private void addIndices() {
         // Counts, failed cards
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_typeCombined ON cards (type, combinedDue)");
+        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_typeCombined ON cards (type, " +
+                "combinedDue, factId)");
         // Scheduler-agnostic type
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_relativeDelay ON cards (relativeDelay)");
         // Index on modified, to speed up sync summaries
@@ -2442,7 +2431,6 @@ public class Deck {
             card.setLastDue(card.getDue()); // only update if card was not new
         }
         card.setDue(nextDue(card, ease, oldState));
-        card.setCombinedDue(card.getDue());
         card.setIsDue(0);
         card.setLastFactor(card.getFactor());
         card.setSpaceUntil(0);
@@ -3814,11 +3802,11 @@ public class Deck {
     private void updateDynamicIndices() {
         Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
         HashMap<String, String> indices = new HashMap<String, String>();
-        indices.put("intervalDesc", "(type, priority desc, interval desc)");
-        indices.put("intervalAsc", "(type, priority desc, interval)");
-        indices.put("randomOrder", "(type, priority desc, factId, ordinal)");
-        indices.put("dueAsc", "(type, priority desc, combinedDue)");
-        indices.put("dueDesc", "(type, priority desc, combinedDue desc)");
+        indices.put("intervalDesc", "(type, priority desc, interval desc, factId, combinedDue)");
+        indices.put("intervalAsc", "(type, priority desc, interval, factId, combinedDue)");
+        indices.put("randomOrder", "(type, priority desc, factId, ordinal, combinedDue)");
+        indices.put("dueAsc", "(type, priority desc, due, factId, combinedDue)");
+        indices.put("dueDesc", "(type, priority desc, due desc, factId, combinedDue)");
 
         ArrayList<String> required = new ArrayList<String>();
         if (mRevCardOrder == REV_CARDS_OLD_FIRST) {
@@ -3838,17 +3826,26 @@ public class Deck {
             required.add("dueDesc");
         }
 
+        // Add/delete
+        boolean analyze = false;
         Set<Entry<String, String>> entries = indices.entrySet();
         Iterator<Entry<String, String>> iter = entries.iterator();
+        String indexName = null;
         while (iter.hasNext()) {
             Entry<String, String> entry = iter.next();
+            indexName = "ix_cards_" + entry.getKey() + "2";
             if (required.contains(entry.getKey())) {
-                getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS " + "ix_cards_" + entry.getKey() + "2 ON cards "
-                        + entry.getValue());
+                if (getDB().queryScalar("SELECT 1 FROM sqlite_master WHERE name = " + indexName) != 1l) {
+                    getDB().getDatabase().execSQL("CREATE INDEX " + indexName + " ON cards " + entry.getValue());
+                    analyze = true;
+                }
             } else {
                 // Leave old indices for older clients
-                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS " + "ix_cards_" + entry.getKey() + "2");
+                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS " + indexName);
             }
+        }
+        if (analyze) {
+            getDB().getDatabase().execSQL("ANALYZE");
         }
     }
 

@@ -73,6 +73,8 @@ public class Card {
     private static final int LEARNT_THRESHOLD = 7;
     private static final int MATURE_THRESHOLD = 21;
 
+    private static final double MAX_TIMER = 60.0;
+
     // BEGIN SQL table entries
     private long mId; // Primary key
     private long mFactId; // Foreign key facts.id
@@ -286,15 +288,13 @@ public class Card {
             mSuccessive = 0;
         }
 
-        double delay = totalTime();
+        double delay = Math.min(totalTime(), MAX_TIMER);
         // Ignore any times over 60 seconds
-        if (delay < 60) {
-            mReviewTime += delay;
-            if (mAverageTime != 0) {
-                mAverageTime = (mAverageTime + delay) / 2.0;
-            } else {
-                mAverageTime = delay;
-            }
+        mReviewTime += delay;
+        if (mAverageTime != 0) {
+            mAverageTime = (mAverageTime + delay) / 2.0;
+        } else {
+            mAverageTime = delay;
         }
         // We don't track first answer for cards
         if (STATE_NEW.equalsIgnoreCase(state)) {

@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.util.Log;
 
+import java.lang.StringBuilder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -110,12 +111,32 @@ public class LaTeX {
         return stringBuilder.toString();
     }
 
-    private static String mungeLatex(String latex)
-    {
-        //TODO: Deal with HTML entity shenanigans
+    private static final Pattern htmlNamedEntityPattern = Pattern.compile("(?i)&[a-z]+;");
 
-        //Fix endlines
+    /**
+     * Convert entities, fix newlines, convert to utf8, and wrap pre/postamble.
+     *
+     * @param deck The deck, needed to get the latex pre/post-ambles
+     * @param latex The latex trsing to be munged
+     * @return the latex string transformed as described above
+     */
+    private static String mungeLatex(Deck deck, String latex) {
+        // Deal with HTML named entities
+        StringBuilder sb = new StringBuilder(latex);
+        Matcher namedEntity = htmlNamedEntityPattern.matcher(sb);
+        while (namedEntity.find()) {
+            sb.replace(namedEntity.begin(), namedEntity.end(), Html.fromHtml(namedEntity.group()).toString());
+            namedEntity = htmlNamedEntityPattern.matcher(sb);
+        }
+        latex = sb.toString();
+
+        // Fix endlines
         latex = sBRPattern.matcher(latex).replaceAll("\n");
+
+        // TODO: Do we need to convert to UTF-8?
+     
+        // Add pre/post-ambles
+        latex = deck.getVar("latexPre") + "\n" + latex + "\n" + deck.getVar("latexPost");
 
         return latex;
     }
