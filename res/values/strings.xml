@@ -132,7 +132,9 @@
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
 <string name="text_selection">Allow text selection</string>
-<string name="text_selection_summ">Lets you select and copy text from cards with a long click, and perform lookup in external dictionnary</string>
+<string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+<string name="dictionary">Dictionary</string>
+<string name="dictionary_summ">Dictionary in which lookups should be performed</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative display font size</string>
@@ -158,7 +160,6 @@
 <string name="personaldeckpicker_title">Open Online Deck</string>
 <string name="shareddeckpicker_title">Select the deck you want to download</string>
 <string name="downloaddeck_search">Search</string>
-<string name="downloaddeck_downloading">Downloading...</string>
 <string name="preferences_title">Preferences</string>
 <string name="deckpreferences_title">Deck Preferences</string>
 <!--<string name="deckproperties_title">Deck Properties</string>-->
@@ -306,7 +307,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="menu_about">About</string>
 <string name="menu_suspend_card">Suspend Card</string>
 <string name="menu_edit_card">Edit Card</string>
-<string name="menu_search">Lookup in Aedict</string>
+<string name="menu_search">Lookup in %1$s</string>
 <string name="menu_mark_card">Mark Card</string>
 <string name="menu_marked">Marked</string>
 

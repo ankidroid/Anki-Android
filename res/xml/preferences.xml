@@ -104,6 +104,13 @@
 			android:defaultValue="false"
 			android:summary="@string/text_selection_summ"
 			android:key="textSelection" />
+		<ListPreference
+			android:title="@string/dictionary"
+			android:summary="@string/dictionary_summ"
+			android:key="dictionary"
+			android:defaultValue="0"
+			android:entries="@array/dictionary_labels"
+			android:entryValues="@array/dictionary_values" />
 		<CheckBoxPreference
 			android:title="@string/zoom"
 			android:defaultValue="true"
