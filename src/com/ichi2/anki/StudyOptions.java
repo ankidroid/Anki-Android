@@ -413,13 +413,16 @@ public class StudyOptions extends Activity {
     }
 
 
+/*
+TODO Commented out because it makes AnkiDroid crash when starting on Android 1.5, needs to find a way to avoid the crash.
     @Override
 	public void onBackPressed() {
         super.onBackPressed();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
         closeOpenedDeck();
     }
-
+*/
+    
 
     private void loadPreviousDeck() {
         Intent deckLoadIntent = new Intent();
