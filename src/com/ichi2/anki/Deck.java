@@ -56,7 +56,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 55;
+    public static final int DECK_VERSION = 60;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -167,6 +167,7 @@ public class Deck {
     private double mLastLoaded;
     private boolean mNewEarly;
     private boolean mReviewEarly;
+    public String mMediaPrefix;
 
     private double mDueCutoff;
     private double mFailedCutoff;
@@ -207,6 +208,9 @@ public class Deck {
 
 
     public static synchronized Deck openDeck(String path) throws SQLException {
+		return openDeck(path, true);
+	}
+    public static synchronized Deck openDeck(String path, boolean rebuild) throws SQLException {
         Deck deck = null;
         Cursor cursor = null;
         Log.i(AnkiDroidApp.TAG, "openDeck - Opening database " + path);
@@ -279,11 +283,21 @@ public class Deck {
         deck.mDeckPath = path;
         deck.mDeckName = (new File(path)).getName().replace(".anki", "");
 
+		if (deck.mVersion < DECK_VERSION) {
+			deck.createMetadata();
+		}
+
         deck.initVars();
 
         // Upgrade to latest version
         deck.upgradeDeck();
 
+		if (!rebuild) {
+			// Minimal startup
+			deck.mGlobalStats = Stats.globalStats(deck);
+			deck.mDailyStats = Stats.dailyStats(deck);
+			return deck;
+		}
         double oldMod = deck.mModified;
 
         // Ensure necessary indices are available
@@ -294,10 +308,9 @@ public class Deck {
         deck.getDB().getDatabase().execSQL("UPDATE cards SET type = type - 3 WHERE type BETWEEN 0 AND 2 AND priority = -3");
 
         // - New delay1 handling
-        if (deck.mDelay0 == deck.mDelay1) {
-            deck.mDelay1 = 0l;
-        } else {
-            deck.mDelay1 = Math.min(deck.mDelay1, 7);
+        if (deck.mDelay1 > 7l) {
+			// We treat 600==0 to avoid breaking older clients
+            deck.mDelay1 = 600l;
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();
@@ -352,6 +365,12 @@ public class Deck {
         return deck;
     }
 
+
+	public void createMetadata() {
+		// Just create table deckvars for now
+		getDB().getDatabase().execSQL("CREATE TABLE IF NOT EXISTS deckVars (\"key\" TEXT NOT NULL, value TEXT, "
+				+ "PRIMARY KEY (\"key\"))");
+	}
 
     public synchronized void closeDeck() {
         DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
@@ -523,7 +542,7 @@ public class Deck {
 
     private void initVars() {
         // tmpMediaDir = null;
-        // forceMediaDir = null;
+        mMediaPrefix = null;
         // lastTags = "";
         mLastLoaded = Utils.now();
         // undoEnabled = false;
@@ -532,7 +551,7 @@ public class Deck {
         // lastSessionStart = 0;
         mQueueLimit = 200;
         // If most recent deck var not defined, make sure defaults are set
-        if (!hasKey("newSpacing")) {
+        if (!hasKey("mediaURL")) {
             setVarDefault("suspendLeeches", "1");
             setVarDefault("leechFails", "16");
             setVarDefault("perDay", "1");
@@ -541,9 +560,62 @@ public class Deck {
             setVarDefault("newInactive", mSuspended);
             setVarDefault("revInactive", mSuspended);
             setVarDefault("newSpacing", "60");
+            setVarDefault("mediaURL", "");
         }
         updateCutoff();
         setupStandardScheduler();
+    }
+
+
+    // Media
+    // *****
+    
+    /**
+     * Return the media directory if exists, none if couldn't be created.
+     * 
+     * @param create If true it will attempt to create the folder if it doesn't exist
+     * @return The path of the media directory
+     */
+    public String mediaDir() {
+        return mediaDir(false);
+    }
+    public String mediaDir(boolean create) {
+        String dir = null;
+        if (mDeckPath != null && !mDeckPath.equals("")) {
+            if (mMediaPrefix != null) {
+                dir = mMediaPrefix + "/" + mDeckName + ".media";
+            } else {
+                dir = mDeckPath.replaceAll("\\.anki$", ".media");
+            }
+            if (!create) {
+                // Don't create, but return dir
+                return dir;
+            } else {
+                File mediaDir = new File(dir);
+                if (!mediaDir.exists()) {
+                    try {
+                        if (!mediaDir.mkdir()) {
+                            Log.e(AnkiDroidApp.TAG, "Couldn't create media directory " + dir);
+                            return null;
+                        }
+                    } catch (SecurityException e) {
+                        Log.e(AnkiDroidApp.TAG, "Security restriction: Couldn't create media directory " + dir);
+                        return null;
+                    }
+                }
+            }
+        }
+
+        if (dir == null) {
+            return null;
+        } else {
+            // TODO: Inefficient, should use prior File
+            File mediaDir = new File(dir);
+            if (!mediaDir.exists() || !mediaDir.isDirectory()) {
+                return null;
+            }
+        }
+        return dir;
     }
 
 
@@ -563,6 +635,8 @@ public class Deck {
         // Oldest versions in existence are 31 as of 11/07/2010
         // We support upgrading from 39 and up.
         // Unsupported are about 135 decks, missing about 6% as of 11/07/2010
+        //
+        double oldmod = mModified;
 
         upgradeNotes = new ArrayList<Integer>();
         if (mVersion < 39) {
@@ -576,7 +650,6 @@ public class Deck {
             mVersion = 40;
             commitToDB();
         }
-        // skip 41
         if (mVersion < 42) {
             mVersion = 42;
             commitToDB();
@@ -620,7 +693,6 @@ public class Deck {
             mVersion = 50;
             commitToDB();
         }
-        // skip 51
         if (mVersion < 52) {
             // The commented code below follows libanki by setting the syncName to the MD5 hash of the path.
             // The problem with that is that it breaks syncing with already uploaded decks.
@@ -658,6 +730,29 @@ public class Deck {
             mVersion = 55;
             commitToDB();
         }
+        if (mVersion < 57) {
+            // Add an index for priority & modified
+            addIndices();
+            getDB().getDatabase().execSQL("ANALYZE");
+            mVersion = 57;
+            commitToDB();
+        }
+        if (mVersion < 58) {
+            // orderNewCards() had a bug in older versions where combinedDue was not updated, and since we're sorting
+            // on combinedDue now we need to make sure it's correct. This will discard any spacing the cards had.
+            if (mNewCardOrder != 0) {
+                getDB().getDatabase().execSQL("UPDATE cards SET due = created, combinedDue = created "
+                        + "WHERE relativeDelay = 2");
+            }
+            mVersion = 58;
+            commitToDB();
+        }
+        if (mVersion < 60) {
+            // Rebuild the media db based on new format
+            Media.rebuildMediaDir(this, false);
+            mVersion = 60;
+            commitToDB();
+        }
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
             commitToDB();
@@ -667,6 +762,7 @@ public class Deck {
             setVar("pageSize", "4096", false);
             commitToDB();
         }
+        assert (mModified == oldmod);
         return true;
     }
 
@@ -679,11 +775,11 @@ public class Deck {
             if (note == com.ichi2.anki.R.string.deck_upgrade_too_old_version) {
                 // Unsupported version
                 notes = notes.concat(res.getString(note.intValue()));
-            //} else if (note == com.ichi2.anki.R.string.deck_upgrade_52_note) {
-            //    // Upgrade note for version 52 regarding syncName
-            //    notes = notes.concat(String.format(res.getString(note.intValue()),
-            //            deck.getDeckName(), deck.getSyncName()));
-            }
+                //} else if (note == com.ichi2.anki.R.string.deck_upgrade_52_note) {
+                //    // Upgrade note for version 52 regarding syncName
+                //    notes = notes.concat(String.format(res.getString(note.intValue()),
+                //            deck.getDeckName(), deck.getSyncName()));
+                }
         }
         return notes;
     }
@@ -697,9 +793,15 @@ public class Deck {
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_typeCombined ON cards (type, combinedDue)");
         // Scheduler-agnostic type
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_relativeDelay ON cards (relativeDelay)");
+        // Index on modified, to speed up sync summaries
+        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_modified ON cards (modified)");
+        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_facts_modified ON facts (modified)");
         // Failed cards, review early - obsolete
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_duePriority " +
-        "ON cards (type, isDue, combinedDue, priority)");
+                "ON cards (type, isDue, combinedDue, priority)");
+        // Priority - temporary index to make compat code faster. This can be removed when all clients are on 1.2,
+        // as can the ones below
+        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_priority ON cards (priority)");
         // Check due - obsolete
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_priorityDue " +
                 "ON cards (type, isDue, priority, combinedDue)");
@@ -739,13 +841,13 @@ public class Deck {
         Log.i(AnkiDroidApp.TAG, "updatefieldCache fids: " + Utils.ids2str(fids));
         try {
             cur = getDB().getDatabase().rawQuery("SELECT factId, group_concat(value, ' ') FROM fields " +
-                "WHERE factId IN " + Utils.ids2str(fids) + " GROUP BY factId" , null);
+                    "WHERE factId IN " + Utils.ids2str(fids) + " GROUP BY factId" , null);
             while (cur.moveToNext()) {
                 String values = cur.getString(1);
                 //if (values.charAt(0) == ' ') {
-                    // Fix for a slight difference between how Android SQLite and python sqlite work.
-                    // Inconsequential difference in this context, but messes up any effort for automated testing.
-                    values = values.replaceFirst("^ *", "");
+                // Fix for a slight difference between how Android SQLite and python sqlite work.
+                // Inconsequential difference in this context, but messes up any effort for automated testing.
+                values = values.replaceFirst("^ *", "");
                 //}
                 r.put(cur.getLong(0), Utils.stripHTMLMedia(values));
             }
@@ -1218,14 +1320,14 @@ public class Deck {
     private void _fillFailedQueue() {
         if ((mFailedSoonCount != 0) && mFailedQueue.isEmpty()) {
             Cursor cur = null;
-        	try {
-        		String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " +
-        		mFailedCutoff + " ORDER BY combinedDue LIMIT " + mQueueLimit;
-        		cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
-        		while (cur.moveToNext()) {
-        			QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
-        			mFailedQueue.add(0, qi); // Add to front, so list is reversed as it is built
-        		}
+            try {
+                String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 0 AND combinedDue < " +
+                    mFailedCutoff + " ORDER BY combinedDue LIMIT " + mQueueLimit;
+                cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
+                while (cur.moveToNext()) {
+                    QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
+                    mFailedQueue.add(0, qi); // Add to front, so list is reversed as it is built
+                }
             } finally {
                 if (cur != null && !cur.isClosed()) {
                     cur.close();
@@ -1237,16 +1339,16 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _fillRevQueue() {
-    	if ((mRevCount != 0) && mRevQueue.isEmpty()) {
+        if ((mRevCount != 0) && mRevQueue.isEmpty()) {
             Cursor cur = null;
-        	try {
-        		String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 1 AND combinedDue < " + mDueCutoff
-        					+ " ORDER BY " + revOrder() + " LIMIT " + mQueueLimit;
-        		cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
-        		while (cur.moveToNext()) {
-        			QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
-        			mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
-        		}
+            try {
+                String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 1 AND combinedDue < " + mDueCutoff
+                    + " ORDER BY " + revOrder() + " LIMIT " + mQueueLimit;
+                cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
+                while (cur.moveToNext()) {
+                    QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
+                    mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
+                }
             } finally {
                 if (cur != null && !cur.isClosed()) {
                     cur.close();
@@ -1260,14 +1362,14 @@ public class Deck {
     private void _fillNewQueue() {
         if ((mNewCountToday != 0) && mNewQueue.isEmpty() && mSpacedCards.isEmpty()) {
             Cursor cur = null;
-        	try {
-            	String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 2 AND combinedDue < " + mDueCutoff
-            				+ " ORDER BY " + newOrder() + " LIMIT " + mQueueLimit;
-            	cur = getDB().getDatabase().rawQuery(cardLimit("newActive", "newInactive", sql), null);
-            	while (cur.moveToNext()) {
-            		QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
-            		mNewQueue.addFirst(qi); // Add to front, so list is reversed as it is built
-            	}
+            try {
+                String sql = "SELECT c.id, factId, combinedDue FROM cards c WHERE type = 2 AND combinedDue < " + mDueCutoff
+                    + " ORDER BY " + newOrder() + " LIMIT " + mQueueLimit;
+                cur = getDB().getDatabase().rawQuery(cardLimit("newActive", "newInactive", sql), null);
+                while (cur.moveToNext()) {
+                    QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
+                    mNewQueue.addFirst(qi); // Add to front, so list is reversed as it is built
+                }
             } finally {
                 if (cur != null && !cur.isClosed()) {
                     cur.close();
@@ -1313,7 +1415,7 @@ public class Deck {
                 long id = queue.removeLast().getCardID();
                 // Assuming 10 cards/minute, track id if likely to expire before queue refilled
                 if (_new && (mNewSpacing < (double) mQueueLimit * 6.0)) {
-                	popped.add(id);
+                    popped.add(id);
                     delay = mSpacedFacts.get(fid);
                 }
             } else {
@@ -1340,26 +1442,26 @@ public class Deck {
     private void _requeueCard(Card card, boolean oldIsRev) {
         int newType = 0;
         //try {
-            if (card.getReps() == 1) {
-                if (mNewFromCache) {
-                    // Fetched from spaced cache
-                    newType = 2;
-                    ArrayList<Long> cards = mSpacedCards.remove().getCards();
-                    // Reschedule the siblings
-                    if (cards.size() > 1) {
-                        cards.remove(0);
-                        mSpacedCards.addLast(new SpacedCardsItem(Utils.now() + mNewSpacing, cards));
-                    }
-                } else {
-                    // Fetched from normal queue
-                    newType = 1;
-                    mNewQueue.removeLast();
+        if (card.getReps() == 1) {
+            if (mNewFromCache) {
+                // Fetched from spaced cache
+                newType = 2;
+                ArrayList<Long> cards = mSpacedCards.remove().getCards();
+                // Reschedule the siblings
+                if (cards.size() > 1) {
+                    cards.remove(0);
+                    mSpacedCards.addLast(new SpacedCardsItem(Utils.now() + mNewSpacing, cards));
                 }
-            } else if (!oldIsRev) {
-                mFailedQueue.removeLast();
             } else {
-                mRevQueue.removeLast();
+                // Fetched from normal queue
+                newType = 1;
+                mNewQueue.removeLast();
             }
+        } else if (!oldIsRev) {
+            mFailedQueue.removeLast();
+        } else {
+            mRevQueue.removeLast();
+        }
         //} catch (Exception e) {
         //    throw new RuntimeException("requeueCard() failed. Counts: " + 
         //            mFailedSoonCount + " " + mRevCount + " " + mNewCountToday + ", Queue: " +
@@ -1542,17 +1644,17 @@ public class Deck {
         if ((mRevCount != 0) && mRevQueue.isEmpty()) {
             Cursor cur = null;
             try {
-            	String sql = "SELECT id, factId, combinedDue FROM cards WHERE type = 1 AND combinedDue > " + mDueCutoff
-            				+ " ORDER BY combinedDue LIMIT " + mQueueLimit;
-            	cur = getDB().getDatabase().rawQuery(sql, null);
-            	while (cur.moveToNext()) {
-            		QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
-            		mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
-            	}
+                String sql = "SELECT id, factId, combinedDue FROM cards WHERE type = 1 AND combinedDue > " + mDueCutoff
+                    + " ORDER BY combinedDue LIMIT " + mQueueLimit;
+                cur = getDB().getDatabase().rawQuery(sql, null);
+                while (cur.moveToNext()) {
+                    QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
+                    mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
+                }
             } finally {
-            	if (cur != null && !cur.isClosed()) {
-                	cur.close();
-            	}
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
             }
         }
     }
@@ -1576,7 +1678,7 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _rebuildLearnMoreCount() {
         mNewCount = (int) getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE, 
-                "SELECT count() FROM cards WHERE type = 2 AND combinedDue < %f", mDueCutoff));
+                    "SELECT count() FROM cards WHERE type = 2 AND combinedDue < %f", mDueCutoff));
         mSpacedCards.clear();
     }
 
@@ -1756,7 +1858,7 @@ public class Deck {
     }
 
 
-    private void flushMod() {
+    public void flushMod() {
         setModified();
         commitToDB();
     }
@@ -2250,6 +2352,7 @@ public class Deck {
         if (!result) {
             return null;
         }
+        card.mDeck = this;
         card.genFuzz();
         card.startTimer();
         return card;
@@ -2407,6 +2510,10 @@ public class Deck {
                     String.format(Utils.ENGLISH_LOCALE, "SELECT count() FROM cards WHERE factId = %d AND id != %d " +
                             "AND combinedDue < %f AND type = 2", card.getFactId(), card.getId(), mDueCutoff));
         }
+        // Update due counts
+		mRevCount -= getDB().queryScalar(
+				String.format(Utils.ENGLISH_LOCALE, "SELECT count() FROM cards WHERE factId = %d AND id != %d " +
+					"AND combinedDue < %f AND type = 1", card.getFactId(), card.getId(), mDueCutoff));
         // Space cards
         getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET " +
                 "combinedDue = (CASE " +
@@ -2454,7 +2561,7 @@ public class Deck {
         // then after setModified we need to save again! Just make setModified to use the tags from the fact,
         // not reload them from the DB.
         scard.getFact().toDb();
-        scard.getFact().setModified(true);
+        scard.getFact().setModified(true, this);
         scard.getFact().toDb();
         updateFactTags(new long[] {scard.getFact().getId()});
         card.setLeechFlag(true);
@@ -2530,7 +2637,12 @@ public class Deck {
         double due;
         if (ease == Card.EASE_FAILED) {
             if (oldState.equals(Card.STATE_MATURE)) {
-                due = mDelay1 * 86400.0;
+				// FIXME: magic value until we have old clients updated
+				long d = 0;
+				if (mDelay1 != 600) {
+					d = mDelay1;
+				}
+                due = d * 86400.0;
             } else {
                 due = 0.0;
             }
@@ -3151,6 +3263,7 @@ public class Deck {
         }
         commitToDB();
         // TODO: code related to random in newCardOrder
+        // TODO: code for updating card q/a
         // TODO: update tags
         // TODO: update priorities?
         return fact;
@@ -3841,8 +3954,6 @@ public class Deck {
             mUtcOffset = deckPayload.getDouble("utcOffset");
 
             commitToDB();
-
-            updateDynamicIndices();
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }

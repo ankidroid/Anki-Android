@@ -34,6 +34,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -632,5 +634,34 @@ public class Utils {
             }
         }
         return result;
+    }
+
+    /**
+     * MD5 sum of file.
+     * Equivalent to checksum(open(os.path.join(mdir, file), "rb").read()))
+     *
+     * @param path The full path to the file
+     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of the contents
+     * of the file
+     */
+    public static String fileChecksum(String path) {
+        byte[] bytes = null;
+        try {
+            File file = new File(path);
+            if (file != null && file.isFile()) {
+                bytes = new byte[(int)file.length()];
+                FileInputStream fin = new FileInputStream(file);
+                fin.read(bytes);
+            }
+        } catch (FileNotFoundException e) {
+            Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
+        }
+        if (bytes == null) {
+            Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
+            return "";
+        }
+        return checksum(new String(bytes));
     }
 }

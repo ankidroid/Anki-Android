@@ -1858,8 +1858,6 @@ public class SyncClient {
 
 
     public String prepareFullSync() {
-        mDeck.setLastSync(Utils.now());
-        mDeck.commitToDB();
         // The deck is closed after the full sync it is completed
         // deck.closeDeck();
 
@@ -1875,7 +1873,7 @@ public class SyncClient {
         URL url;
         try {
             Log.i(AnkiDroidApp.TAG, "Fullup");
-            url = new URL(AnkiDroidProxy.SYNC_URL + "fullup");
+            url = new URL(AnkiDroidProxy.SYNC_URL + "fullup?v=2");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setDoInput(true);
@@ -1950,7 +1948,17 @@ public class SyncClient {
 
             is.close();
             String response = new String(bytesReceived);
-
+			
+			if (response.substring(0,2).equals("OK")) {
+				// Update local modification time
+                boolean wasDbOpen = AnkiDatabaseManager.isDatabaseOpen(deckPath);
+				AnkiDb db = AnkiDatabaseManager.getDatabase(deckPath);
+                AnkiDatabaseManager.getDatabase(deckPath).getDatabase().execSQL("UPDATE decks SET lastSync = " +
+                        response.substring(3, response.length()-3));
+                if (!wasDbOpen) {
+				    AnkiDatabaseManager.closeDatabase(deckPath);
+                }
+			}
             Log.i(AnkiDroidApp.TAG, "Finished!");
         } catch (MalformedURLException e) {
             Log.i(AnkiDroidApp.TAG, "MalformedURLException = " + e.getMessage());

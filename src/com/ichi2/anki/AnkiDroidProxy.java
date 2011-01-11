@@ -42,6 +42,9 @@ import java.util.zip.InflaterInputStream;
 
 public class AnkiDroidProxy {
 
+	// Sync protocol version
+	private static final String SYNC_VERSION = "2";
+
     /**
      * Connection settings
      */
@@ -173,10 +176,11 @@ public class AnkiDroidProxy {
         String decksServer = "{}";
 
         try {
-            // FIXME: Client is hardcoded.
-            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&client=ankidroid-0.4&u="
-                    + URLEncoder.encode(mUsername, "UTF-8") + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8")
-                    + "&libanki=0.9.9.8.6&pversion=5";
+            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&client="
+				+ URLEncoder.encode("ankidroid-" + AnkiDroidApp.getPkgVersion(), "UTF-8") + "&u="
+                + URLEncoder.encode(mUsername, "UTF-8") + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8")
+                + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8") + "&libanki="
+                + URLEncoder.encode(AnkiDroidApp.LIBANKI_VERSION, "UTF-8") + "&pversion=5";
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "getDecks");
@@ -226,7 +230,7 @@ public class AnkiDroidProxy {
 
         try {
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
-                    + "&d=None&name=" + URLEncoder.encode(name, "UTF-8");
+				+ "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=None&name=" + URLEncoder.encode(name, "UTF-8");
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "createDeck");
@@ -274,12 +278,10 @@ public class AnkiDroidProxy {
 
         try {
             // FIXME: Try to do the connection without encoding the lastSync in Base 64
-            String data = "p="
-                    + URLEncoder.encode(mPassword, "UTF-8")
-                    + "&u="
-                    + URLEncoder.encode(mUsername, "UTF-8")
-                    + "&d="
-                    + URLEncoder.encode(mDeckName, "UTF-8")
+            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8")
+                    + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
+                    + "&d=" + URLEncoder.encode(mDeckName, "UTF-8")
+					+ "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8")
                     + "&lastSync="
                     + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(Utils.ENGLISH_LOCALE, "%f", lastSync)
                             .getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
@@ -328,9 +330,9 @@ public class AnkiDroidProxy {
         try {
             // FIXME: Try to do the connection without encoding the payload in Base 64
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
-                    + "&d=" + URLEncoder.encode(mDeckName, "UTF-8") + "&payload="
-                    + URLEncoder.encode(Base64.encodeBytes(Utils.compress(payload.toString().getBytes())), "UTF-8")
-                    + "&base64=" + URLEncoder.encode("true", "UTF-8");
+				+ "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=" + URLEncoder.encode(mDeckName, "UTF-8")
+			   	+ "&payload=" + URLEncoder.encode(Base64.encodeBytes(Utils.compress(payload.toString().getBytes())), "UTF-8")
+				+ "&base64=" + URLEncoder.encode("true", "UTF-8");
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "applyPayload");
