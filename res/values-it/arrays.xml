@@ -53,9 +53,9 @@
     <item>3</item>
   </string-array>
   <string-array name="displayFontSizeLabels">
-    <item>10 %</item>
-    <item>20 %</item>
-    <item>30 %</item>
+    <item>10%</item>
+    <item>20%</item>
+    <item>30%</item>
     <item>40 %</item>
     <item>50 %</item>
     <item>60 %</item>
@@ -100,12 +100,12 @@
     <item>130</item>
     <item>145</item>
     <item>160</item>
-    <item>175</item>
+    <item>175 %</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Hide the question in answer</item>
-    <item>Show the question in answer</item>
-    <item>As defined in CardModel</item>
+    <item>Nascondi la domanda quando mostri la risposta</item>
+    <item>Mostra la domanda quando mostri la risposta</item>
+    <item>Come definito in CardModel</item>
   </string-array>
   <string-array name="hideQuestionInAnswerVals">
     <item>0</item>
@@ -122,8 +122,16 @@
     <item>1</item>
     <item>2</item>
   </string-array>
+  <string-array name="dictionary_labels">
+    <item>Aedict</item>
+    <item>Leo.org</item>
+  </string-array>
+  <string-array name="dictionary_values">
+    <item>0</item>
+    <item>1</item>
+  </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
+    <item>Notifica sempre</item>
     <item>Never report</item>
     <item>Ask me</item>
   </string-array>
@@ -140,7 +148,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Mai</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_values">
     <item>10</item>
@@ -153,20 +161,20 @@
     <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Mostra per primo l\'ultimo modificato</item>
+    <item>Mostra in ordine di inserimento</item>
+    <item>Mostra in ordine casuale</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hour</item>
-    <item>day</item>
-    <item>month</item>
-    <item>year</item>
+    <item>ora</item>
+    <item>giorno</item>
+    <item>mese</item>
+    <item>anno</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>hours</item>
-    <item>days</item>
-    <item>months</item>
-    <item>years</item>
+    <item>ore</item>
+    <item>giorni</item>
+    <item>mesi</item>
+    <item>anni</item>
   </string-array>
 </resources>

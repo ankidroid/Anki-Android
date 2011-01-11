@@ -100,7 +100,9 @@
   <string name="write_answers">Antworten eingeben</string>
   <string name="write_answers_summ">Erlaubt das Eingeben von Antworten und vergleicht die Eingabe mit der richtigen Antwort</string>
   <string name="text_selection">Text markieren</string>
-  <string name="text_selection_summ">Per Langklick kann Text ausgewählt, kopiert und in einem externen Wörterbuch nachgeschlagen werden</string>
+  <string name="text_selection_summ">Erlaubt es, Text auszuwählen und zu kopieren, um in einem externen Wörterbuch nachzuschlagen</string>
+  <string name="dictionary">Wörterbuch</string>
+  <string name="dictionary_summ">Wörterbuch, in dem nachgeschlagen werden soll</string>
   <string name="use_ruby_support">Ruby-Anmerkungen</string>
   <string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
   <string name="display_font_size">Relative Schriftgröße</string>

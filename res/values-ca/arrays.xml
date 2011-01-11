@@ -122,6 +122,14 @@
     <item>1</item>
     <item>2</item>
   </string-array>
+  <string-array name="dictionary_labels">
+    <item>Aedict</item>
+    <item>Leo.org</item>
+  </string-array>
+  <string-array name="dictionary_values">
+    <item>0</item>
+    <item>1</item>
+  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Informa sempre</item>
     <item>No informis mai</item>

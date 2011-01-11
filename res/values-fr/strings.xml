@@ -100,7 +100,9 @@
   <string name="write_answers">Écrire les réponses</string>
   <string name="write_answers_summ">Vous permet d\'écrire la réponse et la comparer avec la bonne</string>
   <string name="text_selection">Autoriser la sélection de texte</string>
-  <string name="text_selection_summ">Autoriser la sélection et copie de texte d\'une carte avec un clic long</string>
+  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+  <string name="dictionary">Dictionary</string>
+  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
   <string name="use_ruby_support">Montrer les annotations ruby</string>
   <string name="use_ruby_support_summ">Si les caractères \'[\' et \']\' sont trouvés, considérer le texte comme une annotation ruby</string>
   <string name="display_font_size">Fonte d\'affichage en taille relative</string>
@@ -196,7 +198,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="menu_about">À propos</string>
   <string name="menu_suspend_card">Suspendre la carte</string>
   <string name="menu_edit_card">Modifier la fiche</string>
-  <string name="menu_search">Rechercher dans Aedict</string>
+  <string name="menu_search">Lookup in %1$s</string>
   <string name="menu_mark_card">Marquer la carte</string>
   <string name="menu_marked">Marqué</string>
   <string name="loading">Chargement...</string>

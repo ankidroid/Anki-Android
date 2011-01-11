@@ -148,7 +148,7 @@ public class Reviewer extends Activity {
      * Searches
      */
     private static final int DICTIONARY_AEDICT = 0;
-    private static final int DICTIONARY_LEO = 1;
+    private static final int DICTIONARY_LEO = 1;	// German web dictionary for English, French, Spanish, Italian, Chinese, Russian
     
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -650,11 +650,12 @@ public class Reviewer extends Activity {
                             mClipboard.setText("");
                     		break;
                     	case DICTIONARY_LEO:                  		
-                    		final CharSequence[] items = {"ende", "frde", "esde", "itde", "chde", "rude"};
+                    		final CharSequence[] itemValues = {"ende", "frde", "esde", "itde", "chde", "rude"};
+                    		final CharSequence[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
                     		AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     		builder.setItems(items, new DialogInterface.OnClickListener() {
                     			public void onClick(DialogInterface dialog, int item) {
-                    		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + items[item] + "&search=" + mClipboard.getText()));
+                    		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + itemValues[item] + "&search=" + mClipboard.getText()));
                             		startActivity(leoSearchIntent);
                                     mClipboard.setText("");
                     		    }
