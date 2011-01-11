@@ -650,9 +650,11 @@ public class Reviewer extends Activity {
                             mClipboard.setText("");
                     		break;
                     	case DICTIONARY_LEO:                  		
+                    		// localisation is needless here since leo.org translates only into or out of German 
                     		final CharSequence[] itemValues = {"ende", "frde", "esde", "itde", "chde", "rude"};
                     		final CharSequence[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
                     		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    		builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
                     		builder.setItems(items, new DialogInterface.OnClickListener() {
                     			public void onClick(DialogInterface dialog, int item) {
                     		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + itemValues[item] + "&search=" + mClipboard.getText()));
