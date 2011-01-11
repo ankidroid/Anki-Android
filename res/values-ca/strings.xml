@@ -100,7 +100,9 @@
   <string name="write_answers">Escriu les respostes</string>
   <string name="write_answers_summ">Permet escriure la resposta i comparar-la amb la solució correcta</string>
   <string name="text_selection">Permet triar el text</string>
-  <string name="text_selection_summ">Permet triar i copiar text de les fitxes mantenint la pressió a la pantalla, i cercar en un diccionari extern</string>
+  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+  <string name="dictionary">Dictionary</string>
+  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
   <string name="use_ruby_support">Permet anotacions de ruby</string>
   <string name="use_ruby_support_summ">El text inclòs entre corxets  \'[\' i \']\' es tractarà con una anotació de ruby</string>
   <string name="display_font_size">Tipus de lletra de mida definida</string>
@@ -196,7 +198,7 @@ Els que no sou desenvolupadors també podeu ajudar, per exemple actualitzant el 
   <string name="menu_about">Quant a</string>
   <string name="menu_suspend_card">Suspèn la fitxa</string>
   <string name="menu_edit_card">Edita la fitxa</string>
-  <string name="menu_search">Cerca-ho a Aedict</string>
+  <string name="menu_search">Cerca-ho a %1$s</string>
   <string name="menu_mark_card">Marca la fitxa</string>
   <string name="menu_marked">Marcada</string>
   <string name="loading">S\'està carregant...</string>

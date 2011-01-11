@@ -100,7 +100,9 @@
   <string name="write_answers">Psát odpovědi</string>
   <string name="write_answers_summ">Umožňuje napsat odpověď a porovnat ji se správnou</string>
   <string name="text_selection">Povolit výběr textu</string>
-  <string name="text_selection_summ">Umožní vám označit a kopírovat text pomocí dlouhého kliknutí a následně hledání v externím slovníku</string>
+  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+  <string name="dictionary">Dictionary</string>
+  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
   <string name="use_ruby_support">Poskytovat podporu ruby anotace</string>
   <string name="use_ruby_support_summ">Pokud jsou nalezeny znaky \ \' [\ \' a \ \'] \ \', pak je text mezi nimi zpracován jako ruby anotace </string>
   <string name="display_font_size">Relativní velikost fontu</string>
@@ -185,7 +187,7 @@
   <string name="menu_about">O aplikaci</string>
   <string name="menu_suspend_card">Vyřadit kartu</string>
   <string name="menu_edit_card">Upravit kartu</string>
-  <string name="menu_search">Vyhledat v Aedict</string>
+  <string name="menu_search">Vyhledat v %1$s</string>
   <string name="menu_mark_card">Označit kartu</string>
   <string name="menu_marked">Označená</string>
   <string name="loading">Načítání...</string>

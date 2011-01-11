@@ -100,12 +100,14 @@
   <string name="write_answers">Kirjoita vastaukset</string>
   <string name="write_answers_summ">Voit kirjoittaa vastauksen, ja verrata sitä oikean vastaukseen</string>
   <string name="text_selection">Salli tekstin valinta</string>
-  <string name="text_selection_summ">Voit valita ja kopida tekstiä korteista pitkällä painauksella ja suorittaa haku ulkoisen sanakirjan kautta</string>
+  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+  <string name="dictionary">Sanakirja</string>
+  <string name="dictionary_summ">Sanakirja, jossa hakuja tulisi suorittaa</string>
   <string name="use_ruby_support">Tuki ruby-huomautusten käytölle</string>
   <string name="use_ruby_support_summ">Merkkien \'[\' ja \']\' välissä olevaa tekstiä käsitellään ruby-huomautuksena</string>
   <string name="display_font_size">Näyttöfontin suhteellinen koko</string>
   <string name="display_font_size_summ">Näytön fonttikoko suhteessa pakan määritelmiin</string>
-  <string name="button_size">Relative button size</string>
+  <string name="button_size">Suhteellinen painikkeen koko</string>
   <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
   <string name="hide_question_in_answer">Piilota kysymys vastauksen yhteydessä?</string>
   <string name="hide_question_in_answer_summ">Määrittää piilotetaanko kysymys kun vastaus näytetään.</string>
@@ -117,7 +119,7 @@
   <string name="zoom_summ">Näytä zoomaussäätimet tarjastekun aikana</string>
   <string name="personaldeckpicker_title">Avaa Online-pakka</string>
   <string name="shareddeckpicker_title">Valitse pakka jonka haluat ladata</string>
-  <string name="downloaddeck_search">Search</string>
+  <string name="downloaddeck_search">Etsi</string>
   <string name="preferences_title">Asetukset</string>
   <string name="deckpreferences_title">Pakan asetukset</string>
   <string name="about_title">Tietoja</string>
@@ -197,7 +199,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="menu_about">Tietoja</string>
   <string name="menu_suspend_card">Keskeytä kortti</string>
   <string name="menu_edit_card">Muokkaa korttia</string>
-  <string name="menu_search">Etsi Aedictista</string>
+  <string name="menu_search">Lookup in %1$s</string>
   <string name="menu_mark_card">Merkitse kortti</string>
   <string name="menu_marked">Merkitty</string>
   <string name="loading">Ladataan...</string>
@@ -237,7 +239,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="sync_complete_message">Synkronointi valmis.</string>
   <string name="sync_determining_differences_message">Määritellään erot...</string>
   <string name="sync_transferring_payload_message">Siirretään hyötykuormaa...</string>
-  <string name="sync_applying_reply_message">Applying reply...</string>
+  <string name="sync_applying_reply_message">Määritellään vastaus...</string>
   <string name="sync_no_changes_message">Muutoksia ei löytynyt.</string>
   <string name="sync_log_error_message">Virhe: Pakkaa ei ole synkronoitu</string>
   <string name="sync_log_no_changes_message">Muutoksia ei löytynyt</string>

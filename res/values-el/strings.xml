@@ -100,7 +100,9 @@
   <string name="write_answers">Εγγραφή απαντήσεων</string>
   <string name="write_answers_summ">Σας επιτρέπει να να γράψετε απαντήσεις στην οθόνη και να συγκρίνετε με τη σωστή</string>
   <string name="text_selection">Allow text selection</string>
-  <string name="text_selection_summ">Lets you select and copy text from cards with a long click, and perform lookup in external dictionnary</string>
+  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+  <string name="dictionary">Dictionary</string>
+  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
   <string name="use_ruby_support">Υποστήριξη οδηγειών για ruby</string>
   <string name="use_ruby_support_summ">Αν βρεθούν οι χαρακτήρες \'[\' and \']\', τότε το εσώκλειστο κείμενο θα χρησιμοποιηθεί ως οδηγεία για ruby</string>
   <string name="display_font_size">Σχετικό μέγεθος γραμματοσειράς</string>
@@ -196,7 +198,7 @@ Flashcards for Android&lt;/h2&gt;
   <string name="menu_about">About</string>
   <string name="menu_suspend_card">Suspend Card</string>
   <string name="menu_edit_card">Edit Card</string>
-  <string name="menu_search">Lookup in Aedict</string>
+  <string name="menu_search">Lookup in %1$s</string>
   <string name="menu_mark_card">Mark Card</string>
   <string name="menu_marked">Marked</string>
   <string name="loading">Loading...</string>

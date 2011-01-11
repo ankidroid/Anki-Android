@@ -88,8 +88,8 @@
   <string name="sync_on_close">Синхронизация при закрытии</string>
   <string name="show_study_options_on_deck_load">Параметры обучения при загрузке колоды</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
-  <string name="startup_mode">Startup Mode</string>
-  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
+  <string name="startup_mode">Режим запуска</string>
+  <string name="startup_mode_summ">Выбрать если вы ходите начинать с параметров обучения или deck picker</string>
   <string name="show_timer">Показать таймер</string>
   <string name="show_timer_summ">Таймер показывает сколько времени Вам дается для ответа</string>
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>
@@ -100,13 +100,15 @@
   <string name="write_answers">Писать ответы</string>
   <string name="write_answers_summ">Позволяет вам написать ответ и сравнивать с правильными</string>
   <string name="text_selection">Разрешить выделение текста</string>
-  <string name="text_selection_summ">Позволяет выделять и копировать текст из карт, долго нажимая кнопку мышки, а также выполнять поиск во внешних словаря</string>
+  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+  <string name="dictionary">Dictionary</string>
+  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
   <string name="use_ruby_support">Поддерживать Ruby-аннотации</string>
   <string name="use_ruby_support_summ">Если найдены символы \'[\' и \']\', то заключенный в них текст будет рассмотрен как Ruby-аннотация</string>
   <string name="display_font_size">Относительный размер шрифта</string>
   <string name="display_font_size_summ">Размер шрифта в процентах относительно к размеру шрифта, сохранённому в колоде</string>
-  <string name="button_size">Relative button size</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
+  <string name="button_size">Размер кнопок (относительный)</string>
+  <string name="button_size_summ">Размер кнопок (относительный) на экране обучения</string>
   <string name="hide_question_in_answer">Скрыть \"Вопрос\" при ответе?</string>
   <string name="hide_question_in_answer_summ">Должен ли быть вопрос скрыт, когда ответ показан.</string>
   <string name="deck_path">Путь к колодам</string>
@@ -117,7 +119,7 @@
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
   <string name="shareddeckpicker_title">Выберите колоду, которую вы хотите загрузить</string>
-  <string name="downloaddeck_search">Search</string>
+  <string name="downloaddeck_search">Поиск</string>
   <string name="preferences_title">Настройки</string>
   <string name="deckpreferences_title">Настройки колоды</string>
   <string name="about_title">О программе</string>
@@ -168,7 +170,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="studyoptions_new_today">Сегодня новых:</string>
   <string name="studyoptions_new_total">Новые всего:</string>
   <string name="studyoptions_new_cards_per_day">Новых карт в день:</string>
-  <string name="studyoptions_session_minutes">Продолжительность урока (минут):</string>
+  <string name="studyoptions_session_minutes">Длительность урока (минут):</string>
   <string name="studyoptions_session_questions">Вопросов в уроке:</string>
   <string name="studyoptions_start">Начать Просмотр</string>
   <string name="studyoptions_more">Параметры обучения</string>
@@ -194,9 +196,9 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="menu_deck_properties">Свойства колоды</string>
   <string name="menu_add_card">Добавить карту</string>
   <string name="menu_about">О программе</string>
-  <string name="menu_suspend_card">Отложенная на потом карта</string>
+  <string name="menu_suspend_card">Отложить карту</string>
   <string name="menu_edit_card">Редактирование карточки</string>
-  <string name="menu_search">Поиск в Aedict</string>
+  <string name="menu_search">Поиск в %1$s</string>
   <string name="menu_mark_card">Отметить карточку</string>
   <string name="menu_marked">Отмечено</string>
   <string name="loading">Загрузка...</string>
@@ -257,7 +259,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="widget_minimum_cards_due">Виджет уведомления минимального порога</string>
   <string name="widget_minimum_cards_due_summary">Минимальное количество карточек при котором всплывет Уведомление</string>
   <string name="widget_minimum_cards_due_vibrate">Вибрировать</string>
-  <string name="widget_minimum_cards_due_blink">Мигание</string>
+  <string name="widget_minimum_cards_due_blink">Мигать</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Минимально карт для показа Уведомления</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карт</string>
   <string name="model">Модель:</string>
@@ -280,19 +282,19 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="delete_deck_confirm">Удалить</string>
   <string-array name="studyoptions_more_new_card_order">
     <item>Нов.карты в случайном порядке</item>
-    <item>Нов.карты, как были добавлены</item>
-    <item>Нов.карты, в обрат.порядке добавления</item>
+    <item>Новые, как были добавлены</item>
+    <item>Новые, в обрат.порядке добавления</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
     <item>Нов.карты на несколько \`Просмотров\`</item>
-    <item>Нов.карты добавлять после \`Просмотра\`</item>
-    <item>Нов.карты до \`Просмотра\`</item>
+    <item>Новые добавлять после Просмотра</item>
+    <item>Новые до Просмотра</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Просмотр карт с наибольшим интервалом</item>
-    <item>Просмотр карт с наименьшим интервалом</item>
+    <item>Просмотр карт с наибол. интервалом</item>
+    <item>Просмотр карт с наимен. интервалом</item>
     <item>Просмотр карт в порядке как есть</item>
-    <item>Просмотр карт в случайном порядке</item>
+    <item>Просмотр карт в случ. порядке</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
     <item>Показать неотвеченных карт быстро</item>

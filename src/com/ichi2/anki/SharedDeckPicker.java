@@ -176,6 +176,7 @@ public class SharedDeckPicker extends Activity {
         Object obj = mAllSharedDecks.get(position);
         if (obj instanceof Download) {
             Download download = (Download) obj;
+            menu.setHeaderTitle(download.getTitle());
             menu.add(Menu.NONE, MENU_CANCEL, Menu.NONE, res.getString(R.string.cancel_download));
             if (download.getStatus() == SharedDeckDownload.STATUS_PAUSED) {
                 menu.add(Menu.NONE, MENU_RESUME, Menu.NONE, res.getString(R.string.resume_download));
