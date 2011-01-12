@@ -1725,7 +1725,7 @@ public class Deck {
         checkDailyStats();
         fillQueues();
 
-        if (mFailedSoonCount >= mFailedCardMax) {
+        if ((mFailedCardMax != 0) && (mFailedSoonCount >= mFailedCardMax)) {
             return ((QueueItem) mFailedQueue.getLast()).getCardID();
         }
         // Card due for review?
@@ -1847,7 +1847,9 @@ public class Deck {
     private void setModified() {
         mModified = Utils.now();
     }
-
+    public void setModified(double mod) {
+        mModified = mod;
+    }
 
     public void flushMod() {
         setModified();
@@ -2250,7 +2252,10 @@ public class Deck {
         }
         // Distribute new cards?
         if (newNoSpaced() && timeForNewCard()) {
-            return getNewCard();
+            long id = getNewCard();
+            if (id != 0L) {
+                return id;
+            }
         }
         // Card due for review?
         if (revNoSpaced()) {
@@ -2315,12 +2320,28 @@ public class Deck {
     }
 
     private long getNewCard() {
-        if (mNewQueue.isEmpty() || (!mSpacedCards.isEmpty() && mSpacedCards.get(0).getSpace() < Utils.now())) {
+        int src = 0;
+        if ((!mSpacedCards.isEmpty()) && (mSpacedCards.get(0).getSpace() < Utils.now())) {
+            // Spaced card has expired
+            src = 0;
+        } else if (!mNewQueue.isEmpty()) {
+            // Card left in new queue
+            src = 1;
+        } else if (!mSpacedCards.isEmpty()) {
+            // Card left in spaced queue
+            src = 0;
+        } else {
+            // Only cards spaced to another day left
+            return 0L;
+        }
+
+        if (src == 0) {
             mNewFromCache = true;
             return mSpacedCards.get(0).getCards().get(0); 
+        } else {
+            mNewFromCache = false;
+            return mNewQueue.getLast().getCardID(); 
         }
-        mNewFromCache = false;
-        return mNewQueue.getLast().getCardID(); 
     }
 
     private boolean showFailedLast() {
@@ -2496,16 +2517,17 @@ public class Deck {
         // Update new counts
         double _new = Utils.now() + mNewSpacing;
         // Space cards
-        getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET " +
-                "combinedDue = (CASE " +
-                "WHEN type = 1 THEN %f " +
-                "WHEN type = 2 THEN %f " +
-                "END), " +
-                "modified = %f, isDue = 0 " +
-                "WHERE id != %d AND factId = %d " +
-                "AND combinedDue < %f " +
-                "AND type BETWEEN 1 AND 2",
-                mDueCutoff, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff));
+        getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE,
+                    "UPDATE cards SET " +
+                    "combinedDue = (CASE " +
+                    "WHEN type = 1 THEN %f " +
+                    "WHEN type = 2 THEN %f " +
+                    "END), " +
+                    "modified = %f, isDue = 0 " +
+                    "WHERE id != %d AND factId = %d " +
+                    "AND combinedDue < %f " +
+                    "AND type BETWEEN 1 AND 2",
+                    mDueCutoff, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff));
         // Update local cache of seen facts
         mSpacedFacts.put(card.getFactId(), _new);
     }

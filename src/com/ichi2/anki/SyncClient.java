@@ -1511,6 +1511,13 @@ public class SyncClient {
     private JSONObject bundleDeck() {
         JSONObject bundledDeck = new JSONObject();
 
+        // Ensure modified is not greater than server time
+        if ((mServer != null) && (mServer.getTimestamp() != 0.0)) {
+            mDeck.setModified(Math.min(mDeck.getModified(), mServer.getTimestamp()));
+        }
+        // And ensure lastSync is greater than modified
+        mDeck.setLastSync(Math.max(Utils.now(), mDeck.getModified() + 1));
+
         try {
             bundledDeck = mDeck.bundleJson(bundledDeck);
 
@@ -1855,7 +1862,11 @@ public class SyncClient {
 
 
     public String prepareFullSync() {
-        // The deck is closed after the full sync it is completed
+        double t = Utils.now();
+        // Ensure modified is not greater than server time
+        mDeck.setModified(Math.min(mDeck.getModified(), mServer.getTimestamp()));
+        mDeck.commitToDB();
+        // The deck is closed after the full sync is completed
         // deck.closeDeck();
 
         if (mLocalTime > mRemoteTime) {
@@ -1947,7 +1958,7 @@ public class SyncClient {
             String response = new String(bytesReceived);
 			
 			if (response.substring(0,2).equals("OK")) {
-				// Update local modification time
+				// Update lastSync
                 boolean wasDbOpen = AnkiDatabaseManager.isDatabaseOpen(deckPath);
 				AnkiDb db = AnkiDatabaseManager.getDatabase(deckPath);
                 AnkiDatabaseManager.getDatabase(deckPath).getDatabase().execSQL("UPDATE decks SET lastSync = " +

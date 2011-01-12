@@ -43,7 +43,7 @@ public class AnkiDroidApp extends Application {
 
 	// AnkiDroid version
 	public static final String VERSION = "0.4alpha16";
-	public static final String LIBANKI_VERSION = "1.2-rc1";
+	public static final String LIBANKI_VERSION = "1.2.0";
 
     /**
      * Tag for logging messages.
