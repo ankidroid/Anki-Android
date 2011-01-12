@@ -3866,9 +3866,18 @@ public class Deck {
             Entry<String, String> entry = iter.next();
             indexName = "ix_cards_" + entry.getKey() + "2";
             if (required.contains(entry.getKey())) {
-                if (getDB().queryScalar("SELECT 1 FROM sqlite_master WHERE name = " + indexName) != 1l) {
-                    getDB().getDatabase().execSQL("CREATE INDEX " + indexName + " ON cards " + entry.getValue());
-                    analyze = true;
+                Cursor cursor = null;
+                try {
+                    cursor = getDB().getDatabase().rawQuery(
+                            "SELECT 1 FROM sqlite_master WHERE name = '" + indexName + "'", null);
+                    if ((!cursor.moveToNext()) || (cursor.getInt(0) != 1)) {
+                        getDB().getDatabase().execSQL("CREATE INDEX " + indexName + " ON cards " + entry.getValue());
+                        analyze = true;
+                    }
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
                 }
             } else {
                 // Leave old indices for older clients
