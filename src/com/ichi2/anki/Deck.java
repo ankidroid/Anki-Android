@@ -59,7 +59,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 62;
+    public static final int DECK_VERSION = 63;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -686,9 +686,9 @@ public class Deck {
             //if ((mSyncName != null) && !mSyncName.equals("")) {
             //    if (!mDeckName.equals(mSyncName)) {
             //        upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_52_note);
-            //        disableSyncing();
+            //        disableSyncing(false);
             //    } else {
-            //        enableSyncing();
+            //        enableSyncing(false);
             //    }
             //}
             mVersion = 52;
@@ -741,6 +741,15 @@ public class Deck {
             updateDynamicIndices();
             getDB().getDatabase().execSQL("VACUUM");
             mVersion = 62;
+            commitToDB();
+        }
+        if (mVersion < 63) {
+            // Set a default font for unset font sizes
+            getDB().getDatabase().execSQL("UPDATE fieldModels SET quizFontSize = 20 WHERE quizFontSize = ''" +
+                    "OR quizFontSize IS NULL");
+            getDB().getDatabase().execSQL("UPDATE fieldModels SET editFontSize = 20 WHERE editFontSize = ''" +
+                    "OR editFontSize IS NULL");
+            mVersion = 63;
             commitToDB();
         }
         // Executing a pragma here is very slow on large decks, so we store our own record
@@ -3558,14 +3567,24 @@ public class Deck {
     // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
     
     public void enableSyncing() {
+        enableSyncing(true);
+    }
+    public void enableSyncing(boolean ls) {
         mSyncName = Utils.checksum(mDeckPath);
-        mLastSync = 0;
+        if (ls) {
+            mLastSync = 0;
+        }
         commitToDB();
     }
 
     private void disableSyncing() {
+        disableSyncing(true);
+    }
+    private void disableSyncing(boolean ls) {
         mSyncName = "";
-        mLastSync = 0;
+        if (ls) {
+            mLastSync = 0;
+        }
         commitToDB();
     }
 

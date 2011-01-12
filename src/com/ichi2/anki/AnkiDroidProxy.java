@@ -178,6 +178,26 @@ public class AnkiDroidProxy {
     }
 
 
+    public void finish() {
+        try {
+            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
+                + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=None";
+            HttpPost httpPost = new HttpPost(SYNC_URL + "finish");
+            StringEntity entity = new StringEntity(data);
+            httpPost.setEntity(entity);
+            httpPost.setHeader("Accept-Encoding", "identity");
+            httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            httpClient.execute(httpPost);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
+        } catch (IOException e) {
+            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+        }
+    }
+
     public String getDecks() {
         // Log.i(AnkiDroidApp.TAG, "getDecks - user = " + username + ", password = " + password);
         String decksServer = "{}";
