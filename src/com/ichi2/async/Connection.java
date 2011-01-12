@@ -305,7 +305,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             SyncClient client = new SyncClient(deck);
             client.setServer(server);
             server.setDeckName(syncName);
-            if (client.prepareSync()) {
+            if (client.prepareSync(0.0)) {
                 publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
                 JSONArray sums = client.summaries();
 

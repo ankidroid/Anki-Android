@@ -97,7 +97,7 @@ public class SyncClient {
      * 
      * @return
      */
-    public boolean prepareSync() {
+    public boolean prepareSync(double timediff) {
         Log.i(AnkiDroidApp.TAG, "prepareSync = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
 
         mLocalTime = mDeck.getModified();
@@ -115,12 +115,9 @@ public class SyncClient {
         double r = mServer.lastSync();
         Log.i(AnkiDroidApp.TAG, "lastSync remote = " + String.format(Utils.ENGLISH_LOCALE, "%f", r));
 
-        if (l != r) {
-            mDeck.setLastSync(java.lang.Math.min(l, r) - 600);
-            Log.i(AnkiDroidApp.TAG, "deck.lastSync = min(l,r) - 600");
-        } else {
-            mDeck.setLastSync(l);
-        }
+        // Set lastSync to the lower of the two sides, and account for slow clocks & assume it took up to 10 seconds
+        // for the reply to arrive
+        mDeck.setLastSync(Math.min(l, r) - timediff - 10);
 
         Log.i(AnkiDroidApp.TAG, "deck.lastSync = " + mDeck.getLastSync());
         return true;

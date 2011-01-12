@@ -85,6 +85,7 @@ public class AnkiDroidProxy {
 
     private JSONObject mDecks;
     private double mTimestamp;
+    private double mTimediff;
 
 
     public AnkiDroidProxy(String user, String password) {
@@ -92,6 +93,7 @@ public class AnkiDroidProxy {
         mPassword = password;
         mDeckName = "";
         mDecks = null;
+        mTimediff = 0.0;
     }
 
 
@@ -104,6 +106,10 @@ public class AnkiDroidProxy {
         return mTimestamp;
     }
 
+    public double getTimediff() {
+        return mTimediff;
+    }
+
 
     public int connect() {
         if (mDecks == null) {
@@ -114,6 +120,7 @@ public class AnkiDroidProxy {
                     mDecks = jsonDecks.getJSONObject("decks");
                     Log.i(AnkiDroidApp.TAG, "Server decks = " + mDecks.toString());
                     mTimestamp = jsonDecks.getDouble("timestamp");
+                    mTimediff = Math.abs(mTimestamp - Utils.now());
                     Log.i(AnkiDroidApp.TAG, "Server timestamp = " + mTimestamp);
                     return LOGIN_OK;
                 } else if ("invalidUserPass".equalsIgnoreCase(jsonDecks.getString("status"))) {

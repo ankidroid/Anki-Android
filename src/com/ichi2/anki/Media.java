@@ -170,7 +170,7 @@ public class Media {
         for (Pattern reg : mMediaRegexps) {
             Matcher m = reg.matcher(string);
             while (m.find()) {
-                isLocal = m.group(2).toLowerCase().matches("(https?|ftp)://.*");
+                isLocal = m.group(2).toLowerCase().matches("(https?|ftp)://");
                 if (!remote && isLocal) {
                     l.add(m.group(2));
                 } else if (remote && !isLocal) {

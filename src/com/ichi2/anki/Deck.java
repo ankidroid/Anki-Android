@@ -723,8 +723,7 @@ public class Deck {
             commitToDB();
         }
         if (mVersion < 61) {
-            // TODO: Normally the python code rebuilds the latex images here, but we don't do that in AD.
-            // Do we need to notify the user?
+            // TODO: Rebuild the QA cache
             
             // Rebuild the media db based on new format
             Media.rebuildMediaDir(this, false);
@@ -733,16 +732,16 @@ public class Deck {
         }
         if (mVersion < 62) {
             // Updated Indices
-            String[] indices = new String[]({"intervalDesc", "intervalAsc", "randomOrder", "dueAsc", "dueDesc"});
-            for (String d in indices) {
-                getDB().getDatabase.execSQL("DROP INDEX IF EXISTS ix_cards_" + d + "2");
+            String[] indices = {"intervalDesc", "intervalAsc", "randomOrder", "dueAsc", "dueDesc"};
+            for (String d : indices) {
+                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d + "2");
             }
-            getDB().getDatabase.execSQL("DROP INDEX IF EXISTS ix_cards_typeCombined");
+            getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_typeCombined");
             addIndices();
             updateDynamicIndices();
             getDB().getDatabase().execSQL("VACUUM");
             mVersion = 62;
-            commitToDB()
+            commitToDB();
         }
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
@@ -1669,8 +1668,8 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildLearnMoreCount() {
-        mNewCount = (int) getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE, 
-                    "SELECT count() FROM cards WHERE type = 2 AND combinedDue < %f", mDueCutoff));
+        mNewCount = (int) getDB().queryScalar(cardLimit("newActive", "newInactive", String.format(Utils.ENGLISH_LOCALE,
+                    "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < %f", mDueCutoff)));
         mSpacedCards.clear();
     }
 
@@ -2261,15 +2260,15 @@ public class Deck {
         if (mNewCountToday != 0) {
             return getNewCard();
         }
-        // Display failed cards early/last
-        if (showFailedLast() && (!mFailedQueue.isEmpty())) {
-            return mFailedQueue.getLast().getCardID();
-        }
         if (check) {
             // Check for expired cards, or new day rollover
             updateCutoff();
             reset();
             return getCardId(false);
+        }
+        // Display failed cards early/last
+        if ((!check) && showFailedLast() && (!mFailedQueue.isEmpty())) {
+            return mFailedQueue.getLast().getCardID();
         }
         // If we're in a custom scheduler, we may need to switch back
         if (finishSchedulerMethod != null) {
@@ -2496,15 +2495,6 @@ public class Deck {
     private void _spaceCards(Card card) {
         // Update new counts
         double _new = Utils.now() + mNewSpacing;
-        if (_new > mDueCutoff) {
-            mNewCount -= getDB().queryScalar(
-                    String.format(Utils.ENGLISH_LOCALE, "SELECT count() FROM cards WHERE factId = %d AND id != %d " +
-                            "AND combinedDue < %f AND type = 2", card.getFactId(), card.getId(), mDueCutoff));
-        }
-        // Update due counts
-		mRevCount -= getDB().queryScalar(
-				String.format(Utils.ENGLISH_LOCALE, "SELECT count() FROM cards WHERE factId = %d AND id != %d " +
-					"AND combinedDue < %f AND type = 1", card.getFactId(), card.getId(), mDueCutoff));
         // Space cards
         getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET " +
                 "combinedDue = (CASE " +
@@ -2515,9 +2505,9 @@ public class Deck {
                 "WHERE id != %d AND factId = %d " +
                 "AND combinedDue < %f " +
                 "AND type BETWEEN 1 AND 2",
-                mDueCutoff - 1.0, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff));
+                mDueCutoff, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff));
         // Update local cache of seen facts
-        mSpacedFacts.put(card.getFactId(), Utils.now() + mNewSpacing);
+        mSpacedFacts.put(card.getFactId(), _new);
     }
 
 
