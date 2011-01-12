@@ -325,6 +325,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     }
                     ankiDB.getDatabase().setTransactionSuccessful();
                     ankiDB.getDatabase().endTransaction();
+                    deck.closeDeck();
 
                     deck = Deck.openDeck(deckPath);
                     client.setDeck(deck);
