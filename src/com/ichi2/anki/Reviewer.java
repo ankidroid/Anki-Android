@@ -38,6 +38,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -238,16 +239,17 @@ public class Reviewer extends Activity {
         }
     };
 
-    private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View view) {
-            Log.i(AnkiDroidApp.TAG, "onLongClick");
-            Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibratorManager.vibrate(50);
-            selectAndCopyText();
-            return true;
-        }
-    };
+// Commented out because there seems to be a bug with WebView OnLongClickListener not firing
+//    private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener() {
+//        @Override
+//        public boolean onLongClick(View view) {
+//            Log.i(AnkiDroidApp.TAG, "onLongClick");
+//            Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//            vibratorManager.vibrate(50);
+//            selectAndCopyText();
+//            return true;
+//        }
+//    };
 
     private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
         @Override
@@ -743,7 +745,15 @@ public class Reviewer extends Activity {
         finish();
     }
 
+    private Runnable copyTextAfterDelay=new Runnable() {
+        public void run() {
+        	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            vibratorManager.vibrate(50);
+            selectAndCopyText();
+        }
+    };
 
+    
     // Set the content view to the one provided and initialize accessors.
     private void initLayout(Integer layout) {
         setContentView(layout);
@@ -762,8 +772,27 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG,
                 "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = " + mCard.isFocusableInTouchMode());
         if (mPrefTextSelection) {
-            mCard.setOnLongClickListener(mLongClickHandler);
-            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+			// mCard.setOnLongClickListener(mLongClickHandler);            
+			mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            final Handler mTimerHandler = new Handler();
+            mCard.setOnTouchListener(new View.OnTouchListener() { 
+    			@Override
+    			public boolean onTouch(View v, MotionEvent event) {
+    				switch (event.getAction()) { 
+    					case MotionEvent.ACTION_DOWN:  
+    						mTimerHandler.removeCallbacks(copyTextAfterDelay);
+    						mTimerHandler.postDelayed(copyTextAfterDelay,1000);
+    						break;
+    					case MotionEvent.ACTION_UP: 
+    						mTimerHandler.removeCallbacks(copyTextAfterDelay);
+    						break;
+    					case MotionEvent.ACTION_MOVE:
+    						mTimerHandler.removeCallbacks(copyTextAfterDelay);
+    						break;
+    				}
+    				return false;    	           
+    			}
+            	});
         }
 
         mScaleInPercent = mCard.getScale();
