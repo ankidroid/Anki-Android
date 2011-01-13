@@ -178,7 +178,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="studyoptions_more_dialog_title">Больше параметров</string>
   <string name="studyoptions_more_save">Сохранить</string>
   <string name="studyoptions_nodeck_title">Колоды не загружены</string>
-  <string name="studyoptions_nodeck_message">В настоящий момент не загружена колода. Колоды Anki сохраняются в каталоге на вашей SD-карточке, путь к которому указан в "Настройках" (текущее значение: \"%s\"). Чтобы Anki автоматически открывала этот каталог - установите его (нажмите кнопку \"Меню\" вашего аппарата, и выберите \"Настройки\").\n\nЧтобы сейчас загрузить колоду нажмите кнопку \"Меню\" вашего аппарата и выберите \"Открыть колоду\" или нажмите одну из клавиш внизу.</string>
+  <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \"Menu\" button and select \"Preferences\").</string>
   <string name="studyoptions_deck_not_loaded_title">Колода не может быть открыта</string>
   <string name="studyoptions_deck_not_loaded_message">Колода, которую вы выбрали, возможно повреждена. Пожалуйста, откройте ее с помощью десктоп-версии Anki и проверьте (или восстановите) для использования ее в Ankidroid.\n\nСейчас вы можете выбрать другую колоду или создать колоду с примерами с помощью клавиш ниже.</string>
   <string name="studyoptions_no_external_storage_title">Нет доступа ко внешнему хранилищу</string>
@@ -240,7 +240,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="sync_transferring_payload_message">Пересылка требуемых изменений...</string>
   <string name="sync_applying_reply_message">Внесение полученного...</string>
   <string name="sync_no_changes_message">Не найдено изменений.</string>
-  <string name="sync_log_error_message">Ошибка: Колоды не синхронизированы</string>
+  <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
   <string name="sync_log_no_changes_message">Не найдено изменений</string>
   <string name="sync_log_uploading_message">Нет колоды на сервере</string>
   <string name="sync_log_downloading_message">Полная синхронизация с сервером</string>

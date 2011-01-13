@@ -178,7 +178,7 @@ Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i
   <string name="studyoptions_more_dialog_title">More Options</string>
   <string name="studyoptions_more_save">Save</string>
   <string name="studyoptions_nodeck_title">No Deck Loaded</string>
-  <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored on your SD card and are read from the location specified in the preferences (currently this is set to: \"%s\"). The preferences can be reached by pressing your device\'s \"Menu\" button and then selecting \"Preferences\".\n\nTo load a deck, press your device\'s \"Menu\" button and then select \"Open Deck\" or press one of the buttons below.</string>
+  <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \"Menu\" button and select \"Preferences\").</string>
   <string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
   <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
   <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
@@ -240,7 +240,7 @@ Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i
   <string name="sync_transferring_payload_message">Transferring payload...</string>
   <string name="sync_applying_reply_message">Applying reply...</string>
   <string name="sync_no_changes_message">No changes found.</string>
-  <string name="sync_log_error_message">Error: Deck not synchronized</string>
+  <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
   <string name="sync_log_no_changes_message">No changes found</string>
   <string name="sync_log_uploading_message">No deck on server</string>
   <string name="sync_log_downloading_message">Full sync from server</string>

@@ -113,9 +113,9 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>Zobrazit nastavení studia</item>
+    <item>Zobrazit vybírač balíčků</item>
+    <item>Zobrazit vybírač balíčků po prvním spuštění v daném dni</item>
   </string-array>
   <string-array name="startup_mode_values">
     <item>0</item>

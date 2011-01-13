@@ -137,6 +137,7 @@ public class StudyOptions extends Activity {
     
     private int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
+    boolean mSyncEnabled = false;
     
     /**
 * Alerts to inform the user about different situations
@@ -870,40 +871,25 @@ public class StudyOptions extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item;
+    	MenuItem item;
         item = menu.add(Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck);
         item.setIcon(R.drawable.ic_menu_manage);
         SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE,
                 R.string.menu_download_deck);
         downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
-        
-        // Show sync menu items only if sync is enabled.
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-        boolean syncEnabled = preferences.getBoolean("syncEnabled", false);
-        if(syncEnabled) {
-            downloadDeckSubMenu.add(
+        downloadDeckSubMenu.add(
                 Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
-        }
-        
         downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
-        
-        if(syncEnabled) {
-            item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
-            item.setIcon(R.drawable.ic_menu_refresh);
-        }
-        
+        item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
+        item.setIcon(R.drawable.ic_menu_refresh);
         item = menu.add(Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card);
         item.setIcon(R.drawable.ic_menu_add);
         item = menu.add(Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more);
         item.setIcon(R.drawable.ic_menu_archive);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
-        
-        if(syncEnabled) {
-            item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
-            item.setIcon(R.drawable.ic_menu_home);
-        }
-        
+        item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
+        item.setIcon(R.drawable.ic_menu_home);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
 
@@ -918,15 +904,13 @@ public class StudyOptions extends Activity {
         menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
         menu.findItem(MENU_ADD_FACT).setEnabled(deckChangable);
         menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangable);
-        
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-        if(preferences.getBoolean("syncEnabled", false)) {
-            //menu.findItem(MENU_SYNC).setEnabled(deckChangable); Somehow generate NPE
-            MenuItem item = menu.findItem(MENU_SYNC);
-            if(item != null) {
-                item.setEnabled(deckChangable);
-            }
-        }
+		menu.findItem(MENU_SYNC).setEnabled(deckChangable);
+
+        // Show sync menu items only if sync is enabled.
+		menu.findItem(MENU_SYNC).setVisible(mSyncEnabled)        
+		menu.findItem(MENU_MY_ACCOUNT).setVisible(mSyncEnabled)
+        menu.findItem(MENU_DOWNLOAD_PERSONAL_DECK).setVisible(mSyncEnabled);
+
         return true;
     }
 
@@ -1190,6 +1174,7 @@ public class StudyOptions extends Activity {
         mStartupMode = Integer.parseInt(preferences.getString("startup_mode",
                 Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
+        mSyncEnabled = preferences.getBoolean("syncEnabled", false);
         return preferences;
     }
 

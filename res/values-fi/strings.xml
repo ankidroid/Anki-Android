@@ -27,7 +27,7 @@
   <string name="no">Ei</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Pakkojen joiden versiot vanhempi kuin 39 eivät tue AnkiDroidia. Avaa pakka Anki-työpöytä versiolla ja päivitä pakka uusimpaan versioon.</string>
-  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
+  <string name="deckpicker_title">Valitse pakka (%1$d  %2$d määrä)</string>
   <string name="deckpicker_title_nosdcard">SD-kortti on irrotettu</string>
   <string name="deckpicker_due">%1$d / %2$d jäljellä</string>
   <string name="deckpicker_new">%d uutta tänään</string>
@@ -51,9 +51,9 @@
   <string name="session_question_limit_reached">Istunnon kysymysten raja saavutettu</string>
   <string name="session_time_limit_reached">Istunnon aikaraja saavutettu</string>
   <string name="cram_edit_warning">Kortin muokkaaminen ei ole pänttäämisen aikana</string>
-  <string name="suspend_leeches">Suspend Leeches</string>
-  <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-  <string name="leech_notification">Card marked as leech</string>
+  <string name="suspend_leeches">Keskeyttää takiaiset</string>
+  <string name="leech_suspend_notification">Kortti om merkitty takiaiseksi ja keskeytettiin</string>
+  <string name="leech_notification">Kortti om merkitty takiaiseksi</string>
   <string name="newcards_day_summ">Montako uutta korttia näytetään korkeintaan päivässä.</string>
   <string name="newcards_day">Uusia korttia / päivä</string>
   <string name="session_time_limit">Istunnon aikaraja</string>
@@ -89,9 +89,9 @@
   <string name="show_study_options_on_deck_load">Opiskelu asetukset latauksessa</string>
   <string name="show_study_options_on_deck_load_summ">Näytä opiskelu asetukset näyttö ladattaessa pakkaa</string>
   <string name="startup_mode">Käynnistystila</string>
-  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
+  <string name="startup_mode_summ">Valitse, jos haluat käynnistää opiskelu asetuksista tai pakan pakan kerääjästä</string>
   <string name="show_timer">Näytä ajastin</string>
-  <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
+  <string name="show_timer_summ">Ajastin näyttää ajan, joka vie vastattaessa</string>
   <string name="show_whiteboard_summ">Voit kirjoittaa ruudulle</string>
   <string name="whiteboard_stroke_width">Valkotaulun reunanleveys</string>
   <string name="whiteboard_stroke_width_summ">Valitse reunan leveys</string>
@@ -100,7 +100,7 @@
   <string name="write_answers">Kirjoita vastaukset</string>
   <string name="write_answers_summ">Voit kirjoittaa vastauksen, ja verrata sitä oikean vastaukseen</string>
   <string name="text_selection">Salli tekstin valinta</string>
-  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+  <string name="text_selection_summ">Voit valita ja kopioida tekstiä korteista. Paina pitkään suorittaaksesi haun ulkoisesta sanakirjasta</string>
   <string name="dictionary">Sanakirja</string>
   <string name="dictionary_summ">Sanakirja, jossa hakuja tulisi suorittaa</string>
   <string name="use_ruby_support">Tuki ruby-huomautusten käytölle</string>
@@ -165,7 +165,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
 &lt;p&gt;AnkiDroidista on julkaistu &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU GPLv3 lisenssillä&lt;/a&gt; ja lähdekoodi on saatavilla täältä &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;täältä&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
-  <string name="studyoptions_title">Opiskelu Asetukset</string>
+  <string name="studyoptions_title">Opiskelu asetukset</string>
   <string name="studyoptions_deck_name">Pakan nimi</string>
   <string name="studyoptions_reviews_due">Tarkastelujen määrä:</string>
   <string name="studyoptions_new_today">Uutta tänään:</string>
@@ -174,12 +174,12 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="studyoptions_session_minutes">Istunnon raja (minuuttia):</string>
   <string name="studyoptions_session_questions">Istunnon raja (kysymykset):</string>
   <string name="studyoptions_start">Aloita tarkistaminen</string>
-  <string name="studyoptions_more">Opiskelu Asetukset</string>
+  <string name="studyoptions_more">Opiskelu asetukset</string>
   <string name="studyoptions_window_title">%1$s (%2$d %3$d määrä)</string>
   <string name="studyoptions_more_dialog_title">Lisää valintoja</string>
   <string name="studyoptions_more_save">Tallenna</string>
   <string name="studyoptions_nodeck_title">Pakkaa ei ole ladattu</string>
-  <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored on your SD card and are read from the location specified in the preferences (currently this is set to: \"%s\"). The preferences can be reached by pressing your device\'s \"Menu\" button and then selecting \"Preferences\".\n\nTo load a deck, press your device\'s \"Menu\" button and then select \"Open Deck\" or press one of the buttons below.</string>
+  <string name="studyoptions_nodeck_message">Pakkaa ei ole tällä hetkellä ladattuna. Anki-pakat on tallennettu hekemistoon \"%s\" SD-kortille. Sijainnin voidaan määrittää asetuksissa (paina \"Menu\"-painiketta ja valitse \"Asetukset\").</string>
   <string name="studyoptions_deck_not_loaded_title">Pakkaa ei voitu ladata</string>
   <string name="studyoptions_deck_not_loaded_message">Valitsemasi pakka ei ole kelvollinen Anki-pakka. Luo kelvollinen Anki-pakka tietokoneella ennen kuin lataat sen AnkiDroid:in.\n\nSillä välin voit valita toisen pakan tai ladat näytepakan alla olevista painikkeista.</string>
   <string name="studyoptions_no_external_storage_title">Ulkoista Muistia Ei Ole Saatavilla</string>
@@ -199,7 +199,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="menu_about">Tietoja</string>
   <string name="menu_suspend_card">Keskeytä kortti</string>
   <string name="menu_edit_card">Muokkaa korttia</string>
-  <string name="menu_search">Lookup in %1$s</string>
+  <string name="menu_search">Haku %1$s</string>
   <string name="menu_mark_card">Merkitse kortti</string>
   <string name="menu_marked">Merkitty</string>
   <string name="loading">Ladataan...</string>

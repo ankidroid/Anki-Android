@@ -27,7 +27,7 @@
   <string name="no">Ne</string>
   <string name="ok">U redu</string>
   <string name="deck_upgrade_too_old_version">Špilovi sa verzijama koje su starije od 39 nisu podržane sa AnkiDroid programom, molimo vas da špil otvorite sa desktop verzijom Anki programa kako bi mogli da prilagodite špil za najnoviju verziju.</string>
-  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
+  <string name="deckpicker_title">Izaberi špil (%1$d od %2$d na redu)</string>
   <string name="deckpicker_title_nosdcard">SD kartica nije montirana</string>
   <string name="deckpicker_due">%1$d od %2$d sledi</string>
   <string name="deckpicker_new">%d novih danas</string>
@@ -100,15 +100,15 @@
   <string name="write_answers">Napiši odgovore</string>
   <string name="write_answers_summ">Omogućava vam da napišete odgovor i da ga uporedite sa tačnim</string>
   <string name="text_selection">Dozvoli izbor teksta</string>
-  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
-  <string name="dictionary">Dictionary</string>
-  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
+  <string name="text_selection_summ">Omogućava vam da izaberete i kopirate tekst sa kartica sa dužim klikom da bi mogli da pogledate značenje reči u spoljnom rečniku</string>
+  <string name="dictionary">Директоријум</string>
+  <string name="dictionary_summ">Rečnik u kome će da se pregledava značenje reči</string>
   <string name="use_ruby_support">Pruži upotrebljavanje rubi anotacije</string>
   <string name="use_ruby_support_summ">Ako su znakovi \'[\' i \']\' pronađeni, onda se uokvireni tekst smatra kao ruby anotacija</string>
   <string name="display_font_size">Relativna veličina fonta</string>
   <string name="display_font_size_summ">Veličina fonta koja se koristi relativno po podeškama karata</string>
-  <string name="button_size">Relative button size</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
+  <string name="button_size">Relativna veličina dugmeta</string>
+  <string name="button_size_summ">Relativna veličina dugmadi na ekranu za pregled</string>
   <string name="hide_question_in_answer">Sakrij pitanje u odgovoru?</string>
   <string name="hide_question_in_answer_summ">Odredite ako pitanje treba da bude skriveno kada je odgovor prikazan.</string>
   <string name="deck_path">Mesto špila</string>
@@ -119,7 +119,7 @@
   <string name="zoom_summ">Prikaži Kontrole za Zumiranje tokom pregledavanja</string>
   <string name="personaldeckpicker_title">Otvori Internet Špil</string>
   <string name="shareddeckpicker_title">Izaberite špil koji želite skinuti</string>
-  <string name="downloaddeck_search">Search</string>
+  <string name="downloaddeck_search">Traži</string>
   <string name="preferences_title">Postavke</string>
   <string name="deckpreferences_title">Podešavanje Špila</string>
   <string name="about_title">O programu</string>
@@ -178,7 +178,7 @@ Oni koji nisu programeri takođe mogu pomoću, naprimer s time što ažuriraju w
   <string name="studyoptions_more_dialog_title">Više Opcija</string>
   <string name="studyoptions_more_save">Sačuvaj</string>
   <string name="studyoptions_nodeck_title">Nijedan Špil nije Učitan</string>
-  <string name="studyoptions_nodeck_message">Nijedan špil nije učitan. Anki Špilovi se nalaze na vašoj SD kartici i usnimavaju se sa mesta koje ste izabrali u opcijama (ovo je trenutno namešteno na: \"%s\"). Do opcija možete doći time što pritisnete \"Meni\" dugme pa onda \"Opcije\".\n\nDa bi učitali špil, pritisnite \"Meni\" dugme i pa izaberite \"Otvori Špil\" ili pritisnite jedno od dugmadi ispod.</string>
+  <string name="studyoptions_nodeck_message">Nijedan špil nije trenutno učitan. Anki špilovi se nalaze u direktorijumu \"%s\" na vašoj SD kartici. Ova lokacija je navedena pod postavkama (pritisnite \"Meni\" dugme i izaberite \"Postavke\").</string>
   <string name="studyoptions_deck_not_loaded_title">Špil nije mogao da se učita</string>
   <string name="studyoptions_deck_not_loaded_message">Špil koji ste izabrali nije važeći Anki špil. Molimo da koristite Anki desktop program da kreirate validan špil pre nego što ga ubacite u Ankidroid.\n\nU međuvremenu, možete da izaberete drugi špil ili da učitate primerni špil sa dugmadima ispod.</string>
   <string name="studyoptions_no_external_storage_title">Nema SD Kartice</string>
@@ -198,7 +198,7 @@ Oni koji nisu programeri takođe mogu pomoću, naprimer s time što ažuriraju w
   <string name="menu_about">O programu</string>
   <string name="menu_suspend_card">Suspendiraj Karticu</string>
   <string name="menu_edit_card">Uredi Karticu</string>
-  <string name="menu_search">Lookup in %1$s</string>
+  <string name="menu_search">Pregledaj u %1$s</string>
   <string name="menu_mark_card">Označi Karticu</string>
   <string name="menu_marked">Označeno</string>
   <string name="loading">Učitavanje...</string>

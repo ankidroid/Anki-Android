@@ -27,7 +27,7 @@
   <string name="no">Ne</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Balíčky verze starší jako 39 nejsou AnkdiDroidem podporovány. Prosím otevřete je v desktopové verzi Anki a aktualizujte je na nejnovější verzi.</string>
-  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
+  <string name="deckpicker_title">Vybrat balíček (%1$d z %2$d k zopakování)</string>
   <string name="deckpicker_title_nosdcard">SD karta je odpojena</string>
   <string name="deckpicker_due">zbývá %1$d / %2$d </string>
   <string name="deckpicker_new">%d nových karet na den</string>
@@ -89,7 +89,7 @@
   <string name="show_study_options_on_deck_load">Studijní možnosti při načtení</string>
   <string name="show_study_options_on_deck_load_summ">Během načítání balíčku zobrazí obrazovku se studijními možnostmi</string>
   <string name="startup_mode">Startup Mode</string>
-  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
+  <string name="startup_mode_summ">Zvol si, jestli chceš začít s nastavením studia nebo vybíračem balíčků</string>
   <string name="show_timer">Zobrazit časovač</string>
   <string name="show_timer_summ">Časovač zobrazující jak dlouho vám trvá odpovědět</string>
   <string name="show_whiteboard_summ">Umožňuje psát na obrazovku</string>
@@ -167,7 +167,7 @@
   <string name="studyoptions_more_dialog_title">Další volby</string>
   <string name="studyoptions_more_save">Uložit</string>
   <string name="studyoptions_nodeck_title">Žádný balíček není načten</string>
-  <string name="studyoptions_nodeck_message">Žádný balíček teď není načten. Anki balíčky jsou uloženy na vaší SD kartě a načítají se z umístění specifikovaného v nastavení (momentálně je nastaveno: \"%s\"). Do nastavení se dostanete stisknutím tlačítka Menu na vašem telefonu a následně zvolení volby Nastavení.\n\nPro načtení balíčku zmáčkněte tlačítko Menu a následně možnost Otevřít balíček nebo zmáčkněte jedno z tlačítek níže.</string>
+  <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \"Menu\" button and select \"Preferences\").</string>
   <string name="studyoptions_deck_not_loaded_title">Balíček nemohl být načten</string>
   <string name="studyoptions_deck_not_loaded_message">Balíček, který jste zvolili není platný balíček aplikace Anki. Prosím použijte desktopovou verzi Anki pro vytvoření platného typu balíčku před tím, než jej otevřete v AnkiDroidu.\n\nMezitím můžete vybrat jiný balíček nebo načíst ukázkový balíček pomocí tlačítek níže.</string>
   <string name="studyoptions_no_external_storage_title">Není k dispozici externí paměť</string>
@@ -229,7 +229,7 @@
   <string name="sync_transferring_payload_message">Přenos dat...</string>
   <string name="sync_applying_reply_message">Použití odpovědi...</string>
   <string name="sync_no_changes_message">Nenalezeny žádné změny.</string>
-  <string name="sync_log_error_message">Chyba: Balíček není synchronizovaný</string>
+  <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
   <string name="sync_log_no_changes_message">Nenalezeny žádné změny</string>
   <string name="sync_log_uploading_message">Na serveru není žádný balíček</string>
   <string name="sync_log_downloading_message">Plná synchronizace ze serveru</string>

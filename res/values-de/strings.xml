@@ -100,7 +100,7 @@
   <string name="write_answers">Antworten eingeben</string>
   <string name="write_answers_summ">Erlaubt das Eingeben von Antworten und vergleicht die Eingabe mit der richtigen Antwort</string>
   <string name="text_selection">Text markieren</string>
-  <string name="text_selection_summ">Erlaubt es, Text auszuwählen und zu kopieren, um in einem externen Wörterbuch nachzuschlagen</string>
+  <string name="text_selection_summ">Erlaubt es, Text per Langklick auszuwählen und zu kopieren, um in einem externen Wörterbuch nachzuschlagen</string>
   <string name="dictionary">Wörterbuch</string>
   <string name="dictionary_summ">Wörterbuch, in dem nachgeschlagen werden soll</string>
   <string name="use_ruby_support">Ruby-Anmerkungen</string>
@@ -229,7 +229,7 @@
   <string name="sync_transferring_payload_message">Übertrage Daten...</string>
   <string name="sync_applying_reply_message">Antworte...</string>
   <string name="sync_no_changes_message">Keine Veränderungen gefunden.</string>
-  <string name="sync_log_error_message">Fehler: Stapel nicht synchronisiert</string>
+  <string name="sync_log_error_message">Fehler: Deck wurde nicht synchronisiert</string>
   <string name="sync_log_no_changes_message">Keine Veränderungen gefunden</string>
   <string name="sync_log_uploading_message">Kein Stapel auf dem Server</string>
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>

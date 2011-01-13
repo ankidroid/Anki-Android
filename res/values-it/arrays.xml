@@ -56,18 +56,18 @@
     <item>10%</item>
     <item>20%</item>
     <item>30%</item>
-    <item>40 %</item>
-    <item>50 %</item>
-    <item>60 %</item>
-    <item>70 %</item>
-    <item>80 %</item>
-    <item>90 %</item>
-    <item>100 %</item>
-    <item>110 %</item>
-    <item>120 %</item>
-    <item>130 %</item>
-    <item>140 %</item>
-    <item>150 %</item>
+    <item>40%</item>
+    <item>50%</item>
+    <item>60%</item>
+    <item>70%</item>
+    <item>80%</item>
+    <item>90%</item>
+    <item>100%</item>
+    <item>false</item>
+    <item>120%</item>
+    <item>130%</item>
+    <item>140%</item>
+    <item>150%</item>
   </string-array>
   <string-array name="displayFontSizeVals">
     <item>10</item>
