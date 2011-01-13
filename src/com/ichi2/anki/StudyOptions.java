@@ -188,6 +188,7 @@ public class StudyOptions extends Activity {
     private View mNoDeckView;
     private TextView mTextNoDeckTitle;
     private TextView mTextNoDeckMessage;
+    private AlertDialog mDownloadDeckAlert;
 
     /**
 * UI elements for "Congrats" view
@@ -256,6 +257,9 @@ public class StudyOptions extends Activity {
                 case R.id.studyoptions_load_other_deck:
                     openDeckPicker();
                     return;
+                case R.id.studyoptions_download_deck:
+                	mDownloadDeckAlert.show();
+                    return;                    
                 default:
                     return;
             }
@@ -539,6 +543,7 @@ public class StudyOptions extends Activity {
         mTextNoDeckMessage = (TextView) mNoDeckView.findViewById(R.id.studyoptions_nodeck_message);
 
         mNoDeckView.findViewById(R.id.studyoptions_load_sample_deck).setOnClickListener(mButtonClickListener);
+        mNoDeckView.findViewById(R.id.studyoptions_download_deck).setOnClickListener(mButtonClickListener);
         mNoDeckView.findViewById(R.id.studyoptions_load_other_deck).setOnClickListener(mButtonClickListener);
 
         // The view that shows the congratulations view.
@@ -601,6 +606,19 @@ public class StudyOptions extends Activity {
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mConnectionErrorAlert = builder.create();
+        
+        AlertDialog.Builder itemDialogBuilder = new AlertDialog.Builder(this);
+        itemDialogBuilder.setTitle(res.getString(R.string.menu_download_deck));
+        itemDialogBuilder.setItems(new CharSequence[] {res.getString(R.string.menu_download_personal_deck), res.getString(R.string.menu_download_shared_deck)}, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				if (item == 0) {
+	            	openPersonalDeckPicker();
+				} else {
+	            	openSharedDeckPicker();
+				}
+		    }
+		});
+		mDownloadDeckAlert = itemDialogBuilder.create();
     }
 
 

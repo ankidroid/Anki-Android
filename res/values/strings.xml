@@ -286,7 +286,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="studyoptions_more_dialog_title">More Options</string>
 <string name="studyoptions_more_save">Save</string>
 <string name="studyoptions_nodeck_title">No Deck Loaded</string>
-<string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored on your SD card and are read from the location specified in the preferences (currently this is set to: \&quot;%s\&quot;). The preferences can be reached by pressing your device\'s \&quot;Menu\&quot; button and then selecting \&quot;Preferences\&quot;.\n\nTo load a deck, press your device\'s \&quot;Menu\&quot; button and then select \&quot;Open Deck\&quot; or press one of the buttons below.</string>
+<string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \&quot;Menu\&quot; button and select \&quot;Preferences\&quot;).</string>
 <string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
 <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
 <string name="studyoptions_no_external_storage_title">No External Storage Available</string>

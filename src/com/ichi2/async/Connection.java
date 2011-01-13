@@ -277,13 +277,16 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         String password = (String) data.data[1];
         Deck deck = (Deck) data.data[2];
         String deckPath = (String) data.data[3];
-        String syncName = deck.getSyncName();
-        if (syncName == null || syncName.equalsIgnoreCase("")) {
-            syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1);
-            syncName = syncName.substring(0, syncName.length() - ".anki".length());
-            Log.i(AnkiDroidApp.TAG, "syncName = *" + syncName + "*");
-            deck.setSyncName(syncName);
-        }
+        String syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1, deckPath.length() - 5);
+
+//        if (syncName == null || syncName.equalsIgnoreCase("")) {
+//        	deck.enableSyncing();
+//            syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1);
+//            syncName = syncName.substring(0, syncName.length() - ".anki".length());
+//            Log.i(AnkiDroidApp.TAG, "syncName = *" + syncName + "*");
+//            deck.setSyncName(syncName);
+//        }
+
         syncChangelog.put("deckName", syncName);
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
