@@ -297,28 +297,51 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 
             publishProgress(syncName, res.getString(R.string.sync_connecting_message));
+            // TODO: Control what happens when the clocks are unsynchronized, or login is wrong
             server.connect();
 
+            // Exists on server?
+            boolean deckCreated = false;
             if (!server.hasDeck(syncName)) {
                 Log.i(AnkiDroidApp.TAG, "AnkiOnline does not have this deck: Creating it...");
                 server.createDeck(syncName);
-            }
-            if (server.getTimediff() > 300) {
-                Log.i(AnkiDroidApp.TAG, "The clock is unsynchronized!");
-                // TODO: Control what happens when the clocks are unsynchronized
+                deckCreated = true;
             }
             publishProgress(syncName, res.getString(R.string.sync_syncing_message, new Object[] { syncName }));
             SyncClient client = new SyncClient(deck);
             client.setServer(server);
             server.setDeckName(syncName);
+            boolean changes = false;
+            String conflictResolution = null;
             if (client.prepareSync(server.getTimediff())) {
-                publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
-                JSONArray sums = client.summaries();
+                if (deck.getLastSync() <= 0) {
+                    if (client.getRemoteTime() > client.getLocalTime()) {
+                        conflictResolution = "keepRemote";
+                    } else {
+                        conflictResolution = "keepLocal";
+                    }
+                }
+                changes = true;
 
-                if (client.needFullSync(sums)) {
+                publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
+
+                // summary
+                JSONArray sums = null;
+                if (conflictResolution == null) {
+                    sums = client.summaries();
+                }
+
+                if ((conflictResolution != null) || client.needFullSync(sums)) {
                     Log.i(AnkiDroidApp.TAG, "DECK NEEDS FULL SYNC");
 
                     publishProgress(syncName, res.getString(R.string.sync_preparing_full_sync_message));
+
+                    if (conflictResolution.equals("keepLocal")) {
+                        client.setRemoteTime(0.0);
+                    } else if (conflictResolution.equals("keepRemote")) {
+                        client.setLocalTime(0.0);
+                    }
+                    double lastSync = deck.getLastSync();
                     String syncFrom = client.prepareFullSync();
 
                     if ("fromLocal".equalsIgnoreCase(syncFrom)) {

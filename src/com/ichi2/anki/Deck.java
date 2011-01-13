@@ -3963,7 +3963,7 @@ public class Deck {
             // key
             mLastLoaded = deckPayload.getDouble("lastLoaded");
             // lastSessionStart
-            mLastSync = deckPayload.getDouble("modified");
+            mLastSync = deckPayload.getDouble("lastSync");
             // lastTags
             mLowPriority = deckPayload.getString("lowPriority");
             mMedPriority = deckPayload.getString("medPriority");

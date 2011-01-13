@@ -58,6 +58,7 @@ public class AnkiDroidProxy {
      */
     public static final int LOGIN_OK = 0;
     public static final int LOGIN_INVALID_USER_PASS = 1;
+    public static final int LOGIN_CLOCKS_UNSYNCED = 2;
 
     /**
      * Shared deck's fields
@@ -122,6 +123,11 @@ public class AnkiDroidProxy {
                     mTimestamp = jsonDecks.getDouble("timestamp");
                     mTimediff = Math.abs(mTimestamp - Utils.now());
                     Log.i(AnkiDroidApp.TAG, "Server timestamp = " + mTimestamp);
+                    if (mTimediff > 300) {
+                        Log.e(AnkiDroidApp.TAG, "The clock of the device and that of the server are unsynchronized!");
+                        return LOGIN_CLOCKS_UNSYNCED;
+                    }
+
                     return LOGIN_OK;
                 } else if ("invalidUserPass".equalsIgnoreCase(jsonDecks.getString("status"))) {
                     return LOGIN_INVALID_USER_PASS;
