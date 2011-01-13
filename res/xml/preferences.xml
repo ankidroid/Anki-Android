@@ -138,7 +138,7 @@
 			android:entryValues="@array/error_reporting_choice_values"
 			android:key="reportErrorMode" />
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/widget_pref">			
+	<PreferenceCategory android:title="@string/widget_pref">
 		<ListPreference
 			android:title="@string/widget_minimum_cards_due"
 			android:summary="@string/widget_minimum_cards_due_summary"
@@ -154,5 +154,12 @@
 			android:title="@string/widget_minimum_cards_due_blink"
 			android:defaultValue="false"
 			android:key="widgetBlink"/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_experimental">
+		<CheckBoxPreference
+			android:title="@string/sync_enabled"
+			android:summary="@string/sync_enabled_in_answer_summ"
+			android:defaultValue="false"
+			android:key="syncEnabled"/>
 	</PreferenceCategory>
 </PreferenceScreen>

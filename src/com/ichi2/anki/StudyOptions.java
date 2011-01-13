@@ -876,19 +876,34 @@ public class StudyOptions extends Activity {
         SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE,
                 R.string.menu_download_deck);
         downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
-        downloadDeckSubMenu
-                .add(Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
+        
+        // Show sync menu items only if sync is enabled.
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        boolean syncEnabled = preferences.getBoolean("syncEnabled", false);
+        if(syncEnabled) {
+            downloadDeckSubMenu.add(
+                Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
+        }
+        
         downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
-        item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
-        item.setIcon(R.drawable.ic_menu_refresh);
+        
+        if(syncEnabled) {
+            item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
+            item.setIcon(R.drawable.ic_menu_refresh);
+        }
+        
         item = menu.add(Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card);
         item.setIcon(R.drawable.ic_menu_add);
         item = menu.add(Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more);
         item.setIcon(R.drawable.ic_menu_archive);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
-        item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
-        item.setIcon(R.drawable.ic_menu_home);
+        
+        if(syncEnabled) {
+            item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
+            item.setIcon(R.drawable.ic_menu_home);
+        }
+        
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
 
@@ -903,7 +918,15 @@ public class StudyOptions extends Activity {
         menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
         menu.findItem(MENU_ADD_FACT).setEnabled(deckChangable);
         menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangable);
-        menu.findItem(MENU_SYNC).setEnabled(deckChangable);
+        
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        if(preferences.getBoolean("syncEnabled", false)) {
+            //menu.findItem(MENU_SYNC).setEnabled(deckChangable); Somehow generate NPE
+            MenuItem item = menu.findItem(MENU_SYNC);
+            if(item != null) {
+                item.setEnabled(deckChangable);
+            }
+        }
         return true;
     }
 
