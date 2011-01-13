@@ -907,8 +907,8 @@ public class StudyOptions extends Activity {
 		menu.findItem(MENU_SYNC).setEnabled(deckChangable);
 
         // Show sync menu items only if sync is enabled.
-		menu.findItem(MENU_SYNC).setVisible(mSyncEnabled)        
-		menu.findItem(MENU_MY_ACCOUNT).setVisible(mSyncEnabled)
+		menu.findItem(MENU_SYNC).setVisible(mSyncEnabled);       
+		menu.findItem(MENU_MY_ACCOUNT).setVisible(mSyncEnabled);
         menu.findItem(MENU_DOWNLOAD_PERSONAL_DECK).setVisible(mSyncEnabled);
 
         return true;
