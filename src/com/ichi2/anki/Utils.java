@@ -43,6 +43,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.StringBuilder;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -238,7 +239,7 @@ public class Utils {
     private static String entsToTxt(String s) {
         Matcher htmlEntities = htmlEntitiesPattern.matcher(s);
         StringBuilder s2 = new StringBuilder(s);
-        while(htmlEntities.find()) {
+        while (htmlEntities.find()) {
             String text = htmlEntities.group();
             text = Html.fromHtml(text).toString();
             // TODO: inefficiency below, can get rid of multiple regex searches

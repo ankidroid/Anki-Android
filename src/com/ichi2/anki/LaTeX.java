@@ -16,8 +16,10 @@
 
 package com.ichi2.anki;
 
+import android.text.Html;
 import android.util.Log;
 
+import java.lang.StringBuilder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,15 +46,15 @@ public class LaTeX {
     private LaTeX() { }
 
     /**
-     * Parses the content (belonging to deck deckFilename), replacing LaTeX with img tags
+     * Parses the content (belonging to deck), replacing LaTeX with img tags
      *
      * @TODO should check to see if the image exists or not? Or can we assume that
      * the user is bright enough to compile stuff if they are using LaTeX?
-     * @param deckFilename Deck's filename whose content is being parsed
+     * @param deck Deck whose content is being parsed
      * @param content HTML content of a card
      * @return content Content with the onload events for the img tags
      */
-    public static String parseLaTeX(String deckFilename, String content) {
+    public static String parseLaTeX(Deck deck, String content) {
 
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
@@ -61,7 +63,7 @@ public class LaTeX {
         Log.i(AnkiDroidApp.TAG, "parseLaTeX");
         Matcher matcher = sStandardPattern.matcher(contentLeft);
         while (matcher.find()) {
-            String img = mungeLatex(matcher.group(1));
+            String img = mungeLatex(deck, matcher.group(1));
             img = "latex-" + Utils.checksum(img) + ".png";
 
             String imgTag = matcher.group();
@@ -78,7 +80,7 @@ public class LaTeX {
         stringBuilder = new StringBuilder();
         matcher = sExpressionPattern.matcher(contentLeft);
         while (matcher.find()) {
-            String img = "$" + mungeLatex(matcher.group(1)) + "$";
+            String img = "$" + mungeLatex(deck, matcher.group(1)) + "$";
             img = "latex-" + Utils.checksum(img) + ".png";
 
             String imgTag = matcher.group();
@@ -95,7 +97,7 @@ public class LaTeX {
         stringBuilder = new StringBuilder();
         matcher = sMathPattern.matcher(contentLeft);
         while (matcher.find()) {
-            String img = "\\begin{displaymath}" + mungeLatex(matcher.group(1)) + "\\end{displaymath}";
+            String img = "\\begin{displaymath}" + mungeLatex(deck, matcher.group(1)) + "\\end{displaymath}";
             img = "latex-" + Utils.checksum(img) + ".png";
 
             String imgTag = matcher.group();
@@ -110,12 +112,32 @@ public class LaTeX {
         return stringBuilder.toString();
     }
 
-    private static String mungeLatex(String latex)
-    {
-        //TODO: Deal with HTML entity shenanigans
+    private static final Pattern htmlNamedEntityPattern = Pattern.compile("(?i)&[a-z]+;");
 
-        //Fix endlines
+    /**
+     * Convert entities, fix newlines, convert to utf8, and wrap pre/postamble.
+     *
+     * @param deck The deck, needed to get the latex pre/post-ambles
+     * @param latex The latex trsing to be munged
+     * @return the latex string transformed as described above
+     */
+    private static String mungeLatex(Deck deck, String latex) {
+        // Deal with HTML named entities
+        StringBuilder sb = new StringBuilder(latex);
+        Matcher namedEntity = htmlNamedEntityPattern.matcher(sb);
+        while (namedEntity.find()) {
+            sb.replace(namedEntity.start(), namedEntity.end(), Html.fromHtml(namedEntity.group()).toString());
+            namedEntity = htmlNamedEntityPattern.matcher(sb);
+        }
+        latex = sb.toString();
+
+        // Fix endlines
         latex = sBRPattern.matcher(latex).replaceAll("\n");
+     
+        // Add pre/post-ambles
+        latex = deck.getVar("latexPre") + "\n" + latex + "\n" + deck.getVar("latexPost");
+
+        // TODO: Do we need to convert to UTF-8?
 
         return latex;
     }

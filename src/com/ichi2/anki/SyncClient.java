@@ -97,7 +97,7 @@ public class SyncClient {
      * 
      * @return
      */
-    public boolean prepareSync() {
+    public boolean prepareSync(double timediff) {
         Log.i(AnkiDroidApp.TAG, "prepareSync = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
 
         mLocalTime = mDeck.getModified();
@@ -115,12 +115,9 @@ public class SyncClient {
         double r = mServer.lastSync();
         Log.i(AnkiDroidApp.TAG, "lastSync remote = " + String.format(Utils.ENGLISH_LOCALE, "%f", r));
 
-        if (l != r) {
-            mDeck.setLastSync(java.lang.Math.min(l, r) - 600);
-            Log.i(AnkiDroidApp.TAG, "deck.lastSync = min(l,r) - 600");
-        } else {
-            mDeck.setLastSync(l);
-        }
+        // Set lastSync to the lower of the two sides, and account for slow clocks & assume it took up to 10 seconds
+        // for the reply to arrive
+        mDeck.setLastSync(Math.min(l, r) - timediff - 10);
 
         Log.i(AnkiDroidApp.TAG, "deck.lastSync = " + mDeck.getLastSync());
         return true;
@@ -1514,6 +1511,13 @@ public class SyncClient {
     private JSONObject bundleDeck() {
         JSONObject bundledDeck = new JSONObject();
 
+        // Ensure modified is not greater than server time
+        if ((mServer != null) && (mServer.getTimestamp() != 0.0)) {
+            mDeck.setModified(Math.min(mDeck.getModified(), mServer.getTimestamp()));
+        }
+        // And ensure lastSync is greater than modified
+        mDeck.setLastSync(Math.max(Utils.now(), mDeck.getModified() + 1));
+
         try {
             bundledDeck = mDeck.bundleJson(bundledDeck);
 
@@ -1858,8 +1862,12 @@ public class SyncClient {
 
 
     public String prepareFullSync() {
-        // The deck is closed after the full sync it is completed
-        // deck.closeDeck();
+        double t = Utils.now();
+        // Ensure modified is not greater than server time
+        mDeck.setModified(Math.min(mDeck.getModified(), mServer.getTimestamp()));
+        mDeck.commitToDB();
+        // The deck is closed after the full sync is completed
+        // mDeck.closeDeck();
 
         if (mLocalTime > mRemoteTime) {
             return "fromLocal";
@@ -1950,7 +1958,7 @@ public class SyncClient {
             String response = new String(bytesReceived);
 			
 			if (response.substring(0,2).equals("OK")) {
-				// Update local modification time
+				// Update lastSync
                 boolean wasDbOpen = AnkiDatabaseManager.isDatabaseOpen(deckPath);
 				AnkiDb db = AnkiDatabaseManager.getDatabase(deckPath);
                 AnkiDatabaseManager.getDatabase(deckPath).getDatabase().execSQL("UPDATE decks SET lastSync = " +

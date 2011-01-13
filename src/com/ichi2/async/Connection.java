@@ -300,8 +300,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 Log.i(AnkiDroidApp.TAG, "AnkiOnline does not have this deck: Creating it...");
                 server.createDeck(syncName);
             }
-            int timediff = (int) (server.getTimestamp() - Utils.now());
-            if (timediff > 300) {
+            if (server.getTimediff() > 300) {
                 Log.i(AnkiDroidApp.TAG, "The clock is unsynchronized!");
                 // TODO: Control what happens when the clocks are unsynchronized
             }
@@ -309,7 +308,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             SyncClient client = new SyncClient(deck);
             client.setServer(server);
             server.setDeckName(syncName);
-            if (client.prepareSync()) {
+            if (client.prepareSync(server.getTimediff())) {
                 publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
                 JSONArray sums = client.summaries();
 
@@ -362,6 +361,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
                     client.applyPayloadReply(payloadReply);
+                    client.getServer().finish();
                     deck.reset();
 
                     deck.setLastLoaded(deck.getModified());

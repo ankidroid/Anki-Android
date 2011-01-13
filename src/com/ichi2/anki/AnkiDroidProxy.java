@@ -85,6 +85,7 @@ public class AnkiDroidProxy {
 
     private JSONObject mDecks;
     private double mTimestamp;
+    private double mTimediff;
 
 
     public AnkiDroidProxy(String user, String password) {
@@ -92,6 +93,7 @@ public class AnkiDroidProxy {
         mPassword = password;
         mDeckName = "";
         mDecks = null;
+        mTimediff = 0.0;
     }
 
 
@@ -104,6 +106,10 @@ public class AnkiDroidProxy {
         return mTimestamp;
     }
 
+    public double getTimediff() {
+        return mTimediff;
+    }
+
 
     public int connect() {
         if (mDecks == null) {
@@ -114,6 +120,7 @@ public class AnkiDroidProxy {
                     mDecks = jsonDecks.getJSONObject("decks");
                     Log.i(AnkiDroidApp.TAG, "Server decks = " + mDecks.toString());
                     mTimestamp = jsonDecks.getDouble("timestamp");
+                    mTimediff = Math.abs(mTimestamp - Utils.now());
                     Log.i(AnkiDroidApp.TAG, "Server timestamp = " + mTimestamp);
                     return LOGIN_OK;
                 } else if ("invalidUserPass".equalsIgnoreCase(jsonDecks.getString("status"))) {
@@ -170,6 +177,26 @@ public class AnkiDroidProxy {
         return lastSync;
     }
 
+
+    public void finish() {
+        try {
+            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
+                + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=None";
+            HttpPost httpPost = new HttpPost(SYNC_URL + "finish");
+            StringEntity entity = new StringEntity(data);
+            httpPost.setEntity(entity);
+            httpPost.setHeader("Accept-Encoding", "identity");
+            httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            httpClient.execute(httpPost);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
+        } catch (IOException e) {
+            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+        }
+    }
 
     public String getDecks() {
         // Log.i(AnkiDroidApp.TAG, "getDecks - user = " + username + ", password = " + password);
