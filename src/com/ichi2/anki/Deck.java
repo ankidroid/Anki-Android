@@ -929,6 +929,20 @@ public class Deck {
     }
 
     /*
+     * Tomorrow's due cards ******************************
+     */
+    public int getNextDueCards() {
+    	String sql = String.format(Utils.ENGLISH_LOCALE, "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue < %f", mDueCutoff + 86400);
+    	return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
+    }
+
+    public int getNextNewCards() {
+        String sql = String.format(Utils.ENGLISH_LOCALE, "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < %f", mDueCutoff + 86400);
+        return Math.min((int) getDB().queryScalar(cardLimit("newActive", "newInactive", sql)), mNewCardsPerDay);
+    }
+
+
+    /*
      * Scheduler related overridable methods******************************
      */
     private Method getCardIdMethod;

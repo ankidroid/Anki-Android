@@ -508,15 +508,18 @@ public class StudyOptions extends Activity {
         	public void afterTextChanged(Editable s) {
                 Deck deck = AnkiDroidApp.deck();
                 String inputText = mEditNewPerDay.getText().toString();
-                if (!inputText.equals(Integer.toString(deck.getNewCardsPerDay()))) {
-                	if (inputText.equals("")) {
-                		deck.setNewCardsPerDay(0);                		
-                	} else if (isValidInt(inputText)) {
-                		deck.setNewCardsPerDay(Integer.parseInt(inputText));
-                	} else {
-                		mEditNewPerDay.setText("0");
-                	}
-            		updateValuesFromDeck();
+                if (deck != null) {
+                    if (!inputText.equals(Integer.toString(deck.getNewCardsPerDay()))) {
+                    	if (inputText.equals("")) {
+                    		deck.setNewCardsPerDay(0);                		
+                    	} else if (isValidInt(inputText)) {
+                    		deck.setNewCardsPerDay(Integer.parseInt(inputText));
+                    	} else {
+                    		mEditNewPerDay.setText("0");
+                    	}
+                		updateValuesFromDeck();
+                    }
+                	
                 }
         	}
         public void beforeTextChanged(CharSequence s, int start, int count, int after){}
@@ -527,15 +530,17 @@ public class StudyOptions extends Activity {
         	public void afterTextChanged(Editable s) {
                 Deck deck = AnkiDroidApp.deck();
                 String inputText = mEditSessionTime.getText().toString();
-                if (!inputText.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
-                	if (inputText.equals("")) {
-                		deck.setSessionTimeLimit(0);                		
-                	} else if (isValidLong(inputText)) {
-                		deck.setSessionTimeLimit(Long.parseLong(inputText) * 60);
-                	} else {
-                		mEditSessionTime.setText("0");
-                	}
-            		updateValuesFromDeck();
+                if (deck != null) {
+                    if (!inputText.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
+                    	if (inputText.equals("")) {
+                    		deck.setSessionTimeLimit(0);                		
+                    	} else if (isValidLong(inputText)) {
+                    		deck.setSessionTimeLimit(Long.parseLong(inputText) * 60);
+                    	} else {
+                    		mEditSessionTime.setText("0");
+                    	}
+                		updateValuesFromDeck();
+                    }                	
                 }
         	}
         public void beforeTextChanged(CharSequence s, int start, int count, int after){}
@@ -546,15 +551,17 @@ public class StudyOptions extends Activity {
         	public void afterTextChanged(Editable s) {
                 Deck deck = AnkiDroidApp.deck();
                 String inputText = mEditSessionQuestions.getText().toString();
-                if (!inputText.equals(Long.toString(deck.getSessionRepLimit()))) {
-                	if (inputText.equals("")) {
-                		deck.setSessionRepLimit(0);                		
-                	} else if (isValidLong(inputText)) {
-                		deck.setSessionRepLimit(Long.parseLong(inputText));
-                	} else {
-                		mEditSessionQuestions.setText("0");
-                	}
-            		updateValuesFromDeck();
+                if (deck != null) {
+                    if (!inputText.equals(Long.toString(deck.getSessionRepLimit()))) {
+                    	if (inputText.equals("")) {
+                    		deck.setSessionRepLimit(0);                		
+                    	} else if (isValidLong(inputText)) {
+                    		deck.setSessionRepLimit(Long.parseLong(inputText));
+                    	} else {
+                    		mEditSessionQuestions.setText("0");
+                    	}
+                		updateValuesFromDeck();
+                    }                 
                 }
         	}
         public void beforeTextChanged(CharSequence s, int start, int count, int after){}
@@ -780,11 +787,31 @@ public class StudyOptions extends Activity {
             case CONTENT_CONGRATS:
                 updateValuesFromDeck();
                 setContentView(mCongratsView);
+                setCongratsMessage();
                 break;
             case CONTENT_NO_EXTERNAL_STORAGE:
                 setTitle(R.string.app_name);
                 setContentView(mNoExternalStorageView);
                 break;
+        }
+    }
+
+
+    private void setCongratsMessage() {
+    	Resources res = getResources();
+        Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+            int revCards = deck.getNextDueCards();
+            int newCards = deck.getNextNewCards();
+            String revca = res.getString(R.string.studyoptions_congrats_cards);
+            String newca = res.getString(R.string.studyoptions_congrats_cards);
+            if (revCards == 1) {
+            	revca = res.getString(R.string.studyoptions_congrats_card);
+            }
+            if (newCards == 1) {
+            	newca = res.getString(R.string.studyoptions_congrats_card);
+            }
+            mTextCongratsMessage.setText(String.format(res.getString(R.string.studyoptions_congrats_message), revCards, revca, newCards, newca));        	
         }
     }
 
