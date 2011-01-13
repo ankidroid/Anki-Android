@@ -194,7 +194,9 @@
   <string name="studyoptions_continue">Lernen fortsetzen</string>
   <string name="studyoptions_well_done">Gut gemacht!</string>
   <string name="studyoptions_congrats_title">Herzlichen Glückwunsch!</string>
-  <string name="studyoptions_congrats_message">Sie sind für\'s erste fertig.</string>
+  <string name="studyoptions_congrats_message">Sie sind für\'s erste fertig.\nMorgen sind %1$d %2$s zu wiederholen\nund %3$d %4$s neu zu lernen.</string>
+  <string name="studyoptions_congrats_card">Karte</string>
+  <string name="studyoptions_congrats_cards">Karten</string>
   <string name="studyoptions_congrats_learnmore">Mehr Lernen</string>
   <string name="studyoptions_congrats_reviewearly">Früher Wiederholen</string>
   <string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>

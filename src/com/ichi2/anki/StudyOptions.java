@@ -780,12 +780,30 @@ public class StudyOptions extends Activity {
             case CONTENT_CONGRATS:
                 updateValuesFromDeck();
                 setContentView(mCongratsView);
+                setCongratsMessage();
                 break;
             case CONTENT_NO_EXTERNAL_STORAGE:
                 setTitle(R.string.app_name);
                 setContentView(mNoExternalStorageView);
                 break;
         }
+    }
+
+
+    private void setCongratsMessage() {
+    	Resources res = getResources();
+        Deck deck = AnkiDroidApp.deck();
+        int revCards = deck.getNextDueCards();
+        int newCards = deck.getNextNewCards();
+        String revca = res.getString(R.string.studyoptions_congrats_cards);
+        String newca = res.getString(R.string.studyoptions_congrats_cards);
+        if (revCards == 1) {
+        	revca = res.getString(R.string.studyoptions_congrats_card);
+        }
+        if (newCards == 1) {
+        	newca = res.getString(R.string.studyoptions_congrats_card);
+        }
+        mTextCongratsMessage.setText(String.format(res.getString(R.string.studyoptions_congrats_message), revCards, revca, newCards, newca));
     }
 
 
