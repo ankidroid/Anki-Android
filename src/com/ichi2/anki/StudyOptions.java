@@ -189,7 +189,6 @@ public class StudyOptions extends Activity {
     private View mNoDeckView;
     private TextView mTextNoDeckTitle;
     private TextView mTextNoDeckMessage;
-    private AlertDialog mDownloadDeckAlert;
 
     /**
 * UI elements for "Congrats" view
@@ -259,8 +258,8 @@ public class StudyOptions extends Activity {
                     openDeckPicker();
                     return;
                 case R.id.studyoptions_download_deck:
-                	mDownloadDeckAlert.show();
-                    return;                    
+                	showDownloadSelector();
+                	return;
                 default:
                     return;
             }
@@ -456,6 +455,34 @@ public class StudyOptions extends Activity {
     }
 
 
+    private void showDownloadSelector(){
+        Resources res = getResources();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(res.getString(R.string.menu_download_deck));
+        CharSequence[] items;
+        if (mSyncEnabled) {
+        	items = new CharSequence[2];
+        	items[0] = res.getString(R.string.menu_download_personal_deck);
+        	items[1] = res.getString(R.string.menu_download_shared_deck);
+        } else {
+        	items = new CharSequence[1];
+        	items[0] = res.getString(R.string.menu_download_shared_deck);
+        }
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				if (item == 0 && mSyncEnabled) {
+	            	openPersonalDeckPicker();
+				} else {
+	            	openSharedDeckPicker();
+				}
+		    }
+		});
+        AlertDialog alert = builder.create();
+		alert.show();
+    }
+
+
     private void initAllContentViews() {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
@@ -607,19 +634,6 @@ public class StudyOptions extends Activity {
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mConnectionErrorAlert = builder.create();
-        
-        AlertDialog.Builder itemDialogBuilder = new AlertDialog.Builder(this);
-        itemDialogBuilder.setTitle(res.getString(R.string.menu_download_deck));
-        itemDialogBuilder.setItems(new CharSequence[] {res.getString(R.string.menu_download_personal_deck), res.getString(R.string.menu_download_shared_deck)}, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) {
-				if (item == 0) {
-	            	openPersonalDeckPicker();
-				} else {
-	            	openSharedDeckPicker();
-				}
-		    }
-		});
-		mDownloadDeckAlert = itemDialogBuilder.create();
     }
 
 
