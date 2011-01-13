@@ -1078,6 +1078,7 @@ public class StudyOptions extends Activity {
 
             Log.i(AnkiDroidApp.TAG,
                     "Synchronizing deck " + mDeckFilename + " with username " + username + " and password " + password);
+            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
             Connection.syncDeck(syncListener, new Connection.Payload(new Object[] { username, password, deck,
                     mDeckFilename }));
         } else {

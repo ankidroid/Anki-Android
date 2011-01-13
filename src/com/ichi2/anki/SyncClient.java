@@ -86,6 +86,21 @@ public class SyncClient {
         mServer = server;
     }
 
+    public double getRemoteTime() {
+        return mRemoteTime;
+    }
+
+    public void setRemoteTime(double time) {
+        mRemoteTime = time;
+    }
+
+    public double getLocalTime() {
+        return mLocalTime;
+    }
+
+    public void setLocalTime(double time) {
+        mLocalTime = time;
+    }
 
     public void setDeck(Deck deck) {
         mDeck = deck;
@@ -131,6 +146,7 @@ public class SyncClient {
         summaries.put(summary(mDeck.getLastSync()));
         summaries.put(mServer.summary(mDeck.getLastSync()));
 
+        Log.i(AnkiDroidApp.TAG, "after summaries = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
         return summaries;
     }
 
