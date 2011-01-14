@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?> 
+<?xml version="1.0" encoding="utf-8"?>
  <!-- 
  ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
  ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
@@ -248,8 +248,8 @@ De som inte kan programmera får gärna hjälpa till med till exempel att uppdat
   <string name="sync_log_facts_to_server_message">%d facts to server</string>
   <string name="sync_log_fact_from_server_message">1 fact from server</string>
   <string name="sync_log_facts_from_server_message">%d facts from server</string>
-  <string name="error_message">Det finns %d fel att rapportera</string>
-  <string name="errors_message">There are %d errors to report</string>
+  <string name="error_message">Det finns ett fel att rapportera</string>
+  <string name="errors_message">Det finns %d fel att rapportera</string>
   <string name="error_ok">Rapportera fel</string>
   <string name="error_cancel">Rapportera inte fel</string>
   <string name="error_email">ankidroid@gmail.com</string>
