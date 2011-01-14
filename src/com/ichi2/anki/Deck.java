@@ -929,6 +929,20 @@ public class Deck {
     }
 
     /*
+     * Tomorrow's due cards ******************************
+     */
+    public int getNextDueCards() {
+    	String sql = String.format(Utils.ENGLISH_LOCALE, "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue < %f", mDueCutoff + 86400);
+    	return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
+    }
+
+    public int getNextNewCards() {
+        String sql = String.format(Utils.ENGLISH_LOCALE, "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < %f", mDueCutoff + 86400);
+        return Math.min((int) getDB().queryScalar(cardLimit("newActive", "newInactive", sql)), mNewCardsPerDay);
+    }
+
+
+    /*
      * Scheduler related overridable methods******************************
      */
     private Method getCardIdMethod;
@@ -3228,6 +3242,9 @@ public class Deck {
      * Add a fact to the deck. Return list of new cards
      */
     public Fact addFact(Fact fact) {
+        return addFact(fact, true);
+    }
+    public Fact addFact(Fact fact, boolean reset) {
         // TODO: assert fact is Valid
         // TODO: assert fact is Unique
         double now = Utils.now();
@@ -3262,19 +3279,31 @@ public class Deck {
             AnkiDatabaseManager.getDatabase(mDeckPath).getDatabase().insert("fields", null, values);
         }
 
+        ArrayList<Long> newCardIds = new ArrayList<Long>();
         for (Map.Entry<Long, CardModel> entry : availableCardModels.entrySet()) {
             CardModel cardModel = entry.getValue();
             Card newCard = new Card(this, fact, cardModel, Utils.now());
             newCard.addToDb();
+            newCardIds.add(newCard.getId());
             mCardCount++;
             mNewCount++;
             Log.i(AnkiDroidApp.TAG, entry.getKey().toString());
         }
         commitToDB();
         // TODO: code related to random in newCardOrder
-        // TODO: code for updating card q/a
-        // TODO: update tags
-        // TODO: update priorities?
+
+        // Update card q/a
+        fact.setModified(true, this);
+        updateFactTags(new long[]{fact.getId()});
+        
+        // This will call reset() which will update counts
+        updatePriorities(Utils.toPrimitive(newCardIds));
+
+        flushMod();
+        if (reset) {
+            reset();
+        }
+        
         return fact;
     }
 
@@ -3963,7 +3992,7 @@ public class Deck {
             // key
             mLastLoaded = deckPayload.getDouble("lastLoaded");
             // lastSessionStart
-            mLastSync = deckPayload.getDouble("modified");
+            mLastSync = deckPayload.getDouble("lastSync");
             // lastTags
             mLowPriority = deckPayload.getString("lowPriority");
             mMedPriority = deckPayload.getString("medPriority");
