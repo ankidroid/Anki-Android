@@ -245,31 +245,35 @@ public class Media {
         for (String fname : refs.keySet()) {
             updateMediaCount(deck, fname, refs.get(fname));
         }
-
-        // Find unused media
-        Set<String> unused = new HashSet<String>();
-        File mdirfile = new File(mdir);
         String fname = null;
-        for (File f : mdirfile.listFiles()) {
-            if (!f.isFile()) {
-                // Ignore directories
-                continue;
+
+        //If there is no media dir, then there is nothing to find.
+        if(mdir != null) {
+            // Find unused media
+            Set<String> unused = new HashSet<String>();
+            File mdirfile = new File(mdir);
+            fname = null;
+            for (File f : mdirfile.listFiles()) {
+                if (!f.isFile()) {
+                    // Ignore directories
+                    continue;
+                }
+                fname = f.getName();
+                if (!refs.containsKey(fname)) {
+                    unused.add(fname);
+                }
             }
-            fname = f.getName();
-            if (!refs.containsKey(fname)) {
-                unused.add(fname);
-            }
-        }
-        // Optionally delete
-        if (delete) {
-            for (String fn : unused) {
-                File file = new File(mdir + "/" + fn);
-                try {
-                    if (!file.delete()) {
-                        Log.e(AnkiDroidApp.TAG, "Couldn't delete unused media file " + mdir + "/" + fn);
+            // Optionally delete
+            if (delete) {
+                for (String fn : unused) {
+                    File file = new File(mdir + "/" + fn);
+                    try {
+                        if (!file.delete()) {
+                            Log.e(AnkiDroidApp.TAG, "Couldn't delete unused media file " + mdir + "/" + fn);
+                        }
+                    } catch (SecurityException e) {
+                        Log.e(AnkiDroidApp.TAG, "Security exception while deleting unused media file " + mdir + "/" + fn);
                     }
-                } catch (SecurityException e) {
-                    Log.e(AnkiDroidApp.TAG, "Security exception while deleting unused media file " + mdir + "/" + fn);
                 }
             }
         }
