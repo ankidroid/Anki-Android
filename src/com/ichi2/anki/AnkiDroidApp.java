@@ -41,7 +41,7 @@ import java.io.File;
  */
 public class AnkiDroidApp extends Application {
 
-	public static final String LIBANKI_VERSION = "1.2.1";
+	public static final String LIBANKI_VERSION = "1.2.2";
 
     /**
      * Tag for logging messages.
