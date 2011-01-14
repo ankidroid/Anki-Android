@@ -117,6 +117,9 @@
   <string name="fullscreen_review_summ">Voit päättää, halutako käyttää kaikkia käytettävissä olevaa näytön tilaa kortin tarkastamisen aikana</string>
   <string name="zoom">Ota zoomaus käyttöön</string>
   <string name="zoom_summ">Näytä zoomaussäätimet tarjastekun aikana</string>
+  <string name="pref_cat_experimental">KOKEELLINEN</string>
+  <string name="sync_enabled">Sync features</string>
+  <string name="sync_enabled_in_answer_summ">Löytyy useita vikoja, pakat saattavat viottua. Varmuuskopio usein!</string>
   <string name="personaldeckpicker_title">Avaa Online-pakka</string>
   <string name="shareddeckpicker_title">Valitse pakka jonka haluat ladata</string>
   <string name="downloaddeck_search">Etsi</string>
@@ -206,7 +209,9 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="studyoptions_continue">Jatka tarkistamista</string>
   <string name="studyoptions_well_done">Hyvin tehty!</string>
   <string name="studyoptions_congrats_title">Onneksi olkoon!</string>
-  <string name="studyoptions_congrats_message">Olet valmis nyt.</string>
+  <string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
+  <string name="studyoptions_congrats_card">kortti</string>
+  <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">Opi lisää</string>
   <string name="studyoptions_congrats_reviewearly">Tarkista etuajassa</string>
   <string name="studyoptions_congrats_open_other_deck">Avaa muu pakka</string>

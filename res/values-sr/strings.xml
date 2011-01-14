@@ -117,6 +117,9 @@
   <string name="fullscreen_review_summ">Možete da odlučite ako hoćete da koristite sav prostor na ekranu za vreme pregledavanja kartica</string>
   <string name="zoom">Omogući Zumiranje</string>
   <string name="zoom_summ">Prikaži Kontrole za Zumiranje tokom pregledavanja</string>
+  <string name="pref_cat_experimental">EXPERIMENTAL</string>
+  <string name="sync_enabled">Sync features</string>
+  <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
   <string name="personaldeckpicker_title">Otvori Internet Špil</string>
   <string name="shareddeckpicker_title">Izaberite špil koji želite skinuti</string>
   <string name="downloaddeck_search">Traži</string>
@@ -205,7 +208,9 @@ Oni koji nisu programeri takođe mogu pomoću, naprimer s time što ažuriraju w
   <string name="studyoptions_continue">Nastavi sa Pregledavanjem</string>
   <string name="studyoptions_well_done">Bravo!</string>
   <string name="studyoptions_congrats_title">Čestitamo!</string>
-  <string name="studyoptions_congrats_message">Završili ste za sada.</string>
+  <string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
+  <string name="studyoptions_congrats_card">card</string>
+  <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">Uči Još</string>
   <string name="studyoptions_congrats_reviewearly">Pregledaj Ranije</string>
   <string name="studyoptions_congrats_open_other_deck">Otvori Drugi Špil</string>

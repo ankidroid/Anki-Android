@@ -117,6 +117,9 @@
   <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
   <string name="zoom">Enable Zoom</string>
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
+  <string name="pref_cat_experimental">EXPERIMENTAL</string>
+  <string name="sync_enabled">Sync features</string>
+  <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Selecciona la baraja que desea descargar</string>
   <string name="downloaddeck_search">Search</string>
@@ -205,7 +208,9 @@ Los no-desarrolladores tambien pueden ayudar, por ejemplo actualizando la wiki y
   <string name="studyoptions_continue">Continue Reviewing</string>
   <string name="studyoptions_well_done">Well Done!</string>
   <string name="studyoptions_congrats_title">Congratulations!</string>
-  <string name="studyoptions_congrats_message">You have finished for now.</string>
+  <string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
+  <string name="studyoptions_congrats_card">card</string>
+  <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">Learn More</string>
   <string name="studyoptions_congrats_reviewearly">Review Early</string>
   <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>

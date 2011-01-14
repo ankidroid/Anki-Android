@@ -55,7 +55,7 @@ public class Sound {
     private Sound() { }
 
 
-    public static String parseSounds(String deckFilename, String content) {
+    public static String parseSounds(String deckFilename, String content, boolean removeSounds) {
 
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
@@ -80,10 +80,13 @@ public class Sound {
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
-            stringBuilder
-                    .append("<a onclick=\"window.interface.playSound(this.title);\" title=\""
-                            + soundPath
-                            + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+            
+            if (!removeSounds) {
+                stringBuilder
+                .append("<a onclick=\"window.interface.playSound(this.title);\" title=\""
+                        + soundPath
+                        + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+            }
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }

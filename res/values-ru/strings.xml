@@ -29,7 +29,7 @@
   <string name="deck_upgrade_too_old_version">Колоды версий до 39 не поддерживаются AnkiDroid, пожалуйста, откройте колоду настольной версией Anki для обновлении колоды до последней версии.</string>
   <string name="deckpicker_title">Выберите колоду (%1$d из %2$d)</string>
   <string name="deckpicker_title_nosdcard">SD-карта отмонтирована</string>
-  <string name="deckpicker_due">%1$d из %2$d к получению</string>
+  <string name="deckpicker_due">%1$d из %2$d к повтору</string>
   <string name="deckpicker_new">%d новых сегодня</string>
   <string name="deckpicker_loaddeck">Открытие колоды...</string>
   <string name="deckpicker_nodeck">Не найдено ни одной колоды.</string>
@@ -89,7 +89,7 @@
   <string name="show_study_options_on_deck_load">Параметры обучения при загрузке колоды</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
   <string name="startup_mode">Режим запуска</string>
-  <string name="startup_mode_summ">Выбрать если вы ходите начинать с параметров обучения или deck picker</string>
+  <string name="startup_mode_summ">Выбрать если вы ходите начинать с параметров обучения или оглавления колод</string>
   <string name="show_timer">Показать таймер</string>
   <string name="show_timer_summ">Таймер показывает сколько времени Вам дается для ответа</string>
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>
@@ -100,9 +100,9 @@
   <string name="write_answers">Писать ответы</string>
   <string name="write_answers_summ">Позволяет вам написать ответ и сравнивать с правильными</string>
   <string name="text_selection">Разрешить выделение текста</string>
-  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
-  <string name="dictionary">Dictionary</string>
-  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
+  <string name="text_selection_summ">Позволяет долгим нажатием на экран выделить и скопировать текст, чтобы во внешнем словаре этот текст найти</string>
+  <string name="dictionary">Словарь</string>
+  <string name="dictionary_summ">Словарь, в котором будет произведён поиск</string>
   <string name="use_ruby_support">Поддерживать Ruby-аннотации</string>
   <string name="use_ruby_support_summ">Если найдены символы \'[\' и \']\', то заключенный в них текст будет рассмотрен как Ruby-аннотация</string>
   <string name="display_font_size">Относительный размер шрифта</string>
@@ -117,6 +117,9 @@
   <string name="fullscreen_review_summ">Вы можете решить, хотите ли вы использовать все доступное место экрана для просмотра</string>
   <string name="zoom">Включить масштабирование</string>
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
+  <string name="pref_cat_experimental">EXPERIMENTAL</string>
+  <string name="sync_enabled">Sync features</string>
+  <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
   <string name="shareddeckpicker_title">Выберите колоду, которую вы хотите загрузить</string>
   <string name="downloaddeck_search">Поиск</string>
@@ -178,7 +181,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="studyoptions_more_dialog_title">Больше параметров</string>
   <string name="studyoptions_more_save">Сохранить</string>
   <string name="studyoptions_nodeck_title">Колоды не загружены</string>
-  <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \"Menu\" button and select \"Preferences\").</string>
+  <string name="studyoptions_nodeck_message">В данный момент не открыто ни одной колоды. Anki-колоды сохраняются в каталоге \"%s\" на SD-карте. Этот каталог может быть изменён в \"Настройках\" (нажмите на кнопку \"Menu\" (на аппарате) и выберете \"Настройки\").</string>
   <string name="studyoptions_deck_not_loaded_title">Колода не может быть открыта</string>
   <string name="studyoptions_deck_not_loaded_message">Колода, которую вы выбрали, возможно повреждена. Пожалуйста, откройте ее с помощью десктоп-версии Anki и проверьте (или восстановите) для использования ее в Ankidroid.\n\nСейчас вы можете выбрать другую колоду или создать колоду с примерами с помощью клавиш ниже.</string>
   <string name="studyoptions_no_external_storage_title">Нет доступа ко внешнему хранилищу</string>
@@ -205,7 +208,9 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="studyoptions_continue">Продолжить обзор</string>
   <string name="studyoptions_well_done">Отлично!</string>
   <string name="studyoptions_congrats_title">Поздравляем!</string>
-  <string name="studyoptions_congrats_message">Урок закончен.</string>
+  <string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
+  <string name="studyoptions_congrats_card">card</string>
+  <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">Подробнее</string>
   <string name="studyoptions_congrats_reviewearly">Просмотрено раньше</string>
   <string name="studyoptions_congrats_open_other_deck">Открыть другие колоды</string>
@@ -223,7 +228,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="download_finished">Загрузка завершена</string>
   <string name="deck_downloaded">Колода скачана</string>
   <string name="connection_error_message">Ошибка сети.</string>
-  <string name="no_user_password_error_message">Для того, чтобы продолжить эту операцию, вы должны иметь AnkiOnline-аккаунт (это бесплатно) и войти в него.</string>
+  <string name="no_user_password_error_message">Для того, чтобы продолжить эту операцию, вы должны иметь AnkiOnline-аккаунт (это бесплатно) и указать логин и пароль в настройках AnkiDroid.</string>
   <string name="sync_progress_bar_title">Синхронизировано %s</string>
   <string name="studyoptions_cram_dialog_title">Что \`Зубрить\`</string>
   <string name="begin_cram">Старт \`Зубрёжки\`</string>
@@ -240,7 +245,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="sync_transferring_payload_message">Пересылка требуемых изменений...</string>
   <string name="sync_applying_reply_message">Внесение полученного...</string>
   <string name="sync_no_changes_message">Не найдено изменений.</string>
-  <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
+  <string name="sync_log_error_message">Ошибка: Колода не была синхронизирована</string>
   <string name="sync_log_no_changes_message">Не найдено изменений</string>
   <string name="sync_log_uploading_message">Нет колоды на сервере</string>
   <string name="sync_log_downloading_message">Полная синхронизация с сервером</string>

@@ -184,6 +184,8 @@ public class Reviewer extends Activity {
     private int mNextTimeTextRecomColor;
     
     private int mButtonHeight = 0;
+    
+    private boolean mConfigurationChanged = false;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -482,7 +484,9 @@ public class Reviewer extends Activity {
         super.onConfigurationChanged(newConfig);
 
         Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
-
+        
+        mConfigurationChanged = true;
+        
         long savedTimer = mCardTimer.getBase();
         CharSequence savedAnswerField = mAnswerField.getText();
 
@@ -515,6 +519,7 @@ public class Reviewer extends Activity {
         if (mPrefWhiteboard) {
             mWhiteboard.rotate();
         }
+        mConfigurationChanged = false;
     }
 
 
@@ -1086,7 +1091,14 @@ public class Reviewer extends Activity {
         // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
         // content = Image.parseImages(deckFilename, content);
         // Log.i(AnkiDroidApp.TAG, "content after parsing images = \n" + content);
-        content = Sound.parseSounds(mDeckFilename, content);
+
+        // don't play question sound again when displaying answer 
+        if (sDisplayAnswer && isQuestionDisplayed() && (content.indexOf("<hr/>") != -1)) {
+        	content = Sound.parseSounds(mDeckFilename, content.substring(0, content.indexOf("<hr/>") - 1), true)
+        			+ Sound.parseSounds(mDeckFilename, content.substring(content.indexOf("<hr/>"), content.length()), false);      	
+        } else {
+        	content = Sound.parseSounds(mDeckFilename, content, false);
+        }
 
         // Parse out the LaTeX images
         content = LaTeX.parseLaTeX(AnkiDroidApp.deck(), content);
@@ -1119,7 +1131,9 @@ public class Reviewer extends Activity {
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8",
                 null);
 
-        Sound.playSounds();
+        if (!mConfigurationChanged) {
+        	Sound.playSounds();
+        }
     }
 
 
