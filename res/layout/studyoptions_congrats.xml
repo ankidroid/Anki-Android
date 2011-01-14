@@ -17,7 +17,6 @@
 	<TextView
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
-		android:layout_marginTop="10dip"
 		android:gravity="center"
 		android:text="@string/studyoptions_congrats_message"
 		android:layout_marginBottom="10dip"

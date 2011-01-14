@@ -57,6 +57,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class StudyOptions extends Activity {
@@ -146,6 +147,7 @@ public class StudyOptions extends Activity {
     private AlertDialog mNoConnectionAlert;
     private AlertDialog mUserNotLoggedInAlert;
     private AlertDialog mConnectionErrorAlert;
+	private AlertDialog mSyncLogAlert;
 
     /*
 * Cram related
@@ -608,6 +610,10 @@ public class StudyOptions extends Activity {
 
         // Init alert dialogs
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        
+        builder.setTitle(getResources().getString(R.string.sync_log_title));
+		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+		mSyncLogAlert = builder.create();
 
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -1347,7 +1353,9 @@ public class StudyOptions extends Activity {
                 mProgressDialog.dismiss();
             }
             if (data.success) {
-            	reloadDeck();
+    			mSyncLogAlert.setMessage(((HashMap<String, String>) data.result).get("message"));
+				reloadDeck();
+				mSyncLogAlert.show();
             } else {
                 // connectionFailedAlert.show();
                 if (mConnectionErrorAlert != null) {
