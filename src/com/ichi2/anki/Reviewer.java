@@ -35,6 +35,7 @@ import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -137,6 +139,7 @@ public class Reviewer extends Activity {
     private int mRelativeButtonSize;
     private String mDictionaryAction;
     private int mDictionary;
+    private boolean mSwipeEnabled;
     
     private boolean mIsDictionaryAvailable;
 
@@ -187,6 +190,12 @@ public class Reviewer extends Activity {
     
     private boolean mConfigurationChanged = false;
 
+    /**
+     * Swipe Detection
+     */    
+ 	private GestureDetector gestureDetector;
+ 	View.OnTouchListener gestureListener;
+ 	
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -218,26 +227,23 @@ public class Reviewer extends Activity {
 
             switch (view.getId()) {
                 case R.id.ease1:
-                    mCurrentEase = Card.EASE_FAILED;
+                	answerCard(Card.EASE_FAILED);
                     break;
                 case R.id.ease2:
-                    mCurrentEase = Card.EASE_HARD;
+                	answerCard(Card.EASE_HARD);
                     break;
                 case R.id.ease3:
-                    mCurrentEase = Card.EASE_MID;
+                	answerCard(Card.EASE_MID);
                     break;
                 case R.id.ease4:
-                    mCurrentEase = Card.EASE_EASY;
+                	answerCard(Card.EASE_EASY);
                     break;
                 default:
-                    mCurrentEase = Card.EASE_NONE;
+                	mCurrentEase = Card.EASE_NONE;
                     return;
             }
 
-            // Increment number reps counter
-            mSessionCurrReps++;
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
-                    mCurrentEase, AnkiDroidApp.deck(), mCurrentCard));
+
         }
     };
 
@@ -448,6 +454,20 @@ public class Reviewer extends Activity {
             mSessionTimeLimit = System.currentTimeMillis() + timelimit;
             mSessionCurrReps = 0;
 
+            // Initialize Swipe
+            gestureDetector = new GestureDetector(new MyGestureDetector());
+            gestureListener = new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.e("erkannt","");
+                 	if (gestureDetector.onTouchEvent(event)) {
+                        return true;
+                    }
+                    return false;
+                }
+            };            
+            mCard.setOnTouchListener(gestureListener);
+            mWhiteboard.setOnTouchListener(gestureListener);            	
+            
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
@@ -758,7 +778,16 @@ public class Reviewer extends Activity {
         }
     };
 
-    
+
+    private void answerCard(int ease) {
+    	mCurrentEase = ease;
+        // Increment number reps counter
+        mSessionCurrReps++;
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
+                mCurrentEase, AnkiDroidApp.deck(), mCurrentCard));
+    }
+
+
     // Set the content view to the one provided and initialize accessors.
     private void initLayout(Integer layout) {
         setContentView(layout);
@@ -928,6 +957,7 @@ public class Reviewer extends Activity {
                 Integer.toString(HQIA_DO_SHOW)));
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
+        mSwipeEnabled = preferences.getBoolean("swipe", false);
 
         return preferences;
     }
@@ -1418,5 +1448,53 @@ public class Reviewer extends Activity {
            		return String.valueOf(adInt) + " " + namePeriod[period]; 	
         	}
         }
+    }
+
+
+    class MyGestureDetector extends SimpleOnGestureListener {
+    	@Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (mSwipeEnabled) {
+        		try {
+       				if (e2.getY() - e1.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+                        // up
+      					if (sDisplayAnswer) {
+           					answerCard(Card.EASE_FAILED);    						
+       					} else {
+           			        displayCardAnswer();    						
+       					}
+       		        } else if (e1.getY() - e2.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+                        // down
+       		        	if (mCurrentCard.isRev()) {
+                        	if (sDisplayAnswer) {
+           						answerCard(Card.EASE_MID); 						
+           					} else {
+               			        displayCardAnswer();    						
+           					}
+                           } else {
+           					if (sDisplayAnswer) {
+           						answerCard(Card.EASE_HARD); 						
+           					} else {
+               			        displayCardAnswer();    						
+           					}
+                         }
+                     } else if (e2.getX() - e1.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+                       	 // left
+                    	 finish();
+                     }
+                 }
+                 catch (Exception e) {
+                   	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
+                 }            	
+            }
+            return false;
+        }
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (gestureDetector.onTouchEvent(event))
+	        return true;
+	    else
+	    	return false;
     }
 }
