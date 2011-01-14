@@ -1289,8 +1289,10 @@ public class Deck {
         if (yes.length > 0) {
             long yids[] = Utils.toPrimitive(tagIds(yes).values());
             long nids[] = Utils.toPrimitive(tagIds(no).values());
-            return sql.replace("WHERE", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE tagId IN " +
-                    Utils.ids2str(yids) + " AND tagId NOT IN " + Utils.ids2str(nids) + ") AND");
+            return sql.replace("WHERE",
+                    "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " +
+                    "tagId IN " + Utils.ids2str(yids) + ") AND +c.id NOT IN (SELECT cardId FROM " +
+                    "cardTags WHERE tagId in " + Utils.ids2str(nids) + ") AND");
         } else if (no.length > 0) {
             long nids[] = Utils.toPrimitive(tagIds(no).values());
             return sql.replace("WHERE", "WHERE +c.id NOT IN (SELECT cardId FROM cardTags WHERE tagId IN "
