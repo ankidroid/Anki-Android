@@ -34,9 +34,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -133,6 +136,7 @@ public class StudyOptions extends Activity {
     private boolean mInDeckPicker;
     private String mDeckFilename;
     private int mStartupMode;
+    private boolean mSwipeEnabled;
     
     private int mCurrentContentView;
     
@@ -214,6 +218,15 @@ public class StudyOptions extends Activity {
     private Spinner mSpinnerCramOrder;
     
     /**
+    * Swipe Detection
+    */    
+	private GestureDetector gestureDetector;
+	View.OnTouchListener gestureListener;
+	public static final int SWIPE_MIN_DISTANCE = 100;
+	public static final int SWIPE_MAX_OFF_PATH = 150;
+	public static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    
+    /**
 * Callbacks for UI events
 */
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
@@ -222,9 +235,7 @@ public class StudyOptions extends Activity {
             Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             switch (v.getId()) {
                 case R.id.studyoptions_start:
-                    // finish();
-                    reviewer.putExtra("deckFilename", mDeckFilename);
-                    startActivityForResult(reviewer, REQUEST_REVIEW);
+                    openReviewer();
                     return;
                 case R.id.studyoptions_cram:
                     if (mToggleCram.isChecked()) {
@@ -361,6 +372,16 @@ public class StudyOptions extends Activity {
             	}
             }
         }
+        
+        gestureDetector = new GestureDetector(new MyGestureDetector());
+       	gestureListener = new View.OnTouchListener() {
+       		public boolean onTouch(View v, MotionEvent event) {
+       			if (gestureDetector.onTouchEvent(event)) {
+       				return true;
+       			}
+       			return false;
+       		}
+       	};	
     }
 
     
@@ -428,6 +449,14 @@ public class StudyOptions extends Activity {
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    private void openReviewer() {
+		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+		// finish();
+        reviewer.putExtra("deckFilename", mDeckFilename);
+		startActivityForResult(reviewer, REQUEST_REVIEW);
     }
 
 
@@ -1223,6 +1252,7 @@ public class StudyOptions extends Activity {
                 Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
         mSyncEnabled = preferences.getBoolean("syncEnabled", false);
+        mSwipeEnabled = preferences.getBoolean("swipe", false);
         return preferences;
     }
 
@@ -1383,4 +1413,34 @@ public class StudyOptions extends Activity {
         }
 
     };
+ 
+
+    class MyGestureDetector extends SimpleOnGestureListener {
+    	@Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (mSwipeEnabled) {
+            	try {
+    				if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
+                        // left
+                    	openReviewer();
+                    } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
+                        // right
+    					// openDeckPicker();
+                    }
+                }
+                catch (Exception e) {
+                	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
+                }
+            }
+            return false;
+        }
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (gestureDetector.onTouchEvent(event))
+	        return true;
+	    else
+	    	return false;
+    }
+
 }

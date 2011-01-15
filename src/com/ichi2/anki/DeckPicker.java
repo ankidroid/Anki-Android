@@ -2,7 +2,8 @@
  * Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>                              *
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             * 
+ * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -40,10 +41,13 @@ import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.GestureDetector;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -114,6 +118,13 @@ public class DeckPicker extends Activity implements Runnable {
 	private int mTotalDueCards = 0;
 	private int mTotalCards = 0;
 	
+    /**
+     * Swipe Detection
+     */    
+ 	private GestureDetector gestureDetector;
+ 	View.OnTouchListener gestureListener;
+ 	private boolean mSwipeEnabled;
+ 	
 	// ----------------------------------------------------------------------------
 	// LISTENERS
 	// ----------------------------------------------------------------------------
@@ -305,6 +316,17 @@ public class DeckPicker extends Activity implements Runnable {
 				.getSharedPrefs(getBaseContext());
 		populateDeckList(preferences.getString("deckPath", AnkiDroidApp
 				.getStorageDirectory()));
+		
+		mSwipeEnabled = preferences.getBoolean("swipe", false);
+		gestureDetector = new GestureDetector(new MyGestureDetector());
+        mDeckListView.setOnTouchListener(new View.OnTouchListener() {
+        	public boolean onTouch(View v, MotionEvent event) {
+        		if (gestureDetector.onTouchEvent(event)) {
+        			return true;
+        		}
+        		return false;
+        		}
+        	});
 	}
 
 	@Override
@@ -839,4 +861,29 @@ public class DeckPicker extends Activity implements Runnable {
 			}
 		}
 	}
+
+
+    class MyGestureDetector extends SimpleOnGestureListener {	
+    	@Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (mSwipeEnabled) {
+                try {
+       				if (e1.getX() - e2.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+       					// finish();
+                    }
+       			}
+                catch (Exception e) {
+                  	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
+                }
+            }	            	
+            return false;
+    	}
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (gestureDetector.onTouchEvent(event))
+	        return true;
+	    else
+	    	return false;
+    }
 }
