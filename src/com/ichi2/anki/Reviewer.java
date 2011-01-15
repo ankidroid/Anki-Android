@@ -189,6 +189,7 @@ public class Reviewer extends Activity {
     private int mButtonHeight = 0;
     
     private boolean mConfigurationChanged = false;
+    private int mSelectionStarted = 0;
 
     /**
      * Swipe Detection
@@ -214,7 +215,6 @@ public class Reviewer extends Activity {
         @Override
         public void onClick(View view) {
             Log.i(AnkiDroidApp.TAG, "Flip card changed:");
-            Sound.stopSounds();
 
             displayCardAnswer();
         }
@@ -454,20 +454,6 @@ public class Reviewer extends Activity {
             mSessionTimeLimit = System.currentTimeMillis() + timelimit;
             mSessionCurrReps = 0;
 
-            // Initialize Swipe
-            gestureDetector = new GestureDetector(new MyGestureDetector());
-            gestureListener = new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    Log.e("erkannt","");
-                 	if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
-                }
-            };            
-            mCard.setOnTouchListener(gestureListener);
-            mWhiteboard.setOnTouchListener(gestureListener);            	
-            
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
@@ -772,6 +758,7 @@ public class Reviewer extends Activity {
 
     private Runnable copyTextAfterDelay=new Runnable() {
         public void run() {
+        	mSelectionStarted = 2;
         	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             selectAndCopyText();
@@ -805,6 +792,10 @@ public class Reviewer extends Activity {
         }
         Log.i(AnkiDroidApp.TAG,
                 "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = " + mCard.isFocusableInTouchMode());
+
+        // initialise swipe
+        gestureDetector = new GestureDetector(new MyGestureDetector());
+
         if (mPrefTextSelection) {
 			// mCard.setOnLongClickListener(mLongClickHandler);            
 			mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -812,6 +803,11 @@ public class Reviewer extends Activity {
             mCard.setOnTouchListener(new View.OnTouchListener() { 
     			@Override
     			public boolean onTouch(View v, MotionEvent event) {
+    				if (event.getAction() == MotionEvent.ACTION_UP && mSelectionStarted != 0) {
+                 		mSelectionStarted--;
+    				} else if (gestureDetector.onTouchEvent(event)) {
+                        return true;
+                    }    				
     				switch (event.getAction()) { 
     					case MotionEvent.ACTION_DOWN:  
     						mTimerHandler.removeCallbacks(copyTextAfterDelay);
@@ -827,8 +823,19 @@ public class Reviewer extends Activity {
     				return false;    	           
     			}
             	});
+        } else {
+        	mCard.setOnTouchListener(new View.OnTouchListener() { 
+        		@Override
+        		public boolean onTouch(View v, MotionEvent event) {
+        			if (gestureDetector.onTouchEvent(event)) {
+                        return true;
+                    }
+                    return false;
+                }
+            });            
+            mCard.setOnTouchListener(gestureListener);
         }
-
+        
         mScaleInPercent = mCard.getScale();
 
         mEase1 = (Button) findViewById(R.id.ease1);
@@ -858,6 +865,18 @@ public class Reviewer extends Activity {
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
         mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
+        mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
+        	@Override
+        	public boolean onTouch(View v, MotionEvent event) {
+             	if (mWhiteboard.getVisibility() == View.VISIBLE) {
+             		return false;
+             	}
+        		if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+                return false;
+            }
+        });
         mAnswerField = (EditText) findViewById(R.id.answer_field);
 
         initControls();
@@ -1063,6 +1082,8 @@ public class Reviewer extends Activity {
     private void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
         sDisplayAnswer = true;
+
+        Sound.stopSounds();
 
         if (mPrefTimer) {
             mCardTimer.stop();
@@ -1456,28 +1477,27 @@ public class Reviewer extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
         		try {
-       				if (e2.getY() - e1.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
-                        // up
+       				if (mSelectionStarted != 0) {
+       					return false;
+       				}
+        			if (e2.getY() - e1.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+                        // down
       					if (sDisplayAnswer) {
-           					answerCard(Card.EASE_FAILED);    						
+           					answerCard(Card.EASE_FAILED);
        					} else {
            			        displayCardAnswer();    						
        					}
        		        } else if (e1.getY() - e2.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
-                        // down
-       		        	if (mCurrentCard.isRev()) {
-                        	if (sDisplayAnswer) {
-           						answerCard(Card.EASE_MID); 						
-           					} else {
-               			        displayCardAnswer();    						
-           					}
-                           } else {
-           					if (sDisplayAnswer) {
-           						answerCard(Card.EASE_HARD); 						
-           					} else {
-               			        displayCardAnswer();    						
-           					}
-                         }
+                        // up
+      					if (sDisplayAnswer) {
+      						if (mCurrentCard.isRev()) {
+           						answerCard(Card.EASE_MID);
+      						} else {
+      							answerCard(Card.EASE_HARD);
+      						}
+      					} else {
+      						displayCardAnswer(); 
+      					}
                      } else if (e2.getX() - e1.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
                        	 // left
                     	 finish();

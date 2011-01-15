@@ -117,6 +117,8 @@
   <string name="fullscreen_review_summ">Nutzt sämtlichen vorhandenen Platz auf dem Bildschirm</string>
   <string name="zoom">Zoom aktivieren</string>
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
+  <string name="swipe">Wischen</string>
+  <string name="swipe_summ">Horizontal wischen, um zwischen Fenstern zu wechseln, und vertikal um Karten zu beantworten (hoch: Empfehlung, nach unten: nochmal)</string>
   <string name="pref_cat_experimental">EXPERIMENTELL</string>
   <string name="sync_enabled">Synchronisierung</string>
   <string name="sync_enabled_in_answer_summ">Die Synchronisierung hat noch Fehler und könnte Ihre Stapel gefährden. Machen Sie häufig Backups!</string>
