@@ -323,11 +323,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 }
                 changes = true;
 
-                publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
-
                 // summary
                 JSONArray sums = null;
                 if (conflictResolution == null) {
+                    publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
                     sums = client.summaries();
                 }
 
@@ -336,29 +335,37 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     publishProgress(syncName, res.getString(R.string.sync_preparing_full_sync_message));
 
-                    if (conflictResolution.equals("keepLocal")) {
-                        client.setRemoteTime(0.0);
-                    } else if (conflictResolution.equals("keepRemote")) {
-                        client.setLocalTime(0.0);
+                    if (conflictResolution != null) {
+                        if (conflictResolution.equals("keepLocal")) {
+                            client.setRemoteTime(0.0);
+                        } else if (conflictResolution.equals("keepRemote")) {
+                            client.setLocalTime(0.0);
+                        }
                     }
-                    double lastSync = deck.getLastSync();
+                    
+                    //double lastSync = deck.getLastSync();
                     String syncFrom = client.prepareFullSync();
 
                     if ("fromLocal".equalsIgnoreCase(syncFrom)) {
                         publishProgress(syncName, res.getString(R.string.sync_uploading_message));
                         SyncClient.fullSyncFromLocal(password, username, syncName, deckPath);
                         syncChangelog.put("message", res.getString(R.string.sync_log_uploading_message));
+                        ankiDB.getDatabase().setTransactionSuccessful();
+                        ankiDB.getDatabase().endTransaction();
                     } else if ("fromServer".equalsIgnoreCase(syncFrom)) {
                         publishProgress(syncName, res.getString(R.string.sync_downloading_message));
+                        ankiDB.getDatabase().endTransaction();
+                        if (deck != null) {
+                            deck.closeDeck();
+                        }
                         SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
                         syncChangelog.put("message", res.getString(R.string.sync_log_downloading_message));
                     }
-                    ankiDB.getDatabase().setTransactionSuccessful();
-                    ankiDB.getDatabase().endTransaction();
-                    deck.closeDeck();
+                    //ankiDB.getDatabase().endTransaction();
+                    //deck.closeDeck();
 
-                    deck = Deck.openDeck(deckPath);
-                    client.setDeck(deck);
+                    //deck = Deck.openDeck(deckPath);
+                    //client.setDeck(deck);
 
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));
                 } else {
