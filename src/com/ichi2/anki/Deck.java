@@ -56,7 +56,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 63;
+    public static final int DECK_VERSION = 64;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -749,6 +749,22 @@ public class Deck {
             mVersion = 63;
             commitToDB();
         }
+        if (mVersion < 64) {
+            // Remove old static indices, as all clients should be libanki1.2+
+            String[] oldStaticIndices = {"ix_cards_duePriority", "ix_cards_priorityDue"};
+            for (String d : oldStaticIndices) {
+                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS " + d);
+            }
+            // Remove old dynamic indices
+            String[] oldDynamicIndices = {"intervalDesc", "intervalAsc", "randomOrder", "dueAsc", "dueDesc"};
+            for (String d : oldDynamicIndices) {
+                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d);
+            }
+            getDB().getDatabase().execSQL("ANALYZE");
+            mVersion = 64;
+            commitToDB();
+            // Note: we keep the priority index for now
+        }
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
             commitToDB();
@@ -793,15 +809,9 @@ public class Deck {
         // Index on modified, to speed up sync summaries
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_modified ON cards (modified)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_facts_modified ON facts (modified)");
-        // Failed cards, review early - obsolete
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_duePriority " +
-                "ON cards (type, isDue, combinedDue, priority)");
         // Priority - temporary index to make compat code faster. This can be removed when all clients are on 1.2,
         // as can the ones below
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_priority ON cards (priority)");
-        // Check due - obsolete
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_priorityDue " +
-                "ON cards (type, isDue, priority, combinedDue)");
         // Average factor
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_factor ON cards (type, factor)");
         // Card spacing
@@ -1279,8 +1289,10 @@ public class Deck {
         if (yes.length > 0) {
             long yids[] = Utils.toPrimitive(tagIds(yes).values());
             long nids[] = Utils.toPrimitive(tagIds(no).values());
-            return sql.replace("WHERE", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE tagId IN " +
-                    Utils.ids2str(yids) + " AND tagId NOT IN " + Utils.ids2str(nids) + ") AND");
+            return sql.replace("WHERE",
+                    "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " +
+                    "tagId IN " + Utils.ids2str(yids) + ") AND +c.id NOT IN (SELECT cardId FROM " +
+                    "cardTags WHERE tagId in " + Utils.ids2str(nids) + ") AND");
         } else if (no.length > 0) {
             long nids[] = Utils.toPrimitive(tagIds(no).values());
             return sql.replace("WHERE", "WHERE +c.id NOT IN (SELECT cardId FROM cardTags WHERE tagId IN "
