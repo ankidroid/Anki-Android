@@ -249,14 +249,10 @@ public class StudyOptions extends Activity {
                     }
                     return;
                 case R.id.studyoptions_congrats_learnmore:
-                    onLearnMore();
-                    reviewer.putExtra("deckFilename", mDeckFilename);
-                    startActivityForResult(reviewer, REQUEST_REVIEW);
-                    return;
+                	startLearnMore();
+                	return;
                 case R.id.studyoptions_congrats_reviewearly:
-                    onReviewEarly();
-                    reviewer.putExtra("deckFilename", mDeckFilename);
-                    startActivityForResult(reviewer, REQUEST_REVIEW);
+                	startEarlyReview();
                     return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     openDeckPicker();
@@ -461,14 +457,38 @@ public class StudyOptions extends Activity {
        			MyAnimation.slide(this, MyAnimation.LEFT);
         	}    		
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
+    		startEarlyReview();
+    	}
+    }
+
+
+    private void startEarlyReview() {
+		Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+            deck.setupReviewEarlyScheduler();
+            deck.reset();
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
-    		onReviewEarly();
             reviewer.putExtra("deckFilename", mDeckFilename);
             startActivityForResult(reviewer, REQUEST_REVIEW);
         	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
        			MyAnimation.slide(this, MyAnimation.LEFT);
-        	}    		
-    	}
+        	}    		    	
+        }
+    }
+
+
+    private void startLearnMore() {
+		Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+            deck.setupLearnMoreScheduler();
+            deck.reset();
+    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+    		reviewer.putExtra("deckFilename", mDeckFilename);
+        	startActivityForResult(reviewer, REQUEST_REVIEW);
+    		if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    			MyAnimation.slide(this, MyAnimation.LEFT);
+    		}    	
+        }
     }
 
 
@@ -902,24 +922,6 @@ public class StudyOptions extends Activity {
             AnkiDroidApp.deck().updateAllPriorities();
         }
         AnkiDroidApp.deck().reset();
-    }
-
-
-    private void onLearnMore() {
-        Deck deck = AnkiDroidApp.deck();
-        if (deck != null) {
-            deck.setupLearnMoreScheduler();
-            deck.reset();
-        }
-    }
-
-
-    private void onReviewEarly() {
-        Deck deck = AnkiDroidApp.deck();
-        if (deck != null) {
-            deck.setupReviewEarlyScheduler();
-            deck.reset();
-        }
     }
 
 
