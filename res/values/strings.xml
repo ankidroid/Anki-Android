@@ -368,7 +368,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_no_changes_message">No changes found.</string>
 <string name="sync_log_error_message">Error: Deck not synchronized</string>
 <string name="sync_log_no_changes_message">No changes found</string>
-<string name="sync_log_uploading_message">No deck on server</string>
+<string name="sync_log_uploading_message">Full sync from local</string>
 <string name="sync_log_downloading_message">Full sync from server</string>
 <string name="sync_log_fact_to_server_message">1 fact to server</string>
 <string name="sync_log_facts_to_server_message">%d facts to server</string>

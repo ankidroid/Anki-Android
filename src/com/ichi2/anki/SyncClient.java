@@ -1453,9 +1453,9 @@ public class SyncClient {
         String idsString = Utils.ids2str(ids);
 
         // Get filenames
-        // FIXME: How come files is never used?
-        ArrayList<String> files = mDeck.getDB().queryColumn(String.class, "SELECT filename FROM media WHERE id IN "
-                + idsString, 0);
+        // files below is never used, so it's commented out
+        // ArrayList<String> files = mDeck.getDB().queryColumn(String.class, "SELECT filename FROM media WHERE id IN "
+        //         + idsString, 0);
 
         // Note the media to delete (Insert the media to delete into mediaDeleted)
         double now = Utils.now();
@@ -1878,7 +1878,6 @@ public class SyncClient {
 
 
     public String prepareFullSync() {
-        double t = Utils.now();
         // Ensure modified is not greater than server time
         mDeck.setModified(Math.min(mDeck.getModified(), mServer.getTimestamp()));
         mDeck.commitToDB();
@@ -1976,7 +1975,6 @@ public class SyncClient {
 			if (response.substring(0,2).equals("OK")) {
 				// Update lastSync
                 boolean wasDbOpen = AnkiDatabaseManager.isDatabaseOpen(deckPath);
-				AnkiDb db = AnkiDatabaseManager.getDatabase(deckPath);
                 AnkiDatabaseManager.getDatabase(deckPath).getDatabase().execSQL("UPDATE decks SET lastSync = " +
                         response.substring(3, response.length()-3));
                 if (!wasDbOpen) {

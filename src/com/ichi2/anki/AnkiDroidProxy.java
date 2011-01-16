@@ -187,14 +187,18 @@ public class AnkiDroidProxy {
     public void finish() {
         try {
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
-                + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=None";
+                + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=" + URLEncoder.encode(mDeckName, "UTF-8");
             HttpPost httpPost = new HttpPost(SYNC_URL + "finish");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
             httpPost.setHeader("Accept-Encoding", "identity");
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
-            httpClient.execute(httpPost);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entityResponse = response.getEntity();
+            InputStream content = entityResponse.getContent();
+            String contentString = Utils.convertStreamToString(new InflaterInputStream(content));
+            Log.i(AnkiDroidApp.TAG, "finish: " + contentString);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
