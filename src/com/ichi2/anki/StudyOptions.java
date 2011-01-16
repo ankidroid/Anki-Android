@@ -460,6 +460,14 @@ public class StudyOptions extends Activity {
         	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
        			MyAnimation.slide(this, MyAnimation.LEFT);
         	}    		
+    	} else if (mCurrentContentView == CONTENT_CONGRATS) {
+    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+    		onReviewEarly();
+            reviewer.putExtra("deckFilename", mDeckFilename);
+            startActivityForResult(reviewer, REQUEST_REVIEW);
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+       			MyAnimation.slide(this, MyAnimation.LEFT);
+        	}    		
     	}
     }
 
