@@ -364,7 +364,7 @@ public class StudyOptions extends Activity {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
             } else {
-            	if (showDeckPickerOnStartup()) {
+            	if (showDeckPickerOnStartup() && !hasErrorFiles()) {
             		openDeckPicker();
             	} else {
             		// Load previous deck.
@@ -457,6 +457,9 @@ public class StudyOptions extends Activity {
 		// finish();
         reviewer.putExtra("deckFilename", mDeckFilename);
 		startActivityForResult(reviewer, REQUEST_REVIEW);
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+   			MyAnimation.slide(this, MyAnimation.LEFT);
+    	}
     }
 
 
@@ -1046,6 +1049,9 @@ public class StudyOptions extends Activity {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    		MyAnimation.slide(this, MyAnimation.RIGHT);
+    	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
 
@@ -1145,6 +1151,10 @@ public class StudyOptions extends Activity {
             // hideSdError();
             // hideDeckErrors();
             mInDeckPicker = false;
+
+            if (requestCode == PICK_DECK_REQUEST && mCurrentContentView == CONTENT_CONGRATS) {
+            	setContentView(mStudyOptionsView);
+            }
 
             if (resultCode != RESULT_OK) {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
@@ -1425,7 +1435,7 @@ public class StudyOptions extends Activity {
                     	openReviewer();
                     } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
                         // right
-    					// openDeckPicker();
+    					openDeckPicker();
                     }
                 }
                 catch (Exception e) {

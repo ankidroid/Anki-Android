@@ -190,6 +190,8 @@ public class Reviewer extends Activity {
     
     private boolean mConfigurationChanged = false;
     private int mSelectionStarted = 0;
+    
+	public boolean mShowCongrats = false;
 
     /**
      * Swipe Detection
@@ -386,10 +388,11 @@ public class Reviewer extends Activity {
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
                 Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
-                Reviewer.this.finish();
+                mShowCongrats = true;
+                closeReviewer();
             } else if (mSessionComplete) {
                 Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                Reviewer.this.finish();
+                closeReviewer();
             }
         }
     };
@@ -411,7 +414,7 @@ public class Reviewer extends Activity {
         // Make sure a deck is loaded before continuing.
         if (AnkiDroidApp.deck() == null) {
             setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-            finish();
+            closeReviewer();
         } else {
             restorePreferences();
 
@@ -482,6 +485,18 @@ public class Reviewer extends Activity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        	Log.i(AnkiDroidApp.TAG, "Reviewer - onBackPressed()");
+        	closeReviewer();
+        	return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -753,7 +768,7 @@ public class Reviewer extends Activity {
 
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-        finish();
+        closeReviewer();
     }
 
     private Runnable copyTextAfterDelay=new Runnable() {
@@ -1471,6 +1486,16 @@ public class Reviewer extends Activity {
         }
     }
 
+    private void closeReviewer() {
+    	finish();
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    		if (mShowCongrats) {
+    			MyAnimation.slide(this, MyAnimation.FADE);
+    		} else {
+    			MyAnimation.slide(this, MyAnimation.RIGHT);
+    		}
+    	}
+    }
 
     class MyGestureDetector extends SimpleOnGestureListener {
     	@Override
@@ -1500,7 +1525,7 @@ public class Reviewer extends Activity {
       					}
                      } else if (e2.getX() - e1.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
                        	 // left
-                    	 finish();
+                    	 closeReviewer();
                      }
                  }
                  catch (Exception e) {
@@ -1517,4 +1542,20 @@ public class Reviewer extends Activity {
 	    else
 	    	return false;
     }
+}
+
+class MyAnimation {
+	public static int LEFT = 1;
+	public static int RIGHT = 2;
+	public static int FADE = 3;
+	
+	public static void slide(Activity activity, int direction) {
+		if (direction == LEFT) {
+			activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+		} else if (direction == RIGHT) {
+			activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+		} else if (direction == FADE) {
+			activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+		}
+	}
 }

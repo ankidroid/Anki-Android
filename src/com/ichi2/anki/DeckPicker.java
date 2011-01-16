@@ -42,6 +42,7 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -470,6 +471,17 @@ public class DeckPicker extends Activity implements Runnable {
 		}
 	}
 
+	
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        	Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
+        	closeDeckPicker();
+        	return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 	// ----------------------------------------------------------------------------
 	// CUSTOM METHODS
 	// ----------------------------------------------------------------------------
@@ -516,6 +528,15 @@ public class DeckPicker extends Activity implements Runnable {
 			registerReceiver(mUnmountReceiver, iFilter);
 		}
 	}
+
+	
+	private void closeDeckPicker () {
+    	finish();
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    		MyAnimation.slide(this, MyAnimation.LEFT);
+    	}
+	}
+
 
 	private void initDialogs() {
 		// Sync Log dialog
@@ -739,7 +760,7 @@ public class DeckPicker extends Activity implements Runnable {
 			intent.putExtra(StudyOptions.OPT_DB, deckFilename);
 			setResult(RESULT_OK, intent);
 
-			finish();
+			closeDeckPicker();
 		}
 	}
 
@@ -869,7 +890,7 @@ public class DeckPicker extends Activity implements Runnable {
             if (mSwipeEnabled) {
                 try {
        				if (e1.getX() - e2.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
-       					// finish();
+       					closeDeckPicker();
                     }
        			}
                 catch (Exception e) {
