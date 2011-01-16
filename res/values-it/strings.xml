@@ -117,6 +117,8 @@
   <string name="fullscreen_review_summ">Puoi decidere se usare tutto lo spazio dello schermo disponibile durante la revisione del mazzo</string>
   <string name="zoom">Abilita lo zoom</string>
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
+  <string name="swipe">Swipe</string>
+  <string name="swipe_summ">Swipe vertically to switch between screens and horizontally to answer cards (down: again, up: recommendation)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sync features</string>
   <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
@@ -253,7 +255,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
   <string name="sync_log_facts_to_server_message">%d facts to server</string>
   <string name="sync_log_fact_from_server_message">1 fact from server</string>
   <string name="sync_log_facts_from_server_message">%d facts from server</string>
-  <string name="error_message">Ci sono %d errori da segnalare</string>
+  <string name="error_message">There is one error to report</string>
   <string name="errors_message">There are %d errors to report</string>
   <string name="error_ok">Segnala gli errori</string>
   <string name="error_cancel">Non segnalare gli errori</string>

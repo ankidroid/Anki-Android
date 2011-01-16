@@ -117,6 +117,8 @@
   <string name="fullscreen_review_summ">Вы можете решить, хотите ли вы использовать все доступное место экрана для просмотра</string>
   <string name="zoom">Включить масштабирование</string>
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
+  <string name="swipe">Swipe</string>
+  <string name="swipe_summ">Swipe vertically to switch between screens and horizontally to answer cards (down: again, up: recommendation)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sync features</string>
   <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
@@ -253,7 +255,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="sync_log_facts_to_server_message">%d факт(ов) на сервер</string>
   <string name="sync_log_fact_from_server_message">1 факт с сервера</string>
   <string name="sync_log_facts_from_server_message">%d факт(ов) с сервера</string>
-  <string name="error_message">Найдено %d ошибок для отчета</string>
+  <string name="error_message">There is one error to report</string>
   <string name="errors_message">Найдено %d ошибки для отчета</string>
   <string name="error_ok">Отправить отчёт об ошибках</string>
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>

@@ -117,6 +117,8 @@
   <string name="fullscreen_review_summ">Možete da odlučite ako hoćete da koristite sav prostor na ekranu za vreme pregledavanja kartica</string>
   <string name="zoom">Omogući Zumiranje</string>
   <string name="zoom_summ">Prikaži Kontrole za Zumiranje tokom pregledavanja</string>
+  <string name="swipe">Swipe</string>
+  <string name="swipe_summ">Swipe vertically to switch between screens and horizontally to answer cards (down: again, up: recommendation)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sync features</string>
   <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
@@ -253,7 +255,7 @@ Oni koji nisu programeri takođe mogu pomoću, naprimer s time što ažuriraju w
   <string name="sync_log_facts_to_server_message">%d podataka na serveru</string>
   <string name="sync_log_fact_from_server_message">1 podatak na serveru</string>
   <string name="sync_log_facts_from_server_message">%d podataka na serveru</string>
-  <string name="error_message">%d grešaka za prijaviti</string>
+  <string name="error_message">There is one error to report</string>
   <string name="errors_message">%d grešaka za prijaviti</string>
   <string name="error_ok">Prijavljuj greške</string>
   <string name="error_cancel">Ne prijavljuj greške</string>

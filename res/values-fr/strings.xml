@@ -117,6 +117,8 @@
   <string name="fullscreen_review_summ">Vous pouvez décider si vous voulez utiliser tout l\'écran pendant la révision</string>
   <string name="zoom">Enable Zoom</string>
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
+  <string name="swipe">Swipe</string>
+  <string name="swipe_summ">Swipe vertically to switch between screens and horizontally to answer cards (down: again, up: recommendation)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sync features</string>
   <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
@@ -253,8 +255,8 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="sync_log_facts_to_server_message">%d facts to server</string>
   <string name="sync_log_fact_from_server_message">1 fact from server</string>
   <string name="sync_log_facts_from_server_message">%d facts from server</string>
-  <string name="error_message">Il y a %d erreurs à signaler</string>
-  <string name="errors_message">There are %d errors to report</string>
+  <string name="error_message">There is one error to report</string>
+  <string name="errors_message">Il y a %d erreurs à signaler</string>
   <string name="error_ok">Signaler les erreurs</string>
   <string name="error_cancel">Ne pas signaler les erreurs</string>
   <string name="error_email">ankidroid@gmail.com</string>
