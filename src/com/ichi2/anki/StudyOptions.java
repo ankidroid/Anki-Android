@@ -453,12 +453,13 @@ public class StudyOptions extends Activity {
 
 
     private void openReviewer() {
-		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
-		// finish();
-        reviewer.putExtra("deckFilename", mDeckFilename);
-		startActivityForResult(reviewer, REQUEST_REVIEW);
-    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-   			MyAnimation.slide(this, MyAnimation.LEFT);
+    	if (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) {
+    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+            reviewer.putExtra("deckFilename", mDeckFilename);
+    		startActivityForResult(reviewer, REQUEST_REVIEW);
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+       			MyAnimation.slide(this, MyAnimation.LEFT);
+        	}    		
     	}
     }
 
