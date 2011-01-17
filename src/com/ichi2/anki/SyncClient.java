@@ -1265,12 +1265,12 @@ public class SyncClient {
                 card.put(cursor.getDouble(15));
                 // spaceUntil
                 card.put(cursor.getDouble(33));
-                // relativeDelay
-                card.put(cursor.getInt(34));
                 // type
                 card.put(cursor.getInt(36));
                 // combinedDue
                 card.put(cursor.getInt(37));
+                // relativeDelay
+                card.put(cursor.getInt(34));
 
                 cards.put(card);
             } catch (JSONException e) {
