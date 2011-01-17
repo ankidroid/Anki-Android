@@ -238,7 +238,7 @@
   <string name="sync_no_changes_message">Keine Veränderungen gefunden.</string>
   <string name="sync_log_error_message">Fehler: Deck wurde nicht synchronisiert</string>
   <string name="sync_log_no_changes_message">Keine Veränderungen gefunden</string>
-  <string name="sync_log_uploading_message">Kein Stapel auf dem Server</string>
+  <string name="sync_log_uploading_message">Voll-Synchronisierung des lokalen Stapels</string>
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
   <string name="sync_log_fact_to_server_message">Ein Fakt hochgeladen</string>
   <string name="sync_log_facts_to_server_message">%d Fakten hochgeladen</string>

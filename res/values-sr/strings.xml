@@ -249,7 +249,7 @@ Oni koji nisu programeri takođe mogu pomoću, naprimer s time što ažuriraju w
   <string name="sync_no_changes_message">Nema promena.</string>
   <string name="sync_log_error_message">Greška: Špil nije sinhronizovan</string>
   <string name="sync_log_no_changes_message">Nema promena</string>
-  <string name="sync_log_uploading_message">Nema špila na serveru</string>
+  <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Puna sinhronizacija sa serverom</string>
   <string name="sync_log_fact_to_server_message">1 podatak na serveru</string>
   <string name="sync_log_facts_to_server_message">%d podataka na serveru</string>

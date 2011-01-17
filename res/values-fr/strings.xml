@@ -27,7 +27,7 @@
   <string name="no">Non</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Les paquets dont la version est antérieure à 39 ne sont pas pris en charge par AnkiDroid, veuillez ouvrir ce paquet avec l\'application de bureau Anki pour mettre à jour le paquet à la dernière version.</string>
-  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
+  <string name="deckpicker_title">Sélectionner le paquet (%1$d de %2$d à faire)</string>
   <string name="deckpicker_title_nosdcard">La carte SD n\'est pas montée</string>
   <string name="deckpicker_due">%1$d parmi %2$d dûes</string>
   <string name="deckpicker_new">%d nouvelles aujourd\'hui</string>
@@ -50,16 +50,16 @@
   <string name="clear_whiteboard">Effacer le tableau blanc</string>
   <string name="session_question_limit_reached">Limite de questions par session atteinte</string>
   <string name="session_time_limit_reached">Temps limite de session atteint</string>
-  <string name="cram_edit_warning">Card editing not allowed while cramming</string>
+  <string name="cram_edit_warning">L\'édition de cartes n\'est pas autorisées pendant le bachotage</string>
   <string name="suspend_leeches">Suspend Leeches</string>
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
   <string name="leech_notification">Card marked as leech</string>
   <string name="newcards_day_summ">Le nombre maximal de nouvelles cartes par jour.</string>
   <string name="newcards_day">Nouvelles cartes par jour</string>
   <string name="session_time_limit">Durée maximale d\'une session</string>
-  <string name="session_time_limit_summ">La durée maximale d\'une session. 0 pour illimité.</string>
+  <string name="session_time_limit_summ">Nombre de minutes par session. 0 pour illimité.</string>
   <string name="session_question_limit">Nombre max de questions par session</string>
-  <string name="session_question_limit_summ">Le nombre maximal de question dans une session. 0 pour illimité.</string>
+  <string name="session_question_limit_summ">Le nombre maximal de questions par session. 0 pour illimité.</string>
   <string name="new_cards_order">Ordre des nouvelles cartes</string>
   <string name="new_cards_order_summ">L\'ordre dans lequel les nouvelles cartes apparaissent.</string>
   <string name="show_new_cards_in">Montrer les nouvelles cartes dans...</string>
@@ -86,10 +86,10 @@
   <string name="pref_cat_qadisplay">Affichage question et réponse</string>
   <string name="sync_on_open">Synchro au démarrage</string>
   <string name="sync_on_close">Synchro à la fermeture</string>
-  <string name="show_study_options_on_deck_load">Study options on load</string>
+  <string name="show_study_options_on_deck_load">Options d\'étude au démarrage</string>
   <string name="show_study_options_on_deck_load_summ">Montrer les options d\'études pendant le chargement d\'un paquet</string>
   <string name="startup_mode">Startup Mode</string>
-  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
+  <string name="startup_mode_summ">Choisissez si vous voulez commencer avec les options d\'étude ou le choix du paquet</string>
   <string name="show_timer">Montrer la minuterie</string>
   <string name="show_timer_summ">Minuterie indiquant le temps qu\'il vous faut pour répondre</string>
   <string name="show_whiteboard_summ">Vous permet d\'écrire sur l\'écran</string>
@@ -100,7 +100,7 @@
   <string name="write_answers">Écrire les réponses</string>
   <string name="write_answers_summ">Vous permet d\'écrire la réponse et la comparer avec la bonne</string>
   <string name="text_selection">Autoriser la sélection de texte</string>
-  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+  <string name="text_selection_summ">Vous permet de sélectionner et copier du texte des cartes avec un clic long pour faire des recherches dans un dictionnaire externe</string>
   <string name="dictionary">Dictionary</string>
   <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
   <string name="use_ruby_support">Montrer les annotations ruby</string>
@@ -117,8 +117,8 @@
   <string name="fullscreen_review_summ">Vous pouvez décider si vous voulez utiliser tout l\'écran pendant la révision</string>
   <string name="zoom">Enable Zoom</string>
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
-  <string name="swipe">Swipe</string>
-  <string name="swipe_summ">Swipe vertically to switch between screens and horizontally to answer cards (down: again, up: recommendation)</string>
+  <string name="swipe">Faites glisser le doigt</string>
+  <string name="swipe_summ">Faites glisser le doigt verticalement pour changer d\'écran et horizontalement pour répondre aux questions (bas: répéter, haut: recommandation)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sync features</string>
   <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
@@ -183,11 +183,11 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="studyoptions_more_dialog_title">Plus d\'options</string>
   <string name="studyoptions_more_save">Enregistrer</string>
   <string name="studyoptions_nodeck_title">Pas de paquet chargé</string>
-  <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \"Menu\" button and select \"Preferences\").</string>
+  <string name="studyoptions_nodeck_message">Aucun paquet n\'est actuellement chargé. Les paquets Anki sont stockés dans le répertoire \"%s\" sur votre carte SD. Cet emplacement peut être spécifié dans les préférences (pressez le bouton \"Menu\" sur votre appareil et choisissez \"Préférences\").</string>
   <string name="studyoptions_deck_not_loaded_title">Le paquet n\'a pas pu être chargé</string>
-  <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
+  <string name="studyoptions_deck_not_loaded_message">Le paquet que vous avez sélectionné n\'est pas un paquet Anki valide. Veuillez utiliser l\'application Anki sur votre ordinateur pour créer un paquet valide avant de le charger sur Ankidroid.\n\nEn attendant, vous pouvez sélectionner un autre paquet ou charger le paquet de démonstration en utilisant les boutons ci-dessous.</string>
   <string name="studyoptions_no_external_storage_title">Aucun stockage externe disponible</string>
-  <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the sdcard in order to read and load your Anki decks. Check that your sdcard is mounted and try again.</string>
+  <string name="studyoptions_no_external_storage_message">Aucun moyen de stockage externe n\'est disponible pour l\'instant. AnkiDroid nécessite d\'avoir accès à la carte SD afin de lire et charger vos paquets Anki. Veuillez vérifier que votre carte SD est montée et essayez à nouveau.</string>
   <string name="studyoptions_load_other_deck">Charger un autre paquet</string>
   <string name="studyoptions_load_sample_deck">Charger un paquet d\'exemple</string>
   <string name="menu_open_deck">Ouvrir paquet</string>
@@ -207,10 +207,10 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="menu_mark_card">Marquer la carte</string>
   <string name="menu_marked">Marqué</string>
   <string name="loading">Chargement...</string>
-  <string name="studyoptions_continue">Continue Reviewing</string>
+  <string name="studyoptions_continue">Continuer à réviser</string>
   <string name="studyoptions_well_done">Bien joué !</string>
   <string name="studyoptions_congrats_title">Félicitations !</string>
-  <string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
+  <string name="studyoptions_congrats_message">Vous avez terminé pour le moment.\nDemain il y aura:\n%1$d %2$s à revoir et %3$d nouvelles %4$s.</string>
   <string name="studyoptions_congrats_card">card</string>
   <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">En savoir plus</string>
@@ -232,7 +232,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
   <string name="no_user_password_error_message">Afin de procéder à cette opération, vous devez avoir un compte AnkiOnline et être connecté.</string>
   <string name="sync_progress_bar_title">Synchronisation de %s</string>
-  <string name="studyoptions_cram_dialog_title">Tags to cram</string>
+  <string name="studyoptions_cram_dialog_title">Marqueurs à bachoter</string>
   <string name="begin_cram">Démarrer la bachotage</string>
   <string name="end_cram">Cesser la bachotage</string>
   <string name="cram">Boulonner</string>
@@ -245,30 +245,30 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="sync_complete_message">Synchronisation complète.</string>
   <string name="sync_determining_differences_message">Détermination des différences...</string>
   <string name="sync_transferring_payload_message">Transferring payload...</string>
-  <string name="sync_applying_reply_message">Applying reply...</string>
+  <string name="sync_applying_reply_message">Application de la réponse...</string>
   <string name="sync_no_changes_message">Aucun changement trouvé.</string>
-  <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
+  <string name="sync_log_error_message">Erreur: Paquet n\'a pas été synchronisé</string>
   <string name="sync_log_no_changes_message">Aucun changement trouvé</string>
-  <string name="sync_log_uploading_message">No deck on server</string>
-  <string name="sync_log_downloading_message">Full sync from server</string>
-  <string name="sync_log_fact_to_server_message">1 fact to server</string>
-  <string name="sync_log_facts_to_server_message">%d facts to server</string>
-  <string name="sync_log_fact_from_server_message">1 fact from server</string>
-  <string name="sync_log_facts_from_server_message">%d facts from server</string>
-  <string name="error_message">There is one error to report</string>
+  <string name="sync_log_uploading_message">Synchronisation complète depuis la version locale</string>
+  <string name="sync_log_downloading_message">Synchronisation complète depuis la version serveur</string>
+  <string name="sync_log_fact_to_server_message">1 élément au serveur</string>
+  <string name="sync_log_facts_to_server_message">%d éléments au serveur</string>
+  <string name="sync_log_fact_from_server_message">1 élément du serveur</string>
+  <string name="sync_log_facts_from_server_message">%d éléments du serveur</string>
+  <string name="error_message">Il y a une erreur à signaler</string>
   <string name="errors_message">Il y a %d erreurs à signaler</string>
   <string name="error_ok">Signaler les erreurs</string>
   <string name="error_cancel">Ne pas signaler les erreurs</string>
   <string name="error_email">ankidroid@gmail.com</string>
-  <string name="error_reporting_choice">Error reporting mode</string>
-  <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
+  <string name="error_reporting_choice">Mode de rapport d\'erreur</string>
+  <string name="error_reporting_choice_summary">Les erreurs peuvent être signalées automatiquement, non signalées, ou requérir une confirmation de votre part</string>
   <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widget notification threshold</string>
-  <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibrate</string>
-  <string name="widget_minimum_cards_due_blink">Blink light</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
+  <string name="widget_minimum_cards_due">Seuil de notification de widget</string>
+  <string name="widget_minimum_cards_due_summary">Le nombre minimum de cartes à faire pour qu\'une notification soit déclenchée</string>
+  <string name="widget_minimum_cards_due_vibrate">Vibrer</string>
+  <string name="widget_minimum_cards_due_blink">Lumière clignotante</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Cartes à faire</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d cartes AnkiDroid à faire</string>
   <string name="model">Modèle:</string>
   <string name="select_model">Modèle</string>
   <string name="card">Carte:</string>
@@ -276,11 +276,11 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="add">Ajouter</string>
   <string name="close">Fermer</string>
   <string name="soon">Bientôt</string>
-  <string name="show_next_review_time">Next review time</string>
-  <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
-  <string name="update_notification">Update notifications</string>
-  <string name="update_notification_summ">Notify me when AnkiDroid is updated</string>
-  <string name="per_day">Per Day</string>
+  <string name="show_next_review_time">Prochain temps de révision</string>
+  <string name="show_next_review_time_summ">Montre le prochain temps de révision dépendant de votre choix</string>
+  <string name="update_notification">Mise à jour des notifications</string>
+  <string name="update_notification_summ">M\'avertir quand AnkiDroid est mis à jour</string>
+  <string name="per_day">Par jour</string>
   <string name="undo">Annuler</string>
   <string name="redo">Refaire</string>
   <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
@@ -288,23 +288,23 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="delete_deck_message">Do you really want to delete deck %s?</string>
   <string name="delete_deck_confirm">Delete it</string>
   <string-array name="studyoptions_more_new_card_order">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
+    <item>Nouvelles cartes en ordre aléatoire</item>
+    <item>Nouvelles cartes dans l\'ordre d\'ajout</item>
+    <item>Nouvelles cartes dans l\'ordre inverse d\'ajout</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Distribuer les nouvelles cartes dans les révisions</item>
+    <item>Nouvelles cartes après la révision</item>
+    <item>Nouvelles carte avant la révision</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
-    <item>Review cards in random order</item>
+    <item>Réviser les cartes en commençant avec l\'intervalle le plus long</item>
+    <item>Réviser les cartes en commençant avec l\'intervalle le plus court</item>
+    <item>Réviser les cartes dans l\'ordre d\'échéance</item>
+    <item>Réviser les cartes dans un ordre aléatoire</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
-    <item>Show failed cards soon</item>
+    <item>Montrer les cartes manquées rapidement</item>
     <item>Show failed cards at end</item>
     <item>Show failed cards in 10 minutes</item>
     <item>Show failed cards in 8 hours</item>

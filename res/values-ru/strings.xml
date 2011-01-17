@@ -249,7 +249,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="sync_no_changes_message">Не найдено изменений.</string>
   <string name="sync_log_error_message">Ошибка: Колода не была синхронизирована</string>
   <string name="sync_log_no_changes_message">Не найдено изменений</string>
-  <string name="sync_log_uploading_message">Нет колоды на сервере</string>
+  <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Полная синхронизация с сервером</string>
   <string name="sync_log_fact_to_server_message">1 факт на сервер</string>
   <string name="sync_log_facts_to_server_message">%d факт(ов) на сервер</string>

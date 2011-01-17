@@ -238,7 +238,7 @@
   <string name="sync_no_changes_message">Nenalezeny žádné změny.</string>
   <string name="sync_log_error_message">Chyba: Balíček nebyl synchronizován</string>
   <string name="sync_log_no_changes_message">Nenalezeny žádné změny</string>
-  <string name="sync_log_uploading_message">Na serveru není žádný balíček</string>
+  <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Plná synchronizace ze serveru</string>
   <string name="sync_log_fact_to_server_message">1 fakt na server</string>
   <string name="sync_log_facts_to_server_message">%d faktů na server</string>

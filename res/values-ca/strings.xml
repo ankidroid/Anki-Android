@@ -249,7 +249,7 @@ Els que no sou desenvolupadors també podeu ajudar, per exemple actualitzant el 
   <string name="sync_no_changes_message">No s\'ha trobat cap canvi.</string>
   <string name="sync_log_error_message">Error: El paquet no s\'ha sincronitzat</string>
   <string name="sync_log_no_changes_message">No s\'ha trobat cap canvi</string>
-  <string name="sync_log_uploading_message">No hi ha cap paquet al servidor</string>
+  <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Sincronització completa del servidor</string>
   <string name="sync_log_fact_to_server_message">1 fet al servidor</string>
   <string name="sync_log_facts_to_server_message">%d fets al servidor</string>

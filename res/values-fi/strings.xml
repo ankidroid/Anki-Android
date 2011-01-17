@@ -250,7 +250,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="sync_no_changes_message">Muutoksia ei löytynyt.</string>
   <string name="sync_log_error_message">Virhe: Pakkaa ei ole synkronoitu</string>
   <string name="sync_log_no_changes_message">Muutoksia ei löytynyt</string>
-  <string name="sync_log_uploading_message">Ei ole pakkaa palvelimella</string>
+  <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Täysi synkronointi palvelimesta</string>
   <string name="sync_log_fact_to_server_message">1 seikka palvelimelle</string>
   <string name="sync_log_facts_to_server_message">%d seikkaa palvelimelle</string>
