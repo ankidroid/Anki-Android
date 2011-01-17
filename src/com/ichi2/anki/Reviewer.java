@@ -982,7 +982,7 @@ public class Reviewer extends Activity {
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
-        mZoomEnabled = preferences.getBoolean("zoom", true);
+        mZoomEnabled = preferences.getBoolean("zoom", false);
         mDisplayFontSize = Integer.parseInt(preferences.getString("displayFontSize",
                 Integer.toString(CardModel.DEFAULT_FONT_SIZE_RATIO)));
         mRelativeButtonSize = Integer.parseInt(preferences.getString("buttonSize", "100"));
@@ -990,7 +990,7 @@ public class Reviewer extends Activity {
                 Integer.toString(HQIA_DO_SHOW)));
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
-        mSwipeEnabled = preferences.getBoolean("swipe", false);
+        mSwipeEnabled = preferences.getBoolean("swipe", true);
 
         return preferences;
     }
