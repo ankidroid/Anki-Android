@@ -117,6 +117,8 @@
   <string name="fullscreen_review_summ">Můžete se rozhodnout, zda chcete použít celý dostupný prostor obrazovky během opakování</string>
   <string name="zoom">Povolit zoom</string>
   <string name="zoom_summ">Zobrazit ovládání zoomu během opakování</string>
+  <string name="swipe">Swipe</string>
+  <string name="swipe_summ">Swipe vertically to switch between screens and horizontally to answer cards (down: again, up: recommendation)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sync features</string>
   <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
@@ -236,13 +238,13 @@
   <string name="sync_no_changes_message">Nenalezeny žádné změny.</string>
   <string name="sync_log_error_message">Chyba: Balíček nebyl synchronizován</string>
   <string name="sync_log_no_changes_message">Nenalezeny žádné změny</string>
-  <string name="sync_log_uploading_message">Na serveru není žádný balíček</string>
+  <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Plná synchronizace ze serveru</string>
   <string name="sync_log_fact_to_server_message">1 fakt na server</string>
   <string name="sync_log_facts_to_server_message">%d faktů na server</string>
   <string name="sync_log_fact_from_server_message">1 fakt ze serveru</string>
   <string name="sync_log_facts_from_server_message">%d faktů ze serveru</string>
-  <string name="error_message">% d chyb k nahlášení</string>
+  <string name="error_message">There is one error to report</string>
   <string name="errors_message">%d chyb k nahlášení</string>
   <string name="error_ok">Hlásit chyby</string>
   <string name="error_cancel">Nehlásit chyby</string>

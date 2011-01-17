@@ -249,14 +249,10 @@ public class StudyOptions extends Activity {
                     }
                     return;
                 case R.id.studyoptions_congrats_learnmore:
-                    onLearnMore();
-                    reviewer.putExtra("deckFilename", mDeckFilename);
-                    startActivityForResult(reviewer, REQUEST_REVIEW);
-                    return;
+                	startLearnMore();
+                	return;
                 case R.id.studyoptions_congrats_reviewearly:
-                    onReviewEarly();
-                    reviewer.putExtra("deckFilename", mDeckFilename);
-                    startActivityForResult(reviewer, REQUEST_REVIEW);
+                	startEarlyReview();
                     return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     openDeckPicker();
@@ -364,7 +360,7 @@ public class StudyOptions extends Activity {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
             } else {
-            	if (showDeckPickerOnStartup()) {
+            	if (showDeckPickerOnStartup() && !hasErrorFiles()) {
             		openDeckPicker();
             	} else {
             		// Load previous deck.
@@ -453,10 +449,46 @@ public class StudyOptions extends Activity {
 
 
     private void openReviewer() {
-		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
-		// finish();
-        reviewer.putExtra("deckFilename", mDeckFilename);
-		startActivityForResult(reviewer, REQUEST_REVIEW);
+    	if (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) {
+    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+            reviewer.putExtra("deckFilename", mDeckFilename);
+    		startActivityForResult(reviewer, REQUEST_REVIEW);
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+       			MyAnimation.slide(this, MyAnimation.LEFT);
+        	}    		
+    	} else if (mCurrentContentView == CONTENT_CONGRATS) {
+    		startEarlyReview();
+    	}
+    }
+
+
+    private void startEarlyReview() {
+		Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+            deck.setupReviewEarlyScheduler();
+            deck.reset();
+    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+            reviewer.putExtra("deckFilename", mDeckFilename);
+            startActivityForResult(reviewer, REQUEST_REVIEW);
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+       			MyAnimation.slide(this, MyAnimation.LEFT);
+        	}    		    	
+        }
+    }
+
+
+    private void startLearnMore() {
+		Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+            deck.setupLearnMoreScheduler();
+            deck.reset();
+    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+    		reviewer.putExtra("deckFilename", mDeckFilename);
+        	startActivityForResult(reviewer, REQUEST_REVIEW);
+    		if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    			MyAnimation.slide(this, MyAnimation.LEFT);
+    		}    	
+        }
     }
 
 
@@ -893,24 +925,6 @@ public class StudyOptions extends Activity {
     }
 
 
-    private void onLearnMore() {
-        Deck deck = AnkiDroidApp.deck();
-        if (deck != null) {
-            deck.setupLearnMoreScheduler();
-            deck.reset();
-        }
-    }
-
-
-    private void onReviewEarly() {
-        Deck deck = AnkiDroidApp.deck();
-        if (deck != null) {
-            deck.setupReviewEarlyScheduler();
-            deck.reset();
-        }
-    }
-
-
     /**
 * Enter cramming mode.
 * Currently not supporting cramming from selection of cards, as we don't have a card list view anyway.
@@ -1046,6 +1060,9 @@ public class StudyOptions extends Activity {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    		MyAnimation.slide(this, MyAnimation.RIGHT);
+    	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
 
@@ -1145,6 +1162,10 @@ public class StudyOptions extends Activity {
             // hideSdError();
             // hideDeckErrors();
             mInDeckPicker = false;
+
+            if (requestCode == PICK_DECK_REQUEST && mCurrentContentView == CONTENT_CONGRATS) {
+            	setContentView(mStudyOptionsView);
+            }
 
             if (resultCode != RESULT_OK) {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
@@ -1425,7 +1446,7 @@ public class StudyOptions extends Activity {
                     	openReviewer();
                     } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
                         // right
-    					// openDeckPicker();
+    					openDeckPicker();
                     }
                 }
                 catch (Exception e) {

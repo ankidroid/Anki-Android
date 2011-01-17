@@ -126,9 +126,9 @@
 			android:entries="@array/button_size_labels"
 			android:entryValues="@array/button_size_values" />
 		<CheckBoxPreference
-			android:title="Swipe"
+			android:title="@string/swipe"
 			android:defaultValue="false"
-			android:summary="Swipe left and right to switch between screens and answer cards by swiping down (again) or up (recommendation)"
+			android:summary="@string/swipe_summ"
 			android:key="swipe"/>
 		<CheckBoxPreference
 			android:title="@string/update_notification"

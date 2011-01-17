@@ -189,6 +189,9 @@ public class Reviewer extends Activity {
     private int mButtonHeight = 0;
     
     private boolean mConfigurationChanged = false;
+    private int mSelectionStarted = 0;
+    
+	public boolean mShowCongrats = false;
 
     /**
      * Swipe Detection
@@ -214,7 +217,6 @@ public class Reviewer extends Activity {
         @Override
         public void onClick(View view) {
             Log.i(AnkiDroidApp.TAG, "Flip card changed:");
-            Sound.stopSounds();
 
             displayCardAnswer();
         }
@@ -223,8 +225,6 @@ public class Reviewer extends Activity {
     private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Sound.stopSounds();
-
             switch (view.getId()) {
                 case R.id.ease1:
                 	answerCard(Card.EASE_FAILED);
@@ -386,10 +386,11 @@ public class Reviewer extends Activity {
             // no more cards will take precedence when returning to study options.
             if (mNoMoreCards) {
                 Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
-                Reviewer.this.finish();
+                mShowCongrats = true;
+                closeReviewer();
             } else if (mSessionComplete) {
                 Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
-                Reviewer.this.finish();
+                closeReviewer();
             }
         }
     };
@@ -411,7 +412,7 @@ public class Reviewer extends Activity {
         // Make sure a deck is loaded before continuing.
         if (AnkiDroidApp.deck() == null) {
             setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-            finish();
+            closeReviewer();
         } else {
             restorePreferences();
 
@@ -454,20 +455,6 @@ public class Reviewer extends Activity {
             mSessionTimeLimit = System.currentTimeMillis() + timelimit;
             mSessionCurrReps = 0;
 
-            // Initialize Swipe
-            gestureDetector = new GestureDetector(new MyGestureDetector());
-            gestureListener = new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    Log.e("erkannt","");
-                 	if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
-                }
-            };            
-            mCard.setOnTouchListener(gestureListener);
-            mWhiteboard.setOnTouchListener(gestureListener);            	
-            
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
@@ -496,6 +483,18 @@ public class Reviewer extends Activity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        	Log.i(AnkiDroidApp.TAG, "Reviewer - onBackPressed()");
+        	closeReviewer();
+        	return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -767,11 +766,12 @@ public class Reviewer extends Activity {
 
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-        finish();
+        closeReviewer();
     }
 
     private Runnable copyTextAfterDelay=new Runnable() {
         public void run() {
+        	mSelectionStarted = 2;
         	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             selectAndCopyText();
@@ -780,6 +780,7 @@ public class Reviewer extends Activity {
 
 
     private void answerCard(int ease) {
+    	Sound.stopSounds();
     	mCurrentEase = ease;
         // Increment number reps counter
         mSessionCurrReps++;
@@ -805,6 +806,10 @@ public class Reviewer extends Activity {
         }
         Log.i(AnkiDroidApp.TAG,
                 "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = " + mCard.isFocusableInTouchMode());
+
+        // initialise swipe
+        gestureDetector = new GestureDetector(new MyGestureDetector());
+
         if (mPrefTextSelection) {
 			// mCard.setOnLongClickListener(mLongClickHandler);            
 			mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -812,6 +817,11 @@ public class Reviewer extends Activity {
             mCard.setOnTouchListener(new View.OnTouchListener() { 
     			@Override
     			public boolean onTouch(View v, MotionEvent event) {
+    				if (event.getAction() == MotionEvent.ACTION_UP && mSelectionStarted != 0) {
+                 		mSelectionStarted--;
+    				} else if (gestureDetector.onTouchEvent(event)) {
+                        return true;
+                    }    				
     				switch (event.getAction()) { 
     					case MotionEvent.ACTION_DOWN:  
     						mTimerHandler.removeCallbacks(copyTextAfterDelay);
@@ -827,8 +837,19 @@ public class Reviewer extends Activity {
     				return false;    	           
     			}
             	});
+        } else {
+        	mCard.setOnTouchListener(new View.OnTouchListener() { 
+        		@Override
+        		public boolean onTouch(View v, MotionEvent event) {
+        			if (gestureDetector.onTouchEvent(event)) {
+                        return true;
+                    }
+                    return false;
+                }
+            });            
+            mCard.setOnTouchListener(gestureListener);
         }
-
+        
         mScaleInPercent = mCard.getScale();
 
         mEase1 = (Button) findViewById(R.id.ease1);
@@ -858,6 +879,18 @@ public class Reviewer extends Activity {
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
         mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
+        mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
+        	@Override
+        	public boolean onTouch(View v, MotionEvent event) {
+             	if (mWhiteboard.getVisibility() == View.VISIBLE) {
+             		return false;
+             	}
+        		if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+                return false;
+            }
+        });
         mAnswerField = (EditText) findViewById(R.id.answer_field);
 
         initControls();
@@ -1063,6 +1096,8 @@ public class Reviewer extends Activity {
     private void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
         sDisplayAnswer = true;
+
+        Sound.stopSounds();
 
         if (mPrefTimer) {
             mCardTimer.stop();
@@ -1398,12 +1433,16 @@ public class Reviewer extends Activity {
     
     private int optimalPeriod(double numberOfDays) {
     	if (numberOfDays < 1) {
+    		// hours
     		return 0;
     	} else if (numberOfDays < 30) {
+    		// days
     		return 1;
     	} else if (numberOfDays < 365) {
+    		// months
     		return 2;
     	} else {
+    		// years
     		return 3;
     	}
     }    
@@ -1414,9 +1453,9 @@ public class Reviewer extends Activity {
         if (ease == 1){
         	return res.getString(R.string.soon);
         } else {
-        	double  nextInt = mCurrentCard.nextInterval(mCurrentCard,ease);
+        	double nextInt = mCurrentCard.nextInterval(mCurrentCard,ease);
         	double adInt = 0;
-        	int period = optimalPeriod(nextInt); 
+        	int period = optimalPeriod(nextInt);
         	String[] namePeriod;
         	
          	switch(period){
@@ -1442,7 +1481,7 @@ public class Reviewer extends Activity {
 	       		namePeriod = res.getStringArray(R.array.next_review_p);
         	}
 		
-		if (period <= 1){
+		if (period <= 1 || (adInt * 10) % 10 == 0){
     			return String.valueOf((int)adInt) + " " + namePeriod[period];        			   			
 		} else {
            		return String.valueOf(adInt) + " " + namePeriod[period]; 	
@@ -1450,37 +1489,46 @@ public class Reviewer extends Activity {
         }
     }
 
+    private void closeReviewer() {
+    	finish();
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    		if (mShowCongrats) {
+    			MyAnimation.slide(this, MyAnimation.FADE);
+    		} else {
+    			MyAnimation.slide(this, MyAnimation.RIGHT);
+    		}
+    	}
+    }
 
     class MyGestureDetector extends SimpleOnGestureListener {
     	@Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
         		try {
-       				if (e2.getY() - e1.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
-                        // up
+       				if (mSelectionStarted != 0) {
+       					return false;
+       				}
+        			if (e2.getY() - e1.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+                        // down
       					if (sDisplayAnswer) {
-           					answerCard(Card.EASE_FAILED);    						
+           					answerCard(Card.EASE_FAILED);
        					} else {
            			        displayCardAnswer();    						
        					}
        		        } else if (e1.getY() - e2.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
-                        // down
-       		        	if (mCurrentCard.isRev()) {
-                        	if (sDisplayAnswer) {
-           						answerCard(Card.EASE_MID); 						
-           					} else {
-               			        displayCardAnswer();    						
-           					}
-                           } else {
-           					if (sDisplayAnswer) {
-           						answerCard(Card.EASE_HARD); 						
-           					} else {
-               			        displayCardAnswer();    						
-           					}
-                         }
+                        // up
+      					if (sDisplayAnswer) {
+      						if (mCurrentCard.isRev()) {
+           						answerCard(Card.EASE_MID);
+      						} else {
+      							answerCard(Card.EASE_HARD);
+      						}
+      					} else {
+      						displayCardAnswer(); 
+      					}
                      } else if (e2.getX() - e1.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
                        	 // left
-                    	 finish();
+                    	 closeReviewer();
                      }
                  }
                  catch (Exception e) {
@@ -1497,4 +1545,20 @@ public class Reviewer extends Activity {
 	    else
 	    	return false;
     }
+}
+
+class MyAnimation {
+	public static int LEFT = 1;
+	public static int RIGHT = 2;
+	public static int FADE = 3;
+	
+	public static void slide(Activity activity, int direction) {
+		if (direction == LEFT) {
+			activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+		} else if (direction == RIGHT) {
+			activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+		} else if (direction == FADE) {
+			activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+		}
+	}
 }
