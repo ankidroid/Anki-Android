@@ -225,8 +225,6 @@ public class Reviewer extends Activity {
     private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Sound.stopSounds();
-
             switch (view.getId()) {
                 case R.id.ease1:
                 	answerCard(Card.EASE_FAILED);
@@ -782,6 +780,7 @@ public class Reviewer extends Activity {
 
 
     private void answerCard(int ease) {
+    	Sound.stopSounds();
     	mCurrentEase = ease;
         // Increment number reps counter
         mSessionCurrReps++;
