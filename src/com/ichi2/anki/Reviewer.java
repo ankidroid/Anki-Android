@@ -1433,12 +1433,16 @@ public class Reviewer extends Activity {
     
     private int optimalPeriod(double numberOfDays) {
     	if (numberOfDays < 1) {
+    		// hours
     		return 0;
     	} else if (numberOfDays < 30) {
+    		// days
     		return 1;
     	} else if (numberOfDays < 365) {
+    		// months
     		return 2;
     	} else {
+    		// years
     		return 3;
     	}
     }    
@@ -1449,9 +1453,9 @@ public class Reviewer extends Activity {
         if (ease == 1){
         	return res.getString(R.string.soon);
         } else {
-        	double  nextInt = mCurrentCard.nextInterval(mCurrentCard,ease);
+        	double nextInt = mCurrentCard.nextInterval(mCurrentCard,ease);
         	double adInt = 0;
-        	int period = optimalPeriod(nextInt); 
+        	int period = optimalPeriod(nextInt);
         	String[] namePeriod;
         	
          	switch(period){
@@ -1477,7 +1481,7 @@ public class Reviewer extends Activity {
 	       		namePeriod = res.getStringArray(R.array.next_review_p);
         	}
 		
-		if (period <= 1){
+		if (period <= 1 || (adInt * 10) % 10 == 0){
     			return String.valueOf((int)adInt) + " " + namePeriod[period];        			   			
 		} else {
            		return String.valueOf(adInt) + " " + namePeriod[period]; 	
