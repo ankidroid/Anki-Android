@@ -1321,9 +1321,9 @@ public class SyncClient {
                     // tags
                     statement.bindString(6, card.getString(5));
                     // ordinal
-                    statement.bindString(7, card.getString(6));
+                    statement.bindLong(7, card.getInt(6));
                     // priority
-                    statement.bindString(8, card.getString(7));
+                    statement.bindLong(8, card.getInt(7));
                     // interval
                     statement.bindDouble(9, card.getDouble(8));
                     // lastInterval
@@ -1337,37 +1337,37 @@ public class SyncClient {
                     // firstAnswered
                     statement.bindDouble(14, card.getDouble(13));
                     // reps
-                    statement.bindString(15, card.getString(14));
+                    statement.bindLong(15, card.getInt(14));
                     // successive
-                    statement.bindString(16, card.getString(15));
+                    statement.bindLong(16, card.getInt(15));
                     // averageTime
                     statement.bindDouble(17, card.getDouble(16));
                     // reviewTime
                     statement.bindDouble(18, card.getDouble(17));
                     // youngEase0
-                    statement.bindString(19, card.getString(18));
+                    statement.bindLong(19, card.getInt(18));
                     // youngEase1
-                    statement.bindString(20, card.getString(19));
+                    statement.bindLong(20, card.getInt(19));
                     // youngEase2
-                    statement.bindString(21, card.getString(20));
+                    statement.bindLong(21, card.getInt(20));
                     // youngEase3
-                    statement.bindString(22, card.getString(21));
+                    statement.bindLong(22, card.getInt(21));
                     // youngEase4
-                    statement.bindString(23, card.getString(22));
+                    statement.bindLong(23, card.getInt(22));
                     // matureEase0
-                    statement.bindString(24, card.getString(23));
+                    statement.bindLong(24, card.getInt(23));
                     // matureEase1
-                    statement.bindString(25, card.getString(24));
+                    statement.bindLong(25, card.getInt(24));
                     // matureEase2
-                    statement.bindString(26, card.getString(25));
+                    statement.bindLong(26, card.getInt(25));
                     // matureEase3
-                    statement.bindString(27, card.getString(26));
+                    statement.bindLong(27, card.getInt(26));
                     // matureEase4
-                    statement.bindString(28, card.getString(27));
+                    statement.bindLong(28, card.getInt(27));
                     // yesCount
-                    statement.bindString(29, card.getString(28));
+                    statement.bindLong(29, card.getInt(28));
                     // noCount
-                    statement.bindString(30, card.getString(29));
+                    statement.bindLong(30, card.getInt(29));
                     // question
                     statement.bindString(31, card.getString(30));
                     // answer
@@ -1377,9 +1377,9 @@ public class SyncClient {
                     // spaceUntil
                     statement.bindDouble(34, card.getDouble(33));
                     // type
-                    statement.bindString(35, card.getString(34));
+                    statement.bindLong(35, card.getInt(34));
                     // combinedDue
-                    statement.bindString(36, card.getString(35));
+                    statement.bindDouble(36, card.getDouble(35));
                     // relativeDelay
                     statement.bindString(37, genType(card));
 
@@ -1397,7 +1397,7 @@ public class SyncClient {
         if (row.length() > 37) {
             return row.getString(37);
         }
-        if (row.getString(15).compareTo("0") != 0) {
+        if (row.getInt(15) != 0) {
             return "1";
         } else if (row.getString(14).compareTo("0") != 0) {
             return "0";
@@ -1892,7 +1892,7 @@ public class SyncClient {
     }
 
 
-    public static void fullSyncFromLocal(String password, String username, String deckName, String deckPath) {
+    public static void fullSyncFromLocal(String password, String username, Deck deck, String deckName) {
         URL url;
         try {
             Log.i(AnkiDroidApp.TAG, "Fullup");
@@ -1926,6 +1926,7 @@ public class SyncClient {
             ds.writeBytes("Content-Type: application/octet-stream" + END);
             ds.writeBytes(END);
 
+            String deckPath = deck.getDeckPath();
             FileInputStream fStream = new FileInputStream(deckPath);
             byte[] buffer = new byte[Utils.CHUNK_SIZE];
             int length = -1;
@@ -1974,12 +1975,16 @@ public class SyncClient {
 			
 			if (response.substring(0,2).equals("OK")) {
 				// Update lastSync
-                boolean wasDbOpen = AnkiDatabaseManager.isDatabaseOpen(deckPath);
-                AnkiDatabaseManager.getDatabase(deckPath).getDatabase().execSQL("UPDATE decks SET lastSync = " +
-                        response.substring(3, response.length()-3));
-                if (!wasDbOpen) {
-				    AnkiDatabaseManager.closeDatabase(deckPath);
-                }
+			    deck.setLastSync(Double.parseDouble(response.substring(3, response.length()-3)));
+			    deck.commitToDB();
+			    // Make sure we don't set modified later than lastSync when we do closeDeck later:
+			    deck.setLastLoaded(deck.getModified());
+                // boolean wasDbOpen = AnkiDatabaseManager.isDatabaseOpen(deckPath);
+                // AnkiDatabaseManager.getDatabase(deckPath).getDatabase().execSQL("UPDATE decks SET lastSync = " +
+                //        response.substring(3, response.length()-3));
+                // if (!wasDbOpen) {
+				//    AnkiDatabaseManager.closeDatabase(deckPath);
+                // }
 			}
             Log.i(AnkiDroidApp.TAG, "Finished!");
         } catch (MalformedURLException e) {
