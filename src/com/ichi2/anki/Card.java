@@ -641,7 +641,7 @@ public class Card {
         values.put("isDue", 0);
         values.put("type", mType);
         values.put("combinedDue", mCombinedDue);
-        values.put("relativeDelay", 0.0);
+        values.put("relativeDelay", mRelativeDelay);
         AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("cards", values, "id = " + mId, null);
 
         // TODO: Should also write JOINED entries: CardModel and Fact.

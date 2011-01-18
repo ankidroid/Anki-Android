@@ -798,6 +798,13 @@ public class Deck {
             commitToDB();
             // Note: we keep the priority index for now
         }
+        if (mVersion < 65) {
+            // We weren't correctly setting relativeDelay when answering cards in previous versions, so ensure
+            // everything is set correctly
+            rebuildTypes();
+            mVersion = 65;
+            commitToDB();
+        }
         // Executing a pragma here is very slow on large decks, so we store our own record
         if (getInt("pageSize") != 4096) {
             commitToDB();
@@ -1707,10 +1714,10 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _rebuildRevEarlyCount() {
-        String extraLim = ""; // In the future it would be nice to skip the first x days of due cards
+        // In the future it would be nice to skip the first x days of due cards
 
-        String sql = "SELECT count() FROM cards WHERE type = 1 AND combinedDue > " + mDueCutoff + extraLim;
-        mRevCount = (int) getDB().queryScalar(sql);
+        mRevCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", String.format(Utils.ENGLISH_LOCALE, 
+                        "SELECT count() FROM cards c WHERE type = 1 AND combinedDue > %f", mDueCutoff)));
     }
 
 
@@ -1719,9 +1726,10 @@ public class Deck {
         if ((mRevCount != 0) && mRevQueue.isEmpty()) {
             Cursor cur = null;
             try {
-                String sql = "SELECT id, factId, combinedDue FROM cards WHERE type = 1 AND combinedDue > " + mDueCutoff
-                        + " ORDER BY combinedDue LIMIT " + mQueueLimit;
-                cur = getDB().getDatabase().rawQuery(sql, null);
+                cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", String.format(
+                                Utils.ENGLISH_LOCALE,
+                                "SELECT id, factId, combinedDue FROM cards c WHERE type = 1 AND combinedDue > %f " +
+                                "ORDER BY combinedDue LIMIT %d", mDueCutoff, mQueueLimit)), null);
                 while (cur.moveToNext()) {
                     QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
                     mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
