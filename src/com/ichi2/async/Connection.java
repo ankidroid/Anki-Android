@@ -348,7 +348,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     if ("fromLocal".equalsIgnoreCase(syncFrom)) {
                         publishProgress(syncName, res.getString(R.string.sync_uploading_message));
-                        SyncClient.fullSyncFromLocal(password, username, syncName, deckPath);
+                        SyncClient.fullSyncFromLocal(password, username, deck, syncName);
                         syncChangelog.put("message", res.getString(R.string.sync_log_uploading_message));
                         ankiDB.getDatabase().setTransactionSuccessful();
                         ankiDB.getDatabase().endTransaction();

@@ -288,6 +288,12 @@ public class Deck {
             deck.createMetadata();
         }
 
+        boolean needUnpack = false;
+        if (deck.getUtcOffset() == -1.0) {
+            deck.setUtcOffset();
+            needUnpack = true;
+        }
+        
         deck.initVars();
 
         // Upgrade to latest version
@@ -299,6 +305,14 @@ public class Deck {
             deck.mDailyStats = Stats.dailyStats(deck);
             return deck;
         }
+        
+        if (needUnpack) {
+            deck.addIndices();
+            // TODO: updateCardsFromModel
+            deck.mCreated = Utils.now();
+            
+        }
+        
         double oldMod = deck.mModified;
 
         // Ensure necessary indices are available
@@ -350,6 +364,18 @@ public class Deck {
         // Rebuild queue
         deck.reset();
         // Make sure we haven't accidentally bumped the modification time
+        double dbMod = 0.0;
+        try {
+            cur = deck.getDB().getDatabase().rawQuery("SELECT modified FROM decks", null);
+            if (cur.moveToNext()) {
+                dbMod = cur.getDouble(0);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        assert Math.abs(dbMod - oldMod) < 1.0e-9;
         assert deck.mModified == oldMod;
         // Create a temporary view for random new cards. Randomizing the cards by themselves
         // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
@@ -567,8 +593,11 @@ public class Deck {
             setVarDefault("mediaURL", "");
             setVarDefault("latexPre", "\\documentclass[12pt]{article}\n" + "\\special{papersize=3in,5in}\n"
                     + "\\usepackage[utf8]{inputenc}\n" + "\\usepackage{amssymb,amsmath}\n" + "\\pagestyle{empty}\n"
-                    + "\\begin{document}");
+                    + "\\begin{document}\n");
             setVarDefault("latexPost", "\\end{document}");
+            // FIXME: The next really belongs to the dropbox setup module, it's not supposed to be empty if the user
+            // wants to use dropbox. ankiqt/ankiqt/ui/main.py : setupMedia
+            setVarDefault("mediaLocation", "");
         }
         updateCutoff();
         setupStandardScheduler();
@@ -835,7 +864,7 @@ public class Deck {
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_factsDeleted_factId ON factsDeleted (factId)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_mediaDeleted_factId ON mediaDeleted (mediaId)");
         // Tags
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_tags_tag ON tags (tag)");
+        getDB().getDatabase().execSQL("CREATE UNIQUE INDEX IF NOT EXISTS ix_tags_tag ON tags (tag)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_tagCard ON cardTags (tagId, cardId)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_cardId ON cardTags (cardId)");
     }
@@ -1434,7 +1463,7 @@ public class Deck {
             try {
                 fillFunc.invoke(Deck.this);
                 mSpacedFacts.clear(); // workaround for freezing cards problem. remove this when the code is up to date
-                                      // with libanki
+                // with libanki
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "queueNotEmpty: Error while invoking overridable fill method:" + e.toString());
                 return false;
@@ -1659,9 +1688,11 @@ public class Deck {
         ArrayList<Long> ids = getDB().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE type BETWEEN 6 AND 8 OR priority = -1", 0);
 
-        updatePriorities(Utils.toPrimitive(ids));
-        getDB().getDatabase().execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8");
-        flushMod();
+        if (!ids.isEmpty()) {
+            updatePriorities(Utils.toPrimitive(ids));
+            getDB().getDatabase().execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8");
+            flushMod();
+        }
     }
 
 
@@ -2012,15 +2043,15 @@ public class Deck {
     }
 
 
-    public String getSyncName() {
-        return mSyncName;
-    }
+    // public String getSyncName() {
+    //     return mSyncName;
+    // }
 
 
-    public void setSyncName(String name) {
-        mSyncName = name;
-        flushMod();
-    }
+    // public void setSyncName(String name) {
+    //     mSyncName = name;
+    //     flushMod();
+    // }
 
 
     public int getRevCardOrder() {
@@ -2203,6 +2234,11 @@ public class Deck {
     public double getUtcOffset() {
         return mUtcOffset;
     }
+    public void setUtcOffset() {
+        // 4am
+        Calendar cal = Calendar.getInstance();
+        mUtcOffset = 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+    }
 
 
     /**
@@ -2260,7 +2296,6 @@ public class Deck {
      */
     public void setLastLoaded(double lastLoaded) {
         mLastLoaded = lastLoaded;
-        // XXX: Need to flushmod() ?
     }
 
 
@@ -3655,25 +3690,22 @@ public class Deck {
         setVar("hexCache", jsonObject.toString(), false);
     }
 
-
     //
     // Syncing
     // *************************
     // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
 
-    //public void enableSyncing() {
-    //    enableSyncing(true);
-    //}
+    // public void enableSyncing() {
+    // enableSyncing(true);
+    // }
 
-
-    //public void enableSyncing(boolean ls) {
-    //    mSyncName = Utils.checksum(mDeckPath);
-    //    if (ls) {
-    //        mLastSync = 0;
-    //    }
-    //    commitToDB();
-    //}
-
+    // public void enableSyncing(boolean ls) {
+    // mSyncName = Utils.checksum(mDeckPath);
+    // if (ls) {
+    // mLastSync = 0;
+    // }
+    // commitToDB();
+    // }
 
     // private void disableSyncing() {
     // disableSyncing(true);
@@ -3686,9 +3718,9 @@ public class Deck {
     // commitToDB();
     // }
 
-    //public boolean syncingEnabled() {
-    //    return (mSyncName != null) && !(mSyncName.equals(""));
-    //}
+    // public boolean syncingEnabled() {
+    // return (mSyncName != null) && !(mSyncName.equals(""));
+    // }
 
     // private void checkSyncHash() {
     // if ((mSyncName != null) && !mSyncName.equals(Utils.checksum(mDeckPath))) {
