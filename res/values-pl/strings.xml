@@ -152,7 +152,7 @@
   <string name="resume_download">Wznów pobieranie</string>
   <string name="pause_download">Wstrzymaj pobieranie</string>
   <string name="duplicate_download">Ta talia jest już pobierana</string>
-  <string name="sync_all">Synchronizacja wszystkie</string>
+  <string name="sync_all">Synchronizuj wszystkie</string>
   <string name="fact">fakt</string>
   <string name="facts">fakty</string>
   <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Dodano/Zmieniono&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Tutaj&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Serwer&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Karty&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Fakty&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Modele&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Statystyki&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
@@ -191,9 +191,9 @@ Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i
   <string name="studyoptions_load_other_deck">Wczytaj inną talię</string>
   <string name="studyoptions_load_sample_deck">Wczytaj przykładową talię</string>
   <string name="menu_open_deck">Otwórz talię</string>
-  <string name="menu_sync">Synchronizacja</string>
+  <string name="menu_sync">Synchronizuj</string>
   <string name="menu_download_deck">Pobierz talię</string>
-  <string name="menu_download_shared_deck">Udostępnioną talię</string>
+  <string name="menu_download_shared_deck">Udostępniona talia</string>
   <string name="menu_download_personal_deck">Własna talia</string>
   <string name="menu_synchronize">Synchronizuj</string>
   <string name="menu_my_account">Moje konto</string>
@@ -235,7 +235,7 @@ Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i
   <string name="studyoptions_cram_dialog_title">Etykiety do zakuwania</string>
   <string name="begin_cram">Zacznij zakuwanie</string>
   <string name="end_cram">Zakończ zakuwanie</string>
-  <string name="cram">Zakuwanie</string>
+  <string name="cram">Zakuwaj</string>
   <string name="sync_connecting_message">Łączenie...</string>
   <string name="sync_syncing_message">Synchronizacja %s</string>
   <string name="sync_summary_from_server_message">Pobieranie podsumowania z serwera...</string>

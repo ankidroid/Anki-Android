@@ -51,9 +51,9 @@
   <string name="session_question_limit_reached">Limite de questions par session atteinte</string>
   <string name="session_time_limit_reached">Temps limite de session atteint</string>
   <string name="cram_edit_warning">L\'édition de cartes n\'est pas autorisées pendant le bachotage</string>
-  <string name="suspend_leeches">Suspend Leeches</string>
-  <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-  <string name="leech_notification">Card marked as leech</string>
+  <string name="suspend_leeches">Suspendre les sangsues</string>
+  <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
+  <string name="leech_notification">Carte marquée comme sangsue</string>
   <string name="newcards_day_summ">Le nombre maximal de nouvelles cartes par jour.</string>
   <string name="newcards_day">Nouvelles cartes par jour</string>
   <string name="session_time_limit">Durée maximale d\'une session</string>
@@ -88,7 +88,7 @@
   <string name="sync_on_close">Synchro à la fermeture</string>
   <string name="show_study_options_on_deck_load">Options d\'étude au démarrage</string>
   <string name="show_study_options_on_deck_load_summ">Montrer les options d\'études pendant le chargement d\'un paquet</string>
-  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode">Mode de démarrage</string>
   <string name="startup_mode_summ">Choisissez si vous voulez commencer avec les options d\'étude ou le choix du paquet</string>
   <string name="show_timer">Montrer la minuterie</string>
   <string name="show_timer_summ">Minuterie indiquant le temps qu\'il vous faut pour répondre</string>
@@ -101,30 +101,30 @@
   <string name="write_answers_summ">Vous permet d\'écrire la réponse et la comparer avec la bonne</string>
   <string name="text_selection">Autoriser la sélection de texte</string>
   <string name="text_selection_summ">Vous permet de sélectionner et copier du texte des cartes avec un clic long pour faire des recherches dans un dictionnaire externe</string>
-  <string name="dictionary">Dictionary</string>
-  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
+  <string name="dictionary">Dictionnaire</string>
+  <string name="dictionary_summ">Dictionnaire dans lequel les recherches doivent être effectuées</string>
   <string name="use_ruby_support">Montrer les annotations ruby</string>
   <string name="use_ruby_support_summ">Si les caractères \'[\' et \']\' sont trouvés, considérer le texte comme une annotation ruby</string>
   <string name="display_font_size">Fonte d\'affichage en taille relative</string>
   <string name="display_font_size_summ">Utiliser la taille de fonte relativement à la taille définie dans le paquet</string>
-  <string name="button_size">Relative button size</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
+  <string name="button_size">Taille relative des boutons</string>
+  <string name="button_size_summ">Taille relative des boutons sur l\'écran de révision</string>
   <string name="hide_question_in_answer">Ne pas montrer la question dans la réponse ?</string>
   <string name="hide_question_in_answer_summ">Détermine si la question doit être montrée en même temps que la réponse.</string>
   <string name="deck_path">Chemin d\'accès au paquet</string>
   <string name="deck_path_summ">Chemin où vos paquets sont stockés</string>
   <string name="fullscreen_review">Réviser en plein écran</string>
   <string name="fullscreen_review_summ">Vous pouvez décider si vous voulez utiliser tout l\'écran pendant la révision</string>
-  <string name="zoom">Enable Zoom</string>
-  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
+  <string name="zoom">Activer le Zoom</string>
+  <string name="zoom_summ">Afficher les contrôles de Zoom lors des révisions</string>
   <string name="swipe">Faites glisser le doigt</string>
   <string name="swipe_summ">Faites glisser le doigt verticalement pour changer d\'écran et horizontalement pour répondre aux questions (bas: répéter, haut: recommandation)</string>
-  <string name="pref_cat_experimental">EXPERIMENTAL</string>
-  <string name="sync_enabled">Sync features</string>
-  <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
+  <string name="pref_cat_experimental">EXPÉRIMENTAL</string>
+  <string name="sync_enabled">Fonctionnalités de synchronisation</string>
+  <string name="sync_enabled_in_answer_summ">Nombreux bugs, peut corrompre vos paquets. Faites des backups!</string>
   <string name="personaldeckpicker_title">Ouvrir un paquet en ligne</string>
   <string name="shareddeckpicker_title">Sélectionnez le paquet que vous voulez télécharger</string>
-  <string name="downloaddeck_search">Search</string>
+  <string name="downloaddeck_search">Recherche</string>
   <string name="preferences_title">Préférences</string>
   <string name="deckpreferences_title">Préférences du paquet</string>
   <string name="about_title">À propos</string>
@@ -203,7 +203,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="menu_about">À propos</string>
   <string name="menu_suspend_card">Suspendre la carte</string>
   <string name="menu_edit_card">Modifier la fiche</string>
-  <string name="menu_search">Lookup in %1$s</string>
+  <string name="menu_search">Recherche dans %1$s</string>
   <string name="menu_mark_card">Marquer la carte</string>
   <string name="menu_marked">Marqué</string>
   <string name="loading">Chargement...</string>
@@ -211,8 +211,8 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="studyoptions_well_done">Bien joué !</string>
   <string name="studyoptions_congrats_title">Félicitations !</string>
   <string name="studyoptions_congrats_message">Vous avez terminé pour le moment.\nDemain il y aura:\n%1$d %2$s à revoir et %3$d nouvelles %4$s.</string>
-  <string name="studyoptions_congrats_card">card</string>
-  <string name="studyoptions_congrats_cards">cards</string>
+  <string name="studyoptions_congrats_card">carte</string>
+  <string name="studyoptions_congrats_cards">cartes</string>
   <string name="studyoptions_congrats_learnmore">En savoir plus</string>
   <string name="studyoptions_congrats_reviewearly">Réviser à l\'avance</string>
   <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre paquet</string>
@@ -244,7 +244,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="sync_downloading_message">Téléchargement...</string>
   <string name="sync_complete_message">Synchronisation complète.</string>
   <string name="sync_determining_differences_message">Détermination des différences...</string>
-  <string name="sync_transferring_payload_message">Transferring payload...</string>
+  <string name="sync_transferring_payload_message">Transfert du contenu...</string>
   <string name="sync_applying_reply_message">Application de la réponse...</string>
   <string name="sync_no_changes_message">Aucun changement trouvé.</string>
   <string name="sync_log_error_message">Erreur: Paquet n\'a pas été synchronisé</string>
@@ -283,10 +283,10 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="per_day">Par jour</string>
   <string name="undo">Annuler</string>
   <string name="redo">Refaire</string>
-  <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
-  <string name="delete_deck_title">Delete Deck</string>
-  <string name="delete_deck_message">Do you really want to delete deck %s?</string>
-  <string name="delete_deck_confirm">Delete it</string>
+  <string name="contextmenu_deckpicker_delete_deck">Supprimer le paquet</string>
+  <string name="delete_deck_title">Supprimer le paquet</string>
+  <string name="delete_deck_message">Voulez-vous vraiment supprimer le paquet %s ?</string>
+  <string name="delete_deck_confirm">Supprimer</string>
   <string-array name="studyoptions_more_new_card_order">
     <item>Nouvelles cartes en ordre aléatoire</item>
     <item>Nouvelles cartes dans l\'ordre d\'ajout</item>
@@ -305,9 +305,9 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
     <item>Montrer les cartes manquées rapidement</item>
-    <item>Show failed cards at end</item>
-    <item>Show failed cards in 10 minutes</item>
-    <item>Show failed cards in 8 hours</item>
-    <item>Show failed cards in 3 days</item>
+    <item>Montrer cartes échouées à la fin</item>
+    <item>Montrer cartes échouées dans 10 minutes</item>
+    <item>Montrer cartes échouées dans 8 heures</item>
+    <item>Montrer cartes échouées dans 3 jours</item>
   </string-array>
 </resources>
