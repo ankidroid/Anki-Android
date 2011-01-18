@@ -1,0 +1,32 @@
+<Schema name="crashes">
+  <Cube name="CrashesAnalysis" cache="true" enabled="true">
+    <Table name="crashes">
+    </Table>
+    <Dimension type="StandardDimension" name="Hard">
+      <Hierarchy name="Model" hasAll="true">
+        <Level name="brand" table="crashes" column="brand" type="String" uniqueMembers="false">
+        </Level>
+        <Level name="device" table="crashes" column="device" type="String" uniqueMembers="false">
+        </Level>
+        <Level name="model" table="crashes" column="model" type="String" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+      <Hierarchy name="Memory" hasAll="true">
+        <Level name="memory" table="crashes" column="memory" type="Integer" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" name="Soft">
+      <Hierarchy name="Android" hasAll="true">
+        <Level name="android" table="crashes" column="android" type="String" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+      <Hierarchy name="AnkiDroid" hasAll="true">
+        <Level name="ankidroid" table="crashes" column="version" type="String" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="crashesnumber" column="id" aggregator="distinct-count" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
