@@ -192,7 +192,7 @@
 <string name="cancelling">Cancelling...</string>
 <string name="loading_personal_decks">Loading available personal decks...</string>
 <string name="connection_error_title">Attention</string>
-<string name="connection_error_return_message">A network error has ocurred. Retry, or cancel and return to the previous screen.</string>
+<string name="connection_error_return_message">A network error has occurred. Retry, or cancel and return to the previous screen.</string>
 <string name="retry">Retry</string>
 <string name="cancel">Cancel</string>
 
@@ -346,7 +346,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="deck_downloaded">Deck downloaded</string>
 
 <!-- StudyOptions.java -->
-<string name="connection_error_message">A network error has ocurred.</string>
+<string name="connection_error_message">A network error has occurred.</string>
 <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
 <string name="sync_progress_bar_title">Syncing %s</string>
 <string name="studyoptions_cram_dialog_title">Tags to cram</string>
