@@ -155,7 +155,7 @@
   <string name="sync_all">Sincronizza tutto</string>
   <string name="fact">fatto</string>
   <string name="facts">fatti</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Aggiunte/modificate&lt;/b&gt;&lt;/td&gt; &lt;td&gt;&lt;b&gt;qui&lt;/b&gt;&lt;/td&gt; &lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;carte di&lt;/td&gt; &lt;td&gt;%1$ s&lt;/td&gt; &lt;td&gt;%2$ s&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;fatti&lt;/td&gt; &lt;td&gt;%3$ s&lt;/td&gt; &lt;td&gt;%4$ s&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;modelli&lt;/td&gt; &lt;td&gt;s$ %5&lt;/td&gt; &lt;td&gt;%6$ s&lt;/td&gt;&lt;/tr&gt; &lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt; &lt;td&gt;%7$ s&lt;/td&gt; &lt;td&gt;%8$ s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
+  <string name="change_report_format"><table><tr><td><b>Aggiunte/modificate</b></td><td><b>qui</b></td><td><b>Server</b></td></tr><tr><td>carte di</td><td>%1$s</td><td>%2$s</td></tr><tr><td>fatti</td><td>%3$s</td><td>%4$s</td></tr><tr><td>modelli</td><td>%5$s</td><td>%6$s</td></tr><tr><td>Stats</td><td>%7$s</td><td>%8$s</td></tr></table></string>
   <string name="saving_changes">Salvataggio delle modifiche ...</string>
   <string name="about_content">&lt;html&gt;
 &lt;body&gt;
