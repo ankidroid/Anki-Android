@@ -179,7 +179,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
   <string name="studyoptions_session_questions">Limite per la sessione (domande):</string>
   <string name="studyoptions_start">Inizia Ripetizioni</string>
   <string name="studyoptions_more">Opzioni di studio</string>
-  <string name="studyoptions_window_title">%1$ s (%2$ d $ %3 d scadute)</string>
+  <string name="studyoptions_window_title">%1$s (%2$d %3$d scadute)</string>
   <string name="studyoptions_more_dialog_title">Altre opzioni</string>
   <string name="studyoptions_more_save">Salva</string>
   <string name="studyoptions_nodeck_title">Nessun mazzo caricato</string>
