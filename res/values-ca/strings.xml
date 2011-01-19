@@ -255,6 +255,7 @@ Els que no sou desenvolupadors també podeu ajudar, per exemple actualitzant el 
   <string name="sync_log_facts_to_server_message">%d fets al servidor</string>
   <string name="sync_log_fact_from_server_message">1 fet del servidor</string>
   <string name="sync_log_facts_from_server_message">%d fets del servidor</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
   <string name="error_message">Hi ha un error pendent d\'informar</string>
   <string name="errors_message">Hi ha %d errors per informar</string>
   <string name="error_ok">Informa dels errors</string>

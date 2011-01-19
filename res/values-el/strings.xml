@@ -255,6 +255,7 @@ Flashcards for Android&lt;/h2&gt;
   <string name="sync_log_facts_to_server_message">%d γεγονότα στο διακομιστή</string>
   <string name="sync_log_fact_from_server_message">1 γεγονός από το διακομιστή</string>
   <string name="sync_log_facts_from_server_message">%d γεγονότα από το διακομιστή</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
   <string name="error_message">Υπάρχει ένα σφάλμα προς αναφορά</string>
   <string name="errors_message">Υπάρχουν %d σφάλματα προς αναφορά</string>
   <string name="error_ok">Αναφορά σφαλμάτων</string>

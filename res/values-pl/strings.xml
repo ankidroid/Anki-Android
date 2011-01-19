@@ -255,6 +255,7 @@ Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i
   <string name="sync_log_facts_to_server_message">%d fakty do serwera</string>
   <string name="sync_log_fact_from_server_message">1 fakt z serwera</string>
   <string name="sync_log_facts_from_server_message">%d fakty z serwera</string>
+  <string name="sync_log_clocks_unsynchronized">Czas urządzenia różni się od tego na serwerze o %d sekund, synchronizacja niemożliwa.</string>
   <string name="error_message">Jest jeden błąd do zgłoszenia</string>
   <string name="errors_message">Jest %d błędów do zgłoszenia</string>
   <string name="error_ok">Zgłaszaj błędy</string>

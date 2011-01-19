@@ -255,6 +255,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="sync_log_facts_to_server_message">%d факт(ов) на сервер</string>
   <string name="sync_log_fact_from_server_message">1 факт с сервера</string>
   <string name="sync_log_facts_from_server_message">%d факт(ов) с сервера</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
   <string name="error_message">There is one error to report</string>
   <string name="errors_message">Найдено %d ошибки для отчета</string>
   <string name="error_ok">Отправить отчёт об ошибках</string>

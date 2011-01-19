@@ -255,6 +255,7 @@ Oni koji nisu programeri takođe mogu pomoću, naprimer s time što ažuriraju w
   <string name="sync_log_facts_to_server_message">%d podataka na serveru</string>
   <string name="sync_log_fact_from_server_message">1 podatak na serveru</string>
   <string name="sync_log_facts_from_server_message">%d podataka na serveru</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
   <string name="error_message">Postoji jedna greška za prijaviti</string>
   <string name="errors_message">%d grešaka za prijaviti</string>
   <string name="error_ok">Prijavljuj greške</string>
