@@ -1410,6 +1410,10 @@ public class StudyOptions extends Activity {
             } else {
                 // connectionFailedAlert.show();
                 if (mConnectionErrorAlert != null) {
+                    String errorMessage = ((HashMap<String, String>) data.result).get("message");
+                    if ((errorMessage != null) && (errorMessage.length() > 0)) {
+                        mConnectionErrorAlert.setMessage(errorMessage);
+                    }
                     mConnectionErrorAlert.show();
                 }
             }

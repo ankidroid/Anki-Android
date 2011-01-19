@@ -2270,7 +2270,6 @@ public class Deck {
      */
     public void setLastSync(double lastSync) {
         mLastSync = lastSync;
-        // XXX: Need to flushmod() ?
     }
 
 
