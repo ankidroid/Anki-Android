@@ -350,7 +350,7 @@ public class StudyOptions extends Activity {
             mDeckFilename = savedInstanceState.getString("deckFilename");
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + mDeckFilename);
         } else {
-            Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
+            // Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
             mDeckFilename = preferences.getString("deckFilename", null);
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + mDeckFilename);
         }
@@ -1410,6 +1410,10 @@ public class StudyOptions extends Activity {
             } else {
                 // connectionFailedAlert.show();
                 if (mConnectionErrorAlert != null) {
+                    String errorMessage = ((HashMap<String, String>) data.result).get("message");
+                    if ((errorMessage != null) && (errorMessage.length() > 0)) {
+                        mConnectionErrorAlert.setMessage(errorMessage);
+                    }
                     mConnectionErrorAlert.show();
                 }
             }

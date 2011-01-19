@@ -1050,7 +1050,6 @@ public class Deck {
     private void fillFailedQueue() {
         try {
             fillFailedQueueMethod.invoke(Deck.this);
-            Log.i(AnkiDroidApp.TAG, "fillFailedQueueMethod invoked");
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -2270,7 +2269,6 @@ public class Deck {
      */
     public void setLastSync(double lastSync) {
         mLastSync = lastSync;
-        // XXX: Need to flushmod() ?
     }
 
 

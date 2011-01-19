@@ -126,27 +126,24 @@ public class SyncClient {
         }
 
         double l = mDeck.getLastSync();
-        Log.i(AnkiDroidApp.TAG, "lastSync local = " + String.format(Utils.ENGLISH_LOCALE, "%f", l));
+        Log.i(AnkiDroidApp.TAG, "lastSync local = " + l);
         double r = mServer.lastSync();
-        Log.i(AnkiDroidApp.TAG, "lastSync remote = " + String.format(Utils.ENGLISH_LOCALE, "%f", r));
+        Log.i(AnkiDroidApp.TAG, "lastSync remote = " + r);
 
         // Set lastSync to the lower of the two sides, and account for slow clocks & assume it took up to 10 seconds
         // for the reply to arrive
         mDeck.setLastSync(Math.min(l, r) - timediff - 10);
 
-        Log.i(AnkiDroidApp.TAG, "deck.lastSync = " + mDeck.getLastSync());
         return true;
     }
 
 
     public JSONArray summaries() {
-        Log.i(AnkiDroidApp.TAG, "summaries = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
 
         JSONArray summaries = new JSONArray();
         summaries.put(summary(mDeck.getLastSync()));
         summaries.put(mServer.summary(mDeck.getLastSync()));
 
-        Log.i(AnkiDroidApp.TAG, "after summaries = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
         return summaries;
     }
 
@@ -264,11 +261,11 @@ public class SyncClient {
         if (mLocalTime > mRemoteTime) {
 
             try {
-                payload.put("deck", bundleDeck());
                 payload.put("stats", bundleStats());
                 payload.put("history", bundleHistory());
                 payload.put("sources", bundleSources());
-                mDeck.setLastSync(mDeck.getModified());
+                // Finally, set new lastSync and bundle the deck info
+                payload.put("deck", bundleDeck());
             } catch (JSONException e) {
                 Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
             }
@@ -1268,7 +1265,7 @@ public class SyncClient {
                 // type
                 card.put(cursor.getInt(36));
                 // combinedDue
-                card.put(cursor.getInt(37));
+                card.put(cursor.getDouble(37));
                 // relativeDelay
                 card.put(cursor.getInt(34));
 
@@ -1394,12 +1391,12 @@ public class SyncClient {
         }
     }
     private String genType(JSONArray row) throws JSONException {
-        if (row.length() > 37) {
-            return row.getString(37);
+        if (row.length() >= 37) {
+            return row.getString(36);
         }
         if (row.getInt(15) != 0) {
             return "1";
-        } else if (row.getString(14).compareTo("0") != 0) {
+        } else if (row.getInt(14) != 0) {
             return "0";
         }
         return "2";
@@ -2009,11 +2006,8 @@ public class SyncClient {
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(httpPost);
-            Log.i(AnkiDroidApp.TAG, "Response = " + response.toString());
             HttpEntity entityResponse = response.getEntity();
-            Log.i(AnkiDroidApp.TAG, "Entity's response = " + entityResponse.toString());
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "Content = " + content.toString());
             Utils.writeToFile(new InflaterInputStream(content), deckPath);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
