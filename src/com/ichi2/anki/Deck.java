@@ -2300,6 +2300,14 @@ public class Deck {
     /**
      * @param lastLoaded the lastLoaded to set
      */
+    public double getLastLoaded() {
+        return mLastLoaded;
+    }
+
+
+    /**
+     * @param lastLoaded the lastLoaded to set
+     */
     public void setLastLoaded(double lastLoaded) {
         mLastLoaded = lastLoaded;
     }
@@ -4079,7 +4087,6 @@ public class Deck {
     public void updateFromJson(JSONObject deckPayload) {
         try {
             // Update deck
-            mAverageFactor = deckPayload.getDouble("averageFactor");
             mCardCount = deckPayload.getInt("cardCount");
             mCollapseTime = deckPayload.getDouble("collapseTime");
             mCreated = deckPayload.getDouble("created");
@@ -4089,6 +4096,7 @@ public class Deck {
             mDelay1 = deckPayload.getLong("delay1");
             mDelay2 = deckPayload.getDouble("delay2");
             mDescription = deckPayload.getString("description");
+            mDueCutoff = deckPayload.getDouble("dueCutoff");
             mEasyIntervalMax = deckPayload.getDouble("easyIntervalMax");
             mEasyIntervalMin = deckPayload.getDouble("easyIntervalMin");
             mFactCount = deckPayload.getInt("factCount");
@@ -4107,24 +4115,25 @@ public class Deck {
             // lastTags
             mLowPriority = deckPayload.getString("lowPriority");
             mMedPriority = deckPayload.getString("medPriority");
+            mMediaPrefix = deckPayload.getString("mediaPrefix");
             mMidIntervalMax = deckPayload.getDouble("midIntervalMax");
             mMidIntervalMin = deckPayload.getDouble("midIntervalMin");
             mModified = deckPayload.getDouble("modified");
             // needLock
-            mNewCardModulus = deckPayload.getInt("newCardModulus");
-            // newCardOrder
-            // newCardSpacings
-            // newCardsPerDay
+            mNewCardOrder = deckPayload.getInt("newCardOrder");
+            mNewCardSpacing = deckPayload.getInt("newCardSpacing");
+            mNewCardsPerDay = deckPayload.getInt("newCardsPerDay");
             mNewCount = deckPayload.getInt("newCount");
-            mNewCountToday = deckPayload.getInt("newCountToday");
-            mNewEarly = deckPayload.getBoolean("newEarly");
-            // revCardOrder
+            // progressHandlerCalled
+            // progressHandlerEnabled
+            mQueueLimit = deckPayload.getInt("queueLimit");
+            mRevCardOrder = deckPayload.getInt("revCardOrder");
             mRevCount = deckPayload.getInt("revCount");
-            mReviewEarly = deckPayload.getBoolean("reviewEarly");
-            // sessionRepLimit
+            mScheduler = deckPayload.getString("scheduler");
+            mSessionRepLimit = deckPayload.getInt("sessionRepLimit");
             // sessionStartReps
             // sessionStartTime
-            // sessionTimeLimit
+            mSessionTimeLimit = deckPayload.getInt("sessionTimeLimit");
             mSuspended = deckPayload.getString("suspended");
             // tmpMediaDir
             mUndoEnabled = deckPayload.getBoolean("undoEnabled");
