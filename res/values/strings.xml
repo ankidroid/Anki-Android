@@ -32,9 +32,9 @@
 
 <!-- Deck.java upgrade deck notes -->
 <!--<string name="deck_not_loaded">Failed to load deck.</string>-->
-<!--<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your sd card.</string>-->
+<!--<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your SD card.</string>-->
 <!--<string name="deck_empty">Deck is empty.</string>-->
-<string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
+<string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
 
 <!-- Colors for Whiteboard and Next Review Time -->
 <color name="wb_fg_color">#B00000FF</color>
@@ -132,7 +132,7 @@
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
 <string name="text_selection">Allow text selection</string>
-<string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+<string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in an external dictionary</string>
 <string name="dictionary">Dictionary</string>
 <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
@@ -144,9 +144,9 @@
 <string name="hide_question_in_answer">Hide question in answer?</string>
 <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown</string>
 <string name="deck_path">Deck path</string>
-<string name="deck_path_summ">Path to where the your decks are stored</string>
+<string name="deck_path_summ">Path to where your decks are stored</string>
 <string name="fullscreen_review">Review in fullscreen</string>
-<string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
+<string name="fullscreen_review_summ">You can decide if you want to use all available screen space during card reviewing</string>
 <string name="zoom">Enable Zoom</string>
 <string name="zoom_summ">Show Zoom Controls when reviewing</string>
 <string name="swipe">Swipe</string>
@@ -249,7 +249,7 @@
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
 Flashcards for Android&lt;/h2&gt;
 &lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href=&quot;http://ankisrs.net&quot;&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
-&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt;, new feature ideas are very welcome too!
+&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt;; new feature ideas are very welcome too!
 Please use the &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Index&quot;&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;AnkiDroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Contribution&quot;&gt;join&lt;/a&gt; the &lt;a href=&quot;https://code.google.com/p/ankidroid/wiki/Contribution#Contributors&quot;&gt;contributors&lt;/a&gt; :-)
 Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href=&quot;http://ankisrs.net/support&quot;&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
@@ -292,9 +292,9 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="studyoptions_nodeck_title">No Deck Loaded</string>
 <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \&quot;Menu\&quot; button and select \&quot;Preferences\&quot;).</string>
 <string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
-<string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
+<string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in AnkiDroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
 <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
-<string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the sdcard in order to read and load your Anki decks. Check that your sdcard is mounted and try again.</string>
+<string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
 <string name="studyoptions_load_other_deck">Load Other Deck</string>
 <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
 
@@ -374,7 +374,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_log_facts_to_server_message">%d facts to server</string>
 <string name="sync_log_fact_from_server_message">1 fact from server</string>
 <string name="sync_log_facts_from_server_message">%d facts from server</string>
-<string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
+<string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
 
 <!-- ErrorReporter.java -->
 <string name="error_message">There is one error to report</string>
