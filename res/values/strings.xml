@@ -328,6 +328,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="studyoptions_congrats_finish">Back to Study Screen</string>
 
 
+
 <!-- MyAccount.java -->
 <string name="username">Username</string>
 <string name="password">Password</string>
@@ -375,6 +376,11 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_log_fact_from_server_message">1 fact from server</string>
 <string name="sync_log_facts_from_server_message">%d facts from server</string>
 <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
+<string name="sync_conflict_title">Syncing conflict</string>
+<string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
+<string name="sync_conflict_local">Keep Local</string>
+<string name="sync_conflict_remote">Keep Remote</string>
+<string name="sync_conflict_cancel">Cancel Syncing</string>
 
 <!-- ErrorReporter.java -->
 <string name="error_message">There is one error to report</string>

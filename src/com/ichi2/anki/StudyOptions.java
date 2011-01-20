@@ -58,6 +58,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -143,6 +144,9 @@ public class StudyOptions extends Activity {
     private int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
     boolean mSyncEnabled = false;
+    String mConflictResolution = null;
+    
+    WeakReference<Connection> mCurrentSyncThread = null;
     
     /**
 * Alerts to inform the user about different situations
@@ -152,6 +156,7 @@ public class StudyOptions extends Activity {
     private AlertDialog mUserNotLoggedInAlert;
     private AlertDialog mConnectionErrorAlert;
 	private AlertDialog mSyncLogAlert;
+	private AlertDialog mSyncConflictResolutionAlert;
 
     /*
 * Cram related
@@ -663,9 +668,30 @@ public class StudyOptions extends Activity {
     }
 
 
+    private OnClickListener mSyncConflictResolutionListener = new OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case AlertDialog.BUTTON_POSITIVE:
+                    mConflictResolution = "keepLocal";
+                    break;
+                case AlertDialog.BUTTON_NEUTRAL:
+                    mConflictResolution = "keepRemote";
+                    break;
+                case AlertDialog.BUTTON_NEGATIVE:
+                    mConflictResolution = "cancel";
+            }
+            mCurrentSyncThread.get().mConflictResolution = mConflictResolution;
+            if (mProgressDialog != null && !mProgressDialog.isShowing()) {
+                mProgressDialog.show();
+           }
+        }
+        
+    };
+    
     /**
-* Create AlertDialogs used on all the activity
-*/
+     * Create AlertDialogs used on all the activity
+     */
     private void initAllDialogs() {
         Resources res = getResources();
 
@@ -708,6 +734,16 @@ public class StudyOptions extends Activity {
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mConnectionErrorAlert = builder.create();
+        
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(res.getString(R.string.sync_conflict_title));
+        builder.setIcon(android.R.drawable.ic_input_get);
+        builder.setMessage(res.getString(R.string.sync_conflict_message));
+        builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncConflictResolutionListener);
+        builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncConflictResolutionListener);
+        builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncConflictResolutionListener);
+        builder.setCancelable(false);
+        mSyncConflictResolutionAlert = builder.create();
     }
 
 
@@ -1427,6 +1463,19 @@ public class StudyOptions extends Activity {
 
         @Override
         public void onProgressUpdate(Object... values) {
+            if ((values != null) && (values.length > 1) &&
+                (((String)values[1]).compareTo(Connection.CONFLICT_RESOLUTION) == 0)) {
+                // Ask user to choose whether keep local or remote
+                mConflictResolution = null;
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                     mProgressDialog.hide();
+                }
+                mSyncConflictResolutionAlert.setMessage(String.format(
+                        getResources().getString(R.string.sync_conflict_message), ((String) values[0])));
+                mCurrentSyncThread = new WeakReference<Connection>((Connection) values[2]);
+                mSyncConflictResolutionAlert.show();
+                return;
+            }
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = ProgressDialog.show(StudyOptions.this, (String) values[0], (String) values[1]);
             } else {
