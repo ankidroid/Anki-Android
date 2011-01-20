@@ -144,9 +144,6 @@ public class StudyOptions extends Activity {
     private int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
     boolean mSyncEnabled = false;
-    String mConflictResolution = null;
-    
-    WeakReference<Connection> mCurrentSyncThread = null;
     
     /**
 * Alerts to inform the user about different situations
@@ -673,20 +670,15 @@ public class StudyOptions extends Activity {
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
                 case AlertDialog.BUTTON_POSITIVE:
-                    mConflictResolution = "keepLocal";
+                    syncDeck("keepLocal");
                     break;
                 case AlertDialog.BUTTON_NEUTRAL:
-                    mConflictResolution = "keepRemote";
+                    syncDeck("keepRemote");
                     break;
                 case AlertDialog.BUTTON_NEGATIVE:
-                    mConflictResolution = "cancel";
+                default:
             }
-            mCurrentSyncThread.get().mConflictResolution = mConflictResolution;
-            if (mProgressDialog != null && !mProgressDialog.isShowing()) {
-                mProgressDialog.show();
-           }
         }
-        
     };
     
     /**
@@ -729,7 +721,7 @@ public class StudyOptions extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                syncDeck();
+                syncDeck(null);
             }
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
@@ -1058,7 +1050,7 @@ public class StudyOptions extends Activity {
                 return true;
 
             case MENU_SYNC:
-                syncDeck();
+                syncDeck(null);
                 return true;
 
             case MENU_MY_ACCOUNT:
@@ -1153,8 +1145,25 @@ public class StudyOptions extends Activity {
         onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
     }
 
+    private void syncDeckWithPrompt() {
+        if (AnkiDroidApp.isUserLoggedIn()) {
+            Deck deck = AnkiDroidApp.deck();
+            if (deck != null) {
+                // Close existing sync progress dialog
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }
+                // Prompt user for conflict resolution
+                mSyncConflictResolutionAlert.setMessage(String.format(
+                            getResources().getString(R.string.sync_conflict_message), deck.getDeckName()));
+                mSyncConflictResolutionAlert.show();
+            }
+        } else {
+            mUserNotLoggedInAlert.show();
+        }
+    }
 
-    private void syncDeck() {
+    private void syncDeck(String conflictResolution) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 
         String username = preferences.getString("username", "");
@@ -1163,10 +1172,11 @@ public class StudyOptions extends Activity {
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = AnkiDroidApp.deck();
 
-            Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename);
-            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
+            Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
+            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f",
+                        deck.getModified(), deck.getLastSync()));
             Connection.syncDeck(syncListener, new Connection.Payload(new Object[] { username, password, deck,
-                    mDeckFilename }));
+                    mDeckFilename, conflictResolution }));
         } else {
             mUserNotLoggedInAlert.show();
         }
@@ -1442,16 +1452,20 @@ public class StudyOptions extends Activity {
 				reloadDeck();
 				mSyncLogAlert.show();
             } else {
-                // connectionFailedAlert.show();
-                if (mConnectionErrorAlert != null) {
-                    String errorMessage = ((HashMap<String, String>) data.result).get("message");
-                    if ((errorMessage != null) && (errorMessage.length() > 0)) {
-                        mConnectionErrorAlert.setMessage(errorMessage);
+                if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
+                    // Need to ask user for conflict resolution direction and re-run sync
+                    syncDeckWithPrompt();
+                } else {
+                    // connectionFailedAlert.show();
+                    if (mConnectionErrorAlert != null) {
+                        String errorMessage = ((HashMap<String, String>) data.result).get("message");
+                        if ((errorMessage != null) && (errorMessage.length() > 0)) {
+                            mConnectionErrorAlert.setMessage(errorMessage);
+                        }
+                        mConnectionErrorAlert.show();
                     }
-                    mConnectionErrorAlert.show();
                 }
             }
-
         }
 
 
@@ -1463,19 +1477,6 @@ public class StudyOptions extends Activity {
 
         @Override
         public void onProgressUpdate(Object... values) {
-            if ((values != null) && (values.length > 1) &&
-                (((String)values[1]).compareTo(Connection.CONFLICT_RESOLUTION) == 0)) {
-                // Ask user to choose whether keep local or remote
-                mConflictResolution = null;
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                     mProgressDialog.hide();
-                }
-                mSyncConflictResolutionAlert.setMessage(String.format(
-                        getResources().getString(R.string.sync_conflict_message), ((String) values[0])));
-                mCurrentSyncThread = new WeakReference<Connection>((Connection) values[2]);
-                mSyncConflictResolutionAlert.show();
-                return;
-            }
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = ProgressDialog.show(StudyOptions.this, (String) values[0], (String) values[1]);
             } else {

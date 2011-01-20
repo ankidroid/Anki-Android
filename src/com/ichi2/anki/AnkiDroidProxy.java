@@ -59,6 +59,7 @@ public class AnkiDroidProxy {
     public static final int LOGIN_OK = 0;
     public static final int LOGIN_INVALID_USER_PASS = 1;
     public static final int LOGIN_CLOCKS_UNSYNCED = 2;
+    public static final int SYNC_CONFLICT_RESOLUTION = 3;
 
     /**
      * Shared deck's fields
