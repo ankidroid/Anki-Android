@@ -26,17 +26,17 @@
   <string name="yes">Sí</string>
   <string name="no">No</string>
   <string name="ok">Aceptar</string>
-  <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid, please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
+  <string name="deck_upgrade_too_old_version">Los mazos con versiones anteriores a la 39 no están soportados por AnkiDroid, por favor abre el mazo con la versión de escritorio de Anki para actualizarlo a la última versión.</string>
+  <string name="deckpicker_title">Seleccionar mazo (%1$d de %2$d programadas)</string>
   <string name="deckpicker_title_nosdcard">La tarjeta SD no está disponible</string>
   <string name="deckpicker_due">%1$d de %2$d pendientes</string>
   <string name="deckpicker_new">%d nuevas hoy</string>
   <string name="deckpicker_loaddeck">Cargando mazo...</string>
   <string name="deckpicker_nodeck">No se ha encontrado ningún mazo.</string>
-  <string name="sync_log_title">Sync Log</string>
-  <string name="deckpicker_upgrading">Upgrading deck...</string>
-  <string name="deckpicker_upgrade_failed">Upgrading failed!</string>
-  <string name="deckpicker_upgrade_notes_title">Upgrade deck results</string>
+  <string name="sync_log_title">Registro de sincronización</string>
+  <string name="deckpicker_upgrading">Actualizando mazo...</string>
+  <string name="deckpicker_upgrade_failed">¡No se pudo actualizar!</string>
+  <string name="deckpicker_upgrade_notes_title">Actualizar resultados del mazo</string>
   <string name="deckpicker_upgrade_notes_button">Notas</string>
   <string name="notify_ticker">Actualización de la aplicación</string>
   <string name="notify_title">Ankidroid actualizado</string>
@@ -46,15 +46,15 @@
   <string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
   <string name="show_whiteboard">Mostrar temporizador / pizarra</string>
-  <string name="hide_whiteboard">Hide Whiteboard</string>
-  <string name="clear_whiteboard">Clear Whiteboard</string>
+  <string name="hide_whiteboard">Ocultar Pizarra</string>
+  <string name="clear_whiteboard">Limpiar Pizarra</string>
   <string name="session_question_limit_reached">Se ha alcanzado el límite de preguntas de la sesión</string>
   <string name="session_time_limit_reached">Se ha alcanzado el límite de tiempo de la sesión</string>
-  <string name="cram_edit_warning">Card editing not allowed while cramming</string>
-  <string name="suspend_leeches">Suspend Leeches</string>
-  <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-  <string name="leech_notification">Card marked as leech</string>
-  <string name="newcards_day_summ">El número máximo de tarjetas nuevas mostradas per día.</string>
+  <string name="cram_edit_warning">No se permite editar tarjetas mientras empollas</string>
+  <string name="suspend_leeches">Suspender Sanguijuelas</string>
+  <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
+  <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
+  <string name="newcards_day_summ">El número máximo de tarjetas nuevas mostradas por día.</string>
   <string name="newcards_day">Nuevas tarjetas / día</string>
   <string name="session_time_limit">Límite de tiempo por sesión</string>
   <string name="session_time_limit_summ">El número de minutos en una sesión. Escoge 0 si no deseas ningún límite.</string>
@@ -71,7 +71,7 @@
   <string name="review_cards_order_summ">El orden en el que mostrar las tarjetas a repasar.</string>
   <string name="show_answer">Mostrar respuesta</string>
   <string name="show_question">Mostrar pregunta</string>
-  <string name="card_hint">Flashcard</string>
+  <string name="card_hint">Tarjeta</string>
   <string name="ease1_learning">Una vez más</string>
   <string name="ease2_learning">Bien</string>
   <string name="ease3_learning">Fácil</string>
@@ -82,233 +82,239 @@
   <string name="ease4_successive">Fácil</string>
   <string name="pref_cat_decks">Barajas</string>
   <string name="pref_cat_sync">Sincronización</string>
-  <string name="pref_cat_advanced">Advanced</string>
+  <string name="pref_cat_advanced">Avanzado</string>
   <string name="pref_cat_qadisplay">Visualización de pregunta y respuesta</string>
   <string name="sync_on_open">Sincronizar al abrir</string>
   <string name="sync_on_close">Sincronizar al cerrar</string>
-  <string name="show_study_options_on_deck_load">Study options on load</string>
-  <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
-  <string name="startup_mode">Startup Mode</string>
-  <string name="startup_mode_summ">Choose if you want to start with study options or deck picker</string>
-  <string name="show_timer">Show timer</string>
-  <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
+  <string name="show_study_options_on_deck_load">Opciones de estudio al cargar</string>
+  <string name="show_study_options_on_deck_load_summ">Mostrar opciones de estudio al cargar un mazo</string>
+  <string name="startup_mode">Modo de inicio</string>
+  <string name="startup_mode_summ">Elige si quieres empezar con las opciones de estudio o el explorador de mazos</string>
+  <string name="show_timer">Mostrar temporizador</string>
+  <string name="show_timer_summ">Temporizador que muestra el tiempo que te está llevando responder</string>
   <string name="show_whiteboard_summ">Te permite escribir en la pantalla</string>
-  <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
-  <string name="whiteboard_stroke_width_summ">Select the width of the stroke</string>
+  <string name="whiteboard_stroke_width">Ancho del trazo en la pizarra</string>
+  <string name="whiteboard_stroke_width_summ">Selecciona el ancho del trazo</string>
   <string name="sample_deck">Mazo de muestra</string>
   <string name="sample_deck_summ">Genera mazo de capitales si no encontrado</string>
   <string name="write_answers">Escribir respuestas</string>
   <string name="write_answers_summ">Te permite escribir la respuesta y compararla con la solución correcta</string>
-  <string name="text_selection">Allow text selection</string>
-  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
-  <string name="dictionary">Dictionary</string>
-  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
+  <string name="text_selection">Permitir la selección de texto</string>
+  <string name="text_selection_summ">Te permite seleccionar y copiar texto en tarjetas mediante una pulsación prolongada para realizar búsquedas en un diccionario externo</string>
+  <string name="dictionary">Diccionario</string>
+  <string name="dictionary_summ">Diccionario en el que realizar las búsquedas</string>
   <string name="use_ruby_support">Soporte para anotacion ruby</string>
   <string name="use_ruby_support_summ">En caso de encontrarse los caracteres \'[\' y \']\', el texto es tratado como una anotación Ruby</string>
   <string name="display_font_size">Tamaño de letra relativo</string>
   <string name="display_font_size_summ">El tamaño de fuente en % relativo al definido en el mazo</string>
-  <string name="button_size">Relative button size</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
+  <string name="button_size">Tamaño del botón relativo</string>
+  <string name="button_size_summ">Tamaño relativo de los botones en la pantalla de repaso</string>
   <string name="hide_question_in_answer">¿Ocultar la pregunta en la respuesa?</string>
   <string name="hide_question_in_answer_summ">Determina si la pregunta debería de ocultarse cuando la respuesta se muestra.</string>
   <string name="deck_path">Directorio mazos</string>
   <string name="deck_path_summ">Directorio donde tus mazos están almacenados</string>
-  <string name="fullscreen_review">Review in fullscreen</string>
-  <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
-  <string name="zoom">Enable Zoom</string>
-  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
-  <string name="swipe">Swipe</string>
-  <string name="swipe_summ">Swipe vertically to switch between screens and horizontally to answer cards (down: again, up: recommendation)</string>
+  <string name="fullscreen_review">Revisar en pantalla completa</string>
+  <string name="fullscreen_review_summ">Puedes decidir si quieres usar todo el espacio disponible de la pantalla durante el repaso</string>
+  <string name="zoom">Habilitar Zoom</string>
+  <string name="zoom_summ">Mostrar controles de zoom durante el repaso</string>
+  <string name="swipe">Enable Gestures</string>
+  <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
-  <string name="sync_enabled">Sync features</string>
-  <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
-  <string name="personaldeckpicker_title">Open Online Deck</string>
+  <string name="sync_enabled">Características de sincronización</string>
+  <string name="sync_enabled_in_answer_summ">Todavía hay muchos errores, puede corromper tus mazos. ¡Haz copias de seguridad a menudo!</string>
+  <string name="personaldeckpicker_title">Abrir Mazo Online</string>
   <string name="shareddeckpicker_title">Selecciona la baraja que desea descargar</string>
-  <string name="downloaddeck_search">Search</string>
+  <string name="downloaddeck_search">Buscar</string>
   <string name="preferences_title">Preferencias</string>
   <string name="deckpreferences_title">Preferencias de baraja</string>
   <string name="about_title">Acerca de</string>
   <string name="cardeditor_title">Editor de tarjetas</string>
-  <string name="factadder_title">Card Adder</string>
+  <string name="factadder_title">Añadir Tarjeta</string>
   <string name="loading_deck">Cargando mazo. Por favor, espere...</string>
   <string name="connection_needed">No hay conexión a Internet</string>
-  <string name="currently_downloading">Currently downloading</string>
-  <string name="personal_decks">Personal Decks</string>
-  <string name="starting_download">Starting download...</string>
-  <string name="downloading">Downloading...</string>
-  <string name="paused">Paused</string>
-  <string name="downloaded">Downloaded</string>
+  <string name="currently_downloading">Actualmente descargando</string>
+  <string name="personal_decks">Mazos personales</string>
+  <string name="starting_download">Comenzando descarga...</string>
+  <string name="downloading">Descargando...</string>
+  <string name="paused">Pausado</string>
+  <string name="downloaded">Descargado</string>
   <string name="error">Error</string>
-  <string name="cancelling">Cancelling...</string>
-  <string name="loading_personal_decks">Loading available personal decks...</string>
-  <string name="connection_error_title">Attention</string>
-  <string name="connection_error_return_message">A network error has ocurred. Retry, or cancel and return to the previous screen.</string>
-  <string name="retry">Retry</string>
-  <string name="cancel">Cancel</string>
-  <string name="shared_decks">Shared Decks</string>
-  <string name="updating">Updating...</string>
+  <string name="cancelling">Cancelando...</string>
+  <string name="loading_personal_decks">Cargando mazos personales disponibles...</string>
+  <string name="connection_error_title">Atención</string>
+  <string name="connection_error_return_message">Ha ocurrido un error de red. Vuelva a intentarlo, o cancele y vuelva a la pantalla anterior.</string>
+  <string name="retry">Reintentar</string>
+  <string name="cancel">Cancelar</string>
+  <string name="shared_decks">Mazos compartidos</string>
+  <string name="updating">Actualizando...</string>
   <string name="loading_shared_decks">Cargando barajas compartidas disponibles...</string>
-  <string name="cancel_download">Cancel Download</string>
-  <string name="resume_download">Resume Download</string>
-  <string name="pause_download">Pause Download</string>
-  <string name="duplicate_download">This deck is already downloading</string>
-  <string name="sync_all">Sync all</string>
+  <string name="cancel_download">Cancelar descarga</string>
+  <string name="resume_download">Reanudar la descarga</string>
+  <string name="pause_download">Pausar la descarga</string>
+  <string name="duplicate_download">Este mazo ya está descargándose</string>
+  <string name="sync_all">Sincronizar todos</string>
   <string name="fact">hecho</string>
   <string name="facts">hechos</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
+  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Añadido/Cambiado&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Aquí&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Servidor&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tarjetas&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Hechos&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Modelos&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Estadísticas&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Guardando cambios...</string>
   <string name="about_content">&lt;html&gt;
 &lt;body&gt;
 &lt;h1&gt;AnkiDroid:&lt;br/&gt;
-Flashcards oara Android&lt;/h1&gt;
+Flashcards para Android&lt;/h1&gt;
 &lt;p&gt;AnkiDroid puede leer ficheros .anki hechos por la aplicación de escritorio &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Para ayudarnos a hacer un mejor AnkiDroid, por favor reporta cualquier bug &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;aqui&lt;/a&gt;, nuevas ideas y mejoras son muy bien recibidas!
-Por favor usa la &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; y di Hola en el &lt;a href="http://groups.google.com/group/anki-android"&gt;foro&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid  &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;software de código abierto&lt;/a&gt;, asi que animamos a todo el mundo a &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;unirse&lt;/a&gt; a los &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contribuyentes&lt;/a&gt; :-)
-Los no-desarrolladores tambien pueden ayudar, por ejemplo actualizando la wiki y las capturas de pantalla, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donando&lt;/a&gt; a Anki, or blogueando acerca de AnkiDroid!&lt;/p&gt;
-&lt;p&gt;AnkiDroid esta licenciado bajo la licencia&lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3&lt;/a&gt; y el código fuente esta disponible &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Para ayudarnos a mejorar AnkiDroid, por favor informa de cualquier error &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;aquí&lt;/a&gt;, ¡nuevas ideas y mejoras son muy bien recibidas!
+Por favor usa el &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; y di "Hola" en el &lt;a href="http://groups.google.com/group/anki-android"&gt;foro&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid es &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;software de código abierto&lt;/a&gt;, asi que animamos a todo el mundo a &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;unirse&lt;/a&gt; a los &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contribuyentes&lt;/a&gt; :-)
+Los no-desarrolladores también pueden ayudar, por ejemplo actualizando el wiki y las capturas de pantalla, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donando&lt;/a&gt; a Anki, ¡o blogueando acerca de AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid está licenciado bajo la licencia &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3&lt;/a&gt; y el código fuente está disponible &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;aquí&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
-  <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">Deck name</string>
-  <string name="studyoptions_reviews_due">Reviews due:</string>
-  <string name="studyoptions_new_today">New today:</string>
-  <string name="studyoptions_new_total">New total:</string>
-  <string name="studyoptions_new_cards_per_day">New cards per day:</string>
-  <string name="studyoptions_session_minutes">Session limit (minutes):</string>
-  <string name="studyoptions_session_questions">Session limit (questions):</string>
-  <string name="studyoptions_start">Start Reviewing</string>
-  <string name="studyoptions_more">Study Options</string>
-  <string name="studyoptions_window_title">%1$s (%2$d of %3$d due)</string>
+  <string name="studyoptions_title">Opciones de Estudio</string>
+  <string name="studyoptions_deck_name">Nombre del mazo</string>
+  <string name="studyoptions_reviews_due">Repasos programados:</string>
+  <string name="studyoptions_new_today">Nuevas hoy:</string>
+  <string name="studyoptions_new_total">Nuevas en total:</string>
+  <string name="studyoptions_new_cards_per_day">Tarjetas nuevas por día:</string>
+  <string name="studyoptions_session_minutes">Límite por sesión (minutos):</string>
+  <string name="studyoptions_session_questions">Límite por sesión (preguntas):</string>
+  <string name="studyoptions_start">Empezar a repasar</string>
+  <string name="studyoptions_more">Opciones de estudio</string>
+  <string name="studyoptions_window_title">%1$s (%2$d de %3$d programadas)</string>
   <string name="studyoptions_more_dialog_title">Opciones de estudio</string>
-  <string name="studyoptions_more_save">Save</string>
-  <string name="studyoptions_nodeck_title">No Deck Loaded</string>
-  <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \"Menu\" button and select \"Preferences\").</string>
-  <string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
-  <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
-  <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
-  <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the sdcard in order to read and load your Anki decks. Check that your sdcard is mounted and try again.</string>
-  <string name="studyoptions_load_other_deck">Load Other Deck</string>
-  <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
-  <string name="menu_open_deck">Open Deck</string>
-  <string name="menu_sync">Sync</string>
-  <string name="menu_download_deck">Download deck</string>
-  <string name="menu_download_shared_deck">Shared deck</string>
-  <string name="menu_download_personal_deck">Personal deck</string>
-  <string name="menu_synchronize">Synchronize</string>
-  <string name="menu_my_account">My Account</string>
-  <string name="menu_preferences">Preferences</string>
-  <string name="menu_deck_properties">Deck Properties</string>
-  <string name="menu_add_card">Add card</string>
-  <string name="menu_about">About</string>
+  <string name="studyoptions_more_save">Guardar</string>
+  <string name="studyoptions_nodeck_title">No hay ningún mazo cargado</string>
+  <string name="studyoptions_nodeck_message">No hay ningún mazo cargado actualmente. Los mazos de Anki se guardan en el directorio \"%s\" en la tarjeta de memoria. Puedes especificar esta localización en el menú de preferencias (pulsa el botón de \"Menú\" en tu despositivo y selecciona \"Preferencias\").</string>
+  <string name="studyoptions_deck_not_loaded_title">El mazo no se pudo cargar</string>
+  <string name="studyoptions_deck_not_loaded_message">El mazo seleccionado no es un mazo de Anki válido. Por favor usa la aplicación de escritorio Anki para crear un mazo válido antes de cargarlo en Ankidroid.\n\nMientras tanto, puedes seleccionar otro mazo o cargar el mazo de ejemplo.</string>
+  <string name="studyoptions_no_external_storage_title">Almacenamiento externo no disponible</string>
+  <string name="studyoptions_no_external_storage_message">Almacenamiento externo no disponible actualmente. AnkiDroid necesita tener acceso a la tarjeta de memoria para leer y cargar tus mazos. Comprueba que la tarjeta de memoria está conectada e inténtalo de nuevo.</string>
+  <string name="studyoptions_load_other_deck">Cargar otro mazo</string>
+  <string name="studyoptions_load_sample_deck">Cargar mazo de ejemplo</string>
+  <string name="menu_open_deck">Abrir mazo</string>
+  <string name="menu_sync">Sincronizar</string>
+  <string name="menu_download_deck">Descargar mazo</string>
+  <string name="menu_download_shared_deck">Mazo compartido</string>
+  <string name="menu_download_personal_deck">Mazo personal</string>
+  <string name="menu_synchronize">Sincronizar</string>
+  <string name="menu_my_account">Mi Cuenta</string>
+  <string name="menu_preferences">Preferencias</string>
+  <string name="menu_deck_properties">Propiedades del mazo</string>
+  <string name="menu_add_card">Añadir tarjeta</string>
+  <string name="menu_about">Acerca de</string>
   <string name="menu_suspend_card">Suspender</string>
-  <string name="menu_edit_card">Edit Card</string>
-  <string name="menu_search">Lookup in %1$s</string>
-  <string name="menu_mark_card">Mark Card</string>
-  <string name="menu_marked">Marked</string>
-  <string name="loading">Loading...</string>
-  <string name="studyoptions_continue">Continue Reviewing</string>
-  <string name="studyoptions_well_done">Well Done!</string>
-  <string name="studyoptions_congrats_title">Congratulations!</string>
-  <string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
-  <string name="studyoptions_congrats_card">card</string>
-  <string name="studyoptions_congrats_cards">cards</string>
-  <string name="studyoptions_congrats_learnmore">Learn More</string>
-  <string name="studyoptions_congrats_reviewearly">Review Early</string>
-  <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
-  <string name="studyoptions_congrats_finish">Back to Study Screen</string>
+  <string name="menu_edit_card">Editar tarjeta</string>
+  <string name="menu_search">Búsqueda en %1$s</string>
+  <string name="menu_mark_card">Marcar Tarjeta</string>
+  <string name="menu_marked">Marcada</string>
+  <string name="loading">Cargando...</string>
+  <string name="studyoptions_continue">Continuar el repaso</string>
+  <string name="studyoptions_well_done">¡Bien hecho!</string>
+  <string name="studyoptions_congrats_title">¡Enhorabuena!</string>
+  <string name="studyoptions_congrats_message">Has terminado por hoy.\nTMañana habrá:\n%1$d %2$s para repasar y %3$d nuevas %4$s.</string>
+  <string name="studyoptions_congrats_card">tarjeta</string>
+  <string name="studyoptions_congrats_cards">tarjetas</string>
+  <string name="studyoptions_congrats_learnmore">Aprender más</string>
+  <string name="studyoptions_congrats_reviewearly">Repasar anticipadamente</string>
+  <string name="studyoptions_congrats_open_other_deck">Abrir otro mazo</string>
+  <string name="studyoptions_congrats_finish">Volver a la pantalla de Estudio</string>
   <string name="username">Usuario</string>
   <string name="password">Contraseña</string>
-  <string name="log_in">Log in</string>
-  <string name="sign_up_description">Don\'t have an AnkiOnline account? It\'s free!</string>
-  <string name="sign_up">Sign up</string>
-  <string name="logged_as">Logged as</string>
-  <string name="log_out">Log out</string>
-  <string name="alert_logging_message">Logging in, please wait...</string>
-  <string name="invalid_username_password">Invalid username or password.</string>
+  <string name="log_in">Iniciar sesión</string>
+  <string name="sign_up_description">¿No tienes una cuenta de AnkiOnline? ¡Es gratis!</string>
+  <string name="sign_up">Regístrate</string>
+  <string name="logged_as">Conectado como</string>
+  <string name="log_out">Cerrar sesión</string>
+  <string name="alert_logging_message">Iniciando sesión, por favor espere...</string>
+  <string name="invalid_username_password">Usuario o contraseña incorrectos.</string>
   <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
-  <string name="download_finished">Download finished</string>
-  <string name="deck_downloaded">Deck downloaded</string>
-  <string name="connection_error_message">A network error has ocurred.</string>
-  <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
-  <string name="sync_progress_bar_title">Syncing %s</string>
-  <string name="studyoptions_cram_dialog_title">Tags to cram</string>
-  <string name="begin_cram">Start Cram mode</string>
-  <string name="end_cram">Stop Cram mode</string>
-  <string name="cram">Cram</string>
-  <string name="sync_connecting_message">Connecting...</string>
-  <string name="sync_syncing_message">Syncing %s</string>
-  <string name="sync_summary_from_server_message">Fetching summary from server...</string>
-  <string name="sync_preparing_full_sync_message">Preparing full sync...</string>
-  <string name="sync_uploading_message">Uploading...</string>
-  <string name="sync_downloading_message">Downloading...</string>
-  <string name="sync_complete_message">Sync complete.</string>
-  <string name="sync_determining_differences_message">Determining differences...</string>
-  <string name="sync_transferring_payload_message">Transferring payload...</string>
-  <string name="sync_applying_reply_message">Applying reply...</string>
-  <string name="sync_no_changes_message">No changes found.</string>
-  <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
-  <string name="sync_log_no_changes_message">No changes found</string>
-  <string name="sync_log_uploading_message">Full sync from local</string>
-  <string name="sync_log_downloading_message">Full sync from server</string>
-  <string name="sync_log_fact_to_server_message">1 fact to server</string>
-  <string name="sync_log_facts_to_server_message">%d facts to server</string>
-  <string name="sync_log_fact_from_server_message">1 fact from server</string>
-  <string name="sync_log_facts_from_server_message">%d facts from server</string>
-  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
-  <string name="error_message">There is one error to report</string>
-  <string name="errors_message">There are %d errors to report</string>
+  <string name="download_finished">Descarga finalizada</string>
+  <string name="deck_downloaded">Mazo descargado</string>
+  <string name="connection_error_message">Ha ocurrido un error de red.</string>
+  <string name="no_user_password_error_message">Para continuar con esta operación, necesitas una cuenta en AnkiOnline y estar conectado.</string>
+  <string name="sync_progress_bar_title">Sincronizando %s</string>
+  <string name="studyoptions_cram_dialog_title">Etiquetas a empollar</string>
+  <string name="begin_cram">Comenzar a empollar</string>
+  <string name="end_cram">Dejar de empollar</string>
+  <string name="cram">Empollar</string>
+  <string name="sync_connecting_message">Conectando...</string>
+  <string name="sync_syncing_message">Sincronizando %s</string>
+  <string name="sync_summary_from_server_message">Recopilando resumen del servidor...</string>
+  <string name="sync_preparing_full_sync_message">Preparando sincronización completa...</string>
+  <string name="sync_uploading_message">Subiendo...</string>
+  <string name="sync_downloading_message">Descargando...</string>
+  <string name="sync_complete_message">Sincronización completa.</string>
+  <string name="sync_determining_differences_message">Determinando diferencias...</string>
+  <string name="sync_transferring_payload_message">Transfiriendo datos...</string>
+  <string name="sync_applying_reply_message">Aplicando respuesta...</string>
+  <string name="sync_no_changes_message">No se encontraron cambios.</string>
+  <string name="sync_log_error_message">Error: El mazo no se ha sincronizado</string>
+  <string name="sync_log_no_changes_message">No se encontraron cambios</string>
+  <string name="sync_log_uploading_message">Sincronización completa desde el cliente</string>
+  <string name="sync_log_downloading_message">Sincronización completa desde el servidor</string>
+  <string name="sync_log_fact_to_server_message">1 hecho al servidor</string>
+  <string name="sync_log_facts_to_server_message">%d hechos al servidor</string>
+  <string name="sync_log_fact_from_server_message">1 hecho del servidor</string>
+  <string name="sync_log_facts_from_server_message">%d hechos del servidor</string>
+  <string name="sync_log_clocks_unsynchronized">La hora de tu dispositivo es diferente de la del servidor en %d segundos, no se pudo sincronizar.</string>
+  <string name="sync_conflict_title">Syncing conflict</string>
+  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
+  <string name="sync_conflict_local">Keep Local</string>
+  <string name="sync_conflict_remote">Keep Remote</string>
+  <string name="sync_conflict_cancel">Cancel Syncing</string>
+  <string name="error_message">Hay un error para enviar</string>
+  <string name="errors_message">Hay %d errores para enviar</string>
   <string name="error_ok">Informar sobre errores</string>
   <string name="error_cancel">No informar de errores</string>
   <string name="error_email">ankidroid@gmail.com</string>
-  <string name="error_reporting_choice">Error reporting mode</string>
-  <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
+  <string name="error_reporting_choice">Modo de envío de errores</string>
+  <string name="error_reporting_choice_summary">Los errores se pueden enviar automáticamente, nunca, o preguntándote primero</string>
   <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widget notification threshold</string>
-  <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibrate</string>
-  <string name="widget_minimum_cards_due_blink">Blink light</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-  <string name="model">Model:</string>
-  <string name="select_model">Model</string>
-  <string name="card">Card:</string>
-  <string name="cards">Cards:</string>
-  <string name="add">Add</string>
-  <string name="close">Close</string>
-  <string name="soon">Soon</string>
-  <string name="show_next_review_time">Next review time</string>
-  <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
-  <string name="update_notification">Update notifications</string>
-  <string name="update_notification_summ">Notify me when AnkiDroid is updated</string>
-  <string name="per_day">Per Day</string>
-  <string name="undo">Undo</string>
-  <string name="redo">Redo</string>
-  <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
-  <string name="delete_deck_title">Delete Deck</string>
-  <string name="delete_deck_message">Do you really want to delete deck %s?</string>
-  <string name="delete_deck_confirm">Delete it</string>
+  <string name="widget_minimum_cards_due">Umbral de notificación del widget</string>
+  <string name="widget_minimum_cards_due_summary">Mínimo número de tarjetas programadas que provoca una notificación</string>
+  <string name="widget_minimum_cards_due_vibrate">Vibración</string>
+  <string name="widget_minimum_cards_due_blink">Luz parpadeante</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Tarjetas programadas</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d tarjetas de AnkiDroid programadas</string>
+  <string name="model">Modelo:</string>
+  <string name="select_model">Modelo</string>
+  <string name="card">Tarjeta:</string>
+  <string name="cards">Tarjetas:</string>
+  <string name="add">Añadir</string>
+  <string name="close">Cerrar</string>
+  <string name="soon">Pronto</string>
+  <string name="show_next_review_time">Próximo tiempo de repaso</string>
+  <string name="show_next_review_time_summ">Muestra el próximo tiempo de repaso dependiento de tu elección</string>
+  <string name="update_notification">Notificaciones de actualizaciones</string>
+  <string name="update_notification_summ">Notificarme cuando AnkiDroid sea actualizado</string>
+  <string name="per_day">Por Día</string>
+  <string name="undo">Deshacer</string>
+  <string name="redo">Repetir</string>
+  <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
+  <string name="delete_deck_title">Eliminar mazo</string>
+  <string name="delete_deck_message">¿Estás seguro de que quieres eliminar el mazo %s?</string>
+  <string name="delete_deck_confirm">Eliminarlo</string>
   <string-array name="studyoptions_more_new_card_order">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
+    <item>Tarjetas nuevas en orden aleatorio</item>
+    <item>Tarjetas nuevas en orden añadido</item>
+    <item>Tarjetas nuevas en orden añadido inverso</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Distribuir tarjetas nuevas entre repasos</item>
+    <item>Tarjetas nuevas después de los repasos</item>
+    <item>Tarjetas nuevas antes de los repasos</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
-    <item>Review cards in random order</item>
+    <item>Repasar tarjetas de intervalo mayor</item>
+    <item>Revisar tarjetas de intervalo menor</item>
+    <item>Revisar tarjetas en el orden programado</item>
+    <item>Revisar tarjetas en orden aleatorio</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
-    <item>Show failed cards soon</item>
-    <item>Show failed cards at end</item>
-    <item>Show failed cards in 10 minutes</item>
-    <item>Show failed cards in 8 hours</item>
-    <item>Show failed cards in 3 days</item>
+    <item>Mostrar tarjetas falladas pronto</item>
+    <item>Mostrar tarjetas falladas al final</item>
+    <item>Mostrar tarjetas falladas en 10 minutos</item>
+    <item>Mostrar tarjetas falladas en 8 horas</item>
+    <item>Mostrar tarjetas falladas en 3 días</item>
   </string-array>
 </resources>

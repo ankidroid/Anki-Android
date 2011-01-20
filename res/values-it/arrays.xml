@@ -132,7 +132,7 @@
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Notifica sempre</item>
-    <item>Never report</item>
+    <item>Non segnalare mai</item>
     <item>Chiedimi</item>
   </string-array>
   <string-array name="error_reporting_choice_values">

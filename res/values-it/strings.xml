@@ -86,7 +86,7 @@
   <string name="pref_cat_qadisplay">Visualizzazione domanda e risposta</string>
   <string name="sync_on_open">Sincronizzazione all\'apertura</string>
   <string name="sync_on_close">Sincronizzazione alla chiusura</string>
-  <string name="show_study_options_on_deck_load">Study options on load</string>
+  <string name="show_study_options_on_deck_load">Opzioni di studio all\'avvio</string>
   <string name="show_study_options_on_deck_load_summ">Mostra le opzioni di studio al caricamento del mazzo</string>
   <string name="startup_mode">Modalità di avvio</string>
   <string name="startup_mode_summ">Scegli se vuoi iniziare con le opzioni di studio o con la scelta dei mazzi</string>
@@ -117,8 +117,9 @@
   <string name="fullscreen_review_summ">Puoi decidere se usare tutto lo spazio dello schermo disponibile durante la revisione del mazzo</string>
   <string name="zoom">Abilita lo zoom</string>
   <string name="zoom_summ">Mostra controlli Zoom durante le ripetizioni</string>
-  <string name="swipe">Swipe</string>
-  <string name="swipe_summ">Swipe verticalmente per passare tra le schermate e orizzontalmente per rispondere alle carte (verso il basso: ancora una volta, su: consiglio)</string>
+  <string name="swipe">Enable Gestures</string>
+  <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
   <string name="pref_cat_experimental">SPERIMENTALE</string>
   <string name="sync_enabled">Funzionalità di sincronizzazione</string>
   <string name="sync_enabled_in_answer_summ">Ancora molti bug, potrebbero danneggiare i vostri mazzi. Fare backup frequenti!</string>
@@ -157,18 +158,7 @@
   <string name="facts">fatti</string>
   <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Aggiunte/modificate&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;qui&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;carte di&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;fatti&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;modelli&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Salvataggio delle modifiche ...</string>
-  <string name="about_content">&lt;html&gt;
-&lt;body&gt;
-&lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Flashcards for Android&lt;/h2&gt;
-&lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
-&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;here&lt;/a&gt;, new feature ideas are very welcome too!
-Please use the &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid is &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;join&lt;/a&gt; the &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contributors&lt;/a&gt; :-)
-Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
-&lt;p&gt;AnkiDroid is released under the &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</string>
+  <string name="about_content">&lt;html&gt;&lt;body&gt;&lt;h2&gt;AnkiDroid: &lt;br/&gt; Flashcards per Android&lt;/h2&gt; &lt;p&gt;AnkiDroid può leggere i file di .anki prodotti con la versione desktop &lt;a href="http://ichi2.net/anki"&gt; Anki&lt;/a&gt; software.&lt;/p&gt; &lt;p&gt;Per aiutarci a rendere AnkiDroid migliore, si prega di segnalare eventuali bug &lt;a href="http://code.google.com/p/ankidroid/issues"&gt; qui&lt;/a&gt;, la richiesta di nuove funzionalità ed idee sono le benvenute! Si prega di utilizzare la &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt; wiki&lt;/a&gt; e presentarsi sul &lt;a href="http://groups.google.com/group/anki-android"&gt; forum&lt;/a&gt;.&lt;/p&gt; &lt;p&gt;AnkiDroid è un &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt; software open source&lt;/a&gt;, in modo che ognuno è incoraggiato a &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt; join&lt;/a&gt; i &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt; contribuire&lt;/a&gt;:-) Anche chi non è un programmatore può essere di aiuto, per esempio aggiornando la wiki e gli screenshots, &lt;a href="http://ichi2.net/anki/donate.html"&gt; facendo una donazione&lt;/a&gt; ad Anki o parlando di AnkiDroid!&lt;/p&gt; &lt;p&gt;AnkiDroid è rilasciato sotto la &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt; licenza di GNU-GPL v3&lt;/a&gt; e il codice sorgente è disponibile &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt; qui&lt;/a&gt;&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
   <string name="studyoptions_title">Opzioni di studio</string>
   <string name="studyoptions_deck_name">Nome del mazzo</string>
   <string name="studyoptions_reviews_due">Da ripetere:</string>
@@ -179,7 +169,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
   <string name="studyoptions_session_questions">Limite per la sessione (domande):</string>
   <string name="studyoptions_start">Inizia Ripetizioni</string>
   <string name="studyoptions_more">Opzioni di studio</string>
-  <string name="studyoptions_window_title">%1$s (%2$d %3$d scadute)</string>
+  <string name="studyoptions_window_title">%1$s (%2$d $ %3$d scadute)</string>
   <string name="studyoptions_more_dialog_title">Altre opzioni</string>
   <string name="studyoptions_more_save">Salva</string>
   <string name="studyoptions_nodeck_title">Nessun mazzo caricato</string>
@@ -255,7 +245,12 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
   <string name="sync_log_facts_to_server_message">%d fatti al server</string>
   <string name="sync_log_fact_from_server_message">1 fatto dal server</string>
   <string name="sync_log_facts_from_server_message">%d fatti dal server</string>
-  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
+  <string name="sync_log_clocks_unsynchronized">L\'orario del tuo dispositivo è differente da quello del server di %d sec,impossibile eseguire la sincronizzazione.</string>
+  <string name="sync_conflict_title">Syncing conflict</string>
+  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
+  <string name="sync_conflict_local">Keep Local</string>
+  <string name="sync_conflict_remote">Keep Remote</string>
+  <string name="sync_conflict_cancel">Cancel Syncing</string>
   <string name="error_message">C\'è un errore da riportare</string>
   <string name="errors_message">Ci sono %d errori da segnalare</string>
   <string name="error_ok">Segnala gli errori</string>

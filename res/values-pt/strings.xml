@@ -117,8 +117,9 @@
   <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
   <string name="zoom">Enable Zoom</string>
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
-  <string name="swipe">Swipe</string>
-  <string name="swipe_summ">Swipe vertically to switch between screens and horizontally to answer cards (down: again, up: recommendation)</string>
+  <string name="swipe">Enable Gestures</string>
+  <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sync features</string>
   <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
@@ -256,6 +257,11 @@ Não-desenvolvedores conseguem ajudar também, por exemplo atualizando a wiki e 
   <string name="sync_log_fact_from_server_message">1 fact from server</string>
   <string name="sync_log_facts_from_server_message">%d facts from server</string>
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
+  <string name="sync_conflict_title">Syncing conflict</string>
+  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
+  <string name="sync_conflict_local">Keep Local</string>
+  <string name="sync_conflict_remote">Keep Remote</string>
+  <string name="sync_conflict_cancel">Cancel Syncing</string>
   <string name="error_message">There is one error to report</string>
   <string name="errors_message">There are %d errors to report</string>
   <string name="error_ok">Relatório de erros</string>

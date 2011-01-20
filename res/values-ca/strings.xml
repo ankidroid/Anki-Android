@@ -117,8 +117,9 @@
   <string name="fullscreen_review_summ">Podeu fer servit tota la pantalla al revisar les fitxes</string>
   <string name="zoom">Activa l\'ampliació</string>
   <string name="zoom_summ">Mostra els botons d\'ampliació a les fitxes</string>
-  <string name="swipe">Passa el dit</string>
-  <string name="swipe_summ">Passa el dit verticalment per canviar la pantalla i horitzontal per respondre a les fitxes (avall: repeteix, amunt: recomana)</string>
+  <string name="swipe">Enable Gestures</string>
+  <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Detalls de la sincronització</string>
   <string name="sync_enabled_in_answer_summ">Encara hi ha molts errors, que podrien malmetre els vostres paquets. Feu sovint còpies de seguretat!</string>
@@ -256,6 +257,11 @@ Els que no sou desenvolupadors també podeu ajudar, per exemple actualitzant el 
   <string name="sync_log_fact_from_server_message">1 fet del servidor</string>
   <string name="sync_log_facts_from_server_message">%d fets del servidor</string>
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
+  <string name="sync_conflict_title">Syncing conflict</string>
+  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
+  <string name="sync_conflict_local">Keep Local</string>
+  <string name="sync_conflict_remote">Keep Remote</string>
+  <string name="sync_conflict_cancel">Cancel Syncing</string>
   <string name="error_message">Hi ha un error pendent d\'informar</string>
   <string name="errors_message">Hi ha %d errors per informar</string>
   <string name="error_ok">Informa dels errors</string>
