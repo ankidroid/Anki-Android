@@ -256,6 +256,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="sync_log_facts_to_server_message">%d seikkaa palvelimelle</string>
   <string name="sync_log_fact_from_server_message">1 seikka palvelimelta</string>
   <string name="sync_log_facts_from_server_message">%d seikkaa palvelimelta</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
   <string name="error_message">Yksi virhe raportissa</string>
   <string name="errors_message">On %d raportoitavaa virhettä</string>
   <string name="error_ok">Ilmoita virheistä</string>

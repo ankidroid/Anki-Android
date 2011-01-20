@@ -190,6 +190,7 @@ public class Reviewer extends Activity {
     
     private boolean mConfigurationChanged = false;
     private int mSelectionStarted = 0;
+    private boolean mAnsweringCard = false;
     
 	public boolean mShowCongrats = false;
 
@@ -769,15 +770,6 @@ public class Reviewer extends Activity {
         closeReviewer();
     }
 
-    private Runnable copyTextAfterDelay=new Runnable() {
-        public void run() {
-        	mSelectionStarted = 2;
-        	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibratorManager.vibrate(50);
-            selectAndCopyText();
-        }
-    };
-
 
     private void answerCard(int ease) {
     	Sound.stopSounds();
@@ -786,6 +778,7 @@ public class Reviewer extends Activity {
         mSessionCurrReps++;
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
                 mCurrentEase, AnkiDroidApp.deck(), mCurrentCard));
+		mAnsweringCard = false;
     }
 
 
@@ -813,28 +806,15 @@ public class Reviewer extends Activity {
         if (mPrefTextSelection) {
 			// mCard.setOnLongClickListener(mLongClickHandler);            
 			mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            final Handler mTimerHandler = new Handler();
             mCard.setOnTouchListener(new View.OnTouchListener() { 
     			@Override
-    			public boolean onTouch(View v, MotionEvent event) {
+        		public boolean onTouch(View v, MotionEvent event) {
     				if (event.getAction() == MotionEvent.ACTION_UP && mSelectionStarted != 0) {
                  		mSelectionStarted--;
     				} else if (gestureDetector.onTouchEvent(event)) {
                         return true;
-                    }    				
-    				switch (event.getAction()) { 
-    					case MotionEvent.ACTION_DOWN:  
-    						mTimerHandler.removeCallbacks(copyTextAfterDelay);
-    						mTimerHandler.postDelayed(copyTextAfterDelay,1000);
-    						break;
-    					case MotionEvent.ACTION_UP: 
-    						mTimerHandler.removeCallbacks(copyTextAfterDelay);
-    						break;
-    					case MotionEvent.ACTION_MOVE:
-    						mTimerHandler.removeCallbacks(copyTextAfterDelay);
-    						break;
-    				}
-    				return false;    	           
+                    }
+                    return false;  	           
     			}
             	});
         } else {
@@ -1512,6 +1492,7 @@ public class Reviewer extends Activity {
                         // down
       					if (sDisplayAnswer) {
            					answerCard(Card.EASE_FAILED);
+           					// Toast.makeText(Reviewer.this, mEase1.getText(), Toast.LENGTH_SHORT).show();        					
        					} else {
            			        displayCardAnswer();    						
        					}
@@ -1520,8 +1501,10 @@ public class Reviewer extends Activity {
       					if (sDisplayAnswer) {
       						if (mCurrentCard.isRev()) {
            						answerCard(Card.EASE_MID);
+           						// Toast.makeText(Reviewer.this, mEase3.getText(), Toast.LENGTH_SHORT).show();
       						} else {
       							answerCard(Card.EASE_HARD);
+      							// Toast.makeText(Reviewer.this, mEase2.getText(), Toast.LENGTH_SHORT).show();
       						}
       					} else {
       						displayCardAnswer(); 
@@ -1537,6 +1520,31 @@ public class Reviewer extends Activity {
             }
             return false;
         }
+    	
+       	@Override
+    	public void onLongPress(MotionEvent e) {
+    		if (!mAnsweringCard) {
+           		mSelectionStarted = 2;
+           		Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            	vibratorManager.vibrate(50);
+           		selectAndCopyText();
+    		}
+    	}
+    	
+    	@Override
+    	public boolean onDoubleTapEvent(MotionEvent e) {
+    		if (mSelectionStarted == 0 && sDisplayAnswer) {
+        		if (mCurrentCard.isRev()) {
+					answerCard(Card.EASE_EASY);
+					// Toast.makeText(Reviewer.this, mEase4.getText(), Toast.LENGTH_SHORT).show();
+        		} else {
+					answerCard(Card.EASE_MID);
+					// Toast.makeText(Reviewer.this, mEase3.getText(), Toast.LENGTH_SHORT).show();
+        		}
+        		mAnsweringCard = true;
+			}
+    		return false;
+    	}
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {

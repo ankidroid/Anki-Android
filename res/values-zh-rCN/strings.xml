@@ -255,6 +255,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
   <string name="sync_log_facts_to_server_message">%d facts to server</string>
   <string name="sync_log_fact_from_server_message">1 fact from server</string>
   <string name="sync_log_facts_from_server_message">%d facts from server</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
   <string name="error_message">There is one error to report</string>
   <string name="errors_message">There are %d errors to report</string>
   <string name="error_ok">报告错误</string>

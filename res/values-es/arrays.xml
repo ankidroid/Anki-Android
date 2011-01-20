@@ -113,7 +113,7 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
+    <item>Mostrar opciones de estudio</item>
     <item>Show deck picker</item>
     <item>Show deck picker on first start of the day</item>
   </string-array>
@@ -163,7 +163,7 @@
   <string-array name="cram_review_order_labels">
     <item>Show oldest modified first</item>
     <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Mostrar en order aleatorio</item>
   </string-array>
   <string-array name="next_review_s">
     <item>hora</item>

@@ -255,6 +255,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="sync_log_facts_to_server_message">%d éléments au serveur</string>
   <string name="sync_log_fact_from_server_message">1 élément du serveur</string>
   <string name="sync_log_facts_from_server_message">%d éléments du serveur</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
   <string name="error_message">Il y a une erreur à signaler</string>
   <string name="errors_message">Il y a %d erreurs à signaler</string>
   <string name="error_ok">Signaler les erreurs</string>

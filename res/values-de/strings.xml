@@ -240,10 +240,11 @@
   <string name="sync_log_no_changes_message">Keine Veränderungen gefunden</string>
   <string name="sync_log_uploading_message">Voll-Synchronisierung des lokalen Stapels</string>
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
-  <string name="sync_log_fact_to_server_message">Ein Fakt hochgeladen</string>
+  <string name="sync_log_fact_to_server_message">Einen Fakt hochgeladen</string>
   <string name="sync_log_facts_to_server_message">%d Fakten hochgeladen</string>
   <string name="sync_log_fact_from_server_message">Ein Fakt heruntergeladen</string>
   <string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
+  <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %d Sekunden von der Server-Zeit ab, es kann deshalb nicht synchronisiert werden.</string>
   <string name="error_message">Es ist ein Fehler zu melden</string>
   <string name="errors_message">Es ist %d Fehler zu melden</string>
   <string name="error_ok">Fehlermeldung</string>
@@ -289,8 +290,8 @@
   <string-array name="studyoptions_more_rev_card_order">
     <item>Karten mit größtem Intervall zuerst</item>
     <item>Karten mit kleinstem Intervall zuerst</item>
-    <item>Karten mit in der Reihenfolge der Fälligkeit</item>
-    <item>Karten in zufälliger Reihenfolge</item>
+    <item>Karten in Fälligkeitsreihenfolge</item>
+    <item>Karten in Zufallsreihenfolge</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
     <item>Zeige nicht gewusste Karten bald</item>
