@@ -176,6 +176,6 @@
 			android:gravity="center"
 			android:textOff="@string/cram"
 			android:textOn="@string/cram" 
-			android:layout_marginBottom="2dip"/>
+			android:layout_marginBottom="1.5dip"/>
 	</LinearLayout>
 </LinearLayout>

@@ -806,29 +806,18 @@ public class Reviewer extends Activity {
         if (mPrefTextSelection) {
 			// mCard.setOnLongClickListener(mLongClickHandler);            
 			mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            mCard.setOnTouchListener(new View.OnTouchListener() { 
-    			@Override
-        		public boolean onTouch(View v, MotionEvent event) {
-    				if (event.getAction() == MotionEvent.ACTION_UP && mSelectionStarted != 0) {
-                 		mSelectionStarted--;
-    				} else if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;  	           
-    			}
-            	});
-        } else {
-        	mCard.setOnTouchListener(new View.OnTouchListener() { 
-        		@Override
-        		public boolean onTouch(View v, MotionEvent event) {
-        			if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
-                }
-            });            
-            mCard.setOnTouchListener(gestureListener);
         }
+        mCard.setOnTouchListener(new View.OnTouchListener() { 
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_UP && mSelectionStarted != 0) {
+						mSelectionStarted--;
+					} else if (gestureDetector.onTouchEvent(event)) {
+                    	return true;
+                	}
+                	return false;  	           
+				}
+           	});
         
         mScaleInPercent = mCard.getScale();
 
@@ -1523,14 +1512,14 @@ public class Reviewer extends Activity {
     	
        	@Override
     	public void onLongPress(MotionEvent e) {
-    		if (!mAnsweringCard) {
+    		if (mPrefTextSelection && !mAnsweringCard) {
            		mSelectionStarted = 2;
            		Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             	vibratorManager.vibrate(50);
            		selectAndCopyText();
     		}
     	}
-    	
+
     	@Override
     	public boolean onDoubleTapEvent(MotionEvent e) {
     		if (mSwipeEnabled && mSelectionStarted == 0 && sDisplayAnswer) {
