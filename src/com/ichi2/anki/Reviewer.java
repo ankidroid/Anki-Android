@@ -161,6 +161,7 @@ public class Reviewer extends Activity {
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
+    private TextView mChoosenAnswer;
     private TextView mNext1;
     private TextView mNext2;
     private TextView mNext3;
@@ -191,6 +192,7 @@ public class Reviewer extends Activity {
     private boolean mConfigurationChanged = false;
     private int mSelectionStarted = 0;
     private boolean mAnsweringCard = false;
+    private int mShowChoosenAnswerLength = 600;
     
 	public boolean mShowCongrats = false;
 
@@ -396,6 +398,13 @@ public class Reviewer extends Activity {
         }
     };
 
+	private Handler mTimerHandler = new Handler();
+
+    private Runnable removeChoosenAnswerText=new Runnable() {
+    	public void run() {
+    		mChoosenAnswer.setText("");
+    	}
+    };
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -595,6 +604,7 @@ public class Reviewer extends Activity {
             mTextBarRed.setVisibility(View.GONE);
             mTextBarBlack.setVisibility(View.GONE);
             mTextBarBlue.setVisibility(View.GONE);
+            mChoosenAnswer.setVisibility(View.GONE);
             if (mPrefTimer) {
                 mCardTimer.setVisibility(View.GONE);
             }
@@ -614,6 +624,7 @@ public class Reviewer extends Activity {
             mTextBarRed.setVisibility(View.VISIBLE);
             mTextBarBlack.setVisibility(View.VISIBLE);
             mTextBarBlue.setVisibility(View.VISIBLE);
+            mChoosenAnswer.setVisibility(View.VISIBLE);
             if (mPrefTimer) {
                 mCardTimer.setVisibility(View.VISIBLE);
             }
@@ -772,6 +783,22 @@ public class Reviewer extends Activity {
 
 
     private void answerCard(int ease) {
+    	switch (ease) {
+    		case Card.EASE_FAILED:
+    	    	mChoosenAnswer.setText(mEase1.getText());
+    			break;
+    		case Card.EASE_HARD:
+    	    	mChoosenAnswer.setText(mEase2.getText());
+    			break;
+    		case Card.EASE_MID:
+    	    	mChoosenAnswer.setText(mEase3.getText());
+    			break;
+    		case Card.EASE_EASY:
+    	    	mChoosenAnswer.setText(mEase4.getText());    			
+    			break;
+    	}
+    	mTimerHandler.postDelayed(removeChoosenAnswerText, mShowChoosenAnswerLength);
+
     	Sound.stopSounds();
     	mCurrentEase = ease;
         // Increment number reps counter
@@ -847,6 +874,12 @@ public class Reviewer extends Activity {
         mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
+        float headTextSize = (float) (mCardTimer.getTextSize() * 0.63);
+        mCardTimer.setTextSize(headTextSize);
+
+        mChoosenAnswer = (TextView) findViewById(R.id.choosen_answer);
+        mChoosenAnswer.setTextSize((float) (headTextSize * 1.1));
+
         mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
         mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
         	@Override
@@ -933,6 +966,7 @@ public class Reviewer extends Activity {
         mTextBarRed.setVisibility(View.VISIBLE);
         mTextBarBlack.setVisibility(View.VISIBLE);
         mTextBarBlue.setVisibility(View.VISIBLE);
+        mChoosenAnswer.setVisibility(View.VISIBLE);
         mFlipCard.setVisibility(View.VISIBLE);
         
         mCardTimer.setVisibility((mPrefTimer) ? View.VISIBLE : View.GONE);
@@ -1481,7 +1515,6 @@ public class Reviewer extends Activity {
                         // down
       					if (sDisplayAnswer) {
            					answerCard(Card.EASE_FAILED);
-           					// Toast.makeText(Reviewer.this, mEase1.getText(), Toast.LENGTH_SHORT).show();        					
        					} else {
            			        displayCardAnswer();    						
        					}
@@ -1490,10 +1523,8 @@ public class Reviewer extends Activity {
       					if (sDisplayAnswer) {
       						if (mCurrentCard.isRev()) {
            						answerCard(Card.EASE_MID);
-           						// Toast.makeText(Reviewer.this, mEase3.getText(), Toast.LENGTH_SHORT).show();
       						} else {
       							answerCard(Card.EASE_HARD);
-      							// Toast.makeText(Reviewer.this, mEase2.getText(), Toast.LENGTH_SHORT).show();
       						}
       					} else {
       						displayCardAnswer(); 
@@ -1525,10 +1556,8 @@ public class Reviewer extends Activity {
     		if (mSwipeEnabled && mSelectionStarted == 0 && sDisplayAnswer) {
         		if (mCurrentCard.isRev()) {
 					answerCard(Card.EASE_EASY);
-					// Toast.makeText(Reviewer.this, mEase4.getText(), Toast.LENGTH_SHORT).show();
         		} else {
 					answerCard(Card.EASE_MID);
-					// Toast.makeText(Reviewer.this, mEase3.getText(), Toast.LENGTH_SHORT).show();
         		}
         		mAnsweringCard = true;
 			}
