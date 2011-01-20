@@ -196,7 +196,7 @@ public class Reviewer extends Activity {
     
 	public boolean mShowCongrats = false;
 
-    /**
+	/**
      * Swipe Detection
      */    
  	private GestureDetector gestureDetector;
@@ -230,7 +230,7 @@ public class Reviewer extends Activity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.ease1:
-                	answerCard(Card.EASE_FAILED);
+                    answerCard(Card.EASE_FAILED);
                     break;
                 case R.id.ease2:
                 	answerCard(Card.EASE_HARD);
@@ -1009,7 +1009,7 @@ public class Reviewer extends Activity {
 
 
     private void reviewNextCard() {
-        updateScreenCounts();
+    	updateScreenCounts();
 
         // Clean answer field
         if (mPrefWriteAnswers) {
@@ -1105,6 +1105,9 @@ public class Reviewer extends Activity {
         if (mPrefTimer) {
             mCardTimer.stop();
         }
+        
+        // Get position to scroll to after answer showed
+        int mAnswerPosition = (int) (mCard.getContentHeight() + mCard.getHeight() / 2);
 
         String displayString = "";
 
@@ -1150,6 +1153,10 @@ public class Reviewer extends Activity {
         mFlipCard.setVisibility(View.GONE);
         showEaseButtons();
         updateCard(displayString);
+        
+        if (isQuestionDisplayed()) {
+        	mCard.scrollTo(0, mAnswerPosition);
+        }
     }
 
 
@@ -1194,7 +1201,7 @@ public class Reviewer extends Activity {
 
         // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         String card = mCardTemplate.replace("::content::", content);
-//        Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
+        // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8",
                 null);
@@ -1504,6 +1511,9 @@ public class Reviewer extends Activity {
     }
 
     class MyGestureDetector extends SimpleOnGestureListener {
+     	private boolean mIsXScrolling = false;
+     	private boolean mIsYScrolling = false;
+
     	@Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
@@ -1511,14 +1521,14 @@ public class Reviewer extends Activity {
        				if (mSelectionStarted != 0) {
        					return false;
        				}
-        			if (e2.getY() - e1.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+        			if (e2.getY() - e1.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH && !mIsYScrolling) {
                         // down
       					if (sDisplayAnswer) {
            					answerCard(Card.EASE_FAILED);
        					} else {
            			        displayCardAnswer();    						
        					}
-       		        } else if (e1.getY() - e2.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+       		        } else if (e1.getY() - e2.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH && !mIsYScrolling) {
                         // up
       					if (sDisplayAnswer) {
       						if (mCurrentCard.isRev()) {
@@ -1529,10 +1539,12 @@ public class Reviewer extends Activity {
       					} else {
       						displayCardAnswer(); 
       					}
-                     } else if (e2.getX() - e1.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+                     } else if (e2.getX() - e1.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH && !mIsXScrolling) {
                        	 // left
                     	 closeReviewer();
                      }
+               		mIsXScrolling = false;        		
+               		mIsYScrolling = false;        		
                  }
                  catch (Exception e) {
                    	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
@@ -1563,6 +1575,18 @@ public class Reviewer extends Activity {
 			}
     		return false;
     	}
+    	
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        	if (mCard.getScrollY() != 0) {
+        		mIsYScrolling = true;        		
+        	}
+        	if (mCard.getScrollX() != 0) {
+        		mIsXScrolling = true;        		
+        	}  
+            return super.onScroll(e1, e2, distanceX, distanceY);
+        }
+
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
