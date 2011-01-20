@@ -405,6 +405,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     deck.setLastLoaded(deck.getModified());
                     deck.commitToDB();
+                    Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE,
+                                "Modified: %f, LastSync: %f, LastLoaded: %f",
+                                deck.getModified(), deck.getLastSync(), deck.getLastLoaded()));
 
                     ankiDB.getDatabase().setTransactionSuccessful();
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));

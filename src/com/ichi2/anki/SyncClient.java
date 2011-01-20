@@ -331,6 +331,7 @@ public class SyncClient {
                 if (!payloadReply.isNull("sources")) {
                     updateSources(payloadReply.getJSONArray("sources"));
                 }
+                mDeck.commitToDB();
             }
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -1527,9 +1528,11 @@ public class SyncClient {
         // Ensure modified is not greater than server time
         if ((mServer != null) && (mServer.getTimestamp() != 0.0)) {
             mDeck.setModified(Math.min(mDeck.getModified(), mServer.getTimestamp()));
+            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Modified: %f", mDeck.getModified()));
         }
         // And ensure lastSync is greater than modified
         mDeck.setLastSync(Math.max(Utils.now(), mDeck.getModified() + 1));
+        Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "LastSync: %f", mDeck.getLastSync()));
 
         try {
             bundledDeck = mDeck.bundleJson(bundledDeck);

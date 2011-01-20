@@ -1008,7 +1008,6 @@ public class StudyOptions extends Activity {
     /** Handles item selections */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(AnkiDroidApp.TAG, "Item = " + item.getItemId());
         switch (item.getItemId()) {
             case MENU_OPEN:
                 openDeckPicker();
@@ -1128,8 +1127,7 @@ public class StudyOptions extends Activity {
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = AnkiDroidApp.deck();
 
-            Log.i(AnkiDroidApp.TAG,
-                    "Synchronizing deck " + mDeckFilename + " with username " + username + " and password " + password);
+            Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename);
             Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
             Connection.syncDeck(syncListener, new Connection.Payload(new Object[] { username, password, deck,
                     mDeckFilename }));

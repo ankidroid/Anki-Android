@@ -277,14 +277,10 @@ public class AnkiDroidProxy {
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(httpPost);
-            Log.i(AnkiDroidApp.TAG, "Response = " + response.toString());
             HttpEntity entityResponse = response.getEntity();
-            Log.i(AnkiDroidApp.TAG, "Entity's response = " + entityResponse.toString());
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "Content = " + content.toString());
-            Log
-                    .i(AnkiDroidApp.TAG, "String content = "
-                            + Utils.convertStreamToString(new InflaterInputStream(content)));
+            Log.i(AnkiDroidApp.TAG, "String content = " +
+                    Utils.convertStreamToString(new InflaterInputStream(content)));
 
             // Add created deck to the list of decks on server
             mDecks.put(name, new JSONArray("[0,0]"));
@@ -337,11 +333,8 @@ public class AnkiDroidProxy {
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(httpPost);
-            Log.i(AnkiDroidApp.TAG, "Response = " + response.toString());
             HttpEntity entityResponse = response.getEntity();
-            Log.i(AnkiDroidApp.TAG, "Entity's response = " + entityResponse.toString());
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "Content = " + content.toString());
             summaryServer = new JSONObject(Utils.convertStreamToString(new InflaterInputStream(content)));
             Log.i(AnkiDroidApp.TAG, "Summary server = ");
             Utils.printJSONObject(summaryServer);
@@ -386,11 +379,8 @@ public class AnkiDroidProxy {
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(httpPost);
-            Log.i(AnkiDroidApp.TAG, "Response = " + response.toString());
             HttpEntity entityResponse = response.getEntity();
-            Log.i(AnkiDroidApp.TAG, "Entity's response = " + entityResponse.toString());
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "Content = " + content.toString());
             String contentString = Utils.convertStreamToString(new InflaterInputStream(content));
             Log.i(AnkiDroidApp.TAG, "Payload response = ");
             payloadReply = new JSONObject(contentString);
