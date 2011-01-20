@@ -111,7 +111,8 @@
 			android:id="@+id/swipe_checkbox"
 			android:title="@string/swipe"
 			android:defaultValue="true"
-			android:summary="@string/swipe_summ"
+			android:summaryOn="@string/swipe_summ_on"
+			android:summaryOff="@string/swipe_summ_off"
 			android:key="swipe"
 			android:disableDependentsState="true"/>
 		<CheckBoxPreference

@@ -1533,7 +1533,7 @@ public class Reviewer extends Activity {
     	
     	@Override
     	public boolean onDoubleTapEvent(MotionEvent e) {
-    		if (mSelectionStarted == 0 && sDisplayAnswer) {
+    		if (mSwipeEnabled && mSelectionStarted == 0 && sDisplayAnswer) {
         		if (mCurrentCard.isRev()) {
 					answerCard(Card.EASE_EASY);
 					// Toast.makeText(Reviewer.this, mEase4.getText(), Toast.LENGTH_SHORT).show();
