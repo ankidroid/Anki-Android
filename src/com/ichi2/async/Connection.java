@@ -55,6 +55,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private static Connection sInstance;
     private TaskListener mListener;
+    public String mConflictResolution = null;
+    
+    public static final String CONFLICT_RESOLUTION = "ConflictResolutionRequired";
 
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
@@ -269,6 +272,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         return data;
     }
 
+    
 
     private Payload doInBackgroundSyncDeck(Payload data) {
         Resources res = sContext.getResources();
@@ -319,32 +323,50 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             SyncClient client = new SyncClient(deck);
             client.setServer(server);
             server.setDeckName(syncName);
-            String conflictResolution = null;
+            
+            // Check conflicts
+            double localMod = deck.getModified();
+            double localSync = deck.getLastSync();
+            double remoteMod = server.modified();
+            double remoteSync = server.lastSync();
+            double minSync = Math.min(localSync, remoteSync);
+            mConflictResolution = null;
+            if ((localMod != remoteMod) && (minSync > 0) &&
+                    (localMod > minSync) && (remoteMod > minSync)) {
+                if (mListener != null) {
+                    publishProgress(syncName, CONFLICT_RESOLUTION, this);
+                } else {
+                    mConflictResolution = "cancel";
+                }
+                while (mConflictResolution == null) {
+                    //?
+                }
+            }
             if (client.prepareSync(server.getTimediff())) {
                 if (deck.getLastSync() <= 0) {
                     if (client.getRemoteTime() > client.getLocalTime()) {
-                        conflictResolution = "keepRemote";
+                        mConflictResolution = "keepRemote";
                     } else {
-                        conflictResolution = "keepLocal";
+                        mConflictResolution = "keepLocal";
                     }
                 }
 
                 // summary
                 JSONArray sums = null;
-                if (conflictResolution == null) {
+                if (mConflictResolution == null) {
                     publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
                     sums = client.summaries();
                 }
 
-                if ((conflictResolution != null) || client.needFullSync(sums)) {
+                if ((mConflictResolution != null) || client.needFullSync(sums)) {
                     Log.i(AnkiDroidApp.TAG, "DECK NEEDS FULL SYNC");
 
                     publishProgress(syncName, res.getString(R.string.sync_preparing_full_sync_message));
 
-                    if (conflictResolution != null) {
-                        if (conflictResolution.equals("keepLocal")) {
+                    if (mConflictResolution != null) {
+                        if (mConflictResolution.equals("keepLocal")) {
                             client.setRemoteTime(0.0);
-                        } else if (conflictResolution.equals("keepRemote")) {
+                        } else if (mConflictResolution.equals("keepRemote")) {
                             client.setLocalTime(0.0);
                         }
                     }

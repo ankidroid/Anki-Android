@@ -250,7 +250,7 @@
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
 Flashcards for Android&lt;/h2&gt;
 &lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href=&quot;http://ankisrs.net&quot;&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
-&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt;; new feature ideas are very welcome too!
+&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt; new feature ideas are very welcome too!
 Please use the &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Index&quot;&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;AnkiDroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Contribution&quot;&gt;join&lt;/a&gt; the &lt;a href=&quot;https://code.google.com/p/ankidroid/wiki/Contribution#Contributors&quot;&gt;contributors&lt;/a&gt; :-)
 Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href=&quot;http://ankisrs.net/support&quot;&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
@@ -329,6 +329,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="studyoptions_congrats_finish">Back to Study Screen</string>
 
 
+
 <!-- MyAccount.java -->
 <string name="username">Username</string>
 <string name="password">Password</string>
@@ -376,6 +377,11 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_log_fact_from_server_message">1 fact from server</string>
 <string name="sync_log_facts_from_server_message">%d facts from server</string>
 <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
+<string name="sync_conflict_title">Syncing conflict</string>
+<string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
+<string name="sync_conflict_local">Keep Local</string>
+<string name="sync_conflict_remote">Keep Remote</string>
+<string name="sync_conflict_cancel">Cancel Syncing</string>
 
 <!-- ErrorReporter.java -->
 <string name="error_message">There is one error to report</string>
