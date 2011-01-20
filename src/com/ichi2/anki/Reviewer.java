@@ -1106,8 +1106,8 @@ public class Reviewer extends Activity {
             mCardTimer.stop();
         }
         
-        // Get position to scroll to after answer showed
-        int mAnswerPosition = (int) (mCard.getContentHeight() + mCard.getHeight() / 2);
+//        // Get position to scroll to after answer showed
+//        int mAnswerPosition = (int) (mCard.getContentHeight() + mCard.getHeight() / 2);
 
         String displayString = "";
 
@@ -1154,9 +1154,9 @@ public class Reviewer extends Activity {
         showEaseButtons();
         updateCard(displayString);
         
-        if (isQuestionDisplayed()) {
-        	mCard.scrollTo(0, mAnswerPosition);
-        }
+//        if (isQuestionDisplayed()) {
+//        	mCard.scrollTo(0, mAnswerPosition);
+//        }
     }
 
 
