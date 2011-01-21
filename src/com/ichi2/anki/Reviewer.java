@@ -106,6 +106,10 @@ public class Reviewer extends Activity {
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
 
+    /** Regex pattern used in identifying Hebrew words, so we can reverse them */
+    private static final Pattern sHebrewPattern = Pattern.compile(
+            "[[\\u0591-\\u05C7][\\u05D0-\\u05EA][\\u05F0-\\u05F4][\\uFB1D-\\uFB4F]]+");
+
     /** Hide Question In Answer choices */
     private static final int HQIA_DO_HIDE = 0;
     private static final int HQIA_DO_SHOW = 1;
@@ -1086,7 +1090,22 @@ public class Reviewer extends Activity {
         mFlipCard.setVisibility(View.VISIBLE);
         mFlipCard.requestFocus();
 
-        String displayString = enrichWithQASpan(mCurrentCard.getQuestion(), false);
+        String question = mCurrentCard.getQuestion();
+        Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
+        // Find hebrew words
+        Matcher m = sHebrewPattern.matcher(question);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            StringBuffer sbg = new StringBuffer(m.group());
+            for (int i = 0; i < sbg.length(); i++) {
+                Log.i(AnkiDroidApp.TAG, "hquestion: " + sbg.codePointAt(i));
+            }
+            sbg.reverse();
+            m.appendReplacement(sb, sbg.toString()); 
+        }
+        m.appendTail(sb);
+        Log.i(AnkiDroidApp.TAG, "altered question: '" + sb.toString() + "'");
+        String displayString = enrichWithQASpan(sb.toString(), false);
         // Show an horizontal line as separation when question is shown in answer
         if (isQuestionDisplayed()) {
             displayString = displayString + "<hr/>";
