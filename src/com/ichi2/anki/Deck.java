@@ -2753,13 +2753,12 @@ public class Deck {
     private double nextDue(Card card, int ease, String oldState) {
         double due;
         if (ease == Card.EASE_FAILED) {
-            if (oldState.equals(Card.STATE_MATURE)) {
-                // FIXME: magic value until we have old clients updated
-                long d = 0;
-                if (mDelay1 != 600) {
-                    d = mDelay1;
-                }
-                due = d * 86400.0;
+        	// 600 is a magic value which means no bonus, and is used to ease upgrades
+            if (oldState.equals(Card.STATE_MATURE) && mDelay1 != 0 && mDelay1 != 600) {
+                // user wants a bonus of 1+ days. put the failed cards at the
+            	// start of the future day, so that failures that day will come
+            	// after the waiting cards
+            	return mFailedCutoff + (mDelay1 - 1) * 86400;
             } else {
                 due = 0.0;
             }
