@@ -257,6 +257,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="sync_log_fact_from_server_message">1 факт с сервера</string>
   <string name="sync_log_facts_from_server_message">%d факт(ов) с сервера</string>
   <string name="sync_log_clocks_unsynchronized">Время на вашем Android-устройстве отличается на %d секунд от времени сервера, поэтому невозможно синхронизировать.</string>
+  <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_conflict_title">Syncing conflict</string>
   <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
   <string name="sync_conflict_local">Keep Local</string>

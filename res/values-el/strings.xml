@@ -257,6 +257,7 @@ Flashcards for Android&lt;/h2&gt;
   <string name="sync_log_fact_from_server_message">1 γεγονός από το διακομιστή</string>
   <string name="sync_log_facts_from_server_message">%d γεγονότα από το διακομιστή</string>
   <string name="sync_log_clocks_unsynchronized">Η ώρα της συσκευής σας είναι διαφορετική από εκείνη του διακομιστή κατά %d\", γι\' αυτό  δε μπορεί να γίνει συγχρονισμός.</string>
+  <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_conflict_title">Syncing conflict</string>
   <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
   <string name="sync_conflict_local">Keep Local</string>

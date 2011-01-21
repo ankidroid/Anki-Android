@@ -257,6 +257,7 @@ Los no-desarrolladores también pueden ayudar, por ejemplo actualizando el wiki 
   <string name="sync_log_fact_from_server_message">1 hecho del servidor</string>
   <string name="sync_log_facts_from_server_message">%d hechos del servidor</string>
   <string name="sync_log_clocks_unsynchronized">La hora de tu dispositivo es diferente de la del servidor en %d segundos, no se pudo sincronizar.</string>
+  <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_conflict_title">Syncing conflict</string>
   <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
   <string name="sync_conflict_local">Keep Local</string>

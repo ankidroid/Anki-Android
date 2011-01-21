@@ -117,9 +117,9 @@
   <string name="fullscreen_review_summ">Możesz zdecydować, czy chcesz korzystać ze całego dostępnego miejsca na ekranie podczas powtarzania kart</string>
   <string name="zoom">Włącz powiększenie</string>
   <string name="zoom_summ">Pokaż kontrolki zbliżenia podczas powtórek</string>
-  <string name="swipe">Enable Gestures</string>
-  <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
+  <string name="swipe">Włącz gesty</string>
+  <string name="swipe_summ_off">Użyj gestów do przełączania ekranów i kart odpowiedzi. Ta opcja nie jest zgodna z kontrolkami powiększania</string>
+  <string name="swipe_summ_on">Przesuń poziomo aby przełączać ekrany i pionowo aby odpowiadać (w dół: wkrótce, góra: zalecane, dotknij dwukrotnie: łatwiejsze niż zalecane)</string>
   <string name="pref_cat_experimental">Eksperymentalne</string>
   <string name="sync_enabled">Funkcje synchronizacji</string>
   <string name="sync_enabled_in_answer_summ">Wciąż wiele błędów, może uszkodzić talię. Rób często kopie zapasowe!</string>
@@ -162,12 +162,17 @@
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
 Fiszki dla Androida&lt;/h2&gt;
-&lt;p&gt;AnkiDroid może czytać pliki .anki utworzone przez oprogramowanie &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt; dla desktopów.&lt;/p&gt;
+&lt;p&gt;AnkiDroid może czytać pliki .anki utworzone przez oprogramowanie &lt;a href="http://ankisrs.net"&gt;Anki&lt;/a&gt; dla desktopów.&lt;/p&gt;
 &lt;p&gt;Aby pomóc w rozwoju AnkiDroida, proszę zgłaszać błędy &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;tutaj&lt;/a&gt;. Pomysły na nowe funkcje także są mile widziane!
-Skorzystaj z &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; i napisz Cześć na &lt;a href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid jest &lt;a href="http://pl.wikipedia.org/wiki/Open_source"&gt;oprogramowaniem otwartoźródłowym &lt;/a&gt;, więc każdy może &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;dołączyć&lt;/a&gt; do listy &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;współpracowników&lt;/a&gt; :-)
-Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i zrzuty ekranowe, &lt;a href="http://ichi2.net/anki/donate.html"&gt;wspierając&lt;/a&gt; projekt Anki, albo blogując o AnkiDroid!&lt;/p&gt;
-&lt;p&gt;AnkiDroid został wypuszczony na licencji &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL w wersji 3&lt;/a&gt;, a jego kod źródłowy dostępny jest &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;tu&lt;/a&gt;.&lt;/p&gt;
+Skorzystaj z &lt;a href="http://code.google.com/p/ankidroid/wiki/Index"&gt;wiki&lt;/a&gt; i napisz Cześć na &lt;a 
+href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid jest &lt;a href="http://pl.wikipedia.org/wiki/Open_source"&gt;oprogramowaniem otwartoźródłowym &lt;/a&gt;, więc każdy może &lt;a 
+href="http://code.google.com/p/ankidroid/wiki/Contribution"&gt;dołączyć&lt;/a&gt; do listy &lt;a 
+href="http://code.google.com/p/ankidroid/wiki/Contribution#Contributors"&gt;współpracowników&lt;/a&gt; :-)
+Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i zrzuty ekranowe, &lt;a 
+href="http://ankisrs.net/support"&gt;wspierając&lt;/a&gt; projekt Anki, albo blogując o AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid został wypuszczony na licencji &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL w wersji 3&lt;/a&gt;, a jego kod źródłowy 
+dostępny jest &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;tu&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
   <string name="studyoptions_title">Ustawienia nauki</string>
@@ -257,11 +262,12 @@ Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i
   <string name="sync_log_fact_from_server_message">1 fakt z serwera</string>
   <string name="sync_log_facts_from_server_message">%d fakty z serwera</string>
   <string name="sync_log_clocks_unsynchronized">Czas urządzenia różni się od tego na serwerze o %d sekund, synchronizacja niemożliwa.</string>
-  <string name="sync_conflict_title">Syncing conflict</string>
-  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
-  <string name="sync_conflict_local">Keep Local</string>
-  <string name="sync_conflict_remote">Keep Remote</string>
-  <string name="sync_conflict_cancel">Cancel Syncing</string>
+  <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
+  <string name="sync_conflict_title">Konflikt synchronizacji</string>
+  <string name="sync_conflict_message">Talia %s została zmieniona po stronie lokalnej i zdalnej. Które zmiany powinny być zachowane?</string>
+  <string name="sync_conflict_local">Zachowaj lokalne</string>
+  <string name="sync_conflict_remote">Zachowaj zdalne</string>
+  <string name="sync_conflict_cancel">Anuluj synchronizację</string>
   <string name="error_message">Jest jeden błąd do zgłoszenia</string>
   <string name="errors_message">Jest %d błędów do zgłoszenia</string>
   <string name="error_ok">Zgłaszaj błędy</string>

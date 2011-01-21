@@ -118,8 +118,8 @@
   <string name="zoom">Zoom aktivieren</string>
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
   <string name="swipe">Gesten aktivieren</string>
-  <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit Zoom-Steuerelementen</string>
-  <string name="swipe_summ_on">Wischen Sie horizontal zum Fenster wechseln und vertikal zum Karten beantworten (hoch: nochmal, nach unten: Empfehlung, Doppelklick: einfacher als E.)</string>
+  <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
+  <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; vertikal wischen: Karten beantworten (hoch: nochmal, runter: Empfehlung, Doppeltap: einfacher als E.)</string>
   <string name="pref_cat_experimental">EXPERIMENTELL</string>
   <string name="sync_enabled">Synchronisierung</string>
   <string name="sync_enabled_in_answer_summ">Die Synchronisierung hat noch Fehler und könnte Ihre Stapel gefährden. Machen Sie häufig Backups!</string>
@@ -246,10 +246,11 @@
   <string name="sync_log_fact_from_server_message">Ein Fakt heruntergeladen</string>
   <string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
   <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %d Sekunden von der Server-Zeit ab, es kann deshalb nicht synchronisiert werden.</string>
+  <string name="sync_log_conflict_resolution_required">Der Stapel wurde lokal und auf dem Server geändert. Bitte öffnen Sie den Stapel und synchronisieren von dort, um den Konflikt zu beheben.</string>
   <string name="sync_conflict_title">Synchronisierungskonflikt</string>
   <string name="sync_conflict_message">Der Stapel %s wurde sowohl lokal als auch auf dem Server geändert. Welche Seite soll behalten werden?</string>
-  <string name="sync_conflict_local">Behalte lokale Version</string>
-  <string name="sync_conflict_remote">Behalte Server-Version</string>
+  <string name="sync_conflict_local">Lokale</string>
+  <string name="sync_conflict_remote">Server</string>
   <string name="sync_conflict_cancel">Abbrechen</string>
   <string name="error_message">Es ist ein Fehler zu melden</string>
   <string name="errors_message">Es ist %d Fehler zu melden</string>

@@ -257,6 +257,7 @@ Els que no sou desenvolupadors també podeu ajudar, per exemple actualitzant el 
   <string name="sync_log_fact_from_server_message">1 fet del servidor</string>
   <string name="sync_log_facts_from_server_message">%d fets del servidor</string>
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
+  <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_conflict_title">Syncing conflict</string>
   <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
   <string name="sync_conflict_local">Keep Local</string>
