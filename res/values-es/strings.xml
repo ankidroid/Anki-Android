@@ -45,7 +45,7 @@
   <string name="notification_message">Una nueva versión de Ankidroid se encuentra disponible en el Android Market.\n\n¿Quieres instalarla?</string>
   <string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
-  <string name="show_whiteboard">Mostrar temporizador / pizarra</string>
+  <string name="show_whiteboard">Mostrar pizarra</string>
   <string name="hide_whiteboard">Ocultar Pizarra</string>
   <string name="clear_whiteboard">Limpiar Pizarra</string>
   <string name="session_question_limit_reached">Se ha alcanzado el límite de preguntas de la sesión</string>
@@ -80,7 +80,7 @@
   <string name="ease2_successive">Difícil</string>
   <string name="ease3_successive">Bien</string>
   <string name="ease4_successive">Fácil</string>
-  <string name="pref_cat_decks">Barajas</string>
+  <string name="pref_cat_decks">Mazos</string>
   <string name="pref_cat_sync">Sincronización</string>
   <string name="pref_cat_advanced">Avanzado</string>
   <string name="pref_cat_qadisplay">Visualización de pregunta y respuesta</string>
@@ -96,7 +96,7 @@
   <string name="whiteboard_stroke_width">Ancho del trazo en la pizarra</string>
   <string name="whiteboard_stroke_width_summ">Selecciona el ancho del trazo</string>
   <string name="sample_deck">Mazo de muestra</string>
-  <string name="sample_deck_summ">Genera mazo de capitales si no encontrado</string>
+  <string name="sample_deck_summ">Crea un mazo de capitales si no se encuentra ningún otro mazo</string>
   <string name="write_answers">Escribir respuestas</string>
   <string name="write_answers_summ">Te permite escribir la respuesta y compararla con la solución correcta</string>
   <string name="text_selection">Permitir la selección de texto</string>
@@ -109,25 +109,25 @@
   <string name="display_font_size_summ">El tamaño de fuente en % relativo al definido en el mazo</string>
   <string name="button_size">Tamaño del botón relativo</string>
   <string name="button_size_summ">Tamaño relativo de los botones en la pantalla de repaso</string>
-  <string name="hide_question_in_answer">¿Ocultar la pregunta en la respuesa?</string>
-  <string name="hide_question_in_answer_summ">Determina si la pregunta debería de ocultarse cuando la respuesta se muestra.</string>
+  <string name="hide_question_in_answer">¿Ocultar la pregunta?</string>
+  <string name="hide_question_in_answer_summ">Determina si la pregunta debería de ocultarse al mostrar la respuesta.</string>
   <string name="deck_path">Directorio mazos</string>
   <string name="deck_path_summ">Directorio donde tus mazos están almacenados</string>
-  <string name="fullscreen_review">Revisar en pantalla completa</string>
+  <string name="fullscreen_review">Pantalla completa</string>
   <string name="fullscreen_review_summ">Puedes decidir si quieres usar todo el espacio disponible de la pantalla durante el repaso</string>
   <string name="zoom">Habilitar Zoom</string>
   <string name="zoom_summ">Mostrar controles de zoom durante el repaso</string>
-  <string name="swipe">Enable Gestures</string>
-  <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
+  <string name="swipe">Habilitar gestos</string>
+  <string name="swipe_summ_off">Usa gestos para moverte entre las pantallas y responder tarjetas. Esta opción es incompatible con los controles de zoom</string>
+  <string name="swipe_summ_on">Desliza el dedo horizontalmente para moverte entre pantallas y verticalmente para responder tarjetas (abajo: otra vez, arriba: recomendación, doble toque: más fácil que la recomendación)</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
-  <string name="sync_enabled">Características de sincronización</string>
+  <string name="sync_enabled">Sincronización</string>
   <string name="sync_enabled_in_answer_summ">Todavía hay muchos errores, puede corromper tus mazos. ¡Haz copias de seguridad a menudo!</string>
   <string name="personaldeckpicker_title">Abrir Mazo Online</string>
-  <string name="shareddeckpicker_title">Selecciona la baraja que desea descargar</string>
+  <string name="shareddeckpicker_title">Selecciona el mazo que deseas descargar</string>
   <string name="downloaddeck_search">Buscar</string>
   <string name="preferences_title">Preferencias</string>
-  <string name="deckpreferences_title">Preferencias de baraja</string>
+  <string name="deckpreferences_title">Preferencias del mazo</string>
   <string name="about_title">Acerca de</string>
   <string name="cardeditor_title">Editor de tarjetas</string>
   <string name="factadder_title">Añadir Tarjeta</string>
@@ -148,7 +148,7 @@
   <string name="cancel">Cancelar</string>
   <string name="shared_decks">Mazos compartidos</string>
   <string name="updating">Actualizando...</string>
-  <string name="loading_shared_decks">Cargando barajas compartidas disponibles...</string>
+  <string name="loading_shared_decks">Cargando mazos compartidos disponibles...</string>
   <string name="cancel_download">Cancelar descarga</string>
   <string name="resume_download">Reanudar la descarga</string>
   <string name="pause_download">Pausar la descarga</string>
@@ -162,7 +162,7 @@
 &lt;body&gt;
 &lt;h1&gt;AnkiDroid:&lt;br/&gt;
 Flashcards para Android&lt;/h1&gt;
-&lt;p&gt;AnkiDroid puede leer ficheros .anki hechos por la aplicación de escritorio &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid puede leer ficheros .anki creados por la aplicación de escritorio &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Para ayudarnos a mejorar AnkiDroid, por favor informa de cualquier error &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;aquí&lt;/a&gt;, ¡nuevas ideas y mejoras son muy bien recibidas!
 Por favor usa el &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; y di "Hola" en el &lt;a href="http://groups.google.com/group/anki-android"&gt;foro&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;AnkiDroid es &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;software de código abierto&lt;/a&gt;, asi que animamos a todo el mundo a &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;unirse&lt;/a&gt; a los &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;contribuyentes&lt;/a&gt; :-)
@@ -184,7 +184,7 @@ Los no-desarrolladores también pueden ayudar, por ejemplo actualizando el wiki 
   <string name="studyoptions_more_dialog_title">Opciones de estudio</string>
   <string name="studyoptions_more_save">Guardar</string>
   <string name="studyoptions_nodeck_title">No hay ningún mazo cargado</string>
-  <string name="studyoptions_nodeck_message">No hay ningún mazo cargado actualmente. Los mazos de Anki se guardan en el directorio \"%s\" en la tarjeta de memoria. Puedes especificar esta localización en el menú de preferencias (pulsa el botón de \"Menú\" en tu despositivo y selecciona \"Preferencias\").</string>
+  <string name="studyoptions_nodeck_message">No hay ningún mazo cargado actualmente. Los mazos de Anki se guardan en el directorio \"%s\" en la tarjeta de memoria. Puedes especificar esta localización en el menú de preferencias (pulsa el botón de \"Menú\" en tu dispositivo y selecciona \"Preferencias\").</string>
   <string name="studyoptions_deck_not_loaded_title">El mazo no se pudo cargar</string>
   <string name="studyoptions_deck_not_loaded_message">El mazo seleccionado no es un mazo de Anki válido. Por favor usa la aplicación de escritorio Anki para crear un mazo válido antes de cargarlo en Ankidroid.\n\nMientras tanto, puedes seleccionar otro mazo o cargar el mazo de ejemplo.</string>
   <string name="studyoptions_no_external_storage_title">Almacenamiento externo no disponible</string>
@@ -211,7 +211,7 @@ Los no-desarrolladores también pueden ayudar, por ejemplo actualizando el wiki 
   <string name="studyoptions_continue">Continuar el repaso</string>
   <string name="studyoptions_well_done">¡Bien hecho!</string>
   <string name="studyoptions_congrats_title">¡Enhorabuena!</string>
-  <string name="studyoptions_congrats_message">Has terminado por hoy.\nTMañana habrá:\n%1$d %2$s para repasar y %3$d nuevas %4$s.</string>
+  <string name="studyoptions_congrats_message">Has terminado por ahora.\nMañana habrá:\n%1$d %2$s para repasar y %3$d nuevas %4$s.</string>
   <string name="studyoptions_congrats_card">tarjeta</string>
   <string name="studyoptions_congrats_cards">tarjetas</string>
   <string name="studyoptions_congrats_learnmore">Aprender más</string>
@@ -257,21 +257,21 @@ Los no-desarrolladores también pueden ayudar, por ejemplo actualizando el wiki 
   <string name="sync_log_fact_from_server_message">1 hecho del servidor</string>
   <string name="sync_log_facts_from_server_message">%d hechos del servidor</string>
   <string name="sync_log_clocks_unsynchronized">La hora de tu dispositivo es diferente de la del servidor en %d segundos, no se pudo sincronizar.</string>
-  <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
-  <string name="sync_conflict_title">Syncing conflict</string>
-  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
-  <string name="sync_conflict_local">Keep Local</string>
-  <string name="sync_conflict_remote">Keep Remote</string>
-  <string name="sync_conflict_cancel">Cancel Syncing</string>
+  <string name="sync_log_conflict_resolution_required">El mazo se ha modificado localmente y en servidor. Por favor abre el mazo y sincroniza desde allí para resolver el conflicto.</string>
+  <string name="sync_conflict_title">Conflicto al sincronizar</string>
+  <string name="sync_conflict_message">El mazo %s se ha modificado localmente y en servidor. ¿Cuál quieres mantener?</string>
+  <string name="sync_conflict_local">Mantener la versión local</string>
+  <string name="sync_conflict_remote">Mantener la versión remota</string>
+  <string name="sync_conflict_cancel">Cancelar Sincronización</string>
   <string name="error_message">Hay un error para enviar</string>
   <string name="errors_message">Hay %d errores para enviar</string>
   <string name="error_ok">Informar sobre errores</string>
   <string name="error_cancel">No informar de errores</string>
   <string name="error_email">ankidroid@gmail.com</string>
-  <string name="error_reporting_choice">Modo de envío de errores</string>
+  <string name="error_reporting_choice">Informar de errores</string>
   <string name="error_reporting_choice_summary">Los errores se pueden enviar automáticamente, nunca, o preguntándote primero</string>
   <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Umbral de notificación del widget</string>
+  <string name="widget_minimum_cards_due">Umbral de notificación</string>
   <string name="widget_minimum_cards_due_summary">Mínimo número de tarjetas programadas que provoca una notificación</string>
   <string name="widget_minimum_cards_due_vibrate">Vibración</string>
   <string name="widget_minimum_cards_due_blink">Luz parpadeante</string>
@@ -284,8 +284,8 @@ Los no-desarrolladores también pueden ayudar, por ejemplo actualizando el wiki 
   <string name="add">Añadir</string>
   <string name="close">Cerrar</string>
   <string name="soon">Pronto</string>
-  <string name="show_next_review_time">Próximo tiempo de repaso</string>
-  <string name="show_next_review_time_summ">Muestra el próximo tiempo de repaso dependiento de tu elección</string>
+  <string name="show_next_review_time">Próximo repaso</string>
+  <string name="show_next_review_time_summ">Muestra el siguiente tiempo de repaso</string>
   <string name="update_notification">Notificaciones de actualizaciones</string>
   <string name="update_notification_summ">Notificarme cuando AnkiDroid sea actualizado</string>
   <string name="per_day">Por Día</string>

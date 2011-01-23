@@ -27,7 +27,7 @@
   <string name="no">Ei</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Pakkojen joiden versiot vanhempi kuin 39 eivät tue AnkiDroidia. Avaa pakka Anki-työpöytä versiolla ja päivitä pakka uusimpaan versioon.</string>
-  <string name="deckpicker_title">Valitse pakka (%1$d  %2$d määrä)</string>
+  <string name="deckpicker_title">Valitse pakka (%1$d / %2$d määrä)</string>
   <string name="deckpicker_title_nosdcard">SD-kortti on irrotettu</string>
   <string name="deckpicker_due">%1$d / %2$d jäljellä</string>
   <string name="deckpicker_new">%d uutta tänään</string>
@@ -117,7 +117,7 @@
   <string name="fullscreen_review_summ">Voit päättää, halutako käyttää kaikkia käytettävissä olevaa näytön tilaa kortin tarkastamisen aikana</string>
   <string name="zoom">Ota zoomaus käyttöön</string>
   <string name="zoom_summ">Näytä zoomaussäätimet tarjastekun aikana</string>
-  <string name="swipe">Enable Gestures</string>
+  <string name="swipe">Ota eleet käyttöön</string>
   <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
   <string name="pref_cat_experimental">KOKEELLINEN</string>
@@ -251,7 +251,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="sync_no_changes_message">Muutoksia ei löytynyt.</string>
   <string name="sync_log_error_message">Virhe: Pakkaa ei ole synkronoitu</string>
   <string name="sync_log_no_changes_message">Muutoksia ei löytynyt</string>
-  <string name="sync_log_uploading_message">Full sync from local</string>
+  <string name="sync_log_uploading_message">Täysi synkronointi sijainnista</string>
   <string name="sync_log_downloading_message">Täysi synkronointi palvelimesta</string>
   <string name="sync_log_fact_to_server_message">1 seikka palvelimelle</string>
   <string name="sync_log_facts_to_server_message">%d seikkaa palvelimelle</string>
@@ -263,7 +263,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
   <string name="sync_conflict_local">Keep Local</string>
   <string name="sync_conflict_remote">Keep Remote</string>
-  <string name="sync_conflict_cancel">Cancel Syncing</string>
+  <string name="sync_conflict_cancel">Peruuta synkronointi</string>
   <string name="error_message">Yksi virhe raportissa</string>
   <string name="errors_message">On %d raportoitavaa virhettä</string>
   <string name="error_ok">Ilmoita virheistä</string>
