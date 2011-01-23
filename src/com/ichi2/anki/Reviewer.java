@@ -1106,9 +1106,6 @@ public class Reviewer extends Activity {
             mCardTimer.stop();
         }
         
-//        // Get position to scroll to after answer showed
-//        int mAnswerPosition = (int) (mCard.getContentHeight() + mCard.getHeight() / 2);
-
         String displayString = "";
 
         // If the user wrote an answer
@@ -1145,18 +1142,14 @@ public class Reviewer extends Activity {
         if (isQuestionDisplayed()) {
             StringBuffer sb = new StringBuffer();
             sb.append(enrichWithQASpan(mCurrentCard.getQuestion(), false));
-            sb.append("<hr/>");
+            sb.append("<a name=\"question\"></a><hr/>");
             sb.append(displayString);
             displayString = sb.toString();
         }
 
         mFlipCard.setVisibility(View.GONE);
         showEaseButtons();
-        updateCard(displayString);
-        
-//        if (isQuestionDisplayed()) {
-//        	mCard.scrollTo(0, mAnswerPosition);
-//        }
+        updateCard(displayString);       
     }
 
 
@@ -1168,9 +1161,10 @@ public class Reviewer extends Activity {
         // Log.i(AnkiDroidApp.TAG, "content after parsing images = \n" + content);
 
         // don't play question sound again when displaying answer 
-        if (sDisplayAnswer && isQuestionDisplayed() && (content.indexOf("<hr/>") != -1)) {
-        	content = Sound.parseSounds(mDeckFilename, content.substring(0, content.indexOf("<hr/>") - 1), true)
-        			+ Sound.parseSounds(mDeckFilename, content.substring(content.indexOf("<hr/>"), content.length()), false);      	
+        int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
+        if (sDisplayAnswer && isQuestionDisplayed() && (questionStartsAt != -1)) {
+        	content = Sound.parseSounds(mDeckFilename, content.substring(0, questionStartsAt - 1), true)
+        			+ Sound.parseSounds(mDeckFilename, content.substring(questionStartsAt, content.length()), false);      	
         } else {
         	content = Sound.parseSounds(mDeckFilename, content, false);
         }
