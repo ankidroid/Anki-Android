@@ -25,6 +25,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -140,6 +144,9 @@ public class Reviewer extends Activity {
     private String mDictionaryAction;
     private int mDictionary;
     private boolean mSwipeEnabled;
+    private boolean mShakeEnabled;
+    private int mShakeIntensity;
+    private boolean mShakeActionStarted = false;
     
     private boolean mIsDictionaryAvailable;
 
@@ -196,6 +203,14 @@ public class Reviewer extends Activity {
     
 	public boolean mShowCongrats = false;
 
+	/** 
+	 * Shake Detection
+	 */
+	private SensorManager mSensorManager;
+	private float mAccel; // acceleration apart from gravity
+	private float mAccelCurrent; // current acceleration including gravity
+	private float mAccelLast; // last acceleration including gravity
+
 	/**
      * Swipe Detection
      */    
@@ -206,6 +221,32 @@ public class Reviewer extends Activity {
     // LISTENERS
     // ----------------------------------------------------------------------------
 
+    /**
+     * From http://stackoverflow.com/questions/2317428/android-i-want-to-shake-it
+     * Thilo Koehler
+     */
+ 	private final SensorEventListener mSensorListener = new SensorEventListener() {
+ 	    public void onSensorChanged(SensorEvent se) {
+ 	      
+ 	      float x = se.values[0];
+ 	      float y = se.values[1];
+ 	      float z = se.values[2];
+ 	      mAccelLast = mAccelCurrent;
+ 	      mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
+ 	      float delta = mAccelCurrent - mAccelLast;
+ 	      mAccel = mAccel * 0.9f + delta; // perform low-cut filter
+ 	      if (!mShakeActionStarted && mAccel >= mShakeIntensity && AnkiDroidApp.deck().undoAvailable()) {
+ 	    	  mShakeActionStarted = true;
+ 	    	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+                      AnkiDroidApp.deck(), mCurrentCard));
+ 	      }
+ 	    }
+
+ 	    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+ 	    }
+ 	  };
+
+ 	  
     private Handler mHandler = new Handler() {
 
         @Override
@@ -306,6 +347,7 @@ public class Reviewer extends Activity {
                 mCardTimer.start();
             }
             reviewNextCard();
+            mShakeActionStarted = false;
             mProgressDialog.dismiss();
 
         }
@@ -485,6 +527,21 @@ public class Reviewer extends Activity {
         Sound.stopSounds();
     }
 
+    @Override
+    protected void onResume() {
+      super.onResume();
+      if (mShakeEnabled) {
+          mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
+      }
+    }
+
+    @Override
+    protected void onStop() {
+      if (mShakeEnabled) {
+          mSensorManager.unregisterListener(mSensorListener);    	  
+      }
+      super.onStop();
+    }
 
     @Override
     protected void onDestroy() {
@@ -829,6 +886,15 @@ public class Reviewer extends Activity {
 
         // initialise swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
+        
+        // initialise shake detection
+        if (mShakeEnabled) {
+            mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+            mAccel = 0.00f;
+            mAccelCurrent = SensorManager.GRAVITY_EARTH;
+            mAccelLast = SensorManager.GRAVITY_EARTH;	
+        }
 
         if (mPrefTextSelection) {
 			// mCard.setOnLongClickListener(mLongClickHandler);            
@@ -994,6 +1060,8 @@ public class Reviewer extends Activity {
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
         mSwipeEnabled = preferences.getBoolean("swipe", true);
+        mShakeEnabled = preferences.getBoolean("shake", false);
+        mShakeIntensity = Integer.parseInt(preferences.getString("shakeIntensity", "5"));
 
         return preferences;
     }

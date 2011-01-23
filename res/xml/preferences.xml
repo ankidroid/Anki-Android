@@ -108,7 +108,19 @@
 			android:entries="@array/dictionary_labels"
 			android:entryValues="@array/dictionary_values" />
 		<CheckBoxPreference
-			android:id="@+id/swipe_checkbox"
+			android:title="@string/shake"
+			android:defaultValue="false"
+			android:summary="@string/shake_summ"
+			android:key="shake"
+			android:disableDependentsState="false"/>
+		<EditTextPreference
+			android:title="@string/shake_intensity"
+			android:summary="@string/shake_intensity_summ"
+			android:dependency="shake"
+			android:defaultValue="3"
+			android:inputType="number"
+			android:key="shakeIntensity" />
+		<CheckBoxPreference
 			android:title="@string/swipe"
 			android:defaultValue="true"
 			android:summaryOn="@string/swipe_summ_on"
