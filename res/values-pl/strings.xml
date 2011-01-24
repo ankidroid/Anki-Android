@@ -120,6 +120,10 @@
   <string name="swipe">Włącz gesty</string>
   <string name="swipe_summ_off">Użyj gestów do przełączania ekranów i kart odpowiedzi. Ta opcja nie jest zgodna z kontrolkami powiększania</string>
   <string name="swipe_summ_on">Przesuń poziomo aby przełączać ekrany i pionowo aby odpowiadać (w dół: wkrótce, góra: zalecane, dotknij dwukrotnie: łatwiejsze niż zalecane)</string>
+  <string name="shake">Shake to Undo</string>
+  <string name="shake_summ">Shake your device to undo the last action</string>
+  <string name="shake_intensity">Shake threshold</string>
+  <string name="shake_intensity_summ">Threshold for shake recognition</string>
   <string name="pref_cat_experimental">Eksperymentalne</string>
   <string name="sync_enabled">Funkcje synchronizacji</string>
   <string name="sync_enabled_in_answer_summ">Wciąż wiele błędów, może uszkodzić talię. Rób często kopie zapasowe!</string>

@@ -120,6 +120,10 @@
   <string name="swipe">Abilitare le Gestures</string>
   <string name="swipe_summ_off">Utilizzare le gestures per passare tra le schermate e le risposte. Questa opzione non è compatibile con i comandi dello zoom</string>
   <string name="swipe_summ_on">Scorrere orizzontalmente per passare tra le schermate e verticalmente per rispondere alle carte (verso il basso: ancora una volta, in alto: suggerimento, toccare due volte: più facile di rec.)</string>
+  <string name="shake">Shake to Undo</string>
+  <string name="shake_summ">Shake your device to undo the last action</string>
+  <string name="shake_intensity">Shake threshold</string>
+  <string name="shake_intensity_summ">Threshold for shake recognition</string>
   <string name="pref_cat_experimental">SPERIMENTALE</string>
   <string name="sync_enabled">Funzionalità di sincronizzazione</string>
   <string name="sync_enabled_in_answer_summ">Ancora molti bug, potrebbero danneggiare i vostri mazzi. Fare backup frequenti!</string>

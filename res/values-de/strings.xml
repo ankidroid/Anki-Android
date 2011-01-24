@@ -120,6 +120,10 @@
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
   <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; vertikal wischen: Karten beantworten (hoch: nochmal, runter: Empfehlung, Doppeltap: einfacher als Empfehlung)</string>
+  <string name="shake">Schütteln aktivieren</string>
+  <string name="shake_summ">Schütteln Sie Ihr Android-Gerät, um die letzte Aktion rückgängig zu machen</string>
+  <string name="shake_intensity">Schüttel-Schwellwert</string>
+  <string name="shake_intensity_summ">Schwelle, ab der ein Schütteln registriert wird</string>
   <string name="pref_cat_experimental">EXPERIMENTELL</string>
   <string name="sync_enabled">Synchronisierung</string>
   <string name="sync_enabled_in_answer_summ">Die Synchronisierung hat noch Fehler und könnte Ihre Stapel gefährden. Machen Sie häufig Backups!</string>
@@ -243,7 +247,7 @@
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
   <string name="sync_log_fact_to_server_message">Einen Fakt hochgeladen</string>
   <string name="sync_log_facts_to_server_message">%d Fakten hochgeladen</string>
-  <string name="sync_log_fact_from_server_message">Ein Fakt heruntergeladen</string>
+  <string name="sync_log_fact_from_server_message">Einen Fakt heruntergeladen</string>
   <string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
   <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %d Sekunden von der Server-Zeit ab, es kann deshalb nicht synchronisiert werden.</string>
   <string name="sync_log_conflict_resolution_required">Der Stapel wurde lokal und auf dem Server geändert. Bitte öffnen Sie den Stapel und synchronisieren von dort, um den Konflikt zu beheben.</string>

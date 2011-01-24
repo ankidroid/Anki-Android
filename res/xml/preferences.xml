@@ -117,7 +117,7 @@
 			android:title="@string/shake_intensity"
 			android:summary="@string/shake_intensity_summ"
 			android:dependency="shake"
-			android:defaultValue="3"
+			android:defaultValue="7"
 			android:inputType="number"
 			android:key="shakeIntensity" />
 		<CheckBoxPreference

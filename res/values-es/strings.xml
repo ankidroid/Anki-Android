@@ -120,6 +120,10 @@
   <string name="swipe">Habilitar gestos</string>
   <string name="swipe_summ_off">Usa gestos para moverte entre las pantallas y responder tarjetas. Esta opción es incompatible con los controles de zoom</string>
   <string name="swipe_summ_on">Desliza el dedo horizontalmente para moverte entre pantallas y verticalmente para responder tarjetas (abajo: otra vez, arriba: recomendación, doble toque: más fácil que la recomendación)</string>
+  <string name="shake">Shake to Undo</string>
+  <string name="shake_summ">Shake your device to undo the last action</string>
+  <string name="shake_intensity">Shake threshold</string>
+  <string name="shake_intensity_summ">Threshold for shake recognition</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sincronización</string>
   <string name="sync_enabled_in_answer_summ">Todavía hay muchos errores, puede corromper tus mazos. ¡Haz copias de seguridad a menudo!</string>

@@ -19,7 +19,7 @@
 
 # Below is the list of official AnkiDroid localizations.
 # Add a language if it is more than 50% translated.
-languages = ['pt-PT', 'fr', 'ru', 'ca', 'es-ES', 'el', 'it', 'pl', 'de', 'ro', 'sv-SE', 'zh-CN', 'zh-TW', 'cs', 'fi', 'sr'];
+languages = ['pt-PT', 'fr', 'ru', 'ca', 'es-ES', 'el', 'it', 'pl', 'de', 'ro', 'sv-SE', 'zh-CN', 'zh-TW', 'cs', 'fi', 'sr', 'ko'];
 
 
 
