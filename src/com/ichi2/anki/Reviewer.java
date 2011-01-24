@@ -236,10 +236,10 @@ public class Reviewer extends Activity {
  	      float y = se.values[1];
  	      float z = se.values[2];
  	      mAccelLast = mAccelCurrent;
- 	      mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
+ 	      mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z));
  	      float delta = mAccelCurrent - mAccelLast;
  	      mAccel = mAccel * 0.9f + delta; // perform low-cut filter
- 	      if (!mShakeActionStarted && mAccel >= mShakeIntensity && AnkiDroidApp.deck().undoAvailable()) {
+ 	      if (!mShakeActionStarted && mAccel >= (mShakeIntensity / 10) && AnkiDroidApp.deck().undoAvailable()) {
  	    	  mShakeActionStarted = true;
  	    	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
                       AnkiDroidApp.deck(), mCurrentCard));
@@ -1065,7 +1065,7 @@ public class Reviewer extends Activity {
                 Integer.toString(DICTIONARY_AEDICT)));
         mSwipeEnabled = preferences.getBoolean("swipe", true);
         mShakeEnabled = preferences.getBoolean("shake", false);
-        mShakeIntensity = Integer.parseInt(preferences.getString("shakeIntensity", "5"));
+        mShakeIntensity = Integer.parseInt(preferences.getString("shakeIntensity", "45"));
 
         return preferences;
     }
