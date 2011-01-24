@@ -160,10 +160,13 @@ public class Reviewer extends Activity {
     private String mDictionaryAction;
     private int mDictionary;
     private boolean mSwipeEnabled;
+<<<<<<< HEAD
     private boolean mShakeEnabled;
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
+=======
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
+>>>>>>> 64281c2f7e54aba2f88f1f51559c941eecb07009
     
     private boolean mIsDictionaryAvailable;
 
@@ -1077,9 +1080,12 @@ public class Reviewer extends Activity {
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
         mSwipeEnabled = preferences.getBoolean("swipe", true);
+<<<<<<< HEAD
         mShakeEnabled = preferences.getBoolean("shake", false);
         mShakeIntensity = Integer.parseInt(preferences.getString("shakeIntensity", "45"));
+=======
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
+>>>>>>> 64281c2f7e54aba2f88f1f51559c941eecb07009
 
         return preferences;
     }

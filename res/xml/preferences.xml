@@ -183,5 +183,10 @@
 			android:summary="@string/sync_enabled_in_answer_summ"
 			android:defaultValue="false"
 			android:key="syncEnabled"/>
+		<CheckBoxPreference
+			android:title="@string/fix_hebrew_text"
+			android:summary="@string/fix_hebrew_text_summ"
+			android:defaultValue="false"
+			android:key="fixHebrewText"/>
 	</PreferenceCategory>
 </PreferenceScreen>
