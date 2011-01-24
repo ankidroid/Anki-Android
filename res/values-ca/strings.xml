@@ -120,6 +120,10 @@
   <string name="swipe">Enable Gestures</string>
   <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
+  <string name="shake">Shake to Undo</string>
+  <string name="shake_summ">Shake your device to undo the last action</string>
+  <string name="shake_intensity">Shake threshold</string>
+  <string name="shake_intensity_summ">Threshold for shake recognition</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Detalls de la sincronització</string>
   <string name="sync_enabled_in_answer_summ">Encara hi ha molts errors, que podrien malmetre els vostres paquets. Feu sovint còpies de seguretat!</string>
