@@ -234,9 +234,9 @@ public class Reviewer extends Activity {
  	      
  	      float x = se.values[0];
  	      float y = se.values[1];
- 	      float z = se.values[2];
+ 	      float z = se.values[2] / 2;
  	      mAccelLast = mAccelCurrent;
- 	      mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z));
+ 	      mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
  	      float delta = mAccelCurrent - mAccelLast;
  	      mAccel = mAccel * 0.9f + delta; // perform low-cut filter
  	      if (!mShakeActionStarted && mAccel >= (mShakeIntensity / 10) && AnkiDroidApp.deck().undoAvailable()) {
