@@ -106,9 +106,21 @@ public class Reviewer extends Activity {
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
 
-    /** Regex pattern used in identifying Hebrew words, so we can reverse them */
+    /** Regex patterns used in identifying and fixing Hebrew words, so we can reverse them */
     private static final Pattern sHebrewPattern = Pattern.compile(
-            "[[\\u0591-\\u05C7][\\u05D0-\\u05EA][\\u05F0-\\u05F4][\\uFB1D-\\uFB4F]]+");
+            // Two cases caught below:
+            // Either a series of characters, starting from a hebrew character...
+            "([[\\u0591-\\u05F4][\\uFB1D-\\uFB4F]]" +
+            // ...followed by hebrew characters, punctuation, parenthesis, spaces, numbers or numerical symbols...
+            "[[\\u0591-\\u05F4][\\uFB1D-\\uFB4F],.?!;:\"'\\[\\](){}+\\-*/%=0-9\\s]*" +
+            // ...and ending with hebrew character, punctuation or numerical symbol
+            "[[\\u0591-\\u05F4][\\uFB1D-\\uFB4F],.?!;:0-9%])|" +
+            // or just a single Hebrew character
+            "([[\\u0591-\\u05F4][\\uFB1D-\\uFB4F]])");
+    private static final Pattern sHebrewVowelsPattern = Pattern.compile(
+            "[[\\u0591-\\u05BD][\\u05BF\\u05C1\\u05C2\\u05C4\\u05C5\\u05C7]]");
+    // private static final Pattern sBracketsPattern = Pattern.compile("[()\\[\\]{}]");
+    // private static final Pattern sNumeralsPattern = Pattern.compile("[0-9][0-9%]+");
 
     /** Hide Question In Answer choices */
     private static final int HQIA_DO_HIDE = 0;
@@ -144,6 +156,7 @@ public class Reviewer extends Activity {
     private String mDictionaryAction;
     private int mDictionary;
     private boolean mSwipeEnabled;
+    private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
     
     private boolean mIsDictionaryAvailable;
 
@@ -998,6 +1011,7 @@ public class Reviewer extends Activity {
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
         mSwipeEnabled = preferences.getBoolean("swipe", true);
+        mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
 
         return preferences;
     }
@@ -1092,20 +1106,8 @@ public class Reviewer extends Activity {
 
         String question = mCurrentCard.getQuestion();
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
-        // Find hebrew words
-        Matcher m = sHebrewPattern.matcher(question);
-        StringBuffer sb = new StringBuffer();
-        while (m.find()) {
-            StringBuffer sbg = new StringBuffer(m.group());
-            for (int i = 0; i < sbg.length(); i++) {
-                Log.i(AnkiDroidApp.TAG, "hquestion: " + sbg.codePointAt(i));
-            }
-            sbg.reverse();
-            m.appendReplacement(sb, sbg.toString()); 
-        }
-        m.appendTail(sb);
-        Log.i(AnkiDroidApp.TAG, "altered question: '" + sb.toString() + "'");
-        String displayString = enrichWithQASpan(sb.toString(), false);
+
+        String displayString = enrichWithQASpan(question, false);
         // Show an horizontal line as separation when question is shown in answer
         if (isQuestionDisplayed()) {
             displayString = displayString + "<hr/>";
@@ -1218,12 +1220,16 @@ public class Reviewer extends Activity {
             baseUrl = "file://" + mDeckFilename.replace(".anki", ".media/");
         }
 
+        // Find hebrew text
+        if (isHebrewFixEnabled()) {
+            content = applyFixForHebrew(content);
+        }
+
         // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         String card = mCardTemplate.replace("::content::", content);
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
-        mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8",
-                null);
+        mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
 
         if (!mConfigurationChanged) {
         	Sound.playSounds();
@@ -1246,6 +1252,11 @@ public class Reviewer extends Activity {
             default:
                 return true;
         }
+    }
+
+
+    private boolean isHebrewFixEnabled() {
+        return mPrefFixHebrew;
     }
 
 
@@ -1427,6 +1438,63 @@ public class Reviewer extends Activity {
         } catch (Exception e) {
             throw new AssertionError(e);
         }
+    }
+
+    private String applyFixForHebrew(String text) {
+        Matcher m = sHebrewPattern.matcher(text);
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            String hebrewText = m.group();
+            for (int i = 0; i < hebrewText.length(); i++) {
+                Log.i(AnkiDroidApp.TAG, "original: " + hebrewText.codePointAt(i));
+            }
+            // Some processing before we reverse the Hebrew text
+            // 1. Remove all Hebrew vowels as they cannot be displayed properly
+            Matcher mv = sHebrewVowelsPattern.matcher(hebrewText);
+            hebrewText = mv.replaceAll("");
+            for (int i = 0; i < hebrewText.length(); i++) {
+                Log.i(AnkiDroidApp.TAG, "no vowels: " + hebrewText.codePointAt(i));
+            }
+            // 2. Flip open parentheses, brackets and curly brackets with closed ones and vice-versa
+            // Matcher mp = sBracketsPattern.matcher(hebrewText);
+            // StringBuffer sbg = new StringBuffer();
+            // int bracket[] = new int[1];
+            // while (mp.find()) {
+            //     bracket[0] = mp.group().codePointAt(0);
+            //     if ((bracket[0] & 0x28) == 0x28) {
+            //         // flip open/close ( and )
+            //         bracket[0] ^= 0x01;
+            //     } else if (bracket[0] == 0x5B || bracket[0] == 0x5D || bracket[0] == 0x7B || bracket[0] == 0x7D) {
+            //         // flip open/close [, ], { and }
+            //         bracket[0] ^= 0x06;
+            //     }
+            //     mp.appendReplacement(sbg, new String(bracket, 0, 1));
+            // }
+            // mp.appendTail(sbg);
+            // hebrewText = sbg.toString();
+            // for (int i = 0; i < hebrewText.length(); i++) {
+            //     Log.i(AnkiDroidApp.TAG, "flipped brackets: " + hebrewText.codePointAt(i));
+            // }
+            // 3. Reverse all numerical groups (so when they get reversed again they show LTR)
+            // Matcher mn = sNumeralsPattern.matcher(hebrewText);
+            // sbg = new StringBuffer();
+            // while (mn.find()) {
+            //     StringBuffer sbn = new StringBuffer(m.group());
+            //     mn.appendReplacement(sbg, sbn.reverse().toString());
+            // }
+            // mn.appendTail(sbg);
+
+            // for (int i = 0; i < sbg.length(); i++) {
+            //     Log.i(AnkiDroidApp.TAG, "LTR numerals: " + sbg.codePointAt(i));
+            // }
+            // hebrewText = sbg.toString();//reverse().toString();
+            for (int i = 0; i < hebrewText.length(); i++) {
+                Log.i(AnkiDroidApp.TAG, "processedl: " + hebrewText.codePointAt(i));
+            }
+            m.appendReplacement(sb, hebrewText); 
+        }
+        m.appendTail(sb);
+        return sb.toString();
     }
 
     // ----------------------------------------------------------------------------
