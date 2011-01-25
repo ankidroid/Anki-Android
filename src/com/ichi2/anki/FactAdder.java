@@ -158,10 +158,16 @@ public class FactAdder extends Activity {
                     public void onClick(DialogInterface dialog, int item) {
                         long oldModelId = mCurrentSelectedModelId;
                         mCurrentSelectedModelId = dialogIds.get(item);
-
                         if (oldModelId != mCurrentSelectedModelId) {
-							// TODO: copy old values into the new fields (if appropriate)
+                            int size = mEditFields.size();
+                        	String[] oldValues = new String[size];
+                        	for (int i = 0; i < size; i++) {
+                                oldValues[i] = mEditFields.get(i).getText().toString();
+                            }
                         	modelChanged();
+                        	for (int i = 0; i < Math.min(size, mEditFields.size()) ; i++) {
+                                mEditFields.get(i).setText(oldValues[i]);
+                            }
                         }
                     }
                 });
