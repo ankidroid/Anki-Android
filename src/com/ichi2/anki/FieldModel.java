@@ -77,7 +77,7 @@ public class FieldModel implements Comparator<FieldModel> {
 
     /** SELECT string with only those fields, which are used in AnkiDroid */
     private static final String SELECT_STRING = "SELECT id, ordinal, modelId, name, description"
-            + ", quizFontSize, quizFontColour"
+            + ", quizFontFamily, quizFontSize, quizFontColour"
             + " FROM fieldModels";
 
 
@@ -106,8 +106,9 @@ public class FieldModel implements Comparator<FieldModel> {
                     myFieldModel.mModelId = cursor.getLong(2);
                     myFieldModel.mName = cursor.getString(3);
                     myFieldModel.mDescription = cursor.getString(4);
-                    myFieldModel.mQuizFontSize = cursor.getInt(5);
-                    myFieldModel.mQuizFontColour = cursor.getString(6);
+                    myFieldModel.mQuizFontFamily = cursor.getString(5);
+                    myFieldModel.mQuizFontSize = cursor.getInt(6);
+                    myFieldModel.mQuizFontColour = cursor.getString(7);
                     models.put(myFieldModel.mId, myFieldModel);
                 } while (cursor.moveToNext());
             }
@@ -179,6 +180,9 @@ public class FieldModel implements Comparator<FieldModel> {
     public String getQuizFontFamily() {
         return mQuizFontFamily;
     }
+    public void setQuizFontFamily(String quizFontFamily) {
+        mQuizFontFamily = quizFontFamily;
+    }
 
 
     /**
@@ -187,6 +191,9 @@ public class FieldModel implements Comparator<FieldModel> {
     public int getQuizFontSize() {
         return mQuizFontSize;
     }
+    public void setQuizFontSize(int quizFontSize) {
+        mQuizFontSize = quizFontSize;
+    }
 
 
     /**
@@ -194,6 +201,16 @@ public class FieldModel implements Comparator<FieldModel> {
      */
     public String getQuizFontColour() {
         return mQuizFontColour;
+    }
+    public void setQuizFontColour(String quizFontColour) {
+        mQuizFontColour = quizFontColour;
+    }
+
+    public int getEditFontSize() {
+        return mEditFontSize;
+    }
+    public void setEditFontSize(int editFontSize) {
+        mEditFontSize = editFontSize;
     }
 
 }

@@ -753,7 +753,39 @@ public class Deck {
             commitToDB();
         }
         if (mVersion < 61) {
-            // TODO: Rebuild the QA cache
+            // Do our best to upgrade templates to the new style
+            String txt =
+                "<span style=\"font-family: %s; font-size: %spx; color: %s; white-space: pre-wrap;\">%s</span>";
+            Map<Long, Model> models = Model.getModels(this);
+            Set<String> unstyled = new HashSet<String>();
+            for (Model m : models.values()) {
+                TreeMap<Long, FieldModel> fieldModels = m.getFieldModels();
+                for (FieldModel fm : fieldModels.values()) {
+                    Log.i(AnkiDroidApp.TAG, "family: '" + fm.getQuizFontFamily() + "'");
+                    Log.i(AnkiDroidApp.TAG, "family: " + fm.getQuizFontSize());
+                    Log.i(AnkiDroidApp.TAG, "family: '" + fm.getQuizFontColour() + "'");
+                    if (!fm.getQuizFontFamily().equals("null") || fm.getQuizFontSize() != 0 ||
+                            fm.getQuizFontColour().equals("null")) {
+                    } else {
+                        unstyled.add(fm.getName());
+                    }
+                    // Fill out missing info
+                    if (fm.getQuizFontFamily().equals("null")) {
+                        fm.setQuizFontFamily("Arial");
+                    }
+                    if (fm.getQuizFontSize() == 0) {
+                        fm.setQuizFontSize(20);
+                    }
+                    if (fm.getQuizFontColour().equals("null")) {
+                        fm.setQuizFontColour("#000000");
+                    }
+                    if (fm.getEditFontSize() == 0) {
+                        fm.setEditFontSize(20);
+                    }
+                }
+
+                
+            }
 
             // Rebuild the media db based on new format
             Media.rebuildMediaDir(this, false);
