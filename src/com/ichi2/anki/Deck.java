@@ -3359,12 +3359,12 @@ public class Deck {
     /**
      * Add a fact to the deck. Return list of new cards
      */
-    public Fact addFact(Fact fact) {
-        return addFact(fact, true);
+    public Fact addFact(Fact fact, TreeMap<Long, CardModel> cardModels) {
+        return addFact(fact, cardModels, true);
     }
 
 
-    public Fact addFact(Fact fact, boolean reset) {
+    public Fact addFact(Fact fact, TreeMap<Long, CardModel> cardModels, boolean reset) {
         // TODO: assert fact is Valid
         // TODO: assert fact is Unique
         double now = Utils.now();
@@ -3379,8 +3379,8 @@ public class Deck {
         getDB().getDatabase().insert("facts", null, values);
 
         // get cardmodels for the new fact
-        TreeMap<Long, CardModel> availableCardModels = availableCardModels(fact);
-        if (availableCardModels.isEmpty()) {
+        // TreeMap<Long, CardModel> availableCardModels = availableCardModels(fact);
+        if (cardModels.isEmpty()) {
             Log.e(AnkiDroidApp.TAG, "Error while adding fact: No cardmodels for the new fact");
             return null;
         }
@@ -3400,7 +3400,7 @@ public class Deck {
         }
 
         ArrayList<Long> newCardIds = new ArrayList<Long>();
-        for (Map.Entry<Long, CardModel> entry : availableCardModels.entrySet()) {
+        for (Map.Entry<Long, CardModel> entry : cardModels.entrySet()) {
             CardModel cardModel = entry.getValue();
             Card newCard = new Card(this, fact, cardModel, Utils.now());
             newCard.addToDb();

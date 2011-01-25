@@ -34,6 +34,8 @@ import com.ichi2.anki.Fact.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -64,6 +66,7 @@ public class FactAdder extends Activity {
     private Long mCurrentSelectedModelId;
 
     private LinkedList<FieldEditText> mEditFields;
+    private TreeMap<Long, CardModel> mCardModels;
 
     private Fact mNewFact;
 
@@ -95,7 +98,7 @@ public class FactAdder extends Activity {
                 for (FieldEditText current : mEditFields) {
                     current.updateField();
                 }
-                mDeck.addFact(mNewFact);
+                mDeck.addFact(mNewFact, mCardModels);
                 setResult(RESULT_OK);
                 finish();
             }
@@ -182,13 +185,20 @@ public class FactAdder extends Activity {
 
     private void modelChanged() {
 		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
-        mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
-        
-        String templates = mModels.get(mCurrentSelectedModelId).getCardModelNames();
-        if (templates.indexOf(", ") == -1){
-        	mCardTemplates.setText(getResources().getString(R.string.card) + " " + templates);        	
+		mCardModels = mDeck.availableCardModels(mNewFact);
+
+		mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
+
+		String cardModelNames = ""; 	
+		for (Map.Entry<Long, CardModel> entry : mCardModels.entrySet()) {
+    		cardModelNames = cardModelNames + entry.getValue().getName() + ", ";
+        }
+    	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
+
+        if (mCardModels.size() == 1){
+        	mCardTemplates.setText(getResources().getString(R.string.card) + " " + cardModelNames);        	
         } else {
-        	mCardTemplates.setText(getResources().getString(R.string.cards) + " " + templates);
+        	mCardTemplates.setText(getResources().getString(R.string.cards) + " " + cardModelNames);
         }
 		populateEditFields();
     }
