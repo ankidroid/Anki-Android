@@ -25,7 +25,6 @@ import android.content.IntentFilter;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,13 +33,11 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ichi2.anki.Fact.Field;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -70,7 +67,6 @@ public class FactAdder extends Activity {
     private Button mCloseButton;
     private Button mModelButton;
     private Button mCardModelButton;
-    private TextView mCardTemplates;
     private ListView mCardModelListView;
 
     private AlertDialog mCardModelDialog;
@@ -80,7 +76,10 @@ public class FactAdder extends Activity {
 
     private LinkedList<FieldEditText> mEditFields;
     private TreeMap<Long, CardModel> mCardModels;
+    
     private TreeMap<Long, CardModel> mSelectedCardModels;
+	private TreeMap<Long, CardModel> mNewSelectedCardModels;       
+	private ArrayList<Long> cardModelIds = new ArrayList<Long>();
 
     private Fact mNewFact;
 
@@ -99,12 +98,13 @@ public class FactAdder extends Activity {
         mCloseButton = (Button) findViewById(R.id.FactAdderCloseButton);
         mModelButton = (Button) findViewById(R.id.FactAdderModelButton);
         mCardModelButton = (Button) findViewById(R.id.FactAdderCardModelButton);
-        mCardTemplates = (TextView) findViewById(R.id.FactAdderTemplates);
         
         mDeck = AnkiDroidApp.deck();
 
         mModels = Model.getModels(mDeck);
         mCurrentSelectedModelId = mDeck.getCurrentModelId();
+        mNewSelectedCardModels = new TreeMap<Long, CardModel>();
+        cardModelIds = new ArrayList<Long>();
         modelChanged();
 
         mAddButton.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +133,7 @@ public class FactAdder extends Activity {
 
             public void onClick(View v) {
             	recreateCardModelDialog();
-
+            	mCardModelDialog.show();
             }
 
         });
@@ -211,8 +211,13 @@ public class FactAdder extends Activity {
 		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
 		mSelectedCardModels = mDeck.availableCardModels(mNewFact);
 
-		mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
+		mModelButton.setText(getResources().getString(R.string.model) + " " + mModels.get(mCurrentSelectedModelId).getName());
+		cardModelsChanged();
+		populateEditFields();
+    }
 
+
+    private void cardModelsChanged() {
 		String cardModelNames = ""; 	
 		for (Map.Entry<Long, CardModel> entry : mSelectedCardModels.entrySet()) {
     		cardModelNames = cardModelNames + entry.getValue().getName() + ", ";
@@ -220,11 +225,10 @@ public class FactAdder extends Activity {
     	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
 
         if (mSelectedCardModels.size() == 1){
-        	mCardTemplates.setText(getResources().getString(R.string.card) + " " + cardModelNames);        	
+        	mCardModelButton.setText(getResources().getString(R.string.card) + " " + cardModelNames);        	
         } else {
-        	mCardTemplates.setText(getResources().getString(R.string.cards) + " " + cardModelNames);
+        	mCardModelButton.setText(getResources().getString(R.string.cards) + " " + cardModelNames);
         }
-		populateEditFields();
     }
 
 
@@ -244,72 +248,56 @@ public class FactAdder extends Activity {
     }
 
     private void recreateCardModelDialog() {
-        Resources res = getResources();
-
-        mCardModels = mDeck.cardModels(mNewFact);
-
-        
-        String[] dialogItems = new String[mCardModels.size()];
-        // Use this array to know which ID is associated with each Item(name)
-        final ArrayList<Long> dialogIds = new ArrayList<Long>();
-		int i = 0;
-        for (Map.Entry<Long, CardModel> entry : mCardModels.entrySet()) {
-        	dialogItems[i] = entry.getValue().getName();
-        	dialogIds.set(i, entry.getKey());
-        	i++;
+    	Resources res = getResources();
+    	mCardModels = mDeck.cardModels(mNewFact);
+    	int size = mCardModels.size();
+    	String dialogItems[] = new String [size];
+        cardModelIds.clear();       
+    	int i = 0;
+        for (Long id : mCardModels.keySet()) {
+        	dialogItems[i] = mCardModels.get(id).getName();
+        	cardModelIds.add(id);
+            i++;
         }
-       
         View contentView = getLayoutInflater().inflate(R.layout.fact_adder_card_model_list, null);
-        
         mCardModelListView = (ListView) contentView.findViewById(R.id.card_model_list);
-        mCardModelListView.setAdapter(new ArrayAdapter<String>(this, R.layout.studyoptions_cram_dialog_item,
-        		dialogItems));
+        mCardModelListView.setAdapter(new ArrayAdapter<String>(this, R.layout.dialog_check_item, dialogItems));
+        for (int j = 0; j < size; j++) {;
+        	mCardModelListView.setItemChecked(j, mSelectedCardModels.containsKey(cardModelIds.get(j)));
+        }
+        mNewSelectedCardModels.clear();
+        mNewSelectedCardModels.putAll(mSelectedCardModels);
         mCardModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (((CheckedTextView)view).isChecked()) {
-                	mSelectedCardModels.put(dialogIds.get(position), mCardModels.get(dialogIds.get(position)));
+            	long m = cardModelIds.get(position);
+            	if (((CheckedTextView)view).isChecked()) {
+            		mNewSelectedCardModels.remove(m);
                 } else {
-                	mSelectedCardModels.remove(dialogIds.get(position));
+                	mNewSelectedCardModels.put(m, mCardModels.get(m));
                 }
-                
+           		mCardModelDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(!mNewSelectedCardModels.isEmpty());
             }
         });
         mCardModelListView.setItemsCanFocus(false);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Card Model");
-        builder.setPositiveButton("Select", new OnClickListener() {
+        builder.setTitle(res.getString(R.string.select_card_model));
+        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-        		String cardModelNames = ""; 	
-        		for (Map.Entry<Long, CardModel> entry : mSelectedCardModels.entrySet()) {
-            		cardModelNames = cardModelNames + entry.getValue().getName() + ", ";
-                }
-            	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
-
-                if (mSelectedCardModels.size() == 1){
-                	mCardTemplates.setText(getResources().getString(R.string.card) + " " + cardModelNames);        	
-                } else {
-                	mCardTemplates.setText(getResources().getString(R.string.cards) + " " + cardModelNames);
-                }
+            public void onClick(DialogInterface dialog, int which) { 
+            	mSelectedCardModels.clear();
+            	mSelectedCardModels.putAll(mNewSelectedCardModels);
+            	cardModelsChanged();
             }
         });
         builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            	mCardModelDialog.dismiss();
             }
         });
-		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-			@Override
-			public void onCancel(DialogInterface dialog) {
-				mCardModelDialog.dismiss();
-			}
-		});					
-        builder.setView(contentView);
+        builder.setView(contentView);            	
         mCardModelDialog = builder.create();
-        mCardModelDialog.show();
     }
 
     /**

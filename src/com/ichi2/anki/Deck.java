@@ -419,20 +419,15 @@ public class Deck {
     }
 
 
-    public Fact newFact(Model m) {
-        Fact mFact = new Fact(this, m);
+    public Fact newFact(Long modelId) {
+    	Model m = Model.getModel(this, modelId, true);
+    	Fact mFact = new Fact(this, m);
         return mFact;
     }
 
 
     public Fact newFact() {
         Model m = Model.getModel(this, getCurrentModelId(), true);
-        Fact mFact = new Fact(this, m);
-        return mFact;
-    }
-
-    public Fact newFact(long modelId) {
-        Model m = Model.getModel(this, modelId, true);
         Fact mFact = new Fact(this, m);
         return mFact;
     }

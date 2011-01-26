@@ -750,7 +750,7 @@ public class StudyOptions extends Activity {
 
         View contentView = getLayoutInflater().inflate(R.layout.studyoptions_cram_dialog_contents, null);
         mCramTagsListView = (ListView) contentView.findViewById(R.id.cram_tags_list);
-        mCramTagsListView.setAdapter(new ArrayAdapter<String>(this, R.layout.studyoptions_cram_dialog_item,
+        mCramTagsListView.setAdapter(new ArrayAdapter<String>(this, R.layout.dialog_check_item,
                     allCramTags));
         mCramTagsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
