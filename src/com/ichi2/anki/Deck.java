@@ -2,6 +2,7 @@
  * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>                             *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+ * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -2478,7 +2479,7 @@ public class Deck {
      * @param id The ID of the card to be returned
      */
 
-    private Card cardFromId(long id) {
+    public Card cardFromId(long id) {
         if (id == 0) {
             return null;
         }
@@ -2554,7 +2555,7 @@ public class Deck {
     public void _answerCard(Card card, int ease) {
         Log.i(AnkiDroidApp.TAG, "answerCard");
         String undoName = "Answer Card";
-        setUndoStart(undoName);
+        setUndoStart(undoName, card.getId());
         double now = Utils.now();
 
         // Old state
@@ -3055,7 +3056,11 @@ public class Deck {
      */
     public void suspendCards(long[] ids) {
         String undoName = "Suspend Card";
-        setUndoStart(undoName);
+        if (ids.length == 1) {
+            setUndoStart(undoName, ids[0]);        	
+        } else {
+        	setUndoStart(undoName);
+        }
         getDB().getDatabase().execSQL(
                 "UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
                         + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
@@ -3754,10 +3759,12 @@ public class Deck {
         private String mName;
         private Long mStart;
         private Long mEnd;
+        private Long mCardId;
 
 
-        UndoRow(String name, Long start, Long end) {
+        UndoRow(String name, Long cardId, Long start, Long end) {
             mName = name;
+            mCardId = cardId;
             mStart = start;
             mEnd = end;
         }
@@ -3865,7 +3872,11 @@ public class Deck {
 
 
     public void setUndoStart(String name) {
-        setUndoStart(name, false);
+        setUndoStart(name, 0, false);
+    }
+
+    public void setUndoStart(String name, long cardId) {
+        setUndoStart(name, cardId, false);
     }
 
 
@@ -3877,7 +3888,7 @@ public class Deck {
     }
 
 
-    private void setUndoStart(String name, boolean merge) {
+    private void setUndoStart(String name, long cardId, boolean merge) {
         if (!mUndoEnabled) {
             return;
         }
@@ -3888,7 +3899,7 @@ public class Deck {
                 return;
             }
         }
-        mUndoStack.push(new UndoRow(name, latestUndoRow(), null));
+        mUndoStack.push(new UndoRow(name, cardId, latestUndoRow(), null));
     }
 
 
@@ -3922,7 +3933,7 @@ public class Deck {
     }
 
 
-    private void undoredo(Stack<UndoRow> src, Stack<UndoRow> dst) {
+    private long undoredo(Stack<UndoRow> src, Stack<UndoRow> dst, long oldCardId) {
 
         UndoRow row;
         commitToDB();
@@ -3947,31 +3958,36 @@ public class Deck {
         }
 
         Long newend = latestUndoRow();
-        dst.push(new UndoRow(row.mName, newstart, newend));
+        dst.push(new UndoRow(row.mName, oldCardId, newstart, newend));
+        return row.mCardId;
     }
 
 
     /**
      * Undo the last action(s). Caller must .reset()
      */
-    public void undo() {
-        if (!mUndoStack.isEmpty()) {
-            undoredo(mUndoStack, mRedoStack);
+    public long undo(long oldCardId) {
+        long cardId = 0;
+    	if (!mUndoStack.isEmpty()) {
+            cardId = undoredo(mUndoStack, mRedoStack, oldCardId);
             commitToDB();
             reset();
         }
+        return cardId;
     }
 
 
     /**
      * Redo the last action(s). Caller must .reset()
      */
-    public void redo() {
+    public long redo(long oldCardId) {
+        long cardId = 0;
         if (!mRedoStack.isEmpty()) {
-            undoredo(mRedoStack, mUndoStack);
+        	cardId = undoredo(mRedoStack, mUndoStack, oldCardId);
             commitToDB();
             reset();
         }
+        return cardId;
     }
 
 

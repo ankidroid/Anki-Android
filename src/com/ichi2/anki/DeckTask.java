@@ -271,12 +271,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundUndo(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card newCard;
+        long currentCardId = params[0].getCard().getId();
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
-        	deck.undo();
+        	long oldCardId = deck.undo(currentCardId);
             newCard = deck.getCard();
+            if (oldCardId != 0) {
+            	newCard = deck.cardFromId(oldCardId);
+            }
             publishProgress(new TaskData(newCard));
             ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
@@ -290,12 +294,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundRedo(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card newCard;
+        long currentCardId = params[0].getCard().getId();
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
-        	deck.redo();
+        	long oldCardId = deck.redo(currentCardId);
             newCard = deck.getCard();
+            if (oldCardId != 0) {
+            	newCard = deck.cardFromId(oldCardId);
+            }
             publishProgress(new TaskData(newCard));
             ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
