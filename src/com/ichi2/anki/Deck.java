@@ -2728,11 +2728,11 @@ public class Deck {
             }
         } else if (interval == 0) {
             if (ease == Card.EASE_HARD) {
-                interval = mHardIntervalMin + ((double) Math.random()) * (mHardIntervalMax - mHardIntervalMin);
+                interval = mHardIntervalMin + card.getFuzz() * (mHardIntervalMax - mHardIntervalMin);
             } else if (ease == Card.EASE_MID) {
-                interval = mMidIntervalMin + ((double) Math.random()) * (mMidIntervalMax - mMidIntervalMin);
+                interval = mMidIntervalMin + card.getFuzz() * (mMidIntervalMax - mMidIntervalMin);
             } else if (ease == Card.EASE_EASY) {
-                interval = mEasyIntervalMin + ((double) Math.random()) * (mEasyIntervalMax - mEasyIntervalMin);
+                interval = mEasyIntervalMin + card.getFuzz() * (mEasyIntervalMax - mEasyIntervalMin);
             }
         } else {
             // if not cramming, boost initial 2
@@ -2748,8 +2748,7 @@ public class Deck {
             } else if (ease == Card.EASE_EASY) {
                 interval = (interval + delay) * factor * FACTOR_FOUR;
             }
-            double fuzz = 0.95 + ((double) Math.random()) * (1.05 - 0.95);
-            interval *= fuzz;
+            interval *= 0.95 + card.getFuzz() * (1.05 - 0.95);
         }
         interval = Math.min(interval, MAX_SCHEDULE_TIME);
         return interval;
