@@ -22,16 +22,25 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.DialogInterface.OnClickListener;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ichi2.anki.Fact.Field;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -60,13 +69,18 @@ public class FactAdder extends Activity {
     private Button mAddButton;
     private Button mCloseButton;
     private Button mModelButton;
+    private Button mCardModelButton;
     private TextView mCardTemplates;
+    private ListView mCardModelListView;
 
+    private AlertDialog mCardModelDialog;
+    
     private Deck mDeck;
     private Long mCurrentSelectedModelId;
 
     private LinkedList<FieldEditText> mEditFields;
     private TreeMap<Long, CardModel> mCardModels;
+    private TreeMap<Long, CardModel> mSelectedCardModels;
 
     private Fact mNewFact;
 
@@ -84,6 +98,7 @@ public class FactAdder extends Activity {
         mAddButton = (Button) findViewById(R.id.FactAdderAddButton);
         mCloseButton = (Button) findViewById(R.id.FactAdderCloseButton);
         mModelButton = (Button) findViewById(R.id.FactAdderModelButton);
+        mCardModelButton = (Button) findViewById(R.id.FactAdderCardModelButton);
         mCardTemplates = (TextView) findViewById(R.id.FactAdderTemplates);
         
         mDeck = AnkiDroidApp.deck();
@@ -98,7 +113,7 @@ public class FactAdder extends Activity {
                 for (FieldEditText current : mEditFields) {
                     current.updateField();
                 }
-                mDeck.addFact(mNewFact, mCardModels);
+                mDeck.addFact(mNewFact, mSelectedCardModels);
                 setResult(RESULT_OK);
                 finish();
             }
@@ -109,6 +124,15 @@ public class FactAdder extends Activity {
 
             public void onClick(View v) {
                 showDialog(DIALOG_MODEL_SELECT);
+
+            }
+
+        });
+
+        mCardModelButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+            	recreateCardModelDialog();
 
             }
 
@@ -185,17 +209,17 @@ public class FactAdder extends Activity {
 
     private void modelChanged() {
 		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
-		mCardModels = mDeck.availableCardModels(mNewFact);
+		mSelectedCardModels = mDeck.availableCardModels(mNewFact);
 
 		mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
 
 		String cardModelNames = ""; 	
-		for (Map.Entry<Long, CardModel> entry : mCardModels.entrySet()) {
+		for (Map.Entry<Long, CardModel> entry : mSelectedCardModels.entrySet()) {
     		cardModelNames = cardModelNames + entry.getValue().getName() + ", ";
         }
     	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
 
-        if (mCardModels.size() == 1){
+        if (mSelectedCardModels.size() == 1){
         	mCardTemplates.setText(getResources().getString(R.string.card) + " " + cardModelNames);        	
         } else {
         	mCardTemplates.setText(getResources().getString(R.string.cards) + " " + cardModelNames);
@@ -219,6 +243,74 @@ public class FactAdder extends Activity {
         }
     }
 
+    private void recreateCardModelDialog() {
+        Resources res = getResources();
+
+        mCardModels = mDeck.cardModels(mNewFact);
+
+        
+        String[] dialogItems = new String[mCardModels.size()];
+        // Use this array to know which ID is associated with each Item(name)
+        final ArrayList<Long> dialogIds = new ArrayList<Long>();
+		int i = 0;
+        for (Map.Entry<Long, CardModel> entry : mCardModels.entrySet()) {
+        	dialogItems[i] = entry.getValue().getName();
+        	dialogIds.set(i, entry.getKey());
+        	i++;
+        }
+       
+        View contentView = getLayoutInflater().inflate(R.layout.fact_adder_card_model_list, null);
+        
+        mCardModelListView = (ListView) contentView.findViewById(R.id.card_model_list);
+        mCardModelListView.setAdapter(new ArrayAdapter<String>(this, R.layout.studyoptions_cram_dialog_item,
+        		dialogItems));
+        mCardModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (((CheckedTextView)view).isChecked()) {
+                	mSelectedCardModels.put(dialogIds.get(position), mCardModels.get(dialogIds.get(position)));
+                } else {
+                	mSelectedCardModels.remove(dialogIds.get(position));
+                }
+                
+            }
+        });
+        mCardModelListView.setItemsCanFocus(false);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Card Model");
+        builder.setPositiveButton("Select", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+        		String cardModelNames = ""; 	
+        		for (Map.Entry<Long, CardModel> entry : mSelectedCardModels.entrySet()) {
+            		cardModelNames = cardModelNames + entry.getValue().getName() + ", ";
+                }
+            	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
+
+                if (mSelectedCardModels.size() == 1){
+                	mCardTemplates.setText(getResources().getString(R.string.card) + " " + cardModelNames);        	
+                } else {
+                	mCardTemplates.setText(getResources().getString(R.string.cards) + " " + cardModelNames);
+                }
+            }
+        });
+        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	mCardModelDialog.dismiss();
+            }
+        });
+		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				mCardModelDialog.dismiss();
+			}
+		});					
+        builder.setView(contentView);
+        mCardModelDialog = builder.create();
+        mCardModelDialog.show();
+    }
 
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.

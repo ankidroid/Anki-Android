@@ -38,6 +38,13 @@
       		   	android:layout_gravity="center"
 				android:gravity="center"/>
         	</LinearLayout>
+        	<Button
+	        	android:id="@+id/FactAdderCardModelButton"
+  		       	android:layout_height="fill_parent"
+   		      	android:layout_width="0dip"
+    		    android:layout_weight="1"
+      		   	android:layout_gravity="center"
+				android:gravity="center"/>
         <TextView
         	android:id="@+id/FactAdderTemplates"
          	android:layout_height="fill_parent"

@@ -451,6 +451,11 @@ public class Deck {
         return availableCardModels;
     }
 
+    public TreeMap<Long, CardModel> cardModels(Fact fact) {
+        TreeMap<Long, CardModel> cardModels = new TreeMap<Long, CardModel>();
+        CardModel.fromDb(this, fact.getModelId(), cardModels);
+        return cardModels;
+    }
 
     /**
      * deckVars methods
