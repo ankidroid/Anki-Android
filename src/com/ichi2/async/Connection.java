@@ -300,6 +300,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 } else if (connectResult == AnkiDroidProxy.LOGIN_CLOCKS_UNSYNCED) {
                     syncChangelog.put("message", String.format(res.getString(R.string.sync_log_clocks_unsynchronized),
                             (new Double(server.getTimediff())).longValue()));
+                } else if (connectResult == AnkiDroidProxy.LOGIN_OLD_VERSION) {
+                    syncChangelog.put("message", String.format(res.getString(R.string.sync_log_old_version)));
                 }
                 data.result = syncChangelog;
                 data.success = false;
