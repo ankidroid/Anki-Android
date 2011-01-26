@@ -431,6 +431,11 @@ public class Deck {
         return mFact;
     }
 
+    public Fact newFact(long modelId) {
+        Model m = Model.getModel(this, modelId, true);
+        Fact mFact = new Fact(this, m);
+        return mFact;
+    }
 
     public TreeMap<Long, CardModel> availableCardModels(Fact fact) {
         TreeMap<Long, CardModel> cardModels = new TreeMap<Long, CardModel>();
