@@ -127,6 +127,8 @@
   <string name="pref_cat_experimental">SPERIMENTALE</string>
   <string name="sync_enabled">Funzionalità di sincronizzazione</string>
   <string name="sync_enabled_in_answer_summ">Ancora molti bug, potrebbero danneggiare i vostri mazzi. Fare backup frequenti!</string>
+  <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
+  <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
   <string name="personaldeckpicker_title">Apri il mazzo online</string>
   <string name="shareddeckpicker_title">Seleziona il mazzo da scaricare</string>
   <string name="downloaddeck_search">Cerca</string>
@@ -250,6 +252,7 @@
   <string name="sync_log_fact_from_server_message">1 fatto dal server</string>
   <string name="sync_log_facts_from_server_message">%d fatti dal server</string>
   <string name="sync_log_clocks_unsynchronized">L\'orario del tuo dispositivo è differente da quello del server di %d sec,impossibile eseguire la sincronizzazione.</string>
+  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_conflict_title">Conflitto in fase di sincronizzazione</string>
   <string name="sync_conflict_message">Il mazzo %s è stato modificato sia in locale che in remoto. Quale versione deve essere mantenuta?</string>

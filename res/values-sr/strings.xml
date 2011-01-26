@@ -127,6 +127,8 @@
   <string name="pref_cat_experimental">Eksperimentalno</string>
   <string name="sync_enabled">Funkcije za sinhronizaciju</string>
   <string name="sync_enabled_in_answer_summ">Još uvek postoji mnogo grešaka koje mogu pokvariti vaše špilove. Sačuvajte često!</string>
+  <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
+  <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
   <string name="personaldeckpicker_title">Otvori Internet Špil</string>
   <string name="shareddeckpicker_title">Izaberite špil koji želite skinuti</string>
   <string name="downloaddeck_search">Traži</string>
@@ -261,6 +263,7 @@ Oni koji nisu programeri takođe mogu pomoću, naprimer s time što ažuriraju w
   <string name="sync_log_fact_from_server_message">1 podatak na serveru</string>
   <string name="sync_log_facts_from_server_message">%d podataka na serveru</string>
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
+  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_conflict_title">Syncing conflict</string>
   <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
