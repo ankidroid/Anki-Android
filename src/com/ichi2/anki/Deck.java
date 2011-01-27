@@ -289,9 +289,12 @@ public class Deck {
         }
 
         boolean needUnpack = false;
-        if (deck.getUtcOffset() == -1.0) {
+        if (deck.getUtcOffset() == -1.0 || deck.getUtcOffset() == -2.0) {
+            // do the rest later
+            needUnpack = deck.getUtcOffset() == -1;
+            // make sure we do this before initVars
             deck.setUtcOffset();
-            needUnpack = true;
+            deck.mCreated = Utils.now();
         }
         
         deck.initVars();
@@ -309,8 +312,6 @@ public class Deck {
         if (needUnpack) {
             deck.addIndices();
             // TODO: updateCardsFromModel
-            deck.mCreated = Utils.now();
-            
         }
         
         double oldMod = deck.mModified;
