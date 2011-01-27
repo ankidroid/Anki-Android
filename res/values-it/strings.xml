@@ -27,7 +27,7 @@
   <string name="no">No</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">I mazzi con una versione più vecchia della 39 non sono usabili in AnkiDroid, si suggerisce di aprire il mazzo con Anki Desktop e aggiornare il mazzo all\'ultima versione.</string>
-  <string name="deckpicker_title">Selezionare il mazzo (%1$ d d %2$ a causa)</string>
+  <string name="deckpicker_title">Selezionare il mazzo (%1$d di %2$d a causa)</string>
   <string name="deckpicker_title_nosdcard">La scheda SD non è montata</string>
   <string name="deckpicker_due">%1$d di %2$d da ripetere</string>
   <string name="deckpicker_new">%d nuove oggi</string>
