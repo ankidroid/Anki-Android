@@ -291,7 +291,7 @@ public class Deck {
         boolean needUnpack = false;
         if (deck.getUtcOffset() == -1.0 || deck.getUtcOffset() == -2.0) {
             // do the rest later
-            needUnpack = deck.getUtcOffset() == -1;
+            needUnpack = deck.getUtcOffset() == -1.0;
             // make sure we do this before initVars
             deck.setUtcOffset();
             deck.mCreated = Utils.now();
