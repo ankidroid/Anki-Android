@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -95,6 +96,8 @@ public class Deck {
     private String mSyncName;
     private double mLastSync;
 
+    private boolean mNeedUnpack = false;
+    
     // Scheduling
     // Initial intervals
     private double mHardIntervalMin;
@@ -288,10 +291,10 @@ public class Deck {
             deck.createMetadata();
         }
 
-        boolean needUnpack = false;
+        deck.mNeedUnpack = false;
         if (deck.getUtcOffset() == -1.0) {
             deck.setUtcOffset();
-            needUnpack = true;
+            deck.mNeedUnpack = true;
         }
         
         deck.initVars();
@@ -306,9 +309,9 @@ public class Deck {
             return deck;
         }
         
-        if (needUnpack) {
+        if (deck.mNeedUnpack) {
             deck.addIndices();
-            // TODO: updateCardsFromModel
+            // Actually this is done from DownloadManagerService.UpdateTask
             deck.mCreated = Utils.now();
             
         }
@@ -2349,6 +2352,9 @@ public class Deck {
         return mVersion;
     }
 
+    public boolean isUnpackNeeded() {
+        return mNeedUnpack;
+    }
 
     /*
      * Getting the next card*****************************
