@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -96,6 +97,8 @@ public class Deck {
     private String mSyncName;
     private double mLastSync;
 
+    private boolean mNeedUnpack = false;
+    
     // Scheduling
     // Initial intervals
     private double mHardIntervalMin;
@@ -289,10 +292,13 @@ public class Deck {
             deck.createMetadata();
         }
 
-        boolean needUnpack = false;
-        if (deck.getUtcOffset() == -1.0) {
+        deck.mNeedUnpack = false;
+        if (deck.getUtcOffset() == -1.0 || deck.getUtcOffset() == -2.0) {
+            // do the rest later
+            deck.mNeedUnpack = deck.getUtcOffset() == -1.0;
+            // make sure we do this before initVars
             deck.setUtcOffset();
-            needUnpack = true;
+            deck.mCreated = Utils.now();
         }
         
         deck.initVars();
@@ -307,11 +313,8 @@ public class Deck {
             return deck;
         }
         
-        if (needUnpack) {
+        if (deck.mNeedUnpack) {
             deck.addIndices();
-            // TODO: updateCardsFromModel
-            deck.mCreated = Utils.now();
-            
         }
         
         double oldMod = deck.mModified;
@@ -759,7 +762,39 @@ public class Deck {
             commitToDB();
         }
         if (mVersion < 61) {
-            // TODO: Rebuild the QA cache
+            // Do our best to upgrade templates to the new style
+            String txt =
+                "<span style=\"font-family: %s; font-size: %spx; color: %s; white-space: pre-wrap;\">%s</span>";
+            Map<Long, Model> models = Model.getModels(this);
+            Set<String> unstyled = new HashSet<String>();
+            for (Model m : models.values()) {
+                TreeMap<Long, FieldModel> fieldModels = m.getFieldModels();
+                for (FieldModel fm : fieldModels.values()) {
+                    Log.i(AnkiDroidApp.TAG, "family: '" + fm.getQuizFontFamily() + "'");
+                    Log.i(AnkiDroidApp.TAG, "family: " + fm.getQuizFontSize());
+                    Log.i(AnkiDroidApp.TAG, "family: '" + fm.getQuizFontColour() + "'");
+                    if (!fm.getQuizFontFamily().equals("null") || fm.getQuizFontSize() != 0 ||
+                            fm.getQuizFontColour().equals("null")) {
+                    } else {
+                        unstyled.add(fm.getName());
+                    }
+                    // Fill out missing info
+                    if (fm.getQuizFontFamily().equals("null")) {
+                        fm.setQuizFontFamily("Arial");
+                    }
+                    if (fm.getQuizFontSize() == 0) {
+                        fm.setQuizFontSize(20);
+                    }
+                    if (fm.getQuizFontColour().equals("null")) {
+                        fm.setQuizFontColour("#000000");
+                    }
+                    if (fm.getEditFontSize() == 0) {
+                        fm.setEditFontSize(20);
+                    }
+                }
+
+                
+            }
 
             // Rebuild the media db based on new format
             Media.rebuildMediaDir(this, false);
@@ -2323,6 +2358,9 @@ public class Deck {
         return mVersion;
     }
 
+    public boolean isUnpackNeeded() {
+        return mNeedUnpack;
+    }
 
     /*
      * Getting the next card*****************************

@@ -122,7 +122,7 @@
 			android:key="shakeIntensity" />
 		<CheckBoxPreference
 			android:title="@string/swipe"
-			android:defaultValue="true"
+			android:defaultValue="false"
 			android:summaryOn="@string/swipe_summ_on"
 			android:summaryOff="@string/swipe_summ_off"
 			android:key="swipe"

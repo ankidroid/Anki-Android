@@ -1080,7 +1080,7 @@ public class Reviewer extends Activity {
                 Integer.toString(HQIA_DO_SHOW)));
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
-        mSwipeEnabled = preferences.getBoolean("swipe", true);
+        mSwipeEnabled = preferences.getBoolean("swipe", false);
         mShakeEnabled = preferences.getBoolean("shake", false);
         mShakeIntensity = Integer.parseInt(preferences.getString("shakeIntensity", "45"));
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);

@@ -354,7 +354,12 @@ public class SyncClient {
         } catch (JSONException e) {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
-        assert missingFacts() == 0;
+
+        long missingFacts = missingFacts();
+        if (missingFacts != 0l) {
+            Log.e(AnkiDroidApp.TAG, "Facts missing after sync (" + missingFacts + " facts)!");
+        }
+        assert missingFacts == 0l;
     }
 
     private long missingFacts() {

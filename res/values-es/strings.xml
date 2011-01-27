@@ -127,6 +127,8 @@
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sincronización</string>
   <string name="sync_enabled_in_answer_summ">Todavía hay muchos errores, puede corromper tus mazos. ¡Haz copias de seguridad a menudo!</string>
+  <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
+  <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
   <string name="personaldeckpicker_title">Abrir Mazo Online</string>
   <string name="shareddeckpicker_title">Selecciona el mazo que deseas descargar</string>
   <string name="downloaddeck_search">Buscar</string>
@@ -261,6 +263,7 @@ Los no-desarrolladores también pueden ayudar, por ejemplo actualizando el wiki 
   <string name="sync_log_fact_from_server_message">1 hecho del servidor</string>
   <string name="sync_log_facts_from_server_message">%d hechos del servidor</string>
   <string name="sync_log_clocks_unsynchronized">La hora de tu dispositivo es diferente de la del servidor en %d segundos, no se pudo sincronizar.</string>
+  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">El mazo se ha modificado localmente y en servidor. Por favor abre el mazo y sincroniza desde allí para resolver el conflicto.</string>
   <string name="sync_conflict_title">Conflicto al sincronizar</string>
   <string name="sync_conflict_message">El mazo %s se ha modificado localmente y en servidor. ¿Cuál quieres mantener?</string>

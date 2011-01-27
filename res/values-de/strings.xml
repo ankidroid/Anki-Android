@@ -127,6 +127,8 @@
   <string name="pref_cat_experimental">EXPERIMENTELL</string>
   <string name="sync_enabled">Synchronisierung</string>
   <string name="sync_enabled_in_answer_summ">Die Synchronisierung hat noch Fehler und könnte Ihre Stapel gefährden. Machen Sie häufig Backups!</string>
+  <string name="fix_hebrew_text">Umgekehrte Textrichtung für Hebräisch</string>
+  <string name="fix_hebrew_text_summ">Erzwingt umgekehrte Textrichtung, um Hebräisch auf dem Android-System darzustellen. Vokale werden nicht unterstützt</string>
   <string name="personaldeckpicker_title">Online-Stapel herunterladen</string>
   <string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
   <string name="downloaddeck_search">Suchen</string>
@@ -250,6 +252,7 @@
   <string name="sync_log_fact_from_server_message">Einen Fakt heruntergeladen</string>
   <string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
   <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %d Sekunden von der Server-Zeit ab, es kann deshalb nicht synchronisiert werden.</string>
+  <string name="sync_log_old_version">Das Synchronisierungsprotokoll wurde verändert. Bitte aktualisieren Sie Ihre AnkiDroid-Version. Besuchen Sie für weitere Informationen http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Der Stapel wurde lokal und auf dem Server geändert. Bitte öffnen Sie den Stapel und synchronisieren von dort, um den Konflikt zu beheben.</string>
   <string name="sync_conflict_title">Synchronisierungskonflikt</string>
   <string name="sync_conflict_message">Der Stapel %s wurde sowohl lokal als auch auf dem Server geändert. Welche Seite soll behalten werden?</string>
