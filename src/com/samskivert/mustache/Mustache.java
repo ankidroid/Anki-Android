@@ -12,6 +12,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Provides <a href="http://mustache.github.com/">Mustache</a> templating services.
@@ -32,7 +34,7 @@ public class Mustache
     /** An interface to the Mustache compilation process. See {@link Mustache}. */
     public static class Compiler {
         /** Whether or not HTML entities are escaped by default. */
-        public final boolean escapeHTML;
+        public final boolean stripSpan;
 
         /** Compiles the supplied template into a repeatedly executable intermediate form. */
         public Template compile (String template)
@@ -47,12 +49,12 @@ public class Mustache
         }
 
         /** Returns a compiler that either does or does not escape HTML by default. */
-        public Compiler escapeHTML (boolean escapeHTML) {
-            return new Compiler(escapeHTML);
+        public Compiler stripSpan (boolean stripSpan) {
+            return new Compiler(stripSpan);
         }
 
-        protected Compiler (boolean escapeHTML) {
-            this.escapeHTML = escapeHTML;
+        protected Compiler (boolean stripSpan) {
+            this.stripSpan = stripSpan;
         }
     }
 
@@ -203,10 +205,14 @@ public class Mustache
         }
     }
 
-    protected static String escapeHTML (String text)
+    protected static final Pattern spanPattern = Pattern.compile("^<span.+?>(.*)</span>");
+
+    protected static String stripSpan (String text)
     {
-        for (String[] escape : ATTR_ESCAPES) {
-            text = text.replace(escape[0], escape[1]);
+        // Changed for anki, stripping the wrapped field span when using {{{
+        Matcher m = spanPattern.matcher(text);
+        if (m.find()) {
+            text = m.group(1);
         }
         return text;
     }
@@ -285,14 +291,14 @@ public class Mustache
                 // comment!, ignore
                 return this;
 
-            case '&':
+            case '{':
                 requireNoNewlines(tag, tagLine);
-                _segs.add(new VariableSegment(tag1, false, tagLine));
+                _segs.add(new VariableSegment(tag, _compiler.stripSpan, tagLine));
                 return this;
 
             default:
                 requireNoNewlines(tag, tagLine);
-                _segs.add(new VariableSegment(tag, _compiler.escapeHTML, tagLine));
+                _segs.add(new VariableSegment(tag1, false, tagLine));
                 return this;
             }
         }
@@ -349,19 +355,19 @@ public class Mustache
 
     /** A segment that substitutes the contents of a variable. */
     protected static class VariableSegment extends NamedSegment {
-        public VariableSegment (String name, boolean escapeHTML, int line) {
+        public VariableSegment (String name, boolean stripSpan, int line) {
             super(name, line);
-            _escapeHTML = escapeHTML;
+            _stripSpan = stripSpan;
         }
         @Override public void execute (Template tmpl, Template.Context ctx, Writer out)  {
             Object value = tmpl.getValue(ctx, _name, _line);
             // TODO: configurable behavior on missing values
             if (value != null) {
                 String text = String.valueOf(value);
-                write(out, _escapeHTML ? escapeHTML(text) : text);
+                write(out, _stripSpan ? stripSpan(text) : text);
             }
         }
-        protected boolean _escapeHTML;
+        protected boolean _stripSpan;
     }
 
     /** A helper class for compound segments. */
