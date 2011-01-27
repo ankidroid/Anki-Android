@@ -1,6 +1,7 @@
 /***************************************************************************************
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+ * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -18,7 +19,10 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
@@ -28,10 +32,11 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 /**
  * Preferences dialog.
  */
-public class Preferences extends PreferenceActivity {
+public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
     private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
+    private CheckBoxPreference zoomCheckboxPreference;
 
 
     @Override
@@ -43,6 +48,9 @@ public class Preferences extends PreferenceActivity {
 
         addPreferencesFromResource(R.xml.preferences);
         mVeecheckStatus = mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, PrefSettings.DEFAULT_ENABLED);
+        
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
     }
 
 
@@ -53,6 +61,12 @@ public class Preferences extends PreferenceActivity {
         // switch
         if (mVeecheckStatus ^ mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, mVeecheckStatus)) {
             sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
+        }
+    }
+
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("swipe")) {
+        	zoomCheckboxPreference.setChecked(false);
         }
     }
 

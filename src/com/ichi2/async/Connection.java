@@ -55,6 +55,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private static Connection sInstance;
     private TaskListener mListener;
+    
+    public static final String CONFLICT_RESOLUTION = "ConflictResolutionRequired";
 
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
@@ -237,8 +239,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        Log.i(AnkiDroidApp.TAG, "username = " + username);
-        Log.i(AnkiDroidApp.TAG, "password = " + password);
+        //Log.i(AnkiDroidApp.TAG, "username = " + username);
+        //Log.i(AnkiDroidApp.TAG, "password = " + password);
 
         ArrayList<HashMap<String, String>> decksToSync = (ArrayList<HashMap<String, String>>) data.data[2];
         for (HashMap<String, String> deckToSync : decksToSync) {
@@ -247,7 +249,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             try {
                 Deck deck = Deck.openDeck(deckPath);
 
-                Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath });
+                Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath, null });
                 syncDeckData = doInBackgroundSyncDeck(syncDeckData);
                 decksChangelogs.add((HashMap<String, String>) syncDeckData.result);
             } catch (Exception e) {
@@ -269,6 +271,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         return data;
     }
 
+    
 
     private Payload doInBackgroundSyncDeck(Payload data) {
         Resources res = sContext.getResources();
@@ -278,41 +281,60 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         Deck deck = (Deck) data.data[2];
         String deckPath = (String) data.data[3];
         String syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1, deckPath.length() - 5);
-
-//        if (syncName == null || syncName.equalsIgnoreCase("")) {
-//        	deck.enableSyncing();
-//            syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1);
-//            syncName = syncName.substring(0, syncName.length() - ".anki".length());
-//            Log.i(AnkiDroidApp.TAG, "syncName = *" + syncName + "*");
-//            deck.setSyncName(syncName);
-//        }
+        String conflictResolution = (String) data.data[4];
 
         syncChangelog.put("deckName", syncName);
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         ankiDB.getDatabase().beginTransaction();
         try {
-            Log.i(AnkiDroidApp.TAG, "Starting sync: username = " + username + ", password = " + password
-                    + ", deckPath = " + deckPath + ", syncName = " + syncName);
+            // Log.i(AnkiDroidApp.TAG, "Starting sync: username = " + username + ", password = " + password
+            //         + ", deckPath = " + deckPath + ", syncName = " + syncName);
             AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 
             publishProgress(syncName, res.getString(R.string.sync_connecting_message));
-            // TODO: Control what happens when the clocks are unsynchronized, or login is wrong
-            server.connect();
+            int connectResult = server.connect();
+            if (connectResult != AnkiDroidProxy.LOGIN_OK) {
+                if (connectResult == AnkiDroidProxy.LOGIN_INVALID_USER_PASS) {
+                    syncChangelog.put("message", res.getString(R.string.invalid_username_password));
+                } else if (connectResult == AnkiDroidProxy.LOGIN_CLOCKS_UNSYNCED) {
+                    syncChangelog.put("message", String.format(res.getString(R.string.sync_log_clocks_unsynchronized),
+                            (new Double(server.getTimediff())).longValue()));
+                } else if (connectResult == AnkiDroidProxy.LOGIN_OLD_VERSION) {
+                    syncChangelog.put("message", String.format(res.getString(R.string.sync_log_old_version)));
+                }
+                data.result = syncChangelog;
+                data.success = false;
+                return data;
+            }
 
             // Exists on server?
-            boolean deckCreated = false;
             if (!server.hasDeck(syncName)) {
                 Log.i(AnkiDroidApp.TAG, "AnkiOnline does not have this deck: Creating it...");
                 server.createDeck(syncName);
-                deckCreated = true;
             }
             publishProgress(syncName, res.getString(R.string.sync_syncing_message, new Object[] { syncName }));
             SyncClient client = new SyncClient(deck);
             client.setServer(server);
             server.setDeckName(syncName);
-            boolean changes = false;
-            String conflictResolution = null;
+            
+            // Check conflicts
+            double localMod = deck.getModified();
+            double localSync = deck.getLastSync();
+            double remoteMod = server.modified();
+            double remoteSync = server.lastSync();
+            double minSync = Math.min(localSync, remoteSync);
+            if ((localMod != remoteMod) && (minSync > 0) &&
+                    (localMod > minSync) && (remoteMod > minSync)) {
+                if (conflictResolution == null) {
+                    Log.i(AnkiDroidApp.TAG, "Syncing needs conflict resolution user input...");
+                    data.success = false;
+                    data.returnType = AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION;
+                    syncChangelog.put("message", res.getString(R.string.sync_log_conflict_resolution_required));
+                    data.result = syncChangelog;
+                    return data;
+                }
+            }
             if (client.prepareSync(server.getTimediff())) {
                 if (deck.getLastSync() <= 0) {
                     if (client.getRemoteTime() > client.getLocalTime()) {
@@ -321,13 +343,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         conflictResolution = "keepLocal";
                     }
                 }
-                changes = true;
-
-                publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
 
                 // summary
                 JSONArray sums = null;
                 if (conflictResolution == null) {
+                    publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
                     sums = client.summaries();
                 }
 
@@ -336,29 +356,31 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     publishProgress(syncName, res.getString(R.string.sync_preparing_full_sync_message));
 
-                    if (conflictResolution.equals("keepLocal")) {
-                        client.setRemoteTime(0.0);
-                    } else if (conflictResolution.equals("keepRemote")) {
-                        client.setLocalTime(0.0);
+                    if (conflictResolution != null) {
+                        if (conflictResolution.equals("keepLocal")) {
+                            client.setRemoteTime(0.0);
+                        } else if (conflictResolution.equals("keepRemote")) {
+                            client.setLocalTime(0.0);
+                        }
                     }
-                    double lastSync = deck.getLastSync();
+                    
                     String syncFrom = client.prepareFullSync();
 
                     if ("fromLocal".equalsIgnoreCase(syncFrom)) {
                         publishProgress(syncName, res.getString(R.string.sync_uploading_message));
-                        SyncClient.fullSyncFromLocal(password, username, syncName, deckPath);
+                        SyncClient.fullSyncFromLocal(password, username, deck, syncName);
                         syncChangelog.put("message", res.getString(R.string.sync_log_uploading_message));
+                        ankiDB.getDatabase().setTransactionSuccessful();
+                        ankiDB.getDatabase().endTransaction();
                     } else if ("fromServer".equalsIgnoreCase(syncFrom)) {
                         publishProgress(syncName, res.getString(R.string.sync_downloading_message));
+                        ankiDB.getDatabase().endTransaction();
+                        if (deck != null) {
+                            deck.closeDeck();
+                        }
                         SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
                         syncChangelog.put("message", res.getString(R.string.sync_log_downloading_message));
                     }
-                    ankiDB.getDatabase().setTransactionSuccessful();
-                    ankiDB.getDatabase().endTransaction();
-                    deck.closeDeck();
-
-                    deck = Deck.openDeck(deckPath);
-                    client.setDeck(deck);
 
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));
                 } else {
@@ -392,6 +414,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     deck.setLastLoaded(deck.getModified());
                     deck.commitToDB();
+                    Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE,
+                                "Modified: %f, LastSync: %f, LastLoaded: %f",
+                                deck.getModified(), deck.getLastSync(), deck.getLastLoaded()));
 
                     ankiDB.getDatabase().setTransactionSuccessful();
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));

@@ -113,9 +113,9 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>Mostra les opcions d\'estudi</item>
+    <item>Tria la coberta</item>
+    <item>Tria la coberta en obrir el primer paquet del dia</item>
   </string-array>
   <string-array name="startup_mode_values">
     <item>0</item>

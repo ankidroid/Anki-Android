@@ -462,7 +462,7 @@ public class Utils {
      * @return Date converted from the ordinal
      */
     public static Date ordinalToDate(int ordinal) {
-        return new Date((ordinal - DAYS_BEFORE_1970) * MILLIS_IN_A_DAY);
+        return new Date((new BigDate(ordinal - DAYS_BEFORE_1970)).getLocalDate().getTime());
     }
 
 

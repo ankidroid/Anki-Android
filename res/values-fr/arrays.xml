@@ -113,8 +113,8 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
+    <item>Afficher les options d\'étude</item>
+    <item>Montrer la liste des paquets</item>
     <item>Montrer la première carte du paquet lors du premier démarrage de la journée</item>
   </string-array>
   <string-array name="startup_mode_values">

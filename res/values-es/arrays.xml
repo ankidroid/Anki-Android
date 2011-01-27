@@ -113,9 +113,9 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>Mostrar opciones de estudio</item>
+    <item>Mostrar explorador de mazos</item>
+    <item>Mostrar explorador al comenzar el día</item>
   </string-array>
   <string-array name="startup_mode_values">
     <item>0</item>
@@ -131,8 +131,8 @@
     <item>1</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
+    <item>Siempre enviar</item>
+    <item>Nunca enviar</item>
     <item>Preguntarme</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
@@ -161,9 +161,9 @@
     <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Últimas modificadas primero</item>
+    <item>Mostrar en el orden añadido</item>
+    <item>Mostrar en order aleatorio</item>
   </string-array>
   <string-array name="next_review_s">
     <item>hora</item>

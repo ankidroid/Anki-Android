@@ -42,8 +42,8 @@ import java.util.zip.InflaterInputStream;
 
 public class AnkiDroidProxy {
 
-	// Sync protocol version
-	private static final String SYNC_VERSION = "2";
+    // Sync protocol version
+    private static final String SYNC_VERSION = "2";
 
     /**
      * Connection settings
@@ -59,6 +59,8 @@ public class AnkiDroidProxy {
     public static final int LOGIN_OK = 0;
     public static final int LOGIN_INVALID_USER_PASS = 1;
     public static final int LOGIN_CLOCKS_UNSYNCED = 2;
+    public static final int SYNC_CONFLICT_RESOLUTION = 3;
+    public static final int LOGIN_OLD_VERSION = 4;
 
     /**
      * Shared deck's fields
@@ -107,6 +109,7 @@ public class AnkiDroidProxy {
         return mTimestamp;
     }
 
+
     public double getTimediff() {
         return mTimediff;
     }
@@ -131,6 +134,8 @@ public class AnkiDroidProxy {
                     return LOGIN_OK;
                 } else if ("invalidUserPass".equalsIgnoreCase(jsonDecks.getString("status"))) {
                     return LOGIN_INVALID_USER_PASS;
+                } else if ("oldVersion".equalsIgnoreCase(jsonDecks.getString("status"))) {
+                    return LOGIN_OLD_VERSION;
                 }
             } catch (JSONException e) {
                 Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -187,14 +192,18 @@ public class AnkiDroidProxy {
     public void finish() {
         try {
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
-                + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=None";
+                    + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=" + URLEncoder.encode(mDeckName, "UTF-8");
             HttpPost httpPost = new HttpPost(SYNC_URL + "finish");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
             httpPost.setHeader("Accept-Encoding", "identity");
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
-            httpClient.execute(httpPost);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entityResponse = response.getEntity();
+            InputStream content = entityResponse.getContent();
+            String contentString = Utils.convertStreamToString(new InflaterInputStream(content));
+            Log.i(AnkiDroidApp.TAG, "finish: " + contentString);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -204,16 +213,17 @@ public class AnkiDroidProxy {
         }
     }
 
+
     public String getDecks() {
         // Log.i(AnkiDroidApp.TAG, "getDecks - user = " + username + ", password = " + password);
         String decksServer = "{}";
 
         try {
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&client="
-				+ URLEncoder.encode("ankidroid-" + AnkiDroidApp.getPkgVersion(), "UTF-8") + "&u="
-                + URLEncoder.encode(mUsername, "UTF-8") + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8")
-                + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8") + "&libanki="
-                + URLEncoder.encode(AnkiDroidApp.LIBANKI_VERSION, "UTF-8") + "&pversion=5";
+                    + URLEncoder.encode("ankidroid-" + AnkiDroidApp.getPkgVersion(), "UTF-8") + "&u="
+                    + URLEncoder.encode(mUsername, "UTF-8") + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8")
+                    + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8") + "&libanki="
+                    + URLEncoder.encode(AnkiDroidApp.LIBANKI_VERSION, "UTF-8") + "&pversion=5";
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "getDecks");
@@ -223,13 +233,10 @@ public class AnkiDroidProxy {
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(httpPost);
-            Log.i(AnkiDroidApp.TAG, "Response = " + response.toString());
             HttpEntity entityResponse = response.getEntity();
-            Log.i(AnkiDroidApp.TAG, "Entity's response = " + entityResponse.toString());
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "Content = " + content.toString());
             decksServer = Utils.convertStreamToString(new InflaterInputStream(content));
-            Log.i(AnkiDroidApp.TAG, "String content = " + decksServer);
+            Log.i(AnkiDroidApp.TAG, "getDecks response = " + decksServer);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -263,7 +270,8 @@ public class AnkiDroidProxy {
 
         try {
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
-				+ "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=None&name=" + URLEncoder.encode(name, "UTF-8");
+                    + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=None&name="
+                    + URLEncoder.encode(name, "UTF-8");
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "createDeck");
@@ -273,12 +281,10 @@ public class AnkiDroidProxy {
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(httpPost);
-            Log.i(AnkiDroidApp.TAG, "Response = " + response.toString());
             HttpEntity entityResponse = response.getEntity();
-            Log.i(AnkiDroidApp.TAG, "Entity's response = " + entityResponse.toString());
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "Content = " + content.toString());
-            Log.i(AnkiDroidApp.TAG, "String content = " + Utils.convertStreamToString(new InflaterInputStream(content)));
+            Log.i(AnkiDroidApp.TAG, "String content = " +
+                    Utils.convertStreamToString(new InflaterInputStream(content)));
 
             // Add created deck to the list of decks on server
             mDecks.put(name, new JSONArray("[0,0]"));
@@ -311,13 +317,17 @@ public class AnkiDroidProxy {
 
         try {
             // FIXME: Try to do the connection without encoding the lastSync in Base 64
-            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8")
-                    + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
-                    + "&d=" + URLEncoder.encode(mDeckName, "UTF-8")
-					+ "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8")
+            String data = "p="
+                    + URLEncoder.encode(mPassword, "UTF-8")
+                    + "&u="
+                    + URLEncoder.encode(mUsername, "UTF-8")
+                    + "&d="
+                    + URLEncoder.encode(mDeckName, "UTF-8")
+                    + "&v="
+                    + URLEncoder.encode(SYNC_VERSION, "UTF-8")
                     + "&lastSync="
-                    + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(Utils.ENGLISH_LOCALE, "%f", lastSync)
-                            .getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
+                    + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(Utils.ENGLISH_LOCALE, "%f",
+                            lastSync).getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "summary");
@@ -327,11 +337,8 @@ public class AnkiDroidProxy {
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(httpPost);
-            Log.i(AnkiDroidApp.TAG, "Response = " + response.toString());
             HttpEntity entityResponse = response.getEntity();
-            Log.i(AnkiDroidApp.TAG, "Entity's response = " + entityResponse.toString());
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "Content = " + content.toString());
             summaryServer = new JSONObject(Utils.convertStreamToString(new InflaterInputStream(content)));
             Log.i(AnkiDroidApp.TAG, "Summary server = ");
             Utils.printJSONObject(summaryServer);
@@ -351,7 +358,7 @@ public class AnkiDroidProxy {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, HttpSyncServerProxy - applyPayload
-     *
+     * 
      * @param payload
      */
     public JSONObject applyPayload(JSONObject payload) {
@@ -363,9 +370,10 @@ public class AnkiDroidProxy {
         try {
             // FIXME: Try to do the connection without encoding the payload in Base 64
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
-				+ "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=" + URLEncoder.encode(mDeckName, "UTF-8")
-			   	+ "&payload=" + URLEncoder.encode(Base64.encodeBytes(Utils.compress(payload.toString().getBytes())), "UTF-8")
-				+ "&base64=" + URLEncoder.encode("true", "UTF-8");
+                    + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=" + URLEncoder.encode(mDeckName, "UTF-8")
+                    + "&payload="
+                    + URLEncoder.encode(Base64.encodeBytes(Utils.compress(payload.toString().getBytes())), "UTF-8")
+                    + "&base64=" + URLEncoder.encode("true", "UTF-8");
 
             // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "applyPayload");
@@ -375,11 +383,8 @@ public class AnkiDroidProxy {
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(httpPost);
-            Log.i(AnkiDroidApp.TAG, "Response = " + response.toString());
             HttpEntity entityResponse = response.getEntity();
-            Log.i(AnkiDroidApp.TAG, "Entity's response = " + entityResponse.toString());
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "Content = " + content.toString());
             String contentString = Utils.convertStreamToString(new InflaterInputStream(content));
             Log.i(AnkiDroidApp.TAG, "Payload response = ");
             payloadReply = new JSONObject(contentString);

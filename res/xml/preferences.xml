@@ -31,6 +31,11 @@
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_qadisplay">
+		<CheckBoxPreference
+			android:title="@string/show_next_review_time"
+			android:defaultValue="true"
+			android:summary="@string/show_next_review_time_summ"
+			android:key="showNextReviewTime" />
 		<ListPreference
 			android:title="@string/display_font_size"
 			android:summary="@string/display_font_size_summ"
@@ -46,41 +51,30 @@
 			android:entries="@array/hideQuestionInAnswerLabels"
 			android:entryValues="@array/hideQuestionInAnswerVals" />
 		<CheckBoxPreference
-			android:title="@string/show_next_review_time"
+			android:title="@string/show_timer"
 			android:defaultValue="true"
-			android:summary="@string/show_next_review_time_summ"
-			android:key="showNextReviewTime" />
-		<CheckBoxPreference 
-			android:title="@string/use_ruby_support" 
-			android:defaultValue="false" 
-			android:summary="@string/use_ruby_support_summ" 
-			android:key="useRubySupport" />
-	</PreferenceCategory>
-	
-	<PreferenceCategory android:title="@string/pref_cat_advanced">
-		<ListPreference
-			android:title="@string/startup_mode"
-			android:summary="@string/startup_mode_summ"
-			android:key="startup_mode"
-			android:defaultValue="2"
-			android:entries="@array/startup_mode_labels"
-			android:entryValues="@array/startup_mode_values" />
-	
-		<CheckBoxPreference
-			android:title="@string/show_study_options_on_deck_load"
-			android:defaultValue="true"
-			android:summary="@string/show_study_options_on_deck_load_summ"
-			android:key="study_options" />
+			android:summary="@string/show_timer_summ"
+			android:key="timer" />
 		<CheckBoxPreference
 			android:title="@string/fullscreen_review"
 			android:defaultValue="true"
 			android:summary="@string/fullscreen_review_summ"
 			android:key="fullscreenReview" />
-		<CheckBoxPreference
-			android:title="@string/show_timer"
-			android:defaultValue="true"
-			android:summary="@string/show_timer_summ"
-			android:key="timer" />
+		<CheckBoxPreference 
+			android:title="@string/use_ruby_support" 
+			android:defaultValue="false" 
+			android:summary="@string/use_ruby_support_summ" 
+			android:key="useRubySupport" />
+		<ListPreference
+			android:title="@string/button_size"
+			android:summary="@string/button_size_summ"
+			android:key="buttonSize"
+			android:defaultValue="100"
+			android:entries="@array/button_size_labels"
+			android:entryValues="@array/button_size_values" />
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="@string/pref_cat_advanced">
 		<CheckBoxPreference
 			android:title="@string/show_whiteboard"
 			android:summary="@string/show_whiteboard_summ"
@@ -114,22 +108,45 @@
 			android:entries="@array/dictionary_labels"
 			android:entryValues="@array/dictionary_values" />
 		<CheckBoxPreference
-			android:title="@string/zoom"
-			android:defaultValue="true"
-			android:summary="@string/zoom_summ"
-			android:key="zoom" />
-		<ListPreference
-			android:title="@string/button_size"
-			android:summary="@string/button_size_summ"
-			android:key="buttonSize"
-			android:defaultValue="100"
-			android:entries="@array/button_size_labels"
-			android:entryValues="@array/button_size_values" />
-		<CheckBoxPreference
-			android:title="Swipe"
+			android:title="@string/shake"
 			android:defaultValue="false"
-			android:summary="Swipe left and right to switch between screens and answer cards by swiping down (again) or up (recommendation)"
-			android:key="swipe"/>
+			android:summary="@string/shake_summ"
+			android:key="shake"
+			android:disableDependentsState="false"/>
+		<EditTextPreference
+			android:title="@string/shake_intensity"
+			android:summary="@string/shake_intensity_summ"
+			android:dependency="shake"
+			android:defaultValue="45"
+			android:inputType="number"
+			android:key="shakeIntensity" />
+		<CheckBoxPreference
+			android:title="@string/swipe"
+			android:defaultValue="false"
+			android:summaryOn="@string/swipe_summ_on"
+			android:summaryOff="@string/swipe_summ_off"
+			android:key="swipe"
+			android:disableDependentsState="true"/>
+		<CheckBoxPreference
+			android:id="@+id/zoom_checkbox"
+			android:title="@string/zoom"
+			android:defaultValue="false"
+			android:summary="@string/zoom_summ"
+			android:key="zoom"
+			android:dependency="swipe"
+			android:disableDependentsState="true"/>
+		<ListPreference
+			android:title="@string/startup_mode"
+			android:summary="@string/startup_mode_summ"
+			android:key="startup_mode"
+			android:defaultValue="2"
+			android:entries="@array/startup_mode_labels"
+			android:entryValues="@array/startup_mode_values" />	
+		<CheckBoxPreference
+			android:title="@string/show_study_options_on_deck_load"
+			android:defaultValue="true"
+			android:summary="@string/show_study_options_on_deck_load_summ"
+			android:key="study_options" />
 		<CheckBoxPreference
 			android:title="@string/update_notification"
 			android:defaultValue="true"
@@ -166,5 +183,10 @@
 			android:summary="@string/sync_enabled_in_answer_summ"
 			android:defaultValue="false"
 			android:key="syncEnabled"/>
+		<CheckBoxPreference
+			android:title="@string/fix_hebrew_text"
+			android:summary="@string/fix_hebrew_text_summ"
+			android:defaultValue="false"
+			android:key="fixHebrewText"/>
 	</PreferenceCategory>
 </PreferenceScreen>

@@ -113,9 +113,9 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>Mostra opzioni di studio</item>
+    <item>Mostra selezionatore di mazzi</item>
+    <item>Mostra selezionatore di mazzi al primo avvio del giorno</item>
   </string-array>
   <string-array name="startup_mode_values">
     <item>0</item>
@@ -132,8 +132,8 @@
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Notifica sempre</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Non segnalare mai</item>
+    <item>Chiedimi</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
     <item>0</item>

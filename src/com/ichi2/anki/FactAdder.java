@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.content.res.Resources;
 
 import com.ichi2.anki.Fact.Field;
 
@@ -72,8 +71,6 @@ public class FactAdder extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Resources res = getResources();
         
         registerExternalStorageListener();
 
@@ -90,18 +87,8 @@ public class FactAdder extends Activity {
 
         mModels = Model.getModels(mDeck);
         mCurrentSelectedModelId = mDeck.getCurrentModelId();
-        mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
-        //res.getString(R.string.card)
-        
-        String templates = mModels.get(mCurrentSelectedModelId).getCardModelNames();
-        if (templates.indexOf(", ") == -1){
-        	mCardTemplates.setText(res.getString(R.string.card) + " " + templates);        	
-        } else {
-        	mCardTemplates.setText(res.getString(R.string.cards) + " " + templates);
-        }
-        
-        mNewFact = mDeck.newFact();
-        populateEditFields();
+        modelChanged();
+
         mAddButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -171,10 +158,16 @@ public class FactAdder extends Activity {
                     public void onClick(DialogInterface dialog, int item) {
                         long oldModelId = mCurrentSelectedModelId;
                         mCurrentSelectedModelId = dialogIds.get(item);
-                        mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
-
                         if (oldModelId != mCurrentSelectedModelId) {
-                            populateEditFields();
+                            int size = mEditFields.size();
+                        	String[] oldValues = new String[size];
+                        	for (int i = 0; i < size; i++) {
+                                oldValues[i] = mEditFields.get(i).getText().toString();
+                            }
+                        	modelChanged();
+                        	for (int i = 0; i < Math.min(size, mEditFields.size()) ; i++) {
+                                mEditFields.get(i).setText(oldValues[i]);
+                            }
                         }
                     }
                 });
@@ -184,6 +177,20 @@ public class FactAdder extends Activity {
                 dialog = null;
         }
         return dialog;
+    }
+
+
+    private void modelChanged() {
+		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
+        mModelButton.setText(mModels.get(mCurrentSelectedModelId).getName());
+        
+        String templates = mModels.get(mCurrentSelectedModelId).getCardModelNames();
+        if (templates.indexOf(", ") == -1){
+        	mCardTemplates.setText(getResources().getString(R.string.card) + " " + templates);        	
+        } else {
+        	mCardTemplates.setText(getResources().getString(R.string.cards) + " " + templates);
+        }
+		populateEditFields();
     }
 
 

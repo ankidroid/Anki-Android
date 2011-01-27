@@ -58,6 +58,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -152,6 +153,7 @@ public class StudyOptions extends Activity {
     private AlertDialog mUserNotLoggedInAlert;
     private AlertDialog mConnectionErrorAlert;
 	private AlertDialog mSyncLogAlert;
+	private AlertDialog mSyncConflictResolutionAlert;
 
     /*
 * Cram related
@@ -249,14 +251,10 @@ public class StudyOptions extends Activity {
                     }
                     return;
                 case R.id.studyoptions_congrats_learnmore:
-                    onLearnMore();
-                    reviewer.putExtra("deckFilename", mDeckFilename);
-                    startActivityForResult(reviewer, REQUEST_REVIEW);
-                    return;
+                	startLearnMore();
+                	return;
                 case R.id.studyoptions_congrats_reviewearly:
-                    onReviewEarly();
-                    reviewer.putExtra("deckFilename", mDeckFilename);
-                    startActivityForResult(reviewer, REQUEST_REVIEW);
+                	startEarlyReview();
                     return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     openDeckPicker();
@@ -354,7 +352,7 @@ public class StudyOptions extends Activity {
             mDeckFilename = savedInstanceState.getString("deckFilename");
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from savedInstanceState: " + mDeckFilename);
         } else {
-            Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
+            // Log.i(AnkiDroidApp.TAG, "onCreate - " + preferences.getAll().toString());
             mDeckFilename = preferences.getString("deckFilename", null);
             Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from preferences: " + mDeckFilename);
         }
@@ -364,7 +362,7 @@ public class StudyOptions extends Activity {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
             } else {
-            	if (showDeckPickerOnStartup()) {
+            	if (showDeckPickerOnStartup() && !hasErrorFiles()) {
             		openDeckPicker();
             	} else {
             		// Load previous deck.
@@ -453,10 +451,46 @@ public class StudyOptions extends Activity {
 
 
     private void openReviewer() {
-		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
-		// finish();
-        reviewer.putExtra("deckFilename", mDeckFilename);
-		startActivityForResult(reviewer, REQUEST_REVIEW);
+    	if (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) {
+    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+            reviewer.putExtra("deckFilename", mDeckFilename);
+    		startActivityForResult(reviewer, REQUEST_REVIEW);
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+       			MyAnimation.slide(this, MyAnimation.LEFT);
+        	}    		
+    	} else if (mCurrentContentView == CONTENT_CONGRATS) {
+    		startEarlyReview();
+    	}
+    }
+
+
+    private void startEarlyReview() {
+		Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+            deck.setupReviewEarlyScheduler();
+            deck.reset();
+    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+            reviewer.putExtra("deckFilename", mDeckFilename);
+            startActivityForResult(reviewer, REQUEST_REVIEW);
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+       			MyAnimation.slide(this, MyAnimation.LEFT);
+        	}    		    	
+        }
+    }
+
+
+    private void startLearnMore() {
+		Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+            deck.setupLearnMoreScheduler();
+            deck.reset();
+    		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
+    		reviewer.putExtra("deckFilename", mDeckFilename);
+        	startActivityForResult(reviewer, REQUEST_REVIEW);
+    		if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    			MyAnimation.slide(this, MyAnimation.LEFT);
+    		}    	
+        }
     }
 
 
@@ -631,9 +665,25 @@ public class StudyOptions extends Activity {
     }
 
 
+    private OnClickListener mSyncConflictResolutionListener = new OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case AlertDialog.BUTTON_POSITIVE:
+                    syncDeck("keepLocal");
+                    break;
+                case AlertDialog.BUTTON_NEUTRAL:
+                    syncDeck("keepRemote");
+                    break;
+                case AlertDialog.BUTTON_NEGATIVE:
+                default:
+            }
+        }
+    };
+    
     /**
-* Create AlertDialogs used on all the activity
-*/
+     * Create AlertDialogs used on all the activity
+     */
     private void initAllDialogs() {
         Resources res = getResources();
 
@@ -671,11 +721,21 @@ public class StudyOptions extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                syncDeck();
+                syncDeck(null);
             }
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mConnectionErrorAlert = builder.create();
+        
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(res.getString(R.string.sync_conflict_title));
+        builder.setIcon(android.R.drawable.ic_input_get);
+        builder.setMessage(res.getString(R.string.sync_conflict_message));
+        builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncConflictResolutionListener);
+        builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncConflictResolutionListener);
+        builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncConflictResolutionListener);
+        builder.setCancelable(false);
+        mSyncConflictResolutionAlert = builder.create();
     }
 
 
@@ -893,24 +953,6 @@ public class StudyOptions extends Activity {
     }
 
 
-    private void onLearnMore() {
-        Deck deck = AnkiDroidApp.deck();
-        if (deck != null) {
-            deck.setupLearnMoreScheduler();
-            deck.reset();
-        }
-    }
-
-
-    private void onReviewEarly() {
-        Deck deck = AnkiDroidApp.deck();
-        if (deck != null) {
-            deck.setupReviewEarlyScheduler();
-            deck.reset();
-        }
-    }
-
-
     /**
 * Enter cramming mode.
 * Currently not supporting cramming from selection of cards, as we don't have a card list view anyway.
@@ -994,7 +1036,6 @@ public class StudyOptions extends Activity {
     /** Handles item selections */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(AnkiDroidApp.TAG, "Item = " + item.getItemId());
         switch (item.getItemId()) {
             case MENU_OPEN:
                 openDeckPicker();
@@ -1009,7 +1050,7 @@ public class StudyOptions extends Activity {
                 return true;
 
             case MENU_SYNC:
-                syncDeck();
+                syncDeck(null);
                 return true;
 
             case MENU_MY_ACCOUNT:
@@ -1046,6 +1087,9 @@ public class StudyOptions extends Activity {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    		MyAnimation.slide(this, MyAnimation.RIGHT);
+    	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
 
@@ -1101,8 +1145,25 @@ public class StudyOptions extends Activity {
         onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
     }
 
+    private void syncDeckWithPrompt() {
+        if (AnkiDroidApp.isUserLoggedIn()) {
+            Deck deck = AnkiDroidApp.deck();
+            if (deck != null) {
+                // Close existing sync progress dialog
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }
+                // Prompt user for conflict resolution
+                mSyncConflictResolutionAlert.setMessage(String.format(
+                            getResources().getString(R.string.sync_conflict_message), deck.getDeckName()));
+                mSyncConflictResolutionAlert.show();
+            }
+        } else {
+            mUserNotLoggedInAlert.show();
+        }
+    }
 
-    private void syncDeck() {
+    private void syncDeck(String conflictResolution) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 
         String username = preferences.getString("username", "");
@@ -1111,11 +1172,11 @@ public class StudyOptions extends Activity {
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = AnkiDroidApp.deck();
 
-            Log.i(AnkiDroidApp.TAG,
-                    "Synchronizing deck " + mDeckFilename + " with username " + username + " and password " + password);
-            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
+            Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
+            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f",
+                        deck.getModified(), deck.getLastSync()));
             Connection.syncDeck(syncListener, new Connection.Payload(new Object[] { username, password, deck,
-                    mDeckFilename }));
+                    mDeckFilename, conflictResolution }));
         } else {
             mUserNotLoggedInAlert.show();
         }
@@ -1145,6 +1206,10 @@ public class StudyOptions extends Activity {
             // hideSdError();
             // hideDeckErrors();
             mInDeckPicker = false;
+
+            if (requestCode == PICK_DECK_REQUEST && mCurrentContentView == CONTENT_CONGRATS) {
+            	setContentView(mStudyOptionsView);
+            }
 
             if (resultCode != RESULT_OK) {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
@@ -1387,12 +1452,20 @@ public class StudyOptions extends Activity {
 				reloadDeck();
 				mSyncLogAlert.show();
             } else {
-                // connectionFailedAlert.show();
-                if (mConnectionErrorAlert != null) {
-                    mConnectionErrorAlert.show();
+                if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
+                    // Need to ask user for conflict resolution direction and re-run sync
+                    syncDeckWithPrompt();
+                } else {
+                    // connectionFailedAlert.show();
+                    if (mConnectionErrorAlert != null) {
+                        String errorMessage = ((HashMap<String, String>) data.result).get("message");
+                        if ((errorMessage != null) && (errorMessage.length() > 0)) {
+                            mConnectionErrorAlert.setMessage(errorMessage);
+                        }
+                        mConnectionErrorAlert.show();
+                    }
                 }
             }
-
         }
 
 
@@ -1425,7 +1498,7 @@ public class StudyOptions extends Activity {
                     	openReviewer();
                     } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
                         // right
-    					// openDeckPicker();
+    					openDeckPicker();
                     }
                 }
                 catch (Exception e) {

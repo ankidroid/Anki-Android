@@ -117,9 +117,18 @@
   <string name="fullscreen_review_summ">Nutzt sämtlichen vorhandenen Platz auf dem Bildschirm</string>
   <string name="zoom">Zoom aktivieren</string>
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
+  <string name="swipe">Gesten aktivieren</string>
+  <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
+  <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; vertikal wischen: Karten beantworten (hoch: nochmal, runter: Empfehlung, Doppeltap: einfacher als Empfehlung)</string>
+  <string name="shake">Schütteln aktivieren</string>
+  <string name="shake_summ">Schütteln Sie Ihr Android-Gerät, um die letzte Aktion rückgängig zu machen</string>
+  <string name="shake_intensity">Schüttel-Schwellwert</string>
+  <string name="shake_intensity_summ">Schwelle, ab der ein Schütteln registriert wird</string>
   <string name="pref_cat_experimental">EXPERIMENTELL</string>
   <string name="sync_enabled">Synchronisierung</string>
   <string name="sync_enabled_in_answer_summ">Die Synchronisierung hat noch Fehler und könnte Ihre Stapel gefährden. Machen Sie häufig Backups!</string>
+  <string name="fix_hebrew_text">Umgekehrte Textrichtung für Hebräisch</string>
+  <string name="fix_hebrew_text_summ">Erzwingt umgekehrte Textrichtung, um Hebräisch auf dem Android-System darzustellen. Vokale werden nicht unterstützt</string>
   <string name="personaldeckpicker_title">Online-Stapel herunterladen</string>
   <string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
   <string name="downloaddeck_search">Suchen</string>
@@ -236,12 +245,20 @@
   <string name="sync_no_changes_message">Keine Veränderungen gefunden.</string>
   <string name="sync_log_error_message">Fehler: Deck wurde nicht synchronisiert</string>
   <string name="sync_log_no_changes_message">Keine Veränderungen gefunden</string>
-  <string name="sync_log_uploading_message">Kein Stapel auf dem Server</string>
+  <string name="sync_log_uploading_message">Voll-Synchronisierung des lokalen Stapels</string>
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
-  <string name="sync_log_fact_to_server_message">Ein Fakt hochgeladen</string>
+  <string name="sync_log_fact_to_server_message">Einen Fakt hochgeladen</string>
   <string name="sync_log_facts_to_server_message">%d Fakten hochgeladen</string>
-  <string name="sync_log_fact_from_server_message">Ein Fakt heruntergeladen</string>
+  <string name="sync_log_fact_from_server_message">Einen Fakt heruntergeladen</string>
   <string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
+  <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %d Sekunden von der Server-Zeit ab, es kann deshalb nicht synchronisiert werden.</string>
+  <string name="sync_log_old_version">Das Synchronisierungsprotokoll wurde verändert. Bitte aktualisieren Sie Ihre AnkiDroid-Version. Besuchen Sie für weitere Informationen http://code.google.com/p/ankidroid</string>
+  <string name="sync_log_conflict_resolution_required">Der Stapel wurde lokal und auf dem Server geändert. Bitte öffnen Sie den Stapel und synchronisieren von dort, um den Konflikt zu beheben.</string>
+  <string name="sync_conflict_title">Synchronisierungskonflikt</string>
+  <string name="sync_conflict_message">Der Stapel %s wurde sowohl lokal als auch auf dem Server geändert. Welche Seite soll behalten werden?</string>
+  <string name="sync_conflict_local">Lokale</string>
+  <string name="sync_conflict_remote">Server</string>
+  <string name="sync_conflict_cancel">Abbrechen</string>
   <string name="error_message">Es ist ein Fehler zu melden</string>
   <string name="errors_message">Es ist %d Fehler zu melden</string>
   <string name="error_ok">Fehlermeldung</string>
@@ -287,8 +304,8 @@
   <string-array name="studyoptions_more_rev_card_order">
     <item>Karten mit größtem Intervall zuerst</item>
     <item>Karten mit kleinstem Intervall zuerst</item>
-    <item>Karten mit in der Reihenfolge der Fälligkeit</item>
-    <item>Karten in zufälliger Reihenfolge</item>
+    <item>Karten in Fälligkeitsreihenfolge</item>
+    <item>Karten in Zufallsreihenfolge</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
     <item>Zeige nicht gewusste Karten bald</item>

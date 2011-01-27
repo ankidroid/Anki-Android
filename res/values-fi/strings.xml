@@ -27,7 +27,7 @@
   <string name="no">Ei</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Pakkojen joiden versiot vanhempi kuin 39 eivät tue AnkiDroidia. Avaa pakka Anki-työpöytä versiolla ja päivitä pakka uusimpaan versioon.</string>
-  <string name="deckpicker_title">Valitse pakka (%1$d  %2$d määrä)</string>
+  <string name="deckpicker_title">Valitse pakka (%1$d / %2$d määrä)</string>
   <string name="deckpicker_title_nosdcard">SD-kortti on irrotettu</string>
   <string name="deckpicker_due">%1$d / %2$d jäljellä</string>
   <string name="deckpicker_new">%d uutta tänään</string>
@@ -86,8 +86,8 @@
   <string name="pref_cat_qadisplay">Kysymys ja vastaus -näyttö</string>
   <string name="sync_on_open">Synkronoi avattaessa</string>
   <string name="sync_on_close">Synkronoi suljettaessa</string>
-  <string name="show_study_options_on_deck_load">Opiskelu asetukset latauksessa</string>
-  <string name="show_study_options_on_deck_load_summ">Näytä opiskelu asetukset näyttö ladattaessa pakkaa</string>
+  <string name="show_study_options_on_deck_load">Opiskeluasetukset latauksessa</string>
+  <string name="show_study_options_on_deck_load_summ">Näytä opiskelu-asetukset näyttö ladattaessa pakkaa</string>
   <string name="startup_mode">Käynnistystila</string>
   <string name="startup_mode_summ">Valitse, jos haluat käynnistää opiskelu asetuksista tai pakan pakan kerääjästä</string>
   <string name="show_timer">Näytä ajastin</string>
@@ -107,8 +107,8 @@
   <string name="use_ruby_support_summ">Merkkien \'[\' ja \']\' välissä olevaa tekstiä käsitellään ruby-huomautuksena</string>
   <string name="display_font_size">Näyttöfontin suhteellinen koko</string>
   <string name="display_font_size_summ">Näytön fonttikoko suhteessa pakan määritelmiin</string>
-  <string name="button_size">Suhteellinen painikkeen koko</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
+  <string name="button_size">Painikkeen koko</string>
+  <string name="button_size_summ">Muuta tarkistaminen ruudun -painikkeiden kokoa</string>
   <string name="hide_question_in_answer">Piilota kysymys vastauksen yhteydessä?</string>
   <string name="hide_question_in_answer_summ">Määrittää piilotetaanko kysymys kun vastaus näytetään.</string>
   <string name="deck_path">Pakan polku</string>
@@ -117,9 +117,18 @@
   <string name="fullscreen_review_summ">Voit päättää, halutako käyttää kaikkia käytettävissä olevaa näytön tilaa kortin tarkastamisen aikana</string>
   <string name="zoom">Ota zoomaus käyttöön</string>
   <string name="zoom_summ">Näytä zoomaussäätimet tarjastekun aikana</string>
+  <string name="swipe">Ota eleet käyttöön</string>
+  <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
+  <string name="shake">Ravista kumoaksesi viimeisimmän toiminnon</string>
+  <string name="shake_summ">Shake your device to undo the last action</string>
+  <string name="shake_intensity">Shake threshold</string>
+  <string name="shake_intensity_summ">Threshold for shake recognition</string>
   <string name="pref_cat_experimental">KOKEELLINEN</string>
-  <string name="sync_enabled">Sync features</string>
+  <string name="sync_enabled">Sync-ominaisuuksia</string>
   <string name="sync_enabled_in_answer_summ">Löytyy useita vikoja, pakat saattavat viottua. Varmuuskopio usein!</string>
+  <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
+  <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
   <string name="personaldeckpicker_title">Avaa Online-pakka</string>
   <string name="shareddeckpicker_title">Valitse pakka jonka haluat ladata</string>
   <string name="downloaddeck_search">Etsi</string>
@@ -168,7 +177,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
 &lt;p&gt;AnkiDroidista on julkaistu &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU GPLv3 lisenssillä&lt;/a&gt; ja lähdekoodi on saatavilla täältä &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;täältä&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
-  <string name="studyoptions_title">Opiskelu asetukset</string>
+  <string name="studyoptions_title">Opiskeluasetukset</string>
   <string name="studyoptions_deck_name">Pakan nimi</string>
   <string name="studyoptions_reviews_due">Tarkastelujen määrä:</string>
   <string name="studyoptions_new_today">Uutta tänään:</string>
@@ -177,12 +186,12 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="studyoptions_session_minutes">Istunnon raja (minuuttia):</string>
   <string name="studyoptions_session_questions">Istunnon raja (kysymykset):</string>
   <string name="studyoptions_start">Aloita tarkistaminen</string>
-  <string name="studyoptions_more">Opiskelu asetukset</string>
+  <string name="studyoptions_more">Opiskeluasetukset</string>
   <string name="studyoptions_window_title">%1$s (%2$d %3$d määrä)</string>
   <string name="studyoptions_more_dialog_title">Lisää valintoja</string>
   <string name="studyoptions_more_save">Tallenna</string>
   <string name="studyoptions_nodeck_title">Pakkaa ei ole ladattu</string>
-  <string name="studyoptions_nodeck_message">Pakkaa ei ole tällä hetkellä ladattuna. Anki-pakat on tallennettu hekemistoon \"%s\" SD-kortille. Sijainnin voidaan määrittää asetuksissa (paina \"Menu\"-painiketta ja valitse \"Asetukset\").</string>
+  <string name="studyoptions_nodeck_message">Pakkaa ei ole tällä hetkellä ladattuna. Anki-pakat on tallennettu hekemistoon \"%s\" SD-kortille. Sijainnin voidaan määrittää asetuksissa (paina \"Menu-painiketta\" ja valitse \"Asetukset\").</string>
   <string name="studyoptions_deck_not_loaded_title">Pakkaa ei voitu ladata</string>
   <string name="studyoptions_deck_not_loaded_message">Valitsemasi pakka ei ole kelvollinen Anki-pakka. Luo kelvollinen Anki-pakka tietokoneella ennen kuin lataat sen AnkiDroid:in.\n\nSillä välin voit valita toisen pakan tai ladat näytepakan alla olevista painikkeista.</string>
   <string name="studyoptions_no_external_storage_title">Ulkoista Muistia Ei Ole Saatavilla</string>
@@ -192,7 +201,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="menu_open_deck">Avaa pakka</string>
   <string name="menu_sync">Synkronointi</string>
   <string name="menu_download_deck">Lataa pakka</string>
-  <string name="menu_download_shared_deck">Jaettu Pakka</string>
+  <string name="menu_download_shared_deck">Jaettu pakka</string>
   <string name="menu_download_personal_deck">Henkilökohtainen pakka</string>
   <string name="menu_synchronize">Synkronoi</string>
   <string name="menu_my_account">Oma tili</string>
@@ -209,13 +218,13 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="studyoptions_continue">Jatka tarkistamista</string>
   <string name="studyoptions_well_done">Hyvin tehty!</string>
   <string name="studyoptions_congrats_title">Onneksi olkoon!</string>
-  <string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
+  <string name="studyoptions_congrats_message">Olet valmis.\nHuomenna on:\n%1$d %2$s tarkasteltavana ja %3$d uutta %4$s.</string>
   <string name="studyoptions_congrats_card">kortti</string>
-  <string name="studyoptions_congrats_cards">cards</string>
+  <string name="studyoptions_congrats_cards">Kortit</string>
   <string name="studyoptions_congrats_learnmore">Opi lisää</string>
   <string name="studyoptions_congrats_reviewearly">Tarkista etuajassa</string>
   <string name="studyoptions_congrats_open_other_deck">Avaa muu pakka</string>
-  <string name="studyoptions_congrats_finish">Takaisin opiskelu-näyttöön</string>
+  <string name="studyoptions_congrats_finish">Takaisin opiskeluruutuun</string>
   <string name="username">Käyttäjätunnus</string>
   <string name="password">Salasana</string>
   <string name="log_in">Kirjaudu sisään</string>
@@ -248,13 +257,21 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="sync_no_changes_message">Muutoksia ei löytynyt.</string>
   <string name="sync_log_error_message">Virhe: Pakkaa ei ole synkronoitu</string>
   <string name="sync_log_no_changes_message">Muutoksia ei löytynyt</string>
-  <string name="sync_log_uploading_message">Ei ole pakkaa palvelimella</string>
+  <string name="sync_log_uploading_message">Täysi synkronointi sijainnista</string>
   <string name="sync_log_downloading_message">Täysi synkronointi palvelimesta</string>
   <string name="sync_log_fact_to_server_message">1 seikka palvelimelle</string>
   <string name="sync_log_facts_to_server_message">%d seikkaa palvelimelle</string>
   <string name="sync_log_fact_from_server_message">1 seikka palvelimelta</string>
   <string name="sync_log_facts_from_server_message">%d seikkaa palvelimelta</string>
-  <string name="error_message">%d virhettä odottaa ilmoittamista</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
+  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
+  <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
+  <string name="sync_conflict_title">Syncing conflict</string>
+  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
+  <string name="sync_conflict_local">Keep Local</string>
+  <string name="sync_conflict_remote">Keep Remote</string>
+  <string name="sync_conflict_cancel">Peruuta synkronointi</string>
+  <string name="error_message">Yksi virhe raportissa</string>
   <string name="errors_message">On %d raportoitavaa virhettä</string>
   <string name="error_ok">Ilmoita virheistä</string>
   <string name="error_cancel">Älä ilmoita virheistä</string>
@@ -262,7 +279,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="error_reporting_choice">Virheraportointitila</string>
   <string name="error_reporting_choice_summary">Virheitä voidaan raportoida automaattisesti, ei koskaan, tai pyytää luvan sinulta</string>
   <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widgetin ilmoituksen kynnys</string>
+  <string name="widget_minimum_cards_due">Widget-ilmoituksen kynnys</string>
   <string name="widget_minimum_cards_due_summary">Korttien vähimmäismäärä, jolloin ilmoitus on esitetty</string>
   <string name="widget_minimum_cards_due_vibrate">Värähdellä</string>
   <string name="widget_minimum_cards_due_blink">Valon vilkkuminen</string>
@@ -289,7 +306,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string-array name="studyoptions_more_new_card_order">
     <item>Uudet kortit satunnaisessa järjestyksessä</item>
     <item>Uudet kortin lisätyt järjestyksessä</item>
-    <item>Uudet kortit päinvastaisessa lisätyt järjestyksessä</item>
+    <item>Uudet kortit päinvastaisessa järjestyksessä lisättyä</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
     <item>Spread new cards through reviews</item>
@@ -297,8 +314,8 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
     <item>Uudet kortit tarkastelua ennen</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
+    <item>Tarkastele kortteja suurimman aikavälin mukaan</item>
+    <item>Tarkastele kortteja pienimmän aikavälin mukaan</item>
     <item>Tarkista kortit järjestyksessä</item>
     <item>Tarkastele kortteja satunnaisessa järjestyksessä</item>
   </string-array>

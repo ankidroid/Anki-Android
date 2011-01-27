@@ -113,9 +113,9 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>Επιλογές μελέτης</item>
+    <item>Λίστα τραπουλών</item>
+    <item>Λίστα τραπουλών την πρώτη φορά κάθε μέρας</item>
   </string-array>
   <string-array name="startup_mode_values">
     <item>0</item>
@@ -131,9 +131,9 @@
     <item>1</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Στείλε πάντα αναφορά</item>
+    <item>Μη στέλνεις αναφορά</item>
+    <item>Ρώτα με</item>
   </string-array>
   <string-array name="error_reporting_choice_values">
     <item>0</item>
@@ -145,10 +145,10 @@
     <item>25</item>
     <item>50</item>
     <item>75</item>
-    <item>100</item>
+    <item>75</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Ποτέ</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_values">
     <item>10</item>
@@ -161,20 +161,20 @@
     <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Εμφάνιση παλαιότερων τροποποιημένων πρώτα</item>
+    <item>Εμφάνιση κατά σειρά εισαγωγής</item>
+    <item>Εμφάνιση κατά τυχαία σειρά</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hour</item>
-    <item>day</item>
-    <item>month</item>
-    <item>year</item>
+    <item>ώρα</item>
+    <item>ημέρα</item>
+    <item>μήνας</item>
+    <item>έτος</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>hours</item>
-    <item>days</item>
-    <item>months</item>
-    <item>years</item>
+    <item>ώρες</item>
+    <item>ημέρες</item>
+    <item>μήνες</item>
+    <item>χρόνια</item>
   </string-array>
 </resources>
