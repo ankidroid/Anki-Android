@@ -19,7 +19,7 @@
 		android:layout_width="fill_parent"
 		android:gravity="center"
 		android:text="@string/studyoptions_congrats_message"
-		android:layout_marginBottom="10dip"
+		android:layout_marginBottom="4dip"
 		android:id="@+id/studyoptions_congrats_message" />
 	<Button
 		android:layout_height="wrap_content"
@@ -27,19 +27,8 @@
 		android:gravity="center"
 		android:id="@+id/studyoptions_congrats_open_other_deck"
 		android:text="@string/studyoptions_congrats_open_other_deck" />
-	<TextView
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:gravity="center"
-		android:text=""
-		android:layout_marginBottom="10dip" />
 	<Button
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:gravity="center"
-		android:id="@+id/studyoptions_congrats_finish"
-		android:text="@string/studyoptions_congrats_finish" />
-	<Button
+		android:layout_marginTop="10dip"
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:gravity="center"
@@ -51,4 +40,10 @@
 		android:gravity="center"
 		android:id="@+id/studyoptions_congrats_reviewearly"
 		android:text="@string/studyoptions_congrats_reviewearly" />
+	<Button
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:gravity="center"
+		android:id="@+id/studyoptions_congrats_finish"
+		android:text="@string/studyoptions_congrats_finish" />
 </LinearLayout>
