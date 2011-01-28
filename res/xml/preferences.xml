@@ -127,7 +127,7 @@
 			android:dependency="shake"
 			android:defaultValue="70"
         	android:text=""
-        	app:min="40"
+        	app:min="10"
         	android:max="140" 
         	app:interval="1" />
 		<CheckBoxPreference
