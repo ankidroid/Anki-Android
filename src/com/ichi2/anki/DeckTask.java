@@ -152,12 +152,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         String undoName = "Update Fact";
         deck.setUndoStart(undoName);
 
+        // Set modified also updates the text of cards and their modified flags
+        editFact.setModified(true, deck, false);
         editFact.toDb();
+        
+        deck.flushMod();
 
         // Find all cards based on this fact and update them with the updateCard method.
-        for (Card modifyCard : editFact.getUpdatedRelatedCards()) {
-            modifyCard.updateQAfields();
-        }
+        // for (Card modifyCard : editFact.getUpdatedRelatedCards()) {
+        //     modifyCard.updateQAfields();
+        // }
 
         // deck.reset();
         deck.setUndoEnd(undoName);
