@@ -4,6 +4,10 @@
 
 package com.samskivert.mustache;
 
+import android.util.Log;
+
+import static com.ichi2.anki.AnkiDroidApp.TAG;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -112,9 +116,9 @@ public class Template
             }
             ctx = ctx.parent;
         }
-        // we've popped all the way off the top of our stack of contexts, so fail
-        throw new MustacheException(
-            "No key, method or field with name '" + name + "' on line " + line);
+        // Graceful failing, no need to throw exception
+        Log.e(TAG, "No key, method or field with name '" + name + "' on line " + line);
+        return new String("{unknown field " + name + "}");
     }
 
     protected Object getValueIn (Object data, String name, int line)

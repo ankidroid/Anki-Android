@@ -298,7 +298,7 @@ public class Mustache
 
             default:
                 requireNoNewlines(tag, tagLine);
-                _segs.add(new VariableSegment(tag1, false, tagLine));
+                _segs.add(new VariableSegment(tag, false, tagLine));
                 return this;
             }
         }

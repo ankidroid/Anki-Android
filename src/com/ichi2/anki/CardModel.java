@@ -18,9 +18,14 @@
 package com.ichi2.anki;
 
 import android.database.Cursor;
+import android.util.Log;
+
+import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Template;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,6 +51,9 @@ public class CardModel implements Comparator<CardModel> {
     private static final Pattern sFactPattern = Pattern.compile("%\\([tT]ags\\)s");
     private static final Pattern sModelPattern = Pattern.compile("%\\(modelTags\\)s");
     private static final Pattern sTemplPattern = Pattern.compile("%\\(cardModel\\)s");
+
+    // Regex pattern for converting old style template to new
+    private static final Pattern sOldStylePattern = Pattern.compile("%\\((.+?)\\)s");
 
     // BEGIN SQL table columns
     private long mId; // Primary key
@@ -85,6 +93,10 @@ public class CardModel implements Comparator<CardModel> {
     private int mAllowEmptyAnswer = 1;
     private String mTypeAnswer = "";
     // END SQL table entries
+
+    // Compiled mustache templates
+    private Template mQTemplate = null;
+    private Template mATemplate = null;
 
     /**
      * Backward reference
@@ -156,6 +168,7 @@ public class CardModel implements Comparator<CardModel> {
                     myCardModel.mAnswerFontColour = cursor.getString(15);
                     myCardModel.mAnswerAlign = cursor.getInt(16);
                     myCardModel.mLastFontColour = cursor.getString(17);
+                    myCardModel.refreshTemplates();
                     models.put(myCardModel.mId, myCardModel);
                 } while (cursor.moveToNext());
             }
@@ -171,6 +184,34 @@ public class CardModel implements Comparator<CardModel> {
         return (mActive != 0);
     }
 
+    /**
+     * This function recompiles the templates for question and answer.
+     * It should be called everytime we change mQformat or mAformat, so if in the
+     * future we create set(Q|A)Format setters, we should include a call to this.
+     */
+    private void refreshTemplates() {
+        // Question template
+        StringBuffer sb = new StringBuffer();
+        Matcher m = sOldStylePattern.matcher(mQformat);
+        while (m.find()) {
+            // Convert old style
+            m.appendReplacement(sb, "{{" + m.group(1) + "}}");
+        }
+        m.appendTail(sb);
+        Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + sb.toString() + "\"");
+        mQTemplate = Mustache.compiler().compile(sb.toString());
+        
+        // Answer template
+        sb = new StringBuffer();
+        m = sOldStylePattern.matcher(mAformat);
+        while (m.find()) {
+            // Convert old style
+            m.appendReplacement(sb, "{{" + m.group(1) + "}}");
+        }
+        m.appendTail(sb);
+        Log.i(AnkiDroidApp.TAG, "Compiling answer template \"" + sb.toString() + "\"");
+        mATemplate = Mustache.compiler().compile(sb.toString());
+    }
 
     /**
      * @param cardModelId
@@ -231,56 +272,26 @@ public class CardModel implements Comparator<CardModel> {
 
     public static HashMap<String, String> formatQA(Fact fact, CardModel cm, String[] tags) {
 
-        // Not pretty, I know.
-        String question = cm.mQformat;
-        String answer = cm.mAformat;
-
-        // First deal with the tag fields:
-        // %(tags)s = factTags tags where src = 0
-        // %(modelTags)s = modelTags tags where src = 1
-        // %(cardModel)s = templateTags tags where src = 2
-        Matcher tagMatcher;
-        // fact tags %(tags)s or %(Tags)s
-        tagMatcher = sFactPattern.matcher(question);
-        question = tagMatcher.replaceAll(tags[Card.TAGS_FACT]);
-        tagMatcher = sFactPattern.matcher(answer);
-        answer = tagMatcher.replaceAll(tags[Card.TAGS_FACT]);
-        // modelTags %(modelTags)s
-        tagMatcher = sModelPattern.matcher(question);
-        question = tagMatcher.replaceAll(tags[Card.TAGS_MODEL]);
-        tagMatcher = sModelPattern.matcher(answer);
-        answer = tagMatcher.replaceAll(tags[Card.TAGS_MODEL]);
-        // templateTags %(cardModel)s
-        tagMatcher = sTemplPattern.matcher(question);
-        question = tagMatcher.replaceAll(tags[Card.TAGS_TEMPL]);
-        tagMatcher = sTemplPattern.matcher(answer);
-        answer = tagMatcher.replaceAll(tags[Card.TAGS_TEMPL]);
-
-        int replaceAt = question.indexOf("%(");
-        while (replaceAt != -1) {
-        	if (question.substring(replaceAt, replaceAt + 7).equals("%(text:")){
-            	question = replaceHtmlField(question, fact, replaceAt);        	
+        Map<String, String> fields = new HashMap<String, String>();
+        for (Fact.Field f : fact.getFields()) {
+            fields.put("text:" + f.getFieldModel().getName(), Utils.stripHTML(f.getValue()));
+            if (!f.getValue().equals("")) {
+                fields.put(f.getFieldModel().getName(), String.format(
+                            "<span class=\"fm%s\">%s</span>", Utils.hexifyID(f.getFieldModelId()), f.getValue()));
             } else {
-            	question = replaceField(question, fact, replaceAt, true);        	
+                fields.put(f.getFieldModel().getName(), "");
             }
-            replaceAt = question.indexOf("%(");
         }
+        fields.put("tags", tags[Card.TAGS_FACT]);
+        fields.put("Tags", tags[Card.TAGS_FACT]);
+        fields.put("modelTags", tags[Card.TAGS_MODEL]);
+        fields.put("cardModel", tags[Card.TAGS_TEMPL]);
 
-        replaceAt = answer.indexOf("%(");
-        while (replaceAt != -1) {
-            if (answer.substring(replaceAt, replaceAt + 7).equals("%(text:")){
-             	answer = replaceHtmlField(answer, fact, replaceAt);       	
-            } else {
-            	answer = replaceField(answer, fact, replaceAt, true);       	
-            }
-            replaceAt = answer.indexOf("%(");
-        }
+        HashMap<String, String> d = new HashMap<String, String>();
+        d.put("question", cm.mQTemplate.execute(fields));
+        d.put("answer", cm.mATemplate.execute(fields));
 
-        HashMap<String, String> returnMap = new HashMap<String, String>();
-        returnMap.put("question", question);
-        returnMap.put("answer", answer);
-
-        return returnMap;
+        return d;
     }
 
 
