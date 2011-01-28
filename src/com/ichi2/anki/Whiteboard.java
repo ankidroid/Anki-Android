@@ -65,8 +65,8 @@ public class Whiteboard extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        String wbStrokeWidth = PrefSettings.getSharedPrefs(context).getString("wbStrokeWidth", "6");
-        mPaint.setStrokeWidth(Integer.parseInt(wbStrokeWidth));
+        int wbStrokeWidth = PrefSettings.getSharedPrefs(context).getInt("whiteBoardStrokeWidth", 6);
+        mPaint.setStrokeWidth((float) wbStrokeWidth);
 
         createBitmap();
 

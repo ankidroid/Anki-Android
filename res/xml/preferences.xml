@@ -3,6 +3,7 @@
 ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
 ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
 ~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
 ~
 ~ This program is free software; you can redistribute it and/or modify it under
 ~ the terms of the GNU General Public License as published by the Free Software
@@ -16,7 +17,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki">
 	<PreferenceCategory android:title="@string/pref_cat_decks">
 		<CheckBoxPreference
 			android:title="@string/sample_deck"
@@ -36,13 +37,15 @@
 			android:defaultValue="true"
 			android:summary="@string/show_next_review_time_summ"
 			android:key="showNextReviewTime" />
-		<ListPreference
-			android:title="@string/display_font_size"
-			android:summary="@string/display_font_size_summ"
-			android:key="displayFontSize"
+		<com.hlidskialf.android.preference.SeekBarPreference 
+      		android:key="relativeDisplayFontSize"
+        	android:title="@string/display_font_size"
+        	android:summary="@string/display_font_size_summ"
 			android:defaultValue="100"
-			android:entries="@array/displayFontSizeLabels"
-			android:entryValues="@array/displayFontSizeVals" />
+        	android:text=" %"
+        	app:min="10"
+        	android:max="150" 
+        	app:interval="10" />			
 		<ListPreference
 			android:title="@string/hide_question_in_answer"
 			android:summary="@string/hide_question_in_answer_summ"
@@ -65,15 +68,17 @@
 			android:defaultValue="false" 
 			android:summary="@string/use_ruby_support_summ" 
 			android:key="useRubySupport" />
-		<ListPreference
-			android:title="@string/button_size"
-			android:summary="@string/button_size_summ"
-			android:key="buttonSize"
+		<com.hlidskialf.android.preference.SeekBarPreference 
+      		android:key="answerButtonSize"
+        	android:title="@string/button_size"
+        	android:summary="@string/button_size_summ"
 			android:defaultValue="100"
-			android:entries="@array/button_size_labels"
-			android:entryValues="@array/button_size_values" />
+        	android:text=" %"
+        	app:min="100"
+        	android:max="170" 
+        	app:interval="10" />	
 	</PreferenceCategory>
-	
+
 	<PreferenceCategory android:title="@string/pref_cat_advanced">
 		<CheckBoxPreference
 			android:title="@string/show_whiteboard"
@@ -81,13 +86,14 @@
 			android:defaultValue="true"
 			android:disableDependentsState="false"
 			android:key="whiteboard" />
-		<EditTextPreference
-			android:title="@string/whiteboard_stroke_width"
-			android:summary="@string/whiteboard_stroke_width_summ"
+      	<com.hlidskialf.android.preference.SeekBarPreference 
+      		android:key="whiteBoardStrokeWidth"
+        	android:title="@string/whiteboard_stroke_width"
+        	android:summary="@string/whiteboard_stroke_width_summ"
 			android:dependency="whiteboard"
 			android:defaultValue="6"
-			android:inputType="number"
-			android:key="wbStrokeWidth" />
+        	android:text=""
+        	android:max="30" />
 		<CheckBoxPreference
 			android:title="@string/write_answers"
 			android:defaultValue="false"
@@ -113,13 +119,17 @@
 			android:summary="@string/shake_summ"
 			android:key="shake"
 			android:disableDependentsState="false"/>
-		<EditTextPreference
-			android:title="@string/shake_intensity"
-			android:summary="@string/shake_intensity_summ"
+		<com.hlidskialf.android.preference.SeekBarPreference 
+      		android:key="minShakeIntensity"
+        	android:title="@string/shake_intensity"
+        	android:summary="@string/shake_intensity_summ"
+        	android:dialogMessage="@string/shake_intensity_summ"
 			android:dependency="shake"
-			android:defaultValue="45"
-			android:inputType="number"
-			android:key="shakeIntensity" />
+			android:defaultValue="70"
+        	android:text=""
+        	app:min="40"
+        	android:max="140" 
+        	app:interval="1" />
 		<CheckBoxPreference
 			android:title="@string/swipe"
 			android:defaultValue="false"
@@ -160,6 +170,7 @@
 			android:entryValues="@array/error_reporting_choice_values"
 			android:key="reportErrorMode" />
 	</PreferenceCategory>
+
 	<PreferenceCategory android:title="@string/widget_pref">
 		<ListPreference
 			android:title="@string/widget_minimum_cards_due"
@@ -177,6 +188,7 @@
 			android:defaultValue="false"
 			android:key="widgetBlink"/>
 	</PreferenceCategory>
+
 	<PreferenceCategory android:title="@string/pref_cat_experimental">
 		<CheckBoxPreference
 			android:title="@string/sync_enabled"
