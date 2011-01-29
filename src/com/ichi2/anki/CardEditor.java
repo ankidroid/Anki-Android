@@ -57,6 +57,8 @@ public class CardEditor extends Activity {
 
     private LinkedList<FieldEditText> mEditFields;
 
+    private boolean mModified;
+
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -84,6 +86,8 @@ public class CardEditor extends Activity {
 
         mEditFields = new LinkedList<FieldEditText>();
 
+        mModified = false;
+
         Iterator<Field> iter = fields.iterator();
         while (iter.hasNext()) {
             FieldEditText newTextbox = new FieldEditText(this, iter.next());
@@ -103,9 +107,15 @@ public class CardEditor extends Activity {
             	Iterator<FieldEditText> iter = mEditFields.iterator();
                 while (iter.hasNext()) {
                     FieldEditText current = iter.next();
-                    current.updateField();
+                    mModified |= current.updateField();
                 }
-                setResult(RESULT_OK);
+                // Only send result to save if something was actually changed
+                if (mModified) {
+                    setResult(RESULT_OK);
+                } else {
+                    setResult(RESULT_CANCELED);
+                }
+
                 finish();
             }
 
@@ -186,8 +196,13 @@ public class CardEditor extends Activity {
         }
 
 
-        public void updateField() {
-            mPairField.setValue(this.getText().toString());
+        public boolean updateField() {
+            String newValue = this.getText().toString();
+            if (!mPairField.getValue().equals(newValue)) {
+                mPairField.setValue(newValue);
+                return true;
+            }
+            return false;
         }
     }
 

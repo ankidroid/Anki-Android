@@ -307,7 +307,7 @@ public class Fact {
         public Field(long id, long factId, FieldModel fieldModel, String value) {
             mFieldId = id;
             mFactId = factId;
-            mFieldModel = fieldModel;
+            mFieldModelId = fieldModel.getId();
             mValue = value;
             mFieldModel = fieldModel;
             mOrdinal = fieldModel.getOrdinal();
