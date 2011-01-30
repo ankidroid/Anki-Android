@@ -17,35 +17,20 @@
       	android:id="@+id/FactAdderSelectModelLayout"
       	android:layout_width="fill_parent"
       	android:layout_height="wrap_content">
-   		   	<LinearLayout
-	      	android:id="@+id/FactAdderSelectModelLayout"
-    	  	android:layout_width="0dip"
-      		android:layout_height="fill_parent"
-      		android:layout_weight="1">
-        	<TextView
-        		android:id="@+id/FactAdderModelTextView"
-         		android:layout_height="fill_parent"
-         		android:layout_width="0dip"
-         		android:layout_weight="1"
-         		android:layout_gravity="center"
-				android:gravity="center"
-        		android:text="@string/model"/>
-        	<Button
+	       	<Button
 	        	android:id="@+id/FactAdderModelButton"
   		       	android:layout_height="fill_parent"
    		      	android:layout_width="0dip"
     		    android:layout_weight="1"
       		   	android:layout_gravity="center"
 				android:gravity="center"/>
-        	</LinearLayout>
-        <TextView
-        	android:id="@+id/FactAdderTemplates"
-         	android:layout_height="fill_parent"
-         	android:layout_width="0dip"
-         	android:layout_weight="1"
-         	android:layout_gravity="center"
-			android:gravity="center"
-        	android:text="@string/card"/>
+        	<Button
+	        	android:id="@+id/FactAdderCardModelButton"
+  		       	android:layout_height="fill_parent"
+   		      	android:layout_width="0dip"
+    		    android:layout_weight="1"
+      		   	android:layout_gravity="center"
+				android:gravity="center"/>
       	</LinearLayout>
 		
         <LinearLayout

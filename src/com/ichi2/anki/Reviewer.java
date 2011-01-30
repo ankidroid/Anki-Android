@@ -1073,16 +1073,15 @@ public class Reviewer extends Activity {
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
-        mDisplayFontSize = Integer.parseInt(preferences.getString("displayFontSize",
-                Integer.toString(CardModel.DEFAULT_FONT_SIZE_RATIO)));
-        mRelativeButtonSize = Integer.parseInt(preferences.getString("buttonSize", "100"));
+        mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", CardModel.DEFAULT_FONT_SIZE_RATIO);
+        mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         mShakeEnabled = preferences.getBoolean("shake", false);
-        mShakeIntensity = Integer.parseInt(preferences.getString("shakeIntensity", "45"));
+        mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
 
         return preferences;

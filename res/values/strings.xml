@@ -177,6 +177,16 @@
 <string name="about_title">About</string>
 <string name="cardeditor_title">Fact Editor</string>
 <string name="factadder_title">Card Adder</string>
+<string name="model">Model:</string>
+<string name="select_model">Model</string>
+<string name="card">Card:</string>
+<string name="cards">Cards:</string>
+<string name="add">Add</string>
+<string name="close">Close</string>
+<string name="select_card_model">Select Card Model</string>
+<string name="select">Select</string>
+
+
 
 <!-- AnkiDroid.java -->
 <!--<string name="loading_new_card">Loading new card...</string>-->
@@ -407,12 +417,12 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="widget_minimum_cards_due_blink">Blink light</string>
 <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
 <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-<string name="model">Model:</string>
-<string name="select_model">Model</string>
-<string name="card">Card:</string>
-<string name="cards">Cards:</string>
-<string name="add">Add</string>
-<string name="close">Close</string>
+<string name="widget_no_cards_due">No cards due</string>
+<string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
+<string name="widget_card">card</string>
+<string name="widget_cards">cards</string>
+<string name="widget_deck">deck</string>
+<string name="widget_decks">decks</string>
 
 <string name="soon">Soon</string>
 <string name="show_next_review_time">Next review time</string>

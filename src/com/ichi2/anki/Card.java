@@ -131,7 +131,7 @@ public class Card {
 
     private double mTimerStarted;
     private double mTimerStopped;
-    private double mFuzz;
+    private double mFuzz = 0;
 
     // Leech flags, not read from database, only set to true during the actual suspension
     private boolean isLeechMarked;
@@ -261,10 +261,17 @@ public class Card {
         return (Utils.now() - mTimerStarted);
     }
 
+    public double getFuzz() {
+    	if (mFuzz == 0) {
+    		genFuzz();
+    	}
+    	return mFuzz;
+    }
 
     public void genFuzz() {
-        Random rand = new Random();
-        mFuzz = 0.95 + (0.1 * rand.nextDouble());
+        // Random rand = new Random();        
+        // mFuzz = 0.95 + (0.1 * rand.nextDouble());
+        mFuzz = (double) Math.random();
     }
 
 
