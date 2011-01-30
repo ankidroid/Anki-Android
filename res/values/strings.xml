@@ -417,6 +417,8 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="widget_minimum_cards_due_blink">Blink light</string>
 <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
 <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
+<string name="widget_no_cards_due">No cards due</string>
+<string name="widget_cards_in_decks_due">%1$d cards due in %2$d decks</string>
 
 <string name="soon">Soon</string>
 <string name="show_next_review_time">Next review time</string>
