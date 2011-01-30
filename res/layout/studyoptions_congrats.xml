@@ -19,16 +19,16 @@
 		android:layout_width="fill_parent"
 		android:gravity="center"
 		android:text="@string/studyoptions_congrats_message"
-		android:layout_marginBottom="4dip"
+		android:layout_marginBottom="10dip"
 		android:id="@+id/studyoptions_congrats_message" />
 	<Button
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:gravity="center"
 		android:id="@+id/studyoptions_congrats_open_other_deck"
+		android:layout_marginBottom="8dip"
 		android:text="@string/studyoptions_congrats_open_other_deck" />
 	<Button
-		android:layout_marginTop="10dip"
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:gravity="center"
