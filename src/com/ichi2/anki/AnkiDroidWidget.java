@@ -142,8 +142,6 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 Deck.openDeck(currentDeck.getDeckPath());
             }
 
-            SpannableStringBuilder sb = new SpannableStringBuilder();
-
             int totalDue = 0;
 
             // Limit the number of decks shown
@@ -213,9 +211,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
                 Context appContext = getApplicationContext();
                 CharSequence contentTitle = getText(R.string.widget_minimum_cards_due_notification_ticker_title);
-                String contentText = sb.toString();
 
-                notification.setLatestEventInfo(appContext, contentTitle, contentText, pendingAnkiDroidIntent);
+                notification.setLatestEventInfo(appContext, contentTitle, tickerText, pendingAnkiDroidIntent);
 
                 final int WIDGET_NOTIFY_ID = 1;
                 mNotificationManager.notify(WIDGET_NOTIFY_ID, notification);
