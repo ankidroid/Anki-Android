@@ -169,8 +169,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
             if (totalDue > 0) {
 	            updateViews.setTextViewText(R.id.anki_droid_title,
-	            		context.getString(R.string.widget_cards_in_decks_due, totalDue,
-	            				hasDueCount));
+					context.getString(R.string.widget_cards_in_decks_due,
+							totalDue, hasDueCount));
             } else {
 	            updateViews.setTextViewText(R.id.anki_droid_title,
 	            		context.getString(R.string.widget_no_cards_due));
