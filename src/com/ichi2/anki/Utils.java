@@ -227,7 +227,7 @@ public class Utils {
         Matcher imgMatcher = imgPattern.matcher(s);
         return stripHTML(imgMatcher.replaceAll(" $1 "));
     }
-    private static String stripHTML(String s) {
+    public static String stripHTML(String s) {
         Matcher styleMatcher = stylePattern.matcher(s);
         s = styleMatcher.replaceAll("");
         Matcher scriptMatcher = scriptPattern.matcher(s);

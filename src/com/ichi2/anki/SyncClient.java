@@ -1924,7 +1924,9 @@ public class SyncClient {
             ds.writeBytes("Content-Disposition: form-data; name=\"u\"" + END + END + username + END);
             Log.i(AnkiDroidApp.TAG, "DeckName");
             ds.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
-            ds.writeBytes("Content-Disposition: form-data; name=\"d\"" + END + END + deckName + END);
+            ds.writeBytes("Content-Disposition: form-data; name=\"d\"" + END + END);
+            ds.write(deckName.getBytes("UTF-8"));
+            ds.writeBytes(END);
             Log.i(AnkiDroidApp.TAG, "Deck");
             ds.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
             ds.writeBytes("Content-Disposition: form-data; name=\"deck\";filename=\"deck\"" + END);

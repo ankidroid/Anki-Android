@@ -1510,16 +1510,10 @@ public class Reviewer extends Activity {
         StringBuffer sb = new StringBuffer();
         while (m.find()) {
             String hebrewText = m.group();
-            for (int i = 0; i < hebrewText.length(); i++) {
-                Log.i(AnkiDroidApp.TAG, "original: " + hebrewText.codePointAt(i));
-            }
             // Some processing before we reverse the Hebrew text
             // 1. Remove all Hebrew vowels as they cannot be displayed properly
             Matcher mv = sHebrewVowelsPattern.matcher(hebrewText);
             hebrewText = mv.replaceAll("");
-            for (int i = 0; i < hebrewText.length(); i++) {
-                Log.i(AnkiDroidApp.TAG, "no vowels: " + hebrewText.codePointAt(i));
-            }
             // 2. Flip open parentheses, brackets and curly brackets with closed ones and vice-versa
             // Matcher mp = sBracketsPattern.matcher(hebrewText);
             // StringBuffer sbg = new StringBuffer();
@@ -1553,9 +1547,6 @@ public class Reviewer extends Activity {
             //     Log.i(AnkiDroidApp.TAG, "LTR numerals: " + sbg.codePointAt(i));
             // }
             // hebrewText = sbg.toString();//reverse().toString();
-            for (int i = 0; i < hebrewText.length(); i++) {
-                Log.i(AnkiDroidApp.TAG, "processedl: " + hebrewText.codePointAt(i));
-            }
             m.appendReplacement(sb, hebrewText); 
         }
         m.appendTail(sb);

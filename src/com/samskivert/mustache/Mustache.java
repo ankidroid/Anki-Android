@@ -78,6 +78,7 @@ public class Mustache
         StringBuilder text = new StringBuilder();
         int line = 1;
         boolean skipNewline = false;
+        boolean skippedExtraBracket = false;
 
         while (true) {
             char c;
@@ -132,13 +133,17 @@ public class Mustache
 
             case TAG:
                 if (c == end1) {
-                    if (end2 == -1) {
+                    if (!skippedExtraBracket && text.charAt(0) == '{') {
+                        // This tag requires an extra closing '}', we need to skip it
+                        skippedExtraBracket = true;
+                    } else if (end2 == -1) {
                         if (text.charAt(0) == '=') {
                             // TODO: change delimiters
                         } else {
                             sanityCheckTag(text, line, start1, start2);
                             accum = accum.addTagSegment(text, line);
                             skipNewline = accum.skipNewline();
+                            skippedExtraBracket = false;
                         }
                         state = TEXT;
                     } else {
@@ -157,6 +162,7 @@ public class Mustache
                         sanityCheckTag(text, line, start1, start2);
                         accum = accum.addTagSegment(text, line);
                         skipNewline = accum.skipNewline();
+                        skippedExtraBracket = false;
                     }
                     state = TEXT;
                 } else {
@@ -292,13 +298,13 @@ public class Mustache
                 return this;
 
             case '{':
-                requireNoNewlines(tag, tagLine);
-                _segs.add(new VariableSegment(tag, _compiler.stripSpan, tagLine));
+                requireNoNewlines(tag1, tagLine);
+                _segs.add(new VariableSegment(tag1, _compiler.stripSpan, tagLine));
                 return this;
 
             default:
                 requireNoNewlines(tag, tagLine);
-                _segs.add(new VariableSegment(tag1, false, tagLine));
+                _segs.add(new VariableSegment(tag, false, tagLine));
                 return this;
             }
         }
