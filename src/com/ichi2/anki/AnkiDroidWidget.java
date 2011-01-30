@@ -167,10 +167,18 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 }
             }
 
+            CharSequence cardsText = getText(R.string.widget_cards);
+            if (totalDue == 1) {
+            	cardsText = getText(R.string.widget_card);
+            }
+            CharSequence decksText = getText(R.string.widget_decks);
+            if (totalDue == 1) {
+            	decksText = getText(R.string.widget_deck);
+            }
             if (totalDue > 0) {
 	            updateViews.setTextViewText(R.id.anki_droid_title,
 					context.getString(R.string.widget_cards_in_decks_due,
-							totalDue, hasDueCount));
+							totalDue, cardsText, hasDueCount, decksText));
             } else {
 	            updateViews.setTextViewText(R.id.anki_droid_title,
 	            		context.getString(R.string.widget_no_cards_due));
