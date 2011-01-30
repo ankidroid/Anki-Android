@@ -117,16 +117,16 @@
   <string name="fullscreen_review_summ">Вы можете решить, хотите ли вы использовать все доступное место экрана для просмотра</string>
   <string name="zoom">Включить масштабирование</string>
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
-  <string name="swipe">Включить жесты (Swipe)</string>
+  <string name="swipe">Включить жесты(Swipe)</string>
   <string name="swipe_summ_off">Используйте жесты для переключения между экранами и ответами. Эта опция не совместима с кнопками масштабирования</string>
-  <string name="swipe_summ_on">Горизонтальный жест - смена экранов, вертикальный жест - ответ на карточку (вверх: снова, вниз: рекомендация, двойное касание: проще чем рекомендовано)</string>
+  <string name="swipe_summ_on">Горизонтальный жест - смена экранов, вертикальный - ответ (вверх: снова, вниз: рекомен., дв.касание: проще чем рекомен.)</string>
   <string name="shake">Тряхнуть для Отмены</string>
   <string name="shake_summ">Тряхнуть ваше устройство для отмены последнего действия</string>
   <string name="shake_intensity">Уровень трясения</string>
   <string name="shake_intensity_summ">Установления уровня трясения</string>
   <string name="pref_cat_experimental">Экспериментальное</string>
   <string name="sync_enabled">Синхронизация</string>
-  <string name="sync_enabled_in_answer_summ">Синхронизация в процессе разработки. При синхронизации Ваши колоды могут быть повреждены. Делайте чаще резервные копии!</string>
+  <string name="sync_enabled_in_answer_summ">Синхронизация в разработке. При синхронизации колоды могут быть повреждены. Делайте чаще резервные копии!</string>
   <string name="fix_hebrew_text">Обратный порядок написания (RTL) для иврита</string>
   <string name="fix_hebrew_text_summ">Ограниченная поддержка иврита для Android-платформы. Не поддерживаются гласные буквы.</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
@@ -168,7 +168,7 @@
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
 Flashcards (Карточки) для Android&lt;/h2&gt;
-&lt;p&gt;AnkiDroid может читать .anki-файлы, созданные десктоп-версией &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;Anki.&lt;/p&gt;
+&lt;p&gt;AnkiDroid может читать .anki-файлы, созданные десктоп-версией &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Чтобы сделать AnkiDroid лучше, пожалуйста, посылайте отчеты о любых ошибках &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;сюда&lt;/a&gt;, также приветствуются новые идеи или пожелания!
 Пожалуйста, загляните на &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt;, и &lt;a href="http://groups.google.com/group/anki-android"&gt;наш форум&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;AnkiDroid - &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;свободная и открытая программное обеспечение&lt;/a&gt;, любой желающий может принять &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;участие&lt;/a&gt;. 
@@ -219,11 +219,11 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="studyoptions_congrats_title">Поздравляем!</string>
   <string name="studyoptions_congrats_message">На сегодня Вы закончили.\nЗавтра будет %1$d %2$s для повторения\nи %3$d %4$s новых к изучению.</string>
   <string name="studyoptions_congrats_card">Карточка</string>
-  <string name="studyoptions_congrats_cards">Карточки</string>
-  <string name="studyoptions_congrats_learnmore">Подробнее</string>
+  <string name="studyoptions_congrats_cards">карт</string>
+  <string name="studyoptions_congrats_learnmore">Учить дальше</string>
   <string name="studyoptions_congrats_reviewearly">Просмотрено раньше</string>
   <string name="studyoptions_congrats_open_other_deck">Открыть другие колоды</string>
-  <string name="studyoptions_congrats_finish">Вернуться к Изучению</string>
+  <string name="studyoptions_congrats_finish">Вернуться к окну \"Начало урока\"</string>
   <string name="username">Имя пользователя</string>
   <string name="password">Пароль</string>
   <string name="log_in">Войти</string>
