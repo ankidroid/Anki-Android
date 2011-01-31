@@ -18,6 +18,7 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.webkit.WebView;
 
@@ -30,13 +31,27 @@ public class About extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    	Resources res = getResources();
 
         setTitle(getAboutTitle());
 
         setContentView(R.layout.about);
 
         WebView webview = (WebView) findViewById(R.id.about);
-        webview.loadDataWithBaseURL("", getResources().getString(R.string.about_content), "text/html", "utf-8", null);
+
+        String text = String.format(res.getString(R.string.about_content) + "</a>.</p></body></html>", 
+                "<html><body><h2>" + res.getString(R.string.app_name) + ":<br/>", 
+                "<a href=\"" + res.getString(R.string.link_anki) + "\">", 
+        		"<a href=\"" + res.getString(R.string.link_issue_tracker) + "\">",
+        		"<a href=\"" + res.getString(R.string.link_wiki) + "\">", 
+        		"<a href=\"" + res.getString(R.string.link_forum) + "\">",
+        		"<a href=\"" + res.getString(R.string.link_wikipedia_open_source) + "\">", 
+        		"<a href=\"" + res.getString(R.string.link_contribution) + "\">",
+        		"<a href=\"" + res.getString(R.string.link_contribution_contributors) + "\">", 
+        		"<a href=\"" + res.getString(R.string.link_donation) + "\">",
+        		"<a href=\"" + res.getString(R.string.licence_wiki) + "\">",
+        		"<a href=\"" + res.getString(R.string.link_source) + "\">");
+        webview.loadDataWithBaseURL("", text, "text/html", "utf-8", null);
     }
 
 

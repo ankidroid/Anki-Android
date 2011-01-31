@@ -29,20 +29,11 @@
 <string name="no">No</string>
 <string name="ok">OK</string>
 
-
 <!-- Deck.java upgrade deck notes -->
 <!--<string name="deck_not_loaded">Failed to load deck.</string>-->
 <!--<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your SD card.</string>-->
 <!--<string name="deck_empty">Deck is empty.</string>-->
 <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-
-<!-- Colors for Whiteboard and Next Review Time -->
-<color name="wb_fg_color">#B00000FF</color>
-<color name="wb_bg_color">#0000</color>
-<color name="next_time_usual_color">#000000</color>
-<color name="next_time_failed_color">#FF0000</color>
-<color name="next_time_recommended_color">#007700</color>
-
 
 <!-- DeckPicker.java -->
 <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
@@ -233,66 +224,23 @@
 <string name="duplicate_download">This deck is already downloading</string>
 <string name="sync_all">Sync all</string>
 
-
 <!-- SharedDeck.java -->
 <string name="fact">fact</string>
 <string name="facts">facts</string>
 
-<!-- SyncClient.java -->
-<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
-
-<!-- Progress bar communicates -->
-<!--<string name="determining_task">Determining task</string>-->
-<!--<string name="connecting_to_server">Connecting to server</string>-->
-<!--<string name="starting_db_transaction">Starting DB transaction</string>-->
-<!--<string name="creating_deck_at_server">Creating deck @ server</string>-->
-<!--<string name="calculating_summaries">Calculating summaries</string>-->
-<!--<string name="determining_sync_type">Determining sync type</string>-->
-<!--<string name="performing_full_sync">Performing full sync</string>-->
-<!--<string name="setting_db_transaction_success">Setting DB transaction success</string>-->
-<!--<string name="finishing_db_transaction">Finishing DB transaction</string>-->
-<!--<string name="closing_deck">Closing deck</string>-->
-<!--<string name="opening_deck_after_sync">Opening deck after sync</string>-->
-<!--<string name="setting_deck_as_current">Setting deck as current</string>-->
-<!--<string name="generating_payload">Generating payload</string>-->
-<!--<string name="getting_payload_reply">Getting payload reply</string>-->
-<!--<string name="applying_payload_reply">Applying payload reply</string>-->
-<!--<string name="commiting_payload_to_db">Commiting payload to DB</string>-->
+<!-- Sync Change Report, not needed by now -->
+<!--<string name=change_report_title">Added/Changed</string>
+<string name=change_report_here">Here</string>
+<string name=change_report_server">Server</string>
+<string name=change_report_cards">Cards</string>
+<string name=change_report_facts">Facts</string>
+<string name=change_report_models">Models</string>
+<string name=change_report_stats">Stats</string>-->
 
 <string name="saving_changes">Saving changes...</string>
-<!--<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck.</string>-->
-<string name="about_content">&lt;html&gt;
-&lt;body&gt;
-&lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Flashcards for Android&lt;/h2&gt;
-&lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href=&quot;http://ankisrs.net&quot;&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
-&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt;&#59; new feature ideas are very welcome too!
-Please use the &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Index&quot;&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Contribution&quot;&gt;join&lt;/a&gt; the &lt;a href=&quot;https://code.google.com/p/ankidroid/wiki/Contribution#Contributors&quot;&gt;contributors&lt;/a&gt; :-)
-Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href=&quot;http://ankisrs.net/support&quot;&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
-&lt;p&gt;AnkiDroid is released under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href=&quot;http://github.com/nicolas-raoul/Anki-Android&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</string>
-<!--<string name="review_early">Review Early</string>-->
-<string-array name="studyoptions_more_new_card_order"><item>New cards in random order</item>
-<item>New cards in order added</item>
-<item>New cards in reverse order added</item>
-</string-array>
-<string-array name="studyoptions_more_new_card_schedule"><item>Spread new cards through reviews</item>
-<item>New cards after reviews</item>
-<item>New cards before reviews</item>
-</string-array>
-<string-array name="studyoptions_more_rev_card_order"><item>Review cards from largest interval</item>
-<item>Review cards from smallest interval</item>
-<item>Review cards in order due</item>
-<item>Review cards in random order</item>
-</string-array>
-<string-array name="studyoptions_more_fail_card_option"><item>Show failed cards soon</item>
-<item>Show failed cards at end</item>
-<item>Show failed cards in 10 minutes</item>
-<item>Show failed cards in 8 hours</item>
-<item>Show failed cards in 3 days</item>
-</string-array>
+<!--<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck.</stri\"ng>-->
+<string name="about_content">%1$s Flashcards for Android &lt;/h2&gt;&lt;p&gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; To help us make AnkiDroid better, please report any bug %3$s here&lt;/a&gt;; new feature ideas are very welcome too! Please use the %4$s wiki&lt;/a&gt; and say Hi on the %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, so everyone is encouraged to %7$s join&lt;/a&gt; the %8$s contributors&lt;/a&gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&lt;/a&gt; to Anki, or blogging about AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&lt;/a&gt; and the source code is available %11$s here</string>
+
 <string name="studyoptions_title">Study Options</string>
 <string name="studyoptions_deck_name">Deck name</string>
 <string name="studyoptions_reviews_due">Reviews due:</string>
@@ -356,7 +304,6 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="log_out">Log out</string>
 <string name="alert_logging_message">Logging in, please wait...</string>
 <string name="invalid_username_password">Invalid username or password.</string>
-<string name="ankionline_sign_up_url">http://ankiweb.net/</string>
 
 <!-- DownloadManagerService.java -->
 <string name="download_finished">Download finished</string>
@@ -392,7 +339,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_log_fact_from_server_message">1 fact from server</string>
 <string name="sync_log_facts_from_server_message">%d facts from server</string>
 <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
-<string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
+<string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
 <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
 <string name="sync_conflict_title">Syncing conflict</string>
 <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
@@ -405,7 +352,6 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="errors_message">There are %d errors to report</string>
 <string name="error_ok">Report errors</string>
 <string name="error_cancel">Do not report errors</string>
-<string name="error_email">ankidroid@gmail.com</string>
 <string name="error_reporting_choice">Error reporting mode</string>
 <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
 
