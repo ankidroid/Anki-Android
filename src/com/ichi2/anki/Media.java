@@ -21,6 +21,7 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -170,7 +171,7 @@ public class Media {
         for (Pattern reg : mMediaRegexps) {
             Matcher m = reg.matcher(string);
             while (m.find()) {
-                isLocal = m.group(2).toLowerCase().matches("(https?|ftp)://");
+                isLocal = !m.group(2).toLowerCase().matches("(https?|ftp)://");
                 if (!remote && isLocal) {
                     l.add(m.group(2));
                 } else if (remote && !isLocal) {
@@ -213,7 +214,10 @@ public class Media {
         rebuildMediaDir(deck, delete, true);
     }
     public static void rebuildMediaDir(Deck deck, boolean delete, boolean dirty) {
-        String mdir = deck.mediaDir(true);
+        String mdir = deck.mediaDir();
+        if (mdir == null) {
+            return;
+        }
         //Set all ref counts to 0
         deck.getDB().getDatabase().execSQL("UPDATE media SET size = 0");
 
@@ -221,6 +225,7 @@ public class Media {
         Cursor cursor = null;
         String txt = null;
         Map<String, Integer> refs = new HashMap<String, Integer>();
+        Set<String> normrefs = new HashSet<String>();
         try {
             cursor = deck.getDB().getDatabase().rawQuery("SELECT question, answer FROM cards", null);
             while (cursor.moveToNext()) {
@@ -231,6 +236,7 @@ public class Media {
                             refs.put(f, refs.get(f) + 1);
                         } else {
                             refs.put(f, 1);
+                            normrefs.add(Normalizer.normalize(f, Normalizer.Form.NFC));
                         }
                     }
                 }
@@ -252,15 +258,17 @@ public class Media {
             // Find unused media
             Set<String> unused = new HashSet<String>();
             File mdirfile = new File(mdir);
-            fname = null;
-            for (File f : mdirfile.listFiles()) {
-                if (!f.isFile()) {
-                    // Ignore directories
-                    continue;
-                }
-                fname = f.getName();
-                if (!refs.containsKey(fname)) {
-                    unused.add(fname);
+            if (mdirfile.exists()) {
+                fname = null;
+                for (File f : mdirfile.listFiles()) {
+                    if (!f.isFile()) {
+                        // Ignore directories
+                        continue;
+                    }
+                    fname = Normalizer.normalize(f.getName(), Normalizer.Form.NFC);
+                    if (!normrefs.contains(fname)) {
+                        unused.add(fname);
+                    }
                 }
             }
             // Optionally delete

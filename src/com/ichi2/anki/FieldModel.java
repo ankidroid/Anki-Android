@@ -17,6 +17,7 @@
 
 package com.ichi2.anki;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import java.util.Comparator;
@@ -117,6 +118,19 @@ public class FieldModel implements Comparator<FieldModel> {
                 cursor.close();
             }
         }
+    }
+
+    protected void toDB(Deck deck) {
+        ContentValues values = new ContentValues();
+        values.put("id", mId);
+        values.put("ordinal", mOrdinal);
+        values.put("modelId", mModelId);
+        values.put("name", mName);
+        values.put("description", mDescription);
+        values.put("quizFontFamily", mQuizFontFamily);
+        values.put("quizFontSize", mQuizFontSize);
+        values.put("quizFontColour", mQuizFontColour);
+        deck.getDB().getDatabase().update("fieldModels", values, "id = " + mId, null);
     }
 
 
