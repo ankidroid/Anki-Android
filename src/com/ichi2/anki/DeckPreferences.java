@@ -142,6 +142,12 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
                 return this;
             }
 
+
+            @Override
+            public void apply() {
+                commit();
+            }
+
         }
 
 
