@@ -41,7 +41,7 @@ import java.io.File;
  */
 public class AnkiDroidApp extends Application {
 
-	public static final String LIBANKI_VERSION = "1.2.2";
+	public static final String LIBANKI_VERSION = "1.2.5";
 
     /**
      * Tag for logging messages.
@@ -95,7 +95,7 @@ public class AnkiDroidApp extends Application {
             // "AnkiDroid" folder
             editor.putString("deckPath", getStorageDirectory() + "/AnkiDroid");
 
-            editor.commit();
+            editor.apply();
         }
 
         // Reschedule the checks - we need to do this if the settings have

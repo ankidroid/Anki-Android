@@ -17,9 +17,12 @@
 
 package com.ichi2.anki;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -103,14 +106,12 @@ public class Model {
 
 
     // XXX: Unused
-//    public void setModified() {
-//        mModified = Utils.now();
-//    }
-
+    // public void setModified() {
+    // mModified = Utils.now();
+    // }
 
     /**
-     * FIXME: this should be called whenever the deck is changed. Otherwise unnecessary space will be used.
-     * XXX: Unused
+     * FIXME: this should be called whenever the deck is changed. Otherwise unnecessary space will be used. XXX: Unused
      */
     protected static final void reset() {
         sModels = new HashMap<Long, Model>();
@@ -124,7 +125,7 @@ public class Model {
      * currentModel. If a cardModel id is submitted, then the related Model data and all related CardModel and
      * FieldModel data are loaded unless the cardModel id is already in the cardModel map. FIXME: nothing is done to
      * treat db failure or non-existing identifiers
-     *
+     * 
      * @param deck The deck we are working with
      * @param identifier a cardModel id or a model id
      * @param isModelId if true then the submitted identifier is a model id; otherwise the identifier is a cardModel id
@@ -187,6 +188,11 @@ public class Model {
     }
 
 
+    public List<CardModel> getCardModels() {
+        return new ArrayList<CardModel>(mCardModelsMap.values());
+    }
+
+
     protected final CardModel getCardModel(long identifier) {
         return mCardModelsMap.get(identifier);
     }
@@ -194,7 +200,7 @@ public class Model {
 
     /**
      * Loads the Model from the database. then loads the related CardModels and FieldModels from the database.
-     *
+     * 
      * @param deck
      * @param modelId
      */
@@ -217,9 +223,38 @@ public class Model {
     }
 
 
+    protected void saveToDBPlusRelatedModels(Deck deck) {
+        for (CardModel cm : mCardModelsMap.values()) {
+            cm.toDB(deck);
+        }
+        for (FieldModel fm : mFieldModelsMap.values()) {
+            fm.toDB(deck);
+        }
+        toDB(deck);
+    }
+
+
+    protected void toDB(Deck deck) {
+        ContentValues values = new ContentValues();
+        values.put("id", mId);
+        values.put("deckid", mDeckId);
+        values.put("created", mCreated);
+        values.put("modified", mModified);
+        values.put("tags", mTags);
+        values.put("name", mName);
+        values.put("description", mDescription);
+        values.put("features", mFeatures);
+        values.put("spacing", mSpacing);
+        values.put("initialSpacing", mInitialSpacing);
+        values.put("source", mSource);
+        deck.getDB().getDatabase().update("models", values, "id = " + mId, null);
+
+    }
+
+
     /**
-     * Loads a model from the database based on the id.
-     * FIXME: nothing is done in case of db error or no returned row
+     * Loads a model from the database based on the id. FIXME: nothing is done in case of db error or no returned row
+     * 
      * @param deck
      * @param id
      * @return
@@ -283,7 +318,7 @@ public class Model {
     /**
      * Returns a cached CSS for the font color and font size of a given CardModel taking into account the included
      * fields
-     *
+     * 
      * @param myCardModelId
      * @param percentage the preference factor to use for calculating the display font size from the cardmodel and
      *            fontmodel font size
@@ -375,30 +410,33 @@ public class Model {
     public String getName() {
         return mName;
     }
-    
+
+
     /**
      * @return the tags
      */
     public String getTags() {
         return mTags;
     }
-    
+
+
     public String getFeatures() {
-    	return mFeatures;
+        return mFeatures;
     }
-    
-    public String getCardModelNames(){
+
+
+    public String getCardModelNames() {
         String cardModelNames = "";
-    	for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
-    		CardModel myCardModel = entry.getValue();
-    		
-    		if (myCardModel.isActive()){
+        for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
+            CardModel myCardModel = entry.getValue();
+
+            if (myCardModel.isActive()) {
                 cardModelNames = cardModelNames + myCardModel.getName() + ", ";
-    		}
+            }
         }
-    	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
-    	
-    	return cardModelNames;
-    } 
+        cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
+
+        return cardModelNames;
+    }
 
 }
