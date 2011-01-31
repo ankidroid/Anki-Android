@@ -88,7 +88,7 @@
   <string name="sync_on_close">關閉時同步</string>
   <string name="show_study_options_on_deck_load">載入時顯示學習選項</string>
   <string name="show_study_options_on_deck_load_summ">載入牌組時顯示學習選項</string>
-  <string name="startup_mode">Startup Mode</string>
+  <string name="startup_mode">啟動模式</string>
   <string name="startup_mode_summ">選擇你要從學習選項或是牌組開始</string>
   <string name="show_timer">顯示計時器</string>
   <string name="show_timer_summ">監控您回答時間的計時器</string>
@@ -101,37 +101,37 @@
   <string name="write_answers_summ">讓你可以填寫答案，和正確答案比對</string>
   <string name="text_selection">允許選擇文字</string>
   <string name="text_selection_summ">讓你可以選擇複製文字，長按可以在字典中查閱</string>
-  <string name="dictionary">Dictionary</string>
-  <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
+  <string name="dictionary">字典</string>
+  <string name="dictionary_summ">在此字典中查詢</string>
   <string name="use_ruby_support">支援Ruby語言</string>
   <string name="use_ruby_support_summ">如果包含\'[\'或\']\'符號，當作Ruby語言處理</string>
   <string name="display_font_size">相對顯示字型大小</string>
   <string name="display_font_size_summ">相對於牌組中定義的字型大小</string>
-  <string name="button_size">Relative button size</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen</string>
+  <string name="button_size">相對按鈕大小</string>
+  <string name="button_size_summ">複習時螢幕上按鈕的相對大小</string>
   <string name="hide_question_in_answer">隱藏題目？</string>
   <string name="hide_question_in_answer_summ">顯示答案時是否隱藏題目。</string>
   <string name="deck_path">牌組路徑</string>
   <string name="deck_path_summ">設定儲存牌組的目錄</string>
   <string name="fullscreen_review">全螢幕複習</string>
   <string name="fullscreen_review_summ">複習時要不要用全螢幕</string>
-  <string name="zoom">Enable Zoom</string>
-  <string name="zoom_summ">Show Zoom Controls when reviewing</string>
+  <string name="zoom">啟用縮放</string>
+  <string name="zoom_summ">複習時顯示縮放控制</string>
   <string name="swipe">啟用手勢</string>
-  <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
+  <string name="swipe_summ_off">使用手勢來切換屏幕和答案卡。此選項無法與縮放控制併用。</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
-  <string name="shake">Shake to Undo</string>
-  <string name="shake_summ">Shake your device to undo the last action</string>
-  <string name="shake_intensity">Shake threshold</string>
-  <string name="shake_intensity_summ">Threshold for shake recognition</string>
-  <string name="pref_cat_experimental">EXPERIMENTAL</string>
-  <string name="sync_enabled">Sync features</string>
-  <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
-  <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
-  <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
+  <string name="shake">搖晃手機以復原</string>
+  <string name="shake_summ">搖晃你的手機，以復原上一個動作</string>
+  <string name="shake_intensity">搖晃閾值</string>
+  <string name="shake_intensity_summ">設定辨識搖晃的最小程度</string>
+  <string name="pref_cat_experimental">實驗中功能</string>
+  <string name="sync_enabled">同步功能</string>
+  <string name="sync_enabled_in_answer_summ">還有很多小問題，可能會損壞你的牌組。記得經常備份！</string>
+  <string name="fix_hebrew_text">強制右到左文字顯示(給希伯來語)</string>
+  <string name="fix_hebrew_text_summ">Ankidroid處理希伯來語的暫時解決方式。不支援母音。</string>
   <string name="personaldeckpicker_title">打開線上牌組</string>
   <string name="shareddeckpicker_title">選擇你想下載的牌組</string>
-  <string name="downloaddeck_search">Search</string>
+  <string name="downloaddeck_search">搜尋</string>
   <string name="preferences_title">偏好設定</string>
   <string name="deckpreferences_title">牌組偏好設定</string>
   <string name="about_title">關於</string>
@@ -162,7 +162,7 @@
   <string name="sync_all">全部同步</string>
   <string name="fact">事實</string>
   <string name="facts">事實</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
+  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt; &lt;b&gt;新增/變更&lt;/b&gt; &lt;/td&gt;&lt;td&gt; &lt;b&gt;這裡&lt;/b&gt; &lt;/td&gt;&lt;td&gt; &lt;b&gt;伺服器&lt;/b&gt; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;卡片&lt;/td&gt;&lt;td&gt;%1$s的&lt;/td&gt;&lt;td&gt;%2$s的&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;事實&lt;/td&gt;&lt;td&gt;%3$s的&lt;/td&gt;&lt;td&gt;%4$s的&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;模型&lt;/td&gt;&lt;td&gt;%5$s的&lt;/td&gt;&lt;td&gt;%6$s的&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;統計&lt;/td&gt;&lt;td&gt;%7$s的&lt;/td&gt;&lt;td&gt;%8$s的&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">正在儲存設定…</string>
   <string name="about_content">&lt;html&gt;
 &lt;body&gt;
@@ -210,7 +210,7 @@ Android單字卡程式&lt;/h2&gt;
   <string name="menu_about">關於</string>
   <string name="menu_suspend_card">暫停卡片</string>
   <string name="menu_edit_card">編輯卡片</string>
-  <string name="menu_search">Lookup in %1$s</string>
+  <string name="menu_search">在%1$s中查詢</string>
   <string name="menu_mark_card">標記卡片</string>
   <string name="menu_marked">標記</string>
   <string name="loading">載入中...</string>
@@ -218,8 +218,8 @@ Android單字卡程式&lt;/h2&gt;
   <string name="studyoptions_well_done">幹得好！</string>
   <string name="studyoptions_congrats_title">恭喜！</string>
   <string name="studyoptions_congrats_message">今天告一段落了。\n明天會有\n%1$d個%2$s和%3$d張新%4$s。</string>
-  <string name="studyoptions_congrats_card">card</string>
-  <string name="studyoptions_congrats_cards">cards</string>
+  <string name="studyoptions_congrats_card">卡片</string>
+  <string name="studyoptions_congrats_cards">卡片</string>
   <string name="studyoptions_congrats_learnmore">繼續加油</string>
   <string name="studyoptions_congrats_reviewearly">提早複習</string>
   <string name="studyoptions_congrats_open_other_deck">打開其他牌組</string>
@@ -237,92 +237,92 @@ Android單字卡程式&lt;/h2&gt;
   <string name="download_finished">下載完成</string>
   <string name="deck_downloaded">牌組已下載</string>
   <string name="connection_error_message">網路出了點問題。</string>
-  <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
-  <string name="sync_progress_bar_title">Syncing %s</string>
+  <string name="no_user_password_error_message">要繼續進行下一步，您需要有一個AnkiOnline的帳戶，並登入完成。</string>
+  <string name="sync_progress_bar_title">%s同步化中</string>
   <string name="studyoptions_cram_dialog_title">Tags to cram</string>
   <string name="begin_cram">Start Cram mode</string>
   <string name="end_cram">Stop Cram mode</string>
   <string name="cram">Cram</string>
-  <string name="sync_connecting_message">Connecting...</string>
-  <string name="sync_syncing_message">Syncing %s</string>
-  <string name="sync_summary_from_server_message">Fetching summary from server...</string>
-  <string name="sync_preparing_full_sync_message">Preparing full sync...</string>
-  <string name="sync_uploading_message">Uploading...</string>
-  <string name="sync_downloading_message">Downloading...</string>
-  <string name="sync_complete_message">Sync complete.</string>
-  <string name="sync_determining_differences_message">Determining differences...</string>
-  <string name="sync_transferring_payload_message">Transferring payload...</string>
-  <string name="sync_applying_reply_message">Applying reply...</string>
-  <string name="sync_no_changes_message">No changes found.</string>
-  <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
-  <string name="sync_log_no_changes_message">No changes found</string>
-  <string name="sync_log_uploading_message">Full sync from local</string>
-  <string name="sync_log_downloading_message">Full sync from server</string>
+  <string name="sync_connecting_message">連線中...</string>
+  <string name="sync_syncing_message">%s同步化中</string>
+  <string name="sync_summary_from_server_message">從伺服器讀取摘要中...</string>
+  <string name="sync_preparing_full_sync_message">正在準備完整同步...</string>
+  <string name="sync_uploading_message">上傳中...</string>
+  <string name="sync_downloading_message">下載中...</string>
+  <string name="sync_complete_message">同步完成。</string>
+  <string name="sync_determining_differences_message">判定差異中...</string>
+  <string name="sync_transferring_payload_message">傳輸資料中...</string>
+  <string name="sync_applying_reply_message">伺服器回應中...</string>
+  <string name="sync_no_changes_message">沒有新的更新。</string>
+  <string name="sync_log_error_message">錯誤：牌組未同步</string>
+  <string name="sync_log_no_changes_message">沒有新的更新。</string>
+  <string name="sync_log_uploading_message">由本地端完整同步</string>
+  <string name="sync_log_downloading_message">由伺服器端完整同步</string>
   <string name="sync_log_fact_to_server_message">1 fact to server</string>
   <string name="sync_log_facts_to_server_message">%d facts to server</string>
   <string name="sync_log_fact_from_server_message">1 fact from server</string>
   <string name="sync_log_facts_from_server_message">%d facts from server</string>
-  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
-  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
-  <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
+  <string name="sync_log_clocks_unsynchronized">手機的時間和伺服器時間相差%d秒，無法同步。</string>
+  <string name="sync_log_old_version">同步協定已更改，請升級到最新版的AnkiDroid。請參閱 http://code.google.com/p/ankidroid</string>
+  <string name="sync_log_conflict_resolution_required">此牌組在本地端和伺服器端都被修改過。請打開此牌組並執行同步化，化解衝突情形。</string>
   <string name="sync_conflict_title">Syncing conflict</string>
-  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
-  <string name="sync_conflict_local">Keep Local</string>
-  <string name="sync_conflict_remote">Keep Remote</string>
-  <string name="sync_conflict_cancel">Cancel Syncing</string>
+  <string name="sync_conflict_message">%s牌組在本地端和伺服器端都被修改過。要保留那一邊的版本？</string>
+  <string name="sync_conflict_local">保留本地端版本</string>
+  <string name="sync_conflict_remote">保留伺服器端版本</string>
+  <string name="sync_conflict_cancel">取消同步</string>
   <string name="error_message">有一個錯誤要報告</string>
-  <string name="errors_message">There are %d errors to report</string>
+  <string name="errors_message">有%d個錯誤報告</string>
   <string name="error_ok">回報錯誤</string>
   <string name="error_cancel">不要回報錯誤</string>
   <string name="error_email">ankidroid@gmail.com</string>
-  <string name="error_reporting_choice">Error reporting mode</string>
-  <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
+  <string name="error_reporting_choice">錯誤報告模式</string>
+  <string name="error_reporting_choice_summary">若有錯誤，可以自動報告、從不報告，也可以請問您</string>
   <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widget notification threshold</string>
-  <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibrate</string>
-  <string name="widget_minimum_cards_due_blink">Blink light</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-  <string name="model">Model:</string>
-  <string name="select_model">Model</string>
-  <string name="card">Card:</string>
-  <string name="cards">Cards:</string>
-  <string name="add">Add</string>
-  <string name="close">Close</string>
-  <string name="soon">Soon</string>
-  <string name="show_next_review_time">Next review time</string>
-  <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
-  <string name="update_notification">Update notifications</string>
-  <string name="update_notification_summ">Notify me when AnkiDroid is updated</string>
-  <string name="per_day">Per Day</string>
+  <string name="widget_minimum_cards_due">Widget通知標準</string>
+  <string name="widget_minimum_cards_due_summary">有多少累積該複習的卡片時要顯示通知</string>
+  <string name="widget_minimum_cards_due_vibrate">振動</string>
+  <string name="widget_minimum_cards_due_blink">閃爍燈</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">卡片到期</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d張AnkiDroid卡片到期</string>
+  <string name="model">模型：</string>
+  <string name="select_model">模型</string>
+  <string name="card">卡片：</string>
+  <string name="cards">卡片：</string>
+  <string name="add">新增</string>
+  <string name="close">關閉</string>
+  <string name="soon">很快</string>
+  <string name="show_next_review_time">下次複習時間</string>
+  <string name="show_next_review_time_summ">根據您的選擇，顯示下一次複習時間</string>
+  <string name="update_notification">更新通知</string>
+  <string name="update_notification_summ">AnkiDroid 更新時通知我</string>
+  <string name="per_day">每天</string>
   <string name="undo">還原</string>
   <string name="redo">取消還原</string>
-  <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
-  <string name="delete_deck_title">Delete Deck</string>
-  <string name="delete_deck_message">Do you really want to delete deck %s?</string>
-  <string name="delete_deck_confirm">Delete it</string>
+  <string name="contextmenu_deckpicker_delete_deck">刪除牌組</string>
+  <string name="delete_deck_title">刪除牌組</string>
+  <string name="delete_deck_message">確定要刪除牌組%s嗎？</string>
+  <string name="delete_deck_confirm">刪除</string>
   <string-array name="studyoptions_more_new_card_order">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
+    <item>隨機順序顯示新卡片</item>
+    <item>以加入的順序顯示新卡片</item>
+    <item>以加入的反向顯示新卡片</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>新卡片散在複習卡片中</item>
+    <item>新卡片散在複習卡片之後</item>
+    <item>新卡片散在複習卡片之前</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
-    <item>Review cards in random order</item>
+    <item>從最大間隔的卡片複習起</item>
+    <item>從最小間隔的卡片複習起</item>
+    <item>從卡片到期的順序複習起</item>
+    <item>隨機選取複習的卡片</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
-    <item>Show failed cards soon</item>
-    <item>Show failed cards at end</item>
-    <item>Show failed cards in 10 minutes</item>
-    <item>Show failed cards in 8 hours</item>
-    <item>Show failed cards in 3 days</item>
+    <item>馬上就顯示失敗的卡片</item>
+    <item>結束時顯示失敗的卡片</item>
+    <item>10分鐘內顯示失敗的卡片</item>
+    <item>8小時內顯示失敗的卡片</item>
+    <item>3天內顯示失敗的卡片</item>
   </string-array>
 </resources>

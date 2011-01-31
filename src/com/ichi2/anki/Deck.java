@@ -292,9 +292,9 @@ public class Deck {
         }
 
         deck.mNeedUnpack = false;
-        if (deck.getUtcOffset() == -1.0 || deck.getUtcOffset() == -2.0) {
+        if (Math.abs(deck.getUtcOffset() - 1.0) < 1e-9 || Math.abs(deck.getUtcOffset() - 2.0) < 1e-9) {
             // do the rest later
-            deck.mNeedUnpack = deck.getUtcOffset() == -1.0;
+            deck.mNeedUnpack = (Math.abs(deck.getUtcOffset() - 1.0) < 1e-9);
             // make sure we do this before initVars
             deck.setUtcOffset();
             deck.mCreated = Utils.now();
@@ -328,8 +328,7 @@ public class Deck {
 
         // - New delay1 handling
         if (deck.mDelay1 > 7l) {
-            // We treat 600==0 to avoid breaking older clients
-            deck.mDelay1 = 600l;
+            deck.mDelay1 = 0l;
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();
@@ -619,14 +618,16 @@ public class Deck {
      * Return the media directory if exists, none if couldn't be created.
      * 
      * @param create If true it will attempt to create the folder if it doesn't exist
+     * @param rename This is used to simulate the python with create=None that is only used when renaming the mediaDir
      * @return The path of the media directory
      */
     public String mediaDir() {
-        return mediaDir(false);
+        return mediaDir(false, false);
     }
-
-
     public String mediaDir(boolean create) {
+        return mediaDir(create, false);
+    }
+    public String mediaDir(boolean create, boolean rename) {
         String dir = null;
         if (mDeckPath != null && !mDeckPath.equals("")) {
             if (mMediaPrefix != null) {
@@ -634,12 +635,12 @@ public class Deck {
             } else {
                 dir = mDeckPath.replaceAll("\\.anki$", ".media");
             }
-            if (!create) {
+            if (rename) {
                 // Don't create, but return dir
                 return dir;
             } else {
                 File mediaDir = new File(dir);
-                if (!mediaDir.exists()) {
+                if (!mediaDir.exists() && create) {
                     try {
                         if (!mediaDir.mkdir()) {
                             Log.e(AnkiDroidApp.TAG, "Couldn't create media directory " + dir);
@@ -747,14 +748,6 @@ public class Deck {
             mVersion = 54;
             commitToDB();
         }
-        if (mVersion < 55) {
-            // Set a default font for unset fonts
-            getDB().getDatabase().execSQL(
-                    "UPDATE fieldModels SET quizFontFamily = 'Arial' "
-                            + "WHERE NOT quizFontFamily OR quizFontFamily IS null");
-            mVersion = 55;
-            commitToDB();
-        }
         if (mVersion < 57) {
             // Add an index for priority & modified
             mVersion = 57;
@@ -766,35 +759,64 @@ public class Deck {
                 "<span style=\"font-family: %s; font-size: %spx; color: %s; white-space: pre-wrap;\">%s</span>";
             Map<Long, Model> models = Model.getModels(this);
             Set<String> unstyled = new HashSet<String>();
+            boolean changed = false;
             for (Model m : models.values()) {
                 TreeMap<Long, FieldModel> fieldModels = m.getFieldModels();
                 for (FieldModel fm : fieldModels.values()) {
+                    changed = false;
                     Log.i(AnkiDroidApp.TAG, "family: '" + fm.getQuizFontFamily() + "'");
                     Log.i(AnkiDroidApp.TAG, "family: " + fm.getQuizFontSize());
                     Log.i(AnkiDroidApp.TAG, "family: '" + fm.getQuizFontColour() + "'");
-                    if (!fm.getQuizFontFamily().equals("null") || fm.getQuizFontSize() != 0 ||
-                            fm.getQuizFontColour().equals("null")) {
+                    if ((fm.getQuizFontFamily() != null && !fm.getQuizFontFamily().equals("")) ||
+                            fm.getQuizFontSize() != 0 ||
+                            (fm.getQuizFontColour() != null && fm.getQuizFontColour().equals(""))) {
                     } else {
                         unstyled.add(fm.getName());
                     }
                     // Fill out missing info
-                    if (fm.getQuizFontFamily().equals("null")) {
+                    if (fm.getQuizFontFamily() == null || fm.getQuizFontFamily().equals("")) {
                         fm.setQuizFontFamily("Arial");
+                        changed = true;
                     }
                     if (fm.getQuizFontSize() == 0) {
                         fm.setQuizFontSize(20);
+                        changed = true;
                     }
-                    if (fm.getQuizFontColour().equals("null")) {
+                    if (fm.getQuizFontColour() == null || fm.getQuizFontColour().equals("")) {
                         fm.setQuizFontColour("#000000");
+                        changed = true;
                     }
                     if (fm.getEditFontSize() == 0) {
                         fm.setEditFontSize(20);
+                        changed = true;
+                    }
+                    if (changed) {
+                        fm.toDB(this);
                     }
                 }
-
                 
+                for (CardModel cm : m.getCardModels()) {
+                    // Embed the old font information into card templates
+                    String format = cm.getQFormat();
+                    cm.setQFormat(String.format(txt, cm.getQuestionFontFamily(), cm.getQuestionFontSize(),
+                            cm.getQuestionFontColour(), format));
+                    format = cm.getAFormat();
+                    cm.setAFormat(String.format(txt, cm.getAnswerFontFamily(), cm.getAnswerFontSize(),
+                            cm.getAnswerFontColour(), format));
+               
+                    // Escape fields that had no previous styling
+                    for (String un : unstyled) {
+                        String oldStyle = "%(" + un + ")s";
+                        String newStyle = "{{{" + un + "}}}";
+                        cm.setQFormat(cm.getQFormat().replace(oldStyle, newStyle));
+                        cm.setAFormat(cm.getAFormat().replace(oldStyle, newStyle));
+                    }
+                    cm.toDB(this);
+                }
             }
-
+            // Rebuild q/a for the above & because latex has changed
+            // We should be doing updateAllCards(), but it takes too long (really)
+            // updateAllCards();
             // Rebuild the media db based on new format
             Media.rebuildMediaDir(this, false);
             mVersion = 61;
@@ -811,15 +833,6 @@ public class Deck {
             updateDynamicIndices();
             getDB().getDatabase().execSQL("VACUUM");
             mVersion = 62;
-            commitToDB();
-        }
-        if (mVersion < 63) {
-            // Set a default font for unset font sizes
-            getDB().getDatabase().execSQL(
-                    "UPDATE fieldModels SET quizFontSize = 20 WHERE quizFontSize = ''" + "OR quizFontSize IS NULL");
-            getDB().getDatabase().execSQL(
-                    "UPDATE fieldModels SET editFontSize = 20 WHERE editFontSize = ''" + "OR editFontSize IS NULL");
-            mVersion = 63;
             commitToDB();
         }
         if (mVersion < 64) {
@@ -911,7 +924,14 @@ public class Deck {
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_factsDeleted_factId ON factsDeleted (factId)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_mediaDeleted_factId ON mediaDeleted (mediaId)");
         // Tags
-        getDB().getDatabase().execSQL("CREATE UNIQUE INDEX IF NOT EXISTS ix_tags_tag ON tags (tag)");
+        String txt = "CREATE UNIQUE INDEX IF NOT EXISTS ix_tags_tag on tags (tag)";
+        try {
+            getDB().getDatabase().execSQL(txt);
+        } catch (SQLException e) {
+            getDB().getDatabase().execSQL("DELETE FROM tags WHERE EXISTS (SELECT 1 FROM tags t2 " +
+                    "WHERE tags.tag = t2.tag AND tags.rowid > t2.rowid)");
+            getDB().getDatabase().execSQL(txt);
+        }
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_tagCard ON cardTags (tagId, cardId)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_cardId ON cardTags (cardId)");
     }
@@ -2677,12 +2697,16 @@ public class Deck {
     private void _spaceCards(Card card) {
         // Update new counts
         double _new = Utils.now() + mNewSpacing;
-        // Space cards
+        // Space reviews too if integer minute
+        String lim = "= 2";
+        if (mNewSpacing % 60 == 0) {
+            lim = "BETWEEN 1 AND 2";
+        }
         getDB().getDatabase().execSQL(
-                String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET " + "combinedDue = (CASE "
-                        + "WHEN type = 1 THEN %f " + "WHEN type = 2 THEN %f " + "END), " + "modified = %f, isDue = 0 "
-                        + "WHERE id != %d AND factId = %d " + "AND combinedDue < %f " + "AND type BETWEEN 1 AND 2",
-                        mDueCutoff, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff));
+                String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET combinedDue = (CASE WHEN type = 1 THEN %f " 
+                        + "WHEN type = 2 THEN %f END), modified = %f, isDue = 0 WHERE id != %d AND factId = %d " 
+                        + "AND combinedDue < %f AND type %s",
+                        mDueCutoff, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff, lim));
         // Update local cache of seen facts
         mSpacedFacts.put(card.getFactId(), _new);
     }

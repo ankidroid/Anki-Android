@@ -58,18 +58,20 @@ public class LaTeX {
 
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
+        String latex;
 
         //First pass, grab everything that the standard pattern gets
         Log.i(AnkiDroidApp.TAG, "parseLaTeX");
         Matcher matcher = sStandardPattern.matcher(contentLeft);
         while (matcher.find()) {
-            String img = mungeLatex(deck, matcher.group(1));
+            latex = matcher.group(1);
+            String img = mungeLatex(deck, latex);
             img = "latex-" + Utils.checksum(img) + ".png";
 
             String imgTag = matcher.group();
             int markerStart = contentLeft.indexOf(imgTag);
             stringBuilder.append(contentLeft.substring(0, markerStart));
-            stringBuilder.append("<img src=" + img + ">");
+            stringBuilder.append("<img src=\"" + img + "\" alt=\"" + latex + "\">");
 
             contentLeft = contentLeft.substring(markerStart + imgTag.length());
         }
@@ -80,13 +82,14 @@ public class LaTeX {
         stringBuilder = new StringBuilder();
         matcher = sExpressionPattern.matcher(contentLeft);
         while (matcher.find()) {
-            String img = "$" + mungeLatex(deck, matcher.group(1)) + "$";
+            latex = matcher.group(1);
+            String img = "$" + mungeLatex(deck, latex) + "$";
             img = "latex-" + Utils.checksum(img) + ".png";
 
             String imgTag = matcher.group();
             int markerStart = contentLeft.indexOf(imgTag);
             stringBuilder.append(contentLeft.substring(0, markerStart));
-            stringBuilder.append("<img src=" + img + ">");
+            stringBuilder.append("<img src=\"" + img + "\" alt=\"" + latex + "\">");
 
             contentLeft = contentLeft.substring(markerStart + imgTag.length());
         }
@@ -97,13 +100,14 @@ public class LaTeX {
         stringBuilder = new StringBuilder();
         matcher = sMathPattern.matcher(contentLeft);
         while (matcher.find()) {
-            String img = "\\begin{displaymath}" + mungeLatex(deck, matcher.group(1)) + "\\end{displaymath}";
+            latex = matcher.group(1);
+            String img = "\\begin{displaymath}" + mungeLatex(deck, latex) + "\\end{displaymath}";
             img = "latex-" + Utils.checksum(img) + ".png";
 
             String imgTag = matcher.group();
             int markerStart = contentLeft.indexOf(imgTag);
             stringBuilder.append(contentLeft.substring(0, markerStart));
-            stringBuilder.append("<img src=" + img + ">");
+            stringBuilder.append("<img src=\"" + img + "\" alt=\"" + latex + "\">");
 
             contentLeft = contentLeft.substring(markerStart + imgTag.length());
         }
