@@ -43,6 +43,12 @@ import java.util.Collections;
 
 public class AnkiDroidWidget extends AppWidgetProvider {
 
+    /** The maximum number of decks present in the widget. */
+    private static final int MAX_DECK_NUM = 3;
+
+    /** The maximum deck name length allowed. */
+    private static final int MAX_NAME_LEN = 13;
+
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -71,12 +77,19 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
             @Override
             public String toString() {
-                return String.format("%s %d %d", mDeckName, mNewCards, mDueCards);
+                String deckName = formatDeckName();
+
+                return String.format("%s %d %d", deckName, mNewCards, mDueCards);
             }
 
 
-            private CharSequence getDeckStatus() {
+            private CharSequence getDeckText() {
+                String deckName = formatDeckName();
+
                 SpannableStringBuilder sb = new SpannableStringBuilder();
+
+                sb.append(deckName);
+                sb.append(" ");
 
                 SpannableString red = new SpannableString(Integer.toString(mFailedCards));
                 red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(),
@@ -99,6 +112,14 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 return sb;
             }
 
+
+            /**
+             * Truncate the deck name if needed.
+             * @return an usable (eventually shortened) deck name
+             */
+            private String formatDeckName() {
+                return (mDeckName.length() > MAX_NAME_LEN) ? mDeckName.substring(0, MAX_NAME_LEN) : mDeckName;
+            }
         }
 
 
@@ -122,10 +143,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             Deck currentDeck = AnkiDroidApp.deck();
 
             if (!AnkiDroidApp.isSdCardMounted()) {
-                updateViews.setTextViewText(R.id.anki_droid_title,
-                		context.getText(R.string.sdcard_missing_message));
-                updateViews.setTextViewText(R.id.anki_droid_name, "");
-                updateViews.setTextViewText(R.id.anki_droid_status, "");
+                updateViews.setTextViewText(R.id.anki_droid_text, context.getText(R.string.sdcard_missing_message));
                 return updateViews;
             }
 
@@ -142,48 +160,26 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 Deck.openDeck(currentDeck.getDeckPath());
             }
 
+            SpannableStringBuilder sb = new SpannableStringBuilder();
+
             int totalDue = 0;
 
             // Limit the number of decks shown
             int nbDecks = decks.size();
-   
-            if (nbDecks == 0) {
-                updateViews.setTextViewText(R.id.anki_droid_name, "");
-                updateViews.setTextViewText(R.id.anki_droid_status, "");
-            } else {
-                DeckInformation deck = decks.get(0);
-                updateViews.setTextViewText(R.id.anki_droid_name,
-                		deck.mDeckName);
-                updateViews.setTextViewText(R.id.anki_droid_status,
-                		deck.getDeckStatus());
-            }
-            
-            int hasDueCount = 0;
-            for (int i = 0; i < nbDecks; i++) {
+            for (int i = 0; i < nbDecks && i < MAX_DECK_NUM; i++) {
                 DeckInformation deck = decks.get(i);
-                if (deck.mDueCards > 0) {
-	                hasDueCount++;
-	                totalDue += deck.mDueCards;
-                }
+                sb.append(deck.getDeckText());
+                sb.append('\n');
+
+                totalDue += deck.mDueCards;
             }
 
-            if (totalDue > 0) {
-	            updateViews.setTextViewText(R.id.anki_droid_title,
-					context.getString(R.string.widget_cards_in_decks_due,
-							totalDue, hasDueCount));
-            } else {
-	            updateViews.setTextViewText(R.id.anki_droid_title,
-	            		context.getString(R.string.widget_no_cards_due));
+            if (sb.length() > 1) {
+                // Get rid of the trailing \n
+                sb.subSequence(0, sb.length() - 1);
             }
-            
-            // Add a click listener to open Anki from the icon.
-            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
-            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent =
-            	PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
-			updateViews.setOnClickPendingIntent(R.id.anki_droid_logo,
-            		pendingAnkiDroidIntent);
+
+            updateViews.setTextViewText(R.id.anki_droid_text, sb);
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
 
@@ -211,8 +207,11 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
                 Context appContext = getApplicationContext();
                 CharSequence contentTitle = getText(R.string.widget_minimum_cards_due_notification_ticker_title);
+                String contentText = sb.toString();
+                Intent notificationIntent = new Intent(this, AnkiDroidApp.class);
+                PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-                notification.setLatestEventInfo(appContext, contentTitle, tickerText, pendingAnkiDroidIntent);
+                notification.setLatestEventInfo(appContext, contentTitle, contentText, contentIntent);
 
                 final int WIDGET_NOTIFY_ID = 1;
                 mNotificationManager.notify(WIDGET_NOTIFY_ID, notification);
