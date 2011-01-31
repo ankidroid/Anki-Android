@@ -377,10 +377,10 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_log_no_changes_message">No changes found</string>
 <string name="sync_log_uploading_message">Full sync from local</string>
 <string name="sync_log_downloading_message">Full sync from server</string>
-<string name="sync_log_fact_to_server_message">1 fact to server</string>
-<string name="sync_log_facts_to_server_message">%d facts to server</string>
-<string name="sync_log_fact_from_server_message">1 fact from server</string>
-<string name="sync_log_facts_from_server_message">%d facts from server</string>
+<string name="sync_log_fact_to_server_message">1 card to server</string>
+<string name="sync_log_facts_to_server_message">%d cards to server</string>
+<string name="sync_log_fact_from_server_message">1 card from server</string>
+<string name="sync_log_facts_from_server_message">%d cards from server</string>
 <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
 <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
 <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
