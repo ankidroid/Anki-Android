@@ -100,6 +100,11 @@
 			android:summary="@string/write_answers_summ"
 			android:key="writeAnswers" />
 		<CheckBoxPreference
+			android:title="@string/tts"
+			android:defaultValue="false"
+			android:summary="@string/tts_summ"
+			android:key="tts" />
+		<CheckBoxPreference
 			android:title="@string/text_selection"
 			android:defaultValue="false"
 			android:summary="@string/text_selection_summ"

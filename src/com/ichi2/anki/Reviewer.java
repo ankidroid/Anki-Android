@@ -63,6 +63,7 @@ import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -164,6 +165,7 @@ public class Reviewer extends Activity {
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
+    private boolean mSpeakText;
     
     private boolean mIsDictionaryAvailable;
 
@@ -233,7 +235,8 @@ public class Reviewer extends Activity {
      */    
  	private GestureDetector gestureDetector;
  	View.OnTouchListener gestureListener;
- 	
+
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -303,8 +306,6 @@ public class Reviewer extends Activity {
                 	mCurrentEase = Card.EASE_NONE;
                     return;
             }
-
-
         }
     };
 
@@ -525,6 +526,11 @@ public class Reviewer extends Activity {
             mSessionTimeLimit = System.currentTimeMillis() + timelimit;
             mSessionCurrReps = 0;
 
+            // Initialize text-to-speech. This is an asynchronous operation.
+            if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+            	ReadText.initializeTts(this);
+            }
+
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
@@ -571,6 +577,9 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "Reviewer - onDestroy()");
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
+        }
+        if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+            ReadText.stopTts();        	
         }
     }
 
@@ -1088,6 +1097,7 @@ public class Reviewer extends Activity {
         mShakeEnabled = preferences.getBoolean("shake", false);
         mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
+        mSpeakText = preferences.getBoolean("tts", false);
 
         return preferences;
     }
@@ -1246,7 +1256,7 @@ public class Reviewer extends Activity {
 
         mFlipCard.setVisibility(View.GONE);
         showEaseButtons();
-        updateCard(displayString);       
+        updateCard(displayString);
     }
 
 
@@ -1300,9 +1310,15 @@ public class Reviewer extends Activity {
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
-
+      
         if (!mConfigurationChanged) {
-        	Sound.playSounds();
+        	if (!mSpeakText) {
+        		Sound.playSounds(null, null);
+        	} else if (!sDisplayAnswer) {
+                Sound.playSounds(mCurrentCard.getQuestion(), new Locale("de"));            	
+            } else {
+                Sound.playSounds(mCurrentCard.getAnswer(), new Locale("fr"));            	
+            }
         }
     }
 

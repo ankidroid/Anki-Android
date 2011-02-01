@@ -22,6 +22,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +50,6 @@ public class Sound {
      * Counter of the number of sounds played out of the total number of sounds in soundPaths
      */
     private static int sNumSoundsPlayed;
-
 
     /* Prevent class from being instantiated */
     private Sound() { }
@@ -100,11 +100,13 @@ public class Sound {
     /**
      * Plays the sounds stored on the paths indicated by mSoundPaths.
      */
-    public static void playSounds() {
+    public static void playSounds(String text, Locale locale) {
         // If there are sounds to play for the current card, play the first one
-        if (sSoundPaths != null && sSoundPaths.size() > 0) {
+    	if (sSoundPaths != null && sSoundPaths.size() > 0) {
             sNumSoundsPlayed = 0;
             playSound(sNumSoundsPlayed);
+        } else if (text != null && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+        	ReadText.textToSpeech(text, locale);
         }
     }
 
@@ -177,6 +179,9 @@ public class Sound {
         if (sMediaPlayer != null) {
             sMediaPlayer.stop();
             releaseSound();
+        }
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+        	ReadText.stopTts();
         }
     }
 }
