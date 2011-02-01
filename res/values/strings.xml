@@ -238,7 +238,6 @@
 <string name=change_report_stats">Stats</string>-->
 
 <string name="saving_changes">Saving changes...</string>
-<!--<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck.</stri\"ng>-->
 <string name="about_content">%1$s Flashcards for Android &lt;/h2&gt;&lt;p&gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; To help us make AnkiDroid better, please report any bug %3$s here&lt;/a&gt;; new feature ideas are very welcome too! Please use the %4$s wiki&lt;/a&gt; and say Hi on the %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, so everyone is encouraged to %7$s join&lt;/a&gt; the %8$s contributors&lt;/a&gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&lt;/a&gt; to Anki, or blogging about AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&lt;/a&gt; and the source code is available %11$s here</string>
 
 <string name="studyoptions_title">Study Options</string>
@@ -334,10 +333,10 @@
 <string name="sync_log_no_changes_message">No changes found</string>
 <string name="sync_log_uploading_message">Full sync from local</string>
 <string name="sync_log_downloading_message">Full sync from server</string>
-<string name="sync_log_fact_to_server_message">1 fact to server</string>
-<string name="sync_log_facts_to_server_message">%d facts to server</string>
-<string name="sync_log_fact_from_server_message">1 fact from server</string>
-<string name="sync_log_facts_from_server_message">%d facts from server</string>
+<string name="sync_log_fact_to_server_message">1 card to server</string>
+<string name="sync_log_facts_to_server_message">%d cards to server</string>
+<string name="sync_log_fact_from_server_message">1 card from server</string>
+<string name="sync_log_facts_from_server_message">%d cards from server</string>
 <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
 <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
 <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
