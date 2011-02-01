@@ -224,6 +224,7 @@ public class DeckPicker extends Activity implements Runnable {
 			mDeckIsSelected = false;
 			SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 			populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+            mSyncAllButton.setClickable(true);
 		}
 	};
 
@@ -252,6 +253,7 @@ public class DeckPicker extends Activity implements Runnable {
 			@Override
 			public void onClick(View v) {
 				if (AnkiDroidApp.isUserLoggedIn()) {
+                    mSyncAllButton.setClickable(false);
 					SharedPreferences preferences = PrefSettings
 							.getSharedPrefs(getBaseContext());
 					String username = preferences.getString("username", "");
