@@ -2681,6 +2681,7 @@ public class Deck {
         CardHistoryEntry entry = new CardHistoryEntry(this, card, ease, lastDelay);
         entry.writeSQL();
         mModified = now;
+        setUndoEnd(undoName);
 
         // Remove form queue
         requeueCard(card, oldIsRev);
@@ -2690,7 +2691,6 @@ public class Deck {
             Log.i(AnkiDroidApp.TAG, "card is leech!");
             handleLeech(card);
         }
-        setUndoEnd(undoName);
     }
 
 
@@ -3146,6 +3146,22 @@ public class Deck {
     }
 
 
+    /**
+     * Bury all cards for fact until next session. Caller must .reset()
+     * 
+     * @param Fact .
+     */
+    public void buryFact(long factId, long cardId) {
+        // TODO: Unbury fact after return to StudyOptions
+        String undoName = "Bury Fact";
+        setUndoStart(undoName, cardId);         
+        getDB().getDatabase().execSQL(
+                "UPDATE cards SET type = priority = -2, isDue = 0, type = type + 3 WHERE type >= 0 AND type <= 3 AND factId = " + factId);
+        setUndoEnd(undoName);
+        flushMod();
+    }
+
+    
     /**
      * Priorities
      *******************************/

@@ -218,7 +218,7 @@ public class Reviewer extends Activity {
     private boolean mAnsweringCard = false;
     private int mShowChoosenAnswerLength = 600;
     
-	public boolean mShowCongrats = false;
+	private boolean mShowCongrats = false;
 
 	/** 
 	 * Shake Detection
@@ -416,7 +416,8 @@ public class Reviewer extends Activity {
                 mSessionComplete = true;
                 sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_time_limit_reached),
                         Toast.LENGTH_SHORT);
-
+            } else if (values[0].isLastCardInQueue()) {
+                mNoMoreCards = true;
             } else {
                 // session limits not reached, show next card
                 Card newCard = values[0].getCard();
@@ -861,9 +862,14 @@ public class Reviewer extends Activity {
 
 
     private void answerCard(int ease) {
+        Deck deck = AnkiDroidApp.deck();
+        boolean lastCard = false;
     	switch (ease) {
     		case Card.EASE_FAILED:
     	    	mChoosenAnswer.setText(mEase1.getText());
+    	    	if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
+                    lastCard = true;
+                }
     			break;
     		case Card.EASE_HARD:
     	    	mChoosenAnswer.setText(mEase2.getText());
@@ -876,13 +882,12 @@ public class Reviewer extends Activity {
     			break;
     	}
     	mTimerHandler.postDelayed(removeChoosenAnswerText, mShowChoosenAnswerLength);
-
     	Sound.stopSounds();
     	mCurrentEase = ease;
         // Increment number reps counter
         mSessionCurrReps++;
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
-                mCurrentEase, AnkiDroidApp.deck(), mCurrentCard));
+                mCurrentEase, deck, lastCard, mCurrentCard));
 		mAnsweringCard = false;
     }
 
