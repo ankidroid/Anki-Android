@@ -188,6 +188,11 @@ public class Model {
     }
 
 
+    public List<CardModel> getCardModels() {
+        return new ArrayList<CardModel>(mCardModelsMap.values());
+    }
+
+
     protected final CardModel getCardModel(long identifier) {
         return mCardModelsMap.get(identifier);
     }
