@@ -166,6 +166,7 @@ public class Reviewer extends Activity {
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
     private boolean mSpeakText;
+    private boolean mPlaySoundsAtStart;
     
     private boolean mIsDictionaryAvailable;
 
@@ -579,7 +580,7 @@ public class Reviewer extends Activity {
             unregisterReceiver(mUnmountReceiver);
         }
         if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-            ReadText.stopTts();        	
+            ReadText.releaseTts();        	
         }
     }
 
@@ -1098,6 +1099,7 @@ public class Reviewer extends Activity {
         mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mSpeakText = preferences.getBoolean("tts", false);
+        mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
 
         return preferences;
     }
@@ -1269,11 +1271,15 @@ public class Reviewer extends Activity {
 
         // don't play question sound again when displaying answer 
         int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
-        if (sDisplayAnswer && isQuestionDisplayed() && (questionStartsAt != -1)) {
-        	content = Sound.parseSounds(mDeckFilename, content.substring(0, questionStartsAt - 1), true)
-        			+ Sound.parseSounds(mDeckFilename, content.substring(questionStartsAt, content.length()), false);      	
+        if (isQuestionDisplayed()) {
+        	if (sDisplayAnswer && (questionStartsAt != -1)) {
+        	content = Sound.parseSounds(mDeckFilename, content.substring(0, questionStartsAt), mSpeakText)
+        			+ Sound.parseSounds(mDeckFilename, content.substring(questionStartsAt, content.length()), mSpeakText);
+        	} else {
+            	content = Sound.parseSounds(mDeckFilename, content.substring(0, content.length() - 5), mSpeakText) + "<hr/>";        		
+        	}
         } else {
-        	content = Sound.parseSounds(mDeckFilename, content, false);
+        	content = Sound.parseSounds(mDeckFilename, content, mSpeakText);
         }
 
         // Parse out the LaTeX images
@@ -1311,13 +1317,13 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
       
-        if (!mConfigurationChanged) {
+        if (!mConfigurationChanged && mPlaySoundsAtStart) {
         	if (!mSpeakText) {
         		Sound.playSounds(null, null);
         	} else if (!sDisplayAnswer) {
-                Sound.playSounds(mCurrentCard.getQuestion(), new Locale("de"));            	
+                Sound.playSounds(Utils.stripHTML(mCurrentCard.getQuestion()), "de");            	
             } else {
-                Sound.playSounds(mCurrentCard.getAnswer(), new Locale("fr"));            	
+                Sound.playSounds(Utils.stripHTML(mCurrentCard.getAnswer()), "fr");            	
             }
         }
     }

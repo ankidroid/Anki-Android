@@ -100,6 +100,11 @@
 			android:summary="@string/write_answers_summ"
 			android:key="writeAnswers" />
 		<CheckBoxPreference
+			android:title="@string/play_sounds_at_start"
+			android:defaultValue="true"
+			android:summary="@string/play_sounds_at_start_summ"
+			android:key="playSoundsAtStart" />
+		<CheckBoxPreference
 			android:title="@string/tts"
 			android:defaultValue="false"
 			android:summary="@string/tts_summ"

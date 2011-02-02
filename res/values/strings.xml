@@ -145,8 +145,10 @@
 <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
 <string name="shake">Shake to Undo</string>
 <string name="shake_summ">Shake your device to undo the last action</string>
-<string name="tts">Text to speech</string>
+<string name="tts">Text to Speech</string>
 <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+<string name="play_sounds_at_start">Play Sounds Instantly</string>
+<string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
 <string name="shake_intensity">Shake threshold</string>
 <string name="shake_intensity_summ">Threshold for shake recognition</string>
 <string name="pref_cat_experimental">EXPERIMENTAL</string>
@@ -155,6 +157,7 @@
 <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
 <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
 
+<string name="select_locale_title">Select Language</string>
 <!-- deck_properties.xml -->
 <!--<string name="deck_properties">Deck properties</string>-->
 <!--<string name="sync_on">Synchronize this deck</string>-->
@@ -349,6 +352,7 @@
 <string name="sync_conflict_cancel">Cancel Syncing</string>
 
 <!-- ErrorReporter.java -->
+<string name="error_reporter_title">Error Reporter</string>
 <string name="error_message">There is one error to report</string>
 <string name="errors_message">There are %d errors to report</string>
 <string name="error_ok">Report errors</string>
