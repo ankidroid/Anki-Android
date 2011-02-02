@@ -859,7 +859,7 @@ public class StudyOptions extends Activity {
             case CONTENT_STUDY_OPTIONS:
             case CONTENT_SESSION_COMPLETE:
                 // Enable timeboxing in case it was disabled from the previous deck
-                if (AnkiDroidApp.deck().name().equals("cram")) {
+                if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().name().equals("cram"))) {
                     mToggleCram.setChecked(false);
                     mEditNewPerDay.setEnabled(true);
                     mEditSessionTime.setEnabled(true);
