@@ -114,7 +114,7 @@
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Показывать параметры обучения</item>
-    <item>Показывать deck picker</item>
+    <item>Показывать оглавление колод</item>
     <item>Показывать оглавление колод при первом запуске этого дня</item>
   </string-array>
   <string-array name="startup_mode_values">
