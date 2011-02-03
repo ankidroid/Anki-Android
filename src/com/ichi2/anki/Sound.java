@@ -60,18 +60,18 @@ public class Sound {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
-        Log.i(AnkiDroidApp.TAG, "parseSounds");
+        // Log.i(AnkiDroidApp.TAG, "parseSounds");
         sSoundPaths = new ArrayList<String>();
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
             // Get the sound file name
             String sound = matcher.group(1);
-            // Log.i(AnkiDroidApp.TAG, "Sound " + matcher.groupCount() + ": " + sound);
+            // // Log.i(AnkiDroidApp.TAG, "Sound " + matcher.groupCount() + ": " + sound);
 
             // Construct the sound path and store it
             String soundPath = deckFilename.replace(".anki", ".media/") + sound;
-            // Log.i(AnkiDroidApp.TAG, "parseSounds - soundPath = " + soundPath);
+            // // Log.i(AnkiDroidApp.TAG, "parseSounds - soundPath = " + soundPath);
             sSoundPaths.add(soundPath);
 
             // Construct the new content, appending the substring from the beginning of the content left until the
@@ -88,7 +88,7 @@ public class Sound {
                         + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
             }
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
-            // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
+            // // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
 
         stringBuilder.append(contentLeft);

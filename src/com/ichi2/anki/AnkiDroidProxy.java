@@ -122,10 +122,10 @@ public class AnkiDroidProxy {
                 JSONObject jsonDecks = new JSONObject(decksString);
                 if ("OK".equalsIgnoreCase(jsonDecks.getString("status"))) {
                     mDecks = jsonDecks.getJSONObject("decks");
-                    Log.i(AnkiDroidApp.TAG, "Server decks = " + mDecks.toString());
+                    // Log.i(AnkiDroidApp.TAG, "Server decks = " + mDecks.toString());
                     mTimestamp = jsonDecks.getDouble("timestamp");
                     mTimediff = Math.abs(mTimestamp - Utils.now());
-                    Log.i(AnkiDroidApp.TAG, "Server timestamp = " + mTimestamp);
+                    // Log.i(AnkiDroidApp.TAG, "Server timestamp = " + mTimestamp);
                     if (mTimediff > 300) {
                         Log.e(AnkiDroidApp.TAG, "The clock of the device and that of the server are unsynchronized!");
                         return LOGIN_CLOCKS_UNSYNCED;
@@ -138,7 +138,7 @@ public class AnkiDroidProxy {
                     return LOGIN_OLD_VERSION;
                 }
             } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                // Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
             }
         }
 
@@ -168,7 +168,7 @@ public class AnkiDroidProxy {
             JSONArray deckInfo = mDecks.getJSONArray(mDeckName);
             lastModified = deckInfo.getDouble(0);
         } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
 
         return lastModified;
@@ -183,7 +183,7 @@ public class AnkiDroidProxy {
             JSONArray deckInfo = mDecks.getJSONArray(mDeckName);
             lastSync = deckInfo.getDouble(1);
         } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
         return lastSync;
     }
@@ -203,19 +203,19 @@ public class AnkiDroidProxy {
             HttpEntity entityResponse = response.getEntity();
             InputStream content = entityResponse.getContent();
             String contentString = Utils.convertStreamToString(new InflaterInputStream(content));
-            Log.i(AnkiDroidApp.TAG, "finish: " + contentString);
+            // Log.i(AnkiDroidApp.TAG, "finish: " + contentString);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
-            Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
         } catch (IOException e) {
-            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
         }
     }
 
 
     public String getDecks() {
-        // Log.i(AnkiDroidApp.TAG, "getDecks - user = " + username + ", password = " + password);
+        // // Log.i(AnkiDroidApp.TAG, "getDecks - user = " + username + ", password = " + password);
         String decksServer = "{}";
 
         try {
@@ -225,7 +225,7 @@ public class AnkiDroidProxy {
                     + "&d=None&sources=" + URLEncoder.encode("[]", "UTF-8") + "&libanki="
                     + URLEncoder.encode(AnkiDroidApp.LIBANKI_VERSION, "UTF-8") + "&pversion=5";
 
-            // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
+            // // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "getDecks");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
@@ -236,14 +236,14 @@ public class AnkiDroidProxy {
             HttpEntity entityResponse = response.getEntity();
             InputStream content = entityResponse.getContent();
             decksServer = Utils.convertStreamToString(new InflaterInputStream(content));
-            Log.i(AnkiDroidApp.TAG, "getDecks response = " + decksServer);
+            // Log.i(AnkiDroidApp.TAG, "getDecks response = " + decksServer);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
-            Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
         } catch (IOException e) {
-            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
         }
 
         return decksServer;
@@ -265,15 +265,15 @@ public class AnkiDroidProxy {
 
 
     public void createDeck(String name) {
-        Log.i(AnkiDroidApp.TAG, "createDeck");
-        // Log.i(AnkiDroidApp.TAG, "user = " + username + ", password = " + password);
+        // Log.i(AnkiDroidApp.TAG, "createDeck");
+        // // Log.i(AnkiDroidApp.TAG, "user = " + username + ", password = " + password);
 
         try {
             String data = "p=" + URLEncoder.encode(mPassword, "UTF-8") + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
                     + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8") + "&d=None&name="
                     + URLEncoder.encode(name, "UTF-8");
 
-            // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
+            // // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "createDeck");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
@@ -283,20 +283,20 @@ public class AnkiDroidProxy {
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entityResponse = response.getEntity();
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "String content = " + Utils.convertStreamToString(new InflaterInputStream(content)));
+            // Log.i(AnkiDroidApp.TAG, "String content = " + Utils.convertStreamToString(new InflaterInputStream(content)));
 
             // Add created deck to the list of decks on server
             mDecks.put(name, new JSONArray("[0,0]"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
-            Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
             e.printStackTrace();
         } catch (IOException e) {
-            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
             e.printStackTrace();
         } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -309,9 +309,9 @@ public class AnkiDroidProxy {
      */
     public JSONObject summary(double lastSync) {
 
-        Log.i(AnkiDroidApp.TAG, "Summary Server");
+        // Log.i(AnkiDroidApp.TAG, "Summary Server");
 
-        // Log.i(AnkiDroidApp.TAG, "user = " + username + ", password = " + password + ", lastSync = " + lastSync);
+        // // Log.i(AnkiDroidApp.TAG, "user = " + username + ", password = " + password + ", lastSync = " + lastSync);
         JSONObject summaryServer = new JSONObject();
 
         try {
@@ -328,7 +328,7 @@ public class AnkiDroidProxy {
                     + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(Utils.ENGLISH_LOCALE, "%f",
                             lastSync).getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");
 
-            // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
+            // // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "summary");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
@@ -339,16 +339,16 @@ public class AnkiDroidProxy {
             HttpEntity entityResponse = response.getEntity();
             InputStream content = entityResponse.getContent();
             summaryServer = new JSONObject(Utils.convertStreamToString(new InflaterInputStream(content)));
-            Log.i(AnkiDroidApp.TAG, "Summary server = ");
+            // Log.i(AnkiDroidApp.TAG, "Summary server = ");
             Utils.printJSONObject(summaryServer);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
-            Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
         } catch (IOException e) {
-            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
         } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
 
         return summaryServer;
@@ -361,8 +361,8 @@ public class AnkiDroidProxy {
      * @param payload
      */
     public JSONObject applyPayload(JSONObject payload) {
-        Log.i(AnkiDroidApp.TAG, "applyPayload");
-        // Log.i(AnkiDroidApp.TAG, "user = " + username + ", password = " + password + ", payload = " +
+        // Log.i(AnkiDroidApp.TAG, "applyPayload");
+        // // Log.i(AnkiDroidApp.TAG, "user = " + username + ", password = " + password + ", payload = " +
         // payload.toString());
         JSONObject payloadReply = new JSONObject();
 
@@ -374,7 +374,7 @@ public class AnkiDroidProxy {
                     + URLEncoder.encode(Base64.encodeBytes(Utils.compress(payload.toString().getBytes())), "UTF-8")
                     + "&base64=" + URLEncoder.encode("true", "UTF-8");
 
-            // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
+            // // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(SYNC_URL + "applyPayload");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
@@ -385,18 +385,18 @@ public class AnkiDroidProxy {
             HttpEntity entityResponse = response.getEntity();
             InputStream content = entityResponse.getContent();
             String contentString = Utils.convertStreamToString(new InflaterInputStream(content));
-            Log.i(AnkiDroidApp.TAG, "Payload response = ");
+            // Log.i(AnkiDroidApp.TAG, "Payload response = ");
             payloadReply = new JSONObject(contentString);
             Utils.printJSONObject(payloadReply, false);
             Utils.saveJSONObject(payloadReply);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
-            Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
         } catch (IOException e) {
-            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
         } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
 
         return payloadReply;
@@ -419,7 +419,7 @@ public class AnkiDroidProxy {
 
                 HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
                 String response = Utils.convertStreamToString(httpResponse.getEntity().getContent());
-                // Log.i(AnkiDroidApp.TAG, "Content = " + response);
+                // // Log.i(AnkiDroidApp.TAG, "Content = " + response);
                 sSharedDecks.addAll(getSharedDecksListFromJSONArray(new JSONArray(response)));
             }
         } catch (Exception e) {
@@ -435,7 +435,7 @@ public class AnkiDroidProxy {
         List<SharedDeck> sharedDecks = new ArrayList<SharedDeck>();
 
         if (jsonSharedDecks != null) {
-            // Log.i(AnkiDroidApp.TAG, "Number of shared decks = " + jsonSharedDecks.length());
+            // // Log.i(AnkiDroidApp.TAG, "Number of shared decks = " + jsonSharedDecks.length());
 
             int nbDecks = jsonSharedDecks.length();
             for (int i = 0; i < nbDecks; i++) {

@@ -182,7 +182,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
             if (oldCard != null) {
                 deck.answerCard(oldCard, ease);
-                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
+                // Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
             }
 
             newCard = deck.getCard();
@@ -203,23 +203,23 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadDeck(TaskData... params) {
         String deckFilename = params[0].getString();
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
+        // Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
-        Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
+        // Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
         try {
             // Open the right deck.
             Deck deck = Deck.openDeck(deckFilename);
             // Start by getting the first card and displaying it.
             Card card = deck.getCard();
-            Log.i(AnkiDroidApp.TAG, "Deck loaded!");
+            // Log.i(AnkiDroidApp.TAG, "Deck loaded!");
             
             return new TaskData(DECK_LOADED, deck, card);
         } catch (SQLException e) {
-            Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
             return new TaskData(DECK_NOT_LOADED);
         } catch (CursorIndexOutOfBoundsException e) {
             // XXX: Where is this exception thrown?
-            Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
+            // Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
             return new TaskData(DECK_EMPTY);
         }
     }

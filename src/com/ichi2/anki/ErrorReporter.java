@@ -39,7 +39,7 @@ public class ErrorReporter extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(AnkiDroidApp.TAG, "OnCreate");
+        // Log.i(AnkiDroidApp.TAG, "OnCreate");
 
         super.onCreate(savedInstanceState);
         Context context = getBaseContext();

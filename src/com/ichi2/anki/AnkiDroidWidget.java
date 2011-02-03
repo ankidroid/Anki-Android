@@ -52,7 +52,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(AnkiDroidApp.TAG, "onUpdate");
+        // Log.i(AnkiDroidApp.TAG, "onUpdate");
         context.startService(new Intent(context, UpdateService.class));
     }
 
@@ -125,7 +125,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
         @Override
         public void onStart(Intent intent, int startId) {
-            Log.i(AnkiDroidApp.TAG, "OnStart");
+            // Log.i(AnkiDroidApp.TAG, "OnStart");
 
             RemoteViews updateViews = buildUpdate(this);
 
@@ -136,7 +136,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
 
         private RemoteViews buildUpdate(Context context) {
-            Log.i(AnkiDroidApp.TAG, "buildUpdate");
+            // Log.i(AnkiDroidApp.TAG, "buildUpdate");
 
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -239,7 +239,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
 
         private ArrayList<DeckInformation> fetchDeckInformation() {
-            Log.i(AnkiDroidApp.TAG, "fetchDeckInformation");
+            // Log.i(AnkiDroidApp.TAG, "fetchDeckInformation");
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
             String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
@@ -270,14 +270,14 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     // Add the information about the deck
                     information.add(new DeckInformation(deckName, newCards, dueCards, failedCards));
                 } catch (SQLException e) {
-                    Log.i(AnkiDroidApp.TAG, "Could not open deck");
+                    // Log.i(AnkiDroidApp.TAG, "Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());
                 }
             }
 
             if (!information.isEmpty() && information.size() > 1) {
                 // Sort and reverse the list if there are decks
-                Log.i(AnkiDroidApp.TAG, "Sorting deck");
+                // Log.i(AnkiDroidApp.TAG, "Sorting deck");
 
                 // Ordered by reverse due cards number
                 Collections.sort(information, new ByDueComparator());
@@ -305,7 +305,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
         @Override
         public IBinder onBind(Intent arg0) {
-            Log.i(AnkiDroidApp.TAG, "onBind");
+            // Log.i(AnkiDroidApp.TAG, "onBind");
             return null;
         }
     }
