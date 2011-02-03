@@ -27,7 +27,7 @@
   <string name="no">いいえ</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
+  <string name="deckpicker_title">デッキを選ぶ (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">SDカードを取り外すことが出来ます。</string>
   <string name="deckpicker_due">%1$d of %2$d due</string>
   <string name="deckpicker_new">%d new today</string>
@@ -73,12 +73,12 @@
   <string name="show_question">Re-display Question</string>
   <string name="card_hint">フラッシュカード</string>
   <string name="ease1_learning">もう一度</string>
-  <string name="ease2_learning">良い</string>
+  <string name="ease2_learning">普通</string>
   <string name="ease3_learning">簡単</string>
-  <string name="ease4_learning">Very Easy</string>
+  <string name="ease4_learning">超簡単</string>
   <string name="ease1_successive">もう一度</string>
-  <string name="ease2_successive">難しい</string>
-  <string name="ease3_successive">良い</string>
+  <string name="ease2_successive">難</string>
+  <string name="ease3_successive">普通</string>
   <string name="ease4_successive">簡単</string>
   <string name="pref_cat_decks">デッキ</string>
   <string name="pref_cat_sync">同期</string>
@@ -162,21 +162,21 @@
   <string name="sync_all">すべて同期する</string>
   <string name="fact">fact</string>
   <string name="facts">facts</string>
-  <string name="change_report_format">&amp;lt;table&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;&amp;lt;b&amp;gt;Added/Changed&amp;lt;/b&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;&amp;lt;b&amp;gt;Here&amp;lt;/b&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;&amp;lt;b&amp;gt;Server&amp;lt;/b&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Cards&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%1$s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%2$s&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Facts&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%3$s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%4$s&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Models&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%5$s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%6$s&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Stats&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%7$s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%8$s&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;</string>
+  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">変更を保存しています...</string>
-  <string name="about_content">&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-&amp;lt;h2&amp;gt;AnkiDroid:&amp;lt;br/&amp;gt;
-Flashcards for Android&amp;lt;/h2&amp;gt;
-&amp;lt;p&amp;gt;AnkiDroid can read .anki files produced by the desktop &amp;lt;a href="http://ankisrs.net"&amp;gt;Anki&amp;lt;/a&amp;gt; software.&amp;lt;/p&amp;gt;
-&amp;lt;p&amp;gt;To help us make AnkiDroid better, please report any bug &amp;lt;a href="http://code.google.com/p/ankidroid/issues"&amp;gt;here&amp;lt;/a&amp;gt;; new feature ideas are very welcome too!
-Please use the &amp;lt;a href="http://code.google.com/p/ankidroid/wiki/Index"&amp;gt;wiki&amp;lt;/a&amp;gt; and say Hi on the &amp;lt;a href="http://groups.google.com/group/anki-android"&amp;gt;forum&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;
-&amp;lt;p&amp;gt;AnkiDroid is &amp;lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&amp;gt;open source software&amp;lt;/a&amp;gt;, so everyone is encouraged to &amp;lt;a href="http://code.google.com/p/ankidroid/wiki/Contribution"&amp;gt;join&amp;lt;/a&amp;gt; the &amp;lt;a href="https://code.google.com/p/ankidroid/wiki/Contribution#Contributors"&amp;gt;contributors&amp;lt;/a&amp;gt; :-)
-Non-developers can also help, for instance by updating the wiki and screenshots, &amp;lt;a href="http://ankisrs.net/support"&amp;gt;donating&amp;lt;/a&amp;gt; to Anki, or blogging about AnkiDroid!&amp;lt;/p&amp;gt;
-&amp;lt;p&amp;gt;AnkiDroid is released under the &amp;lt;a href="http://www.gnu.org/licenses/gpl.html"&amp;gt;GNU-GPL v3 license&amp;lt;/a&amp;gt; and the source code is available &amp;lt;a href="http://github.com/nicolas-raoul/Anki-Android"&amp;gt;here&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="about_content">&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;AnkiDroid:&lt;br/&gt;
+Flashcards for Android&lt;/h2&gt;
+&lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href=&quot;http://ankisrs.net&quot;&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
+&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt;&#59; new feature ideas are very welcome too!
+Please use the &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Index&quot;&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;AnkiDroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Contribution&quot;&gt;join&lt;/a&gt; the &lt;a href=&quot;https://code.google.com/p/ankidroid/wiki/Contribution#Contributors&quot;&gt;contributors&lt;/a&gt; :-)
+Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href=&quot;http://ankisrs.net/support&quot;&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
+&lt;p&gt;AnkiDroid is released under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href=&quot;http://github.com/nicolas-raoul/Anki-Android&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</string>
+  <string name="studyoptions_title">勉強設定</string>
   <string name="studyoptions_deck_name">Deck name</string>
   <string name="studyoptions_reviews_due">Reviews due:</string>
   <string name="studyoptions_new_today">New today:</string>
@@ -184,7 +184,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
   <string name="studyoptions_new_cards_per_day">New cards per day:</string>
   <string name="studyoptions_session_minutes">Session limit (minutes):</string>
   <string name="studyoptions_session_questions">Session limit (questions):</string>
-  <string name="studyoptions_start">Start Reviewing</string>
+  <string name="studyoptions_start">スタート</string>
   <string name="studyoptions_more">Study Options</string>
   <string name="studyoptions_window_title">%1$s (%2$d of %3$d due)</string>
   <string name="studyoptions_more_dialog_title">More Options</string>
@@ -197,7 +197,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
   <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
   <string name="studyoptions_load_other_deck">Load Other Deck</string>
   <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
-  <string name="menu_open_deck">Open Deck</string>
+  <string name="menu_open_deck">他のデッキ</string>
   <string name="menu_sync">同期</string>
   <string name="menu_download_deck">Download deck</string>
   <string name="menu_download_shared_deck">Shared deck</string>
