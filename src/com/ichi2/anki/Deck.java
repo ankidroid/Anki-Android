@@ -2279,6 +2279,14 @@ public class Deck {
         return mCardCount;
     }
 
+	/**
+	 * Get the number of mature cards of the deck.
+	 * 
+	 * @return The number of cards contained in the deck
+	 */
+	public int getMatureCardCount() {
+    	return (int) (getDB().queryScalar("SELECT count(*) from cards WHERE interval >= " + Card.MATURE_THRESHOLD));
+    }
 
     /**
      * @return the currentModelId
