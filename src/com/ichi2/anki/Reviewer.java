@@ -393,8 +393,7 @@ public class Reviewer extends Activity {
             long sessionTime = deck.getSessionTimeLimit();
             Toast sessionMessage = null;
             Toast leechMessage = null;
-            Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() +
-                    " " + values[0].isPreviousCardSuspended());
+            Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
 
             if (values[0].isPreviousCardLeech()) {
                 if (values[0].isPreviousCardSuspended()) {
@@ -907,8 +906,7 @@ public class Reviewer extends Activity {
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
             mCard.setFocusableInTouchMode(false);
         }
-        Log.i(AnkiDroidApp.TAG,
-                "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = " + mCard.isFocusableInTouchMode());
+        Log.i(AnkiDroidApp.TAG, "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = " + mCard.isFocusableInTouchMode());
 
         // initialise swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());

@@ -273,8 +273,7 @@ public class Deck {
                 cursor.close();
             }
         }
-        Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f",
-                deck.mModified, Utils.now()));
+        Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.mModified, Utils.now()));
 
         // Initialise queues
         deck.mFailedQueue = new LinkedList<QueueItem>();
@@ -1376,8 +1375,7 @@ public class Deck {
         fillRevQueue();
         fillNewQueue();
         for (QueueItem i : mFailedQueue) {
-            Log.i(AnkiDroidApp.TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: "
-                    + i.getDue());
+            Log.i(AnkiDroidApp.TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: " + i.getDue());
         }
         for (QueueItem i : mRevQueue) {
             Log.i(AnkiDroidApp.TAG, "rev queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
@@ -2735,8 +2733,7 @@ public class Deck {
             // No leech threshold found in DeckVars
             return false;
         }
-        Log.i(AnkiDroidApp.TAG, "leech handling: " + card.getSuccessive() + " successive fails and " + no
-                + " total fails, threshold at " + fmax);
+        Log.i(AnkiDroidApp.TAG, "leech handling: " + card.getSuccessive() + " successive fails and " + no + " total fails, threshold at " + fmax);
         // Return true if:
         // - The card failed AND
         // - The number of failures exceeds the leech threshold AND
@@ -2947,13 +2944,10 @@ public class Deck {
                     "SELECT factId FROM cards WHERE id IN " + Utils.ids2str(cardIds), 0)));
             Log.i(AnkiDroidApp.TAG, "updateCardTags fids: " + fids);
             tids = tagIds(allTags_("WHERE id IN " + fids));
-            Log.i(AnkiDroidApp.TAG, "updateCardTags tids keys: "
-                    + Arrays.toString(tids.keySet().toArray(new String[tids.size()])));
-            Log.i(AnkiDroidApp.TAG, "updateCardTags tids values: "
-                    + Arrays.toString(tids.values().toArray(new Long[tids.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags tids keys: " + Arrays.toString(tids.keySet().toArray(new String[tids.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags tids values: " + Arrays.toString(tids.values().toArray(new Long[tids.size()])));
             rows = splitTagsList("AND facts.id IN " + fids);
-            Log.i(AnkiDroidApp.TAG, "updateCardTags rows keys: "
-                    + Arrays.toString(rows.keySet().toArray(new Long[rows.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags rows keys: " + Arrays.toString(rows.keySet().toArray(new Long[rows.size()])));
             for (List<String> l : rows.values()) {
                 Log.i(AnkiDroidApp.TAG, "updateCardTags rows values: ");
                 for (String v : l) {

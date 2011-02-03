@@ -182,8 +182,7 @@ public class DeckPicker extends Activity implements Runnable {
 			}
 
 			mDeckListAdapter.notifyDataSetChanged();
-			Log.i(AnkiDroidApp.TAG,
-					"DeckPicker - mDeckList notified of changes");
+			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
 			setTitleText();
 		}
 	};
@@ -575,14 +574,11 @@ public class DeckPicker extends Activity implements Runnable {
 		}
 		mFileList = fileList;
 		if (len > 0 && fileList != null) {
-			Log.i(AnkiDroidApp.TAG,
-					"DeckPicker - populateDeckList, number of anki files = "
-							+ len);
+			Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
 			for (File file : fileList) {
 				String absPath = file.getAbsolutePath();
 
-				Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, file:"
-						+ file.getName());
+				Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, file:" + file.getName());
 
 				try {
 					HashMap<String, String> data = new HashMap<String, String>();
@@ -655,9 +651,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 					// Don't load any more decks if one has already been
 					// selected.
-					Log.i(AnkiDroidApp.TAG,
-							"Thread run - Before break mDeckIsSelected = "
-									+ mDeckIsSelected);
+					Log.i(AnkiDroidApp.TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
 					if (mDeckIsSelected) {
 						break;
 					}
