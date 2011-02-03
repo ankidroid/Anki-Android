@@ -105,7 +105,7 @@ public class PersonalDeckPicker extends Activity {
                 Object deckNameObject = mAllPersonalDecks.get(position);
                 String deckName = "bug 378"; // FIXME
                 if (deckNameObject instanceof String) {
-                    deckName = (String) mAllPersonalDecks.get(position);
+                    deckName = (String) deckNameObject;
                 }
                 Download personalDeckDownload = new Download(deckName);
                 mPersonalDeckDownloads.add(personalDeckDownload);
