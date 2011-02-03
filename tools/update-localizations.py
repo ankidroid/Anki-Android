@@ -18,8 +18,9 @@
 # http://crowdin.net/download/project/ankidroid.zip
 
 # Below is the list of official AnkiDroid localizations.
-# Add a language if it is more than 50% translated.
-languages = ['ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'it', 'ko', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'zh-CN', 'zh-TW'];
+# Add a language if it is more than 40% translated.
+# Do not remove languages.
+languages = ['ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'it', 'ja', 'ko', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'zh-CN', 'zh-TW'];
 
 
 
