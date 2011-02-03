@@ -754,6 +754,11 @@ public class Deck {
             commitToDB();
         }
         if (mVersion < 61) {
+            // First check if the deck has LaTeX, if so it should be upgraded in Anki
+            if (hasLaTeX()) {
+                upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_version_61_has_latex);
+                return false;
+            }
             // Do our best to upgrade templates to the new style
             String txt =
                 "<span style=\"font-family: %s; font-size: %spx; color: %s; white-space: pre-wrap;\">%s</span>";
@@ -873,22 +878,31 @@ public class Deck {
 
 
     public static String upgradeNotesToMessages(Deck deck, Resources res) {
-        // FIXME: upgradeNotes should be a list of HashMaps<Integer, ArrayList<String>> containing any values
-        // necessary for generating the messages. In the case of upgrade 52, name and syncName.
         String notes = "";
         for (Integer note : deck.upgradeNotes) {
-            if (note == com.ichi2.anki.R.string.deck_upgrade_too_old_version) {
-                // Unsupported version
-                notes = notes.concat(res.getString(note.intValue()));
-                // } else if (note == com.ichi2.anki.R.string.deck_upgrade_52_note) {
-                // // Upgrade note for version 52 regarding syncName
-                // notes = notes.concat(String.format(res.getString(note.intValue()),
-                // deck.getDeckName(), deck.getSyncName()));
-            }
+            notes = notes.concat(res.getString(note.intValue()) + "\n");
         }
         return notes;
     }
 
+    private boolean hasLaTeX() {
+        Cursor cursor = null;
+        try {
+            cursor = getDB().getDatabase().rawQuery(
+                "SELECT Id FROM fields WHERE " +
+                "(value like '%[latex]%[/latex]%') OR " +
+                "(value like '%[$]%[/$]%') OR " +
+                "(value like '%[$$]%[/$$]%') LIMIT 1 ", null);
+            if (cursor.moveToFirst()) {
+                return true;
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return false;
+    }
 
     /**
      * Add indices to the DB.
