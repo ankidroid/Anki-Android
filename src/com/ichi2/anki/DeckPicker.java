@@ -719,8 +719,7 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_UPGRADE_FAILURE);
 						data.putInt("version", version);
-						data.putString("notes", Deck.upgradeNotesToMessages(
-								deck, getResources()));
+						data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
 						deck.closeDeck();
 						msg.setData(data);
 						mHandler.sendMessage(msg);
@@ -730,8 +729,7 @@ public class DeckPicker extends Activity implements Runnable {
 						int newCards = deck.getNewCountToday();
 						int totalNewCards = deck.getNewCount();
 						int matureCards = deck.getMatureCardCount();
-						String upgradeNotes = deck.upgradeNotesToMessages(deck,
-								getResources());
+						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
 						deck.closeDeck();
 
 						data.putString("absPath", path);

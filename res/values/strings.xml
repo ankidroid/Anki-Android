@@ -33,7 +33,8 @@
 <!--<string name="deck_not_loaded">Failed to load deck.</string>-->
 <!--<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your SD card.</string>-->
 <!--<string name="deck_empty">Deck is empty.</string>-->
-<string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
+<string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop to upgrade it to the latest version.</string>
+<string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
 
 <!-- DeckPicker.java -->
 <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
