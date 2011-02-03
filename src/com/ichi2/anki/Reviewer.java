@@ -540,9 +540,7 @@ public class Reviewer extends Activity {
         
         // Save changes
         Deck deck = AnkiDroidApp.deck();
-        if(deck != null) {
-            deck.commitToDB();
-        }
+        deck.commitToDB();
 
         if (mShakeEnabled) {
             mSensorManager.unregisterListener(mSensorListener);    	  
