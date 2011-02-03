@@ -1192,6 +1192,11 @@ public class Reviewer extends Activity {
         mFlipCard.setVisibility(View.VISIBLE);
         mFlipCard.requestFocus();
 
+        // Sometimes the current card is not loaded yet, so skip the rest. (unsatisfying fix for issue 370)
+        if(mCurrentCard == null) {
+            return;
+        }
+        
         String question = mCurrentCard.getQuestion();
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
