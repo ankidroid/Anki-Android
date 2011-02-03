@@ -102,7 +102,11 @@ public class PersonalDeckPicker extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String deckName = (String) mAllPersonalDecks.get(position);
+                Object deckNameObject = mAllPersonalDecks.get(position);
+                String deckName = "bug 378"; // FIXME
+                if (deckNameObject instanceof String) {
+                    deckName = (String) mAllPersonalDecks.get(position);
+                }
                 Download personalDeckDownload = new Download(deckName);
                 mPersonalDeckDownloads.add(personalDeckDownload);
                 refreshPersonalDecksList();
