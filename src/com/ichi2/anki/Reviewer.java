@@ -545,9 +545,12 @@ public class Reviewer extends Activity {
     protected void onPause() {
         super.onPause();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
+        
         // Save changes
         Deck deck = AnkiDroidApp.deck();
-        deck.commitToDB();
+        if(deck != null) {
+            deck.commitToDB();
+        }
 
         if (mShakeEnabled) {
             mSensorManager.unregisterListener(mSensorListener);    	  
