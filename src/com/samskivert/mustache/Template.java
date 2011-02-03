@@ -6,7 +6,7 @@ package com.samskivert.mustache;
 
 import android.util.Log;
 
-import static com.ichi2.anki.AnkiDroidApp.TAG;
+import com.ichi2.anki.AnkiDroidApp;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -117,7 +117,7 @@ public class Template
             ctx = ctx.parent;
         }
         // Graceful failing, no need to throw exception
-        Log.e(TAG, "No key, method or field with name '" + name + "' on line " + line);
+        Log.e(AnkiDroidApp.TAG, "No key, method or field with name '" + name + "' on line " + line);
         return new String("{unknown field " + name + "}");
     }
 

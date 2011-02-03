@@ -4,6 +4,10 @@
 
 package com.samskivert.mustache;
 
+import android.util.Log;
+
+import com.ichi2.anki.AnkiDroidApp;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -140,8 +144,11 @@ public class Mustache
                         if (text.charAt(0) == '=') {
                             // TODO: change delimiters
                         } else {
-                            sanityCheckTag(text, line, start1, start2);
-                            accum = accum.addTagSegment(text, line);
+                            if (sanityCheckTag(text, line, start1, start2)) {
+                                accum = accum.addTagSegment(text, line);
+                            } else {
+                                text.setLength(0);
+                            }
                             skipNewline = accum.skipNewline();
                             skippedExtraBracket = false;
                         }
@@ -159,8 +166,11 @@ public class Mustache
                     if (text.charAt(0) == '=') {
                         // TODO: change delimiters
                     } else {
-                        sanityCheckTag(text, line, start1, start2);
-                        accum = accum.addTagSegment(text, line);
+                        if (sanityCheckTag(text, line, start1, start2)) {
+                            accum = accum.addTagSegment(text, line);
+                        } else {
+                            text.setLength(0);
+                        }
                         skipNewline = accum.skipNewline();
                         skippedExtraBracket = false;
                     }
@@ -190,7 +200,10 @@ public class Mustache
             accum.addTextSegment(text);
             break;
         case TAG:
-            throw new MustacheException("Template ended while parsing a tag TODO");
+            Log.e(AnkiDroidApp.TAG, "Template ended while parsing a tag [line=" + line + ", tag="+ text + "]");
+            text.append(end1);
+            accum.addTextSegment(text);
+            break;
         }
 
         return new Template(accum.finish());
@@ -198,17 +211,18 @@ public class Mustache
 
     private Mustache () {} // no instantiateski
 
-    protected static void sanityCheckTag (StringBuilder accum, int line, char start1, char start2)
+    protected static boolean sanityCheckTag (StringBuilder accum, int line, char start1, char start2)
     {
         for (int ii = 0, ll = accum.length(); ii < ll; ii++) {
             if (accum.charAt(ii) == start1) {
                 if (start2 == -1 || (ii < ll-1 && accum.charAt(ii+1) == start2)) {
-                    throw new MustacheException(
-                        "Tag contains start tag delimiter, probably missing close delimiter " +
-                        "[line=" + line + ", tag=" + accum + "]");
+                    Log.e(AnkiDroidApp.TAG, "Tag contains start tag delimiter, probably missing close delimiter " +
+                            "[line=" + line + ", tag=" + accum + "]");
+                    return false;
                 }
             }
         }
+        return true;
     }
 
     protected static final Pattern spanPattern = Pattern.compile("^<span.+?>(.*)</span>");
