@@ -283,8 +283,7 @@ public class AnkiDroidProxy {
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entityResponse = response.getEntity();
             InputStream content = entityResponse.getContent();
-            Log.i(AnkiDroidApp.TAG, "String content = " +
-                    Utils.convertStreamToString(new InflaterInputStream(content)));
+            Log.i(AnkiDroidApp.TAG, "String content = " + Utils.convertStreamToString(new InflaterInputStream(content)));
 
             // Add created deck to the list of decks on server
             mDecks.put(name, new JSONArray("[0,0]"));

@@ -343,8 +343,7 @@ public class DownloadManagerService extends Service {
                         Utils.writeToFile(zipInputStream, deckFilename);
                     } else if (zipEntry.getName().startsWith("shared.media/", 0)) {
                         Log.i(AnkiDroidApp.TAG, "Folder created = " + new File(partialDeckPath + ".media/").mkdir());
-                        Log.i(AnkiDroidApp.TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/"
-                                + zipEntry.getName().replace("shared.media/", ""));
+                        Log.i(AnkiDroidApp.TAG, "Destination = " + AnkiDroidApp.getStorageDirectory() + "/" + title + ".media/" + zipEntry.getName().replace("shared.media/", ""));
                         Utils.writeToFile(zipInputStream,
                                 partialDeckPath + ".media/" + zipEntry.getName().replace("shared.media/", ""));
                     }
