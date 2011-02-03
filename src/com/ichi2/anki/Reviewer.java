@@ -626,9 +626,13 @@ public class Reviewer extends Activity {
         mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
                 + getAvailableWidthInCard() + ";");
 
-        refreshCard();
-
-        updateScreenCounts();
+        // If the card hasn't loaded yet, don't refresh it
+        // Also skipping the counts (because we don't know which one to underline)
+        // They will be updated when the card loads anyway
+        if (mCurrentCard != null) {
+            refreshCard();
+            updateScreenCounts();
+        }
 
         if (mPrefTimer) {
             mCardTimer.setBase(savedTimer);
@@ -1195,11 +1199,6 @@ public class Reviewer extends Activity {
         mFlipCard.setVisibility(View.VISIBLE);
         mFlipCard.requestFocus();
 
-        // Sometimes the current card is not loaded yet, so skip the rest. (unsatisfying fix for issue 370)
-        if(mCurrentCard == null) {
-            return;
-        }
-        
         String question = mCurrentCard.getQuestion();
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
