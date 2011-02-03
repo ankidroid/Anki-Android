@@ -113,9 +113,9 @@
     <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Показывать параметры обучения</item>
-    <item>Показывать оглавление колод</item>
-    <item>Показывать оглавление колод при первом запуске этого дня</item>
+    <item>\"Параметры обучения\"</item>
+    <item>Оглавление колод</item>
+    <item>Оглавление колод только 1ый раз</item>
   </string-array>
   <string-array name="startup_mode_values">
     <item>0</item>

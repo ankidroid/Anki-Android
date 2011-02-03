@@ -88,8 +88,8 @@
   <string name="sync_on_close">Синхронизация при закрытии</string>
   <string name="show_study_options_on_deck_load">Параметры обучения при загрузке колоды</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
-  <string name="startup_mode">Режим запуска</string>
-  <string name="startup_mode_summ">Выбрать если вы ходите начинать с параметров обучения или оглавления колод</string>
+  <string name="startup_mode">Режим при запуске</string>
+  <string name="startup_mode_summ">Какой экран будет показан первым при запуске AnkiDroid: \"Параметры\", \"Оглавление\" или  \"Оглавление только 1ый раз\" (потом\"Параметры\")</string>
   <string name="show_timer">Показать таймер</string>
   <string name="show_timer_summ">Таймер показывает сколько времени Вам дается для ответа</string>
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>
@@ -118,7 +118,7 @@
   <string name="zoom">Включить масштабирование</string>
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
   <string name="swipe">Включить жесты</string>
-  <string name="swipe_summ_off">Используйте жесты (при swipe) для переключения между экранами. Не совместимо с кнопками масштабирования</string>
+  <string name="swipe_summ_off">Используйте жесты (при swipe) для переключения между экранами. Не работает одновременно с кнопками масштабирования</string>
   <string name="swipe_summ_on">Горизонтальный жест (при swipe) - смена экранов, вертикал. - ответ (вверх: снова, вниз: рекомен., двой.касание: проще чем рекомен.)</string>
   <string name="shake">Тряхнуть для отмены</string>
   <string name="shake_summ">Тряхнуть ваше устройство для отмены последнего действия</string>
@@ -185,7 +185,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="studyoptions_session_minutes">Длительность урока (минут):</string>
   <string name="studyoptions_session_questions">Вопросов в уроке:</string>
   <string name="studyoptions_start">Начать Просмотр</string>
-  <string name="studyoptions_more">Параметры обучения</string>
+  <string name="studyoptions_more">Доп. параметры</string>
   <string name="studyoptions_window_title">%1$s (%2$d из %3$d)</string>
   <string name="studyoptions_more_dialog_title">Больше параметров</string>
   <string name="studyoptions_more_save">Сохранить</string>
@@ -278,8 +278,8 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="error_reporting_choice_summary">Можно посылать ошибки программы автоматически, не посылать или выводить вопрос пользователю</string>
   <string name="widget_pref">Виджет</string>
-  <string name="widget_minimum_cards_due">Виджет уведомления минимального порога</string>
-  <string name="widget_minimum_cards_due_summary">Минимальное количество карточек при котором всплывет Уведомление</string>
+  <string name="widget_minimum_cards_due">Виджет уведомления</string>
+  <string name="widget_minimum_cards_due_summary">Если количество карточек больше этого установленного порога - всплывет \"Уведомление\" (в зоне уведомлений вашего аппарата)</string>
   <string name="widget_minimum_cards_due_vibrate">Вибрировать</string>
   <string name="widget_minimum_cards_due_blink">Мигать</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Минимально карт для показа Уведомления</string>
