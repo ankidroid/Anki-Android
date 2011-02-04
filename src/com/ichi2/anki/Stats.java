@@ -93,7 +93,7 @@ public class Stats {
         Cursor cursor = null;
 
         try {
-            // Log.i(AnkiDroidApp.TAG, "Reading stats from DB...");
+            Log.i(AnkiDroidApp.TAG, "Reading stats from DB...");
             cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                     "SELECT * " + "FROM stats WHERE id = " + String.valueOf(id), null);
 
@@ -133,7 +133,7 @@ public class Stats {
 
 
     public void create(int type, Date day) {
-        // Log.i(AnkiDroidApp.TAG, "Creating new stats for " + day.toString() + "...");
+        Log.i(AnkiDroidApp.TAG, "Creating new stats for " + day.toString() + "...");
         mType = type;
         mDay = day;
 
@@ -250,7 +250,7 @@ public class Stats {
             bundledStat.put("matureEase4", mMatureEase4);
 
         } catch (JSONException e) {
-            // Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
 
         return bundledStat;
@@ -284,13 +284,13 @@ public class Stats {
 
             toDB();
         } catch (JSONException e) {
-            // Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
     }
 
 
     public static Stats globalStats(Deck deck) {
-        // Log.i(AnkiDroidApp.TAG, "Getting global stats...");
+        Log.i(AnkiDroidApp.TAG, "Getting global stats...");
         int type = STATS_LIFE;
         Date today = Utils.genToday(deck.getUtcOffset());
         Cursor cursor = null;
@@ -318,14 +318,14 @@ public class Stats {
 
 
     public static Stats dailyStats(Deck deck) {
-        // Log.i(AnkiDroidApp.TAG, "Getting daily stats...");
+        Log.i(AnkiDroidApp.TAG, "Getting daily stats...");
         int type = STATS_DAY;
         Date today = Utils.genToday(deck.getUtcOffset());
         Stats stats = null;
         Cursor cursor = null;
 
         try {
-            // Log.i(AnkiDroidApp.TAG, "Trying to get stats for " + today.toString());
+            Log.i(AnkiDroidApp.TAG, "Trying to get stats for " + today.toString());
             cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(
                     "SELECT id " + "FROM stats "
                     + "WHERE type = " + String.valueOf(type) + " and day = \"" + today.toString() + "\"", null);

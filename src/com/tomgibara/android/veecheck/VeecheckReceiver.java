@@ -42,13 +42,13 @@ public abstract class VeecheckReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Log.d(LOG_TAG, "Receiver called");
+        Log.d(LOG_TAG, "Receiver called");
         String action = intent.getAction();
         if (action == null) {
             return;
         }
 
-        // Log.v(LOG_TAG, "Receiver called with action: " + action);
+        Log.v(LOG_TAG, "Receiver called with action: " + action);
         if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
             syncChecking(context);
         } else if (action.equals(Veecheck.getRescheduleAction(context))) {
@@ -104,15 +104,15 @@ public abstract class VeecheckReceiver extends BroadcastReceiver {
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pending = createCheckingIntent(context);
         if (settings.isEnabled()) {
-            // Log.d(LOG_TAG, "Registering checks with alarm service");
+            Log.d(LOG_TAG, "Registering checks with alarm service");
             long now = System.currentTimeMillis();
             long period = settings.getPeriod();
             // could create a Random object here to avoid cost of double, but probably not worthwhile
             long offset = (long) (Math.random() * period);
-            // Log.v(LOG_TAG, "Check period is " + period + "ms starting from " + new Date(now + offset));
+            Log.v(LOG_TAG, "Check period is " + period + "ms starting from " + new Date(now + offset));
             manager.setRepeating(AlarmManager.RTC, now + offset, period, pending);
         } else {
-            // Log.d(LOG_TAG, "de-registering checks with alarm service");
+            Log.d(LOG_TAG, "de-registering checks with alarm service");
             manager.cancel(pending);
         }
     }
@@ -126,19 +126,19 @@ public abstract class VeecheckReceiver extends BroadcastReceiver {
      */
 
     private void considerChecking(Context context) {
-        // Log.d(LOG_TAG, "Considering performing check.");
+        Log.d(LOG_TAG, "Considering performing check.");
         VeecheckSettings settings = createSettings(context);
         if (!settings.isEnabled()) {
             syncChecking(context);
             return;
         }
-        // Log.d(LOG_TAG, "Checking is enabled.");
+        Log.d(LOG_TAG, "Checking is enabled.");
 
         String uri = settings.getCheckUri();
         if (uri == null) {
             return; // no point continuing - not configured
         }
-        // Log.d(LOG_TAG, "URI is available.");
+        Log.d(LOG_TAG, "URI is available.");
 
         VeecheckState state = createState(context);
         long now = System.currentTimeMillis();
@@ -146,7 +146,7 @@ public abstract class VeecheckReceiver extends BroadcastReceiver {
         if (lastCheck >= 0L && lastCheck + settings.getCheckInterval() > now) {
             return; // it has run too recently
         }
-        // Log.d(LOG_TAG, "Last check was not too recent.");
+        Log.d(LOG_TAG, "Last check was not too recent.");
 
         // TODO get battery status: not possible yet, see:
         // http://code.google.com/p/android/issues/detail?id=926
@@ -154,7 +154,7 @@ public abstract class VeecheckReceiver extends BroadcastReceiver {
         if (status != BatteryManager.BATTERY_STATUS_CHARGING) {
             return; // run some other, better, time
         }
-        // // Log.d(LOG_TAG, "Battery is in a suitable state.");
+        // Log.d(LOG_TAG, "Battery is in a suitable state.");
 
         // attach our package as an extra on the intent
         Intent intent = new Intent(Veecheck.getCheckAction(context), Uri.parse(uri));
@@ -164,7 +164,7 @@ public abstract class VeecheckReceiver extends BroadcastReceiver {
         // check has been successfully made, but this is not obviously the right
         // design.
         state.setLastCheckNow(now);
-        // Log.d(LOG_TAG, "Last check date was updated.");
+        Log.d(LOG_TAG, "Last check date was updated.");
     }
 
 }
