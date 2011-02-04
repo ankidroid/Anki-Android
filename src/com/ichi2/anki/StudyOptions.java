@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -58,7 +59,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -144,6 +144,7 @@ public class StudyOptions extends Activity {
     private int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
     boolean mSyncEnabled = false;
+    boolean mNewVersion = false;
     
     /**
 * Alerts to inform the user about different situations
@@ -154,6 +155,7 @@ public class StudyOptions extends Activity {
     private AlertDialog mConnectionErrorAlert;
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mSyncConflictResolutionAlert;
+	private AlertDialog mNewVersionAlert;
 
     /*
 * Cram related
@@ -379,7 +381,7 @@ public class StudyOptions extends Activity {
        			}
        			return false;
        		}
-       	};	
+       	};
     }
 
     
@@ -435,7 +437,7 @@ public class StudyOptions extends Activity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
-        savePreferences("lastOpened");
+        savePreferences("close");
     }
 
 
@@ -1301,8 +1303,9 @@ public class StudyOptions extends Activity {
         Editor editor = preferences.edit();
         if (str == "deckFilename") {
             editor.putString("deckFilename", mDeckFilename);        
-        } else if (str == "lastOpened") {
-            editor.putLong("lastTimeOpened", System.currentTimeMillis());        	
+        } else if (str == "close") {
+        	editor.putLong("lastTimeOpened", System.currentTimeMillis());
+        	editor.putString("lastVersion", getVersion());
         }
         editor.commit();
     }
@@ -1317,7 +1320,29 @@ public class StudyOptions extends Activity {
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
         mSyncEnabled = preferences.getBoolean("syncEnabled", false);
         mSwipeEnabled = preferences.getBoolean("swipe", false);
+        if (!preferences.getString("lastVersion", "").equals(getVersion())) {
+            Resources res = getResources();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(res.getString(R.string.new_version_title) + " " + getVersion());
+            builder.setMessage(res.getString(R.string.new_version_text));
+            builder.setPositiveButton(res.getString(R.string.ok), null);
+            builder.setCancelable(true);
+            mNewVersion = true;
+            mNewVersionAlert = builder.create();
+        }
         return preferences;
+    }
+
+
+    private String getVersion() {
+    	String versionNumber;
+    	try {
+            String pkg = this.getPackageName();
+            versionNumber = this.getPackageManager().getPackageInfo(pkg, 0).versionName;
+        } catch (NameNotFoundException e) {
+            versionNumber = "?";
+        }
+        return versionNumber;
     }
 
 
@@ -1419,6 +1444,10 @@ public class StudyOptions extends Activity {
                     mProgressDialog.dismiss();
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+                if (mNewVersion) {
+                    mNewVersionAlert.show();
+                    mNewVersion = false;
                 }
             }
         }
