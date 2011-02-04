@@ -63,7 +63,6 @@ import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -167,6 +166,7 @@ public class Reviewer extends Activity {
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
     private boolean mSpeakText;
     private boolean mPlaySoundsAtStart;
+    private boolean mInvertedColors = false;
     
     private boolean mIsDictionaryAvailable;
 
@@ -184,6 +184,7 @@ public class Reviewer extends Activity {
     /**
      * Variables to hold layout objects that we need to update or handle events for
      */
+    private View mMainLayout;
     private WebView mCard;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
@@ -475,9 +476,6 @@ public class Reviewer extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
-        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);
-
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
         // Make sure a deck is loaded before continuing.
@@ -640,6 +638,9 @@ public class Reviewer extends Activity {
         }
         if (mPrefWhiteboard) {
             mWhiteboard.rotate();
+        }
+        if (mInvertedColors) {
+            invertColors();
         }
         mConfigurationChanged = false;
     }
@@ -910,6 +911,8 @@ public class Reviewer extends Activity {
     private void initLayout(Integer layout) {
         setContentView(layout);
 
+        mMainLayout = findViewById(R.id.main_layout);
+        
         mCard = (WebView) findViewById(R.id.flashcard);
         mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
@@ -1000,7 +1003,28 @@ public class Reviewer extends Activity {
         });
         mAnswerField = (EditText) findViewById(R.id.answer_field);
 
+        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
+        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);            
+
+        if (mInvertedColors) {
+            invertColors();
+        }
+
         initControls();
+    }
+
+
+    private void invertColors() {
+        mMainLayout.setBackgroundColor(getResources().getColor(R.color.background_color_inv));
+        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color_inv);
+        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color_inv);
+        mNext4.setTextColor(mNextTimeTextColor);
+        int fgColor = getResources().getColor(R.color.foreground_color_inv);
+        mCardTimer.setTextColor(fgColor);
+        mTextBarBlack.setTextColor(fgColor);
+        mTextBarBlue.setTextColor(getResources().getColor(R.color.textbar_blue_color_inv));
+        mCard.setBackgroundColor(getResources().getColor(R.color.background_color_inv));
+        mWhiteboard.setInvertedColor(true);         
     }
 
 
@@ -1303,7 +1327,7 @@ public class Reviewer extends Activity {
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
             baseUrl = Utils.getBaseUrl(myModel, mDeckFilename);
-            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize) + content;
+            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + content;
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             baseUrl = "file://" + mDeckFilename.replace(".anki", ".media/");

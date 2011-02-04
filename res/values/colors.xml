@@ -15,10 +15,17 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-	<!-- Colors for Whiteboard and Next Review Time -->
 	<color name="wb_fg_color">#B00000FF</color>
 	<color name="wb_bg_color">#0000</color>
+	<color name="wb_fg_color_inv">#0099FF</color>
+	<color name="wb_bg_color_inv">#FFFF</color>
 	<color name="next_time_usual_color">#000000</color>
 	<color name="next_time_failed_color">#FF0000</color>
 	<color name="next_time_recommended_color">#007700</color>
+	<color name="next_time_usual_color_inv">#FFFFFF</color>
+	<color name="next_time_failed_color_inv">#00FFFF</color>
+	<color name="next_time_recommended_color_inv">#66AD66</color>
+	<color name="background_color_inv">#000000</color>
+	<color name="foreground_color_inv">#FFFFFF</color>
+	<color name="textbar_blue_color_inv">#0099FF</color>
 </resources>
