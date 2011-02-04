@@ -26,7 +26,8 @@
   <string name="yes">Ναι</string>
   <string name="no">Όχι</string>
   <string name="ok">Εντάξει</string>
-  <string name="deck_upgrade_too_old_version">Τράπουλες παλιότερες από έκδοση 39 δεν υποστηρίζονται από το AnkiDroid· παρακαλούμε να ανοίξετε την τράπουλα με την εφαρμογή Anki, ώστε να αναβαθμίσετε την τράπουλα στην τελευταία έκδοση.</string>
+  <string name="deck_upgrade_too_old_version">Τράπουλες παλιότερες από έκδοση 39 δεν υποστηρίζονται από το AnkiDroid· παρακαλούμε να ανοίξετε την τράπουλα με την εφαρμογή Anki, ώστε να αναβαθμιστεί στην τελευταία έκδοση.</string>
+  <string name="deck_upgrade_version_61_has_latex">Η τράπουλα δε μπορεί να αναβαθμιστεί πλήρως επειδή περιέχει κώδικα LaTeX, παρακαλούμε να ανοίξετε την τράπουλα με την εφαρμογή Anki, ώστε να αναβαθμιστεί στην τελευταία έκδοση και να μεταφραστεί ο κώδικας LaTeX.</string>
   <string name="deckpicker_title">Επιλέξτε τράπουλα (%1$d από %2$d αναμένουν)</string>
   <string name="deckpicker_title_nosdcard">Η SD κάρτα δεν είναι προσαρτημένη</string>
   <string name="deckpicker_due">%1$d από %2$d σε αναμονή</string>
@@ -162,18 +163,18 @@
   <string name="sync_all">Συγχρονισμός όλων</string>
   <string name="fact">γεγονός</string>
   <string name="facts">γεγονότα</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
+  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Προστιθέμενο/Αλλαγμένο&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Εδώ&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Διακομιστής&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Κάρτες&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Γεγονότα&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Μοντέλα&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Στατιστικά&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Αποθήκευση αλλαγών...</string>
   <string name="about_content">&lt;html&gt;
 &lt;body&gt;
 &lt;h2&gt;AnkiDroid:&lt;br/&gt;
 Flashcards for Android&lt;/h2&gt;
-&lt;p&gt;Το AnkiDroid μπορεί να διαβάσει αρχεία .anki από την εφαρμογή &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Για να μας βοηθήσετε να βελτιώσουμε το AnkiDroid, παρακαλούμε ανακοινώνεστε τυχόν σφάλματα &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;εδώ&lt;/a&gt;, νέες ιδέες για λειτουργίες είναι ευπροσδεκτές, επίσης!
-Παρακαλούμε χρησιμοποιείστε το &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; και πείτε μας ενα γεια στο &lt;a href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Το AnkiDroid είναι &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;λειτουργικό ανοικτού κώδικα&lt;/a&gt;, οπότε ο καθένας μπορεί να &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;συμμετάσχει&lt;/a&gt; στους &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;συντελεστές&lt;/a&gt; :-)
-Μη προγραμματιστές μπορούν να βοηθήσουν επίσης, όπως με το να ενημερώσουν το wiki, με screenshots, με &lt;a href="http://ichi2.net/anki/donate.html"&gt;δωρεές&lt;/a&gt; στο Anki, ή με το να κάνουν blogging για το AnkiDroid!&lt;/p&gt;
-&lt;p&gt;Το AnkiDroid διατίθετε υπό την &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;άδεια GNU-GPL v3&lt;/a&gt; και ο κώδικάς του είναι διαθέσιμος &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;εδώ&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Το AnkiDroid μπορεί να διαβάσει αρχεία .anki από την εφαρμογή &lt;a href=&quot;http://ankisrs.net/anki&quot;&gt;Anki&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Για να μας βοηθήσετε να βελτιώσουμε το AnkiDroid, παρακαλούμε ανακοινώνεστε τυχόν σφάλματα &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;εδώ&lt;/a&gt;, νέες ιδέες για λειτουργίες είναι ευπροσδεκτές, επίσης!
+Παρακαλούμε χρησιμοποιείστε το &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Index&quot;&gt;wiki&lt;/a&gt; και πείτε μας ενα γεια στο &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Το AnkiDroid είναι &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;λειτουργικό ανοικτού κώδικα&lt;/a&gt;, οπότε ο καθένας μπορεί να &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Contribution&quot;&gt;συμμετάσχει&lt;/a&gt; στους &lt;a href=&quot;https://code.google.com/p/ankidroid/wiki/Contribution#Contributors&quot;&gt;συντελεστές&lt;/a&gt; :-)
+Μη προγραμματιστές μπορούν να βοηθήσουν επίσης, όπως με το να ενημερώσουν το wiki, με screenshots, με &lt;a href=&quot;http://ankisrs.net/support&quot;&gt;δωρεές&lt;/a&gt; στο Anki, ή με το να κάνουν blogging για το AnkiDroid!&lt;/p&gt;
+&lt;p&gt;Το AnkiDroid διατίθετε υπό την &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;άδεια GNU-GPL v3&lt;/a&gt; και ο κώδικάς του είναι διαθέσιμος &lt;a href=&quot;http://github.com/nicolas-raoul/Anki-Android&quot;&gt;εδώ&lt;/a&gt;.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</string>
   <string name="studyoptions_title">Επιλογές Μελέτης</string>
