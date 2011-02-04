@@ -1111,6 +1111,7 @@ public class Reviewer extends Activity {
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
         mPrefTextSelection = preferences.getBoolean("textSelection", false);
         mDeckFilename = preferences.getString("deckFilename", "");
+        mInvertedColors = preferences.getBoolean("invertedColors", false);
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);

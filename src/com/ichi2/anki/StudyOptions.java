@@ -46,6 +46,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -145,6 +146,7 @@ public class StudyOptions extends Activity {
     private long mLastTimeOpened;
     boolean mSyncEnabled = false;
     boolean mNewVersion = false;
+    boolean mInvertedColors = false;
     
     /**
 * Alerts to inform the user about different situations
@@ -180,6 +182,7 @@ public class StudyOptions extends Activity {
     private EditText mEditNewPerDay;
     private EditText mEditSessionTime;
     private EditText mEditSessionQuestions;
+    private CheckBox mNightMode;
 
     /**
 * UI elements for "More Options" dialog
@@ -563,6 +566,18 @@ public class StudyOptions extends Activity {
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
         mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
+        mNightMode = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_night_mode);
+        mNightMode.setChecked(mInvertedColors);
+        mNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+            boolean isChecked) {
+                if (mInvertedColors != isChecked) {
+                    mInvertedColors = isChecked;
+                    savePreferences("invertedColors");                    
+                }
+            }
+            });
 
         mEditNewPerDay = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_new_cards_per_day);
         mEditSessionTime = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_minutes);
@@ -1302,11 +1317,14 @@ public class StudyOptions extends Activity {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         if (str == "deckFilename") {
-            editor.putString("deckFilename", mDeckFilename);        
+            editor.putString("deckFilename", mDeckFilename); 
         } else if (str == "close") {
         	editor.putLong("lastTimeOpened", System.currentTimeMillis());
         	editor.putString("lastVersion", getVersion());
+        } else if (str == "invertedColors") {
+            editor.putBoolean("invertedColors", mInvertedColors);
         }
+
         editor.commit();
     }
 
@@ -1330,6 +1348,7 @@ public class StudyOptions extends Activity {
             mNewVersion = true;
             mNewVersionAlert = builder.create();
         }
+        mInvertedColors = preferences.getBoolean("invertedColors", false);
         return preferences;
     }
 

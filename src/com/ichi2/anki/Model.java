@@ -92,6 +92,7 @@ public class Model {
      */
     private transient int mDisplayPercentage = 0;
 
+    private boolean mInvertedColor = false;
 
     private Model(Deck deck, String name) {
         mDeck = deck;
@@ -326,8 +327,9 @@ public class Model {
      */
     protected final String getCSSForFontColorSize(long myCardModelId, int percentage, boolean invertedColors) {
         // tjek whether the percentage is this the same as last time
-        if (mDisplayPercentage != percentage) {
+        if (mDisplayPercentage != percentage || mInvertedColor != invertedColors) {
             mDisplayPercentage = percentage;
+            mInvertedColor = invertedColors;
             prepareCSSForCardModels(invertedColors);
         }
         return mCssCardModelMap.get(myCardModelId);
