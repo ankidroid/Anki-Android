@@ -20,8 +20,6 @@ import android.database.Cursor;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -236,7 +234,8 @@ public class Media {
                             refs.put(f, refs.get(f) + 1);
                         } else {
                             refs.put(f, 1);
-                            normrefs.add(Normalizer.normalize(f, Normalizer.Form.NFC));
+                            // normrefs.add(Normalizer.normalize(f, Normalizer.Form.NFC));
+                            normrefs.add(f);
                         }
                     }
                 }
@@ -265,7 +264,8 @@ public class Media {
                         // Ignore directories
                         continue;
                     }
-                    fname = Normalizer.normalize(f.getName(), Normalizer.Form.NFC);
+                    // fname = Normalizer.normalize(f.getName(), Normalizer.Form.NFC);
+                    fname = f.getName();
                     if (!normrefs.contains(fname)) {
                         unused.add(fname);
                     }
