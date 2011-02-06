@@ -864,7 +864,7 @@ public class Deck {
             commitToDB();
         }
         // Executing a pragma here is very slow on large decks, so we store our own record
-        if (getInt("pageSize") != 4096) {
+        if ((!hasKey("pageSize")) || (getInt("pageSize") != 4096)) {
             commitToDB();
             getDB().getDatabase().execSQL("PRAGMA page_size = 4096");
             getDB().getDatabase().execSQL("PRAGMA legacy_file_format = 0");
