@@ -1370,7 +1370,7 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
       
-        if (!mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+        if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
             ReadText.setLanguageInformation(Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());       	
         }
         
