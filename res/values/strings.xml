@@ -127,6 +127,9 @@
 <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in an external dictionary</string>
 <string name="dictionary">Dictionary</string>
 <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
+<string name="reset_languages">Reset Languages</string>
+<string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+<string name="reset_languages_confirmation">Reset all languages assignments?</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative display font size</string>
@@ -387,6 +390,9 @@
 
 <string name="undo">Undo</string>
 <string name="redo">Redo</string>
+
+<string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+<string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
 
 <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
 <string name="delete_deck_title">Delete Deck</string>

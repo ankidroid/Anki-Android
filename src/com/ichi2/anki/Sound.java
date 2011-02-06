@@ -54,7 +54,7 @@ public class Sound {
     private Sound() { }
 
 
-    public static String parseSounds(String deckFilename, String content, boolean ttsEnabled) {
+    public static String parseSounds(String deckFilename, String content, boolean ttsEnabled, int qa) {
     	boolean soundAvailable = false;
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
@@ -90,7 +90,7 @@ public class Sound {
         if (!soundAvailable && ttsEnabled) {
             stringBuilder.append(content.substring(0, content.length() - 9));        
             stringBuilder
-                .append("<a onclick=\"window.interface.playSound(this.title);\" title=\"tts"
+                .append("<a onclick=\"window.interface.playSound(this.title);\" title=\"tts" + Integer.toString(qa)
                 		+ Utils.stripHTML(content)
                         + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
             contentLeft = "</p>";
@@ -105,13 +105,13 @@ public class Sound {
     /**
      * Plays the sounds stored on the paths indicated by mSoundPaths.
      */
-    public static void playSounds(String text, String loc) {
+    public static void playSounds(String text, int qa) {
         // If there are sounds to play for the current card, play the first one
     	if (sSoundPaths != null && sSoundPaths.size() > 0) {
             sNumSoundsPlayed = 0;
             playSound(sNumSoundsPlayed);
         } else if (text != null && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-        	ReadText.textToSpeech(text, loc);
+        	ReadText.textToSpeech(text, qa);
         }
     }
 
@@ -152,7 +152,7 @@ public class Sound {
 
     public static void playSound(String soundPath) {
         if (soundPath.substring(0, 3).equals("tts")) {
-        	ReadText.textToSpeech(soundPath.substring(4, soundPath.length()), null);
+        	ReadText.textToSpeech(soundPath.substring(4, soundPath.length()), Integer.parseInt(soundPath.substring(3, 4)));
         } else 
         	if (sSoundPaths.contains(soundPath)) {
             sMediaPlayer = new MediaPlayer();

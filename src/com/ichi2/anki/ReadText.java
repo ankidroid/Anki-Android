@@ -29,30 +29,35 @@ public class ReadText {
     private static ArrayList<String[]> availableTtsLocales = new ArrayList<String[]>();
     private static String mTextToSpeak;
     private static Context mReviewer;
+    private static String mDeckFilename;
+    private static long mModelId;
+    private static long mCardModelId;
+    private static int mQuestionAnswer;
+    
     //private boolean mTtsReady = false;
+
     
-    public static void textToSpeech(String text, String loc) {
-    	mTextToSpeak = text;
-    	if (loc == null) {
-    		selectLocale();
-   		} else {
-   	    	speak(loc);   			
-   		}
-    }
-    
-    public static void speak(String loc) {
+    private static void speak(String loc) {
     	int result = mTts.setLanguage(new Locale(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+        	Log.e(AnkiDroidApp.TAG, "Error loading locale "+ loc.toString());
         } else {
           	mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, null);
         }    	
     }
 
 
-    public static void selectLocale() {
-    	ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
-       final ArrayList<String> dialogIds = new ArrayList<String>();
+    public static void setLanguageInformation(long modelId, long cardModelId) {
+    	mModelId = modelId;
+    	mCardModelId = cardModelId;    	
+    }
 
+
+    public static void textToSpeech(String text, int qa) {
+    	mTextToSpeak = text;
+    	mQuestionAnswer = qa;
+    	
+    	String language = MetaDB.getLanguage(mReviewer, mDeckFilename,  mModelId, mCardModelId, mQuestionAnswer);
         if (availableTtsLocales.isEmpty()) {
 	    	Locale[] systemLocales = Locale.getAvailableLocales();
 			for (Locale loc : systemLocales) {
@@ -62,6 +67,18 @@ public class ReadText {
 			}			
 		}
 
+        // Check, if stored language is available
+        for (int i = 0; i < availableTtsLocales.size(); i++) {
+        	String tu = availableTtsLocales.get(i)[0];
+    		if (language.equals(availableTtsLocales.get(i)[0])) {
+    			speak(language);
+    			return;
+    		}                    			
+		}
+
+        // Otherwise ask 
+    	ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
+    	final ArrayList<String> dialogIds = new ArrayList<String>();
         AlertDialog.Builder builder = new AlertDialog.Builder(mReviewer);
         builder.setTitle(R.string.select_locale_title);
 
@@ -75,6 +92,7 @@ public class ReadText {
         builder.setItems(items, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				MetaDB.storeLanguage(mReviewer, mDeckFilename,  mModelId, mCardModelId, mQuestionAnswer, dialogIds.get(which));
 				speak(dialogIds.get(which));
 			}
         });
@@ -83,8 +101,9 @@ public class ReadText {
     }
 
 
-    public static void initializeTts(Context context) {
+    public static void initializeTts(Context context, String deckFilename) {
     	mReviewer = context;
+    	mDeckFilename = deckFilename;
     	mTts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
 			@Override
 			public void onInit(int status) {

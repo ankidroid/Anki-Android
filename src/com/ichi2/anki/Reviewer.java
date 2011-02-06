@@ -526,7 +526,7 @@ public class Reviewer extends Activity {
 
             // Initialize text-to-speech. This is an asynchronous operation.
             if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-            	ReadText.initializeTts(this);
+            	ReadText.initializeTts(this, mDeckFilename);
             }
 
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
@@ -780,23 +780,34 @@ public class Reviewer extends Activity {
                     		aedictSearchIntent.putExtra("kanjis", mClipboard.getText());
                     		startActivity(aedictSearchIntent);
                             mClipboard.setText("");
-                    		break;
-                    	case DICTIONARY_LEO:                  		
+                            return true;
+                    	case DICTIONARY_LEO:
                     		// localisation is needless here since leo.org translates only into or out of German 
-                    		final CharSequence[] itemValues = {"ende", "frde", "esde", "itde", "chde", "rude"};
+                    		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
+                    		String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
+                    		for (int i = 0; i < itemValues.length; i++) {
+                        		if (language.equals(itemValues[i])) {
+                    		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
+                            		startActivity(leoSearchIntent);
+                                    mClipboard.setText("");
+                                    return true;
+                        		}                    			
+                    		}
                     		final CharSequence[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
                     		AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     		builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
                     		builder.setItems(items, new DialogInterface.OnClickListener() {
                     			public void onClick(DialogInterface dialog, int item) {
-                    		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + itemValues[item] + "&search=" + mClipboard.getText()));
-                            		startActivity(leoSearchIntent);
-                                    mClipboard.setText("");
-                    		    }
+                    				String language = itemValues[item].toString();
+                    				Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
+                    				startActivity(leoSearchIntent);
+                    				mClipboard.setText("");
+                    				storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
+                    			}
                     		});
                     		AlertDialog alert = builder.create();
                     		alert.show();
-                    		break;
+                    		return true;
                 	}
                 }
                 return true;
@@ -867,6 +878,16 @@ public class Reviewer extends Activity {
             iFilter.addDataScheme("file");
             registerReceiver(mUnmountReceiver, iFilter);
         }
+    }
+
+
+    private String getLanguage(int questionAnswer) {
+    	String language = MetaDB.getLanguage(this, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);
+		return language;
+    }
+    
+    private void storeLanguage(String language, int questionAnswer) {
+    	MetaDB.storeLanguage(this, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);		
     }
 
 
@@ -1301,13 +1322,17 @@ public class Reviewer extends Activity {
         int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
         if (isQuestionDisplayed()) {
         	if (sDisplayAnswer && (questionStartsAt != -1)) {
-        	content = Sound.parseSounds(mDeckFilename, content.substring(0, questionStartsAt), mSpeakText)
-        			+ Sound.parseSounds(mDeckFilename, content.substring(questionStartsAt, content.length()), mSpeakText);
+        	content = Sound.parseSounds(mDeckFilename, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION)
+        			+ Sound.parseSounds(mDeckFilename, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
         	} else {
-            	content = Sound.parseSounds(mDeckFilename, content.substring(0, content.length() - 5), mSpeakText) + "<hr/>";        		
+            	content = Sound.parseSounds(mDeckFilename, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
         	}
         } else {
-        	content = Sound.parseSounds(mDeckFilename, content, mSpeakText);
+        	int qa = MetaDB.LANGUAGE_QUESTION;
+        	if (sDisplayAnswer) {
+        		qa = MetaDB.LANGUAGE_ANSWER;
+        	}
+        	content = Sound.parseSounds(mDeckFilename, content, mSpeakText, qa);
         }
 
         // Parse out the LaTeX images
@@ -1345,14 +1370,18 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
       
+        if (!mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+            ReadText.setLanguageInformation(Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());       	
+        }
+        
         if (!mConfigurationChanged && mPlaySoundsAtStart) {
         	if (!mSpeakText) {
-        		Sound.playSounds(null, null);
+        		Sound.playSounds(null, 0);
         	} else if (!sDisplayAnswer) {
-                Sound.playSounds(Utils.stripHTML(mCurrentCard.getQuestion()), "de");            	
-            } else {
-                Sound.playSounds(Utils.stripHTML(mCurrentCard.getAnswer()), "fr");            	
-            }
+        		Sound.playSounds(Utils.stripHTML(mCurrentCard.getQuestion()), MetaDB.LANGUAGE_QUESTION);            	
+        	} else {
+        		Sound.playSounds(Utils.stripHTML(mCurrentCard.getAnswer()), MetaDB.LANGUAGE_ANSWER);            	
+            } 
         }
     }
 
@@ -1698,6 +1727,7 @@ public class Reviewer extends Activity {
     }
 
     private void closeReviewer() {
+    	MetaDB.closeDB();
     	finish();
     	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
     		if (mShowCongrats) {
