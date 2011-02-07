@@ -122,8 +122,19 @@
 			android:defaultValue="0"
 			android:dependency="textSelection"
 			android:entries="@array/dictionary_labels"
-			android:entryValues="@array/dictionary_values" />
-		<CheckBoxPreference
+			android:entryValues="@array/dictionary_values" /><!--
+
+		<DialogPreference
+			android:id="@+id/reset_languages"
+			android:negativeButtonText="@string/no"
+			android:positiveButtonText="@string/yes"
+			android:dialogTitle="@string/reset_languages"
+			android:dialogMessage="@string/reset_languages_confirmation"
+			android:title="@string/reset_languages"
+			android:summary="@string/reset_languages_summ" />
+			
+			
+		--><CheckBoxPreference
 			android:title="@string/shake"
 			android:defaultValue="false"
 			android:summary="@string/shake_summ"

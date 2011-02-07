@@ -57,6 +57,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.ichi2.async.Connection;
@@ -468,16 +469,18 @@ public class DeckPicker extends Activity implements Runnable {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		waitForDeckLoaderThread();
+		
+		@SuppressWarnings("unchecked")
+		HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(info.position);
 		switch (item.getItemId()) {
 		case R.id.delete_deck:
 			mRemoveDeckPath = null;
-			waitForDeckLoaderThread();
-			
-			@SuppressWarnings("unchecked")
-			HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter
-					.getItem(info.position);
 			mRemoveDeckPath = data.get("filepath");
 			showDialog(DIALOG_DELETE_DECK);
+			return true;
+		case R.id.reset_language:
+			resetDeckLanguages(data.get("filepath"));
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -755,6 +758,16 @@ public class DeckPicker extends Activity implements Runnable {
 	
 	private void setTitleText(){
 		setTitle(String.format(getResources().getString(R.string.deckpicker_title), mTotalDueCards, mTotalCards));
+	}
+
+
+	private void resetDeckLanguages(String deckPath) {
+		if (MetaDB.resetDeckLanguages(this, deckPath)) {
+            Toast successReport = 
+                Toast.makeText(this, 
+                        getResources().getString(R.string.contextmenu_deckpicker_reset_reset_message), Toast.LENGTH_SHORT);
+            successReport.show();
+		}
 	}
 
 
