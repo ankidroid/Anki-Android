@@ -39,7 +39,7 @@ public class About extends Activity {
 
         WebView webview = (WebView) findViewById(R.id.about);
 
-        String text = String.format(res.getString(R.string.about_content) + "</a>.</p></body></html>", 
+        String text = String.format(res.getString(R.string.about_content) + "</p></body></html>", 
                 "<html><body><h2>" + res.getString(R.string.app_name) + ":<br/>", 
                 "<a href=\"" + res.getString(R.string.link_anki) + "\">", 
         		"<a href=\"" + res.getString(R.string.link_issue_tracker) + "\">",

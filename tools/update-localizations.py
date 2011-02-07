@@ -43,6 +43,7 @@ def replacechars(filename):
 				line = "    <item>0</item>\n"
 			line = string.replace(line, '\'', '\\\'')
 			line = string.replace(line, '\\\\\'', '\\\'')
+			line = string.replace(line, 'amp;', '')
 		print line		
 		fin.write(line)
 	s.close()

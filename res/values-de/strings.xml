@@ -104,7 +104,7 @@
   <string name="text_selection_summ">Erlaubt es, Text per Langklick auszuwählen und zu kopieren, um in einem externen Wörterbuch nachzuschlagen</string>
   <string name="dictionary">Wörterbuch</string>
   <string name="dictionary_summ">Wörterbuch, in dem nachgeschlagen werden soll</string>
-  <string name="reset_languages">Sprachzuordnungen zurückgesetzt</string>
+  <string name="reset_languages">Sprachzuordnungen zurücksetzen</string>
   <string name="reset_languages_summ">Setzt die Sprachzuordnungen (für Vorlesen und Wörterbücher) für alle Stapel zurück. Für einzelne Stapel: siehe Stapelauswahl</string>
   <string name="reset_languages_question">Sämtliche Sprachzuordnungen zurücksetzen?</string>
   <string name="reset_languages_confirmation">Sämtliche Sprachzuordnungen zurückgesetzt</string>
@@ -181,7 +181,7 @@
   <string name="fact">Fakt</string>
   <string name="facts">Fakten</string>
   <string name="saving_changes">Änderungen werden gespeichert...</string>
-  <string name="about_content">%1$s Karteikarten für Android &amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt; AnkiDroid kann .anki-Dateien lesen, die mit der Desktop-Version von %2$s Anki&amp;lt;/a&amp;gt; erzeugt werden. &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; Um mitzuhelfen, AnkiDroid besser zu machen, bitten wir Sie, Fehler %3$s hier&amp;lt;/a&amp;gt; zu melden; neue Verbesserungsideen sind ebenfalls sehr wilkommen! Benutzen Sie das %4$s Wiki&amp;lt;/a&amp;gt; und sagen Sie Hallo im %5$s Forum&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid ist %6$s Open-SourceSoftware&amp;lt;/a&amp;gt;, %8$s jeder&amp;lt;/a&amp;gt; kann also %7$s mitmachen&amp;lt;/a&amp;gt; :-) Auch Nicht-Entwickler können helfen, zum Beispiel, indem sie das Wiki oder Screenshots aktualisieren, für die Anki-Desktop-Version %9$s spenden&amp;lt;/a&amp;gt; oder über AnkiDroid bloggen! &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid wird unter der %10$s GNU-GPL-v3-Lizenz&amp;lt;/a&amp;gt; veröffentlicht; der Quellcode findet sich %11$s hier</string>
+  <string name="about_content">%1$s Karteikarten für Android &lt;/h2&gt;&lt;p&gt; AnkiDroid kann .anki-Dateien lesen, die mit der Desktop-Version von %2$s Anki&lt;/a&gt; erzeugt werden. &lt;/p&gt;&lt;p&gt; Um mitzuhelfen, AnkiDroid besser zu machen, bitten wir Sie, Fehler %3$s hier&lt;/a&gt; zu melden; neue Verbesserungsideen sind ebenfalls sehr wilkommen! Benutzen Sie das %4$s Wiki&lt;/a&gt; und sagen Sie Hallo im %5$s Forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid ist %6$s Open-SourceSoftware&lt;/a&gt;, %8$s jeder&lt;/a&gt; kann also %7$s mitmachen&lt;/a&gt; :-) Auch Nicht-Entwickler können helfen, zum Beispiel, indem sie das Wiki oder Screenshots aktualisieren, für die Anki-Desktop-Version %9$s spenden&lt;/a&gt; oder über AnkiDroid bloggen! &lt;/p&gt;&lt;p&gt; AnkiDroid wird unter der %10$s GNU-GPL-v3-Lizenz&lt;/a&gt; veröffentlicht; der Quellcode findet sich %11$s hier&lt;/a&gt;.</string>
   <string name="studyoptions_title">Lerneinstellungen</string>
   <string name="studyoptions_deck_name">Stapelname</string>
   <string name="studyoptions_reviews_due">Fällige Wiederholungen:</string>
@@ -305,7 +305,7 @@
   <string name="undo">Rückgängig</string>
   <string name="redo">Wiederholen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurücksetzen</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>
   <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
   <string name="delete_deck_title">Stapel löschen</string>
   <string name="delete_deck_message">Möchten Sie den Stapel %s wirklich löschen?</string>
