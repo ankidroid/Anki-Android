@@ -331,6 +331,7 @@ public class Utils {
             output.close();
 
         } catch (Exception e) {
+            Log.e(AnkiDroidApp.TAG, e.getMessage());
             return false;
         }
         return true;
