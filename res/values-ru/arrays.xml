@@ -42,7 +42,7 @@
     <item>Как определено в модели карты</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>\"Параметры обучения\"</item>
+    <item>Параметры обучения</item>
     <item>Оглавление колод</item>
     <item>Оглавление колод только 1ый раз</item>
   </string-array>
@@ -79,14 +79,14 @@
     <item>лет</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
-    <item>Нов.карты в случайном порядке</item>
+    <item>Новые в случайном порядке</item>
     <item>Новые, как были добавлены</item>
     <item>Новые, в обрат.порядке добавления</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Нов.карты на несколько \`Просмотров\`</item>
-    <item>Новые добавлять после Просмотра</item>
-    <item>Новые до Просмотра</item>
+    <item>Новые на несколько просмотров</item>
+    <item>Новые добавлять после просмотра</item>
+    <item>Новые до просмотра</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
     <item>Просмотр карт с наибол. интервалом</item>

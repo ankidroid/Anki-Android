@@ -104,9 +104,10 @@
   <string name="text_selection_summ">Erlaubt es, Text per Langklick auszuwählen und zu kopieren, um in einem externen Wörterbuch nachzuschlagen</string>
   <string name="dictionary">Wörterbuch</string>
   <string name="dictionary_summ">Wörterbuch, in dem nachgeschlagen werden soll</string>
-  <string name="reset_languages">Sprachzuordnungen zurücksetzen</string>
-  <string name="reset_languages_summ">Setzt die Sprachzuordnungen (für Vorlesen und Wörterbücher) für alle Stapel zurück. Für einzelne Stapel kann dies in der Stapelauswahl getätigt werden</string>
-  <string name="reset_languages_confirmation">Alle Sprachzuordnungen zurücksetzen?</string>
+  <string name="reset_languages">Sprachzuordnungen zurückgesetzt</string>
+  <string name="reset_languages_summ">Setzt die Sprachzuordnungen (für Vorlesen und Wörterbücher) für alle Stapel zurück. Für einzelne Stapel: siehe Stapelauswahl</string>
+  <string name="reset_languages_question">Sämtliche Sprachzuordnungen zurücksetzen?</string>
+  <string name="reset_languages_confirmation">Sämtliche Sprachzuordnungen zurückgesetzt</string>
   <string name="use_ruby_support">Ruby-Anmerkungen</string>
   <string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
   <string name="display_font_size">Relative Schriftgröße</string>
@@ -123,7 +124,7 @@
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
-  <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; vertikal wischen: Karten beantworten (hoch: nochmal, runter: Empfehlung, Doppeltap: einfacher als Empfehlung)</string>
+  <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; vertikal wischen: Karten beantworten (runter: nochmal, hoch: Empfehlung, Doppeltap: einfacher als Empfehlung)</string>
   <string name="shake">Schütteln aktivieren</string>
   <string name="shake_summ">Schütteln Sie Ihr Android-Gerät, um die letzte Aktion rückgängig zu machen</string>
   <string name="tts">Vorlesen</string>

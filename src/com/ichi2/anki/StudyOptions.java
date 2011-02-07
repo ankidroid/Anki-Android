@@ -437,6 +437,7 @@ public class StudyOptions extends Activity {
         super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
         closeOpenedDeck();
+        MetaDB.closeDB();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
@@ -449,6 +450,7 @@ public class StudyOptions extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
             closeOpenedDeck();
+            MetaDB.closeDB();
         }
 
         return super.onKeyDown(keyCode, event);

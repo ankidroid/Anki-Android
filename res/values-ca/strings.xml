@@ -60,7 +60,7 @@
   <string name="session_time_limit">Límit de temps per sessió</string>
   <string name="session_time_limit_summ">El nombre de minuts d\'una sessió Trieu 0 si no voleu cap límit.</string>
   <string name="session_question_limit">Límit de preguntes per sessió</string>
-  <string name="session_question_limit_summ">El nombre de preguntes d\una sessió Trieu 0 si no voleu cap límit.</string>
+  <string name="session_question_limit_summ">El nombre de preguntes d\'una sessió Trieu 0 si no voleu cap límit.</string>
   <string name="new_cards_order">Ordre de les fitxes noves</string>
   <string name="new_cards_order_summ">L\'ordre en el que mostrar les fitxes noves.</string>
   <string name="show_new_cards_in">Mostrar les fitxes noves en...</string>
@@ -106,7 +106,8 @@
   <string name="dictionary_summ">Diccionari on realitzar les cerques</string>
   <string name="reset_languages">Reset Languages</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
-  <string name="reset_languages_confirmation">Reset all languages assignments?</string>
+  <string name="reset_languages_question">Reset all languages assignments?</string>
+  <string name="reset_languages_confirmation">All languages assignments reset</string>
   <string name="use_ruby_support">Permet anotacions de ruby</string>
   <string name="use_ruby_support_summ">El text inclòs entre corxets  \'[\' i \']\' es tractaràn con una anotació de ruby</string>
   <string name="display_font_size">Tipus de lletra de mida definida</string>

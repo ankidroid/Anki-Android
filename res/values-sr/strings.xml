@@ -106,7 +106,8 @@
   <string name="dictionary_summ">Rečnik u kome će da se pregledava značenje reči</string>
   <string name="reset_languages">Reset Languages</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
-  <string name="reset_languages_confirmation">Reset all languages assignments?</string>
+  <string name="reset_languages_question">Reset all languages assignments?</string>
+  <string name="reset_languages_confirmation">All languages assignments reset</string>
   <string name="use_ruby_support">Pruži upotrebljavanje rubi anotacije</string>
   <string name="use_ruby_support_summ">Ako su znakovi \'[\' i \']\' pronađeni, onda se uokvireni tekst smatra kao ruby anotacija</string>
   <string name="display_font_size">Relativna veličina fonta</string>
