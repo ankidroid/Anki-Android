@@ -25,20 +25,10 @@
     <item>V pořádí přidání</item>
     <item>V opačném pořadí přidání</item>
   </string-array>
-  <string-array name="newCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Rozprostřít v průběhu opakování</item>
     <item>Po opakování</item>
     <item>Před opakováním</item>
-  </string-array>
-  <string-array name="newCardSchedulingVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
     <item>Nejdelší interval nejdříve</item>
@@ -46,99 +36,20 @@
     <item>V pořadí přidání</item>
     <item>Náhodné pořadí</item>
   </string-array>
-  <string-array name="revCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-  </string-array>
-  <string-array name="displayFontSizeLabels">
-    <item>10%</item>
-    <item>20%</item>
-    <item>30%</item>
-    <item>40%</item>
-    <item>50%</item>
-    <item>60%</item>
-    <item>70%</item>
-    <item>80%</item>
-    <item>90%</item>
-    <item>100%</item>
-    <item>110%</item>
-    <item>120%</item>
-    <item>130%</item>
-    <item>140%</item>
-    <item>150%</item>
-  </string-array>
-  <string-array name="displayFontSizeVals">
-    <item>10</item>
-    <item>20</item>
-    <item>30</item>
-    <item>40</item>
-    <item>50</item>
-    <item>60</item>
-    <item>70</item>
-    <item>80</item>
-    <item>90</item>
-    <item>100</item>
-    <item>110</item>
-    <item>120</item>
-    <item>130</item>
-    <item>140</item>
-    <item>150</item>
-  </string-array>
-  <string-array name="button_size_labels">
-    <item>100 %</item>
-    <item>115 %</item>
-    <item>130 %</item>
-    <item>145 %</item>
-    <item>160 %</item>
-    <item>175 %</item>
-  </string-array>
-  <string-array name="button_size_values">
-    <item>100</item>
-    <item>115</item>
-    <item>130</item>
-    <item>145</item>
-    <item>160</item>
-    <item>175</item>
-  </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>Nezobrazit otázku v odpovědi</item>
     <item>Zobrazit otázku v odpovědi</item>
     <item>Podle nastavení modelu karet</item>
-  </string-array>
-  <string-array name="hideQuestionInAnswerVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Zobrazit nastavení studia</item>
     <item>Zobrazit vybírač balíčků</item>
     <item>Zobrazit vybírač balíčků po prvním spuštění v daném dni</item>
   </string-array>
-  <string-array name="startup_mode_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
-  <string-array name="dictionary_labels">
-    <item>Aedict</item>
-    <item>Leo.org</item>
-  </string-array>
-  <string-array name="dictionary_values">
-    <item>0</item>
-    <item>1</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Vždy hlásit</item>
     <item>Nikdy nehlásit</item>
     <item>Zeptat se mě</item>
-  </string-array>
-  <string-array name="error_reporting_choice_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -149,16 +60,6 @@
     <item>150</item>
     <item>200</item>
     <item>Nikdy</item>
-  </string-array>
-  <string-array name="widget_minimum_cards_due_values">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Zobrazit poslední upravenou nejdříve</item>
@@ -176,5 +77,28 @@
     <item>dnů</item>
     <item>měsíců</item>
     <item>let</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_order">
+    <item>Nové karty v náhodném pořadí</item>
+    <item>Nové karty v pořadí přidání</item>
+    <item>Nové karty v pořadí opačném než v jakém byly přidány</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_schedule">
+    <item>Rozprostřít nové karty skrz opakování</item>
+    <item>Nové karty až po opakování</item>
+    <item>Nové karty před opakováním</item>
+  </string-array>
+  <string-array name="studyoptions_more_rev_card_order">
+    <item>Opakovat karty z největšího intervalu</item>
+    <item>Opakovat karty z nejkratšího intervalu</item>
+    <item>Opakovat karty v pořadí přidání</item>
+    <item>Opakovat karty v náhodném pořadí</item>
+  </string-array>
+  <string-array name="studyoptions_more_fail_card_option">
+    <item>Zobrazit špatně zodpovězené karty brzo</item>
+    <item>Zobrazit špatně zodpovězené karty na konci</item>
+    <item>Zobrazit špatně zodpovězené karty za 10 minut</item>
+    <item>Zobrazit špatně zodpovězené karty za 8 hodin</item>
+    <item>Zobrazit špatně zodpovězené karty za 3 dny</item>
   </string-array>
 </resources>

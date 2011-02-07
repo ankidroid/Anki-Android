@@ -27,6 +27,7 @@
   <string name="no">Нет</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Колоды версий до 39 не поддерживаются AnkiDroid, пожалуйста, откройте колоду настольной версией Anki для обновлении колоды до последней версии.</string>
+  <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
   <string name="deckpicker_title">Выберите колоду (%1$d из %2$d)</string>
   <string name="deckpicker_title_nosdcard">SD-карта отмонтирована</string>
   <string name="deckpicker_due">%1$d из %2$d к повтору</string>
@@ -103,6 +104,9 @@
   <string name="text_selection_summ">Позволяет долгим нажатием на экран выделить и скопировать текст. Для дальнейшего поиска во внешнем словаре</string>
   <string name="dictionary">Словарь</string>
   <string name="dictionary_summ">Словарь, в котором будет произведён поиск</string>
+  <string name="reset_languages">Reset Languages</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_languages_confirmation">Reset all languages assignments?</string>
   <string name="use_ruby_support">Поддерживать Ruby-аннотации</string>
   <string name="use_ruby_support_summ">Если найдены символы \'[\' и \']\', то заключенный в них текст будет рассмотрен как Ruby-аннотация</string>
   <string name="display_font_size">Размер шрифта</string>
@@ -122,6 +126,10 @@
   <string name="swipe_summ_on">Горизонтальный жест (при swipe) - смена экранов, вертикал. - ответ (вверх: снова, вниз: рекомен., двой.касание: проще чем рекомен.)</string>
   <string name="shake">Тряхнуть для отмены</string>
   <string name="shake_summ">Тряхнуть ваше устройство для отмены последнего действия</string>
+  <string name="tts">Text to Speech</string>
+  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="play_sounds_at_start">Play Sounds Instantly</string>
+  <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Уровень трясения</string>
   <string name="shake_intensity_summ">Установка силы трясения для срабатывания</string>
   <string name="pref_cat_experimental">Экспериментальное</string>
@@ -129,6 +137,7 @@
   <string name="sync_enabled_in_answer_summ">Синхронизация в разработке. При синхронизации колоды могут быть повреждены. Делайте чаще резервные копии!</string>
   <string name="fix_hebrew_text">Обратный порядок написания (RTL) для иврита</string>
   <string name="fix_hebrew_text_summ">Ограниченная поддержка иврита для Android-платформы. Не поддерживаются гласные буквы.</string>
+  <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
   <string name="shareddeckpicker_title">Выберите колоду, которую вы хотите загрузить</string>
   <string name="downloaddeck_search">Поиск</string>
@@ -137,6 +146,14 @@
   <string name="about_title">О программе</string>
   <string name="cardeditor_title">Редактор карты</string>
   <string name="factadder_title">Автор карты</string>
+  <string name="model">Модель:</string>
+  <string name="select_model">Модель</string>
+  <string name="card">Карта:</string>
+  <string name="cards">Карточек:</string>
+  <string name="add">Добавить</string>
+  <string name="close">Закрыть</string>
+  <string name="select_card_model">Select Card Model</string>
+  <string name="select">Select</string>
   <string name="loading_deck">Открытие колоды. Пожалуйста, подождите...</string>
   <string name="connection_needed">Нет подключения к Интернету</string>
   <string name="currently_downloading">Загружается</string>
@@ -162,20 +179,8 @@
   <string name="sync_all">Синхронизировать все</string>
   <string name="fact">факт</string>
   <string name="facts">факты</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Добавлено/Изменено&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Здесь&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Сервер&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Карточек&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Фактов&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Моделей&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Статистика&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Сохранение изменений...</string>
-  <string name="about_content">&lt;html&gt;
-&lt;body&gt;
-&lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Flashcards (Карточки) для Android&lt;/h2&gt;
-&lt;p&gt;AnkiDroid может читать .anki-файлы, созданные десктоп-версией &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Чтобы сделать AnkiDroid лучше, пожалуйста, посылайте отчеты о любых ошибках &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;сюда&lt;/a&gt;, также приветствуются новые идеи или пожелания!
-Пожалуйста, загляните на &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt;, и &lt;a href="http://groups.google.com/group/anki-android"&gt;наш форум&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid - &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;свободная и открытая программное обеспечение&lt;/a&gt;, любой желающий может принять &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;участие&lt;/a&gt;. 
-"Не-программисты" тоже могут помочь - редактировать wiki, добавлять скриншоты, &lt;a href="http://ichi2.net/anki/donate.html"&gt;или помочь материально!  :-) &lt;/a&gt; Anki. Пишите о AnkiDroid в своих блогах!&lt;/p&gt;
-&lt;p&gt;AnkiDroid распространяется под &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 лицензией&lt;/a&gt; и её исходный код доступен &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;здесь&lt;/a&gt;.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</string>
+  <string name="about_content">%1$s Flashcards for Android &amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&amp;lt;/a&amp;gt; software. &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; To help us make AnkiDroid better, please report any bug %3$s here&amp;lt;/a&amp;gt;; new feature ideas are very welcome too! Please use the %4$s wiki&amp;lt;/a&amp;gt; and say Hi on the %5$s forum&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid is %6$s open source software&amp;lt;/a&amp;gt;, so everyone is encouraged to %7$s join&amp;lt;/a&amp;gt; the %8$s contributors&amp;lt;/a&amp;gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&amp;lt;/a&amp;gt; to Anki, or blogging about AnkiDroid! &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&amp;lt;/a&amp;gt; and the source code is available %11$s here</string>
   <string name="studyoptions_title">Параметры обучения</string>
   <string name="studyoptions_deck_name">Название колоды</string>
   <string name="studyoptions_reviews_due">Повторов:</string>
@@ -197,6 +202,7 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
   <string name="studyoptions_load_other_deck">Загружать другие колоды</string>
   <string name="studyoptions_load_sample_deck">Загрузить колоду с примерами</string>
+  <string name="studyoptions_night_mode">Night Mode</string>
   <string name="menu_open_deck">Открыть колоду</string>
   <string name="menu_sync">Синхронизация</string>
   <string name="menu_download_deck">Скачать колоду</string>
@@ -233,7 +239,6 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="log_out">Завершить сеанс</string>
   <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
   <string name="invalid_username_password">Неправильное имя пользователя или пароль.</string>
-  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
   <string name="download_finished">Загрузка завершена</string>
   <string name="deck_downloaded">Колода скачана</string>
   <string name="connection_error_message">Ошибка сети.</string>
@@ -270,11 +275,11 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="sync_conflict_local">Сохранить локальную</string>
   <string name="sync_conflict_remote">Сохранить серверную</string>
   <string name="sync_conflict_cancel">Отменить синхронизацию</string>
+  <string name="error_reporter_title">Error Reporter</string>
   <string name="error_message">Есть одна ошибка для отчёта</string>
   <string name="errors_message">Найдено %d ошибки для отчета</string>
   <string name="error_ok">Отправить отчёт об ошибках</string>
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
-  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="error_reporting_choice_summary">Можно посылать ошибки программы автоматически, не посылать или выводить вопрос пользователю</string>
   <string name="widget_pref">Виджет</string>
@@ -284,12 +289,12 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="widget_minimum_cards_due_blink">Мигать</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Минимально карт для показа Уведомления</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карт</string>
-  <string name="model">Модель:</string>
-  <string name="select_model">Модель</string>
-  <string name="card">Карта:</string>
-  <string name="cards">Карточек:</string>
-  <string name="add">Добавить</string>
-  <string name="close">Закрыть</string>
+  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
+  <string name="widget_card">card</string>
+  <string name="widget_cards">cards</string>
+  <string name="widget_deck">deck</string>
+  <string name="widget_decks">decks</string>
   <string name="soon">Скоро</string>
   <string name="show_next_review_time">Время у кнопок показывать</string>
   <string name="show_next_review_time_summ">Показывать добавляемое время у кнопок ответа (Скоро, +1, +5 и т.д.)</string>
@@ -298,31 +303,12 @@ Flashcards (Карточки) для Android&lt;/h2&gt;
   <string name="per_day">В день</string>
   <string name="undo">Откат</string>
   <string name="redo">Возврат</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
   <string name="delete_deck_title">Удалить колоду</string>
   <string name="delete_deck_message">Вы действительно хотите удалить колоду %s?</string>
   <string name="delete_deck_confirm">Удалить</string>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Нов.карты в случайном порядке</item>
-    <item>Новые, как были добавлены</item>
-    <item>Новые, в обрат.порядке добавления</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Нов.карты на несколько \`Просмотров\`</item>
-    <item>Новые добавлять после Просмотра</item>
-    <item>Новые до Просмотра</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Просмотр карт с наибол. интервалом</item>
-    <item>Просмотр карт с наимен. интервалом</item>
-    <item>Просмотр карт в порядке как есть</item>
-    <item>Просмотр карт в случ. порядке</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Показать неотвеченных карт быстро</item>
-    <item>Показать неотвеченных карт в конце</item>
-    <item>Показать неотвеченных карт за 10 минут</item>
-    <item>Показать неотвеченных карт за 8 часов</item>
-    <item>Показать неотвеченных карт за 3 дня</item>
-  </string-array>
+  <string name="new_version_title">New Version:</string>
+  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 </resources>

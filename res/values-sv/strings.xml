@@ -22,11 +22,12 @@
 <resources>
   <string name="CardEditorCancelButton">Avbryt</string>
   <string name="CardEditorSaveButton">Spara</string>
-  <string name="app_name">Ankidroid</string>
-  <string name="yes">Ja</string>
-  <string name="no">Nej</string>
+  <string name="app_name">AnkiDroid</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
   <string name="ok">Ok</string>
   <string name="deck_upgrade_too_old_version">Däck med en version äldre än 39 stöds inte av AnkiDroid. Öppna dessa med Anki desktop för att uppgradera till den senaste versionen.</string>
+  <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
   <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">SD-kortet är frånkopplat</string>
   <string name="deckpicker_due">%1$d av %2$d i kö</string>
@@ -100,9 +101,12 @@
   <string name="write_answers">Skriv svar</string>
   <string name="write_answers_summ">Låter dig skriva svaret och jämföra med det korrekta svaret</string>
   <string name="text_selection">Allow text selection</string>
-  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in external dictionary</string>
+  <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in an external dictionary</string>
   <string name="dictionary">Dictionary</string>
   <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
+  <string name="reset_languages">Reset Languages</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_languages_confirmation">Reset all languages assignments?</string>
   <string name="use_ruby_support">Stöd för ruby kommentarer</string>
   <string name="use_ruby_support_summ">Om tecknet \'[\' och  \']\' hittas så hanteras inramad text som ruby-anteckning</string>
   <string name="display_font_size">Relativ teckenstorlek</string>
@@ -114,7 +118,7 @@
   <string name="deck_path">Sökväg till kortlekarna</string>
   <string name="deck_path_summ">Sökväg vart dina kortlekar är lagrade</string>
   <string name="fullscreen_review">Review in fullscreen</string>
-  <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
+  <string name="fullscreen_review_summ">You can decide if you want to use all available screen space during card reviewing</string>
   <string name="zoom">Enable Zoom</string>
   <string name="zoom_summ">Visa zoom-kontrollerna vid granskning</string>
   <string name="swipe">Aktivera gester</string>
@@ -122,6 +126,10 @@
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
   <string name="shake">Shake to Undo</string>
   <string name="shake_summ">Shake your device to undo the last action</string>
+  <string name="tts">Text to Speech</string>
+  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="play_sounds_at_start">Play Sounds Instantly</string>
+  <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Shake threshold</string>
   <string name="shake_intensity_summ">Threshold for shake recognition</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
@@ -129,6 +137,7 @@
   <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
   <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
   <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
+  <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Välj den kortlek du vill ladda ner</string>
   <string name="downloaddeck_search">Search</string>
@@ -137,6 +146,14 @@
   <string name="about_title">Om</string>
   <string name="cardeditor_title">Kort editor</string>
   <string name="factadder_title">Card Adder</string>
+  <string name="model">Model:</string>
+  <string name="select_model">Model</string>
+  <string name="card">Card:</string>
+  <string name="cards">Cards:</string>
+  <string name="add">Add</string>
+  <string name="close">Close</string>
+  <string name="select_card_model">Select Card Model</string>
+  <string name="select">Select</string>
   <string name="loading_deck">Laddar kortlek. Var god vänta...</string>
   <string name="connection_needed">Ingen internetanslutning</string>
   <string name="currently_downloading">Currently downloading</string>
@@ -149,7 +166,7 @@
   <string name="cancelling">Avbryter...</string>
   <string name="loading_personal_decks">Loading available personal decks...</string>
   <string name="connection_error_title">Attention</string>
-  <string name="connection_error_return_message">A network error has ocurred. Retry, or cancel and return to the previous screen.</string>
+  <string name="connection_error_return_message">A network error has occurred. Retry, or cancel and return to the previous screen.</string>
   <string name="retry">Retry</string>
   <string name="cancel">Cancel</string>
   <string name="shared_decks">Shared Decks</string>
@@ -162,20 +179,8 @@
   <string name="sync_all">Sync all</string>
   <string name="fact">kort</string>
   <string name="facts">kort</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Sparar ändringar...</string>
-  <string name="about_content">&lt;html&gt;
-&lt;body&gt;
-&lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Flashkort för Android&lt;/h2&gt;
-&lt;p&gt;AnkiDroid kan läsa .anki-filer producerade av &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;För att hjälpa oss, var god och rapportera eventuella buggar &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;här&lt;/a&gt;, förslag på nya funktioner är också välkommna!
-Var god använd &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki:t&lt;/a&gt; och kom förbi &lt;a href="http://groups.google.com/group/anki-android"&gt;forumet&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid är ett &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;öppen källkodsprojekt &lt;/a&gt;, så alla uppmanas att &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;gå med&lt;/a&gt; bland &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;utvecklarna&lt;/a&gt; :-)
-De som inte kan programmera får gärna hjälpa till med till exempel att uppdatera wiki:t och skärmdumpar, &lt;a href="http://ichi2.net/anki/donate.html"&gt;donera&lt;/a&gt; till Anki, eller blogga om AnkiDroid!&lt;/p&gt;
-&lt;p&gt;AnkiDroid släps under &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL v3 licens&lt;/a&gt; och källkoden finns tillgänglig &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;här&lt;/a&gt;.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</string>
+  <string name="about_content">%1$s Flashcards for Android &amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&amp;lt;/a&amp;gt; software. &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; To help us make AnkiDroid better, please report any bug %3$s here&amp;lt;/a&amp;gt;; new feature ideas are very welcome too! Please use the %4$s wiki&amp;lt;/a&amp;gt; and say Hi on the %5$s forum&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid is %6$s open source software&amp;lt;/a&amp;gt;, so everyone is encouraged to %7$s join&amp;lt;/a&amp;gt; the %8$s contributors&amp;lt;/a&amp;gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&amp;lt;/a&amp;gt; to Anki, or blogging about AnkiDroid! &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&amp;lt;/a&amp;gt; and the source code is available %11$s here</string>
   <string name="studyoptions_title">Study Options</string>
   <string name="studyoptions_deck_name">Deck name</string>
   <string name="studyoptions_reviews_due">Reviews due:</string>
@@ -192,11 +197,12 @@ De som inte kan programmera får gärna hjälpa till med till exempel att uppdat
   <string name="studyoptions_nodeck_title">No Deck Loaded</string>
   <string name="studyoptions_nodeck_message">No deck is currently loaded. Anki decks are stored in the directory \"%s\" on your SD card. This location can be specified in the preferences (press your device\'s \"Menu\" button and select \"Preferences\").</string>
   <string name="studyoptions_deck_not_loaded_title">Deck Could Not Be Loaded</string>
-  <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in Ankidroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
+  <string name="studyoptions_deck_not_loaded_message">The deck you selected is not a valid Anki deck. Please use the Anki desktop application to create a valid deck before loading it in AnkiDroid.\n\nIn the meantime, you can select another deck or load the sample deck with the buttons below.</string>
   <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
-  <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the sdcard in order to read and load your Anki decks. Check that your sdcard is mounted and try again.</string>
+  <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
   <string name="studyoptions_load_other_deck">Load Other Deck</string>
   <string name="studyoptions_load_sample_deck">Ladda exempel däck</string>
+  <string name="studyoptions_night_mode">Night Mode</string>
   <string name="menu_open_deck">Öppna däck</string>
   <string name="menu_sync">Synkronisera</string>
   <string name="menu_download_deck">Hämta däck</string>
@@ -233,7 +239,6 @@ De som inte kan programmera får gärna hjälpa till med till exempel att uppdat
   <string name="log_out">Logga ut</string>
   <string name="alert_logging_message">Loggar in, vänta ...</string>
   <string name="invalid_username_password">Ogiltigt användarnamn eller lösenord.</string>
-  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
   <string name="download_finished">Hämtningen är färdig</string>
   <string name="deck_downloaded">Däcket är hämtat</string>
   <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
@@ -258,23 +263,23 @@ De som inte kan programmera får gärna hjälpa till med till exempel att uppdat
   <string name="sync_log_no_changes_message">No changes found</string>
   <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Full sync from server</string>
-  <string name="sync_log_fact_to_server_message">1 fact to server</string>
-  <string name="sync_log_facts_to_server_message">%d facts to server</string>
-  <string name="sync_log_fact_from_server_message">1 fact from server</string>
-  <string name="sync_log_facts_from_server_message">%d facts from server</string>
-  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
-  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
+  <string name="sync_log_fact_to_server_message">1 card to server</string>
+  <string name="sync_log_facts_to_server_message">%d cards to server</string>
+  <string name="sync_log_fact_from_server_message">1 card from server</string>
+  <string name="sync_log_facts_from_server_message">%d cards from server</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
+  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
   <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_conflict_title">Syncing conflict</string>
   <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
   <string name="sync_conflict_local">Keep Local</string>
   <string name="sync_conflict_remote">Keep Remote</string>
   <string name="sync_conflict_cancel">Cancel Syncing</string>
+  <string name="error_reporter_title">Error Reporter</string>
   <string name="error_message">Det finns ett fel att rapportera</string>
   <string name="errors_message">Det finns %d fel att rapportera</string>
   <string name="error_ok">Rapportera fel</string>
   <string name="error_cancel">Rapportera inte fel</string>
-  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Error reporting mode</string>
   <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
   <string name="widget_pref">Widget</string>
@@ -284,12 +289,12 @@ De som inte kan programmera får gärna hjälpa till med till exempel att uppdat
   <string name="widget_minimum_cards_due_blink">Blink light</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-  <string name="model">Model:</string>
-  <string name="select_model">Model</string>
-  <string name="card">Card:</string>
-  <string name="cards">Cards:</string>
-  <string name="add">Add</string>
-  <string name="close">Close</string>
+  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
+  <string name="widget_card">card</string>
+  <string name="widget_cards">cards</string>
+  <string name="widget_deck">deck</string>
+  <string name="widget_decks">decks</string>
   <string name="soon">Soon</string>
   <string name="show_next_review_time">Next review time</string>
   <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
@@ -298,31 +303,12 @@ De som inte kan programmera får gärna hjälpa till med till exempel att uppdat
   <string name="per_day">Per Day</string>
   <string name="undo">Undo</string>
   <string name="redo">Redo</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_delete_deck">Ta bort däck</string>
   <string name="delete_deck_title">Delete Deck</string>
   <string name="delete_deck_message">Vill du verkligen ta bort däcket %s?</string>
   <string name="delete_deck_confirm">Ta bort det</string>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
-    <item>Review cards in random order</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Visa misslyckade kort snart</item>
-    <item>Visa misslyckade kort i slutet</item>
-    <item>Visa misslyckade kort om 10 minuter</item>
-    <item>Visa misslyckade kort om 8 timmar</item>
-    <item>Visa misslyckade kort om 3 dagar</item>
-  </string-array>
+  <string name="new_version_title">New Version:</string>
+  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 </resources>

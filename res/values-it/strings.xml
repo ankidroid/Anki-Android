@@ -22,11 +22,12 @@
 <resources>
   <string name="CardEditorCancelButton">Annulla</string>
   <string name="CardEditorSaveButton">Salva</string>
-  <string name="app_name">Ankidroid</string>
+  <string name="app_name">AnkiDroid</string>
   <string name="yes">Sì</string>
   <string name="no">No</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">I mazzi con una versione più vecchia della 39 non sono usabili in AnkiDroid, si suggerisce di aprire il mazzo con Anki Desktop e aggiornare il mazzo all\'ultima versione.</string>
+  <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
   <string name="deckpicker_title">Selezionare il mazzo (%1$d di %2$d scadute)</string>
   <string name="deckpicker_title_nosdcard">La scheda SD non è montata</string>
   <string name="deckpicker_due">%1$d di %2$d da ripetere</string>
@@ -103,6 +104,9 @@
   <string name="text_selection_summ">Consente di selezionare e copiare il testo da carte con un clic lungo al fine di eseguire ricerche nel dizionario esterno</string>
   <string name="dictionary">Dizionario</string>
   <string name="dictionary_summ">Dizionario in cui le ricerche devono essere eseguite</string>
+  <string name="reset_languages">Reset Languages</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_languages_confirmation">Reset all languages assignments?</string>
   <string name="use_ruby_support">Fornisce support alle annotazioni ruby</string>
   <string name="use_ruby_support_summ">Se i caratteri \'[\ e \']\' sono nel testo, il testo racchiuso sarà considerato come una annotazione ruby</string>
   <string name="display_font_size">Dimensione carattere del display</string>
@@ -122,6 +126,10 @@
   <string name="swipe_summ_on">Scorrere orizzontalmente per passare tra le schermate e verticalmente per rispondere alle carte (verso il basso: ancora una volta, in alto: suggerimento, toccare due volte: più facile di rec.)</string>
   <string name="shake">Scuotere per annullare</string>
   <string name="shake_summ">Scuotere il dispositivo per annullare l\'ultima azione</string>
+  <string name="tts">Text to Speech</string>
+  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="play_sounds_at_start">Play Sounds Instantly</string>
+  <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Limite di scuotimento</string>
   <string name="shake_intensity_summ">Soglia per il riconoscimento dello scuotimento</string>
   <string name="pref_cat_experimental">SPERIMENTALE</string>
@@ -129,6 +137,7 @@
   <string name="sync_enabled_in_answer_summ">Ancora molti bug, potrebbero danneggiare i vostri mazzi. Fare backup frequenti!</string>
   <string name="fix_hebrew_text">Applica RTL per Ebraico</string>
   <string name="fix_hebrew_text_summ">Soluzione per il limitato supporto alla lingua Ebraica della piattaforma Android. Non supporta le vocali.</string>
+  <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Apri il mazzo online</string>
   <string name="shareddeckpicker_title">Seleziona il mazzo da scaricare</string>
   <string name="downloaddeck_search">Cerca</string>
@@ -137,6 +146,14 @@
   <string name="about_title">Informazioni</string>
   <string name="cardeditor_title">Modica la carta</string>
   <string name="factadder_title">Aggiungi carta</string>
+  <string name="model">Modello:</string>
+  <string name="select_model">Modello</string>
+  <string name="card">Carta:</string>
+  <string name="cards">Carte:</string>
+  <string name="add">Aggiungi</string>
+  <string name="close">Chiudi</string>
+  <string name="select_card_model">Select Card Model</string>
+  <string name="select">Select</string>
   <string name="loading_deck">Caricamento mazzo. Attendi...</string>
   <string name="connection_needed">Nessuna connessione a Internet</string>
   <string name="currently_downloading">Scaricamento in corso</string>
@@ -162,9 +179,8 @@
   <string name="sync_all">Sincronizza tutto</string>
   <string name="fact">fatto</string>
   <string name="facts">fatti</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Aggiunte/modificate&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;qui&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;carte di&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;fatti&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;modelli&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Salvataggio delle modifiche ...</string>
-  <string name="about_content">&lt;html&gt;&lt;body&gt;&lt;h2&gt;AnkiDroid: &lt;br/&gt; Flashcards per Android&lt;/h2&gt; &lt;p&gt;AnkiDroid può leggere i file di .anki prodotti con la versione desktop &lt;a href="http://ichi2.net/anki"&gt; Anki&lt;/a&gt; software.&lt;/p&gt; &lt;p&gt;Per aiutarci a rendere AnkiDroid migliore, si prega di segnalare eventuali bug &lt;a href="http://code.google.com/p/ankidroid/issues"&gt; qui&lt;/a&gt;, la richiesta di nuove funzionalità ed idee sono le benvenute! Si prega di utilizzare la &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt; wiki&lt;/a&gt; e presentarsi sul &lt;a href="http://groups.google.com/group/anki-android"&gt; forum&lt;/a&gt;.&lt;/p&gt; &lt;p&gt;AnkiDroid è un &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt; software open source&lt;/a&gt;, in modo che ognuno è incoraggiato a &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt; join&lt;/a&gt; i &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt; contribuire&lt;/a&gt;:-) Anche chi non è un programmatore può essere di aiuto, per esempio aggiornando la wiki e gli screenshots, &lt;a href="http://ichi2.net/anki/donate.html"&gt; facendo una donazione&lt;/a&gt; ad Anki o parlando di AnkiDroid!&lt;/p&gt; &lt;p&gt;AnkiDroid è rilasciato sotto la &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt; licenza di GNU-GPL v3&lt;/a&gt; e il codice sorgente è disponibile &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt; qui&lt;/a&gt;&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+  <string name="about_content">%1$s Flashcards for Android &amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&amp;lt;/a&amp;gt; software. &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; To help us make AnkiDroid better, please report any bug %3$s here&amp;lt;/a&amp;gt;; new feature ideas are very welcome too! Please use the %4$s wiki&amp;lt;/a&amp;gt; and say Hi on the %5$s forum&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid is %6$s open source software&amp;lt;/a&amp;gt;, so everyone is encouraged to %7$s join&amp;lt;/a&amp;gt; the %8$s contributors&amp;lt;/a&amp;gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&amp;lt;/a&amp;gt; to Anki, or blogging about AnkiDroid! &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&amp;lt;/a&amp;gt; and the source code is available %11$s here</string>
   <string name="studyoptions_title">Opzioni di studio</string>
   <string name="studyoptions_deck_name">Nome del mazzo</string>
   <string name="studyoptions_reviews_due">Da ripetere:</string>
@@ -186,6 +202,7 @@
   <string name="studyoptions_no_external_storage_message">La memoria esterna non è disponibile. AnkiDroid deve avere accesso al SD Card per leggere e caricare i mazzi. Controlla che la SD Card sia correttamente al suo posto e prova ancora.</string>
   <string name="studyoptions_load_other_deck">Carica un altro mazzo</string>
   <string name="studyoptions_load_sample_deck">Carica un mazzo di esempio</string>
+  <string name="studyoptions_night_mode">Night Mode</string>
   <string name="menu_open_deck">Apri il mazzo</string>
   <string name="menu_sync">Sincronizza</string>
   <string name="menu_download_deck">Scarica il mazzo</string>
@@ -222,7 +239,6 @@
   <string name="log_out">Esci</string>
   <string name="alert_logging_message">Attendere prego, login in corso...</string>
   <string name="invalid_username_password">Username o password invalidi.</string>
-  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
   <string name="download_finished">Download finito</string>
   <string name="deck_downloaded">Mazzo scaricato</string>
   <string name="connection_error_message">Problemi di connessione.</string>
@@ -259,11 +275,11 @@
   <string name="sync_conflict_local">Tenere in locale</string>
   <string name="sync_conflict_remote">Tenere in remoto</string>
   <string name="sync_conflict_cancel">Annulla Sincronizzazione</string>
+  <string name="error_reporter_title">Error Reporter</string>
   <string name="error_message">C\'è un errore da riportare</string>
   <string name="errors_message">Ci sono %d errori da segnalare</string>
   <string name="error_ok">Segnala gli errori</string>
   <string name="error_cancel">Non segnalare gli errori</string>
-  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Modalità di segnalazione degli errori</string>
   <string name="error_reporting_choice_summary">Gli errori possono essere segnalati automaticamente, mai segnalati, oppure è possibile che venga richiesto</string>
   <string name="widget_pref">Widget</string>
@@ -273,12 +289,12 @@
   <string name="widget_minimum_cards_due_blink">Luce lampeggiante</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Carte scadute</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid carte scadute</string>
-  <string name="model">Modello:</string>
-  <string name="select_model">Modello</string>
-  <string name="card">Carta:</string>
-  <string name="cards">Carte:</string>
-  <string name="add">Aggiungi</string>
-  <string name="close">Chiudi</string>
+  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
+  <string name="widget_card">card</string>
+  <string name="widget_cards">cards</string>
+  <string name="widget_deck">deck</string>
+  <string name="widget_decks">decks</string>
   <string name="soon">Presto</string>
   <string name="show_next_review_time">Prossima ripetizione</string>
   <string name="show_next_review_time_summ">Mostra il prossimo tempo di ripetizione a secondo della tua scelta</string>
@@ -287,31 +303,12 @@
   <string name="per_day">Al giorno</string>
   <string name="undo">Annullare</string>
   <string name="redo">Ripristinare</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_delete_deck">Elimina il mazzo</string>
   <string name="delete_deck_title">Elimina il mazzo</string>
   <string name="delete_deck_message">Sei sicuro di cancellare il mazzo %s?</string>
   <string name="delete_deck_confirm">Cancella</string>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Mostra le carte nuove in ordine casuale</item>
-    <item>Mostra le carte nuove in ordine di aggiunta</item>
-    <item>Mostra le nuove carte in ordine di aggiunta inverso</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Distribuisci le carte nuove sulla sequenza di ripetizioni</item>
-    <item>Mostra le carte nuove dopo tutte le altre</item>
-    <item>Mostra le carte nuove prima delle ripetizioni</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Ripeti a partire dalle carte con l\'intervallo più lungo</item>
-    <item>Ripeti a partire dalle carte con l\'intervallo più corto</item>
-    <item>Ripeti le carte in ordine di scadenza</item>
-    <item>Rpeti le carte in ordine casuale</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Mostra presto le carte fallite</item>
-    <item>Mostra le carte fallite alla fine</item>
-    <item>Mostra le carte sbagliate tra 10 minuti</item>
-    <item>Mostra le carte sbagliate tra 8 ore</item>
-    <item>Mostra le carte sbagliate tra 3 giorni</item>
-  </string-array>
+  <string name="new_version_title">New Version:</string>
+  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 </resources>

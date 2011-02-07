@@ -27,6 +27,7 @@
   <string name="no">Ne</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Balíčky verze starší jako 39 nejsou AnkdiDroidem podporovány. Prosím otevřete je v desktopové verzi Anki a aktualizujte je na nejnovější verzi.</string>
+  <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
   <string name="deckpicker_title">Vybrat balíček (%1$d z %2$d k zopakování)</string>
   <string name="deckpicker_title_nosdcard">SD karta je odpojena</string>
   <string name="deckpicker_due">zbývá %1$d / %2$d </string>
@@ -103,6 +104,9 @@
   <string name="text_selection_summ">Dovolí označit a kopírovat text z karet pomocí dlouhého kliknutí, aby mohlo být provedeno hledání v externím slovníku</string>
   <string name="dictionary">Slovník</string>
   <string name="dictionary_summ">Slovník v němž by mělo být hledání provedeno</string>
+  <string name="reset_languages">Reset Languages</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_languages_confirmation">Reset all languages assignments?</string>
   <string name="use_ruby_support">Poskytovat podporu ruby anotace</string>
   <string name="use_ruby_support_summ">Pokud jsou nalezeny znaky \ \' [\ \' a \ \'] \ \', pak je text mezi nimi zpracován jako ruby anotace </string>
   <string name="display_font_size">Relativní velikost fontu</string>
@@ -122,6 +126,10 @@
   <string name="swipe_summ_on">Čmárněte prste horizontálně pro přepnutí mezi obrazovkami a vertikálně pro zodpovězení karet (dolů: znovu, nahoru: doporučení, dvojité poklepání: lehčí)</string>
   <string name="shake">Zatřepat pro vrácení změn</string>
   <string name="shake_summ">Zatřepejte svým přístrojem pro zpětné vrácení poslední akce</string>
+  <string name="tts">Text to Speech</string>
+  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="play_sounds_at_start">Play Sounds Instantly</string>
+  <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Míra třepání</string>
   <string name="shake_intensity_summ">Míra třepání rozpoznatelného za třepání</string>
   <string name="pref_cat_experimental">EXPERIMENTÁLNÍ</string>
@@ -129,6 +137,7 @@
   <string name="sync_enabled_in_answer_summ">Stále mnoho chyb, může způsobit pokažení vašich balíčků. Zálohujte často!</string>
   <string name="fix_hebrew_text">Vynutit RTL pro hebrejštinu</string>
   <string name="fix_hebrew_text_summ">Řešení pro omezenou podporu hebrejštiny Android platformy. Nepodporuje samohlásky.</string>
+  <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Otevřít online balíček</string>
   <string name="shareddeckpicker_title">Vyberte balíček, který chcete stáhnout</string>
   <string name="downloaddeck_search">Hledat</string>
@@ -137,6 +146,14 @@
   <string name="about_title">O aplikaci</string>
   <string name="cardeditor_title">Editor karet</string>
   <string name="factadder_title">Přidávač karet</string>
+  <string name="model">Model:</string>
+  <string name="select_model">Model</string>
+  <string name="card">Karta:</string>
+  <string name="cards">Karty:</string>
+  <string name="add">Přidat</string>
+  <string name="close">Zavřít</string>
+  <string name="select_card_model">Select Card Model</string>
+  <string name="select">Select</string>
   <string name="loading_deck">Načítám balíček. Čekejte prosím ...</string>
   <string name="connection_needed">Připojení k Internetu nenalezeno</string>
   <string name="currently_downloading">Právě se stahuje</string>
@@ -162,9 +179,8 @@
   <string name="sync_all">Synchronizovat všechny</string>
   <string name="fact">fakt</string>
   <string name="facts">fakta</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Přidáno/Změněno&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Zde&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Karty&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Údaje&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Modely&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Statistiky&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Ukládání změn ...</string>
-  <string name="about_content">&lt;html&gt;&lt;body&gt;&lt;h2&gt; AnkiDroid: &lt;br/&gt; Karty pro Android &lt;/h2&gt;&lt;p&gt; AnkiDroid umí číst soubory .anki vytvořené desktopovým prostředím &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; Chcete-li nám pomoci vylepšit AnkiDroid, nahlašte chybu &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;zde&lt;/a&gt; , nápady na nové funkce jsou též vítány! Prosím použijte &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wiki&lt;/a&gt; a pozdravte na &lt;a href="http://groups.google.com/group/anki-android"&gt;fóru&lt;/a&gt; . &lt;/p&gt;&lt;p&gt; AnkiDroid je &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;open source software&lt;/a&gt; , takže každý se může &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;připojit k &lt;/a&gt; &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;přispěvatelům&lt;/a&gt; :-) Pomoci můžete nejen vývojem, ale například též aktualizací wiki a screenshotů, &lt;a href="http://ichi2.net/anki/donate.html"&gt;příspěvkem&lt;/a&gt; Anki, nebo blogem o AnkiDroidu! &lt;/p&gt;&lt;p&gt; AnkiDroid je vydáván pod licencí &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU GPL v3-licence&lt;/a&gt; a zdrojový kód je k dispozici &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;zde&lt;/a&gt; . &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+  <string name="about_content">%1$s Flashcards for Android &amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&amp;lt;/a&amp;gt; software. &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; To help us make AnkiDroid better, please report any bug %3$s here&amp;lt;/a&amp;gt;; new feature ideas are very welcome too! Please use the %4$s wiki&amp;lt;/a&amp;gt; and say Hi on the %5$s forum&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid is %6$s open source software&amp;lt;/a&amp;gt;, so everyone is encouraged to %7$s join&amp;lt;/a&amp;gt; the %8$s contributors&amp;lt;/a&amp;gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&amp;lt;/a&amp;gt; to Anki, or blogging about AnkiDroid! &amp;lt;/p&amp;gt;&amp;lt;p&amp;gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&amp;lt;/a&amp;gt; and the source code is available %11$s here</string>
   <string name="studyoptions_title">Studijní možnosti</string>
   <string name="studyoptions_deck_name">Jméno balíčku</string>
   <string name="studyoptions_reviews_due">K zopakování:</string>
@@ -186,6 +202,7 @@
   <string name="studyoptions_no_external_storage_message">Žádná externí paměť není momentálně k dispozici. AnkiDroid potřebuje přistupovat k SD kartě, aby mohl načíst Anki balíčky. Zkontrolujte, zda je vaše SD karta připojena a akci opakujte.</string>
   <string name="studyoptions_load_other_deck">Načíst jiný balíček</string>
   <string name="studyoptions_load_sample_deck">Načíst ukázkový balíček</string>
+  <string name="studyoptions_night_mode">Night Mode</string>
   <string name="menu_open_deck">Otevřít balíček</string>
   <string name="menu_sync">Synchronizovat</string>
   <string name="menu_download_deck">Stáhnout balíček</string>
@@ -222,7 +239,6 @@
   <string name="log_out">Odhlásit se</string>
   <string name="alert_logging_message">Probíhá přihlašování, čekejte prosím...</string>
   <string name="invalid_username_password">Neplatné uživatelské jméno nebo heslo.</string>
-  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
   <string name="download_finished">Stahování dokončeno</string>
   <string name="deck_downloaded">Balíček byl stažen</string>
   <string name="connection_error_message">Došlo k síťové chybě.</string>
@@ -259,11 +275,11 @@
   <string name="sync_conflict_local">Ponechat místní</string>
   <string name="sync_conflict_remote">Ponechat vzdálenou</string>
   <string name="sync_conflict_cancel">Zrušit synchronizaci</string>
+  <string name="error_reporter_title">Error Reporter</string>
   <string name="error_message">Je tu jedna chyba k ohlášení</string>
   <string name="errors_message">%d chyb k nahlášení</string>
   <string name="error_ok">Hlásit chyby</string>
   <string name="error_cancel">Nehlásit chyby</string>
-  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Režim hlášení chyb</string>
   <string name="error_reporting_choice_summary">Chyby mohou být oznámeny automaticky, nikdy nebo okamžitě</string>
   <string name="widget_pref">Widget</string>
@@ -273,12 +289,12 @@
   <string name="widget_minimum_cards_due_blink">Blikat</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Karty k zopakování</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid karet k zopakování</string>
-  <string name="model">Model:</string>
-  <string name="select_model">Model</string>
-  <string name="card">Karta:</string>
-  <string name="cards">Karty:</string>
-  <string name="add">Přidat</string>
-  <string name="close">Zavřít</string>
+  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
+  <string name="widget_card">card</string>
+  <string name="widget_cards">cards</string>
+  <string name="widget_deck">deck</string>
+  <string name="widget_decks">decks</string>
   <string name="soon">Brzy</string>
   <string name="show_next_review_time">Čas příštího opakování</string>
   <string name="show_next_review_time_summ">Zobrazí čas příštího opakování na základě vaší volby</string>
@@ -287,31 +303,12 @@
   <string name="per_day">Za den</string>
   <string name="undo">Vrátit zpět</string>
   <string name="redo">Zrušit vrácení</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
   <string name="delete_deck_title">Smazat balíček</string>
   <string name="delete_deck_message">Opravdu chcete smazat balíček %s?</string>
   <string name="delete_deck_confirm">Smazat</string>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Nové karty v náhodném pořadí</item>
-    <item>Nové karty v pořadí přidání</item>
-    <item>Nové karty v pořadí opačném než v jakém byly přidány</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Rozprostřít nové karty skrz opakování</item>
-    <item>Nové karty až po opakování</item>
-    <item>Nové karty před opakováním</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Opakovat karty z největšího intervalu</item>
-    <item>Opakovat karty z nejkratšího intervalu</item>
-    <item>Opakovat karty v pořadí přidání</item>
-    <item>Opakovat karty v náhodném pořadí</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Zobrazit špatně zodpovězené karty brzo</item>
-    <item>Zobrazit špatně zodpovězené karty na konci</item>
-    <item>Zobrazit špatně zodpovězené karty za 10 minut</item>
-    <item>Zobrazit špatně zodpovězené karty za 8 hodin</item>
-    <item>Zobrazit špatně zodpovězené karty za 3 dny</item>
-  </string-array>
+  <string name="new_version_title">New Version:</string>
+  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 </resources>

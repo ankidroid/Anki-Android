@@ -25,20 +25,10 @@
     <item>Reihenfolge des Hinzufügens</item>
     <item>Umgekehrte Reihenfolge des Hinzufügens</item>
   </string-array>
-  <string-array name="newCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Über Wiederholungen verteilt</item>
     <item>Nach Wiederholungen</item>
     <item>Vor Wiederholungen</item>
-  </string-array>
-  <string-array name="newCardSchedulingVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
     <item>Größtes Intervall zuerst</item>
@@ -46,99 +36,20 @@
     <item>Reihenfolge fälliger Karten</item>
     <item>Zufällige Reihenfolge</item>
   </string-array>
-  <string-array name="revCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-  </string-array>
-  <string-array name="displayFontSizeLabels">
-    <item>10 %</item>
-    <item>20 %</item>
-    <item>30 %</item>
-    <item>40 %</item>
-    <item>50 %</item>
-    <item>60 %</item>
-    <item>70 %</item>
-    <item>80 %</item>
-    <item>90 %</item>
-    <item>100 %</item>
-    <item>110 %</item>
-    <item>120 %</item>
-    <item>130 %</item>
-    <item>140%</item>
-    <item>150 %</item>
-  </string-array>
-  <string-array name="displayFontSizeVals">
-    <item>10</item>
-    <item>20</item>
-    <item>30</item>
-    <item>40</item>
-    <item>50</item>
-    <item>60</item>
-    <item>70</item>
-    <item>80</item>
-    <item>90</item>
-    <item>100</item>
-    <item>110</item>
-    <item>120</item>
-    <item>130</item>
-    <item>140</item>
-    <item>150</item>
-  </string-array>
-  <string-array name="button_size_labels">
-    <item>100 %</item>
-    <item>115 %</item>
-    <item>130 %</item>
-    <item>145 %</item>
-    <item>160 %</item>
-    <item>175 %</item>
-  </string-array>
-  <string-array name="button_size_values">
-    <item>100</item>
-    <item>115</item>
-    <item>130</item>
-    <item>145</item>
-    <item>160</item>
-    <item>175</item>
-  </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>Verstecke die Frage während der Antwort</item>
     <item>Zeige die Frage während der Antwort</item>
     <item>Wie im Kartenmodell definiert</item>
-  </string-array>
-  <string-array name="hideQuestionInAnswerVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Lade zuletzt gelernten Stapel</item>
     <item>Zeige Stapelübersicht</item>
     <item>Zeige Stapelübersicht beim ersten Start des Tages</item>
   </string-array>
-  <string-array name="startup_mode_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
-  <string-array name="dictionary_labels">
-    <item>Aedict</item>
-    <item>Leo.org</item>
-  </string-array>
-  <string-array name="dictionary_values">
-    <item>0</item>
-    <item>1</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Immer berichten</item>
     <item>Niemals berichten</item>
     <item>Nachfragen</item>
-  </string-array>
-  <string-array name="error_reporting_choice_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -149,16 +60,6 @@
     <item>150</item>
     <item>200</item>
     <item>Nie</item>
-  </string-array>
-  <string-array name="widget_minimum_cards_due_values">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>false</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Älteste zuerst</item>
@@ -176,5 +77,28 @@
     <item>Tage</item>
     <item>Monate</item>
     <item>Jahre</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_order">
+    <item>Neue Karten in zufälliger Reihenfolge</item>
+    <item>Neue Karten in Reihenfolge des Hinzufügens</item>
+    <item>Neue Karten in umgekehrter Reihenfolge des Hinzufügens</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_schedule">
+    <item>Neue Karten über Wiederholungen verteilen</item>
+    <item>Neue Karten nach Wiederholungen</item>
+    <item>Neue Karten vor Wiederholungen</item>
+  </string-array>
+  <string-array name="studyoptions_more_rev_card_order">
+    <item>Karten mit größtem Intervall zuerst</item>
+    <item>Karten mit kleinstem Intervall zuerst</item>
+    <item>Karten in Fälligkeitsreihenfolge</item>
+    <item>Karten in Zufallsreihenfolge</item>
+  </string-array>
+  <string-array name="studyoptions_more_fail_card_option">
+    <item>Zeige nicht gewusste Karten bald</item>
+    <item>Zeige nicht gewusste Karten am Schluss</item>
+    <item>Zeige nicht gewusste Karten in 10 Minuten</item>
+    <item>Zeige nicht gewusste Karten in 8 Stunden</item>
+    <item>Zeige nicht gewusste Karten in 3 Tagen</item>
   </string-array>
 </resources>
