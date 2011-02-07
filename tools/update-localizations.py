@@ -52,7 +52,7 @@ def replacechars(filename):
 zipname = 'ankidroid.zip'
 
 print "downloading crowdin-file"
-req = urllib.urlopen('http://crowdin.net/download/project/ankidroidv0-5.zip')
+req = urllib.urlopen('http://crowdin.net/download/project/ankidroidv0-6.zip')
 file(zipname, 'w').write(req.read())
 req.close()
 
