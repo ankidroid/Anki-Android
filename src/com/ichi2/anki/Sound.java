@@ -50,13 +50,12 @@ public class Sound {
      */
     private static int sNumSoundsPlayed;
 
-
     /* Prevent class from being instantiated */
     private Sound() { }
 
 
-    public static String parseSounds(String deckFilename, String content, boolean removeSounds) {
-
+    public static String parseSounds(String deckFilename, String content, boolean ttsEnabled) {
+    	boolean soundAvailable = false;
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
@@ -65,6 +64,7 @@ public class Sound {
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
+        	soundAvailable = true;
             // Get the sound file name
             String sound = matcher.group(1);
             // Log.i(AnkiDroidApp.TAG, "Sound " + matcher.groupCount() + ": " + sound);
@@ -79,16 +79,21 @@ public class Sound {
             // and then appending the html code to add the play button
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
-            stringBuilder.append(contentLeft.substring(0, markerStart));
-            
-            if (!removeSounds) {
-                stringBuilder
+            stringBuilder.append(contentLeft.substring(0, markerStart));        
+            stringBuilder
                 .append("<a onclick=\"window.interface.playSound(this.title);\" title=\""
                         + soundPath
                         + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
-            }
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
+        }
+        if (!soundAvailable && ttsEnabled) {
+            stringBuilder.append(content.substring(0, content.length() - 9));        
+            stringBuilder
+                .append("<a onclick=\"window.interface.playSound(this.title);\" title=\"tts"
+                		+ Utils.stripHTML(content)
+                        + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+            contentLeft = "</p>";
         }
 
         stringBuilder.append(contentLeft);
@@ -100,11 +105,13 @@ public class Sound {
     /**
      * Plays the sounds stored on the paths indicated by mSoundPaths.
      */
-    public static void playSounds() {
+    public static void playSounds(String text, String loc) {
         // If there are sounds to play for the current card, play the first one
-        if (sSoundPaths != null && sSoundPaths.size() > 0) {
+    	if (sSoundPaths != null && sSoundPaths.size() > 0) {
             sNumSoundsPlayed = 0;
             playSound(sNumSoundsPlayed);
+        } else if (text != null && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+        	ReadText.textToSpeech(text, loc);
         }
     }
 
@@ -144,7 +151,10 @@ public class Sound {
 
 
     public static void playSound(String soundPath) {
-        if (sSoundPaths.contains(soundPath)) {
+        if (soundPath.substring(0, 3).equals("tts")) {
+        	ReadText.textToSpeech(soundPath.substring(4, soundPath.length()), null);
+        } else 
+        	if (sSoundPaths.contains(soundPath)) {
             sMediaPlayer = new MediaPlayer();
             try {
                 sMediaPlayer.setDataSource(soundPath);
@@ -177,6 +187,9 @@ public class Sound {
         if (sMediaPlayer != null) {
             sMediaPlayer.stop();
             releaseSound();
+        }
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+        	ReadText.stopTts();
         }
     }
 }

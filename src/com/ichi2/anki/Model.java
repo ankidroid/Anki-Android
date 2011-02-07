@@ -92,6 +92,7 @@ public class Model {
      */
     private transient int mDisplayPercentage = 0;
 
+    private boolean mInvertedColor = false;
 
     private Model(Deck deck, String name) {
         mDeck = deck;
@@ -200,7 +201,7 @@ public class Model {
 
     /**
      * Loads the Model from the database. then loads the related CardModels and FieldModels from the database.
-     * 
+     *
      * @param deck
      * @param modelId
      */
@@ -304,12 +305,12 @@ public class Model {
     /**
      * Prepares the CSS for all CardModels in this Model
      */
-    private void prepareCSSForCardModels() {
+    private void prepareCSSForCardModels(boolean invertedColors) {
         CardModel myCardModel = null;
         String cssString = null;
         for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
             myCardModel = entry.getValue();
-            cssString = createCSSForFontColorSize(myCardModel.getId(), mDisplayPercentage);
+            cssString = createCSSForFontColorSize(myCardModel.getId(), mDisplayPercentage, invertedColors);
             mCssCardModelMap.put(myCardModel.getId(), cssString);
         }
     }
@@ -318,17 +319,18 @@ public class Model {
     /**
      * Returns a cached CSS for the font color and font size of a given CardModel taking into account the included
      * fields
-     * 
+     *
      * @param myCardModelId
      * @param percentage the preference factor to use for calculating the display font size from the cardmodel and
      *            fontmodel font size
      * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
      */
-    protected final String getCSSForFontColorSize(long myCardModelId, int percentage) {
+    protected final String getCSSForFontColorSize(long myCardModelId, int percentage, boolean invertedColors) {
         // tjek whether the percentage is this the same as last time
-        if (mDisplayPercentage != percentage) {
+        if (mDisplayPercentage != percentage || mInvertedColor != invertedColors) {
             mDisplayPercentage = percentage;
-            prepareCSSForCardModels();
+            mInvertedColor = invertedColors;
+            prepareCSSForCardModels(invertedColors);
         }
         return mCssCardModelMap.get(myCardModelId);
     }
@@ -339,7 +341,7 @@ public class Model {
      * @param percentage the factor to apply to the font size in card model to the display size (in %)
      * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
      */
-    private String createCSSForFontColorSize(long myCardModelId, int percentage) {
+    private String createCSSForFontColorSize(long myCardModelId, int percentage, boolean invertedColors) {
         StringBuffer sb = new StringBuffer();
         sb.append("<!-- ").append(percentage).append(" % display font size-->");
         sb.append("<style type=\"text/css\">\n");
@@ -347,17 +349,17 @@ public class Model {
 
         // body background
         if (null != myCardModel.getLastFontColour() && 0 < myCardModel.getLastFontColour().trim().length()) {
-            sb.append("body {background-color:").append(myCardModel.getLastFontColour()).append(";}\n");
+            sb.append("body {background-color:").append(invertColor(myCardModel.getLastFontColour(), invertedColors)).append(";}\n");
         }
         // question
         sb.append(".").append(Reviewer.QUESTION_CLASS).append(" {\n");
         sb.append(calculateDisplay(percentage, myCardModel.getQuestionFontFamily(), myCardModel.getQuestionFontSize(),
-                myCardModel.getQuestionFontColour(), myCardModel.getQuestionAlign(), false));
+                myCardModel.getQuestionFontColour(), myCardModel.getQuestionAlign(), false, invertedColors));
         sb.append("}\n");
         // answer
         sb.append(".").append(Reviewer.ANSWER_CLASS).append(" {\n");
         sb.append(calculateDisplay(percentage, myCardModel.getAnswerFontFamily(), myCardModel.getAnswerFontSize(),
-                myCardModel.getAnswerFontColour(), myCardModel.getAnswerAlign(), false));
+                myCardModel.getAnswerFontColour(), myCardModel.getAnswerAlign(), false, invertedColors));
         sb.append("}\n");
         // css for fields. Gets css for all fields no matter whether they actually are used in a given card model
         FieldModel myFieldModel = null;
@@ -367,7 +369,7 @@ public class Model {
             hexId = "fm" + Long.toHexString(myFieldModel.getId());
             sb.append(".").append(hexId).append(" {\n");
             sb.append(calculateDisplay(percentage, myFieldModel.getQuizFontFamily(), myFieldModel.getQuizFontSize(),
-                    myFieldModel.getQuizFontColour(), 0, true));
+                    myFieldModel.getQuizFontColour(), 0, true, invertedColors));
             sb.append("}\n");
         }
 
@@ -377,14 +379,29 @@ public class Model {
     }
 
 
+    private static String invertColor(String color, boolean invert) {
+    	if (invert) {
+            final char[] items = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+            final char[] tmpItems = {'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v'};
+            for (int i = 0; i < 16; i++) {
+                color = color.replace(items[i], tmpItems[15-i]);
+            }
+            for (int i = 0; i < 16; i++) {
+                color = color.replace(tmpItems[i], items[i]);
+            }
+		}
+		return color;		
+    }
+
+
     private static String calculateDisplay(int percentage, String fontFamily, int fontSize, String fontColour,
-            int align, boolean isField) {
+            int align, boolean isField, boolean invertedColors) {
         StringBuffer sb = new StringBuffer();
         if (null != fontFamily && 0 < fontFamily.trim().length()) {
             sb.append("font-family:\"").append(fontFamily).append("\";\n");
         }
         if (null != fontColour && 0 < fontColour.trim().length()) {
-            sb.append("color:").append(fontColour).append(";\n");
+            sb.append("color:").append(invertColor(fontColour, invertedColors)).append(";\n");
         }
         if (0 < fontSize) {
             sb.append("font-size:");
@@ -422,21 +439,6 @@ public class Model {
 
     public String getFeatures() {
         return mFeatures;
-    }
-
-
-    public String getCardModelNames() {
-        String cardModelNames = "";
-        for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
-            CardModel myCardModel = entry.getValue();
-
-            if (myCardModel.isActive()) {
-                cardModelNames = cardModelNames + myCardModel.getName() + ", ";
-            }
-        }
-        cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
-
-        return cardModelNames;
     }
 
 }

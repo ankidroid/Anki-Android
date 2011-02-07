@@ -164,6 +164,9 @@ public class Reviewer extends Activity {
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
+    private boolean mSpeakText;
+    private boolean mPlaySoundsAtStart;
+    private boolean mInvertedColors = false;
     
     private boolean mIsDictionaryAvailable;
 
@@ -181,6 +184,7 @@ public class Reviewer extends Activity {
     /**
      * Variables to hold layout objects that we need to update or handle events for
      */
+    private View mMainLayout;
     private WebView mCard;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
@@ -218,7 +222,7 @@ public class Reviewer extends Activity {
     private boolean mAnsweringCard = false;
     private int mShowChoosenAnswerLength = 600;
     
-	public boolean mShowCongrats = false;
+	private boolean mShowCongrats = false;
 
 	/** 
 	 * Shake Detection
@@ -233,7 +237,8 @@ public class Reviewer extends Activity {
      */    
  	private GestureDetector gestureDetector;
  	View.OnTouchListener gestureListener;
- 	
+
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -303,8 +308,6 @@ public class Reviewer extends Activity {
                 	mCurrentEase = Card.EASE_NONE;
                     return;
             }
-
-
         }
     };
 
@@ -415,7 +418,8 @@ public class Reviewer extends Activity {
                 mSessionComplete = true;
                 sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_time_limit_reached),
                         Toast.LENGTH_SHORT);
-
+            } else if (values[0].isLastCardInQueue()) {
+                mNoMoreCards = true;
             } else {
                 // session limits not reached, show next card
                 Card newCard = values[0].getCard();
@@ -472,9 +476,6 @@ public class Reviewer extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
-        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);
-
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
         // Make sure a deck is loaded before continuing.
@@ -523,6 +524,11 @@ public class Reviewer extends Activity {
             mSessionTimeLimit = System.currentTimeMillis() + timelimit;
             mSessionCurrReps = 0;
 
+            // Initialize text-to-speech. This is an asynchronous operation.
+            if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+            	ReadText.initializeTts(this);
+            }
+
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
@@ -570,6 +576,9 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "Reviewer - onDestroy()");
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
+        }
+        if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+            ReadText.releaseTts();        	
         }
     }
 
@@ -629,6 +638,9 @@ public class Reviewer extends Activity {
         }
         if (mPrefWhiteboard) {
             mWhiteboard.rotate();
+        }
+        if (mInvertedColors) {
+            invertColors();
         }
         mConfigurationChanged = false;
     }
@@ -865,9 +877,14 @@ public class Reviewer extends Activity {
 
 
     private void answerCard(int ease) {
+        Deck deck = AnkiDroidApp.deck();
+        boolean lastCard = false;
     	switch (ease) {
     		case Card.EASE_FAILED:
     	    	mChoosenAnswer.setText(mEase1.getText());
+    	    	if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
+                    lastCard = true;
+                }
     			break;
     		case Card.EASE_HARD:
     	    	mChoosenAnswer.setText(mEase2.getText());
@@ -880,13 +897,12 @@ public class Reviewer extends Activity {
     			break;
     	}
     	mTimerHandler.postDelayed(removeChoosenAnswerText, mShowChoosenAnswerLength);
-
     	Sound.stopSounds();
     	mCurrentEase = ease;
         // Increment number reps counter
         mSessionCurrReps++;
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
-                mCurrentEase, AnkiDroidApp.deck(), mCurrentCard));
+                mCurrentEase, deck, lastCard, mCurrentCard));
 		mAnsweringCard = false;
     }
 
@@ -895,6 +911,8 @@ public class Reviewer extends Activity {
     private void initLayout(Integer layout) {
         setContentView(layout);
 
+        mMainLayout = findViewById(R.id.main_layout);
+        
         mCard = (WebView) findViewById(R.id.flashcard);
         mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
@@ -985,7 +1003,28 @@ public class Reviewer extends Activity {
         });
         mAnswerField = (EditText) findViewById(R.id.answer_field);
 
+        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
+        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);            
+
+        if (mInvertedColors) {
+            invertColors();
+        }
+
         initControls();
+    }
+
+
+    private void invertColors() {
+        mMainLayout.setBackgroundColor(getResources().getColor(R.color.background_color_inv));
+        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color_inv);
+        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color_inv);
+        mNext4.setTextColor(mNextTimeTextColor);
+        int fgColor = getResources().getColor(R.color.foreground_color_inv);
+        mCardTimer.setTextColor(fgColor);
+        mTextBarBlack.setTextColor(fgColor);
+        mTextBarBlue.setTextColor(getResources().getColor(R.color.textbar_blue_color_inv));
+        mCard.setBackgroundColor(getResources().getColor(R.color.background_color_inv));
+        mWhiteboard.setInvertedColor(true);         
     }
 
 
@@ -1072,21 +1111,23 @@ public class Reviewer extends Activity {
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
         mPrefTextSelection = preferences.getBoolean("textSelection", false);
         mDeckFilename = preferences.getString("deckFilename", "");
+        mInvertedColors = preferences.getBoolean("invertedColors", false);
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
-        mDisplayFontSize = Integer.parseInt(preferences.getString("displayFontSize",
-                Integer.toString(CardModel.DEFAULT_FONT_SIZE_RATIO)));
-        mRelativeButtonSize = Integer.parseInt(preferences.getString("buttonSize", "100"));
+        mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", CardModel.DEFAULT_FONT_SIZE_RATIO);
+        mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         mShakeEnabled = preferences.getBoolean("shake", false);
-        mShakeIntensity = Integer.parseInt(preferences.getString("shakeIntensity", "45"));
+        mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
+        mSpeakText = preferences.getBoolean("tts", false);
+        mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
 
         return preferences;
     }
@@ -1245,7 +1286,7 @@ public class Reviewer extends Activity {
 
         mFlipCard.setVisibility(View.GONE);
         showEaseButtons();
-        updateCard(displayString);       
+        updateCard(displayString);
     }
 
 
@@ -1258,11 +1299,15 @@ public class Reviewer extends Activity {
 
         // don't play question sound again when displaying answer 
         int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
-        if (sDisplayAnswer && isQuestionDisplayed() && (questionStartsAt != -1)) {
-        	content = Sound.parseSounds(mDeckFilename, content.substring(0, questionStartsAt - 1), true)
-        			+ Sound.parseSounds(mDeckFilename, content.substring(questionStartsAt, content.length()), false);      	
+        if (isQuestionDisplayed()) {
+        	if (sDisplayAnswer && (questionStartsAt != -1)) {
+        	content = Sound.parseSounds(mDeckFilename, content.substring(0, questionStartsAt), mSpeakText)
+        			+ Sound.parseSounds(mDeckFilename, content.substring(questionStartsAt, content.length()), mSpeakText);
+        	} else {
+            	content = Sound.parseSounds(mDeckFilename, content.substring(0, content.length() - 5), mSpeakText) + "<hr/>";        		
+        	}
         } else {
-        	content = Sound.parseSounds(mDeckFilename, content, false);
+        	content = Sound.parseSounds(mDeckFilename, content, mSpeakText);
         }
 
         // Parse out the LaTeX images
@@ -1283,7 +1328,7 @@ public class Reviewer extends Activity {
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
             baseUrl = Utils.getBaseUrl(myModel, mDeckFilename);
-            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize) + content;
+            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + content;
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             baseUrl = "file://" + mDeckFilename.replace(".anki", ".media/");
@@ -1299,9 +1344,15 @@ public class Reviewer extends Activity {
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
-
-        if (!mConfigurationChanged) {
-        	Sound.playSounds();
+      
+        if (!mConfigurationChanged && mPlaySoundsAtStart) {
+        	if (!mSpeakText) {
+        		Sound.playSounds(null, null);
+        	} else if (!sDisplayAnswer) {
+                Sound.playSounds(Utils.stripHTML(mCurrentCard.getQuestion()), "de");            	
+            } else {
+                Sound.playSounds(Utils.stripHTML(mCurrentCard.getAnswer()), "fr");            	
+            }
         }
     }
 

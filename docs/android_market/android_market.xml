@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="AndroidMarketTitle">AnkiDroid flashcards</string>
-  <string name="AndroidMarketDescription">AnkiDroid lets you learn flashcards very efficiently by showing them just before you forget. It is fully compatible with the spaced repetition software Anki (incl. sync).
+<string name="AndroidMarketTitle">AnkiDroid flashcards</string>
+<string name="AndroidMarketDescription">AnkiDroid lets you learn flashcards very efficiently by showing them just before you forget. It is fully compatible with the spaced repetition software Anki (incl. sync). 
 
 Great for learning languages, studying for all kinds of exams or memorizing anything else.
 
 Download premade decks or create/modify them by your own.</string>
-  <string name="AndroidMarketPromo">Memorize anything efficiently with AnkiDroid!
+<string name="AndroidMarketPromo">Memorize anything efficiently with AnkiDroid!
 Many free decks available.</string>
 </resources>

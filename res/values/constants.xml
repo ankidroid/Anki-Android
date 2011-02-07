@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+	<!--
+		WARNING: These values here match static values defined in Deck.java DO
+		NOT edit them, unless you change their corresponding values
+	-->
+	<!-- Used in deck preferences -->
+	<string-array name="newCardOrderVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="newCardSchedulingVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="revCardOrderVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	<string-array name="hideQuestionInAnswerVals">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="startup_mode_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="dictionary_labels">
+		<item>Aedict</item>
+		<item>Leo.org</item>
+	</string-array>
+	<string-array name="dictionary_values">
+		<item>0</item>
+		<item>1</item>
+	</string-array>
+	<string-array name="error_reporting_choice_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="widget_minimum_cards_due_values">
+		<item>10</item>
+		<item>25</item>
+		<item>50</item>
+		<item>75</item>
+		<item>100</item>
+		<item>150</item>
+		<item>200</item>
+		<item>1000000</item>
+	</string-array>
+	<string name="link_anki">http://ankisrs.net</string>
+	<string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
+	<string name="link_forum">http://groups.google.com/group/anki-android</string>
+	<string name="link_wiki">http://code.google.com/p/ankidroid/wiki/Index</string>
+	<string name="link_issue_tracker">http://code.google.com/p/ankidroid/issues</string> 
+	<string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
+	<string name="link_source">http://github.com/nicolas-raoul/Anki-Android</string>
+	<string name="link_donation">http://ankisrs.net/support</string>
+	<string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
+	<string name="link_contribution">http://code.google.com/p/ankidroid/wiki/Contribution</string>
+	<string name="link_contribution_contributors">http://code.google.com/p/ankidroid/wiki/Contribution</string>
+	<string name="error_email">ankidroid@gmail.com</string>	
+	<string name="ankionline_sign_up_url">http://ankiweb.net/</string>
+
+	<!--change report: not needed by now-->
+	<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
+	<!--<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1$s&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;%2$s&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;%3$s&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td>&lt;td&gt;9$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%10$s&lt;/td&gt;&lt;td&gt;%11$s&lt;/td&gt;&lt;td&gt;%12$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%13$s&lt;/td&gt;&lt;td&gt;%14$s&lt;/td&gt;&lt;td&gt;%15$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>-->
+</resources>

@@ -2,6 +2,7 @@
  * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>                             *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+ * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -420,20 +421,15 @@ public class Deck {
     }
 
 
-    public Fact newFact(Model m) {
-        Fact mFact = new Fact(this, m);
+    public Fact newFact(Long modelId) {
+    	Model m = Model.getModel(this, modelId, true);
+    	Fact mFact = new Fact(this, m);
         return mFact;
     }
 
 
     public Fact newFact() {
         Model m = Model.getModel(this, getCurrentModelId(), true);
-        Fact mFact = new Fact(this, m);
-        return mFact;
-    }
-
-    public Fact newFact(long modelId) {
-        Model m = Model.getModel(this, modelId, true);
         Fact mFact = new Fact(this, m);
         return mFact;
     }
@@ -452,6 +448,11 @@ public class Deck {
         return availableCardModels;
     }
 
+    public TreeMap<Long, CardModel> cardModels(Fact fact) {
+        TreeMap<Long, CardModel> cardModels = new TreeMap<Long, CardModel>();
+        CardModel.fromDb(this, fact.getModelId(), cardModels);
+        return cardModels;
+    }
 
     /**
      * deckVars methods
@@ -2290,6 +2291,14 @@ public class Deck {
         return mCardCount;
     }
 
+	/**
+	 * Get the number of mature cards of the deck.
+	 * 
+	 * @return The number of cards contained in the deck
+	 */
+	public int getMatureCardCount() {
+    	return (int) (getDB().queryScalar("SELECT count(*) from cards WHERE interval >= " + Card.MATURE_THRESHOLD));
+    }
 
     /**
      * @return the currentModelId
@@ -2548,7 +2557,7 @@ public class Deck {
      * @param id The ID of the card to be returned
      */
 
-    private Card cardFromId(long id) {
+    public Card cardFromId(long id) {
         if (id == 0) {
             return null;
         }
@@ -2624,7 +2633,7 @@ public class Deck {
     public void _answerCard(Card card, int ease) {
         Log.i(AnkiDroidApp.TAG, "answerCard");
         String undoName = "Answer Card";
-        setUndoStart(undoName);
+        setUndoStart(undoName, card.getId());
         double now = Utils.now();
 
         // Old state
@@ -2692,6 +2701,7 @@ public class Deck {
         CardHistoryEntry entry = new CardHistoryEntry(this, card, ease, lastDelay);
         entry.writeSQL();
         mModified = now;
+        setUndoEnd(undoName);
 
         // Remove form queue
         requeueCard(card, oldIsRev);
@@ -2701,7 +2711,6 @@ public class Deck {
             Log.i(AnkiDroidApp.TAG, "card is leech!");
             handleLeech(card);
         }
-        setUndoEnd(undoName);
     }
 
 
@@ -2800,11 +2809,11 @@ public class Deck {
             }
         } else if (interval == 0) {
             if (ease == Card.EASE_HARD) {
-                interval = mHardIntervalMin + ((double) Math.random()) * (mHardIntervalMax - mHardIntervalMin);
+                interval = mHardIntervalMin + card.getFuzz() * (mHardIntervalMax - mHardIntervalMin);
             } else if (ease == Card.EASE_MID) {
-                interval = mMidIntervalMin + ((double) Math.random()) * (mMidIntervalMax - mMidIntervalMin);
+                interval = mMidIntervalMin + card.getFuzz() * (mMidIntervalMax - mMidIntervalMin);
             } else if (ease == Card.EASE_EASY) {
-                interval = mEasyIntervalMin + ((double) Math.random()) * (mEasyIntervalMax - mEasyIntervalMin);
+                interval = mEasyIntervalMin + card.getFuzz() * (mEasyIntervalMax - mEasyIntervalMin);
             }
         } else {
             // if not cramming, boost initial 2
@@ -2820,8 +2829,7 @@ public class Deck {
             } else if (ease == Card.EASE_EASY) {
                 interval = (interval + delay) * factor * FACTOR_FOUR;
             }
-            double fuzz = 0.95 + ((double) Math.random()) * (1.05 - 0.95);
-            interval *= fuzz;
+            interval *= 0.95 + card.getFuzz() * (1.05 - 0.95);
         }
         interval = Math.min(interval, MAX_SCHEDULE_TIME);
         return interval;
@@ -3125,7 +3133,11 @@ public class Deck {
      */
     public void suspendCards(long[] ids) {
         String undoName = "Suspend Card";
-        setUndoStart(undoName);
+        if (ids.length == 1) {
+            setUndoStart(undoName, ids[0]);        	
+        } else {
+        	setUndoStart(undoName);
+        }
         getDB().getDatabase().execSQL(
                 "UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
                         + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
@@ -3150,6 +3162,22 @@ public class Deck {
     }
 
 
+    /**
+     * Bury all cards for fact until next session. Caller must .reset()
+     * 
+     * @param Fact .
+     */
+    public void buryFact(long factId, long cardId) {
+        // TODO: Unbury fact after return to StudyOptions
+        String undoName = "Bury Fact";
+        setUndoStart(undoName, cardId);         
+        getDB().getDatabase().execSQL(
+                "UPDATE cards SET type = priority = -2, isDue = 0, type = type + 3 WHERE type >= 0 AND type <= 3 AND factId = " + factId);
+        setUndoEnd(undoName);
+        flushMod();
+    }
+
+    
     /**
      * Priorities
      *******************************/
@@ -3429,12 +3457,12 @@ public class Deck {
     /**
      * Add a fact to the deck. Return list of new cards
      */
-    public Fact addFact(Fact fact) {
-        return addFact(fact, true);
+    public Fact addFact(Fact fact, TreeMap<Long, CardModel> cardModels) {
+        return addFact(fact, cardModels, true);
     }
 
 
-    public Fact addFact(Fact fact, boolean reset) {
+    public Fact addFact(Fact fact, TreeMap<Long, CardModel> cardModels, boolean reset) {
         // TODO: assert fact is Valid
         // TODO: assert fact is Unique
         double now = Utils.now();
@@ -3449,8 +3477,8 @@ public class Deck {
         getDB().getDatabase().insert("facts", null, values);
 
         // get cardmodels for the new fact
-        TreeMap<Long, CardModel> availableCardModels = availableCardModels(fact);
-        if (availableCardModels.isEmpty()) {
+        // TreeMap<Long, CardModel> availableCardModels = availableCardModels(fact);
+        if (cardModels.isEmpty()) {
             Log.e(AnkiDroidApp.TAG, "Error while adding fact: No cardmodels for the new fact");
             return null;
         }
@@ -3470,7 +3498,7 @@ public class Deck {
         }
 
         ArrayList<Long> newCardIds = new ArrayList<Long>();
-        for (Map.Entry<Long, CardModel> entry : availableCardModels.entrySet()) {
+        for (Map.Entry<Long, CardModel> entry : cardModels.entrySet()) {
             CardModel cardModel = entry.getValue();
             Card newCard = new Card(this, fact, cardModel, Utils.now());
             newCard.addToDb();
@@ -3824,10 +3852,12 @@ public class Deck {
         private String mName;
         private Long mStart;
         private Long mEnd;
+        private Long mCardId;
 
 
-        UndoRow(String name, Long start, Long end) {
+        UndoRow(String name, Long cardId, Long start, Long end) {
             mName = name;
+            mCardId = cardId;
             mStart = start;
             mEnd = end;
         }
@@ -3935,7 +3965,11 @@ public class Deck {
 
 
     public void setUndoStart(String name) {
-        setUndoStart(name, false);
+        setUndoStart(name, 0, false);
+    }
+
+    public void setUndoStart(String name, long cardId) {
+        setUndoStart(name, cardId, false);
     }
 
 
@@ -3947,7 +3981,7 @@ public class Deck {
     }
 
 
-    private void setUndoStart(String name, boolean merge) {
+    private void setUndoStart(String name, long cardId, boolean merge) {
         if (!mUndoEnabled) {
             return;
         }
@@ -3958,7 +3992,7 @@ public class Deck {
                 return;
             }
         }
-        mUndoStack.push(new UndoRow(name, latestUndoRow(), null));
+        mUndoStack.push(new UndoRow(name, cardId, latestUndoRow(), null));
     }
 
 
@@ -3992,7 +4026,7 @@ public class Deck {
     }
 
 
-    private void undoredo(Stack<UndoRow> src, Stack<UndoRow> dst) {
+    private long undoredo(Stack<UndoRow> src, Stack<UndoRow> dst, long oldCardId) {
 
         UndoRow row;
         commitToDB();
@@ -4017,31 +4051,36 @@ public class Deck {
         }
 
         Long newend = latestUndoRow();
-        dst.push(new UndoRow(row.mName, newstart, newend));
+        dst.push(new UndoRow(row.mName, oldCardId, newstart, newend));
+        return row.mCardId;
     }
 
 
     /**
      * Undo the last action(s). Caller must .reset()
      */
-    public void undo() {
-        if (!mUndoStack.isEmpty()) {
-            undoredo(mUndoStack, mRedoStack);
+    public long undo(long oldCardId) {
+        long cardId = 0;
+    	if (!mUndoStack.isEmpty()) {
+            cardId = undoredo(mUndoStack, mRedoStack, oldCardId);
             commitToDB();
             reset();
         }
+        return cardId;
     }
 
 
     /**
      * Redo the last action(s). Caller must .reset()
      */
-    public void redo() {
+    public long redo(long oldCardId) {
+        long cardId = 0;
         if (!mRedoStack.isEmpty()) {
-            undoredo(mRedoStack, mUndoStack);
+        	cardId = undoredo(mRedoStack, mUndoStack, oldCardId);
             commitToDB();
             reset();
         }
+        return cardId;
     }
 
 

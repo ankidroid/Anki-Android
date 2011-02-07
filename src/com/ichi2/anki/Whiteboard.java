@@ -50,13 +50,20 @@ public class Whiteboard extends View {
 
     private float mX;
     private float mY;
+    
+    private boolean mInvertedColors = false;
 
 
     public Whiteboard(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mBackgroundColor = context.getResources().getColor(R.color.wb_bg_color);
-        mForegroundColor = context.getResources().getColor(R.color.wb_fg_color);
+        if (!mInvertedColors) {
+            mForegroundColor = context.getResources().getColor(R.color.wb_fg_color);
+            mBackgroundColor = context.getResources().getColor(R.color.wb_bg_color);
+        } else {
+            mForegroundColor = context.getResources().getColor(R.color.wb_fg_color_inv);
+            mBackgroundColor = context.getResources().getColor(R.color.wb_bg_color_inv);
+        }
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -65,8 +72,8 @@ public class Whiteboard extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        String wbStrokeWidth = PrefSettings.getSharedPrefs(context).getString("wbStrokeWidth", "6");
-        mPaint.setStrokeWidth(Integer.parseInt(wbStrokeWidth));
+        int wbStrokeWidth = PrefSettings.getSharedPrefs(context).getInt("whiteBoardStrokeWidth", 6);
+        mPaint.setStrokeWidth((float) wbStrokeWidth);
 
         createBitmap();
 
@@ -160,6 +167,9 @@ public class Whiteboard extends View {
 //    public void lock() {
 //        mLocked = true;
 //    }
+    public void setInvertedColor(boolean inverted) {
+        mInvertedColors = inverted;
+    }
 
 
     private void createBitmap(int w, int h, Bitmap.Config conf) {
