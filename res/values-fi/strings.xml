@@ -22,11 +22,12 @@
 <resources>
   <string name="CardEditorCancelButton">Peruuta</string>
   <string name="CardEditorSaveButton">Tallenna</string>
-  <string name="app_name">Ankidroid</string>
+  <string name="app_name">AnkiDroid</string>
   <string name="yes">Kyllä</string>
   <string name="no">Ei</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Pakkojen joiden versiot vanhempi kuin 39 eivät tue AnkiDroidia. Avaa pakka Anki-työpöytä versiolla ja päivitä pakka uusimpaan versioon.</string>
+  <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
   <string name="deckpicker_title">Valitse pakka (%1$d / %2$d määrä)</string>
   <string name="deckpicker_title_nosdcard">SD-kortti on irrotettu</string>
   <string name="deckpicker_due">%1$d / %2$d jäljellä</string>
@@ -103,6 +104,10 @@
   <string name="text_selection_summ">Voit valita ja kopioida tekstiä korteista. Paina pitkään suorittaaksesi haun ulkoisesta sanakirjasta</string>
   <string name="dictionary">Sanakirja</string>
   <string name="dictionary_summ">Sanakirja, jossa hakuja tulisi suorittaa</string>
+  <string name="reset_languages">Reset Languages</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_languages_question">Reset all languages assignments?</string>
+  <string name="reset_languages_confirmation">All languages assignments reset</string>
   <string name="use_ruby_support">Tuki ruby-huomautusten käytölle</string>
   <string name="use_ruby_support_summ">Merkkien \'[\' ja \']\' välissä olevaa tekstiä käsitellään ruby-huomautuksena</string>
   <string name="display_font_size">Näyttöfontin suhteellinen koko</string>
@@ -122,6 +127,10 @@
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
   <string name="shake">Ravista kumoaksesi viimeisimmän toiminnon</string>
   <string name="shake_summ">Shake your device to undo the last action</string>
+  <string name="tts">Text to Speech</string>
+  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="play_sounds_at_start">Play Sounds Instantly</string>
+  <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Shake threshold</string>
   <string name="shake_intensity_summ">Threshold for shake recognition</string>
   <string name="pref_cat_experimental">KOKEELLINEN</string>
@@ -129,6 +138,7 @@
   <string name="sync_enabled_in_answer_summ">Löytyy useita vikoja, pakat saattavat viottua. Varmuuskopio usein!</string>
   <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
   <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
+  <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Avaa Online-pakka</string>
   <string name="shareddeckpicker_title">Valitse pakka jonka haluat ladata</string>
   <string name="downloaddeck_search">Etsi</string>
@@ -137,6 +147,14 @@
   <string name="about_title">Tietoja</string>
   <string name="cardeditor_title">Korttien muokkaus</string>
   <string name="factadder_title">Kortin Yhteenlaskia</string>
+  <string name="model">Malli:</string>
+  <string name="select_model">Malli</string>
+  <string name="card">Kortti:</string>
+  <string name="cards">Kortit:</string>
+  <string name="add">Lisää</string>
+  <string name="close">Sulje</string>
+  <string name="select_card_model">Select Card Model</string>
+  <string name="select">Select</string>
   <string name="loading_deck">Ladataan pakkaa. Odota hetki...</string>
   <string name="connection_needed">Ei ole internet-yhteyttä</string>
   <string name="currently_downloading">Nyt ladataan</string>
@@ -162,21 +180,8 @@
   <string name="sync_all">Synkronoi kaikki</string>
   <string name="fact">tosiasia</string>
   <string name="facts">tosiasiaa</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Lisätty/Muutettu&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Täällä&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Serveri&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Kortit&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Faktat&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Mallit&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Tallennetaan muutokset ...</string>
-  <string name="about_content">
-&lt;html&gt;
-&lt;body&gt;
-&lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Kysymyskorttit Androidille&lt;/h2&gt;
-&lt;p&gt;AnkiDroid pystyy lukemaan .anki -tiedostoja, jotka on luotu &lt;a href="http://ichi2.net/anki"&gt;Anki&lt;/a&gt;-ohjelmistolla.&lt;/p&gt;
-&lt;p&gt;Auta meitä tekemään AnkiDroidista parempi, ilmoita virheistä &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;täällä&lt;/a&gt;, uudet ideat ovat erittäin tervetulleita myös!
-Käytä &lt;a href="http://ichi2.net/anki/wiki/AndroidAnki"&gt;wikiä&lt;/a&gt; ja sano terveiset &lt;a href="http://groups.google.com/group/anki-android"&gt;foorumissa&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid on &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;avoimen lähdekoodin ohjelmisto&lt;/a&gt;, joten kaikkia kehotetaan &lt;a href="http://ichi2.net/anki/wiki/ContributeToAnkiDroid"&gt;liittymöön&lt;/a&gt; the &lt;a href="http://ichi2.net/anki/wiki/AnkiDroidContributors"&gt;avustajiksi&lt;/a&gt; :-)
-Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaappauksia, &lt;a href="http://ichi2.net/anki/donate.html"&gt;lahoittaa &lt;/a&gt;, kirjoitaa blogiin AnkiDroidista!&lt;/p&gt;
-&lt;p&gt;AnkiDroidista on julkaistu &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU GPLv3 lisenssillä&lt;/a&gt; ja lähdekoodi on saatavilla täältä &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;täältä&lt;/a&gt;.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</string>
+  <string name="about_content">%1$s Flashcards for Android &lt;/h2&gt;&lt;p&gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; To help us make AnkiDroid better, please report any bug %3$s here&lt;/a&gt;; new feature ideas are very welcome too! Please use the %4$s wiki&lt;/a&gt; and say Hi on the %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, so everyone is encouraged to %7$s join&lt;/a&gt; the %8$s contributors&lt;/a&gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&lt;/a&gt; to Anki, or blogging about AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&lt;/a&gt; and the source code is available %11$s here&lt;/a&gt;.</string>
   <string name="studyoptions_title">Opiskeluasetukset</string>
   <string name="studyoptions_deck_name">Pakan nimi</string>
   <string name="studyoptions_reviews_due">Tarkastelujen määrä:</string>
@@ -198,6 +203,7 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="studyoptions_no_external_storage_message">Ulkoista muistia ei ole tällä hetkellä saatavilla. AnkiDroid tarvitsee saada käyttöönsä SD-kortti voidaksesi lukea ja ladata Anki-pakat. Tarkista, että SD-kortti on asennettu ja yritä uudelleen.</string>
   <string name="studyoptions_load_other_deck">Lataa muu pakka</string>
   <string name="studyoptions_load_sample_deck">Lataa näytekappalepakka</string>
+  <string name="studyoptions_night_mode">Night Mode</string>
   <string name="menu_open_deck">Avaa pakka</string>
   <string name="menu_sync">Synkronointi</string>
   <string name="menu_download_deck">Lataa pakka</string>
@@ -234,7 +240,6 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="log_out">Kirjaudu ulos</string>
   <string name="alert_logging_message">Kirjaudutaan sisälle, odota hetki...</string>
   <string name="invalid_username_password">Virheellinen käyttäjätunnus tai salasana.</string>
-  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
   <string name="download_finished">Lataaminen valmistui</string>
   <string name="deck_downloaded">Pakka ladattu</string>
   <string name="connection_error_message">Verkkovirhe on tapahtunut.</string>
@@ -263,19 +268,19 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="sync_log_facts_to_server_message">%d seikkaa palvelimelle</string>
   <string name="sync_log_fact_from_server_message">1 seikka palvelimelta</string>
   <string name="sync_log_facts_from_server_message">%d seikkaa palvelimelta</string>
-  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec, unable to sync.</string>
-  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
+  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
   <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_conflict_title">Syncing conflict</string>
   <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
   <string name="sync_conflict_local">Keep Local</string>
   <string name="sync_conflict_remote">Keep Remote</string>
   <string name="sync_conflict_cancel">Peruuta synkronointi</string>
+  <string name="error_reporter_title">Error Reporter</string>
   <string name="error_message">Yksi virhe raportissa</string>
   <string name="errors_message">On %d raportoitavaa virhettä</string>
   <string name="error_ok">Ilmoita virheistä</string>
   <string name="error_cancel">Älä ilmoita virheistä</string>
-  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Virheraportointitila</string>
   <string name="error_reporting_choice_summary">Virheitä voidaan raportoida automaattisesti, ei koskaan, tai pyytää luvan sinulta</string>
   <string name="widget_pref">Widget</string>
@@ -285,12 +290,12 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="widget_minimum_cards_due_blink">Valon vilkkuminen</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Kortien Määrä</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
-  <string name="model">Malli:</string>
-  <string name="select_model">Malli</string>
-  <string name="card">Kortti:</string>
-  <string name="cards">Kortit:</string>
-  <string name="add">Lisää</string>
-  <string name="close">Sulje</string>
+  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
+  <string name="widget_card">card</string>
+  <string name="widget_cards">cards</string>
+  <string name="widget_deck">deck</string>
+  <string name="widget_decks">decks</string>
   <string name="soon">Pian</string>
   <string name="show_next_review_time">Seuraava tarkastelun aika</string>
   <string name="show_next_review_time_summ">Näyttää seuraavan tarkistuken kerran, riippuen valinnastasi</string>
@@ -299,31 +304,12 @@ Ei-kehittäjät voivat myös auttaa, esim. päivittää wikiä ja listä kuvakaa
   <string name="per_day">Päivässä</string>
   <string name="undo">Kumoa</string>
   <string name="redo">Tee uudelleen</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_delete_deck">Poista pakka</string>
   <string name="delete_deck_title">Poista pakka</string>
   <string name="delete_deck_message">Haluatko varmasti poistaa pakan %s?</string>
   <string name="delete_deck_confirm">Poista se</string>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Uudet kortit satunnaisessa järjestyksessä</item>
-    <item>Uudet kortin lisätyt järjestyksessä</item>
-    <item>Uudet kortit päinvastaisessa järjestyksessä lisättyä</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
-    <item>Uudet kortit tarkastelun jälkeen</item>
-    <item>Uudet kortit tarkastelua ennen</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Tarkastele kortteja suurimman aikavälin mukaan</item>
-    <item>Tarkastele kortteja pienimmän aikavälin mukaan</item>
-    <item>Tarkista kortit järjestyksessä</item>
-    <item>Tarkastele kortteja satunnaisessa järjestyksessä</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Näytä väärin vastatut kortit pian</item>
-    <item>Näytä väärin vastatut kortit lopussa</item>
-    <item>Näytä väärin vastatut kortit 10 minuutin ajalta</item>
-    <item>Näytä väärin vastatut kortit 8 tunnin ajalta</item>
-    <item>Näytä väärin vastatut kortit 3 päivän ajalta</item>
-  </string-array>
+  <string name="new_version_title">New Version:</string>
+  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 </resources>

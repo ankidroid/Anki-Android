@@ -104,6 +104,10 @@
   <string name="text_selection_summ">Σας επιτρέπει να επιλέξετε και να αντιγράψετε κείμενο από κάρτες με μακρό κλικ για την εκτέλεση αναζητήσεων σε εξωτερικό λεξικό</string>
   <string name="dictionary">Λεξικό</string>
   <string name="dictionary_summ">Λεξικό στο οποίο θα εκτελούνται οι αναζητήσεις</string>
+  <string name="reset_languages">Reset Languages</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_languages_question">Reset all languages assignments?</string>
+  <string name="reset_languages_confirmation">All languages assignments reset</string>
   <string name="use_ruby_support">Υποστήριξη οδηγειών για ruby</string>
   <string name="use_ruby_support_summ">Αν βρεθούν οι χαρακτήρες \'[\' and \']\', τότε το εσώκλειστο κείμενο θα χρησιμοποιηθεί ως οδηγεία για ruby</string>
   <string name="display_font_size">Σχετικό μέγεθος γραμματοσειράς</string>
@@ -123,6 +127,10 @@
   <string name="swipe_summ_on">Σαρώστε οριζόντια για εναλλαγή μεταξύ των οθονών και κάθετα για να απαντήσετε κάρτες (κάτω: ξανά, πάνω: σύσταση, διπλό άγγιγμα: ευκολότερο από σύσταση.)</string>
   <string name="shake">Ανακινήστε για Αναίρεση</string>
   <string name="shake_summ">Ανακινήστε τη συσκευή σας για να αναιρέσετε την τελευταία ενέργεια</string>
+  <string name="tts">Text to Speech</string>
+  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="play_sounds_at_start">Play Sounds Instantly</string>
+  <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Όριο ανακίνησης</string>
   <string name="shake_intensity_summ">Κατώτατο όριο για την αναγνώριση ανακίνησης</string>
   <string name="pref_cat_experimental">ΠΕΙΡΑΜΑΤΙΚΌ</string>
@@ -130,6 +138,7 @@
   <string name="sync_enabled_in_answer_summ">Ακόμη πολλά σφάλματα, ίσως να κατεστρέψει τις τράπουλές σας. Κρατήστε αντίγραφα συχνά!</string>
   <string name="fix_hebrew_text">Επιβολή RTL για τα εβραϊκά</string>
   <string name="fix_hebrew_text_summ">Εναλλακτική λύση για περιορισμένη υποστήριξη για εβραϊκά από το Android. Δεν υποστηρίζει φωνήεντα.</string>
+  <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Ανοίξτε τράπουλα από το δίκτυο</string>
   <string name="shareddeckpicker_title">Επιλέξτε την τράπουλα που θέλετε να κατεβάσετε</string>
   <string name="downloaddeck_search">Αναζήτηση</string>
@@ -138,6 +147,14 @@
   <string name="about_title">Σχετικά</string>
   <string name="cardeditor_title">Επεξεργαστής Γεγονότος</string>
   <string name="factadder_title">Προσθήκη Κάρτας</string>
+  <string name="model">Μοντέλο:</string>
+  <string name="select_model">Μοντέλο</string>
+  <string name="card">Κάρτα:</string>
+  <string name="cards">Κάρτες:</string>
+  <string name="add">Προσθήκη</string>
+  <string name="close">Κλείσιμο</string>
+  <string name="select_card_model">Select Card Model</string>
+  <string name="select">Select</string>
   <string name="loading_deck">Φόρτωση τράπουλας. Παρακαλώ περιμένετε...</string>
   <string name="connection_needed">Αυτή τη στιγμή είστε χωρίς σύνδεση.</string>
   <string name="currently_downloading">Λήψεις σε εξέλιξη</string>
@@ -163,20 +180,8 @@
   <string name="sync_all">Συγχρονισμός όλων</string>
   <string name="fact">γεγονός</string>
   <string name="facts">γεγονότα</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Προστιθέμενο/Αλλαγμένο&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Εδώ&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Διακομιστής&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Κάρτες&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Γεγονότα&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Μοντέλα&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Στατιστικά&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Αποθήκευση αλλαγών...</string>
-  <string name="about_content">&lt;html&gt;
-&lt;body&gt;
-&lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Flashcards for Android&lt;/h2&gt;
-&lt;p&gt;Το AnkiDroid μπορεί να διαβάσει αρχεία .anki από την εφαρμογή &lt;a href=&quot;http://ankisrs.net/anki&quot;&gt;Anki&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Για να μας βοηθήσετε να βελτιώσουμε το AnkiDroid, παρακαλούμε ανακοινώνεστε τυχόν σφάλματα &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;εδώ&lt;/a&gt;, νέες ιδέες για λειτουργίες είναι ευπροσδεκτές, επίσης!
-Παρακαλούμε χρησιμοποιείστε το &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Index&quot;&gt;wiki&lt;/a&gt; και πείτε μας ενα γεια στο &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Το AnkiDroid είναι &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;λειτουργικό ανοικτού κώδικα&lt;/a&gt;, οπότε ο καθένας μπορεί να &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Contribution&quot;&gt;συμμετάσχει&lt;/a&gt; στους &lt;a href=&quot;https://code.google.com/p/ankidroid/wiki/Contribution#Contributors&quot;&gt;συντελεστές&lt;/a&gt; :-)
-Μη προγραμματιστές μπορούν να βοηθήσουν επίσης, όπως με το να ενημερώσουν το wiki, με screenshots, με &lt;a href=&quot;http://ankisrs.net/support&quot;&gt;δωρεές&lt;/a&gt; στο Anki, ή με το να κάνουν blogging για το AnkiDroid!&lt;/p&gt;
-&lt;p&gt;Το AnkiDroid διατίθετε υπό την &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;άδεια GNU-GPL v3&lt;/a&gt; και ο κώδικάς του είναι διαθέσιμος &lt;a href=&quot;http://github.com/nicolas-raoul/Anki-Android&quot;&gt;εδώ&lt;/a&gt;.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</string>
+  <string name="about_content">%1$s Flashcards for Android &lt;/h2&gt;&lt;p&gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; To help us make AnkiDroid better, please report any bug %3$s here&lt;/a&gt;; new feature ideas are very welcome too! Please use the %4$s wiki&lt;/a&gt; and say Hi on the %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, so everyone is encouraged to %7$s join&lt;/a&gt; the %8$s contributors&lt;/a&gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&lt;/a&gt; to Anki, or blogging about AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&lt;/a&gt; and the source code is available %11$s here&lt;/a&gt;.</string>
   <string name="studyoptions_title">Επιλογές Μελέτης</string>
   <string name="studyoptions_deck_name">Όνομα τράπουλας</string>
   <string name="studyoptions_reviews_due">Προς επανάληψη:</string>
@@ -198,6 +203,7 @@ Flashcards for Android&lt;/h2&gt;
   <string name="studyoptions_no_external_storage_message">Δεν υπάρχει διαθέσιμη εξωτερική αποθήκευση αυτή τη στιγμή. Το AnkiDroid χρειάζεται να έχει πρόσβαση στην κάρτα SD σας για να διαβάσει και να φορτώσει τις Anki τράπουλές σας. Ελέγξτε ότι η κάρτα SD σας είναι τοποθετημένη και προσπαθήστε ξανά.</string>
   <string name="studyoptions_load_other_deck">Φορτώστε άλλη τράπουλα</string>
   <string name="studyoptions_load_sample_deck">Φορτώστε την τράπουλα δείγμα</string>
+  <string name="studyoptions_night_mode">Night Mode</string>
   <string name="menu_open_deck">Άνοιγμα τράπουλας</string>
   <string name="menu_sync">Συγχρονισμός</string>
   <string name="menu_download_deck">Λήψη τράπουλας</string>
@@ -234,7 +240,6 @@ Flashcards for Android&lt;/h2&gt;
   <string name="log_out">Αποσύνδεση</string>
   <string name="alert_logging_message">Σύνδεση, παρακαλώ περιμένετε...</string>
   <string name="invalid_username_password">Άκυρο όνομα χρήστη ή κωδικός πρόσβασης.</string>
-  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
   <string name="download_finished">Η λήψη ολοκληρώθηκε</string>
   <string name="deck_downloaded">Η τράπουλα κατέβηκε</string>
   <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
@@ -271,11 +276,11 @@ Flashcards for Android&lt;/h2&gt;
   <string name="sync_conflict_local">Κρατήστε αυτή στη Συσκευή</string>
   <string name="sync_conflict_remote">Κρατήστε αυτή στο Διακομιστή</string>
   <string name="sync_conflict_cancel">Ακύρωση Συγχρονισμού</string>
+  <string name="error_reporter_title">Error Reporter</string>
   <string name="error_message">Υπάρχει ένα σφάλμα προς αναφορά</string>
   <string name="errors_message">Υπάρχουν %d σφάλματα προς αναφορά</string>
   <string name="error_ok">Αναφορά σφαλμάτων</string>
   <string name="error_cancel">Μην αναφέρετε σφάλματα</string>
-  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Λειτουργία αναφοράς σφαλμάτων</string>
   <string name="error_reporting_choice_summary">Σφάλματα μπορεί να αναφερθούν αυτόματα, ποτέ, ή μπορεί να σας ζητηθεί</string>
   <string name="widget_pref">Widget</string>
@@ -285,12 +290,12 @@ Flashcards for Android&lt;/h2&gt;
   <string name="widget_minimum_cards_due_blink">Αναβόσβηση φωτός</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Αναμένουσες Κάρτες</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d κάρτες AnkiDroid εις αναμονή</string>
-  <string name="model">Μοντέλο:</string>
-  <string name="select_model">Μοντέλο</string>
-  <string name="card">Κάρτα:</string>
-  <string name="cards">Κάρτες:</string>
-  <string name="add">Προσθήκη</string>
-  <string name="close">Κλείσιμο</string>
+  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
+  <string name="widget_card">card</string>
+  <string name="widget_cards">cards</string>
+  <string name="widget_deck">deck</string>
+  <string name="widget_decks">decks</string>
   <string name="soon">Σύντομα</string>
   <string name="show_next_review_time">Ώρα επόμενης επανάληψης</string>
   <string name="show_next_review_time_summ">Δείχνει την ώρα της επόμενης επανάληψης ανάλογα με την επιλογή σας</string>
@@ -299,31 +304,12 @@ Flashcards for Android&lt;/h2&gt;
   <string name="per_day">Ανά Ημέρα</string>
   <string name="undo">Αναίρεση</string>
   <string name="redo">Επαναφορά</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_delete_deck">Διαγραφή Τράπουλας</string>
   <string name="delete_deck_title">Διαγραφή Τράπουλας</string>
   <string name="delete_deck_message">Θέλετε πραγματικά να διαγράψετε την τράπουλα %s;</string>
   <string name="delete_deck_confirm">Διαγράψτε το</string>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Νέες κάρτες σε τυχαία σειρά</item>
-    <item>Νέες κάρτες σε σειρά προσθήκης</item>
-    <item>Νέες κάρτες σε αντίστροφη σειρά προσθήκης</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Κατανομή νέων καρτών καθόλης της επανάληψης</item>
-    <item>Νέες κάρτες μετά τις επαναλήψεις</item>
-    <item>Νέες κάρτες πριν τις επαναλήψεις</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Επανάληψη καρτών από μεγαλύτερο διάστημα</item>
-    <item>Επανάληψη καρτών από μικρότερο διάστημα</item>
-    <item>Επανάληψη καρτών σε δέουσα σειρά</item>
-    <item>Επανάληψη καρτών σε τυχαία σειρά</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Εμφάνιση αποτυχημένων καρτών σύντομα</item>
-    <item>Εμφάνιση αποτυχημένων καρτών στο τέλος</item>
-    <item>Εμφάνιση αποτυχημένων καρτών σε 10 λεπτά</item>
-    <item>Εμφάνιση αποτυχημένων καρτών σε 8 ώρες</item>
-    <item>Εμφάνιση αποτυχημένων καρτών σε 3 μέρες</item>
-  </string-array>
+  <string name="new_version_title">New Version:</string>
+  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 </resources>

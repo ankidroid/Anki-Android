@@ -27,13 +27,14 @@
   <string name="no">Nein</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Stapel mit einer älteren Version als 39 werden nicht durch AnkiDroid unterstützt. Öffnen Sie den Stapel mit Anki Desktop um ihn auf die neueste Version zu aktualisieren.</string>
+  <string name="deck_upgrade_version_61_has_latex">Der Stapel kann nicht voll synchronisiert werden, weil er LaTeX-Ausdrücke enthält; bitte öffnen Sie den Stapel mit der Desktop-Version von Anki, um ihn auf die neueste Version zu aktualisieren und die LaTeX-Ausdrücke neu zu erzeugen.</string>
   <string name="deckpicker_title">Stapel wählen (%1$d von %2$d fällig)</string>
   <string name="deckpicker_title_nosdcard">SD-Karte ist ausgehängt</string>
   <string name="deckpicker_due">%1$d von %2$d fällig</string>
   <string name="deckpicker_new">%d neue heute</string>
   <string name="deckpicker_loaddeck">Stapel wird geladen...</string>
   <string name="deckpicker_nodeck">Keine Stapel gefunden.</string>
-  <string name="sync_log_title">Sync Log</string>
+  <string name="sync_log_title">Synchronisierungergebnis</string>
   <string name="deckpicker_upgrading">Stapel wird aktualisiert...</string>
   <string name="deckpicker_upgrade_failed">Aktualisieren fehlgeschlagen!</string>
   <string name="deckpicker_upgrade_notes_title">Ergebnis der Stapelaktulisierung</string>
@@ -103,6 +104,10 @@
   <string name="text_selection_summ">Erlaubt es, Text per Langklick auszuwählen und zu kopieren, um in einem externen Wörterbuch nachzuschlagen</string>
   <string name="dictionary">Wörterbuch</string>
   <string name="dictionary_summ">Wörterbuch, in dem nachgeschlagen werden soll</string>
+  <string name="reset_languages">Sprachzuordnungen zurücksetzen</string>
+  <string name="reset_languages_summ">Setzt die Sprachzuordnungen (für Vorlesen und Wörterbücher) für alle Stapel zurück. Für einzelne Stapel: siehe Stapelauswahl</string>
+  <string name="reset_languages_question">Sämtliche Sprachzuordnungen zurücksetzen?</string>
+  <string name="reset_languages_confirmation">Sämtliche Sprachzuordnungen zurückgesetzt</string>
   <string name="use_ruby_support">Ruby-Anmerkungen</string>
   <string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
   <string name="display_font_size">Relative Schriftgröße</string>
@@ -119,9 +124,13 @@
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
-  <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; vertikal wischen: Karten beantworten (hoch: nochmal, runter: Empfehlung, Doppeltap: einfacher als Empfehlung)</string>
+  <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; vertikal wischen: Karten beantworten (runter: nochmal, hoch: Empfehlung, Doppeltap: einfacher als Empfehlung)</string>
   <string name="shake">Schütteln aktivieren</string>
   <string name="shake_summ">Schütteln Sie Ihr Android-Gerät, um die letzte Aktion rückgängig zu machen</string>
+  <string name="tts">Vorlesen</string>
+  <string name="tts_summ">Liest Frage und Antwort vor, wenn keine anderen Sounds enthalten sind</string>
+  <string name="play_sounds_at_start">Sounds automatisch abspielen</string>
+  <string name="play_sounds_at_start_summ">Sounds beim Anzeigen der Frage/Antwort sofort abspielen</string>
   <string name="shake_intensity">Schüttel-Schwellwert</string>
   <string name="shake_intensity_summ">Schwelle, ab der ein Schütteln registriert wird</string>
   <string name="pref_cat_experimental">EXPERIMENTELL</string>
@@ -129,6 +138,7 @@
   <string name="sync_enabled_in_answer_summ">Die Synchronisierung hat noch Fehler und könnte Ihre Stapel gefährden. Machen Sie häufig Backups!</string>
   <string name="fix_hebrew_text">Umgekehrte Textrichtung für Hebräisch</string>
   <string name="fix_hebrew_text_summ">Erzwingt umgekehrte Textrichtung, um Hebräisch auf dem Android-System darzustellen. Vokale werden nicht unterstützt</string>
+  <string name="select_locale_title">Sprache wählen</string>
   <string name="personaldeckpicker_title">Online-Stapel herunterladen</string>
   <string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
   <string name="downloaddeck_search">Suchen</string>
@@ -137,6 +147,14 @@
   <string name="about_title">Über</string>
   <string name="cardeditor_title">Fakteneditor</string>
   <string name="factadder_title">Karten hinzufügen</string>
+  <string name="model">Modell:</string>
+  <string name="select_model">Modell</string>
+  <string name="card">Karte:</string>
+  <string name="cards">Karten:</string>
+  <string name="add">Hinzufügen</string>
+  <string name="close">Schließen</string>
+  <string name="select_card_model">Kartenvorlage wählen</string>
+  <string name="select">Auswählen</string>
   <string name="loading_deck">Stapel wird geladen.\nBitte warten...</string>
   <string name="connection_needed">Sie sind momentan offline.</string>
   <string name="currently_downloading">Wird gerade heruntergeladen</string>
@@ -162,9 +180,8 @@
   <string name="sync_all">Alle synchronisieren</string>
   <string name="fact">Fakt</string>
   <string name="facts">Fakten</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Hinzugefügt/Geändert&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Hier&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Karten&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Fakten&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Änderungen werden gespeichert...</string>
-  <string name="about_content">&lt;html&gt;&lt;body&gt;&lt;h2&gt; AnkiDroid: &lt;br/&gt; Flashcards für Android &lt;/h2&gt;&lt;p&gt; AnkiDroid kann Stapel-Dateien, die durch durch die &lt;a href="http://ankisrs.net/"&gt;Anki&lt;/a&gt;-Desktop-Software erzeugt wurden, lesen und bearbeiten. &lt;/p&gt;&lt;p&gt; Um uns zu helfen ein besseres AnkiDroid machen, melden Sie Fehler bitte &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;hier&lt;/a&gt;, Ideen für neue Programmfähigkeiten sind sehr willkommen! Bitte nutzen Sie das &lt;a href="http://code.google.com/p/ankidroid/wiki/Index"&gt;Wiki&lt;/a&gt; und sagen Sie "Hallo" im &lt;a href="http://groups.google.com/group/anki-android"&gt;Forum&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; AnkiDroid ist &lt;a href="http://en.wikipedia.org/wiki/Open_source_software"&gt;Open Source Software&lt;/a&gt;, so ist jeder aufgefordert, &lt;a href="http://code.google.com/p/ankidroid/wiki/Contribution"&gt;beizutreten&lt;/a&gt; um einen &lt;a href="http://code.google.com/p/ankidroid/wiki/Contribution"&gt;Beitrag zu leisten&lt;/a&gt; :-) Auch Nicht-Entwickler können helfen, zum Beispiel durch eine Aktualisierung des Wikis und der Screenshots, durch eine &lt;a href="http://ankisrs.net/support/"&gt;Spende&lt;/a&gt; an Anki oder durch Blogging über AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid ist freigegeben unter der &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-Lizenz GPL v3&lt;/a&gt; und der Quellcode ist verfügbar &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;hier&lt;/a&gt;  verfügbar. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+  <string name="about_content">%1$s Karteikarten für Android &lt;/h2&gt;&lt;p&gt; AnkiDroid kann .anki-Dateien lesen, die mit der Desktop-Version von %2$s Anki&lt;/a&gt; erzeugt werden. &lt;/p&gt;&lt;p&gt; Um mitzuhelfen, AnkiDroid besser zu machen, bitten wir Sie, Fehler %3$s hier&lt;/a&gt; zu melden; neue Verbesserungsideen sind ebenfalls sehr wilkommen! Benutzen Sie das %4$s Wiki&lt;/a&gt; und sagen Sie Hallo im %5$s Forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid ist %6$s Open-SourceSoftware&lt;/a&gt;, %8$s jeder&lt;/a&gt; kann also %7$s mitmachen&lt;/a&gt; :-) Auch Nicht-Entwickler können helfen, zum Beispiel, indem sie das Wiki oder Screenshots aktualisieren, für die Anki-Desktop-Version %9$s spenden&lt;/a&gt; oder über AnkiDroid bloggen! &lt;/p&gt;&lt;p&gt; AnkiDroid wird unter der %10$s GNU-GPL-v3-Lizenz&lt;/a&gt; veröffentlicht; der Quellcode findet sich %11$s hier&lt;/a&gt;.</string>
   <string name="studyoptions_title">Lerneinstellungen</string>
   <string name="studyoptions_deck_name">Stapelname</string>
   <string name="studyoptions_reviews_due">Fällige Wiederholungen:</string>
@@ -186,6 +203,7 @@
   <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid braucht Zugang zur SD-Karte um Stapel zu öffnen oder zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist und versuchen Sie es erneut.</string>
   <string name="studyoptions_load_other_deck">Stapel öffnen</string>
   <string name="studyoptions_load_sample_deck">Beispielstapel öffnen</string>
+  <string name="studyoptions_night_mode">Nachtmodus</string>
   <string name="menu_open_deck">Stapel öffnen</string>
   <string name="menu_sync">Synchronisieren</string>
   <string name="menu_download_deck">Stapel herunterladen</string>
@@ -222,7 +240,6 @@
   <string name="log_out">Ausloggen</string>
   <string name="alert_logging_message">Einloggen, bitte warten...</string>
   <string name="invalid_username_password">Ungültiger Benutzername oder Passwort.</string>
-  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
   <string name="download_finished">Herunterladen beendet</string>
   <string name="deck_downloaded">Stapel heruntergeladen</string>
   <string name="connection_error_message">Ein Netzwerkfehler ist aufgetreten.</string>
@@ -259,11 +276,11 @@
   <string name="sync_conflict_local">Lokale</string>
   <string name="sync_conflict_remote">Server</string>
   <string name="sync_conflict_cancel">Abbrechen</string>
+  <string name="error_reporter_title">Fehler-Melder</string>
   <string name="error_message">Es ist ein Fehler zu melden</string>
   <string name="errors_message">Es ist %d Fehler zu melden</string>
   <string name="error_ok">Fehlermeldung</string>
   <string name="error_cancel">Melde keine Fehler</string>
-  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Fehlermeldungs-Modus</string>
   <string name="error_reporting_choice_summary">Fehler können automatisch, nie oder nach Nachfrage gemeldet werden</string>
   <string name="widget_pref">Widget</string>
@@ -273,12 +290,12 @@
   <string name="widget_minimum_cards_due_blink">Blinken</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Fällige Karten</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-Karten fällig</string>
-  <string name="model">Modell:</string>
-  <string name="select_model">Modell</string>
-  <string name="card">Karte:</string>
-  <string name="cards">Karten:</string>
-  <string name="add">Hinzufügen</string>
-  <string name="close">Schließen</string>
+  <string name="widget_no_cards_due">Keine Karten fällig</string>
+  <string name="widget_cards_in_decks_due">%1$d %2$s in %3$d %4$s fällig</string>
+  <string name="widget_card">Karte</string>
+  <string name="widget_cards">Karten</string>
+  <string name="widget_deck">Stapel</string>
+  <string name="widget_decks">Stapeln</string>
   <string name="soon">Bald</string>
   <string name="show_next_review_time">Intervall anzeigen</string>
   <string name="show_next_review_time_summ">Zeigt während des Lernens die Zeit bis zur nächsten Fälligkeit der Karte abhängig von der Wahl des Schwierigkeitsgrades</string>
@@ -287,31 +304,12 @@
   <string name="per_day">Einteilung pro Tag</string>
   <string name="undo">Rückgängig</string>
   <string name="redo">Wiederholen</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>
   <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
   <string name="delete_deck_title">Stapel löschen</string>
   <string name="delete_deck_message">Möchten Sie den Stapel %s wirklich löschen?</string>
   <string name="delete_deck_confirm">Löschen</string>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Neue Karten in zufälliger Reihenfolge</item>
-    <item>Neue Karten in Reihenfolge des Hinzufügens</item>
-    <item>Neue Karten in umgekehrter Reihenfolge des Hinzufügens</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Neue Karten über Wiederholungen verteilen</item>
-    <item>Neue Karten nach Wiederholungen</item>
-    <item>Neue Karten vor Wiederholungen</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Karten mit größtem Intervall zuerst</item>
-    <item>Karten mit kleinstem Intervall zuerst</item>
-    <item>Karten in Fälligkeitsreihenfolge</item>
-    <item>Karten in Zufallsreihenfolge</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Zeige nicht gewusste Karten bald</item>
-    <item>Zeige nicht gewusste Karten am Schluss</item>
-    <item>Zeige nicht gewusste Karten in 10 Minuten</item>
-    <item>Zeige nicht gewusste Karten in 8 Stunden</item>
-    <item>Zeige nicht gewusste Karten in 3 Tagen</item>
-  </string-array>
+  <string name="new_version_title">Neue Version:</string>
+  <string name="new_version_text">Neue Funktion:\n- Vorlesefunktion\n- Fortschrittsanzeige in der Stapelauswahl\n- Kartenvorlage kann nun beim Hinzufügen gewählt werden\n- neues Widget\n- verbesserte Rückgängig-Funktion\n- Schieberegler\n- mehr Sprachen</string>
 </resources>

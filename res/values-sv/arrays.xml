@@ -25,20 +25,10 @@
     <item>Ordningen de lades till</item>
     <item>Motsatta ordning de lades till</item>
   </string-array>
-  <string-array name="newCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Fördela bland repetitioner</item>
     <item>Efter genomgång</item>
     <item>Innan genomgång</item>
-  </string-array>
-  <string-array name="newCardSchedulingVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
     <item>Störst intervall först</item>
@@ -46,99 +36,20 @@
     <item>Efter förfallotid</item>
     <item>Slumpmässig ordning</item>
   </string-array>
-  <string-array name="revCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-  </string-array>
-  <string-array name="displayFontSizeLabels">
-    <item>10 %</item>
-    <item>20 %</item>
-    <item>30 %</item>
-    <item>40 %</item>
-    <item>50 %</item>
-    <item>60 %</item>
-    <item>70 %</item>
-    <item>80 %</item>
-    <item>90 %</item>
-    <item>100 %</item>
-    <item>110 %</item>
-    <item>120 %</item>
-    <item>130 %</item>
-    <item>140 %</item>
-    <item>150 %</item>
-  </string-array>
-  <string-array name="displayFontSizeVals">
-    <item>10</item>
-    <item>20</item>
-    <item>30</item>
-    <item>40</item>
-    <item>50</item>
-    <item>60</item>
-    <item>70</item>
-    <item>80</item>
-    <item>90</item>
-    <item>100</item>
-    <item>110</item>
-    <item>120</item>
-    <item>130</item>
-    <item>140</item>
-    <item>150</item>
-  </string-array>
-  <string-array name="button_size_labels">
-    <item>100 %</item>
-    <item>115 %</item>
-    <item>130 %</item>
-    <item>145 %</item>
-    <item>160 %</item>
-    <item>175 %</item>
-  </string-array>
-  <string-array name="button_size_values">
-    <item>100</item>
-    <item>115</item>
-    <item>130</item>
-    <item>145</item>
-    <item>160</item>
-    <item>175</item>
-  </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>Dölj fråga vid svar</item>
     <item>Visa fråga vid svar</item>
     <item>Enligt kortlekens definition</item>
-  </string-array>
-  <string-array name="hideQuestionInAnswerVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Show study options</item>
     <item>Show deck picker</item>
     <item>Show deck picker on first start of the day</item>
   </string-array>
-  <string-array name="startup_mode_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
-  <string-array name="dictionary_labels">
-    <item>Aedict</item>
-    <item>Leo.org</item>
-  </string-array>
-  <string-array name="dictionary_values">
-    <item>0</item>
-    <item>1</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Always report</item>
     <item>Never report</item>
     <item>Ask me</item>
-  </string-array>
-  <string-array name="error_reporting_choice_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -149,16 +60,6 @@
     <item>150</item>
     <item>200</item>
     <item>Never</item>
-  </string-array>
-  <string-array name="widget_minimum_cards_due_values">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Show oldest modified first</item>
@@ -176,5 +77,28 @@
     <item>days</item>
     <item>months</item>
     <item>years</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_order">
+    <item>New cards in random order</item>
+    <item>New cards in order added</item>
+    <item>New cards in reverse order added</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_schedule">
+    <item>Spread new cards through reviews</item>
+    <item>New cards after reviews</item>
+    <item>New cards before reviews</item>
+  </string-array>
+  <string-array name="studyoptions_more_rev_card_order">
+    <item>Review cards from largest interval</item>
+    <item>Review cards from smallest interval</item>
+    <item>Review cards in order due</item>
+    <item>Review cards in random order</item>
+  </string-array>
+  <string-array name="studyoptions_more_fail_card_option">
+    <item>Visa misslyckade kort snart</item>
+    <item>Visa misslyckade kort i slutet</item>
+    <item>Visa misslyckade kort om 10 minuter</item>
+    <item>Visa misslyckade kort om 8 timmar</item>
+    <item>Visa misslyckade kort om 3 dagar</item>
   </string-array>
 </resources>

@@ -1727,7 +1727,6 @@ public class Reviewer extends Activity {
     }
 
     private void closeReviewer() {
-    	MetaDB.closeDB();
     	finish();
     	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
     		if (mShowCongrats) {

@@ -27,6 +27,7 @@
   <string name="no">Nie</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Talie starsze niż w wersji 39tej nie są obsługiwane przez AnkiDroid, proszę otworzyć talię w kliencie Anki na PC żeby uaktualnić talię do najnowszej wersji.</string>
+  <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
   <string name="deckpicker_title">Wybierz talię (%1$d z %2$d zaległych)</string>
   <string name="deckpicker_title_nosdcard">Karta SD jest niezainstalowana</string>
   <string name="deckpicker_due">%1$d z %2$d zaległych</string>
@@ -103,6 +104,10 @@
   <string name="text_selection_summ">Pozwala wybrać i skopiować tekst z kart poprzez długie kliknięcie, aby umożliwić wyszukiwanie w zewnętrznym słowniku</string>
   <string name="dictionary">Słownik</string>
   <string name="dictionary_summ">Słownik, w którym należy przeprowadzić wyszukiwania</string>
+  <string name="reset_languages">Reset Languages</string>
+  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_languages_question">Reset all languages assignments?</string>
+  <string name="reset_languages_confirmation">All languages assignments reset</string>
   <string name="use_ruby_support">Zapewnia wsparcie dla notacji ruby</string>
   <string name="use_ruby_support_summ">W razie znalezienia znaków \'[\' i \']\', tekst zawarty między nimi będzie traktowany jako notacja ruby</string>
   <string name="display_font_size">Względna wielkość czcionki wyświetlacza</string>
@@ -122,6 +127,10 @@
   <string name="swipe_summ_on">Przesuń poziomo aby przełączać ekrany i pionowo aby odpowiadać (w dół: wkrótce, góra: zalecane, dotknij dwukrotnie: łatwiejsze niż zalecane)</string>
   <string name="shake">Wstrząsnij aby cofnąć</string>
   <string name="shake_summ">Wstrząśnij urządzenie aby cofnąć ostatnią akcję</string>
+  <string name="tts">Text to Speech</string>
+  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="play_sounds_at_start">Play Sounds Instantly</string>
+  <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Czułość wstrząsania</string>
   <string name="shake_intensity_summ">Próg czułości na wykrywanie wstrząsania</string>
   <string name="pref_cat_experimental">Eksperymentalne</string>
@@ -129,6 +138,7 @@
   <string name="sync_enabled_in_answer_summ">Wciąż wiele błędów, może uszkodzić talię. Rób często kopie zapasowe!</string>
   <string name="fix_hebrew_text">Wymuszaj RTL dla języka hebrajskiego</string>
   <string name="fix_hebrew_text_summ">Obejście problemu ograniczonej obsługi języka hebrajskiego przez platformę Android. Nie obsługuje samogłosek.</string>
+  <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Otwórz talię online</string>
   <string name="shareddeckpicker_title">Wybierz talię do pobrania</string>
   <string name="downloaddeck_search">Szukaj</string>
@@ -137,6 +147,14 @@
   <string name="about_title">O programie</string>
   <string name="cardeditor_title">Edytor kart</string>
   <string name="factadder_title">Dodawanie kart</string>
+  <string name="model">Model:</string>
+  <string name="select_model">Model</string>
+  <string name="card">Card:</string>
+  <string name="cards">Cards:</string>
+  <string name="add">Dodaj</string>
+  <string name="close">Zamknij</string>
+  <string name="select_card_model">Select Card Model</string>
+  <string name="select">Select</string>
   <string name="loading_deck">Ładowanie talii. Proszę czekać...</string>
   <string name="connection_needed">Brak połączenia z Internetem</string>
   <string name="currently_downloading">Trwa pobieranie</string>
@@ -160,27 +178,10 @@
   <string name="pause_download">Wstrzymaj pobieranie</string>
   <string name="duplicate_download">Ta talia jest już pobierana</string>
   <string name="sync_all">Synchronizuj wszystkie</string>
-  <string name="fact">fakt</string>
+  <string name="fact">fact</string>
   <string name="facts">fakty</string>
-  <string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Dodano/Zmieniono&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Tutaj&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Serwer&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Karty&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Fakty&lt;/td&gt;&lt;td&gt;%3$s&lt;/td&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Modele&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Statystyki&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
   <string name="saving_changes">Trwa zapisywanie zmian...</string>
-  <string name="about_content">&lt;html&gt;
-&lt;body&gt;
-&lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Fiszki dla Androida&lt;/h2&gt;
-&lt;p&gt;AnkiDroid może czytać pliki .anki utworzone przez oprogramowanie &lt;a href="http://ankisrs.net"&gt;Anki&lt;/a&gt; dla desktopów.&lt;/p&gt;
-&lt;p&gt;Aby pomóc w rozwoju AnkiDroida, proszę zgłaszać błędy &lt;a href="http://code.google.com/p/ankidroid/issues"&gt;tutaj&lt;/a&gt;. Pomysły na nowe funkcje także są mile widziane!
-Skorzystaj z &lt;a href="http://code.google.com/p/ankidroid/wiki/Index"&gt;wiki&lt;/a&gt; i napisz Cześć na &lt;a 
-href="http://groups.google.com/group/anki-android"&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid jest &lt;a href="http://pl.wikipedia.org/wiki/Open_source"&gt;oprogramowaniem otwartoźródłowym &lt;/a&gt;, więc każdy może &lt;a 
-href="http://code.google.com/p/ankidroid/wiki/Contribution"&gt;dołączyć&lt;/a&gt; do listy &lt;a 
-href="http://code.google.com/p/ankidroid/wiki/Contribution#Contributors"&gt;współpracowników&lt;/a&gt; :-)
-Osoby nie potrafiące programować także mogą pomóc, np. aktualizując wiki i zrzuty ekranowe, &lt;a 
-href="http://ankisrs.net/support"&gt;wspierając&lt;/a&gt; projekt Anki, albo blogując o AnkiDroid!&lt;/p&gt;
-&lt;p&gt;AnkiDroid został wypuszczony na licencji &lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;GNU-GPL w wersji 3&lt;/a&gt;, a jego kod źródłowy 
-dostępny jest &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;tu&lt;/a&gt;.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</string>
+  <string name="about_content">%1$s Flashcards for Android &lt;/h2&gt;&lt;p&gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; To help us make AnkiDroid better, please report any bug %3$s here&lt;/a&gt;; new feature ideas are very welcome too! Please use the %4$s wiki&lt;/a&gt; and say Hi on the %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, so everyone is encouraged to %7$s join&lt;/a&gt; the %8$s contributors&lt;/a&gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&lt;/a&gt; to Anki, or blogging about AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&lt;/a&gt; and the source code is available %11$s here&lt;/a&gt;.</string>
   <string name="studyoptions_title">Ustawienia nauki</string>
   <string name="studyoptions_deck_name">Nazwa talii</string>
   <string name="studyoptions_reviews_due">Do przeglądnięcia:</string>
@@ -202,6 +203,7 @@ dostępny jest &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;tu&l
   <string name="studyoptions_no_external_storage_message">Brak zewnętrznej pamięci masowej. AnkiDroid potrzebuje dostępu do karty SD aby móc wczytać twoje talie Anki. Sprawdź czy twoja karta SD jest zamontowana i spróbuj ponownie.</string>
   <string name="studyoptions_load_other_deck">Wczytaj inną talię</string>
   <string name="studyoptions_load_sample_deck">Wczytaj przykładową talię</string>
+  <string name="studyoptions_night_mode">Night Mode</string>
   <string name="menu_open_deck">Otwórz talię</string>
   <string name="menu_sync">Synchronizuj</string>
   <string name="menu_download_deck">Pobierz talię</string>
@@ -238,7 +240,6 @@ dostępny jest &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;tu&l
   <string name="log_out">Wyloguj się</string>
   <string name="alert_logging_message">Logowanie, proszę czekać...</string>
   <string name="invalid_username_password">Błędna nazwa użytkownika lub hasło.</string>
-  <string name="ankionline_sign_up_url">http://ankiweb.net/</string>
   <string name="download_finished">Pobieranie zakończone</string>
   <string name="deck_downloaded">Talia pobrana</string>
   <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
@@ -275,11 +276,11 @@ dostępny jest &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;tu&l
   <string name="sync_conflict_local">Zachowaj lokalne</string>
   <string name="sync_conflict_remote">Zachowaj zdalne</string>
   <string name="sync_conflict_cancel">Anuluj synchronizację</string>
+  <string name="error_reporter_title">Error Reporter</string>
   <string name="error_message">Jest jeden błąd do zgłoszenia</string>
   <string name="errors_message">Jest %d błędów do zgłoszenia</string>
   <string name="error_ok">Zgłaszaj błędy</string>
   <string name="error_cancel">Nie zgłaszaj błędów</string>
-  <string name="error_email">ankidroid@gmail.com</string>
   <string name="error_reporting_choice">Tryb raportowania błędów</string>
   <string name="error_reporting_choice_summary">Błędy mogą być zgłaszane automatycznie, nigdy nie zgłaszane, lub może zostać wyświetlony monit</string>
   <string name="widget_pref">Widżet</string>
@@ -289,12 +290,12 @@ dostępny jest &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;tu&l
   <string name="widget_minimum_cards_due_blink">Miganie diody</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Karty do przeglądnięcia</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d kart AnkiDroid do przeglądnięcia</string>
-  <string name="model">Model:</string>
-  <string name="select_model">Model</string>
-  <string name="card">Karta:</string>
-  <string name="cards">Karty:</string>
-  <string name="add">Dodaj</string>
-  <string name="close">Zamknij</string>
+  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
+  <string name="widget_card">card</string>
+  <string name="widget_cards">cards</string>
+  <string name="widget_deck">deck</string>
+  <string name="widget_decks">decks</string>
   <string name="soon">Wkrótce</string>
   <string name="show_next_review_time">Czas kolejnego przeglądnięcia</string>
   <string name="show_next_review_time_summ">Pokazuje czas następnego przeglądnięcia w zależności od wyboru</string>
@@ -303,31 +304,12 @@ dostępny jest &lt;a href="http://github.com/nicolas-raoul/Anki-Android"&gt;tu&l
   <string name="per_day">Na Dzień</string>
   <string name="undo">Cofnij</string>
   <string name="redo">Ponów</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
   <string name="delete_deck_title">Skasuj talię</string>
   <string name="delete_deck_message">Na pewno chcesz skasować talię %s?</string>
   <string name="delete_deck_confirm">Usuń ją</string>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Nowe karty w kolejności losowej</item>
-    <item>Nowe karty w kolejności dodania</item>
-    <item>Nowe karty w odwrotności kolejności dodania</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Rozrzuć nowe karty między powtórki</item>
-    <item>Nowe karty po powtórkach</item>
-    <item>Nowe karty przed powtórkami</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Powtórki od najdłuższych przerw</item>
-    <item>Powtórki od najkrótszych przerw</item>
-    <item>Powtórki według planu</item>
-    <item>Powtórki w losowej kolejności</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Pokaż źle rozwiązane karty wkrótce</item>
-    <item>Pokaż źle rozwiązane karty na końcu</item>
-    <item>Pokaż źle rozwiązane karty za 10 minut</item>
-    <item>Pokaż źle rozwiązane karty za 8 godzin</item>
-    <item>Pokaż źle rozwiązane karty za 3 dni</item>
-  </string-array>
+  <string name="new_version_title">New Version:</string>
+  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 </resources>

@@ -25,20 +25,10 @@
     <item>Redosled dodat</item>
     <item>Dodato u obrnutom redosledu</item>
   </string-array>
-  <string-array name="newCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Razbacaj po pregledu</item>
     <item>Posle pregleda</item>
     <item>Pre pregleda</item>
-  </string-array>
-  <string-array name="newCardSchedulingVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
     <item>Najduži interval prvo</item>
@@ -46,99 +36,20 @@
     <item>Redosled sledi</item>
     <item>Slučajan redosled</item>
   </string-array>
-  <string-array name="revCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-  </string-array>
-  <string-array name="displayFontSizeLabels">
-    <item>10 %</item>
-    <item>20 %</item>
-    <item>30 %</item>
-    <item>40 %</item>
-    <item>50 %</item>
-    <item>60 %</item>
-    <item>70 %</item>
-    <item>80 %</item>
-    <item>90 %</item>
-    <item>100 %</item>
-    <item>110 %</item>
-    <item>120 %</item>
-    <item>130 %</item>
-    <item>140 %</item>
-    <item>150 %</item>
-  </string-array>
-  <string-array name="displayFontSizeVals">
-    <item>10</item>
-    <item>20</item>
-    <item>30</item>
-    <item>40</item>
-    <item>50</item>
-    <item>60</item>
-    <item>70</item>
-    <item>80</item>
-    <item>90</item>
-    <item>100</item>
-    <item>110</item>
-    <item>120</item>
-    <item>130</item>
-    <item>140</item>
-    <item>150</item>
-  </string-array>
-  <string-array name="button_size_labels">
-    <item>100 %</item>
-    <item>115 %</item>
-    <item>130 %</item>
-    <item>145 %</item>
-    <item>160 %</item>
-    <item>175 %</item>
-  </string-array>
-  <string-array name="button_size_values">
-    <item>100</item>
-    <item>115</item>
-    <item>130</item>
-    <item>145</item>
-    <item>160</item>
-    <item>175</item>
-  </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>Sakrij pitanje u odgovoru</item>
     <item>Prikaži pitanje u odgovoru</item>
     <item>Kao što je definisano u Špil modelu</item>
-  </string-array>
-  <string-array name="hideQuestionInAnswerVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Prikaži opcije za učenje</item>
     <item>Prikaži listu špilova</item>
     <item>Prikaži listu špilova na početku dana</item>
   </string-array>
-  <string-array name="startup_mode_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
-  <string-array name="dictionary_labels">
-    <item>Aedict</item>
-    <item>Leo.org</item>
-  </string-array>
-  <string-array name="dictionary_values">
-    <item>0</item>
-    <item>1</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Uvek prijavljuj</item>
     <item>Nikada ne prijavljuj</item>
     <item>Pitaj me</item>
-  </string-array>
-  <string-array name="error_reporting_choice_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -149,16 +60,6 @@
     <item>150</item>
     <item>200</item>
     <item>Nikada</item>
-  </string-array>
-  <string-array name="widget_minimum_cards_due_values">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Prikaži najstariji modifikovani prvo</item>
@@ -176,5 +77,28 @@
     <item>dana</item>
     <item>meseci</item>
     <item>godina</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_order">
+    <item>Nove kartice u slučajnom redosledu</item>
+    <item>Nove kartice u redosledu u kojem su dodane</item>
+    <item>Nove kartice u redosledu soprotnom od kojeg su dodane</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_schedule">
+    <item>Razbacaj nove kartice širom pregleda</item>
+    <item>Nove kartice posle pregleda</item>
+    <item>Nove kartice pre pregleda</item>
+  </string-array>
+  <string-array name="studyoptions_more_rev_card_order">
+    <item>Pregledaj kartice iz najvećeg intervala</item>
+    <item>Pregledaj kartice iz najmanjeg intervala</item>
+    <item>Pregledaj kartice po redu</item>
+    <item>Pregledaj karticu u slučajnom redosledu</item>
+  </string-array>
+  <string-array name="studyoptions_more_fail_card_option">
+    <item>Prikaži neuspešne kartice uskoro</item>
+    <item>Prikaži neuspešne kartice na kraju</item>
+    <item>Prikaži neuspešne kartice za 10 minuta</item>
+    <item>Prikaži neuspešne kartice za 8 sati</item>
+    <item>Prikaži neuspešne kartice za 3 dana</item>
   </string-array>
 </resources>

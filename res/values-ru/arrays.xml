@@ -25,20 +25,10 @@
     <item>Порядок просмотра добавлен</item>
     <item>Обратный порядок добавлен</item>
   </string-array>
-  <string-array name="newCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Распространение через отзывы</item>
     <item>После просмотра</item>
     <item>Перед просмотром</item>
-  </string-array>
-  <string-array name="newCardSchedulingVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
     <item>Наибольший интервал первым</item>
@@ -46,99 +36,20 @@
     <item>Соответствующий порядок</item>
     <item>В случайном порядке</item>
   </string-array>
-  <string-array name="revCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-  </string-array>
-  <string-array name="displayFontSizeLabels">
-    <item>10%</item>
-    <item>20%</item>
-    <item>30%</item>
-    <item>40%</item>
-    <item>50%</item>
-    <item>60%</item>
-    <item>70%</item>
-    <item>80%</item>
-    <item>90%</item>
-    <item>100%</item>
-    <item>110%</item>
-    <item>120%</item>
-    <item>130%</item>
-    <item>140%</item>
-    <item>150%</item>
-  </string-array>
-  <string-array name="displayFontSizeVals">
-    <item>10</item>
-    <item>20</item>
-    <item>30</item>
-    <item>40</item>
-    <item>50</item>
-    <item>60</item>
-    <item>70</item>
-    <item>80</item>
-    <item>90</item>
-    <item>100</item>
-    <item>110</item>
-    <item>120</item>
-    <item>130</item>
-    <item>140</item>
-    <item>150</item>
-  </string-array>
-  <string-array name="button_size_labels">
-    <item>100 %</item>
-    <item>115 %</item>
-    <item>130 %</item>
-    <item>145 %</item>
-    <item>160 %</item>
-    <item>175 %</item>
-  </string-array>
-  <string-array name="button_size_values">
-    <item>100</item>
-    <item>115</item>
-    <item>130</item>
-    <item>145</item>
-    <item>160</item>
-    <item>175</item>
-  </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>Скрыть вопрос при ответе</item>
     <item>Показать вопрос при ответе</item>
     <item>Как определено в модели карты</item>
   </string-array>
-  <string-array name="hideQuestionInAnswerVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
   <string-array name="startup_mode_labels">
-    <item>\"Параметры обучения\"</item>
+    <item>Параметры обучения</item>
     <item>Оглавление колод</item>
     <item>Оглавление колод только 1ый раз</item>
-  </string-array>
-  <string-array name="startup_mode_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
-  <string-array name="dictionary_labels">
-    <item>Aedict</item>
-    <item>Leo.org</item>
-  </string-array>
-  <string-array name="dictionary_values">
-    <item>0</item>
-    <item>1</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Всегда сообщать</item>
     <item>Никогда не сообщать</item>
     <item>Спросите меня</item>
-  </string-array>
-  <string-array name="error_reporting_choice_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -149,16 +60,6 @@
     <item>150</item>
     <item>200</item>
     <item>Никогда</item>
-  </string-array>
-  <string-array name="widget_minimum_cards_due_values">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>1000000</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Показывать сначала последние изменённые</item>
@@ -176,5 +77,28 @@
     <item>дней</item>
     <item>месяцев</item>
     <item>лет</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_order">
+    <item>Новые в случайном порядке</item>
+    <item>Новые, как были добавлены</item>
+    <item>Новые, в обрат.порядке добавления</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_schedule">
+    <item>Новые на несколько просмотров</item>
+    <item>Новые добавлять после просмотра</item>
+    <item>Новые до просмотра</item>
+  </string-array>
+  <string-array name="studyoptions_more_rev_card_order">
+    <item>Просмотр карт с наибол. интервалом</item>
+    <item>Просмотр карт с наимен. интервалом</item>
+    <item>Просмотр карт в порядке как есть</item>
+    <item>Просмотр карт в случ. порядке</item>
+  </string-array>
+  <string-array name="studyoptions_more_fail_card_option">
+    <item>Показать неотвеченных карт быстро</item>
+    <item>Показать неотвеченных карт в конце</item>
+    <item>Показать неотвеченных карт за 10 минут</item>
+    <item>Показать неотвеченных карт за 8 часов</item>
+    <item>Показать неотвеченных карт за 3 дня</item>
   </string-array>
 </resources>

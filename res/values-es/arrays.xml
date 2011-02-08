@@ -25,20 +25,10 @@
     <item>Orden añadido</item>
     <item>Orden inverso del añadido</item>
   </string-array>
-  <string-array name="newCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Distribuir entre repasos</item>
     <item>Después de los repasos</item>
     <item>Antes de los repasos</item>
-  </string-array>
-  <string-array name="newCardSchedulingVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="revCardOrderLabels">
     <item>Mayor intervalo primero</item>
@@ -46,99 +36,20 @@
     <item>Orden programado</item>
     <item>Orden aleatorio</item>
   </string-array>
-  <string-array name="revCardOrderVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-  </string-array>
-  <string-array name="displayFontSizeLabels">
-    <item>10%</item>
-    <item>20%</item>
-    <item>30%</item>
-    <item>40%</item>
-    <item>50%</item>
-    <item>60%</item>
-    <item>70%</item>
-    <item>80%</item>
-    <item>90%</item>
-    <item>100%</item>
-    <item>110%</item>
-    <item>120%</item>
-    <item>130%</item>
-    <item>140%</item>
-    <item>150%</item>
-  </string-array>
-  <string-array name="displayFontSizeVals">
-    <item>10</item>
-    <item>20</item>
-    <item>30</item>
-    <item>40</item>
-    <item>50</item>
-    <item>60</item>
-    <item>70</item>
-    <item>80</item>
-    <item>90</item>
-    <item>100</item>
-    <item>110</item>
-    <item>120</item>
-    <item>130</item>
-    <item>140</item>
-    <item>150</item>
-  </string-array>
-  <string-array name="button_size_labels">
-    <item>100 %</item>
-    <item>115 %</item>
-    <item>130 %</item>
-    <item>145 %</item>
-    <item>160 %</item>
-    <item>175 %</item>
-  </string-array>
-  <string-array name="button_size_values">
-    <item>100</item>
-    <item>115</item>
-    <item>130</item>
-    <item>145</item>
-    <item>160</item>
-    <item>175</item>
-  </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>Ocultar la pregunta en la respuesta</item>
     <item>Mostrar la pregunta en la respuesta</item>
     <item>Tal como se define en el modelo</item>
-  </string-array>
-  <string-array name="hideQuestionInAnswerVals">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Mostrar opciones de estudio</item>
     <item>Mostrar explorador de mazos</item>
     <item>Mostrar explorador al comenzar el día</item>
   </string-array>
-  <string-array name="startup_mode_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
-  </string-array>
-  <string-array name="dictionary_labels">
-    <item>Aedict</item>
-    <item>Leo.org</item>
-  </string-array>
-  <string-array name="dictionary_values">
-    <item>0</item>
-    <item>1</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Siempre enviar</item>
     <item>Nunca enviar</item>
     <item>Preguntarme</item>
-  </string-array>
-  <string-array name="error_reporting_choice_values">
-    <item>0</item>
-    <item>1</item>
-    <item>2</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -150,25 +61,15 @@
     <item>200</item>
     <item>Nunca</item>
   </string-array>
-  <string-array name="widget_minimum_cards_due_values">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>1000000</item>
-  </string-array>
   <string-array name="cram_review_order_labels">
     <item>Últimas modificadas primero</item>
     <item>Mostrar en el orden añadido</item>
     <item>Mostrar en order aleatorio</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hora</item>
+    <item>hour</item>
     <item>día</item>
-    <item>mes</item>
+    <item>month</item>
     <item>año</item>
   </string-array>
   <string-array name="next_review_p">
@@ -176,5 +77,28 @@
     <item>días</item>
     <item>meses</item>
     <item>años</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_order">
+    <item>Tarjetas nuevas en orden aleatorio</item>
+    <item>Tarjetas nuevas en orden añadido</item>
+    <item>Tarjetas nuevas en orden añadido inverso</item>
+  </string-array>
+  <string-array name="studyoptions_more_new_card_schedule">
+    <item>Distribuir tarjetas nuevas entre repasos</item>
+    <item>Tarjetas nuevas después de los repasos</item>
+    <item>Tarjetas nuevas antes de los repasos</item>
+  </string-array>
+  <string-array name="studyoptions_more_rev_card_order">
+    <item>Repasar tarjetas de intervalo mayor</item>
+    <item>Revisar tarjetas de intervalo menor</item>
+    <item>Revisar tarjetas en el orden programado</item>
+    <item>Revisar tarjetas en orden aleatorio</item>
+  </string-array>
+  <string-array name="studyoptions_more_fail_card_option">
+    <item>Mostrar tarjetas falladas pronto</item>
+    <item>Mostrar tarjetas falladas al final</item>
+    <item>Mostrar tarjetas falladas en 10 minutos</item>
+    <item>Mostrar tarjetas falladas en 8 horas</item>
+    <item>Mostrar tarjetas falladas en 3 días</item>
   </string-array>
 </resources>
