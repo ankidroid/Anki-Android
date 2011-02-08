@@ -54,27 +54,27 @@ if sel == 'm':
 elif sel == 't':
 	# Update Translations:
 	print 'still problems with crowding here'
-#	language = raw_input("enter language code: ")
-#	selu = raw_input("update (s)rings.xml or (a)rrays.xml? ")
-#	path = '../res/values-'+language+'/'
-#	if selu == 's':
-#		filename = 'strings.xml'
-#	elif selu == 'a':
-#		filename = 'arrays.xml'
-#	else:
-#		filename = ''		
-#		print "nothing to do"
-#	print 'Update of Translation '+language+' for '+filename
-#	if filename:	
-#		c = pycurl.Curl()
-#		fields = [('files['+filename+']', (c.FORM_FILE, path + filename)), ('language', language), ('auto_approve_imported','0')]
-#		c.setopt(pycurl.URL, 'http://crowdin.net/api/project/ankidroidv0-6/upload-translation?key='+CROWDIN_KEY)
-#		c.setopt(pycurl.HTTPPOST, fields)
-#		b = StringIO.StringIO()
-#		c.setopt(pycurl.WRITEFUNCTION, b.write) 
-#		c.perform()
-#		c.close()
-#		print b.getvalue()
+	language = raw_input("enter language code: ")
+	selu = raw_input("update (s)rings.xml or (a)rrays.xml? ")
+	path = '../res/values-'+language+'/'
+	if selu == 's':
+		filename = 'strings.xml'
+	elif selu == 'a':
+		filename = 'arrays.xml'
+	else:
+		filename = ''		
+		print "nothing to do"
+	print 'Update of Translation '+language+' for '+filename
+	if filename:	
+		c = pycurl.Curl()
+		fields = [('files['+filename+']', (c.FORM_FILE, path + filename)), ('language', language), ('auto_approve_imported','0')]
+		c.setopt(pycurl.URL, 'http://crowdin.net/api/project/ankidroidv0-6/upload-translation?key='+CROWDIN_KEY)
+		c.setopt(pycurl.HTTPPOST, fields)
+		b = StringIO.StringIO()
+		c.setopt(pycurl.WRITEFUNCTION, b.write) 
+		c.perform()
+		c.close()
+		print b.getvalue()
 
 elif sel == 'r':
 	# Update Translations:
