@@ -23,6 +23,7 @@ import StringIO
 import sys
 
 CROWDIN_KEY = 'insert your Crowdin API key here'
+PROJECT_IDENTIFIER = 'insert your Project Identifier here'
 
 path = '../res/values/'
 
@@ -43,7 +44,7 @@ if sel == 'm':
 		print 'Update of Master File ' + filename
 		c = pycurl.Curl()
 		fields = [('files['+filename+']', (c.FORM_FILE, path + filename))]
-		c.setopt(pycurl.URL, 'http://crowdin.net/api/project/ankidroidv0-6/update-file?key='+CROWDIN_KEY)
+		c.setopt(pycurl.URL, 'http://crowdin.net/api/project/' + PROJECT_IDENTIFIER + '/update-file?key=' + CROWDIN_KEY)
 		c.setopt(pycurl.HTTPPOST, fields)
 		b = StringIO.StringIO()
 		c.setopt(pycurl.WRITEFUNCTION, b.write) 
@@ -68,7 +69,7 @@ elif sel == 't':
 	if filename:	
 		c = pycurl.Curl()
 		fields = [('files['+filename+']', (c.FORM_FILE, path + filename)), ('language', language), ('auto_approve_imported','0')]
-		c.setopt(pycurl.URL, 'http://crowdin.net/api/project/ankidroidv0-6/upload-translation?key='+CROWDIN_KEY)
+		c.setopt(pycurl.URL, 'http://crowdin.net/api/project/' + PROJECT_IDENTIFIER + '/upload-translation?key=' + CROWDIN_KEY)
 		c.setopt(pycurl.HTTPPOST, fields)
 		b = StringIO.StringIO()
 		c.setopt(pycurl.WRITEFUNCTION, b.write) 
@@ -80,7 +81,7 @@ elif sel == 'r':
 	# Update Translations:
 	print "Force translation export"
 	c = pycurl.Curl()
-	c.setopt(pycurl.URL, 'http://crowdin.net/api/project/ankidroidv0-6/export?&key='+CROWDIN_KEY)
+	c.setopt(pycurl.URL, 'http://crowdin.net/api/project/' + PROJECT_IDENTIFIER + '/export?&key=' + CROWDIN_KEY)
 	b = StringIO.StringIO()
 	c.setopt(pycurl.WRITEFUNCTION, b.write) 
 	c.perform()
