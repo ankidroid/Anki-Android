@@ -1139,6 +1139,12 @@ public class StudyOptions extends Activity {
 
 
     private void loadSampleDeck() {
+        // If decks directory does not exist, create it.
+        File decksDirectory = new File(mPrefDeckPath);
+        if (!decksDirectory.isDirectory()) {
+            decksDirectory.mkdirs();
+        }
+        
         File sampleDeckFile = new File(mPrefDeckPath, SAMPLE_DECK_NAME);
 
         if (!sampleDeckFile.exists()) {
@@ -1150,7 +1156,7 @@ public class StudyOptions extends Activity {
                 stream.close();
                 if (!written) {
                     openDeckPicker();
-                    Log.i(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card failed.");
+                    Log.e(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card failed.");
                     return;
                 }
                 Log.i(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card was sucessful.");
