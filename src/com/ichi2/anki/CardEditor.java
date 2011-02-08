@@ -77,8 +77,8 @@ public class CardEditor extends Activity {
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
 
-        mEditorCard = Reviewer.getEditorCard();
-
+        mEditorCard = AnkiDroidApp.deck().cardFromId(getIntent().getExtras().getLong("card"));
+      
         // Card -> FactID -> FieldIDs -> FieldModels
 
         Fact cardFact = mEditorCard.getFact();

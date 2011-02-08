@@ -2989,6 +2989,31 @@ public class Deck {
     }
 
 
+    public ArrayList<String[]> getAllCards(String order) {
+    	ArrayList<String[]> allCards = new ArrayList<String[]>();
+    	
+        Cursor cur = null;
+        try {
+        	cur = getDB().getDatabase().rawQuery("SELECT id, question, answer FROM cards ORDER BY " + order, null);
+            while (cur.moveToNext()) {
+            	String[] data = new String[3];
+            	data[0] = Long.toString(cur.getLong(0));
+            	data[1] = Utils.stripHTML(cur.getString(1));
+            	data[2] = Utils.stripHTML(cur.getString(2));
+            	allCards.add(data);
+            }
+        } catch (SQLException e) {
+            Log.e(AnkiDroidApp.TAG, "getAllCards: " + e.toString());
+            throw new RuntimeException(e);
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    	return allCards;
+    }
+
+
     /*
      * Tags: adding/removing in bulk*********************************************************
      */

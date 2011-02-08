@@ -99,6 +99,7 @@ public class StudyOptions extends Activity {
     private static final int DOWNLOAD_SHARED_DECK = 4;
     private static final int REPORT_ERROR = 5;
     private static final int ADD_FACT = 6;
+    private static final int BROWSE_CARDS = 7;
 
     /**
 * Constants for selecting which content view to display
@@ -183,6 +184,7 @@ public class StudyOptions extends Activity {
     private EditText mEditSessionTime;
     private EditText mEditSessionQuestions;
     private CheckBox mNightMode;
+    private Button mCardBrowser;
 
     /**
 * UI elements for "More Options" dialog
@@ -276,6 +278,9 @@ public class StudyOptions extends Activity {
                 case R.id.studyoptions_download_deck:
                 	showDownloadSelector();
                 	return;
+                case R.id.studyoptions_card_browser:
+                    openCardBrowser();
+                    return;
                 default:
                     return;
             }
@@ -564,6 +569,7 @@ public class StudyOptions extends Activity {
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
         mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
+        mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
@@ -587,7 +593,8 @@ public class StudyOptions extends Activity {
 
         mButtonStart.setOnClickListener(mButtonClickListener);
         mToggleCram.setOnClickListener(mButtonClickListener);
-
+        mCardBrowser.setOnClickListener(mButtonClickListener);
+        
         mEditNewPerDay.addTextChangedListener(new TextWatcher() {
         	public void afterTextChanged(Editable s) {
                 Deck deck = AnkiDroidApp.deck();
@@ -1111,6 +1118,14 @@ public class StudyOptions extends Activity {
     	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
+
+
+    private void openCardBrowser() {
+        Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
+        cardBrowser.putExtra("deckFilename", mDeckFilename);
+        startActivityForResult(cardBrowser, BROWSE_CARDS);
+    }
+
 
     public void openPersonalDeckPicker() {
         if (AnkiDroidApp.isUserLoggedIn()) {

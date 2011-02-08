@@ -187,7 +187,9 @@
 <string name="select_card_model">Select Card Model</string>
 <string name="select">Select</string>
 
-
+<!-- CardBrowser -->
+<string name="card_browser_title">Card Browser</string>
+<string name="card_browser_load">Loading cards</string>
 
 <!-- AnkiDroid.java -->
 <!--<string name="loading_new_card">Loading new card...</string>-->

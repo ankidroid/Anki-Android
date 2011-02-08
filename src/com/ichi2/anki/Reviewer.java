@@ -131,8 +131,6 @@ public class Reviewer extends Activity {
     private static final int HQIA_DO_SHOW = 1;
     private static final int HQIA_CARD_MODEL = 2;
 
-    private static Card sEditorCard; // To be assigned as the currentCard or a new card to be sent to and from editor
-
     private static boolean sDisplayAnswer =  false; // Indicate if "show answer" button has been pressed
 
     /** The percentage of the absolute font size specified in the deck. */
@@ -761,8 +759,9 @@ public class Reviewer extends Activity {
                     cramEditWarning.show();
                     return false;
                 } else {
-                    sEditorCard = mCurrentCard; 
                     Intent editCard = new Intent(Reviewer.this, CardEditor.class);
+
+                	editCard.putExtra("card", mCurrentCard.getId()); 
                     startActivityForResult(editCard, EDIT_CURRENT_CARD);
                     return true;
                 }
@@ -1557,11 +1556,6 @@ public class Reviewer extends Activity {
         if (mPrefWriteAnswers) {
             mAnswerField.setEnabled(false);
         }
-    }
-
-
-    public static Card getEditorCard() {
-        return sEditorCard;
     }
 
 

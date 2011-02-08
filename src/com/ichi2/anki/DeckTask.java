@@ -17,6 +17,9 @@
 
 package com.ichi2.anki;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.os.AsyncTask;
@@ -35,6 +38,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_UPDATE_FACT = 5;
     public static final int TASK_TYPE_UNDO = 6;
     public static final int TASK_TYPE_REDO = 7;
+    public static final int TASK_LOAD_CARDS = 8;
 
     /**
      * Possible outputs trying to load a deck.
@@ -116,7 +120,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundUndo(params);                
 
             case TASK_TYPE_REDO:
-                return doInBackgroundRedo(params);                
+                return doInBackgroundRedo(params);   
+                
+            case TASK_LOAD_CARDS:
+                return doInBackgroundLoadCards(params);                   
 
             default:
                 return null;
@@ -317,7 +324,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         return null;
     }
-    
+
+
+    private TaskData doInBackgroundLoadCards(TaskData... params) {
+        Deck deck = params[0].getDeck();
+        String order = params[0].getOrder();
+
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
+            
+        return new TaskData(deck.getAllCards(order));
+    }
+
 
     public static interface TaskListener {
         public void onPreExecute();
@@ -337,6 +354,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private boolean previousCardLeech;     // answer card resulted in card marked as leech
         private boolean previousCardSuspended; // answer card resulted in card marked as leech and suspended
         private boolean mLastCardInQueue;
+        private ArrayList<String[]> mAllCards;
+        private String mOrder;
 
 
         public TaskData(int value, Deck deck, Card card) {
@@ -362,6 +381,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
+        public TaskData(ArrayList<String[]> allCards) {
+        	mAllCards = new ArrayList<String[]>();
+        	mAllCards.addAll(allCards);
+        }
+
+
         public TaskData(Card card, boolean markedLeech, boolean suspendedLeech, boolean lastCardInQueue) {
             mCard = card;
             previousCardLeech = markedLeech;
@@ -370,6 +395,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
+        public TaskData(Deck deck, String order) {
+            mDeck = deck;
+            mOrder = order;
+        }
+
+ 
         public TaskData(int value) {
             mInteger = value;
         }
@@ -382,6 +413,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public Deck getDeck() {
             return mDeck;
+        }
+
+
+        public String getOrder() {
+            return mOrder;
+        }
+
+
+        public ArrayList<String[]> getAllCards() {
+        	return mAllCards;
         }
 
 
