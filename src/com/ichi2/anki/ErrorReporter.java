@@ -16,7 +16,6 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,16 +26,30 @@ import android.widget.TextView;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class ErrorReporter extends Activity {
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
+public class ErrorReporter extends Activity {
+	protected static String REPORT_ASK = "2";
+	protected static String REPORT_NEVER = "1";
+	protected static String REPORT_ALWAYS = "0";
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(AnkiDroidApp.TAG, "OnCreate");
@@ -44,9 +57,9 @@ public class ErrorReporter extends Activity {
         super.onCreate(savedInstanceState);
         Context context = getBaseContext();
         SharedPreferences sharedPreferences = PrefSettings.getSharedPrefs(context);
-        String reportErrorMode = sharedPreferences.getString("reportErrorMode", "2");
+        String reportErrorMode = sharedPreferences.getString("reportErrorMode", REPORT_ASK);
 
-        if (reportErrorMode.equals("0")) { // Always report
+        if (reportErrorMode.equals(REPORT_ALWAYS)) { // Always report
             try {
                 sendErrorReport();
             } catch (Exception e) {
@@ -58,7 +71,7 @@ public class ErrorReporter extends Activity {
             finish();
 
             return;
-        } else if (reportErrorMode.equals("1")) { // Never report
+        } else if (reportErrorMode.equals(REPORT_NEVER)) { // Never report
             deleteFiles();
             setResult(RESULT_OK);
             finish();
@@ -107,7 +120,6 @@ public class ErrorReporter extends Activity {
         }
     }
 
-
     private ArrayList<String> getErrorFiles() {
         ArrayList<String> files = new ArrayList<String>();
         String[] errors = fileList();
@@ -121,7 +133,6 @@ public class ErrorReporter extends Activity {
         return files;
     }
 
-
     private void deleteFiles() {
         ArrayList<String> files = getErrorFiles();
 
@@ -134,52 +145,79 @@ public class ErrorReporter extends Activity {
         }
     }
 
-
     private void sendErrorReport() throws IOException {
         ArrayList<String> files = getErrorFiles();
-        StringBuilder report = new StringBuilder();
-        int count = 1;
 
         for (String filename : files) {
             try {
-                report.append(String.format("--> BEGIN REPORT %d <--\n", count));
-
-                FileInputStream fi = openFileInput(filename);
-
-                if (fi == null) {
-                    continue;
+            	String singleLine;
+            	SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss ", Locale.US);
+                SimpleDateFormat df2 = new SimpleDateFormat(" yyyy", Locale.US);
+                Date ts = new Date();
+                TimeZone tz = TimeZone.getDefault();
+                
+            	BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(filename)));
+                List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+                
+                pairs.add(new BasicNameValuePair("reportsent", String.format("%s%s%s", df1.format(ts), tz.getID(), df2.format(ts))));
+                
+                while((singleLine=br.readLine())!=null) {
+                	int indexOfEquals = singleLine.indexOf('=');
+                	
+                	if(indexOfEquals==-1)
+                		continue;
+                	
+                	String key = singleLine.substring(0, indexOfEquals).toLowerCase();
+                	String value = singleLine.substring(indexOfEquals+1,singleLine.length());
+                	
+                	if(key.equals("stacktrace")) {
+                		StringBuilder sb = new StringBuilder(value);
+                		
+                		while((singleLine=br.readLine())!=null) {
+                			sb.append(singleLine);
+                			sb.append("\n");
+                		}
+                		
+                		value = sb.toString();
+                	}
+                	
+                	pairs.add(new BasicNameValuePair(key, value));
                 }
 
-                int ch;
-
-                while ((ch = fi.read()) != -1) {
-                    report.append((char) ch);
-                }
-
-                fi.close();
-
-                report.append(String.format("--> END REPORT %d <--", count++));
+                br.close();
+                
+                postReport(pairs);
+                
             } catch (Exception ex) {
                 Log.e(AnkiDroidApp.TAG, ex.toString());
             }
         }
-
-        sendEmail(report.toString());
     }
 
-
-    private void sendEmail(String body) {
-        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-        SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss ", Locale.US);
-        SimpleDateFormat df2 = new SimpleDateFormat(" yyyy", Locale.US);
-        Date ts = new Date();
-        TimeZone tz = TimeZone.getDefault();
-        String subject = String.format("Bug Report on %s%s%s", df1.format(ts), tz.getID(), df2.format(ts));
-        sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { getString(R.string.error_email) });
-        sendIntent.putExtra(Intent.EXTRA_TEXT, body);
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        sendIntent.setType("message/rfc822");
-
-        startActivity(Intent.createChooser(sendIntent, "Send Error Report"));
+    private void postReport(List<NameValuePair> values) {
+        final String url = getString(R.string.error_post_url);
+        
+    	HttpClient httpClient = new DefaultHttpClient();  
+        HttpPost httpPost = new HttpPost(url);  
+      
+        try {  
+        	httpPost.setEntity(new UrlEncodedFormEntity(values));  
+            HttpResponse response = httpClient.execute(httpPost);  
+            
+            switch(response.getStatusLine().getStatusCode()) {
+	            case 200:
+	            	Log.e(AnkiDroidApp.TAG, String.format("bug report posted to %s", url));
+	            	break;
+	            	
+            	default:
+            		Log.e(AnkiDroidApp.TAG, String.format("bug report posted to %s message", url));
+            		Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase()));
+	            	break;
+            }
+        } catch (ClientProtocolException ex) {  
+        	Log.e(AnkiDroidApp.TAG, ex.toString());
+        } catch (IOException ex) {  
+        	Log.e(AnkiDroidApp.TAG, ex.toString());  
+        }
     }
 }

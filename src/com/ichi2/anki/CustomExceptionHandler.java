@@ -98,15 +98,15 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             mInformation.put("Brand", android.os.Build.BRAND);
             mInformation.put("Device", android.os.Build.DEVICE);
             mInformation.put("Display", android.os.Build.DISPLAY);
-            mInformation.put("FingerPrint", android.os.Build.FINGERPRINT);
+            //mInformation.put("FingerPrint", android.os.Build.FINGERPRINT);
             mInformation.put("Host", android.os.Build.HOST);
             mInformation.put("ID", android.os.Build.ID);
             mInformation.put("Model", android.os.Build.MODEL);
             mInformation.put("Product", android.os.Build.PRODUCT);
-            mInformation.put("Tags", android.os.Build.TAGS);
+            //mInformation.put("Tags", android.os.Build.TAGS);
             mInformation.put("Time", Long.toString(android.os.Build.TIME));
-            mInformation.put("Type", android.os.Build.TYPE);
-            mInformation.put("User", android.os.Build.USER);
+            //mInformation.put("Type", android.os.Build.TYPE);
+            //mInformation.put("User", android.os.Build.USER);
             mInformation.put("TotalInternalMemory", Long.toString(getTotalInternalMemorySize()));
             mInformation.put("AvailableInternalMemory", Long.toString(getAvailableInternalMemorySize()));
 
@@ -127,16 +127,16 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         SimpleDateFormat df2 = new SimpleDateFormat(" yyyy", Locale.US);
         TimeZone tz = TimeZone.getDefault();
         StringBuilder reportInformation = new StringBuilder(10000);
-        reportInformation.append(String.format("Report Generated: %s%s%s\nBegin Collected Information\n\n",
+        reportInformation.append(String.format("reportgenerated=%s%s%s\n",
                 df1.format(currentDate), tz.getID(), df2.format(currentDate)));
 
         for (String key : mInformation.keySet()) {
             String value = mInformation.get(key);
 
-            reportInformation.append(String.format("%s = %s\n", key, value));
+            reportInformation.append(String.format("%s=%s\n", key.toLowerCase(), value));
         }
 
-        reportInformation.append(String.format("End Collected Information\n\nBegin Stacktrace\n\n"));
+        reportInformation.append(String.format("stacktrace="));
 
         // Stack trace
         final Writer result = new StringWriter();
@@ -153,8 +153,6 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             reportInformation.append(String.format("%s\n", result.toString()));
             cause = cause.getCause();
         }
-
-        reportInformation.append(String.format("End Inner exceptions"));
 
         printWriter.close();
 
