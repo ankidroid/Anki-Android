@@ -131,6 +131,8 @@ public class Reviewer extends Activity {
     private static final int HQIA_DO_SHOW = 1;
     private static final int HQIA_CARD_MODEL = 2;
 
+    private static Card sEditorCard; // To be assigned as the currentCard or a new card to be sent to and from editor
+
     private static boolean sDisplayAnswer =  false; // Indicate if "show answer" button has been pressed
 
     /** The percentage of the absolute font size specified in the deck. */
@@ -760,9 +762,11 @@ public class Reviewer extends Activity {
                     return false;
                 } else {
                     Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-
-                	editCard.putExtra("card", mCurrentCard.getId()); 
+                	sEditorCard = mCurrentCard;
                     startActivityForResult(editCard, EDIT_CURRENT_CARD);
+                    if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                        MyAnimation.slide(Reviewer.this, MyAnimation.LEFT);
+                    }
                     return true;
                 }
             case MENU_SUSPEND:
@@ -1402,6 +1406,10 @@ public class Reviewer extends Activity {
         }
     }
 
+
+    public static Card getEditorCard() {
+        return sEditorCard;
+    }
 
     private boolean isHebrewFixEnabled() {
         return mPrefFixHebrew;
