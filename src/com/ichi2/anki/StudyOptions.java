@@ -1122,9 +1122,7 @@ public class StudyOptions extends Activity {
 
     private void openCardBrowser() {
         Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
-        cardBrowser.putExtra("deckFilename", mDeckFilename);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
-        finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
             MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
         }
