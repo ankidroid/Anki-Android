@@ -235,18 +235,18 @@ public class CardBrowser extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuItem item;
-//        item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
-//        item.setIcon(R.drawable.ic_menu_revert);
-//        item = menu.add(Menu.NONE, MENU_REDO, Menu.NONE, R.string.redo);
-//        item.setIcon(R.drawable.ic_menu_redo);          
+        MenuItem item;
+        item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
+        item.setIcon(R.drawable.ic_menu_revert);
+        item = menu.add(Menu.NONE, MENU_REDO, Menu.NONE, R.string.redo);
+        item.setIcon(R.drawable.ic_menu_redo);          
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-//        menu.findItem(MENU_UNDO).setEnabled(AnkiDroidApp.deck().undoAvailable());
-//        menu.findItem(MENU_REDO).setEnabled(AnkiDroidApp.deck().redoAvailable());
+        menu.findItem(MENU_UNDO).setEnabled(mDeck.undoAvailable());
+        menu.findItem(MENU_REDO).setEnabled(mDeck.redoAvailable());
         return true;
     }
 
@@ -256,12 +256,12 @@ public class CardBrowser extends Activity {
         switch (item.getItemId()) {
             case MENU_UNDO:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler, new DeckTask.TaskData(0,
-                        AnkiDroidApp.deck(), mSelectedCard));
+                        mDeck, mSelectedCard));
                 return true;
 
             case MENU_REDO:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUndoRedoHandler, new DeckTask.TaskData(0,
-                        AnkiDroidApp.deck(), mSelectedCard));
+                        mDeck, mSelectedCard));
                 return true;
         }
         return false;
@@ -350,12 +350,11 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            mSelectedCard = values[0].getCard();
             if (mIsMarked) {
-                mDeck.deleteTag(mSelectedCard.getFactId(), Deck.TAG_MARKED);
                 String marSus = mCards.get(mPositionInCardsList).remove("marSus");
                 mCards.get(mPositionInCardsList).put("marSus", "0" + marSus.substring(1,2));
             } else {
-                mDeck.addTag(mSelectedCard.getFactId(), Deck.TAG_MARKED);
                 String marSus = mCards.get(mPositionInCardsList).remove("marSus");
                 mCards.get(mPositionInCardsList).put("marSus", "1" + marSus.substring(1,2));
             }
@@ -382,17 +381,14 @@ public class CardBrowser extends Activity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             if (mIsSuspended) {
-                mSelectedCard.unsuspend();
                 String marSus = mCards.get(mPositionInCardsList).remove("marSus");
                 mCards.get(mPositionInCardsList).put("marSus", marSus.substring(0,1) + "0");
             } else {
-                mSelectedCard.suspend();
                 String marSus = mCards.get(mPositionInCardsList).remove("marSus");
                 mCards.get(mPositionInCardsList).put("marSus", marSus.substring(0,1) + "1");
             }
             updateList();
         }
-
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
@@ -400,6 +396,7 @@ public class CardBrowser extends Activity {
 
         }
     };
+
 
     private DeckTask.TaskListener mDeleteCardHandler = new DeckTask.TaskListener() {
         @Override
@@ -441,12 +438,13 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            mSelectedCard = values[0].getCard();
         }
 
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            mProgressDialog.dismiss();
+            //mProgressDialog.dismiss();
             getCards(Deck.ORDER_BY_ANSWER);
         }
     };
@@ -471,13 +469,12 @@ public class CardBrowser extends Activity {
                 }
             }
             updateList();
-
-            mProgressDialog.dismiss();
         }
 
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            mProgressDialog.dismiss();
         }
     };
 }
