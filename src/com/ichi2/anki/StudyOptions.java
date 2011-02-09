@@ -1124,6 +1124,10 @@ public class StudyOptions extends Activity {
         Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
         cardBrowser.putExtra("deckFilename", mDeckFilename);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
+        finish();
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+            MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
+        }
     }
 
 
@@ -1304,6 +1308,8 @@ public class StudyOptions extends Activity {
                     break;
             }
         } else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
+            reloadDeck();
+        } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
             reloadDeck();
         }
     }

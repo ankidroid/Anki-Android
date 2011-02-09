@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,8 +79,12 @@ public class CardEditor extends Activity {
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
 
-        mEditorCard = AnkiDroidApp.deck().cardFromId(getIntent().getExtras().getLong("card"));
-      
+        if (getIntent().getBooleanExtra("callfromcardbrowser", false)) {
+            mEditorCard = CardBrowser.getEditorCard();
+        } else {
+            mEditorCard = Reviewer.getEditorCard();
+        }
+
         // Card -> FactID -> FieldIDs -> FieldModels
 
         Fact cardFact = mEditorCard.getFact();
@@ -126,10 +132,22 @@ public class CardEditor extends Activity {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
-                finish();
+                closeCardEditor();
             }
 
         });
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
+            closeCardEditor();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -171,6 +189,14 @@ public class CardEditor extends Activity {
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
         finish();
+    }
+
+
+    private void closeCardEditor() {
+        finish();
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+            MyAnimation.slide(CardEditor.this, MyAnimation.RIGHT);
+        }    
     }
 
     // ----------------------------------------------------------------------------

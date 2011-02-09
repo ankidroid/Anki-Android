@@ -18,7 +18,6 @@
 package com.ichi2.anki;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
@@ -38,7 +37,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_UPDATE_FACT = 5;
     public static final int TASK_TYPE_UNDO = 6;
     public static final int TASK_TYPE_REDO = 7;
-    public static final int TASK_LOAD_CARDS = 8;
+    public static final int TASK_TYPE_LOAD_CARDS = 8;
+    public static final int TASK_TYPE_DELETE_CARD = 9;
 
     /**
      * Possible outputs trying to load a deck.
@@ -113,7 +113,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_MARK_CARD:
                 return doInBackgroundMarkCard(params);
 
-		case TASK_TYPE_UPDATE_FACT:
+            case TASK_TYPE_UPDATE_FACT:
                 return doInBackgroundUpdateFact(params);
                 
             case TASK_TYPE_UNDO:
@@ -122,8 +122,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_REDO:
                 return doInBackgroundRedo(params);   
                 
-            case TASK_LOAD_CARDS:
+            case TASK_TYPE_LOAD_CARDS:
                 return doInBackgroundLoadCards(params);                   
+
+            case TASK_TYPE_DELETE_CARD:
+                return doInBackgroundDeleteCard(params);                   
 
             default:
                 return null;
@@ -236,16 +239,21 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundSuspendCard(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card oldCard = params[0].getCard();
-        Card newCard;
+        Card newCard = null;
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
             if (oldCard != null) {
-                oldCard.suspend();
+                if (oldCard.getSuspendedState()) {
+                    oldCard.unsuspend();
+                    newCard = oldCard;
+                } else {
+                    oldCard.suspend();
+                    newCard = deck.getCard(); 
+                }
             }
-
-            newCard = deck.getCard();
+            
             publishProgress(new TaskData(newCard));
             ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
@@ -283,7 +291,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundUndo(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card newCard;
-        long currentCardId = params[0].getCard().getId();
+        Card oldCard = params[0].getCard();
+        long currentCardId = 0;
+
+        if (oldCard != null) {
+            currentCardId = params[0].getCard().getId();            
+        }
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
@@ -331,8 +344,22 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         String order = params[0].getOrder();
 
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-            
-        return new TaskData(deck.getAllCards(order));
+        publishProgress(new TaskData(deck.getAllCards(order)));
+        
+        return null;
+    }
+
+
+    private TaskData doInBackgroundDeleteCard(TaskData... params) {
+        Card card = params[0].getCard();
+        
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
+        
+        Long id = card.getId();
+        card.delete();
+        publishProgress(new TaskData(String.valueOf(id)));
+
+        return null;
     }
 
 

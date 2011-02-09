@@ -42,7 +42,7 @@
 			android:label="DeckPicker"
 			android:configChanges="keyboardHidden|orientation"/>
 		<activity android:name="CardBrowser" 
-			android:label="@string/card_browser_title"
+			android:label="Card Browser"
 			android:configChanges="keyboardHidden|orientation"/>
 		<activity android:name="PersonalDeckPicker" 
 			android:label="@string/personaldeckpicker_title"

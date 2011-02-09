@@ -12,6 +12,6 @@
 		android:hint="@string/downloaddeck_search"/>
   	<ListView android:id="@+id/card_browser_list"
   		android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
+    	android:layout_height="fill_parent"
     	android:fastScrollEnabled="true"/>
 </LinearLayout>

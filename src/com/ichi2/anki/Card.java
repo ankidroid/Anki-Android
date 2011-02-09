@@ -23,7 +23,7 @@ import android.util.Log;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+import java.util.List;
 
 /**
  * A card is a presentation of a fact, and has two sides: a question and an answer. Any number of fields can appear on
@@ -376,12 +376,25 @@ public class Card {
 
     /**
      * Unsuspend this card.
-     * XXX Unused
      */
     public void unsuspend() {
         long[] ids = new long[1];
         ids[0] = mId;
         mDeck.unsuspendCards(ids);
+    }
+
+
+    public boolean getSuspendedState() {
+        return mDeck.getSuspendedState(mId);
+    }
+
+    /**
+     * Delete this card.
+     */
+    public void delete() {
+        List<String> ids = new ArrayList<String>();
+        ids.add(Long.toString(mId));
+        mDeck.deleteCards(ids);
     }
 
 
@@ -448,6 +461,11 @@ public class Card {
         return (allTags().indexOf(tag) != -1);
     }
 
+
+    public boolean isMarked() {
+        loadTags();
+        return (allTags().indexOf(Deck.TAG_MARKED) != -1);
+    }
 
     // FIXME: Should be removed. Calling code should directly interact with Model
     public CardModel getCardModel() {

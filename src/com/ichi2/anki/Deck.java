@@ -76,6 +76,12 @@ public class Deck {
     public static final double INITIAL_FACTOR = 2.5;
     private static final double MINIMUM_AVERAGE = 1.7;
     private static final double MAX_SCHEDULE_TIME = 36500.0;
+    
+    public static final String ORDER_BY_QUESTION = "question";
+    public static final String ORDER_BY_ANSWER = "answer";
+    public static final String ORDER_BY_DUE = "combinedDue";
+    public static final String ORDER_BY_INTERVAL = "interval";
+    public static final String ORDER_BY_EASE = "factor";
 
     // Card order strings for building SQL statements
     private static final String[] revOrderStrings = { "priority desc, interval desc", "priority desc, interval",
@@ -2994,12 +3000,24 @@ public class Deck {
     	
         Cursor cur = null;
         try {
-        	cur = getDB().getDatabase().rawQuery("SELECT id, question, answer FROM cards ORDER BY " + order, null);
+        	cur = getDB().getDatabase().rawQuery("SELECT DISTINCT cards.id, cards.question, cards.answer, "
+        	       + "a.tagid, priority FROM cards LEFT OUTER JOIN (SELECT cardid, tagid FROM cardtags WHERE "
+        	       + "tagid = (SELECT id FROM tags WHERE tag = \"" + TAG_MARKED + "\")) a ON cards.id = a.cardid ORDER BY " + order, null);
             while (cur.moveToNext()) {
-            	String[] data = new String[3];
+            	String[] data = new String[4];
             	data[0] = Long.toString(cur.getLong(0));
             	data[1] = Utils.stripHTML(cur.getString(1));
             	data[2] = Utils.stripHTML(cur.getString(2));
+            	if (cur.getString(3) != null) {
+                    data[3] = "1";
+            	} else {
+                    data[3] = "0";            	    
+            	}
+                if (cur.getString(4).equals("-3")) {
+                    data[3] = data[3] + "1";
+                } else {
+                    data[3] = data[3] + "0";                  
+                }            	
             	allCards.add(data);
             }
         } catch (SQLException e) {
@@ -3167,6 +3185,7 @@ public class Deck {
                 "UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
                         + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                         + ", isDue = 0 WHERE type >= 0 AND id IN " + Utils.ids2str(ids));
+        Log.i(AnkiDroidApp.TAG, "Cards suspended");
         setUndoEnd(undoName);
         flushMod();
     }
@@ -3182,8 +3201,14 @@ public class Deck {
                 "UPDATE cards SET type = relativeDelay, priority = 0, " + "modified = "
                         + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()) + " WHERE type < 0 AND id IN "
                         + Utils.ids2str(ids));
+        Log.i(AnkiDroidApp.TAG, "Cards unsuspended");
         updatePriorities(ids);
         flushMod();
+    }
+
+
+    public boolean getSuspendedState(long id) {
+        return (getDB().queryScalar("SELECT count(*) from cards WHERE id = " + id + " AND priority = -3") == 1);
     }
 
 
@@ -3413,7 +3438,12 @@ public class Deck {
      */
     public void deleteCards(List<String> ids) {
         Log.i(AnkiDroidApp.TAG, "deleteCards = " + ids.toString());
-
+        String undoName = "delete Cards";
+        if (ids.size() == 1) {
+            setUndoStart(undoName, Long.parseLong(ids.get(0)));         
+        } else {
+            setUndoStart(undoName);
+        }
         // Bulk delete cards by ID
         if (ids != null && ids.size() > 0) {
             commitToDB();
@@ -3470,6 +3500,7 @@ public class Deck {
 
             // Remove any dangling fact
             deleteDanglingFacts();
+            setUndoEnd(undoName);
             flushMod();
         }
     }
