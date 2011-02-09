@@ -52,7 +52,8 @@ public class CardBrowser extends Activity {
     private EditText mSearchEditText;
     
     private ProgressDialog mProgressDialog;
-    private  Card mSelectedCard;
+    private boolean mUndoRedoDialogShowing = false;
+    private Card mSelectedCard;
     private static Card sEditorCard;
     private boolean mIsSuspended;
     private boolean mIsMarked;
@@ -301,7 +302,12 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(CardBrowser.this, "", getResources().getString(R.string.card_browser_load), true);
+            if (!mUndoRedoDialogShowing) {
+                mProgressDialog = ProgressDialog.show(CardBrowser.this, "", getResources().getString(R.string.card_browser_load), true);                
+            } else {
+                mProgressDialog.setMessage(getResources().getString(R.string.card_browser_load));
+                mUndoRedoDialogShowing = false;
+            }
         }
 
 
@@ -393,7 +399,6 @@ public class CardBrowser extends Activity {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             mProgressDialog.dismiss();
-
         }
     };
 
@@ -444,7 +449,7 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            //mProgressDialog.dismiss();
+            mUndoRedoDialogShowing = true;
             getCards(Deck.ORDER_BY_ANSWER);
         }
     };
