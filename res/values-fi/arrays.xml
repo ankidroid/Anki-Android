@@ -43,8 +43,8 @@
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Näytä opiskelu asetukset</item>
-    <item>Näytä pakan kerääjä</item>
-    <item>Näytä pakan kerääjä päivän ensimmäisen käynnistyksen yhteydessä</item>
+    <item>Näytä korttipakan kerääjä</item>
+    <item>Näytä korttipakan kerääjä päivän ensimmäisen käynnistyksen yhteydessä</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Raportoi aina</item>
@@ -95,7 +95,7 @@
     <item>Tarkastele kortteja satunnaisessa järjestyksessä</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
-    <item>Näytä väärin vastatut kortit pian</item>
+    <item>Näytä äskettäin väärin vastatut kortit</item>
     <item>Näytä väärin vastatut kortit lopussa</item>
     <item>Näytä väärin vastatut kortit 10 minuutin ajalta</item>
     <item>Näytä väärin vastatut kortit 8 tunnin ajalta</item>

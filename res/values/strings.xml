@@ -188,6 +188,7 @@
 <string name="select">Select</string>
 
 <!-- CardBrowser -->
+<string name="card_browser">Card Browser</string>
 <string name="card_browser_title">%1$s: %2$d of %3$d cards shown</string>
 <string name="card_browser_load">Loading cards</string>
 <string name="card_browser_delete_card">Delete card</string>
@@ -196,7 +197,7 @@
 <string name="card_browser_mark_card">Mark card</string>
 <string name="card_browser_unmark_card">Unmark card</string>
 <string name="delete_card_title">Delete Card</string>
-<string name="delete_card_message">Really delete card this card?\n%1$s\n%2$s</string>
+<string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
 
 <!-- AnkiDroid.java -->
 <!--<string name="loading_new_card">Loading new card...</string>-->
@@ -410,6 +411,6 @@
 <string name="delete_deck_confirm">Delete it</string>
 
 <string name="new_version_title">New Version:</string>
-<string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+<string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 
 </resources>

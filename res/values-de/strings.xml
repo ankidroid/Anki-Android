@@ -26,7 +26,7 @@
   <string name="yes">Ja</string>
   <string name="no">Nein</string>
   <string name="ok">OK</string>
-  <string name="deck_upgrade_too_old_version">Stapel mit einer älteren Version als 39 werden nicht durch AnkiDroid unterstützt. Öffnen Sie den Stapel mit Anki Desktop um ihn auf die neueste Version zu aktualisieren.</string>
+  <string name="deck_upgrade_too_old_version">Stapel mit einer älteren Version als 39 werden nicht durch AnkiDroid unterstützt. Öffnen Sie den Stapel mit Anki-Desktop um ihn auf die neueste Version zu aktualisieren.</string>
   <string name="deck_upgrade_version_61_has_latex">Der Stapel kann nicht voll synchronisiert werden, weil er LaTeX-Ausdrücke enthält; bitte öffnen Sie den Stapel mit der Desktop-Version von Anki, um ihn auf die neueste Version zu aktualisieren und die LaTeX-Ausdrücke neu zu erzeugen.</string>
   <string name="deckpicker_title">Stapel wählen (%1$d von %2$d fällig)</string>
   <string name="deckpicker_title_nosdcard">SD-Karte ist ausgehängt</string>
@@ -155,6 +155,16 @@
   <string name="close">Schließen</string>
   <string name="select_card_model">Kartenvorlage wählen</string>
   <string name="select">Auswählen</string>
+  <string name="card_browser">Kartenübersicht</string>
+  <string name="card_browser_title">%1$s: %2$d von %3$d Karten</string>
+  <string name="card_browser_load">Karten werden geladen</string>
+  <string name="card_browser_delete_card">Karte löschen</string>
+  <string name="card_browser_suspend_card">Karte aussetzen</string>
+  <string name="card_browser_unsuspend_card">Aussetzen aufheben</string>
+  <string name="card_browser_mark_card">Karte markieren</string>
+  <string name="card_browser_unmark_card">Markierung aufheben</string>
+  <string name="delete_card_title">Karte löschen</string>
+  <string name="delete_card_message">Diese Karte wirklich löschen?\n%1$s\n%2$s</string>
   <string name="loading_deck">Stapel wird geladen.\nBitte warten...</string>
   <string name="connection_needed">Sie sind momentan offline.</string>
   <string name="currently_downloading">Wird gerade heruntergeladen</string>
@@ -311,5 +321,5 @@
   <string name="delete_deck_message">Möchten Sie den Stapel %s wirklich löschen?</string>
   <string name="delete_deck_confirm">Löschen</string>
   <string name="new_version_title">Neue Version:</string>
-  <string name="new_version_text">Neue Funktion:\n- Vorlesefunktion\n- Fortschrittsanzeige in der Stapelauswahl\n- Kartenvorlage kann nun beim Hinzufügen gewählt werden\n- neues Widget\n- verbesserte Rückgängig-Funktion\n- Schieberegler\n- mehr Sprachen</string>
+  <string name="new_version_text">Neue Funktion:\n- Kartenübersicht\n- Vorlesefunktion\n- Fortschrittsanzeige in der Stapelauswahl\n- Kartenvorlage kann nun beim Hinzufügen gewählt werden\n- neues Widget\n- verbesserte Rückgängig-Funktion\n- Schieberegler\n- mehr Sprachen</string>
 </resources>

@@ -155,6 +155,15 @@
   <string name="close">Close</string>
   <string name="select_card_model">Select Card Model</string>
   <string name="select">Select</string>
+  <string name="card_browser_title">%1$s: %2$d of %3$d cards shown</string>
+  <string name="card_browser_load">Loading cards</string>
+  <string name="card_browser_delete_card">Delete card</string>
+  <string name="card_browser_suspend_card">Suspend card</string>
+  <string name="card_browser_unsuspend_card">Unsuspend card</string>
+  <string name="card_browser_mark_card">Mark card</string>
+  <string name="card_browser_unmark_card">Unmark card</string>
+  <string name="delete_card_title">Delete Card</string>
+  <string name="delete_card_message">Really delete card this card?\n%1$s\n%2$s</string>
   <string name="loading_deck">Incărcare pachet. Vă rugăm aşteptaţi ...</string>
   <string name="connection_needed">Nu sunteti conectat la Internet</string>
   <string name="currently_downloading">Currently downloading</string>
