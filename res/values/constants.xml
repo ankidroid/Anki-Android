@@ -69,6 +69,13 @@
 		<item>200</item>
 		<item>1000000</item>
 	</string-array>
+	<string-array name="card_browser_order_values">
+		<item>SUBSTR(cards.question, 34) COLLATE NOCASE</item>
+		<item>SUBSTR(cards.answer, 34) COLLATE NOCASE</item>
+		<item>combinedDue ASC</item>
+		<item>interval ASC</item>
+		<item>factor DESC</item>
+	</string-array>
 	<string name="link_anki">http://ankisrs.net</string>
 	<string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
 	<string name="link_forum">http://groups.google.com/group/anki-android</string>

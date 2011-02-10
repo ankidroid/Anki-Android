@@ -77,12 +77,6 @@ public class Deck {
     private static final double MINIMUM_AVERAGE = 1.7;
     private static final double MAX_SCHEDULE_TIME = 36500.0;
     
-    public static final String ORDER_BY_QUESTION = "question";
-    public static final String ORDER_BY_ANSWER = "answer";
-    public static final String ORDER_BY_DUE = "combinedDue";
-    public static final String ORDER_BY_INTERVAL = "interval";
-    public static final String ORDER_BY_EASE = "factor";
-    
     public static final String UNDO_TYPE_ANSWER_CARD = "Answer Card";
     public static final String UNDO_TYPE_SUSPEND_CARD = "Suspend Card";
     public static final String UNDO_TYPE_EDIT_CARD = "Edit Card";
@@ -4064,6 +4058,7 @@ public class Deck {
                 return;
             }
         }
+        Log.e("cardID",""+cardId);
         mUndoStack.push(new UndoRow(name, cardId, latestUndoRow(), null));
     }
 

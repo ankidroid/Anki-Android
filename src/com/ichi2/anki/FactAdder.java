@@ -25,6 +25,8 @@ import android.content.IntentFilter;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -115,7 +117,7 @@ public class FactAdder extends Activity {
                 }
                 mDeck.addFact(mNewFact, mSelectedCardModels);
                 setResult(RESULT_OK);
-                finish();
+                closeFactAdder();
             }
 
         });
@@ -142,7 +144,7 @@ public class FactAdder extends Activity {
 
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
-                finish();
+                closeFactAdder();
             }
 
         });
@@ -229,6 +231,18 @@ public class FactAdder extends Activity {
         } else {
         	mCardModelButton.setText(getResources().getString(R.string.cards) + " " + cardModelNames);
         }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
+            closeFactAdder();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -322,9 +336,17 @@ public class FactAdder extends Activity {
     }
 
 
+    private void closeFactAdder() {
+    	finish();
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+            MyAnimation.slide(FactAdder.this, MyAnimation.RIGHT);
+        }
+    }
+
+
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-        finish();
+        closeFactAdder();
     }
 
     // TODO: remove redundance with CardEditor.java::FieldEditText

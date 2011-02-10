@@ -198,6 +198,11 @@
 <string name="card_browser_unmark_card">Unmark card</string>
 <string name="delete_card_title">Delete Card</string>
 <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
+<string name="card_browser_show_marked">Show marked cards</string>
+<string name="card_browser_show_suspended">Show suspended cards</string>
+<string name="card_browser_change_display_order">Change display order</string>
+<string name="card_browser_change_display_order_title">Choose display order</string>
+
 
 <!-- AnkiDroid.java -->
 <!--<string name="loading_new_card">Loading new card...</string>-->

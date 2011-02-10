@@ -1095,6 +1095,9 @@ public class StudyOptions extends Activity {
 
             case MENU_ADD_FACT:
             	startActivityForResult(new Intent(StudyOptions.this, FactAdder.class), ADD_FACT);
+                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                    MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
+                }
                 return true;
 
             case MENU_ABOUT:
