@@ -47,6 +47,7 @@ import java.util.HashMap;
 public class CardBrowser extends Activity {
     private ArrayList<HashMap<String, String>> mCards;
     private ArrayList<HashMap<String, String>> mAllCards;
+    private ArrayList<HashMap<String, String>> mDeletedCards;
     private ListView mCardsListView;
     private SimpleAdapter mCardsAdapter;
     private EditText mSearchEditText;
@@ -130,14 +131,7 @@ public class CardBrowser extends Activity {
         mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
         mSearchEditText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                mCards.clear();
-            	for (int i = 0; i < mAllCards.size(); i++) {
-                    if (mAllCards.get(i).get("question").toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1 ||
-                    		mAllCards.get(i).get("answer").toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1) { 
-                    	mCards.add(mAllCards.get(i));
-                    }
-                }
-            	updateList();
+                updateCardsList();
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}
@@ -222,10 +216,14 @@ public class CardBrowser extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
-            setResult(RESULT_OK);
-            finish();
-            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                MyAnimation.slide(CardBrowser.this, MyAnimation.RIGHT);
+            if (mSearchEditText.getText().length() == 0) {
+                setResult(RESULT_OK);
+                finish();
+                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                    MyAnimation.slide(CardBrowser.this, MyAnimation.RIGHT);
+                }                
+            } else {
+                mSearchEditText.setText("");
             }
             return true;
         }
@@ -259,7 +257,6 @@ public class CardBrowser extends Activity {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler, new DeckTask.TaskData(0,
                         mDeck, mSelectedCard));
                 return true;
-
             case MENU_REDO:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUndoRedoHandler, new DeckTask.TaskData(0,
                         mDeck, mSelectedCard));
@@ -282,6 +279,22 @@ public class CardBrowser extends Activity {
     }
 
 
+    private void updateCardsList() {
+        mCards.clear();
+        if (mSearchEditText.getText().length() == 0) {
+            mCards.addAll(mAllCards);
+        } else {
+            for (int i = 0; i < mAllCards.size(); i++) {
+                if (mAllCards.get(i).get("question").toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1 ||
+                    mAllCards.get(i).get("answer").toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1) { 
+                    mCards.add(mAllCards.get(i));
+                }
+            }                    
+        }
+        updateList();
+    }
+
+
     private void getCards(String order) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS, mLoadCardsHandler, new DeckTask.TaskData(mDeck, order));
     }
@@ -298,7 +311,90 @@ public class CardBrowser extends Activity {
     }
 
 
-    DeckTask.TaskListener mLoadCardsHandler = new DeckTask.TaskListener() {
+    private int getPosition(ArrayList<HashMap<String, String>> list, long cardId) {
+        String cardid = Long.toString(cardId);
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).get("id").equals(cardid)) {
+                return i;
+			}
+        }
+        return -1;
+    }
+
+
+    private void updateCard(Card card, ArrayList<HashMap<String, String>> list, int position) {
+    	list.get(position).put("question", Utils.stripHTML(card.getQuestion()));
+    	list.get(position).put("answer", Utils.stripHTML(card.getAnswer()));
+    }
+
+
+    private void markCards(long factId, boolean mark) {
+        for (long cardId : mDeck.getCardsFromFactId(factId)) {
+            int positionC = getPosition(mCards, cardId);
+            int positionA = getPosition(mAllCards, cardId);
+            String marSus = mAllCards.get(positionA).get("marSus");
+            if (mark) {
+                marSus = "1" + marSus.substring(1,2);
+                if (positionC != -1) {
+                    mCards.get(positionC).put("marSus", marSus);                    
+                }
+                mAllCards.get(positionA).put("marSus", marSus);
+            } else {
+                marSus = "0" + marSus.substring(1,2);
+                if (positionC != -1) {
+                    mCards.get(positionC).put("marSus", marSus);                    
+                }
+                mAllCards.get(positionA).put("marSus", marSus);
+            }            
+        }
+        updateList();
+    }
+
+
+    private void suspendCard(Card card, int position, boolean suspend) {
+        int posA = getPosition(mAllCards, card.getId());
+        String marSus = mAllCards.get(posA).remove("marSus");
+        if (suspend) {
+            marSus = marSus.substring(0,1) + "1";
+            if (position != -1) {
+                mCards.get(position).put("marSus", marSus);                
+            }
+            mAllCards.get(posA).put("marSus", marSus);
+        } else {
+            marSus = marSus.substring(0,1) + "0";
+            if (position != -1) {
+                mCards.get(position).put("marSus", marSus);                
+            }
+            mAllCards.get(posA).put("marSus", marSus);
+        }
+        updateList();
+    }
+
+
+    private void deleteCard(String cardId, int position) {
+        if (mDeletedCards == null) {
+            mDeletedCards = new ArrayList<HashMap<String, String>>();
+        }
+        HashMap<String, String> data = new HashMap<String, String>();
+        for (int i = 0; i < mAllCards.size(); i++) {
+            if (mAllCards.get(i).get("id").equals(cardId)) {
+                data.put("id", mAllCards.get(i).get("id"));
+                data.put("question", mAllCards.get(i).get("question"));
+                data.put("answer", mAllCards.get(i).get("answer"));
+                data.put("marSus", mAllCards.get(i).get("id"));
+                data.put("allCardPos", Integer.toString(i));
+                mDeletedCards.add(data);
+                mAllCards.remove(i);
+                Log.i(AnkiDroidApp.TAG, "Remove card from list");
+                break;
+            }
+        }
+        mCards.remove(position);
+        updateList();
+    }
+
+
+    private DeckTask.TaskListener mLoadCardsHandler = new DeckTask.TaskListener() {
 
         @Override
         public void onPreExecute() {
@@ -357,14 +453,7 @@ public class CardBrowser extends Activity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mSelectedCard = values[0].getCard();
-            if (mIsMarked) {
-                String marSus = mCards.get(mPositionInCardsList).remove("marSus");
-                mCards.get(mPositionInCardsList).put("marSus", "0" + marSus.substring(1,2));
-            } else {
-                String marSus = mCards.get(mPositionInCardsList).remove("marSus");
-                mCards.get(mPositionInCardsList).put("marSus", "1" + marSus.substring(1,2));
-            }
-            updateList();
+            markCards(mSelectedCard.getFactId(), !mIsMarked);
         }
 
 
@@ -386,14 +475,7 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            if (mIsSuspended) {
-                String marSus = mCards.get(mPositionInCardsList).remove("marSus");
-                mCards.get(mPositionInCardsList).put("marSus", marSus.substring(0,1) + "0");
-            } else {
-                String marSus = mCards.get(mPositionInCardsList).remove("marSus");
-                mCards.get(mPositionInCardsList).put("marSus", marSus.substring(0,1) + "1");
-            }
-            updateList();
+        	suspendCard(mSelectedCard, mPositionInCardsList, !mIsSuspended);
         }
 
         @Override
@@ -413,15 +495,7 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            
-            for (int i = 0; i < mAllCards.size(); i++) {
-                if (mAllCards.get(i).get("id").equals(values[0].getString())) {
-                    mAllCards.remove(i);
-                    Log.i(AnkiDroidApp.TAG, "Remove card from list");
-                }
-            }
-            mCards.remove(mPositionInCardsList);
-            updateList();
+            deleteCard(values[0].getString(), mPositionInCardsList);
         }
 
 
@@ -449,8 +523,47 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            mUndoRedoDialogShowing = true;
-            getCards(Deck.ORDER_BY_ANSWER);
+        	String undoType = result.getString();
+            if (undoType.equals(Deck.UNDO_TYPE_EDIT_CARD)) {
+                mSelectedCard.fromDB(mSelectedCard.getId());
+                int pos = getPosition(mAllCards, mSelectedCard.getId());
+                updateCard(mSelectedCard, mAllCards, pos);                    
+                pos = getPosition(mCards, mSelectedCard.getId());
+                if (pos != -1) {
+                    updateCard(mSelectedCard, mCards, pos);                    
+                }
+                updateList();
+            	mProgressDialog.dismiss();
+            } else if (undoType.equals(Deck.UNDO_TYPE_MARK_CARD)) {
+            	markCards(mSelectedCard.getFactId(), mSelectedCard.isMarked());
+            	mProgressDialog.dismiss();
+            } else if (undoType.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
+            	suspendCard(mSelectedCard, getPosition(mCards, mSelectedCard.getId()), mSelectedCard.getSuspendedState());
+            	mProgressDialog.dismiss();
+            } else if (undoType.equals(Deck.UNDO_TYPE_DELETE_CARD)) {
+                if (mSelectedCard != null) {
+                    int position = getPosition(mDeletedCards, mSelectedCard.getId());
+                    if (position != -1) {
+                        HashMap<String, String> data = new HashMap<String, String>();
+                        data.put("id", mDeletedCards.get(position).get("id"));
+                        data.put("question", mDeletedCards.get(position).get("question"));
+                        data.put("answer", mDeletedCards.get(position).get("answer"));
+                        data.put("marSus", mDeletedCards.get(position).get("id"));
+                        mAllCards.add(Integer.parseInt(mDeletedCards.get(position).get("allCardPos")), data);
+                        mDeletedCards.remove(position);
+                        updateCardsList();
+                    } else {
+                        deleteCard(Long.toString(mSelectedCard.getId()), getPosition(mCards, mSelectedCard.getId()));
+                    }                    
+                    mProgressDialog.dismiss();
+                } else {
+                    mUndoRedoDialogShowing = true;
+                    getCards(Deck.ORDER_BY_ANSWER);                    
+                }
+            } else {
+            	mUndoRedoDialogShowing = true;
+            	getCards(Deck.ORDER_BY_ANSWER);
+            }
         }
     };
 
@@ -464,14 +577,12 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-          mSelectedCard.fromDB(mSelectedCard.getId());
-            mCards.get(mPositionInCardsList).put("question", Utils.stripHTML(mSelectedCard.getQuestion()));
-            mCards.get(mPositionInCardsList).put("answer", Utils.stripHTML(mSelectedCard.getAnswer()));
-            for (int i = 0; i < mAllCards.size(); i++) {
-                if (mAllCards.get(i).get("id").equals(mSelectedCard.getId())) {
-                    mAllCards.get(mPositionInCardsList).put("question", Utils.stripHTML(mSelectedCard.getQuestion()));
-                    mAllCards.get(mPositionInCardsList).put("answer", Utils.stripHTML(mSelectedCard.getAnswer()));
-                }
+            mSelectedCard.fromDB(mSelectedCard.getId());
+            int pos = getPosition(mAllCards, mSelectedCard.getId());
+            updateCard(mSelectedCard, mAllCards, pos);                    
+            pos = getPosition(mCards, mSelectedCard.getId());
+            if (pos != -1) {
+                updateCard(mSelectedCard, mCards, pos);                    
             }
             updateList();
         }

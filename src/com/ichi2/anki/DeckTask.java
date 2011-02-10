@@ -157,15 +157,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Deck deck = params[0].getDeck();
         Card editCard = params[0].getCard();
         Fact editFact = editCard.getFact();
-        
+
         // Start undo routine
-        String undoName = "Update Fact";
-        deck.setUndoStart(undoName);
+        String undoName = Deck.UNDO_TYPE_EDIT_CARD;
+        deck.setUndoStart(undoName, editCard.getId());
 
         // Set modified also updates the text of cards and their modified flags
         editFact.setModified(true, deck, false);
         editFact.toDb();
-        
+
         deck.flushMod();
 
         // Find all cards based on this fact and update them with the updateCard method.
@@ -245,13 +245,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         ankiDB.getDatabase().beginTransaction();
         try {
             if (oldCard != null) {
+                String undoName = Deck.UNDO_TYPE_SUSPEND_CARD;
+                deck.setUndoStart(undoName, oldCard.getId());
                 if (oldCard.getSuspendedState()) {
                     oldCard.unsuspend();
                     newCard = oldCard;
                 } else {
                     oldCard.suspend();
-                    newCard = deck.getCard(); 
+                    newCard = deck.getCard();
                 }
+                deck.setUndoEnd(undoName);
             }
             
             publishProgress(new TaskData(newCard));
@@ -272,11 +275,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         ankiDB.getDatabase().beginTransaction();
         try {
             if (currentCard != null) {
+                String undoName = Deck.UNDO_TYPE_MARK_CARD;
+                deck.setUndoStart(undoName, currentCard.getId());
             	if (currentCard.hasTag(Deck.TAG_MARKED)) {
                     deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 } else {
                     deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 }
+            	deck.setUndoEnd(undoName);
             }
 
             publishProgress(new TaskData(currentCard));
@@ -312,7 +318,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             ankiDB.getDatabase().endTransaction();
         }
 
-        return null;
+        return new TaskData(deck.getUndoType());
     }
 
     
@@ -335,7 +341,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             ankiDB.getDatabase().endTransaction();
         }
 
-        return null;
+        return new TaskData(deck.getUndoType());
     }
 
 
@@ -354,7 +360,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Card card = params[0].getCard();
         
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
-        
+
         Long id = card.getId();
         card.delete();
         publishProgress(new TaskData(String.valueOf(id)));

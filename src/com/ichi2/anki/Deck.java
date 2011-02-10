@@ -82,6 +82,16 @@ public class Deck {
     public static final String ORDER_BY_DUE = "combinedDue";
     public static final String ORDER_BY_INTERVAL = "interval";
     public static final String ORDER_BY_EASE = "factor";
+    
+    public static final String UNDO_TYPE_ANSWER_CARD = "Answer Card";
+    public static final String UNDO_TYPE_SUSPEND_CARD = "Suspend Card";
+    public static final String UNDO_TYPE_EDIT_CARD = "Edit Card";
+    public static final String UNDO_TYPE_MARK_CARD = "Mark Card";
+    public static final String UNDO_TYPE_BURY_CARD = "Bury Card";
+    public static final String UNDO_TYPE_DELETE_CARD = "Delete Card";
+    
+    public String mCurrentUndoRedoType = "";
+    
 
     // Card order strings for building SQL statements
     private static final String[] revOrderStrings = { "priority desc, interval desc", "priority desc, interval",
@@ -2408,6 +2418,25 @@ public class Deck {
         return mNeedUnpack;
     }
 
+
+    public ArrayList<Long> getCardsFromFactId(Long factId) {
+        Cursor cursor = null;
+        ArrayList<Long> cardIds = new ArrayList<Long>();
+        try {
+            cursor = getDB().getDatabase().rawQuery(
+                    "SELECT id FROM cards WHERE factid = " + factId, null);
+            while (cursor.moveToNext()) {
+                cardIds.add(cursor.getLong(0));
+            }
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return cardIds;
+    }
+
+
     /*
      * Getting the next card*****************************
      */
@@ -2638,7 +2667,7 @@ public class Deck {
 
     public void _answerCard(Card card, int ease) {
         Log.i(AnkiDroidApp.TAG, "answerCard");
-        String undoName = "Answer Card";
+        String undoName = UNDO_TYPE_ANSWER_CARD;
         setUndoStart(undoName, card.getId());
         double now = Utils.now();
 
@@ -3050,8 +3079,6 @@ public class Deck {
 
     public void addTag(long[] factIds, String tag) {
         ArrayList<String> factTagsList = factTags(factIds);
-        String undoName = "Add Tag";
-        setUndoStart(undoName);
 
         // Create tag if necessary
         long tagId = tagId(tag, true);
@@ -3097,17 +3124,13 @@ public class Deck {
         }
 
         flushMod();
-        setUndoEnd(undoName);
     }
 
 
     public void deleteTag(long factId, String tag) {
-        String undoName = "Delete Tag";
-        setUndoStart(undoName);
         long[] ids = new long[1];
         ids[0] = factId;
         deleteTag(ids, tag);
-        setUndoEnd(undoName);
     }
 
 
@@ -3175,18 +3198,11 @@ public class Deck {
      * @param ids List of card IDs of the cards that are to be suspended.
      */
     public void suspendCards(long[] ids) {
-        String undoName = "Suspend Card";
-        if (ids.length == 1) {
-            setUndoStart(undoName, ids[0]);        	
-        } else {
-        	setUndoStart(undoName);
-        }
         getDB().getDatabase().execSQL(
                 "UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
                         + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
                         + ", isDue = 0 WHERE type >= 0 AND id IN " + Utils.ids2str(ids));
         Log.i(AnkiDroidApp.TAG, "Cards suspended");
-        setUndoEnd(undoName);
         flushMod();
     }
 
@@ -3197,7 +3213,7 @@ public class Deck {
      * @param ids List of card IDs of the cards that are to be unsuspended.
      */
     public void unsuspendCards(long[] ids) {
-        getDB().getDatabase().execSQL(
+    	getDB().getDatabase().execSQL(
                 "UPDATE cards SET type = relativeDelay, priority = 0, " + "modified = "
                         + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()) + " WHERE type < 0 AND id IN "
                         + Utils.ids2str(ids));
@@ -3219,7 +3235,7 @@ public class Deck {
      */
     public void buryFact(long factId, long cardId) {
         // TODO: Unbury fact after return to StudyOptions
-        String undoName = "Bury Fact";
+        String undoName = UNDO_TYPE_BURY_CARD;
         setUndoStart(undoName, cardId);         
         getDB().getDatabase().execSQL(
                 "UPDATE cards SET type = priority = -2, isDue = 0, type = type + 3 WHERE type >= 0 AND type <= 3 AND factId = " + factId);
@@ -3438,7 +3454,7 @@ public class Deck {
      */
     public void deleteCards(List<String> ids) {
         Log.i(AnkiDroidApp.TAG, "deleteCards = " + ids.toString());
-        String undoName = "delete Cards";
+        String undoName = UNDO_TYPE_DELETE_CARD;
         if (ids.size() == 1) {
             setUndoStart(undoName, Long.parseLong(ids.get(0)));         
         } else {
@@ -4105,7 +4121,7 @@ public class Deck {
         for (String s : sql) {
             getDB().getDatabase().execSQL(s);
         }
-
+        mCurrentUndoRedoType = row.mName;
         Long newend = latestUndoRow();
         dst.push(new UndoRow(row.mName, oldCardId, newstart, newend));
         return row.mCardId;
@@ -4140,6 +4156,10 @@ public class Deck {
     }
 
 
+    public String getUndoType() {
+    	return mCurrentUndoRedoType;
+    }
+    
     /*
      * Dynamic indices*********************************************************
      */

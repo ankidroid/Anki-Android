@@ -121,8 +121,7 @@ public class CardEditor extends Activity {
                 } else {
                     setResult(RESULT_CANCELED);
                 }
-
-                finish();
+                closeCardEditor();
             }
 
         });
