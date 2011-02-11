@@ -144,16 +144,25 @@ public class ErrorReporter extends Activity {
 
         for (String filename : files) {
             try {
+            	Date ts = new Date();
+            	TimeZone tz = TimeZone.getDefault();
             	String singleLine;
-            	SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss ", Locale.US);
-                SimpleDateFormat df2 = new SimpleDateFormat(" yyyy", Locale.US);
-                Date ts = new Date();
-                TimeZone tz = TimeZone.getDefault();
+            	
+                SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
+                SimpleDateFormat df2 = new SimpleDateFormat("Z", Locale.US);
+                
+                df1.setTimeZone(TimeZone.getTimeZone("UTC"));
+                
+                String reportsentutc = String.format("%s", df1.format(ts));
+                String reportsenttzoffset = String.format("%s", df2.format(ts));
+                String reportsenttz = String.format("%s", tz.getID());
                 
             	BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(filename)));
                 List<NameValuePair> pairs = new ArrayList<NameValuePair>();
                 
-                pairs.add(new BasicNameValuePair("reportsent", String.format("%s%s%s", df1.format(ts), tz.getID(), df2.format(ts))));
+                pairs.add(new BasicNameValuePair("reportsentutc", reportsentutc));
+                pairs.add(new BasicNameValuePair("reportsenttzoffset", reportsenttzoffset));
+                pairs.add(new BasicNameValuePair("reportsenttz", reportsenttz));
                 
                 while((singleLine=br.readLine())!=null) {
                 	int indexOfEquals = singleLine.indexOf('=');
