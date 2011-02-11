@@ -24,6 +24,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.Color;
 import android.os.IBinder;
@@ -167,18 +168,15 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 }
             }
 
-            CharSequence cardsText = getText(R.string.widget_cards);
-            if (totalDue == 1) {
-            	cardsText = getText(R.string.widget_card);
-            }
-            CharSequence decksText = getText(R.string.widget_decks);
-            if (totalDue == 1) {
-            	decksText = getText(R.string.widget_deck);
-            }
             if (totalDue > 0) {
-	            updateViews.setTextViewText(R.id.anki_droid_title,
-					context.getString(R.string.widget_cards_in_decks_due,
-							totalDue, cardsText, hasDueCount, decksText));
+                Resources resources = getResources();
+                String cardsText = resources.getQuantityString(
+                        R.plurals.widget_cards, totalDue, totalDue);
+                String decksText = resources.getQuantityString(
+                        R.plurals.widget_decks, hasDueCount, hasDueCount);
+                updateViews.setTextViewText(R.id.anki_droid_title,
+                        context.getString(R.string.widget_cards_in_decks_due,
+                                cardsText, decksText));
             } else {
 	            updateViews.setTextViewText(R.id.anki_droid_title,
 	            		context.getString(R.string.widget_no_cards_due));
