@@ -180,13 +180,11 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
             if (totalDue > 0) {
                 Resources resources = getResources();
-                String cardsText = resources.getQuantityString(
-                        R.plurals.widget_cards, totalDue, totalDue);
                 String decksText = resources.getQuantityString(
                         R.plurals.widget_decks, hasDueCount, hasDueCount);
-                updateViews.setTextViewText(R.id.anki_droid_title,
-                        context.getString(R.string.widget_cards_in_decks_due,
-                                cardsText, decksText));
+                String text = resources.getQuantityString(
+                        R.plurals.widget_cards_in_decks_due, totalDue, totalDue, decksText);                
+                updateViews.setTextViewText(R.id.anki_droid_title, text);
             } else {
 	            updateViews.setTextViewText(R.id.anki_droid_title,
 	            		context.getString(R.string.widget_no_cards_due));

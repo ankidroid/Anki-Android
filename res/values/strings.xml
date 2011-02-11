@@ -390,10 +390,9 @@
 <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
 <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
 <string name="widget_no_cards_due">No cards due</string>
-<string name="widget_cards_in_decks_due">%1$s due in %2$s</string>
-<plurals name="widget_cards">
-  <item quantity="one">1 card</item>
-  <item quantity="other">%1$d cards</item>
+<plurals name="widget_cards_in_decks_due">
+  <item quantity="one">%1$d card due in %2$s</item>
+  <item quantity="other">%1$d cards due in %2$s</item>
 </plurals>
 <plurals name="widget_decks">
   <item quantity="one">1 deck</item>
