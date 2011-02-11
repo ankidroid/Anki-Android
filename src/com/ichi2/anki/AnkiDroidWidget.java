@@ -122,6 +122,16 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
             Deck currentDeck = AnkiDroidApp.deck();
 
+            // Add a click listener to open Anki from the icon.
+            // This should be always there, whether there are due cards or not.
+            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
+            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
+            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            PendingIntent pendingAnkiDroidIntent =
+                PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
+            updateViews.setOnClickPendingIntent(R.id.anki_droid_logo,
+                    pendingAnkiDroidIntent);
+
             if (!AnkiDroidApp.isSdCardMounted()) {
                 updateViews.setTextViewText(R.id.anki_droid_title,
                 		context.getText(R.string.sdcard_missing_message));
@@ -182,15 +192,6 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 	            		context.getString(R.string.widget_no_cards_due));
             }
             
-            // Add a click listener to open Anki from the icon.
-            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
-            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            PendingIntent pendingAnkiDroidIntent =
-            	PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
-			updateViews.setOnClickPendingIntent(R.id.anki_droid_logo,
-            		pendingAnkiDroidIntent);
-
             SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
 
             int minimumCardsDueForNotification = Integer.parseInt(preferences.getString(
