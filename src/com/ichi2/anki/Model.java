@@ -17,9 +17,12 @@
 
 package com.ichi2.anki;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -89,6 +92,7 @@ public class Model {
      */
     private transient int mDisplayPercentage = 0;
 
+    private boolean mInvertedColor = false;
 
     private Model(Deck deck, String name) {
         mDeck = deck;
@@ -103,14 +107,12 @@ public class Model {
 
 
     // XXX: Unused
-//    public void setModified() {
-//        mModified = Utils.now();
-//    }
-
+    // public void setModified() {
+    // mModified = Utils.now();
+    // }
 
     /**
-     * FIXME: this should be called whenever the deck is changed. Otherwise unnecessary space will be used.
-     * XXX: Unused
+     * FIXME: this should be called whenever the deck is changed. Otherwise unnecessary space will be used. XXX: Unused
      */
     protected static final void reset() {
         sModels = new HashMap<Long, Model>();
@@ -124,7 +126,7 @@ public class Model {
      * currentModel. If a cardModel id is submitted, then the related Model data and all related CardModel and
      * FieldModel data are loaded unless the cardModel id is already in the cardModel map. FIXME: nothing is done to
      * treat db failure or non-existing identifiers
-     *
+     * 
      * @param deck The deck we are working with
      * @param identifier a cardModel id or a model id
      * @param isModelId if true then the submitted identifier is a model id; otherwise the identifier is a cardModel id
@@ -187,6 +189,11 @@ public class Model {
     }
 
 
+    public List<CardModel> getCardModels() {
+        return new ArrayList<CardModel>(mCardModelsMap.values());
+    }
+
+
     protected final CardModel getCardModel(long identifier) {
         return mCardModelsMap.get(identifier);
     }
@@ -217,9 +224,38 @@ public class Model {
     }
 
 
+    protected void saveToDBPlusRelatedModels(Deck deck) {
+        for (CardModel cm : mCardModelsMap.values()) {
+            cm.toDB(deck);
+        }
+        for (FieldModel fm : mFieldModelsMap.values()) {
+            fm.toDB(deck);
+        }
+        toDB(deck);
+    }
+
+
+    protected void toDB(Deck deck) {
+        ContentValues values = new ContentValues();
+        values.put("id", mId);
+        values.put("deckid", mDeckId);
+        values.put("created", mCreated);
+        values.put("modified", mModified);
+        values.put("tags", mTags);
+        values.put("name", mName);
+        values.put("description", mDescription);
+        values.put("features", mFeatures);
+        values.put("spacing", mSpacing);
+        values.put("initialSpacing", mInitialSpacing);
+        values.put("source", mSource);
+        deck.getDB().getDatabase().update("models", values, "id = " + mId, null);
+
+    }
+
+
     /**
-     * Loads a model from the database based on the id.
-     * FIXME: nothing is done in case of db error or no returned row
+     * Loads a model from the database based on the id. FIXME: nothing is done in case of db error or no returned row
+     * 
      * @param deck
      * @param id
      * @return
@@ -269,12 +305,12 @@ public class Model {
     /**
      * Prepares the CSS for all CardModels in this Model
      */
-    private void prepareCSSForCardModels() {
+    private void prepareCSSForCardModels(boolean invertedColors) {
         CardModel myCardModel = null;
         String cssString = null;
         for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
             myCardModel = entry.getValue();
-            cssString = createCSSForFontColorSize(myCardModel.getId(), mDisplayPercentage);
+            cssString = createCSSForFontColorSize(myCardModel.getId(), mDisplayPercentage, invertedColors);
             mCssCardModelMap.put(myCardModel.getId(), cssString);
         }
     }
@@ -289,11 +325,12 @@ public class Model {
      *            fontmodel font size
      * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
      */
-    protected final String getCSSForFontColorSize(long myCardModelId, int percentage) {
+    protected final String getCSSForFontColorSize(long myCardModelId, int percentage, boolean invertedColors) {
         // tjek whether the percentage is this the same as last time
-        if (mDisplayPercentage != percentage) {
+        if (mDisplayPercentage != percentage || mInvertedColor != invertedColors) {
             mDisplayPercentage = percentage;
-            prepareCSSForCardModels();
+            mInvertedColor = invertedColors;
+            prepareCSSForCardModels(invertedColors);
         }
         return mCssCardModelMap.get(myCardModelId);
     }
@@ -304,7 +341,7 @@ public class Model {
      * @param percentage the factor to apply to the font size in card model to the display size (in %)
      * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
      */
-    private String createCSSForFontColorSize(long myCardModelId, int percentage) {
+    private String createCSSForFontColorSize(long myCardModelId, int percentage, boolean invertedColors) {
         StringBuffer sb = new StringBuffer();
         sb.append("<!-- ").append(percentage).append(" % display font size-->");
         sb.append("<style type=\"text/css\">\n");
@@ -312,17 +349,17 @@ public class Model {
 
         // body background
         if (null != myCardModel.getLastFontColour() && 0 < myCardModel.getLastFontColour().trim().length()) {
-            sb.append("body {background-color:").append(myCardModel.getLastFontColour()).append(";}\n");
+            sb.append("body {background-color:").append(invertColor(myCardModel.getLastFontColour(), invertedColors)).append(";}\n");
         }
         // question
         sb.append(".").append(Reviewer.QUESTION_CLASS).append(" {\n");
         sb.append(calculateDisplay(percentage, myCardModel.getQuestionFontFamily(), myCardModel.getQuestionFontSize(),
-                myCardModel.getQuestionFontColour(), myCardModel.getQuestionAlign(), false));
+                myCardModel.getQuestionFontColour(), myCardModel.getQuestionAlign(), false, invertedColors));
         sb.append("}\n");
         // answer
         sb.append(".").append(Reviewer.ANSWER_CLASS).append(" {\n");
         sb.append(calculateDisplay(percentage, myCardModel.getAnswerFontFamily(), myCardModel.getAnswerFontSize(),
-                myCardModel.getAnswerFontColour(), myCardModel.getAnswerAlign(), false));
+                myCardModel.getAnswerFontColour(), myCardModel.getAnswerAlign(), false, invertedColors));
         sb.append("}\n");
         // css for fields. Gets css for all fields no matter whether they actually are used in a given card model
         FieldModel myFieldModel = null;
@@ -332,7 +369,7 @@ public class Model {
             hexId = "fm" + Long.toHexString(myFieldModel.getId());
             sb.append(".").append(hexId).append(" {\n");
             sb.append(calculateDisplay(percentage, myFieldModel.getQuizFontFamily(), myFieldModel.getQuizFontSize(),
-                    myFieldModel.getQuizFontColour(), 0, true));
+                    myFieldModel.getQuizFontColour(), 0, true, invertedColors));
             sb.append("}\n");
         }
 
@@ -342,14 +379,29 @@ public class Model {
     }
 
 
+    private static String invertColor(String color, boolean invert) {
+    	if (invert) {
+            final char[] items = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+            final char[] tmpItems = {'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v'};
+            for (int i = 0; i < 16; i++) {
+                color = color.replace(items[i], tmpItems[15-i]);
+            }
+            for (int i = 0; i < 16; i++) {
+                color = color.replace(tmpItems[i], items[i]);
+            }
+		}
+		return color;		
+    }
+
+
     private static String calculateDisplay(int percentage, String fontFamily, int fontSize, String fontColour,
-            int align, boolean isField) {
+            int align, boolean isField, boolean invertedColors) {
         StringBuffer sb = new StringBuffer();
         if (null != fontFamily && 0 < fontFamily.trim().length()) {
             sb.append("font-family:\"").append(fontFamily).append("\";\n");
         }
         if (null != fontColour && 0 < fontColour.trim().length()) {
-            sb.append("color:").append(fontColour).append(";\n");
+            sb.append("color:").append(invertColor(fontColour, invertedColors)).append(";\n");
         }
         if (0 < fontSize) {
             sb.append("font-size:");
@@ -375,16 +427,18 @@ public class Model {
     public String getName() {
         return mName;
     }
-    
+
+
     /**
      * @return the tags
      */
     public String getTags() {
         return mTags;
     }
-    
+
+
     public String getFeatures() {
-    	return mFeatures;
+        return mFeatures;
     }
 
 }

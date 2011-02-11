@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -58,7 +60,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -144,6 +145,8 @@ public class StudyOptions extends Activity {
     private int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
     boolean mSyncEnabled = false;
+    boolean mNewVersion = false;
+    boolean mInvertedColors = false;
     
     /**
 * Alerts to inform the user about different situations
@@ -154,6 +157,7 @@ public class StudyOptions extends Activity {
     private AlertDialog mConnectionErrorAlert;
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mSyncConflictResolutionAlert;
+	private AlertDialog mNewVersionAlert;
 
     /*
 * Cram related
@@ -178,6 +182,7 @@ public class StudyOptions extends Activity {
     private EditText mEditNewPerDay;
     private EditText mEditSessionTime;
     private EditText mEditSessionQuestions;
+    private CheckBox mNightMode;
 
     /**
 * UI elements for "More Options" dialog
@@ -379,7 +384,7 @@ public class StudyOptions extends Activity {
        			}
        			return false;
        		}
-       	};	
+       	};
     }
 
     
@@ -435,7 +440,7 @@ public class StudyOptions extends Activity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
-        savePreferences("lastOpened");
+        savePreferences("close");
     }
 
 
@@ -561,6 +566,18 @@ public class StudyOptions extends Activity {
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
         mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
+        mNightMode = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_night_mode);
+        mNightMode.setChecked(mInvertedColors);
+        mNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+            boolean isChecked) {
+                if (mInvertedColors != isChecked) {
+                    mInvertedColors = isChecked;
+                    savePreferences("invertedColors");                    
+                }
+            }
+            });
 
         mEditNewPerDay = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_new_cards_per_day);
         mEditSessionTime = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_minutes);
@@ -859,7 +876,7 @@ public class StudyOptions extends Activity {
             case CONTENT_STUDY_OPTIONS:
             case CONTENT_SESSION_COMPLETE:
                 // Enable timeboxing in case it was disabled from the previous deck
-                if (AnkiDroidApp.deck().name().equals("cram")) {
+                if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().name().equals("cram"))) {
                     mToggleCram.setChecked(false);
                     mEditNewPerDay.setEnabled(true);
                     mEditSessionTime.setEnabled(true);
@@ -1173,8 +1190,7 @@ public class StudyOptions extends Activity {
             Deck deck = AnkiDroidApp.deck();
 
             Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
-            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f",
-                        deck.getModified(), deck.getLastSync()));
+            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
             Connection.syncDeck(syncListener, new Connection.Payload(new Object[] { username, password, deck,
                     mDeckFilename, conflictResolution }));
         } else {
@@ -1301,10 +1317,14 @@ public class StudyOptions extends Activity {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
         if (str == "deckFilename") {
-            editor.putString("deckFilename", mDeckFilename);        
-        } else if (str == "lastOpened") {
-            editor.putLong("lastTimeOpened", System.currentTimeMillis());        	
+            editor.putString("deckFilename", mDeckFilename); 
+        } else if (str == "close") {
+        	editor.putLong("lastTimeOpened", System.currentTimeMillis());
+        	editor.putString("lastVersion", getVersion());
+        } else if (str == "invertedColors") {
+            editor.putBoolean("invertedColors", mInvertedColors);
         }
+
         editor.commit();
     }
 
@@ -1318,7 +1338,30 @@ public class StudyOptions extends Activity {
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
         mSyncEnabled = preferences.getBoolean("syncEnabled", false);
         mSwipeEnabled = preferences.getBoolean("swipe", false);
+        if (!preferences.getString("lastVersion", "").equals(getVersion())) {
+            Resources res = getResources();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(res.getString(R.string.new_version_title) + " " + getVersion());
+            builder.setMessage(res.getString(R.string.new_version_text));
+            builder.setPositiveButton(res.getString(R.string.ok), null);
+            builder.setCancelable(true);
+            mNewVersion = true;
+            mNewVersionAlert = builder.create();
+        }
+        mInvertedColors = preferences.getBoolean("invertedColors", false);
         return preferences;
+    }
+
+
+    private String getVersion() {
+    	String versionNumber;
+    	try {
+            String pkg = this.getPackageName();
+            versionNumber = this.getPackageManager().getPackageInfo(pkg, 0).versionName;
+        } catch (NameNotFoundException e) {
+            versionNumber = "?";
+        }
+        return versionNumber;
     }
 
 
@@ -1420,6 +1463,10 @@ public class StudyOptions extends Activity {
                     mProgressDialog.dismiss();
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+                if (mNewVersion) {
+                    mNewVersionAlert.show();
+                    mNewVersion = false;
                 }
             }
         }

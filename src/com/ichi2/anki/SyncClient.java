@@ -1870,9 +1870,7 @@ public class SyncClient {
 
         Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString() + ", lastDayInMillis = " + lastDay.getTime());
 
-        Log.i(AnkiDroidApp.TAG,
-                "Count stats = "
-                        + ankiDB.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\""));
+        Log.i(AnkiDroidApp.TAG, "Count stats = " + ankiDB.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\""));
         if (ankiDB.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\"") > 100) {
             Log.i(AnkiDroidApp.TAG, "stats since lastDay > 100");
             return true;

@@ -178,4 +178,13 @@
 			android:textOn="@string/cram" 
 			android:layout_marginBottom="1.5dip"/>
 	</LinearLayout>
+
+		<CheckBox android:id="@+id/studyoptions_night_mode"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="@string/studyoptions_night_mode"
+			android:layout_marginLeft="4dip"
+			android:textSize="14dip"/>
+
 </LinearLayout>

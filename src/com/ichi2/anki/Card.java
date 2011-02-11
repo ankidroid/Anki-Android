@@ -71,7 +71,7 @@ public class Card {
     public static final int TAGS_TEMPL = 2;
 
     private static final int LEARNT_THRESHOLD = 7;
-    private static final int MATURE_THRESHOLD = 21;
+    public static final int MATURE_THRESHOLD = 21;
 
     private static final double MAX_TIMER = 60.0;
 

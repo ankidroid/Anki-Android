@@ -274,8 +274,7 @@ public class Deck {
                 cursor.close();
             }
         }
-        Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f",
-                deck.mModified, Utils.now()));
+        Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "openDeck - modified: %f currentTime: %f", deck.mModified, Utils.now()));
 
         // Initialise queues
         deck.mFailedQueue = new LinkedList<QueueItem>();
@@ -293,9 +292,9 @@ public class Deck {
         }
 
         deck.mNeedUnpack = false;
-        if (deck.getUtcOffset() == -1.0 || deck.getUtcOffset() == -2.0) {
+        if (Math.abs(deck.getUtcOffset() - 1.0) < 1e-9 || Math.abs(deck.getUtcOffset() - 2.0) < 1e-9) {
             // do the rest later
-            deck.mNeedUnpack = deck.getUtcOffset() == -1.0;
+            deck.mNeedUnpack = (Math.abs(deck.getUtcOffset() - 1.0) < 1e-9);
             // make sure we do this before initVars
             deck.setUtcOffset();
             deck.mCreated = Utils.now();
@@ -329,8 +328,7 @@ public class Deck {
 
         // - New delay1 handling
         if (deck.mDelay1 > 7l) {
-            // We treat 600==0 to avoid breaking older clients
-            deck.mDelay1 = 600l;
+            deck.mDelay1 = 0l;
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();
@@ -620,14 +618,16 @@ public class Deck {
      * Return the media directory if exists, none if couldn't be created.
      * 
      * @param create If true it will attempt to create the folder if it doesn't exist
+     * @param rename This is used to simulate the python with create=None that is only used when renaming the mediaDir
      * @return The path of the media directory
      */
     public String mediaDir() {
-        return mediaDir(false);
+        return mediaDir(false, false);
     }
-
-
     public String mediaDir(boolean create) {
+        return mediaDir(create, false);
+    }
+    public String mediaDir(boolean create, boolean rename) {
         String dir = null;
         if (mDeckPath != null && !mDeckPath.equals("")) {
             if (mMediaPrefix != null) {
@@ -635,12 +635,12 @@ public class Deck {
             } else {
                 dir = mDeckPath.replaceAll("\\.anki$", ".media");
             }
-            if (!create) {
+            if (rename) {
                 // Don't create, but return dir
                 return dir;
             } else {
                 File mediaDir = new File(dir);
-                if (!mediaDir.exists()) {
+                if (!mediaDir.exists() && create) {
                     try {
                         if (!mediaDir.mkdir()) {
                             Log.e(AnkiDroidApp.TAG, "Couldn't create media directory " + dir);
@@ -748,54 +748,80 @@ public class Deck {
             mVersion = 54;
             commitToDB();
         }
-        if (mVersion < 55) {
-            // Set a default font for unset fonts
-            getDB().getDatabase().execSQL(
-                    "UPDATE fieldModels SET quizFontFamily = 'Arial' "
-                            + "WHERE NOT quizFontFamily OR quizFontFamily IS null");
-            mVersion = 55;
-            commitToDB();
-        }
         if (mVersion < 57) {
             // Add an index for priority & modified
             mVersion = 57;
             commitToDB();
         }
         if (mVersion < 61) {
+            // First check if the deck has LaTeX, if so it should be upgraded in Anki
+            if (hasLaTeX()) {
+                upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_version_61_has_latex);
+                return false;
+            }
             // Do our best to upgrade templates to the new style
             String txt =
                 "<span style=\"font-family: %s; font-size: %spx; color: %s; white-space: pre-wrap;\">%s</span>";
             Map<Long, Model> models = Model.getModels(this);
             Set<String> unstyled = new HashSet<String>();
+            boolean changed = false;
             for (Model m : models.values()) {
                 TreeMap<Long, FieldModel> fieldModels = m.getFieldModels();
                 for (FieldModel fm : fieldModels.values()) {
+                    changed = false;
                     Log.i(AnkiDroidApp.TAG, "family: '" + fm.getQuizFontFamily() + "'");
                     Log.i(AnkiDroidApp.TAG, "family: " + fm.getQuizFontSize());
                     Log.i(AnkiDroidApp.TAG, "family: '" + fm.getQuizFontColour() + "'");
-                    if (!fm.getQuizFontFamily().equals("null") || fm.getQuizFontSize() != 0 ||
-                            fm.getQuizFontColour().equals("null")) {
+                    if ((fm.getQuizFontFamily() != null && !fm.getQuizFontFamily().equals("")) ||
+                            fm.getQuizFontSize() != 0 ||
+                            (fm.getQuizFontColour() != null && fm.getQuizFontColour().equals(""))) {
                     } else {
                         unstyled.add(fm.getName());
                     }
                     // Fill out missing info
-                    if (fm.getQuizFontFamily().equals("null")) {
+                    if (fm.getQuizFontFamily() == null || fm.getQuizFontFamily().equals("")) {
                         fm.setQuizFontFamily("Arial");
+                        changed = true;
                     }
                     if (fm.getQuizFontSize() == 0) {
                         fm.setQuizFontSize(20);
+                        changed = true;
                     }
-                    if (fm.getQuizFontColour().equals("null")) {
+                    if (fm.getQuizFontColour() == null || fm.getQuizFontColour().equals("")) {
                         fm.setQuizFontColour("#000000");
+                        changed = true;
                     }
                     if (fm.getEditFontSize() == 0) {
                         fm.setEditFontSize(20);
+                        changed = true;
+                    }
+                    if (changed) {
+                        fm.toDB(this);
                     }
                 }
-
                 
+                for (CardModel cm : m.getCardModels()) {
+                    // Embed the old font information into card templates
+                    String format = cm.getQFormat();
+                    cm.setQFormat(String.format(txt, cm.getQuestionFontFamily(), cm.getQuestionFontSize(),
+                            cm.getQuestionFontColour(), format));
+                    format = cm.getAFormat();
+                    cm.setAFormat(String.format(txt, cm.getAnswerFontFamily(), cm.getAnswerFontSize(),
+                            cm.getAnswerFontColour(), format));
+               
+                    // Escape fields that had no previous styling
+                    for (String un : unstyled) {
+                        String oldStyle = "%(" + un + ")s";
+                        String newStyle = "{{{" + un + "}}}";
+                        cm.setQFormat(cm.getQFormat().replace(oldStyle, newStyle));
+                        cm.setAFormat(cm.getAFormat().replace(oldStyle, newStyle));
+                    }
+                    cm.toDB(this);
+                }
             }
-
+            // Rebuild q/a for the above & because latex has changed
+            // We should be doing updateAllCards(), but it takes too long (really)
+            // updateAllCards();
             // Rebuild the media db based on new format
             Media.rebuildMediaDir(this, false);
             mVersion = 61;
@@ -812,15 +838,6 @@ public class Deck {
             updateDynamicIndices();
             getDB().getDatabase().execSQL("VACUUM");
             mVersion = 62;
-            commitToDB();
-        }
-        if (mVersion < 63) {
-            // Set a default font for unset font sizes
-            getDB().getDatabase().execSQL(
-                    "UPDATE fieldModels SET quizFontSize = 20 WHERE quizFontSize = ''" + "OR quizFontSize IS NULL");
-            getDB().getDatabase().execSQL(
-                    "UPDATE fieldModels SET editFontSize = 20 WHERE editFontSize = ''" + "OR editFontSize IS NULL");
-            mVersion = 63;
             commitToDB();
         }
         if (mVersion < 64) {
@@ -861,22 +878,31 @@ public class Deck {
 
 
     public static String upgradeNotesToMessages(Deck deck, Resources res) {
-        // FIXME: upgradeNotes should be a list of HashMaps<Integer, ArrayList<String>> containing any values
-        // necessary for generating the messages. In the case of upgrade 52, name and syncName.
         String notes = "";
         for (Integer note : deck.upgradeNotes) {
-            if (note == com.ichi2.anki.R.string.deck_upgrade_too_old_version) {
-                // Unsupported version
-                notes = notes.concat(res.getString(note.intValue()));
-                // } else if (note == com.ichi2.anki.R.string.deck_upgrade_52_note) {
-                // // Upgrade note for version 52 regarding syncName
-                // notes = notes.concat(String.format(res.getString(note.intValue()),
-                // deck.getDeckName(), deck.getSyncName()));
-            }
+            notes = notes.concat(res.getString(note.intValue()) + "\n");
         }
         return notes;
     }
 
+    private boolean hasLaTeX() {
+        Cursor cursor = null;
+        try {
+            cursor = getDB().getDatabase().rawQuery(
+                "SELECT Id FROM fields WHERE " +
+                "(value like '%[latex]%[/latex]%') OR " +
+                "(value like '%[$]%[/$]%') OR " +
+                "(value like '%[$$]%[/$$]%') LIMIT 1 ", null);
+            if (cursor.moveToFirst()) {
+                return true;
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return false;
+    }
 
     /**
      * Add indices to the DB.
@@ -912,7 +938,14 @@ public class Deck {
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_factsDeleted_factId ON factsDeleted (factId)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_mediaDeleted_factId ON mediaDeleted (mediaId)");
         // Tags
-        getDB().getDatabase().execSQL("CREATE UNIQUE INDEX IF NOT EXISTS ix_tags_tag ON tags (tag)");
+        String txt = "CREATE UNIQUE INDEX IF NOT EXISTS ix_tags_tag on tags (tag)";
+        try {
+            getDB().getDatabase().execSQL(txt);
+        } catch (SQLException e) {
+            getDB().getDatabase().execSQL("DELETE FROM tags WHERE EXISTS (SELECT 1 FROM tags t2 " +
+                    "WHERE tags.tag = t2.tag AND tags.rowid > t2.rowid)");
+            getDB().getDatabase().execSQL(txt);
+        }
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_tagCard ON cardTags (tagId, cardId)");
         getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_cardId ON cardTags (cardId)");
     }
@@ -1343,8 +1376,7 @@ public class Deck {
         fillRevQueue();
         fillNewQueue();
         for (QueueItem i : mFailedQueue) {
-            Log.i(AnkiDroidApp.TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: "
-                    + i.getDue());
+            Log.i(AnkiDroidApp.TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: " + i.getDue());
         }
         for (QueueItem i : mRevQueue) {
             Log.i(AnkiDroidApp.TAG, "rev queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
@@ -2259,6 +2291,14 @@ public class Deck {
         return mCardCount;
     }
 
+	/**
+	 * Get the number of mature cards of the deck.
+	 * 
+	 * @return The number of cards contained in the deck
+	 */
+	public int getMatureCardCount() {
+    	return (int) (getDB().queryScalar("SELECT count(*) from cards WHERE interval >= " + Card.MATURE_THRESHOLD));
+    }
 
     /**
      * @return the currentModelId
@@ -2661,6 +2701,7 @@ public class Deck {
         CardHistoryEntry entry = new CardHistoryEntry(this, card, ease, lastDelay);
         entry.writeSQL();
         mModified = now;
+        setUndoEnd(undoName);
 
         // Remove form queue
         requeueCard(card, oldIsRev);
@@ -2670,7 +2711,6 @@ public class Deck {
             Log.i(AnkiDroidApp.TAG, "card is leech!");
             handleLeech(card);
         }
-        setUndoEnd(undoName);
     }
 
 
@@ -2678,12 +2718,16 @@ public class Deck {
     private void _spaceCards(Card card) {
         // Update new counts
         double _new = Utils.now() + mNewSpacing;
-        // Space cards
+        // Space reviews too if integer minute
+        String lim = "= 2";
+        if (mNewSpacing % 60 == 0) {
+            lim = "BETWEEN 1 AND 2";
+        }
         getDB().getDatabase().execSQL(
-                String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET " + "combinedDue = (CASE "
-                        + "WHEN type = 1 THEN %f " + "WHEN type = 2 THEN %f " + "END), " + "modified = %f, isDue = 0 "
-                        + "WHERE id != %d AND factId = %d " + "AND combinedDue < %f " + "AND type BETWEEN 1 AND 2",
-                        mDueCutoff, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff));
+                String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET combinedDue = (CASE WHEN type = 1 THEN %f " 
+                        + "WHEN type = 2 THEN %f END), modified = %f, isDue = 0 WHERE id != %d AND factId = %d " 
+                        + "AND combinedDue < %f AND type %s",
+                        mDueCutoff, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff, lim));
         // Update local cache of seen facts
         mSpacedFacts.put(card.getFactId(), _new);
     }
@@ -2698,8 +2742,7 @@ public class Deck {
             // No leech threshold found in DeckVars
             return false;
         }
-        Log.i(AnkiDroidApp.TAG, "leech handling: " + card.getSuccessive() + " successive fails and " + no
-                + " total fails, threshold at " + fmax);
+        Log.i(AnkiDroidApp.TAG, "leech handling: " + card.getSuccessive() + " successive fails and " + no + " total fails, threshold at " + fmax);
         // Return true if:
         // - The card failed AND
         // - The number of failures exceeds the leech threshold AND
@@ -2909,13 +2952,10 @@ public class Deck {
                     "SELECT factId FROM cards WHERE id IN " + Utils.ids2str(cardIds), 0)));
             Log.i(AnkiDroidApp.TAG, "updateCardTags fids: " + fids);
             tids = tagIds(allTags_("WHERE id IN " + fids));
-            Log.i(AnkiDroidApp.TAG, "updateCardTags tids keys: "
-                    + Arrays.toString(tids.keySet().toArray(new String[tids.size()])));
-            Log.i(AnkiDroidApp.TAG, "updateCardTags tids values: "
-                    + Arrays.toString(tids.values().toArray(new Long[tids.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags tids keys: " + Arrays.toString(tids.keySet().toArray(new String[tids.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags tids values: " + Arrays.toString(tids.values().toArray(new Long[tids.size()])));
             rows = splitTagsList("AND facts.id IN " + fids);
-            Log.i(AnkiDroidApp.TAG, "updateCardTags rows keys: "
-                    + Arrays.toString(rows.keySet().toArray(new Long[rows.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags rows keys: " + Arrays.toString(rows.keySet().toArray(new Long[rows.size()])));
             for (List<String> l : rows.values()) {
                 Log.i(AnkiDroidApp.TAG, "updateCardTags rows values: ");
                 for (String v : l) {
@@ -3122,6 +3162,22 @@ public class Deck {
     }
 
 
+    /**
+     * Bury all cards for fact until next session. Caller must .reset()
+     * 
+     * @param Fact .
+     */
+    public void buryFact(long factId, long cardId) {
+        // TODO: Unbury fact after return to StudyOptions
+        String undoName = "Bury Fact";
+        setUndoStart(undoName, cardId);         
+        getDB().getDatabase().execSQL(
+                "UPDATE cards SET type = priority = -2, isDue = 0, type = type + 3 WHERE type >= 0 AND type <= 3 AND factId = " + factId);
+        setUndoEnd(undoName);
+        flushMod();
+    }
+
+    
     /**
      * Priorities
      *******************************/

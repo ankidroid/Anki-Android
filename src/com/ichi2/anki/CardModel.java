@@ -17,6 +17,7 @@
 
 package com.ichi2.anki;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -33,7 +34,7 @@ import java.util.regex.Pattern;
 /**
  * Card model. Card models are used to make question/answer pairs for the information you add to facts. You can display
  * any number of fields on the question side and answer side.
- *
+ * 
  * @see http://ichi2.net/anki/wiki/ModelProperties#Card_Templates
  */
 public class CardModel implements Comparator<CardModel> {
@@ -126,8 +127,7 @@ public class CardModel implements Comparator<CardModel> {
     /** SELECT string with only those fields, which are used in AnkiDroid */
     private static final String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, "
             + "aformat, questionInAnswer, questionFontFamily, questionFontSize, questionFontColour, questionAlign, "
-            + "answerFontFamily, answerFontSize, answerFontColour, answerAlign, lastFontColour"
-            + " FROM cardModels";
+            + "answerFontFamily, answerFontSize, answerFontColour, answerAlign, lastFontColour" + " FROM cardModels";
 
 
     /**
@@ -178,16 +178,39 @@ public class CardModel implements Comparator<CardModel> {
             }
         }
     }
+    
+    protected void toDB(Deck deck) {
+        ContentValues values = new ContentValues();
+        values.put("id", mId);
+        values.put("ordinal", mOrdinal);
+        values.put("modelId", mModelId);
+        values.put("name", mName);
+        values.put("description", mDescription);
+        values.put("active", mActive);
+        values.put("qformat", mQformat);
+        values.put("aformat", mAformat);
+        values.put("questionInAnswer", mQuestionInAnswer);
+        values.put("questionFontFamily", mQuestionFontFamily);
+        values.put("questionFontSize", mQuestionFontSize);
+        values.put("questionFontColour", mQuestionFontColour);
+        values.put("questionAlign", mQuestionAlign);
+        values.put("answerFontFamily", mAnswerFontFamily);
+        values.put("answerFontSize", mAnswerFontSize);
+        values.put("answerFontColour", mAnswerFontColour);
+        values.put("answerAlign", mAnswerAlign);
+        values.put("lastFontColour", mLastFontColour);
+        deck.getDB().getDatabase().update("cardModels", values, "id = " + mId, null);
+    }
 
 
     public boolean isActive() {
         return (mActive != 0);
     }
 
+
     /**
-     * This function recompiles the templates for question and answer.
-     * It should be called everytime we change mQformat or mAformat, so if in the
-     * future we create set(Q|A)Format setters, we should include a call to this.
+     * This function recompiles the templates for question and answer. It should be called everytime we change mQformat
+     * or mAformat, so if in the future we create set(Q|A)Format setters, we should include a call to this.
      */
     private void refreshTemplates() {
         // Question template
@@ -200,7 +223,7 @@ public class CardModel implements Comparator<CardModel> {
         m.appendTail(sb);
         Log.i(AnkiDroidApp.TAG, "Compiling question template \"" + sb.toString() + "\"");
         mQTemplate = Mustache.compiler().compile(sb.toString());
-        
+
         // Answer template
         sb = new StringBuffer();
         m = sOldStylePattern.matcher(mAformat);
@@ -212,6 +235,7 @@ public class CardModel implements Comparator<CardModel> {
         Log.i(AnkiDroidApp.TAG, "Compiling answer template \"" + sb.toString() + "\"");
         mATemplate = Mustache.compiler().compile(sb.toString());
     }
+
 
     /**
      * @param cardModelId
@@ -235,40 +259,39 @@ public class CardModel implements Comparator<CardModel> {
 
 
     // XXX Unused
-//    /**
-//     * Return a copy of this object.
-//     */
-//    public CardModel copy() {
-//        CardModel cardModel = new CardModel(mName, mQformat, mAformat, (mActive == 1) ? true : false);
-//        cardModel.mOrdinal = mOrdinal;
-//        cardModel.mModelId = mModelId;
-//        cardModel.mDescription = mDescription;
-//        cardModel.mLformat = mLformat;
-//        cardModel.mQedformat = mQedformat;
-//        cardModel.mAedformat = mAedformat;
-//        cardModel.mQuestionInAnswer = mQuestionInAnswer;
-//        cardModel.mQuestionFontFamily = mQuestionFontFamily;
-//        cardModel.mQuestionFontSize = mQuestionFontSize;
-//        cardModel.mQuestionFontColour = mQuestionFontColour;
-//        cardModel.mQuestionAlign = mQuestionAlign;
-//        cardModel.mAnswerFontFamily = mAnswerFontFamily;
-//        cardModel.mAnswerFontSize = mAnswerFontSize;
-//        cardModel.mAnswerFontColour = mAnswerFontColour;
-//        cardModel.mAnswerAlign = mAnswerAlign;
-//        cardModel.mLastFontFamily = mLastFontFamily;
-//        cardModel.mLastFontSize = mLastFontSize;
-//        cardModel.mLastFontColour = mLastFontColour;
-//        cardModel.mEditQuestionFontFamily = mEditQuestionFontFamily;
-//        cardModel.mEditQuestionFontSize = mEditQuestionFontSize;
-//        cardModel.mEditAnswerFontFamily = mEditAnswerFontFamily;
-//        cardModel.mEditAnswerFontSize = mEditAnswerFontSize;
-//        cardModel.mAllowEmptyAnswer = mAllowEmptyAnswer;
-//        cardModel.mTypeAnswer = mTypeAnswer;
-//        cardModel.mModel = null;
-//
-//        return cardModel;
-//    }
-
+    // /**
+    // * Return a copy of this object.
+    // */
+    // public CardModel copy() {
+    // CardModel cardModel = new CardModel(mName, mQformat, mAformat, (mActive == 1) ? true : false);
+    // cardModel.mOrdinal = mOrdinal;
+    // cardModel.mModelId = mModelId;
+    // cardModel.mDescription = mDescription;
+    // cardModel.mLformat = mLformat;
+    // cardModel.mQedformat = mQedformat;
+    // cardModel.mAedformat = mAedformat;
+    // cardModel.mQuestionInAnswer = mQuestionInAnswer;
+    // cardModel.mQuestionFontFamily = mQuestionFontFamily;
+    // cardModel.mQuestionFontSize = mQuestionFontSize;
+    // cardModel.mQuestionFontColour = mQuestionFontColour;
+    // cardModel.mQuestionAlign = mQuestionAlign;
+    // cardModel.mAnswerFontFamily = mAnswerFontFamily;
+    // cardModel.mAnswerFontSize = mAnswerFontSize;
+    // cardModel.mAnswerFontColour = mAnswerFontColour;
+    // cardModel.mAnswerAlign = mAnswerAlign;
+    // cardModel.mLastFontFamily = mLastFontFamily;
+    // cardModel.mLastFontSize = mLastFontSize;
+    // cardModel.mLastFontColour = mLastFontColour;
+    // cardModel.mEditQuestionFontFamily = mEditQuestionFontFamily;
+    // cardModel.mEditQuestionFontSize = mEditQuestionFontSize;
+    // cardModel.mEditAnswerFontFamily = mEditAnswerFontFamily;
+    // cardModel.mEditAnswerFontSize = mEditAnswerFontSize;
+    // cardModel.mAllowEmptyAnswer = mAllowEmptyAnswer;
+    // cardModel.mTypeAnswer = mTypeAnswer;
+    // cardModel.mModel = null;
+    //
+    // return cardModel;
+    // }
 
     public static HashMap<String, String> formatQA(Fact fact, CardModel cm, String[] tags) {
 
@@ -276,8 +299,8 @@ public class CardModel implements Comparator<CardModel> {
         for (Fact.Field f : fact.getFields()) {
             fields.put("text:" + f.getFieldModel().getName(), Utils.stripHTML(f.getValue()));
             if (!f.getValue().equals("")) {
-                fields.put(f.getFieldModel().getName(), String.format(
-                            "<span class=\"fm%s\">%s</span>", Utils.hexifyID(f.getFieldModelId()), f.getValue()));
+                fields.put(f.getFieldModel().getName(), String.format("<span class=\"fm%s\">%s</span>", Utils
+                        .hexifyID(f.getFieldModelId()), f.getValue()));
             } else {
                 fields.put(f.getFieldModel().getName(), "");
             }
@@ -305,14 +328,14 @@ public class CardModel implements Comparator<CardModel> {
                     + fact.getFieldValue(fieldName) + "</span>";
             replaceFrom = replaceFrom.replace(replace, with);
         } else {
-            replaceFrom.replace(
-                    "%(" + fieldName + ")" + fieldType,
-                    "<span class=\"fma" + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">"
-                            + fact.getFieldValue(fieldName) + "</span");
+            replaceFrom.replace("%(" + fieldName + ")" + fieldType, "<span class=\"fma"
+                    + Long.toHexString(fact.getFieldModelId(fieldName)) + "\">" + fact.getFieldValue(fieldName)
+                    + "</span");
         }
         return replaceFrom;
     }
-    
+
+
     private static String replaceHtmlField(String replaceFrom, Fact fact, int replaceAt) {
         int endIndex = replaceFrom.indexOf(")", replaceAt);
         String fieldName = replaceFrom.substring(replaceAt + 7, endIndex);
@@ -326,6 +349,7 @@ public class CardModel implements Comparator<CardModel> {
 
     /**
      * Implements Comparator by comparing the field "ordinal".
+     * 
      * @param object1
      * @param object2
      * @return
@@ -400,6 +424,7 @@ public class CardModel implements Comparator<CardModel> {
         return mQuestionAlign;
     }
 
+
     /**
      * @return the answerFontFamily
      */
@@ -437,5 +462,37 @@ public class CardModel implements Comparator<CardModel> {
      */
     public String getName() {
         return mName;
+    }
+    
+    /**
+     * Getter for question Format
+     * @return the question format
+     */
+    public String getQFormat() {
+        return mQformat;
+    }
+    
+    /**
+     * Setter for question Format
+     * @param the new question format
+     */
+    public void setQFormat(String qFormat) {
+        mQformat = qFormat;
+    }
+    
+    /**
+     * Getter for answer Format
+     * @return the answer format
+     */
+    public String getAFormat() {
+        return mAformat;
+    }
+    
+    /**
+     * Setter for answer Format
+     * @param the new answer format
+     */
+    public void setAFormat(String aFormat) {
+        mAformat = aFormat;
     }
 }

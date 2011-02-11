@@ -58,7 +58,7 @@
 			android:id="@+id/DeckPickerDue" 
 			android:layout_height="wrap_content" 
 			android:layout_width="fill_parent"
-			android:layout_weight="1"
+			android:layout_weight="0.9"
 			android:paddingLeft="10dip"
 			android:paddingRight="5dip"
 			android:paddingBottom="5dip"
@@ -69,7 +69,7 @@
 			android:id="@+id/DeckPickerNew" 
 			android:layout_height="wrap_content" 
 			android:layout_width="fill_parent"
-			android:layout_weight="1"
+			android:layout_weight="1.1"
 			android:paddingRight="10dip"
 			android:paddingLeft="5dip"
 			android:paddingBottom="5dip"
@@ -89,5 +89,25 @@
 		</ProgressBar>
 		
 
+	</LinearLayout>
+	<LinearLayout 
+		android:layout_height="wrap_content" 
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent">
+		
+	<TextView
+		android:id="@+id/DeckPickerCompletitionMat"
+    	android:layout_width="0dip"
+    	android:layout_height="2dip"
+    	android:background="#ffffff"
+		android:paddingLeft="5dip"
+		android:paddingBottom="5dip"/>
+	<TextView
+		android:id="@+id/DeckPickerCompletitionAll"
+    	android:layout_width="0dip"
+    	android:layout_height="2dip"
+    	android:background="#808080"
+		android:paddingRight="5dip"
+		android:paddingBottom="5dip"/>
 	</LinearLayout>
 </LinearLayout>

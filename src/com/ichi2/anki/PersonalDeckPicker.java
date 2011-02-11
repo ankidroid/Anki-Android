@@ -102,7 +102,13 @@ public class PersonalDeckPicker extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String deckName = (String) mAllPersonalDecks.get(position);
+                Object deckNameObject = mAllPersonalDecks.get(position);
+                // If we click twice very fast, the second click tries to download the download that was triggered
+                // by the first click and causes crash
+                if (!(deckNameObject instanceof String)) {
+                    return;
+                }
+                String deckName = (String) deckNameObject;
                 Download personalDeckDownload = new Download(deckName);
                 mPersonalDeckDownloads.add(personalDeckDownload);
                 refreshPersonalDecksList();

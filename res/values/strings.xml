@@ -29,20 +29,12 @@
 <string name="no">No</string>
 <string name="ok">OK</string>
 
-
 <!-- Deck.java upgrade deck notes -->
 <!--<string name="deck_not_loaded">Failed to load deck.</string>-->
 <!--<string name="deck_not_loaded_detail">Please, press menu and select one of the decks stored in your SD card.</string>-->
 <!--<string name="deck_empty">Deck is empty.</string>-->
-<string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop version to upgrade the deck to the latest version.</string>
-
-<!-- Colors for Whiteboard and Next Review Time -->
-<color name="wb_fg_color">#B00000FF</color>
-<color name="wb_bg_color">#0000</color>
-<color name="next_time_usual_color">#000000</color>
-<color name="next_time_failed_color">#FF0000</color>
-<color name="next_time_recommended_color">#007700</color>
-
+<string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop to upgrade it to the latest version.</string>
+<string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
 
 <!-- DeckPicker.java -->
 <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
@@ -135,6 +127,9 @@
 <string name="text_selection_summ">Lets you select and copy text from cards with a long click in order to perform lookups in an external dictionary</string>
 <string name="dictionary">Dictionary</string>
 <string name="dictionary_summ">Dictionary in which lookups should be performed</string>
+<string name="reset_languages">Reset Languages</string>
+<string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+<string name="reset_languages_confirmation">Reset all languages assignments?</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative display font size</string>
@@ -154,6 +149,10 @@
 <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
 <string name="shake">Shake to Undo</string>
 <string name="shake_summ">Shake your device to undo the last action</string>
+<string name="tts">Text to Speech</string>
+<string name="tts_summ">Reads out question and answer if no sound file is included</string>
+<string name="play_sounds_at_start">Play Sounds Instantly</string>
+<string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
 <string name="shake_intensity">Shake threshold</string>
 <string name="shake_intensity_summ">Threshold for shake recognition</string>
 <string name="pref_cat_experimental">EXPERIMENTAL</string>
@@ -162,6 +161,7 @@
 <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
 <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
 
+<string name="select_locale_title">Select Language</string>
 <!-- deck_properties.xml -->
 <!--<string name="deck_properties">Deck properties</string>-->
 <!--<string name="sync_on">Synchronize this deck</string>-->
@@ -233,66 +233,22 @@
 <string name="duplicate_download">This deck is already downloading</string>
 <string name="sync_all">Sync all</string>
 
-
 <!-- SharedDeck.java -->
 <string name="fact">fact</string>
 <string name="facts">facts</string>
 
-<!-- SyncClient.java -->
-<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>
-
-<!-- Progress bar communicates -->
-<!--<string name="determining_task">Determining task</string>-->
-<!--<string name="connecting_to_server">Connecting to server</string>-->
-<!--<string name="starting_db_transaction">Starting DB transaction</string>-->
-<!--<string name="creating_deck_at_server">Creating deck @ server</string>-->
-<!--<string name="calculating_summaries">Calculating summaries</string>-->
-<!--<string name="determining_sync_type">Determining sync type</string>-->
-<!--<string name="performing_full_sync">Performing full sync</string>-->
-<!--<string name="setting_db_transaction_success">Setting DB transaction success</string>-->
-<!--<string name="finishing_db_transaction">Finishing DB transaction</string>-->
-<!--<string name="closing_deck">Closing deck</string>-->
-<!--<string name="opening_deck_after_sync">Opening deck after sync</string>-->
-<!--<string name="setting_deck_as_current">Setting deck as current</string>-->
-<!--<string name="generating_payload">Generating payload</string>-->
-<!--<string name="getting_payload_reply">Getting payload reply</string>-->
-<!--<string name="applying_payload_reply">Applying payload reply</string>-->
-<!--<string name="commiting_payload_to_db">Commiting payload to DB</string>-->
+<!-- Sync Change Report, not needed by now -->
+<!--<string name=change_report_title">Added/Changed</string>
+<string name=change_report_here">Here</string>
+<string name=change_report_server">Server</string>
+<string name=change_report_cards">Cards</string>
+<string name=change_report_facts">Facts</string>
+<string name=change_report_models">Models</string>
+<string name=change_report_stats">Stats</string>-->
 
 <string name="saving_changes">Saving changes...</string>
-<!--<string name="congratulations_finished_for_now">Congratulations! You have finished for now. Please come back tomorrow or switch to another deck.</string>-->
-<string name="about_content">&lt;html&gt;
-&lt;body&gt;
-&lt;h2&gt;AnkiDroid:&lt;br/&gt;
-Flashcards for Android&lt;/h2&gt;
-&lt;p&gt;AnkiDroid can read .anki files produced by the desktop &lt;a href=&quot;http://ankisrs.net&quot;&gt;Anki&lt;/a&gt; software.&lt;/p&gt;
-&lt;p&gt;To help us make AnkiDroid better, please report any bug &lt;a href=&quot;http://code.google.com/p/ankidroid/issues&quot;&gt;here&lt;/a&gt;&#59; new feature ideas are very welcome too!
-Please use the &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Index&quot;&gt;wiki&lt;/a&gt; and say Hi on the &lt;a href=&quot;http://groups.google.com/group/anki-android&quot;&gt;forum&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;AnkiDroid is &lt;a href=&quot;http://en.wikipedia.org/wiki/Open_source_software&quot;&gt;open source software&lt;/a&gt;, so everyone is encouraged to &lt;a href=&quot;http://code.google.com/p/ankidroid/wiki/Contribution&quot;&gt;join&lt;/a&gt; the &lt;a href=&quot;https://code.google.com/p/ankidroid/wiki/Contribution#Contributors&quot;&gt;contributors&lt;/a&gt; :-)
-Non-developers can also help, for instance by updating the wiki and screenshots, &lt;a href=&quot;http://ankisrs.net/support&quot;&gt;donating&lt;/a&gt; to Anki, or blogging about AnkiDroid!&lt;/p&gt;
-&lt;p&gt;AnkiDroid is released under the &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU-GPL v3 license&lt;/a&gt; and the source code is available &lt;a href=&quot;http://github.com/nicolas-raoul/Anki-Android&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</string>
-<!--<string name="review_early">Review Early</string>-->
-<string-array name="studyoptions_more_new_card_order"><item>New cards in random order</item>
-<item>New cards in order added</item>
-<item>New cards in reverse order added</item>
-</string-array>
-<string-array name="studyoptions_more_new_card_schedule"><item>Spread new cards through reviews</item>
-<item>New cards after reviews</item>
-<item>New cards before reviews</item>
-</string-array>
-<string-array name="studyoptions_more_rev_card_order"><item>Review cards from largest interval</item>
-<item>Review cards from smallest interval</item>
-<item>Review cards in order due</item>
-<item>Review cards in random order</item>
-</string-array>
-<string-array name="studyoptions_more_fail_card_option"><item>Show failed cards soon</item>
-<item>Show failed cards at end</item>
-<item>Show failed cards in 10 minutes</item>
-<item>Show failed cards in 8 hours</item>
-<item>Show failed cards in 3 days</item>
-</string-array>
+<string name="about_content">%1$s Flashcards for Android &lt;/h2&gt;&lt;p&gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; To help us make AnkiDroid better, please report any bug %3$s here&lt;/a&gt;; new feature ideas are very welcome too! Please use the %4$s wiki&lt;/a&gt; and say Hi on the %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, so everyone is encouraged to %7$s join&lt;/a&gt; the %8$s contributors&lt;/a&gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&lt;/a&gt; to Anki, or blogging about AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&lt;/a&gt; and the source code is available %11$s here</string>
+
 <string name="studyoptions_title">Study Options</string>
 <string name="studyoptions_deck_name">Deck name</string>
 <string name="studyoptions_reviews_due">Reviews due:</string>
@@ -314,6 +270,7 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
 <string name="studyoptions_load_other_deck">Load Other Deck</string>
 <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
+<string name="studyoptions_night_mode">Night Mode</string>
 
 <string name="menu_open_deck">Open Deck</string>
 <string name="menu_sync">Sync</string>
@@ -356,7 +313,6 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="log_out">Log out</string>
 <string name="alert_logging_message">Logging in, please wait...</string>
 <string name="invalid_username_password">Invalid username or password.</string>
-<string name="ankionline_sign_up_url">http://ankiweb.net/</string>
 
 <!-- DownloadManagerService.java -->
 <string name="download_finished">Download finished</string>
@@ -387,12 +343,12 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_log_no_changes_message">No changes found</string>
 <string name="sync_log_uploading_message">Full sync from local</string>
 <string name="sync_log_downloading_message">Full sync from server</string>
-<string name="sync_log_fact_to_server_message">1 fact to server</string>
-<string name="sync_log_facts_to_server_message">%d facts to server</string>
-<string name="sync_log_fact_from_server_message">1 fact from server</string>
-<string name="sync_log_facts_from_server_message">%d facts from server</string>
+<string name="sync_log_fact_to_server_message">1 card to server</string>
+<string name="sync_log_facts_to_server_message">%d cards to server</string>
+<string name="sync_log_fact_from_server_message">1 card from server</string>
+<string name="sync_log_facts_from_server_message">%d cards from server</string>
 <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
-<string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
+<string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
 <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
 <string name="sync_conflict_title">Syncing conflict</string>
 <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
@@ -401,11 +357,11 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="sync_conflict_cancel">Cancel Syncing</string>
 
 <!-- ErrorReporter.java -->
+<string name="error_reporter_title">Error Reporter</string>
 <string name="error_message">There is one error to report</string>
 <string name="errors_message">There are %d errors to report</string>
 <string name="error_ok">Report errors</string>
 <string name="error_cancel">Do not report errors</string>
-<string name="error_email">ankidroid@gmail.com</string>
 <string name="error_reporting_choice">Error reporting mode</string>
 <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
 
@@ -435,9 +391,15 @@ Non-developers can also help, for instance by updating the wiki and screenshots,
 <string name="undo">Undo</string>
 <string name="redo">Redo</string>
 
+<string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+<string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
+
 <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
 <string name="delete_deck_title">Delete Deck</string>
 <string name="delete_deck_message">Do you really want to delete deck %s?</string>
 <string name="delete_deck_confirm">Delete it</string>
+
+<string name="new_version_title">New Version:</string>
+<string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 
 </resources>

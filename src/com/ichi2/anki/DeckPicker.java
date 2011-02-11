@@ -52,10 +52,12 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.ichi2.async.Connection;
@@ -119,7 +121,7 @@ public class DeckPicker extends Activity implements Runnable {
 	private int mTotalDueCards = 0;
 	private int mTotalCards = 0;
 	
-    /**
+	/**
      * Swipe Detection
      */    
  	private GestureDetector gestureDetector;
@@ -146,6 +148,8 @@ public class DeckPicker extends Activity implements Runnable {
 			String newString = "";
 			String showProgress = "false";
 			String notes = data.getString("notes");
+            String completitionMat = Integer.toString(data.getInt("rateOfCompletitionMat"));
+            String completitionAll = Integer.toString(data.getInt("rateOfCompletitionAll"));
 
 			String path = data.getString("absPath");
 			int msgtype = data.getInt("msgtype");
@@ -177,13 +181,14 @@ public class DeckPicker extends Activity implements Runnable {
 					map.put("due", dueString);
 					map.put("new", newString);
 					map.put("showProgress", showProgress);
-					map.put("notes", notes);
+                    map.put("notes", notes);
+                    map.put("rateOfCompletitionMat", completitionMat);                    
+                    map.put("rateOfCompletitionAll", completitionAll);                    
 				}
 			}
 
 			mDeckListAdapter.notifyDataSetChanged();
-			Log.i(AnkiDroidApp.TAG,
-					"DeckPicker - mDeckList notified of changes");
+			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
 			setTitleText();
 		}
 	};
@@ -224,6 +229,7 @@ public class DeckPicker extends Activity implements Runnable {
 			mDeckIsSelected = false;
 			SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 			populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+            mSyncAllButton.setClickable(true);
 		}
 	};
 
@@ -252,6 +258,7 @@ public class DeckPicker extends Activity implements Runnable {
 			@Override
 			public void onClick(View v) {
 				if (AnkiDroidApp.isUserLoggedIn()) {
+                    mSyncAllButton.setClickable(false);
 					SharedPreferences preferences = PrefSettings
 							.getSharedPrefs(getBaseContext());
 					String username = preferences.getString("username", "");
@@ -267,14 +274,14 @@ public class DeckPicker extends Activity implements Runnable {
 		});
 
 		mDeckList = new ArrayList<HashMap<String, String>>();
-		mDeckListView = (ListView) findViewById(R.id.files);
+        mDeckListView = (ListView) findViewById(R.id.files);
 		mDeckListAdapter = new SimpleAdapter(this, mDeckList,
 				R.layout.deck_item, new String[] { "name", "due", "new",
-						"showProgress", "notes" }, new int[] {
+						"showProgress", "notes", "rateOfCompletitionMat", "rateOfCompletitionAll" }, new int[] {
 						R.id.DeckPickerName, R.id.DeckPickerDue,
 						R.id.DeckPickerNew, R.id.DeckPickerProgress,
-						R.id.DeckPickerUpgradeNotesButton });
-
+						R.id.DeckPickerUpgradeNotesButton,
+						R.id.DeckPickerCompletitionMat, R.id.DeckPickerCompletitionAll });
 		mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Object data, String text) {
@@ -286,6 +293,13 @@ public class DeckPicker extends Activity implements Runnable {
 					}
 					return true;
 				}
+				if (view.getId() == R.id.DeckPickerCompletitionMat || view.getId() == R.id.DeckPickerCompletitionAll) {
+                    int mScreenWidth = mDeckListView.getWidth();
+                    LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);
+                    lparam.width = (int) (mScreenWidth * Integer.parseInt(text) / 100);
+                    lparam.height = 2;
+                    view.setLayoutParams(lparam);
+                }
 				if (view.getId() == R.id.DeckPickerUpgradeNotesButton) {
 					if (text.equals("")) {
 						view.setVisibility(View.GONE);
@@ -455,16 +469,18 @@ public class DeckPicker extends Activity implements Runnable {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		waitForDeckLoaderThread();
+		
+		@SuppressWarnings("unchecked")
+		HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(info.position);
 		switch (item.getItemId()) {
 		case R.id.delete_deck:
 			mRemoveDeckPath = null;
-			waitForDeckLoaderThread();
-			
-			@SuppressWarnings("unchecked")
-			HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter
-					.getItem(info.position);
 			mRemoveDeckPath = data.get("filepath");
 			showDialog(DIALOG_DELETE_DECK);
+			return true;
+		case R.id.reset_language:
+			resetDeckLanguages(data.get("filepath"));
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -573,14 +589,11 @@ public class DeckPicker extends Activity implements Runnable {
 		}
 		mFileList = fileList;
 		if (len > 0 && fileList != null) {
-			Log.i(AnkiDroidApp.TAG,
-					"DeckPicker - populateDeckList, number of anki files = "
-							+ len);
+			Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
 			for (File file : fileList) {
 				String absPath = file.getAbsolutePath();
 
-				Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, file:"
-						+ file.getName());
+				Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, file:" + file.getName());
 
 				try {
 					HashMap<String, String> data = new HashMap<String, String>();
@@ -592,7 +605,9 @@ public class DeckPicker extends Activity implements Runnable {
 					data.put("mod", String.format("%f", Deck
 							.getLastModified(absPath)));
 					data.put("filepath", absPath);
-					data.put("showProgress", "true");
+                    data.put("showProgress", "true");
+                    data.put("rateOfCompletitionMat", "0");
+                    data.put("rateOfCompletitionAll", "0");
 
 					tree.add(data);
 
@@ -627,6 +642,8 @@ public class DeckPicker extends Activity implements Runnable {
 			data.put("due", "");
 			data.put("mod", "1");
 			data.put("showProgress", "false");
+            data.put("rateOfCompletitionMat", "0");
+            data.put("rateOfCompletitionAll", "0");
 
 			tree.add(data);
 
@@ -653,9 +670,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 					// Don't load any more decks if one has already been
 					// selected.
-					Log.i(AnkiDroidApp.TAG,
-							"Thread run - Before break mDeckIsSelected = "
-									+ mDeckIsSelected);
+					Log.i(AnkiDroidApp.TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
 					if (mDeckIsSelected) {
 						break;
 					}
@@ -701,8 +716,7 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_UPGRADE_FAILURE);
 						data.putInt("version", version);
-						data.putString("notes", Deck.upgradeNotesToMessages(
-								deck, getResources()));
+						data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
 						deck.closeDeck();
 						msg.setData(data);
 						mHandler.sendMessage(msg);
@@ -710,8 +724,9 @@ public class DeckPicker extends Activity implements Runnable {
 						int dueCards = deck.getDueCount();
 						int totalCards = deck.getCardCount();
 						int newCards = deck.getNewCountToday();
-						String upgradeNotes = deck.upgradeNotesToMessages(deck,
-								getResources());
+						int totalNewCards = deck.getNewCount();
+						int matureCards = deck.getMatureCardCount();
+						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
 						deck.closeDeck();
 
 						data.putString("absPath", path);
@@ -720,6 +735,8 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("total", totalCards);
 						data.putInt("new", newCards);
 						data.putString("notes", upgradeNotes);
+                        data.putInt("rateOfCompletitionMat", (matureCards * 100) / totalCards);
+                        data.putInt("rateOfCompletitionAll", ((totalCards - totalNewCards - matureCards) * 100) / totalCards);
 						msg.setData(data);
 						
 						mTotalDueCards += dueCards;
@@ -742,8 +759,18 @@ public class DeckPicker extends Activity implements Runnable {
 	private void setTitleText(){
 		setTitle(String.format(getResources().getString(R.string.deckpicker_title), mTotalDueCards, mTotalCards));
 	}
-	
-	
+
+
+	private void resetDeckLanguages(String deckPath) {
+		if (MetaDB.resetDeckLanguages(this, deckPath)) {
+            Toast successReport = 
+                Toast.makeText(this, 
+                        getResources().getString(R.string.contextmenu_deckpicker_reset_reset_message), Toast.LENGTH_SHORT);
+            successReport.show();
+		}
+	}
+
+
 	private void handleDeckSelection(int id) {
 		String deckFilename = null;
 
