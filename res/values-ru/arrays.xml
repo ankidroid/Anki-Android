@@ -97,15 +97,15 @@
   <string-array name="studyoptions_more_fail_card_option">
     <item>Показать неотвеченных карт быстро</item>
     <item>Показать неотвеченных карт в конце</item>
-    <item>Показать неотвеченных карт за 10 минут</item>
-    <item>Показать неотвеченных карт за 8 часов</item>
-    <item>Показать неотвеченных карт за 3 дня</item>
+    <item>Показать неотвеченные карты за 10 минут</item>
+    <item>Показать неотвеченные карты за 8 часов</item>
+    <item>Показать неотвеченные карты за 3 дня</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
+    <item>по вопросу</item>
+    <item>по ответу</item>
+    <item>по времени повтора</item>
+    <item>по интервалу</item>
+    <item>по сложности</item>
   </string-array>
 </resources>

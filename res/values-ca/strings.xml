@@ -329,7 +329,7 @@
   </plurals>
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 of %3$d due)</item>
-    <item quantity="other">>%1$s (%2$d de %3$d pendents)</item>
+    <item quantity="other">%1$s (%2$d de %3$d pendents)</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Hi ha un error pendent d\'informar</item>
@@ -340,7 +340,7 @@
     <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 paquet</item>
-    <item quantity="other">%1$d paquets</item>
+    <item quantity="one">1 deck</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
 </resources>
