@@ -436,4 +436,7 @@
 <string name="new_version_title">New Version:</string>
 <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 
+<string name="no_tts_available_title">Text-to-Speech</string>
+<string name="no_tts_available_message">No text-to-speech language available</string>
+
 </resources>

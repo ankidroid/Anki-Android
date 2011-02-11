@@ -875,6 +875,10 @@ public class StudyOptions extends Activity {
                 mTextNoDeckMessage.setText(String.format(
                         getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
                 setContentView(mNoDeckView);
+                if (mNewVersion) {
+                    mNewVersionAlert.show();
+                    mNewVersion = false;
+                }
                 break;
             case CONTENT_DECK_NOT_LOADED:
                 setTitle(R.string.app_name);
@@ -1349,11 +1353,9 @@ public class StudyOptions extends Activity {
             editor.putString("deckFilename", mDeckFilename); 
         } else if (str == "close") {
         	editor.putLong("lastTimeOpened", System.currentTimeMillis());
-        	editor.putString("lastVersion", getVersion());
         } else if (str == "invertedColors") {
             editor.putBoolean("invertedColors", mInvertedColors);
         }
-
         editor.commit();
     }
 
@@ -1368,7 +1370,11 @@ public class StudyOptions extends Activity {
         mSyncEnabled = preferences.getBoolean("syncEnabled", false);
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         if (!preferences.getString("lastVersion", "").equals(getVersion())) {
-            Resources res = getResources();
+        	Editor editor = preferences.edit();
+        	editor.putString("lastVersion", getVersion());
+        	editor.commit();
+
+        	Resources res = getResources();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(res.getString(R.string.new_version_title) + " " + getVersion());
             builder.setMessage(res.getString(R.string.new_version_text));

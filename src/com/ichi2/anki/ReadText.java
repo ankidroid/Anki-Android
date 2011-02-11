@@ -22,6 +22,7 @@ import android.speech.tts.TextToSpeech;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.util.Log;
 
 public class ReadText {
@@ -69,7 +70,6 @@ public class ReadText {
 
         // Check, if stored language is available
         for (int i = 0; i < availableTtsLocales.size(); i++) {
-        	String tu = availableTtsLocales.get(i)[0];
     		if (language.equals(availableTtsLocales.get(i)[0])) {
     			speak(language);
     			return;
@@ -77,25 +77,33 @@ public class ReadText {
 		}
 
         // Otherwise ask 
-    	ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
-    	final ArrayList<String> dialogIds = new ArrayList<String>();
         AlertDialog.Builder builder = new AlertDialog.Builder(mReviewer);
-        builder.setTitle(R.string.select_locale_title);
+        if (availableTtsLocales.size() == 0) {
+        	Resources res = mReviewer.getResources();
+        	builder.setTitle(res.getString(R.string.no_tts_available_title));
+            builder.setMessage(res.getString(R.string.no_tts_available_message));
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setPositiveButton(res.getString(R.string.ok), null);
+        } else {
+        	ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
+        	final ArrayList<String> dialogIds = new ArrayList<String>();
+            builder.setTitle(R.string.select_locale_title);
 
-        for (int i = 0; i < availableTtsLocales.size(); i++) {
-            dialogItems.add(availableTtsLocales.get(i)[1]);
-            dialogIds.add(availableTtsLocales.get(i)[0]);
+            for (int i = 0; i < availableTtsLocales.size(); i++) {
+                dialogItems.add(availableTtsLocales.get(i)[1]);
+                dialogIds.add(availableTtsLocales.get(i)[0]);
+            }
+            CharSequence[] items = new CharSequence[dialogItems.size()];
+            dialogItems.toArray(items);
+
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+    			@Override
+    			public void onClick(DialogInterface dialog, int which) {
+    				MetaDB.storeLanguage(mReviewer, mDeckFilename,  mModelId, mCardModelId, mQuestionAnswer, dialogIds.get(which));
+    				speak(dialogIds.get(which));
+    			}
+            });        	
         }
-        CharSequence[] items = new CharSequence[dialogItems.size()];
-        dialogItems.toArray(items);
-
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				MetaDB.storeLanguage(mReviewer, mDeckFilename,  mModelId, mCardModelId, mQuestionAnswer, dialogIds.get(which));
-				speak(dialogIds.get(which));
-			}
-        });
         AlertDialog alert = builder.create();
         alert.show();
     }
