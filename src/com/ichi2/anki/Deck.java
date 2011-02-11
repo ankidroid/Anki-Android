@@ -4058,7 +4058,6 @@ public class Deck {
                 return;
             }
         }
-        Log.e("cardID",""+cardId);
         mUndoStack.push(new UndoRow(name, cardId, latestUndoRow(), null));
     }
 
@@ -4093,7 +4092,7 @@ public class Deck {
     }
 
 
-    private long undoredo(Stack<UndoRow> src, Stack<UndoRow> dst, long oldCardId) {
+    private long undoredo(Stack<UndoRow> src, Stack<UndoRow> dst, long oldCardId, boolean inReview) {
 
         UndoRow row;
         commitToDB();
@@ -4116,9 +4115,14 @@ public class Deck {
         for (String s : sql) {
             getDB().getDatabase().execSQL(s);
         }
-        mCurrentUndoRedoType = row.mName;
+        mCurrentUndoRedoType = row.mName;        
         Long newend = latestUndoRow();
-        dst.push(new UndoRow(row.mName, oldCardId, newstart, newend));
+
+        if (inReview) {
+        	dst.push(new UndoRow(row.mName, row.mCardId, newstart, newend));
+        } else {
+        	dst.push(new UndoRow(row.mName, oldCardId, newstart, newend));
+        }
         return row.mCardId;
     }
 
@@ -4126,10 +4130,10 @@ public class Deck {
     /**
      * Undo the last action(s). Caller must .reset()
      */
-    public long undo(long oldCardId) {
+    public long undo(long oldCardId, boolean inReview) {
         long cardId = 0;
     	if (!mUndoStack.isEmpty()) {
-            cardId = undoredo(mUndoStack, mRedoStack, oldCardId);
+            cardId = undoredo(mUndoStack, mRedoStack, oldCardId, inReview);
             commitToDB();
             reset();
         }
@@ -4140,10 +4144,10 @@ public class Deck {
     /**
      * Redo the last action(s). Caller must .reset()
      */
-    public long redo(long oldCardId) {
+    public long redo(long oldCardId, boolean inReview) {
         long cardId = 0;
         if (!mRedoStack.isEmpty()) {
-        	cardId = undoredo(mRedoStack, mUndoStack, oldCardId);
+        	cardId = undoredo(mRedoStack, mUndoStack, oldCardId, inReview);
             commitToDB();
             reset();
         }

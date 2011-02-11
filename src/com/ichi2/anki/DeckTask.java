@@ -185,7 +185,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Deck deck = params[0].getDeck();
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
-        boolean lastCardInQueue = params[0].isLastCardInQueue();
         Card newCard;
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
@@ -198,7 +197,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             newCard = deck.getCard();
             if (oldCard != null) {
-                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag(), lastCardInQueue));
+                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
             } else {
                 publishProgress(new TaskData(newCard));
             }
@@ -297,17 +296,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundUndo(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card newCard;
-        Card oldCard = params[0].getCard();
-        long currentCardId = 0;
-
-        if (oldCard != null) {
-            currentCardId = params[0].getCard().getId();            
-        }
+        long currentCardId = params[0].getLong();
+        boolean inReview = params[0].getBoolean();
+        long oldCardId = 0;
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
-        	long oldCardId = deck.undo(currentCardId);
+        	oldCardId = deck.undo(currentCardId, inReview);
             newCard = deck.getCard();
             if (oldCardId != 0) {
             	newCard = deck.cardFromId(oldCardId);
@@ -318,19 +314,21 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             ankiDB.getDatabase().endTransaction();
         }
 
-        return new TaskData(deck.getUndoType());
+        return new TaskData(deck.getUndoType(), oldCardId);
     }
 
     
     private TaskData doInBackgroundRedo(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card newCard;
-        long currentCardId = params[0].getCard().getId();
+        long currentCardId = params[0].getLong();
+        boolean inReview = params[0].getBoolean();
+        long oldCardId = 0;
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
-        	long oldCardId = deck.redo(currentCardId);
+        	oldCardId = deck.redo(currentCardId, inReview);
             newCard = deck.getCard();
             if (oldCardId != 0) {
             	newCard = deck.cardFromId(oldCardId);
@@ -341,7 +339,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             ankiDB.getDatabase().endTransaction();
         }
 
-        return new TaskData(deck.getUndoType());
+        return new TaskData(deck.getUndoType(), oldCardId);
     }
 
 
@@ -386,24 +384,24 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private String mMsg;
         private boolean previousCardLeech;     // answer card resulted in card marked as leech
         private boolean previousCardSuspended; // answer card resulted in card marked as leech and suspended
-        private boolean mLastCardInQueue;
+        private boolean mBool = false;
         private ArrayList<String[]> mAllCards;
         private String mOrder;
+        private long mLong;
 
 
         public TaskData(int value, Deck deck, Card card) {
             this(value);
             mDeck = deck;
             mCard = card;
-            mLastCardInQueue = false;
         }
 
 
-        public TaskData(int value, Deck deck, boolean lastCardInQueue, Card card) {
+        public TaskData(int value, Deck deck, long cardId, boolean bool) {
             this(value);
             mDeck = deck;
-            mCard = card;
-            mLastCardInQueue = lastCardInQueue;
+            mLong = cardId;
+            mBool = bool;
         }
 
 
@@ -420,11 +418,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
-        public TaskData(Card card, boolean markedLeech, boolean suspendedLeech, boolean lastCardInQueue) {
+        public TaskData(Card card, boolean markedLeech, boolean suspendedLeech) {
             mCard = card;
             previousCardLeech = markedLeech;
             previousCardSuspended = suspendedLeech;
-            mLastCardInQueue = lastCardInQueue;
         }
 
 
@@ -441,6 +438,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(String msg) {
             mMsg = msg;
+        }
+
+
+        public TaskData(String msg, long cardId) {
+            mMsg = msg;
+            mLong = cardId;
         }
 
 
@@ -464,6 +467,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
+        public long getLong() {
+            return mLong;
+        }
+
+
         public int getInt() {
             return mInteger;
         }
@@ -484,8 +492,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
-        public boolean isLastCardInQueue() {
-            return mLastCardInQueue;
+        public boolean getBoolean() {
+            return mBool;
         }
     }
 

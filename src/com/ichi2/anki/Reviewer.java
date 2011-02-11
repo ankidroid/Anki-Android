@@ -167,6 +167,7 @@ public class Reviewer extends Activity {
     private boolean mSpeakText;
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
+    private boolean mIsLastCard = false;
     
     private boolean mIsDictionaryAvailable;
 
@@ -189,7 +190,7 @@ public class Reviewer extends Activity {
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
-    private TextView mChoosenAnswer;
+    private TextView mChosenAnswer;
     private TextView mNext1;
     private TextView mNext2;
     private TextView mNext3;
@@ -220,7 +221,7 @@ public class Reviewer extends Activity {
     private boolean mConfigurationChanged = false;
     private int mSelectionStarted = 0;
     private boolean mAnsweringCard = false;
-    private int mShowChoosenAnswerLength = 600;
+    private int mShowChosenAnswerLength = 600;
     
 	private boolean mShowCongrats = false;
 
@@ -418,7 +419,7 @@ public class Reviewer extends Activity {
                 mSessionComplete = true;
                 sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_time_limit_reached),
                         Toast.LENGTH_SHORT);
-            } else if (values[0].isLastCardInQueue()) {
+            } else if (mIsLastCard) {
                 mNoMoreCards = true;
             } else {
                 // session limits not reached, show next card
@@ -462,9 +463,9 @@ public class Reviewer extends Activity {
 
 	private Handler mTimerHandler = new Handler();
 
-    private Runnable removeChoosenAnswerText=new Runnable() {
+    private Runnable removeChosenAnswerText=new Runnable() {
     	public void run() {
-    		mChoosenAnswer.setText("");
+    		mChosenAnswer.setText("");
     	}
     };
 
@@ -484,7 +485,7 @@ public class Reviewer extends Activity {
             closeReviewer();
         } else {
             restorePreferences();
-
+            AnkiDroidApp.deck().resetUndo();
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -698,7 +699,7 @@ public class Reviewer extends Activity {
             mTextBarRed.setVisibility(View.GONE);
             mTextBarBlack.setVisibility(View.GONE);
             mTextBarBlue.setVisibility(View.GONE);
-            mChoosenAnswer.setVisibility(View.GONE);
+            mChosenAnswer.setVisibility(View.GONE);
             if (mPrefTimer) {
                 mCardTimer.setVisibility(View.GONE);
             }
@@ -718,7 +719,7 @@ public class Reviewer extends Activity {
             mTextBarRed.setVisibility(View.VISIBLE);
             mTextBarBlack.setVisibility(View.VISIBLE);
             mTextBarBlue.setVisibility(View.VISIBLE);
-            mChoosenAnswer.setVisibility(View.VISIBLE);
+            mChosenAnswer.setVisibility(View.VISIBLE);
             if (mPrefTimer) {
                 mCardTimer.setVisibility(View.VISIBLE);
             }
@@ -822,12 +823,12 @@ public class Reviewer extends Activity {
 
             case MENU_UNDO:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
-                        AnkiDroidApp.deck(), mCurrentCard));
+                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));
                 return true;
 
             case MENU_REDO:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(0,
-                        AnkiDroidApp.deck(), mCurrentCard));
+                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));
                 return true;
         }
         return false;
@@ -902,31 +903,30 @@ public class Reviewer extends Activity {
 
     private void answerCard(int ease) {
         Deck deck = AnkiDroidApp.deck();
-        boolean lastCard = false;
     	switch (ease) {
     		case Card.EASE_FAILED:
-    	    	mChoosenAnswer.setText(mEase1.getText());
+    	    	mChosenAnswer.setText(mEase1.getText());
     	    	if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
-                    lastCard = true;
+    	    		mIsLastCard = true;
                 }
     			break;
     		case Card.EASE_HARD:
-    	    	mChoosenAnswer.setText(mEase2.getText());
+    	    	mChosenAnswer.setText(mEase2.getText());
     			break;
     		case Card.EASE_MID:
-    	    	mChoosenAnswer.setText(mEase3.getText());
+    	    	mChosenAnswer.setText(mEase3.getText());
     			break;
     		case Card.EASE_EASY:
-    	    	mChoosenAnswer.setText(mEase4.getText());    			
+    	    	mChosenAnswer.setText(mEase4.getText());    			
     			break;
     	}
-    	mTimerHandler.postDelayed(removeChoosenAnswerText, mShowChoosenAnswerLength);
+    	mTimerHandler.postDelayed(removeChosenAnswerText, mShowChosenAnswerLength);
     	Sound.stopSounds();
     	mCurrentEase = ease;
         // Increment number reps counter
         mSessionCurrReps++;
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
-                mCurrentEase, deck, lastCard, mCurrentCard));
+                mCurrentEase, deck, mCurrentCard));
 		mAnsweringCard = false;
     }
 
@@ -1009,8 +1009,8 @@ public class Reviewer extends Activity {
         float headTextSize = (float) (mCardTimer.getTextSize() * 0.63);
         mCardTimer.setTextSize(headTextSize);
 
-        mChoosenAnswer = (TextView) findViewById(R.id.choosen_answer);
-        mChoosenAnswer.setTextSize((float) (headTextSize * 1.1));
+        mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
+        mChosenAnswer.setTextSize((float) (headTextSize * 1.1));
 
         mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
         mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
@@ -1119,7 +1119,7 @@ public class Reviewer extends Activity {
         mTextBarRed.setVisibility(View.VISIBLE);
         mTextBarBlack.setVisibility(View.VISIBLE);
         mTextBarBlue.setVisibility(View.VISIBLE);
-        mChoosenAnswer.setVisibility(View.VISIBLE);
+        mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCard.setVisibility(View.VISIBLE);
         
         mCardTimer.setVisibility((mPrefTimer) ? View.VISIBLE : View.GONE);
