@@ -38,13 +38,13 @@
 
 <!-- DeckPicker.java -->
 <plurals name="deckpicker_title">
-  <item quantity="one">Select deck (%1$d of %2$d due)</item>
+  <item quantity="one">Select deck (1 of %2$d due)</item>
   <item quantity="other">Select deck (%1$d of %2$d due)</item>
 </plurals>
 
 <string name="deckpicker_title_nosdcard">SD card is unmounted</string>
 <plurals name="deckpicker_due">
-  <item quantity="one">%1$d of %2$d due</item>
+  <item quantity="one">1 of %2$d due</item>
   <item quantity="other">%1$d of %2$d due</item>
 </plurals>
 <string name="deckpicker_new">%d new today</string>
@@ -197,7 +197,7 @@
 <!-- CardBrowser -->
 <string name="card_browser">Card Browser</string>
 <plurals name="card_browser_title">
-  <item quantity="one">%1$s: %2$d of %3$d cards shown</item>
+  <item quantity="one">%1$s: 1 of %3$d cards shown</item>
   <item quantity="other">%1$s: %2$d of %3$d cards shown</item>
 </plurals>
 <string name="card_browser_load">Loading cards</string>
@@ -286,7 +286,7 @@
 <string name="studyoptions_start">Start Reviewing</string>
 <string name="studyoptions_more">Study Options</string>
 <plurals name="studyoptions_window_title">
-  <item quantity="one">%1$s (%2$d of %3$d due)</item>
+  <item quantity="one">%1$s (1 of %3$d due)</item>
   <item quantity="other">%1$s (%2$d of %3$d due)</item>
 </plurals>
 <string name="studyoptions_more_dialog_title">More Options</string>
@@ -406,7 +406,7 @@
 <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
 <string name="widget_no_cards_due">No cards due</string>
 <plurals name="widget_cards_in_decks_due">
-  <item quantity="one">%1$d card due in %2$s</item>
+  <item quantity="one">1 card due in %2$s</item>
   <item quantity="other">%1$d cards due in %2$s</item>
 </plurals>
 <plurals name="widget_decks">
