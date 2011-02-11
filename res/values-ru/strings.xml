@@ -28,9 +28,7 @@
   <string name="ok">Да</string>
   <string name="deck_upgrade_too_old_version">Колоды версий до 39 не поддерживаются AnkiDroid, пожалуйста, откройте колоду настольной версией Anki для обновлении колоды до последней версии.</string>
   <string name="deck_upgrade_version_61_has_latex">Колода не может быть полностью обновлена, так как она содержит LaTeX-выражения; пожалуйста откройте колоду в десктоп-версии Anki и пересохраните файл колоды (чтобы обновить её до последнего нового формата и перегенерировать LaTeX).</string>
-  <string name="deckpicker_title">Выберите колоду (%1$d из %2$d)</string>
   <string name="deckpicker_title_nosdcard">SD-карта отмонтирована</string>
-  <string name="deckpicker_due">%1$d из %2$d к повтору</string>
   <string name="deckpicker_new">%d новых сегодня</string>
   <string name="deckpicker_loaddeck">Открытие колоды...</string>
   <string name="deckpicker_nodeck">Не найдено ни одной колоды.</string>
@@ -155,7 +153,7 @@
   <string name="close">Закрыть</string>
   <string name="select_card_model">Выберите модель карты</string>
   <string name="select">Выберите</string>
-  <string name="card_browser_title">%1$s: %2$d из %3$d карт показано</string>
+  <string name="card_browser">Card Browser</string>
   <string name="card_browser_load">Загрузка карт</string>
   <string name="card_browser_delete_card">Удалить карту</string>
   <string name="card_browser_suspend_card">Отложить карту</string>
@@ -163,7 +161,11 @@
   <string name="card_browser_mark_card">Отметить карту</string>
   <string name="card_browser_unmark_card">Снять отметку</string>
   <string name="delete_card_title">Удалить карту</string>
-  <string name="delete_card_message">Вы действительно хотите удалить эту карту?\n%1$s\n%2$s</string>
+  <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
+  <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
+  <string name="card_browser_change_display_order">Change display order</string>
+  <string name="card_browser_change_display_order_title">Choose display order</string>
   <string name="loading_deck">Открытие колоды. Пожалуйста, подождите...</string>
   <string name="connection_needed">Нет подключения к Интернету</string>
   <string name="currently_downloading">Загружается</string>
@@ -201,7 +203,6 @@
   <string name="studyoptions_session_questions">Вопросов в уроке:</string>
   <string name="studyoptions_start">Начать Просмотр</string>
   <string name="studyoptions_more">Доп. параметры</string>
-  <string name="studyoptions_window_title">%1$s (%2$d из %3$d)</string>
   <string name="studyoptions_more_dialog_title">Доп. параметры</string>
   <string name="studyoptions_more_save">Сохранить</string>
   <string name="studyoptions_nodeck_title">Колоды не загружены</string>
@@ -210,7 +211,7 @@
   <string name="studyoptions_deck_not_loaded_message">Колода, которую вы выбрали, возможно повреждена. Пожалуйста, откройте ее с помощью десктоп-версии Anki и проверьте (или восстановите) для использования ее в Ankidroid.\n\nСейчас вы можете выбрать другую колоду или создать колоду с примерами с помощью клавиш ниже.</string>
   <string name="studyoptions_no_external_storage_title">Нет доступа ко внешнему хранилищу</string>
   <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
-  <string name="studyoptions_load_other_deck">Загружать другие колоды</string>
+  <string name="studyoptions_load_other_deck">Загрузить другие колоды</string>
   <string name="studyoptions_load_sample_deck">Загрузить колоду с примерами</string>
   <string name="studyoptions_night_mode">Ночной режим</string>
   <string name="menu_open_deck">Открыть колоду</string>
@@ -286,8 +287,6 @@
   <string name="sync_conflict_remote">Сохранить серверную</string>
   <string name="sync_conflict_cancel">Отменить синхронизацию</string>
   <string name="error_reporter_title">Генератор отчётов об ошибках</string>
-  <string name="error_message">Есть одна ошибка для отчёта</string>
-  <string name="errors_message">Найдено %d ошибки для отчета</string>
   <string name="error_ok">Отправить отчёт об ошибках</string>
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
   <string name="error_reporting_choice">Сообщать об ошибках</string>
@@ -300,11 +299,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Минимально карт для показа Уведомления</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карт</string>
   <string name="widget_no_cards_due">Нет карт для повтора</string>
-  <string name="widget_cards_in_decks_due">%1$d %2$s из %3$d %4$s к повтору</string>
-  <string name="widget_card">карта</string>
-  <string name="widget_cards">карт</string>
-  <string name="widget_deck">колода</string>
-  <string name="widget_decks">колод</string>
   <string name="soon">Скоро</string>
   <string name="show_next_review_time">Время у кнопок показывать</string>
   <string name="show_next_review_time_summ">Показывать добавляемое время у кнопок ответа (Скоро, +1, +5 и т.д.)</string>
@@ -320,5 +314,33 @@
   <string name="delete_deck_message">Вы действительно хотите удалить колоду %s?</string>
   <string name="delete_deck_confirm">Удалить</string>
   <string name="new_version_title">Новая версия:</string>
-  <string name="new_version_text">Новые возможности:\n- произношение текста\n- показ прогресса изучения колоды в оглавлении колоды\n- выбор модели карты при добавлении факта\n- новый виджет\n- улучшение функции Отмена/Повтор\n- новый элемент интерфейса - ползунок\n- больше языков</string>
+  <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <plurals name="deckpicker_title">
+    <item name="one">Select deck (1 of %2$d due)</item>
+    <item name="other">Выберите колоду (%1$d из %2$d)</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item name="one">1 of %2$d due</item>
+    <item name="other">%1$d из %2$d к повтору</item>
+  </plurals>
+  <plurals name="card_browser_title">
+    <item name="one">%1$s: 1 of %3$d cards shown</item>
+    <item name="other">>%1$s: %2$d из %3$d карт показано</item>
+  </plurals>
+  <plurals name="studyoptions_window_title">
+    <item name="one">%1$s (1 of %3$d due)</item>
+    <item name="other">%1$s (%2$d из %3$d)</item>
+  </plurals>
+  <plurals name="error_message">
+    <item name="one">Есть одна ошибка для отчёта</item>
+    <item name="other">Найдено %d ошибки для отчета</item>
+  </plurals>
+  <plurals name="widget_cards_in_decks_due">
+    <item name="one">1 card due in %2$s</item>
+    <item name="other">%1$d cards due in %2$s</item>
+  </plurals>
+  <plurals name="widget_decks">
+    <item name="one">1 deck</item>
+    <item name="other">%1$d колод</item>
+  </plurals>
 </resources>

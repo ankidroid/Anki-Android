@@ -101,4 +101,11 @@
     <item>8小時內顯示失敗的卡片</item>
     <item>3天內顯示失敗的卡片</item>
   </string-array>
+  <string-array name="card_browser_order_labels">
+    <item>By question</item>
+    <item>By answer</item>
+    <item>By due time</item>
+    <item>By interval</item>
+    <item>By ease</item>
+  </string-array>
 </resources>

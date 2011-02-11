@@ -28,9 +28,7 @@
   <string name="ok">Εντάξει</string>
   <string name="deck_upgrade_too_old_version">Τράπουλες παλιότερες από έκδοση 39 δεν υποστηρίζονται από το AnkiDroid· παρακαλούμε να ανοίξετε την τράπουλα με την εφαρμογή Anki, ώστε να αναβαθμιστεί στην τελευταία έκδοση.</string>
   <string name="deck_upgrade_version_61_has_latex">Η τράπουλα δε μπορεί να αναβαθμιστεί πλήρως επειδή περιέχει κώδικα LaTeX, παρακαλούμε να ανοίξετε την τράπουλα με την εφαρμογή Anki, ώστε να αναβαθμιστεί στην τελευταία έκδοση και να μεταφραστεί ο κώδικας LaTeX.</string>
-  <string name="deckpicker_title">Επιλέξτε τράπουλα (%1$d από %2$d αναμένουν)</string>
   <string name="deckpicker_title_nosdcard">Η SD κάρτα δεν είναι προσαρτημένη</string>
-  <string name="deckpicker_due">%1$d από %2$d σε αναμονή</string>
   <string name="deckpicker_new">%d νέες σήμερα</string>
   <string name="deckpicker_loaddeck">Φόρτωση τράπουλας...</string>
   <string name="deckpicker_nodeck">Δεν βρέθηκαν τράπουλες.</string>
@@ -155,7 +153,7 @@
   <string name="close">Κλείσιμο</string>
   <string name="select_card_model">Select Card Model</string>
   <string name="select">Select</string>
-  <string name="card_browser_title">%1$s: %2$d of %3$d cards shown</string>
+  <string name="card_browser">Card Browser</string>
   <string name="card_browser_load">Loading cards</string>
   <string name="card_browser_delete_card">Delete card</string>
   <string name="card_browser_suspend_card">Suspend card</string>
@@ -163,7 +161,11 @@
   <string name="card_browser_mark_card">Mark card</string>
   <string name="card_browser_unmark_card">Unmark card</string>
   <string name="delete_card_title">Delete Card</string>
-  <string name="delete_card_message">Really delete card this card?\n%1$s\n%2$s</string>
+  <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
+  <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
+  <string name="card_browser_change_display_order">Change display order</string>
+  <string name="card_browser_change_display_order_title">Choose display order</string>
   <string name="loading_deck">Φόρτωση τράπουλας. Παρακαλώ περιμένετε...</string>
   <string name="connection_needed">Αυτή τη στιγμή είστε χωρίς σύνδεση.</string>
   <string name="currently_downloading">Λήψεις σε εξέλιξη</string>
@@ -201,7 +203,6 @@
   <string name="studyoptions_session_questions">Όριο περιόδου (ερωτήσεις):</string>
   <string name="studyoptions_start">Έναρξη επανάληψης</string>
   <string name="studyoptions_more">Επιλογές Μελέτης</string>
-  <string name="studyoptions_window_title">%1$s (%2$d από %3$d αναμένουν)</string>
   <string name="studyoptions_more_dialog_title">Περισσότερες επιλογές</string>
   <string name="studyoptions_more_save">Αποθήκευση</string>
   <string name="studyoptions_nodeck_title">Δεν έχει φορτωθεί τράπουλα</string>
@@ -286,8 +287,6 @@
   <string name="sync_conflict_remote">Κρατήστε αυτή στο Διακομιστή</string>
   <string name="sync_conflict_cancel">Ακύρωση Συγχρονισμού</string>
   <string name="error_reporter_title">Error Reporter</string>
-  <string name="error_message">Υπάρχει ένα σφάλμα προς αναφορά</string>
-  <string name="errors_message">Υπάρχουν %d σφάλματα προς αναφορά</string>
   <string name="error_ok">Αναφορά σφαλμάτων</string>
   <string name="error_cancel">Μην αναφέρετε σφάλματα</string>
   <string name="error_reporting_choice">Λειτουργία αναφοράς σφαλμάτων</string>
@@ -300,11 +299,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Αναμένουσες Κάρτες</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d κάρτες AnkiDroid εις αναμονή</string>
   <string name="widget_no_cards_due">No cards due</string>
-  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
-  <string name="widget_card">card</string>
-  <string name="widget_cards">cards</string>
-  <string name="widget_deck">deck</string>
-  <string name="widget_decks">decks</string>
   <string name="soon">Σύντομα</string>
   <string name="show_next_review_time">Ώρα επόμενης επανάληψης</string>
   <string name="show_next_review_time_summ">Δείχνει την ώρα της επόμενης επανάληψης ανάλογα με την επιλογή σας</string>
@@ -320,5 +314,33 @@
   <string name="delete_deck_message">Θέλετε πραγματικά να διαγράψετε την τράπουλα %s;</string>
   <string name="delete_deck_confirm">Διαγράψτε το</string>
   <string name="new_version_title">New Version:</string>
-  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <plurals name="deckpicker_title">
+    <item name="one">Select deck (1 of %2$d due)</item>
+    <item name="other">Επιλέξτε τράπουλα (%1$d από %2$d αναμένουν)</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item name="one">1 of %2$d due</item>
+    <item name="other">%1$d από %2$d σε αναμονή</item>
+  </plurals>
+  <plurals name="card_browser_title">
+    <item name="one">%1$s: 1 of %3$d cards shown</item>
+    <item name="other">%1$s: %2$d of %3$d cards shown</item>
+  </plurals>
+  <plurals name="studyoptions_window_title">
+    <item name="one">%1$s (1 of %3$d due)</item>
+    <item name="other">%1$s (%2$d από %3$d αναμένουν)</item>
+  </plurals>
+  <plurals name="error_message">
+    <item name="one">Υπάρχει ένα σφάλμα προς αναφορά</item>
+    <item name="other">Υπάρχουν %d σφάλματα προς αναφορά</item>
+  </plurals>
+  <plurals name="widget_cards_in_decks_due">
+    <item name="one">1 card due in %2$s</item>
+    <item name="other">%1$d cards due in %2$s</item>
+  </plurals>
+  <plurals name="widget_decks">
+    <item name="one">1 deck</item>
+    <item name="other">%1$d decks</item>
+  </plurals>
 </resources>

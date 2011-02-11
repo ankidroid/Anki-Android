@@ -101,4 +101,11 @@
     <item>Zeige nicht gewusste Karten in 8 Stunden</item>
     <item>Zeige nicht gewusste Karten in 3 Tagen</item>
   </string-array>
+  <string-array name="card_browser_order_labels">
+    <item>Nach Antwort</item>
+    <item>Nach Frage</item>
+    <item>Nach Fälligkeit</item>
+    <item>Nach Intervall</item>
+    <item>Nach Schwierigkeit</item>
+  </string-array>
 </resources>

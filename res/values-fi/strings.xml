@@ -28,9 +28,7 @@
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Pakkojen joiden versiot vanhempi kuin 39 eivät tue AnkiDroidia. Avaa korttipakka Anki-työpöytä versiolla ja päivitä korttipakka uusimpaan versioon.</string>
   <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
-  <string name="deckpicker_title">Valitse korttipakka (%1$d / %2$d määrä)</string>
   <string name="deckpicker_title_nosdcard">SD-kortti on irrotettu</string>
-  <string name="deckpicker_due">%1$d / %2$d jäljellä</string>
   <string name="deckpicker_new">%d uutta tänään</string>
   <string name="deckpicker_loaddeck">Ladataan korttipakkaa...</string>
   <string name="deckpicker_nodeck">Korttipakkoja ei löydetty.</string>
@@ -155,15 +153,19 @@
   <string name="close">Sulje</string>
   <string name="select_card_model">Select Card Model</string>
   <string name="select">Select</string>
-  <string name="card_browser_title">%1$s: %2$d of %3$d cards shown</string>
-  <string name="card_browser_load">Loading cards</string>
-  <string name="card_browser_delete_card">Delete card</string>
-  <string name="card_browser_suspend_card">Suspend card</string>
-  <string name="card_browser_unsuspend_card">Unsuspend card</string>
-  <string name="card_browser_mark_card">Mark card</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="card_browser_load">Ladataan kortit</string>
+  <string name="card_browser_delete_card">Poista kortti</string>
+  <string name="card_browser_suspend_card">Keskeytä kortti</string>
+  <string name="card_browser_unsuspend_card">Jatka korttia</string>
+  <string name="card_browser_mark_card">Merkitse kortti</string>
   <string name="card_browser_unmark_card">Unmark card</string>
-  <string name="delete_card_title">Delete Card</string>
-  <string name="delete_card_message">Really delete card this card?\n%1$s\n%2$s</string>
+  <string name="delete_card_title">Poista kortti</string>
+  <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
+  <string name="card_browser_show_marked">Näytä merkityt kortit</string>
+  <string name="card_browser_show_suspended">Näytä keskeytetyt kortit</string>
+  <string name="card_browser_change_display_order">Change display order</string>
+  <string name="card_browser_change_display_order_title">Choose display order</string>
   <string name="loading_deck">Ladataan korttipakkaa. Odota hetki...</string>
   <string name="connection_needed">Ei ole internet-yhteyttä</string>
   <string name="currently_downloading">Nyt ladataan</string>
@@ -201,7 +203,6 @@
   <string name="studyoptions_session_questions">Istunnon raja (kysymykset):</string>
   <string name="studyoptions_start">Aloita tarkistaminen</string>
   <string name="studyoptions_more">Opiskeluasetukset</string>
-  <string name="studyoptions_window_title">%1$s (%2$d %3$d määrä)</string>
   <string name="studyoptions_more_dialog_title">Lisää valintoja</string>
   <string name="studyoptions_more_save">Tallenna</string>
   <string name="studyoptions_nodeck_title">Korttipakkaa ei ole ladattu</string>
@@ -279,15 +280,13 @@
   <string name="sync_log_facts_from_server_message">%d seikkaa palvelimelta</string>
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
   <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
-  <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
+  <string name="sync_log_conflict_resolution_required">Korttipakka on muutettu paikallis- ja etäpuolella. Avaa korttipakka ja suorita synkronointi ristariidan ratkaisemiseksi.</string>
   <string name="sync_conflict_title">Syncing conflict</string>
-  <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
+  <string name="sync_conflict_message">Korttipakka %s on muutettu paikallis- ja etäpuolella. Kummalla puolella haluat säilyttää?</string>
   <string name="sync_conflict_local">Keep Local</string>
   <string name="sync_conflict_remote">Keep Remote</string>
   <string name="sync_conflict_cancel">Peruuta synkronointi</string>
   <string name="error_reporter_title">Error Reporter</string>
-  <string name="error_message">Yksi virhe raportissa</string>
-  <string name="errors_message">On %d raportoitavaa virhettä</string>
   <string name="error_ok">Ilmoita virheistä</string>
   <string name="error_cancel">Älä ilmoita virheistä</string>
   <string name="error_reporting_choice">Virheraportointitila</string>
@@ -300,11 +299,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Kortien Määrä</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
   <string name="widget_no_cards_due">No cards due</string>
-  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
-  <string name="widget_card">card</string>
-  <string name="widget_cards">cards</string>
-  <string name="widget_deck">deck</string>
-  <string name="widget_decks">decks</string>
   <string name="soon">Pian</string>
   <string name="show_next_review_time">Seuraava tarkastelun aika</string>
   <string name="show_next_review_time_summ">Näyttää seuraavan tarkistuken kerran, riippuen valinnastasi</string>
@@ -314,11 +308,39 @@
   <string name="undo">Kumoa</string>
   <string name="redo">Tee uudelleen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Palauta kieli</string>
   <string name="contextmenu_deckpicker_delete_deck">Poista korttipakka</string>
   <string name="delete_deck_title">Poista korttipakka</string>
   <string name="delete_deck_message">Haluatko varmasti poistaa korttipakan %s?</string>
   <string name="delete_deck_confirm">Poista se</string>
   <string name="new_version_title">Uusi versio:</string>
-  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <plurals name="deckpicker_title">
+    <item name="one">Select deck (1 of %2$d due)</item>
+    <item name="other">Valitse korttipakka (%1$d / %2$d määrä)</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item name="one">1 of %2$d due</item>
+    <item name="other">%1$d / %2$d jäljellä</item>
+  </plurals>
+  <plurals name="card_browser_title">
+    <item name="one">%1$s: 1 of %3$d cards shown</item>
+    <item name="other">%1$s: %2$d of %3$d cards shown</item>
+  </plurals>
+  <plurals name="studyoptions_window_title">
+    <item name="one">%1$s (1 of %3$d due)</item>
+    <item name="other">%1$s (%2$d %3$d määrä)</item>
+  </plurals>
+  <plurals name="error_message">
+    <item name="one">Yksi virhe raportissa</item>
+    <item name="other">On %d raportoitavaa virhettä</item>
+  </plurals>
+  <plurals name="widget_cards_in_decks_due">
+    <item name="one">1 card due in %2$s</item>
+    <item name="other">%1$d cards due in %2$s</item>
+  </plurals>
+  <plurals name="widget_decks">
+    <item name="one">1 deck</item>
+    <item name="other">%1$d decks</item>
+  </plurals>
 </resources>

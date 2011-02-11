@@ -28,9 +28,7 @@
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop to upgrade it to the latest version.</string>
   <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
-  <string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
   <string name="deckpicker_title_nosdcard">SD卡已拔除</string>
-  <string name="deckpicker_due">%2$d张中的%1$d张待复习</string>
   <string name="deckpicker_new">今天有%d张新卡片</string>
   <string name="deckpicker_loaddeck">正在读取牌组…</string>
   <string name="deckpicker_nodeck">找不到牌组。</string>
@@ -155,7 +153,7 @@
   <string name="close">Close</string>
   <string name="select_card_model">Select Card Model</string>
   <string name="select">Select</string>
-  <string name="card_browser_title">%1$s: %2$d of %3$d cards shown</string>
+  <string name="card_browser">Card Browser</string>
   <string name="card_browser_load">Loading cards</string>
   <string name="card_browser_delete_card">Delete card</string>
   <string name="card_browser_suspend_card">Suspend card</string>
@@ -163,7 +161,11 @@
   <string name="card_browser_mark_card">Mark card</string>
   <string name="card_browser_unmark_card">Unmark card</string>
   <string name="delete_card_title">Delete Card</string>
-  <string name="delete_card_message">Really delete card this card?\n%1$s\n%2$s</string>
+  <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
+  <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
+  <string name="card_browser_change_display_order">Change display order</string>
+  <string name="card_browser_change_display_order_title">Choose display order</string>
   <string name="loading_deck">正在加载牌组。请稍等…</string>
   <string name="connection_needed">没有Internet连接</string>
   <string name="currently_downloading">Currently downloading</string>
@@ -201,7 +203,6 @@
   <string name="studyoptions_session_questions">Session limit (questions):</string>
   <string name="studyoptions_start">Start Reviewing</string>
   <string name="studyoptions_more">Study Options</string>
-  <string name="studyoptions_window_title">%1$s (%2$d of %3$d due)</string>
   <string name="studyoptions_more_dialog_title">More Options</string>
   <string name="studyoptions_more_save">Save</string>
   <string name="studyoptions_nodeck_title">No Deck Loaded</string>
@@ -286,8 +287,6 @@
   <string name="sync_conflict_remote">Keep Remote</string>
   <string name="sync_conflict_cancel">Cancel Syncing</string>
   <string name="error_reporter_title">Error Reporter</string>
-  <string name="error_message">There is one error to report</string>
-  <string name="errors_message">There are %d errors to report</string>
   <string name="error_ok">报告错误</string>
   <string name="error_cancel">Do not report errors</string>
   <string name="error_reporting_choice">Error reporting mode</string>
@@ -300,11 +299,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
   <string name="widget_no_cards_due">No cards due</string>
-  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
-  <string name="widget_card">card</string>
-  <string name="widget_cards">cards</string>
-  <string name="widget_deck">deck</string>
-  <string name="widget_decks">decks</string>
   <string name="soon">Soon</string>
   <string name="show_next_review_time">Next review time</string>
   <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
@@ -320,5 +314,33 @@
   <string name="delete_deck_message">Do you really want to delete deck %s?</string>
   <string name="delete_deck_confirm">Delete it</string>
   <string name="new_version_title">New Version:</string>
-  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <plurals name="deckpicker_title">
+    <item name="one">Select deck (1 of %2$d due)</item>
+    <item name="other">Select deck (%1$d of %2$d due)</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item name="one">1 of %2$d due</item>
+    <item name="other">%2$d张中的%1$d张待复习</item>
+  </plurals>
+  <plurals name="card_browser_title">
+    <item name="one">%1$s: 1 of %3$d cards shown</item>
+    <item name="other">%1$s: %2$d of %3$d cards shown</item>
+  </plurals>
+  <plurals name="studyoptions_window_title">
+    <item name="one">%1$s (1 of %3$d due)</item>
+    <item name="other">%1$s (%2$d of %3$d due)</item>
+  </plurals>
+  <plurals name="error_message">
+    <item name="one">There is one error to report</item>
+    <item name="other">There are %d errors to report</item>
+  </plurals>
+  <plurals name="widget_cards_in_decks_due">
+    <item name="one">1 card due in %2$s</item>
+    <item name="other">%1$d cards due in %2$s</item>
+  </plurals>
+  <plurals name="widget_decks">
+    <item name="one">1 deck</item>
+    <item name="other">%1$d decks</item>
+  </plurals>
 </resources>

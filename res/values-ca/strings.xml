@@ -28,9 +28,7 @@
   <string name="ok">D\'acord</string>
   <string name="deck_upgrade_too_old_version">El paquets de les versions posteriors a la 39 no són compatibles amb AnkiDroid, si us plau, obriu el paquet a la versió de l\'Anki d\'escriptori per actualitzar-ho a la versió més recent.</string>
   <string name="deck_upgrade_version_61_has_latex">El paquet no es pot actualitzar del tot, ja que conté expressions LaTeX, podeu obrir el paquet amb la versió de l\'Anki d\'escriptori per actualitzar el paquet a la darrera versió i regenerar el LaTeX.</string>
-  <string name="deckpicker_title">Trieu un paquet (%1$d de %2$d pendents)</string>
   <string name="deckpicker_title_nosdcard">La targeta SD no està disponible</string>
-  <string name="deckpicker_due">%1$d de %2$d pendents</string>
   <string name="deckpicker_new">%d noves avui</string>
   <string name="deckpicker_loaddeck">S\'està carregant el paquet...</string>
   <string name="deckpicker_nodeck">No s\'ha trobat cap paquet.</string>
@@ -155,7 +153,7 @@
   <string name="close">Tanca</string>
   <string name="select_card_model">Trieu una plantilla per les fitxes</string>
   <string name="select">Seleccioneu</string>
-  <string name="card_browser_title">%1$s: %2$d of %3$d cards shown</string>
+  <string name="card_browser">Card Browser</string>
   <string name="card_browser_load">Loading cards</string>
   <string name="card_browser_delete_card">Delete card</string>
   <string name="card_browser_suspend_card">Suspend card</string>
@@ -163,7 +161,11 @@
   <string name="card_browser_mark_card">Mark card</string>
   <string name="card_browser_unmark_card">Unmark card</string>
   <string name="delete_card_title">Delete Card</string>
-  <string name="delete_card_message">Really delete card this card?\n%1$s\n%2$s</string>
+  <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
+  <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
+  <string name="card_browser_change_display_order">Change display order</string>
+  <string name="card_browser_change_display_order_title">Choose display order</string>
   <string name="loading_deck">S\'està carregant el paquet. Un moment...</string>
   <string name="connection_needed">En aquest moment sou fora de línia.</string>
   <string name="currently_downloading">S\'està baixant</string>
@@ -201,7 +203,6 @@
   <string name="studyoptions_session_questions">Màxim de fitxes (num.):</string>
   <string name="studyoptions_start">Comença</string>
   <string name="studyoptions_more">Opcions d\'aprenentatge</string>
-  <string name="studyoptions_window_title">%1$s (%2$d de %3$d pendents)</string>
   <string name="studyoptions_more_dialog_title">Més</string>
   <string name="studyoptions_more_save">Desa</string>
   <string name="studyoptions_nodeck_title">No hi ha cap paquet carregat</string>
@@ -286,8 +287,6 @@
   <string name="sync_conflict_remote">Manté la còpia remota</string>
   <string name="sync_conflict_cancel">Cancel·la la sincronització</string>
   <string name="error_reporter_title">Informes d\'error</string>
-  <string name="error_message">Hi ha un error pendent d\'informar</string>
-  <string name="errors_message">Hi ha %d errors pendents d\'informar</string>
   <string name="error_ok">Informa  dels errors</string>
   <string name="error_cancel">No informis dels errors</string>
   <string name="error_reporting_choice">Tipus d\'informes d\'error</string>
@@ -300,11 +299,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Fitxes pendents</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d fitxes pendents</string>
   <string name="widget_no_cards_due">No hi ha fitxes pendents</string>
-  <string name="widget_cards_in_decks_due">%1$d %2$s pendents en %3$d %4$s</string>
-  <string name="widget_card">fitxa</string>
-  <string name="widget_cards">fitxes</string>
-  <string name="widget_deck">paquet</string>
-  <string name="widget_decks">Paquets</string>
   <string name="soon">Aviat</string>
   <string name="show_next_review_time">La nova revisió serà</string>
   <string name="show_next_review_time_summ">Mostra l\'hora de la propera revisió en funció de la meva tria</string>
@@ -320,5 +314,33 @@
   <string name="delete_deck_message">Segur que voleu suprimir el paquet %s?</string>
   <string name="delete_deck_confirm">Suprimeix</string>
   <string name="new_version_title">Nova versió:</string>
-  <string name="new_version_text">Noves característiques:\n- síntesi de veu\n- barra de finalització a la pantalla per triar el paquet\n- trieu la plantilla de la fitxa a l\'editor de fitxes\n- nou giny\n- desfés millorat\n- comportament del refés\n- barres de desplaçament\n- més idiomes</string>
+  <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <plurals name="deckpicker_title">
+    <item name="one">Select deck (1 of %2$d due)</item>
+    <item name="other">Trieu un paquet (%1$d de %2$d pendents)</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item name="one">1 of %2$d due</item>
+    <item name="other">%1$d de %2$d pendents</item>
+  </plurals>
+  <plurals name="card_browser_title">
+    <item name="one">%1$s: 1 of %3$d cards shown</item>
+    <item name="other">%1$s: %2$d of %3$d cards shown</item>
+  </plurals>
+  <plurals name="studyoptions_window_title">
+    <item name="one">%1$s (1 of %3$d due)</item>
+    <item name="other">>%1$s (%2$d de %3$d pendents)</item>
+  </plurals>
+  <plurals name="error_message">
+    <item name="one">Hi ha un error pendent d\'informar</item>
+    <item name="other">Hi ha %d errors pendents d\'informar</item>
+  </plurals>
+  <plurals name="widget_cards_in_decks_due">
+    <item name="one">1 card due in %2$s</item>
+    <item name="other">%1$d cards due in %2$s</item>
+  </plurals>
+  <plurals name="widget_decks">
+    <item name="one">1 paquet</item>
+    <item name="other">%1$d paquets</item>
+  </plurals>
 </resources>

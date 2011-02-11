@@ -101,4 +101,11 @@
     <item>Näytä väärin vastatut kortit 8 tunnin ajalta</item>
     <item>Näytä väärin vastatut kortit 3 päivän ajalta</item>
   </string-array>
+  <string-array name="card_browser_order_labels">
+    <item>Kysymyksen mukaan</item>
+    <item>Vastauksen mukaan</item>
+    <item>Määräajan mukaan</item>
+    <item>Aikavälin mukaan</item>
+    <item>Helppouden mukaan</item>
+  </string-array>
 </resources>

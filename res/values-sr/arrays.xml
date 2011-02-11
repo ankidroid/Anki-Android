@@ -101,4 +101,11 @@
     <item>Prikaži neuspešne kartice za 8 sati</item>
     <item>Prikaži neuspešne kartice za 3 dana</item>
   </string-array>
+  <string-array name="card_browser_order_labels">
+    <item>By question</item>
+    <item>By answer</item>
+    <item>By due time</item>
+    <item>By interval</item>
+    <item>By ease</item>
+  </string-array>
 </resources>

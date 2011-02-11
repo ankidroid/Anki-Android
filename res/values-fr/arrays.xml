@@ -101,4 +101,11 @@
     <item>Montrer cartes échouées dans 8 heures</item>
     <item>Montrer cartes échouées dans 3 jours</item>
   </string-array>
+  <string-array name="card_browser_order_labels">
+    <item>Par question</item>
+    <item>Par réponse</item>
+    <item>Par échéance</item>
+    <item>Par intervalle</item>
+    <item>Par difficulté</item>
+  </string-array>
 </resources>

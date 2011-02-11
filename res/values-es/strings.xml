@@ -28,9 +28,7 @@
   <string name="ok">Aceptar</string>
   <string name="deck_upgrade_too_old_version">Los mazos con versiones anteriores a la 39 no están soportados por AnkiDroid, por favor abre el mazo con la versión de escritorio de Anki para actualizarlo a la última versión.</string>
   <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
-  <string name="deckpicker_title">Seleccionar mazo (%1$d de %2$d programadas)</string>
   <string name="deckpicker_title_nosdcard">La tarjeta SD no está disponible</string>
-  <string name="deckpicker_due">%1$d de %2$d pendientes</string>
   <string name="deckpicker_new">%d nuevas hoy</string>
   <string name="deckpicker_loaddeck">Cargando mazo...</string>
   <string name="deckpicker_nodeck">No se ha encontrado ningún mazo.</string>
@@ -155,7 +153,7 @@
   <string name="close">Cerrar</string>
   <string name="select_card_model">Select Card Model</string>
   <string name="select">Select</string>
-  <string name="card_browser_title">%1$s: %2$d of %3$d cards shown</string>
+  <string name="card_browser">Card Browser</string>
   <string name="card_browser_load">Loading cards</string>
   <string name="card_browser_delete_card">Delete card</string>
   <string name="card_browser_suspend_card">Suspend card</string>
@@ -163,7 +161,11 @@
   <string name="card_browser_mark_card">Mark card</string>
   <string name="card_browser_unmark_card">Unmark card</string>
   <string name="delete_card_title">Delete Card</string>
-  <string name="delete_card_message">Really delete card this card?\n%1$s\n%2$s</string>
+  <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
+  <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
+  <string name="card_browser_change_display_order">Change display order</string>
+  <string name="card_browser_change_display_order_title">Choose display order</string>
   <string name="loading_deck">Cargando mazo. Por favor, espere...</string>
   <string name="connection_needed">No hay conexión a Internet</string>
   <string name="currently_downloading">Actualmente descargando</string>
@@ -201,7 +203,6 @@
   <string name="studyoptions_session_questions">Límite por sesión (preguntas):</string>
   <string name="studyoptions_start">Empezar a repasar</string>
   <string name="studyoptions_more">Opciones de estudio</string>
-  <string name="studyoptions_window_title">%1$s (%2$d de %3$d programadas)</string>
   <string name="studyoptions_more_dialog_title">Opciones de estudio</string>
   <string name="studyoptions_more_save">Guardar</string>
   <string name="studyoptions_nodeck_title">No hay ningún mazo cargado</string>
@@ -286,8 +287,6 @@
   <string name="sync_conflict_remote">Mantener la versión remota</string>
   <string name="sync_conflict_cancel">Cancelar Sincronización</string>
   <string name="error_reporter_title">Error Reporter</string>
-  <string name="error_message">Hay un error para enviar</string>
-  <string name="errors_message">Hay %d errores para enviar</string>
   <string name="error_ok">Informar sobre errores</string>
   <string name="error_cancel">No informar de errores</string>
   <string name="error_reporting_choice">Informar de errores</string>
@@ -300,11 +299,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Tarjetas programadas</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d tarjetas de AnkiDroid programadas</string>
   <string name="widget_no_cards_due">No cards due</string>
-  <string name="widget_cards_in_decks_due">%1$d %2$s due in %3$d %4$s</string>
-  <string name="widget_card">card</string>
-  <string name="widget_cards">cards</string>
-  <string name="widget_deck">deck</string>
-  <string name="widget_decks">decks</string>
   <string name="soon">Pronto</string>
   <string name="show_next_review_time">Próximo repaso</string>
   <string name="show_next_review_time_summ">Muestra el siguiente tiempo de repaso</string>
@@ -320,5 +314,33 @@
   <string name="delete_deck_message">¿Estás seguro de que quieres eliminar el mazo %s?</string>
   <string name="delete_deck_confirm">Eliminarlo</string>
   <string name="new_version_title">New Version:</string>
-  <string name="new_version_text">New features:\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <plurals name="deckpicker_title">
+    <item name="one">Seleccionar mazo (1 de %2$d programada)</item>
+    <item name="other">Seleccionar mazo (%1$d de %2$d programadas)</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item name="one">1 de %2$d pendiente</item>
+    <item name="other">%1$d de %2$d pendientes</item>
+  </plurals>
+  <plurals name="card_browser_title">
+    <item name="one">%1$s: 1 of %3$d cards shown</item>
+    <item name="other">%1$s: %2$d of %3$d cards shown</item>
+  </plurals>
+  <plurals name="studyoptions_window_title">
+    <item name="one">%1$s (1 de %3$d programada)</item>
+    <item name="other">%1$s (%2$d de %3$d programadas)</item>
+  </plurals>
+  <plurals name="error_message">
+    <item name="one">Hay un error para enviar</item>
+    <item name="other">Hay %d errores para enviar</item>
+  </plurals>
+  <plurals name="widget_cards_in_decks_due">
+    <item name="one">1 card due in %2$s</item>
+    <item name="other">%1$d cards due in %2$s</item>
+  </plurals>
+  <plurals name="widget_decks">
+    <item name="one">1 deck</item>
+    <item name="other">%1$d decks</item>
+  </plurals>
 </resources>
