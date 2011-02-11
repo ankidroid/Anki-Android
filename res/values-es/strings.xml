@@ -316,31 +316,31 @@
   <string name="new_version_title">New Version:</string>
   <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
   <plurals name="deckpicker_title">
-    <item name="one">Seleccionar mazo (1 de %2$d programada)</item>
-    <item name="other">Seleccionar mazo (%1$d de %2$d programadas)</item>
+    <item quantity="one">Seleccionar mazo (1 de %2$d programada)</item>
+    <item quantity="other">Seleccionar mazo (%1$d de %2$d programadas)</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item name="one">1 de %2$d pendiente</item>
-    <item name="other">%1$d de %2$d pendientes</item>
+    <item quantity="one">1 de %2$d pendiente</item>
+    <item quantity="other">%1$d de %2$d pendientes</item>
   </plurals>
   <plurals name="card_browser_title">
-    <item name="one">%1$s: 1 of %3$d cards shown</item>
-    <item name="other">%1$s: %2$d of %3$d cards shown</item>
+    <item quantity="one">%1$s: 1 of %3$d cards shown</item>
+    <item quantity="other">%1$s: %2$d of %3$d cards shown</item>
   </plurals>
   <plurals name="studyoptions_window_title">
-    <item name="one">%1$s (1 de %3$d programada)</item>
-    <item name="other">%1$s (%2$d de %3$d programadas)</item>
+    <item quantity="one">%1$s (1 de %3$d programada)</item>
+    <item quantity="other">%1$s (%2$d de %3$d programadas)</item>
   </plurals>
   <plurals name="error_message">
-    <item name="one">Hay un error para enviar</item>
-    <item name="other">Hay %d errores para enviar</item>
+    <item quantity="one">Hay un error para enviar</item>
+    <item quantity="other">Hay %d errores para enviar</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item name="one">1 card due in %2$s</item>
-    <item name="other">%1$d cards due in %2$s</item>
+    <item quantity="one">1 card due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item name="one">1 deck</item>
-    <item name="other">%1$d decks</item>
+    <item quantity="one">1 deck</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
 </resources>

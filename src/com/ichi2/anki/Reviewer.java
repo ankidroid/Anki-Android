@@ -1189,7 +1189,7 @@ public class Reviewer extends Activity {
 
     private void updateScreenCounts() {
         Deck deck = AnkiDroidApp.deck();
-        String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
+        String unformattedTitle = getResources().getString(R.plurals.studyoptions_window_title);
         setTitle(String.format(unformattedTitle, deck.getDeckName(), deck.getDueCount(), deck.getCardCount()));
 
         int _failedSoonCount = deck.getFailedSoonCount();
