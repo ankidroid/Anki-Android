@@ -110,13 +110,7 @@ public class ErrorReporter extends Activity {
                 }
             });
 
-            String errorText;
-            if (numErrors == 1) {
-                errorText = getString(R.string.error_message);
-            } else {
-                errorText = String.format(getString(R.string.errors_message), numErrors);
-            }
-            tvErrorText.setText(errorText);
+            tvErrorText.setText(getResources().getQuantityString(R.plurals.error_message, numErrors, numErrors));
         }
     }
 

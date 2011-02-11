@@ -37,9 +37,16 @@
 <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
 
 <!-- DeckPicker.java -->
-<string name="deckpicker_title">Select deck (%1$d of %2$d due)</string>
+<plurals name="deckpicker_title">
+  <item quantity="one">Select deck (%1$d of %2$d due)</item>
+  <item quantity="other">Select deck (%1$d of %2$d due)</item>
+</plurals>
+
 <string name="deckpicker_title_nosdcard">SD card is unmounted</string>
-<string name="deckpicker_due">%1$d of %2$d due</string>
+<plurals name="deckpicker_due">
+  <item quantity="one">%1$d of %2$d due</item>
+  <item quantity="other">%1$d of %2$d due</item>
+</plurals>
 <string name="deckpicker_new">%d new today</string>
 <string name="deckpicker_loaddeck">Loading deck...</string>
 <string name="deckpicker_nodeck">No decks found.</string>
@@ -189,7 +196,10 @@
 
 <!-- CardBrowser -->
 <string name="card_browser">Card Browser</string>
-<string name="card_browser_title">%1$s: %2$d of %3$d cards shown</string>
+<plurals name="card_browser_title">
+  <item quantity="one">%1$s: %2$d of %3$d cards shown</item>
+  <item quantity="other">%1$s: %2$d of %3$d cards shown</item>
+</plurals>
 <string name="card_browser_load">Loading cards</string>
 <string name="card_browser_delete_card">Delete card</string>
 <string name="card_browser_suspend_card">Suspend card</string>
@@ -275,7 +285,10 @@
 <string name="studyoptions_session_questions">Session limit (questions):</string>
 <string name="studyoptions_start">Start Reviewing</string>
 <string name="studyoptions_more">Study Options</string>
-<string name="studyoptions_window_title">%1$s (%2$d of %3$d due)</string>
+<plurals name="studyoptions_window_title">
+  <item quantity="one">%1$s (%2$d of %3$d due)</item>
+  <item quantity="other">%1$s (%2$d of %3$d due)</item>
+</plurals>
 <string name="studyoptions_more_dialog_title">More Options</string>
 <string name="studyoptions_more_save">Save</string>
 <string name="studyoptions_nodeck_title">No Deck Loaded</string>
@@ -374,8 +387,10 @@
 
 <!-- ErrorReporter.java -->
 <string name="error_reporter_title">Error Reporter</string>
-<string name="error_message">There is one error to report</string>
-<string name="errors_message">There are %d errors to report</string>
+<plurals name="error_message">
+  <item quantity="one">There is one error to report</item>
+  <item quantity="other">There are %d errors to report</item>
+</plurals>
 <string name="error_ok">Report errors</string>
 <string name="error_cancel">Do not report errors</string>
 <string name="error_reporting_choice">Error reporting mode</string>

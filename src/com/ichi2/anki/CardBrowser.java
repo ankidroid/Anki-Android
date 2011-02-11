@@ -381,7 +381,8 @@ public class CardBrowser extends Activity {
 
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
-        setTitle(String.format(getResources().getString(R.string.card_browser_title), mDeck.getDeckName(), mCards.size(), mAllCards.size()));
+        int count = mCards.size();
+        setTitle(getResources().getQuantityString(R.plurals.card_browser_title, count, mDeck.getDeckName(), count, mAllCards.size()));
     }
 
 

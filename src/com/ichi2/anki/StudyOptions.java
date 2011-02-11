@@ -944,8 +944,7 @@ public class StudyOptions extends Activity {
             deck.reset();
             // TODO: updateActives() from anqiqt/ui/main.py
             int reviewCount = deck.getDueCount();
-            String unformattedTitle = getResources().getString(R.string.studyoptions_window_title);
-            setTitle(String.format(unformattedTitle, deck.getDeckName(), reviewCount, deck.getCardCount()));
+            setTitle(getResources().getQuantityString(R.plurals.studyoptions_window_title, reviewCount, deck.getDeckName(), reviewCount, deck.getCardCount()));
 
             mTextDeckName.setText(deck.getDeckName());
             mTextReviewsDue.setText(String.valueOf(reviewCount));

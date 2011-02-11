@@ -163,9 +163,8 @@ public class DeckPicker extends Activity implements Runnable {
 				newString = "";
 				showProgress = "false";
 			} else if (msgtype == DeckPicker.MSG_UPGRADE_SUCCESS) {
-				dueString = String.format(res
-						.getString(R.string.deckpicker_due),
-						data.getInt("due"), data.getInt("total"));
+			    int due = data.getInt("due");
+				dueString = res.getQuantityString(R.plurals.deckpicker_due, due, due, data.getInt("total"));
 				newString = String
 						.format(res.getString(R.string.deckpicker_new), data
 								.getInt("new"));
@@ -757,7 +756,7 @@ public class DeckPicker extends Activity implements Runnable {
 	
 	
 	private void setTitleText(){
-		setTitle(String.format(getResources().getString(R.string.deckpicker_title), mTotalDueCards, mTotalCards));
+		setTitle(getResources().getQuantityString(R.plurals.deckpicker_title, mTotalDueCards, mTotalDueCards, mTotalCards));
 	}
 
 
