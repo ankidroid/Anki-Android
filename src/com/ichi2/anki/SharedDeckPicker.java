@@ -558,6 +558,7 @@ public class SharedDeckPicker extends Activity {
             TextView sharedDeckTitle = wrapper.getDeckTitle();
             TextView sharedDeckFacts = wrapper.getDeckFacts();
 
+            progressBar.setIndeterminate(false);
             Object obj = mAllSharedDecks.get(position);
             if (obj instanceof Download) {
                 Download download = (Download) obj;
