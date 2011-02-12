@@ -17,7 +17,10 @@
 package com.ichi2.anki;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.lang.reflect.Field;
@@ -688,6 +691,72 @@ public class Card {
 
     public long getId() {
         return mId;
+    }
+
+
+    public String getCardDetails(Context context) {
+    	Resources res = context.getResources();
+        StringBuilder builder = new StringBuilder();
+        builder.append("<html><body text=\"#FFFFFF\"><table><colgroup><col span=\"1\" style=\"width: 40%;\"><col span=\"1\" style=\"width: 60%;\"></colgroup><tr><td>");
+        builder.append(res.getString(R.string.card_details_question));
+        builder.append("</td><td>");
+        builder.append(Utils.stripHTML(mQuestion));
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_answer));
+        builder.append("</td><td>");
+        builder.append(Utils.stripHTML(mAnswer));
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_due));
+        builder.append("</td><td>");
+        builder.append(Utils.getReadableInterval(context, (mCombinedDue - Utils.now()) / 86400.0));
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_interval));
+        builder.append("</td><td>");
+        if (mInterval == 0) {
+            builder.append("-");
+        } else {
+            builder.append(Utils.getReadableInterval(context, mInterval));        	
+        }
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_ease));
+        builder.append("</td><td>");
+        double ease = Math.round(mFactor * 100);
+        builder.append(ease / 100);
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_average_time));
+        builder.append("</td><td>");
+        builder.append(Utils.doubleToTime(mAverageTime));
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_total_time));
+        builder.append("</td><td>");
+        builder.append(Utils.doubleToTime(mReviewTime));
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_yes_count));
+        builder.append("</td><td>");
+        builder.append(mYesCount);
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_no_count));
+        builder.append("</td><td>");
+        builder.append(mNoCount);
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_added));
+        builder.append("</td><td>");
+        builder.append(DateFormat.getDateFormat(context).format((long) (mCreated - mDeck.getUtcOffset()) * 1000l));
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_changed));
+        builder.append("</td><td>");
+        builder.append(DateFormat.getDateFormat(context).format((long) (mModified - mDeck.getUtcOffset()) * 1000l));
+        builder.append("</td></tr><tr><td>");        
+        builder.append(res.getString(R.string.card_details_model));
+        builder.append("</td><td>");
+        Model model = Model.getModel(mDeck, mCardModelId, false);
+        builder.append(model.getName());
+        builder.append("</td></tr><tr><td>");
+        builder.append(res.getString(R.string.card_details_card_model));
+        builder.append("</td><td>");
+        builder.append(model.getCardModel(mCardModelId).getName());
+        builder.append("</td></tr></html></body>");
+    return builder.toString();
     }
 
 

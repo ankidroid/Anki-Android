@@ -212,6 +212,20 @@
 <string name="card_browser_show_suspended">Show suspended cards</string>
 <string name="card_browser_change_display_order">Change display order</string>
 <string name="card_browser_change_display_order_title">Choose display order</string>
+<string name="card_browser_card_details">Card details</string>
+<string name="card_details_question">Question</string>
+<string name="card_details_answer">Answer</string>
+<string name="card_details_due">Next due</string>
+<string name="card_details_interval">Interval</string>
+<string name="card_details_ease">Ease</string>
+<string name="card_details_average_time">Average time</string>
+<string name="card_details_total_time">Total time</string>
+<string name="card_details_yes_count">Yes count</string>
+<string name="card_details_no_count">No count</string>
+<string name="card_details_added">Added</string>
+<string name="card_details_changed">Changed</string>
+<string name="card_details_model">Model</string>
+<string name="card_details_card_model">Card model</string>
 
 
 <!-- AnkiDroid.java -->
