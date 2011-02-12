@@ -22,6 +22,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Html;
+import android.text.format.DateFormat;
+import android.text.format.Time;
 import android.util.Log;
 
 import com.mindprod.common11.BigDate;
@@ -425,6 +427,42 @@ public class Utils {
     }
 
 
+    public static String getReadableInterval(Context context, double numberOfDays) {
+    	double adjustedInterval;
+    	int type;
+    	if (numberOfDays < 1) {
+    		// hours
+    		adjustedInterval = Math.max(1, Math.round(numberOfDays * 24));
+    		type = 0;
+    	} else if (numberOfDays < 30) {
+    		// days
+    		adjustedInterval = Math.round(numberOfDays);
+    		type = 1;
+    	} else if (numberOfDays < 360) {
+    		// months
+    		adjustedInterval = Math.round(numberOfDays / 3);
+    		adjustedInterval /= 10;
+    		type = 2;
+    	} else {
+    		// years
+    		adjustedInterval = Math.round(numberOfDays / 36.5);
+			adjustedInterval /= 10;
+    		type = 3;
+    	}
+    	String period;
+       	if (adjustedInterval == 1){
+       		period = context.getResources().getStringArray(R.array.next_review_s)[type];
+       	} else {
+       		period = context.getResources().getStringArray(R.array.next_review_p)[type];
+    	}
+    	if (type == 0 || (adjustedInterval * 10) % 10 == 0){
+			return String.valueOf((int) adjustedInterval) + " " + period;        			   			
+    	} else {
+       		return String.valueOf(adjustedInterval) + " " + period; 	
+		}
+    }
+
+
     /**
      *  Returns the effective date of the present moment.
      *  If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
@@ -443,6 +481,20 @@ public class Utils {
         cal.setTimeInMillis(System.currentTimeMillis() - (long) utcOffset * 1000l);
         Date today = Date.valueOf(df.format(cal.getTime()));
         return today;
+    }
+
+
+    public static String doubleToTime(double value) {
+    	int time = (int) Math.round(value);
+    	int seconds = time % 60;
+    	int minutes = (time - seconds) / 60;
+    	String formattedTime;
+    	if (seconds < 10) {
+    		formattedTime = Integer.toString(minutes) + ":0" + Integer.toString(seconds);
+    	} else {
+    		formattedTime = Integer.toString(minutes) + ":" + Integer.toString(seconds);
+    	}
+    	return formattedTime;
     }
 
 

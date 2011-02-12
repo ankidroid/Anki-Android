@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -53,6 +54,8 @@ public class CardBrowser extends Activity {
     private EditText mSearchEditText;
     
     private AlertDialog mSelectOrderDialog;
+    private AlertDialog mDetailsDialog;
+    private WebView mAboutWebView;
     private ProgressDialog mProgressDialog;
     private boolean mUndoRedoDialogShowing = false;
     private Card mSelectedCard;
@@ -67,6 +70,7 @@ public class CardBrowser extends Activity {
     private static final int CONTEXT_MENU_MARK = 0;
     private static final int CONTEXT_MENU_SUSPEND = 1;
     private static final int CONTEXT_MENU_DELETE = 2;
+    private static final int CONTEXT_MENU_DETAILS = 3;
 
     private static final int MENU_UNDO = 0;
     private static final int MENU_REDO = 1;
@@ -182,6 +186,7 @@ public class CardBrowser extends Activity {
             mIsSuspended = false;
         }
         item = menu.add(Menu.NONE, CONTEXT_MENU_DELETE, Menu.NONE, res.getString(R.string.card_browser_delete_card));
+        item = menu.add(Menu.NONE, CONTEXT_MENU_DETAILS, Menu.NONE, res.getString(R.string.card_browser_card_details));
         menu.setHeaderTitle(mCards.get(selectedPosition).get("question"));
     }
 
@@ -219,6 +224,10 @@ public class CardBrowser extends Activity {
             dialog = builder.create();
             dialog.show();
             return true;
+        case CONTEXT_MENU_DETAILS:
+        	mAboutWebView.loadDataWithBaseURL("", mSelectedCard.getCardDetails(this), "text/html", "utf-8", null);
+        	mDetailsDialog.show();
+        	return true;
         default:
             return super.onContextItemSelected(item);
         }
@@ -341,6 +350,13 @@ public class CardBrowser extends Activity {
         Resources res = getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+        View contentView = getLayoutInflater().inflate(R.layout.about, null);
+        mAboutWebView = (WebView) contentView.findViewById(R.id.about);
+        mAboutWebView.setBackgroundColor(res.getColor(R.color.card_browser_background));
+        builder.setView(contentView);
+		mDetailsDialog = builder.create();      
+        
         builder.setTitle(res.getString(R.string.card_browser_change_display_order_title));
         builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
         builder.setSingleChoiceItems(getResources().getStringArray(R.array.card_browser_order_labels), mSelectedOrder, new DialogInterface.OnClickListener() {
@@ -429,7 +445,7 @@ public class CardBrowser extends Activity {
     }
 
 
-    private void suspendCard(Card card, int position, boolean suspend) {
+	private void suspendCard(Card card, int position, boolean suspend) {
         int posA = getPosition(mAllCards, card.getId());
         String marSus = mAllCards.get(posA).remove("marSus");
         if (suspend) {
@@ -459,7 +475,7 @@ public class CardBrowser extends Activity {
                 data.put("id", mAllCards.get(i).get("id"));
                 data.put("question", mAllCards.get(i).get("question"));
                 data.put("answer", mAllCards.get(i).get("answer"));
-                data.put("marSus", mAllCards.get(i).get("id"));
+                data.put("marSus", mAllCards.get(i).get("marSus"));
                 data.put("allCardPos", Integer.toString(i));
                 mDeletedCards.add(data);
                 mAllCards.remove(i);
@@ -609,7 +625,7 @@ public class CardBrowser extends Activity {
                     data.put("id", mDeletedCards.get(position).get("id"));
                     data.put("question", mDeletedCards.get(position).get("question"));
                     data.put("answer", mDeletedCards.get(position).get("answer"));
-                    data.put("marSus", mDeletedCards.get(position).get("id"));
+                    data.put("marSus", mDeletedCards.get(position).get("marSus"));
                     mAllCards.add(Integer.parseInt(mDeletedCards.get(position).get("allCardPos")), data);
                     mDeletedCards.remove(position);
                     updateCardsList();

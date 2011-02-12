@@ -1669,22 +1669,7 @@ public class Reviewer extends Activity {
             mHandler.sendMessage(msg);
         }
     }
-    
-    private int optimalPeriod(double numberOfDays) {
-    	if (numberOfDays < 1) {
-    		// hours
-    		return 0;
-    	} else if (numberOfDays < 30) {
-    		// days
-    		return 1;
-    	} else if (numberOfDays < 365) {
-    		// months
-    		return 2;
-    	} else {
-    		// years
-    		return 3;
-    	}
-    }    
+
 
     private String nextInterval(int ease) {
         Resources res = getResources();
@@ -1692,41 +1677,10 @@ public class Reviewer extends Activity {
         if (ease == 1){
         	return res.getString(R.string.soon);
         } else {
-        	double nextInt = mCurrentCard.nextInterval(mCurrentCard,ease);
-        	double adInt = 0;
-        	int period = optimalPeriod(nextInt);
-        	String[] namePeriod;
-        	
-         	switch(period){
-    		case 0: 
-    			adInt = Math.max(1, Math.round(nextInt * 24));
-    			break;
-    		case 1: 
-    			adInt = Math.round(nextInt);
-    			break;
-    		case 2:
-    			adInt = Math.round(nextInt / 3);
-    			adInt = adInt / 10;
-    			break;
-    		case 3:
-    			adInt = Math.round(nextInt / 36.5);
-    			adInt = adInt / 10;
-    			break;
-        	}
-
-	       	if (adInt == 1){
-	       		namePeriod = res.getStringArray(R.array.next_review_s);
-	       	} else {
-	       		namePeriod = res.getStringArray(R.array.next_review_p);
-        	}
-		
-		if (period <= 1 || (adInt * 10) % 10 == 0){
-    			return String.valueOf((int)adInt) + " " + namePeriod[period];        			   			
-		} else {
-           		return String.valueOf(adInt) + " " + namePeriod[period]; 	
-        	}
+        	return Utils.getReadableInterval(this, mCurrentCard.nextInterval(mCurrentCard, ease));
         }
     }
+
 
     private void closeReviewer() {
     	finish();
