@@ -316,31 +316,31 @@
   <string name="new_version_title">Neue Version:</string>
   <string name="new_version_text">Neue Funktion:\n- Kartenübersicht\n- Vorlesefunktion\n- Fortschrittsanzeige in der Stapelauswahl\n- Kartenvorlage kann nun beim Hinzufügen gewählt werden\n- neues Widget\n- verbesserte Rückgängig-Funktion\n- Schieberegler\n- mehr Sprachen</string>
   <plurals name="deckpicker_title">
-    <item name="one">Stapel wählen (1 von %2$d fällig)</item>
-    <item name="other">Stapel wählen (%1$d von %2$d fällig)</item>
+    <item quantity="one">Stapel wählen (1 von %2$d fällig)</item>
+    <item quantity="other">Stapel wählen (%1$d von %2$d fällig)</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item name="one">1 von %2$d fällig</item>
-    <item name="other">%1$d von %2$d fällig</item>
+    <item quantity="one">1 von %2$d fällig</item>
+    <item quantity="other">%1$d von %2$d fällig</item>
   </plurals>
   <plurals name="card_browser_title">
-    <item name="one">%1$s: 1 von %3$d Karten</item>
-    <item name="other">%1$s: %2$d von %3$d Karten</item>
+    <item quantity="one">%1$s: 1 von %3$d Karten</item>
+    <item quantity="other">%1$s: %2$d von %3$d Karten</item>
   </plurals>
   <plurals name="studyoptions_window_title">
-    <item name="one">%1$s (1 von %3$d fällig)</item>
-    <item name="other">%1$s (%2$d von %3$d fällig)</item>
+    <item quantity="one">%1$s (1 von %3$d fällig)</item>
+    <item quantity="other">%1$s (%2$d von %3$d fällig)</item>
   </plurals>
   <plurals name="error_message">
-    <item name="one">Es gibt einen Fehler zu melden</item>
-    <item name="other">Es gibt %d Fehler zu melden</item>
+    <item quantity="one">Es gibt einen Fehler zu melden</item>
+    <item quantity="other">Es gibt %d Fehler zu melden</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item name="one">1 Karte in %2$s fällig</item>
-    <item name="other">%1$d Karten in %2$s fällig</item>
+    <item quantity="one">1 Karte in %2$s fällig</item>
+    <item quantity="other">%1$d Karten in %2$s fällig</item>
   </plurals>
   <plurals name="widget_decks">
-    <item name="one">1 Stapel</item>
-    <item name="other">%1$d Stapeln</item>
+    <item quantity="one">1 Stapel</item>
+    <item quantity="other">%1$d Stapeln</item>
   </plurals>
 </resources>

@@ -56,6 +56,8 @@ public class CardBrowser extends Activity {
     private ProgressDialog mProgressDialog;
     private boolean mUndoRedoDialogShowing = false;
     private Card mSelectedCard;
+    private Card mUndoRedoCard;
+    private long mUndoRedoCardId;
     private static Card sEditorCard;
     private boolean mIsSuspended;
     private boolean mIsMarked;
@@ -90,6 +92,7 @@ public class CardBrowser extends Activity {
 
         setContentView(R.layout.card_browser);
         mDeck = AnkiDroidApp.deck();
+        mDeck.resetUndo();
 
         markedColor = getResources().getColor(R.color.card_browser_marked);
         suspendedColor = getResources().getColor(R.color.card_browser_suspended);
@@ -273,11 +276,11 @@ public class CardBrowser extends Activity {
         switch (item.getItemId()) {
             case MENU_UNDO:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler, new DeckTask.TaskData(0,
-                        mDeck, mSelectedCard));
+                        mDeck, 0, true));
                 return true;
             case MENU_REDO:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUndoRedoHandler, new DeckTask.TaskData(0,
-                        mDeck, mSelectedCard));
+                        mDeck, 0, true));
                 return true;
             case MENU_ADD_FACT:
             	startActivityForResult(new Intent(CardBrowser.this, FactAdder.class), ADD_FACT);
@@ -592,52 +595,50 @@ public class CardBrowser extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            mSelectedCard = values[0].getCard();
         }
 
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+        	mUndoRedoCardId = result.getLong();
         	String undoType = result.getString();
-            if (undoType.equals(Deck.UNDO_TYPE_EDIT_CARD)) {
-                mSelectedCard.fromDB(mSelectedCard.getId());
-                int pos = getPosition(mAllCards, mSelectedCard.getId());
-                updateCard(mSelectedCard, mAllCards, pos);                    
-                pos = getPosition(mCards, mSelectedCard.getId());
-                if (pos != -1) {
-                    updateCard(mSelectedCard, mCards, pos);                    
-                }
-                updateList();
-            	mProgressDialog.dismiss();
-            } else if (undoType.equals(Deck.UNDO_TYPE_MARK_CARD)) {
-            	markCards(mSelectedCard.getFactId(), mSelectedCard.isMarked());
-            	mProgressDialog.dismiss();
-            } else if (undoType.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
-            	suspendCard(mSelectedCard, getPosition(mCards, mSelectedCard.getId()), mSelectedCard.getSuspendedState());
-            	mProgressDialog.dismiss();
-            } else if (undoType.equals(Deck.UNDO_TYPE_DELETE_CARD)) {
-                if (mSelectedCard != null) {
-                    int position = getPosition(mDeletedCards, mSelectedCard.getId());
-                    if (position != -1) {
-                        HashMap<String, String> data = new HashMap<String, String>();
-                        data.put("id", mDeletedCards.get(position).get("id"));
-                        data.put("question", mDeletedCards.get(position).get("question"));
-                        data.put("answer", mDeletedCards.get(position).get("answer"));
-                        data.put("marSus", mDeletedCards.get(position).get("id"));
-                        mAllCards.add(Integer.parseInt(mDeletedCards.get(position).get("allCardPos")), data);
-                        mDeletedCards.remove(position);
-                        updateCardsList();
-                    } else {
-                        deleteCard(Long.toString(mSelectedCard.getId()), getPosition(mCards, mSelectedCard.getId()));
-                    }                    
-                    mProgressDialog.dismiss();
+        	if (undoType.equals(Deck.UNDO_TYPE_DELETE_CARD)) {
+                int position = getPosition(mDeletedCards, mUndoRedoCardId);
+                if (position != -1) {
+                    HashMap<String, String> data = new HashMap<String, String>();
+                    data.put("id", mDeletedCards.get(position).get("id"));
+                    data.put("question", mDeletedCards.get(position).get("question"));
+                    data.put("answer", mDeletedCards.get(position).get("answer"));
+                    data.put("marSus", mDeletedCards.get(position).get("id"));
+                    mAllCards.add(Integer.parseInt(mDeletedCards.get(position).get("allCardPos")), data);
+                    mDeletedCards.remove(position);
+                    updateCardsList();
+                } else {
+                    deleteCard(Long.toString(mUndoRedoCardId), getPosition(mCards, mUndoRedoCardId));
+                }                    
+                mProgressDialog.dismiss();
+            } else {
+            	mUndoRedoCard = mDeck.cardFromId(mUndoRedoCardId);
+            	if (undoType.equals(Deck.UNDO_TYPE_EDIT_CARD)) {
+                	mUndoRedoCard.fromDB(mUndoRedoCardId);
+                    int pos = getPosition(mAllCards, mUndoRedoCardId);
+                    updateCard(mUndoRedoCard, mAllCards, pos);                    
+                    pos = getPosition(mCards, mUndoRedoCardId);
+                    if (pos != -1) {
+                        updateCard(mUndoRedoCard, mCards, pos);                    
+                    }
+                    updateList();
+                	mProgressDialog.dismiss();
+                } else if (undoType.equals(Deck.UNDO_TYPE_MARK_CARD)) {
+                	markCards(mUndoRedoCard.getFactId(), mUndoRedoCard.isMarked());
+                	mProgressDialog.dismiss();
+                } else if (undoType.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
+                	suspendCard(mUndoRedoCard, getPosition(mCards, mUndoRedoCardId), mUndoRedoCard.getSuspendedState());
+                	mProgressDialog.dismiss();
                 } else {
                     mUndoRedoDialogShowing = true;
                     getCards();
                 }
-            } else {
-            	mUndoRedoDialogShowing = true;
-            	getCards();
             }
         }
     };

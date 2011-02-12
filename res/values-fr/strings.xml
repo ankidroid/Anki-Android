@@ -322,31 +322,31 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="new_version_title">Nouvelle version:</string>
   <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
   <plurals name="deckpicker_title">
-    <item name="one">Sélectionner le paquet (1 de %2$d à faire)</item>
-    <item name="other">Sélectionner le paquet (%1$d de %2$d à faire)</item>
+    <item quantity="one">Sélectionner le paquet (1 de %2$d à faire)</item>
+    <item quantity="other">Sélectionner le paquet (%1$d de %2$d à faire)</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item name="one">%1$d parmi %2$d dûes</item>
-    <item name="other">%1$d parmi %2$d dûe</item>
+    <item quantity="one">%1$d parmi %2$d dûes</item>
+    <item quantity="other">%1$d parmi %2$d dûe</item>
   </plurals>
   <plurals name="card_browser_title">
-    <item name="one">%1$s: 1 parmi %3$d cartes montrée</item>
-    <item name="other">%1$s: %2$d de %3$d cartes montrées</item>
+    <item quantity="one">%1$s: 1 parmi %3$d cartes montrée</item>
+    <item quantity="other">%1$s: %2$d de %3$d cartes montrées</item>
   </plurals>
   <plurals name="studyoptions_window_title">
-    <item name="one">%1$s (1 de %3$d due)</item>
-    <item name="other">%1$s (%2$d de %3$d dues)</item>
+    <item quantity="one">%1$s (1 de %3$d due)</item>
+    <item quantity="other">%1$s (%2$d de %3$d dues)</item>
   </plurals>
   <plurals name="error_message">
-    <item name="one">Il y a une erreur à signaler</item>
-    <item name="other">Il y a %d erreurs à signaler</item>
+    <item quantity="one">Il y a une erreur à signaler</item>
+    <item quantity="other">Il y a %d erreurs à signaler</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item name="one">1 card due in %2$s</item>
-    <item name="other">%1$d cartes dûes dans %2$s</item>
+    <item quantity="one">1 card due in %2$s</item>
+    <item quantity="other">%1$d cartes dûes dans %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item name="one">1 paquet</item>
-    <item name="other">%1$d paquets</item>
+    <item quantity="one">1 paquet</item>
+    <item quantity="other">%1$d paquets</item>
   </plurals>
 </resources>

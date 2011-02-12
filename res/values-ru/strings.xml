@@ -153,7 +153,7 @@
   <string name="close">Закрыть</string>
   <string name="select_card_model">Выберите модель карты</string>
   <string name="select">Выберите</string>
-  <string name="card_browser">Card Browser</string>
+  <string name="card_browser">Редактор карт</string>
   <string name="card_browser_load">Загрузка карт</string>
   <string name="card_browser_delete_card">Удалить карту</string>
   <string name="card_browser_suspend_card">Отложить карту</string>
@@ -161,11 +161,11 @@
   <string name="card_browser_mark_card">Отметить карту</string>
   <string name="card_browser_unmark_card">Снять отметку</string>
   <string name="delete_card_title">Удалить карту</string>
-  <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
-  <string name="card_browser_show_marked">Show marked cards</string>
-  <string name="card_browser_show_suspended">Show suspended cards</string>
-  <string name="card_browser_change_display_order">Change display order</string>
-  <string name="card_browser_change_display_order_title">Choose display order</string>
+  <string name="delete_card_message">Действительно удалить эту карту?\n%1$s\n%2$s</string>
+  <string name="card_browser_show_marked">Показать отмеченные карты</string>
+  <string name="card_browser_show_suspended">Показать приостановленные карты</string>
+  <string name="card_browser_change_display_order">Изменение порядка отображения</string>
+  <string name="card_browser_change_display_order_title">Выбор порядка отображения</string>
   <string name="loading_deck">Открытие колоды. Пожалуйста, подождите...</string>
   <string name="connection_needed">Нет подключения к Интернету</string>
   <string name="currently_downloading">Загружается</string>
@@ -314,33 +314,33 @@
   <string name="delete_deck_message">Вы действительно хотите удалить колоду %s?</string>
   <string name="delete_deck_confirm">Удалить</string>
   <string name="new_version_title">Новая версия:</string>
-  <string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_text">Новые возможности:\n- редактор карт\n- произношение текста\n- прогресс завершения колоды в оглавлении\n- выбор модели карт при добавлении карты\n- новый виджет\n- улучшение отмена/возврат\n- новый элемент интерфейса - ползунок\n- больше языков</string>
   <plurals name="deckpicker_title">
-    <item name="one">Select deck (1 of %2$d due)</item>
-    <item name="other">Выберите колоду (%1$d из %2$d)</item>
+    <item quantity="one">Выберите колоду (1 карту из %2$d повторить)</item>
+    <item quantity="other">Выберите колоду (%1$d из %2$d)</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item name="one">1 of %2$d due</item>
-    <item name="other">%1$d из %2$d к повтору</item>
+    <item quantity="one">1 из %2$d к повтору</item>
+    <item quantity="other">%1$d из %2$d к повтору</item>
   </plurals>
   <plurals name="card_browser_title">
-    <item name="one">%1$s: 1 of %3$d cards shown</item>
-    <item name="other">>%1$s: %2$d из %3$d карт показано</item>
+    <item quantity="one">%1$s: 1 из %3$d карт показано</item>
+    <item quantity="other">&gt;%1$s: %2$d из %3$d карт показано</item>
   </plurals>
   <plurals name="studyoptions_window_title">
-    <item name="one">%1$s (1 of %3$d due)</item>
-    <item name="other">%1$s (%2$d из %3$d)</item>
+    <item quantity="one">%1$s (1 из %3$d к повтору)</item>
+    <item quantity="other">%1$s (%2$d из %3$d)</item>
   </plurals>
   <plurals name="error_message">
-    <item name="one">Есть одна ошибка для отчёта</item>
-    <item name="other">Найдено %d ошибки для отчета</item>
+    <item quantity="one">Есть одна ошибка для отчёта</item>
+    <item quantity="other">Найдено %d ошибки для отчета</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item name="one">1 card due in %2$s</item>
-    <item name="other">%1$d cards due in %2$s</item>
+    <item quantity="one">1 карту повторить в %2$s</item>
+    <item quantity="other">%1$d карт в %2$s к повтору</item>
   </plurals>
   <plurals name="widget_decks">
-    <item name="one">1 deck</item>
-    <item name="other">%1$d колод</item>
+    <item quantity="one">1 колода</item>
+    <item quantity="other">%1$d колод</item>
   </plurals>
 </resources>
