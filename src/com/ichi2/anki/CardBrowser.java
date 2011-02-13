@@ -350,13 +350,6 @@ public class CardBrowser extends Activity {
         Resources res = getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-		builder.setPositiveButton(getResources().getString(R.string.ok), null);
-        View contentView = getLayoutInflater().inflate(R.layout.about, null);
-        mAboutWebView = (WebView) contentView.findViewById(R.id.about);
-        mAboutWebView.setBackgroundColor(res.getColor(R.color.card_browser_background));
-        builder.setView(contentView);
-		mDetailsDialog = builder.create();      
-        
         builder.setTitle(res.getString(R.string.card_browser_change_display_order_title));
         builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
         builder.setSingleChoiceItems(getResources().getStringArray(R.array.card_browser_order_labels), mSelectedOrder, new DialogInterface.OnClickListener() {
@@ -367,6 +360,13 @@ public class CardBrowser extends Activity {
         		}
         	});
         mSelectOrderDialog = builder.create();
+
+		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+        View contentView = getLayoutInflater().inflate(R.layout.about, null);
+        mAboutWebView = (WebView) contentView.findViewById(R.id.about);
+        mAboutWebView.setBackgroundColor(res.getColor(R.color.card_browser_background));
+        builder.setView(contentView);
+		mDetailsDialog = builder.create(); 
     }
 
 
