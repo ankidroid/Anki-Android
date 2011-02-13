@@ -25,21 +25,22 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -1895,51 +1896,39 @@ public class SyncClient {
     }
 
 
-    public static void fullSyncFromLocal(String password, String username, Deck deck, String deckName) {
-        URL url;
+    public static HashMap<String, String> fullSyncFromLocal(String password, String username, Deck deck, String deckName) {
+        HashMap<String, String> result = new HashMap<String, String>();
+        Throwable exc = null;
         try {
             Log.i(AnkiDroidApp.TAG, "Fullup");
-            url = new URL(AnkiDroidProxy.SYNC_URL + "fullup?v=2");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setUseCaches(false);
-            conn.setRequestMethod("POST");
-
-            conn.setRequestProperty("Connection", "close");
-            conn.setRequestProperty("Charset", "UTF-8");
-            // conn.setRequestProperty("Content-Length", "8494662");
-            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + MIME_BOUNDARY);
-            conn.setRequestProperty("Host", AnkiDroidProxy.SYNC_HOST);
-
-            DataOutputStream ds = new DataOutputStream(conn.getOutputStream());
-            Log.i(AnkiDroidApp.TAG, "Pass");
-            ds.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
-            ds.writeBytes("Content-Disposition: form-data; name=\"p\"" + END + END + password + END);
-            Log.i(AnkiDroidApp.TAG, "User");
-            ds.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
-            ds.writeBytes("Content-Disposition: form-data; name=\"u\"" + END + END + username + END);
-            Log.i(AnkiDroidApp.TAG, "DeckName");
-            ds.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
-            ds.writeBytes("Content-Disposition: form-data; name=\"d\"" + END + END);
-            ds.write(deckName.getBytes("UTF-8"));
-            ds.writeBytes(END);
-            Log.i(AnkiDroidApp.TAG, "Deck");
-            ds.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
-            ds.writeBytes("Content-Disposition: form-data; name=\"deck\";filename=\"deck\"" + END);
-            ds.writeBytes("Content-Type: application/octet-stream" + END);
-            ds.writeBytes(END);
+            // We need to write the output to a temporary file, so that FileEntity knows the length
+            String tmpPath = (new File(deck.getDeckPath())).getParent();
+            File tmpFile = new File(tmpPath + "/fulluploadPayload.tmp");
+            if (tmpFile.exists()) {
+                tmpFile.delete();
+            }
+            Log.i(AnkiDroidApp.TAG, "Writing temporary payload file...");
+            tmpFile.createNewFile();
+            DataOutputStream tmp = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(tmpFile)));
+            tmp.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
+            tmp.writeBytes("Content-Disposition: form-data; name=\"p\"" + END + END + password + END);
+            tmp.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
+            tmp.writeBytes("Content-Disposition: form-data; name=\"u\"" + END + END + username + END);
+            tmp.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
+            tmp.writeBytes("Content-Disposition: form-data; name=\"d\"" + END + END);
+            tmp.write(deckName.getBytes("UTF-8"));
+            tmp.writeBytes(END);
+            tmp.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
+            tmp.writeBytes("Content-Disposition: form-data; name=\"deck\"; filename=\"deck\"" + END);
+            tmp.writeBytes("Content-Type: application/octet-stream" + END);
+            tmp.writeBytes(END);
 
             String deckPath = deck.getDeckPath();
             FileInputStream fStream = new FileInputStream(deckPath);
             byte[] buffer = new byte[Utils.CHUNK_SIZE];
             int length = -1;
-
             Deflater deflater = new Deflater(Deflater.BEST_SPEED);
-            DeflaterOutputStream dos = new DeflaterOutputStream(ds, deflater);
-
-            Log.i(AnkiDroidApp.TAG, "Writing buffer...");
+            DeflaterOutputStream dos = new DeflaterOutputStream(tmp, deflater);
             while ((length = fStream.read(buffer)) != -1) {
                 dos.write(buffer, 0, length);
                 Log.i(AnkiDroidApp.TAG, "Length = " + length);
@@ -1947,62 +1936,68 @@ public class SyncClient {
             dos.finish();
             fStream.close();
 
-            ds.writeBytes(END);
-            ds.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + TWO_HYPHENS + END);
-            Log.i(AnkiDroidApp.TAG, "Closing streams...");
+            tmp.writeBytes(END);
+            tmp.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + TWO_HYPHENS + END + END);
+            tmp.flush();
+            tmp.close();
+            Log.i(AnkiDroidApp.TAG, "Payload file ready, size: " + tmpFile.length());
 
-            ds.flush();
-            ds.close();
-
+            HttpPost httpPost = new HttpPost(AnkiDroidProxy.SYNC_URL + "fullup?v=2");
+            httpPost.setHeader("Content-type", "multipart/form-data; boundary=" + MIME_BOUNDARY);
+            httpPost.addHeader("Host", AnkiDroidProxy.SYNC_HOST);
+            httpPost.setEntity(new FileEntity(tmpFile, "application/octet-stream"));
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpResponse resp = httpClient.execute(httpPost);
+            
             // Ensure we got the HTTP 200 response code
-            int responseCode = conn.getResponseCode();
-            if (responseCode != 200) {
-                Log.i(AnkiDroidApp.TAG, "Response code = " + responseCode);
-                // throw new Exception(String.format("Received the response code %d from the URL %s", responseCode,
-                // url));
-            } else {
-                Log.i(AnkiDroidApp.TAG, "Response code = 200");
-            }
-
+            String response = Utils.convertStreamToString(resp.getEntity().getContent());
+            int responseCode = resp.getStatusLine().getStatusCode();
+            Log.i(AnkiDroidApp.TAG, "Response code = " + responseCode);
             // Read the response
-            InputStream is = conn.getInputStream();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] bytes = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = is.read(bytes)) != -1) {
-                baos.write(bytes, 0, bytesRead);
-            }
-            byte[] bytesReceived = baos.toByteArray();
-            baos.close();
-
-            is.close();
-            String response = new String(bytesReceived);
-			
 			if (response.substring(0,2).equals("OK")) {
 				// Update lastSync
 			    deck.setLastSync(Double.parseDouble(response.substring(3, response.length()-3)));
 			    deck.commitToDB();
 			    // Make sure we don't set modified later than lastSync when we do closeDeck later:
 			    deck.setLastLoaded(deck.getModified());
-                // boolean wasDbOpen = AnkiDatabaseManager.isDatabaseOpen(deckPath);
-                // AnkiDatabaseManager.getDatabase(deckPath).getDatabase().execSQL("UPDATE decks SET lastSync = " +
-                //        response.substring(3, response.length()-3));
-                // if (!wasDbOpen) {
-				//    AnkiDatabaseManager.closeDatabase(deckPath);
-                // }
+			    // Remove temp file
+			    tmpFile.delete();
 			}
             Log.i(AnkiDroidApp.TAG, "Finished!");
+            result.put("code", String.valueOf(responseCode));
+            result.put("message", response);
+        } catch (ClientProtocolException e) {
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            result.put("code", "ClientProtocolException");
+            exc = e;
+        } catch (UnsupportedEncodingException e) {
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            result.put("code", "UnsupportedEncodingException");
+            exc = e;
         } catch (MalformedURLException e) {
-            Log.i(AnkiDroidApp.TAG, "MalformedURLException = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            result.put("code", "MalformedURLException");
+            exc = e;
         } catch (IOException e) {
-            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            result.put("code", "IOException");
+            exc = e;
         }
+        
+        if (exc != null) {
+            // Sometimes the exception has null message and we have to get it from its cause
+            while (exc.getMessage() == null && exc.getCause() != null) {
+                exc = exc.getCause();
+            }
+            result.put("message", exc.getMessage());
+        }
+        return result;
     }
 
 
-    public static void fullSyncFromServer(String password, String username, String deckName, String deckPath) {
-        // Log.i(AnkiDroidApp.TAG, "password = " + password + ", user = " + username + ", d = " + deckName);
-
+    public static HashMap<String, String> fullSyncFromServer(String password, String username, String deckName, String deckPath) {
+        HashMap<String, String> result = new HashMap<String, String>();
+        Throwable exc = null;
         try {
             String data = "p=" + URLEncoder.encode(password, "UTF-8") + "&u=" + URLEncoder.encode(username, "UTF-8")
                     + "&d=" + URLEncoder.encode(deckName, "UTF-8");
@@ -2016,14 +2011,44 @@ public class SyncClient {
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entityResponse = response.getEntity();
             InputStream content = entityResponse.getContent();
-            Utils.writeToFile(new InflaterInputStream(content), deckPath);
+            int responseCode = response.getStatusLine().getStatusCode();
+            String tempDeckPath = deckPath + ".tmp";
+            if (responseCode == 200) {
+                Utils.writeToFile(new InflaterInputStream(content), tempDeckPath);
+                File newFile = new File(tempDeckPath);
+                //File oldFile = new File(deckPath);
+                if (newFile.renameTo(new File(deckPath))) {
+                    result.put("code", "200");
+                } else {
+                    result.put("code", "PermissionError");
+                    result.put("message", "Can't overwrite old deck with downloaded from server");
+                }
+            } else {
+                result.put("code", String.valueOf(responseCode));
+                result.put("message", Utils.convertStreamToString(content));
+            }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            result.put("code", "UnsupportedEncodingException");
+            exc = e;
         } catch (ClientProtocolException e) {
-            Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            result.put("code", "ClientProtocolException");
+            exc = e;
         } catch (IOException e) {
-            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            result.put("code", "IOException");
+            exc = e;
         }
+    
+        if (exc != null) {
+            // Sometimes the exception has null message and we have to get it from its cause
+            while (exc.getMessage() == null && exc.getCause() != null) {
+                exc = exc.getCause();
+            }
+            result.put("message", exc.getMessage());
+        }
+        return result;
     }
 
 }

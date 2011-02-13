@@ -1215,16 +1215,14 @@ public class StudyOptions extends Activity {
             try {
                 // Copy the sample deck from the assets to the SD card.
                 InputStream stream = getResources().getAssets().open(SAMPLE_DECK_NAME);
-                boolean written = Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
+                Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
                 stream.close();
-                if (!written) {
-                    openDeckPicker();
-                    Log.e(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card failed.");
-                    return;
-                }
                 Log.i(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card was sucessful.");
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+                Log.e(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card failed.");
+                openDeckPicker();
+                return;
             }
         }
 

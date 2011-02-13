@@ -652,6 +652,7 @@ public class DownloadManagerService extends Service {
 
                 iis = new InflaterInputStream(connection.getInputStream());
 
+                int phase = 0;
                 while (download.getStatus() == Download.STATUS_DOWNLOADING) {
                     // Size buffer according to how much of the file is left to download
                     Log.v(AnkiDroidApp.TAG, "Downloading... " + download.getDownloaded());
@@ -671,7 +672,12 @@ public class DownloadManagerService extends Service {
                     // Write buffer to file.
                     file.write(buffer, 0, read);
                     download.setDownloaded(download.getDownloaded() + read);
-                    publishProgress();
+                    // Less frequent updates
+                    phase++;
+                    if (phase == 249) {
+                        phase = 0;
+                        publishProgress();
+                    }
                 }
 
                 if (download.getStatus() == Download.STATUS_DOWNLOADING) {

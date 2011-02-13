@@ -47,6 +47,8 @@
 		android:layout_height="wrap_content"
 		android:padding="10dip"
 		style="?android:attr/progressBarStyleHorizontal"
+		android:indeterminate="true"
+		android:indeterminateBehavior="cycle"
 		android:progress="0"
 		android:max="100"
 		android:visibility="gone"/>

@@ -487,6 +487,7 @@ public class PersonalDeckPicker extends Activity {
             TextView downloadingSharedDeckTitle = wrapper.getDownloadTitle();
             ProgressBar progressBar = wrapper.getProgressBar();
             TextView progressText = wrapper.getProgressBarText();
+            TextView estimatedText = wrapper.getEstimatedTimeText();
             TextView sharedDeckTitle = wrapper.getDeckTitle();
             TextView sharedDeckFacts = wrapper.getDeckFacts();
 
@@ -505,7 +506,12 @@ public class PersonalDeckPicker extends Activity {
                 }
                 downloadingSharedDeckTitle.setText(download.getTitle());
                 downloadingSharedDeckTitle.setVisibility(View.VISIBLE);
+
+                //if (!progressBar.isIndeterminate()) {
+                //    progressBar.setIndeterminate(true);
+                //}
                 progressBar.setVisibility(View.VISIBLE);
+                long downloaded = 0l;
                 switch (download.getStatus()) {
                     case Download.STATUS_STARTED:
                         progressText.setText(res.getString(R.string.starting_download));
@@ -513,12 +519,9 @@ public class PersonalDeckPicker extends Activity {
 
                     case Download.STATUS_DOWNLOADING:
                         progressText.setText(res.getString(R.string.downloading));
+                        downloaded = download.getDownloaded();
+                        estimatedText.setText(String.valueOf(downloaded / 1024) + " kB");
                         break;
-
-                    case Download.STATUS_PAUSED:
-                        progressText.setText(res.getString(R.string.paused));
-                        break;
-
                     case Download.STATUS_COMPLETE:
                         progressText.setText(res.getString(R.string.downloaded));
                         break;
@@ -528,6 +531,7 @@ public class PersonalDeckPicker extends Activity {
                         break;
                 }
                 progressText.setVisibility(View.VISIBLE);
+                estimatedText.setVisibility(View.VISIBLE);
             } else {
                 String personalDeckTitle = (String) obj;
                 if (position > 0 && (mAllPersonalDecks.get(position - 1) instanceof Download)) {
@@ -539,6 +543,7 @@ public class PersonalDeckPicker extends Activity {
                 downloadingSharedDeckTitle.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);
                 progressText.setVisibility(View.GONE);
+                estimatedText.setVisibility(View.GONE);
 
                 sharedDeckTitle.setText(personalDeckTitle);
                 sharedDeckTitle.setVisibility(View.VISIBLE);

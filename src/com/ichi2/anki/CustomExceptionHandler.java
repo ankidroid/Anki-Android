@@ -122,14 +122,25 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         Log.i(AnkiDroidApp.TAG, "uncaughtException");
 
         collectInformation();
-        Date currentDate = new Date();
-        SimpleDateFormat df1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss ", Locale.US);
-        SimpleDateFormat df2 = new SimpleDateFormat(" yyyy", Locale.US);
-        TimeZone tz = TimeZone.getDefault();
-        StringBuilder reportInformation = new StringBuilder(10000);
-        reportInformation.append(String.format("reportgenerated=%s%s%s\n",
-                df1.format(currentDate), tz.getID(), df2.format(currentDate)));
 
+        Date ts = new Date();
+    	TimeZone tz = TimeZone.getDefault();
+    	
+        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
+        SimpleDateFormat df2 = new SimpleDateFormat("Z", Locale.US);
+        
+        df1.setTimeZone(TimeZone.getTimeZone("UTC"));
+        
+        String reportgeneratedutc = String.format("%s", df1.format(ts));
+        String reportgeneratedtzoffset = String.format("%s", df2.format(ts));
+        String reportgeneratedtz = String.format("%s", tz.getID());
+        
+        StringBuilder reportInformation = new StringBuilder(10000);
+        
+        reportInformation.append(String.format("reportgeneratedutc=%s\n", reportgeneratedutc));
+        reportInformation.append(String.format("reportgeneratedtzoffset=%s\n", reportgeneratedtzoffset));
+        reportInformation.append(String.format("reportgeneratedtz=%s\n", reportgeneratedtz));
+        
         for (String key : mInformation.keySet()) {
             String value = mInformation.get(key);
 
