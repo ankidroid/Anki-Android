@@ -1,22 +1,45 @@
 package com.ichi2.anki;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
 public class Statistics {
-	public static String[] AXES_LABELS = { "Month", "Cards due" };
+	public static String[] axesLabels = { "Days", "Cards" };
+    public static String[] Titles = { "All cards", "Mature cards" };
     public static String CHART_TITLE = "Cards due";
     
-    public static String[] Titles = { "All cards", "Mature cards" };
+    public static double[] xAxisData;
+    public static double[][] SeriesList;
+    
+    public static boolean refreshStatistics(Context context, int type, int period) {
+    	Resources res = context.getResources();
+    	axesLabels[0] = res.getString(R.string.statistics_period_x_axis);
+    	axesLabels[1] = res.getString(R.string.statistics_period_y_axis);
+    	Titles[0] = res.getString(R.string.statistics_all_cards);
+    	Titles[1] = res.getString(R.string.statistics_mature_cards);
+    	
+    	xAxisData = xAxisData(period);
+    	SeriesList = new double[2][period];
 
-    public static void refreshStatistics() {
-    	xAxisData(30);
-    	getAllCards(30, true, false);
-    	getAllCards(30, false, false);
-    }
-
-
-    public static double[] xAxisData() {
-    	return xAxisData(30);
+    	switch (type) {
+    	case StudyOptions.STATISTICS_DUE:
+        	SeriesList[0] = getAllCards(period, false, false);
+        	SeriesList[1] = getAllCards(period, true, false);
+    		return true;
+    	case StudyOptions.STATISTICS_CUMULATIVE_DUE:
+        	SeriesList[0] = getAllCards(period, false, true);
+        	SeriesList[1] = getAllCards(period, true, true);
+    		return true;
+    	case StudyOptions.STATISTICS_INTERVALS:
+    		return false;
+    	case StudyOptions.STATISTICS_REVIEWS:
+    		return false;
+    	case StudyOptions.STATISTICS_REVIEWING_TIME:
+    		return false;
+    	default:
+    		return false;
+    	} 
     }
 
 
@@ -47,8 +70,4 @@ public class Statistics {
     	}
     return series;
     }
-
-
-    public static double[][] SeriesList = {getAllCards(30, false, false), getAllCards(30, true, false)};
-
 }

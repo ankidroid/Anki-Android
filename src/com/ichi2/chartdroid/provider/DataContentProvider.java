@@ -48,9 +48,9 @@ public class DataContentProvider extends ContentProvider {
                                         ColumnSchema.Aspect.Axes.COLUMN_AXIS_LABEL});
 
                         int row_index = 0;
-                        for (int i=0; i < Statistics.AXES_LABELS.length; i++) {
+                        for (int i=0; i < Statistics.axesLabels.length; i++) {
 
-                                c.newRow().add( row_index ).add( Statistics.AXES_LABELS[i] );
+                                c.newRow().add( row_index ).add( Statistics.axesLabels[i] );
                                 row_index++;
                         }
 
@@ -85,7 +85,7 @@ public class DataContentProvider extends ContentProvider {
                         int row_index = 0;
 
                         // Add x-axis data
-                        for (int i=0; i < Statistics.xAxisData().length; i++) {
+                        for (int i=0; i < Statistics.xAxisData.length; i++) {
 
 
                                 //                c.newRow().add( X_AXIS_INDEX ).add( i ).add( TemperatureData.DEMO_X_AXIS_DATA[i] ).add( null );
@@ -93,7 +93,7 @@ public class DataContentProvider extends ContentProvider {
                                 .add( row_index )
                                 .add( ColumnSchema.X_AXIS_INDEX )
                                 .add( 0 )   // Only create data for the first series.
-                                .add( Statistics.xAxisData()[i] )
+                                .add( Statistics.xAxisData[i] )
                                 .add( null );
 
                                 row_index++;
