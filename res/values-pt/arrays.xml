@@ -78,6 +78,18 @@
     <item>months</item>
     <item>years</item>
   </string-array>
+  <string-array name="next_review_in_s">
+    <item>in 1 hour</item>
+    <item>in 1 day</item>
+    <item>in 1 month</item>
+    <item>in 1 year</item>
+  </string-array>
+  <string-array name="next_review_in_p">
+    <item>in %s hours</item>
+    <item>in %s days</item>
+    <item>in %s months</item>
+    <item>in %s years</item>
+  </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>New cards in random order</item>
     <item>New cards in order added</item>
@@ -107,5 +119,19 @@
     <item>By due time</item>
     <item>By interval</item>
     <item>By ease</item>
+  </string-array>
+  <string-array name="statistics_type_labels">
+    <item>Due</item>
+    <item>Cumulative due</item>
+    <item>Intervals</item>
+    <item>Reviews</item>
+    <item>Reviewing time</item>
+  </string-array>
+  <string-array name="statistics_period_labels">
+    <item>1 week</item>
+    <item>1 month</item>
+    <item>3 months</item>
+    <item>6 month</item>
+    <item>1 year</item>
   </string-array>
 </resources>

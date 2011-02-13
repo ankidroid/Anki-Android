@@ -424,6 +424,11 @@ public class Utils {
 
 
     public static String getReadableInterval(Context context, double numberOfDays) {
+    	return getReadableInterval(context, numberOfDays, false);
+    }
+
+
+    public static String getReadableInterval(Context context, double numberOfDays, boolean inFormat) {
     	double adjustedInterval;
     	int type;
     	if (numberOfDays < 1) {
@@ -445,19 +450,29 @@ public class Utils {
 			adjustedInterval /= 10;
     		type = 3;
     	}
-    	String period;
-       	if (adjustedInterval == 1){
-       		period = context.getResources().getStringArray(R.array.next_review_s)[type];
-       	} else {
-       		period = context.getResources().getStringArray(R.array.next_review_p)[type];
-    	}
-    	if (type == 0 || (adjustedInterval * 10) % 10 == 0){
-			return String.valueOf((int) adjustedInterval) + " " + period;        			   			
-    	} else {
-       		return String.valueOf(adjustedInterval) + " " + period; 	
-		}
+   		if (!inFormat) {
+   	    	if (adjustedInterval == 1){
+   	       		return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_s)[type];
+   	       	} else {
+   	   			return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_p)[type];
+   	    	}   			
+   		} else {
+   	    	if (adjustedInterval == 1){
+   	       		return String.format(context.getResources().getStringArray(R.array.next_review_in_s)[type], formatDouble(type, adjustedInterval));       			       			
+   	       	} else {
+   	   			return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval));
+   	    	}   			
+   		}
     }
 
+
+    private static String formatDouble(int type, double adjustedInterval) {
+    	if (type == 0 || (adjustedInterval * 10) % 10 == 0){
+			return String.valueOf((int) adjustedInterval);        			   			
+    	} else {
+       		return String.valueOf(adjustedInterval); 	
+		}
+    }
 
     /**
      *  Returns the effective date of the present moment.

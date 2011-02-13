@@ -48,9 +48,9 @@ public class DataContentProvider extends ContentProvider {
                                         ColumnSchema.Aspect.Axes.COLUMN_AXIS_LABEL});
 
                         int row_index = 0;
-                        for (int i=0; i < Statistics.axesLabels.length; i++) {
+                        for (int i=0; i < Statistics.axisLabels.length; i++) {
 
-                                c.newRow().add( row_index ).add( Statistics.axesLabels[i] );
+                                c.newRow().add( row_index ).add( Statistics.axisLabels[i] );
                                 row_index++;
                         }
 

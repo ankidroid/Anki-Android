@@ -708,7 +708,13 @@ public class Card {
         builder.append("</td></tr><tr><td>");
         builder.append(res.getString(R.string.card_details_due));
         builder.append("</td><td>");
-        builder.append(Utils.getReadableInterval(context, (mCombinedDue - Utils.now()) / 86400.0));
+        if (mYesCount + mNoCount == 0) {
+            builder.append("-");
+        } else if (mCombinedDue < mDeck.getDueCutoff()) {
+            builder.append(res.getString(R.string.card_details_now));
+        } else {
+            builder.append(Utils.getReadableInterval(context, (mCombinedDue - Utils.now()) / 86400.0, true));        	
+        }
         builder.append("</td></tr><tr><td>");
         builder.append(res.getString(R.string.card_details_interval));
         builder.append("</td><td>");
@@ -725,7 +731,11 @@ public class Card {
         builder.append("</td></tr><tr><td>");
         builder.append(res.getString(R.string.card_details_average_time));
         builder.append("</td><td>");
-        builder.append(Utils.doubleToTime(mAverageTime));
+        if (mYesCount + mNoCount == 0) {
+            builder.append("-");
+        } else {
+            builder.append(Utils.doubleToTime(mAverageTime));
+        }
         builder.append("</td></tr><tr><td>");
         builder.append(res.getString(R.string.card_details_total_time));
         builder.append("</td><td>");
