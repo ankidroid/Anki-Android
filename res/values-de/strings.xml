@@ -314,7 +314,7 @@
   <string name="delete_deck_message">Möchten Sie den Stapel %s wirklich löschen?</string>
   <string name="delete_deck_confirm">Löschen</string>
   <string name="new_version_title">Neue Version:</string>
-  <string name="new_version_text">Neue Funktion:\n- Kartenübersicht\n- Vorlesefunktion\n- Fortschrittsanzeige in der Stapelauswahl\n- Kartenvorlage kann nun beim Hinzufügen gewählt werden\n- neues Widget\n- verbesserte Rückgängig-Funktion\n- Schieberegler\n- mehr Sprachen</string>
+  <string name="new_version_text">Neue Funktion:\n- Kartenübersicht\n - Statistik\n- Vorlesefunktion\n- Fortschrittsanzeige in der Stapelauswahl\n- Kartenvorlage kann nun beim Hinzufügen gewählt werden\n- neues Widget\n- verbesserte Rückgängig-Funktion\n- Schieberegler\n- mehr Sprachen</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Stapel wählen (1 von %2$d fällig)</item>
     <item quantity="other">Stapel wählen (%1$d von %2$d fällig)</item>

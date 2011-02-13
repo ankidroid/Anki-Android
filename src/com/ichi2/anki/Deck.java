@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -1092,6 +1093,63 @@ public class Deck {
                 "SELECT count(*) FROM cards c WHERE type = 2 AND combinedDue < %f", mDueCutoff + 86400);
         return Math.min((int) getDB().queryScalar(cardLimit("newActive", "newInactive", sql)), mNewCardsPerDay);
     }
+
+
+    /*
+     * Next cards by interval ******************************
+     */
+    public int getCardsByInterval(int interval) {
+        String sql = String.format(Utils.ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND interval BETWEEN %d AND %d", interval, interval + 1);
+        return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
+    }
+
+
+    /*
+     * Review counts ******************************
+     */
+    public int getDaysReviewed(int day) {
+        Date value = Utils.genToday(getUtcOffset() - (86400 * day));
+    	Cursor cur = null;
+    	int count = 0;
+    	try {
+            cur = getDB().getDatabase().rawQuery(String.format(Utils.ENGLISH_LOCALE,
+            		"SELECT reps FROM stats WHERE day = \'%tF\' AND reps > 0", value), null);
+            while (cur.moveToNext()) {
+            	count = cur.getInt(0);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    	
+    	return count;
+    }
+
+
+    /*
+     * Review time ******************************
+     */
+    public int getReviewTime(int day) {
+        Date value = Utils.genToday(getUtcOffset() - (86400 * day));
+    	Cursor cur = null;
+    	int count = 0;
+    	try {
+            cur = getDB().getDatabase().rawQuery(String.format(Utils.ENGLISH_LOCALE,
+            		"SELECT reviewTime FROM stats WHERE day = \'%tF\' AND reps > 0", value), null);
+            while (cur.moveToNext()) {
+            	count = cur.getInt(0);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    	
+    	return count;
+    }
+
 
     /*
      * Scheduler related overridable methods******************************
@@ -2419,6 +2477,10 @@ public class Deck {
 
     public boolean isUnpackNeeded() {
         return mNeedUnpack;
+    }
+
+    public double getDueCutoff() {
+        return mDueCutoff;
     }
 
 

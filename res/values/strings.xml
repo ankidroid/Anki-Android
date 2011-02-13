@@ -215,7 +215,8 @@
 <string name="card_browser_card_details">Card details</string>
 <string name="card_details_question">Question</string>
 <string name="card_details_answer">Answer</string>
-<string name="card_details_due">Next due</string>
+<string name="card_details_due">Due</string>
+<string name="card_details_now">Now</string>
 <string name="card_details_interval">Interval</string>
 <string name="card_details_ease">Ease</string>
 <string name="card_details_average_time">Average time</string>
@@ -450,7 +451,7 @@
 <string name="delete_deck_confirm">Delete it</string>
 
 <string name="new_version_title">New Version:</string>
-<string name="new_version_text">New features:\n- card browser\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+<string name="new_version_text">New features:\n- card browser\n- statistics\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
 
 <string name="no_tts_available_title">Text-to-Speech</string>
 <string name="no_tts_available_message">No text-to-speech language available</string>
@@ -463,6 +464,7 @@
 <string name="statistics_period_title">Chose report period</string>
 <string name="statistics_period_y_axis">Cards</string>
 <string name="statistics_period_x_axis">Days</string>
+<string name="statistics_period_x_axis_minutes">Minutes</string>
 <string name="statistics_all_cards">All cards</string>
 <string name="statistics_mature_cards">Mature cards</string>
 

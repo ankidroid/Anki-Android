@@ -89,8 +89,6 @@
 		<item>92</item>
 		<item>183</item>
 		<item>365</item>
-		<item>730</item>
-		<item>1095</item>
 	</string-array>
 	<string name="link_anki">http://ankisrs.net</string>
 	<string name="link_ankidroid">http://code.google.com/p/ankidroid</string>

@@ -754,21 +754,11 @@ public class StudyOptions extends Activity {
         // Init alert dialogs
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(res.getString(R.string.statistics_period_title));
-        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_period_labels), 0, mStatisticListener);
-        mStatisticPeriodAlert = builder.create();
-
-        builder.setTitle(res.getString(R.string.statistics_type_title));
-        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), STATISTICS_DUE, mStatisticListener);
-        mStatisticTypeAlert = builder.create();
-
         builder.setTitle(getResources().getString(R.string.sync_log_title));
 		builder.setPositiveButton(getResources().getString(R.string.ok), null);
 		mSyncLogAlert = builder.create();
 
-        builder.setTitle(res.getString(R.string.connection_error_title));
+		builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.connection_needed));
         builder.setPositiveButton(res.getString(R.string.ok), null);
@@ -825,6 +815,17 @@ public class StudyOptions extends Activity {
         builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncConflictResolutionListener);
         builder.setCancelable(false);
         mSyncConflictResolutionAlert = builder.create();
+
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(res.getString(R.string.statistics_period_title));
+        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_period_labels), 0, mStatisticListener);
+        mStatisticPeriodAlert = builder.create();
+
+        builder.setTitle(res.getString(R.string.statistics_type_title));
+        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), STATISTICS_DUE, mStatisticListener);
+        mStatisticTypeAlert = builder.create();
     }
 
 
