@@ -450,19 +450,19 @@ public class Utils {
 			adjustedInterval /= 10;
     		type = 3;
     	}
-       	if (adjustedInterval == 1){
-       		if (inFormat) {
-           		return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_s)[type];
-       		} else {
-           		return String.format(context.getResources().getStringArray(R.array.next_review_in_s)[type], formatDouble(type, adjustedInterval));       			       			
-       		}
-       	} else {
-       		if (inFormat) {
-       			return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_p)[type];
-       		} else {
-       			return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval));
-       		}
-    	}
+   		if (!inFormat) {
+   	    	if (adjustedInterval == 1){
+   	       		return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_s)[type];
+   	       	} else {
+   	   			return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_p)[type];
+   	    	}   			
+   		} else {
+   	    	if (adjustedInterval == 1){
+   	       		return String.format(context.getResources().getStringArray(R.array.next_review_in_s)[type], formatDouble(type, adjustedInterval));       			       			
+   	       	} else {
+   	   			return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval));
+   	    	}   			
+   		}
     }
 
 
