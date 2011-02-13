@@ -102,5 +102,21 @@
 		<item>By due time</item>
 		<item>By interval</item>
 		<item>By ease</item>
+	</string-array>	
+	<string-array name="statistics_type_labels">
+		<item>Due</item>
+		<item>Cumulative due</item>
+		<item>Intervals</item>
+		<item>Reviews</item>
+		<item>Reviewing time</item>
+	</string-array>	
+	<string-array name="statistics_period_labels">
+		<item>1 week</item>
+		<item>1 month</item>
+		<item>3 months</item>
+		<item>6 month</item>
+		<item>1 year</item>
+		<item>2 years</item>
+		<item>3 years</item>
 	</string-array>
 </resources>

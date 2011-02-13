@@ -115,7 +115,7 @@ public class StudyOptions extends Activity {
     private static final int CONTENT_SESSION_COMPLETE = 4;
     public static final int CONTENT_NO_EXTERNAL_STORAGE = 5;
 
-    
+
     /** Startup Mode choices */
     private static final int SUM_STUDY_OPTIONS = 0;
     private static final int SUM_DECKPICKER = 1;
@@ -163,6 +163,9 @@ public class StudyOptions extends Activity {
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mSyncConflictResolutionAlert;
 	private AlertDialog mNewVersionAlert;
+	private AlertDialog mDownloadChartDroidAlert;
+	private AlertDialog mStatisticTypeAlert;
+	private AlertDialog mStatisticPeriodAlert;
 
     /*
 * Cram related
@@ -239,14 +242,23 @@ public class StudyOptions extends Activity {
 	public static final int SWIPE_MIN_DISTANCE = 100;
 	public static final int SWIPE_MAX_OFF_PATH = 150;
 	public static final int SWIPE_THRESHOLD_VELOCITY = 200;
-    
+
+    /**
+	* Statistics
+	*/    
+	public static final int STATISTICS_DUE = 0; 
+	public static final int STATISTICS_CUMULATIVE_DUE = 1; 
+	public static final int STATISTICS_INTERVALS = 2; 
+	public static final int STATISTICS_REVIEWS = 3;
+	public static final int STATISTICS_REVIEWING_TIME = 4; 
+	public static int sStatisticType;
+
     /**
 * Callbacks for UI events
 */
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             switch (v.getId()) {
                 case R.id.studyoptions_start:
                     openReviewer();
@@ -287,7 +299,8 @@ public class StudyOptions extends Activity {
                     openCardBrowser();
                     return;
                 case R.id.studyoptions_statistics:
-                	openStatistics();
+                	sStatisticType = -1;
+                	mStatisticTypeAlert.show();
                 	return;
                 default:
                     return;
@@ -716,7 +729,22 @@ public class StudyOptions extends Activity {
             }
         }
     };
-    
+
+
+    private OnClickListener mStatisticListener = new OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+        	if (sStatisticType == -1) {
+        		sStatisticType = which;
+        		dialog.dismiss();
+        		mStatisticPeriodAlert.show();
+        	} else {
+        		dialog.dismiss();
+        		openStatistics(which);
+        	}
+        }
+    };
+
     /**
      * Create AlertDialogs used on all the activity
      */
@@ -725,7 +753,17 @@ public class StudyOptions extends Activity {
 
         // Init alert dialogs
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        
+
+        builder.setTitle(res.getString(R.string.statistics_period_title));
+        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_period_labels), 0, mStatisticListener);
+        mStatisticPeriodAlert = builder.create();
+
+        builder.setTitle(res.getString(R.string.statistics_type_title));
+        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), STATISTICS_DUE, mStatisticListener);
+        mStatisticTypeAlert = builder.create();
+
         builder.setTitle(getResources().getString(R.string.sync_log_title));
 		builder.setPositiveButton(getResources().getString(R.string.ok), null);
 		mSyncLogAlert = builder.create();
@@ -762,6 +800,21 @@ public class StudyOptions extends Activity {
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mConnectionErrorAlert = builder.create();
+        
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setTitle(res.getString(R.string.download_chartdroid_title));
+        builder.setMessage(res.getString(R.string.download_chartdroid_message));
+        builder.setPositiveButton(res.getString(R.string.download_chartdroid_market), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+            		startActivity(Market.getMarketDownloadIntent(Market.CHARTDROID_PACKAGE_NAME));
+                }
+        	});
+        builder.setNeutralButton(res.getString(R.string.download_chartdroid_web), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Market.APK_DOWNLOAD_URI_CHARTDROID));
+                }
+        	});
+        mDownloadChartDroidAlert = builder.create();
         
         builder = new AlertDialog.Builder(this);
         builder.setTitle(res.getString(R.string.sync_conflict_title));
@@ -1145,32 +1198,19 @@ public class StudyOptions extends Activity {
     }
 
 
-    private void openStatistics() {
-    	Statistics.refreshStatistics();
+    private void openStatistics(int period) {
+    	Resources res = getResources();
     	Intent i = new Intent(Intent.ACTION_VIEW, DataContentProvider.PROVIDER_URI);
-        i.putExtra(Intent.EXTRA_TITLE, "CArds due");
         i.addCategory(IntentConstants.CATEGORY_XY_CHART);
         i.setClassName("com.googlecode.chartdroid", "org.achartengine.activity.BarChartActivity");
-        i.putExtra("com.googlecode.chartdroid.intent.extra.SERIES_COLORS", new int[]{getResources().getColor(R.color.statistics_all_cards), getResources().getColor(R.color.statistics_mature_cards)});
+        i.putExtra("com.googlecode.chartdroid.intent.extra.SERIES_COLORS", new int[]{res.getColor(R.color.statistics_all_cards), res.getColor(R.color.statistics_mature_cards)});
     	if (Market.isIntentAvailable(this, i)) {
-            startActivity(i);
+    		i.putExtra(Intent.EXTRA_TITLE, res.getStringArray(R.array.statistics_type_labels)[sStatisticType]);
+        	if (Statistics.refreshStatistics(this, sStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]))) {
+            	startActivity(i);        		
+        	}
     	} else {
-            AlertDialog dialog = new AlertDialog.Builder(this)
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .setTitle("Download ChartDroid")
-            .setMessage("You need to download ChartDroid to display this data.")
-            .setPositiveButton("Market download", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                		startActivity(Market.getMarketDownloadIntent(Market.CHARTDROID_PACKAGE_NAME));
-                    }
-            })
-            .setNeutralButton("Web download", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Market.APK_DOWNLOAD_URI_CHARTDROID));
-                    }
-            })
-            .create();
-            dialog.show();    		
+    		mDownloadChartDroidAlert.show();   		
     	}
     }
 
