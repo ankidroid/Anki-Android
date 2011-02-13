@@ -227,6 +227,7 @@
 <string name="card_details_model">Model</string>
 <string name="card_details_card_model">Card model</string>
 
+<string name="statistics">Statistics</string>
 
 <!-- AnkiDroid.java -->
 <!--<string name="loading_new_card">Loading new card...</string>-->
