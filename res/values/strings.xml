@@ -377,12 +377,13 @@
 <string name="sync_preparing_full_sync_message">Preparing full sync...</string>
 <string name="sync_uploading_message">Uploading...</string>
 <string name="sync_downloading_message">Downloading...</string>
-<string name="sync_complete_message">Sync complete.</string>
+<string name="sync_complete_message">Closing...</string>
 <string name="sync_determining_differences_message">Determining differences...</string>
 <string name="sync_transferring_payload_message">Transferring payload...</string>
 <string name="sync_applying_reply_message">Applying reply...</string>
 <string name="sync_no_changes_message">No changes found.</string>
 <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
+<string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
 <string name="sync_log_no_changes_message">No changes found</string>
 <string name="sync_log_uploading_message">Full sync from local</string>
 <string name="sync_log_downloading_message">Full sync from server</string>

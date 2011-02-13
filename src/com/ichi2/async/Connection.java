@@ -366,10 +366,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     
                     String syncFrom = client.prepareFullSync();
 
+                    HashMap<String, String> result = new HashMap<String, String>();
                     if ("fromLocal".equalsIgnoreCase(syncFrom)) {
                         publishProgress(syncName, res.getString(R.string.sync_uploading_message));
-                        SyncClient.fullSyncFromLocal(password, username, deck, syncName);
-                        syncChangelog.put("message", res.getString(R.string.sync_log_uploading_message));
+                        result = SyncClient.fullSyncFromLocal(password, username, deck, syncName);
+                        if (result.containsKey("code") && result.get("code").equals("200")) {
+                            syncChangelog.put("message", res.getString(R.string.sync_log_uploading_message));
+                        }
                         ankiDB.getDatabase().setTransactionSuccessful();
                         ankiDB.getDatabase().endTransaction();
                     } else if ("fromServer".equalsIgnoreCase(syncFrom)) {
@@ -378,11 +381,23 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         if (deck != null) {
                             deck.closeDeck();
                         }
-                        SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
-                        syncChangelog.put("message", res.getString(R.string.sync_log_downloading_message));
+                        result = SyncClient.fullSyncFromServer(password, username, syncName, deckPath);
+                        if (result.containsKey("code") && result.get("code").equals("200")) {
+                            syncChangelog.put("message", res.getString(R.string.sync_log_downloading_message));
+                        }
                     }
 
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));
+                    // Pass error (if any) to UI
+                    if (!result.containsKey("code") || !result.get("code").equals("200")) {
+                        if (result.containsKey("message")) {
+                        syncChangelog.put("message", String.format(
+                                res.getString(R.string.sync_log_error_specific),
+                                result.get("code"), result.get("message")));
+                        } else {
+                            syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
+                        }
+                    }
                 } else {
                     Log.i(AnkiDroidApp.TAG, "DECK DOES NOT NEED FULL SYNC");
 
@@ -426,7 +441,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             }
         } catch (Exception e) {
             Log.e(AnkiDroidApp.TAG, "Error synchronizing deck = " + e.getMessage());
-            e.printStackTrace();
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
             syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
             data.success = false;
             data.exception = e;

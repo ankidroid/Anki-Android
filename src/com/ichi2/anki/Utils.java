@@ -32,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -310,33 +311,28 @@ public class Utils {
 
     /**
      * Utility method to write to a file.
+     * Throws the exception, so we can report it in syncing log
+     * @throws IOException 
      */
-    public static boolean writeToFile(InputStream source, String destination) {
-        try {
-            Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
-            new File(destination).createNewFile();
+    public static void writeToFile(InputStream source, String destination) throws IOException {
+        Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
+        new File(destination).createNewFile();
 
-            OutputStream output = new FileOutputStream(destination);
+        OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
 
-            // Transfer bytes, from source to destination.
-            byte[] buf = new byte[CHUNK_SIZE];
-            int len;
-            if (source == null) {
-                Log.i(AnkiDroidApp.TAG, "source is null!");
-            }
-            while ((len = source.read(buf)) > 0) {
-                output.write(buf, 0, len);
-                Log.i(AnkiDroidApp.TAG, "Write...");
-            }
-
-            Log.i(AnkiDroidApp.TAG, "Finished writing!");
-            output.close();
-
-        } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG, e.getMessage());
-            return false;
+        // Transfer bytes, from source to destination.
+        byte[] buf = new byte[CHUNK_SIZE];
+        int len;
+        if (source == null) {
+            Log.i(AnkiDroidApp.TAG, "source is null!");
         }
-        return true;
+        while ((len = source.read(buf)) > 0) {
+            output.write(buf, 0, len);
+            Log.i(AnkiDroidApp.TAG, "Write...");
+        }
+
+        Log.i(AnkiDroidApp.TAG, "Finished writing!");
+        output.close();
     }
 
 
