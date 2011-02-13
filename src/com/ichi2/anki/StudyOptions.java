@@ -55,6 +55,9 @@ import android.widget.ToggleButton;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.chartdroid.IntentConstants;
+import com.ichi2.chartdroid.Market;
+import com.ichi2.chartdroid.provider.DataContentProvider;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
@@ -100,6 +103,7 @@ public class StudyOptions extends Activity {
     private static final int REPORT_ERROR = 5;
     private static final int ADD_FACT = 6;
     private static final int BROWSE_CARDS = 7;
+    private static final int STATISTICS = 8;
 
     /**
 * Constants for selecting which content view to display
@@ -185,6 +189,7 @@ public class StudyOptions extends Activity {
     private EditText mEditSessionQuestions;
     private CheckBox mNightMode;
     private Button mCardBrowser;
+    private Button mStatisticsButton;
 
     /**
 * UI elements for "More Options" dialog
@@ -281,6 +286,9 @@ public class StudyOptions extends Activity {
                 case R.id.studyoptions_card_browser:
                     openCardBrowser();
                     return;
+                case R.id.studyoptions_statistics:
+                	openStatistics();
+                	return;
                 default:
                     return;
             }
@@ -570,6 +578,7 @@ public class StudyOptions extends Activity {
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
         mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
         mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
+        mStatisticsButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
@@ -594,6 +603,7 @@ public class StudyOptions extends Activity {
         mButtonStart.setOnClickListener(mButtonClickListener);
         mToggleCram.setOnClickListener(mButtonClickListener);
         mCardBrowser.setOnClickListener(mButtonClickListener);
+        mStatisticsButton.setOnClickListener(mButtonClickListener);
         
         mEditNewPerDay.addTextChangedListener(new TextWatcher() {
         	public void afterTextChanged(Editable s) {
@@ -926,7 +936,7 @@ public class StudyOptions extends Activity {
     	Resources res = getResources();
         Deck deck = AnkiDroidApp.deck();
         if (deck != null) {
-            int revCards = deck.getNextDueCards();
+            int revCards = deck.getNextDueCards(1);
             int newCards = deck.getNextNewCards();
             String revca = res.getString(R.string.studyoptions_congrats_cards);
             String newca = res.getString(R.string.studyoptions_congrats_cards);
@@ -1132,6 +1142,36 @@ public class StudyOptions extends Activity {
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
             MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
         }
+    }
+
+
+    private void openStatistics() {
+    	Statistics.refreshStatistics();
+    	Intent i = new Intent(Intent.ACTION_VIEW, DataContentProvider.PROVIDER_URI);
+        i.putExtra(Intent.EXTRA_TITLE, "CArds due");
+        i.addCategory(IntentConstants.CATEGORY_XY_CHART);
+        i.setClassName("com.googlecode.chartdroid", "org.achartengine.activity.BarChartActivity");
+        i.putExtra("com.googlecode.chartdroid.intent.extra.SERIES_COLORS", new int[]{getResources().getColor(R.color.statistics_all_cards), getResources().getColor(R.color.statistics_mature_cards)});
+    	if (Market.isIntentAvailable(this, i)) {
+            startActivity(i);
+    	} else {
+            AlertDialog dialog = new AlertDialog.Builder(this)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle("Download ChartDroid")
+            .setMessage("You need to download ChartDroid to display this data.")
+            .setPositiveButton("Market download", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                		startActivity(Market.getMarketDownloadIntent(Market.CHARTDROID_PACKAGE_NAME));
+                    }
+            })
+            .setNeutralButton("Web download", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Market.APK_DOWNLOAD_URI_CHARTDROID));
+                    }
+            })
+            .create();
+            dialog.show();    		
+    	}
     }
 
 

@@ -156,7 +156,6 @@
 			android:text="30"
 			android:textSize="14dip"/>
 	</LinearLayout>
-
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
@@ -181,18 +180,21 @@
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
-		<CheckBox android:id="@+id/studyoptions_night_mode"
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:text="@string/studyoptions_night_mode"
-			android:layout_marginLeft="4dip"
-         	android:layout_weight="1"
-			android:textSize="14dip"/>
+		<Button android:id="@+id/studyoptions_statistics"
+   	     	android:layout_height="fill_parent"
+   	     	android:layout_width="0dip"
+   	     	android:layout_weight="2"
+			android:text="@string/statistics"/>
 		<Button android:id="@+id/studyoptions_card_browser"
-         	android:layout_height="fill_parent"
-         	android:layout_width="0dip"
-         	android:layout_weight="1"
+   	     	android:layout_height="fill_parent"
+   	     	android:layout_width="0dip"
+   	     	android:layout_weight="2"
 			android:text="@string/card_browser"/>
 	</LinearLayout>
+	<CheckBox android:id="@+id/studyoptions_night_mode"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical"
+		android:text="@string/studyoptions_night_mode"
+		android:textSize="14dip"/>
 </LinearLayout>
