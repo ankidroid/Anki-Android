@@ -791,6 +791,7 @@ public class StudyOptions extends Activity {
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mConnectionErrorAlert = builder.create();
         
+        builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setTitle(res.getString(R.string.download_chartdroid_title));
         builder.setMessage(res.getString(R.string.download_chartdroid_message));
