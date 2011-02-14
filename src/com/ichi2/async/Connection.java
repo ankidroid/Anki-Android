@@ -50,6 +50,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final int TASK_TYPE_SYNC_ALL_DECKS = 3;
     public static final int TASK_TYPE_SYNC_DECK = 4;
     public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 5;
+    public static final int TASK_TYPE_SEND_CRASH_REPORT = 6;
 
     private static Context sContext;
 
@@ -155,6 +156,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
+    public static Connection sendCrashReport(TaskListener listener, Payload data) {
+        data.taskType = TASK_TYPE_SEND_CRASH_REPORT;
+        return launchConnectionTask(listener, data);
+    }
+
+
     @Override
     protected Payload doInBackground(Payload... params) {
         Payload data = params[0];
@@ -177,6 +184,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
             case TASK_TYPE_SYNC_DECK_FROM_PAYLOAD:
                 return doInBackgroundSyncDeckFromPayload(data);
+
+            case TASK_TYPE_SEND_CRASH_REPORT:
+                return doInBackgroundSendCrashReport(data);
 
             default:
                 return null;
@@ -480,6 +490,45 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         }
 
         Log.i(AnkiDroidApp.TAG, "Synchronization from payload finished!");
+        return data;
+    }
+
+
+    private Payload doInBackgroundSendCrashReport(Payload data) {
+        Log.i(AnkiDroidApp.TAG, "SendCrashReport");
+        String url = (String) data.data[0];
+        List<NameValuePair> values = (List<NameValuePair>) data.data[1];
+
+    	HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(url);
+
+        try {
+        	httpPost.setEntity(new UrlEncodedFormEntity(values));
+            HttpResponse response = httpClient.execute(httpPost);
+            Log.e(AnkiDroidApp.TAG, String.format("bug report posted to %s", url));
+
+            switch(response.getStatusLine().getStatusCode()) {
+	            case 200:
+                    data.success = true;
+	            	break;
+
+            	default:
+            		Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(),
+                                response.getStatusLine().getReasonPhrase()));
+                    data.success = false;
+                    data.result = new String(response.getStatusLine().getReasonPhrase());
+	            	break;
+            }
+        } catch (ClientProtocolException ex) {
+        	Log.e(AnkiDroidApp.TAG, ex.toString());
+            data.success = false;
+            data.result = new String(ex.toString());
+        } catch (IOException ex) {
+        	Log.e(AnkiDroidApp.TAG, ex.toString());
+            data.success = false;
+            data.result = new String(ex.toString());
+        }
+        
         return data;
     }
 

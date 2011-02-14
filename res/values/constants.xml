@@ -102,7 +102,7 @@
 	<string name="link_contribution">http://code.google.com/p/ankidroid/wiki/Contribution</string>
 	<string name="link_contribution_contributors">http://code.google.com/p/ankidroid/wiki/Contribution</string>
 	<string name="error_email">ankidroid@gmail.com</string>
-	<string name="error_post_url">http://192.168.0.2/post/default.aspx</string>		
+	<string name="error_post_url">http://ankidroid-triage.appspot.com/crash_receiver</string>		
 	<string name="ankionline_sign_up_url">http://ankiweb.net/</string>
 
 	<!--change report: not needed by now-->

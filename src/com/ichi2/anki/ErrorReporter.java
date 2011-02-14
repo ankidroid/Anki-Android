@@ -49,6 +49,7 @@ public class ErrorReporter extends Activity {
 	protected static String REPORT_ASK = "2";
 	protected static String REPORT_NEVER = "1";
 	protected static String REPORT_ALWAYS = "0";
+    public static String REPORT_POST_URL = 
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,30 +198,33 @@ public class ErrorReporter extends Activity {
         }
     }
 
+    private void initDialogs() {
+        Resources res = getResources();
+
+        AlertDialog.Builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(res.getString(R.string.send_crash_title));
+		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+    Connection.TaskListener sendListener = new Connection.TaskListener() {
+
+        @Override
+        public void onDisconnected() {
+            if (mNoConnectionAlert != null) {
+                mNoConnectionAlert.show();
+            }
+        }
+
+        @Override
+        public void onPostExecute(Payload data) {
+
+        
+    }
+
     private void postReport(List<NameValuePair> values) {
         final String url = getString(R.string.error_post_url);
         
-    	HttpClient httpClient = new DefaultHttpClient();  
-        HttpPost httpPost = new HttpPost(url);  
-      
-        try {  
-        	httpPost.setEntity(new UrlEncodedFormEntity(values));  
-            HttpResponse response = httpClient.execute(httpPost);  
-            
-            switch(response.getStatusLine().getStatusCode()) {
-	            case 200:
-	            	Log.e(AnkiDroidApp.TAG, String.format("bug report posted to %s", url));
-	            	break;
-	            	
-            	default:
-            		Log.e(AnkiDroidApp.TAG, String.format("bug report posted to %s message", url));
-            		Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase()));
-	            	break;
-            }
-        } catch (ClientProtocolException ex) {  
-        	Log.e(AnkiDroidApp.TAG, ex.toString());
-        } catch (IOException ex) {  
-        	Log.e(AnkiDroidApp.TAG, ex.toString());  
-        }
+        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values});
     }
 }
