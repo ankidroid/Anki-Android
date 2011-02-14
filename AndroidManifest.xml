@@ -106,10 +106,8 @@
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider" />
 		</receiver>
 		<!-- Content Provider to deliver statistic-data to ChartDroid-->
-		<provider android:label="statistics_provider"
-       		android:name="com.ichi2.chartdroid.provider.DataContentProvider"
-           	android:authorities="com.ichi2.chartdroid.provider"/>
-		<!-- Service to perform web API queries -->
+		<activity android:name="com.ichi2.charts.ChartBuilder" /><!--
+		--><!-- Service to perform web API queries -->
 		<service android:name=".AnkiDroidWidget$UpdateService" />
 </application>
 	<uses-sdk android:minSdkVersion="3"/>

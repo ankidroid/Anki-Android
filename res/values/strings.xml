@@ -456,10 +456,6 @@
 <string name="no_tts_available_title">Text-to-Speech</string>
 <string name="no_tts_available_message">No text-to-speech language available</string>
 
-<string name="download_chartdroid_title">Download ChartDroid</string>
-<string name="download_chartdroid_message">You need to download ChartDroid to display this data.</string>
-<string name="download_chartdroid_market">Market download</string>
-<string name="download_chartdroid_web">Web download</string>
 <string name="statistics_type_title">Chose statistic type</string>
 <string name="statistics_period_title">Chose report period</string>
 <string name="statistics_period_y_axis">Cards</string>
@@ -467,5 +463,6 @@
 <string name="statistics_period_x_axis_minutes">Minutes</string>
 <string name="statistics_all_cards">All cards</string>
 <string name="statistics_mature_cards">Mature cards</string>
+<string name="statistics_fullscreen">Toggle Fullscreen</string>
 
 </resources>

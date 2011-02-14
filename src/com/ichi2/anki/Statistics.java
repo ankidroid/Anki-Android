@@ -19,18 +19,19 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 
 public class Statistics {
 	public static String[] axisLabels = {"", ""};
+	public static String sTitle;
     public static String[] Titles;
     public static String CHART_TITLE = "Cards due";
     
     public static double[] xAxisData;
     public static double[][] SeriesList;
     
-    public static boolean refreshStatistics(Context context, int type, int period) {
+    public static boolean refreshStatistics(Context context, int type, int period, String title) {
     	Resources res = context.getResources();
+    	sTitle = title;
     	axisLabels[0] = res.getString(R.string.statistics_period_x_axis);
     	axisLabels[1] = res.getString(R.string.statistics_period_y_axis);
 
@@ -41,9 +42,9 @@ public class Statistics {
         	SeriesList = new double[2][period];    		
         	xAxisData = xAxisData(period, false);
     	} else {
-        	Titles = new String[2]; //should be [1], but crashes ChartDroid
+        	Titles = new String[1]; //should be [1], but crashes ChartDroid
         	Titles[0] = res.getString(R.string.statistics_all_cards);
-        	SeriesList = new double[2][period]; //should be [1], but crashes ChartDroid
+        	SeriesList = new double[1][period]; //should be [1], but crashes ChartDroid
     	}
 
     	switch (type) {
@@ -78,7 +79,7 @@ public class Statistics {
     	double series[] = new double[length];
     	if (backwards) {
         	for (int i = 0; i < length; i++) {
-        		series[i] = i - length;
+        		series[i] = i - length + 1;
         	}	
     	} else {
         	for (int i = 0; i < length; i++) {
@@ -113,7 +114,7 @@ public class Statistics {
     	Deck deck = AnkiDroidApp.deck();
     	double series[] = new double[length];
     	for (int i = 0; i < length; i++) {
-    		series[i] = deck.getDaysReviewed(i - length);
+    		series[i] = deck.getDaysReviewed(i - length + 1);
     	}
     return series;
     }    
@@ -123,7 +124,7 @@ public class Statistics {
     	Deck deck = AnkiDroidApp.deck();
     	double series[] = new double[length];
     	for (int i = 0; i < length; i++) {
-    		series[i] = deck.getReviewTime(i - length) / 60;
+    		series[i] = deck.getReviewTime(i - length + 1) / 60;
     	}
     return series;
     }    
