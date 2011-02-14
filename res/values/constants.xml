@@ -104,6 +104,7 @@
 	<string name="error_email">ankidroid@gmail.com</string>
 	<string name="error_post_url">http://192.168.0.2/post/default.aspx</string>		
 	<string name="ankionline_sign_up_url">http://ankiweb.net/</string>
+	<string name="feedback_post_url">http://192.168.0.2/post/default.aspx</string>
 
 	<!--change report: not needed by now-->
 	<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Added/Changed&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Here&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Server&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Cards&lt;/td&gt;&lt;td&gt;%1$s&lt;/td&gt;&lt;td&gt;%2$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Facts&lt;/td&gt;&lt;td&gt;%3$s&lt;/td>&lt;td&gt;%4$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Models&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Stats&lt;/td&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>

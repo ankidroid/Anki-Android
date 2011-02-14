@@ -7,36 +7,35 @@
 	android:paddingTop="15dp"
 	android:paddingRight="10dp"
 	android:paddingBottom="15dp">
-	<TextView 
-		android:text="@+id/TextView01" 
+	<EditText
+		android:hint="@string/feedback_default_text" 
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/tvErrorText"
+		android:id="@+id/etFeedbackText"
 		android:paddingBottom="15dp" 
-		android:gravity="center"/>
+		android:gravity="top"
+		android:minLines="7"
+		/>
+		
 	<LinearLayout
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:orientation="horizontal">
-	<Button android:text="@string/error_ok" 
-			android:id="@+id/btnSendEmail" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:gravity="bottom"
+		>
+		<Button android:text="@string/cancel" 
+			android:id="@+id/btnFeedbackCancel" 
 			android:layout_width="0dip" 
 			android:layout_height="fill_parent"
 			android:layout_gravity="center"
 			android:gravity="center"
 			android:layout_weight="1"/>
-	<Button android:text="@string/error_cancel" 
-			android:id="@+id/btnIgnoreError" 
+		<Button android:text="@string/ok" 
+			android:id="@+id/btnFeedbackOk" 
 			android:layout_width="0dip" 
 			android:layout_height="fill_parent"
 			android:layout_gravity="center"
 			android:gravity="center"
 			android:layout_weight="1"/>
 	</LinearLayout>
-	<TextView 
-		android:text="@+string/error_collection_information" 
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:paddingBottom="15dp" 
-		android:gravity="top"/>
 </LinearLayout>

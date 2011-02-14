@@ -345,7 +345,7 @@
 <string name="studyoptions_congrats_reviewearly">Review Early</string>
 <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
 <string name="studyoptions_congrats_finish">Back to Study Screen</string>
-
+<string name="studyoptions_feedback">Feedback</string>
 
 <!-- MyAccount.java -->
 <string name="username">Username</string>
@@ -412,7 +412,7 @@
 <string name="error_cancel">Do not report errors</string>
 <string name="error_reporting_choice">Error reporting mode</string>
 <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
-
+<string name="error_collection_information">We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string> 
 <!--  Widget -->
 <string name="widget_pref">Widget</string>
 <string name="widget_minimum_cards_due">Widget notification threshold</string>
@@ -468,4 +468,7 @@
 <string name="statistics_all_cards">All cards</string>
 <string name="statistics_mature_cards">Mature cards</string>
 
+<string name="feedback_title">Feedback</string>
+<string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
+<string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
 </resources>
