@@ -79,16 +79,16 @@
     <item>лет</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>в течение 1 часа</item>
+    <item>через 1 день</item>
+    <item>через 1 месяц</item>
+    <item>через 1 год</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>через %s ч</item>
+    <item>через %s дн</item>
+    <item>через %s мес</item>
+    <item>через %s год</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Новые в случайном порядке</item>
@@ -121,17 +121,17 @@
     <item>по сложности</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
-    <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>Повтор</item>
+    <item>Накопленные повторы</item>
+    <item>Интервалы</item>
+    <item>Просмотры</item>
+    <item>Общ. время просмотров</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1 неделя</item>
+    <item>1 месяц</item>
+    <item>3 месяца</item>
+    <item>6 месяцев</item>
+    <item>1 год</item>
   </string-array>
 </resources>

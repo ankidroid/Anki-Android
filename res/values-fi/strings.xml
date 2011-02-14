@@ -170,10 +170,10 @@
   <string name="card_details_question">Kysymys</string>
   <string name="card_details_answer">Vastaus</string>
   <string name="card_details_due">Due</string>
-  <string name="card_details_now">Now</string>
-  <string name="card_details_interval">Interval</string>
+  <string name="card_details_now">Nyt</string>
+  <string name="card_details_interval">Aikaväli</string>
   <string name="card_details_ease">Helppous</string>
-  <string name="card_details_average_time">Average time</string>
+  <string name="card_details_average_time">Keskimääräinen aika</string>
   <string name="card_details_total_time">Kokonaisaika</string>
   <string name="card_details_yes_count">Yes count</string>
   <string name="card_details_no_count">No count</string>
@@ -181,7 +181,7 @@
   <string name="card_details_changed">Muutettu</string>
   <string name="card_details_model">Malli</string>
   <string name="card_details_card_model">Korttimalli</string>
-  <string name="statistics">Statistics</string>
+  <string name="statistics">Tilastot</string>
   <string name="loading_deck">Ladataan korttipakkaa. Odota hetki...</string>
   <string name="connection_needed">Ei ole internet-yhteyttä</string>
   <string name="currently_downloading">Nyt ladataan</string>
@@ -281,13 +281,13 @@
   <string name="sync_preparing_full_sync_message">Valmistellaan koko synkronointiin...</string>
   <string name="sync_uploading_message">Lähetetään...</string>
   <string name="sync_downloading_message">Ladataan...</string>
-  <string name="sync_complete_message">Closing...</string>
+  <string name="sync_complete_message">Suljetaan...</string>
   <string name="sync_determining_differences_message">Määritellään erot...</string>
   <string name="sync_transferring_payload_message">Siirretään hyötykuormaa...</string>
   <string name="sync_applying_reply_message">Määritellään vastaus...</string>
   <string name="sync_no_changes_message">Muutoksia ei löytynyt.</string>
   <string name="sync_log_error_message">Virhe: Korttipakkaa ei ole synkronoitu</string>
-  <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
+  <string name="sync_log_error_specific">Synkronointivirhe, tyyppi: %1$s, viesti: %2$s</string>
   <string name="sync_log_no_changes_message">Muutoksia ei löytynyt</string>
   <string name="sync_log_uploading_message">Täysi synkronointi sijainnista</string>
   <string name="sync_log_downloading_message">Täysi synkronointi palvelimesta</string>
@@ -333,17 +333,17 @@
   <string name="new_version_title">Uusi versio:</string>
   <string name="new_version_text">New features:\n- card browser\n- statistics\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
   <string name="no_tts_available_title">Teksti puheeksi</string>
-  <string name="no_tts_available_message">No text-to-speech language available</string>
-  <string name="download_chartdroid_title">Download ChartDroid</string>
-  <string name="download_chartdroid_message">You need to download ChartDroid to display this data.</string>
-  <string name="download_chartdroid_market">Market download</string>
-  <string name="download_chartdroid_web">Web download</string>
+  <string name="no_tts_available_message">Teksti puheeksi kieli ei ole käytettävissä</string>
+  <string name="download_chartdroid_title">Lataa ChartDroid</string>
+  <string name="download_chartdroid_message">Sinun täytyy ladata ChartDroid tietojen näyttämiseen.</string>
+  <string name="download_chartdroid_market">Lataa Marketista</string>
+  <string name="download_chartdroid_web">Lataa verkosta</string>
   <string name="statistics_type_title">Chose statistic type</string>
   <string name="statistics_period_title">Chose report period</string>
-  <string name="statistics_period_y_axis">Cards</string>
-  <string name="statistics_period_x_axis">Days</string>
-  <string name="statistics_period_x_axis_minutes">Minutes</string>
-  <string name="statistics_all_cards">All cards</string>
+  <string name="statistics_period_y_axis">Kortit</string>
+  <string name="statistics_period_x_axis">Päivää</string>
+  <string name="statistics_period_x_axis_minutes">Minuuttia</string>
+  <string name="statistics_all_cards">Kaikki kortit</string>
   <string name="statistics_mature_cards">Mature cards</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Select deck (1 of %2$d due)</item>
@@ -354,7 +354,7 @@
     <item quantity="other">%1$d / %2$d jäljellä</item>
   </plurals>
   <plurals name="card_browser_title">
-    <item quantity="one">%1$s: 1 of %3$d cards shown</item>
+    <item quantity="one">%1$s: 1 / %3$d  korttia näytetään</item>
     <item quantity="other">%1$s: %2$d of %3$d cards shown</item>
   </plurals>
   <plurals name="studyoptions_window_title">
