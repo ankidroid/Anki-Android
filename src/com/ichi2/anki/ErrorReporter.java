@@ -26,6 +26,9 @@ import android.widget.TextView;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,20 +39,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
 public class ErrorReporter extends Activity {
 	protected static String REPORT_ASK = "2";
 	protected static String REPORT_NEVER = "1";
 	protected static String REPORT_ALWAYS = "0";
-    public static String REPORT_POST_URL = 
+    public static String REPORT_POST_URL = "FIXME specify REPORT_POST_URL";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +184,7 @@ public class ErrorReporter extends Activity {
 
                 br.close();
                 
-                postReport(pairs);
+                //postReport(pairs);
                 
             } catch (Exception ex) {
                 Log.e(AnkiDroidApp.TAG, ex.toString());
@@ -198,7 +192,7 @@ public class ErrorReporter extends Activity {
         }
     }
 
-    private void initDialogs() {
+    /*private void initDialogs() {
         Resources res = getResources();
 
         AlertDialog.Builder = new AlertDialog.Builder(this);
@@ -225,6 +219,6 @@ public class ErrorReporter extends Activity {
     private void postReport(List<NameValuePair> values) {
         final String url = getString(R.string.error_post_url);
         
-        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values});
-    }
+        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values}));
+    }*/
 }
