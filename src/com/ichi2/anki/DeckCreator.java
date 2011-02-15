@@ -18,39 +18,116 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.webkit.WebView;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * Shows an about box, which is a small HTML page.
+ * Create a new deck, with zero cards.
+ * Just a basic question/answer model, no choice for now.
+ * We just copy empty.anki to the decks directory under the specified name.
  */
 
 public class DeckCreator extends Activity {
 
+    private final static String EMPTY_DECK_NAME = "empty.anki";
+    
+    private String mPrefDeckPath;
+    
+    private Button mCreate;
+    private Button mCancel;
+    private EditText mFilename;
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     	Resources res = getResources();
 
-        setTitle(getAboutTitle());
+        setTitle(res.getString(R.string.menu_create_deck));
 
-        setContentView(R.layout.about);
+        // Get decks path
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+        
+        setContentView(R.layout.deck_creator);
+        
+        mCreate = (Button) findViewById(R.id.DeckCreatorOKButton);
+        mCancel = (Button) findViewById(R.id.DeckCreatorCancelButton);
+        mFilename = (EditText) findViewById(R.id.DeckCreatorFilename);
 
-        WebView webview = (WebView) findViewById(R.id.about);
-
-        String text = String.format("deck creator");
-        webview.loadDataWithBaseURL("", text, "text/html", "utf-8", null);
+        // When "OK" is clicked.
+        mCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String filename = mFilename.getText().toString();
+                createDeck(filename);
+                closeDeckCreator();
+            }
+        });
+        
+        // When "Cancel" is clicked.
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_CANCELED);
+                closeDeckCreator();
+            }
+        });
     }
 
 
-    private String getAboutTitle() {
-        StringBuilder appName = new StringBuilder();
-
-        appName.append("About ");
-        appName.append(AnkiDroidApp.getPkgName());
-        appName.append(" v");
-        appName.append(AnkiDroidApp.getPkgVersion());
-        return appName.toString();
+    /**
+     * Create a new deck with given name
+     * @param filename for instance "my Japanese words";
+     * @return success or not
+     */
+    private boolean createDeck(String filename) {
+        Log.d(AnkiDroidApp.TAG, "Creating deck: " + filename);
+        
+        // TODO: check filename validity
+        
+        filename = filename + ".anki";
+        
+        // If decks directory does not exist, create it.
+        File decksDirectory = new File(mPrefDeckPath);
+        if (!decksDirectory.isDirectory()) {
+            decksDirectory.mkdirs();
+        }
+        
+        File destinationFile = new File(mPrefDeckPath, filename + ".anki");
+        if (destinationFile.exists()) {
+            return false;
+        }
+        
+        try {
+            // Copy the empty deck from the assets to the SD card.
+            InputStream stream = getResources().getAssets().open(EMPTY_DECK_NAME);
+            Utils.writeToFile(stream, destinationFile.getAbsolutePath());
+            stream.close();
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            Log.e(AnkiDroidApp.TAG, "onCreate - The copy of empty.anki to the SD card failed.");
+            return false;
+        }
+        return true;
+    }
+    
+    
+    private void closeDeckCreator() {
+        finish();
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+            MyAnimation.slide(DeckCreator.this, MyAnimation.RIGHT);
+        }    
     }
 }

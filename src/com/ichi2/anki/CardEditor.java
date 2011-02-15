@@ -94,6 +94,7 @@ public class CardEditor extends Activity {
 
         mModified = false;
 
+        // Generate a new EditText for each field
         Iterator<Field> iter = fields.iterator();
         while (iter.hasNext()) {
             FieldEditText newTextbox = new FieldEditText(this, iter.next());
@@ -102,8 +103,6 @@ public class CardEditor extends Activity {
 
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(newTextbox);
-            // Generate a new EditText for each field
-
         }
 
         mSave.setOnClickListener(new View.OnClickListener() {

@@ -185,6 +185,7 @@
 <string name="about_title">About</string>
 <string name="cardeditor_title">Fact Editor</string>
 <string name="factadder_title">Card Adder</string>
+<string name="deckcreator_title">Deck Creator</string>
 <string name="model">Model:</string>
 <string name="select_model">Model</string>
 <string name="card">Card:</string>

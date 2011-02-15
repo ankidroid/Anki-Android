@@ -68,6 +68,9 @@
 		<activity android:name="FactAdder" 
 			android:label="@string/factadder_title"
 			android:configChanges="keyboardHidden|orientation"/>
+		<activity android:name="DeckCreator" 
+			android:label="@string/deckcreator_title"
+			android:configChanges="keyboardHidden|orientation"/>
 		<activity android:name="ErrorReporter" 
 			android:label="@string/error_reporter_title"/>
 		<activity android:name="Feedback" 
