@@ -209,7 +209,7 @@ public class ErrorReporter extends Activity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "Send error report finished.");
+            Log.i(AnkiDroidApp.TAG, "Send error report finished, result: " + ((String) data.result));
             // TODO: Report success/failure and any server side message
         }
 
