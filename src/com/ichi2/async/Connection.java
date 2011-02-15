@@ -519,6 +519,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             switch(response.getStatusLine().getStatusCode()) {
 	            case 200:
                     data.success = true;
+                    data.result = Utils.convertStreamToString(response.getEntity().getContent());
 	            	break;
 
             	default:
