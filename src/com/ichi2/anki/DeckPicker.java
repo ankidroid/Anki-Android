@@ -43,6 +43,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -86,6 +87,12 @@ public class DeckPicker extends Activity implements Runnable {
 	private static final int DIALOG_NO_CONNECTION = 2;
 	private static final int DIALOG_DELETE_DECK = 3;
 
+	/**
+	 * Menus
+	 */
+    private static final int MENU_ABOUT = 0;
+    private static final int MENU_CREATE_DECK = 1;
+	
 	/**
 	 * Message types
 	 */
@@ -566,7 +573,36 @@ public class DeckPicker extends Activity implements Runnable {
 		builder.setPositiveButton(getResources().getString(R.string.ok), null);
 		mUpgradeNotesAlert = builder.create();
 	}
+	
+	
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem item;
+        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.menu_create_deck);
+        item.setIcon(R.drawable.ic_menu_add);
+        item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
+        item.setIcon(R.drawable.ic_menu_info_details);
+        return true;
+    }
 
+    
+    /** Handles item selections */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_CREATE_DECK:
+                startActivity(new Intent(DeckPicker.this, DeckCreator.class));;
+                return true;
+
+            case MENU_ABOUT:
+                startActivity(new Intent(DeckPicker.this, About.class));
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
 	private void populateDeckList(String location) {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList");
 		
