@@ -62,10 +62,10 @@ public class Statistics {
         	SeriesList[0] = getCardsByDue(period, false, true);
             SeriesList[1] = getCardsByDue(period, true, true);
             SeriesList[2] = getFailedCardsByDue(period, true);
-            SeriesList[0][0] += SeriesList[2][0];
-            SeriesList[0][1] += SeriesList[2][1];
-            SeriesList[1][0] += SeriesList[2][0];
-            SeriesList[1][1] += SeriesList[2][1];
+            for (int i = 0; i < period; i++) {
+                SeriesList[0][i] += SeriesList[2][i];                
+                SeriesList[1][i] += SeriesList[2][i];                
+            }
     		return true;
     	case StudyOptions.STATISTICS_INTERVALS:
         	xAxisData = xAxisData(period, false);
@@ -104,21 +104,19 @@ public class Statistics {
     public static double[] getCardsByDue(int length, boolean matureCards, boolean cumulative) {
     	Deck deck = AnkiDroidApp.deck();
     	double series[] = new double[length];
-    	for (int i = 0; i < length; i++) {
+    	series[0] = deck.getDueCount();
+    	for (int i = 1; i < length; i++) {
     		int count = 0;
     		if (!matureCards) {
                 count = deck.getNextDueCards(i);
     		} else {
     		    count = deck.getNextDueMatureCards(i);
     		}
-    		if (i > 0 && cumulative) {
+    		if (cumulative) {
     			series[i] = count + series[i - 1];
     		} else {
         		series[i] = count;
     		}
-    	}
-    	if (deck.getDueCount() < series[0]) {
-    	    series[0] = deck.getDueCount();
     	}
     	return series;
     }    
@@ -131,6 +129,9 @@ public class Statistics {
         series[1] = deck.getFailedDelayedCount();
         if (cumulative) {
             series[1] += series[0];
+            for (int i = 2; i < length; i++) {
+                series[i] = series[1];
+            }
         }
     return series;
     }    

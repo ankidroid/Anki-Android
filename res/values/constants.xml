@@ -84,11 +84,11 @@
 		<item>4</item>
 	</string-array>
 	<string-array name="statistics_period_values">
-		<item>7</item>
-		<item>30</item>
-		<item>92</item>
-		<item>183</item>
-		<item>365</item>
+		<item>8</item>
+		<item>32</item>
+		<item>93</item>
+		<item>184</item>
+		<item>366</item>
 	</string-array>
 	<string name="link_anki">http://ankisrs.net</string>
 	<string name="link_ankidroid">http://code.google.com/p/ankidroid</string>

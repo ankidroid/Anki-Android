@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -56,10 +57,14 @@ public class ChartBuilder extends Activity {
 
 	private GraphicalView mChartView;
 	private TextView mTitle;
+	private double[] mPan;
+	private int zoom = 0;
 
 	private boolean mFullScreen;
 	
     private static final int MENU_FULLSCREEN = 0;
+    private static final int MENU_ZOOM_IN = 1;
+    private static final int MENU_ZOOM_OUT = 2;
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedState) {
@@ -98,6 +103,22 @@ public class ChartBuilder extends Activity {
 		mRenderer.addSeriesRenderer(renderer);
 	}
 
+	private void zoom() {
+        if (mChartView != null) {
+            if (zoom != 0) {
+                mRenderer.setXAxisMin(mPan[0] / (zoom + 1));
+                mRenderer.setXAxisMax(mPan[1] / (zoom + 1));                
+            } else {
+                mRenderer.setXAxisMin(mPan[0] * (zoom + 1));
+                mRenderer.setXAxisMax(mPan[1] * (zoom + 1));                
+            }
+            mChartView = ChartFactory.getBarChartView(this, mDataset,
+                    mRenderer, BarChart.Type.STACKED);
+            LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
+            layout.addView(mChartView, new LayoutParams(
+                    LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+        }
+	}
 
 	public void closeChartBuilder() {
     	finish();
@@ -115,9 +136,20 @@ public class ChartBuilder extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	MenuItem item;
-        item = menu.add(Menu.NONE, 0, Menu.NONE, R.string.statistics_fullscreen);
+        item = menu.add(Menu.NONE, MENU_FULLSCREEN, Menu.NONE, R.string.statistics_fullscreen);
         item.setIcon(R.drawable.ic_menu_manage);
+        item = menu.add(Menu.NONE, MENU_ZOOM_IN, Menu.NONE, R.string.statistics_zoom_in);
+        item.setIcon(R.drawable.ic_menu_zoom);
+        item = menu.add(Menu.NONE, MENU_ZOOM_OUT, Menu.NONE, R.string.statistics_zoom_out);
+        item.setIcon(R.drawable.ic_menu_zoom);
 		return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	menu.findItem(MENU_ZOOM_IN).setEnabled(zoom < 10);
+    	menu.findItem(MENU_ZOOM_OUT).setEnabled(zoom > 0);
+    	return true;
     }
 
     @Override
@@ -135,6 +167,16 @@ public class ChartBuilder extends Activity {
        			MyAnimation.slide(this, MyAnimation.FADE);
         	}
         	return true;
+        case MENU_ZOOM_IN:
+            zoom += 1;
+            zoom();
+            return true;
+        case MENU_ZOOM_OUT:
+            if (zoom > 1) {
+            	zoom -= 1;            	
+            }
+            zoom();
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -165,18 +207,26 @@ public class ChartBuilder extends Activity {
 			if (Statistics.SeriesList.length == 1) {
 	            mRenderer.setShowLegend(false);			    
 			}
+			mPan = new double[] {Statistics.xAxisData[0] - 1, Statistics.xAxisData[Statistics.xAxisData.length - 1] + 1};
 			mRenderer.setLegendTextSize(17);
             mRenderer.setLegendHeight(60);
 			mRenderer.setAxisTitleTextSize(17);
 			mRenderer.setLabelsTextSize(17);
-			mRenderer.setXAxisMin(Statistics.xAxisData[0] - 1);
-            mRenderer.setXAxisMax(Statistics.xAxisData[Statistics.xAxisData.length - 1] + 1);
+			mRenderer.setXAxisMin(mPan[0]);
+            mRenderer.setXAxisMax(mPan[1]);
 			mRenderer.setYAxisMin(0);
 			mRenderer.setXTitle(Statistics.axisLabels[0]);
 			mRenderer.setYTitle(Statistics.axisLabels[1]);
 			mRenderer.setZoomEnabled(false, false);
-			mRenderer.setMargins(new int[]{30, 30, 0, 0});
-			mRenderer.setPanEnabled(false, false);
+			if (Statistics.SeriesList[0][Statistics.xAxisData.length - 1] < 100) {
+	            mRenderer.setMargins(new int[]{15, 42, 25, 0});			    
+			} else {
+			    mRenderer.setMargins(new int[]{15, 58, 25, 0});
+			}
+			mRenderer.setPanEnabled(true, false);
+            mRenderer.setPanLimits(mPan);
+			mRenderer.setXLabelsAlign(Align.CENTER);
+			mRenderer.setYLabelsAlign(Align.RIGHT);
 			mChartView = ChartFactory.getBarChartView(this, mDataset,
 					mRenderer, BarChart.Type.STACKED);
 			LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
