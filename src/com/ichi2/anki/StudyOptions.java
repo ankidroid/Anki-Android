@@ -55,9 +55,6 @@ import android.widget.ToggleButton;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
-import com.ichi2.chartdroid.IntentConstants;
-import com.ichi2.chartdroid.Market;
-import com.ichi2.chartdroid.provider.DataContentProvider;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
@@ -163,7 +160,6 @@ public class StudyOptions extends Activity {
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mSyncConflictResolutionAlert;
 	private AlertDialog mNewVersionAlert;
-	private AlertDialog mDownloadChartDroidAlert;
 	private AlertDialog mStatisticTypeAlert;
 	private AlertDialog mStatisticPeriodAlert;
 
@@ -507,7 +503,7 @@ public class StudyOptions extends Activity {
             startActivityForResult(reviewer, REQUEST_REVIEW);
         	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
        			MyAnimation.slide(this, MyAnimation.LEFT);
-        	}    		    	
+        	}
         }
     }
 
@@ -790,23 +786,7 @@ public class StudyOptions extends Activity {
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mConnectionErrorAlert = builder.create();
-        
-        builder = new AlertDialog.Builder(this);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setTitle(res.getString(R.string.download_chartdroid_title));
-        builder.setMessage(res.getString(R.string.download_chartdroid_message));
-        builder.setPositiveButton(res.getString(R.string.download_chartdroid_market), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-            		startActivity(Market.getMarketDownloadIntent(Market.CHARTDROID_PACKAGE_NAME));
-                }
-        	});
-        builder.setNeutralButton(res.getString(R.string.download_chartdroid_web), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Market.APK_DOWNLOAD_URI_CHARTDROID));
-                }
-        	});
-        mDownloadChartDroidAlert = builder.create();
-        
+
         builder = new AlertDialog.Builder(this);
         builder.setTitle(res.getString(R.string.sync_conflict_title));
         builder.setIcon(android.R.drawable.ic_input_get);
@@ -1202,18 +1182,12 @@ public class StudyOptions extends Activity {
 
     private void openStatistics(int period) {
     	Resources res = getResources();
-    	Intent i = new Intent(Intent.ACTION_VIEW, DataContentProvider.PROVIDER_URI);
-        i.addCategory(IntentConstants.CATEGORY_XY_CHART);
-        i.setClassName("com.googlecode.chartdroid", "org.achartengine.activity.BarChartActivity");
-        i.putExtra("com.googlecode.chartdroid.intent.extra.SERIES_COLORS", new int[]{res.getColor(R.color.statistics_all_cards), res.getColor(R.color.statistics_mature_cards)});
-    	if (Market.isIntentAvailable(this, i)) {
-    		i.putExtra(Intent.EXTRA_TITLE, res.getStringArray(R.array.statistics_type_labels)[sStatisticType]);
-        	if (Statistics.refreshStatistics(this, sStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]))) {
-            	startActivity(i);        		
-        	}
-    	} else {
-    		mDownloadChartDroidAlert.show();   		
-    	}
+    	Statistics.refreshStatistics(this, sStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[sStatisticType]);
+    	Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
+    	startActivity(intent);
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+            MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
+        }
     }
 
 
