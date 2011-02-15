@@ -70,6 +70,8 @@
 			android:configChanges="keyboardHidden|orientation"/>
 		<activity android:name="ErrorReporter" 
 			android:label="@string/error_reporter_title"/>
+		<activity android:name="Feedback" 
+			android:label="@string/feedback_title"/>
 		<activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
 		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
 					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">

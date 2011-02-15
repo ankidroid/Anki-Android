@@ -101,6 +101,7 @@ public class StudyOptions extends Activity {
     private static final int ADD_FACT = 6;
     private static final int BROWSE_CARDS = 7;
     private static final int STATISTICS = 8;
+    private static final int REPORT_FEEDBACK = 9;
 
     /**
 * Constants for selecting which content view to display
@@ -189,7 +190,8 @@ public class StudyOptions extends Activity {
     private CheckBox mNightMode;
     private Button mCardBrowser;
     private Button mStatisticsButton;
-
+    private Button mFeedbackButton;
+    
     /**
 * UI elements for "More Options" dialog
 */
@@ -298,6 +300,10 @@ public class StudyOptions extends Activity {
                 	sStatisticType = -1;
                 	mStatisticTypeAlert.show();
                 	return;
+                case R.id.studyoptions_feedback:
+                	startFeedback();
+                	return;
+                	
                 default:
                     return;
             }
@@ -588,6 +594,7 @@ public class StudyOptions extends Activity {
         mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
         mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
         mStatisticsButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
+        mFeedbackButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_feedback);
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
@@ -613,6 +620,7 @@ public class StudyOptions extends Activity {
         mToggleCram.setOnClickListener(mButtonClickListener);
         mCardBrowser.setOnClickListener(mButtonClickListener);
         mStatisticsButton.setOnClickListener(mButtonClickListener);
+        mFeedbackButton.setOnClickListener(mButtonClickListener);
         
         mEditNewPerDay.addTextChangedListener(new TextWatcher() {
         	public void afterTextChanged(Editable s) {
@@ -1178,6 +1186,11 @@ public class StudyOptions extends Activity {
             MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
         }
     }
+    
+    private void startFeedback() {
+        Intent feedbackReporter = new Intent(StudyOptions.this, Feedback.class);
+        startActivityForResult(feedbackReporter, REPORT_FEEDBACK);
+    }
 
 
     private void openStatistics(int period) {
@@ -1369,6 +1382,8 @@ public class StudyOptions extends Activity {
             reloadDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
             reloadDeck();
+        }
+        else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         }
     }
 

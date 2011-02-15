@@ -24,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ichi2.utils.HttpUtility;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.apache.http.NameValuePair;
@@ -136,7 +137,8 @@ public class ErrorReporter extends Activity {
 
     private void sendErrorReport() throws IOException {
         ArrayList<String> files = getErrorFiles();
-
+        final String url = getString(R.string.error_post_url);
+        
         for (String filename : files) {
             try {
             	Date ts = new Date();
@@ -184,8 +186,7 @@ public class ErrorReporter extends Activity {
 
                 br.close();
                 
-                //postReport(pairs);
-                
+                HttpUtility.postReport(url, pairs);
             } catch (Exception ex) {
                 Log.e(AnkiDroidApp.TAG, ex.toString());
             }
