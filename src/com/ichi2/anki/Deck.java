@@ -45,6 +45,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeMap;
@@ -1691,7 +1692,12 @@ public class Deck {
         } else if (!oldIsRev) {
             mFailedQueue.removeLast();
         } else {
-            mRevQueue.removeLast();
+            try {
+                mRevQueue.removeLast();
+            }
+            catch(NoSuchElementException e) {
+                Log.w(AnkiDroidApp.TAG, "mRevQueue empty");
+            }
         }
         // } catch (Exception e) {
         // throw new RuntimeException("requeueCard() failed. Counts: " +
