@@ -87,8 +87,7 @@ public class StudyOptions extends Activity {
     private static final int MENU_MY_ACCOUNT = 4;
     private static final int MENU_PREFERENCES = 5;
     private static final int MENU_ADD_FACT = 6;
-    private static final int MENU_ABOUT = 7;
-    private static final int MENU_MORE_OPTIONS = 8;
+    private static final int MENU_MORE_OPTIONS = 7;
     /**
 * Available options performed by other activities
 */
@@ -1090,8 +1089,6 @@ public class StudyOptions extends Activity {
         item.setIcon(R.drawable.ic_menu_preferences);
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
         item.setIcon(R.drawable.ic_menu_home);
-        item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
-        item.setIcon(R.drawable.ic_menu_info_details);
 
         return true;
     }
@@ -1154,10 +1151,6 @@ public class StudyOptions extends Activity {
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                     MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
                 }
-                return true;
-
-            case MENU_ABOUT:
-                startActivity(new Intent(StudyOptions.this, About.class));
                 return true;
 
             default:
