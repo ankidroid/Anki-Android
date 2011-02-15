@@ -1072,18 +1072,30 @@ public class Deck {
     /*
      * Next day's due cards ******************************
      */
-    public int getNextDueCards(int day) {
+    public int getNextDueCards(int day, boolean inclFailed) {
     	double dayStart = mDueCutoff + (86400 * (day - 1));
-        String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue BETWEEN %f AND %f", dayStart, dayStart + 86400);
+    	String sql;
+    	if (inclFailed) {
+            sql = String.format(Utils.ENGLISH_LOCALE,
+                    "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue BETWEEN %f AND %f AND PRIORITY > -1", dayStart, dayStart + 86400);    	    
+    	} else {
+            sql = String.format(Utils.ENGLISH_LOCALE,
+                    "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue BETWEEN %f AND %f AND PRIORITY > -1", dayStart, dayStart + 86400);    	    
+    	}
         return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
 
-    public int getNextDueMatureCards(int day) {
+    public int getNextDueMatureCards(int day, boolean inclFailed) {
     	double dayStart = mDueCutoff + (86400 * (day - 1));
-        String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue BETWEEN %f AND %f AND interval >= %d", dayStart, dayStart + 86400, Card.MATURE_THRESHOLD);
+        String sql;
+        if (inclFailed) {
+            sql = String.format(Utils.ENGLISH_LOCALE,
+                    "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue BETWEEN %f AND %f AND interval >= %d", dayStart, dayStart + 86400, Card.MATURE_THRESHOLD);
+        } else {
+            sql = String.format(Utils.ENGLISH_LOCALE,
+                    "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue BETWEEN %f AND %f AND interval >= %d", dayStart, dayStart + 86400, Card.MATURE_THRESHOLD);            
+        }
         return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
@@ -1100,7 +1112,7 @@ public class Deck {
      */
     public int getCardsByInterval(int interval) {
         String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND interval BETWEEN %d AND %d", interval, interval + 1);
+                "SELECT count(*) FROM cards c WHERE type = 1 AND interval BETWEEN %d AND %d", interval, interval + 1);
         return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 

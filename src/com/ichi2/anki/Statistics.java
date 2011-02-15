@@ -96,9 +96,17 @@ public class Statistics {
     	for (int i = 0; i < length; i++) {
     		int count = 0;
     		if (!matureCards) {
-    			count = deck.getNextDueCards(i);
+    		    if (i == 0) {
+                    count = deck.getNextDueCards(i, true);
+    		    } else {
+                    count = deck.getNextDueCards(i, false);    		        
+    		    }
     		} else {
-    			count = deck.getNextDueMatureCards(i);    			
+                if (i == 0) {
+                    count = deck.getNextDueMatureCards(i, true);
+                } else {
+                    count = deck.getNextDueMatureCards(i, false);                 
+                }
     		}
     		if (i > 0 && cumulative) {
     			series[i] = count + series[i - 1];
