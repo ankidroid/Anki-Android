@@ -1692,12 +1692,12 @@ public class Deck {
         } else if (!oldIsRev) {
             mFailedQueue.removeLast();
         } else {
-            try {
+            // try {
                 mRevQueue.removeLast();
-            }
-            catch(NoSuchElementException e) {
-                Log.w(AnkiDroidApp.TAG, "mRevQueue empty");
-            }
+            // }
+            // catch(NoSuchElementException e) {
+            //     Log.w(AnkiDroidApp.TAG, "mRevQueue empty");
+            // }
         }
         // } catch (Exception e) {
         // throw new RuntimeException("requeueCard() failed. Counts: " +
