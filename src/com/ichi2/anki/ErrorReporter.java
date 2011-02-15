@@ -24,6 +24,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.BufferedReader;
@@ -49,7 +51,6 @@ public class ErrorReporter extends Activity {
 	protected static String REPORT_ASK = "2";
 	protected static String REPORT_NEVER = "1";
 	protected static String REPORT_ALWAYS = "0";
-    public static String REPORT_POST_URL = 
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,33 +199,35 @@ public class ErrorReporter extends Activity {
         }
     }
 
-    private void initDialogs() {
-        Resources res = getResources();
-
-        AlertDialog.Builder = new AlertDialog.Builder(this);
-
-        builder.setTitle(res.getString(R.string.send_crash_title));
-		builder.setPositiveButton(getResources().getString(R.string.ok), null);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
 
     Connection.TaskListener sendListener = new Connection.TaskListener() {
 
         @Override
         public void onDisconnected() {
-            if (mNoConnectionAlert != null) {
-                mNoConnectionAlert.show();
-            }
+            // TODO: Inform the user that the connection was lost before the post was completed
         }
 
         @Override
         public void onPostExecute(Payload data) {
+            Log.i(AnkiDroidApp.TAG, "Send error report finished.");
+            // TODO: Report success/failure and any server side message
+        }
 
-        
-    }
+        @Override
+        public void onPreExecute() {
+            // pass
+            
+        }
+
+        @Override
+        public void onProgressUpdate(Object... values) {
+            // pass, no progress update while posting
+        }
+    };
 
     private void postReport(List<NameValuePair> values) {
         final String url = getString(R.string.error_post_url);
         
-        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values});
+        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values}));
     }
 }

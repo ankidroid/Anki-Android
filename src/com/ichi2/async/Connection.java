@@ -31,6 +31,13 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.SyncClient;
 import com.ichi2.anki.Utils;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +48,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload> {
 
@@ -156,7 +164,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
-    public static Connection sendCrashReport(TaskListener listener, Payload data) {
+    public static Connection sendErrorReport(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_SEND_CRASH_REPORT;
         return launchConnectionTask(listener, data);
     }
@@ -501,11 +509,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     	HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
+        httpPost.addHeader("User-Agent", "AnkiDroid");
 
         try {
         	httpPost.setEntity(new UrlEncodedFormEntity(values));
             HttpResponse response = httpClient.execute(httpPost);
-            Log.e(AnkiDroidApp.TAG, String.format("bug report posted to %s", url));
+            Log.e(AnkiDroidApp.TAG, String.format("Bug report posted to %s", url));
 
             switch(response.getStatusLine().getStatusCode()) {
 	            case 200:
