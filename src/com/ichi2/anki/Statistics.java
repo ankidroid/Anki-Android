@@ -53,16 +53,14 @@ public class Statistics {
         	SeriesList[0] = getCardsByDue(period, false, false);
             SeriesList[1] = getCardsByDue(period, true, false);
             SeriesList[2] = getFailedCardsByDue(period, false);
-            SeriesList[0][0] += SeriesList[2][0];
             SeriesList[0][1] += SeriesList[2][1];
-            SeriesList[1][0] += SeriesList[2][0];
             SeriesList[1][1] += SeriesList[2][1];
     		return true;
     	case StudyOptions.STATISTICS_CUMULATIVE_DUE:
         	SeriesList[0] = getCardsByDue(period, false, true);
             SeriesList[1] = getCardsByDue(period, true, true);
             SeriesList[2] = getFailedCardsByDue(period, true);
-            for (int i = 0; i < period; i++) {
+            for (int i = 1; i < period; i++) {
                 SeriesList[0][i] += SeriesList[2][i];                
                 SeriesList[1][i] += SeriesList[2][i];                
             }
