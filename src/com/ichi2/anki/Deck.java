@@ -1073,30 +1073,28 @@ public class Deck {
     /*
      * Next day's due cards ******************************
      */
-    public int getNextDueCards(int day, boolean inclFailed) {
+    public int getNextDueCards(int day) {
     	double dayStart = mDueCutoff + (86400 * (day - 1));
-    	String sql;
-    	if (inclFailed) {
-            sql = String.format(Utils.ENGLISH_LOCALE,
-                    "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue BETWEEN %f AND %f AND PRIORITY > -1", dayStart, dayStart + 86400);    	    
-    	} else {
-            sql = String.format(Utils.ENGLISH_LOCALE,
-                    "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue BETWEEN %f AND %f AND PRIORITY > -1", dayStart, dayStart + 86400);    	    
-    	}
+    	String sql = String.format(Utils.ENGLISH_LOCALE,
+                    "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue BETWEEN %f AND %f AND PRIORITY > -1", dayStart, dayStart + 86400);
         return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
 
-    public int getNextDueMatureCards(int day, boolean inclFailed) {
+    public int getNextDueMatureCards(int day) {
     	double dayStart = mDueCutoff + (86400 * (day - 1));
-        String sql;
-        if (inclFailed) {
-            sql = String.format(Utils.ENGLISH_LOCALE,
-                    "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue BETWEEN %f AND %f AND interval >= %d", dayStart, dayStart + 86400, Card.MATURE_THRESHOLD);
-        } else {
-            sql = String.format(Utils.ENGLISH_LOCALE,
-                    "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue BETWEEN %f AND %f AND interval >= %d", dayStart, dayStart + 86400, Card.MATURE_THRESHOLD);            
-        }
+        String sql = String.format(Utils.ENGLISH_LOCALE,
+                    "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue BETWEEN %f AND %f AND interval >= %d", dayStart, dayStart + 86400, Card.MATURE_THRESHOLD);
+        return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
+    }
+
+
+    /*
+     * Get failed cards count ******************************
+     */
+    public int getFailedDelayedCount() {
+        String sql = String.format(Utils.ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue >= " + mFailedCutoff + " AND PRIORITY > -1");
         return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 

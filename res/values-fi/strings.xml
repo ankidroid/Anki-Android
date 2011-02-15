@@ -257,6 +257,7 @@
   <string name="studyoptions_congrats_reviewearly">Tarkista etuajassa</string>
   <string name="studyoptions_congrats_open_other_deck">Avaa muu korttipakka</string>
   <string name="studyoptions_congrats_finish">Takaisin opiskeluruutuun</string>
+  <string name="studyoptions_feedback">Feedback</string>
   <string name="username">Käyttäjätunnus</string>
   <string name="password">Salasana</string>
   <string name="log_in">Kirjaudu sisään</string>
@@ -308,6 +309,7 @@
   <string name="error_cancel">Älä ilmoita virheistä</string>
   <string name="error_reporting_choice">Virheraportointitila</string>
   <string name="error_reporting_choice_summary">Virheitä voidaan raportoida automaattisesti, ei koskaan, tai pyytää luvan sinulta</string>
+  <string name="error_collection_information">We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Widget-ilmoituksen kynnys</string>
   <string name="widget_minimum_cards_due_summary">Korttien vähimmäismäärä, jolloin ilmoitus on esitetty</string>
@@ -334,10 +336,6 @@
   <string name="new_version_text">New features:\n- card browser\n- statistics\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
   <string name="no_tts_available_title">Teksti puheeksi</string>
   <string name="no_tts_available_message">Teksti puheeksi kieli ei ole käytettävissä</string>
-  <string name="download_chartdroid_title">Lataa ChartDroid</string>
-  <string name="download_chartdroid_message">Sinun täytyy ladata ChartDroid tietojen näyttämiseen.</string>
-  <string name="download_chartdroid_market">Lataa Marketista</string>
-  <string name="download_chartdroid_web">Lataa verkosta</string>
   <string name="statistics_type_title">Chose statistic type</string>
   <string name="statistics_period_title">Chose report period</string>
   <string name="statistics_period_y_axis">Kortit</string>
@@ -345,6 +343,11 @@
   <string name="statistics_period_x_axis_minutes">Minuuttia</string>
   <string name="statistics_all_cards">Kaikki kortit</string>
   <string name="statistics_mature_cards">Mature cards</string>
+  <string name="statistics_failed_cards">Failed cards</string>
+  <string name="statistics_fullscreen">Toggle Fullscreen</string>
+  <string name="feedback_title">Feedback</string>
+  <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
+  <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Select deck (1 of %2$d due)</item>
     <item quantity="other">Valitse korttipakka (%1$d / %2$d määrä)</item>

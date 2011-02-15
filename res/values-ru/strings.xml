@@ -257,6 +257,7 @@
   <string name="studyoptions_congrats_reviewearly">Просмотренные ранее</string>
   <string name="studyoptions_congrats_open_other_deck">Открыть другие колоды</string>
   <string name="studyoptions_congrats_finish">Вернуться к окну \"Начало урока\"</string>
+  <string name="studyoptions_feedback">Feedback</string>
   <string name="username">Имя пользователя</string>
   <string name="password">Пароль</string>
   <string name="log_in">Войти</string>
@@ -308,6 +309,7 @@
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="error_reporting_choice_summary">Можно посылать ошибки программы автоматически, не посылать или выводить вопрос пользователю</string>
+  <string name="error_collection_information">We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string>
   <string name="widget_pref">Виджет</string>
   <string name="widget_minimum_cards_due">Виджет уведомления</string>
   <string name="widget_minimum_cards_due_summary">Если количество карточек больше этого установленного порога - всплывет \"Уведомление\" (в зоне уведомлений вашего аппарата)</string>
@@ -334,10 +336,6 @@
   <string name="new_version_text">Новые возможности:\n- редактор карт\n- статистика\n- произношение текста\n- прогресс завершения колоды в оглавлении\n- выбор модели карт при добавлении карты\n- новый виджет\n- улучшение отмена/возврат\n- новый элемент интерфейса - ползунок\n- больше языков</string>
   <string name="no_tts_available_title">Преобразование текста в речь</string>
   <string name="no_tts_available_message">Функция преобразования текста в речь не доступна</string>
-  <string name="download_chartdroid_title">Скачать ChartDroid</string>
-  <string name="download_chartdroid_message">Вам необходимо скачать ChartDroid для отображения этих данных.</string>
-  <string name="download_chartdroid_market">Скачать Маркет</string>
-  <string name="download_chartdroid_web">Вэб скачать</string>
   <string name="statistics_type_title">Выберите тип статистики</string>
   <string name="statistics_period_title">Выберите отчетный период</string>
   <string name="statistics_period_y_axis">карты</string>
@@ -345,6 +343,11 @@
   <string name="statistics_period_x_axis_minutes">минут</string>
   <string name="statistics_all_cards">Все карты</string>
   <string name="statistics_mature_cards">Развитые карты</string>
+  <string name="statistics_failed_cards">Failed cards</string>
+  <string name="statistics_fullscreen">Toggle Fullscreen</string>
+  <string name="feedback_title">Feedback</string>
+  <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
+  <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Выберите колоду (1 карту из %2$d повторить)</item>
     <item quantity="other">Выберите колоду (%1$d из %2$d)</item>
