@@ -35,6 +35,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
@@ -52,7 +53,6 @@ public class ChartBuilder extends Activity {
 
 	private XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
 	private XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
-	private double mYAxisMax = 0;
 
 	private GraphicalView mChartView;
 	private TextView mTitle;
@@ -80,11 +80,7 @@ public class ChartBuilder extends Activity {
 	public void setDataset(int row) {
 		XYSeries series = new XYSeries(Statistics.Titles[row]);
 		for (int i = 0; i < Statistics.xAxisData.length; i++) {
-		    double yValue = Statistics.SeriesList[row][i];
-		    if (yValue > mYAxisMax) {
-		        mYAxisMax = yValue;
-		    }
-			series.add(Statistics.xAxisData[i], yValue);
+			series.add(Statistics.xAxisData[i], Statistics.SeriesList[row][i]);
 		}
 		mDataset.addSeries(series);
 	}
@@ -156,8 +152,10 @@ public class ChartBuilder extends Activity {
 		if (mChartView == null) {
 	        if (mFullScreen) {
 	        	mTitle.setText(Statistics.sTitle);
+	        } else {
+	            setTitle(Statistics.sTitle);
+	            mTitle.setVisibility(View.GONE);
 	        }
-	        setTitle(Statistics.sTitle);
 			for (int i = 0; i < Statistics.SeriesList.length; i++) {
 				setDataset(i);
 				setRenderer(i);
@@ -166,14 +164,17 @@ public class ChartBuilder extends Activity {
 	            mRenderer.setShowLegend(false);			    
 			}
 			mRenderer.setLegendTextSize(17);
+            mRenderer.setLegendHeight(60);
 			mRenderer.setAxisTitleTextSize(17);
 			mRenderer.setLabelsTextSize(17);
 			mRenderer.setXAxisMin(Statistics.xAxisData[0] - 1);
-			mRenderer.setXAxisMax(Statistics.xAxisData[Statistics.xAxisData.length - 1] + 1);
+            mRenderer.setXAxisMax(Statistics.xAxisData[Statistics.xAxisData.length - 1] + 1);
 			mRenderer.setYAxisMin(0);
-			mRenderer.setYAxisMax(mYAxisMax * 1.05);
 			mRenderer.setXTitle(Statistics.axisLabels[0]);
 			mRenderer.setYTitle(Statistics.axisLabels[1]);
+			mRenderer.setZoomEnabled(false, false);
+			mRenderer.setMargins(new int[]{30, 30, 0, 0});
+			mRenderer.setPanEnabled(false, false);
 			mChartView = ChartFactory.getBarChartView(this, mDataset,
 					mRenderer, BarChart.Type.STACKED);
 			LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
