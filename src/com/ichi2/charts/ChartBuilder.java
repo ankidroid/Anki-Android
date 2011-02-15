@@ -90,9 +90,11 @@ public class ChartBuilder extends Activity {
 		XYSeriesRenderer renderer = new XYSeriesRenderer();
 		if (row == 0) {
 			renderer.setColor(res.getColor(R.color.statistics_all_cards));
-		} else {
-			renderer.setColor(res.getColor(R.color.statistics_mature_cards));
-		}
+		} else if (row == 1) {
+            renderer.setColor(res.getColor(R.color.statistics_mature_cards));
+        } else {
+            renderer.setColor(res.getColor(R.color.next_time_failed_color));
+	    }
 		mRenderer.addSeriesRenderer(renderer);
 	}
 

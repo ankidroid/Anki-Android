@@ -257,6 +257,7 @@
   <string name="studyoptions_congrats_reviewearly">Früher Wiederholen</string>
   <string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>
   <string name="studyoptions_congrats_finish">Zurück zu den Lerneinstellungen</string>
+  <string name="studyoptions_feedback">Rückmeldung</string>
   <string name="username">Benutzername</string>
   <string name="password">Passwort</string>
   <string name="log_in">Einloggen</string>
@@ -308,6 +309,7 @@
   <string name="error_cancel">Melde keine Fehler</string>
   <string name="error_reporting_choice">Fehlermeldungs-Modus</string>
   <string name="error_reporting_choice_summary">Fehler können automatisch, nie oder nach Nachfrage gemeldet werden</string>
+  <string name="error_collection_information">Es werden keinerlei persönliche Informationen wie E-Mail- oder IP-Adresse, Telefonnummern, IMEI o.ä. übertragen, sondern lediglich Informationen über den Hersteller, das Modell, die Android-Version und Informationen über den Fehler selbst gesendet.</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Benachrichtigungsschwelle</string>
   <string name="widget_minimum_cards_due_summary">Mindestzahl an fälligen Karten, ab der eine Benachrichtigung angezeigt wird</string>
@@ -334,10 +336,6 @@
   <string name="new_version_text">Neue Funktion:\n- Kartenübersicht\n - Statistik\n- Vorlesefunktion\n- Fortschrittsanzeige in der Stapelauswahl\n- Kartenvorlage kann nun beim Hinzufügen gewählt werden\n- neues Widget\n- verbesserte Rückgängig-Funktion\n- Schieberegler\n- mehr Sprachen</string>
   <string name="no_tts_available_title">Vorlesen</string>
   <string name="no_tts_available_message">Keine Vorlese-Sprache verfügbar</string>
-  <string name="download_chartdroid_title">ChartDroid herunterladen</string>
-  <string name="download_chartdroid_message">Sie benötigen ChartDroid, um diese Daten anzuzeigen.</string>
-  <string name="download_chartdroid_market">Market</string>
-  <string name="download_chartdroid_web">Internet</string>
   <string name="statistics_type_title">Statistik-Typ</string>
   <string name="statistics_period_title">Berichtszeitraum</string>
   <string name="statistics_period_y_axis">Karten</string>
@@ -345,6 +343,11 @@
   <string name="statistics_period_x_axis_minutes">Minuten</string>
   <string name="statistics_all_cards">Alle Karten</string>
   <string name="statistics_mature_cards">Alte Karten</string>
+  <string name="statistics_failed_cards">Falsch beantwortete Karten</string>
+  <string name="statistics_fullscreen">Vollbildmodus ein/aus</string>
+  <string name="feedback_title">Rückmeldung</string>
+  <string name="feedback_default_text">Bitte geben Sie hier Ihre Rückmeldung ein und drücken Sie OK, um sie zu senden.</string>
+  <string name="feedback_result_fail">Leider konnte Ihre Rückmeldung nicht übermittelt werden. Bitte versuchen Sie es erneut.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Stapel wählen (1 von %2$d fällig)</item>
     <item quantity="other">Stapel wählen (%1$d von %2$d fällig)</item>

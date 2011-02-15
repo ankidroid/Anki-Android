@@ -36,10 +36,11 @@ public class Statistics {
     	axisLabels[1] = res.getString(R.string.statistics_period_y_axis);
 
     	if (type <= StudyOptions.STATISTICS_CUMULATIVE_DUE) {
-        	Titles = new String[2];
+        	Titles = new String[3];
         	Titles[0] = res.getString(R.string.statistics_all_cards);
         	Titles[1] = res.getString(R.string.statistics_mature_cards);
-        	SeriesList = new double[2][period];    		
+        	Titles[2] = res.getString(R.string.statistics_failed_cards);
+        	SeriesList = new double[3][period];    		
         	xAxisData = xAxisData(period, false);
     	} else {
         	Titles = new String[1]; //should be [1], but crashes ChartDroid
@@ -50,11 +51,21 @@ public class Statistics {
     	switch (type) {
     	case StudyOptions.STATISTICS_DUE:
         	SeriesList[0] = getCardsByDue(period, false, false);
-        	SeriesList[1] = getCardsByDue(period, true, false);
+            SeriesList[1] = getCardsByDue(period, true, false);
+            SeriesList[2] = getFailedCardsByDue(period, false);
+            SeriesList[0][0] += SeriesList[2][0];
+            SeriesList[0][1] += SeriesList[2][1];
+            SeriesList[1][0] += SeriesList[2][0];
+            SeriesList[1][1] += SeriesList[2][1];
     		return true;
     	case StudyOptions.STATISTICS_CUMULATIVE_DUE:
         	SeriesList[0] = getCardsByDue(period, false, true);
-        	SeriesList[1] = getCardsByDue(period, true, true);
+            SeriesList[1] = getCardsByDue(period, true, true);
+            SeriesList[2] = getFailedCardsByDue(period, true);
+            SeriesList[0][0] += SeriesList[2][0];
+            SeriesList[0][1] += SeriesList[2][1];
+            SeriesList[1][0] += SeriesList[2][0];
+            SeriesList[1][1] += SeriesList[2][1];
     		return true;
     	case StudyOptions.STATISTICS_INTERVALS:
         	xAxisData = xAxisData(period, false);
@@ -96,17 +107,9 @@ public class Statistics {
     	for (int i = 0; i < length; i++) {
     		int count = 0;
     		if (!matureCards) {
-    		    if (i == 0) {
-                    count = deck.getNextDueCards(i, true);
-    		    } else {
-                    count = deck.getNextDueCards(i, false);    		        
-    		    }
+                count = deck.getNextDueCards(i);
     		} else {
-                if (i == 0) {
-                    count = deck.getNextDueMatureCards(i, true);
-                } else {
-                    count = deck.getNextDueMatureCards(i, false);                 
-                }
+    		    count = deck.getNextDueMatureCards(i);
     		}
     		if (i > 0 && cumulative) {
     			series[i] = count + series[i - 1];
@@ -114,18 +117,33 @@ public class Statistics {
         		series[i] = count;
     		}
     	}
+    	if (deck.getDueCount() < series[0]) {
+    	    series[0] = deck.getDueCount();
+    	}
+    	return series;
+    }    
+
+
+    public static double[] getFailedCardsByDue(int length, boolean cumulative) {
+        Deck deck = AnkiDroidApp.deck();
+        double series[] = new double[length];
+        series[0] = deck.getFailedSoonCount();
+        series[1] = deck.getFailedDelayedCount();
+        if (cumulative) {
+            series[1] += series[0];
+        }
     return series;
     }    
 
 
     public static double[] getReviews(int length) {
-    	Deck deck = AnkiDroidApp.deck();
-    	double series[] = new double[length];
-    	for (int i = 0; i < length; i++) {
-    		series[i] = deck.getDaysReviewed(i - length + 1);
-    	}
+        Deck deck = AnkiDroidApp.deck();
+        double series[] = new double[length];
+        for (int i = 0; i < length; i++) {
+            series[i] = deck.getDaysReviewed(i - length + 1);
+        }
     return series;
-    }    
+    }
 
 
     public static double[] getReviewTime(int length) {

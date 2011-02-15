@@ -979,7 +979,7 @@ public class StudyOptions extends Activity {
     	Resources res = getResources();
         Deck deck = AnkiDroidApp.deck();
         if (deck != null) {
-            int revCards = deck.getNextDueCards(1, true);
+            int revCards = deck.getNextDueCards(1) + deck.getFailedDelayedCount();
             int newCards = deck.getNextNewCards();
             String revca = res.getString(R.string.studyoptions_congrats_cards);
             String newca = res.getString(R.string.studyoptions_congrats_cards);

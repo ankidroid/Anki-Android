@@ -463,6 +463,7 @@
 <string name="statistics_period_x_axis_minutes">Minutes</string>
 <string name="statistics_all_cards">All cards</string>
 <string name="statistics_mature_cards">Mature cards</string>
+<string name="statistics_failed_cards">Failed cards</string>
 <string name="statistics_fullscreen">Toggle Fullscreen</string>
 
 <string name="feedback_title">Feedback</string>
