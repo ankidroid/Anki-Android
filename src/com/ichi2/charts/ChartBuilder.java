@@ -52,6 +52,7 @@ public class ChartBuilder extends Activity {
 
 	private XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
 	private XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
+	private double mYAxisMax = 0;
 
 	private GraphicalView mChartView;
 	private TextView mTitle;
@@ -79,7 +80,11 @@ public class ChartBuilder extends Activity {
 	public void setDataset(int row) {
 		XYSeries series = new XYSeries(Statistics.Titles[row]);
 		for (int i = 0; i < Statistics.xAxisData.length; i++) {
-			series.add(Statistics.xAxisData[i], Statistics.SeriesList[row][i]);
+		    double yValue = Statistics.SeriesList[row][i];
+		    if (yValue > mYAxisMax) {
+		        mYAxisMax = yValue;
+		    }
+			series.add(Statistics.xAxisData[i], yValue);
 		}
 		mDataset.addSeries(series);
 	}
@@ -157,11 +162,16 @@ public class ChartBuilder extends Activity {
 				setDataset(i);
 				setRenderer(i);
 			}
+			if (Statistics.SeriesList.length == 1) {
+	            mRenderer.setShowLegend(false);			    
+			}
 			mRenderer.setLegendTextSize(17);
 			mRenderer.setAxisTitleTextSize(17);
 			mRenderer.setLabelsTextSize(17);
 			mRenderer.setXAxisMin(Statistics.xAxisData[0] - 1);
 			mRenderer.setXAxisMax(Statistics.xAxisData[Statistics.xAxisData.length - 1] + 1);
+			mRenderer.setYAxisMin(0);
+			mRenderer.setYAxisMax(mYAxisMax * 1.05);
 			mRenderer.setXTitle(Statistics.axisLabels[0]);
 			mRenderer.setYTitle(Statistics.axisLabels[1]);
 			mChartView = ChartFactory.getBarChartView(this, mDataset,
