@@ -24,7 +24,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.ichi2.async.Connection;
+import com.ichi2.async.Connection.Payload;
+import com.ichi2.utils.HttpUtility;
 import com.tomgibara.android.veecheck.util.PrefSettings;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,15 +41,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 public class ErrorReporter extends Activity {
 	protected static String REPORT_ASK = "2";
@@ -141,7 +138,8 @@ public class ErrorReporter extends Activity {
 
     private void sendErrorReport() throws IOException {
         ArrayList<String> files = getErrorFiles();
-
+        final String url = getString(R.string.error_post_url);
+        
         for (String filename : files) {
             try {
             	Date ts = new Date();
@@ -189,38 +187,41 @@ public class ErrorReporter extends Activity {
 
                 br.close();
                 
-                postReport(pairs);
-                
+                HttpUtility.postReport(url, pairs);
             } catch (Exception ex) {
                 Log.e(AnkiDroidApp.TAG, ex.toString());
             }
         }
     }
 
+    Connection.TaskListener sendListener = new Connection.TaskListener() {
+
+        @Override
+        public void onDisconnected() {
+            // TODO: Inform the user that the connection was lost before the post was completed
+        }
+
+        @Override
+        public void onPostExecute(Payload data) {
+            Log.i(AnkiDroidApp.TAG, "Send error report finished, result: " + ((String) data.result));
+            // TODO: Report success/failure and any server side message
+        }
+
+        @Override
+        public void onPreExecute() {
+            // pass
+            
+        }
+
+        @Override
+        public void onProgressUpdate(Object... values) {
+            // pass, no progress update while posting
+        }
+    };
+
     private void postReport(List<NameValuePair> values) {
         final String url = getString(R.string.error_post_url);
         
-    	HttpClient httpClient = new DefaultHttpClient();  
-        HttpPost httpPost = new HttpPost(url);  
-      
-        try {  
-        	httpPost.setEntity(new UrlEncodedFormEntity(values));  
-            HttpResponse response = httpClient.execute(httpPost);  
-            
-            switch(response.getStatusLine().getStatusCode()) {
-	            case 200:
-	            	Log.e(AnkiDroidApp.TAG, String.format("bug report posted to %s", url));
-	            	break;
-	            	
-            	default:
-            		Log.e(AnkiDroidApp.TAG, String.format("bug report posted to %s message", url));
-            		Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase()));
-	            	break;
-            }
-        } catch (ClientProtocolException ex) {  
-        	Log.e(AnkiDroidApp.TAG, ex.toString());
-        } catch (IOException ex) {  
-        	Log.e(AnkiDroidApp.TAG, ex.toString());  
-        }
+        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values}));
     }
 }
