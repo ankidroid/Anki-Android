@@ -86,6 +86,8 @@ public class DeckPicker extends Activity implements Runnable {
 	private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
 	private static final int DIALOG_NO_CONNECTION = 2;
 	private static final int DIALOG_DELETE_DECK = 3;
+	private static final int DIALOG_SELECT_STATISTICS_TYPE = 4;
+	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 5;	
 
 	/**
 	 * Menus
@@ -105,8 +107,9 @@ public class DeckPicker extends Activity implements Runnable {
 	private ProgressDialog mProgressDialog;
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mUpgradeNotesAlert;
-	private RelativeLayout mSyncAllBar;
+	private LinearLayout mSyncAllBar;
 	private Button mSyncAllButton;
+	private Button mStatisticsAllButton;
 
 	private SimpleAdapter mDeckListAdapter;
 	private ArrayList<HashMap<String, String>> mDeckList;
@@ -127,7 +130,8 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private int mTotalDueCards = 0;
 	private int mTotalCards = 0;
-	
+
+	int mStatisticType;
 	/**
      * Swipe Detection
      */    
@@ -257,7 +261,7 @@ public class DeckPicker extends Activity implements Runnable {
 		registerExternalStorageListener();
 		initDialogs();
 
-		mSyncAllBar = (RelativeLayout) findViewById(R.id.sync_all_bar);
+		mSyncAllBar = (LinearLayout) findViewById(R.id.sync_all_bar);
 		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
 
@@ -277,6 +281,16 @@ public class DeckPicker extends Activity implements Runnable {
 				}
 			}
 
+		});
+
+		mStatisticsAllButton = (Button) findViewById(R.id.statistics_all_button);
+		mStatisticsAllButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mStatisticType = -1;
+				showDialog(DIALOG_SELECT_STATISTICS_TYPE);
+			}
 		});
 
 		mDeckList = new ArrayList<HashMap<String, String>>();
@@ -442,7 +456,18 @@ public class DeckPicker extends Activity implements Runnable {
 					});					
 			dialog = builder.create();
 			break;
-
+		case DIALOG_SELECT_STATISTICS_TYPE:
+	        builder.setTitle(res.getString(R.string.statistics_type_title));
+	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), StudyOptions.STATISTICS_DUE, mStatisticListener);
+	        dialog = builder.create();
+			break;
+		case DIALOG_SELECT_STATISTICS_PERIOD:
+	        builder.setTitle(res.getString(R.string.statistics_period_title));
+	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_period_labels), 0, mStatisticListener);
+	        dialog = builder.create();
+			break;
 		default:
 			dialog = null;
 		}
@@ -461,7 +486,36 @@ public class DeckPicker extends Activity implements Runnable {
 	}
 
 
-	@Override
+    private DialogInterface.OnClickListener mStatisticListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+			if (mStatisticType == -1) {
+				mStatisticType = which;
+        		dialog.dismiss();
+        		showDialog(DIALOG_SELECT_STATISTICS_PERIOD);
+        	} else {
+        		dialog.dismiss();
+		    	Resources res = getResources();
+		    	if (mFileList != null && mFileList.length > 0) {
+					String[] deckPaths = new String[mFileList.length];
+					int i = 0;
+			    	for (File file : mFileList) {
+			    		deckPaths[i] = file.getAbsolutePath();
+			    		i++;
+					}
+			    	Statistics.refreshAllDeckStatistics(DeckPicker.this, deckPaths, mStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[which]), res.getStringArray(R.array.statistics_type_labels)[mStatisticType]);
+			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
+			    	startActivity(intent);
+			        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+			            MyAnimation.slide(DeckPicker.this, MyAnimation.LEFT);
+			        }
+		    	}
+        	}
+        }
+    };
+
+
+    @Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		int selectedPosition = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
@@ -605,7 +659,7 @@ public class DeckPicker extends Activity implements Runnable {
     
 	private void populateDeckList(String location) {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList");
-		
+
 		mTotalDueCards = 0;
 		mTotalCards = 0;
 		setTitleText();

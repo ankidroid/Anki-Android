@@ -1188,7 +1188,7 @@ public class StudyOptions extends Activity {
 
     private void openStatistics(int period) {
     	Resources res = getResources();
-    	Statistics.refreshStatistics(this, sStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[sStatisticType]);
+    	Statistics.refreshDeckStatistics(this, AnkiDroidApp.deck(), sStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[sStatisticType]);
     	Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
     	startActivity(intent);
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
