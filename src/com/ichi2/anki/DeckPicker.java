@@ -461,7 +461,7 @@ public class DeckPicker extends Activity implements Runnable {
 		case DIALOG_SELECT_STATISTICS_TYPE:
 	        builder.setTitle(res.getString(R.string.statistics_type_title));
 	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), StudyOptions.STATISTICS_DUE, mStatisticListener);
+	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), Statistics.TYPE_DUE, mStatisticListener);
 	        dialog = builder.create();
 			break;
 		case DIALOG_SELECT_STATISTICS_PERIOD:

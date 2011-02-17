@@ -75,6 +75,8 @@
 			android:label="@string/error_reporter_title"/>
 		<activity android:name="Feedback" 
 			android:label="@string/feedback_title"/>
+		<activity android:name="com.ichi2.charts.ChartBuilder"
+			android:configChanges="orientation" />
 		<activity android:name="com.ichi2.veecheck.Notification" android:label="@string/notification_title"/>
 		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
 					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
@@ -110,9 +112,7 @@
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider" />
 		</receiver>
-		<!-- Content Provider to deliver statistic-data to ChartDroid-->
-		<activity android:name="com.ichi2.charts.ChartBuilder" /><!--
-		--><!-- Service to perform web API queries -->
+		<!-- Service to perform web API queries -->
 		<service android:name=".AnkiDroidWidget$UpdateService" />
 </application>
 	<uses-sdk android:minSdkVersion="3"/>

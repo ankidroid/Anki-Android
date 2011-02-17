@@ -86,21 +86,41 @@ public class ChartBuilder extends Activity {
     public void setDataset(int row) {
         XYSeries series = new XYSeries(Statistics.Titles[row]);
         for (int i = 0; i < Statistics.xAxisData.length; i++) {
-            series.add(Statistics.xAxisData[i], Statistics.mSeriesList[row][i]);
+            series.add(Statistics.xAxisData[i], Statistics.sSeriesList[row][i]);
         }
         mDataset.addSeries(series);
     }
 
 
-    public void setRenderer(int row) {
+    public void setRenderer(int type, int row) {
         Resources res = getResources();
         XYSeriesRenderer renderer = new XYSeriesRenderer();
-        if (row == 0) {
-            renderer.setColor(res.getColor(R.color.statistics_all_cards));
-        } else if (row == 1) {
-            renderer.setColor(res.getColor(R.color.statistics_mature_cards));
+        if (type <= Statistics.TYPE_CUMULATIVE_DUE) {
+        	switch (row) {
+        	case 0: 
+                renderer.setColor(res.getColor(R.color.statistics_due_young_cards));
+        		break;
+        	case 1:
+                renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
+                break;
+        	case 2:
+                renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
+        		break;
+        	}
+        } else if (type == Statistics.TYPE_REVIEWS) {
+        	switch (row) {
+        	case 0: 
+                renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
+        		break;
+        	case 1:
+                renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
+                break;
+        	case 2:
+                renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
+        		break;
+        	}
         } else {
-            renderer.setColor(res.getColor(R.color.next_time_failed_color));
+            renderer.setColor(res.getColor(R.color.statistics_default));        	
         }
         mRenderer.addSeriesRenderer(renderer);
     }
@@ -188,7 +208,7 @@ public class ChartBuilder extends Activity {
         }
     }
 
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,11 +227,11 @@ public class ChartBuilder extends Activity {
                 setTitle(Statistics.sTitle);
                 mTitle.setVisibility(View.GONE);
             }
-            for (int i = 0; i < Statistics.mSeriesList.length; i++) {
+            for (int i = 0; i < Statistics.sSeriesList.length; i++) {
                 setDataset(i);
-                setRenderer(i);
+                setRenderer(Statistics.sType, i);
             }
-            if (Statistics.mSeriesList.length == 1) {
+            if (Statistics.sSeriesList.length == 1) {
                 mRenderer.setShowLegend(false);
             }
             mPan = new double[] { Statistics.xAxisData[0] - 1,
@@ -226,7 +246,7 @@ public class ChartBuilder extends Activity {
             mRenderer.setXTitle(Statistics.axisLabels[0]);
             mRenderer.setYTitle(Statistics.axisLabels[1]);
             mRenderer.setZoomEnabled(false, false);
-            if (Statistics.mSeriesList[0][0] > 100 || Statistics.mSeriesList[0][1] > 100 || Statistics.mSeriesList[0][Statistics.mSeriesList[0].length - 1] > 100) {
+            if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
                 mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
             } else {
                 mRenderer.setMargins(new int[] { 15, 42, 25, 0 });

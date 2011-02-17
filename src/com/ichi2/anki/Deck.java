@@ -1125,15 +1125,18 @@ public class Deck {
     /*
      * Review counts ******************************
      */
-    public int getDaysReviewed(int day) {
+    public int[] getDaysReviewed(int day) {
         Date value = Utils.genToday(getUtcOffset() - (86400 * day));
     	Cursor cur = null;
-    	int count = 0;
+    	int[] count = {0, 0, 0};   	
     	try {
             cur = getDB().getDatabase().rawQuery(String.format(Utils.ENGLISH_LOCALE,
-            		"SELECT reps FROM stats WHERE day = \'%tF\' AND reps > 0", value), null);
+            		"SELECT reps, (matureease1 + matureease2 + matureease3 + matureease4 +  youngease1 + youngease2 + youngease3 + youngease4), " +
+            		"(matureease1 + matureease2 + matureease3 + matureease4)  FROM stats WHERE day = \'%tF\' AND reps > 0 AND id > 1", value), null);
             while (cur.moveToNext()) {
-            	count = cur.getInt(0);
+            	count[0] = cur.getInt(0);
+            	count[1] = cur.getInt(1);
+            	count[2] = cur.getInt(2);            	
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -1154,7 +1157,7 @@ public class Deck {
     	int count = 0;
     	try {
             cur = getDB().getDatabase().rawQuery(String.format(Utils.ENGLISH_LOCALE,
-            		"SELECT reviewTime FROM stats WHERE day = \'%tF\' AND reps > 0", value), null);
+            		"SELECT reviewTime FROM stats WHERE day = \'%tF\' AND reps > 0 AND id > 1", value), null);
             while (cur.moveToNext()) {
             	count = cur.getInt(0);
             }

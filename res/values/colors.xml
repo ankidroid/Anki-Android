@@ -24,13 +24,19 @@
 	<color name="next_time_recommended_color">#007700</color>
 	<color name="next_time_usual_color_inv">#FFFFFF</color>
 	<color name="next_time_failed_color_inv">#00FFFF</color>
-	<color name="next_time_recommended_color_inv">#66AD66</color>
+	<color name="next_time_recommended_color_inv">#4AA02C</color>
 	<color name="background_color_inv">#000000</color>
 	<color name="foreground_color_inv">#FFFFFF</color>
-	<color name="textbar_blue_color_inv">#0099FF</color>
+	<color name="textbar_blue_color_inv">#4AA02C</color>
 	<color name="card_browser_background">#000000</color>
 	<color name="card_browser_marked">#5E5A80</color>
 	<color name="card_browser_suspended">#646D7E</color>
-	<color name="statistics_all_cards">#FBB117</color>
-	<color name="statistics_mature_cards">#F88017</color>	
+
+	<color name="statistics_default">#FBB117</color>
+	<color name="statistics_due_young_cards">#FBB117</color>
+	<color name="statistics_due_mature_cards">#F88017</color>	
+	<color name="statistics_due_failed_cards">#FF0000</color>
+	<color name="statistics_reps_new_cards">#5CB3FF</color>	
+	<color name="statistics_reps_young_cards">#488AC7</color>
+	<color name="statistics_reps_mature_cards">#1569C7</color>	
 </resources>

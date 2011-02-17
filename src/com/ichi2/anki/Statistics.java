@@ -25,35 +25,50 @@ public class Statistics {
     public static String[] Titles;
 
     public static double[] xAxisData;
-    public static double[][] mSeriesList;
+    public static double[][] sSeriesList;
 
-    private static Deck mDeck;
+    private static Deck sDeck;
+    public static int sType;
+
+    /**
+	* Types
+	*/    
+	public static final int TYPE_DUE = 0; 
+	public static final int TYPE_CUMULATIVE_DUE = 1; 
+	public static final int TYPE_INTERVALS = 2; 
+	public static final int TYPE_REVIEWS = 3;
+	public static final int TYPE_REVIEWING_TIME = 4; 
 
 
     public static void initVariables(Context context, int type, int period, String title) {
         Resources res = context.getResources();
+        sType = type;
         sTitle = title;
         axisLabels[0] = res.getString(R.string.statistics_period_x_axis);
         axisLabels[1] = res.getString(R.string.statistics_period_y_axis);
-        if (type <= StudyOptions.STATISTICS_CUMULATIVE_DUE) {
+        if (type <= TYPE_CUMULATIVE_DUE) {
             Titles = new String[3];
-            Titles[0] = res.getString(R.string.statistics_all_cards);
+            Titles[0] = res.getString(R.string.statistics_young_cards);
             Titles[1] = res.getString(R.string.statistics_mature_cards);
             Titles[2] = res.getString(R.string.statistics_failed_cards);
-            mSeriesList = new double[3][period];
+            sSeriesList = new double[3][period];
             xAxisData = xAxisData(period, false);
+        } else if (type == TYPE_REVIEWS) {
+        	Titles = new String[3];
+            Titles[0] = res.getString(R.string.statistics_new_cards);
+            Titles[1] = res.getString(R.string.statistics_young_cards);
+            Titles[2] = res.getString(R.string.statistics_mature_cards);
+            sSeriesList = new double[3][period];
+            xAxisData = xAxisData(period, true);
         } else {
             Titles = new String[1];
             Titles[0] = res.getString(R.string.statistics_all_cards);
-            mSeriesList = new double[1][period];
+            sSeriesList = new double[1][period];
             switch (type) {
-            	case StudyOptions.STATISTICS_INTERVALS:
+            	case TYPE_INTERVALS:
                     xAxisData = xAxisData(period, false);
             		break;
-            	case StudyOptions.STATISTICS_REVIEWS:
-                    xAxisData = xAxisData(period, true);
-            		break;
-            	case StudyOptions.STATISTICS_REVIEWING_TIME:
+            	case TYPE_REVIEWING_TIME:
                     xAxisData = xAxisData(period, true);
                     axisLabels[1] = context.getResources().getString(R.string.statistics_period_x_axis_minutes);
             		break;
@@ -64,9 +79,9 @@ public class Statistics {
 
     public static boolean refreshDeckStatistics(Context context, Deck deck, int type, int period, String title) {
         initVariables(context, type, period, title);
-        mDeck = deck;
-    	mSeriesList = getSeriesList(context, type, period);
-        if (mSeriesList != null) {
+        sDeck = deck;
+        sSeriesList = getSeriesList(context, type, period);
+        if (sSeriesList != null) {
         	return true;
         } else {
         	return false;
@@ -78,16 +93,16 @@ public class Statistics {
         initVariables(context, type, period, title);
     	for (String dp : deckPaths) {
             double[][] seriesList;
-        	mDeck = Deck.openDeck(dp);
+            sDeck = Deck.openDeck(dp);
             seriesList = getSeriesList(context, type, period);
-            mDeck.closeDeck(false);
-            for (int i = 0; i < mSeriesList.length; i++) {
+            sDeck.closeDeck(false);
+            for (int i = 0; i < sSeriesList.length; i++) {
                 for (int j = 0; j < period; j++) {
-                	mSeriesList[i][j] += seriesList[i][j];
+                	sSeriesList[i][j] += seriesList[i][j];
                 }        	
             }
     	}
-        if (mSeriesList != null) {
+        if (sSeriesList != null) {
         	return true;
         } else {
         	return false;
@@ -97,37 +112,38 @@ public class Statistics {
 
     public static double[][] getSeriesList(Context context, int type, int period) {
     	double[][] seriesList;
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(sDeck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
         	switch (type) {
-            case StudyOptions.STATISTICS_DUE:
+            case TYPE_DUE:
             	seriesList = new double[3][period];
             	seriesList[0] = getCardsByDue(period, false);
             	seriesList[1] = getMatureCardsByDue(period, false);
             	seriesList[2] = getFailedCardsByDue(period, false);
+            	seriesList[0][0] += seriesList[2][0];
             	seriesList[0][1] += seriesList[2][1];
+            	seriesList[1][0] += seriesList[2][0];
             	seriesList[1][1] += seriesList[2][1];
             	break;
-            case StudyOptions.STATISTICS_CUMULATIVE_DUE:
+            case TYPE_CUMULATIVE_DUE:
             	seriesList = new double[3][period];
             	seriesList[0] = getCardsByDue(period, true);
             	seriesList[1] = getMatureCardsByDue(period, true);
             	seriesList[2] = getFailedCardsByDue(period, true);
-                for (int i = 1; i < period; i++) {
+                for (int i = 0; i < period; i++) {
                 	seriesList[0][i] += seriesList[2][i];
                 	seriesList[1][i] += seriesList[2][i];
                 }
             	break;
-            case StudyOptions.STATISTICS_INTERVALS:
+            case TYPE_INTERVALS:
             	seriesList = new double[1][period];
             	seriesList[0] = getCardsByInterval(period);
             	break;
-            case StudyOptions.STATISTICS_REVIEWS:
-            	seriesList = new double[1][period];
-                seriesList[0] = getReviews(period);
+            case TYPE_REVIEWS:
+            	seriesList = getReviews(period);
             	break;
-            case StudyOptions.STATISTICS_REVIEWING_TIME:
+            case TYPE_REVIEWING_TIME:
             	seriesList = new double[1][period];
                 seriesList[0] = getReviewTime(period);
             	break;
@@ -159,10 +175,10 @@ public class Statistics {
 
     public static double[] getCardsByDue(int length, boolean cumulative) {
         double series[] = new double[length];
-        series[0] = mDeck.getDueCount();
+        series[0] = sDeck.getDueCount();
         for (int i = 1; i < length; i++) {
             int count = 0;
-            count = mDeck.getNextDueCards(i);
+            count = sDeck.getNextDueCards(i);
             if (cumulative) {
                 series[i] = count + series[i - 1];
             } else {
@@ -177,7 +193,7 @@ public class Statistics {
         double series[] = new double[length];
         for (int i = 0; i < length; i++) {
             int count = 0;
-            count = mDeck.getNextDueMatureCards(i);
+            count = sDeck.getNextDueMatureCards(i);
             if (cumulative && i > 0) {
                 series[i] = count + series[i - 1];
             } else {
@@ -190,8 +206,8 @@ public class Statistics {
 
     public static double[] getFailedCardsByDue(int length, boolean cumulative) {
         double series[] = new double[length];
-        series[0] = mDeck.getFailedSoonCount();
-        series[1] = mDeck.getFailedDelayedCount();
+        series[0] = sDeck.getFailedSoonCount();
+        series[1] = sDeck.getFailedDelayedCount();
         if (cumulative) {
             series[1] += series[0];
             for (int i = 2; i < length; i++) {
@@ -202,10 +218,13 @@ public class Statistics {
     }
 
 
-    public static double[] getReviews(int length) {
-        double series[] = new double[length];
+    public static double[][] getReviews(int length) {
+        double series[][] = new double[3][length];
         for (int i = 0; i < length; i++) {
-            series[i] = mDeck.getDaysReviewed(i - length + 1);
+        	int result[] = sDeck.getDaysReviewed(i - length + 1);
+            series[0][i] = result[0];
+            series[1][i] = result[1];
+            series[2][i] = result[2];
         }
         return series;
     }
@@ -214,7 +233,7 @@ public class Statistics {
     public static double[] getReviewTime(int length) {
         double series[] = new double[length];
         for (int i = 0; i < length; i++) {
-            series[i] = mDeck.getReviewTime(i - length + 1) / 60;
+            series[i] = sDeck.getReviewTime(i - length + 1) / 60;
         }
         return series;
     }
@@ -223,7 +242,7 @@ public class Statistics {
     public static double[] getCardsByInterval(int length) {
         double series[] = new double[length];
         for (int i = 0; i < length; i++) {
-            series[i] = mDeck.getCardsByInterval(i);
+            series[i] = sDeck.getCardsByInterval(i);
         }
         return series;
     }

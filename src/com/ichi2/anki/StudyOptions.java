@@ -244,11 +244,6 @@ public class StudyOptions extends Activity {
     /**
 	* Statistics
 	*/    
-	public static final int STATISTICS_DUE = 0; 
-	public static final int STATISTICS_CUMULATIVE_DUE = 1; 
-	public static final int STATISTICS_INTERVALS = 2; 
-	public static final int STATISTICS_REVIEWS = 3;
-	public static final int STATISTICS_REVIEWING_TIME = 4; 
 	public static int mStatisticType;
 
     /**
@@ -812,7 +807,7 @@ public class StudyOptions extends Activity {
 
         builder.setTitle(res.getString(R.string.statistics_type_title));
         builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), STATISTICS_DUE, mStatisticListener);
+        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), Statistics.TYPE_DUE, mStatisticListener);
         mStatisticTypeAlert = builder.create();
     }
 
