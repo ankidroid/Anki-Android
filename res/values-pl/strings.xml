@@ -145,6 +145,7 @@
   <string name="about_title">O programie</string>
   <string name="cardeditor_title">Edytor kart</string>
   <string name="factadder_title">Dodawanie kart</string>
+  <string name="deckcreator_title">Deck Creator</string>
   <string name="model">Model:</string>
   <string name="select_model">Model</string>
   <string name="card">Card:</string>
@@ -246,6 +247,7 @@
   <string name="menu_search">Wyszukiwanie w %1$s</string>
   <string name="menu_mark_card">Oznacz kartę</string>
   <string name="menu_marked">Oznaczona</string>
+  <string name="menu_create_deck">Create deck</string>
   <string name="loading">Ładowanie...</string>
   <string name="studyoptions_continue">Kontynuuj powtórki</string>
   <string name="studyoptions_well_done">Dobra robota!</string>
@@ -345,6 +347,8 @@
   <string name="statistics_mature_cards">Mature cards</string>
   <string name="statistics_failed_cards">Failed cards</string>
   <string name="statistics_fullscreen">Toggle Fullscreen</string>
+  <string name="statistics_zoom_in">Zoom in</string>
+  <string name="statistics_zoom_out">Zoom out</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
   <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>

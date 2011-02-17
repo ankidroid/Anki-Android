@@ -145,6 +145,7 @@
   <string name="about_title">Tietoja</string>
   <string name="cardeditor_title">Korttien muokkaus</string>
   <string name="factadder_title">Kortin Yhteenlaskia</string>
+  <string name="deckcreator_title">Deck Creator</string>
   <string name="model">Malli:</string>
   <string name="select_model">Malli</string>
   <string name="card">Kortti:</string>
@@ -246,6 +247,7 @@
   <string name="menu_search">Haku %1$s</string>
   <string name="menu_mark_card">Merkitse kortti</string>
   <string name="menu_marked">Merkitty</string>
+  <string name="menu_create_deck">Create deck</string>
   <string name="loading">Ladataan...</string>
   <string name="studyoptions_continue">Jatka tarkistamista</string>
   <string name="studyoptions_well_done">Hyvin tehty!</string>
@@ -345,6 +347,8 @@
   <string name="statistics_mature_cards">Mature cards</string>
   <string name="statistics_failed_cards">Failed cards</string>
   <string name="statistics_fullscreen">Toggle Fullscreen</string>
+  <string name="statistics_zoom_in">Zoom in</string>
+  <string name="statistics_zoom_out">Zoom out</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
   <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>

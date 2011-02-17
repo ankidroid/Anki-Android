@@ -145,6 +145,7 @@
   <string name="about_title">Über</string>
   <string name="cardeditor_title">Fakteneditor</string>
   <string name="factadder_title">Karten hinzufügen</string>
+  <string name="deckcreator_title">Stapel erstellen</string>
   <string name="model">Modell:</string>
   <string name="select_model">Modell</string>
   <string name="card">Karte:</string>
@@ -246,6 +247,7 @@
   <string name="menu_search">In %1$s nachschlagen</string>
   <string name="menu_mark_card">Karte markieren</string>
   <string name="menu_marked">Markiert</string>
+  <string name="menu_create_deck">Stapel erstellen</string>
   <string name="loading">Lade...</string>
   <string name="studyoptions_continue">Lernen fortsetzen</string>
   <string name="studyoptions_well_done">Gut gemacht!</string>
@@ -345,6 +347,8 @@
   <string name="statistics_mature_cards">Alte Karten</string>
   <string name="statistics_failed_cards">Falsch beantwortete Karten</string>
   <string name="statistics_fullscreen">Vollbildmodus ein/aus</string>
+  <string name="statistics_zoom_in">Verkleinern</string>
+  <string name="statistics_zoom_out">Vergrößern</string>
   <string name="feedback_title">Rückmeldung</string>
   <string name="feedback_default_text">Bitte geben Sie hier Ihre Rückmeldung ein und drücken Sie OK, um sie zu senden.</string>
   <string name="feedback_result_fail">Leider konnte Ihre Rückmeldung nicht übermittelt werden. Bitte versuchen Sie es erneut.</string>

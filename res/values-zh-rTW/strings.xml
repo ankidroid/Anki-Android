@@ -145,6 +145,7 @@
   <string name="about_title">關於</string>
   <string name="cardeditor_title">卡片編輯器</string>
   <string name="factadder_title">增加卡片</string>
+  <string name="deckcreator_title">Deck Creator</string>
   <string name="model">模型：</string>
   <string name="select_model">模型</string>
   <string name="card">卡片：</string>
@@ -246,6 +247,7 @@
   <string name="menu_search">在%1$s中查詢</string>
   <string name="menu_mark_card">標記卡片</string>
   <string name="menu_marked">標記</string>
+  <string name="menu_create_deck">Create deck</string>
   <string name="loading">載入中...</string>
   <string name="studyoptions_continue">繼續複習</string>
   <string name="studyoptions_well_done">幹得好！</string>
@@ -345,6 +347,8 @@
   <string name="statistics_mature_cards">Mature cards</string>
   <string name="statistics_failed_cards">Failed cards</string>
   <string name="statistics_fullscreen">Toggle Fullscreen</string>
+  <string name="statistics_zoom_in">Zoom in</string>
+  <string name="statistics_zoom_out">Zoom out</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
   <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
