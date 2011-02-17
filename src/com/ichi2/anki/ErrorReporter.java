@@ -14,6 +14,7 @@
 
 package com.ichi2.anki;
 
+import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,7 +22,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.ichi2.async.Connection;
@@ -38,23 +43,36 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.UUID;
 
 public class ErrorReporter extends Activity {
-	protected static String REPORT_ASK = "2";
-	protected static String REPORT_NEVER = "1";
-	protected static String REPORT_ALWAYS = "0";
+    protected static String REPORT_ASK = "2";
+    protected static String REPORT_NEVER = "1";
+    protected static String REPORT_ALWAYS = "0";
+    protected static String STATE_WAITING = "0";
+    protected static String STATE_UPLOADING = "1";
+    protected static String STATE_SUCCESSFUL = "2";
+    protected static String STATE_FAILED = "3";
 	
+	// This is used to group the batch of bugs and notes sent on the server side
+	protected long mNonce;
+	protected List<HashMap<String, String>> mErrorReports;
+    protected SimpleAdapter mErrorAdapter;
+    protected ListView mErrorListView;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(AnkiDroidApp.TAG, "OnCreate");
-
         super.onCreate(savedInstanceState);
+
         Context context = getBaseContext();
         SharedPreferences sharedPreferences = PrefSettings.getSharedPrefs(context);
         String reportErrorMode = sharedPreferences.getString("reportErrorMode", REPORT_ASK);
+        
+        mNonce = UUID.randomUUID().getMostSignificantBits();
 
         if (reportErrorMode.equals(REPORT_ALWAYS)) { // Always report
             try {
@@ -63,27 +81,75 @@ public class ErrorReporter extends Activity {
                 Log.e(AnkiDroidApp.TAG, e.toString());
             }
 
-            deleteFiles();
+            //deleteFiles();
             setResult(RESULT_OK);
             finish();
 
             return;
         } else if (reportErrorMode.equals(REPORT_NEVER)) { // Never report
-            deleteFiles();
+            //deleteFiles();
             setResult(RESULT_OK);
             finish();
 
             return;
         } else { // Prompt, default behaviour
-            setContentView(R.layout.email_error);
+            setContentView(R.layout.feedback);
 
-            int numErrors = getErrorFiles().size();
+            // TextView tvErrorText = (TextView) findViewById(R.id.tvErrorText);
+            Button btnSendAll = (Button) findViewById(R.id.btnSendAll);
+            Button btnSendMostRecent = (Button) findViewById(R.id.btnSendMostRecent);
+            Button btnClearAll = (Button) findViewById(R.id.btnClearAll);
+            
+            ListView mErrorListView = (ListView) findViewById(R.id.lvErrorList);
 
-            TextView tvErrorText = (TextView) findViewById(R.id.tvErrorText);
-            Button btnOk = (Button) findViewById(R.id.btnSendEmail);
-            Button btnCancel = (Button) findViewById(R.id.btnIgnoreError);
+            getErrorFiles();
+            int numErrors = mErrorReports.size();
+            if (numErrors == 0) {
+                mErrorListView.setVisibility(View.GONE);
+                btnSendMostRecent.setVisibility(View.GONE);
+                btnClearAll.setVisibility(View.GONE);
+                btnSendAll.setText("Send us your feedback");
+            } else {
+                if (numErrors == 1) {
+                    btnSendMostRecent.setVisibility(View.GONE);
+                }
+            
+                mErrorAdapter = new SimpleAdapter(this, mErrorReports,
+                        R.layout.error_item, new String[] {"title", "state", "state"}, new int[] {
+                                R.id.error_item_text, R.id.error_item_icon, error_item_progress });
+                mErrorAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+                    @Override
+                    public boolean setViewValue(View view, Object arg1, String text) {
+                        if (view.getId() == R.id.error_item_progress) {
+                            if (text.equals(STATE_UPLOADING)) {
+                                view.setVisibility(View.VISIBLE);
+                            } else {
+                                view.setVisibility(View.GONE);
+                            }
+                            return true;
+                        /*} else if (view.getId() == R.id.error_item_progress) {
+                            if (text.equals(STATE_SUCCESSFUL)) {
+                                ImageView iv = (ImageView)view;
+                                iv.setImageResource(R.drawable.ic_bullet_key_permission);
+                                view.setVisibility(View.VISIBLE);
+                            } else if (text.equals(STATE_FAILED)) {
+                                ImageView iv = (ImageView)view;
+                                iv.setImageResource(R.drawable.ic_delete);
+                                view.setVisibility(View.VISIBLE);
+                            } else {
+                                view.setVisibility(View.GONE);
+                            }
+                            return true;*/
+                        }
+                        return false;
+                    }
+                });
+    
+                mErrorListView.setAdapter(mErrorAdapter);
+                refreshErrorListView();
+            }
 
-            btnOk.setOnClickListener(new OnClickListener() {
+            btnSendAll.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try {
@@ -92,56 +158,62 @@ public class ErrorReporter extends Activity {
                         Log.e(AnkiDroidApp.TAG, e.toString());
                     }
 
-                    deleteFiles();
+//                    deleteFiles();
                     setResult(RESULT_OK);
                     finish();
                 }
             });
 
-            btnCancel.setOnClickListener(new OnClickListener() {
+            btnClearAll.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deleteFiles();
+                    deleteFiles(false);
                     setResult(RESULT_OK);
                     finish();
                 }
             });
 
-            tvErrorText.setText(getResources().getQuantityString(R.plurals.error_message, numErrors, numErrors));
+            //tvErrorText.setText(getResources().getQuantityString(R.plurals.error_message, numErrors, numErrors));
         }
     }
 
-    private ArrayList<String> getErrorFiles() {
-        ArrayList<String> files = new ArrayList<String>();
+    private void refreshErrorListView() {
+        mErrorAdapter.notifyDataSetChanged();
+    }
+    
+    private void getErrorFiles() {
+        mErrorReports = new ArrayList<HashMap<String, String>>();
         String[] errors = fileList();
 
         for (String file : errors) {
             if (file.endsWith(".stacktrace")) {
-                files.add(file);
+                HashMap<String, String> error = new HashMap<String, String>();
+                error.put("name", file);
+                error.put("state", STATE_WAITING);
+                error.put("result", "");
+                mErrorReports.add(error);
             }
         }
-
-        return files;
     }
 
-    private void deleteFiles() {
-        ArrayList<String> files = getErrorFiles();
-
-        for (String file : files) {
+    private void deleteFiles(boolean keepLatest) {
+        
+        for (int i = (keepLatest? 1: 0); i < mErrorReports.size(); ) {
             try {
-                deleteFile(file);
+                deleteFile(mErrorReports.get(i).get("name"));
+                mErrorReports.remove(i);
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, String.format("Could not delete file: %s", file));
+                Log.e(AnkiDroidApp.TAG, String.format("Could not delete file: %s", mErrorReports.get(i)));
             }
         }
     }
 
     private void sendErrorReport() throws IOException {
-        ArrayList<String> files = getErrorFiles();
         final String url = getString(R.string.error_post_url);
         
-        for (String filename : files) {
+        for (HashMap<String, String> error : mErrorReports) {
             try {
+                String filename = error.get("name");
             	Date ts = new Date();
             	TimeZone tz = TimeZone.getDefault();
             	String singleLine;
@@ -187,7 +259,7 @@ public class ErrorReporter extends Activity {
 
                 br.close();
                 
-                HttpUtility.postReport(url, pairs);
+                postReport(pairs);
             } catch (Exception ex) {
                 Log.e(AnkiDroidApp.TAG, ex.toString());
             }
@@ -221,7 +293,11 @@ public class ErrorReporter extends Activity {
 
     private void postReport(List<NameValuePair> values) {
         final String url = getString(R.string.error_post_url);
-        
+        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values}));
+    }
+
+    private void postFeedback(List<NameValuePair> values) {
+        final String url = getString(R.string.feedback_post_url);
         Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values}));
     }
 }

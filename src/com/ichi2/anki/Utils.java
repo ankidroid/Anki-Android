@@ -22,8 +22,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Html;
-import android.text.format.DateFormat;
-import android.text.format.Time;
 import android.util.Log;
 
 import com.mindprod.common11.BigDate;
