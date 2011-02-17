@@ -415,7 +415,13 @@ public class Deck {
 
 
     public synchronized void closeDeck() {
-        DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
+    	closeDeck(true);
+    }
+
+    public synchronized void closeDeck(boolean wait) {
+        if (wait) {
+        	DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
+        }
         if (finishSchedulerMethod != null) {
             finishScheduler();
             reset();

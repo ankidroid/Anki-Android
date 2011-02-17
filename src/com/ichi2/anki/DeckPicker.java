@@ -56,7 +56,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -506,12 +505,7 @@ public class DeckPicker extends Activity implements Runnable {
 			    		deckPaths[i] = file.getAbsolutePath();
 			    		i++;
 					}
-			    	Statistics.refreshAllDeckStatistics(DeckPicker.this, deckPaths, mStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[which]), res.getStringArray(R.array.statistics_type_labels)[mStatisticType] + " " + res.getString(R.string.statistics_all_decks));
-			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
-			    	startActivity(intent);
-			        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-			            MyAnimation.slide(DeckPicker.this, MyAnimation.DOWN);
-			        }
+			    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, which));
 		    	}
         	}
         }
@@ -982,6 +976,40 @@ public class DeckPicker extends Activity implements Runnable {
 
 		return spannableStringBuilder;
 	}
+
+
+    DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+            if (mProgressDialog.isShowing()) {
+                try {
+                    mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+            }
+            if (result.getBoolean()) {
+		    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
+		    	startActivity(intent);
+		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+		            MyAnimation.slide(DeckPicker.this, MyAnimation.DOWN);
+		        }				
+			}
+		}
+
+		@Override
+		public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+                    .getString(R.string.calculating_statistics), true);
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+    	
+    };
+
 
 	// ----------------------------------------------------------------------------
 	// INNER CLASSES

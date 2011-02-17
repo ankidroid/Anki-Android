@@ -249,7 +249,7 @@ public class StudyOptions extends Activity {
 	public static final int STATISTICS_INTERVALS = 2; 
 	public static final int STATISTICS_REVIEWS = 3;
 	public static final int STATISTICS_REVIEWING_TIME = 4; 
-	public static int sStatisticType;
+	public static int mStatisticType;
 
     /**
 * Callbacks for UI events
@@ -297,11 +297,11 @@ public class StudyOptions extends Activity {
                     openCardBrowser();
                     return;
                 case R.id.studyoptions_statistics:
-                	sStatisticType = -1;
+                	mStatisticType = -1;
                 	mStatisticTypeAlert.show();
                 	return;
                 case R.id.studyoptions_congrats_message:
-                	sStatisticType = 0;
+                	mStatisticType = 0;
                 	openStatistics(0);
                 	return;
                 default:
@@ -737,8 +737,8 @@ public class StudyOptions extends Activity {
     private OnClickListener mStatisticListener = new OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-        	if (sStatisticType == -1) {
-        		sStatisticType = which;
+        	if (mStatisticType == -1) {
+        		mStatisticType = which;
         		dialog.dismiss();
         		mStatisticPeriodAlert.show();
         	} else {
@@ -1191,13 +1191,7 @@ public class StudyOptions extends Activity {
 
 
     private void openStatistics(int period) {
-    	Resources res = getResources();
-    	Statistics.refreshDeckStatistics(this, AnkiDroidApp.deck(), sStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[sStatisticType]);
-    	Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
-    	startActivity(intent);
-        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(StudyOptions.this, MyAnimation.DOWN);
-        }
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
     }
 
 
@@ -1635,6 +1629,39 @@ public class StudyOptions extends Activity {
 
     };
  
+
+    DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+            if (mProgressDialog.isShowing()) {
+                try {
+                    mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+            }
+            if (result.getBoolean()) {
+		    	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
+		    	startActivity(intent);
+		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+		            MyAnimation.slide(StudyOptions.this, MyAnimation.DOWN);
+		        }				
+			}
+		}
+
+		@Override
+		public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+                    .getString(R.string.calculating_statistics), true);
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+    	
+    };
+
 
     class MyGestureDetector extends SimpleOnGestureListener {
     	@Override

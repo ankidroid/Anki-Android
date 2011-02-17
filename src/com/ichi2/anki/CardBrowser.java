@@ -217,7 +217,7 @@ public class CardBrowser extends Activity {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mDeleteCardHandler, new DeckTask.TaskData(mSelectedCard));
+                            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mDeleteCardHandler, new DeckTask.TaskData(0, mDeck, mSelectedCard));
                         }
                     });
             builder.setNegativeButton(res.getString(R.string.no), null);

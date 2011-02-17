@@ -80,7 +80,7 @@ public class Statistics {
             double[][] seriesList;
         	mDeck = Deck.openDeck(dp);
             seriesList = getSeriesList(context, type, period);
-            mDeck.closeDeck();
+            mDeck.closeDeck(false);
             for (int i = 0; i < mSeriesList.length; i++) {
                 for (int j = 0; j < period; j++) {
                 	mSeriesList[i][j] += seriesList[i][j];
@@ -97,7 +97,10 @@ public class Statistics {
 
     public static double[][] getSeriesList(Context context, int type, int period) {
     	double[][] seriesList;
-    	switch (type) {
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
+        try {
+        	switch (type) {
             case StudyOptions.STATISTICS_DUE:
             	seriesList = new double[3][period];
             	seriesList[0] = getCardsByDue(period, false);
@@ -105,7 +108,7 @@ public class Statistics {
             	seriesList[2] = getFailedCardsByDue(period, false);
             	seriesList[0][1] += seriesList[2][1];
             	seriesList[1][1] += seriesList[2][1];
-                return seriesList;
+            	break;
             case StudyOptions.STATISTICS_CUMULATIVE_DUE:
             	seriesList = new double[3][period];
             	seriesList[0] = getCardsByDue(period, true);
@@ -115,22 +118,27 @@ public class Statistics {
                 	seriesList[0][i] += seriesList[2][i];
                 	seriesList[1][i] += seriesList[2][i];
                 }
-                return seriesList;
+            	break;
             case StudyOptions.STATISTICS_INTERVALS:
             	seriesList = new double[1][period];
             	seriesList[0] = getCardsByInterval(period);
-                return seriesList;
+            	break;
             case StudyOptions.STATISTICS_REVIEWS:
             	seriesList = new double[1][period];
                 seriesList[0] = getReviews(period);
-                return seriesList;
+            	break;
             case StudyOptions.STATISTICS_REVIEWING_TIME:
             	seriesList = new double[1][period];
                 seriesList[0] = getReviewTime(period);
-                return seriesList;
+            	break;
             default:
-                return null;
+            	seriesList = null;
+        	}
+        	ankiDB.getDatabase().setTransactionSuccessful();
+        } finally {
+            ankiDB.getDatabase().endTransaction();
         }
+        return seriesList;
     }
 
 
