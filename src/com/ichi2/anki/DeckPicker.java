@@ -132,6 +132,8 @@ public class DeckPicker extends Activity implements Runnable {
 	private int mTotalCards = 0;
 
 	int mStatisticType;
+	int mLoadingFinished; 
+
 	/**
      * Swipe Detection
      */    
@@ -200,6 +202,7 @@ public class DeckPicker extends Activity implements Runnable {
 			mDeckListAdapter.notifyDataSetChanged();
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
 			setTitleText();
+			enableButtons(mLoadingFinished == 0);
 		}
 	};
 
@@ -503,11 +506,11 @@ public class DeckPicker extends Activity implements Runnable {
 			    		deckPaths[i] = file.getAbsolutePath();
 			    		i++;
 					}
-			    	Statistics.refreshAllDeckStatistics(DeckPicker.this, deckPaths, mStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[which]), res.getStringArray(R.array.statistics_type_labels)[mStatisticType]);
+			    	Statistics.refreshAllDeckStatistics(DeckPicker.this, deckPaths, mStatisticType, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[which]), res.getStringArray(R.array.statistics_type_labels)[mStatisticType] + " " + res.getString(R.string.statistics_all_decks));
 			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
 			    	startActivity(intent);
 			        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-			            MyAnimation.slide(DeckPicker.this, MyAnimation.LEFT);
+			            MyAnimation.slide(DeckPicker.this, MyAnimation.DOWN);
 			        }
 		    	}
         	}
@@ -614,6 +617,12 @@ public class DeckPicker extends Activity implements Runnable {
 	}
 
 
+	private void enableButtons(boolean enabled) {
+		mSyncAllButton.setEnabled(enabled);
+		mStatisticsAllButton.setEnabled(enabled);		
+	}
+
+
 	private void initDialogs() {
 		// Sync Log dialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -646,6 +655,9 @@ public class DeckPicker extends Activity implements Runnable {
         switch (item.getItemId()) {
             case MENU_CREATE_DECK:
                 startActivity(new Intent(DeckPicker.this, DeckCreator.class));;
+                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                    MyAnimation.slide(DeckPicker.this, MyAnimation.RIGHT);
+                }
                 return true;
 
             case MENU_ABOUT:
@@ -675,7 +687,10 @@ public class DeckPicker extends Activity implements Runnable {
 
 		if (dir.exists() && dir.isDirectory() && fileList != null) {
 			len = fileList.length;
+			mLoadingFinished = len;
+			enableButtons(false);
 		}
+
 		mFileList = fileList;
 		if (len > 0 && fileList != null) {
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
@@ -830,6 +845,7 @@ public class DeckPicker extends Activity implements Runnable {
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
+						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);
 					}

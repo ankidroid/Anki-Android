@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -128,7 +129,19 @@ public class DeckCreator extends Activity {
     private void closeDeckCreator() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(DeckCreator.this, MyAnimation.RIGHT);
+            MyAnimation.slide(DeckCreator.this, MyAnimation.LEFT);
         }    
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Log.i(AnkiDroidApp.TAG, "DeckCreator - onBackPressed()");
+            closeDeckCreator();
+            MetaDB.closeDB();
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

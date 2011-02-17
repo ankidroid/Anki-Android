@@ -88,6 +88,8 @@ public class StudyOptions extends Activity {
     private static final int MENU_PREFERENCES = 5;
     private static final int MENU_ADD_FACT = 6;
     private static final int MENU_MORE_OPTIONS = 7;
+    private static final int MENU_FEEDBACK = 8;
+
     /**
 * Available options performed by other activities
 */
@@ -189,7 +191,6 @@ public class StudyOptions extends Activity {
     private CheckBox mNightMode;
     private Button mCardBrowser;
     private Button mStatisticsButton;
-    private Button mFeedbackButton;
     
     /**
 * UI elements for "More Options" dialog
@@ -299,10 +300,10 @@ public class StudyOptions extends Activity {
                 	sStatisticType = -1;
                 	mStatisticTypeAlert.show();
                 	return;
-                case R.id.studyoptions_feedback:
-                	startFeedback();
+                case R.id.studyoptions_congrats_message:
+                	sStatisticType = 0;
+                	openStatistics(0);
                 	return;
-                	
                 default:
                     return;
             }
@@ -593,7 +594,6 @@ public class StudyOptions extends Activity {
         mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
         mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
         mStatisticsButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
-        mFeedbackButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_feedback);
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
@@ -619,7 +619,6 @@ public class StudyOptions extends Activity {
         mToggleCram.setOnClickListener(mButtonClickListener);
         mCardBrowser.setOnClickListener(mButtonClickListener);
         mStatisticsButton.setOnClickListener(mButtonClickListener);
-        mFeedbackButton.setOnClickListener(mButtonClickListener);
         
         mEditNewPerDay.addTextChangedListener(new TextWatcher() {
         	public void afterTextChanged(Editable s) {
@@ -702,6 +701,7 @@ public class StudyOptions extends Activity {
         mCongratsView = getLayoutInflater().inflate(R.layout.studyoptions_congrats, null);
 
         mTextCongratsMessage = (TextView) mCongratsView.findViewById(R.id.studyoptions_congrats_message);
+        mTextCongratsMessage.setOnClickListener(mButtonClickListener);
         mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
         mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
         mButtonCongratsOpenOtherDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_open_other_deck);
@@ -1089,7 +1089,8 @@ public class StudyOptions extends Activity {
         item.setIcon(R.drawable.ic_menu_preferences);
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
         item.setIcon(R.drawable.ic_menu_home);
-
+        item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
+        item.setIcon(R.drawable.ic_menu_send);
         return true;
     }
 
@@ -1153,6 +1154,9 @@ public class StudyOptions extends Activity {
                 }
                 return true;
 
+            case MENU_FEEDBACK:
+            	startFeedback();
+            	return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -1192,7 +1196,7 @@ public class StudyOptions extends Activity {
     	Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
     	startActivity(intent);
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
+            MyAnimation.slide(StudyOptions.this, MyAnimation.DOWN);
         }
     }
 

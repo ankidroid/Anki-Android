@@ -125,7 +125,7 @@ public class ChartBuilder extends Activity {
     public void closeChartBuilder() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(this, MyAnimation.RIGHT);
+            MyAnimation.slide(this, MyAnimation.UP);
         }
     }
 
@@ -226,11 +226,10 @@ public class ChartBuilder extends Activity {
             mRenderer.setXTitle(Statistics.axisLabels[0]);
             mRenderer.setYTitle(Statistics.axisLabels[1]);
             mRenderer.setZoomEnabled(false, false);
-            if (Statistics.mSeriesList[0][Statistics.xAxisData.length - 1] < 100) {
-                mRenderer.setMargins(new int[] { 15, 42, 25, 0 });
+            if (Statistics.mSeriesList[0][0] > 100 || Statistics.mSeriesList[0][1] > 100 || Statistics.mSeriesList[0][Statistics.mSeriesList[0].length - 1] > 100) {
+                mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
             } else {
-
-                mRenderer.setMargins(new int[] { 15, 58, 25, 0 });
+                mRenderer.setMargins(new int[] { 15, 42, 25, 0 });
             }
             mRenderer.setPanEnabled(true, false);
             mRenderer.setPanLimits(mPan);
