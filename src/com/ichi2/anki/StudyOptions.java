@@ -258,8 +258,6 @@ public class StudyOptions extends Activity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.studyoptions_start:
-                    Deck d = null;
-                    d.reset();
                     openReviewer();
                     return;
                 case R.id.studyoptions_cram:
