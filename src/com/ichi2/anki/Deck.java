@@ -2416,9 +2416,7 @@ public class Deck {
         return mUtcOffset;
     }
     public void setUtcOffset() {
-        // 4am
-        Calendar cal = Calendar.getInstance();
-        mUtcOffset = 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+        mUtcOffset = Utils.utcOffset();
     }
 
 
@@ -4494,4 +4492,30 @@ public class Deck {
         return results;
     }
 
+    /**
+     * Initialize an empty deck that has just been creating by copying the existing "empty.anki" file.
+     * 
+     * From Damien:
+     * Just copying a file is not sufficient - you need to give each model, cardModel and fieldModel new ids as well, and make sure they are all still linked up. If you don't do that, and people modify one model and then import/export one deck into another, the models will be treated as identical even though they have different layouts, and half the cards will end up corrupted.
+     *  It's only the IDs that you have to worry about, and the utcOffset IIRC.
+     */
+    public static synchronized void initializeEmptyDeck(String deckPath) {
+        AnkiDb db = AnkiDatabaseManager.getDatabase(deckPath);
+        
+        // Regenerate IDs.
+        long modelId = Utils.genID();
+        db.getDatabase().execSQL("UPDATE models SET id=" + modelId);
+        db.getDatabase().execSQL("UPDATE cardModels SET id=" + Utils.genID() + " where ordinal=0;");
+        db.getDatabase().execSQL("UPDATE cardModels SET id=" + Utils.genID() + " where ordinal=1;");
+        db.getDatabase().execSQL("UPDATE fieldModels SET id=" + Utils.genID() + " where ordinal=0;");
+        db.getDatabase().execSQL("UPDATE fieldModels SET id=" + Utils.genID() + " where ordinal=1;");
+
+        // Update columns that refer to modelId.
+        db.getDatabase().execSQL("UPDATE fieldModels SET modelId=" + modelId);
+        db.getDatabase().execSQL("UPDATE cardModels SET modelId=" + modelId);
+        db.getDatabase().execSQL("UPDATE decks SET currentModelId=" + modelId);
+        
+        // Set the UTC offset.
+        db.getDatabase().execSQL("UPDATE decks SET utcOffset=" + Utils.utcOffset());
+    }
 }

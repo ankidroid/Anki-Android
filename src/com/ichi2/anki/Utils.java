@@ -729,4 +729,13 @@ public class Utils {
         }
         return checksum(new String(bytes));
     }
+    
+    /**
+     * Calculate the UTC offset
+     */
+    public static double utcOffset() {
+        Calendar cal = Calendar.getInstance();
+        // 4am
+        return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+    }
 }

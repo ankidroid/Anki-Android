@@ -95,8 +95,6 @@ public class DeckCreator extends Activity {
     private boolean createDeck(String filename) {
         Log.d(AnkiDroidApp.TAG, "Creating deck: " + filename);
         
-        // TODO: check filename validity
-        
         filename = filename + ".anki";
         
         // If decks directory does not exist, create it.
@@ -120,6 +118,9 @@ public class DeckCreator extends Activity {
             Log.e(AnkiDroidApp.TAG, "onCreate - The copy of empty.anki to the SD card failed.");
             return false;
         }
+        
+        Deck.initializeEmptyDeck(mPrefDeckPath + filename + ".anki");
+        
         return true;
     }
     
