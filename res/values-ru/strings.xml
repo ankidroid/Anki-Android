@@ -330,6 +330,10 @@
   <string name="redo">Возврат</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Сброс языка</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Сброс языка</string>
+  <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
+  <string name="optimize_deck_title">Optimize database</string>
+  <string name="optimize_deck_dialog">Optimizing database</string>
+  <string name="optimize_deck_message">Database optimized.\nShrunk by %d kb</string>
   <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
   <string name="delete_deck_title">Удалить колоду</string>
   <string name="delete_deck_message">Вы действительно хотите удалить колоду %s?</string>
@@ -343,12 +347,15 @@
   <string name="statistics_period_y_axis">карты</string>
   <string name="statistics_period_x_axis">дни</string>
   <string name="statistics_period_x_axis_minutes">минут</string>
-  <string name="statistics_all_cards">Все карты</string>
+  <string name="statistics_new_cards">New cards</string>
+  <string name="statistics_young_cards">Young cards</string>
   <string name="statistics_mature_cards">Развитые карты</string>
   <string name="statistics_failed_cards">Неудачные карты</string>
   <string name="statistics_fullscreen">Полноэкранный режим</string>
   <string name="statistics_zoom_in">Увеличить</string>
   <string name="statistics_zoom_out">Уменьшить</string>
+  <string name="statistics_all_decks">(all decks)</string>
+  <string name="calculating_statistics">Calculating statistics</string>
   <string name="feedback_title">Обратная связь</string>
   <string name="feedback_default_text">Пожалуйста, введите Ваш отзыв здесь и нажмите кнопку OK, чтобы отправить его.</string>
   <string name="feedback_result_fail">К сожалению, мы не смогли передать ваш отзыв. Пожалуйста, попробуйте еще раз.</string>

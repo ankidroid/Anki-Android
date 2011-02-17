@@ -42,6 +42,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_LOAD_CARDS = 8;
     public static final int TASK_TYPE_DELETE_CARD = 9;
     public static final int TASK_TYPE_LOAD_STATISTICS = 10;
+    public static final int TASK_TYPE_OPTIMIZE_DECK = 11;
 
     /**
      * Possible outputs trying to load a deck.
@@ -133,6 +134,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_LOAD_STATISTICS:
                 return doInBackgroundLoadStatistics(params);
+
+            case TASK_TYPE_OPTIMIZE_DECK:
+                return doInBackgroundOptimizeDeck(params);
 
             default:
                 return null;
@@ -404,6 +408,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    private TaskData doInBackgroundOptimizeDeck(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundOptimizeDeck");
+    	Deck deck = params[0].getDeck();
+        long result = 0;
+    	result = deck.optimizeDeck();
+        return new TaskData(deck, result);
+    }
+
+
     public static interface TaskListener {
         public void onPreExecute();
 
@@ -476,6 +489,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         public TaskData(Deck deck, String order) {
             mDeck = deck;
             mOrder = order;
+        }
+
+ 
+        public TaskData(Deck deck, long value) {
+            mDeck = deck;
+            mLong = value;
         }
 
  

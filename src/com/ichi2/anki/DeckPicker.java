@@ -87,6 +87,7 @@ public class DeckPicker extends Activity implements Runnable {
 	private static final int DIALOG_DELETE_DECK = 3;
 	private static final int DIALOG_SELECT_STATISTICS_TYPE = 4;
 	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 5;	
+	private static final int DIALOG_OPTIMIZE_DATABASE = 6;
 
 	/**
 	 * Menus
@@ -470,6 +471,12 @@ public class DeckPicker extends Activity implements Runnable {
 	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_period_labels), 0, mStatisticListener);
 	        dialog = builder.create();
 			break;
+		case DIALOG_OPTIMIZE_DATABASE:
+    		builder.setTitle(res.getString(R.string.optimize_deck_title));
+    		builder.setPositiveButton(res.getString(R.string.ok), null);
+			builder.setIcon(android.R.drawable.ic_dialog_alert);
+			dialog = builder.create();
+			break;
 		default:
 			dialog = null;
 		}
@@ -538,6 +545,11 @@ public class DeckPicker extends Activity implements Runnable {
 			return true;
 		case R.id.reset_language:
 			resetDeckLanguages(data.get("filepath"));
+			return true;
+		case R.id.optimize_deck:
+			String deckPath = data.get("filepath");
+			Deck deck = Deck.openDeck(deckPath);
+	    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, null));
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -1011,7 +1023,37 @@ public class DeckPicker extends Activity implements Runnable {
     };
 
 
-	// ----------------------------------------------------------------------------
+    DeckTask.TaskListener mOptimizeDeckHandler = new DeckTask.TaskListener() {
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+            if (mProgressDialog.isShowing()) {
+                try {
+                    mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+            }
+            result.getDeck().closeDeck();
+    		AlertDialog dialog = (AlertDialog) onCreateDialog(DIALOG_OPTIMIZE_DATABASE);
+    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.optimize_deck_message), Math.round(result.getLong() / 1024)));
+    		dialog.show();
+		}
+
+		@Override
+		public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+                    .getString(R.string.optimize_deck_dialog), true);
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+    	
+    };
+
+
+    // ----------------------------------------------------------------------------
 	// INNER CLASSES
 	// ----------------------------------------------------------------------------
 

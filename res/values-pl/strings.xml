@@ -330,6 +330,10 @@
   <string name="redo">Ponów</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
+  <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
+  <string name="optimize_deck_title">Optimize database</string>
+  <string name="optimize_deck_dialog">Optimizing database</string>
+  <string name="optimize_deck_message">Database optimized.\nShrunk by %d kb</string>
   <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
   <string name="delete_deck_title">Skasuj talię</string>
   <string name="delete_deck_message">Na pewno chcesz skasować talię %s?</string>
@@ -343,12 +347,15 @@
   <string name="statistics_period_y_axis">Cards</string>
   <string name="statistics_period_x_axis">Days</string>
   <string name="statistics_period_x_axis_minutes">Minutes</string>
-  <string name="statistics_all_cards">All cards</string>
+  <string name="statistics_new_cards">New cards</string>
+  <string name="statistics_young_cards">Young cards</string>
   <string name="statistics_mature_cards">Mature cards</string>
   <string name="statistics_failed_cards">Failed cards</string>
   <string name="statistics_fullscreen">Toggle Fullscreen</string>
   <string name="statistics_zoom_in">Zoom in</string>
   <string name="statistics_zoom_out">Zoom out</string>
+  <string name="statistics_all_decks">(all decks)</string>
+  <string name="calculating_statistics">Calculating statistics</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
   <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>

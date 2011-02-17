@@ -62,7 +62,6 @@ public class Statistics {
             xAxisData = xAxisData(period, true);
         } else {
             Titles = new String[1];
-            Titles[0] = res.getString(R.string.statistics_all_cards);
             sSeriesList = new double[1][period];
             switch (type) {
             	case TYPE_INTERVALS:

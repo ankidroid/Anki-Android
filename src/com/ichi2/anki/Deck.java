@@ -1015,6 +1015,21 @@ public class Deck {
         return mModified > mLastLoaded;
     }
 
+
+    public long optimizeDeck() {
+    	File file = new File(mDeckPath);
+		long size = file.length();
+    	commitToDB();
+    	Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
+        getDB().getDatabase().execSQL("VACUUM");
+    	Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
+        getDB().getDatabase().execSQL("ANALYZE");
+        file = new File(mDeckPath);
+        size -= file.length();
+        return size;
+    }
+
+
     /*
      * Queue Management*****************************
      */
