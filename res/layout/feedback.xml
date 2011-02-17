@@ -7,7 +7,31 @@
 	android:paddingTop="15dp"
 	android:paddingRight="10dp"
 	android:paddingBottom="15dp">
-		
+
+	<TextView android:id="@+id/tvErrorCollectionInformation"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@+string/error_collection_information"></TextView>
+	<ScrollView android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/scrollView1">
+		<EditText android:id="@+id/etFeedbackText"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="15dp"
+			android:gravity="top"
+			android:minLines="4"
+			android:hint="@string/feedback_default_text"
+			android:text="EditText"></EditText>
+	</ScrollView>
+	<TextView android:id="@+id/textView3"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="TextView"></TextView>
+	<ListView android:id="@+id/lvErrorList"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:fastScrollEnabled="true"/>
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
@@ -34,27 +58,4 @@
 			android:gravity="center"
 			android:layout_weight="1"/>
 	</LinearLayout>
-	<TextView android:id="@+id/textView3"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="TextView"></TextView>
-	<ScrollView android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/scrollView1">
-		<EditText android:id="@+id/etFeedbackText"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:paddingBottom="15dp"
-			android:gravity="top"
-			android:minLines="4"
-			android:hint="@string/feedback_default_text"
-			android:text="EditText"></EditText>
-	</ScrollView>
-	<ListView android:id="@+id/lvErrorList"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"></ListView>
-	<TextView android:id="@+id/tvErrorCollectionInformation"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@+string/error_collection_information"></TextView>
 </LinearLayout>

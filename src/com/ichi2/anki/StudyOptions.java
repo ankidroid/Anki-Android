@@ -258,6 +258,8 @@ public class StudyOptions extends Activity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.studyoptions_start:
+                    Deck d = null;
+                    d.reset();
                     openReviewer();
                     return;
                 case R.id.studyoptions_cram:
@@ -1181,7 +1183,7 @@ public class StudyOptions extends Activity {
     }
     
     private void startFeedback() {
-        Intent feedbackReporter = new Intent(StudyOptions.this, Feedback.class);
+        Intent feedbackReporter = new Intent(StudyOptions.this, ErrorReporter.class);
         startActivityForResult(feedbackReporter, REPORT_FEEDBACK);
     }
 

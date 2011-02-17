@@ -14,7 +14,6 @@
 
 package com.ichi2.anki;
 
-import android.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,6 +21,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -65,6 +65,13 @@ public class ErrorReporter extends Activity {
     protected ListView mErrorListView;
     
     @Override
+    public void onBackPressed() {
+        deleteFiles(true, false);
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -81,13 +88,13 @@ public class ErrorReporter extends Activity {
                 Log.e(AnkiDroidApp.TAG, e.toString());
             }
 
-            //deleteFiles();
+            deleteFiles(true, false);
             setResult(RESULT_OK);
             finish();
 
             return;
         } else if (reportErrorMode.equals(REPORT_NEVER)) { // Never report
-            //deleteFiles();
+            deleteFiles(false, false);
             setResult(RESULT_OK);
             finish();
 
@@ -96,9 +103,9 @@ public class ErrorReporter extends Activity {
             setContentView(R.layout.feedback);
 
             // TextView tvErrorText = (TextView) findViewById(R.id.tvErrorText);
-            Button btnSendAll = (Button) findViewById(R.id.btnSendAll);
-            Button btnSendMostRecent = (Button) findViewById(R.id.btnSendMostRecent);
-            Button btnClearAll = (Button) findViewById(R.id.btnClearAll);
+            Button btnSendAll = (Button) findViewById(R.id.btnFeedbackSendAll);
+            Button btnSendMostRecent = (Button) findViewById(R.id.btnFeedbackSendLatest);
+            Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);
             
             ListView mErrorListView = (ListView) findViewById(R.id.lvErrorList);
 
@@ -115,8 +122,8 @@ public class ErrorReporter extends Activity {
                 }
             
                 mErrorAdapter = new SimpleAdapter(this, mErrorReports,
-                        R.layout.error_item, new String[] {"title", "state", "state"}, new int[] {
-                                R.id.error_item_text, R.id.error_item_icon, error_item_progress });
+                        R.layout.error_item, new String[] {"name", "state"}, new int[] {
+                                R.id.error_item_text, R.id.error_item_progress });
                 mErrorAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
                     @Override
                     public boolean setViewValue(View view, Object arg1, String text) {
@@ -157,23 +164,32 @@ public class ErrorReporter extends Activity {
                     } catch (Exception e) {
                         Log.e(AnkiDroidApp.TAG, e.toString());
                     }
+                    refreshErrorListView();
+                }
+            });
 
-//                    deleteFiles();
-                    setResult(RESULT_OK);
-                    finish();
+            btnSendMostRecent.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        deleteFiles(false, true);
+                        refreshErrorListView();
+                        sendErrorReport();
+                    } catch (Exception e) {
+                        Log.e(AnkiDroidApp.TAG, e.toString());
+                    }
+                    refreshErrorListView();
                 }
             });
 
             btnClearAll.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deleteFiles(false);
-                    setResult(RESULT_OK);
-                    finish();
+                    deleteFiles(false, false);
+                    refreshErrorListView();
                 }
             });
-
-            //tvErrorText.setText(getResources().getQuantityString(R.plurals.error_message, numErrors, numErrors));
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         }
     }
 
@@ -196,12 +212,17 @@ public class ErrorReporter extends Activity {
         }
     }
 
-    private void deleteFiles(boolean keepLatest) {
+    private void deleteFiles(boolean onlyProcessed, boolean keepLatest) {
         
         for (int i = (keepLatest? 1: 0); i < mErrorReports.size(); ) {
             try {
-                deleteFile(mErrorReports.get(i).get("name"));
-                mErrorReports.remove(i);
+                String errorState = mErrorReports.get(i).get("state");
+                if (!onlyProcessed || errorState.equals(STATE_SUCCESSFUL)) {
+                    deleteFile(mErrorReports.get(i).get("name"));
+                    mErrorReports.remove(i);
+                } else {
+                    i++;
+                }
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, String.format("Could not delete file: %s", mErrorReports.get(i)));
             }
@@ -211,7 +232,8 @@ public class ErrorReporter extends Activity {
     private void sendErrorReport() throws IOException {
         final String url = getString(R.string.error_post_url);
         
-        for (HashMap<String, String> error : mErrorReports) {
+        for (int i = 0; i < mErrorReports.size(); i++) {
+            HashMap<String, String> error = mErrorReports.get(i);
             try {
                 String filename = error.get("name");
             	Date ts = new Date();
@@ -259,7 +281,7 @@ public class ErrorReporter extends Activity {
 
                 br.close();
                 
-                postReport(pairs);
+                postReport(i, pairs);
             } catch (Exception ex) {
                 Log.e(AnkiDroidApp.TAG, ex.toString());
             }
@@ -275,7 +297,10 @@ public class ErrorReporter extends Activity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "Send error report finished, result: " + ((String) data.result));
+            int errorIndex = (Integer)data.data[1];
+            mErrorReports.get(errorIndex).put("state", STATE_SUCCESSFUL);
+            refreshErrorListView();
+            Log.i(AnkiDroidApp.TAG, "Send error report " + errorIndex + " finished, result: " + ((String) data.result));
             // TODO: Report success/failure and any server side message
         }
 
@@ -291,9 +316,10 @@ public class ErrorReporter extends Activity {
         }
     };
 
-    private void postReport(List<NameValuePair> values) {
+    private void postReport(int index, List<NameValuePair> values) {
         final String url = getString(R.string.error_post_url);
-        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values}));
+        mErrorReports.get(index).put("state", STATE_UPLOADING);
+        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, index, values}));
     }
 
     private void postFeedback(List<NameValuePair> values) {
