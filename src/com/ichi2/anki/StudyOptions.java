@@ -1180,7 +1180,7 @@ public class StudyOptions extends Activity {
     }
     
     private void startFeedback() {
-        Intent feedbackReporter = new Intent(StudyOptions.this, Feedback.class);
+        Intent feedbackReporter = new Intent(StudyOptions.this, ErrorReporter.class);
         startActivityForResult(feedbackReporter, REPORT_FEEDBACK);
     }
 
