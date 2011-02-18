@@ -1368,8 +1368,9 @@ public class StudyOptions extends Activity {
             reloadDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
             reloadDeck();
-        }
-        else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
+        } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
+        } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
+        	showContentView(CONTENT_STUDY_OPTIONS);
         }
     }
 
@@ -1638,7 +1639,7 @@ public class StudyOptions extends Activity {
             }
             if (result.getBoolean()) {
 		    	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
-		    	startActivity(intent);
+		    	startActivityForResult(intent, STATISTICS);
 		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 		            MyAnimation.slide(StudyOptions.this, MyAnimation.DOWN);
 		        }				
@@ -1669,7 +1670,12 @@ public class StudyOptions extends Activity {
                     } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
                         // right
     					openDeckPicker();
+                    } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < SWIPE_MAX_OFF_PATH) {
+                        // down
+                    	mStatisticType = 0;
+                    	openStatistics(0);
                     }
+
                 }
                 catch (Exception e) {
                 	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());

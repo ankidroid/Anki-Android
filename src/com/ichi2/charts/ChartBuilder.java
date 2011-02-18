@@ -33,12 +33,15 @@ import android.content.res.Resources;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,6 +50,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.MyAnimation;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Statistics;
+import com.ichi2.anki.StudyOptions;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class ChartBuilder extends Activity {
@@ -66,6 +70,12 @@ public class ChartBuilder extends Activity {
     private static final int MENU_ZOOM_IN = 1;
     private static final int MENU_ZOOM_OUT = 2;
 
+	/**
+     * Swipe Detection
+     */    
+ 	private GestureDetector gestureDetector;
+ 	View.OnTouchListener gestureListener;
+ 	private boolean mSwipeEnabled;
 
     @Override
     protected void onRestoreInstanceState(Bundle savedState) {
@@ -153,6 +163,7 @@ public class ChartBuilder extends Activity {
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mFullScreen = preferences.getBoolean("fullScreen", false);
+		mSwipeEnabled = preferences.getBoolean("swipe", false);
         return preferences;
     }
 
@@ -261,6 +272,15 @@ public class ChartBuilder extends Activity {
         } else {
             mChartView.repaint();
         }
+		gestureDetector = new GestureDetector(new MyGestureDetector());
+        mChartView.setOnTouchListener(new View.OnTouchListener() {
+        	public boolean onTouch(View v, MotionEvent event) {
+        		if (gestureDetector.onTouchEvent(event)) {
+        			return true;
+        		}
+        		return false;
+        		}
+        	});
     }
 
 
@@ -271,5 +291,29 @@ public class ChartBuilder extends Activity {
             closeChartBuilder();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    class MyGestureDetector extends SimpleOnGestureListener {	
+    	@Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (mSwipeEnabled) {
+                try {
+                	if (e1.getY() - e2.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+                		closeChartBuilder();
+                    }
+       			}
+                catch (Exception e) {
+                  	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
+                }
+            }	            	
+            return false;
+    	}
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (gestureDetector.onTouchEvent(event))
+	        return true;
+	    else
+	    	return false;
     }
 }
