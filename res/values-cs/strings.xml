@@ -215,7 +215,7 @@
   <string name="studyoptions_reviews_due">K zopakování:</string>
   <string name="studyoptions_new_today">Dnes nových:</string>
   <string name="studyoptions_new_total">Nových celkově:</string>
-  <string name="studyoptions_new_cards_per_day">Nových karet na den:</string>
+  <string name="studyoptions_new_cards_per_day">Nových karet na den</string>
   <string name="studyoptions_session_minutes">Limit sezení (minuty):</string>
   <string name="studyoptions_session_questions">Limit sezení (otázky):</string>
   <string name="studyoptions_start">Začít opakovat</string>

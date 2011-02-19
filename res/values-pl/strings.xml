@@ -215,7 +215,7 @@
   <string name="studyoptions_reviews_due">Do przeglądnięcia:</string>
   <string name="studyoptions_new_today">Nowe dzisiaj:</string>
   <string name="studyoptions_new_total">Wszystkie nowe:</string>
-  <string name="studyoptions_new_cards_per_day">Nowe karty na dzień:</string>
+  <string name="studyoptions_new_cards_per_day">Nowe karty na dzień</string>
   <string name="studyoptions_session_minutes">Limit sesji (w minutach):</string>
   <string name="studyoptions_session_questions">Limit sesji (pytania):</string>
   <string name="studyoptions_start">Zacznij powtórki</string>

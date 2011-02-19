@@ -215,7 +215,7 @@
   <string name="studyoptions_reviews_due">Προς επανάληψη:</string>
   <string name="studyoptions_new_today">Νέες σήμερα:</string>
   <string name="studyoptions_new_total">Νέες σύνολο:</string>
-  <string name="studyoptions_new_cards_per_day">Νέες κάρτες ανά μέρα:</string>
+  <string name="studyoptions_new_cards_per_day">Νέες κάρτες ανά μέρα</string>
   <string name="studyoptions_session_minutes">Όριο περιόδου (λεπτά):</string>
   <string name="studyoptions_session_questions">Όριο περιόδου (ερωτήσεις):</string>
   <string name="studyoptions_start">Έναρξη επανάληψης</string>

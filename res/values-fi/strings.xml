@@ -215,7 +215,7 @@
   <string name="studyoptions_reviews_due">Tarkastelujen määrä:</string>
   <string name="studyoptions_new_today">Uutta tänään:</string>
   <string name="studyoptions_new_total">Uusia yhteensä:</string>
-  <string name="studyoptions_new_cards_per_day">Uusia kortteja per päivä:</string>
+  <string name="studyoptions_new_cards_per_day">Uusia kortteja per päivä</string>
   <string name="studyoptions_session_minutes">Istunnon raja (minuuttia):</string>
   <string name="studyoptions_session_questions">Istunnon raja (kysymykset):</string>
   <string name="studyoptions_start">Aloita tarkistaminen</string>

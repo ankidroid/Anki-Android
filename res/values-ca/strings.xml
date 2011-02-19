@@ -215,7 +215,7 @@
   <string name="studyoptions_reviews_due">Pendents de revisar:</string>
   <string name="studyoptions_new_today">Noves avui:</string>
   <string name="studyoptions_new_total">Total de noves:</string>
-  <string name="studyoptions_new_cards_per_day">Noves fitxes per dia:</string>
+  <string name="studyoptions_new_cards_per_day">Noves fitxes per dia</string>
   <string name="studyoptions_session_minutes">Temps màxim (minuts):</string>
   <string name="studyoptions_session_questions">Màxim de fitxes (num.):</string>
   <string name="studyoptions_start">Comença</string>

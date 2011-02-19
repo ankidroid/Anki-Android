@@ -221,7 +221,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="studyoptions_reviews_due">Révisions dues:</string>
   <string name="studyoptions_new_today">Nouvelles aujourd\'hui :</string>
   <string name="studyoptions_new_total">Nouvelles total :</string>
-  <string name="studyoptions_new_cards_per_day">Nouvelles cartes par jour :</string>
+  <string name="studyoptions_new_cards_per_day">Nouvelles cartes par jour </string>
   <string name="studyoptions_session_minutes">Limite de session (minutes) :</string>
   <string name="studyoptions_session_questions">Limite de session (questions) :</string>
   <string name="studyoptions_start">Démarrer l\'apprentisage</string>

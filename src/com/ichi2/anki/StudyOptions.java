@@ -184,8 +184,8 @@ public class StudyOptions extends Activity {
     private TextView mTextDeckName;
     private TextView mTextReviewsDue;
     private TextView mTextNewToday;
+    private TextView mTextETA;
     private TextView mTextNewTotal;
-    private EditText mEditNewPerDay;
     private EditText mEditSessionTime;
     private EditText mEditSessionQuestions;
     private CheckBox mNightMode;
@@ -200,6 +200,7 @@ public class StudyOptions extends Activity {
     private Spinner mSpinnerNewCardSchedule;
     private Spinner mSpinnerRevCardOrder;
     private Spinner mSpinnerFailCardOption;
+    private EditText mEditNewPerDay;
     
     private CheckBox mCheckBoxPerDay;
     private CheckBox mCheckBoxSuspendLeeches;
@@ -334,6 +335,17 @@ public class StudyOptions extends Activity {
             deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
             deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
             // TODO: mSpinnerFailCardOption
+            String inputText = mEditNewPerDay.getText().toString();
+            if (!inputText.equals(Integer.toString(deck.getNewCardsPerDay()))) {
+            	if (inputText.equals("")) {
+            		deck.setNewCardsPerDay(0);                		
+            	} else if (isValidInt(inputText)) {
+            		deck.setNewCardsPerDay(Integer.parseInt(inputText));
+            	} else {
+            		mEditNewPerDay.setText("0");
+            	}
+        		updateValuesFromDeck();
+            }
             boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked(); 
           	deck.setPerDay(mCheckBoxPerDay.isChecked());
           	deck.setSuspendLeeches(mCheckBoxSuspendLeeches.isChecked());
@@ -592,6 +604,7 @@ public class StudyOptions extends Activity {
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
+        mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
         mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
         mNightMode = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_night_mode);
         mNightMode.setChecked(mInvertedColors);
@@ -606,7 +619,6 @@ public class StudyOptions extends Activity {
             }
             });
 
-        mEditNewPerDay = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_new_cards_per_day);
         mEditSessionTime = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_minutes);
         mEditSessionQuestions = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_questions);
 
@@ -614,29 +626,7 @@ public class StudyOptions extends Activity {
         mToggleCram.setOnClickListener(mButtonClickListener);
         mCardBrowser.setOnClickListener(mButtonClickListener);
         mStatisticsButton.setOnClickListener(mButtonClickListener);
-        
-        mEditNewPerDay.addTextChangedListener(new TextWatcher() {
-        	public void afterTextChanged(Editable s) {
-                Deck deck = AnkiDroidApp.deck();
-                String inputText = mEditNewPerDay.getText().toString();
-                if (deck != null) {
-                    if (!inputText.equals(Integer.toString(deck.getNewCardsPerDay()))) {
-                    	if (inputText.equals("")) {
-                    		deck.setNewCardsPerDay(0);                		
-                    	} else if (isValidInt(inputText)) {
-                    		deck.setNewCardsPerDay(Integer.parseInt(inputText));
-                    	} else {
-                    		mEditNewPerDay.setText("0");
-                    	}
-                		updateValuesFromDeck();
-                    }
-                	
-                }
-        	}
-        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-        public void onTextChanged(CharSequence s, int start, int before, int count){}
-        });
-        
+
         mEditSessionTime.addTextChangedListener(new TextWatcher() {
         	public void afterTextChanged(Editable s) {
                 Deck deck = AnkiDroidApp.deck();
@@ -881,6 +871,7 @@ public class StudyOptions extends Activity {
         mSpinnerNewCardSchedule = (Spinner) contentView.findViewById(R.id.studyoptions_new_card_schedule);
         mSpinnerRevCardOrder = (Spinner) contentView.findViewById(R.id.studyoptions_rev_card_order);
         mSpinnerFailCardOption = (Spinner) contentView.findViewById(R.id.studyoptions_fail_card_option);
+        mEditNewPerDay = (EditText) contentView.findViewById(R.id.studyoptions_new_cards_per_day);
         mCheckBoxPerDay = (CheckBox) contentView.findViewById(R.id.studyoptions_per_day);
         mCheckBoxSuspendLeeches = (CheckBox) contentView.findViewById(R.id.studyoptions_suspend_leeches);
 
@@ -900,6 +891,7 @@ public class StudyOptions extends Activity {
         mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
         mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
         mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
+        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
         mCheckBoxPerDay.setChecked(deck.getPerDay());
         mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());
 
@@ -938,7 +930,6 @@ public class StudyOptions extends Activity {
                 // Enable timeboxing in case it was disabled from the previous deck
                 if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().name().equals("cram"))) {
                     mToggleCram.setChecked(false);
-                    mEditNewPerDay.setEnabled(true);
                     mEditSessionTime.setEnabled(true);
                     mEditSessionQuestions.setEnabled(true);
                 }
@@ -990,21 +981,24 @@ public class StudyOptions extends Activity {
 
     private void updateValuesFromDeck() {
         Deck deck = AnkiDroidApp.deck();
+        Resources res = getResources();
         DeckTask.waitToFinish();
         if (deck != null) {
             deck.reset();
             // TODO: updateActives() from anqiqt/ui/main.py
             int reviewCount = deck.getDueCount();
-            setTitle(getResources().getQuantityString(R.plurals.studyoptions_window_title, reviewCount, deck.getDeckName(), reviewCount, deck.getCardCount()));
+            setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, reviewCount, deck.getDeckName(), reviewCount, deck.getCardCount()));
 
             mTextDeckName.setText(deck.getDeckName());
             mTextReviewsDue.setText(String.valueOf(reviewCount));
             mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
-            mTextNewTotal.setText(String.valueOf(deck.getNewCount()));
-
-            if (!mEditNewPerDay.getText().toString().equals(String.valueOf(deck.getNewCardsPerDay())) && !mEditNewPerDay.getText().toString().equals("")) {
-            	mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
+            String etastr = "-";
+            int eta = (int) deck.getStats()[Stats.STATSARRAY_TIME_LEFT];
+            if (eta != -1) {
+            	etastr = Integer.toString(eta / 60);
             }
+            mTextETA.setText(etastr);
+            mTextNewTotal.setText(String.valueOf(deck.getNewCount()));
             if (!mEditSessionTime.getText().toString().equals(String.valueOf(deck.getSessionTimeLimit() / 60)) && !mEditSessionTime.getText().toString().equals("")) {
             	mEditSessionTime.setText(String.valueOf(deck.getSessionTimeLimit() / 60));
             }
@@ -1036,7 +1030,6 @@ public class StudyOptions extends Activity {
     private void onCram() {
         AnkiDroidApp.deck().setupCramScheduler(activeCramTags.toArray(new String[activeCramTags.size()]), cramOrder);
         // Timeboxing only supported using the standard scheduler
-        mEditNewPerDay.setEnabled(false);
         mEditSessionTime.setEnabled(false);
         mEditSessionQuestions.setEnabled(false);
         updateValuesFromDeck();
@@ -1047,7 +1040,6 @@ public class StudyOptions extends Activity {
 */
     private void onCramStop() {
         AnkiDroidApp.deck().setupStandardScheduler();
-        mEditNewPerDay.setEnabled(true);
         mEditSessionTime.setEnabled(true);
         mEditSessionQuestions.setEnabled(true);
     }
@@ -1473,7 +1465,6 @@ public class StudyOptions extends Activity {
             // showControls(false);
 
         	mToggleCram.setChecked(false);
-            mEditNewPerDay.setEnabled(true);
             mEditSessionTime.setEnabled(true);
             mEditSessionQuestions.setEnabled(true);
             

@@ -297,7 +297,8 @@
 <string name="studyoptions_reviews_due">Reviews due:</string>
 <string name="studyoptions_new_today">New today:</string>
 <string name="studyoptions_new_total">New total:</string>
-<string name="studyoptions_new_cards_per_day">New cards per day:</string>
+<string name="studyoptions_eta">Estimated time (min):</string>
+<string name="studyoptions_new_cards_per_day">New cards per day</string>
 <string name="studyoptions_session_minutes">Session limit (minutes):</string>
 <string name="studyoptions_session_questions">Session limit (questions):</string>
 <string name="studyoptions_start">Start Reviewing</string>

@@ -215,7 +215,7 @@
   <string name="studyoptions_reviews_due">Repasos programados:</string>
   <string name="studyoptions_new_today">Nuevas hoy:</string>
   <string name="studyoptions_new_total">Nuevas en total:</string>
-  <string name="studyoptions_new_cards_per_day">Tarjetas nuevas por día:</string>
+  <string name="studyoptions_new_cards_per_day">Tarjetas nuevas por día</string>
   <string name="studyoptions_session_minutes">Límite por sesión (minutos):</string>
   <string name="studyoptions_session_questions">Límite por sesión (preguntas):</string>
   <string name="studyoptions_start">Empezar a repasar</string>

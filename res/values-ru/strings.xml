@@ -215,7 +215,7 @@
   <string name="studyoptions_reviews_due">Повторов:</string>
   <string name="studyoptions_new_today">Сегодня новых:</string>
   <string name="studyoptions_new_total">Новые всего:</string>
-  <string name="studyoptions_new_cards_per_day">Новых карт в день:</string>
+  <string name="studyoptions_new_cards_per_day">Новых карт в день</string>
   <string name="studyoptions_session_minutes">Длительность урока (минут):</string>
   <string name="studyoptions_session_questions">Вопросов в уроке:</string>
   <string name="studyoptions_start">Начать Просмотр</string>

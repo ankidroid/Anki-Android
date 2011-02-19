@@ -215,7 +215,7 @@
   <string name="studyoptions_reviews_due">Fällige Wiederholungen:</string>
   <string name="studyoptions_new_today">Heute neu:</string>
   <string name="studyoptions_new_total">Neu insgesamt:</string>
-  <string name="studyoptions_new_cards_per_day">Neue Karten pro Tag:</string>
+  <string name="studyoptions_new_cards_per_day">Neue Karten pro Tag</string>
   <string name="studyoptions_session_minutes">Sitzungslimit (Minuten):</string>
   <string name="studyoptions_session_questions">Sitzungslimit (Fragen):</string>
   <string name="studyoptions_start">Lernen starten</string>
