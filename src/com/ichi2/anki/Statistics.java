@@ -120,7 +120,6 @@ public class Statistics {
             	seriesList[0] = getCardsByDue(period, false);
             	seriesList[1] = getMatureCardsByDue(period, false);
             	seriesList[2] = getFailedCardsByDue(period, false);
-            	seriesList[0][0] += seriesList[2][0];
             	seriesList[0][1] += seriesList[2][1];
             	seriesList[1][0] += seriesList[2][0];
             	seriesList[1][1] += seriesList[2][1];
@@ -130,7 +129,8 @@ public class Statistics {
             	seriesList[0] = getCardsByDue(period, true);
             	seriesList[1] = getMatureCardsByDue(period, true);
             	seriesList[2] = getFailedCardsByDue(period, true);
-                for (int i = 0; i < period; i++) {
+            	seriesList[1][0] += seriesList[2][0];
+                for (int i = 1; i < period; i++) {
                 	seriesList[0][i] += seriesList[2][i];
                 	seriesList[1][i] += seriesList[2][i];
                 }
