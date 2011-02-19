@@ -139,6 +139,7 @@
 		<item>new widget</item>
 		<item>better undo/redo behaviour</item>
 		<item>slider controls</item>
+		<item>language selection</item>
 		<item>more languages</item>
 	</string-array>
 </resources>

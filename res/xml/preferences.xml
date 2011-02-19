@@ -32,6 +32,11 @@
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_qadisplay">
+		<ListPreference
+			android:title="@string/language"
+			android:summary="@string/language_summ"
+			android:key="language"
+			android:defaultValue="0"/>
 		<CheckBoxPreference
 			android:title="@string/show_next_review_time"
 			android:defaultValue="true"

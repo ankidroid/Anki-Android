@@ -298,7 +298,7 @@ public class ChartBuilder extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-                	if (e1.getY() - e2.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+                	if (e1.getY() - e2.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath) {
                 		closeChartBuilder();
                     }
        			}

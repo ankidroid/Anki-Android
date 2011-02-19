@@ -26,6 +26,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -65,6 +66,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 
 public class StudyOptions extends Activity {
     /**
@@ -240,9 +242,9 @@ public class StudyOptions extends Activity {
     */    
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
-	public static int SWIPE_MIN_DISTANCE = 150;
-	public static int SWIPE_MAX_OFF_PATH = 70;
-	public static int SWIPE_THRESHOLD_VELOCITY = 200;
+	public static int sSwipeMinDistance = 150;
+	public static int sSwipeMaxOffPath = 70;
+	public static int sSwipeThresholdVelocity = 200;
 
     /**
 	* Statistics
@@ -438,7 +440,7 @@ public class StudyOptions extends Activity {
        	};
     }
 
-    
+
 //    @Override 
 //    public void onConfigurationChanged(Configuration newConfig){
 //    	super.onConfigurationChanged(newConfig); 
@@ -1479,13 +1481,14 @@ public class StudyOptions extends Activity {
             mNewVersion = true;
         }
 
-        SWIPE_MIN_DISTANCE = preferences.getInt("swipe_sensibility", 100);
-        if (SWIPE_MIN_DISTANCE != 100) {
-        	SWIPE_MAX_OFF_PATH = (int) (SWIPE_MIN_DISTANCE * 100 / 70);
-        	SWIPE_THRESHOLD_VELOCITY = (int) (SWIPE_MIN_DISTANCE * 2);
+        sSwipeMinDistance = preferences.getInt("swipe_sensibility", 100);
+        if (sSwipeMinDistance != 100) {
+        	sSwipeMaxOffPath = (int) (sSwipeMinDistance * 100 / 70);
+        	sSwipeThresholdVelocity = (int) (sSwipeMinDistance * 2);
         }
 
         mInvertedColors = preferences.getBoolean("invertedColors", false);
+       	setLanguage(preferences.getString("language", ""));
         return preferences;
     }
 
@@ -1516,6 +1519,19 @@ public class StudyOptions extends Activity {
         }
         builder.append("</ul>");
     	return builder.toString();
+    }
+
+
+    private void setLanguage(String language) {
+    	Locale locale;
+    	if (language.equals("")) {
+        	locale = Locale.getDefault();
+    	} else {
+        	locale = new Locale(language);    		
+    	}
+        Configuration config = new Configuration();
+        config.locale = locale;
+        this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
     }
 
 
@@ -1726,13 +1742,13 @@ public class StudyOptions extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
             	try {
-    				if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
+    				if (e1.getX() - e2.getX() > sSwipeMinDistance && Math.abs(velocityX) > sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < sSwipeMaxOffPath) {
                         // left
                     	openReviewer();
-                    } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
+                    } else if (e2.getX() - e1.getX() > sSwipeMinDistance && Math.abs(velocityX) > sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < sSwipeMaxOffPath) {
                         // right
     					openDeckPicker();
-                    } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < SWIPE_MAX_OFF_PATH) {
+                    } else if (e2.getY() - e1.getY() > sSwipeMinDistance && Math.abs(velocityY) > sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < sSwipeMaxOffPath) {
                         // down
                     	mStatisticType = 0;
                     	openStatistics(0);

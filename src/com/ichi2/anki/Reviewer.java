@@ -1704,14 +1704,14 @@ public class Reviewer extends Activity {
        				if (mSelectionStarted != 0) {
        					return false;
        				}
-        			if (e2.getY() - e1.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH && !mIsYScrolling) {
+        			if (e2.getY() - e1.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath && !mIsYScrolling) {
                         // down
       					if (sDisplayAnswer) {
            					answerCard(Card.EASE_FAILED);
        					} else {
            			        displayCardAnswer();    						
        					}
-       		        } else if (e1.getY() - e2.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH && !mIsYScrolling) {
+       		        } else if (e1.getY() - e2.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath && !mIsYScrolling) {
                         // up
       					if (sDisplayAnswer) {
       						if (mCurrentCard.isRev()) {
@@ -1722,7 +1722,7 @@ public class Reviewer extends Activity {
       					} else {
       						displayCardAnswer(); 
       					}
-                     } else if (e2.getX() - e1.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH && !mIsXScrolling) {
+                     } else if (e2.getX() - e1.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath && !mIsXScrolling) {
                        	 // left
                     	 closeReviewer();
                      }

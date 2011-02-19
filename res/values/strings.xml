@@ -160,7 +160,6 @@
 <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
 <string name="swipe_sensibility">Gesture Sensibility</string>
 <string name="swipe_sensibility_summ">Sensibility of swipe gestures</string>
-
 <string name="shake">Shake to Undo</string>
 <string name="shake_summ">Shake your device to undo the last action</string>
 <string name="tts">Text to Speech</string>
@@ -174,6 +173,9 @@
 <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
 <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
 <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
+<string name="language">Language</string>
+<string name="language_summ">Select the language, AnkiDroid should use. Default is the general system language</string>
+<string name="language_system">System Language</string>
 
 <string name="select_locale_title">Select Language</string>
 <!-- deck_properties.xml -->

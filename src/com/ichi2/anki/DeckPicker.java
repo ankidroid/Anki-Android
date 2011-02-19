@@ -1095,7 +1095,7 @@ public class DeckPicker extends Activity implements Runnable {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-       				if (e1.getX() - e2.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+       				if (e1.getX() - e2.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath) {
        					closeDeckPicker();
                     }
        			}
