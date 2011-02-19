@@ -123,6 +123,8 @@
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
   <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; vertikal wischen: Karten beantworten (runter: nochmal, hoch: Empfehlung, Doppeltap: einfacher als Empfehlung)</string>
+  <string name="swipe_sensibility">Gesten-Sensibilität</string>
+  <string name="swipe_sensibility_summ">Legt fest, wie empfindlich AnkiDroid auf Gesten reagiert</string>
   <string name="shake">Schütteln aktivieren</string>
   <string name="shake_summ">Schütteln Sie Ihr Android-Gerät, um die letzte Aktion rückgängig zu machen</string>
   <string name="tts">Vorlesen</string>
@@ -136,6 +138,9 @@
   <string name="sync_enabled_in_answer_summ">Die Synchronisierung hat noch Fehler und könnte Ihre Stapel gefährden. Machen Sie häufig Backups!</string>
   <string name="fix_hebrew_text">Umgekehrte Textrichtung für Hebräisch</string>
   <string name="fix_hebrew_text_summ">Erzwingt umgekehrte Textrichtung, um Hebräisch auf dem Android-System darzustellen. Vokale werden nicht unterstützt</string>
+  <string name="language">Sprache</string>
+  <string name="language_summ">Wählen Sie die Sprache, die AnkiDroid benutzen soll. Standardmäßig ist das die Systemsprache</string>
+  <string name="language_system">System-Sprache</string>
   <string name="select_locale_title">Sprache wählen</string>
   <string name="personaldeckpicker_title">Online-Stapel herunterladen</string>
   <string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
@@ -215,6 +220,7 @@
   <string name="studyoptions_reviews_due">Fällige Wiederholungen:</string>
   <string name="studyoptions_new_today">Heute neu:</string>
   <string name="studyoptions_new_total">Neu insgesamt:</string>
+  <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_new_cards_per_day">Neue Karten pro Tag</string>
   <string name="studyoptions_session_minutes">Sitzungslimit (Minuten):</string>
   <string name="studyoptions_session_questions">Sitzungslimit (Fragen):</string>
@@ -224,6 +230,8 @@
   <string name="studyoptions_more_save">Speichern</string>
   <string name="studyoptions_nodeck_title">Kein Stapel geladen</string>
   <string name="studyoptions_nodeck_message">Momentan ist kein Stapel geladen. Anki-Stapel werden im Verzeichnis \"%s\" auf der SD-Karte gespeichert. Dieses Verzeichnis kann in den Einstellungen geändert werden (drücken Sie die \"Menu\"-Taste und wählen Sie \"Einstellungen\").</string>
+  <string name="studyoptions_welcome_title">Willkommen in AnkiDroid!</string>
+  <string name="studyoptions_welcome_message">Mit AnkiDroid können Sie effizient große Mengen an Vokabeln oder anderen Dingen lernen. AnkiDroid präsentiert das Lernmaterial stets kurz vor dem Vergessen.\nInformationen sind in Stapeln organisiert, die Sie entweder von anderen Nutzern herunterladen können (öffentliche Stapel) oder selbst mit AnkiDroid oder Anki Desktop erstellen können. In letzterem Fall können Sie die Stapel entweder über AnkiWeb synchronisieren oder in das Verzeichnis %s kopieren.\nKlicken Sie auf diesen Text, um mehr zu erfahren.</string>
   <string name="studyoptions_deck_not_loaded_title">Stapel konnte nicht geladen werden</string>
   <string name="studyoptions_deck_not_loaded_message">Der ausgewählte Stapel ist kein gültiger Anki-Stapel. Erstellen Sie Stapel mit Anki-Desktop oder laden Sie öffentlich freigegebene Stapel herunter.</string>
   <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>

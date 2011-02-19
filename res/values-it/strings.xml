@@ -123,6 +123,8 @@
   <string name="swipe">Abilitare le Gestures</string>
   <string name="swipe_summ_off">Utilizzare le gestures per passare tra le schermate e le risposte. Questa opzione non è compatibile con i comandi dello zoom</string>
   <string name="swipe_summ_on">Scorrere orizzontalmente per passare tra le schermate e verticalmente per rispondere alle carte (verso il basso: ancora una volta, in alto: suggerimento, toccare due volte: più facile di rec.)</string>
+  <string name="swipe_sensibility">Gesture Sensibility</string>
+  <string name="swipe_sensibility_summ">Sensibility of swipe gestures</string>
   <string name="shake">Scuotere per annullare</string>
   <string name="shake_summ">Scuotere il dispositivo per annullare l\'ultima azione</string>
   <string name="tts">Text to Speech</string>
@@ -136,6 +138,9 @@
   <string name="sync_enabled_in_answer_summ">Ancora molti bug, potrebbero danneggiare i vostri mazzi. Fare backup frequenti!</string>
   <string name="fix_hebrew_text">Applica RTL per Ebraico</string>
   <string name="fix_hebrew_text_summ">Soluzione per il limitato supporto alla lingua Ebraica della piattaforma Android. Non supporta le vocali.</string>
+  <string name="language">Language</string>
+  <string name="language_summ">Select the language, AnkiDroid should use. Default is the general system language</string>
+  <string name="language_system">System Language</string>
   <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Apri il mazzo online</string>
   <string name="shareddeckpicker_title">Seleziona il mazzo da scaricare</string>
@@ -215,6 +220,7 @@
   <string name="studyoptions_reviews_due">Da ripetere:</string>
   <string name="studyoptions_new_today">Nuove oggi:</string>
   <string name="studyoptions_new_total">Totale nuove:</string>
+  <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Carte nuove al giorno</string>
   <string name="studyoptions_session_minutes">Limite della sessione (minuti):</string>
   <string name="studyoptions_session_questions">Limite per la sessione (domande):</string>
@@ -224,6 +230,8 @@
   <string name="studyoptions_more_save">Salva</string>
   <string name="studyoptions_nodeck_title">Nessun mazzo caricato</string>
   <string name="studyoptions_nodeck_message">Nessun mazzo è attualmente caricato. I mazzi di Anki sono archiviati nella directory \"%s\" sulla scheda SD. Questo percorso può essere specificato nelle preferenze (premere \"Menu\ del tuo device\"pulsante e selezionare \"Preferenze\").</string>
+  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">Impossibile caricare il mazzo</string>
   <string name="studyoptions_deck_not_loaded_message">Il mazzo che è stato selezionato non è un mazzo di Anki valido. Vi preghiamo di usare l\'applicazione desktop Anki per creare un mazzo valido prima di caricarli in Ankidroid.\n\n Intanto, è possibile selezionare un altro mazzo o caricare il mazzo campione con i pulsanti qui sotto.</string>
   <string name="studyoptions_no_external_storage_title">Nessuna scheda di archiviazione esterna disponibile</string>
@@ -339,7 +347,7 @@
   <string name="delete_deck_message">Sei sicuro di cancellare il mazzo %s?</string>
   <string name="delete_deck_confirm">Cancella</string>
   <string name="new_version_title">New Version:</string>
-  <string name="new_version_text">New features:\n- card browser\n- statistics\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="statistics_type_title">Chose statistic type</string>
@@ -360,8 +368,12 @@
   <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
   <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Select deck (1 of %2$d due)</item>
+    <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
     <item quantity="other">Selezionare il mazzo (%1$d di %2$d scadute)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 of %2$d due</item>

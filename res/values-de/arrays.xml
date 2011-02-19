@@ -134,15 +134,17 @@
     <item>6 Monate</item>
     <item>1 Jahr</item>
   </string-array>
-	<string-array name="new_version_features">
-		<item>Kartenübersicht</item>
-		<item>Statistik</item>
-		<item>Vorlesefunktion</item>
-		<item>Fortschrittsanzeige in der Stapelauswahl</item>
-		<item>Kartenvorlage kann nun beim Hinzufügen gewählt werden</item>
-		<item>neues Widget</item>
-		<item>verbesserte Rückgängig-Funktion</item>
-		<item>Schieberegler</item>
-		<item>mehr Sprachen</item>
-	</string-array>
+  <string-array name="new_version_features">
+    <item>Kartenübersicht</item>
+    <item>Statistik</item>
+    <item>Vorlesefunktion</item>
+    <item>Fortschrittsanzeige in der Stapelauswahl</item>
+    <item>Kartenvorlage kann nun beim Hinzufügen gewählt werden</item>
+    <item>neues Widget</item>
+    <item>verbesserte Rückgängig-Funktion</item>
+    <item>Schieberegler</item>
+    <item>mehr Sprachen</item>
+    <item>Auswahl der Sprache</item>
+    <item>mehr Sprachen</item>
+  </string-array>
 </resources>

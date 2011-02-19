@@ -18,12 +18,9 @@
 
 package com.ichi2.anki;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

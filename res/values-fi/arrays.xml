@@ -121,7 +121,7 @@
     <item>Helppouden mukaan</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
+    <item>Määrä</item>
     <item>Cumulative due</item>
     <item>Jaksot</item>
     <item>Tarkastelut</item>
@@ -133,5 +133,18 @@
     <item>3 kuukautta</item>
     <item>6 kuukautta</item>
     <item>1 vuosi</item>
+  </string-array>
+  <string-array name="new_version_features">
+    <item>fest</item>
+    <item>card browser</item>
+    <item>statistics</item>
+    <item>text-to-speech</item>
+    <item>deck completion bar on deck picker</item>
+    <item>select card model on fact adder</item>
+    <item>new widget</item>
+    <item>better undo/redo behaviour</item>
+    <item>slider controls</item>
+    <item>language selection</item>
+    <item>more languages</item>
   </string-array>
 </resources>

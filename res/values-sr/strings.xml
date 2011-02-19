@@ -123,6 +123,8 @@
   <string name="swipe">Omogući Geste</string>
   <string name="swipe_summ_off">Koristite geste da bi se prebacivali iz ekrana u ekran i odgovarali na kartice. Ova opcija nije kompatibilna sa kontrolama za zum</string>
   <string name="swipe_summ_on">Horizontalno pređite prstom preko ekrana da bi se prebacili na drugi ekrana i vertikalno da bi odgovorili na pitanja (dole: ponovo, gore: predlog, duplo: lakše nego pre)</string>
+  <string name="swipe_sensibility">Gesture Sensibility</string>
+  <string name="swipe_sensibility_summ">Sensibility of swipe gestures</string>
   <string name="shake">Tresite da bi Poništili</string>
   <string name="shake_summ">Tresite vaš uređaj da bi poništili zadnji postupak</string>
   <string name="tts">Text to Speech</string>
@@ -136,6 +138,9 @@
   <string name="sync_enabled_in_answer_summ">Još uvek postoji mnogo grešaka koje mogu pokvariti vaše špilove. Sačuvajte često!</string>
   <string name="fix_hebrew_text">Forsiraj Desno-Na-Levo za Hebrejski</string>
   <string name="fix_hebrew_text_summ">Privremeno rešanja za hebrejski jezik na Androidu. Ne podržava vokale.</string>
+  <string name="language">Language</string>
+  <string name="language_summ">Select the language, AnkiDroid should use. Default is the general system language</string>
+  <string name="language_system">System Language</string>
   <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Otvori Internet Špil</string>
   <string name="shareddeckpicker_title">Izaberite špil koji želite skinuti</string>
@@ -215,6 +220,7 @@
   <string name="studyoptions_reviews_due">Pregleda na redu:</string>
   <string name="studyoptions_new_today">Novih danas:</string>
   <string name="studyoptions_new_total">Novih ukupno:</string>
+  <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Novih kartica po danu</string>
   <string name="studyoptions_session_minutes">Granica sesije (minuta):</string>
   <string name="studyoptions_session_questions">Granica sesije (pitanja):</string>
@@ -224,6 +230,8 @@
   <string name="studyoptions_more_save">Sačuvaj</string>
   <string name="studyoptions_nodeck_title">Nijedan Špil nije Učitan</string>
   <string name="studyoptions_nodeck_message">Nijedan špil nije trenutno učitan. Anki špilovi se nalaze u direktorijumu \"%s\" na vašoj SD kartici. Ova lokacija je navedena pod postavkama (pritisnite \"Meni\" dugme i izaberite \"Postavke\").</string>
+  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">Špil nije mogao da se učita</string>
   <string name="studyoptions_deck_not_loaded_message">Špil koji ste izabrali nije važeći Anki špil. Molimo da koristite Anki desktop program da kreirate validan špil pre nego što ga ubacite u Ankidroid.\n\nU međuvremenu, možete da izaberete drugi špil ili da učitate primerni špil sa dugmadima ispod.</string>
   <string name="studyoptions_no_external_storage_title">Nema SD Kartice</string>
@@ -339,7 +347,7 @@
   <string name="delete_deck_message">Da li zaista želite da izbrišete špil %s?</string>
   <string name="delete_deck_confirm">Izbriši</string>
   <string name="new_version_title">New Version:</string>
-  <string name="new_version_text">New features:\n- card browser\n- statistics\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="statistics_type_title">Chose statistic type</string>
@@ -360,8 +368,12 @@
   <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
   <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Select deck (1 of %2$d due)</item>
+    <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
     <item quantity="other">Izaberi špil (%1$d od %2$d na redu)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 of %2$d due</item>

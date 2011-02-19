@@ -123,6 +123,8 @@
   <string name="swipe">Povolit gesta</string>
   <string name="swipe_summ_off">Použít gesta pro přepínání mezi obrazovkami a zodpovězenými kartami. Toto nastavení není kompatibilní s ovládacími prvky zoomu</string>
   <string name="swipe_summ_on">Čmárněte prste horizontálně pro přepnutí mezi obrazovkami a vertikálně pro zodpovězení karet (dolů: znovu, nahoru: doporučení, dvojité poklepání: lehčí)</string>
+  <string name="swipe_sensibility">Gesture Sensibility</string>
+  <string name="swipe_sensibility_summ">Sensibility of swipe gestures</string>
   <string name="shake">Zatřepat pro vrácení změn</string>
   <string name="shake_summ">Zatřepejte svým přístrojem pro zpětné vrácení poslední akce</string>
   <string name="tts">Text to Speech</string>
@@ -136,6 +138,9 @@
   <string name="sync_enabled_in_answer_summ">Stále mnoho chyb, může způsobit pokažení vašich balíčků. Zálohujte často!</string>
   <string name="fix_hebrew_text">Vynutit RTL pro hebrejštinu</string>
   <string name="fix_hebrew_text_summ">Řešení pro omezenou podporu hebrejštiny Android platformy. Nepodporuje samohlásky.</string>
+  <string name="language">Language</string>
+  <string name="language_summ">Select the language, AnkiDroid should use. Default is the general system language</string>
+  <string name="language_system">System Language</string>
   <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Otevřít online balíček</string>
   <string name="shareddeckpicker_title">Vyberte balíček, který chcete stáhnout</string>
@@ -215,6 +220,7 @@
   <string name="studyoptions_reviews_due">K zopakování:</string>
   <string name="studyoptions_new_today">Dnes nových:</string>
   <string name="studyoptions_new_total">Nových celkově:</string>
+  <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Nových karet na den</string>
   <string name="studyoptions_session_minutes">Limit sezení (minuty):</string>
   <string name="studyoptions_session_questions">Limit sezení (otázky):</string>
@@ -224,6 +230,8 @@
   <string name="studyoptions_more_save">Uložit</string>
   <string name="studyoptions_nodeck_title">Žádný balíček není načten</string>
   <string name="studyoptions_nodeck_message">Žádný balíček není momentálně načten. Anki balíčky jsou uloženy v adresáři \"%s\" na vaší SD kartě. Toto umístění může být změněno v nastavení (zmáčkněte tlačítko \"Menu\" a zvolte \"Nastavení\").</string>
+  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">Balíček nemohl být načten</string>
   <string name="studyoptions_deck_not_loaded_message">Balíček, který jste zvolili není platný balíček aplikace Anki. Prosím použijte desktopovou verzi Anki pro vytvoření platného typu balíčku před tím, než jej otevřete v AnkiDroidu.\n\nMezitím můžete vybrat jiný balíček nebo načíst ukázkový balíček pomocí tlačítek níže.</string>
   <string name="studyoptions_no_external_storage_title">Není k dispozici externí paměť</string>
@@ -339,7 +347,7 @@
   <string name="delete_deck_message">Opravdu chcete smazat balíček %s?</string>
   <string name="delete_deck_confirm">Smazat</string>
   <string name="new_version_title">New Version:</string>
-  <string name="new_version_text">New features:\n- card browser\n- statistics\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="statistics_type_title">Chose statistic type</string>
@@ -360,8 +368,12 @@
   <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
   <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Select deck (1 of %2$d due)</item>
+    <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
     <item quantity="other">Vybrat balíček (%1$d z %2$d k zopakování)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 of %2$d due</item>

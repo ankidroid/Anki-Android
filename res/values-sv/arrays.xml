@@ -134,4 +134,17 @@
     <item>6 month</item>
     <item>1 year</item>
   </string-array>
+  <string-array name="new_version_features">
+    <item>fest</item>
+    <item>card browser</item>
+    <item>statistics</item>
+    <item>text-to-speech</item>
+    <item>deck completion bar on deck picker</item>
+    <item>select card model on fact adder</item>
+    <item>new widget</item>
+    <item>better undo/redo behaviour</item>
+    <item>slider controls</item>
+    <item>language selection</item>
+    <item>more languages</item>
+  </string-array>
 </resources>

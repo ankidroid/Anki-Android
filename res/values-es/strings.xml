@@ -123,6 +123,8 @@
   <string name="swipe">Habilitar gestos</string>
   <string name="swipe_summ_off">Usa gestos para moverte entre las pantallas y responder tarjetas. Esta opción es incompatible con los controles de zoom</string>
   <string name="swipe_summ_on">Desliza el dedo horizontalmente para moverte entre pantallas y verticalmente para responder tarjetas (abajo: otra vez, arriba: recomendación, doble toque: más fácil que la recomendación)</string>
+  <string name="swipe_sensibility">Gesture Sensibility</string>
+  <string name="swipe_sensibility_summ">Sensibility of swipe gestures</string>
   <string name="shake">Shake to Undo</string>
   <string name="shake_summ">Shake your device to undo the last action</string>
   <string name="tts">Text to Speech</string>
@@ -136,6 +138,9 @@
   <string name="sync_enabled_in_answer_summ">Todavía hay muchos errores, puede corromper tus mazos. ¡Haz copias de seguridad a menudo!</string>
   <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
   <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
+  <string name="language">Language</string>
+  <string name="language_summ">Select the language, AnkiDroid should use. Default is the general system language</string>
+  <string name="language_system">System Language</string>
   <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Abrir Mazo Online</string>
   <string name="shareddeckpicker_title">Selecciona el mazo que deseas descargar</string>
@@ -215,6 +220,7 @@
   <string name="studyoptions_reviews_due">Repasos programados:</string>
   <string name="studyoptions_new_today">Nuevas hoy:</string>
   <string name="studyoptions_new_total">Nuevas en total:</string>
+  <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Tarjetas nuevas por día</string>
   <string name="studyoptions_session_minutes">Límite por sesión (minutos):</string>
   <string name="studyoptions_session_questions">Límite por sesión (preguntas):</string>
@@ -224,6 +230,8 @@
   <string name="studyoptions_more_save">Guardar</string>
   <string name="studyoptions_nodeck_title">No hay ningún mazo cargado</string>
   <string name="studyoptions_nodeck_message">No hay ningún mazo cargado actualmente. Los mazos de Anki se guardan en el directorio \"%s\" en la tarjeta de memoria. Puedes especificar esta localización en el menú de preferencias (pulsa el botón de \"Menú\" en tu dispositivo y selecciona \"Preferencias\").</string>
+  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">El mazo no se pudo cargar</string>
   <string name="studyoptions_deck_not_loaded_message">El mazo seleccionado no es un mazo de Anki válido. Por favor usa la aplicación de escritorio Anki para crear un mazo válido antes de cargarlo en Ankidroid.\n\nMientras tanto, puedes seleccionar otro mazo o cargar el mazo de ejemplo.</string>
   <string name="studyoptions_no_external_storage_title">Almacenamiento externo no disponible</string>
@@ -339,7 +347,7 @@
   <string name="delete_deck_message">¿Estás seguro de que quieres eliminar el mazo %s?</string>
   <string name="delete_deck_confirm">Eliminarlo</string>
   <string name="new_version_title">New Version:</string>
-  <string name="new_version_text">New features:\n- card browser\n- statistics\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="statistics_type_title">Chose statistic type</string>
@@ -362,6 +370,10 @@
   <plurals name="deckpicker_title">
     <item quantity="one">Seleccionar mazo (1 de %2$d programada)</item>
     <item quantity="other">Seleccionar mazo (%1$d de %2$d programadas)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 de %2$d pendiente</item>
