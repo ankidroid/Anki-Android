@@ -41,6 +41,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -929,7 +930,7 @@ public class StudyOptions extends Activity {
                 if (mNewVersion) {
                 	mShowWelcomeScreen = true;
                 	savePreferences("welcome");
-                    mNewVersionAlert.show();
+                	mNewVersionAlert.show();
                     mNewVersion = false;
                 }
                 mShowWelcomeScreen = PrefSettings.getSharedPrefs(getBaseContext()).getBoolean("welcome", false);
@@ -1463,13 +1464,19 @@ public class StudyOptions extends Activity {
         	editor.commit();
 
         	Resources res = getResources();
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(res.getString(R.string.new_version_title) + " " + getVersion());
-            builder.setMessage(res.getString(R.string.new_version_text));
+            builder.setPositiveButton(getResources().getString(R.string.ok), null);
+            View contentView = getLayoutInflater().inflate(R.layout.dialog_webview, null);
+            WebView messageWebView = (WebView) contentView.findViewById(R.id.dialog_webview);
+            messageWebView.setBackgroundColor(res.getColor(R.color.card_browser_background));
+            messageWebView.loadDataWithBaseURL("", getVersionMessage(), "text/html", "utf-8", null);
+            builder.setView(contentView);
             builder.setPositiveButton(res.getString(R.string.ok), null);
             builder.setCancelable(true);
-            mNewVersion = true;
             mNewVersionAlert = builder.create();
+            mNewVersion = true;
         }
         mInvertedColors = preferences.getBoolean("invertedColors", false);
         return preferences;
@@ -1485,6 +1492,23 @@ public class StudyOptions extends Activity {
             versionNumber = "?";
         }
         return versionNumber;
+    }
+
+
+    private String getVersionMessage() {
+    	Resources res = getResources();
+        StringBuilder builder = new StringBuilder();
+        builder.append("<html><body text=\"#FFFFFF\">");
+        builder.append(res.getString(R.string.new_version_message));
+        builder.append("<ul>");
+        String[] features = res.getStringArray(R.array.new_version_features);
+        for (int i = 0; i < features.length; i++) {
+        	builder.append("<li>");
+        	builder.append(features[i]);
+        	builder.append("</li>");
+        }
+        builder.append("</ul>");
+    	return builder.toString();
     }
 
 

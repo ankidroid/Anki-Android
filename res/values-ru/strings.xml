@@ -339,7 +339,7 @@
   <string name="delete_deck_message">Вы действительно хотите удалить колоду %s?</string>
   <string name="delete_deck_confirm">Удалить</string>
   <string name="new_version_title">Новая версия:</string>
-  <string name="new_version_text">Новые возможности:\n- редактор карт\n- статистика\n- произношение текста\n- прогресс завершения колоды в оглавлении\n- выбор модели карт при добавлении карты\n- новый виджет\n- улучшение отмена/возврат\n- новый элемент интерфейса - ползунок\n- больше языков</string>
+<string name="new_version_message">Новые возможности:</string>
   <string name="no_tts_available_title">Преобразование текста в речь</string>
   <string name="no_tts_available_message">Функция преобразования текста в речь не доступна</string>
   <string name="statistics_type_title">Выберите тип статистики</string>

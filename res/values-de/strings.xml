@@ -339,7 +339,7 @@
   <string name="delete_deck_message">Möchten Sie den Stapel %s wirklich löschen?</string>
   <string name="delete_deck_confirm">Löschen</string>
   <string name="new_version_title">Neue Version:</string>
-  <string name="new_version_text">Neue Funktion:\n- Kartenübersicht\n - Statistik\n- Vorlesefunktion\n- Fortschrittsanzeige in der Stapelauswahl\n- Kartenvorlage kann nun beim Hinzufügen gewählt werden\n- neues Widget\n- verbesserte Rückgängig-Funktion\n- Schieberegler\n- mehr Sprachen</string>
+  <string name="new_version_message">Neue Funktionen:</string>
   <string name="no_tts_available_title">Vorlesen</string>
   <string name="no_tts_available_message">Keine Vorlese-Sprache verfügbar</string>
   <string name="statistics_type_title">Statistik-Typ</string>
