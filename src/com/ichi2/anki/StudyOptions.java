@@ -240,9 +240,9 @@ public class StudyOptions extends Activity {
     */    
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
-	public static final int SWIPE_MIN_DISTANCE = 100;
-	public static final int SWIPE_MAX_OFF_PATH = 150;
-	public static final int SWIPE_THRESHOLD_VELOCITY = 200;
+	public static int SWIPE_MIN_DISTANCE = 150;
+	public static int SWIPE_MAX_OFF_PATH = 70;
+	public static int SWIPE_THRESHOLD_VELOCITY = 200;
 
     /**
 	* Statistics
@@ -1478,6 +1478,13 @@ public class StudyOptions extends Activity {
             mNewVersionAlert = builder.create();
             mNewVersion = true;
         }
+
+        SWIPE_MIN_DISTANCE = preferences.getInt("swipe_sensibility", 100);
+        if (SWIPE_MIN_DISTANCE != 100) {
+        	SWIPE_MAX_OFF_PATH = (int) (SWIPE_MIN_DISTANCE * 100 / 70);
+        	SWIPE_THRESHOLD_VELOCITY = (int) (SWIPE_MIN_DISTANCE * 2);
+        }
+
         mInvertedColors = preferences.getBoolean("invertedColors", false);
         return preferences;
     }

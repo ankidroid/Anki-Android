@@ -37,6 +37,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
     private CheckBoxPreference zoomCheckboxPreference;
+    private CheckBoxPreference swipeCheckboxPreference;
 
 
     @Override
@@ -50,7 +51,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         mVeecheckStatus = mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, PrefSettings.DEFAULT_ENABLED);
         
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
+        zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
     }
 
 
@@ -67,6 +70,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("swipe")) {
         	zoomCheckboxPreference.setChecked(false);
+        	zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
         }
     }
 
