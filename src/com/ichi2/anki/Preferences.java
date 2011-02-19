@@ -21,6 +21,9 @@ package com.ichi2.anki;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -68,24 +71,26 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
 
     private void initializeLanguageDialog() {
-    	ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
-    	ArrayList<String> dialogIds = new ArrayList<String>();
-        dialogItems.add(getResources().getString(R.string.language_system));
-        dialogIds.add("");
-		for (String localeCode : mAppLanguages) {
+    	TreeMap<String, String> items = new TreeMap<String, String>();
+        for (String localeCode : mAppLanguages) {
 			Locale loc;
 			if (localeCode.length() > 2) {
 				loc = new Locale(localeCode.substring(0,2), localeCode.substring(3,5));				
 			} else {
 				loc = new Locale(localeCode);				
 			}
-			dialogItems.add(loc.getDisplayName());
-			dialogIds.add(loc.toString());
+	    	items.put(loc.getDisplayName(), loc.toString());
 		}
-		mLanguageDialogLabels = new CharSequence[dialogItems.size()];
-		mLanguageDialogValues = new CharSequence[dialogItems.size()];
-        dialogItems.toArray(mLanguageDialogLabels);
-        dialogIds.toArray(mLanguageDialogValues);
+		mLanguageDialogLabels = new CharSequence[items.size() + 1];
+		mLanguageDialogValues = new CharSequence[items.size() + 1];
+		mLanguageDialogLabels[0] = getResources().getString(R.string.language_system);
+		mLanguageDialogValues[0] = ""; 
+		int i = 1;
+		for (Map.Entry<String, String> e : items.entrySet()) {
+			mLanguageDialogLabels[i] = e.getKey();
+			mLanguageDialogValues[i] = e.getValue();
+			i++;
+		}
         mLanguageSelection = (ListPreference) getPreferenceScreen().findPreference("language");
         mLanguageSelection.setEntries(mLanguageDialogLabels);
         mLanguageSelection.setEntryValues(mLanguageDialogValues);
