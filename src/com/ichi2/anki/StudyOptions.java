@@ -150,6 +150,7 @@ public class StudyOptions extends Activity {
     private long mLastTimeOpened;
     boolean mSyncEnabled = false;
     boolean mNewVersion = false;
+    boolean mShowWelcomeScreen = false;
     boolean mInvertedColors = false;
     
     /**
@@ -299,6 +300,20 @@ public class StudyOptions extends Activity {
                 case R.id.studyoptions_congrats_message:
                 	mStatisticType = 0;
                 	openStatistics(0);
+                	return;
+                case R.id.studyoptions_nodeck_message:
+                	if (!mShowWelcomeScreen) {
+                        startActivityForResult(
+                                new Intent(StudyOptions.this, Preferences.class),
+                                PREFERENCES_UPDATE);
+                	} else {
+                    	if (Utils.isIntentAvailable(StudyOptions.this, "android.intent.action.VIEW")) {
+                    		Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_wiki)));
+                    		startActivity(intent);
+                    	} else {
+                    		startActivity(new Intent(StudyOptions.this, About.class));
+                    	}
+                	}
                 	return;
                 default:
                     return;
@@ -677,6 +692,7 @@ public class StudyOptions extends Activity {
 
         mTextNoDeckTitle = (TextView) mNoDeckView.findViewById(R.id.studyoptions_nodeck_title);
         mTextNoDeckMessage = (TextView) mNoDeckView.findViewById(R.id.studyoptions_nodeck_message);
+        mTextNoDeckMessage.setOnClickListener(mButtonClickListener);
 
         mNoDeckView.findViewById(R.id.studyoptions_load_sample_deck).setOnClickListener(mButtonClickListener);
         mNoDeckView.findViewById(R.id.studyoptions_download_deck).setOnClickListener(mButtonClickListener);
@@ -910,14 +926,23 @@ public class StudyOptions extends Activity {
         switch (mCurrentContentView) {
             case CONTENT_NO_DECK:
                 setTitle(R.string.app_name);
-                mTextNoDeckTitle.setText(R.string.studyoptions_nodeck_title);
-                mTextNoDeckMessage.setText(String.format(
-                        getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
-                setContentView(mNoDeckView);
                 if (mNewVersion) {
+                	mShowWelcomeScreen = true;
+                	savePreferences("welcome");
                     mNewVersionAlert.show();
                     mNewVersion = false;
                 }
+                mShowWelcomeScreen = PrefSettings.getSharedPrefs(getBaseContext()).getBoolean("welcome", false);
+                if (!mShowWelcomeScreen) {
+                    mTextNoDeckTitle.setText(R.string.studyoptions_nodeck_title);
+                    mTextNoDeckMessage.setText(String.format(
+                            getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
+                } else {
+                    mTextNoDeckTitle.setText(R.string.studyoptions_welcome_title);
+                    mTextNoDeckMessage.setText(String.format(
+                            getResources().getString(R.string.studyoptions_welcome_message), mPrefDeckPath));
+                }
+                setContentView(mNoDeckView);
                 break;
             case CONTENT_DECK_NOT_LOADED:
                 setTitle(R.string.app_name);
@@ -1191,6 +1216,9 @@ public class StudyOptions extends Activity {
             }
             startActivityForResult(
                     new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        		MyAnimation.slide(this, MyAnimation.RIGHT);
+        	}
         } else {
             mUserNotLoggedInAlert.show();
         }
@@ -1205,6 +1233,9 @@ public class StudyOptions extends Activity {
         }
         // deckLoaded = false;
         startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    		MyAnimation.slide(this, MyAnimation.RIGHT);
+    	}
     }
 
 
@@ -1299,16 +1330,19 @@ public class StudyOptions extends Activity {
             // hideDeckErrors();
             mInDeckPicker = false;
 
-            if (requestCode == PICK_DECK_REQUEST && mCurrentContentView == CONTENT_CONGRATS) {
+            if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_OK) {
             	setContentView(mStudyOptionsView);
+            } else if ((requestCode == DOWNLOAD_SHARED_DECK || requestCode == DOWNLOAD_PERSONAL_DECK) && resultCode == RESULT_OK) {
+            	openDeckPicker();
+            	return;
             }
 
             if (resultCode != RESULT_OK) {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
                 // Make sure we open the database again in onResume() if user pressed "back"
                 // deckSelected = false;
-                boolean mFileNotDeleted = mDeckFilename != null && new File(mDeckFilename).exists();
-            	if (!mFileNotDeleted) {
+                boolean fileNotDeleted = mDeckFilename != null && new File(mDeckFilename).exists();
+            	if (!fileNotDeleted) {
                     AnkiDroidApp.setDeck(null);
                     showContentView(CONTENT_NO_DECK);
             	}
@@ -1327,6 +1361,10 @@ public class StudyOptions extends Activity {
             Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
             mDeckFilename = intent.getExtras().getString(OPT_DB);
             savePreferences("deckFilename");
+    		if (mShowWelcomeScreen) {
+            	mShowWelcomeScreen = false;
+            	savePreferences("welcome");            			
+    		}
 
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
@@ -1401,6 +1439,8 @@ public class StudyOptions extends Activity {
             editor.putString("deckFilename", mDeckFilename); 
         } else if (str == "close") {
         	editor.putLong("lastTimeOpened", System.currentTimeMillis());
+        } else if (str == "welcome") {
+        	editor.putBoolean("welcome", mShowWelcomeScreen);
         } else if (str == "invertedColors") {
             editor.putBoolean("invertedColors", mInvertedColors);
         }

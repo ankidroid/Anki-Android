@@ -54,7 +54,7 @@
 					android:layout_height="wrap_content"
 					android:layout_marginLeft="10dip"
 					android:gravity="right"
-					android:text="99999"
+					android:text="0"
 					android:textColor="#ffffff"/>
 			</LinearLayout>
 			<LinearLayout
@@ -70,7 +70,7 @@
 					android:layout_height="wrap_content"
 					android:layout_marginLeft="10dip"
 					android:gravity="right"
-					android:text="99999"
+					android:text="0"
 					android:textColor="#ffffff"/>
 			</LinearLayout>
 			<LinearLayout
@@ -86,7 +86,7 @@
 					android:layout_height="wrap_content"
 					android:layout_marginLeft="10dip"
 					android:gravity="right"
-					android:text="99999"
+					android:text="0"
 					android:textColor="#ffffff"/>
 			</LinearLayout>
 			<LinearLayout
