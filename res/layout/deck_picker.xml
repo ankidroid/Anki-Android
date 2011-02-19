@@ -15,8 +15,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:background="#8b8b8b"
-		android:orientation="horizontal"
-		android:visibility="gone">
+		android:orientation="horizontal">
 		
 		<Button	android:id="@+id/sync_all_button"
 			android:layout_width="0dip"

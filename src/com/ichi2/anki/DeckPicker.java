@@ -732,8 +732,8 @@ public class DeckPicker extends Activity implements Runnable {
 	        // Show "Sync all" button only if sync is enabled.
 	        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 	        Log.d(AnkiDroidApp.TAG, "syncEnabled=" + preferences.getBoolean("syncEnabled", false));
-	        if (preferences.getBoolean("syncEnabled", false)) {
-	            mSyncAllBar.setVisibility(View.VISIBLE);
+	        if (!preferences.getBoolean("syncEnabled", false)) {
+	            mSyncAllButton.setVisibility(View.GONE);
 	        }
 
 			Thread thread = new Thread(this);
