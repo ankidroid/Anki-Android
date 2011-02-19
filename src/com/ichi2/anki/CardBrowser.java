@@ -54,8 +54,6 @@ public class CardBrowser extends Activity {
     private EditText mSearchEditText;
     
     private AlertDialog mSelectOrderDialog;
-    private AlertDialog mDetailsDialog;
-    private WebView mAboutWebView;
     private ProgressDialog mProgressDialog;
     private boolean mUndoRedoDialogShowing = false;
     private Card mSelectedCard;
@@ -152,7 +150,7 @@ public class CardBrowser extends Activity {
             public void onTextChanged(CharSequence s, int start, int before, int count){}
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        
+
         setTitle(mDeck.getDeckName());
 
         initAllDialogs();
@@ -225,8 +223,14 @@ public class CardBrowser extends Activity {
             dialog.show();
             return true;
         case CONTEXT_MENU_DETAILS:
-        	mAboutWebView.loadDataWithBaseURL("", mSelectedCard.getCardDetails(this), "text/html", "utf-8", null);
-        	mDetailsDialog.show();
+        	AlertDialog.Builder detailsbuilder = new AlertDialog.Builder(this);
+        	detailsbuilder.setPositiveButton(getResources().getString(R.string.ok), null);
+            View contentView = getLayoutInflater().inflate(R.layout.dialog_webview, null);
+            WebView detailsWebView = (WebView) contentView.findViewById(R.id.dialog_webview);
+            detailsWebView.loadDataWithBaseURL("", mSelectedCard.getCardDetails(this), "text/html", "utf-8", null);
+            detailsWebView.setBackgroundColor(getResources().getColor(R.color.card_browser_background));
+            detailsbuilder.setView(contentView);
+    		detailsbuilder.create().show(); 
         	return true;
         default:
             return super.onContextItemSelected(item);
@@ -360,13 +364,6 @@ public class CardBrowser extends Activity {
         		}
         	});
         mSelectOrderDialog = builder.create();
-
-		builder.setPositiveButton(getResources().getString(R.string.ok), null);
-        View contentView = getLayoutInflater().inflate(R.layout.about, null);
-        mAboutWebView = (WebView) contentView.findViewById(R.id.about);
-        mAboutWebView.setBackgroundColor(res.getColor(R.color.card_browser_background));
-        builder.setView(contentView);
-		mDetailsDialog = builder.create(); 
     }
 
 
