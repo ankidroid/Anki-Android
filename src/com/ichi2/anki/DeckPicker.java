@@ -130,6 +130,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private int mTotalDueCards = 0;
 	private int mTotalCards = 0;
+	private int mTotalTime = 0;
 
 	int mStatisticType;
 	int mLoadingFinished; 
@@ -851,6 +852,7 @@ public class DeckPicker extends Activity implements Runnable {
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
+						mTotalTime += Math.max(deck.getStats()[Stats.STATSARRAY_TIME_LEFT] / 60, 0);
 						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);
@@ -868,7 +870,9 @@ public class DeckPicker extends Activity implements Runnable {
 	
 	
 	private void setTitleText(){
-		setTitle(getResources().getQuantityString(R.plurals.deckpicker_title, mTotalDueCards, mTotalDueCards, mTotalCards));
+		Resources res = getResources();
+		String time = res.getQuantityString(R.plurals.deckpicker_title_minutes, mTotalTime, mTotalTime);
+		setTitle(res.getQuantityString(R.plurals.deckpicker_title, mTotalDueCards, mTotalDueCards, mTotalCards, time));
 	}
 
 

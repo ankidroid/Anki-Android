@@ -38,10 +38,13 @@
 
 <!-- DeckPicker.java -->
 <plurals name="deckpicker_title">
-  <item quantity="one">Select deck (1 of %2$d due)</item>
-  <item quantity="other">Select deck (%1$d of %2$d due)</item>
+  <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
+  <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
 </plurals>
-
+<plurals name="deckpicker_title_minutes">
+  <item quantity="one">1 min.</item>
+  <item quantity="other">%d min.</item>
+</plurals>
 <string name="deckpicker_title_nosdcard">SD card is unmounted</string>
 <plurals name="deckpicker_due">
   <item quantity="one">1 of %2$d due</item>

@@ -360,8 +360,12 @@
   <string name="feedback_default_text">Bitte geben Sie hier Ihre Rückmeldung ein und drücken Sie OK, um sie zu senden.</string>
   <string name="feedback_result_fail">Leider konnte Ihre Rückmeldung nicht übermittelt werden. Bitte versuchen Sie es erneut.</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Stapel wählen (1 von %2$d fällig)</item>
-    <item quantity="other">Stapel wählen (%1$d von %2$d fällig)</item>
+    <item quantity="one">Alle Stapel: 1 von %2$d fällig (%3$s)</item>
+    <item quantity="other">Alle Stapel: %1$d von %2$d fällig (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 Min.</item>
+    <item quantity="other">%d Min.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 von %2$d fällig</item>
