@@ -242,7 +242,7 @@ public class StudyOptions extends Activity {
     */    
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
-	public static int sSwipeMinDistance = 150;
+	public static int sSwipeMinDistance = 100;
 	public static int sSwipeMaxOffPath = 70;
 	public static int sSwipeThresholdVelocity = 200;
 
@@ -1021,7 +1021,7 @@ public class StudyOptions extends Activity {
             mTextReviewsDue.setText(String.valueOf(reviewCount));
             mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
             String etastr = "-";
-            int eta = (int) deck.getStats()[Stats.STATSARRAY_TIME_LEFT];
+            int eta = (int) deck.getStats(Stats.TYPE_ETA)[0];
             if (eta != -1) {
             	etastr = Integer.toString(eta / 60);
             }
@@ -1206,7 +1206,9 @@ public class StudyOptions extends Activity {
 
 
     private void openStatistics(int period) {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
+        if (AnkiDroidApp.deck() != null) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));            
+        }
     }
 
 
@@ -1481,7 +1483,7 @@ public class StudyOptions extends Activity {
             mNewVersion = true;
         }
 
-        sSwipeMinDistance = preferences.getInt("swipe_sensibility", 100);
+        sSwipeMinDistance = preferences.getInt("swipeSensibility", 100);
         if (sSwipeMinDistance != 100) {
         	sSwipeMaxOffPath = (int) (sSwipeMinDistance * 100 / 70);
         	sSwipeThresholdVelocity = (int) (sSwipeMinDistance * 2);

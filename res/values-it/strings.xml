@@ -102,6 +102,8 @@
   <string name="startup_mode_summ">Choose if you want to start with study options or deck picker:</string>
   <string name="show_timer">Mostra l\'orologio</string>
   <string name="show_timer_summ">L\'orologio mostrando il tempo, ti sollecita nella risposta</string>
+  <string name="show_progress_bars">Show progress bars</string>
+  <string name="show_progress_bars_summ">Shows proportion of today\'s yes answers and proportion of total yes answers on mature cards</string>
   <string name="show_whiteboard_summ">Consente di scrivere sullo schermo</string>
   <string name="whiteboard_stroke_width">Larghezza del tratto della lavagna</string>
   <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>

@@ -88,7 +88,7 @@
   <string name="pref_cat_whiteboard">Whiteboard</string>
   <string name="pref_cat_sounds">Sprache/Geräusche</string>
   <string name="pref_cat_lookup">Nachschlagen</string>
-  <string name="pref_cat_navigation">Programmnavigation</string>
+  <string name="pref_cat_navigation">Navigation</string>
   <string name="pref_cat_swipe">Wischen</string>
   <string name="pref_cat_shake">Schütteln</string>
   <string name="pref_cat_zoom">Vergrößern</string>
@@ -102,6 +102,8 @@
   <string name="startup_mode_summ">Bestimmt, ob zuerst die Stapelübersicht angezeigt wird oder der zuletzt gelernte Stapel geladen wird:</string>
   <string name="show_timer">Timer anzeigen</string>
   <string name="show_timer_summ">Zeigt die Zeit bis zum Beantworten der Frage</string>
+  <string name="show_progress_bars">Erfolgsbalken anzeigen</string>
+  <string name="show_progress_bars_summ">Zeigt den Anteil der heutigen Ja-Antworten und den Anteil sämtlicher Ja-Antworten bei alten Karten</string>
   <string name="show_whiteboard_summ">Erlaubt es, auf den Bildschirm zu schreiben</string>
   <string name="whiteboard_stroke_width">Whiteboard-Pinsel</string>
   <string name="whiteboard_stroke_width_summ">Breite des Pinsels: XXX</string>

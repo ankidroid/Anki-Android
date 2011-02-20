@@ -852,7 +852,7 @@ public class DeckPicker extends Activity implements Runnable {
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
-						mTotalTime += Math.max(deck.getStats()[Stats.STATSARRAY_TIME_LEFT] / 60, 0);
+						mTotalTime += Math.max(deck.getStats(Stats.TYPE_ETA)[0] / 60, 0);
 						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);
