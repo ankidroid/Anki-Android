@@ -1206,7 +1206,9 @@ public class StudyOptions extends Activity {
 
 
     private void openStatistics(int period) {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));
+        if (AnkiDroidApp.deck() != null) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(this, new String[]{""}, mStatisticType, period));            
+        }
     }
 
 
