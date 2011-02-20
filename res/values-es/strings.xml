@@ -102,6 +102,8 @@
   <string name="startup_mode_summ">Choose if you want to start with study options or deck picker:</string>
   <string name="show_timer">Mostrar temporizador</string>
   <string name="show_timer_summ">Temporizador que muestra el tiempo que te está llevando responder</string>
+  <string name="show_progress_bars">Show progress bars</string>
+  <string name="show_progress_bars_summ">Shows proportion of today\'s yes answers and proportion of total yes answers on mature cards</string>
   <string name="show_whiteboard_summ">Te permite escribir en la pantalla</string>
   <string name="whiteboard_stroke_width">Ancho del trazo en la pizarra</string>
   <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>

@@ -102,6 +102,8 @@
   <string name="startup_mode_summ">Choose if you want to start with study options or deck picker:</string>
   <string name="show_timer">Εμφάνιση χρονόμετρου</string>
   <string name="show_timer_summ">Χρονόμετρο που δείχνει το χρόνο που σας παίρνει για να απαντήσετε</string>
+  <string name="show_progress_bars">Show progress bars</string>
+  <string name="show_progress_bars_summ">Shows proportion of today\'s yes answers and proportion of total yes answers on mature cards</string>
   <string name="show_whiteboard_summ">Σας επιτρέπει να γράψετε στην οθόνη</string>
   <string name="whiteboard_stroke_width">Πάχος γραμμής στον πίνακα</string>
   <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>
