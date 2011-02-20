@@ -34,11 +34,12 @@ public class Stats {
     public static final int STATS_LIFE = 0;
     public static final int STATS_DAY = 1;
 
-    public static final int STATSARRAY_SIZE = 4;
+    public static final int STATSARRAY_SIZE = 5;
     public static final int STATSARRAY_DAILY_AVERAGE_TIME = 0;
     public static final int STATSARRAY_GLOBAL_AVERAGE_TIME = 1;
     public static final int STATSARRAY_TIME_LEFT = 2;
     public static final int STATSARRAY_GLOBAL_YOUNG_NO_SHARE = 3;
+    public static final int STATSARRAY_DAILY_REPS = 4;
     
     // BEGIN: SQL table columns
     private long mId;
@@ -358,6 +359,7 @@ public class Stats {
     	stats[STATSARRAY_DAILY_AVERAGE_TIME] = dailyStats.mAverageTime;
     	stats[STATSARRAY_GLOBAL_AVERAGE_TIME] = globalStats.mAverageTime;
     	stats[STATSARRAY_TIME_LEFT] = 0;
+    	stats[STATSARRAY_DAILY_REPS] = dailyStats.mReps;
     	double globalYoungNo = globalStats.mYoungEase0 + globalStats.mYoungEase1;
     	double globalYoungTotal = globalYoungNo + globalStats.mYoungEase2 + globalStats.mYoungEase3 + globalStats.mYoungEase4;
     	if (globalYoungTotal != 0) {

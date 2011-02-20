@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
@@ -31,6 +32,7 @@ import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+import com.hlidskialf.android.preference.SeekBarPreference;
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -46,8 +48,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
-    private static String[] mAppLanguages = {"ca", "cs", "de", "el", "es_ES", "fi", "fr", "it", "ja", "ko", "pl", "pt_PT", "ro", "ru", "sr", "sv-SE", "zh-CN", "zh-TW"};
-
+    private static String[] mAppLanguages = {"ca", "cs", "de", "el", "es_ES", "fi", "fr", "it", "ja", "ko", "pl", "pt_PT", "ro", "ru", "sr", "sv-SE", "zh-CN", "zh-TW", "en"};
+    private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification"};
+    private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility"};
+    private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,53 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
         initializeLanguageDialog();
+        for (String key : mShowValueInSummList) {
+            updateListPreference(key);
+        }
+        for (String key : mShowValueInSummSeek) {
+            updateSeekBarPreference(key);
+        }
+    }
+
+
+    private void updateListPreference(String key) {
+        ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference(key);
+        if (mListsToUpdate.containsKey(key)) {
+            listpref.setSummary(replaceString(mListsToUpdate.get(key), listpref.getEntry().toString()));
+        } else {
+            String oldsum = (String) listpref.getSummary();
+            if (oldsum.contains("XXX")) {
+                mListsToUpdate.put(key, oldsum);
+                listpref.setSummary(replaceString(oldsum, listpref.getEntry().toString()));
+            } else {
+                listpref.setSummary(listpref.getEntry());                
+            }
+        }
+    }
+
+
+    private void updateSeekBarPreference(String key) {
+        SeekBarPreference seekpref = (SeekBarPreference) getPreferenceScreen().findPreference(key);
+        if (mListsToUpdate.containsKey(key)) {
+            seekpref.setSummary(replaceString(mListsToUpdate.get(key), Integer.toString(seekpref.getValue())));
+        } else {
+            String oldsum = (String) seekpref.getSummary();
+            if (oldsum.contains("XXX")) {
+                mListsToUpdate.put(key, oldsum);
+                seekpref.setSummary(replaceString(oldsum, Integer.toString(seekpref.getValue())));
+            } else {
+                seekpref.setSummary(Integer.toString(seekpref.getValue()));                
+            }
+        }
+    }
+
+
+    private String replaceString(String str, String value) {
+        if (str.contains("XXX")) {
+            return str.replace("XXX", value);
+        } else {
+            return str;
+        }
     }
 
 
@@ -112,6 +163,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName());
         	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         	startActivity(i);
+        } else if (Arrays.asList(mShowValueInSummList).contains(key)) {
+            updateListPreference(key);
+        } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
+            updateSeekBarPreference(key);
         }
     }
 

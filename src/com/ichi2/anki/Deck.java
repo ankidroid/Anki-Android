@@ -1189,9 +1189,7 @@ public class Deck {
      */
     public double[] getStats() {
     	double[] stats = Stats.getStats(this, mGlobalStats, mDailyStats);
-    	// add scheduling related stats
-
-    	if (stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME] != 0) {
+    	if (stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME] != 0 && stats[Stats.STATSARRAY_DAILY_REPS] / (mNewCountToday + mRevCount + stats[Stats.STATSARRAY_DAILY_REPS]) > 0.1) {
     		stats[Stats.STATSARRAY_TIME_LEFT] = getETA(stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
     	} else if (stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME] != 0) {
     		stats[Stats.STATSARRAY_TIME_LEFT] = getETA(stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
