@@ -234,6 +234,7 @@ public class Reviewer extends Activity {
     private int mStatisticBarsMax;
     private int mStatisticBarsHeight;
 
+    private long mSavedTimer = 0;
 	/** 
 	 * Shake Detection
 	 */
@@ -552,7 +553,15 @@ public class Reviewer extends Activity {
     protected void onPause() {
         super.onPause();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
-        
+
+        // Stop visible timer and card timer 
+        if (mPrefTimer) {
+            mSavedTimer = SystemClock.elapsedRealtime() - mCardTimer.getBase();
+            mCardTimer.stop();
+        }
+        if (mCurrentCard != null) {
+           mCurrentCard.stopTimer();
+        }
         // Save changes
         Deck deck = AnkiDroidApp.deck();
         deck.commitToDB();
@@ -569,6 +578,13 @@ public class Reviewer extends Activity {
       super.onResume();
       if (mShakeEnabled) {
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
+      }
+      if (mCurrentCard != null) {
+          mCurrentCard.resumeTimer();          
+      }
+      if (mPrefTimer && mSavedTimer != 0) {
+          mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
+          mCardTimer.start();
       }
     }
 

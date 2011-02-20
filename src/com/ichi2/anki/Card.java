@@ -251,6 +251,16 @@ public class Card {
     }
 
 
+    public void resumeTimer() {
+        if (!Double.isNaN(mTimerStarted) && !Double.isNaN(mTimerStopped)) {
+            mTimerStarted += Utils.now() - mTimerStopped;
+            mTimerStopped = Double.NaN;
+        } else {
+            Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
+        }
+    }
+
+
     public double thinkingTime() {
         if (Double.isNaN(mTimerStopped)) {
             return (Utils.now() - mTimerStarted);
