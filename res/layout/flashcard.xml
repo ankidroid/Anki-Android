@@ -56,15 +56,61 @@
 		android:gravity="center"
 		android:text=""
 		android:textColor="#808080" />
-	<Chronometer android:id="@+id/card_time"
-		android:layout_alignParentRight="true"
-		android:layout_alignTop="@+id/red_number"
+	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:gravity="right"
-		android:paddingRight="5dp"
-		android:textColor="#000000" />
-
+		android:layout_alignTop="@+id/red_number"
+		android:layout_alignParentRight="true"
+		android:paddingRight="5dp">
+		<LinearLayout android:id="@+id/progress_bars"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:layout_alignTop="@+id/card_time"
+			android:layout_toLeftOf="@+id/card_time"
+			android:orientation="vertical"
+			android:gravity="center"
+			android:visibility="gone"
+			android:paddingRight="8dp">
+			<FrameLayout
+				android:background="#808080"
+				android:layout_width="42dp"
+				android:layout_height="4dp"
+				android:padding="0.5dip"
+				android:layout_marginBottom="1dp">	
+				<FrameLayout
+					android:id="@+id/daily_bar_max"
+					android:background="#ffffff"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent">
+					<View android:id="@+id/daily_bar"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:background="#000000"/>
+				</FrameLayout>
+			</FrameLayout>
+			<FrameLayout
+				android:background="#808080"
+				android:layout_width="42dp"
+				android:layout_height="4dp"
+				android:padding="0.5dip">
+				<FrameLayout
+					android:background="#ffffff"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent">
+					<View android:id="@+id/global_bar"
+						android:layout_width="0dip"
+						android:layout_height="fill_parent"
+						android:background="#000000"/>
+				</FrameLayout>
+			</FrameLayout>
+		</LinearLayout>
+		<Chronometer android:id="@+id/card_time"
+			android:layout_alignParentRight="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="right"
+			android:textColor="#000000" />
+	</LinearLayout>
 	<!-- Card and whiteboard -->
 	<WebView android:id="@+id/flashcard"
 		android:layout_below="@+id/red_number"

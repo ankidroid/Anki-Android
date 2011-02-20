@@ -39,4 +39,9 @@
 	<color name="statistics_reps_new_cards">#5CB3FF</color>	
 	<color name="statistics_reps_young_cards">#488AC7</color>
 	<color name="statistics_reps_mature_cards">#1569C7</color>	
+	
+	<color name="progressbar_1">#ff0000</color>	
+	<color name="progressbar_2">#ff9100</color>	
+	<color name="progressbar_3">#ffbe00</color>	
+	<color name="progressbar_4">#4aa02c</color>	
 </resources>

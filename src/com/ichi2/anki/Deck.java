@@ -1187,16 +1187,31 @@ public class Deck {
     /*
      * Stats ******************************
      */
-    public double[] getStats() {
+    public double[] getStats(int which) {
     	double[] stats = Stats.getStats(this, mGlobalStats, mDailyStats);
-    	if (stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME] != 0 && stats[Stats.STATSARRAY_DAILY_REPS] / (mNewCountToday + mRevCount + stats[Stats.STATSARRAY_DAILY_REPS]) > 0.1) {
-    		stats[Stats.STATSARRAY_TIME_LEFT] = getETA(stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
-    	} else if (stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME] != 0) {
-    		stats[Stats.STATSARRAY_TIME_LEFT] = getETA(stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
-    	} else {
-    		stats[Stats.STATSARRAY_TIME_LEFT] = -1;
+    	double[] result;
+    	switch (which) {
+    	    case Stats.TYPE_ETA:
+    	        result = new double[1];
+    	        if (stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME] != 0 && stats[Stats.STATSARRAY_DAILY_REPS] / (mNewCountToday + mRevCount + stats[Stats.STATSARRAY_DAILY_REPS]) > 0.1) {
+    	            result[0] = getETA(stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
+    	        } else if (stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME] != 0) {
+    	            result[0] = getETA(stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
+    	        } else {
+    	            result[0] = -1;
+    	        }
+    	        break;
+            case Stats.TYPE_YES_SHARES:
+                result = new double[2];
+                result[0] = 1 - stats[Stats.STATSARRAY_DAILY_NO] / (stats[Stats.STATSARRAY_DAILY_REPS]);
+                result[1] = stats[Stats.STATSARRAY_GLOBAL_MATURE_YES] / (stats[Stats.STATSARRAY_GLOBAL_MATURE_YES] + stats[Stats.STATSARRAY_GLOBAL_MATURE_NO]);
+                break;
+	        default:
+	            result = new double[1];
+	            result[0] = 0;;
+                break;
     	}
-    	return stats;
+    	return result;
     }
 
 

@@ -55,6 +55,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -168,6 +170,7 @@ public class Reviewer extends Activity {
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
     private boolean mIsLastCard = false;
+    private boolean mShowProgressBars;
     
     private boolean mIsDictionaryAvailable;
 
@@ -191,6 +194,9 @@ public class Reviewer extends Activity {
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
     private TextView mChosenAnswer;
+    private LinearLayout mProgressBars;
+    private View mDailyBar;
+    private View mGlobalBar;
     private TextView mNext1;
     private TextView mNext2;
     private TextView mNext3;
@@ -224,6 +230,9 @@ public class Reviewer extends Activity {
     private int mShowChosenAnswerLength = 600;
     
 	private boolean mShowCongrats = false;
+
+    private int mStatisticBarsMax;
+    private int mStatisticBarsHeight;
 
 	/** 
 	 * Shake Detection
@@ -703,6 +712,9 @@ public class Reviewer extends Activity {
             if (mPrefTimer) {
                 mCardTimer.setVisibility(View.GONE);
             }
+            if (mShowProgressBars) {
+                mProgressBars.setVisibility(View.GONE);
+            }
 
             getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
@@ -722,6 +734,9 @@ public class Reviewer extends Activity {
             mChosenAnswer.setVisibility(View.VISIBLE);
             if (mPrefTimer) {
                 mCardTimer.setVisibility(View.VISIBLE);
+            }
+            if (mShowProgressBars) {
+                mProgressBars.setVisibility(View.GONE);
             }
 
             // Restore fullscreen preference
@@ -1005,6 +1020,12 @@ public class Reviewer extends Activity {
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
         mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 
+        if (mShowProgressBars) {
+            mDailyBar = (View) findViewById(R.id.daily_bar);
+            mGlobalBar = (View) findViewById(R.id.global_bar);
+            mProgressBars = (LinearLayout) findViewById(R.id.progress_bars);
+        }
+
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
         float headTextSize = (float) (mCardTimer.getTextSize() * 0.63);
         mCardTimer.setTextSize(headTextSize);
@@ -1123,6 +1144,9 @@ public class Reviewer extends Activity {
         mFlipCard.setVisibility(View.VISIBLE);
         
         mCardTimer.setVisibility((mPrefTimer) ? View.VISIBLE : View.GONE);
+        if (mShowProgressBars) {
+            mProgressBars.setVisibility(View.VISIBLE);
+        }
         mWhiteboard.setVisibility((mPrefWhiteboard && mShowWhiteboard) ? View.VISIBLE : View.GONE);
         mAnswerField.setVisibility((mPrefWriteAnswers) ? View.VISIBLE : View.GONE);
     }
@@ -1152,6 +1176,7 @@ public class Reviewer extends Activity {
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
+        mShowProgressBars = preferences.getBoolean("progressBars", true);
 
         return preferences;
     }
@@ -1168,6 +1193,9 @@ public class Reviewer extends Activity {
 
     private void reviewNextCard() {
     	updateScreenCounts();
+    	if (mShowProgressBars) {
+            updateStatisticBars();    	    
+    	}
 
         // Clean answer field
         if (mPrefWriteAnswers) {
@@ -1217,6 +1245,40 @@ public class Reviewer extends Activity {
         mTextBarBlack.setText(revCount);
         mTextBarBlue.setText(newCount);
     }
+
+
+    private void updateStatisticBars() {
+        if (mStatisticBarsMax == 0) {
+            View view = findViewById(R.id.daily_bar_max);
+            mStatisticBarsMax = view.getWidth();
+            mStatisticBarsHeight = view.getHeight();
+        }
+        Deck deck = AnkiDroidApp.deck();
+        double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
+        FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);
+        lparam.height = mStatisticBarsHeight;
+        lparam.width = (int) (mStatisticBarsMax * values[0]);
+        mDailyBar.setLayoutParams(lparam);
+        updateColors(mDailyBar, values[0]);
+        FrameLayout.LayoutParams lparamg = new FrameLayout.LayoutParams(0, 0);
+        lparamg.height = mStatisticBarsHeight;
+        lparamg.width = (int) (mStatisticBarsMax * values[1]);
+        mGlobalBar.setLayoutParams(lparamg);
+        updateColors(mGlobalBar, values[1]);
+    }
+
+
+    private void updateColors(View view, double progress) {
+        if (progress < 0.5) {
+            view.setBackgroundColor(getResources().getColor(R.color.progressbar_1));
+        } else if (progress < 0.65) {
+            view.setBackgroundColor(getResources().getColor(R.color.progressbar_2));
+        } else if (progress < 0.75) {
+            view.setBackgroundColor(getResources().getColor(R.color.progressbar_3));
+        } else {
+            view.setBackgroundColor(getResources().getColor(R.color.progressbar_4));            
+        }
+    }    
 
 
     private void displayCardQuestion() {

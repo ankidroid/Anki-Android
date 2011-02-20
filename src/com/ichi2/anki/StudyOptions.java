@@ -1021,7 +1021,7 @@ public class StudyOptions extends Activity {
             mTextReviewsDue.setText(String.valueOf(reviewCount));
             mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
             String etastr = "-";
-            int eta = (int) deck.getStats()[Stats.STATSARRAY_TIME_LEFT];
+            int eta = (int) deck.getStats(Stats.TYPE_ETA)[0];
             if (eta != -1) {
             	etastr = Integer.toString(eta / 60);
             }

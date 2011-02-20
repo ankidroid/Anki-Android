@@ -77,6 +77,11 @@
 			android:defaultValue="true"
 			android:summary="@string/show_timer_summ"
 			android:key="timer" />
+		<CheckBoxPreference
+			android:title="@string/show_progress_bars"
+			android:defaultValue="true"
+			android:summary="@string/show_progress_bars_summ"
+			android:key="progressBars" />
 		<ListPreference
 			android:title="@string/hide_question_in_answer"
 			android:summary="@string/hide_question_in_answer_summ"
