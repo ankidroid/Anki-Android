@@ -21,28 +21,78 @@
 			android:layout_width="fill_parent"
 			android:id="@+id/studyoptions_new_card_schedule"
 			android:entries="@array/studyoptions_more_new_card_schedule" />
-		<Spinner
-			android:layout_height="wrap_content"
-			android:layout_width="fill_parent"
-			android:id="@+id/studyoptions_rev_card_order"
-			android:entries="@array/studyoptions_more_rev_card_order" />
+		<Spinner android:layout_width="fill_parent" android:id="@+id/studyoptions_rev_card_order" android:entries="@array/studyoptions_more_rev_card_order" android:layout_height="wrap_content"></Spinner>
 		<Spinner
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
 			android:id="@+id/studyoptions_fail_card_option"
 			android:entries="@array/studyoptions_more_fail_card_option" />
-		<CheckBox
-			android:layout_height="wrap_content"
+		<LinearLayout
 			android:layout_width="fill_parent"
-			android:id="@+id/studyoptions_per_day"
-			android:text="@string/per_day"
-			android:checked="true" />
-		<CheckBox
 			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="4"
+				android:layout_marginLeft="4dip"
+				android:text="@string/studyoptions_new_cards_per_day"
+				android:textColor="#ffffff"
+				android:textSize="16dip"/>
+			<EditText android:id="@+id/studyoptions_new_cards_per_day"
+				android:layout_width="0dip"
+				android:layout_height="38dip"
+				android:layout_weight="1"
+				android:layout_marginRight="4dip"
+				android:gravity="center"
+				android:inputType="number"
+				android:lines="1"
+				android:text="50"
+				android:textSize="14dip"/>
+		</LinearLayout>
+		<RelativeLayout
 			android:layout_width="fill_parent"
-			android:id="@+id/studyoptions_suspend_leeches"
-			android:text="@string/suspend_leeches"
-			android:checked="true" />
-	</LinearLayout>
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="4dip"
+				android:text="@string/per_day"
+				android:textColor="#ffffff"
+				android:textSize="16dip"/>
+			<CheckBox
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_alignParentRight="true"
+				android:id="@+id/studyoptions_per_day"
+				android:layout_marginRight="4dip"
+				android:checked="true" />
+		</RelativeLayout>
+		<RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="4"
+				android:layout_marginLeft="3dip"
+				android:text="@string/suspend_leeches"
+				android:textColor="#ffffff"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:textSize="16dip"/>
+			<CheckBox
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:id="@+id/studyoptions_suspend_leeches"
+				android:layout_alignParentRight="true"
+				android:layout_marginRight="3dip"
+				android:checked="true" />
+		</RelativeLayout>	
+</LinearLayout>
 	
 </ScrollView>

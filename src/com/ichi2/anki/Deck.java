@@ -45,7 +45,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeMap;
@@ -1183,6 +1182,43 @@ public class Deck {
         }
     	
     	return count;
+    }
+
+    /*
+     * Stats ******************************
+     */
+    public double[] getStats() {
+    	double[] stats = Stats.getStats(this, mGlobalStats, mDailyStats);
+    	// add scheduling related stats
+
+    	if (stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME] != 0) {
+    		stats[Stats.STATSARRAY_TIME_LEFT] = getETA(stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
+    	} else if (stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME] != 0) {
+    		stats[Stats.STATSARRAY_TIME_LEFT] = getETA(stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
+    	} else {
+    		stats[Stats.STATSARRAY_TIME_LEFT] = -1;
+    	}
+    	return stats;
+    }
+
+
+    private double getETA(double averageTime, double globalYoungNoShare) {
+    	double left;
+    	double count;
+
+    	// rev + new cards first, account for failures
+    	count = mNewCountToday + mRevCount;
+    	count *= 1 + (globalYoungNoShare / 100.0);
+    	left = count * averageTime;
+    	
+    	//failed - higher time per card for higher amount of cards
+    	double failedBaseMulti = 1.5;
+    	double failedMod = 0.07;
+    	double failedBaseCount = 20;
+    	double factor = (failedBaseMulti + (failedMod * (mFailedSoonCount - failedBaseCount)));
+    	left += mFailedSoonCount * averageTime * factor;
+        	
+    	return left;
     }
 
 

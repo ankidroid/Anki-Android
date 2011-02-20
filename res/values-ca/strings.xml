@@ -123,6 +123,8 @@
   <string name="swipe">Habilita els gestos</string>
   <string name="swipe_summ_off">Feu servir gestos per canviar entre les pantalles i fitxes de resposta. Aquesta opció no és compatible amb els controls de zoom</string>
   <string name="swipe_summ_on">Passeu horitzontalment per canviar entre les pantalles i verticalment per respondre a les fitxes (cap a baix: de nou, fins a: recomanació, premeu dues vegades: més fàcil)</string>
+  <string name="swipe_sensibility">Gesture Sensibility</string>
+  <string name="swipe_sensibility_summ">Sensibility of swipe gestures</string>
   <string name="shake">Sacsegeu el dispositiu per desfer</string>
   <string name="shake_summ">Sacsegeu el dispositiu per desfer la darrera acció</string>
   <string name="tts">Síntesi de veu</string>
@@ -136,6 +138,9 @@
   <string name="sync_enabled_in_answer_summ">Encara hi ha molts errors, que podrien malmetre els vostres paquets. Feu sovint còpies de seguretat!</string>
   <string name="fix_hebrew_text">Feu complir RTL per l\'hebreu</string>
   <string name="fix_hebrew_text_summ">Solució per al suport limitat de la llengua hebrea de la plataforma Android No permet l\'ús de vocals.</string>
+  <string name="language">Language</string>
+  <string name="language_summ">Select the language, AnkiDroid should use. Default is the general system language</string>
+  <string name="language_system">System Language</string>
   <string name="select_locale_title">Seleccioneu l\'idioma</string>
   <string name="personaldeckpicker_title">Obre un paquet de la xarxa</string>
   <string name="shareddeckpicker_title">Trieu el paquet que voleu baixar</string>
@@ -215,7 +220,8 @@
   <string name="studyoptions_reviews_due">Pendents de revisar:</string>
   <string name="studyoptions_new_today">Noves avui:</string>
   <string name="studyoptions_new_total">Total de noves:</string>
-  <string name="studyoptions_new_cards_per_day">Noves fitxes per dia:</string>
+  <string name="studyoptions_eta">Estimated time (min):</string>
+  <string name="studyoptions_new_cards_per_day">Noves fitxes per dia</string>
   <string name="studyoptions_session_minutes">Temps màxim (minuts):</string>
   <string name="studyoptions_session_questions">Màxim de fitxes (num.):</string>
   <string name="studyoptions_start">Comença</string>
@@ -224,6 +230,8 @@
   <string name="studyoptions_more_save">Desa</string>
   <string name="studyoptions_nodeck_title">No hi ha cap paquet carregat</string>
   <string name="studyoptions_nodeck_message">No hi ha cap paquet carregat. Els paquets Anki s\'emmagatzemen a la carpeta \"%s\" de la targeta SD. Podeu indicar la ubicació a les Preferències (premeu el botó \"Menu\" del dispositiu i trieu \"Preferències\").</string>
+  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">No ha estat possible carregar el paquet</string>
   <string name="studyoptions_deck_not_loaded_message">El paquet que heu triat no és vàlid. Podeu utilitzar l\'aplicació Anki per l\'escriptori per preparar un nou paquet abans de carregar-ho a Ankidroid.\n\n Mentre, podeu triar un altre paquet o carregar el paquet de mostra amb els botons de sota.</string>
   <string name="studyoptions_no_external_storage_title">No hi ha cap suport extern disponible</string>
@@ -339,7 +347,7 @@
   <string name="delete_deck_message">Segur que voleu suprimir el paquet %s?</string>
   <string name="delete_deck_confirm">Suprimeix</string>
   <string name="new_version_title">Nova versió:</string>
-  <string name="new_version_text">New features:\n- card browser\n- statistics\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="statistics_type_title">Chose statistic type</string>
@@ -362,6 +370,10 @@
   <plurals name="deckpicker_title">
     <item quantity="one">Select deck (1 of %2$d due)</item>
     <item quantity="other">Trieu un paquet (%1$d de %2$d pendents)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 of %2$d due</item>

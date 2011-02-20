@@ -130,6 +130,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private int mTotalDueCards = 0;
 	private int mTotalCards = 0;
+	private int mTotalTime = 0;
 
 	int mStatisticType;
 	int mLoadingFinished; 
@@ -732,8 +733,8 @@ public class DeckPicker extends Activity implements Runnable {
 	        // Show "Sync all" button only if sync is enabled.
 	        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 	        Log.d(AnkiDroidApp.TAG, "syncEnabled=" + preferences.getBoolean("syncEnabled", false));
-	        if (preferences.getBoolean("syncEnabled", false)) {
-	            mSyncAllBar.setVisibility(View.VISIBLE);
+	        if (!preferences.getBoolean("syncEnabled", false)) {
+	            mSyncAllButton.setVisibility(View.GONE);
 	        }
 
 			Thread thread = new Thread(this);
@@ -851,6 +852,7 @@ public class DeckPicker extends Activity implements Runnable {
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
+						mTotalTime += Math.max(deck.getStats()[Stats.STATSARRAY_TIME_LEFT] / 60, 0);
 						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);
@@ -868,7 +870,9 @@ public class DeckPicker extends Activity implements Runnable {
 	
 	
 	private void setTitleText(){
-		setTitle(getResources().getQuantityString(R.plurals.deckpicker_title, mTotalDueCards, mTotalDueCards, mTotalCards));
+		Resources res = getResources();
+		String time = res.getQuantityString(R.plurals.deckpicker_title_minutes, mTotalTime, mTotalTime);
+		setTitle(res.getQuantityString(R.plurals.deckpicker_title, mTotalDueCards, mTotalDueCards, mTotalCards, time));
 	}
 
 
@@ -1091,7 +1095,7 @@ public class DeckPicker extends Activity implements Runnable {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-       				if (e1.getX() - e2.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+       				if (e1.getX() - e2.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath) {
        					closeDeckPicker();
                     }
        			}

@@ -123,6 +123,8 @@
   <string name="swipe">Ενεργοποίηση χειρονομίων</string>
   <string name="swipe_summ_off">Χρησιμοποιήστε χειρονομίες για να αλλάξετε μεταξύ οθόνων και να απαντήσετε κάρτες. Αυτή η επιλογή δεν είναι συμβατή με τους ελέγχους ζουμ</string>
   <string name="swipe_summ_on">Σαρώστε οριζόντια για εναλλαγή μεταξύ των οθονών και κάθετα για να απαντήσετε κάρτες (κάτω: ξανά, πάνω: σύσταση, διπλό άγγιγμα: ευκολότερο από σύσταση.)</string>
+  <string name="swipe_sensibility">Gesture Sensibility</string>
+  <string name="swipe_sensibility_summ">Sensibility of swipe gestures</string>
   <string name="shake">Ανακινήστε για Αναίρεση</string>
   <string name="shake_summ">Ανακινήστε τη συσκευή σας για να αναιρέσετε την τελευταία ενέργεια</string>
   <string name="tts">Text to Speech</string>
@@ -136,6 +138,9 @@
   <string name="sync_enabled_in_answer_summ">Ακόμη πολλά σφάλματα, ίσως να κατεστρέψει τις τράπουλές σας. Κρατήστε αντίγραφα συχνά!</string>
   <string name="fix_hebrew_text">Επιβολή RTL για τα εβραϊκά</string>
   <string name="fix_hebrew_text_summ">Εναλλακτική λύση για περιορισμένη υποστήριξη για εβραϊκά από το Android. Δεν υποστηρίζει φωνήεντα.</string>
+  <string name="language">Language</string>
+  <string name="language_summ">Select the language, AnkiDroid should use. Default is the general system language</string>
+  <string name="language_system">System Language</string>
   <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Ανοίξτε τράπουλα από το δίκτυο</string>
   <string name="shareddeckpicker_title">Επιλέξτε την τράπουλα που θέλετε να κατεβάσετε</string>
@@ -215,7 +220,8 @@
   <string name="studyoptions_reviews_due">Προς επανάληψη:</string>
   <string name="studyoptions_new_today">Νέες σήμερα:</string>
   <string name="studyoptions_new_total">Νέες σύνολο:</string>
-  <string name="studyoptions_new_cards_per_day">Νέες κάρτες ανά μέρα:</string>
+  <string name="studyoptions_eta">Estimated time (min):</string>
+  <string name="studyoptions_new_cards_per_day">Νέες κάρτες ανά μέρα</string>
   <string name="studyoptions_session_minutes">Όριο περιόδου (λεπτά):</string>
   <string name="studyoptions_session_questions">Όριο περιόδου (ερωτήσεις):</string>
   <string name="studyoptions_start">Έναρξη επανάληψης</string>
@@ -224,6 +230,8 @@
   <string name="studyoptions_more_save">Αποθήκευση</string>
   <string name="studyoptions_nodeck_title">Δεν έχει φορτωθεί τράπουλα</string>
   <string name="studyoptions_nodeck_message">Δεν έχει φορτωθεί τράπουλα ακόμη. Οι τράπουλες του Anki αποθηκεύονται στον κατάλογο \"%s\" στην κάρτα SD. Αυτή η θέση μπορεί να καθοριστεί στις προτιμήσεις (πατήστε το πλήκτρο \"Μενού\" και επιλέξτε \"Προτιμήσεις\").</string>
+  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">Η τράπουλα δεν ήταν δυνατό το φορτωθεί</string>
   <string name="studyoptions_deck_not_loaded_message">Η τράπουλα που επιλέξατε δεν είναι έγκυρη τράπουλα Anki. Παρακαλούμε χρησιμοποιήστε την desktop εφαρμογή Anki για να δημιουργήσετε μία έγκυρη τράπουλα, πριν την φόρτωσή τους στο Ankidroid.\n\nΕν τω μεταξύ, μπορείτε να επιλέξετε μια άλλη τράπουλα ή να φορτώσετε την τράπουλα δείγμα με τα παρακάτω πλήκτρα.</string>
   <string name="studyoptions_no_external_storage_title">Μη διαθέσιμη εξωτερική αποθήκευση</string>
@@ -339,7 +347,7 @@
   <string name="delete_deck_message">Θέλετε πραγματικά να διαγράψετε την τράπουλα %s;</string>
   <string name="delete_deck_confirm">Διαγράψτε το</string>
   <string name="new_version_title">New Version:</string>
-  <string name="new_version_text">New features:\n- card browser\n- statistics\n- text-to-speech\n- deck completion bar on deck picker\n- select card model on fact adder\n- new widget\n- better undo/redo behaviour\n- slider controls\n- more languages</string>
+  <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="statistics_type_title">Chose statistic type</string>
@@ -360,8 +368,12 @@
   <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
   <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Select deck (1 of %2$d due)</item>
+    <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
     <item quantity="other">Επιλέξτε τράπουλα (%1$d από %2$d αναμένουν)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 of %2$d due</item>

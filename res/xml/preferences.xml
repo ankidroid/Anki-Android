@@ -32,6 +32,11 @@
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/pref_cat_qadisplay">
+		<ListPreference
+			android:title="@string/language"
+			android:summary="@string/language_summ"
+			android:key="language"
+			android:defaultValue="0"/>
 		<CheckBoxPreference
 			android:title="@string/show_next_review_time"
 			android:defaultValue="true"
@@ -153,15 +158,24 @@
 			android:summaryOn="@string/swipe_summ_on"
 			android:summaryOff="@string/swipe_summ_off"
 			android:key="swipe"
-			android:disableDependentsState="true"/>
+			android:disableDependentsState="false"/>
+		<com.hlidskialf.android.preference.SeekBarPreference 
+      		android:key="swipeSensibility"
+        	android:title="@string/swipe_sensibility"
+        	android:summary="@string/swipe_sensibility_summ"
+        	android:dialogMessage="@string/shake_intensity_summ"
+			android:dependency="swipe"
+			android:defaultValue="100"
+        	android:text=""
+        	app:min="40"
+        	android:max="200" 
+        	app:interval="1" />
 		<CheckBoxPreference
 			android:id="@+id/zoom_checkbox"
 			android:title="@string/zoom"
 			android:defaultValue="false"
 			android:summary="@string/zoom_summ"
-			android:key="zoom"
-			android:dependency="swipe"
-			android:disableDependentsState="true"/>
+			android:key="zoom"/>
 		<ListPreference
 			android:title="@string/startup_mode"
 			android:summary="@string/startup_mode_summ"

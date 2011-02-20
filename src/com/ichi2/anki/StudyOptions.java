@@ -26,6 +26,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -64,6 +66,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 
 public class StudyOptions extends Activity {
     /**
@@ -150,6 +153,7 @@ public class StudyOptions extends Activity {
     private long mLastTimeOpened;
     boolean mSyncEnabled = false;
     boolean mNewVersion = false;
+    boolean mShowWelcomeScreen = false;
     boolean mInvertedColors = false;
     
     /**
@@ -184,8 +188,8 @@ public class StudyOptions extends Activity {
     private TextView mTextDeckName;
     private TextView mTextReviewsDue;
     private TextView mTextNewToday;
+    private TextView mTextETA;
     private TextView mTextNewTotal;
-    private EditText mEditNewPerDay;
     private EditText mEditSessionTime;
     private EditText mEditSessionQuestions;
     private CheckBox mNightMode;
@@ -200,6 +204,7 @@ public class StudyOptions extends Activity {
     private Spinner mSpinnerNewCardSchedule;
     private Spinner mSpinnerRevCardOrder;
     private Spinner mSpinnerFailCardOption;
+    private EditText mEditNewPerDay;
     
     private CheckBox mCheckBoxPerDay;
     private CheckBox mCheckBoxSuspendLeeches;
@@ -237,9 +242,9 @@ public class StudyOptions extends Activity {
     */    
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
-	public static final int SWIPE_MIN_DISTANCE = 100;
-	public static final int SWIPE_MAX_OFF_PATH = 150;
-	public static final int SWIPE_THRESHOLD_VELOCITY = 200;
+	public static int sSwipeMinDistance = 150;
+	public static int sSwipeMaxOffPath = 70;
+	public static int sSwipeThresholdVelocity = 200;
 
     /**
 	* Statistics
@@ -299,6 +304,20 @@ public class StudyOptions extends Activity {
                 	mStatisticType = 0;
                 	openStatistics(0);
                 	return;
+                case R.id.studyoptions_nodeck_message:
+                	if (!mShowWelcomeScreen) {
+                        startActivityForResult(
+                                new Intent(StudyOptions.this, Preferences.class),
+                                PREFERENCES_UPDATE);
+                	} else {
+                    	if (Utils.isIntentAvailable(StudyOptions.this, "android.intent.action.VIEW")) {
+                    		Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_wiki)));
+                    		startActivity(intent);
+                    	} else {
+                    		startActivity(new Intent(StudyOptions.this, About.class));
+                    	}
+                	}
+                	return;
                 default:
                     return;
             }
@@ -334,6 +353,17 @@ public class StudyOptions extends Activity {
             deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
             deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
             // TODO: mSpinnerFailCardOption
+            String inputText = mEditNewPerDay.getText().toString();
+            if (!inputText.equals(Integer.toString(deck.getNewCardsPerDay()))) {
+            	if (inputText.equals("")) {
+            		deck.setNewCardsPerDay(0);                		
+            	} else if (isValidInt(inputText)) {
+            		deck.setNewCardsPerDay(Integer.parseInt(inputText));
+            	} else {
+            		mEditNewPerDay.setText("0");
+            	}
+        		updateValuesFromDeck();
+            }
             boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked(); 
           	deck.setPerDay(mCheckBoxPerDay.isChecked());
           	deck.setSuspendLeeches(mCheckBoxSuspendLeeches.isChecked());
@@ -410,7 +440,7 @@ public class StudyOptions extends Activity {
        	};
     }
 
-    
+
 //    @Override 
 //    public void onConfigurationChanged(Configuration newConfig){
 //    	super.onConfigurationChanged(newConfig); 
@@ -592,6 +622,7 @@ public class StudyOptions extends Activity {
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
+        mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
         mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
         mNightMode = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_night_mode);
         mNightMode.setChecked(mInvertedColors);
@@ -606,7 +637,6 @@ public class StudyOptions extends Activity {
             }
             });
 
-        mEditNewPerDay = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_new_cards_per_day);
         mEditSessionTime = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_minutes);
         mEditSessionQuestions = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_questions);
 
@@ -614,29 +644,7 @@ public class StudyOptions extends Activity {
         mToggleCram.setOnClickListener(mButtonClickListener);
         mCardBrowser.setOnClickListener(mButtonClickListener);
         mStatisticsButton.setOnClickListener(mButtonClickListener);
-        
-        mEditNewPerDay.addTextChangedListener(new TextWatcher() {
-        	public void afterTextChanged(Editable s) {
-                Deck deck = AnkiDroidApp.deck();
-                String inputText = mEditNewPerDay.getText().toString();
-                if (deck != null) {
-                    if (!inputText.equals(Integer.toString(deck.getNewCardsPerDay()))) {
-                    	if (inputText.equals("")) {
-                    		deck.setNewCardsPerDay(0);                		
-                    	} else if (isValidInt(inputText)) {
-                    		deck.setNewCardsPerDay(Integer.parseInt(inputText));
-                    	} else {
-                    		mEditNewPerDay.setText("0");
-                    	}
-                		updateValuesFromDeck();
-                    }
-                	
-                }
-        	}
-        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-        public void onTextChanged(CharSequence s, int start, int before, int count){}
-        });
-        
+
         mEditSessionTime.addTextChangedListener(new TextWatcher() {
         	public void afterTextChanged(Editable s) {
                 Deck deck = AnkiDroidApp.deck();
@@ -687,6 +695,7 @@ public class StudyOptions extends Activity {
 
         mTextNoDeckTitle = (TextView) mNoDeckView.findViewById(R.id.studyoptions_nodeck_title);
         mTextNoDeckMessage = (TextView) mNoDeckView.findViewById(R.id.studyoptions_nodeck_message);
+        mTextNoDeckMessage.setOnClickListener(mButtonClickListener);
 
         mNoDeckView.findViewById(R.id.studyoptions_load_sample_deck).setOnClickListener(mButtonClickListener);
         mNoDeckView.findViewById(R.id.studyoptions_download_deck).setOnClickListener(mButtonClickListener);
@@ -881,6 +890,7 @@ public class StudyOptions extends Activity {
         mSpinnerNewCardSchedule = (Spinner) contentView.findViewById(R.id.studyoptions_new_card_schedule);
         mSpinnerRevCardOrder = (Spinner) contentView.findViewById(R.id.studyoptions_rev_card_order);
         mSpinnerFailCardOption = (Spinner) contentView.findViewById(R.id.studyoptions_fail_card_option);
+        mEditNewPerDay = (EditText) contentView.findViewById(R.id.studyoptions_new_cards_per_day);
         mCheckBoxPerDay = (CheckBox) contentView.findViewById(R.id.studyoptions_per_day);
         mCheckBoxSuspendLeeches = (CheckBox) contentView.findViewById(R.id.studyoptions_suspend_leeches);
 
@@ -900,6 +910,7 @@ public class StudyOptions extends Activity {
         mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
         mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
         mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
+        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
         mCheckBoxPerDay.setChecked(deck.getPerDay());
         mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());
 
@@ -918,14 +929,23 @@ public class StudyOptions extends Activity {
         switch (mCurrentContentView) {
             case CONTENT_NO_DECK:
                 setTitle(R.string.app_name);
-                mTextNoDeckTitle.setText(R.string.studyoptions_nodeck_title);
-                mTextNoDeckMessage.setText(String.format(
-                        getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
-                setContentView(mNoDeckView);
                 if (mNewVersion) {
-                    mNewVersionAlert.show();
+                	mShowWelcomeScreen = true;
+                	savePreferences("welcome");
+                	mNewVersionAlert.show();
                     mNewVersion = false;
                 }
+                mShowWelcomeScreen = PrefSettings.getSharedPrefs(getBaseContext()).getBoolean("welcome", false);
+                if (!mShowWelcomeScreen) {
+                    mTextNoDeckTitle.setText(R.string.studyoptions_nodeck_title);
+                    mTextNoDeckMessage.setText(String.format(
+                            getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
+                } else {
+                    mTextNoDeckTitle.setText(R.string.studyoptions_welcome_title);
+                    mTextNoDeckMessage.setText(String.format(
+                            getResources().getString(R.string.studyoptions_welcome_message), mPrefDeckPath));
+                }
+                setContentView(mNoDeckView);
                 break;
             case CONTENT_DECK_NOT_LOADED:
                 setTitle(R.string.app_name);
@@ -938,7 +958,6 @@ public class StudyOptions extends Activity {
                 // Enable timeboxing in case it was disabled from the previous deck
                 if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().name().equals("cram"))) {
                     mToggleCram.setChecked(false);
-                    mEditNewPerDay.setEnabled(true);
                     mEditSessionTime.setEnabled(true);
                     mEditSessionQuestions.setEnabled(true);
                 }
@@ -990,21 +1009,24 @@ public class StudyOptions extends Activity {
 
     private void updateValuesFromDeck() {
         Deck deck = AnkiDroidApp.deck();
+        Resources res = getResources();
         DeckTask.waitToFinish();
         if (deck != null) {
             deck.reset();
             // TODO: updateActives() from anqiqt/ui/main.py
             int reviewCount = deck.getDueCount();
-            setTitle(getResources().getQuantityString(R.plurals.studyoptions_window_title, reviewCount, deck.getDeckName(), reviewCount, deck.getCardCount()));
+            setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, reviewCount, deck.getDeckName(), reviewCount, deck.getCardCount()));
 
             mTextDeckName.setText(deck.getDeckName());
             mTextReviewsDue.setText(String.valueOf(reviewCount));
             mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
-            mTextNewTotal.setText(String.valueOf(deck.getNewCount()));
-
-            if (!mEditNewPerDay.getText().toString().equals(String.valueOf(deck.getNewCardsPerDay())) && !mEditNewPerDay.getText().toString().equals("")) {
-            	mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
+            String etastr = "-";
+            int eta = (int) deck.getStats()[Stats.STATSARRAY_TIME_LEFT];
+            if (eta != -1) {
+            	etastr = Integer.toString(eta / 60);
             }
+            mTextETA.setText(etastr);
+            mTextNewTotal.setText(String.valueOf(deck.getNewCount()));
             if (!mEditSessionTime.getText().toString().equals(String.valueOf(deck.getSessionTimeLimit() / 60)) && !mEditSessionTime.getText().toString().equals("")) {
             	mEditSessionTime.setText(String.valueOf(deck.getSessionTimeLimit() / 60));
             }
@@ -1036,7 +1058,6 @@ public class StudyOptions extends Activity {
     private void onCram() {
         AnkiDroidApp.deck().setupCramScheduler(activeCramTags.toArray(new String[activeCramTags.size()]), cramOrder);
         // Timeboxing only supported using the standard scheduler
-        mEditNewPerDay.setEnabled(false);
         mEditSessionTime.setEnabled(false);
         mEditSessionQuestions.setEnabled(false);
         updateValuesFromDeck();
@@ -1047,7 +1068,6 @@ public class StudyOptions extends Activity {
 */
     private void onCramStop() {
         AnkiDroidApp.deck().setupStandardScheduler();
-        mEditNewPerDay.setEnabled(true);
         mEditSessionTime.setEnabled(true);
         mEditSessionQuestions.setEnabled(true);
     }
@@ -1199,6 +1219,9 @@ public class StudyOptions extends Activity {
             }
             startActivityForResult(
                     new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        		MyAnimation.slide(this, MyAnimation.RIGHT);
+        	}
         } else {
             mUserNotLoggedInAlert.show();
         }
@@ -1213,6 +1236,9 @@ public class StudyOptions extends Activity {
         }
         // deckLoaded = false;
         startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    		MyAnimation.slide(this, MyAnimation.RIGHT);
+    	}
     }
 
 
@@ -1307,16 +1333,19 @@ public class StudyOptions extends Activity {
             // hideDeckErrors();
             mInDeckPicker = false;
 
-            if (requestCode == PICK_DECK_REQUEST && mCurrentContentView == CONTENT_CONGRATS) {
+            if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_OK) {
             	setContentView(mStudyOptionsView);
+            } else if ((requestCode == DOWNLOAD_SHARED_DECK || requestCode == DOWNLOAD_PERSONAL_DECK) && resultCode == RESULT_OK) {
+            	openDeckPicker();
+            	return;
             }
 
             if (resultCode != RESULT_OK) {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
                 // Make sure we open the database again in onResume() if user pressed "back"
                 // deckSelected = false;
-                boolean mFileNotDeleted = mDeckFilename != null && new File(mDeckFilename).exists();
-            	if (!mFileNotDeleted) {
+                boolean fileNotDeleted = mDeckFilename != null && new File(mDeckFilename).exists();
+            	if (!fileNotDeleted) {
                     AnkiDroidApp.setDeck(null);
                     showContentView(CONTENT_NO_DECK);
             	}
@@ -1335,6 +1364,10 @@ public class StudyOptions extends Activity {
             Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
             mDeckFilename = intent.getExtras().getString(OPT_DB);
             savePreferences("deckFilename");
+    		if (mShowWelcomeScreen) {
+            	mShowWelcomeScreen = false;
+            	savePreferences("welcome");            			
+    		}
 
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
@@ -1368,8 +1401,9 @@ public class StudyOptions extends Activity {
             reloadDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
             reloadDeck();
-        }
-        else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
+        } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
+        } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
+        	showContentView(CONTENT_STUDY_OPTIONS);
         }
     }
 
@@ -1408,6 +1442,8 @@ public class StudyOptions extends Activity {
             editor.putString("deckFilename", mDeckFilename); 
         } else if (str == "close") {
         	editor.putLong("lastTimeOpened", System.currentTimeMillis());
+        } else if (str == "welcome") {
+        	editor.putBoolean("welcome", mShowWelcomeScreen);
         } else if (str == "invertedColors") {
             editor.putBoolean("invertedColors", mInvertedColors);
         }
@@ -1430,15 +1466,29 @@ public class StudyOptions extends Activity {
         	editor.commit();
 
         	Resources res = getResources();
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(res.getString(R.string.new_version_title) + " " + getVersion());
-            builder.setMessage(res.getString(R.string.new_version_text));
+            builder.setPositiveButton(getResources().getString(R.string.ok), null);
+            View contentView = getLayoutInflater().inflate(R.layout.dialog_webview, null);
+            WebView messageWebView = (WebView) contentView.findViewById(R.id.dialog_webview);
+            messageWebView.setBackgroundColor(res.getColor(R.color.card_browser_background));
+            messageWebView.loadDataWithBaseURL("", getVersionMessage(), "text/html", "utf-8", null);
+            builder.setView(contentView);
             builder.setPositiveButton(res.getString(R.string.ok), null);
             builder.setCancelable(true);
-            mNewVersion = true;
             mNewVersionAlert = builder.create();
+            mNewVersion = true;
         }
+
+        sSwipeMinDistance = preferences.getInt("swipe_sensibility", 100);
+        if (sSwipeMinDistance != 100) {
+        	sSwipeMaxOffPath = (int) (sSwipeMinDistance * 100 / 70);
+        	sSwipeThresholdVelocity = (int) (sSwipeMinDistance * 2);
+        }
+
         mInvertedColors = preferences.getBoolean("invertedColors", false);
+       	setLanguage(preferences.getString("language", ""));
         return preferences;
     }
 
@@ -1452,6 +1502,36 @@ public class StudyOptions extends Activity {
             versionNumber = "?";
         }
         return versionNumber;
+    }
+
+
+    private String getVersionMessage() {
+    	Resources res = getResources();
+        StringBuilder builder = new StringBuilder();
+        builder.append("<html><body text=\"#FFFFFF\">");
+        builder.append(res.getString(R.string.new_version_message));
+        builder.append("<ul>");
+        String[] features = res.getStringArray(R.array.new_version_features);
+        for (int i = 0; i < features.length; i++) {
+        	builder.append("<li>");
+        	builder.append(features[i]);
+        	builder.append("</li>");
+        }
+        builder.append("</ul>");
+    	return builder.toString();
+    }
+
+
+    private void setLanguage(String language) {
+    	Locale locale;
+    	if (language.equals("")) {
+        	locale = Locale.getDefault();
+    	} else {
+        	locale = new Locale(language);    		
+    	}
+        Configuration config = new Configuration();
+        config.locale = locale;
+        this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
     }
 
 
@@ -1472,7 +1552,6 @@ public class StudyOptions extends Activity {
             // showControls(false);
 
         	mToggleCram.setChecked(false);
-            mEditNewPerDay.setEnabled(true);
             mEditSessionTime.setEnabled(true);
             mEditSessionQuestions.setEnabled(true);
             
@@ -1638,7 +1717,7 @@ public class StudyOptions extends Activity {
             }
             if (result.getBoolean()) {
 		    	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
-		    	startActivity(intent);
+		    	startActivityForResult(intent, STATISTICS);
 		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 		            MyAnimation.slide(StudyOptions.this, MyAnimation.DOWN);
 		        }				
@@ -1663,13 +1742,18 @@ public class StudyOptions extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
             	try {
-    				if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
+    				if (e1.getX() - e2.getX() > sSwipeMinDistance && Math.abs(velocityX) > sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < sSwipeMaxOffPath) {
                         // left
                     	openReviewer();
-                    } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < SWIPE_MAX_OFF_PATH) {
+                    } else if (e2.getX() - e1.getX() > sSwipeMinDistance && Math.abs(velocityX) > sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < sSwipeMaxOffPath) {
                         // right
     					openDeckPicker();
+                    } else if (e2.getY() - e1.getY() > sSwipeMinDistance && Math.abs(velocityY) > sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < sSwipeMaxOffPath) {
+                        // down
+                    	mStatisticType = 0;
+                    	openStatistics(0);
                     }
+
                 }
                 catch (Exception e) {
                 	Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());

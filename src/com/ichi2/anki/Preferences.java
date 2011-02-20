@@ -18,11 +18,16 @@
 
 package com.ichi2.anki;
 
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
@@ -37,6 +42,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
     private CheckBoxPreference zoomCheckboxPreference;
+    private CheckBoxPreference swipeCheckboxPreference;
+    private ListPreference mLanguageSelection;
+    private CharSequence[] mLanguageDialogLabels;
+    private CharSequence[] mLanguageDialogValues;
+    private static String[] mAppLanguages = {"ca", "cs", "de", "el", "es_ES", "fi", "fr", "it", "ja", "ko", "pl", "pt_PT", "ro", "ru", "sr", "sv-SE", "zh-CN", "zh-TW"};
 
 
     @Override
@@ -50,7 +60,37 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         mVeecheckStatus = mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, PrefSettings.DEFAULT_ENABLED);
         
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
+        zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
+        initializeLanguageDialog();
+    }
+
+
+    private void initializeLanguageDialog() {
+    	TreeMap<String, String> items = new TreeMap<String, String>();
+        for (String localeCode : mAppLanguages) {
+			Locale loc;
+			if (localeCode.length() > 2) {
+				loc = new Locale(localeCode.substring(0,2), localeCode.substring(3,5));				
+			} else {
+				loc = new Locale(localeCode);				
+			}
+	    	items.put(loc.getDisplayName(), loc.toString());
+		}
+		mLanguageDialogLabels = new CharSequence[items.size() + 1];
+		mLanguageDialogValues = new CharSequence[items.size() + 1];
+		mLanguageDialogLabels[0] = getResources().getString(R.string.language_system);
+		mLanguageDialogValues[0] = ""; 
+		int i = 1;
+		for (Map.Entry<String, String> e : items.entrySet()) {
+			mLanguageDialogLabels[i] = e.getKey();
+			mLanguageDialogValues[i] = e.getValue();
+			i++;
+		}
+        mLanguageSelection = (ListPreference) getPreferenceScreen().findPreference("language");
+        mLanguageSelection.setEntries(mLanguageDialogLabels);
+        mLanguageSelection.setEntryValues(mLanguageDialogValues);
     }
 
 
@@ -67,6 +107,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("swipe")) {
         	zoomCheckboxPreference.setChecked(false);
+        	zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
+        } else if (key.equals("language")) {
+        	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName());
+        	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        	startActivity(i);
         }
     }
 

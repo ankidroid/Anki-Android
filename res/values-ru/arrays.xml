@@ -134,4 +134,17 @@
     <item>6 месяцев</item>
     <item>1 год</item>
   </string-array>
+  <string-array name="new_version_features">
+    <item>редактор карт</item>
+    <item>статистика</item>
+    <item>произношение текста</item>
+    <item>прогресс завершения колоды в оглавлении</item>
+    <item>выбор модели карт при добавлении карты</item>
+    <item>новый виджет</item>
+    <item>улучшение отмена/возврат</item>
+    <item>новый элемент интерфейса - ползунок</item>
+    <item>больше языков</item>
+    <item>language selection</item>
+    <item>more languages</item>
+  </string-array>
 </resources>

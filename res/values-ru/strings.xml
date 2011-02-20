@@ -123,6 +123,8 @@
   <string name="swipe">Включить жесты</string>
   <string name="swipe_summ_off">Используйте жесты (при swipe) для переключения между экранами. Не работает одновременно с кнопками масштабирования</string>
   <string name="swipe_summ_on">Горизонтальный жест (при swipe) - смена экранов, вертикал. - ответ (вверх: снова, вниз: рекомен., двой.касание: проще чем рекомен.)</string>
+  <string name="swipe_sensibility">Gesture Sensibility</string>
+  <string name="swipe_sensibility_summ">Sensibility of swipe gestures</string>
   <string name="shake">Тряхнуть для отмены</string>
   <string name="shake_summ">Тряхнуть ваше устройство для отмены последнего действия</string>
   <string name="tts">Преобразование текста в речь</string>
@@ -136,6 +138,9 @@
   <string name="sync_enabled_in_answer_summ">Синхронизация в разработке. При синхронизации колоды могут быть повреждены. Делайте чаще резервные копии!</string>
   <string name="fix_hebrew_text">Обратный порядок написания (RTL) для иврита</string>
   <string name="fix_hebrew_text_summ">Ограниченная поддержка иврита для Android-платформы. Не поддерживаются гласные буквы.</string>
+  <string name="language">Language</string>
+  <string name="language_summ">Select the language, AnkiDroid should use. Default is the general system language</string>
+  <string name="language_system">System Language</string>
   <string name="select_locale_title">Выберите язык</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
   <string name="shareddeckpicker_title">Выберите колоду, которую вы хотите загрузить</string>
@@ -215,7 +220,8 @@
   <string name="studyoptions_reviews_due">Повторов:</string>
   <string name="studyoptions_new_today">Сегодня новых:</string>
   <string name="studyoptions_new_total">Новые всего:</string>
-  <string name="studyoptions_new_cards_per_day">Новых карт в день:</string>
+  <string name="studyoptions_eta">Estimated time (min):</string>
+  <string name="studyoptions_new_cards_per_day">Новых карт в день</string>
   <string name="studyoptions_session_minutes">Длительность урока (минут):</string>
   <string name="studyoptions_session_questions">Вопросов в уроке:</string>
   <string name="studyoptions_start">Начать Просмотр</string>
@@ -224,6 +230,8 @@
   <string name="studyoptions_more_save">Сохранить</string>
   <string name="studyoptions_nodeck_title">Колоды не загружены</string>
   <string name="studyoptions_nodeck_message">В данный момент не открыто ни одной колоды. Anki-колоды сохраняются в каталоге \"%s\" на SD-карте. Этот каталог может быть изменён в \"Настройках\" (нажмите на кнопку \"Menu\" (на аппарате) и выберете \"Настройки\").</string>
+  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">Колода не может быть открыта</string>
   <string name="studyoptions_deck_not_loaded_message">Колода, которую вы выбрали, возможно повреждена. Пожалуйста, откройте ее с помощью десктоп-версии Anki и проверьте (или восстановите) для использования ее в Ankidroid.\n\nСейчас вы можете выбрать другую колоду или создать колоду с примерами с помощью клавиш ниже.</string>
   <string name="studyoptions_no_external_storage_title">Нет доступа ко внешнему хранилищу</string>
@@ -339,7 +347,7 @@
   <string name="delete_deck_message">Вы действительно хотите удалить колоду %s?</string>
   <string name="delete_deck_confirm">Удалить</string>
   <string name="new_version_title">Новая версия:</string>
-  <string name="new_version_text">Новые возможности:\n- редактор карт\n- статистика\n- произношение текста\n- прогресс завершения колоды в оглавлении\n- выбор модели карт при добавлении карты\n- новый виджет\n- улучшение отмена/возврат\n- новый элемент интерфейса - ползунок\n- больше языков</string>
+  <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Преобразование текста в речь</string>
   <string name="no_tts_available_message">Функция преобразования текста в речь не доступна</string>
   <string name="statistics_type_title">Выберите тип статистики</string>
@@ -362,6 +370,10 @@
   <plurals name="deckpicker_title">
     <item quantity="one">Выберите колоду (1 карту из %2$d повторить)</item>
     <item quantity="other">Выберите колоду (%1$d из %2$d)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 из %2$d к повтору</item>

@@ -33,6 +33,7 @@ import android.os.RemoteException;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -76,6 +77,7 @@ public class PersonalDeckPicker extends Activity {
     private PersonalDecksAdapter mPersonalDecksAdapter;
     private EditText mSearchEditText;
 
+    private boolean mDownloadSuccessful = false;
 
     /********************************************************************
      * Lifecycle methods *
@@ -191,6 +193,16 @@ public class PersonalDeckPicker extends Activity {
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Log.i(AnkiDroidApp.TAG, "PersonalDeckPicker - onBackPressed()");
+            closePersonalDeckPicker();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
     /********************************************************************
      * Custom methods *
      ********************************************************************/
@@ -262,7 +274,7 @@ public class PersonalDeckPicker extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+            	closePersonalDeckPicker();
             }
 
         });
@@ -282,7 +294,7 @@ public class PersonalDeckPicker extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                PersonalDeckPicker.this.finish();
+            	closePersonalDeckPicker();
             }
 
         });
@@ -326,7 +338,23 @@ public class PersonalDeckPicker extends Activity {
 
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-        finish();
+        closePersonalDeckPicker();
+    }
+
+    private void closePersonalDeckPicker() {
+        if (mDownloadSuccessful) {
+    		Intent intent = PersonalDeckPicker.this.getIntent();
+    		setResult(RESULT_OK, intent);
+            finish();
+            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                MyAnimation.slide(this, MyAnimation.RIGHT);
+            }
+    	} else {
+            finish();
+            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                MyAnimation.slide(this, MyAnimation.LEFT);
+            }
+    	}
     }
 
     /********************************************************************
@@ -411,7 +439,7 @@ public class PersonalDeckPicker extends Activity {
                 	@Override
                 	public void onCancel(DialogInterface dialog) {
                 		Connection.cancelGetDecks();
-                		finish();
+                		closePersonalDeckPicker();
                 	}
                 });
             }
@@ -524,6 +552,7 @@ public class PersonalDeckPicker extends Activity {
                         break;
                     case Download.STATUS_COMPLETE:
                         progressText.setText(res.getString(R.string.downloaded));
+                        mDownloadSuccessful = true;
                         break;
 
                     default:
