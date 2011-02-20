@@ -34,6 +34,18 @@ public class Stats {
     public static final int STATS_LIFE = 0;
     public static final int STATS_DAY = 1;
 
+    public static final int STATSARRAY_SIZE = 7;
+    public static final int STATSARRAY_DAILY_AVERAGE_TIME = 0;
+    public static final int STATSARRAY_GLOBAL_AVERAGE_TIME = 1;
+    public static final int STATSARRAY_GLOBAL_YOUNG_NO_SHARE = 2;
+    public static final int STATSARRAY_DAILY_REPS = 3;
+    public static final int STATSARRAY_DAILY_NO = 4;
+    public static final int STATSARRAY_GLOBAL_MATURE_YES = 5;
+    public static final int STATSARRAY_GLOBAL_MATURE_NO = 6;
+    
+    public static final int TYPE_ETA = 0;
+    public static final int TYPE_YES_SHARES = 1;
+    
     // BEGIN: SQL table columns
     private long mId;
     private int mType;
@@ -347,6 +359,24 @@ public class Stats {
     }
 
 
+    public static double[] getStats(Deck deck, Stats globalStats, Stats dailyStats) {
+    	double[] stats = new double[STATSARRAY_SIZE];
+    	stats[STATSARRAY_DAILY_AVERAGE_TIME] = dailyStats.mAverageTime;
+    	stats[STATSARRAY_GLOBAL_AVERAGE_TIME] = globalStats.mAverageTime;
+    	stats[STATSARRAY_DAILY_REPS] = dailyStats.mReps;
+    	double globalYoungNo = globalStats.mYoungEase0 + globalStats.mYoungEase1;
+    	double globalYoungTotal = globalYoungNo + globalStats.mYoungEase2 + globalStats.mYoungEase3 + globalStats.mYoungEase4;
+    	if (globalYoungTotal != 0) {
+        	stats[STATSARRAY_GLOBAL_YOUNG_NO_SHARE] = globalYoungNo / globalYoungTotal * 100;
+    	} else {
+        	stats[STATSARRAY_GLOBAL_YOUNG_NO_SHARE] = 0;
+    	}
+    	stats[STATSARRAY_DAILY_NO] = dailyStats.mNewEase0 + dailyStats.mNewEase1 + dailyStats.mYoungEase0 + dailyStats.mYoungEase1 + dailyStats.mMatureEase0 + dailyStats.mMatureEase1;
+    	stats[STATSARRAY_GLOBAL_MATURE_YES] = globalStats.mMatureEase2 + globalStats.mMatureEase3 + globalStats.mMatureEase4;
+    	stats[STATSARRAY_GLOBAL_MATURE_NO] = globalStats.mMatureEase0 + globalStats.mMatureEase1;
+    	return stats;
+    }
+    
     /**
      * @return the reps
      */

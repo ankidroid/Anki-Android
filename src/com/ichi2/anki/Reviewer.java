@@ -55,6 +55,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -168,6 +170,7 @@ public class Reviewer extends Activity {
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
     private boolean mIsLastCard = false;
+    private boolean mShowProgressBars;
     
     private boolean mIsDictionaryAvailable;
 
@@ -191,6 +194,9 @@ public class Reviewer extends Activity {
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
     private TextView mChosenAnswer;
+    private LinearLayout mProgressBars;
+    private View mDailyBar;
+    private View mGlobalBar;
     private TextView mNext1;
     private TextView mNext2;
     private TextView mNext3;
@@ -225,6 +231,10 @@ public class Reviewer extends Activity {
     
 	private boolean mShowCongrats = false;
 
+    private int mStatisticBarsMax;
+    private int mStatisticBarsHeight;
+
+    private long mSavedTimer = 0;
 	/** 
 	 * Shake Detection
 	 */
@@ -543,7 +553,15 @@ public class Reviewer extends Activity {
     protected void onPause() {
         super.onPause();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
-        
+
+        // Stop visible timer and card timer 
+        if (mPrefTimer) {
+            mSavedTimer = SystemClock.elapsedRealtime() - mCardTimer.getBase();
+            mCardTimer.stop();
+        }
+        if (mCurrentCard != null) {
+           mCurrentCard.stopTimer();
+        }
         // Save changes
         Deck deck = AnkiDroidApp.deck();
         deck.commitToDB();
@@ -560,6 +578,13 @@ public class Reviewer extends Activity {
       super.onResume();
       if (mShakeEnabled) {
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
+      }
+      if (mCurrentCard != null) {
+          mCurrentCard.resumeTimer();          
+      }
+      if (mPrefTimer && mSavedTimer != 0) {
+          mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
+          mCardTimer.start();
       }
     }
 
@@ -703,6 +728,9 @@ public class Reviewer extends Activity {
             if (mPrefTimer) {
                 mCardTimer.setVisibility(View.GONE);
             }
+            if (mShowProgressBars) {
+                mProgressBars.setVisibility(View.GONE);
+            }
 
             getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
@@ -722,6 +750,9 @@ public class Reviewer extends Activity {
             mChosenAnswer.setVisibility(View.VISIBLE);
             if (mPrefTimer) {
                 mCardTimer.setVisibility(View.VISIBLE);
+            }
+            if (mShowProgressBars) {
+                mProgressBars.setVisibility(View.GONE);
             }
 
             // Restore fullscreen preference
@@ -1005,6 +1036,12 @@ public class Reviewer extends Activity {
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
         mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 
+        if (mShowProgressBars) {
+            mDailyBar = (View) findViewById(R.id.daily_bar);
+            mGlobalBar = (View) findViewById(R.id.global_bar);
+            mProgressBars = (LinearLayout) findViewById(R.id.progress_bars);
+        }
+
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
         float headTextSize = (float) (mCardTimer.getTextSize() * 0.63);
         mCardTimer.setTextSize(headTextSize);
@@ -1123,6 +1160,9 @@ public class Reviewer extends Activity {
         mFlipCard.setVisibility(View.VISIBLE);
         
         mCardTimer.setVisibility((mPrefTimer) ? View.VISIBLE : View.GONE);
+        if (mShowProgressBars) {
+            mProgressBars.setVisibility(View.VISIBLE);
+        }
         mWhiteboard.setVisibility((mPrefWhiteboard && mShowWhiteboard) ? View.VISIBLE : View.GONE);
         mAnswerField.setVisibility((mPrefWriteAnswers) ? View.VISIBLE : View.GONE);
     }
@@ -1152,6 +1192,7 @@ public class Reviewer extends Activity {
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
+        mShowProgressBars = preferences.getBoolean("progressBars", true);
 
         return preferences;
     }
@@ -1168,6 +1209,9 @@ public class Reviewer extends Activity {
 
     private void reviewNextCard() {
     	updateScreenCounts();
+    	if (mShowProgressBars) {
+            updateStatisticBars();    	    
+    	}
 
         // Clean answer field
         if (mPrefWriteAnswers) {
@@ -1217,6 +1261,40 @@ public class Reviewer extends Activity {
         mTextBarBlack.setText(revCount);
         mTextBarBlue.setText(newCount);
     }
+
+
+    private void updateStatisticBars() {
+        if (mStatisticBarsMax == 0) {
+            View view = findViewById(R.id.daily_bar_max);
+            mStatisticBarsMax = view.getWidth();
+            mStatisticBarsHeight = view.getHeight();
+        }
+        Deck deck = AnkiDroidApp.deck();
+        double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
+        FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);
+        lparam.height = mStatisticBarsHeight;
+        lparam.width = (int) (mStatisticBarsMax * values[0]);
+        mDailyBar.setLayoutParams(lparam);
+        updateColors(mDailyBar, values[0]);
+        FrameLayout.LayoutParams lparamg = new FrameLayout.LayoutParams(0, 0);
+        lparamg.height = mStatisticBarsHeight;
+        lparamg.width = (int) (mStatisticBarsMax * values[1]);
+        mGlobalBar.setLayoutParams(lparamg);
+        updateColors(mGlobalBar, values[1]);
+    }
+
+
+    private void updateColors(View view, double progress) {
+        if (progress < 0.5) {
+            view.setBackgroundColor(getResources().getColor(R.color.progressbar_1));
+        } else if (progress < 0.65) {
+            view.setBackgroundColor(getResources().getColor(R.color.progressbar_2));
+        } else if (progress < 0.75) {
+            view.setBackgroundColor(getResources().getColor(R.color.progressbar_3));
+        } else {
+            view.setBackgroundColor(getResources().getColor(R.color.progressbar_4));            
+        }
+    }    
 
 
     private void displayCardQuestion() {
@@ -1704,14 +1782,14 @@ public class Reviewer extends Activity {
        				if (mSelectionStarted != 0) {
        					return false;
        				}
-        			if (e2.getY() - e1.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH && !mIsYScrolling) {
+        			if (e2.getY() - e1.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath && !mIsYScrolling) {
                         // down
       					if (sDisplayAnswer) {
            					answerCard(Card.EASE_FAILED);
        					} else {
            			        displayCardAnswer();    						
        					}
-       		        } else if (e1.getY() - e2.getY() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityY) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getX() - e2.getX()) < StudyOptions.SWIPE_MAX_OFF_PATH && !mIsYScrolling) {
+       		        } else if (e1.getY() - e2.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath && !mIsYScrolling) {
                         // up
       					if (sDisplayAnswer) {
       						if (mCurrentCard.isRev()) {
@@ -1722,7 +1800,7 @@ public class Reviewer extends Activity {
       					} else {
       						displayCardAnswer(); 
       					}
-                     } else if (e2.getX() - e1.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH && !mIsXScrolling) {
+                     } else if (e2.getX() - e1.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath && !mIsXScrolling) {
                        	 // left
                     	 closeReviewer();
                      }
@@ -1778,20 +1856,4 @@ public class Reviewer extends Activity {
 	    else
 	    	return false;
     }
-}
-
-class MyAnimation {
-	public static int LEFT = 1;
-	public static int RIGHT = 2;
-	public static int FADE = 3;
-	
-	public static void slide(Activity activity, int direction) {
-		if (direction == LEFT) {
-			activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-		} else if (direction == RIGHT) {
-			activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
-		} else if (direction == FADE) {
-			activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
-		}
-	}
 }

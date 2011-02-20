@@ -2,6 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@+id/delete_deck" 
 	android:title="@string/contextmenu_deckpicker_delete_deck"/>
+	<item android:id="@+id/optimize_deck" 
+	android:title="@string/contextmenu_deckpicker_optimize_deck"/>	
 	<item android:id="@+id/reset_language" 
 	android:title="@string/contextmenu_deckpicker_reset_language_assignments"/>
 </menu>

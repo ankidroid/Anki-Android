@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:paddingLeft="10dp"
+	android:paddingTop="15dp"
+	android:paddingRight="10dp"
+	android:paddingBottom="15dp">
+
+	<TextView android:id="@+id/tvErrorCollectionInformation"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@+string/error_collection_information"></TextView>
+	<ScrollView android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/scrollView1">
+		<EditText android:id="@+id/etFeedbackText"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="15dp"
+			android:gravity="top"
+			android:minLines="4"
+			android:hint="@string/feedback_default_text"
+			android:text="EditText"></EditText>
+	</ScrollView>
+	<TextView android:id="@+id/textView3"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="TextView"></TextView>
+	<ListView android:id="@+id/lvErrorList"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:fastScrollEnabled="true"/>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:gravity="bottom">
+		<Button android:id="@+id/btnFeedbackSendAll"
+			android:text="Send all" 
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:layout_weight="1"/>
+		<Button android:id="@+id/btnFeedbackSendLatest"
+			android:text="Send most recent"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:layout_weight="1"/>
+		<Button android:id="@+id/btnFeedbackClearAll" 
+			android:text="Clear all"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:layout_weight="1"/>
+	</LinearLayout>
+</LinearLayout>

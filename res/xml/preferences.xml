@@ -18,25 +18,82 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki">
-	<PreferenceCategory android:title="@string/pref_cat_decks">
-		<CheckBoxPreference
-			android:title="@string/sample_deck"
-			android:defaultValue="true"
-			android:summary="@string/sample_deck_summ"
-			android:key="generateSampleDeck" />
-		<EditTextPreference
-			android:title="@string/deck_path"
-			android:defaultValue="/sdcard/AnkiDroid"
-			android:summary="@string/deck_path_summ"
-			android:key="deckPath" />
-	</PreferenceCategory>
+	<PreferenceScreen android:title="@string/pref_cat_general">
+		<PreferenceCategory android:title="@string/language">
+			<ListPreference
+				android:title="@string/language"
+				android:summary="@string/language_summ"
+				android:key="language"
+				android:defaultValue="0"/>
+			</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_start">
+			<ListPreference
+				android:title="@string/startup_mode"
+				android:summary="@string/startup_mode_summ"
+				android:key="startup_mode"
+				android:defaultValue="2"
+				android:entries="@array/startup_mode_labels"
+				android:entryValues="@array/startup_mode_values" />	
+			<CheckBoxPreference
+				android:title="@string/show_study_options_on_deck_load"
+				android:defaultValue="true"
+				android:summary="@string/show_study_options_on_deck_load_summ"
+				android:key="study_options" />
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_decks">
+			<CheckBoxPreference
+				android:title="@string/sample_deck"
+				android:defaultValue="true"
+				android:summary="@string/sample_deck_summ"
+				android:key="generateSampleDeck" />
+			<EditTextPreference
+				android:title="@string/deck_path"
+				android:defaultValue="/sdcard/AnkiDroid"
+				android:summary="@string/deck_path_summ"
+				android:key="deckPath" />
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_experimental">
+			<CheckBoxPreference
+				android:title="@string/sync_enabled"
+				android:summary="@string/sync_enabled_in_answer_summ"
+				android:defaultValue="false"
+				android:key="syncEnabled"/>
+		</PreferenceCategory>
+	</PreferenceScreen>
 	
-	<PreferenceCategory android:title="@string/pref_cat_qadisplay">
+	<PreferenceScreen android:title="@string/pref_cat_qadisplay">
+		<CheckBoxPreference
+			android:title="@string/fullscreen_review"
+			android:defaultValue="true"
+			android:summary="@string/fullscreen_review_summ"
+			android:key="fullscreenReview" />
 		<CheckBoxPreference
 			android:title="@string/show_next_review_time"
 			android:defaultValue="true"
 			android:summary="@string/show_next_review_time_summ"
 			android:key="showNextReviewTime" />
+		<CheckBoxPreference
+			android:title="@string/show_timer"
+			android:defaultValue="true"
+			android:summary="@string/show_timer_summ"
+			android:key="timer" />
+		<CheckBoxPreference
+			android:title="@string/show_progress_bars"
+			android:defaultValue="true"
+			android:summary="@string/show_progress_bars_summ"
+			android:key="progressBars" />
+		<ListPreference
+			android:title="@string/hide_question_in_answer"
+			android:summary="@string/hide_question_in_answer_summ"
+			android:key="hideQuestionInAnswer"
+			android:defaultValue="1"
+			android:entries="@array/hideQuestionInAnswerLabels"
+			android:entryValues="@array/hideQuestionInAnswerVals" />
+		<CheckBoxPreference 
+			android:title="@string/use_ruby_support" 
+			android:defaultValue="false" 
+			android:summary="@string/use_ruby_support_summ" 
+			android:key="useRubySupport" />
 		<com.hlidskialf.android.preference.SeekBarPreference 
       		android:key="relativeDisplayFontSize"
         	android:title="@string/display_font_size"
@@ -45,29 +102,7 @@
         	android:text=" %"
         	app:min="10"
         	android:max="150" 
-        	app:interval="10" />			
-		<ListPreference
-			android:title="@string/hide_question_in_answer"
-			android:summary="@string/hide_question_in_answer_summ"
-			android:key="hideQuestionInAnswer"
-			android:defaultValue="1"
-			android:entries="@array/hideQuestionInAnswerLabels"
-			android:entryValues="@array/hideQuestionInAnswerVals" />
-		<CheckBoxPreference
-			android:title="@string/show_timer"
-			android:defaultValue="true"
-			android:summary="@string/show_timer_summ"
-			android:key="timer" />
-		<CheckBoxPreference
-			android:title="@string/fullscreen_review"
-			android:defaultValue="true"
-			android:summary="@string/fullscreen_review_summ"
-			android:key="fullscreenReview" />
-		<CheckBoxPreference 
-			android:title="@string/use_ruby_support" 
-			android:defaultValue="false" 
-			android:summary="@string/use_ruby_support_summ" 
-			android:key="useRubySupport" />
+        	app:interval="10" />
 		<com.hlidskialf.android.preference.SeekBarPreference 
       		android:key="answerButtonSize"
         	android:title="@string/button_size"
@@ -77,118 +112,117 @@
         	app:min="100"
         	android:max="170" 
         	app:interval="10" />	
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/pref_cat_advanced">
-		<CheckBoxPreference
-			android:title="@string/show_whiteboard"
-			android:summary="@string/show_whiteboard_summ"
-			android:defaultValue="true"
-			android:disableDependentsState="false"
-			android:key="whiteboard" />
-      	<com.hlidskialf.android.preference.SeekBarPreference 
-      		android:key="whiteBoardStrokeWidth"
-        	android:title="@string/whiteboard_stroke_width"
-        	android:summary="@string/whiteboard_stroke_width_summ"
-			android:dependency="whiteboard"
-			android:defaultValue="6"
-        	android:text=""
-        	android:max="30" />
+	</PreferenceScreen>
+	<PreferenceScreen android:title="@string/pref_cat_extras">
 		<CheckBoxPreference
 			android:title="@string/write_answers"
 			android:defaultValue="false"
 			android:summary="@string/write_answers_summ"
 			android:key="writeAnswers" />
-		<CheckBoxPreference
-			android:title="@string/play_sounds_at_start"
-			android:defaultValue="true"
-			android:summary="@string/play_sounds_at_start_summ"
-			android:key="playSoundsAtStart" />
-		<CheckBoxPreference
-			android:title="@string/tts"
-			android:defaultValue="false"
-			android:summary="@string/tts_summ"
-			android:key="tts" />
-		<CheckBoxPreference
-			android:title="@string/text_selection"
-			android:defaultValue="false"
-			android:summary="@string/text_selection_summ"
-			android:key="textSelection" 
-			android:disableDependentsState="false"/>
-		<ListPreference
-			android:title="@string/dictionary"
-			android:summary="@string/dictionary_summ"
-			android:key="dictionary"
-			android:defaultValue="0"
-			android:dependency="textSelection"
-			android:entries="@array/dictionary_labels"
-			android:entryValues="@array/dictionary_values" />
-		<com.ichi2.preferences.LanguageDialogPreference
-			android:title="@string/reset_languages"
-			android:positiveButtonText="@string/yes"
-			android:negativeButtonText="@string/no"
-			android:dialogTitle="@string/reset_languages"
-			android:dialogMessage="@string/reset_languages_question"
-			android:summary="@string/reset_languages_summ" />
-	 	<CheckBoxPreference
-			android:title="@string/shake"
-			android:defaultValue="false"
-			android:summary="@string/shake_summ"
-			android:key="shake"
-			android:disableDependentsState="false"/>
-		<com.hlidskialf.android.preference.SeekBarPreference 
-      		android:key="minShakeIntensity"
-        	android:title="@string/shake_intensity"
-        	android:summary="@string/shake_intensity_summ"
-        	android:dialogMessage="@string/shake_intensity_summ"
-			android:dependency="shake"
-			android:defaultValue="70"
-        	android:text=""
-        	app:min="10"
-        	android:max="140" 
-        	app:interval="1" />
-		<CheckBoxPreference
-			android:title="@string/swipe"
-			android:defaultValue="false"
-			android:summaryOn="@string/swipe_summ_on"
-			android:summaryOff="@string/swipe_summ_off"
-			android:key="swipe"
-			android:disableDependentsState="true"/>
-		<CheckBoxPreference
-			android:id="@+id/zoom_checkbox"
-			android:title="@string/zoom"
-			android:defaultValue="false"
-			android:summary="@string/zoom_summ"
-			android:key="zoom"
-			android:dependency="swipe"
-			android:disableDependentsState="true"/>
-		<ListPreference
-			android:title="@string/startup_mode"
-			android:summary="@string/startup_mode_summ"
-			android:key="startup_mode"
-			android:defaultValue="2"
-			android:entries="@array/startup_mode_labels"
-			android:entryValues="@array/startup_mode_values" />	
-		<CheckBoxPreference
-			android:title="@string/show_study_options_on_deck_load"
-			android:defaultValue="true"
-			android:summary="@string/show_study_options_on_deck_load_summ"
-			android:key="study_options" />
-		<CheckBoxPreference
-			android:title="@string/update_notification"
-			android:defaultValue="true"
-			android:summary="@string/update_notification_summ"
-			android:key="enabled"/>
-		<ListPreference
-			android:title="@string/error_reporting_choice"
-			android:summary="@string/error_reporting_choice_summary"
-			android:defaultValue="2"
-			android:entries="@array/error_reporting_choice_labels"
-			android:entryValues="@array/error_reporting_choice_values"
-			android:key="reportErrorMode" />
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/widget_pref">
+		<PreferenceCategory android:title="@string/pref_cat_whiteboard">
+			<CheckBoxPreference
+				android:title="@string/show_whiteboard"
+				android:summary="@string/show_whiteboard_summ"
+				android:defaultValue="true"
+				android:disableDependentsState="false"
+				android:key="whiteboard" />
+	      	<com.hlidskialf.android.preference.SeekBarPreference 
+   		   		android:key="whiteBoardStrokeWidth"
+   	    	 	android:title="@string/whiteboard_stroke_width"
+   	     		android:summary="@string/whiteboard_stroke_width_summ"
+				android:dependency="whiteboard"
+				android:defaultValue="6"
+   	    	 	android:text=""
+   		     	android:max="30" />
+       	</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_sounds">
+			<CheckBoxPreference
+				android:title="@string/play_sounds_at_start"
+				android:defaultValue="true"
+				android:summary="@string/play_sounds_at_start_summ"
+				android:key="playSoundsAtStart" />
+			<CheckBoxPreference
+				android:title="@string/tts"
+				android:defaultValue="false"
+				android:summary="@string/tts_summ"
+				android:key="tts" />
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_lookup">
+			<CheckBoxPreference
+				android:title="@string/text_selection"
+				android:defaultValue="false"
+				android:summary="@string/text_selection_summ"
+				android:key="textSelection" 
+				android:disableDependentsState="false"/>
+			<ListPreference
+				android:title="@string/dictionary"
+				android:summary="@string/dictionary_summ"
+				android:key="dictionary"
+				android:defaultValue="0"
+				android:dependency="textSelection"
+				android:entries="@array/dictionary_labels"
+				android:entryValues="@array/dictionary_values" />
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_reset">
+			<com.ichi2.preferences.LanguageDialogPreference
+				android:title="@string/reset_languages"
+				android:positiveButtonText="@string/yes"
+				android:negativeButtonText="@string/no"
+				android:dialogTitle="@string/reset_languages"
+				android:dialogMessage="@string/reset_languages_question"
+				android:summary="@string/reset_languages_summ" />
+		</PreferenceCategory>
+	</PreferenceScreen>
+	<PreferenceScreen android:title="@string/pref_cat_navigation">
+		<PreferenceCategory android:title="@string/pref_cat_swipe">
+			<CheckBoxPreference
+				android:title="@string/swipe"
+				android:defaultValue="false"
+				android:summaryOn="@string/swipe_summ_on"
+				android:summaryOff="@string/swipe_summ_off"
+				android:key="swipe"
+				android:disableDependentsState="false"/>
+			<com.hlidskialf.android.preference.SeekBarPreference 
+      			android:key="swipeSensibility"
+       	 		android:title="@string/swipe_sensibility"
+       		 	android:summary="@string/swipe_sensibility_summ"
+	       	 	android:dialogMessage="@string/shake_intensity_summ"
+				android:dependency="swipe"
+				android:defaultValue="100"
+   		     	android:text=""
+   	    	 	app:min="40"
+        		android:max="200" 
+	        	app:interval="1" />
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_shake">
+	 		<CheckBoxPreference
+				android:title="@string/shake"
+				android:defaultValue="false"
+				android:summary="@string/shake_summ"
+				android:key="shake"
+				android:disableDependentsState="false"/>
+			<com.hlidskialf.android.preference.SeekBarPreference 
+ 	     		android:key="minShakeIntensity"
+   	     		android:title="@string/shake_intensity"
+   	     		android:summary="@string/shake_intensity_summ"
+   	    	 	android:dialogMessage="@string/shake_intensity_summ"
+				android:dependency="shake"
+				android:defaultValue="70"
+        		android:text=""
+        		app:min="10"
+        		android:max="140" 
+        		app:interval="1" />
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_zoom">
+			<CheckBoxPreference
+				android:id="@+id/zoom_checkbox"
+				android:title="@string/zoom"
+				android:defaultValue="false"
+				android:summary="@string/zoom_summ"
+				android:key="zoom"/>
+		</PreferenceCategory>
+	</PreferenceScreen>
+	<PreferenceScreen android:title="@string/widget_pref">
 		<ListPreference
 			android:title="@string/widget_minimum_cards_due"
 			android:summary="@string/widget_minimum_cards_due_summary"
@@ -204,18 +238,26 @@
 			android:title="@string/widget_minimum_cards_due_blink"
 			android:defaultValue="false"
 			android:key="widgetBlink"/>
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/pref_cat_experimental">
+	</PreferenceScreen>
+	<PreferenceScreen android:title="@string/pref_cat_other">
 		<CheckBoxPreference
-			android:title="@string/sync_enabled"
-			android:summary="@string/sync_enabled_in_answer_summ"
-			android:defaultValue="false"
-			android:key="syncEnabled"/>
-		<CheckBoxPreference
-			android:title="@string/fix_hebrew_text"
-			android:summary="@string/fix_hebrew_text_summ"
-			android:defaultValue="false"
-			android:key="fixHebrewText"/>
-	</PreferenceCategory>
+			android:title="@string/update_notification"
+			android:defaultValue="true"
+			android:summary="@string/update_notification_summ"
+			android:key="enabled"/>
+		<ListPreference
+			android:title="@string/error_reporting_choice"
+			android:summary="@string/error_reporting_choice_summary"
+			android:defaultValue="2"
+			android:entries="@array/error_reporting_choice_labels"
+			android:entryValues="@array/error_reporting_choice_values"
+			android:key="reportErrorMode" />
+		<PreferenceCategory android:title="@string/pref_cat_experimental">
+			<CheckBoxPreference
+				android:title="@string/fix_hebrew_text"
+				android:summary="@string/fix_hebrew_text_summ"
+				android:defaultValue="false"
+				android:key="fixHebrewText"/>
+			</PreferenceCategory>
+	</PreferenceScreen>
 </PreferenceScreen>

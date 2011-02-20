@@ -19,6 +19,8 @@ package com.ichi2.anki;
 
 import java.util.ArrayList;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.os.AsyncTask;
@@ -39,6 +41,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_REDO = 7;
     public static final int TASK_TYPE_LOAD_CARDS = 8;
     public static final int TASK_TYPE_DELETE_CARD = 9;
+    public static final int TASK_TYPE_LOAD_STATISTICS = 10;
+    public static final int TASK_TYPE_OPTIMIZE_DECK = 11;
 
     /**
      * Possible outputs trying to load a deck.
@@ -120,13 +124,19 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 return doInBackgroundUndo(params);                
 
             case TASK_TYPE_REDO:
-                return doInBackgroundRedo(params);   
+                return doInBackgroundRedo(params);
                 
             case TASK_TYPE_LOAD_CARDS:
-                return doInBackgroundLoadCards(params);                   
+                return doInBackgroundLoadCards(params);
 
             case TASK_TYPE_DELETE_CARD:
-                return doInBackgroundDeleteCard(params);                   
+                return doInBackgroundDeleteCard(params);
+
+            case TASK_TYPE_LOAD_STATISTICS:
+                return doInBackgroundLoadStatistics(params);
+
+            case TASK_TYPE_OPTIMIZE_DECK:
+                return doInBackgroundOptimizeDeck(params);
 
             default:
                 return null;
@@ -346,24 +356,64 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundLoadCards(TaskData... params) {
         Deck deck = params[0].getDeck();
         String order = params[0].getOrder();
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
 
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-        publishProgress(new TaskData(deck.getAllCards(order)));
-        
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
+        try {
+        	publishProgress(new TaskData(deck.getAllCards(order)));
+        	ankiDB.getDatabase().setTransactionSuccessful();
+        } finally {
+            ankiDB.getDatabase().endTransaction();
+        }
         return null;
     }
 
 
     private TaskData doInBackgroundDeleteCard(TaskData... params) {
-        Card card = params[0].getCard();
-        
+    	Deck deck = params[0].getDeck();
+    	Card card = params[0].getCard();
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
 
-        Long id = card.getId();
-        card.delete();
-        publishProgress(new TaskData(String.valueOf(id)));
-
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
+        try {
+            Long id = card.getId();
+        	card.delete();
+        	publishProgress(new TaskData(String.valueOf(id)));
+        	ankiDB.getDatabase().setTransactionSuccessful();
+        } finally {
+            ankiDB.getDatabase().endTransaction();
+        }
         return null;
+    }
+
+
+    private TaskData doInBackgroundLoadStatistics(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
+        int type = params[0].getType();
+        int period = params[0].getInt();
+        Context context = params[0].getContext();
+        String[] deckList = params[0].getDeckList();;
+        boolean result = false;
+
+        Resources res = context.getResources();
+        if (deckList.length == 1 && deckList[0].equals("") && AnkiDroidApp.deck() != null) {
+        	result = Statistics.refreshDeckStatistics(context, AnkiDroidApp.deck(), type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        	
+        } else {
+        	result = Statistics.refreshAllDeckStatistics(context, deckList, type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type] + " " + res.getString(R.string.statistics_all_decks));        	
+        }
+       	publishProgress(new TaskData(result));
+        return new TaskData(result);
+    }
+
+
+    private TaskData doInBackgroundOptimizeDeck(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundOptimizeDeck");
+    	Deck deck = params[0].getDeck();
+        long result = 0;
+    	result = deck.optimizeDeck();
+        return new TaskData(deck, result);
     }
 
 
@@ -388,6 +438,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private ArrayList<String[]> mAllCards;
         private String mOrder;
         private long mLong;
+        private Context mContext;
+        private int mType;
+        private String[] mDeckList;
 
 
         public TaskData(int value, Deck deck, Card card) {
@@ -412,6 +465,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
+        public TaskData(Context context, String[] deckList, int type, int period) {
+            mContext = context;
+            mDeckList = deckList;
+            mType = type;
+        	mInteger = period;
+        }
+
+
         public TaskData(ArrayList<String[]> allCards) {
         	mAllCards = new ArrayList<String[]>();
         	mAllCards.addAll(allCards);
@@ -428,6 +489,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         public TaskData(Deck deck, String order) {
             mDeck = deck;
             mOrder = order;
+        }
+
+ 
+        public TaskData(Deck deck, long value) {
+            mDeck = deck;
+            mLong = value;
+        }
+
+ 
+        public TaskData(boolean bool) {
+            mBool = bool;
         }
 
  
@@ -494,6 +566,21 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public boolean getBoolean() {
             return mBool;
+        }
+
+
+        public Context getContext() {
+            return mContext;
+        }
+
+
+        public int getType() {
+            return mType;
+        }
+
+
+        public String[] getDeckList() {
+            return mDeckList;
         }
     }
 

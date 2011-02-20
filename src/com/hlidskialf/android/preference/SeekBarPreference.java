@@ -102,6 +102,15 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
     }
 
 
+    public int getValue() {
+        if (mValue == 0) {
+            return getPersistedInt(mDefault);
+        } else {
+            return mValue;            
+        }
+    }
+
+
     public void onStartTrackingTouch(SeekBar seek) {
     }
 

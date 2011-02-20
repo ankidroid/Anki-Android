@@ -414,7 +414,13 @@ public class Deck {
 
 
     public synchronized void closeDeck() {
-        DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
+    	closeDeck(true);
+    }
+
+    public synchronized void closeDeck(boolean wait) {
+        if (wait) {
+        	DeckTask.waitToFinish(); // Wait for any thread working on the deck to finish.
+        }
         if (finishSchedulerMethod != null) {
             finishScheduler();
             reset();
@@ -1008,6 +1014,21 @@ public class Deck {
         return mModified > mLastLoaded;
     }
 
+
+    public long optimizeDeck() {
+    	File file = new File(mDeckPath);
+		long size = file.length();
+    	commitToDB();
+    	Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
+        getDB().getDatabase().execSQL("VACUUM");
+    	Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
+        getDB().getDatabase().execSQL("ANALYZE");
+        file = new File(mDeckPath);
+        size -= file.length();
+        return size;
+    }
+
+
     /*
      * Queue Management*****************************
      */
@@ -1074,8 +1095,8 @@ public class Deck {
      */
     public int getNextDueCards(int day) {
     	double dayStart = mDueCutoff + (86400 * (day - 1));
-        String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue BETWEEN %f AND %f", dayStart, dayStart + 86400);
+    	String sql = String.format(Utils.ENGLISH_LOCALE,
+                    "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue BETWEEN %f AND %f AND PRIORITY > -1", dayStart, dayStart + 86400);
         return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
@@ -1083,7 +1104,17 @@ public class Deck {
     public int getNextDueMatureCards(int day) {
     	double dayStart = mDueCutoff + (86400 * (day - 1));
         String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND combinedDue BETWEEN %f AND %f AND interval >= %d", dayStart, dayStart + 86400, Card.MATURE_THRESHOLD);
+                    "SELECT count(*) FROM cards c WHERE type = 1 AND combinedDue BETWEEN %f AND %f AND interval >= %d", dayStart, dayStart + 86400, Card.MATURE_THRESHOLD);
+        return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
+    }
+
+
+    /*
+     * Get failed cards count ******************************
+     */
+    public int getFailedDelayedCount() {
+        String sql = String.format(Utils.ENGLISH_LOCALE,
+                "SELECT count(*) FROM cards c WHERE type = 0 AND combinedDue >= " + mFailedCutoff + " AND PRIORITY > -1");
         return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
@@ -1100,7 +1131,7 @@ public class Deck {
      */
     public int getCardsByInterval(int interval) {
         String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE type = 0 OR type = 1 AND interval BETWEEN %d AND %d", interval, interval + 1);
+                "SELECT count(*) FROM cards c WHERE type = 1 AND interval BETWEEN %d AND %d", interval, interval + 1);
         return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
     }
 
@@ -1108,15 +1139,18 @@ public class Deck {
     /*
      * Review counts ******************************
      */
-    public int getDaysReviewed(int day) {
+    public int[] getDaysReviewed(int day) {
         Date value = Utils.genToday(getUtcOffset() - (86400 * day));
     	Cursor cur = null;
-    	int count = 0;
+    	int[] count = {0, 0, 0};   	
     	try {
             cur = getDB().getDatabase().rawQuery(String.format(Utils.ENGLISH_LOCALE,
-            		"SELECT reps FROM stats WHERE day = \'%tF\' AND reps > 0", value), null);
+            		"SELECT reps, (matureease1 + matureease2 + matureease3 + matureease4 +  youngease1 + youngease2 + youngease3 + youngease4), " +
+            		"(matureease1 + matureease2 + matureease3 + matureease4)  FROM stats WHERE day = \'%tF\' AND reps > 0 AND id > 1", value), null);
             while (cur.moveToNext()) {
-            	count = cur.getInt(0);
+            	count[0] = cur.getInt(0);
+            	count[1] = cur.getInt(1);
+            	count[2] = cur.getInt(2);            	
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -1137,7 +1171,7 @@ public class Deck {
     	int count = 0;
     	try {
             cur = getDB().getDatabase().rawQuery(String.format(Utils.ENGLISH_LOCALE,
-            		"SELECT reviewTime FROM stats WHERE day = \'%tF\' AND reps > 0", value), null);
+            		"SELECT reviewTime FROM stats WHERE day = \'%tF\' AND reps > 0 AND id > 1", value), null);
             while (cur.moveToNext()) {
             	count = cur.getInt(0);
             }
@@ -1148,6 +1182,56 @@ public class Deck {
         }
     	
     	return count;
+    }
+
+    /*
+     * Stats ******************************
+     */
+    public double[] getStats(int which) {
+    	double[] stats = Stats.getStats(this, mGlobalStats, mDailyStats);
+    	double[] result;
+    	switch (which) {
+    	    case Stats.TYPE_ETA:
+    	        result = new double[1];
+    	        if (stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME] != 0 && stats[Stats.STATSARRAY_DAILY_REPS] / (mNewCountToday + mRevCount + stats[Stats.STATSARRAY_DAILY_REPS]) > 0.1) {
+    	            result[0] = getETA(stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
+    	        } else if (stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME] != 0) {
+    	            result[0] = getETA(stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
+    	        } else {
+    	            result[0] = -1;
+    	        }
+    	        break;
+            case Stats.TYPE_YES_SHARES:
+                result = new double[2];
+                result[0] = 1 - stats[Stats.STATSARRAY_DAILY_NO] / (stats[Stats.STATSARRAY_DAILY_REPS]);
+                result[1] = stats[Stats.STATSARRAY_GLOBAL_MATURE_YES] / (stats[Stats.STATSARRAY_GLOBAL_MATURE_YES] + stats[Stats.STATSARRAY_GLOBAL_MATURE_NO]);
+                break;
+	        default:
+	            result = new double[1];
+	            result[0] = 0;;
+                break;
+    	}
+    	return result;
+    }
+
+
+    private double getETA(double averageTime, double globalYoungNoShare) {
+    	double left;
+    	double count;
+
+    	// rev + new cards first, account for failures
+    	count = mNewCountToday + mRevCount;
+    	count *= 1 + (globalYoungNoShare / 100.0);
+    	left = count * averageTime;
+    	
+    	//failed - higher time per card for higher amount of cards
+    	double failedBaseMulti = 1.5;
+    	double failedMod = 0.07;
+    	double failedBaseCount = 20;
+    	double factor = (failedBaseMulti + (failedMod * (mFailedSoonCount - failedBaseCount)));
+    	left += mFailedSoonCount * averageTime * factor;
+        	
+    	return left;
     }
 
 
@@ -1691,7 +1775,12 @@ public class Deck {
         } else if (!oldIsRev) {
             mFailedQueue.removeLast();
         } else {
-            mRevQueue.removeLast();
+            // try {
+                mRevQueue.removeLast();
+            // }
+            // catch(NoSuchElementException e) {
+            //     Log.w(AnkiDroidApp.TAG, "mRevQueue empty");
+            // }
         }
         // } catch (Exception e) {
         // throw new RuntimeException("requeueCard() failed. Counts: " +
@@ -2400,9 +2489,7 @@ public class Deck {
         return mUtcOffset;
     }
     public void setUtcOffset() {
-        // 4am
-        Calendar cal = Calendar.getInstance();
-        mUtcOffset = 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+        mUtcOffset = Utils.utcOffset();
     }
 
 
@@ -4478,4 +4565,30 @@ public class Deck {
         return results;
     }
 
+    /**
+     * Initialize an empty deck that has just been creating by copying the existing "empty.anki" file.
+     * 
+     * From Damien:
+     * Just copying a file is not sufficient - you need to give each model, cardModel and fieldModel new ids as well, and make sure they are all still linked up. If you don't do that, and people modify one model and then import/export one deck into another, the models will be treated as identical even though they have different layouts, and half the cards will end up corrupted.
+     *  It's only the IDs that you have to worry about, and the utcOffset IIRC.
+     */
+    public static synchronized void initializeEmptyDeck(String deckPath) {
+        AnkiDb db = AnkiDatabaseManager.getDatabase(deckPath);
+        
+        // Regenerate IDs.
+        long modelId = Utils.genID();
+        db.getDatabase().execSQL("UPDATE models SET id=" + modelId);
+        db.getDatabase().execSQL("UPDATE cardModels SET id=" + Utils.genID() + " where ordinal=0;");
+        db.getDatabase().execSQL("UPDATE cardModels SET id=" + Utils.genID() + " where ordinal=1;");
+        db.getDatabase().execSQL("UPDATE fieldModels SET id=" + Utils.genID() + " where ordinal=0;");
+        db.getDatabase().execSQL("UPDATE fieldModels SET id=" + Utils.genID() + " where ordinal=1;");
+
+        // Update columns that refer to modelId.
+        db.getDatabase().execSQL("UPDATE fieldModels SET modelId=" + modelId);
+        db.getDatabase().execSQL("UPDATE cardModels SET modelId=" + modelId);
+        db.getDatabase().execSQL("UPDATE decks SET currentModelId=" + modelId);
+        
+        // Set the UTC offset.
+        db.getDatabase().execSQL("UPDATE decks SET utcOffset=" + Utils.utcOffset());
+    }
 }

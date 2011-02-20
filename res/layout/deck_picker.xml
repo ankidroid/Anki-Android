@@ -11,20 +11,29 @@
 		android:layout_weight="1"
 		android:fastScrollEnabled="true"/>
 
-	<RelativeLayout android:id="@+id/sync_all_bar"
+	<LinearLayout android:id="@+id/sync_all_bar"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:background="#8b8b8b"
-		android:visibility="gone">
+		android:orientation="horizontal">
 		
 		<Button	android:id="@+id/sync_all_button"
-			android:layout_width="150dp"
+			android:layout_width="0dip"
 			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
+			android:layout_weight="1"
 			android:layout_marginTop="3dp"
 			android:layout_marginBottom="3dp"
+			android:enabled="true"
 			android:text="@string/sync_all"/>
 		
-	</RelativeLayout>
+		<Button	android:id="@+id/statistics_all_button"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:layout_marginTop="3dp"
+			android:layout_marginBottom="3dp"
+			android:enabled="true"
+			android:text="@string/statistics"/>
+	</LinearLayout>
 	
 </LinearLayout>

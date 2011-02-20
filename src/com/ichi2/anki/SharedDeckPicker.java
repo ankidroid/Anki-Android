@@ -34,6 +34,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,11 +80,13 @@ public class SharedDeckPicker extends Activity {
     private IDownloadManagerService mDownloadManagerService = null;
 
     private List<Download> mSharedDeckDownloads;
-    private List<SharedDeck> mFoundSharedDecks;
     private List<SharedDeck> mSharedDecks;
+    private List<SharedDeck> mFoundSharedDecks;
     private ListView mSharedDecksListView;
     private SharedDecksAdapter mSharedDecksAdapter;
     private EditText mSearchEditText;
+
+    private boolean mDownloadSuccessful = false;
 
 
     /********************************************************************
@@ -111,7 +114,7 @@ public class SharedDeckPicker extends Activity {
         
         mSearchEditText = (EditText) findViewById(R.id.shared_deck_download_search);
         mSearchEditText.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
+        	public void afterTextChanged(Editable s) {
                 findDecks();
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
@@ -158,6 +161,18 @@ public class SharedDeckPicker extends Activity {
 
         Connection.getSharedDecks(mGetSharedDecksListener, new Connection.Payload(new Object[] {}));
     }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Log.i(AnkiDroidApp.TAG, "SharedDeckPicker - onBackPressed()");
+            closeSharedDeckPicker();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
@@ -324,7 +339,7 @@ public class SharedDeckPicker extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                closeSharedDeckPicker();
             }
 
         });
@@ -344,7 +359,7 @@ public class SharedDeckPicker extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SharedDeckPicker.this.finish();
+                closeSharedDeckPicker();
             }
 
         });
@@ -401,9 +416,25 @@ public class SharedDeckPicker extends Activity {
 
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-        finish();
+        closeSharedDeckPicker();
     }
 
+
+    private void closeSharedDeckPicker() {
+    	if (mDownloadSuccessful) {
+    		Intent intent = SharedDeckPicker.this.getIntent();
+    		setResult(RESULT_OK, intent);	
+            finish();
+            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                MyAnimation.slide(this, MyAnimation.RIGHT);
+            }
+    	} else {
+            finish();
+            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                MyAnimation.slide(this, MyAnimation.LEFT);
+            }    		
+    	}
+    }
 
     /********************************************************************
      * Service Connection *
@@ -485,7 +516,7 @@ public class SharedDeckPicker extends Activity {
                     @Override
                     public void onCancel(DialogInterface dialog) {
                         Connection.cancelGetDecks();
-                        finish();
+                        closeSharedDeckPicker();
                     }
                 });
             }
@@ -546,7 +577,7 @@ public class SharedDeckPicker extends Activity {
 
         //@Override
         //public boolean isEnabled(int position) {
-        //    return !(mAllSharedDecks.get(position) instanceof Download);
+        //    return !(getSharedDeckFromList(position) instanceof Download);
         //}
 
 
@@ -612,6 +643,7 @@ public class SharedDeckPicker extends Activity {
                         progressText.setText(res.getString(R.string.downloaded));
                         estimatedText.setText("");
                         progressBar.setProgress(0);
+                        mDownloadSuccessful = true;
                         break;
 
                     case SharedDeckDownload.STATUS_UPDATING:

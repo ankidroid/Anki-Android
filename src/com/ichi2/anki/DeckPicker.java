@@ -43,6 +43,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -55,7 +56,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -85,7 +85,16 @@ public class DeckPicker extends Activity implements Runnable {
 	private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
 	private static final int DIALOG_NO_CONNECTION = 2;
 	private static final int DIALOG_DELETE_DECK = 3;
+	private static final int DIALOG_SELECT_STATISTICS_TYPE = 4;
+	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 5;	
+	private static final int DIALOG_OPTIMIZE_DATABASE = 6;
 
+	/**
+	 * Menus
+	 */
+    private static final int MENU_ABOUT = 0;
+    private static final int MENU_CREATE_DECK = 1;
+	
 	/**
 	 * Message types
 	 */
@@ -98,8 +107,9 @@ public class DeckPicker extends Activity implements Runnable {
 	private ProgressDialog mProgressDialog;
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mUpgradeNotesAlert;
-	private RelativeLayout mSyncAllBar;
+	private LinearLayout mSyncAllBar;
 	private Button mSyncAllButton;
+	private Button mStatisticsAllButton;
 
 	private SimpleAdapter mDeckListAdapter;
 	private ArrayList<HashMap<String, String>> mDeckList;
@@ -120,7 +130,11 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private int mTotalDueCards = 0;
 	private int mTotalCards = 0;
-	
+	private int mTotalTime = 0;
+
+	int mStatisticType;
+	int mLoadingFinished; 
+
 	/**
      * Swipe Detection
      */    
@@ -189,6 +203,7 @@ public class DeckPicker extends Activity implements Runnable {
 			mDeckListAdapter.notifyDataSetChanged();
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
 			setTitleText();
+			enableButtons(mLoadingFinished == 0);
 		}
 	};
 
@@ -250,7 +265,7 @@ public class DeckPicker extends Activity implements Runnable {
 		registerExternalStorageListener();
 		initDialogs();
 
-		mSyncAllBar = (RelativeLayout) findViewById(R.id.sync_all_bar);
+		mSyncAllBar = (LinearLayout) findViewById(R.id.sync_all_bar);
 		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
 
@@ -270,6 +285,16 @@ public class DeckPicker extends Activity implements Runnable {
 				}
 			}
 
+		});
+
+		mStatisticsAllButton = (Button) findViewById(R.id.statistics_all_button);
+		mStatisticsAllButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mStatisticType = -1;
+				showDialog(DIALOG_SELECT_STATISTICS_TYPE);
+			}
 		});
 
 		mDeckList = new ArrayList<HashMap<String, String>>();
@@ -435,7 +460,24 @@ public class DeckPicker extends Activity implements Runnable {
 					});					
 			dialog = builder.create();
 			break;
-
+		case DIALOG_SELECT_STATISTICS_TYPE:
+	        builder.setTitle(res.getString(R.string.statistics_type_title));
+	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), Statistics.TYPE_DUE, mStatisticListener);
+	        dialog = builder.create();
+			break;
+		case DIALOG_SELECT_STATISTICS_PERIOD:
+	        builder.setTitle(res.getString(R.string.statistics_period_title));
+	        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_period_labels), 0, mStatisticListener);
+	        dialog = builder.create();
+			break;
+		case DIALOG_OPTIMIZE_DATABASE:
+    		builder.setTitle(res.getString(R.string.optimize_deck_title));
+    		builder.setPositiveButton(res.getString(R.string.ok), null);
+			builder.setIcon(android.R.drawable.ic_dialog_alert);
+			dialog = builder.create();
+			break;
 		default:
 			dialog = null;
 		}
@@ -454,7 +496,31 @@ public class DeckPicker extends Activity implements Runnable {
 	}
 
 
-	@Override
+    private DialogInterface.OnClickListener mStatisticListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+			if (mStatisticType == -1) {
+				mStatisticType = which;
+        		dialog.dismiss();
+        		showDialog(DIALOG_SELECT_STATISTICS_PERIOD);
+        	} else {
+        		dialog.dismiss();
+		    	Resources res = getResources();
+		    	if (mFileList != null && mFileList.length > 0) {
+					String[] deckPaths = new String[mFileList.length];
+					int i = 0;
+			    	for (File file : mFileList) {
+			    		deckPaths[i] = file.getAbsolutePath();
+			    		i++;
+					}
+			    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, which));
+		    	}
+        	}
+        }
+    };
+
+
+    @Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		int selectedPosition = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
@@ -480,6 +546,11 @@ public class DeckPicker extends Activity implements Runnable {
 			return true;
 		case R.id.reset_language:
 			resetDeckLanguages(data.get("filepath"));
+			return true;
+		case R.id.optimize_deck:
+			String deckPath = data.get("filepath");
+			Deck deck = Deck.openDeck(deckPath);
+	    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, null));
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -553,6 +624,12 @@ public class DeckPicker extends Activity implements Runnable {
 	}
 
 
+	private void enableButtons(boolean enabled) {
+		mSyncAllButton.setEnabled(enabled);
+		mStatisticsAllButton.setEnabled(enabled);		
+	}
+
+
 	private void initDialogs() {
 		// Sync Log dialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -566,10 +643,42 @@ public class DeckPicker extends Activity implements Runnable {
 		builder.setPositiveButton(getResources().getString(R.string.ok), null);
 		mUpgradeNotesAlert = builder.create();
 	}
+	
+	
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem item;
+        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.menu_create_deck);
+        item.setIcon(R.drawable.ic_menu_add);
+        item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
+        item.setIcon(R.drawable.ic_menu_info_details);
+        return true;
+    }
 
+    
+    /** Handles item selections */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_CREATE_DECK:
+                startActivity(new Intent(DeckPicker.this, DeckCreator.class));;
+                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                    MyAnimation.slide(DeckPicker.this, MyAnimation.RIGHT);
+                }
+                return true;
+
+            case MENU_ABOUT:
+                startActivity(new Intent(DeckPicker.this, About.class));
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
 	private void populateDeckList(String location) {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList");
-		
+
 		mTotalDueCards = 0;
 		mTotalCards = 0;
 		setTitleText();
@@ -585,7 +694,10 @@ public class DeckPicker extends Activity implements Runnable {
 
 		if (dir.exists() && dir.isDirectory() && fileList != null) {
 			len = fileList.length;
+			mLoadingFinished = len;
+			enableButtons(false);
 		}
+
 		mFileList = fileList;
 		if (len > 0 && fileList != null) {
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
@@ -621,8 +733,8 @@ public class DeckPicker extends Activity implements Runnable {
 	        // Show "Sync all" button only if sync is enabled.
 	        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 	        Log.d(AnkiDroidApp.TAG, "syncEnabled=" + preferences.getBoolean("syncEnabled", false));
-	        if (preferences.getBoolean("syncEnabled", false)) {
-	            mSyncAllBar.setVisibility(View.VISIBLE);
+	        if (!preferences.getBoolean("syncEnabled", false)) {
+	            mSyncAllButton.setVisibility(View.GONE);
 	        }
 
 			Thread thread = new Thread(this);
@@ -740,6 +852,8 @@ public class DeckPicker extends Activity implements Runnable {
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
+						mTotalTime += Math.max(deck.getStats(Stats.TYPE_ETA)[0] / 60, 0);
+						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);
 					}
@@ -756,7 +870,9 @@ public class DeckPicker extends Activity implements Runnable {
 	
 	
 	private void setTitleText(){
-		setTitle(getResources().getQuantityString(R.plurals.deckpicker_title, mTotalDueCards, mTotalDueCards, mTotalCards));
+		Resources res = getResources();
+		String time = res.getQuantityString(R.plurals.deckpicker_title_minutes, mTotalTime, mTotalTime);
+		setTitle(res.getQuantityString(R.plurals.deckpicker_title, mTotalDueCards, mTotalDueCards, mTotalCards, time));
 	}
 
 
@@ -877,7 +993,71 @@ public class DeckPicker extends Activity implements Runnable {
 		return spannableStringBuilder;
 	}
 
-	// ----------------------------------------------------------------------------
+
+    DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+            if (mProgressDialog.isShowing()) {
+                try {
+                    mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+            }
+            if (result.getBoolean()) {
+		    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
+		    	startActivity(intent);
+		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+		            MyAnimation.slide(DeckPicker.this, MyAnimation.DOWN);
+		        }				
+			}
+		}
+
+		@Override
+		public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+                    .getString(R.string.calculating_statistics), true);
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+    	
+    };
+
+
+    DeckTask.TaskListener mOptimizeDeckHandler = new DeckTask.TaskListener() {
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+            if (mProgressDialog.isShowing()) {
+                try {
+                    mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+            }
+            result.getDeck().closeDeck();
+    		AlertDialog dialog = (AlertDialog) onCreateDialog(DIALOG_OPTIMIZE_DATABASE);
+    		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.optimize_deck_message), Math.round(result.getLong() / 1024)));
+    		dialog.show();
+		}
+
+		@Override
+		public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+                    .getString(R.string.optimize_deck_dialog), true);
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+    	
+    };
+
+
+    // ----------------------------------------------------------------------------
 	// INNER CLASSES
 	// ----------------------------------------------------------------------------
 
@@ -915,7 +1095,7 @@ public class DeckPicker extends Activity implements Runnable {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
                 try {
-       				if (e1.getX() - e2.getX() > StudyOptions.SWIPE_MIN_DISTANCE && Math.abs(velocityX) > StudyOptions.SWIPE_THRESHOLD_VELOCITY && Math.abs(e1.getY() - e2.getY()) < StudyOptions.SWIPE_MAX_OFF_PATH) {
+       				if (e1.getX() - e2.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath) {
        					closeDeckPicker();
                     }
        			}

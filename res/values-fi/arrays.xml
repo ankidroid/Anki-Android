@@ -79,16 +79,16 @@
     <item>vuotta</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>tunnin kuluttua</item>
+    <item>päivän kuluttua</item>
+    <item>kuukauden kuluttua</item>
+    <item>vuoden kuluttua</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>%s tunnin kuluttua</item>
+    <item>%s päivän kuluttua</item>
+    <item>%s kuukauden kuluttua</item>
+    <item>%s vuoden kuluttua</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Uudet kortit satunnaisessa järjestyksessä</item>
@@ -121,17 +121,31 @@
     <item>Helppouden mukaan</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
+    <item>Määrä</item>
     <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>Jaksot</item>
+    <item>Tarkastelut</item>
+    <item>Tarkistaminen aika</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1 viikko</item>
+    <item>1 kuukausi</item>
+    <item>3 kuukautta</item>
+    <item>6 kuukautta</item>
+    <item>1 vuosi</item>
+  </string-array>
+  <string-array name="new_version_features">
+    <item>fest</item>
+    <item>card browser</item>
+    <item>statistics</item>
+    <item>text-to-speech</item>
+    <item>deck completion bar on deck picker</item>
+    <item>select card model on fact adder</item>
+    <item>new widget</item>
+    <item>better undo/redo behaviour</item>
+    <item>slider controls</item>
+    <item>language selection</item>
+    <item>more languages</item>
+    <item>progress bars in reviewer</item>
   </string-array>
 </resources>

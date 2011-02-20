@@ -33,4 +33,10 @@
 			android:gravity="center"
 			android:layout_weight="1"/>
 	</LinearLayout>
+	<TextView 
+		android:text="@+string/error_collection_information" 
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:paddingBottom="15dp" 
+		android:gravity="top"/>
 </LinearLayout>
