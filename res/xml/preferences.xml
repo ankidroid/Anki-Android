@@ -24,7 +24,7 @@
 				android:title="@string/language"
 				android:summary="@string/language_summ"
 				android:key="language"
-				android:defaultValue=""/>
+				android:defaultValue="0"/>
 			</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_start">
 			<ListPreference
@@ -226,7 +226,7 @@
 		<ListPreference
 			android:title="@string/widget_minimum_cards_due"
 			android:summary="@string/widget_minimum_cards_due_summary"
-			android:defaultValue="25"
+			android:defaultValue="1"
 			android:entries="@array/widget_minimum_cards_due_labels"
 			android:entryValues="@array/widget_minimum_cards_due_values"
 			android:key="minimumCardsDueForNotification" />
