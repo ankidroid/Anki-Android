@@ -24,7 +24,7 @@
 				android:title="@string/language"
 				android:summary="@string/language_summ"
 				android:key="language"
-				android:defaultValue="0"/>
+				android:defaultValue=""/>
 			</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_start">
 			<ListPreference
