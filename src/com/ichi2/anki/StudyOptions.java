@@ -184,12 +184,13 @@ public class StudyOptions extends Activity {
     private View mStudyOptionsView;
     private Button mButtonStart;
     private ToggleButton mToggleCram;
-    private TextView mTextTitle;
+//    private TextView mTextTitle;
     private TextView mTextDeckName;
     private TextView mTextReviewsDue;
     private TextView mTextNewToday;
     private TextView mTextETA;
     private TextView mTextNewTotal;
+    private TextView mHelp;
     private EditText mEditSessionTime;
     private EditText mEditSessionQuestions;
     private CheckBox mNightMode;
@@ -243,7 +244,7 @@ public class StudyOptions extends Activity {
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
 	public static int sSwipeMinDistance = 100;
-	public static int sSwipeMaxOffPath = 70;
+	public static int sSwipeMaxOffPath = 100;
 	public static int sSwipeThresholdVelocity = 200;
 
     /**
@@ -318,6 +319,14 @@ public class StudyOptions extends Activity {
                     	}
                 	}
                 	return;
+                case R.id.studyoptions_help:
+                    if (Utils.isIntentAvailable(StudyOptions.this, "android.intent.action.VIEW")) {
+                        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_help)));
+                        startActivity(intent);
+                    } else {
+                        startActivity(new Intent(StudyOptions.this, About.class));
+                    }
+                    return;
                 default:
                     return;
             }
@@ -612,7 +621,7 @@ public class StudyOptions extends Activity {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
 
-        mTextTitle = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_title);
+//        mTextTitle = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_title);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
@@ -636,7 +645,9 @@ public class StudyOptions extends Activity {
                 }
             }
             });
-
+        mHelp = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_help);
+        mHelp.setOnClickListener(mButtonClickListener);
+        
         mEditSessionTime = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_minutes);
         mEditSessionQuestions = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_questions);
 
@@ -968,10 +979,10 @@ public class StudyOptions extends Activity {
                 updateValuesFromDeck();
                 if (mCurrentContentView == CONTENT_STUDY_OPTIONS) {
                     mButtonStart.setText(R.string.studyoptions_start);
-                    mTextTitle.setText(R.string.studyoptions_title);
+//                    mTextTitle.setText(R.string.studyoptions_title);
                 } else {
                     mButtonStart.setText(R.string.studyoptions_continue);
-                    mTextTitle.setText(R.string.studyoptions_well_done);
+//                    mTextTitle.setText(R.string.studyoptions_well_done);
                 }
                 setContentView(mStudyOptionsView);
                 break;

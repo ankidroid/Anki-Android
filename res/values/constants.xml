@@ -101,6 +101,7 @@
 	<string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
 	<string name="link_contribution">http://code.google.com/p/ankidroid/wiki/Contribution</string>
 	<string name="link_contribution_contributors">http://code.google.com/p/ankidroid/wiki/Contribution</string>
+	<string name="link_help">http://code.google.com/p/ankidroid/wiki/help</string>
 	<string name="error_email">ankidroid@gmail.com</string>
 	<string name="error_post_url">http://ankidroid-triage.appspot.com/crash_receiver</string>		
 	<string name="ankionline_sign_up_url">http://ankiweb.net/</string>

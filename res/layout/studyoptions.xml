@@ -7,30 +7,43 @@
 	android:paddingLeft="10dip"
 	android:gravity="center"
 	android:orientation="vertical">
-	
+	<RelativeLayout
+		android:orientation="horizontal"
+		android:layout_marginRight="0dp"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView
+			android:id="@+id/studyoptions_help"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_margin="8dp"
+			android:drawableLeft="@drawable/help"/>
+	</RelativeLayout>
 	<TextView android:id="@+id/studyoptions_deck_name"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="15dip"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="8dp"
 		android:gravity="center"
 		android:lines="2"
 		android:ellipsize="end"
 		android:text="@string/studyoptions_deck_name"
 		android:textColor="#ffffff"
 		android:textSize="26sp"
-		android:textStyle="bold" />
+		android:textStyle="bold" /><!--
 		
 	<TextView android:id="@+id/studyoptions_title"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:gravity="center"
+		android:gravity="center_horizontal"
 		android:text="@string/studyoptions_title"
 		android:layout_marginBottom="15dip"
 		android:textColor="#ffffff"
 		android:textSize="26dip"
 		android:textStyle="bold" />
 
-	<LinearLayout
+	--><LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="15dip"
@@ -186,10 +199,15 @@
    	     	android:layout_weight="2"
 			android:text="@string/card_browser"/>
 	</LinearLayout>
-	<CheckBox android:id="@+id/studyoptions_night_mode"
+	<RelativeLayout
+		android:orientation="horizontal"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center_vertical"
-		android:text="@string/studyoptions_night_mode"
-		android:textSize="14dip"/>
+		android:layout_height="wrap_content">
+		<CheckBox android:id="@+id/studyoptions_night_mode"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:text="@string/studyoptions_night_mode"
+			android:textSize="14dip"/>
+	</RelativeLayout>
 </LinearLayout>
