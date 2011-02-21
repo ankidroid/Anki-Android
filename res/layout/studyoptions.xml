@@ -102,7 +102,7 @@
 					android:layout_height="wrap_content"
 					android:layout_marginLeft="15dip"
 					android:gravity="right"
-					android:text="-"
+					android:text="  -"
 					android:textColor="#ffffff"/>
 			</LinearLayout>
 		</LinearLayout>
