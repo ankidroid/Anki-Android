@@ -31,6 +31,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.tomgibara.android.veecheck.Veecheck;
@@ -79,15 +80,22 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private void updateListPreference(String key) {
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference(key);
+        String entry;
+        try {
+            entry = listpref.getEntry().toString();            
+        } catch (NullPointerException e) {
+            Log.e(AnkiDroidApp.TAG, "Error getting set preference value of " + key + ": " + e);
+            entry = "?";
+        }
         if (mListsToUpdate.containsKey(key)) {
-            listpref.setSummary(replaceString(mListsToUpdate.get(key), listpref.getEntry().toString()));
+            listpref.setSummary(replaceString(mListsToUpdate.get(key), entry));
         } else {
             String oldsum = (String) listpref.getSummary();
             if (oldsum.contains("XXX")) {
                 mListsToUpdate.put(key, oldsum);
-                listpref.setSummary(replaceString(oldsum, listpref.getEntry().toString()));
+                listpref.setSummary(replaceString(oldsum, entry));
             } else {
-                listpref.setSummary(listpref.getEntry());                
+                listpref.setSummary(entry);
             }
         }
     }
@@ -103,7 +111,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mListsToUpdate.put(key, oldsum);
                 seekpref.setSummary(replaceString(oldsum, Integer.toString(seekpref.getValue())));
             } else {
-                seekpref.setSummary(Integer.toString(seekpref.getValue()));                
+                seekpref.setSummary(Integer.toString(seekpref.getValue()));
             }
         }
     }
