@@ -1076,16 +1076,22 @@ public class Reviewer extends Activity {
 
 
     private void invertColors() {
-        mMainLayout.setBackgroundColor(getResources().getColor(R.color.background_color_inv));
-        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color_inv);
-        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color_inv);
+        Resources res = getResources();
+        int bgColor = res.getColor(R.color.background_color_inv);
+        int fgColor = res.getColor(R.color.foreground_color_inv);
+        mMainLayout.setBackgroundColor(bgColor);
+        mNextTimeTextColor = res.getColor(R.color.next_time_usual_color_inv);
+        mNextTimeTextRecomColor = res.getColor(R.color.next_time_recommended_color_inv);
         mNext4.setTextColor(mNextTimeTextColor);
-        int fgColor = getResources().getColor(R.color.foreground_color_inv);
         mCardTimer.setTextColor(fgColor);
         mTextBarBlack.setTextColor(fgColor);
-        mTextBarBlue.setTextColor(getResources().getColor(R.color.textbar_blue_color_inv));
-        mCard.setBackgroundColor(getResources().getColor(R.color.background_color_inv));
-        mWhiteboard.setInvertedColor(true);         
+        mTextBarBlue.setTextColor(res.getColor(R.color.textbar_blue_color_inv));
+        mCard.setBackgroundColor(res.getColor(R.color.background_color_inv));
+        mWhiteboard.setInvertedColor(true);
+        findViewById(R.id.progress_bars_border1).setBackgroundColor(fgColor);
+        findViewById(R.id.progress_bars_border2).setBackgroundColor(fgColor);
+        findViewById(R.id.progress_bars_back1).setBackgroundColor(bgColor);
+        findViewById(R.id.progress_bars_back2).setBackgroundColor(bgColor);
     }
 
 
@@ -1265,7 +1271,7 @@ public class Reviewer extends Activity {
 
     private void updateStatisticBars() {
         if (mStatisticBarsMax == 0) {
-            View view = findViewById(R.id.daily_bar_max);
+            View view = findViewById(R.id.progress_bars_back1);
             mStatisticBarsMax = view.getWidth();
             mStatisticBarsHeight = view.getHeight();
         }

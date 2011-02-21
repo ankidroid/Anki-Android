@@ -71,14 +71,13 @@
 			android:gravity="center"
 			android:visibility="gone"
 			android:paddingRight="8dp">
-			<FrameLayout
+			<FrameLayout android:id="@+id/progress_bars_border1"
 				android:background="#808080"
 				android:layout_width="42dp"
 				android:layout_height="4dp"
 				android:padding="0.5dip"
 				android:layout_marginBottom="1dp">	
-				<FrameLayout
-					android:id="@+id/daily_bar_max"
+				<FrameLayout android:id="@+id/progress_bars_back1"
 					android:background="#ffffff"
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent">
@@ -88,12 +87,12 @@
 						android:background="#000000"/>
 				</FrameLayout>
 			</FrameLayout>
-			<FrameLayout
+			<FrameLayout android:id="@+id/progress_bars_border2"
 				android:background="#808080"
 				android:layout_width="42dp"
 				android:layout_height="4dp"
 				android:padding="0.5dip">
-				<FrameLayout
+				<FrameLayout android:id="@+id/progress_bars_back2"
 					android:background="#ffffff"
 					android:layout_width="fill_parent"
 					android:layout_height="fill_parent">
