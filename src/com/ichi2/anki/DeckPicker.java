@@ -133,7 +133,9 @@ public class DeckPicker extends Activity implements Runnable {
 	private int mTotalTime = 0;
 
 	int mStatisticType;
-	int mLoadingFinished; 
+	int mLoadingFinished;
+
+	boolean mCompletionBarRestrictToActive = true; // set this to true in order to calculate completion bar only for active cards
 
 	/**
      * Swipe Detection
@@ -162,8 +164,8 @@ public class DeckPicker extends Activity implements Runnable {
 			String newString = "";
 			String showProgress = "false";
 			String notes = data.getString("notes");
-            String completitionMat = Integer.toString(data.getInt("rateOfCompletitionMat"));
-            String completitionAll = Integer.toString(data.getInt("rateOfCompletitionAll"));
+            String completionMat = Integer.toString(data.getInt("rateOfCompletionMat"));
+            String completionAll = Integer.toString(data.getInt("rateOfCompletionAll"));
 
 			String path = data.getString("absPath");
 			int msgtype = data.getInt("msgtype");
@@ -195,8 +197,8 @@ public class DeckPicker extends Activity implements Runnable {
 					map.put("new", newString);
 					map.put("showProgress", showProgress);
                     map.put("notes", notes);
-                    map.put("rateOfCompletitionMat", completitionMat);                    
-                    map.put("rateOfCompletitionAll", completitionAll);                    
+                    map.put("rateOfCompletionMat", completionMat);                    
+                    map.put("rateOfCompletionAll", completionAll);                    
 				}
 			}
 
@@ -301,11 +303,11 @@ public class DeckPicker extends Activity implements Runnable {
         mDeckListView = (ListView) findViewById(R.id.files);
 		mDeckListAdapter = new SimpleAdapter(this, mDeckList,
 				R.layout.deck_item, new String[] { "name", "due", "new",
-						"showProgress", "notes", "rateOfCompletitionMat", "rateOfCompletitionAll" }, new int[] {
+						"showProgress", "notes", "rateOfCompletionMat", "rateOfCompletionAll" }, new int[] {
 						R.id.DeckPickerName, R.id.DeckPickerDue,
 						R.id.DeckPickerNew, R.id.DeckPickerProgress,
 						R.id.DeckPickerUpgradeNotesButton,
-						R.id.DeckPickerCompletitionMat, R.id.DeckPickerCompletitionAll });
+						R.id.DeckPickerCompletionMat, R.id.DeckPickerCompletionAll });
 		mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Object data, String text) {
@@ -317,7 +319,7 @@ public class DeckPicker extends Activity implements Runnable {
 					}
 					return true;
 				}
-				if (view.getId() == R.id.DeckPickerCompletitionMat || view.getId() == R.id.DeckPickerCompletitionAll) {
+				if (view.getId() == R.id.DeckPickerCompletionMat || view.getId() == R.id.DeckPickerCompletionAll) {
                     int mScreenWidth = mDeckListView.getWidth();
                     LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);
                     lparam.width = (int) (mScreenWidth * Integer.parseInt(text) / 100);
@@ -717,8 +719,8 @@ public class DeckPicker extends Activity implements Runnable {
 							.getLastModified(absPath)));
 					data.put("filepath", absPath);
                     data.put("showProgress", "true");
-                    data.put("rateOfCompletitionMat", "0");
-                    data.put("rateOfCompletitionAll", "0");
+                    data.put("rateOfCompletionMat", "0");
+                    data.put("rateOfCompletionAll", "0");
 
 					tree.add(data);
 
@@ -753,8 +755,8 @@ public class DeckPicker extends Activity implements Runnable {
 			data.put("due", "");
 			data.put("mod", "1");
 			data.put("showProgress", "false");
-            data.put("rateOfCompletitionMat", "0");
-            data.put("rateOfCompletitionAll", "0");
+            data.put("rateOfCompletionMat", "0");
+            data.put("rateOfCompletionAll", "0");
 
 			tree.add(data);
 
@@ -835,8 +837,9 @@ public class DeckPicker extends Activity implements Runnable {
 						int dueCards = deck.getDueCount();
 						int totalCards = deck.getCardCount();
 						int newCards = deck.getNewCountToday();
-						int totalNewCards = deck.getNewCount();
-						int matureCards = deck.getMatureCardCount();
+						int totalNewCards = deck.getNewCount(mCompletionBarRestrictToActive);
+						int matureCards = deck.getMatureCardCount(mCompletionBarRestrictToActive);
+						int totalCardsCompletionBar = deck.getCardCount(mCompletionBarRestrictToActive);
 						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
 						deck.closeDeck();
 
@@ -846,8 +849,18 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("total", totalCards);
 						data.putInt("new", newCards);
 						data.putString("notes", upgradeNotes);
-                        data.putInt("rateOfCompletitionMat", (matureCards * 100) / totalCards);
-                        data.putInt("rateOfCompletitionAll", ((totalCards - totalNewCards - matureCards) * 100) / totalCards);
+
+						int rateOfCompletionMat;
+						int rateOfCompletionAll;
+						if (totalCardsCompletionBar != 0) {
+						    rateOfCompletionMat = (matureCards * 100) / totalCardsCompletionBar;
+		                    rateOfCompletionAll = ((totalCardsCompletionBar - totalNewCards) * 100) / totalCardsCompletionBar; 
+						} else {
+						    rateOfCompletionMat = 0;
+						    rateOfCompletionAll = 0;
+						}
+						data.putInt("rateOfCompletionMat", rateOfCompletionMat);
+                        data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
 						msg.setData(data);
 						
 						mTotalDueCards += dueCards;

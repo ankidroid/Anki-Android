@@ -2457,14 +2457,46 @@ public class Deck {
         return mCardCount;
     }
 
-	/**
+
+    /**
 	 * Get the number of mature cards of the deck.
 	 * 
 	 * @return The number of cards contained in the deck
 	 */
-	public int getMatureCardCount() {
-    	return (int) (getDB().queryScalar("SELECT count(*) from cards WHERE interval >= " + Card.MATURE_THRESHOLD));
+	public int getMatureCardCount(boolean restrictToActive) {
+        String sql = String.format(Utils.ENGLISH_LOCALE,
+                "SELECT count(*) from cards c WHERE interval >= %d", Card.MATURE_THRESHOLD);
+        if (restrictToActive) {
+            return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
+        } else {
+            return (int) getDB().queryScalar(sql);            
+        }
     }
+
+
+    /**
+     * @return the newCount
+     */
+    public int getNewCount(boolean restrictToActive) {
+        if (restrictToActive) {
+            return getNewCount();
+        } else {
+            return (int) getDB().queryScalar("SELECT count(*) from cards WHERE type = 2");
+        }
+    }
+
+
+    /**
+     * @return the card count
+     */
+    public int getCardCount(boolean restrictToActive) {
+        if (restrictToActive) {
+                return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", "SELECT count(*) from cards c WHERE id != 0"));
+        } else {
+            return getCardCount();
+        }
+    }
+
 
     /**
      * @return the currentModelId

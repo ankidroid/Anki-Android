@@ -96,18 +96,16 @@
 		android:layout_width="fill_parent">
 		
 	<TextView
-		android:id="@+id/DeckPickerCompletitionMat"
+		android:id="@+id/DeckPickerCompletionMat"
     	android:layout_width="0dip"
     	android:layout_height="2dip"
     	android:background="#ffffff"
-		android:paddingLeft="5dip"
 		android:paddingBottom="5dip"/>
 	<TextView
-		android:id="@+id/DeckPickerCompletitionAll"
+		android:id="@+id/DeckPickerCompletionAll"
     	android:layout_width="0dip"
     	android:layout_height="2dip"
     	android:background="#808080"
-		android:paddingRight="5dip"
 		android:paddingBottom="5dip"/>
 	</LinearLayout>
 </LinearLayout>
