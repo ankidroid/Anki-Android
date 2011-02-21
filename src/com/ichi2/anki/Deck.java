@@ -655,18 +655,17 @@ public class Deck {
             if (rename) {
                 // Don't create, but return dir
                 return dir;
-            } else {
-                File mediaDir = new File(dir);
-                if (!mediaDir.exists() && create) {
-                    try {
-                        if (!mediaDir.mkdir()) {
-                            Log.e(AnkiDroidApp.TAG, "Couldn't create media directory " + dir);
-                            return null;
-                        }
-                    } catch (SecurityException e) {
-                        Log.e(AnkiDroidApp.TAG, "Security restriction: Couldn't create media directory " + dir);
+            }
+            File mediaDir = new File(dir);
+            if (!mediaDir.exists() && create) {
+                try {
+                    if (!mediaDir.mkdir()) {
+                        Log.e(AnkiDroidApp.TAG, "Couldn't create media directory " + dir);
                         return null;
                     }
+                } catch (SecurityException e) {
+                    Log.e(AnkiDroidApp.TAG, "Security restriction: Couldn't create media directory " + dir);
+                    return null;
                 }
             }
         }
@@ -4446,7 +4445,6 @@ public class Deck {
             // lastTags
             mLowPriority = deckPayload.getString("lowPriority");
             mMedPriority = deckPayload.getString("medPriority");
-            mMediaPrefix = deckPayload.getString("mediaPrefix");
             mMidIntervalMax = deckPayload.getDouble("midIntervalMax");
             mMidIntervalMin = deckPayload.getDouble("midIntervalMin");
             mModified = deckPayload.getDouble("modified");
