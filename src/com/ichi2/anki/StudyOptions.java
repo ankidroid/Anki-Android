@@ -1494,10 +1494,11 @@ public class StudyOptions extends Activity {
             mNewVersion = true;
         }
 
-        sSwipeMinDistance = preferences.getInt("swipeSensibility", 100);
-        if (sSwipeMinDistance != 100) {
-        	sSwipeMaxOffPath = (int) (sSwipeMinDistance * 100 / 70);
-        	sSwipeThresholdVelocity = (int) (sSwipeMinDistance * 2);
+        int sensibility = preferences.getInt("swipeSensibility", 100);
+        if (sensibility != 100) {
+            sSwipeMinDistance = 200 - sensibility;
+            sSwipeMaxOffPath = sSwipeMinDistance;
+        	sSwipeThresholdVelocity = sSwipeMinDistance * (200 / 100);
         }
 
         mInvertedColors = preferences.getBoolean("invertedColors", false);

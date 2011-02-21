@@ -190,8 +190,8 @@
 				android:dependency="swipe"
 				android:defaultValue="100"
    		     	android:text=""
-   	    	 	app:min="40"
-        		android:max="200" 
+   	    	 	app:min="20"
+        		android:max="180" 
 	        	app:interval="1" />
 		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_shake">
