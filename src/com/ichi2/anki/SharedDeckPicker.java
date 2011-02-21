@@ -81,7 +81,7 @@ public class SharedDeckPicker extends Activity {
 
     private List<Download> mSharedDeckDownloads;
     private List<SharedDeck> mSharedDecks;
-    private List<Object> mAllSharedDecks;
+    private List<SharedDeck> mFoundSharedDecks;
     private ListView mSharedDecksListView;
     private SharedDecksAdapter mSharedDecksAdapter;
     private EditText mSearchEditText;
@@ -105,8 +105,8 @@ public class SharedDeckPicker extends Activity {
 
         mSharedDeckDownloads = new ArrayList<Download>();
         mSharedDecks = new ArrayList<SharedDeck>();
+        mFoundSharedDecks = new ArrayList<SharedDeck>();
 
-        mAllSharedDecks = new ArrayList<Object>();
         mSharedDecksAdapter = new SharedDecksAdapter();
         mSharedDecksListView = (ListView) findViewById(R.id.list);
         mSharedDecksListView.setAdapter(mSharedDecksAdapter);
@@ -115,17 +115,7 @@ public class SharedDeckPicker extends Activity {
         mSearchEditText = (EditText) findViewById(R.id.shared_deck_download_search);
         mSearchEditText.addTextChangedListener(new TextWatcher() {
         	public void afterTextChanged(Editable s) {
-    			List<SharedDeck> foundDecks = new ArrayList<SharedDeck>();
-            	foundDecks.clear();
-            	for (int i = 0; i < mSharedDecks.size(); i++) {
-            		if (mSharedDecks.get(i).get("title").toString().toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1) { 
-            			foundDecks.add(mSharedDecks.get(i));
-            		}
-            	}
-                mAllSharedDecks.clear();
-                mAllSharedDecks.addAll(mSharedDeckDownloads);
-                mAllSharedDecks.addAll(foundDecks);
-                mSharedDecksAdapter.notifyDataSetChanged();
+                findDecks();
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}
@@ -136,7 +126,7 @@ public class SharedDeckPicker extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Resources res = getResources();
-                Object obj = mAllSharedDecks.get(position);
+                Object obj = getSharedDeckFromList(position);
                 if (obj instanceof SharedDeck) {
                     SharedDeck selectedDeck = (SharedDeck) obj;
 
@@ -188,7 +178,7 @@ public class SharedDeckPicker extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         Resources res = getResources();
         int position = ((AdapterContextMenuInfo) menuInfo).position;
-        Object obj = mAllSharedDecks.get(position);
+        Object obj = getSharedDeckFromList(position);
         if (obj instanceof Download) {
             Download download = (Download) obj;
             menu.setHeaderTitle(download.getTitle());
@@ -205,7 +195,7 @@ public class SharedDeckPicker extends Activity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Object obj = mAllSharedDecks.get(info.position);
+        Object obj = getSharedDeckFromList(info.position);
 
         if (obj instanceof Download) {
             Download download = (Download) obj;
@@ -386,10 +376,33 @@ public class SharedDeckPicker extends Activity {
     }
 
 
+    private Object getSharedDeckFromList(int position) {
+        // The "list" consists of all mSharedDeckDownloads followed by all mFoundSharedDecks
+        if ( position < mSharedDeckDownloads.size() ) {
+            return mSharedDeckDownloads.get(position);
+        } else {
+            return mFoundSharedDecks.get(position - mSharedDeckDownloads.size());
+        }
+    }
+
+
+    private void findDecks() {
+        if (mSearchEditText.getText().length() == 0) {
+            mFoundSharedDecks = mSharedDecks;
+        } else {
+            List<SharedDeck> foundDecks = new ArrayList<SharedDeck>();
+            for (SharedDeck sharedDeck : mSharedDecks) {
+                if (sharedDeck.get("title").toString().toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1) { 
+                    foundDecks.add(sharedDeck);
+                }
+            }
+            mFoundSharedDecks = foundDecks;
+        }
+        refreshSharedDecksList();
+    }
+
+
     private void refreshSharedDecksList() {
-        mAllSharedDecks.clear();
-        mAllSharedDecks.addAll(mSharedDeckDownloads);
-        mAllSharedDecks.addAll(mSharedDecks);
         mSharedDecksAdapter.notifyDataSetChanged();
     }
 
@@ -486,7 +499,7 @@ public class SharedDeckPicker extends Activity {
             if (data.success) {
                 mSharedDecks.clear();
                 mSharedDecks.addAll((List<SharedDeck>) data.result);
-                refreshSharedDecksList();
+                findDecks();
             } else {
                 if (mConnectionErrorAlert != null) {
                     mConnectionErrorAlert.show();
@@ -500,11 +513,11 @@ public class SharedDeckPicker extends Activity {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = ProgressDialog.show(SharedDeckPicker.this, "",
                         getResources().getString(R.string.loading_shared_decks), true, true, new DialogInterface.OnCancelListener() {
-                	@Override
-        			public void onCancel(DialogInterface dialog) {
-        				Connection.cancelGetDecks();
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        Connection.cancelGetDecks();
                         closeSharedDeckPicker();
-        			}
+                    }
                 });
             }
         }
@@ -546,13 +559,13 @@ public class SharedDeckPicker extends Activity {
 
         @Override
         public int getCount() {
-            return mAllSharedDecks.size();
+            return mSharedDeckDownloads.size() + mFoundSharedDecks.size();
         }
 
 
         @Override
         public Object getItem(int position) {
-            return mAllSharedDecks.get(position);
+            return getSharedDeckFromList(position);
         }
 
 
@@ -564,7 +577,7 @@ public class SharedDeckPicker extends Activity {
 
         //@Override
         //public boolean isEnabled(int position) {
-        //    return !(mAllSharedDecks.get(position) instanceof Download);
+        //    return !(getSharedDeckFromList(position) instanceof Download);
         //}
 
 
@@ -591,7 +604,7 @@ public class SharedDeckPicker extends Activity {
             TextView sharedDeckFacts = wrapper.getDeckFacts();
 
             progressBar.setIndeterminate(false);
-            Object obj = mAllSharedDecks.get(position);
+            Object obj = getSharedDeckFromList(position);
             if (obj instanceof Download) {
                 Download download = (Download) obj;
 
@@ -654,7 +667,7 @@ public class SharedDeckPicker extends Activity {
                 estimatedText.setVisibility(View.VISIBLE);
             } else {
                 SharedDeck sharedDeck = (SharedDeck) obj;
-                if (position > 0 && (mAllSharedDecks.get(position - 1) instanceof Download)) {
+                if (position > 0 && (getSharedDeckFromList(position - 1) instanceof Download)) {
                     headerTitle.setText(res.getString(R.string.shared_decks));
                     headerTitle.setVisibility(View.VISIBLE);
                 } else {

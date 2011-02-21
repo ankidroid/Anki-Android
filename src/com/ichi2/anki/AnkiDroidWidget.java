@@ -134,7 +134,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
             if (!AnkiDroidApp.isSdCardMounted()) {
                 updateViews.setTextViewText(R.id.anki_droid_title,
-                		context.getText(R.string.sdcard_missing_message));
+                    context.getText(R.string.sdcard_missing_message));
                 updateViews.setTextViewText(R.id.anki_droid_name, "");
                 updateViews.setTextViewText(R.id.anki_droid_status, "");
                 return updateViews;
@@ -157,24 +157,24 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
             // Limit the number of decks shown
             int nbDecks = decks.size();
-   
+
             if (nbDecks == 0) {
                 updateViews.setTextViewText(R.id.anki_droid_name, "");
                 updateViews.setTextViewText(R.id.anki_droid_status, "");
             } else {
                 DeckInformation deck = decks.get(0);
                 updateViews.setTextViewText(R.id.anki_droid_name,
-                		deck.mDeckName);
+                    deck.mDeckName);
                 updateViews.setTextViewText(R.id.anki_droid_status,
-                		deck.getDeckStatus());
+                    deck.getDeckStatus());
             }
-            
+
             int hasDueCount = 0;
             for (int i = 0; i < nbDecks; i++) {
                 DeckInformation deck = decks.get(i);
                 if (deck.mDueCards > 0) {
-	                hasDueCount++;
-	                totalDue += deck.mDueCards;
+                  hasDueCount++;
+                  totalDue += deck.mDueCards;
                 }
             }
 
@@ -183,13 +183,13 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 String decksText = resources.getQuantityString(
                         R.plurals.widget_decks, hasDueCount, hasDueCount);
                 String text = resources.getQuantityString(
-                        R.plurals.widget_cards_in_decks_due, totalDue, totalDue, decksText);                
+                        R.plurals.widget_cards_in_decks_due, totalDue, totalDue, decksText);
                 updateViews.setTextViewText(R.id.anki_droid_title, text);
             } else {
-	            updateViews.setTextViewText(R.id.anki_droid_title,
-	            		context.getString(R.string.widget_no_cards_due));
+              updateViews.setTextViewText(R.id.anki_droid_title,
+                  context.getString(R.string.widget_no_cards_due));
             }
-            
+
             SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
 
             int minimumCardsDueForNotification = Integer.parseInt(preferences.getString(
