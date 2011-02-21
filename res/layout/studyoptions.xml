@@ -52,7 +52,7 @@
 				<TextView android:id="@+id/studyoptions_reviews_due"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginLeft="10dip"
+					android:layout_marginLeft="15dip"
 					android:gravity="right"
 					android:text="0"
 					android:textColor="#ffffff"/>
@@ -68,7 +68,7 @@
 				<TextView android:id="@+id/studyoptions_new_today"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginLeft="10dip"
+					android:layout_marginLeft="15dip"
 					android:gravity="right"
 					android:text="0"
 					android:textColor="#ffffff"/>
@@ -84,7 +84,7 @@
 				<TextView android:id="@+id/studyoptions_new_total"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginLeft="10dip"
+					android:layout_marginLeft="15dip"
 					android:gravity="right"
 					android:text="0"
 					android:textColor="#ffffff"/>
@@ -100,7 +100,7 @@
 				<TextView android:id="@+id/studyoptions_eta"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginLeft="10dip"
+					android:layout_marginLeft="15dip"
 					android:gravity="right"
 					android:text="-"
 					android:textColor="#ffffff"/>
