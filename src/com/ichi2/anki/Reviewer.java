@@ -752,7 +752,7 @@ public class Reviewer extends Activity {
                 mCardTimer.setVisibility(View.VISIBLE);
             }
             if (mShowProgressBars) {
-                mProgressBars.setVisibility(View.GONE);
+                mProgressBars.setVisibility(View.VISIBLE);
             }
 
             // Restore fullscreen preference
