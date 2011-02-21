@@ -184,7 +184,7 @@ public class StudyOptions extends Activity {
     private View mStudyOptionsView;
     private Button mButtonStart;
     private ToggleButton mToggleCram;
-//    private TextView mTextTitle;
+    private TextView mTextTitle;
     private TextView mTextDeckName;
     private TextView mTextReviewsDue;
     private TextView mTextNewToday;
@@ -312,7 +312,7 @@ public class StudyOptions extends Activity {
                                 PREFERENCES_UPDATE);
                 	} else {
                     	if (Utils.isIntentAvailable(StudyOptions.this, "android.intent.action.VIEW")) {
-                    		Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_wiki)));
+                    		Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_help)));
                     		startActivity(intent);
                     	} else {
                     		startActivity(new Intent(StudyOptions.this, About.class));
@@ -621,7 +621,7 @@ public class StudyOptions extends Activity {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
 
-//        mTextTitle = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_title);
+        mTextTitle = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_title);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
@@ -979,10 +979,10 @@ public class StudyOptions extends Activity {
                 updateValuesFromDeck();
                 if (mCurrentContentView == CONTENT_STUDY_OPTIONS) {
                     mButtonStart.setText(R.string.studyoptions_start);
-//                    mTextTitle.setText(R.string.studyoptions_title);
+                    mTextTitle.setText(R.string.studyoptions_title);
                 } else {
                     mButtonStart.setText(R.string.studyoptions_continue);
-//                    mTextTitle.setText(R.string.studyoptions_well_done);
+                    mTextTitle.setText(R.string.studyoptions_well_done);
                 }
                 setContentView(mStudyOptionsView);
                 break;

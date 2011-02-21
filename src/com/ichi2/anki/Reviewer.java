@@ -392,6 +392,9 @@ public class Reviewer extends Activity {
         @Override
         public void onPreExecute() {
             Reviewer.this.setProgressBarIndeterminateVisibility(true);
+            if (mPrefTimer) {
+                mCardTimer.stop();
+            }
             blockControls();
         }
 
@@ -1347,10 +1350,6 @@ public class Reviewer extends Activity {
 
         Sound.stopSounds();
 
-        if (mPrefTimer) {
-            mCardTimer.stop();
-        }
-        
         String displayString = "";
 
         // If the user wrote an answer
