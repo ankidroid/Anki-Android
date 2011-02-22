@@ -544,10 +544,17 @@ public class Utils {
     }
 
 
-    public static String getBaseUrl(Model model, String deckFileName) {
+    public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
         String base = model.getFeatures().trim();
-        if (base.length() == 0) {
-            base = "file://" + deckFileName.replace(".anki", ".media/");
+        if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
+            return base;
+        } else {
+            // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
+            // Reviewer.onCreate() and use the value from there
+            base = mediaDir;
+            if (base != null) {
+                base = "file://" + base + "/";
+            }
         }
         return base;
     }
@@ -725,8 +732,24 @@ public class Utils {
             Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
             return "";
         }
-        return checksum(new String(bytes));
+        MessageDigest md = null;
+        byte[] digest = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+            digest = md.digest(bytes);
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        BigInteger biginteger = new BigInteger(1, digest);
+        String result = biginteger.toString(16);
+        // pad with zeros to length of 32
+        if (result.length() < 32) {
+            result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
+        }
+        return result;
     }
+    
     
     /**
      * Calculate the UTC offset

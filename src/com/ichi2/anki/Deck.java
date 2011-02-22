@@ -181,7 +181,7 @@ public class Deck {
     private double mLastLoaded;
     private boolean mNewEarly;
     private boolean mReviewEarly;
-    public String mMediaPrefix;
+    private String mMediaPrefix;
 
     private double mDueCutoff;
     private double mFailedCutoff;
@@ -621,7 +621,7 @@ public class Deck {
             setVarDefault("latexPost", "\\end{document}");
             // FIXME: The next really belongs to the dropbox setup module, it's not supposed to be empty if the user
             // wants to use dropbox. ankiqt/ankiqt/ui/main.py : setupMedia
-            setVarDefault("mediaLocation", "");
+            // setVarDefault("mediaLocation", "");
         }
         updateCutoff();
         setupStandardScheduler();
@@ -646,6 +646,7 @@ public class Deck {
     }
     public String mediaDir(boolean create, boolean rename) {
         String dir = null;
+        File mediaDir = null;
         if (mDeckPath != null && !mDeckPath.equals("")) {
             if (mMediaPrefix != null) {
                 dir = mMediaPrefix + "/" + mDeckName + ".media";
@@ -655,18 +656,17 @@ public class Deck {
             if (rename) {
                 // Don't create, but return dir
                 return dir;
-            } else {
-                File mediaDir = new File(dir);
-                if (!mediaDir.exists() && create) {
-                    try {
-                        if (!mediaDir.mkdir()) {
-                            Log.e(AnkiDroidApp.TAG, "Couldn't create media directory " + dir);
-                            return null;
-                        }
-                    } catch (SecurityException e) {
-                        Log.e(AnkiDroidApp.TAG, "Security restriction: Couldn't create media directory " + dir);
+            }
+            mediaDir = new File(dir);
+            if (!mediaDir.exists() && create) {
+                try {
+                    if (!mediaDir.mkdir()) {
+                        Log.e(AnkiDroidApp.TAG, "Couldn't create media directory " + dir);
                         return null;
                     }
+                } catch (SecurityException e) {
+                    Log.e(AnkiDroidApp.TAG, "Security restriction: Couldn't create media directory " + dir);
+                    return null;
                 }
             }
         }
@@ -674,13 +674,18 @@ public class Deck {
         if (dir == null) {
             return null;
         } else {
-            // TODO: Inefficient, should use prior File
-            File mediaDir = new File(dir);
             if (!mediaDir.exists() || !mediaDir.isDirectory()) {
                 return null;
             }
         }
         return dir;
+    }
+    
+    public String getMediaPrefix() {
+        return mMediaPrefix;
+    }
+    public void setMediaPrefix(String mediaPrefix) {
+        mMediaPrefix = mediaPrefix;
     }
 
 
@@ -4493,7 +4498,6 @@ public class Deck {
             // lastTags
             mLowPriority = deckPayload.getString("lowPriority");
             mMedPriority = deckPayload.getString("medPriority");
-            mMediaPrefix = deckPayload.getString("mediaPrefix");
             mMidIntervalMax = deckPayload.getDouble("midIntervalMax");
             mMidIntervalMin = deckPayload.getDouble("midIntervalMin");
             mModified = deckPayload.getDouble("modified");

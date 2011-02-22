@@ -6,4 +6,6 @@
 	android:title="@string/contextmenu_deckpicker_optimize_deck"/>	
 	<item android:id="@+id/reset_language" 
 	android:title="@string/contextmenu_deckpicker_reset_language_assignments"/>
+	<item android:id="@+id/download_missing_media" 
+	android:title="@string/contextmenu_deckpicker_download_missing_media"/>
 </menu>

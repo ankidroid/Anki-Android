@@ -178,6 +178,8 @@ public class Reviewer extends Activity {
     private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
 
     private String mCardTemplate;
+    
+    private String mMediaDir;
 
     /**
      * Searches
@@ -493,12 +495,14 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
         // Make sure a deck is loaded before continuing.
-        if (AnkiDroidApp.deck() == null) {
+        Deck deck = AnkiDroidApp.deck();
+        if (deck == null) {
             setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
             closeReviewer();
         } else {
+            mMediaDir = setupMedia(deck);
             restorePreferences();
-            AnkiDroidApp.deck().resetUndo();
+            deck.resetUndo();
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -533,7 +537,7 @@ public class Reviewer extends Activity {
             }
 
             // Initialize session limits
-            long timelimit = AnkiDroidApp.deck().getSessionTimeLimit() * 1000;
+            long timelimit = deck.getSessionTimeLimit() * 1000;
             Log.i(AnkiDroidApp.TAG, "SessionTimeLimit: " + timelimit + " ms.");
             mSessionTimeLimit = System.currentTimeMillis() + timelimit;
             mSessionCurrReps = 0;
@@ -546,7 +550,7 @@ public class Reviewer extends Activity {
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
-                    AnkiDroidApp.deck(), null));
+                    deck, null));
         }
     }
 
@@ -1400,6 +1404,19 @@ public class Reviewer extends Activity {
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
 
+
+        String baseUrl = "";
+        // Add CSS for font color and font size
+        if (mCurrentCard != null) {
+            Deck currentDeck = AnkiDroidApp.deck();
+            Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
+            baseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
+            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + content;
+        } else {
+            mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
+            baseUrl = "file://" + mDeckFilename.replace(".anki", ".media/");
+        }
+
         // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
         // content = Image.parseImages(deckFilename, content);
         // Log.i(AnkiDroidApp.TAG, "content after parsing images = \n" + content);
@@ -1408,17 +1425,17 @@ public class Reviewer extends Activity {
         int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
         if (isQuestionDisplayed()) {
         	if (sDisplayAnswer && (questionStartsAt != -1)) {
-        	content = Sound.parseSounds(mDeckFilename, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION)
-        			+ Sound.parseSounds(mDeckFilename, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
+        	content = Sound.parseSounds(baseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION)
+        			+ Sound.parseSounds(baseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
         	} else {
-            	content = Sound.parseSounds(mDeckFilename, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
+            	content = Sound.parseSounds(baseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
         	}
         } else {
         	int qa = MetaDB.LANGUAGE_QUESTION;
         	if (sDisplayAnswer) {
         		qa = MetaDB.LANGUAGE_ANSWER;
         	}
-        	content = Sound.parseSounds(mDeckFilename, content, mSpeakText, qa);
+        	content = Sound.parseSounds(baseUrl, content, mSpeakText, qa);
         }
 
         // Parse out the LaTeX images
@@ -1431,18 +1448,6 @@ public class Reviewer extends Activity {
         // If ruby annotation support is activated, then parse and add markup
         if (mPrefUseRubySupport) {
             content = RubyParser.ankiRubyToMarkup(content);
-        }
-
-        String baseUrl = "";
-        // Add CSS for font color and font size
-        if (mCurrentCard != null) {
-            Deck currentDeck = AnkiDroidApp.deck();
-            Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
-            baseUrl = Utils.getBaseUrl(myModel, mDeckFilename);
-            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + content;
-        } else {
-            mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
-            baseUrl = "file://" + mDeckFilename.replace(".anki", ".media/");
         }
 
         // Find hebrew text
@@ -1674,6 +1679,25 @@ public class Reviewer extends Activity {
         }
     }
 
+
+    /**
+     * Setup media.
+     * Try to detect if we're using dropbox and set the mediaPrefix accordingly. Then set the media directory.
+     * @param deck The deck that we've just opened
+     */
+    public static String setupMedia(Deck deck) {
+        String mediaLoc = deck.getVar("mediaLocation");
+        if (mediaLoc != null) {
+            mediaLoc = mediaLoc.replace("\\", "/");
+            if (mediaLoc.contains("/Dropbox/Public/Anki")) {
+                // We're using dropbox
+                deck.setMediaPrefix(AnkiDroidApp.getDropboxDir());
+            }
+        }
+        return deck.mediaDir();
+    }
+
+    
     private String applyFixForHebrew(String text) {
         Matcher m = sHebrewPattern.matcher(text);
         StringBuffer sb = new StringBuffer();

@@ -18,6 +18,7 @@ package com.ichi2.async;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -42,10 +43,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +71,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     public static final int TASK_TYPE_SYNC_DECK = 4;
     public static final int TASK_TYPE_SYNC_DECK_FROM_PAYLOAD = 5;
     public static final int TASK_TYPE_SEND_CRASH_REPORT = 6;
+    public static final int TASK_TYPE_DOWNLOAD_MEDIA = 7;
 
     private static Context sContext;
 
@@ -170,6 +183,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
+    public static Connection downloadMissingMedia(TaskListener listener, Payload data) {
+        data.taskType = TASK_TYPE_DOWNLOAD_MEDIA;
+        return launchConnectionTask(listener, data);
+    }
+
+    
     @Override
     protected Payload doInBackground(Payload... params) {
         Payload data = params[0];
@@ -195,6 +214,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
             case TASK_TYPE_SEND_CRASH_REPORT:
                 return doInBackgroundSendCrashReport(data);
+                
+            case TASK_TYPE_DOWNLOAD_MEDIA:
+                return doInBackgroundDownloadMissingMedia(data);
 
             default:
                 return null;
@@ -539,6 +561,153 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             data.result = new String(ex.toString());
         }
 
+        return data;
+    }
+    
+    /**
+     * Downloads any missing media files according to the mediaURL deckvar.
+     * @param data
+     * @return The return type contains data.resultType and an array of Integer
+     * in data.data. data.data[0] is the number of total missing media, data.data[1] is the number
+     * of downloaded ones.
+     */
+    private Payload doInBackgroundDownloadMissingMedia(Payload data) {
+        Log.i(AnkiDroidApp.TAG, "DownloadMissingMedia");
+        Deck deck = (Deck) data.data[0];
+        
+        data.success = false;
+        data.data = new Integer[] {0, 0, 0};
+        if (!deck.hasKey("mediaURL")) {
+            data.success = true;
+            return data;
+        }
+        String urlbase = deck.getVar("mediaURL");
+        if (urlbase.equals("")) {
+            data.success = true;
+            return data;
+        }
+
+        String mdir = deck.mediaDir(true);
+        int totalMissing = 0;
+        int missing = 0;
+        int grabbed = 0;
+
+        HashMap<String, String> missingPaths = new HashMap<String, String>();
+        HashMap<String, String> missingSums = new HashMap<String, String>();
+        Cursor cursor = null;
+        try {
+            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename, originalPath FROM media", null);
+            String path = null;
+            String f = null;
+            while (cursor.moveToNext()) {
+                f = cursor.getString(0);
+                path = mdir + "/" + f;
+                File file = new File(path);
+                if (!file.exists()) {
+                    missingPaths.put(f, path);
+                    missingSums.put(f, cursor.getString(1));
+                    Log.i(AnkiDroidApp.TAG, "Missing file: " + f);
+                }
+            }
+        } finally {
+            deck.closeDeck();
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        totalMissing = missingPaths.size();
+        data.data[0] = new Integer(totalMissing);
+        if (totalMissing == 0) {
+            data.success = true;
+            return data;
+        }
+        publishProgress(Boolean.FALSE, new Integer(totalMissing), new Integer(0));
+
+        URL url = null;
+        HttpURLConnection connection = null;
+        String path = null;
+        String sum = null;
+        int readbytes = 0;
+        byte[] buf = new byte[4096];
+        for (String file : missingPaths.keySet()) {
+            
+            try {
+                android.net.Uri uri = android.net.Uri.parse(urlbase + file);
+                url = new URI(uri.getScheme(), uri.getHost(), uri.getPath(), null).toURL();
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                if (connection.getResponseCode() == 200) {
+                    path = missingPaths.get(file);
+                    InputStream is = connection.getInputStream();
+                    BufferedInputStream bis = new BufferedInputStream(is, 4096);
+                    FileOutputStream fos = new FileOutputStream(path);
+                    while ((readbytes = bis.read(buf, 0, 4096)) != -1) {
+                        fos.write(buf, 0, readbytes);
+                        Log.i(AnkiDroidApp.TAG, "Downloaded " + readbytes + " file: " + path);
+                    }
+                    fos.close();
+    
+                    // Verify with checksum
+                    sum = missingSums.get(file);
+                    if (sum.equals("") || sum.equals(Utils.fileChecksum(path))) {
+                        grabbed++;
+                    } else {
+                        // Download corrupted, delete file
+                        Log.i(AnkiDroidApp.TAG, "Downloaded media file " + path + " failed checksum.");
+                        File f = new File(path);
+                        f.delete();
+                        missing++;
+                    }
+                } else {
+                    Log.e(AnkiDroidApp.TAG, "Connection error (" + connection.getResponseCode() +
+                            ") while retrieving media file " + urlbase + file);
+                    Log.e(AnkiDroidApp.TAG, "Connection message: " + connection.getResponseMessage());
+                    if (missingSums.get(file).equals("")) {
+                        // Ignore and keep going
+                        missing++;
+                    } else {
+                        data.success = false;
+                        data.data[0] = file;
+                        return data;
+                    }
+                }
+                connection.disconnect();
+            } catch (URISyntaxException e) {
+                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+            } catch (MalformedURLException e) {
+                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+                Log.e(AnkiDroidApp.TAG, "MalformedURLException while download media file " + path);
+                if (missingSums.get(file).equals("")) {
+                    // Ignore and keep going
+                    missing++;
+                } else {
+                    data.success = false;
+                    data.data[0] = file;
+                    return data;
+                }
+            } catch (IOException e) {
+                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+                Log.e(AnkiDroidApp.TAG, "IOException while download media file " + path);
+                if (missingSums.get(file).equals("")) {
+                    // Ignore and keep going
+                    missing++;
+                } else {
+                    data.success = false;
+                    data.data[0] = file;
+                    return data;
+                }
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+            publishProgress(Boolean.TRUE, new Integer(totalMissing), new Integer(grabbed + missing));
+        }
+
+        data.data[1] = new Integer(grabbed);
+        data.data[2] = new Integer(missing);
+        data.success = true;
         return data;
     }
 
