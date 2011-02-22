@@ -174,9 +174,9 @@ public class ChartBuilder extends Activity {
         item = menu.add(Menu.NONE, MENU_FULLSCREEN, Menu.NONE, R.string.statistics_fullscreen);
         item.setIcon(R.drawable.ic_menu_manage);
         item = menu.add(Menu.NONE, MENU_ZOOM_IN, Menu.NONE, R.string.statistics_zoom_in);
-        item.setIcon(R.drawable.ic_menu_zoom);
+        item.setIcon(R.drawable.ic_menu_zoom_in);
         item = menu.add(Menu.NONE, MENU_ZOOM_OUT, Menu.NONE, R.string.statistics_zoom_out);
-        item.setIcon(R.drawable.ic_menu_zoom);
+        item.setIcon(R.drawable.ic_menu_zoom_out);
         return true;
     }
 
