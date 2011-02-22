@@ -30,12 +30,13 @@
 			android:textStyle="bold" 
 			android:textColor="#ffffff"
 			android:ellipsize="end" 
-			android:lines="2"
+			android:lines="1"
 			android:gravity="center" 
 			android:layout_width="fill_parent" 
 			android:layout_height="wrap_content" 
 			android:text="Deck name"/>
-		<TextView 
+		<TextView
+			android:visibility="gone"
 			android:id="@+id/studyoptions_title"
 			android:textSize="26dip"
 			android:textStyle="bold"

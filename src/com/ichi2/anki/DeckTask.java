@@ -373,19 +373,22 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundDeleteCard(TaskData... params) {
     	Deck deck = params[0].getDeck();
     	Card card = params[0].getCard();
+    	Card newCard = null;
+    	Long id = 0l;
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
-            Long id = card.getId();
+            id = card.getId();
         	card.delete();
-        	publishProgress(new TaskData(String.valueOf(id)));
+            newCard = deck.getCard();
+        	publishProgress(new TaskData(newCard));
         	ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
             ankiDB.getDatabase().endTransaction();
         }
-        return null;
+        return new TaskData(String.valueOf(id));
     }
 
 

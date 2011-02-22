@@ -16,6 +16,7 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -44,6 +45,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -102,7 +104,10 @@ public class Reviewer extends Activity {
     private static final int MENU_WHITEBOARD = 0;
     private static final int MENU_CLEAR_WHITEBOARD = 1;
     private static final int MENU_EDIT = 2;
-    private static final int MENU_SUSPEND = 3;
+    private static final int MENU_REMOVE = 3;
+    private static final int MENU_REMOVE_BURY = 31;
+    private static final int MENU_REMOVE_SUSPEND = 32;
+    private static final int MENU_REMOVE_DELETE = 33;
     private static final int MENU_SEARCH = 4;
     private static final int MENU_MARK = 5;
     private static final int MENU_UNDO = 6;
@@ -691,7 +696,12 @@ public class Reviewer extends Activity {
         }
         item = menu.add(Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card);
         item.setIcon(R.drawable.ic_menu_edit);
-        item = menu.add(Menu.NONE, MENU_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
+
+        SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_remove_card);
+        removeDeckSubMenu.setIcon(R.drawable.ic_menu_close_clear_cancel);
+        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY, Menu.NONE, R.string.menu_bury_card);
+        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
+        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.card_browser_delete_card);
         item.setIcon(R.drawable.ic_menu_close_clear_cancel);
         if (mPrefTextSelection) {
             item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, String.format(getString(R.string.menu_search), 
@@ -743,6 +753,13 @@ public class Reviewer extends Activity {
         }
         menu.findItem(MENU_UNDO).setEnabled(AnkiDroidApp.deck().undoAvailable());
         menu.findItem(MENU_REDO).setEnabled(AnkiDroidApp.deck().redoAvailable());
+        
+        // Disable bury card for now, until unburying works as expected
+        item = menu.findItem(MENU_REMOVE_BURY);
+        item.setEnabled(false);
+        // Disable bury card for now, since there are some problems with retrieving a new card
+        item = menu.findItem(MENU_REMOVE_DELETE);
+        item.setEnabled(false);
         return true;
     }
 
@@ -808,9 +825,19 @@ public class Reviewer extends Activity {
                     }
                     return true;
                 }
-            case MENU_SUSPEND:
+
+            case MENU_REMOVE_BURY:
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+//                        AnkiDroidApp.deck(), mCurrentCard));
+                return true;
+
+            case MENU_REMOVE_SUSPEND:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
+                return true;
+
+            case MENU_REMOVE_DELETE:
+                showDeleteCardDialog();
                 return true;
 
             case MENU_SEARCH:
@@ -936,6 +963,26 @@ public class Reviewer extends Activity {
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
         closeReviewer();
+    }
+
+
+    private void showDeleteCardDialog() {
+        Dialog dialog;
+        Resources res = getResources();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(res.getString(R.string.delete_card_title));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setMessage(String.format(res.getString(R.string.delete_card_message), Utils.stripHTML(mCurrentCard.getQuestion()), Utils.stripHTML(mCurrentCard.getAnswer())));
+        builder.setPositiveButton(res.getString(R.string.yes),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
+                    }
+                });
+        builder.setNegativeButton(res.getString(R.string.no), null);
+        dialog = builder.create();
+        dialog.show();
     }
 
 

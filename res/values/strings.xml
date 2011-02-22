@@ -86,6 +86,10 @@
 <!-- deck_preferences.xml -->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
 <string name="newcards_day">New Cards / Day</string>
+
+<string name="studyoptions_limit_button_text">Limit</string>
+<string name="studyoptions_limit_dialog_title">Limit session</string>
+<string name="studyoptions_session_limit_text">Limit session:</string>
 <string name="session_time_limit">Session Time Limit</string>
 <string name="session_time_limit_summ">The number of minutes in a session. Choose 0 for no limit.</string>
 <string name="session_question_limit">Session Question Limit</string>
@@ -357,7 +361,9 @@
 <string name="menu_deck_properties">Deck Properties</string>
 <string name="menu_add_card">Add card</string>
 <string name="menu_about">About</string>
+<string name="menu_remove_card">Remove Card</string>
 <string name="menu_suspend_card">Suspend Card</string>
+<string name="menu_bury_card">Bury Card</string>
 <string name="menu_edit_card">Edit Card</string>
 <string name="menu_search">Lookup in %1$s</string>
 <string name="menu_mark_card">Mark Card</string>

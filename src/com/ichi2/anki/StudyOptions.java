@@ -83,11 +83,7 @@ public class StudyOptions extends Activity {
 * Menus
 */
     private static final int MENU_OPEN = 1;
-    private static final int SUBMENU_DOWNLOAD = 2;
-    private static final int MENU_DOWNLOAD_PERSONAL_DECK = 21;
-    private static final int MENU_DOWNLOAD_SHARED_DECK = 22;
     private static final int MENU_SYNC = 3;
-    private static final int MENU_MY_ACCOUNT = 4;
     private static final int MENU_PREFERENCES = 5;
     private static final int MENU_ADD_FACT = 6;
     private static final int MENU_MORE_OPTIONS = 7;
@@ -169,6 +165,14 @@ public class StudyOptions extends Activity {
 	private AlertDialog mStatisticTypeAlert;
 	private AlertDialog mStatisticPeriodAlert;
 
+	/*
+	* Limit session dialog
+	*/
+    private AlertDialog mLimitSessionDialog;
+    private EditText mEditSessionTime;
+    private EditText mEditSessionQuestions;
+    private CheckBox mSessionLimitCheckBox;
+
     /*
 * Cram related
 */
@@ -182,8 +186,10 @@ public class StudyOptions extends Activity {
 * UI elements for "Study Options" view
 */
     private View mStudyOptionsView;
+    private View mStudyOptionsMain;
     private Button mButtonStart;
     private ToggleButton mToggleCram;
+    private ToggleButton mToggleLimit;
     private TextView mTextTitle;
     private TextView mTextDeckName;
     private TextView mTextReviewsDue;
@@ -191,8 +197,6 @@ public class StudyOptions extends Activity {
     private TextView mTextETA;
     private TextView mTextNewTotal;
     private TextView mHelp;
-    private EditText mEditSessionTime;
-    private EditText mEditSessionQuestions;
     private CheckBox mNightMode;
     private Button mCardBrowser;
     private Button mStatisticsButton;
@@ -272,6 +276,10 @@ public class StudyOptions extends Activity {
                         onCramStop();
                         updateValuesFromDeck();
                     }
+                    return;
+                case R.id.studyoptions_limit:
+                    mToggleLimit.setChecked(!mToggleLimit.isChecked());
+                    showLimitSessionDialog();
                     return;
                 case R.id.studyoptions_congrats_learnmore:
                 	startLearnMore();
@@ -620,12 +628,16 @@ public class StudyOptions extends Activity {
     private void initAllContentViews() {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
+        mStudyOptionsMain = (View) mStudyOptionsView.findViewById(R.id.studyoptions_main);
 
         mTextTitle = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_title);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
         mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
+
+        mToggleLimit = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_limit);
+
         mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
         mStatisticsButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
 
@@ -647,58 +659,15 @@ public class StudyOptions extends Activity {
             });
         mHelp = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_help);
         mHelp.setOnClickListener(mButtonClickListener);
-        
-        mEditSessionTime = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_minutes);
-        mEditSessionQuestions = (EditText) mStudyOptionsView.findViewById(R.id.studyoptions_session_questions);
 
         mButtonStart.setOnClickListener(mButtonClickListener);
         mToggleCram.setOnClickListener(mButtonClickListener);
+        mToggleLimit.setOnClickListener(mButtonClickListener);
         mCardBrowser.setOnClickListener(mButtonClickListener);
         mStatisticsButton.setOnClickListener(mButtonClickListener);
 
-        mEditSessionTime.addTextChangedListener(new TextWatcher() {
-        	public void afterTextChanged(Editable s) {
-                Deck deck = AnkiDroidApp.deck();
-                String inputText = mEditSessionTime.getText().toString();
-                if (deck != null) {
-                    if (!inputText.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
-                    	if (inputText.equals("")) {
-                    		deck.setSessionTimeLimit(0);                		
-                    	} else if (isValidLong(inputText)) {
-                    		deck.setSessionTimeLimit(Long.parseLong(inputText) * 60);
-                    	} else {
-                    		mEditSessionTime.setText("0");
-                    	}
-                		updateValuesFromDeck();
-                    }                	
-                }
-        	}
-        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-        public void onTextChanged(CharSequence s, int start, int before, int count){}
-        });
-        
-        mEditSessionQuestions.addTextChangedListener(new TextWatcher() {
-        	public void afterTextChanged(Editable s) {
-                Deck deck = AnkiDroidApp.deck();
-                String inputText = mEditSessionQuestions.getText().toString();
-                if (deck != null) {
-                    if (!inputText.equals(Long.toString(deck.getSessionRepLimit()))) {
-                    	if (inputText.equals("")) {
-                    		deck.setSessionRepLimit(0);                		
-                    	} else if (isValidLong(inputText)) {
-                    		deck.setSessionRepLimit(Long.parseLong(inputText));
-                    	} else {
-                    		mEditSessionQuestions.setText("0");
-                    	}
-                		updateValuesFromDeck();
-                    }                 
-                }
-        	}
-        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-        public void onTextChanged(CharSequence s, int start, int before, int count){}
-        });
-
         mDialogMoreOptions = createMoreOptionsDialog();
+        mLimitSessionDialog = createLimitSessionDialog();
 
         // The view to use when there is no deck loaded yet.
         // TODO: Add and init view here.
@@ -929,6 +898,76 @@ public class StudyOptions extends Activity {
     }
 
 
+    private AlertDialog createLimitSessionDialog() {
+        // Custom view for the dialog content.
+        View contentView = getLayoutInflater().inflate(R.layout.studyoptions_limit_dialog_contents, null);
+        mEditSessionTime = (EditText) contentView.findViewById(R.id.studyoptions_session_minutes);
+        mEditSessionQuestions = (EditText) contentView.findViewById(R.id.studyoptions_session_questions);
+        mSessionLimitCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_session_check);
+        mSessionLimitCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mEditSessionTime.setEnabled(isChecked);
+                mEditSessionQuestions.setEnabled(isChecked);
+                if (!isChecked) {
+                    mEditSessionTime.setText("");
+                    mEditSessionQuestions.setText("");
+                }
+            }
+            });
+        
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.studyoptions_limit_dialog_title);
+        builder.setPositiveButton(R.string.studyoptions_more_save, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mToggleLimit.setChecked(mSessionLimitCheckBox.isChecked());
+                Deck deck = AnkiDroidApp.deck();
+                boolean changed = false;
+                String text = mEditSessionTime.getText().toString();
+                if (!text.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
+                  if (text.equals("")) {
+                      deck.setSessionTimeLimit(0);
+                  } else if (isValidLong(text)) {
+                      deck.setSessionTimeLimit(Long.parseLong(text) * 60);
+                  }
+                }   
+                text = mEditSessionQuestions.getText().toString();
+                if (!text.equals(Long.toString(deck.getSessionRepLimit()))) {
+                    if (text.equals("")) {
+                        deck.setSessionRepLimit(0);
+                    } else if (isValidLong(text)) {
+                        deck.setSessionRepLimit(Long.parseLong(text));
+                    }
+                    changed = true;
+                }
+                if (changed) {
+                    updateValuesFromDeck();                    
+                }
+            }
+        });
+        builder.setView(contentView);
+        return builder.create();
+    }
+
+
+    private void showLimitSessionDialog() {
+        // Update spinner selections from deck prior to showing the dialog.
+        Deck deck = AnkiDroidApp.deck();
+        long timeLimit = deck.getSessionTimeLimit() / 60;
+        long repLimit = deck.getSessionRepLimit();
+        mSessionLimitCheckBox.setChecked(timeLimit + repLimit > 0);
+        if (timeLimit != 0) {
+            mEditSessionTime.setText(String.valueOf(timeLimit));
+        }
+        if (repLimit != 0) {
+            mEditSessionTime.setText(String.valueOf(repLimit));
+        }
+        mLimitSessionDialog.show();
+    }
+
+
     private void showContentView(int which) {
         mCurrentContentView = which;
         showContentView();
@@ -969,8 +1008,7 @@ public class StudyOptions extends Activity {
                 // Enable timeboxing in case it was disabled from the previous deck
                 if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().name().equals("cram"))) {
                     mToggleCram.setChecked(false);
-                    mEditSessionTime.setEnabled(true);
-                    mEditSessionQuestions.setEnabled(true);
+                    mToggleLimit.setEnabled(true);
                 }
                 // Return to standard scheduler
                 if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
@@ -1038,12 +1076,6 @@ public class StudyOptions extends Activity {
             }
             mTextETA.setText(etastr);
             mTextNewTotal.setText(String.valueOf(deck.getNewCount()));
-            if (!mEditSessionTime.getText().toString().equals(String.valueOf(deck.getSessionTimeLimit() / 60)) && !mEditSessionTime.getText().toString().equals("")) {
-            	mEditSessionTime.setText(String.valueOf(deck.getSessionTimeLimit() / 60));
-            }
-            if (!mEditSessionQuestions.getText().toString().equals(String.valueOf(deck.getSessionRepLimit())) && !mEditSessionQuestions.getText().toString().equals("")) {
-            	mEditSessionQuestions.setText(String.valueOf(deck.getSessionRepLimit()));
-            }
         }
     }
 
@@ -1069,8 +1101,7 @@ public class StudyOptions extends Activity {
     private void onCram() {
         AnkiDroidApp.deck().setupCramScheduler(activeCramTags.toArray(new String[activeCramTags.size()]), cramOrder);
         // Timeboxing only supported using the standard scheduler
-        mEditSessionTime.setEnabled(false);
-        mEditSessionQuestions.setEnabled(false);
+        mToggleLimit.setEnabled(false);
         updateValuesFromDeck();
     }
 
@@ -1079,8 +1110,7 @@ public class StudyOptions extends Activity {
 */
     private void onCramStop() {
         AnkiDroidApp.deck().setupStandardScheduler();
-        mEditSessionTime.setEnabled(true);
-        mEditSessionQuestions.setEnabled(true);
+        mToggleLimit.setEnabled(true);
     }
 
     @Override
@@ -1099,12 +1129,6 @@ public class StudyOptions extends Activity {
     	MenuItem item;
         item = menu.add(Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck);
         item.setIcon(R.drawable.ic_menu_manage);
-        SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE,
-                R.string.menu_download_deck);
-        downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
-        downloadDeckSubMenu.add(
-                Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
-        downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
         item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
         item.setIcon(R.drawable.ic_menu_refresh);
         item = menu.add(Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card);
@@ -1113,8 +1137,6 @@ public class StudyOptions extends Activity {
         item.setIcon(R.drawable.ic_menu_archive);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
-        item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
-        item.setIcon(R.drawable.ic_menu_home);
         item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
         item.setIcon(R.drawable.ic_menu_send);
         return true;
@@ -1125,16 +1147,12 @@ public class StudyOptions extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean deckChangable = (AnkiDroidApp.deck() != null) && mSdCardAvailable && !mToggleCram.isChecked(); 
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
-        menu.findItem(SUBMENU_DOWNLOAD).setEnabled(mSdCardAvailable);
         menu.findItem(MENU_ADD_FACT).setEnabled(deckChangable);
         menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangable);
 		menu.findItem(MENU_SYNC).setEnabled(deckChangable);
 
         // Show sync menu items only if sync is enabled.
-		menu.findItem(MENU_SYNC).setVisible(mSyncEnabled);       
-		menu.findItem(MENU_MY_ACCOUNT).setVisible(mSyncEnabled);
-        menu.findItem(MENU_DOWNLOAD_PERSONAL_DECK).setVisible(mSyncEnabled);
-
+		menu.findItem(MENU_SYNC).setVisible(mSyncEnabled);
         return true;
     }
 
@@ -1147,20 +1165,8 @@ public class StudyOptions extends Activity {
                 openDeckPicker();
                 return true;
 
-            case MENU_DOWNLOAD_PERSONAL_DECK:
-            	openPersonalDeckPicker();
-                return true;
-
-            case MENU_DOWNLOAD_SHARED_DECK:
-            	openSharedDeckPicker();
-                return true;
-
             case MENU_SYNC:
                 syncDeck(null);
-                return true;
-
-            case MENU_MY_ACCOUNT:
-                startActivity(new Intent(StudyOptions.this, MyAccount.class));
                 return true;
 
             case MENU_MORE_OPTIONS:
@@ -1347,7 +1353,7 @@ public class StudyOptions extends Activity {
             mInDeckPicker = false;
 
             if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_OK) {
-            	setContentView(mStudyOptionsView);
+                mStudyOptionsMain.setVisibility(View.INVISIBLE);
             } else if ((requestCode == DOWNLOAD_SHARED_DECK || requestCode == DOWNLOAD_PERSONAL_DECK) && resultCode == RESULT_OK) {
             	openDeckPicker();
             	return;
@@ -1566,8 +1572,7 @@ public class StudyOptions extends Activity {
             // showControls(false);
 
         	mToggleCram.setChecked(false);
-            mEditSessionTime.setEnabled(true);
-            mEditSessionQuestions.setEnabled(true);
+        	mToggleLimit.setEnabled(true);
             
             if (updateAllCards) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
@@ -1654,6 +1659,9 @@ public class StudyOptions extends Activity {
                     mNewVersion = false;
                 }
             }
+            Deck deck = AnkiDroidApp.deck();
+            mToggleLimit.setChecked(deck.getSessionTimeLimit() + deck.getSessionTimeLimit() > 0);
+            mStudyOptionsMain.setVisibility(View.VISIBLE);
         }
 
 

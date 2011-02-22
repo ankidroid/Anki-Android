@@ -585,13 +585,13 @@ public class CardBrowser extends Activity {
 
 
         @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            deleteCard(values[0].getString(), mPositionInCardsList);
+        public void onProgressUpdate(DeckTask.TaskData... values) {            
         }
 
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            deleteCard(result.getString(), mPositionInCardsList);
             mProgressDialog.dismiss();
 
         }

@@ -47,6 +47,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -94,7 +95,13 @@ public class DeckPicker extends Activity implements Runnable {
 	 */
     private static final int MENU_ABOUT = 0;
     private static final int MENU_CREATE_DECK = 1;
-	
+    private static final int SUBMENU_DOWNLOAD = 2;
+    private static final int MENU_DOWNLOAD_PERSONAL_DECK = 21;
+    private static final int MENU_DOWNLOAD_SHARED_DECK = 22;
+    private static final int MENU_PREFERENCES = 3;
+    private static final int MENU_MY_ACCOUNT = 4;
+
+
 	/**
 	 * Message types
 	 */
@@ -102,13 +109,18 @@ public class DeckPicker extends Activity implements Runnable {
 	private static final int MSG_UPGRADE_SUCCESS = 1;
 	private static final int MSG_UPGRADE_FAILURE = 2;
 
+    /**
+	* Available options performed by other activities
+	*/
+    private static final int PREFERENCES_UPDATE = 0;
+
+
 	private DeckPicker mSelf;
 
 	private ProgressDialog mProgressDialog;
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mUpgradeNotesAlert;
 	private AlertDialog mMissingMediaAlert;
-	private LinearLayout mSyncAllBar;
 	private Button mSyncAllButton;
 	private Button mStatisticsAllButton;
 
@@ -126,6 +138,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private BroadcastReceiver mUnmountReceiver = null;
 
+	private String mPrefDeckPath = null;
 	private String mRemoveDeckFilename = null;
 	private String mRemoveDeckPath = null;
 
@@ -244,8 +257,7 @@ public class DeckPicker extends Activity implements Runnable {
 					.setMessage(getSyncLogMessage((ArrayList<HashMap<String, String>>) data.result));
 			mSyncLogAlert.show();
 			mDeckIsSelected = false;
-			SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-			populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+			populateDeckList(mPrefDeckPath);
             mSyncAllButton.setClickable(true);
 		}
 	};
@@ -326,7 +338,6 @@ public class DeckPicker extends Activity implements Runnable {
 		registerExternalStorageListener();
 		initDialogs();
 
-		mSyncAllBar = (LinearLayout) findViewById(R.id.sync_all_bar);
 		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
 
@@ -412,11 +423,13 @@ public class DeckPicker extends Activity implements Runnable {
 		mDeckListView.setAdapter(mDeckListAdapter);
 		registerForContextMenu(mDeckListView);
 
+		
+		
 		SharedPreferences preferences = PrefSettings
 				.getSharedPrefs(getBaseContext());
-		populateDeckList(preferences.getString("deckPath", AnkiDroidApp
-				.getStorageDirectory()));
-		
+		mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+		populateDeckList(mPrefDeckPath);
+
 		mSwipeEnabled = preferences.getBoolean("swipe", false);
 		gestureDetector = new GestureDetector(new MyGestureDetector());
         mDeckListView.setOnTouchListener(new View.OnTouchListener() {
@@ -592,7 +605,7 @@ public class DeckPicker extends Activity implements Runnable {
 	}
 
 	
-	@Override
+    @Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		waitForDeckLoaderThread();
@@ -728,8 +741,29 @@ public class DeckPicker extends Activity implements Runnable {
         MenuItem item;
         item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.menu_create_deck);
         item.setIcon(R.drawable.ic_menu_add);
+        SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE,
+                R.string.menu_download_deck);
+        downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
+        downloadDeckSubMenu.add(
+                Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
+        downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
+        item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
+        item.setIcon(R.drawable.ic_menu_preferences);
+        item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
+        item.setIcon(R.drawable.ic_menu_home);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
+        return true;
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
+        menu.findItem(SUBMENU_DOWNLOAD).setEnabled(sdCardAvailable);
+        menu.findItem(MENU_DOWNLOAD_PERSONAL_DECK).setVisible(sdCardAvailable);
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        menu.findItem(MENU_MY_ACCOUNT).setVisible(preferences.getBoolean("syncEnabled", false));
         return true;
     }
 
@@ -749,13 +783,49 @@ public class DeckPicker extends Activity implements Runnable {
                 startActivity(new Intent(DeckPicker.this, About.class));
                 return true;
 
+            case MENU_DOWNLOAD_PERSONAL_DECK:
+                openPersonalDeckPicker();
+                return true;
+
+            case MENU_DOWNLOAD_SHARED_DECK:
+                openSharedDeckPicker();
+                return true;
+
+            case MENU_MY_ACCOUNT:
+                startActivity(new Intent(DeckPicker.this, MyAccount.class));
+                return true;
+
+            case MENU_PREFERENCES:
+                startActivityForResult(
+                        new Intent(DeckPicker.this, Preferences.class),
+                        PREFERENCES_UPDATE);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
     
-	private void populateDeckList(String location) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == PREFERENCES_UPDATE) {
+            SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+            String newPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+            if (!mPrefDeckPath.equals(newPath)) {
+                populateDeckList(newPath);
+            }
+        }
+    }
+
+
+    private void populateDeckList(String location) {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList");
+
+		if (!location.equals(mPrefDeckPath)) {
+		    mPrefDeckPath = location;
+		}
 
 		mTotalDueCards = 0;
 		mTotalCards = 0;
@@ -767,7 +837,7 @@ public class DeckPicker extends Activity implements Runnable {
 		TreeSet<HashMap<String, String>> tree = new TreeSet<HashMap<String, String>>(
 				new HashMapCompare());
 
-		File dir = new File(location);
+		File dir = new File(mPrefDeckPath);
 		fileList = dir.listFiles(new AnkiFilter());
 
 		if (dir.exists() && dir.isDirectory() && fileList != null) {
@@ -835,8 +905,6 @@ public class DeckPicker extends Activity implements Runnable {
             data.put("rateOfCompletionAll", "0");
 
 			tree.add(data);
-
-			mSyncAllBar.setVisibility(View.GONE);
 		}
 		mDeckList.clear();
 		mDeckList.addAll(tree);
@@ -975,6 +1043,37 @@ public class DeckPicker extends Activity implements Runnable {
 	}
 
 
+    public void openPersonalDeckPicker() {
+        if (AnkiDroidApp.isUserLoggedIn()) {
+            if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
+            {
+                AnkiDroidApp.deck().closeDeck();
+                AnkiDroidApp.setDeck(null);
+            }
+            startActivity(new Intent(this, PersonalDeckPicker.class));
+            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                MyAnimation.slide(this, MyAnimation.RIGHT);
+            }
+        } else {
+            showDialog(DIALOG_USER_NOT_LOGGED_IN);
+        }
+    }
+
+
+    public void openSharedDeckPicker() {
+        if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
+        {
+            AnkiDroidApp.deck().closeDeck();
+            AnkiDroidApp.setDeck(null);
+        }
+        // deckLoaded = false;
+        startActivity(new Intent(this, SharedDeckPicker.class));
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+            MyAnimation.slide(this, MyAnimation.RIGHT);
+        }
+    }
+
+
 	private void handleDeckSelection(int id) {
 		String deckFilename = null;
 
@@ -1023,9 +1122,8 @@ public class DeckPicker extends Activity implements Runnable {
 				} else {
 					Log.e(AnkiDroidApp.TAG, "Error: Could not delete " + mediaDir);										
 				}
-				
-				SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-				populateDeckList(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+
+				populateDeckList(mPrefDeckPath);
 			} else {
 				Log.e(AnkiDroidApp.TAG, "Error: Could not delete "
 						+ deckFilename);
