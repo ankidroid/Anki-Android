@@ -1580,7 +1580,8 @@ public class StudyOptions extends Activity {
         // displaySdError();
         // }
     }
-
+    
+    
     DeckTask.TaskListener mLoadDeckHandler = new DeckTask.TaskListener() {
 
         @Override
@@ -1608,6 +1609,7 @@ public class StudyOptions extends Activity {
                     // Set the deck in the application instance, so other activities
                     // can access the loaded deck.
                     AnkiDroidApp.setDeck(result.getDeck());
+                    
                     if (mPrefStudyOptions) {
                         showContentView(CONTENT_STUDY_OPTIONS);
                     } else {

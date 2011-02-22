@@ -42,6 +42,7 @@ import java.io.File;
 public class AnkiDroidApp extends Application {
 
 	public static final String LIBANKI_VERSION = "1.2.5";
+	public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
 
     /**
      * Tag for logging messages.
@@ -203,4 +204,17 @@ public class AnkiDroidApp extends Application {
 
         return pkgVersion;
     }
+    
+    /**
+     * Get the DropBox folder
+     * @return the absolute path to the DropBox public folder, or null if it is not found
+     */
+    public static String getDropboxDir() {
+        File f = new File(AnkiDroidApp.getStorageDirectory() + DROPBOX_PUBLIC_DIR);
+        if (f.exists() && f.isDirectory()) {
+            return f.getAbsolutePath();
+        }
+        return null;
+    }
+
 }

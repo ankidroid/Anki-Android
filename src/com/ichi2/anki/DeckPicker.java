@@ -107,6 +107,7 @@ public class DeckPicker extends Activity implements Runnable {
 	private ProgressDialog mProgressDialog;
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mUpgradeNotesAlert;
+	private AlertDialog mMissingMediaAlert;
 	private LinearLayout mSyncAllBar;
 	private Button mSyncAllButton;
 	private Button mStatisticsAllButton;
@@ -246,6 +247,64 @@ public class DeckPicker extends Activity implements Runnable {
             mSyncAllButton.setClickable(true);
 		}
 	};
+
+   private Connection.TaskListener mDownloadMediaListener = new Connection.TaskListener() {
+
+        @Override
+        public void onDisconnected() {
+            showDialog(DIALOG_NO_CONNECTION);
+        }
+
+        @Override
+        public void onPreExecute() {
+            // Pass
+        }
+
+        @Override
+        public void onProgressUpdate(Object... values) {
+            int total = ((Integer)values[1]).intValue();
+            int done = ((Integer)values[2]).intValue();
+            if (!((Boolean)values[0]).booleanValue()) {
+                // Initializing, just get the count of missing media
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }
+                mProgressDialog.setMax(total);
+                mProgressDialog.show();
+            } else {
+                mProgressDialog.setProgress(done);
+            }
+        }
+
+        @Override
+        public void onPostExecute(Payload data) {
+            Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            Resources res = getResources();
+            if (mProgressDialog != null) {
+                mProgressDialog.dismiss();
+            }
+
+            if (data.success) {
+                int total = ((Integer)data.data[0]).intValue();
+                if (total == 0) {
+                    mMissingMediaAlert
+                        .setMessage(res.getString(R.string.deckpicker_download_missing_none));
+                } else {
+                    int done = ((Integer)data.data[1]).intValue();
+                    int missing = ((Integer)data.data[2]).intValue();
+                    mMissingMediaAlert
+                        .setMessage(res.getString(R.string.deckpicker_download_missing_success, done, missing));
+                }
+            } else {
+                String failedFile = (String)data.data[0];
+                mMissingMediaAlert
+                    .setMessage(res.getString(R.string.deckpicker_download_missing_error, failedFile));
+            }
+            mMissingMediaAlert.show();
+ 
+        }
+    };
+
 
 	// ----------------------------------------------------------------------------
 	// ANDROID METHODS
@@ -538,6 +597,8 @@ public class DeckPicker extends Activity implements Runnable {
 		
 		@SuppressWarnings("unchecked")
 		HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(info.position);
+		String deckPath = null;
+		Deck deck = null;
 		switch (item.getItemId()) {
 		case R.id.delete_deck:
 			mRemoveDeckPath = null;
@@ -548,10 +609,16 @@ public class DeckPicker extends Activity implements Runnable {
 			resetDeckLanguages(data.get("filepath"));
 			return true;
 		case R.id.optimize_deck:
-			String deckPath = data.get("filepath");
-			Deck deck = Deck.openDeck(deckPath);
+			deckPath = data.get("filepath");
+			deck = Deck.openDeck(deckPath);
 	    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, null));
 			return true;
+		case R.id.download_missing_media:
+		    deckPath = data.get("filepath");
+		    deck = Deck.openDeck(deckPath);
+		    Reviewer.setupMedia(deck);
+		    Connection.downloadMissingMedia(mDownloadMediaListener, new Connection.Payload(new Object[] {deck}));
+		    return true;
 		default:
 			return super.onContextItemSelected(item);
 		}
@@ -642,6 +709,15 @@ public class DeckPicker extends Activity implements Runnable {
 				R.string.deckpicker_upgrade_notes_title));
 		builder.setPositiveButton(getResources().getString(R.string.ok), null);
 		mUpgradeNotesAlert = builder.create();
+		builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.deckpicker_download_missing_title));
+        builder.setPositiveButton(getResources().getString(R.string.ok), null);
+        mMissingMediaAlert = builder.create();
+        mProgressDialog = new ProgressDialog(DeckPicker.this);
+        mProgressDialog.setTitle(R.string.deckpicker_download_missing_title);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setMax(100);
+        mProgressDialog.setCancelable(false);
 	}
 	
 	

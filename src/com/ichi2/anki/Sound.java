@@ -54,7 +54,7 @@ public class Sound {
     private Sound() { }
 
 
-    public static String parseSounds(String deckFilename, String content, boolean ttsEnabled, int qa) {
+    public static String parseSounds(String soundDir, String content, boolean ttsEnabled, int qa) {
     	boolean soundAvailable = false;
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
@@ -70,7 +70,8 @@ public class Sound {
             // Log.i(AnkiDroidApp.TAG, "Sound " + matcher.groupCount() + ": " + sound);
 
             // Construct the sound path and store it
-            String soundPath = deckFilename.replace(".anki", ".media/") + sound;
+            //String soundPath = deckFilename.replace(".anki", ".media/") + sound;
+            String soundPath = soundDir + sound;
             // Log.i(AnkiDroidApp.TAG, "parseSounds - soundPath = " + soundPath);
             sSoundPaths.add(soundPath);
 

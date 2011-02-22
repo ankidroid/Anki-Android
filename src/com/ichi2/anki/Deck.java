@@ -181,7 +181,7 @@ public class Deck {
     private double mLastLoaded;
     private boolean mNewEarly;
     private boolean mReviewEarly;
-    public String mMediaPrefix;
+    private String mMediaPrefix;
 
     private double mDueCutoff;
     private double mFailedCutoff;
@@ -621,7 +621,7 @@ public class Deck {
             setVarDefault("latexPost", "\\end{document}");
             // FIXME: The next really belongs to the dropbox setup module, it's not supposed to be empty if the user
             // wants to use dropbox. ankiqt/ankiqt/ui/main.py : setupMedia
-            setVarDefault("mediaLocation", "");
+            // setVarDefault("mediaLocation", "");
         }
         updateCutoff();
         setupStandardScheduler();
@@ -646,6 +646,7 @@ public class Deck {
     }
     public String mediaDir(boolean create, boolean rename) {
         String dir = null;
+        File mediaDir = null;
         if (mDeckPath != null && !mDeckPath.equals("")) {
             if (mMediaPrefix != null) {
                 dir = mMediaPrefix + "/" + mDeckName + ".media";
@@ -656,7 +657,7 @@ public class Deck {
                 // Don't create, but return dir
                 return dir;
             }
-            File mediaDir = new File(dir);
+            mediaDir = new File(dir);
             if (!mediaDir.exists() && create) {
                 try {
                     if (!mediaDir.mkdir()) {
@@ -673,13 +674,18 @@ public class Deck {
         if (dir == null) {
             return null;
         } else {
-            // TODO: Inefficient, should use prior File
-            File mediaDir = new File(dir);
             if (!mediaDir.exists() || !mediaDir.isDirectory()) {
                 return null;
             }
         }
         return dir;
+    }
+    
+    public String getMediaPrefix() {
+        return mMediaPrefix;
+    }
+    public void setMediaPrefix(String mediaPrefix) {
+        mMediaPrefix = mediaPrefix;
     }
 
 

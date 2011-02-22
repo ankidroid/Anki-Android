@@ -58,6 +58,10 @@
 <string name="deckpicker_upgrade_failed">Upgrading failed!</string>
 <string name="deckpicker_upgrade_notes_title">Upgrade deck results</string>
 <string name="deckpicker_upgrade_notes_button">Notes</string>
+<string name="deckpicker_download_missing_title">Fetching missing media</string>
+<string name="deckpicker_download_missing_none">No media files found missing</string>
+<string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
+<string name="deckpicker_download_missing_error">Error with file: %1$s</string>
 
 <string name="notify_ticker">Application Update</string>
 <string name="notify_title">AnkiDroid Updated</string>
@@ -466,9 +470,11 @@
 <string name="undo">Undo</string>
 <string name="redo">Redo</string>
 
+<string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
 <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
 <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
 <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
+
 <string name="optimize_deck_title">Optimize database</string>
 <string name="optimize_deck_dialog">Optimizing database</string>
 <string name="optimize_deck_message">Database optimized.\nShrunk by %d kb</string>
