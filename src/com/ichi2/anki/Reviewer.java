@@ -1056,19 +1056,21 @@ public class Reviewer extends Activity {
         mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
         mChosenAnswer.setTextSize((float) (headTextSize * 1.1));
 
-        mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
-        mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
-        	@Override
-        	public boolean onTouch(View v, MotionEvent event) {
-             	if (mWhiteboard.getVisibility() == View.VISIBLE) {
-             		return false;
-             	}
-        		if (gestureDetector.onTouchEvent(event)) {
-                    return true;
+        if (mPrefWhiteboard) {
+            mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
+            mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (mWhiteboard.getVisibility() == View.VISIBLE) {
+                        return false;
+                    }
+                    if (gestureDetector.onTouchEvent(event)) {
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });            
+        }
         mAnswerField = (EditText) findViewById(R.id.answer_field);
 
         mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
@@ -1094,7 +1096,9 @@ public class Reviewer extends Activity {
         mTextBarBlack.setTextColor(fgColor);
         mTextBarBlue.setTextColor(res.getColor(R.color.textbar_blue_color_inv));
         mCard.setBackgroundColor(res.getColor(R.color.background_color_inv));
-        mWhiteboard.setInvertedColor(true);
+        if (mPrefWhiteboard) {
+            mWhiteboard.setInvertedColor(true);
+        }
         findViewById(R.id.progress_bars_border1).setBackgroundColor(fgColor);
         findViewById(R.id.progress_bars_border2).setBackgroundColor(fgColor);
         findViewById(R.id.progress_bars_back1).setBackgroundColor(bgColor);
@@ -1176,7 +1180,9 @@ public class Reviewer extends Activity {
         if (mShowProgressBars) {
             mProgressBars.setVisibility(View.VISIBLE);
         }
-        mWhiteboard.setVisibility((mPrefWhiteboard && mShowWhiteboard) ? View.VISIBLE : View.GONE);
+        if (mPrefWhiteboard) {
+            mWhiteboard.setVisibility(mShowWhiteboard ? View.VISIBLE : View.GONE);            
+        }
         mAnswerField.setVisibility((mPrefWriteAnswers) ? View.VISIBLE : View.GONE);
     }
 
@@ -1184,7 +1190,7 @@ public class Reviewer extends Activity {
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mPrefTimer = preferences.getBoolean("timer", true);
-        mPrefWhiteboard = preferences.getBoolean("whiteboard", true);
+        mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
         mPrefTextSelection = preferences.getBoolean("textSelection", false);
         mDeckFilename = preferences.getString("deckFilename", "");
