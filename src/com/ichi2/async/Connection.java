@@ -527,7 +527,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     private Payload doInBackgroundSendCrashReport(Payload data) {
         Log.i(AnkiDroidApp.TAG, "SendCrashReport");
         String url = (String) data.data[0];
-        List<NameValuePair> values = (List<NameValuePair>) data.data[2];
+        List<NameValuePair> values = (List<NameValuePair>) data.data[1];
 
     	HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);

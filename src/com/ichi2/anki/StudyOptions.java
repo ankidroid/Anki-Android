@@ -263,6 +263,8 @@ public class StudyOptions extends Activity {
                     openReviewer();
                     return;
                 case R.id.studyoptions_cram:
+                    Deck d = null;
+                    d.reset();
                     if (mToggleCram.isChecked()) {
                         activeCramTags.clear();
                         cramOrder = cramOrderList[0];
