@@ -24,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -53,10 +54,15 @@ public class ErrorReporter extends Activity {
     protected static String REPORT_ASK = "2";
     protected static String REPORT_NEVER = "1";
     protected static String REPORT_ALWAYS = "0";
+
     protected static String STATE_WAITING = "0";
     protected static String STATE_UPLOADING = "1";
     protected static String STATE_SUCCESSFUL = "2";
     protected static String STATE_FAILED = "3";
+
+    protected static String TYPE_STACKTRACE = "crash-stacktrace";
+    protected static String TYPE_FEEDBACK = "feedback";
+    protected static String TYPE_ERROR_FEEDBACK = "error-feedback";
 	
 	// This is used to group the batch of bugs and notes sent on the server side
 	protected long mNonce;
@@ -83,7 +89,7 @@ public class ErrorReporter extends Activity {
 
         if (reportErrorMode.equals(REPORT_ALWAYS)) { // Always report
             try {
-                sendErrorReport();
+                sendErrorReports();
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, e.toString());
             }
@@ -116,9 +122,14 @@ public class ErrorReporter extends Activity {
                 btnSendMostRecent.setVisibility(View.GONE);
                 btnClearAll.setVisibility(View.GONE);
                 btnSendAll.setText("Send us your feedback");
+                btnSendAll.setVisibility(View.VISIBLE);
             } else {
+                btnClearAll.setVisibility(View.VISIBLE);
+                btnSendAll.setVisibility(View.VISIBLE);
                 if (numErrors == 1) {
                     btnSendMostRecent.setVisibility(View.GONE);
+                } else {
+                    btnSendMostRecent.setVisibility(View.VISIBLE);
                 }
             
                 mErrorAdapter = new SimpleAdapter(this, mErrorReports,
@@ -160,7 +171,18 @@ public class ErrorReporter extends Activity {
                 @Override
                 public void onClick(View v) {
                     try {
-                        sendErrorReport();
+                        sendErrorReports();
+                        EditText etFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
+                        String feedback = etFeedbackText.getText().toString();
+                        if (feedback.length() > 0) {
+                            if (mErrorReports.size() == 0) {
+                                // This is stand-alone feedback
+                                sendFeedback(TYPE_FEEDBACK, feedback);
+                            } else {
+                                // This is error accompanying feedback
+                                sendFeedback(TYPE_ERROR_FEEDBACK, feedback);
+                            }
+                        }
                     } catch (Exception e) {
                         Log.e(AnkiDroidApp.TAG, e.toString());
                     }
@@ -174,7 +196,13 @@ public class ErrorReporter extends Activity {
                     try {
                         deleteFiles(false, true);
                         refreshErrorListView();
-                        sendErrorReport();
+                        sendErrorReports();
+                        EditText etFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
+                        String feedback = etFeedbackText.getText().toString();
+                        if (feedback.length() > 0) {
+                            // Always accompanying errors here
+                            sendFeedback(TYPE_ERROR_FEEDBACK, feedback);
+                        }
                     } catch (Exception e) {
                         Log.e(AnkiDroidApp.TAG, e.toString());
                     }
@@ -189,7 +217,8 @@ public class ErrorReporter extends Activity {
                     refreshErrorListView();
                 }
             });
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN |
+                    WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         }
     }
 
@@ -229,32 +258,39 @@ public class ErrorReporter extends Activity {
         }
     }
 
-    private void sendErrorReport() throws IOException {
+    private void addTimestamp(List<NameValuePair> pairs) {
+        Date ts = new Date();
+        TimeZone tz = TimeZone.getDefault();
+
+        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
+        SimpleDateFormat df2 = new SimpleDateFormat("Z", Locale.US);
+        df1.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        String reportsentutc = String.format("%s", df1.format(ts));
+        String reportsenttzoffset = String.format("%s", df2.format(ts));
+        String reportsenttz = String.format("%s", tz.getID());
+
+        pairs.add(new BasicNameValuePair("reportsentutc", reportsentutc));
+        pairs.add(new BasicNameValuePair("reportsenttzoffset", reportsenttzoffset));
+        pairs.add(new BasicNameValuePair("reportsenttz", reportsenttz));
+    }
+
+    private void sendErrorReports() throws IOException {
         final String url = getString(R.string.error_post_url);
-        
+
         for (int i = 0; i < mErrorReports.size(); i++) {
             HashMap<String, String> error = mErrorReports.get(i);
             try {
                 String filename = error.get("name");
-            	Date ts = new Date();
-            	TimeZone tz = TimeZone.getDefault();
             	String singleLine;
-            	
-                SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
-                SimpleDateFormat df2 = new SimpleDateFormat("Z", Locale.US);
-                
-                df1.setTimeZone(TimeZone.getTimeZone("UTC"));
-                
-                String reportsentutc = String.format("%s", df1.format(ts));
-                String reportsenttzoffset = String.format("%s", df2.format(ts));
-                String reportsenttz = String.format("%s", tz.getID());
                 
             	BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(filename)));
                 List<NameValuePair> pairs = new ArrayList<NameValuePair>();
                 
-                pairs.add(new BasicNameValuePair("reportsentutc", reportsentutc));
-                pairs.add(new BasicNameValuePair("reportsenttzoffset", reportsenttzoffset));
-                pairs.add(new BasicNameValuePair("reportsenttz", reportsenttz));
+                pairs.add(new BasicNameValuePair("type", "crash-stacktrace"));
+                pairs.add(new BasicNameValuePair("groupid", String.valueOf(mNonce)));
+                pairs.add(new BasicNameValuePair("id", String.valueOf(i)));
+                addTimestamp(pairs);
                 
                 while((singleLine=br.readLine())!=null) {
                 	int indexOfEquals = singleLine.indexOf('=');
@@ -281,7 +317,8 @@ public class ErrorReporter extends Activity {
 
                 br.close();
                 
-                postReport(i, pairs);
+                postReport(TYPE_STACKTRACE, i, pairs);
+                Log.i(AnkiDroidApp.TAG, "posting error report " + i);
             } catch (Exception ex) {
                 Log.e(AnkiDroidApp.TAG, ex.toString());
             }
@@ -297,17 +334,33 @@ public class ErrorReporter extends Activity {
 
         @Override
         public void onPostExecute(Payload data) {
-            int errorIndex = (Integer)data.data[1];
-            mErrorReports.get(errorIndex).put("state", STATE_SUCCESSFUL);
-            refreshErrorListView();
-            Log.i(AnkiDroidApp.TAG, "Send error report " + errorIndex + " finished, result: " + ((String) data.result));
-            // TODO: Report success/failure and any server side message
+            String errorType = (String)data.data[2];
+            int errorIndex = (Integer)data.data[3];
+            Log.i(AnkiDroidApp.TAG, "done posting " + errorType + "(" + errorIndex + "), success " + data.success);
+            if (errorType.equals(TYPE_FEEDBACK) || errorType.equals(TYPE_ERROR_FEEDBACK)) {
+                if (data.success) {
+                    EditText etFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
+                    etFeedbackText.setText("");
+                    etFeedbackText.setHint("Sent, thank you!");
+                    etFeedbackText.setEnabled(false);
+                } else {
+                    // TODO: Say something about failing
+                }
+            } else {
+                if (data.success) {
+                    mErrorReports.get(errorIndex).put("state", STATE_SUCCESSFUL);
+                } else {
+                    mErrorReports.get(errorIndex).put("state", STATE_FAILED);
+                }
+                refreshErrorListView();
+                //Log.i(AnkiDroidApp.TAG, "Send error report " + errorIndex + " finished, result: " + ((String) data.result));
+                // TODO: Report success/failure and any server side message
+            }
         }
 
         @Override
         public void onPreExecute() {
             // pass
-            
         }
 
         @Override
@@ -316,14 +369,21 @@ public class ErrorReporter extends Activity {
         }
     };
 
-    private void postReport(int index, List<NameValuePair> values) {
+    private void postReport(String type, int index, List<NameValuePair> values) {
         final String url = getString(R.string.error_post_url);
         mErrorReports.get(index).put("state", STATE_UPLOADING);
-        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, index, values}));
+        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values, type, index}));
     }
 
-    private void postFeedback(List<NameValuePair> values) {
+    private void sendFeedback(String type, String feedback) {
+        
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        pairs.add(new BasicNameValuePair("type", type));
+        pairs.add(new BasicNameValuePair("groupid", String.valueOf(mNonce)));
+        pairs.add(new BasicNameValuePair("id", "0"));
+        pairs.add(new BasicNameValuePair("message", feedback));
+        addTimestamp(pairs);
         final String url = getString(R.string.feedback_post_url);
-        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, values}));
+        Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, pairs, type, 0}));
     }
 }
