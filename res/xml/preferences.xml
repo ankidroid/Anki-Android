@@ -123,7 +123,7 @@
 			<CheckBoxPreference
 				android:title="@string/show_whiteboard"
 				android:summary="@string/show_whiteboard_summ"
-				android:defaultValue="true"
+				android:defaultValue="false"
 				android:disableDependentsState="false"
 				android:key="whiteboard" />
 	      	<com.hlidskialf.android.preference.SeekBarPreference 
