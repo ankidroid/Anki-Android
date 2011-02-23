@@ -94,8 +94,8 @@ public class DeckPicker extends Activity implements Runnable {
 	 * Menus
 	 */
     private static final int MENU_ABOUT = 0;
-    private static final int MENU_CREATE_DECK = 1;
-    private static final int SUBMENU_DOWNLOAD = 2;
+    private static final int SUBMENU_DOWNLOAD = 1;
+    private static final int MENU_CREATE_DECK = 2;
     private static final int MENU_DOWNLOAD_PERSONAL_DECK = 21;
     private static final int MENU_DOWNLOAD_SHARED_DECK = 22;
     private static final int MENU_PREFERENCES = 3;
@@ -739,14 +739,14 @@ public class DeckPicker extends Activity implements Runnable {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
-        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.menu_create_deck);
-        item.setIcon(R.drawable.ic_menu_add);
         SubMenu downloadDeckSubMenu = menu.addSubMenu(Menu.NONE, SUBMENU_DOWNLOAD, Menu.NONE,
                 R.string.menu_download_deck);
         downloadDeckSubMenu.setIcon(R.drawable.ic_menu_download);
         downloadDeckSubMenu.add(
                 Menu.NONE, MENU_DOWNLOAD_PERSONAL_DECK, Menu.NONE, R.string.menu_download_personal_deck);
         downloadDeckSubMenu.add(Menu.NONE, MENU_DOWNLOAD_SHARED_DECK, Menu.NONE, R.string.menu_download_shared_deck);
+        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.menu_create_deck);
+        item.setIcon(R.drawable.ic_menu_add);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
         item = menu.add(Menu.NONE, MENU_MY_ACCOUNT, Menu.NONE, R.string.menu_my_account);
