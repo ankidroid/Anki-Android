@@ -180,7 +180,7 @@ public class Whiteboard extends View {
 
 
     private void createBitmap() {
-        createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ARGB_8888);
+        createBitmap(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight(), Bitmap.Config.ARGB_4444);
     }
 
 
