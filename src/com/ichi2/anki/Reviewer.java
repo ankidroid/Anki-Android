@@ -61,6 +61,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.FrameLayout.LayoutParams;
 
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
@@ -69,6 +70,8 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.xmlpull.v1.XmlPullParser;
 
 public class Reviewer extends Activity {
 
@@ -1104,7 +1107,12 @@ public class Reviewer extends Activity {
         mChosenAnswer.setTextSize((float) (headTextSize * 1.1));
 
         if (mPrefWhiteboard) {
-            mWhiteboard = (Whiteboard) findViewById(R.id.whiteboard);
+            mWhiteboard = new Whiteboard(this, null);
+            FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+            mWhiteboard.setLayoutParams(lp2);
+            FrameLayout fl = (FrameLayout) findViewById(R.id.whiteboard);
+            fl.addView(mWhiteboard);
+            
             mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
