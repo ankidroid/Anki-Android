@@ -37,6 +37,10 @@
   <string name="deckpicker_upgrade_failed">Aktualisieren fehlgeschlagen!</string>
   <string name="deckpicker_upgrade_notes_title">Ergebnis der Stapelaktulisierung</string>
   <string name="deckpicker_upgrade_notes_button">Hinweise</string>
+  <string name="deckpicker_download_missing_title">Rufe fehlende Media-Daten ab</string>
+  <string name="deckpicker_download_missing_none">Keine fehlenden Media-Daten gefunden</string>
+  <string name="deckpicker_download_missing_success">Erfolgreich %1$d Mediadaten abgerufen, %2$d fehlen noch</string>
+  <string name="deckpicker_download_missing_error">Fehler bei Datei: %1$s</string>
   <string name="notify_ticker">Anwendungsaktualisierung</string>
   <string name="notify_title">Ankidroid aktualisiert</string>
   <string name="notify_message">Eine neue Version herunterladen</string>
@@ -55,6 +59,9 @@
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="newcards_day_summ">Maximale Anzahl neuer Karten pro Tag wurde abgefragt.</string>
   <string name="newcards_day">Neue Karten pro Tag</string>
+  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_dialog_title">Sitzungslimitierung</string>
+  <string name="studyoptions_session_limit_text">Beschränke Sitzung:</string>
   <string name="session_time_limit">Zeitlimit der Sitzung</string>
   <string name="session_time_limit_summ">Maximale Länge pro Sitzung in Minuten. Wählen Sie 0 für keine Beschränkung.</string>
   <string name="session_question_limit">Fragenlimit der Sitzung</string>
@@ -263,7 +270,9 @@
   <string name="menu_deck_properties">Stapeleinstellungen</string>
   <string name="menu_add_card">Karten hinzufügen</string>
   <string name="menu_about">Über</string>
+  <string name="menu_remove_card">Karte entfernen</string>
   <string name="menu_suspend_card">Karte aussetzen</string>
+  <string name="menu_bury_card">Vorläufig aussetzen</string>
   <string name="menu_edit_card">Karte bearbeiten</string>
   <string name="menu_search">In %1$s nachschlagen</string>
   <string name="menu_mark_card">Karte markieren</string>
@@ -349,6 +358,7 @@
   <string name="per_day">Einteilung pro Tag</string>
   <string name="undo">Rückgängig</string>
   <string name="redo">Wiederholen</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>
   <string name="contextmenu_deckpicker_optimize_deck">Datenbank optimieren</string>

@@ -37,6 +37,10 @@
   <string name="deckpicker_upgrade_failed">升級失敗！</string>
   <string name="deckpicker_upgrade_notes_title">牌組升級結果</string>
   <string name="deckpicker_upgrade_notes_button">備註</string>
+  <string name="deckpicker_download_missing_title">Fetching missing media</string>
+  <string name="deckpicker_download_missing_none">No media files found missing</string>
+  <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
+  <string name="deckpicker_download_missing_error">Error with file: %1$s</string>
   <string name="notify_ticker">更新程式</string>
   <string name="notify_title">Ankidroid 更新成功</string>
   <string name="notify_message">下載新版本</string>
@@ -55,6 +59,9 @@
   <string name="leech_notification">Card marked as leech</string>
   <string name="newcards_day_summ">一天最多顯示幾張新卡片</string>
   <string name="newcards_day">新卡片數</string>
+  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_dialog_title">Limit session</string>
+  <string name="studyoptions_session_limit_text">Limit session:</string>
   <string name="session_time_limit">回合時間限制</string>
   <string name="session_time_limit_summ">一回合複習最多幾分鐘。如果不想限制，請設定0。</string>
   <string name="session_question_limit">回合題數限制</string>
@@ -263,7 +270,9 @@
   <string name="menu_deck_properties">牌組內容屬性</string>
   <string name="menu_add_card">增加卡片</string>
   <string name="menu_about">關於</string>
+  <string name="menu_remove_card">Remove Card</string>
   <string name="menu_suspend_card">暫停卡片</string>
+  <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">編輯卡片</string>
   <string name="menu_search">在%1$s中查詢</string>
   <string name="menu_mark_card">標記卡片</string>
@@ -349,6 +358,7 @@
   <string name="per_day">每天</string>
   <string name="undo">還原</string>
   <string name="redo">取消還原</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>

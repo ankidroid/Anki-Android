@@ -125,7 +125,7 @@
     <item>Накопленные повторы</item>
     <item>Интервалы</item>
     <item>Просмотры</item>
-    <item>Общ. время просмотров</item>
+    <item>Общее время просмотров</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 неделя</item>

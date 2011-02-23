@@ -37,6 +37,10 @@
   <string name="deckpicker_upgrade_failed">Обновление не удалось!</string>
   <string name="deckpicker_upgrade_notes_title">Результаты обновления колоды</string>
   <string name="deckpicker_upgrade_notes_button">Примечания</string>
+  <string name="deckpicker_download_missing_title">Загрузка недостающих медиа-файлов</string>
+  <string name="deckpicker_download_missing_none">Не найдено отсутствие медиа-файлов</string>
+  <string name="deckpicker_download_missing_success">Успешно получено %1$d, недостаёт %2$d</string>
+  <string name="deckpicker_download_missing_error">Ошибка с файлом: %1$s</string>
   <string name="notify_ticker">Обновление приложения</string>
   <string name="notify_title">Ankidroid обновлен</string>
   <string name="notify_message">Скачать новую версию</string>
@@ -50,11 +54,14 @@
   <string name="session_question_limit_reached">Достигнут лимит вопросов сеансов</string>
   <string name="session_time_limit_reached">Достигнут лимит времени сеанса</string>
   <string name="cram_edit_warning">Редактирование карты заблокировано во время \`Зубрёжки\`</string>
-  <string name="suspend_leeches">Приостановить получение</string>
-  <string name="leech_suspend_notification">Карта помечена лишняя и не связанная</string>
+  <string name="suspend_leeches">Откладывать \"приставучие\"</string>
+  <string name="leech_suspend_notification">Карта помечена как \"приставучая\" и отложена</string>
   <string name="leech_notification">Карта помечена как лишняя</string>
   <string name="newcards_day_summ">Максимальное количество новых карт в день было показано.</string>
   <string name="newcards_day">Новых карт в день</string>
+  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_dialog_title">Limit session</string>
+  <string name="studyoptions_session_limit_text">Limit session:</string>
   <string name="session_time_limit">Лимит времени сеанса</string>
   <string name="session_time_limit_summ">Количество минут в сеансе. Выберите 0 для отмены ограничения.</string>
   <string name="session_question_limit">Лимит вопросов в сеансе</string>
@@ -81,7 +88,7 @@
   <string name="ease4_successive">Легко</string>
   <string name="pref_cat_decks">Колоды</string>
   <string name="pref_cat_sync">Синхронизация</string>
-  <string name="pref_cat_qadisplay">Отображение полей \"Вопрос\" и \"Ответ\"</string>
+  <string name="pref_cat_qadisplay">Экран Просмотра</string>
   <string name="pref_cat_general">Основные</string>
   <string name="pref_cat_start">При запуске</string>
   <string name="pref_cat_extras">Дополнительно</string>
@@ -102,8 +109,8 @@
   <string name="startup_mode_summ">Выбрать если вы ходите начинать с окна параметров обучения или окна оглавления колод:</string>
   <string name="show_timer">Показать таймер</string>
   <string name="show_timer_summ">Таймер показывает сколько времени Вам остаётся для ответа</string>
-  <string name="show_progress_bars">Показать индикаторы хода выполнения</string>
-  <string name="show_progress_bars_summ">Показывать долю сегодняшних \"да\"-ответов (т.е. при ответе было выбрано не \"Скоро\") и долю общих  \"да\"-ответов во всех развитых картах колоды</string>
+  <string name="show_progress_bars">Индикаторы хода выполнения</string>
+  <string name="show_progress_bars_summ">Показывать долю сегодняшних \"да\"-ответов (т.е. при ответе - не \"Скоро\") и долю общих  \"да\"-ответов во всех развитых картах</string>
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>
   <string name="whiteboard_stroke_width">Ширина штриха</string>
   <string name="whiteboard_stroke_width_summ">Ширина штриха: XXX</string>
@@ -125,7 +132,7 @@
   <string name="display_font_size_summ">Размер шрифта для использования на дисплее относительно размера шрифта, сохранённого в колоде. На данный момент: XXX %</string>
   <string name="button_size">Размер кнопок</string>
   <string name="button_size_summ">Относительный размер кнопок на экране обзора. На данный момент: XXX %</string>
-  <string name="hide_question_in_answer">Скрыть вопрос при ответе?</string>
+  <string name="hide_question_in_answer">Вопрос при ответе?</string>
   <string name="hide_question_in_answer_summ">Должен ли быть вопрос скрыт, когда ответ показан.</string>
   <string name="deck_path">Путь к колодам</string>
   <string name="deck_path_summ">Путь, где хранятся ваши колоды</string>
@@ -176,13 +183,13 @@
   <string name="card_browser_load">Открытие карт</string>
   <string name="card_browser_delete_card">Удалить карту</string>
   <string name="card_browser_suspend_card">Отложить карту</string>
-  <string name="card_browser_unsuspend_card">Возобновить карту</string>
+  <string name="card_browser_unsuspend_card">Вернуть из отложенных</string>
   <string name="card_browser_mark_card">Отметить карту</string>
   <string name="card_browser_unmark_card">Снять отметку</string>
   <string name="delete_card_title">Удалить карту</string>
   <string name="delete_card_message">Действительно удалить эту карту?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Показать отмеченные карты</string>
-  <string name="card_browser_show_suspended">Показать приостановленные карты</string>
+  <string name="card_browser_show_suspended">Показать отложенные карты</string>
   <string name="card_browser_change_display_order">Изменение сортировки</string>
   <string name="card_browser_change_display_order_title">Сортировка</string>
   <string name="card_browser_card_details">Информация о карте</string>
@@ -233,7 +240,7 @@
   <string name="studyoptions_reviews_due">Повторов:</string>
   <string name="studyoptions_new_today">Сегодня новых:</string>
   <string name="studyoptions_new_total">Новые всего:</string>
-  <string name="studyoptions_eta">Предполагаемое время (мин):</string>
+  <string name="studyoptions_eta">Вероятно займёт (мин):</string>
   <string name="studyoptions_new_cards_per_day">Новых карт в день</string>
   <string name="studyoptions_session_minutes">Длительность урока (минут):</string>
   <string name="studyoptions_session_questions">Вопросов в уроке:</string>
@@ -244,7 +251,7 @@
   <string name="studyoptions_nodeck_title">Колоды не загружены</string>
   <string name="studyoptions_nodeck_message">В данный момент не открыто ни одной колоды. Anki-колоды сохраняются в каталоге \"%s\" на SD-карте. Этот каталог может быть изменён в \"Настройках\" (нажмите на кнопку \"Menu\" (на аппарате) и выберете \"Настройки\").</string>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
-  <string name="studyoptions_welcome_message">С AnkiDroid вы можете изучать большие объемы лексики или любого другого материала. AnkiDroid покажет вам карточки для изучения перед тем, как вы забудете их (по специальному алгоритму). \nВся информация организована в \"колоды\", которые вы можете либо загрузить от других пользователей (так называемые общедоступные колоды) или создать свою собственную с AnkiDroid или с Anki (настольная версия). Свои собственные колоды можно также синхронизировать через онлайн-сервис AnkiWeb (это бесплатно) между всеми вашими устройствами или просто копировать файлы колоды в каталог %s.\nНажмите на этот текст, чтобы узнать больше.</string>
+  <string name="studyoptions_welcome_message">С AnkiDroid вы можете изучать большие объемы лексики или любого другого материала. AnkiDroid покажет вам карточки перед тем, как вы забудете их (по спец. алгоритму). \nВсе карточки организованны в \"колоды\", их можно загрузить с сайта (общедоступные) или создать свою с AnkiDroid или Anki. Свои можно синхронизировать через AnkiWeb или копировать колоды в каталог %s.\nНажмите, чтобы узнать больше.</string>
   <string name="studyoptions_deck_not_loaded_title">Колода не может быть открыта</string>
   <string name="studyoptions_deck_not_loaded_message">Колода, которую вы выбрали, возможно повреждена. Пожалуйста, откройте ее с помощью десктоп-версии Anki и проверьте (или восстановите) для использования ее в Ankidroid.\n\nСейчас вы можете выбрать другую колоду или создать колоду с примерами с помощью клавиш ниже.</string>
   <string name="studyoptions_no_external_storage_title">Нет доступа ко внешнему хранилищу</string>
@@ -263,8 +270,10 @@
   <string name="menu_deck_properties">Свойства колоды</string>
   <string name="menu_add_card">Добавить карту</string>
   <string name="menu_about">О программе</string>
+  <string name="menu_remove_card">Remove Card</string>
   <string name="menu_suspend_card">Отложить карту</string>
-  <string name="menu_edit_card">Редактирование карточки</string>
+  <string name="menu_bury_card">Bury Card</string>
+  <string name="menu_edit_card">Редактирование карты</string>
   <string name="menu_search">Поиск в %1$s</string>
   <string name="menu_mark_card">Отметить карту</string>
   <string name="menu_marked">Отмечено</string>
@@ -315,9 +324,9 @@
   <string name="sync_log_no_changes_message">Не найдено изменений</string>
   <string name="sync_log_uploading_message">Полностью синхронизировано с локальными данными</string>
   <string name="sync_log_downloading_message">Полная синхронизация с сервером</string>
-  <string name="sync_log_fact_to_server_message">1 факт на сервер</string>
+  <string name="sync_log_fact_to_server_message">1 карта на сервер</string>
   <string name="sync_log_facts_to_server_message">%d факт(ов) на сервер</string>
-  <string name="sync_log_fact_from_server_message">1 факт с сервера</string>
+  <string name="sync_log_fact_from_server_message">1 карта с сервера</string>
   <string name="sync_log_facts_from_server_message">%d факт(ов) с сервера</string>
   <string name="sync_log_clocks_unsynchronized">Время на вашем Android-устройстве отличается на %d секунд от времени сервера, поэтому невозможно синхронизировать.</string>
   <string name="sync_log_old_version">Протокол синхронизации был изменён, пожалуйста, установите последнюю версию AnkiDroid. (См. http://code.google.com/p/ankidroid)</string>
@@ -338,8 +347,8 @@
   <string name="widget_minimum_cards_due_summary">Минимальное количество карточек для повтора, при котором всплывет уведомление в зоне уведомлений Вашего аппарата: XXX</string>
   <string name="widget_minimum_cards_due_vibrate">Вибрировать</string>
   <string name="widget_minimum_cards_due_blink">Мигать</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">AnkiDroid: Есть карты для повторения</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d карт</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Есть карты для повторения</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d карт ожидают повторения</string>
   <string name="widget_no_cards_due">Нет карт для повтора</string>
   <string name="soon">Скоро</string>
   <string name="show_next_review_time">Время у кнопок показывать</string>
@@ -349,6 +358,7 @@
   <string name="per_day">В день</string>
   <string name="undo">Откат</string>
   <string name="redo">Возврат</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Скачать недостающие медиа-файлы</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Сброс языка</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Сброс языка</string>
   <string name="contextmenu_deckpicker_optimize_deck">Оптимизировать базу данных</string>
@@ -370,7 +380,7 @@
   <string name="statistics_period_x_axis_minutes">минут</string>
   <string name="statistics_new_cards">Новые карты</string>
   <string name="statistics_young_cards">Молодые карты</string>
-  <string name="statistics_mature_cards">Развитые карты</string>
+  <string name="statistics_mature_cards">Развитые</string>
   <string name="statistics_failed_cards">Неудачные карты</string>
   <string name="statistics_fullscreen">Полноэкранный режим</string>
   <string name="statistics_zoom_in">Увеличить</string>
@@ -405,7 +415,7 @@
     <item quantity="other">Найдено %d ошибки для отчета</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 карту повторить в %2$s</item>
+    <item quantity="one">1 карту в %2$s</item>
     <item quantity="other">%1$d карт из %2$s</item>
   </plurals>
   <plurals name="widget_decks">

@@ -37,6 +37,10 @@
   <string name="deckpicker_upgrade_failed">Échec de la mise à jour !</string>
   <string name="deckpicker_upgrade_notes_title">Résultats de la mise à jour des paquets</string>
   <string name="deckpicker_upgrade_notes_button">Notes</string>
+  <string name="deckpicker_download_missing_title">Fetching missing media</string>
+  <string name="deckpicker_download_missing_none">No media files found missing</string>
+  <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
+  <string name="deckpicker_download_missing_error">Error with file: %1$s</string>
   <string name="notify_ticker">Mise à jour de l\'application</string>
   <string name="notify_title">AnkiDroid mis à jour</string>
   <string name="notify_message">Télécharger une nouvelle version</string>
@@ -55,6 +59,9 @@
   <string name="leech_notification">Carte marquée comme sangsue</string>
   <string name="newcards_day_summ">Le nombre maximal de nouvelles cartes par jour.</string>
   <string name="newcards_day">Nouvelles cartes par jour</string>
+  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_dialog_title">Limit session</string>
+  <string name="studyoptions_session_limit_text">Limit session:</string>
   <string name="session_time_limit">Durée maximale d\'une session</string>
   <string name="session_time_limit_summ">Nombre de minutes par session. 0 pour illimité.</string>
   <string name="session_question_limit">Nombre max de questions par session</string>
@@ -269,7 +276,9 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="menu_deck_properties">Propriétés du paquet</string>
   <string name="menu_add_card">Ajouter une carte</string>
   <string name="menu_about">À propos</string>
+  <string name="menu_remove_card">Remove Card</string>
   <string name="menu_suspend_card">Suspendre la carte</string>
+  <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">Modifier la fiche</string>
   <string name="menu_search">Recherche dans %1$s</string>
   <string name="menu_mark_card">Marquer la carte</string>
@@ -355,6 +364,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="per_day">Par jour</string>
   <string name="undo">Annuler</string>
   <string name="redo">Refaire</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Réinitialiser les affectations de langue</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>

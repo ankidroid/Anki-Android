@@ -37,6 +37,10 @@
   <string name="deckpicker_upgrade_failed">Uppgradering misslyckades!</string>
   <string name="deckpicker_upgrade_notes_title">Uppgradering av däck resultat</string>
   <string name="deckpicker_upgrade_notes_button">Anteckningar</string>
+  <string name="deckpicker_download_missing_title">Fetching missing media</string>
+  <string name="deckpicker_download_missing_none">No media files found missing</string>
+  <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
+  <string name="deckpicker_download_missing_error">Error with file: %1$s</string>
   <string name="notify_ticker">Programuppdatering</string>
   <string name="notify_title">Ankidroid uppdaterad</string>
   <string name="notify_message">Ladda ner en ny version</string>
@@ -55,6 +59,9 @@
   <string name="leech_notification">Card marked as leech</string>
   <string name="newcards_day_summ">Maximala antalet nya kort per dag.</string>
   <string name="newcards_day">Nya kort / dag</string>
+  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_dialog_title">Limit session</string>
+  <string name="studyoptions_session_limit_text">Limit session:</string>
   <string name="session_time_limit">Tidsgräns per studiepass</string>
   <string name="session_time_limit_summ">Antal minuter per studiepass. Välj 0 för obegränsad.</string>
   <string name="session_question_limit">Frågor per studiepass</string>
@@ -263,7 +270,9 @@
   <string name="menu_deck_properties">Däck-inställningar</string>
   <string name="menu_add_card">Lägg till kort</string>
   <string name="menu_about">Om</string>
+  <string name="menu_remove_card">Remove Card</string>
   <string name="menu_suspend_card">Suspend Card</string>
+  <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">Redigera kort</string>
   <string name="menu_search">Lookup in %1$s</string>
   <string name="menu_mark_card">Markera kort</string>
@@ -349,6 +358,7 @@
   <string name="per_day">Per Day</string>
   <string name="undo">Undo</string>
   <string name="redo">Redo</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>

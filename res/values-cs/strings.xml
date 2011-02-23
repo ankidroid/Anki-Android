@@ -37,6 +37,10 @@
   <string name="deckpicker_upgrade_failed">Aktualizace selhala!</string>
   <string name="deckpicker_upgrade_notes_title">Výsledky aktualizace balíčku</string>
   <string name="deckpicker_upgrade_notes_button">Poznámky</string>
+  <string name="deckpicker_download_missing_title">Fetching missing media</string>
+  <string name="deckpicker_download_missing_none">No media files found missing</string>
+  <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
+  <string name="deckpicker_download_missing_error">Error with file: %1$s</string>
   <string name="notify_ticker">Aktualizace aplikace</string>
   <string name="notify_title">AnkiDroid aktualizován</string>
   <string name="notify_message">Stáhnouut novou verzi</string>
@@ -55,6 +59,9 @@
   <string name="leech_notification">Karta byla označena jako pijavice</string>
   <string name="newcards_day_summ">Maximální počet nových karet na den.</string>
   <string name="newcards_day">Nové karty / den</string>
+  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_dialog_title">Limit session</string>
+  <string name="studyoptions_session_limit_text">Limit session:</string>
   <string name="session_time_limit">Časové omezení sezení</string>
   <string name="session_time_limit_summ">Počet minut v sezení. Vyberte 0 pro časově neomezené sezení.</string>
   <string name="session_question_limit">Limiit otázek v sezení</string>
@@ -263,7 +270,9 @@
   <string name="menu_deck_properties">Nastavení balíčku</string>
   <string name="menu_add_card">Přidat kartu</string>
   <string name="menu_about">O aplikaci</string>
+  <string name="menu_remove_card">Remove Card</string>
   <string name="menu_suspend_card">Vyřadit kartu</string>
+  <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">Upravit kartu</string>
   <string name="menu_search">Vyhledat v %1$s</string>
   <string name="menu_mark_card">Označit kartu</string>
@@ -349,6 +358,7 @@
   <string name="per_day">Za den</string>
   <string name="undo">Vrátit zpět</string>
   <string name="redo">Zrušit vrácení</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>

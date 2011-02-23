@@ -37,6 +37,10 @@
   <string name="deckpicker_upgrade_failed">No ha estat possible actualitzar!</string>
   <string name="deckpicker_upgrade_notes_title">Resultats de l\'actualització del paquet</string>
   <string name="deckpicker_upgrade_notes_button">Notes</string>
+  <string name="deckpicker_download_missing_title">Fetching missing media</string>
+  <string name="deckpicker_download_missing_none">No media files found missing</string>
+  <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
+  <string name="deckpicker_download_missing_error">Error with file: %1$s</string>
   <string name="notify_ticker">Actualització de l\'aplicació</string>
   <string name="notify_title">S\'ha actualitzat Ankidroid</string>
   <string name="notify_message">Baixeu la nova versió</string>
@@ -55,6 +59,9 @@
   <string name="leech_notification">Fitxa marcada com a lapa</string>
   <string name="newcards_day_summ">El nombre màxim de targetes noves mostrades per dia.</string>
   <string name="newcards_day">Noves targetes / dia</string>
+  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_dialog_title">Limit session</string>
+  <string name="studyoptions_session_limit_text">Limit session:</string>
   <string name="session_time_limit">Límit de temps per sessió</string>
   <string name="session_time_limit_summ">El nombre de minuts d\'una sessió Trieu 0 si no voleu cap límit.</string>
   <string name="session_question_limit">Límit de preguntes per sessió</string>
@@ -263,7 +270,9 @@
   <string name="menu_deck_properties">Detalls del paquet</string>
   <string name="menu_add_card">Nova fitxa</string>
   <string name="menu_about">Quant a</string>
+  <string name="menu_remove_card">Remove Card</string>
   <string name="menu_suspend_card">Suspèn la fitxa</string>
+  <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">Edita la fitxa</string>
   <string name="menu_search">Cerca-ho a %1$s</string>
   <string name="menu_mark_card">Marca la fitxa</string>
@@ -349,6 +358,7 @@
   <string name="per_day">Cada dia</string>
   <string name="undo">Desfés</string>
   <string name="redo">Refés</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>

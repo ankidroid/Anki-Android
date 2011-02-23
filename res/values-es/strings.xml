@@ -37,6 +37,10 @@
   <string name="deckpicker_upgrade_failed">¡No se pudo actualizar!</string>
   <string name="deckpicker_upgrade_notes_title">Actualizar resultados del mazo</string>
   <string name="deckpicker_upgrade_notes_button">Notas</string>
+  <string name="deckpicker_download_missing_title">Fetching missing media</string>
+  <string name="deckpicker_download_missing_none">No media files found missing</string>
+  <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
+  <string name="deckpicker_download_missing_error">Error with file: %1$s</string>
   <string name="notify_ticker">Actualización de la aplicación</string>
   <string name="notify_title">Ankidroid actualizado</string>
   <string name="notify_message">Descargar una nueva versión</string>
@@ -55,6 +59,9 @@
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
   <string name="newcards_day_summ">El número máximo de tarjetas nuevas mostradas por día.</string>
   <string name="newcards_day">Nuevas tarjetas / día</string>
+  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_dialog_title">Limit session</string>
+  <string name="studyoptions_session_limit_text">Limit session:</string>
   <string name="session_time_limit">Límite de tiempo por sesión</string>
   <string name="session_time_limit_summ">El número de minutos en una sesión. Escoge 0 si no deseas ningún límite.</string>
   <string name="session_question_limit">Límite de preguntas por sesión</string>
@@ -263,7 +270,9 @@
   <string name="menu_deck_properties">Propiedades del mazo</string>
   <string name="menu_add_card">Añadir tarjeta</string>
   <string name="menu_about">Acerca de</string>
+  <string name="menu_remove_card">Remove Card</string>
   <string name="menu_suspend_card">Suspender</string>
+  <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">Editar tarjeta</string>
   <string name="menu_search">Búsqueda en %1$s</string>
   <string name="menu_mark_card">Marcar Tarjeta</string>
@@ -349,6 +358,7 @@
   <string name="per_day">Por Día</string>
   <string name="undo">Deshacer</string>
   <string name="redo">Repetir</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>

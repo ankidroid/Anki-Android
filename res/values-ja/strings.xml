@@ -37,6 +37,10 @@
   <string name="deckpicker_upgrade_failed">アップグレードに失敗しました</string>
   <string name="deckpicker_upgrade_notes_title">同期の履歴</string>
   <string name="deckpicker_upgrade_notes_button">備考</string>
+  <string name="deckpicker_download_missing_title">Fetching missing media</string>
+  <string name="deckpicker_download_missing_none">No media files found missing</string>
+  <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
+  <string name="deckpicker_download_missing_error">Error with file: %1$s</string>
   <string name="notify_ticker">アプリケーションの更新</string>
   <string name="notify_title">新しいバージョンのアンキドロイドがあります</string>
   <string name="notify_message">新しいバージョンをダウンロード</string>
@@ -55,6 +59,9 @@
   <string name="leech_notification">邪魔カードとして登録されました</string>
   <string name="newcards_day_summ">1日を示す新しいカードの最大数。</string>
   <string name="newcards_day">新しいカード/日</string>
+  <string name="studyoptions_limit_button_text">Limit</string>
+  <string name="studyoptions_limit_dialog_title">Limit session</string>
+  <string name="studyoptions_session_limit_text">Limit session:</string>
   <string name="session_time_limit">セッション時間の制限</string>
   <string name="session_time_limit_summ">セッションの時間（分）。0は制限なし。</string>
   <string name="session_question_limit">セッションの質問の制限</string>
@@ -263,7 +270,9 @@
   <string name="menu_deck_properties">単語帳プロパティー</string>
   <string name="menu_add_card">カードを追加</string>
   <string name="menu_about">このプログラムについて</string>
+  <string name="menu_remove_card">Remove Card</string>
   <string name="menu_suspend_card">カードの表示を中止</string>
+  <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">カードの編集</string>
   <string name="menu_search">Lookup in %1$s</string>
   <string name="menu_mark_card">マークをつける</string>
@@ -349,6 +358,7 @@
   <string name="per_day">Per Day</string>
   <string name="undo">Undo</string>
   <string name="redo">Redo</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
