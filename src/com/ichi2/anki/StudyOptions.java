@@ -1077,7 +1077,7 @@ public class StudyOptions extends Activity {
             	etastr = Integer.toString(eta / 60);
             }
             mTextETA.setText(etastr);
-            mTextNewTotal.setText(String.valueOf(deck.getNewCount()));
+            mTextNewTotal.setText(String.valueOf(deck.getNewCount(false)));
         }
     }
 
