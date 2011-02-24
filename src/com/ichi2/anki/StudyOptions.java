@@ -37,9 +37,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -280,7 +282,17 @@ public class StudyOptions extends Activity {
 	* Statistics
 	*/    
 	public static int mStatisticType;
-
+    private int mStatisticBarsMax = 0;
+    private int mStatisticBarsHeight;
+    private View mDailyBar;
+    private View mMatureBar;
+    private View mGlobalBar;
+    private View mGlobalMatBar;
+    private double mProgressTodayYes;
+    private double mProgressMatureYes;
+    private double mProgressMature;
+    private double mProgressAll;
+    
     /**
 * Callbacks for UI events
 */
@@ -690,6 +702,14 @@ public class StudyOptions extends Activity {
     private void initAllContentViews() {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
+        ViewTreeObserver vto = mStudyOptionsView.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                updateStatisticBars();            
+            }
+        });
+      
         mStudyOptionsMain = (View) mStudyOptionsView.findViewById(R.id.studyoptions_main);
 
         mTextTitle = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_title);
@@ -702,6 +722,10 @@ public class StudyOptions extends Activity {
 
         mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
         mStatisticsButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
+        mDailyBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_daily_bar);
+        mMatureBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_mature_bar);
+        mGlobalBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_bar);
+        mGlobalMatBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_bar);
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
@@ -727,7 +751,7 @@ public class StudyOptions extends Activity {
         mToggleLimit.setOnClickListener(mButtonClickListener);
         mCardBrowser.setOnClickListener(mButtonClickListener);
         mStatisticsButton.setOnClickListener(mButtonClickListener);
-
+        
         mDialogMoreOptions = createMoreOptionsDialog();
         mLimitSessionDialog = createLimitSessionDialog();
 
@@ -1285,11 +1309,12 @@ public class StudyOptions extends Activity {
         if (deck != null) {
             deck.reset();
             // TODO: updateActives() from anqiqt/ui/main.py
-            int reviewCount = deck.getDueCount();
-            setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, reviewCount, deck.getDeckName(), reviewCount, deck.getCardCount()));
+            int dueCount = deck.getDueCount();
+            int cardsCount = deck.getCardCount();
+            setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dueCount, deck.getDeckName(), dueCount, cardsCount));
 
             mTextDeckName.setText(deck.getDeckName());
-            mTextReviewsDue.setText(String.valueOf(reviewCount));
+            mTextReviewsDue.setText(String.valueOf(dueCount));
             mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
             String etastr = "-";
             int eta = (int) deck.getStats(Stats.TYPE_ETA)[0];
@@ -1297,9 +1322,43 @@ public class StudyOptions extends Activity {
             	etastr = Integer.toString(eta / 60);
             }
             mTextETA.setText(etastr);
-            mTextNewTotal.setText(String.valueOf(deck.getNewCount(false)));
+            int totalNewCount = deck.getNewCount(false);
+            mTextNewTotal.setText(String.valueOf(totalNewCount));
+
+            double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
+            mProgressTodayYes = values[0];
+            mProgressMatureYes = values[1];
+            double mature = deck.getMatureCardCount(false);
+            mProgressMature = mature / cardsCount;
+            double seen = cardsCount - totalNewCount;
+            mProgressAll = seen / cardsCount;
+            updateStatisticBars();
         }
     }
+
+
+    private void updateStatisticBars() {
+        if (mStatisticBarsMax == 0) {
+            View view = mStudyOptionsView.findViewById(R.id.studyoptions_bars_max);
+            view.requestLayout();
+            view.invalidate();
+            mStatisticBarsMax = view.getWidth();
+            mStatisticBarsHeight = view.getHeight();                
+        }
+        if (mProgressTodayYes != 0) {
+            Utils.updateProgressBars(this, mDailyBar, mProgressTodayYes, mStatisticBarsMax, mStatisticBarsHeight, true);            
+        }
+        if (mProgressMatureYes != 0) {
+        Utils.updateProgressBars(this, mMatureBar,mProgressMatureYes, mStatisticBarsMax, mStatisticBarsHeight, true);
+        }
+        if (mProgressMature != 0) {
+        Utils.updateProgressBars(this, mGlobalMatBar, mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
+        }
+        if (mProgressMature != mProgressAll) {
+        Utils.updateProgressBars(this, mGlobalBar, mProgressAll - mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
+        }
+    } 
+
 
     /*
 * Switch schedulers

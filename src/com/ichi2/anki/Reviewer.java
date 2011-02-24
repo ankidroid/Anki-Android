@@ -71,8 +71,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.xmlpull.v1.XmlPullParser;
-
 public class Reviewer extends Activity {
 
     /**
@@ -1346,30 +1344,9 @@ public class Reviewer extends Activity {
         }
         Deck deck = AnkiDroidApp.deck();
         double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
-        FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);
-        lparam.height = mStatisticBarsHeight;
-        lparam.width = (int) (mStatisticBarsMax * values[0]);
-        mDailyBar.setLayoutParams(lparam);
-        updateColors(mDailyBar, values[0]);
-        FrameLayout.LayoutParams lparamg = new FrameLayout.LayoutParams(0, 0);
-        lparamg.height = mStatisticBarsHeight;
-        lparamg.width = (int) (mStatisticBarsMax * values[1]);
-        mGlobalBar.setLayoutParams(lparamg);
-        updateColors(mGlobalBar, values[1]);
-    }
-
-
-    private void updateColors(View view, double progress) {
-        if (progress < 0.5) {
-            view.setBackgroundColor(getResources().getColor(R.color.progressbar_1));
-        } else if (progress < 0.65) {
-            view.setBackgroundColor(getResources().getColor(R.color.progressbar_2));
-        } else if (progress < 0.75) {
-            view.setBackgroundColor(getResources().getColor(R.color.progressbar_3));
-        } else {
-            view.setBackgroundColor(getResources().getColor(R.color.progressbar_4));            
-        }
-    }    
+        Utils.updateProgressBars(this, mDailyBar, values[0], mStatisticBarsMax, mStatisticBarsHeight, true);
+        Utils.updateProgressBars(this, mGlobalBar, values[1], mStatisticBarsMax, mStatisticBarsHeight, true);
+    }  
 
 
     private void displayCardQuestion() {

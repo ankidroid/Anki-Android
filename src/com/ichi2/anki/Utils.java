@@ -23,6 +23,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.mindprod.common11.BigDate;
 
@@ -705,6 +708,34 @@ public class Utils {
         }
         return result;
     }
+
+
+    public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar) {
+        if (view == null) {
+            return;
+        }
+        if (singleBar) {
+            if (progress < 0.5) {
+                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_1));
+            } else if (progress < 0.65) {
+                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_2));
+            } else if (progress < 0.75) {
+                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_3));
+            } else {
+                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_4));            
+            }            
+            FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);            
+            lparam.height = y;
+            lparam.width = (int) (maxX * progress);
+            view.setLayoutParams(lparam);
+        } else {
+            LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);            
+            lparam.height = y;
+            lparam.width = (int) (maxX * progress);
+            view.setLayoutParams(lparam);
+        }
+    }  
+
 
     /**
      * MD5 sum of file.

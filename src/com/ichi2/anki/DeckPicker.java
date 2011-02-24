@@ -390,11 +390,9 @@ public class DeckPicker extends Activity implements Runnable {
 					return true;
 				}
 				if (view.getId() == R.id.DeckPickerCompletionMat || view.getId() == R.id.DeckPickerCompletionAll) {
-                    int mScreenWidth = mDeckListView.getWidth();
-                    LinearLayout.LayoutParams lparam = new LinearLayout.LayoutParams(0, 0);
-                    lparam.width = (int) (mScreenWidth * Integer.parseInt(text) / 100);
-                    lparam.height = 2;
-                    view.setLayoutParams(lparam);
+				    if (!text.equals("0")) {
+	                    Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text) / 100.0, mDeckListView.getWidth(), 2, false); 				        
+				    }
                 }
 				if (view.getId() == R.id.DeckPickerUpgradeNotesButton) {
 					if (text.equals("")) {
