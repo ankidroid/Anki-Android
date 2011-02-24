@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+	android:orientation="vertical">
+	<ListView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:layout_weight="100"
+		android:choiceMode="multipleChoice"
+		android:id="@+id/tags_list"
+		android:fastScrollEnabled="true">
+	</ListView>
+	<Button
+		android:visibility="gone"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:layout_weight="1"
+		android:id="@+id/select_tags_copy"
+		android:text="copy from rev or new"/>
+</LinearLayout>
+

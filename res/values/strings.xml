@@ -87,9 +87,17 @@
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
 <string name="newcards_day">New Cards / Day</string>
 
+<string name="studyoptions_limit_select_tags">Select Tags</string>
+<string name="studyoptions_limit_tags_active">With: %1$s</string>
+<string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
 <string name="studyoptions_limit_button_text">Limit</string>
-<string name="studyoptions_limit_dialog_title">Limit session</string>
-<string name="studyoptions_session_limit_text">Limit session:</string>
+<string name="studyoptions_limit_dialog_title">Limit Learning</string>
+<string name="studyoptions_session">Session</string>
+<string name="studyoptions_tag">By Tag</string>
+<string name="studyoptions_tag_new">Show only new cards:</string>
+<string name="studyoptions_tag_rev">Show only review cards:</string>
+<string name="studyoptions_session_minutes">Session limit (minutes):</string>
+<string name="studyoptions_session_questions">Session limit (questions):</string>
 <string name="session_time_limit">Session Time Limit</string>
 <string name="session_time_limit_summ">The number of minutes in a session. Choose 0 for no limit.</string>
 <string name="session_question_limit">Session Question Limit</string>
@@ -328,8 +336,6 @@
 <string name="studyoptions_new_total">New total:</string>
 <string name="studyoptions_eta">Estimated time (min):</string>
 <string name="studyoptions_new_cards_per_day">New cards per day</string>
-<string name="studyoptions_session_minutes">Session limit (minutes):</string>
-<string name="studyoptions_session_questions">Session limit (questions):</string>
 <string name="studyoptions_start">Start Reviewing</string>
 <string name="studyoptions_more">Study Options</string>
 <plurals name="studyoptions_window_title">

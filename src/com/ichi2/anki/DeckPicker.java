@@ -814,7 +814,12 @@ public class DeckPicker extends Activity implements Runnable {
             SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
             String newPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
             if (!mPrefDeckPath.equals(newPath)) {
-                populateDeckList(newPath);
+                finish();
+                Intent i = new Intent(DeckPicker.this, DeckPicker.class);
+                startActivity(i);
+                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                    MyAnimation.slide(this, MyAnimation.NONE);
+                }
             }
         }
     }

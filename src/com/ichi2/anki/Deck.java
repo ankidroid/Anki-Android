@@ -2412,6 +2412,15 @@ public class Deck {
     }
 
 
+    public boolean isLimited() {
+        if (!getVar("newActive").equals("") || !getVar("newInactive").equals("") || !getVar("revActive").equals("") || !getVar("revInactive").equals("")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     /**
      * @return the failedSoonCount
      */

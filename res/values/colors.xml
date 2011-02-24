@@ -44,4 +44,7 @@
 	<color name="progressbar_2">#ff9100</color>	
 	<color name="progressbar_3">#ffbe00</color>	
 	<color name="progressbar_4">#4aa02c</color>	
+
+	<color name="studyoptions_foreground">#ffffff</color>	
+	<color name="studyoptions_foreground_deactivated">#484848</color>	
 </resources>

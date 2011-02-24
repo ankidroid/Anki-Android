@@ -7,7 +7,8 @@ public class MyAnimation {
 	public static int RIGHT = 1;
 	public static int FADE = 2;
 	public static int UP = 3;
-	public static int DOWN = 4;
+    public static int DOWN = 4;
+    public static int NONE = 5;
 	
 	public static void slide(Activity activity, int direction) {
 		if (direction == LEFT) {
@@ -20,6 +21,8 @@ public class MyAnimation {
 			activity.overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
 		} else if (direction == DOWN) {
 			activity.overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out);
+		} else if (direction == NONE){
+		    activity.overridePendingTransition(R.anim.none, R.anim.none);
 		}
 	}
 }
