@@ -455,6 +455,8 @@
 <string name="error_reporting_choice">Error reporting mode</string>
 <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
 <string name="error_collection_information">We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string> 
+<string name="feedback_message_sent_success">Feedback received, thank you!</string>
+<string name="feedback_message_sent_failure">Unable to send feedback, code %1$s</string>
 <!--  Widget -->
 <string name="widget_pref">Widget</string>
 <string name="widget_minimum_cards_due">Widget notification threshold</string>

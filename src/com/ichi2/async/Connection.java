@@ -545,10 +545,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 	            	break;
 
             	default:
-            		Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(),
+            		Log.e(AnkiDroidApp.TAG, String.format("doInBackgroundSendCrashReport failure: %d - %s",
+                                response.getStatusLine().getStatusCode(),
                                 response.getStatusLine().getReasonPhrase()));
                     data.success = false;
-                    data.result = new String(response.getStatusLine().getReasonPhrase());
+                    data.result = new Integer(response.getStatusLine().getStatusCode()).toString();
 	            	break;
             }
         } catch (ClientProtocolException ex) {
