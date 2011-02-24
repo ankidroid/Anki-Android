@@ -705,7 +705,6 @@ public class Reviewer extends Activity {
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY, Menu.NONE, R.string.menu_bury_card);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.card_browser_delete_card);
-        item.setIcon(R.drawable.ic_menu_close_clear_cancel);
         if (mPrefTextSelection) {
             item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, String.format(getString(R.string.menu_search), 
             			res.getStringArray(R.array.dictionary_labels)[mDictionary]));
