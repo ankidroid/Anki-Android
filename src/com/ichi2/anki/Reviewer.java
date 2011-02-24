@@ -705,7 +705,6 @@ public class Reviewer extends Activity {
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY, Menu.NONE, R.string.menu_bury_card);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.card_browser_delete_card);
-        item.setIcon(R.drawable.ic_menu_close_clear_cancel);
         if (mPrefTextSelection) {
             item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, String.format(getString(R.string.menu_search), 
             			res.getStringArray(R.array.dictionary_labels)[mDictionary]));
@@ -1154,6 +1153,8 @@ public class Reviewer extends Activity {
         if (mPrefWhiteboard) {
             mWhiteboard.setInvertedColor(true);
         }
+        fgColor = res.getColor(R.color.progressbar_border_inverted);
+        bgColor = res.getColor(R.color.progressbar_background_inverted);
         findViewById(R.id.progress_bars_border1).setBackgroundColor(fgColor);
         findViewById(R.id.progress_bars_border2).setBackgroundColor(fgColor);
         findViewById(R.id.progress_bars_back1).setBackgroundColor(bgColor);
