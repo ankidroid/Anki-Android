@@ -1153,6 +1153,8 @@ public class Reviewer extends Activity {
         if (mPrefWhiteboard) {
             mWhiteboard.setInvertedColor(true);
         }
+        fgColor = res.getColor(R.color.progressbar_border_inverted);
+        bgColor = res.getColor(R.color.progressbar_background_inverted);
         findViewById(R.id.progress_bars_border1).setBackgroundColor(fgColor);
         findViewById(R.id.progress_bars_border2).setBackgroundColor(fgColor);
         findViewById(R.id.progress_bars_back1).setBackgroundColor(bgColor);
