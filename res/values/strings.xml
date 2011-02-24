@@ -94,8 +94,8 @@
 <string name="studyoptions_limit_dialog_title">Limit Learning</string>
 <string name="studyoptions_session">Session</string>
 <string name="studyoptions_tag">By Tag</string>
-<string name="studyoptions_tag_new">Show only new cards:</string>
-<string name="studyoptions_tag_rev">Show only review cards:</string>
+<string name="studyoptions_tag_new">Show new cards by tag:</string>
+<string name="studyoptions_tag_rev">Show review cards by tag:</string>
 <string name="studyoptions_session_minutes">Session limit (minutes):</string>
 <string name="studyoptions_session_questions">Session limit (questions):</string>
 <string name="session_time_limit">Session Time Limit</string>

@@ -119,59 +119,6 @@
 			android:orientation="vertical"
 			android:background="@drawable/border">
 			<TextView
-				android:id="@+id/studyoptions_limit_tag_tv1"
-				android:layout_marginLeft="10dip"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:gravity="center"
-				android:text="@string/studyoptions_tag_new"
-				android:textColor="#484848"
-				android:textSize="14dip"/>
-		    <LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal">
-				<CheckBox
-					android:gravity="center"
-					android:enabled="false"
-					android:layout_marginLeft="4dip"
-					android:layout_height="fill_parent"
-					android:layout_width="wrap_content"
-					android:id="@+id/studyoptions_limit_tag_new_active_check"
-					android:layout_marginRight="4dip"
-					android:checked="false"/>
-				<TextView
-					android:gravity="center_vertical"
-					android:id="@+id/studyoptions_limit_tag_tv2"
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:text="@string/studyoptions_limit_tags_active"
-					android:textColor="#484848"
-					android:textSize="14dip"/>
-			</LinearLayout>
-		    <LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal">
-				<CheckBox
-					android:gravity="center"
-					android:enabled="false"
-					android:layout_marginLeft="4dip"
-					android:layout_height="fill_parent"
-					android:layout_width="wrap_content"
-					android:id="@+id/studyoptions_limit_tag_new_inactive_check"
-					android:layout_marginRight="4dip"
-					android:checked="false"/>
-				<TextView
-					android:gravity="center_vertical"
-					android:id="@+id/studyoptions_limit_tag_tv3"
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:text="@string/studyoptions_limit_tags_inactive"
-					android:textColor="#484848"
-					android:textSize="14dip"/>
-			</LinearLayout>			
-			<TextView
 				android:id="@+id/studyoptions_limit_tag_tv4"
 				android:layout_marginLeft="10dip"
 				android:layout_width="wrap_content"
@@ -218,6 +165,59 @@
 				<TextView
 					android:gravity="center_vertical"
 					android:id="@+id/studyoptions_limit_tag_tv6"				
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:text="@string/studyoptions_limit_tags_inactive"
+					android:textColor="#484848"
+					android:textSize="14dip"/>
+			</LinearLayout>
+			<TextView
+				android:id="@+id/studyoptions_limit_tag_tv1"
+				android:layout_marginLeft="10dip"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:text="@string/studyoptions_tag_new"
+				android:textColor="#484848"
+				android:textSize="14dip"/>
+		    <LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+				<CheckBox
+					android:gravity="center"
+					android:enabled="false"
+					android:layout_marginLeft="4dip"
+					android:layout_height="fill_parent"
+					android:layout_width="wrap_content"
+					android:id="@+id/studyoptions_limit_tag_new_active_check"
+					android:layout_marginRight="4dip"
+					android:checked="false"/>
+				<TextView
+					android:gravity="center_vertical"
+					android:id="@+id/studyoptions_limit_tag_tv2"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:text="@string/studyoptions_limit_tags_active"
+					android:textColor="#484848"
+					android:textSize="14dip"/>
+			</LinearLayout>
+		    <LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+				<CheckBox
+					android:gravity="center"
+					android:enabled="false"
+					android:layout_marginLeft="4dip"
+					android:layout_height="fill_parent"
+					android:layout_width="wrap_content"
+					android:id="@+id/studyoptions_limit_tag_new_inactive_check"
+					android:layout_marginRight="4dip"
+					android:checked="false"/>
+				<TextView
+					android:gravity="center_vertical"
+					android:id="@+id/studyoptions_limit_tag_tv3"
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
 					android:text="@string/studyoptions_limit_tags_inactive"
