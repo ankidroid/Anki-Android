@@ -1149,7 +1149,7 @@ public class StudyOptions extends Activity {
                 } else if (changed == 1) {
                     updateValuesFromDeck();
                 }
-                mToggleLimit.setChecked((mSessionLimitCheckBox.isChecked() && !(textTime.isEmpty() && textReps.isEmpty())) || (mLimitTagsCheckBox.isChecked() && (mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
+                mToggleLimit.setChecked((mSessionLimitCheckBox.isChecked() && !(textTime.length() == 0 && textReps.length() == 0)) || (mLimitTagsCheckBox.isChecked() && (mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
                         || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked())));
             }
         });
