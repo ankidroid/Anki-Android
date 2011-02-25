@@ -1325,14 +1325,17 @@ public class StudyOptions extends Activity {
             int totalNewCount = deck.getNewCount(false);
             mTextNewTotal.setText(String.valueOf(totalNewCount));
 
-            double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
-            mProgressTodayYes = values[0];
-            mProgressMatureYes = values[1];
-            double mature = deck.getMatureCardCount(false);
-            mProgressMature = mature / cardsCount;
-            double seen = cardsCount - totalNewCount;
-            mProgressAll = seen / cardsCount;
-            updateStatisticBars();
+            // Progress bars are not shown on small screens
+            if (mDailyBar != null) {
+                double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
+                mProgressTodayYes = values[0];
+                mProgressMatureYes = values[1];
+                double mature = deck.getMatureCardCount(false);
+                mProgressMature = mature / cardsCount;
+                double seen = cardsCount - totalNewCount;
+                mProgressAll = seen / cardsCount;
+                updateStatisticBars();                
+            }
         }
     }
 
