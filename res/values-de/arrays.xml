@@ -146,5 +146,12 @@
     <item>mehr Sprachen</item>
     <item>Auswahl der Sprache</item>
     <item>Erfolgsanzeige beim Lernen</item>
+    <item>Rückmeldung innerhalb von AnkiDroid</item>
+    <item>Möglichkeiten, Karten nach Schlagworten zu aktivieren/deaktivieren</item>
+    <item>Bessere Synchronisierung</item>
+    <item>Bessere Fehlermeldungen</item>
+    <item>Stapel hinzufügen</item>
+    <item>Mehr Optionen</item>
+    <item>Viele kleine Fehler behoben</item>
   </string-array>
 </resources>

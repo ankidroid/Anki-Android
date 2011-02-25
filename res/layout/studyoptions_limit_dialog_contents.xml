@@ -21,35 +21,41 @@
 			android:orientation="horizontal">
 		    <LinearLayout
 				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="fill_parent"
+				android:gravity="center"
 				android:layout_weight="1"
 				android:orientation="horizontal">
 				<CheckBox
-					android:layout_height="wrap_content"
+					android:layout_height="fill_parent"
 					android:layout_width="wrap_content"
+					android:gravity="center"
 					android:id="@+id/studyoptions_limit_session_check"
 					android:checked="false"/>
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_height="fill_parent"
+					android:gravity="center_vertical"
 					android:text="@string/studyoptions_session"
 					android:textColor="#ffffff"
 					android:textSize="14dip"/>
 			</LinearLayout>
 		    <LinearLayout
 				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="fill_parent"
+				android:gravity="center"
 				android:layout_weight="1"
 				android:orientation="horizontal">
 				<CheckBox
-					android:layout_height="wrap_content"
+					android:layout_height="fill_parent"
 					android:layout_width="wrap_content"
+					android:gravity="center"
 					android:id="@+id/studyoptions_limit_tag_check"
 					android:layout_marginRight="4dip"
 					android:checked="false"/>
 				<TextView
-					android:layout_width="wrap_content"
+					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
+					android:gravity="center_vertical"
 					android:text="@string/studyoptions_tag"
 					android:textColor="#ffffff"
 					android:textSize="14dip"/>

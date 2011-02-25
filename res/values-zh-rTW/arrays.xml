@@ -67,16 +67,16 @@
     <item>Show in random order</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hour</item>
-    <item>day</item>
-    <item>month</item>
-    <item>year</item>
+    <item>小時</item>
+    <item>天</item>
+    <item>月</item>
+    <item>年</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>hours</item>
-    <item>days</item>
-    <item>months</item>
-    <item>years</item>
+    <item>小時</item>
+    <item>天</item>
+    <item>月</item>
+    <item>年</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>in 1 hour</item>
@@ -121,7 +121,7 @@
     <item>By ease</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
+    <item>到期</item>
     <item>Cumulative due</item>
     <item>Intervals</item>
     <item>Reviews</item>
@@ -146,5 +146,12 @@
     <item>language selection</item>
     <item>more languages</item>
     <item>progress bars in reviewer</item>
+    <item>feedback within AnkiDroid</item>
+    <item>possibility to set cards active/inactive by tag</item>
+    <item>better syncing</item>
+    <item>better error reporter</item>
+    <item>add decks</item>
+    <item>more options</item>
+    <item>lots of fixes for small errors</item>
   </string-array>
 </resources>

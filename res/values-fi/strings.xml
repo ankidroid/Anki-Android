@@ -59,9 +59,17 @@
   <string name="leech_notification">Kortti om merkitty takiaiseksi</string>
   <string name="newcards_day_summ">Montako uutta korttia näytetään korkeintaan päivässä.</string>
   <string name="newcards_day">Uusia korttia / päivä</string>
+  <string name="studyoptions_limit_select_tags">Select Tags</string>
+  <string name="studyoptions_limit_tags_active">With: %1$s</string>
+  <string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit session</string>
-  <string name="studyoptions_session_limit_text">Limit session:</string>
+  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
+  <string name="studyoptions_session">Session</string>
+  <string name="studyoptions_tag">By Tag</string>
+  <string name="studyoptions_tag_new">Show new cards by tag:</string>
+  <string name="studyoptions_tag_rev">Show review cards by tag:</string>
+  <string name="studyoptions_session_minutes">Istunnon raja (minuuttia):</string>
+  <string name="studyoptions_session_questions">Istunnon raja (kysymykset):</string>
   <string name="session_time_limit">Istunnon aikaraja</string>
   <string name="session_time_limit_summ">Yhteen istuntoon käytettävä minuuttimäärä. 0 tarkoittaa ei rajoitusta.</string>
   <string name="session_question_limit">Istunnon kysymysraja</string>
@@ -142,7 +150,7 @@
   <string name="zoom_summ">Näytä zoomaussäätimet tarjastekun aikana</string>
   <string name="swipe">Ota eleet käyttöön</string>
   <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
-  <string name="swipe_summ_on">Pyyhkäisy vaakasuunnassa vaihtaaksesi ruutua ja pystysuunassa vastaaksesi kortteihin (alas: uudelleen, ylös: suositus, kaksoisnapsautus: helpompi kuin suositus)</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
   <string name="swipe_sensibility">Gesture Sensibility</string>
   <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
   <string name="shake">Ravista kumoaksesi viimeisimmän toiminnon</string>
@@ -242,8 +250,6 @@
   <string name="studyoptions_new_total">Uusia yhteensä:</string>
   <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Uusia kortteja per päivä</string>
-  <string name="studyoptions_session_minutes">Istunnon raja (minuuttia):</string>
-  <string name="studyoptions_session_questions">Istunnon raja (kysymykset):</string>
   <string name="studyoptions_start">Aloita tarkistaminen</string>
   <string name="studyoptions_more">Opiskeluasetukset</string>
   <string name="studyoptions_more_dialog_title">Lisää valintoja</string>
