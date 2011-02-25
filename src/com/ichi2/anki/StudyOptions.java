@@ -473,7 +473,7 @@ public class StudyOptions extends Activity {
         Log.i(AnkiDroidApp.TAG, "StudyOptions Activity");
 
         if (hasErrorFiles()) {
-            Intent i = new Intent(this, ErrorReporter.class);
+            Intent i = new Intent(this, Feedback.class);
             startActivityForResult(i, REPORT_ERROR);
         }
 
@@ -1501,7 +1501,7 @@ public class StudyOptions extends Activity {
     }
     
     private void startFeedback() {
-        Intent feedbackReporter = new Intent(StudyOptions.this, ErrorReporter.class);
+        Intent feedbackReporter = new Intent(StudyOptions.this, Feedback.class);
         startActivityForResult(feedbackReporter, REPORT_FEEDBACK);
     }
 

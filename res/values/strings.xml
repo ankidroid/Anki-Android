@@ -444,8 +444,7 @@
 <string name="sync_conflict_remote">Keep Remote</string>
 <string name="sync_conflict_cancel">Cancel Syncing</string>
 
-<!-- ErrorReporter.java -->
-<string name="error_reporter_title">Error Reporter</string>
+<!-- Feedback.java -->
 <plurals name="error_message">
   <item quantity="one">There is one error to report</item>
   <item quantity="other">There are %d errors to report</item>
@@ -454,7 +453,17 @@
 <string name="error_cancel">Do not report errors</string>
 <string name="error_reporting_choice">Error reporting mode</string>
 <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
-<string name="error_collection_information">We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string> 
+<string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string> 
+<string name="feedback_title">Feedback</string>
+<string name="feedback_send_feedback">Send us your feedback</string>
+<string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
+<string name="feedback_message_sent_success">Feedback received, thank you!</string>
+<string name="feedback_message_sent_failure">Unable to send feedback, code %1$s</string>
+<string name="feedback_error_list_header">List of errors to send</string>
+<string name="feedback_keep_latest">Keep latest error</string>
+<string name="feedback_clear_all">Clear all errors</string>
+<string name="feedback_default_text">Please enter your feedback or information about the nature of the error.</string>
+
 <!--  Widget -->
 <string name="widget_pref">Widget</string>
 <string name="widget_minimum_cards_due">Widget notification threshold</string>
@@ -518,8 +527,4 @@
 <string name="statistics_zoom_out">Zoom out</string>
 <string name="statistics_all_decks">(all decks)</string>
 <string name="calculating_statistics">Calculating statistics</string>
-
-<string name="feedback_title">Feedback</string>
-<string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
-<string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
 </resources>

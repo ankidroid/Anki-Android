@@ -16,7 +16,9 @@
 
 package com.ichi2.async;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
@@ -28,6 +30,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Deck;
+import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
 import com.ichi2.anki.SyncClient;
 import com.ichi2.anki.Utils;
@@ -177,7 +180,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
-    public static Connection sendErrorReport(TaskListener listener, Payload data) {
+    public static Connection sendFeedback(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_SEND_CRASH_REPORT;
         return launchConnectionTask(listener, data);
     }
@@ -213,7 +216,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 return doInBackgroundSyncDeckFromPayload(data);
 
             case TASK_TYPE_SEND_CRASH_REPORT:
-                return doInBackgroundSendCrashReport(data);
+                return doInBackgroundSendFeedback(data);
                 
             case TASK_TYPE_DOWNLOAD_MEDIA:
                 return doInBackgroundDownloadMissingMedia(data);
@@ -524,42 +527,46 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     }
 
 
-    private Payload doInBackgroundSendCrashReport(Payload data) {
-        Log.i(AnkiDroidApp.TAG, "SendCrashReport");
-        String url = (String) data.data[0];
-        List<NameValuePair> values = (List<NameValuePair>) data.data[1];
+    private Payload doInBackgroundSendFeedback(Payload data) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSendFeedback");
+        String feedbackUrl = (String) data.data[0];
+        String errorUrl = (String) data.data[1];
+        String feedback  = (String) data.data[2];
+        ArrayList<HashMap<String, String>> errors  = (ArrayList<HashMap<String, String>>) data.data[3];
+        String groupId  = ((Long) data.data[4]).toString();
+        Application app  = (Application) data.data[5];
 
-    	HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(url);
-        httpPost.addHeader("User-Agent", "AnkiDroid");
-
-        try {
-        	httpPost.setEntity(new UrlEncodedFormEntity(values));
-            HttpResponse response = httpClient.execute(httpPost);
-            Log.e(AnkiDroidApp.TAG, String.format("Bug report posted to %s", url));
-
-            switch(response.getStatusLine().getStatusCode()) {
-	            case 200:
-                    data.success = true;
-                    data.result = Utils.convertStreamToString(response.getEntity().getContent());
-	            	break;
-
-            	default:
-            		Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(),
-                                response.getStatusLine().getReasonPhrase()));
-                    data.success = false;
-                    data.result = new String(response.getStatusLine().getReasonPhrase());
-	            	break;
+        String postType = null;
+        if (feedback.length() > 0) {
+            if (errors.size() > 0) {
+                postType = Feedback.TYPE_ERROR_FEEDBACK;
+            } else {
+                postType = Feedback.TYPE_FEEDBACK;
             }
-        } catch (ClientProtocolException ex) {
-        	Log.e(AnkiDroidApp.TAG, ex.toString());
-            data.success = false;
-            data.result = new String(ex.toString());
-        } catch (IOException ex) {
-        	Log.e(AnkiDroidApp.TAG, ex.toString());
-            data.success = false;
-            data.result = new String(ex.toString());
+            publishProgress(postType, 0, Feedback.STATE_UPLOADING);
+            Payload reply = Feedback.postFeedback(feedbackUrl, postType, feedback, groupId, 0, null);
+            if (reply.success) {
+                publishProgress(postType, 0, Feedback.STATE_SUCCESSFUL, reply.returnType, reply.result);
+            } else {
+                publishProgress(postType, 0, Feedback.STATE_FAILED, reply.returnType, reply.result);
+            }
         }
+        
+        for (int i = 0; i < errors.size(); i++) {
+            HashMap<String, String> error = errors.get(i);
+            if (error.containsKey("state") && error.get("state").equals(Feedback.STATE_WAITING)) {
+                postType = Feedback.TYPE_STACKTRACE; 
+                publishProgress(postType, i, Feedback.STATE_UPLOADING);
+                Payload reply = Feedback.postFeedback(errorUrl, postType, error.get("name"), groupId, i, app);
+                if (reply.success) {
+                    publishProgress(postType, i, Feedback.STATE_SUCCESSFUL, reply.returnType, reply.result);
+                } else {
+                    publishProgress(postType, i, Feedback.STATE_FAILED, reply.returnType, reply.result);
+                }
+            }
+        }
+
+        app = null;
 
         return data;
     }
