@@ -87,6 +87,27 @@
 							android:background="#000000"/>
 					</FrameLayout>
 				</FrameLayout>
+				<FrameLayout android:id="@+id/studyoptions_global_limit_bars"
+					android:background="@color/progressbar_border_inverted"
+					android:layout_width="fill_parent"
+					android:layout_height="5dp"
+					android:padding="0.5dip"
+					android:visibility="gone"
+					android:layout_marginBottom="3dp">	
+					<LinearLayout 
+						android:background="@color/progressbar_background_inverted"
+						android:layout_width="fill_parent"
+						android:layout_height="fill_parent">
+						<View android:id="@+id/studyoptions_global_mat_limit_bar"
+							android:layout_width="0dip"
+							android:layout_height="fill_parent"
+							android:background="#CDCDCD"/>
+						<View android:id="@+id/studyoptions_global_limit_bar"
+							android:layout_width="0dip"
+							android:layout_height="fill_parent"
+							android:background="#8d8d8d" />
+					</LinearLayout>
+				</FrameLayout>
 				<FrameLayout
 					android:background="@color/progressbar_border_inverted"
 					android:layout_width="fill_parent"
