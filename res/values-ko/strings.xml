@@ -59,9 +59,17 @@
   <string name="leech_notification">Card marked as leech</string>
   <string name="newcards_day_summ">하루에 보여지는 최대 새 카드 개수.</string>
   <string name="newcards_day">새 카드 / 일</string>
+  <string name="studyoptions_limit_select_tags">Select Tags</string>
+  <string name="studyoptions_limit_tags_active">With: %1$s</string>
+  <string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit session</string>
-  <string name="studyoptions_session_limit_text">Limit session:</string>
+  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
+  <string name="studyoptions_session">Session</string>
+  <string name="studyoptions_tag">By Tag</string>
+  <string name="studyoptions_tag_new">Show new cards by tag:</string>
+  <string name="studyoptions_tag_rev">Show review cards by tag:</string>
+  <string name="studyoptions_session_minutes">Session limit (minutes):</string>
+  <string name="studyoptions_session_questions">Session limit (questions):</string>
   <string name="session_time_limit">최대 세션 연결 시간</string>
   <string name="session_time_limit_summ">한 세션의 연결 시간 (분단위). 제한 없을땐 0을 선택하세요.</string>
   <string name="session_question_limit">Session Question Limit</string>
@@ -142,7 +150,7 @@
   <string name="zoom_summ">Show zoom controls when reviewing</string>
   <string name="swipe">Enable Gestures</string>
   <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: again, up: recommendation, double-tap: easier than rec.)</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
   <string name="swipe_sensibility">Gesture Sensibility</string>
   <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
   <string name="shake">Shake to Undo</string>
@@ -242,8 +250,6 @@
   <string name="studyoptions_new_total">New total:</string>
   <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">New cards per day</string>
-  <string name="studyoptions_session_minutes">Session limit (minutes):</string>
-  <string name="studyoptions_session_questions">Session limit (questions):</string>
   <string name="studyoptions_start">Start Reviewing</string>
   <string name="studyoptions_more">Study Options</string>
   <string name="studyoptions_more_dialog_title">More Options</string>

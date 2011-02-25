@@ -59,9 +59,17 @@
   <string name="leech_notification">Karta byla označena jako pijavice</string>
   <string name="newcards_day_summ">Maximální počet nových karet na den.</string>
   <string name="newcards_day">Nové karty / den</string>
+  <string name="studyoptions_limit_select_tags">Select Tags</string>
+  <string name="studyoptions_limit_tags_active">With: %1$s</string>
+  <string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit session</string>
-  <string name="studyoptions_session_limit_text">Limit session:</string>
+  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
+  <string name="studyoptions_session">Session</string>
+  <string name="studyoptions_tag">By Tag</string>
+  <string name="studyoptions_tag_new">Show new cards by tag:</string>
+  <string name="studyoptions_tag_rev">Show review cards by tag:</string>
+  <string name="studyoptions_session_minutes">Limit sezení (minuty):</string>
+  <string name="studyoptions_session_questions">Limit sezení (otázky):</string>
   <string name="session_time_limit">Časové omezení sezení</string>
   <string name="session_time_limit_summ">Počet minut v sezení. Vyberte 0 pro časově neomezené sezení.</string>
   <string name="session_question_limit">Limiit otázek v sezení</string>
@@ -142,7 +150,7 @@
   <string name="zoom_summ">Zobrazit ovládání zoomu během opakování</string>
   <string name="swipe">Povolit gesta</string>
   <string name="swipe_summ_off">Použít gesta pro přepínání mezi obrazovkami a zodpovězenými kartami. Toto nastavení není kompatibilní s ovládacími prvky zoomu</string>
-  <string name="swipe_summ_on">Čmárněte prste horizontálně pro přepnutí mezi obrazovkami a vertikálně pro zodpovězení karet (dolů: znovu, nahoru: doporučení, dvojité poklepání: lehčí)</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
   <string name="swipe_sensibility">Gesture Sensibility</string>
   <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
   <string name="shake">Zatřepat pro vrácení změn</string>
@@ -242,8 +250,6 @@
   <string name="studyoptions_new_total">Nových celkově:</string>
   <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Nových karet na den</string>
-  <string name="studyoptions_session_minutes">Limit sezení (minuty):</string>
-  <string name="studyoptions_session_questions">Limit sezení (otázky):</string>
   <string name="studyoptions_start">Začít opakovat</string>
   <string name="studyoptions_more">Studijní možnosti</string>
   <string name="studyoptions_more_dialog_title">Další volby</string>

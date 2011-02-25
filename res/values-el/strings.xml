@@ -59,9 +59,17 @@
   <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>
   <string name="newcards_day_summ">Μέγιστος αριθμός νέων καρτών που εμφανίζονται ανά μέρα.</string>
   <string name="newcards_day">Νέες Κάρτες / Ημέρα</string>
+  <string name="studyoptions_limit_select_tags">Select Tags</string>
+  <string name="studyoptions_limit_tags_active">With: %1$s</string>
+  <string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit session</string>
-  <string name="studyoptions_session_limit_text">Limit session:</string>
+  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
+  <string name="studyoptions_session">Session</string>
+  <string name="studyoptions_tag">By Tag</string>
+  <string name="studyoptions_tag_new">Show new cards by tag:</string>
+  <string name="studyoptions_tag_rev">Show review cards by tag:</string>
+  <string name="studyoptions_session_minutes">Όριο περιόδου (λεπτά):</string>
+  <string name="studyoptions_session_questions">Όριο περιόδου (ερωτήσεις):</string>
   <string name="session_time_limit">Χρονικό Όριο Μελέτης</string>
   <string name="session_time_limit_summ">Ο αριθμός χρονικών λεπτών ανά περίοδο μελέτης. Επιλέξτε 0 για κανένα όριο.</string>
   <string name="session_question_limit">Όριο Ερωτήσεων Μελέτης</string>
@@ -142,7 +150,7 @@
   <string name="zoom_summ">Εμφάνιση ελέγχων ζουμ κατά την επανάληψη</string>
   <string name="swipe">Ενεργοποίηση χειρονομίων</string>
   <string name="swipe_summ_off">Χρησιμοποιήστε χειρονομίες για να αλλάξετε μεταξύ οθόνων και να απαντήσετε κάρτες. Αυτή η επιλογή δεν είναι συμβατή με τους ελέγχους ζουμ</string>
-  <string name="swipe_summ_on">Σαρώστε οριζόντια για εναλλαγή μεταξύ των οθονών και κάθετα για να απαντήσετε κάρτες (κάτω: ξανά, πάνω: σύσταση, διπλό άγγιγμα: ευκολότερο από σύσταση.)</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
   <string name="swipe_sensibility">Gesture Sensibility</string>
   <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
   <string name="shake">Ανακινήστε για Αναίρεση</string>
@@ -242,8 +250,6 @@
   <string name="studyoptions_new_total">Νέες σύνολο:</string>
   <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Νέες κάρτες ανά μέρα</string>
-  <string name="studyoptions_session_minutes">Όριο περιόδου (λεπτά):</string>
-  <string name="studyoptions_session_questions">Όριο περιόδου (ερωτήσεις):</string>
   <string name="studyoptions_start">Έναρξη επανάληψης</string>
   <string name="studyoptions_more">Επιλογές Μελέτης</string>
   <string name="studyoptions_more_dialog_title">Περισσότερες επιλογές</string>

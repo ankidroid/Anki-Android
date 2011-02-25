@@ -59,9 +59,17 @@
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="newcards_day_summ">Maximale Anzahl neuer Karten pro Tag wurde abgefragt.</string>
   <string name="newcards_day">Neue Karten pro Tag</string>
+  <string name="studyoptions_limit_select_tags">Schlagworte wählen</string>
+  <string name="studyoptions_limit_tags_active">ohne: %1$s</string>
+  <string name="studyoptions_limit_tags_inactive">ohne: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Sitzungslimitierung</string>
-  <string name="studyoptions_session_limit_text">Beschränke Sitzung:</string>
+  <string name="studyoptions_limit_dialog_title">Lernen einschränken</string>
+  <string name="studyoptions_session">Sitzung</string>
+  <string name="studyoptions_tag">Nach Schlagwort</string>
+  <string name="studyoptions_tag_new">Neue Karten nach Schlagworten:</string>
+  <string name="studyoptions_tag_rev">Wiederholungen nach Schlagworten:</string>
+  <string name="studyoptions_session_minutes">Sitzungslimit (Minuten):</string>
+  <string name="studyoptions_session_questions">Sitzungslimit (Fragen):</string>
   <string name="session_time_limit">Zeitlimit der Sitzung</string>
   <string name="session_time_limit_summ">Maximale Länge pro Sitzung in Minuten. Wählen Sie 0 für keine Beschränkung.</string>
   <string name="session_question_limit">Fragenlimit der Sitzung</string>
@@ -142,7 +150,7 @@
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
-  <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; vertikal wischen: Karten beantworten (runter: nochmal, hoch: Empfehlung, Doppeltap: einfacher als Empfehlung)</string>
+  <string name="swipe_summ_on">Horizontal wischen: Fensterwechsel; verikal wischen: Karten beantworten (runter: nochmal, hoch: gut, Doppeltipp: leicht)</string>
   <string name="swipe_sensibility">Gesten-Sensibilität</string>
   <string name="swipe_sensibility_summ">Empfindlichkeit der Wisch-Gesten: XXX</string>
   <string name="shake">Schütteln aktivieren</string>
@@ -242,8 +250,6 @@
   <string name="studyoptions_new_total">Neu insgesamt:</string>
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_new_cards_per_day">Neue Karten pro Tag</string>
-  <string name="studyoptions_session_minutes">Sitzungslimit (Minuten):</string>
-  <string name="studyoptions_session_questions">Sitzungslimit (Fragen):</string>
   <string name="studyoptions_start">Lernen starten</string>
   <string name="studyoptions_more">Lernoptionen</string>
   <string name="studyoptions_more_dialog_title">Lernoptionen</string>

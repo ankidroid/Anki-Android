@@ -146,5 +146,12 @@
     <item>language selection</item>
     <item>more languages</item>
     <item>progress bars in reviewer</item>
+    <item>feedback within AnkiDroid</item>
+    <item>possibility to set cards active/inactive by tag</item>
+    <item>better syncing</item>
+    <item>better error reporter</item>
+    <item>add decks</item>
+    <item>more options</item>
+    <item>lots of fixes for small errors</item>
   </string-array>
 </resources>
