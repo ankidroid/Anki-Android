@@ -149,7 +149,7 @@ public class DeckPicker extends Activity implements Runnable {
 	int mStatisticType;
 	int mLoadingFinished;
 
-	boolean mCompletionBarRestrictToActive = true; // set this to true in order to calculate completion bar only for active cards
+	boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for active cards
 
 	/**
      * Swipe Detection
@@ -986,7 +986,9 @@ public class DeckPicker extends Activity implements Runnable {
 						int newCards = deck.getNewCountToday();
 						int totalNewCards = deck.getNewCount(mCompletionBarRestrictToActive);
 						int matureCards = deck.getMatureCardCount(mCompletionBarRestrictToActive);
-						int totalCardsCompletionBar = deck.getCardCount(mCompletionBarRestrictToActive);
+						int totalRevCards = deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);
+						int totalCardsCompletionBar = totalRevCards + totalNewCards;
+
 						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
 						deck.closeDeck();
 
@@ -1001,7 +1003,7 @@ public class DeckPicker extends Activity implements Runnable {
 						int rateOfCompletionAll;
 						if (totalCardsCompletionBar != 0) {
 						    rateOfCompletionMat = (matureCards * 100) / totalCardsCompletionBar;
-		                    rateOfCompletionAll = ((totalCardsCompletionBar - totalNewCards) * 100) / totalCardsCompletionBar; 
+		                    rateOfCompletionAll = (totalRevCards * 100) / totalCardsCompletionBar; 
 						} else {
 						    rateOfCompletionMat = 0;
 						    rateOfCompletionAll = 0;

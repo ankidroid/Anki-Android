@@ -2390,15 +2390,6 @@ public class Deck {
     }
 
 
-    public boolean isLimited() {
-        if (!getVar("newActive").equals("") || !getVar("newInactive").equals("") || !getVar("revActive").equals("") || !getVar("revInactive").equals("")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
     /**
      * @return the failedSoonCount
      */
@@ -2451,13 +2442,31 @@ public class Deck {
 
 
     /**
+     * @return True, if there are any tag limits
+     */
+    public boolean isLimitedByTag() {
+        if (!getVar("newActive").equals("")) {
+            return true;
+        } else if (!getVar("newInactive").equals("")) {
+            return true;
+        } else if (!getVar("revActive").equals("")) {
+            return true;
+        } else if (!getVar("revInactive").equals("")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
 	 * Get the number of mature cards of the deck.
 	 * 
 	 * @return The number of cards contained in the deck
 	 */
 	public int getMatureCardCount(boolean restrictToActive) {
         String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) from cards c WHERE interval >= %d", Card.MATURE_THRESHOLD);
+                "SELECT count(*) from cards c WHERE (type = 1 OR TYPE = 0) AND interval >= %d", Card.MATURE_THRESHOLD);
         if (restrictToActive) {
             return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
         } else {
@@ -2479,13 +2488,13 @@ public class Deck {
 
 
     /**
-     * @return the card count
+     * @return the rev card count
      */
-    public int getCardCount(boolean restrictToActive) {
+    public int getTotalRevFailedCount(boolean restrictToActive) {
         if (restrictToActive) {
-                return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", "SELECT count(*) from cards c WHERE id != 0"));
+            return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", "SELECT count(*) from cards c WHERE (type = 1 OR type = 0)"));
         } else {
-            return getCardCount();
+            return getCardCount() - getNewCount(false);
         }
     }
 

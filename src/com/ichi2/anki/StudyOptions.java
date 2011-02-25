@@ -284,12 +284,18 @@ public class StudyOptions extends Activity {
 	public static int mStatisticType;
     private int mStatisticBarsMax = 0;
     private int mStatisticBarsHeight;
+    private View mBarsMax;
     private View mDailyBar;
     private View mMatureBar;
+    private View mGlobalLimitFrame;
+    private View mGlobalLimitBar;
+    private View mGlobalMatLimitBar;
     private View mGlobalBar;
     private View mGlobalMatBar;
     private double mProgressTodayYes;
     private double mProgressMatureYes;
+    private double mProgressMatureLimit;
+    private double mProgressAllLimit;
     private double mProgressMature;
     private double mProgressAll;
     
@@ -729,13 +735,6 @@ public class StudyOptions extends Activity {
     private void initAllContentViews() {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
-        ViewTreeObserver vto = mStudyOptionsView.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                updateStatisticBars();            
-            }
-        });
       
         mStudyOptionsMain = (View) mStudyOptionsView.findViewById(R.id.studyoptions_main);
 
@@ -749,8 +748,21 @@ public class StudyOptions extends Activity {
 
         mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
         mStatisticsButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
+
+        mBarsMax = (View) mStudyOptionsView.findViewById(R.id.studyoptions_bars_max);
+        ViewTreeObserver vto = mBarsMax.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mBarsMax.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                updateStatisticBars();
+            }
+        });
         mDailyBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_daily_bar);
         mMatureBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_mature_bar);
+        mGlobalLimitFrame = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_limit_bars);
+        mGlobalLimitBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_limit_bar);
+        mGlobalMatLimitBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_limit_bar);
         mGlobalBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_bar);
         mGlobalMatBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_bar);
 
@@ -1372,13 +1384,24 @@ public class StudyOptions extends Activity {
             // Progress bars are not shown on small screens
             if (mDailyBar != null) {
                 double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
+                double totalCardsCount = cardsCount;
                 mProgressTodayYes = values[0];
                 mProgressMatureYes = values[1];
                 double mature = deck.getMatureCardCount(false);
-                mProgressMature = mature / cardsCount;
-                double seen = cardsCount - totalNewCount;
-                mProgressAll = seen / cardsCount;
-                updateStatisticBars();                
+                mProgressMature = mature / totalCardsCount;
+                double allRev = deck.getTotalRevFailedCount(false);
+                mProgressAll = allRev / totalCardsCount;
+                if (deck.isLimitedByTag()) {
+                    mGlobalLimitFrame.setVisibility(View.VISIBLE);
+                    mature = deck.getMatureCardCount(true);
+                    allRev = deck.getTotalRevFailedCount(true);
+                    totalCardsCount = allRev + deck.getNewCount(true);
+                    mProgressMatureLimit = mature / totalCardsCount;
+                    mProgressAllLimit = allRev / totalCardsCount;
+                } else {
+                    mGlobalLimitFrame.setVisibility(View.GONE);
+                }
+                updateStatisticBars();
             }
         }
     }
@@ -1386,24 +1409,15 @@ public class StudyOptions extends Activity {
 
     private void updateStatisticBars() {
         if (mStatisticBarsMax == 0) {
-            View view = mStudyOptionsView.findViewById(R.id.studyoptions_bars_max);
-            view.requestLayout();
-            view.invalidate();
-            mStatisticBarsMax = view.getWidth();
-            mStatisticBarsHeight = view.getHeight();                
+            mStatisticBarsMax = mBarsMax.getWidth();
+            mStatisticBarsHeight = mBarsMax.getHeight();                
         }
-        if (mProgressTodayYes != 0) {
-            Utils.updateProgressBars(this, mDailyBar, mProgressTodayYes, mStatisticBarsMax, mStatisticBarsHeight, true);            
-        }
-        if (mProgressMatureYes != 0) {
-            Utils.updateProgressBars(this, mMatureBar,mProgressMatureYes, mStatisticBarsMax, mStatisticBarsHeight, true);
-        }
-        if (mProgressMature != 0) {
-            Utils.updateProgressBars(this, mGlobalMatBar, mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
-        }
-        if (mProgressMature != mProgressAll) {
-            Utils.updateProgressBars(this, mGlobalBar, mProgressAll - mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
-        }
+        Utils.updateProgressBars(this, mDailyBar, mProgressTodayYes, mStatisticBarsMax, mStatisticBarsHeight, true);            
+        Utils.updateProgressBars(this, mMatureBar,mProgressMatureYes, mStatisticBarsMax, mStatisticBarsHeight, true);
+        Utils.updateProgressBars(this, mGlobalMatLimitBar, mProgressMatureLimit, mStatisticBarsMax, mStatisticBarsHeight, false);
+        Utils.updateProgressBars(this, mGlobalLimitBar, (mProgressAllLimit == 1.0) ? 1.0 : mProgressAllLimit - mProgressMatureLimit, mStatisticBarsMax, mStatisticBarsHeight, false);
+        Utils.updateProgressBars(this, mGlobalMatBar, mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
+        Utils.updateProgressBars(this, mGlobalBar, (mProgressAll == 1.0) ? 1.0 : mProgressAll - mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
     } 
 
 
@@ -1988,7 +2002,7 @@ public class StudyOptions extends Activity {
                 }
             }
             Deck deck = AnkiDroidApp.deck();
-            mToggleLimit.setChecked(deck.isLimited());
+            mToggleLimit.setChecked(deck.isLimitedByTag());
             mStudyOptionsMain.setVisibility(View.VISIBLE);
         }
 
