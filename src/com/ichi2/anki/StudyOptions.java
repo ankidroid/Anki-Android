@@ -67,6 +67,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 
 public class StudyOptions extends Activity {
@@ -191,8 +192,7 @@ public class StudyOptions extends Activity {
     private String mLimitNewInactive;
     private String mLimitRevActive;
     private String mLimitRevInactive;
-    private HashSet<String> selectedTags;
-    private ListView mTagsListView;
+    private HashSet<String> mSelectedTags;
     private String allTags[];
     private int mSelectedLimitTagText;
     private static final int LIMIT_NEW_ACTIVE = 0;
@@ -373,6 +373,34 @@ public class StudyOptions extends Activity {
                         startActivity(new Intent(StudyOptions.this, About.class));
                     }
                     return;
+                case R.id.studyoptions_limit_tag_tv2:
+                    if (mLimitTagNewActiveCheckBox.isChecked()) {
+                        mSelectedLimitTagText = LIMIT_NEW_ACTIVE;
+                        recreateTagsDialog();
+                        mTagsDialog.show();                        
+                    }
+                    return;
+                case R.id.studyoptions_limit_tag_tv3:
+                    if (mLimitTagNewInactiveCheckBox.isChecked()) {
+                        mSelectedLimitTagText = LIMIT_NEW_INACTIVE;
+                        recreateTagsDialog();
+                        mTagsDialog.show();
+                    }
+                    return;
+                case R.id.studyoptions_limit_tag_tv5:
+                    if (mLimitTagRevActiveCheckBox.isChecked()) {
+                        mSelectedLimitTagText = LIMIT_REV_ACTIVE;
+                        recreateTagsDialog();
+                        mTagsDialog.show();
+                    }
+                    return;
+                case R.id.studyoptions_limit_tag_tv6:
+                    if (mLimitTagRevInactiveCheckBox.isChecked()) {
+                        mSelectedLimitTagText = LIMIT_REV_INACTIVE;
+                        recreateTagsDialog();
+                        mTagsDialog.show();
+                    }
+                    return;
                 default:
                     return;
             }
@@ -403,7 +431,6 @@ public class StudyOptions extends Activity {
                     return;
             }
             if (isChecked) {
-                selectedTags.clear();
                 recreateTagsDialog();
                 mTagsDialog.show();
             } else {
@@ -483,7 +510,7 @@ public class StudyOptions extends Activity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         activeCramTags = new HashSet<String>();
-        selectedTags = new HashSet<String>();
+        mSelectedTags = new HashSet<String>();
 
         initAllContentViews();
         initAllDialogs();
@@ -943,59 +970,56 @@ public class StudyOptions extends Activity {
     // This has to be called every time we open a new deck AND whenever we edit any tags.
     private void recreateTagsDialog() {
         Resources res = getResources();
-
-        // Dialog for selecting the tags
-        selectedTags.clear();
-
         if (allTags.length == 0) {
             allTags = AnkiDroidApp.deck().allTags_();
             Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));            
         }
-
-        View contentView = getLayoutInflater().inflate(R.layout.studyoptions_tags_dialog_contents, null);
-        mTagsListView = (ListView) contentView.findViewById(R.id.tags_list);
-        mTagsListView.setAdapter(new ArrayAdapter<String>(this, R.layout.dialog_check_item,
-                allTags));
-        mTagsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String tag = allTags[position];
-                if (((CheckedTextView)view).isChecked()) {
-                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                    selectedTags.remove(tag);
-                } else {
-                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                    selectedTags.add(tag);
-                }
+        mSelectedTags.clear();
+        List<String> selectedList = Arrays.asList(Utils.parseTags(getSelectedTags(mSelectedLimitTagText)));
+        int length = allTags.length;
+        boolean[] checked = new boolean[length];
+        for (int i = 0; i < length; i++) {
+            String tag = allTags[i];
+            if (selectedList.contains(tag)) {
+                checked[i] = true;
+                mSelectedTags.add(tag);
             }
-        });
-        mTagsListView.setItemsCanFocus(false);
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.studyoptions_limit_select_tags);
+        builder.setMultiChoiceItems(allTags, checked,
+                new DialogInterface.OnMultiChoiceClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+                        String tag = allTags[whichButton];
+                        if (!isChecked) {
+                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                            mSelectedTags.remove(tag);
+                        } else {
+                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                            mSelectedTags.add(tag);
+                        }  
+                    }
+                });
         builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String readableText = selectedTags.toString();
+                String readableText = mSelectedTags.toString();
                 updateLimitTagText(mSelectedLimitTagText, readableText.substring(1, readableText.length()-1));
             }
         });
         builder.setNegativeButton(res.getString(R.string.cancel),  new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                updateLimitTagText(mSelectedLimitTagText, "");
+                updateLimitTagText(mSelectedLimitTagText, getSelectedTags(mSelectedLimitTagText));
             }
         });
         builder.setOnCancelListener(new OnCancelListener() {
-
             @Override
             public void onCancel(DialogInterface dialog) {
-                updateLimitTagText(mSelectedLimitTagText, "");
+                updateLimitTagText(mSelectedLimitTagText, getSelectedTags(mSelectedLimitTagText));
             }
             
         });
-        
-        
-        builder.setView(contentView);
         mTagsDialog = builder.create();
     }
 
@@ -1054,6 +1078,10 @@ public class StudyOptions extends Activity {
         mLimitTagTv4 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv4);
         mLimitTagTv5 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv5);
         mLimitTagTv6 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv6);
+        mLimitTagTv2.setOnClickListener(mButtonClickListener);
+        mLimitTagTv3.setOnClickListener(mButtonClickListener);
+        mLimitTagTv5.setOnClickListener(mButtonClickListener);
+        mLimitTagTv6.setOnClickListener(mButtonClickListener);
 
         mSessionLimitCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
@@ -1283,6 +1311,22 @@ public class StudyOptions extends Activity {
     }
 
 
+    private String getSelectedTags(int which) {
+        switch (which) {
+            case LIMIT_NEW_ACTIVE:
+                return mLimitNewActive;
+            case LIMIT_NEW_INACTIVE:
+                return mLimitNewInactive;
+            case LIMIT_REV_ACTIVE:
+                return mLimitRevActive;
+            case LIMIT_REV_INACTIVE:
+                return mLimitRevInactive;
+            default:
+                return "";
+        }
+    }
+
+
     private void setCongratsMessage() {
     	Resources res = getResources();
         Deck deck = AnkiDroidApp.deck();
@@ -1352,13 +1396,13 @@ public class StudyOptions extends Activity {
             Utils.updateProgressBars(this, mDailyBar, mProgressTodayYes, mStatisticBarsMax, mStatisticBarsHeight, true);            
         }
         if (mProgressMatureYes != 0) {
-        Utils.updateProgressBars(this, mMatureBar,mProgressMatureYes, mStatisticBarsMax, mStatisticBarsHeight, true);
+            Utils.updateProgressBars(this, mMatureBar,mProgressMatureYes, mStatisticBarsMax, mStatisticBarsHeight, true);
         }
         if (mProgressMature != 0) {
-        Utils.updateProgressBars(this, mGlobalMatBar, mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
+            Utils.updateProgressBars(this, mGlobalMatBar, mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
         }
         if (mProgressMature != mProgressAll) {
-        Utils.updateProgressBars(this, mGlobalBar, mProgressAll - mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
+            Utils.updateProgressBars(this, mGlobalBar, mProgressAll - mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
         }
     } 
 

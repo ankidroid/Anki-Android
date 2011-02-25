@@ -195,7 +195,7 @@
   <string name="card_browser_mark_card">Marcar Tarjeta</string>
   <string name="card_browser_unmark_card">Desmarcar tarjeta</string>
   <string name="delete_card_title">Eliminar tarjeta</string>
-  <string name="delete_card_message">¿Desea borrar esta tarjeta?\N%1%$s\n%2$s</string>
+  <string name="delete_card_message">¿Desea borrar esta tarjeta?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Mostrar tarjetas marcadas</string>
   <string name="card_browser_show_suspended">Mostrar tarjetas suspendidas</string>
   <string name="card_browser_change_display_order">Cambiar el orden de presentación</string>

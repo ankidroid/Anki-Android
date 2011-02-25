@@ -60,7 +60,7 @@
   <string name="newcards_day_summ">Maximale Anzahl neuer Karten pro Tag wurde abgefragt.</string>
   <string name="newcards_day">Neue Karten pro Tag</string>
   <string name="studyoptions_limit_select_tags">Schlagworte wählen</string>
-  <string name="studyoptions_limit_tags_active">ohne: %1$s</string>
+  <string name="studyoptions_limit_tags_active">mit: %1$s</string>
   <string name="studyoptions_limit_tags_inactive">ohne: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
   <string name="studyoptions_limit_dialog_title">Lernen einschränken</string>
