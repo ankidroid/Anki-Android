@@ -1468,12 +1468,17 @@ public class Reviewer extends Activity {
 
 
         String baseUrl = "";
+        Boolean isJapaneseModel = false;
+        
         // Add CSS for font color and font size
         if (mCurrentCard != null) {
+        	final String japaneseModelTag = "Japanese";
+        	
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
             baseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + content;
+            isJapaneseModel = myModel.hasTag(japaneseModelTag);
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             baseUrl = "file://" + mDeckFilename.replace(".anki", ".media/");
@@ -1508,7 +1513,7 @@ public class Reviewer extends Activity {
         content = content.replace("font-weight:600;", "font-weight:700;");
 
         // If ruby annotation support is activated, then parse and add markup
-        if (mPrefUseRubySupport) {
+        if (mPrefUseRubySupport && isJapaneseModel) {
             content = RubyParser.ankiRubyToMarkup(content);
         }
 

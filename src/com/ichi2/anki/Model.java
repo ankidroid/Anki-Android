@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -441,4 +442,13 @@ public class Model {
         return mFeatures;
     }
 
+    public Boolean hasTag(String tag) {
+    	if(mTags==null || mTags.equals(""))
+    		return false;
+    		
+		if(mTags.equals(tag))
+			return true;
+		
+    	return Arrays.asList(mTags.split(" ")).contains(tag);
+    }
 }
