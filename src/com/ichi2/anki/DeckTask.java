@@ -230,10 +230,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             // Open the right deck.
             Deck deck = Deck.openDeck(deckFilename);
             // Start by getting the first card and displaying it.
-            Card card = deck.getCard();
+            // Card card = deck.getCard();
             Log.i(AnkiDroidApp.TAG, "Deck loaded!");
             
-            return new TaskData(DECK_LOADED, deck, card);
+            return new TaskData(DECK_LOADED, deck, null);
         } catch (SQLException e) {
             Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
             return new TaskData(DECK_NOT_LOADED);

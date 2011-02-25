@@ -213,6 +213,8 @@ public class Deck {
 
     private long mCurrentCardId;
 
+    private HashMap<String, String> mDeckVars = new HashMap<String, String>();
+
     /**
      * Undo/Redo variables.
      */
@@ -296,6 +298,7 @@ public class Deck {
         deck.mSpacedCards = new LinkedList<SpacedCardsItem>();
 
         deck.mDeckPath = path;
+        deck.initDeckvarsCache();
         deck.mDeckName = (new File(path)).getName().replace(".anki", "");
 
         if (deck.mVersion < DECK_VERSION) {
@@ -474,85 +477,67 @@ public class Deck {
     /**
      * deckVars methods
      */
+
+    private void initDeckvarsCache() {
+        mDeckVars.clear();
+        Cursor cur = null;
+        try {
+            cur = getDB().getDatabase().rawQuery("SELECT key, value FROM deckVars", null);
+            while (cur.moveToNext()) {
+                mDeckVars.put(cur.getString(0), cur.getString(1));
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    }
+
     public boolean hasKey(String key) {
-        Cursor cur = null;
-        try {
-            cur = getDB().getDatabase().rawQuery("SELECT 1 FROM deckVars WHERE key = '" + key + "'", null);
-            return cur.moveToNext();
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
+        return mDeckVars.containsKey(key);
+    }
+
+    public int getInt(String key) {
+        if (mDeckVars.containsKey(key)) {
+            try {
+                return Integer.parseInt(mDeckVars.get(key));
+            } catch (NumberFormatException e) {
+                Log.w(AnkiDroidApp.TAG, "NumberFormatException: Converting deckvar to int failed, key: \"" + key +
+                        "\", value: \"" + mDeckVars.get(key) + "\"");
+                return 0;
             }
+        } else {
+            return 0;
         }
     }
 
 
-    public int getInt(String key) throws SQLException {
-        Cursor cur = null;
-        try {
-            cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.moveToFirst()) {
-                return cur.getInt(0);
-            } else {
-                throw new SQLException("DeckVars.getInt: could not retrieve value for " + key);
+    public double getFloat(String key) {
+        if (mDeckVars.containsKey(key)) {
+            try {
+                return Double.parseDouble(mDeckVars.get(key));
+            } catch (NumberFormatException e) {
+                Log.w(AnkiDroidApp.TAG, "NumberFormatException: Converting deckvar to double failed, key: \"" + key +
+                        "\", value: \"" + mDeckVars.get(key) + "\"");
+                return 0.0;
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-    }
-
-
-    public double getFloat(String key) throws SQLException {
-        Cursor cur = null;
-        try {
-            cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.moveToFirst()) {
-                return cur.getFloat(0);
-            } else {
-                throw new SQLException("DeckVars.getFloat: could not retrieve value for " + key);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
+        } else {
+            return 0.0;
         }
     }
 
 
     public boolean getBool(String key) {
-        Cursor cur = null;
-        try {
-            cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.moveToFirst()) {
-                return (cur.getInt(0) != 0);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
+        if (mDeckVars.containsKey(key)) {
+            return mDeckVars.get(key).equals("1");
+        } else {
+            return false;
         }
-        return false;
     }
 
 
     public String getVar(String key) {
-        Cursor cur = null;
-        try {
-            cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.moveToFirst()) {
-                return cur.getString(0);
-            }
-        } catch (SQLException e) {
-            Log.e(AnkiDroidApp.TAG, "getVar: " + e.toString());
-            throw new RuntimeException(e);
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-        return null;
+        return mDeckVars.get(key);
     }
 
 
@@ -562,34 +547,27 @@ public class Deck {
 
 
     public void setVar(String key, String value, boolean mod) {
-        Cursor cur = null;
         try {
-            cur = getDB().getDatabase().rawQuery("SELECT value FROM deckVars WHERE key = '" + key + "'", null);
-            if (cur.moveToNext()) {
-                if (cur.getString(0).equals(value)) {
-                    return;
-                } else {
-                    getDB().getDatabase()
-                            .execSQL("UPDATE deckVars SET value='" + value + "' WHERE key = '" + key + "'");
-                }
+            if (mDeckVars.containsKey(key)) {
+                getDB().getDatabase() .execSQL("UPDATE deckVars SET value='" + value + "' WHERE key = '" + key + "'");
             } else {
-                getDB().getDatabase().execSQL(
-                        "INSERT INTO deckVars (key, value) VALUES ('" + key + "', '" + value + "')");
+                getDB().getDatabase().execSQL("INSERT INTO deckVars (key, value) VALUES ('" + key + "', '" +
+                        value + "')");
             }
+            mDeckVars.put(key, value);
         } catch (SQLException e) {
             Log.e(AnkiDroidApp.TAG, "setVar: " + e.toString());
             throw new RuntimeException(e);
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
+        }
+        if (mod) {
+            setModified();
         }
     }
 
 
     public void setVarDefault(String key, String value) {
-        if (!hasKey(key)) {
-            getDB().getDatabase().execSQL("INSERT INTO deckVars (key, value) values ('" + key + "', '" + value + "')");
+        if (!mDeckVars.containsKey(key)) {
+            setVar(key, value, false);
         }
     }
 
@@ -2969,9 +2947,9 @@ public class Deck {
     private boolean isLeech(Card card) {
         int no = card.getNoCount();
         int fmax = 0;
-        try {
+        if (hasKey("leechFails")) {
             fmax = getInt("leechFails");
-        } catch (SQLException e) {
+        } else {
             // No leech threshold found in DeckVars
             return false;
         }

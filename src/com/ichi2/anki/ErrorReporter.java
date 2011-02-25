@@ -17,6 +17,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
@@ -77,6 +79,36 @@ public class ErrorReporter extends Activity {
         finish();
     }
 
+    private void refreshInterface() {
+        Button btnSendAll = (Button) findViewById(R.id.btnFeedbackSendAll);
+        Button btnSendMostRecent = (Button) findViewById(R.id.btnFeedbackSendLatest);
+        Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);
+        EditText etFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
+        ListView mErrorListView = (ListView) findViewById(R.id.lvErrorList);
+
+        Log.i(AnkiDroidApp.TAG, "refreshing UI");
+
+        int numErrors = mErrorReports.size();
+        if (numErrors == 0) {
+            mErrorListView.setVisibility(View.GONE);
+            btnSendMostRecent.setVisibility(View.GONE);
+            btnClearAll.setVisibility(View.GONE);
+            btnSendAll.setText("Send us your feedback");
+            btnSendAll.setVisibility(View.VISIBLE);
+        } else {
+            btnClearAll.setVisibility(View.VISIBLE);
+            btnSendAll.setVisibility(View.VISIBLE);
+            btnSendAll.setText("Send All");
+            if (numErrors == 1) {
+                btnSendMostRecent.setVisibility(View.GONE);
+            } else {
+                btnSendMostRecent.setVisibility(View.VISIBLE);
+            }
+            refreshErrorListView();
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,29 +144,15 @@ public class ErrorReporter extends Activity {
             Button btnSendAll = (Button) findViewById(R.id.btnFeedbackSendAll);
             Button btnSendMostRecent = (Button) findViewById(R.id.btnFeedbackSendLatest);
             Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);
-            
+            EditText etFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
             ListView mErrorListView = (ListView) findViewById(R.id.lvErrorList);
 
             getErrorFiles();
             int numErrors = mErrorReports.size();
-            if (numErrors == 0) {
-                mErrorListView.setVisibility(View.GONE);
-                btnSendMostRecent.setVisibility(View.GONE);
-                btnClearAll.setVisibility(View.GONE);
-                btnSendAll.setText("Send us your feedback");
-                btnSendAll.setVisibility(View.VISIBLE);
-            } else {
-                btnClearAll.setVisibility(View.VISIBLE);
-                btnSendAll.setVisibility(View.VISIBLE);
-                if (numErrors == 1) {
-                    btnSendMostRecent.setVisibility(View.GONE);
-                } else {
-                    btnSendMostRecent.setVisibility(View.VISIBLE);
-                }
-            
+            if (numErrors > 0) {
                 mErrorAdapter = new SimpleAdapter(this, mErrorReports,
                         R.layout.error_item, new String[] {"name", "state"}, new int[] {
-                                R.id.error_item_text, R.id.error_item_progress });
+                            R.id.error_item_text, R.id.error_item_progress });
                 mErrorAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
                     @Override
                     public boolean setViewValue(View view, Object arg1, String text) {
@@ -162,61 +180,69 @@ public class ErrorReporter extends Activity {
                         return false;
                     }
                 });
-    
+
+                btnClearAll.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteFiles(false, false);
+                        refreshErrorListView();
+                        refreshInterface();
+                    }
+                });
+
                 mErrorListView.setAdapter(mErrorAdapter);
-                refreshErrorListView();
             }
 
             btnSendAll.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String feedbackType = null;
                     try {
-                        sendErrorReports();
+                        if (mErrorReports.size() > 0) {
+                            sendErrorReports();
+                            // This is error accompanying feedback
+                            feedbackType = TYPE_ERROR_FEEDBACK;
+                            refreshErrorListView();
+                        } else {
+                            // This is stand-alone feedback
+                            feedbackType = TYPE_FEEDBACK;
+                        }
                         EditText etFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
                         String feedback = etFeedbackText.getText().toString();
                         if (feedback.length() > 0) {
-                            if (mErrorReports.size() == 0) {
-                                // This is stand-alone feedback
-                                sendFeedback(TYPE_FEEDBACK, feedback);
-                            } else {
-                                // This is error accompanying feedback
+                            sendFeedback(feedbackType, feedback);
+                        }
+                    } catch (Exception e) {
+                        Log.e(AnkiDroidApp.TAG, e.toString());
+                    }
+                }
+            });
+
+            if (numErrors > 1) {
+                btnSendMostRecent.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            deleteFiles(false, true);
+                            sendErrorReports();
+                            refreshErrorListView();
+                            EditText etFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
+                            String feedback = etFeedbackText.getText().toString();
+                            if (feedback.length() > 0) {
+                                // Always accompanying errors here
                                 sendFeedback(TYPE_ERROR_FEEDBACK, feedback);
                             }
+                        } catch (Exception e) {
+                            Log.e(AnkiDroidApp.TAG, e.toString());
                         }
-                    } catch (Exception e) {
-                        Log.e(AnkiDroidApp.TAG, e.toString());
-                    }
-                    refreshErrorListView();
-                }
-            });
-
-            btnSendMostRecent.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        deleteFiles(false, true);
                         refreshErrorListView();
-                        sendErrorReports();
-                        EditText etFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
-                        String feedback = etFeedbackText.getText().toString();
-                        if (feedback.length() > 0) {
-                            // Always accompanying errors here
-                            sendFeedback(TYPE_ERROR_FEEDBACK, feedback);
-                        }
-                    } catch (Exception e) {
-                        Log.e(AnkiDroidApp.TAG, e.toString());
+                        refreshInterface();
                     }
-                    refreshErrorListView();
-                }
-            });
+                });
+            }
 
-            btnClearAll.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    deleteFiles(false, false);
-                    refreshErrorListView();
-                }
-            });
+            refreshInterface();
+
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN |
                     WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         }
@@ -318,7 +344,7 @@ public class ErrorReporter extends Activity {
                 br.close();
                 
                 postReport(TYPE_STACKTRACE, i, pairs);
-                Log.i(AnkiDroidApp.TAG, "posting error report " + i);
+                Log.i(AnkiDroidApp.TAG, "Posting error report " + i);
             } catch (Exception ex) {
                 Log.e(AnkiDroidApp.TAG, ex.toString());
             }
@@ -334,6 +360,7 @@ public class ErrorReporter extends Activity {
 
         @Override
         public void onPostExecute(Payload data) {
+            Resources res = getResources();
             String errorType = (String)data.data[2];
             int errorIndex = (Integer)data.data[3];
             Log.i(AnkiDroidApp.TAG, "done posting " + errorType + "(" + errorIndex + "), success " + data.success);
@@ -343,8 +370,12 @@ public class ErrorReporter extends Activity {
                     etFeedbackText.setText("");
                     etFeedbackText.setHint("Sent, thank you!");
                     etFeedbackText.setEnabled(false);
+                    Toast.makeText(ErrorReporter.this,
+                            res.getString(R.string.feedback_message_sent_success), Toast.LENGTH_LONG).show();
                 } else {
-                    // TODO: Say something about failing
+                    Toast.makeText(ErrorReporter.this,
+                            res.getString(R.string.feedback_message_sent_failure, data.result),
+                            Toast.LENGTH_LONG).show();
                 }
             } else {
                 if (data.success) {
@@ -365,7 +396,7 @@ public class ErrorReporter extends Activity {
 
         @Override
         public void onProgressUpdate(Object... values) {
-            // pass, no progress update while posting
+            // pass
         }
     };
 
@@ -387,3 +418,4 @@ public class ErrorReporter extends Activity {
         Connection.sendErrorReport(sendListener, new Connection.Payload(new Object[] {url, pairs, type, 0}));
     }
 }
+
