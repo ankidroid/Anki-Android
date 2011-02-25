@@ -59,9 +59,17 @@
   <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
   <string name="newcards_day_summ">Il numero massimo di carte nuove mostrate al giorno.</string>
   <string name="newcards_day">Carte nuove / Giorno</string>
+  <string name="studyoptions_limit_select_tags">Select Tags</string>
+  <string name="studyoptions_limit_tags_active">With: %1$s</string>
+  <string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit session</string>
-  <string name="studyoptions_session_limit_text">Limit session:</string>
+  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
+  <string name="studyoptions_session">Session</string>
+  <string name="studyoptions_tag">By Tag</string>
+  <string name="studyoptions_tag_new">Show new cards by tag:</string>
+  <string name="studyoptions_tag_rev">Show review cards by tag:</string>
+  <string name="studyoptions_session_minutes">Limite della sessione (minuti):</string>
+  <string name="studyoptions_session_questions">Limite per la sessione (domande):</string>
   <string name="session_time_limit">Tempo limite di sessione</string>
   <string name="session_time_limit_summ">Durata della sessione in minuti. Scegli 0 per nessun limite.</string>
   <string name="session_question_limit">Numero di domande per sessione</string>
@@ -142,7 +150,7 @@
   <string name="zoom_summ">Mostra controlli Zoom durante le ripetizioni</string>
   <string name="swipe">Abilitare le Gestures</string>
   <string name="swipe_summ_off">Utilizzare le gestures per passare tra le schermate e le risposte. Questa opzione non è compatibile con i comandi dello zoom</string>
-  <string name="swipe_summ_on">Scorrere orizzontalmente per passare tra le schermate e verticalmente per rispondere alle carte (verso il basso: ancora una volta, in alto: suggerimento, toccare due volte: più facile di rec.)</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
   <string name="swipe_sensibility">Gesture Sensibility</string>
   <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
   <string name="shake">Scuotere per annullare</string>
@@ -242,8 +250,6 @@
   <string name="studyoptions_new_total">Totale nuove:</string>
   <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Carte nuove al giorno</string>
-  <string name="studyoptions_session_minutes">Limite della sessione (minuti):</string>
-  <string name="studyoptions_session_questions">Limite per la sessione (domande):</string>
   <string name="studyoptions_start">Inizia Ripetizioni</string>
   <string name="studyoptions_more">Opzioni di studio</string>
   <string name="studyoptions_more_dialog_title">Altre opzioni</string>

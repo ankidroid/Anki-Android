@@ -67,9 +67,9 @@
     <item>Mostrar en order aleatorio</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hour</item>
+    <item>hora</item>
     <item>día</item>
-    <item>month</item>
+    <item>mes</item>
     <item>año</item>
   </string-array>
   <string-array name="next_review_p">
@@ -79,16 +79,16 @@
     <item>años</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>en 1 hora</item>
+    <item>en 1 día</item>
+    <item>en 1 mes</item>
+    <item>en 1 año</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>en %s horas</item>
+    <item>en %s días</item>
+    <item>en %s meses</item>
+    <item>en %s años</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Tarjetas nuevas en orden aleatorio</item>
@@ -114,37 +114,44 @@
     <item>Mostrar tarjetas falladas en 3 días</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
+    <item>Por pregunta</item>
+    <item>Por respuesta</item>
+    <item>Por tiempo programado</item>
+    <item>Por intervalo</item>
+    <item>Por dificultad</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
-    <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>Pendientes</item>
+    <item>Programadas acumulativamente</item>
+    <item>Intervalos</item>
+    <item>Repasos</item>
+    <item>Tiempo de repaso</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1 semana</item>
+    <item>1 mes</item>
+    <item>3 meses</item>
+    <item>6 meses</item>
+    <item>1 año</item>
   </string-array>
   <string-array name="new_version_features">
-    <item>card browser</item>
-    <item>statistics</item>
-    <item>text-to-speech</item>
-    <item>deck completion bar on deck picker</item>
-    <item>select card model on fact adder</item>
-    <item>new widget</item>
-    <item>better undo/redo behaviour</item>
-    <item>slider controls</item>
-    <item>language selection</item>
-    <item>more languages</item>
-    <item>progress bars in reviewer</item>
+    <item>Explorador de tarjetas</item>
+    <item>Estadísticas</item>
+    <item>texto-a-voz</item>
+    <item>barra de progreso de mazo en la pantalla de selección de mazos</item>
+    <item>seleccionar el modelo de la tarjeta en añadir elementos</item>
+    <item>nuevo widget</item>
+    <item>comportamiento mejorado para deshacer/rehacer</item>
+    <item>controles deslizantes</item>
+    <item>selección de idioma</item>
+    <item>más idiomas</item>
+    <item>barras de progreso en la pantalla de revisión</item>
+    <item>enviar comentarios desde AnkiDroid</item>
+    <item>posibilidad de establecer tarjetas en activas/inactivas mediante etiquetas</item>
+    <item>sincronización mejorada</item>
+    <item>reporte de errores mejorado</item>
+    <item>añadir mazos</item>
+    <item>más opciones</item>
+    <item>muchas correcciones para errores pequeños</item>
   </string-array>
 </resources>

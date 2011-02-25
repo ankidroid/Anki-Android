@@ -59,9 +59,17 @@
   <string name="leech_notification">Fitxa marcada com a lapa</string>
   <string name="newcards_day_summ">El nombre màxim de targetes noves mostrades per dia.</string>
   <string name="newcards_day">Noves targetes / dia</string>
+  <string name="studyoptions_limit_select_tags">Select Tags</string>
+  <string name="studyoptions_limit_tags_active">With: %1$s</string>
+  <string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit session</string>
-  <string name="studyoptions_session_limit_text">Limit session:</string>
+  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
+  <string name="studyoptions_session">Session</string>
+  <string name="studyoptions_tag">By Tag</string>
+  <string name="studyoptions_tag_new">Show new cards by tag:</string>
+  <string name="studyoptions_tag_rev">Show review cards by tag:</string>
+  <string name="studyoptions_session_minutes">Temps màxim (minuts):</string>
+  <string name="studyoptions_session_questions">Màxim de fitxes (num.):</string>
   <string name="session_time_limit">Límit de temps per sessió</string>
   <string name="session_time_limit_summ">El nombre de minuts d\'una sessió Trieu 0 si no voleu cap límit.</string>
   <string name="session_question_limit">Límit de preguntes per sessió</string>
@@ -142,7 +150,7 @@
   <string name="zoom_summ">Mostra els botons d\'ampliació a les fitxes</string>
   <string name="swipe">Habilita els gestos</string>
   <string name="swipe_summ_off">Feu servir gestos per canviar entre les pantalles i fitxes de resposta. Aquesta opció no és compatible amb els controls de zoom</string>
-  <string name="swipe_summ_on">Passeu horitzontalment per canviar entre les pantalles i verticalment per respondre a les fitxes (cap a baix: de nou, fins a: recomanació, premeu dues vegades: més fàcil)</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
   <string name="swipe_sensibility">Gesture Sensibility</string>
   <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
   <string name="shake">Sacsegeu el dispositiu per desfer</string>
@@ -242,8 +250,6 @@
   <string name="studyoptions_new_total">Total de noves:</string>
   <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Noves fitxes per dia</string>
-  <string name="studyoptions_session_minutes">Temps màxim (minuts):</string>
-  <string name="studyoptions_session_questions">Màxim de fitxes (num.):</string>
   <string name="studyoptions_start">Comença</string>
   <string name="studyoptions_more">Opcions d\'aprenentatge</string>
   <string name="studyoptions_more_dialog_title">Més</string>

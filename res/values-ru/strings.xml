@@ -29,7 +29,7 @@
   <string name="deck_upgrade_too_old_version">Колоды версий до 39 не поддерживаются AnkiDroid, пожалуйста, откройте колоду настольной версией Anki для обновлении колоды до последней версии.</string>
   <string name="deck_upgrade_version_61_has_latex">Колода не может быть полностью обновлена, так как она содержит LaTeX-выражения; пожалуйста откройте колоду в десктоп-версии Anki и пересохраните файл колоды (чтобы обновить её до последнего нового формата и перегенерировать LaTeX).</string>
   <string name="deckpicker_title_nosdcard">SD-карта отмонтирована</string>
-  <string name="deckpicker_new">%d новых сегодня</string>
+  <string name="deckpicker_new">%d нов.сегодня</string>
   <string name="deckpicker_loaddeck">Открытие колоды...</string>
   <string name="deckpicker_nodeck">Не найдено ни одной колоды.</string>
   <string name="sync_log_title">Ход выполнения синхронизации</string>
@@ -59,9 +59,17 @@
   <string name="leech_notification">Карта помечена как лишняя</string>
   <string name="newcards_day_summ">Максимальное количество новых карт в день было показано.</string>
   <string name="newcards_day">Новых карт в день</string>
-  <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit session</string>
-  <string name="studyoptions_session_limit_text">Limit session:</string>
+  <string name="studyoptions_limit_select_tags">Выберите тэги</string>
+  <string name="studyoptions_limit_tags_active">С: %1$s</string>
+  <string name="studyoptions_limit_tags_inactive">Без: %1$s</string>
+  <string name="studyoptions_limit_button_text">Лимит</string>
+  <string name="studyoptions_limit_dialog_title">Ограничение обучения</string>
+  <string name="studyoptions_session">Сессия</string>
+  <string name="studyoptions_tag">По тэгам</string>
+  <string name="studyoptions_tag_new">Показать новые карты по тегам:</string>
+  <string name="studyoptions_tag_rev">Показать обзор карты по тегам:</string>
+  <string name="studyoptions_session_minutes">Урок составляет (мин):</string>
+  <string name="studyoptions_session_questions">Вопросов в уроке:</string>
   <string name="session_time_limit">Лимит времени сеанса</string>
   <string name="session_time_limit_summ">Количество минут в сеансе. Выберите 0 для отмены ограничения.</string>
   <string name="session_question_limit">Лимит вопросов в сеансе</string>
@@ -88,7 +96,7 @@
   <string name="ease4_successive">Легко</string>
   <string name="pref_cat_decks">Колоды</string>
   <string name="pref_cat_sync">Синхронизация</string>
-  <string name="pref_cat_qadisplay">Экран Просмотра</string>
+  <string name="pref_cat_qadisplay">Просмотр</string>
   <string name="pref_cat_general">Основные</string>
   <string name="pref_cat_start">При запуске</string>
   <string name="pref_cat_extras">Дополнительно</string>
@@ -142,7 +150,7 @@
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
   <string name="swipe">Включить жесты</string>
   <string name="swipe_summ_off">Используйте жесты (при swipe) для переключения между экранами. Не работает одновременно с кнопками масштабирования</string>
-  <string name="swipe_summ_on">Горизонтальный жест (при swipe) - смена экранов, вертикал. - ответ (вверх: снова, вниз: рекомен., двой.касание: проще чем рекомен.)</string>
+  <string name="swipe_summ_on">Swipe-движение горизонтальное - для перемещения между экранами, вертикальное - для ответа на карты (вниз: снова, вверх: хорошо, двойное постукивание - легко)</string>
   <string name="swipe_sensibility">Чувствительность жестов</string>
   <string name="swipe_sensibility_summ">Чувствительность swipe жестов: XXX</string>
   <string name="shake">Тряхнуть для отмены</string>
@@ -188,8 +196,8 @@
   <string name="card_browser_unmark_card">Снять отметку</string>
   <string name="delete_card_title">Удалить карту</string>
   <string name="delete_card_message">Действительно удалить эту карту?\n%1$s\n%2$s</string>
-  <string name="card_browser_show_marked">Показать отмеченные карты</string>
-  <string name="card_browser_show_suspended">Показать отложенные карты</string>
+  <string name="card_browser_show_marked">Показать отмеченные</string>
+  <string name="card_browser_show_suspended">Показать отложенные</string>
   <string name="card_browser_change_display_order">Изменение сортировки</string>
   <string name="card_browser_change_display_order_title">Сортировка</string>
   <string name="card_browser_card_details">Информация о карте</string>
@@ -242,8 +250,6 @@
   <string name="studyoptions_new_total">Новые всего:</string>
   <string name="studyoptions_eta">Вероятно займёт (мин):</string>
   <string name="studyoptions_new_cards_per_day">Новых карт в день</string>
-  <string name="studyoptions_session_minutes">Длительность урока (минут):</string>
-  <string name="studyoptions_session_questions">Вопросов в уроке:</string>
   <string name="studyoptions_start">Начать Просмотр</string>
   <string name="studyoptions_more">Доп. параметры</string>
   <string name="studyoptions_more_dialog_title">Доп. параметры</string>
@@ -251,13 +257,13 @@
   <string name="studyoptions_nodeck_title">Колоды не загружены</string>
   <string name="studyoptions_nodeck_message">В данный момент не открыто ни одной колоды. Anki-колоды сохраняются в каталоге \"%s\" на SD-карте. Этот каталог может быть изменён в \"Настройках\" (нажмите на кнопку \"Menu\" (на аппарате) и выберете \"Настройки\").</string>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
-  <string name="studyoptions_welcome_message">С AnkiDroid вы можете изучать большие объемы лексики или любого другого материала. AnkiDroid покажет вам карточки перед тем, как вы забудете их (по спец. алгоритму). \nВсе карточки организованны в \"колоды\", их можно загрузить с сайта (общедоступные) или создать свою с AnkiDroid или Anki. Свои можно синхронизировать через AnkiWeb или копировать колоды в каталог %s.\nНажмите, чтобы узнать больше.</string>
+  <string name="studyoptions_welcome_message">С AnkiDroid вы можете изучать большие объемы лексики или любого другого материала. AnkiDroid покажет вам карточки перед тем, как вы забудете их (по спец. алгоритму). Все карточки организованны в \"колоды\", их можно загрузить с сайта (общедоступные) или создать свою с AnkiDroid или Anki. Свои можно синхронизировать через AnkiWeb или копировать колоды в каталог %s.\nНажмите, чтобы узнать больше.</string>
   <string name="studyoptions_deck_not_loaded_title">Колода не может быть открыта</string>
   <string name="studyoptions_deck_not_loaded_message">Колода, которую вы выбрали, возможно повреждена. Пожалуйста, откройте ее с помощью десктоп-версии Anki и проверьте (или восстановите) для использования ее в Ankidroid.\n\nСейчас вы можете выбрать другую колоду или создать колоду с примерами с помощью клавиш ниже.</string>
   <string name="studyoptions_no_external_storage_title">Нет доступа ко внешнему хранилищу</string>
   <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
-  <string name="studyoptions_load_other_deck">Загрузить другие колоды</string>
-  <string name="studyoptions_load_sample_deck">Загрузить колоду с примерами</string>
+  <string name="studyoptions_load_other_deck">Открыть другие колоды</string>
+  <string name="studyoptions_load_sample_deck">Открыть колоду с примерами</string>
   <string name="studyoptions_night_mode">Ночной режим</string>
   <string name="menu_open_deck">Открыть колоду</string>
   <string name="menu_sync">Синхронизация</string>
@@ -270,9 +276,9 @@
   <string name="menu_deck_properties">Свойства колоды</string>
   <string name="menu_add_card">Добавить карту</string>
   <string name="menu_about">О программе</string>
-  <string name="menu_remove_card">Remove Card</string>
+  <string name="menu_remove_card">Удаление карты</string>
   <string name="menu_suspend_card">Отложить карту</string>
-  <string name="menu_bury_card">Bury Card</string>
+  <string name="menu_bury_card">Скрыть карту</string>
   <string name="menu_edit_card">Редактирование карты</string>
   <string name="menu_search">Поиск в %1$s</string>
   <string name="menu_mark_card">Отметить карту</string>
@@ -341,15 +347,15 @@
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="error_reporting_choice_summary">Можно посылать ошибки программы автоматически, не посылать или выводить вопрос пользователю</string>
-  <string name="error_collection_information">Мы не собираем никакой личной информации, такой как адрес электронной почты, номер телефона, IP-адреса или IMEI-телефона. Мы собираем информацию о вашем устройстве, таком, как производитель, модель и версию Android, а также сам характер ошибки.</string>
+  <string name="error_collection_information">Мы не собираем никакой личной информации, такой как адрес электронной почты, номер телефона, IP-адреса или IMEI-телефона. Мы собираем информацию общего характера о вашем устройстве, такую, как производитель, модель и версию Android, а также сам характер ошибки.</string>
   <string name="widget_pref">Виджет</string>
   <string name="widget_minimum_cards_due">Виджет уведомления</string>
   <string name="widget_minimum_cards_due_summary">Минимальное количество карточек для повтора, при котором всплывет уведомление в зоне уведомлений Вашего аппарата: XXX</string>
   <string name="widget_minimum_cards_due_vibrate">Вибрировать</string>
   <string name="widget_minimum_cards_due_blink">Мигать</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Есть карты для повторения</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d карт ожидают повторения</string>
-  <string name="widget_no_cards_due">Нет карт для повтора</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Есть карты для повтора</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">повтор %d карт</string>
+  <string name="widget_no_cards_due">Карт для повтора нет</string>
   <string name="soon">Скоро</string>
   <string name="show_next_review_time">Время у кнопок показывать</string>
   <string name="show_next_review_time_summ">Показывать добавляемое время у кнопок ответа (Скоро, +1, +5 и т.д.)</string>
@@ -388,19 +394,19 @@
   <string name="statistics_all_decks">(все колоды)</string>
   <string name="calculating_statistics">Расчет статистики</string>
   <string name="feedback_title">Обратная связь</string>
-  <string name="feedback_default_text">Пожалуйста, введите Ваш отзыв здесь и нажмите кнопку OK, чтобы отправить его.</string>
+  <string name="feedback_default_text">Пожалуйста, введите Ваш отзыв здесь и нажмите кнопку внизу, чтобы отправить его.</string>
   <string name="feedback_result_fail">К сожалению, мы не смогли передать ваш отзыв. Пожалуйста, попробуйте еще раз.</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Все колоды: 1 из %2$d к повтору (%3$s)</item>
-    <item quantity="other">Все колоды: %1$d из %2$d к повтору (%3$s)</item>
+    <item quantity="one">Все колоды: повтор 1 из %2$d (%3$s)</item>
+    <item quantity="other">Все колоды: повтор %1$d из %2$d (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 мин.</item>
     <item quantity="other">%d мин.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 из %2$d к повтору</item>
-    <item quantity="other">%1$d из %2$d к повтору</item>
+    <item quantity="one">повтор 1 из %2$d</item>
+    <item quantity="other">повтор %1$d из %2$d</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 из %3$d карт показано</item>
@@ -408,15 +414,15 @@
   </plurals>
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 из %3$d к повтору)</item>
-    <item quantity="other">%1$s (%2$d из %3$d)</item>
+    <item quantity="other">%1$s (повтор %2$d из %3$d)</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Есть одна ошибка для отчёта</item>
     <item quantity="other">Найдено %d ошибки для отчета</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 карту в %2$s</item>
-    <item quantity="other">%1$d карт из %2$s</item>
+    <item quantity="one">повтор 1 из %2$s</item>
+    <item quantity="other">повтор %1$d из %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1 колода</item>
