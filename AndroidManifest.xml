@@ -75,8 +75,8 @@
 		<activity android:name="DeckCreator" 
 			android:label="@string/deckcreator_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="ErrorReporter" 
-			android:label="@string/error_reporter_title"
+		<activity android:name="Feedback" 
+			android:label="@string/feedback_title"
 			android:configChanges="locale"/>
 		<activity android:name="Feedback" 
 			android:label="@string/feedback_title"
