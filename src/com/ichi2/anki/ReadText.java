@@ -34,7 +34,8 @@ public class ReadText {
     private static long mModelId;
     private static long mCardModelId;
     private static int mQuestionAnswer;
-    
+    public static final String NO_TTS = "0";
+
     //private boolean mTtsReady = false;
 
     
@@ -54,11 +55,16 @@ public class ReadText {
     }
 
 
+    public static String getLanguage(int qa) {
+        return MetaDB.getLanguage(mReviewer, mDeckFilename,  mModelId, mCardModelId, qa);
+    }
+
+
     public static void textToSpeech(String text, int qa) {
     	mTextToSpeak = text;
     	mQuestionAnswer = qa;
-    	
-    	String language = MetaDB.getLanguage(mReviewer, mDeckFilename,  mModelId, mCardModelId, mQuestionAnswer);
+
+    	String language = getLanguage(mQuestionAnswer);
         if (availableTtsLocales.isEmpty()) {
 	    	Locale[] systemLocales = Locale.getAvailableLocales();
 			for (Locale loc : systemLocales) {
@@ -70,16 +76,18 @@ public class ReadText {
 
         // Check, if stored language is available
         for (int i = 0; i < availableTtsLocales.size(); i++) {
-    		if (language.equals(availableTtsLocales.get(i)[0])) {
+    		if (language.equals(NO_TTS)) {
+    		    return;
+    		} else if (language.equals(availableTtsLocales.get(i)[0])) {
     			speak(language);
     			return;
-    		}                    			
+    		}
 		}
 
         // Otherwise ask 
+        Resources res = mReviewer.getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(mReviewer);
         if (availableTtsLocales.size() == 0) {
-        	Resources res = mReviewer.getResources();
         	builder.setTitle(res.getString(R.string.no_tts_available_title));
             builder.setMessage(res.getString(R.string.no_tts_available_message));
             builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -88,7 +96,9 @@ public class ReadText {
         	ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
         	final ArrayList<String> dialogIds = new ArrayList<String>();
             builder.setTitle(R.string.select_locale_title);
-
+            // Add option: "no tts"
+            dialogItems.add(res.getString(R.string.tts_no_tts));
+            dialogIds.add(NO_TTS);
             for (int i = 0; i < availableTtsLocales.size(); i++) {
                 dialogItems.add(availableTtsLocales.get(i)[1]);
                 dialogIds.add(availableTtsLocales.get(i)[0]);

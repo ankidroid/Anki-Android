@@ -88,7 +88,7 @@ public class Sound {
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
-        if (!soundAvailable && ttsEnabled) {
+        if (!soundAvailable && ttsEnabled && !ReadText.getLanguage(qa).equals(ReadText.NO_TTS)) {
             stringBuilder.append(content.substring(0, content.length() - 9));        
             stringBuilder
                 .append("<a onclick=\"window.interface.playSound(this.title);\" title=\"tts" + Integer.toString(qa)
