@@ -516,9 +516,7 @@ public class CardBrowser extends Activity {
                 data.put("marSus", item[3]);
                 mAllCards.add(data);
             }
-            mCards.clear();
-            mCards.addAll(mAllCards);
-            updateList();
+            updateCardsList();
             
             // This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems
             // that emulator does not do)
