@@ -49,4 +49,6 @@
 
 	<color name="studyoptions_foreground">#ffffff</color>	
 	<color name="studyoptions_foreground_deactivated">#484848</color>
+	<color name="background">#ffffff</color>	
+	
 </resources>

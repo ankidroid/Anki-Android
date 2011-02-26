@@ -23,6 +23,7 @@
 <string name="CardEditorCancelButton">Cancel</string>
 <string name="CardEditorSaveButton">Save</string>
 <string name="CardEditorTags">Tags: %1$s</string>
+<string name="add_new_tag">Add new tag</string>
 
 <string name="app_name">AnkiDroid</string>
 

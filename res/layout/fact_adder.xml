@@ -40,7 +40,6 @@
 			android:layout_height="wrap_content" 
 			android:id="@+id/FactAdderTagButton"
 			android:text="Tags:"
-			android:visibility="gone"
 			android:layout_gravity="center"
 			android:gravity="left|center_vertical"/>
  	    <LinearLayout

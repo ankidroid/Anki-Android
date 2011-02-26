@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -92,6 +93,9 @@ public class FactAdder extends Activity {
     private String[] allTags;
     private HashSet<String> mSelectedTags;
     private String mFactTags = "";
+    private EditText mNewTagEditText;
+    private AlertDialog mTagsDialog;
+    private AlertDialog mAddNewTag;
 
 
     @Override
@@ -166,10 +170,12 @@ public class FactAdder extends Activity {
 
             @Override
             public void onClick(View v) {
-                tagsDialog().show();
+                recreateTagsDialog();
+                mTagsDialog.show();
             }
 
         });
+        initDialogs();
     }
 
 
@@ -179,6 +185,50 @@ public class FactAdder extends Activity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
+    }
+
+
+    private void initDialogs() {
+        Resources res = getResources();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View contentView = getLayoutInflater().inflate(R.layout.edittext, null);
+        //contentView.setBackgroundColor(res.getColor(R.color.background));
+        mNewTagEditText =  (EditText) contentView.findViewById(R.id.edit_text);
+        builder.setView(contentView);
+        builder.setTitle(res.getString(R.string.add_new_tag));
+        builder.setPositiveButton(res.getString(R.string.add), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String tag = mNewTagEditText.getText().toString();
+                if (tag.equals("")) {
+                    mTagsDialog.show();
+                } else {
+                    String[] oldTags = allTags;
+                    Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+                    allTags = new String[oldTags.length + 1];
+                    allTags[0] = oldTags[0]; 
+                    allTags[1] = tag;
+                    for (int i = 1; i < oldTags.length; i++) {
+                        allTags[i + 1] = oldTags[i];
+                    }
+                    recreateTagsDialog();
+                    mTagsDialog.show();                    
+                }
+            }
+        });
+        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mTagsDialog.show();
+            }
+        });
+        builder.setOnCancelListener(new OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mTagsDialog.show();
+            }
+        });
+        mAddNewTag = builder.create();
     }
 
 
@@ -337,11 +387,16 @@ public class FactAdder extends Activity {
     }
 
 
-    private AlertDialog tagsDialog() {
+    private void recreateTagsDialog() {
         Resources res = getResources();
         if (allTags.length == 0) {
-            allTags = AnkiDroidApp.deck().allUserTags();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));            
+            String[] oldTags = AnkiDroidApp.deck().allUserTags();
+            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+            allTags = new String[oldTags.length + 1];
+            allTags[0] = res.getString(R.string.add_new_tag);
+            for (int i = 0; i < oldTags.length; i++) {
+                allTags[i + 1] = oldTags[i];
+            }
         }
         mSelectedTags.clear();
         List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
@@ -359,14 +414,20 @@ public class FactAdder extends Activity {
         builder.setMultiChoiceItems(allTags, checked,
                 new DialogInterface.OnMultiChoiceClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-                        String tag = allTags[whichButton];
-                        if (!isChecked) {
-                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                            mSelectedTags.remove(tag);
+                        if (whichButton == 0) {
+                            dialog.dismiss();
+                            mNewTagEditText.setText("");
+                            mAddNewTag.show();
                         } else {
-                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                            mSelectedTags.add(tag);
-                        }  
+                            String tag = allTags[whichButton];
+                            if (!isChecked) {
+                                Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                                mSelectedTags.remove(tag);
+                            } else {
+                                Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                                mSelectedTags.add(tag);
+                            }                            
+                        }
                     }
                 });
         builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
@@ -378,7 +439,7 @@ public class FactAdder extends Activity {
             }
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
-        return builder.create();
+        mTagsDialog = builder.create();
     }
 
     /**
