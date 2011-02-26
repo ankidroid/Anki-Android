@@ -3,10 +3,7 @@
 <ScrollView android:layout_width="fill_parent"
 	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/CardEditorScroll"
-	android:paddingLeft="10dp"
-	android:paddingTop="15dp"
-	android:paddingRight="10dp"
-	android:paddingBottom="15dp">
+	android:padding="5dp">
 	<LinearLayout android:id="@+id/CardEditorLayout"
 		android:orientation="vertical" 
 		android:layout_width="fill_parent"
@@ -15,6 +12,12 @@
 			android:layout_height="wrap_content" 
 			android:id="@+id/CardEditorEditFieldsLayout"
 			android:orientation="vertical"></LinearLayout>
+		<Button android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:id="@+id/CardEditorTagButton"
+			android:text="@string/CardEditorTags"
+			android:layout_gravity="center"
+			android:gravity="left|center_vertical"/>
 		<LinearLayout android:layout_width="fill_parent"
 			android:layout_height="wrap_content" 
 			android:orientation="horizontal"

@@ -15,10 +15,14 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.DialogInterface.OnClickListener;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,8 +34,11 @@ import android.widget.TextView;
 
 import com.ichi2.anki.Fact.Field;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeSet;
 
 /**
@@ -54,13 +61,18 @@ public class CardEditor extends Activity {
     private LinearLayout mFieldsLayoutContainer;
     private Button mSave;
     private Button mCancel;
+    private Button mTags;
 
     private Card mEditorCard;
+    private Fact mEditorFact;
 
     private LinkedList<FieldEditText> mEditFields;
 
     private boolean mModified;
 
+    private String[] allTags;
+    private HashSet<String> mSelectedTags;
+    private String mFactTags;
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -78,6 +90,7 @@ public class CardEditor extends Activity {
 
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
+        mTags = (Button) findViewById(R.id.CardEditorTagButton);
 
         if (getIntent().getBooleanExtra("callfromcardbrowser", false)) {
             mEditorCard = CardBrowser.getEditorCard();
@@ -87,8 +100,8 @@ public class CardEditor extends Activity {
 
         // Card -> FactID -> FieldIDs -> FieldModels
 
-        Fact cardFact = mEditorCard.getFact();
-        TreeSet<Field> fields = cardFact.getFields();
+        mEditorFact = mEditorCard.getFact();
+        TreeSet<Field> fields = mEditorFact.getFields();
 
         mEditFields = new LinkedList<FieldEditText>();
 
@@ -105,6 +118,19 @@ public class CardEditor extends Activity {
             mFieldsLayoutContainer.addView(newTextbox);
         }
 
+        mFactTags = mEditorFact.getTags();
+        mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
+        mTags.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                tagsDialog().show();
+            }
+
+        });
+        allTags = new String[0];
+        mSelectedTags = new HashSet<String>();
+
         mSave.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -113,6 +139,10 @@ public class CardEditor extends Activity {
                 while (iter.hasNext()) {
                     FieldEditText current = iter.next();
                     mModified |= current.updateField();
+                }
+                if (!mEditorFact.getTags().equals(mFactTags)) {
+                    mEditorFact.setTags(mFactTags);
+                    mModified = true;
                 }
                 // Only send result to save if something was actually changed
                 if (mModified) {
@@ -197,6 +227,50 @@ public class CardEditor extends Activity {
         }    
     }
 
+
+    private AlertDialog tagsDialog() {
+        Resources res = getResources();
+        if (allTags.length == 0) {
+            allTags = AnkiDroidApp.deck().allUserTags();
+            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));            
+        }
+        mSelectedTags.clear();
+        List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
+        int length = allTags.length;
+        boolean[] checked = new boolean[length];
+        for (int i = 0; i < length; i++) {
+            String tag = allTags[i];
+            if (selectedList.contains(tag)) {
+                checked[i] = true;
+                mSelectedTags.add(tag);
+            }
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.studyoptions_limit_select_tags);
+        builder.setMultiChoiceItems(allTags, checked,
+                new DialogInterface.OnMultiChoiceClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+                        String tag = allTags[whichButton];
+                        if (!isChecked) {
+                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                            mSelectedTags.remove(tag);
+                        } else {
+                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                            mSelectedTags.add(tag);
+                        }  
+                    }
+                });
+        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String tags = mSelectedTags.toString();
+                mFactTags = tags.substring(1, tags.length() - 1);
+                mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
+            }
+        });
+        builder.setNegativeButton(res.getString(R.string.cancel), null);
+        return builder.create();
+    }
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------

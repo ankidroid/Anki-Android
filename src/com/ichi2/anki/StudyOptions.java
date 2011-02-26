@@ -193,7 +193,7 @@ public class StudyOptions extends Activity {
     private String mLimitRevActive;
     private String mLimitRevInactive;
     private HashSet<String> mSelectedTags;
-    private String allTags[];
+    private String[] allTags;
     private int mSelectedLimitTagText;
     private static final int LIMIT_NEW_ACTIVE = 0;
     private static final int LIMIT_NEW_INACTIVE = 1;

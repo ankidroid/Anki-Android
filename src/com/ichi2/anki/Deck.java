@@ -3142,6 +3142,17 @@ public class Deck {
     }
 
 
+    public String[] allUserTags() {
+        ArrayList<String> t = new ArrayList<String>();
+        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts", 0));
+        String joined = Utils.joinTags(t);
+        String[] parsed = Utils.parseTags(joined);
+        List<String> joinedList = Arrays.asList(parsed);
+        TreeSet<String> joinedSet = new TreeSet<String>(joinedList);
+        return joinedSet.toArray(new String[joinedSet.size()]);
+    }
+
+
     /*
      * Tags: Caching*****************************
      */
