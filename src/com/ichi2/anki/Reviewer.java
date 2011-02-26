@@ -1383,6 +1383,10 @@ public class Reviewer extends Activity {
             displayString = displayString + "<hr/>";
         }
 
+        if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
+            ReadText.setLanguageInformation(Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());          
+        }
+
         updateCard(displayString);
     }
 
@@ -1500,10 +1504,6 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
       
-        if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
-            ReadText.setLanguageInformation(Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());       	
-        }
-        
         if (!mConfigurationChanged && mPlaySoundsAtStart) {
         	if (!mSpeakText) {
         		Sound.playSounds(null, 0);
