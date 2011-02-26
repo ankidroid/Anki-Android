@@ -171,7 +171,9 @@ public class FactAdder extends Activity {
             @Override
             public void onClick(View v) {
                 recreateTagsDialog();
-                mTagsDialog.show();
+                if (!mTagsDialog.isShowing()) {
+                    mTagsDialog.show();                    
+                }
             }
 
         });
@@ -201,6 +203,7 @@ public class FactAdder extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 String tag = mNewTagEditText.getText().toString();
                 if (tag.equals("")) {
+                    recreateTagsDialog();
                     mTagsDialog.show();
                 } else {
                     String[] oldTags = allTags;
@@ -219,12 +222,14 @@ public class FactAdder extends Activity {
         builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mTagsDialog.show();
+                recreateTagsDialog();
+                mTagsDialog.show();                    
             }
         });
         builder.setOnCancelListener(new OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
+                recreateTagsDialog();
                 mTagsDialog.show();
             }
         });
