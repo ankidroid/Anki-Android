@@ -4,10 +4,7 @@
 	android:layout_height="fill_parent" 
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/FactAdderScroll"
-	android:paddingLeft="10dp"
-	android:paddingTop="15dp"
-	android:paddingRight="10dp"
-	android:paddingBottom="15dp">
+	android:padding="10dp">
 	<LinearLayout android:id="@+id/FactAdderLayout"
 		android:orientation="vertical" 
 		android:layout_width="fill_parent"
@@ -39,7 +36,13 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
         </LinearLayout>
-
+		<Button android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:id="@+id/FactAdderTagButton"
+			android:text="Tags:"
+			android:visibility="gone"
+			android:layout_gravity="center"
+			android:gravity="left|center_vertical"/>
  	    <LinearLayout
    		android:id="@+id/FactAdderButtons"
   		android:layout_height="wrap_content" 
