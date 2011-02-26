@@ -512,7 +512,7 @@
 
 <string name="no_tts_available_title">Text-to-Speech</string>
 <string name="no_tts_available_message">No text-to-speech language available</string>
-<string name="tts_no_tts">Don't speak</string>
+<string name="tts_no_tts">Don\'t speak</string>
 
 <string name="statistics_type_title">Chose statistic type</string>
 <string name="statistics_period_title">Chose report period</string>
