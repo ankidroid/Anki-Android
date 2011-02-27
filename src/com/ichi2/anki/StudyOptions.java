@@ -274,9 +274,14 @@ public class StudyOptions extends Activity {
     */    
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
-	public static int sSwipeMinDistance = 100;
-	public static int sSwipeMaxOffPath = 100;
-	public static int sSwipeThresholdVelocity = 200;
+
+	private static final int SWIPE_MIN_DISTANCE_DIP = 130;
+    private static final int SWIPE_MAX_OFF_PATH_DIP = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY_DIP = 250;
+
+	public static int sSwipeMinDistance;
+	public static int sSwipeMaxOffPath;
+	public static int sSwipeThresholdVelocity;
 
     /**
 	* Statistics
@@ -1854,11 +1859,18 @@ public class StudyOptions extends Activity {
             mNewVersion = true;
         }
 
+        // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
+        final float gestureScale = getResources().getDisplayMetrics().density;
         int sensibility = preferences.getInt("swipeSensibility", 100);
         if (sensibility != 100) {
-            sSwipeMinDistance = 200 - sensibility;
-            sSwipeMaxOffPath = sSwipeMinDistance;
-        	sSwipeThresholdVelocity = sSwipeMinDistance * (200 / 100);
+            float sens = (200 - sensibility) / 100;
+            sSwipeMinDistance = (int)(SWIPE_MIN_DISTANCE_DIP * sens * gestureScale + 0.5f);
+            sSwipeThresholdVelocity = (int)(SWIPE_THRESHOLD_VELOCITY_DIP * sens * gestureScale + 0.5f);
+            sSwipeMaxOffPath = (int)(SWIPE_MAX_OFF_PATH_DIP * sens * gestureScale + 0.5f);
+        } else {
+            sSwipeMinDistance = (int)(SWIPE_MIN_DISTANCE_DIP * gestureScale + 0.5f);
+            sSwipeThresholdVelocity = (int)(SWIPE_THRESHOLD_VELOCITY_DIP * gestureScale + 0.5f);
+            sSwipeMaxOffPath = (int)(SWIPE_MAX_OFF_PATH_DIP * gestureScale + 0.5f);            
         }
 
         mInvertedColors = preferences.getBoolean("invertedColors", false);
