@@ -15,17 +15,21 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
@@ -45,7 +49,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -79,11 +82,15 @@ public class Feedback extends Activity {
 
 	// This is used to group the batch of bugs and notes sent on the server side
 	protected long mNonce;
+	
 	protected List<HashMap<String, String>> mErrorReports;
     protected SimpleAdapter mErrorAdapter;
     protected ListView mLvErrorList;
     protected EditText mEtFeedbackText;
     protected boolean mPostingFeedback;
+    protected InputMethodManager mImm = null;
+    protected AlertDialog mNoConnectionAlert = null;
+
     
     protected String mFeedbackUrl; 
     protected String mErrorUrl; 
@@ -93,6 +100,27 @@ public class Feedback extends Activity {
         deleteFiles(true, false);
         setResult(RESULT_OK);
         finish();
+    }
+    
+    /**
+     * Create AlertDialogs used on all the activity
+     */
+    private void initAllAlertDialogs() {
+        Resources res = getResources();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(res.getString(R.string.connection_error_title));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setMessage(res.getString(R.string.connection_needed));
+        builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPostingFeedback = false;
+                refreshInterface();
+            }
+        });
+        mNoConnectionAlert = builder.create();
     }
 
     private void refreshInterface() {
@@ -124,9 +152,14 @@ public class Feedback extends Activity {
         }
         
         if (mPostingFeedback) {
+            int buttonHeight = btnSend.getHeight();
             btnSend.setVisibility(View.GONE);
             pbSpinner.setVisibility(View.VISIBLE);
+            LinearLayout topLine = (LinearLayout) findViewById(R.id.llFeedbackTopLine);
+            topLine.setMinimumHeight(buttonHeight);
+
             mEtFeedbackText.setEnabled(false);
+            mImm.hideSoftInputFromWindow(mEtFeedbackText.getWindowToken(), 0);
         } else {
             btnSend.setVisibility(View.VISIBLE);
             pbSpinner.setVisibility(View.GONE);
@@ -147,8 +180,10 @@ public class Feedback extends Activity {
         mNonce = UUID.randomUUID().getMostSignificantBits();
         mFeedbackUrl = res.getString(R.string.feedback_post_url);
         mErrorUrl = res.getString(R.string.error_post_url);
+        mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         mPostingFeedback = false;
+        initAllAlertDialogs();
 
         getErrorFiles();
         if (reportErrorMode.equals(REPORT_ALWAYS)) { // Always report
@@ -171,14 +206,12 @@ public class Feedback extends Activity {
 
         setContentView(R.layout.feedback);
 
-        // TextView tvErrorText = (TextView) findViewById(R.id.tvErrorText);
         Button btnSend = (Button) findViewById(R.id.btnFeedbackSend);
         Button btnKeepLatest = (Button) findViewById(R.id.btnFeedbackKeepLatest);
         Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);
         mEtFeedbackText = (EditText) findViewById(R.id.etFeedbackText);
         mLvErrorList = (ListView) findViewById(R.id.lvFeedbackErrorList);
 
-//        int numErrors = mErrorReports.size();
         mErrorAdapter = new SimpleAdapter(this, mErrorReports,
                 R.layout.error_item, new String[] {"name", "state"}, new int[] {
                     R.id.error_item_text, R.id.error_item_progress });
@@ -237,7 +270,7 @@ public class Feedback extends Activity {
 
         refreshInterface();
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN |
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         
     }
@@ -286,7 +319,9 @@ public class Feedback extends Activity {
 
         @Override
         public void onDisconnected() {
-            // TODO: Inform the user that the connection was lost before the post was completed
+            if (mNoConnectionAlert != null) {
+                mNoConnectionAlert.show();
+            }
         }
 
         @Override
@@ -318,8 +353,12 @@ public class Feedback extends Activity {
                             res.getString(R.string.feedback_message_sent_success), Toast.LENGTH_LONG).show();
                 } else if (state.equals(STATE_FAILED)) {
                     int respCode = (Integer)values[3];
-                    Toast.makeText(Feedback.this,
-                            res.getString(R.string.feedback_message_sent_failure, respCode), Toast.LENGTH_LONG).show();
+                    if (respCode == 0) {
+                        onDisconnected();
+                    } else {
+                        Toast.makeText(Feedback.this, res.getString(R.string.feedback_message_sent_failure, respCode),
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         }
@@ -431,7 +470,7 @@ public class Feedback extends Activity {
                     break;
 
                 default:
-                    Log.e(AnkiDroidApp.TAG, String.format("doInBackgroundSendCrashReport failure: %d - %s",
+                    Log.e(AnkiDroidApp.TAG, String.format("postFeedback failure: %d - %s",
                                 response.getStatusLine().getStatusCode(),
                                 response.getStatusLine().getReasonPhrase()));
                     result.success = false;
@@ -440,11 +479,11 @@ public class Feedback extends Activity {
                     break;
             }
         } catch (ClientProtocolException ex) {
-            Log.e(AnkiDroidApp.TAG, ex.toString());
+            Log.e(AnkiDroidApp.TAG, "net1: " + ex.toString());
             result.success = false;
             result.result = new String(ex.toString());
         } catch (IOException ex) {
-            Log.e(AnkiDroidApp.TAG, ex.toString());
+            Log.e(AnkiDroidApp.TAG, "net2: " + ex.toString());
             result.success = false;
             result.result = new String(ex.toString());
         }

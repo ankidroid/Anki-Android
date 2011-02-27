@@ -1942,7 +1942,8 @@ public class SyncClient {
             tmp.close();
             Log.i(AnkiDroidApp.TAG, "Payload file ready, size: " + tmpFile.length());
 
-            HttpPost httpPost = new HttpPost(AnkiDroidProxy.SYNC_URL + "fullup?v=2");
+            HttpPost httpPost = new HttpPost(AnkiDroidProxy.SYNC_URL + "fullup?v=" +
+                    URLEncoder.encode(AnkiDroidProxy.SYNC_VERSION, "UTF-8"));
             httpPost.setHeader("Content-type", "multipart/form-data; boundary=" + MIME_BOUNDARY);
             httpPost.addHeader("Host", AnkiDroidProxy.SYNC_HOST);
             httpPost.setEntity(new FileEntity(tmpFile, "application/octet-stream"));
