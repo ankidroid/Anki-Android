@@ -275,9 +275,9 @@ public class StudyOptions extends Activity {
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
 
-	private static final int SWIPE_MIN_DISTANCE_DIP = 130;
-    private static final int SWIPE_MAX_OFF_PATH_DIP = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY_DIP = 250;
+	private static final int SWIPE_MIN_DISTANCE_DIP = 65;
+    private static final int SWIPE_MAX_OFF_PATH_DIP = 120;
+    private static final int SWIPE_THRESHOLD_VELOCITY_DIP = 120;
 
 	public static int sSwipeMinDistance;
 	public static int sSwipeMaxOffPath;
@@ -1863,7 +1863,7 @@ public class StudyOptions extends Activity {
         final float gestureScale = getResources().getDisplayMetrics().density;
         int sensibility = preferences.getInt("swipeSensibility", 100);
         if (sensibility != 100) {
-            float sens = (200 - sensibility) / 100;
+            float sens = (200 - sensibility) / 100.0f;
             sSwipeMinDistance = (int)(SWIPE_MIN_DISTANCE_DIP * sens * gestureScale + 0.5f);
             sSwipeThresholdVelocity = (int)(SWIPE_THRESHOLD_VELOCITY_DIP * sens * gestureScale + 0.5f);
             sSwipeMaxOffPath = (int)(SWIPE_MAX_OFF_PATH_DIP * sens * gestureScale + 0.5f);
