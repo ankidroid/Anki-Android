@@ -3225,15 +3225,17 @@ public class Deck {
     	
         Cursor cur = null;
         try {
-        	cur = getDB().getDatabase().rawQuery("SELECT DISTINCT cards.id, cards.question, cards.answer, "
-        	       + "a.tagid, priority FROM cards LEFT OUTER JOIN (SELECT cardid, tagid FROM cardtags WHERE "
-        	       + "tagid = (SELECT id FROM tags WHERE tag = \"" + TAG_MARKED + "\")) a ON cards.id = a.cardid ORDER BY " + order, null);
+        	cur = getDB().getDatabase().rawQuery("SELECT DISTINCT cards.id, cards.question, cards.answer, c.tag, " +
+        			"priority FROM cards LEFT OUTER JOIN (SELECT cardId, GROUP_CONCAT(tag) AS tag FROM " +
+        			"(SELECT DISTINCT cardId, a.tag AS tag FROM cardTags LEFT OUTER JOIN (SELECT id, tag FROM tags) a " +
+        			"ON cardTags.tagId = a.id ORDER BY cardId, a.tag) GROUP BY cardId) c ON cards.id = c.cardId ORDER BY " + order, null);
             while (cur.moveToNext()) {
-            	String[] data = new String[4];
+            	String[] data = new String[5];
             	data[0] = Long.toString(cur.getLong(0));
             	data[1] = Utils.stripHTML(cur.getString(1));
             	data[2] = Utils.stripHTML(cur.getString(2));
-            	if (cur.getString(3) != null) {
+            	String tags = cur.getString(3);
+            	if (tags.contains(TAG_MARKED)) {
                     data[3] = "1";
             	} else {
                     data[3] = "0";            	    
@@ -3242,7 +3244,8 @@ public class Deck {
                     data[3] = data[3] + "1";
                 } else {
                     data[3] = data[3] + "0";                  
-                }            	
+                }
+                data[4] = tags;
             	allCards.add(data);
             }
         } catch (SQLException e) {

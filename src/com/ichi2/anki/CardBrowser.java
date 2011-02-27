@@ -22,6 +22,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,6 +33,7 @@ import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -43,7 +46,10 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 public class CardBrowser extends Activity {
     private ArrayList<HashMap<String, String>> mCards;
@@ -74,7 +80,9 @@ public class CardBrowser extends Activity {
     private static final int MENU_REDO = 1;
     private static final int MENU_ADD_FACT = 2;
     private static final int MENU_SHOW_MARKED = 3;
-    private static final int MENU_SHOW_SUSPENDED = 4;
+    private static final int MENU_SELECT = 4;
+    private static final int MENU_SELECT_SUSPENDED = 41;
+    private static final int MENU_SELECT_TAG = 42;
     private static final int MENU_CHANGE_ORDER = 5;
 
     private static final int EDIT_CARD = 0;
@@ -87,6 +95,10 @@ public class CardBrowser extends Activity {
     private boolean mShowOnlyMarSus = false;
 
     private int mSelectedOrder = 0;
+    
+    private String[] allTags;
+    private HashSet<String> mSelectedTags;
+    private AlertDialog mTagsDialog;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +166,10 @@ public class CardBrowser extends Activity {
         setTitle(mDeck.getDeckName());
 
         initAllDialogs();
+        allTags = new String[0];
+        mSelectedTags = new HashSet<String>();
 
-        getCards();
+        getCards();        
     }
 
 
@@ -242,7 +256,7 @@ public class CardBrowser extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
-            if (mSearchEditText.getText().length() == 0 && !mShowOnlyMarSus) {
+            if (mSearchEditText.getText().length() == 0 && !mShowOnlyMarSus && mSelectedTags.size() == 0) {
                 setResult(RESULT_OK);
                 finish();
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
@@ -250,6 +264,11 @@ public class CardBrowser extends Activity {
                 }                
             } else {
                 mSearchEditText.setText("");
+                mSearchEditText.setHint(R.string.downloaddeck_search);
+                mSelectedTags.clear();
+                mCards.clear();
+                mCards.addAll(mAllCards);
+                updateList();
             }
             return true;
         }
@@ -271,7 +290,10 @@ public class CardBrowser extends Activity {
         item.setIcon(R.drawable.ic_menu_sort_by_size);
         item = menu.add(Menu.NONE, MENU_SHOW_MARKED, Menu.NONE, R.string.card_browser_show_marked);
         item.setIcon(R.drawable.ic_menu_star_on);          
-        item = menu.add(Menu.NONE, MENU_SHOW_SUSPENDED, Menu.NONE, R.string.card_browser_show_suspended);
+        SubMenu selectSubMenu = menu.addSubMenu(Menu.NONE, MENU_SELECT, Menu.NONE, R.string.card_browser_search);
+        selectSubMenu.setIcon(R.drawable.ic_menu_search);
+        selectSubMenu.add(Menu.NONE, MENU_SELECT_SUSPENDED, Menu.NONE, R.string.card_browser_search_suspended);
+        selectSubMenu.add(Menu.NONE, MENU_SELECT_TAG, Menu.NONE, R.string.card_browser_search_by_tag);
         item.setIcon(R.drawable.ic_menu_close_clear_cancel);
         return true;
     }
@@ -314,7 +336,7 @@ public class CardBrowser extends Activity {
                 }                    
                 updateList();
                 return true;
-            case MENU_SHOW_SUSPENDED:
+            case MENU_SELECT_SUSPENDED:
             	mShowOnlyMarSus = true;
             	mSearchEditText.setHint(R.string.card_browser_show_suspended);
             	mCards.clear();
@@ -327,6 +349,10 @@ public class CardBrowser extends Activity {
                 }                    
                 updateList();
             	return true;
+            case MENU_SELECT_TAG:
+                recreateTagsDialog();
+                mTagsDialog.show();
+                return true;
             case MENU_CHANGE_ORDER:
             	mSelectOrderDialog.show();
             	return true;
@@ -367,17 +393,73 @@ public class CardBrowser extends Activity {
     }
 
 
+    private void recreateTagsDialog() {
+        Resources res = getResources();
+        if (allTags.length == 0) {
+            String[] oldTags = AnkiDroidApp.deck().allTags_();
+            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+            allTags = new String[oldTags.length];
+            for (int i = 0; i < oldTags.length; i++) {
+                allTags[i] = oldTags[i];
+            }
+        }
+        mSelectedTags.clear();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.studyoptions_limit_select_tags);
+        builder.setMultiChoiceItems(allTags, null,
+                new DialogInterface.OnMultiChoiceClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+                        String tag = allTags[whichButton];
+                        if (!isChecked) {
+                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                            mSelectedTags.remove(tag);
+                        } else {
+                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                            mSelectedTags.add(tag);
+                        }
+                    }
+                });
+        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                updateCardsList();
+            }
+        });
+        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mSelectedTags.clear();
+            }
+        });
+        builder.setOnCancelListener(new OnCancelListener() {
+
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mSelectedTags.clear();
+            }            
+        });
+        mTagsDialog = builder.create();
+    }
+
+
     private void updateCardsList() {
     	mShowOnlyMarSus = false;
-    	mSearchEditText.setHint(R.string.downloaddeck_search);
+    	if (mSelectedTags.size() == 0) {
+            mSearchEditText.setHint(R.string.downloaddeck_search);    	    
+    	} else {
+    	    String tags = mSelectedTags.toString();
+    	    mSearchEditText.setHint(getResources().getString(R.string.card_browser_tags_shown, tags.substring(1, tags.length()-1)));
+    	}
     	mCards.clear();
-        if (mSearchEditText.getText().length() == 0) {
+        if (mSearchEditText.getText().length() == 0 && mSelectedTags.size() == 0 && mSelectedTags.size() == 0) {
             mCards.addAll(mAllCards);
         } else {
             for (int i = 0; i < mAllCards.size(); i++) {
-                if (mAllCards.get(i).get("question").toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1 ||
-                    mAllCards.get(i).get("answer").toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1) { 
-                    mCards.add(mAllCards.get(i));
+                if ((mAllCards.get(i).get("question").toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1 ||
+                    mAllCards.get(i).get("answer").toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1) &&
+                    Arrays.asList(Utils.parseTags(mAllCards.get(i).get("tags"))).containsAll(mSelectedTags)) {
+                        mCards.add(mAllCards.get(i));
                 }
             }                    
         }
@@ -514,6 +596,7 @@ public class CardBrowser extends Activity {
                 data.put("question",  item[1]);
                 data.put("answer",  item[2]);
                 data.put("marSus", item[3]);
+                data.put("tags", item[4]);
                 mAllCards.add(data);
             }
             updateCardsList();
