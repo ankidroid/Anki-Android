@@ -3751,7 +3751,7 @@ public class Deck {
         values.put("modelId", fact.getModelId());
         values.put("created", now);
         values.put("modified", now);
-        values.put("tags", "");
+        values.put("tags", fact.getTags());
         values.put("spaceUntil", 0);
         getDB().getDatabase().insert("facts", null, values);
 

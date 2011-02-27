@@ -254,6 +254,7 @@ public class CardEditor extends Activity {
                     mTagsDialog.show();
                 } else {
                     String[] oldTags = allTags;
+                    mFactTags += ", " + tag;
                     Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
                     allTags = new String[oldTags.length + 1];
                     allTags[0] = oldTags[0]; 
