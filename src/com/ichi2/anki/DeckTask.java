@@ -382,6 +382,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
             id = card.getId();
         	card.delete();
+        	deck.reset();
             newCard = deck.getCard();
         	publishProgress(new TaskData(newCard));
         	ankiDB.getDatabase().setTransactionSuccessful();

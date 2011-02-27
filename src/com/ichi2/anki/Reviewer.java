@@ -757,9 +757,6 @@ public class Reviewer extends Activity {
         // Disable bury card for now, until unburying works as expected
         item = menu.findItem(MENU_REMOVE_BURY);
         item.setEnabled(false);
-        // Disable bury card for now, since there are some problems with retrieving a new card
-        item = menu.findItem(MENU_REMOVE_DELETE);
-        item.setEnabled(false);
         return true;
     }
 
