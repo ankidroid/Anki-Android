@@ -40,9 +40,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_UNDO = 6;
     public static final int TASK_TYPE_REDO = 7;
     public static final int TASK_TYPE_LOAD_CARDS = 8;
-    public static final int TASK_TYPE_DELETE_CARD = 9;
-    public static final int TASK_TYPE_LOAD_STATISTICS = 10;
-    public static final int TASK_TYPE_OPTIMIZE_DECK = 11;
+    public static final int TASK_TYPE_BURY_CARD = 9;
+    public static final int TASK_TYPE_DELETE_CARD = 10;
+    public static final int TASK_TYPE_LOAD_STATISTICS = 11;
+    public static final int TASK_TYPE_OPTIMIZE_DECK = 12;
 
     /**
      * Possible outputs trying to load a deck.
@@ -128,6 +129,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 
             case TASK_TYPE_LOAD_CARDS:
                 return doInBackgroundLoadCards(params);
+
+            case TASK_TYPE_BURY_CARD:
+                return doInBackgroundBuryCard(params);
 
             case TASK_TYPE_DELETE_CARD:
                 return doInBackgroundDeleteCard(params);
@@ -371,21 +375,44 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundDeleteCard(TaskData... params) {
-    	Deck deck = params[0].getDeck();
-    	Card card = params[0].getCard();
-    	Card newCard = null;
-    	Long id = 0l;
+        Deck deck = params[0].getDeck();
+        Card card = params[0].getCard();
+        Card newCard = null;
+        Long id = 0l;
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
             id = card.getId();
-        	card.delete();
-        	deck.reset();
+            card.delete();
+            deck.reset();
             newCard = deck.getCard();
-        	publishProgress(new TaskData(newCard));
-        	ankiDB.getDatabase().setTransactionSuccessful();
+            publishProgress(new TaskData(newCard));
+            ankiDB.getDatabase().setTransactionSuccessful();
+        } finally {
+            ankiDB.getDatabase().endTransaction();
+        }
+        return new TaskData(String.valueOf(id));
+    }
+
+
+    private TaskData doInBackgroundBuryCard(TaskData... params) {
+        Deck deck = params[0].getDeck();
+        Card card = params[0].getCard();
+        Card newCard = null;
+        Long id = 0l;
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundBuryCard");
+
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
+        try {
+            id = card.getId();
+            deck.buryFact(card.getFactId(), id);
+            deck.reset();
+            newCard = deck.getCard();
+            publishProgress(new TaskData(newCard));
+            ankiDB.getDatabase().setTransactionSuccessful();
         } finally {
             ankiDB.getDatabase().endTransaction();
         }

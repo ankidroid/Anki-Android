@@ -3427,12 +3427,23 @@ public class Deck {
     /**
      * Bury all cards for fact until next session. Caller must .reset()
      * 
-     * @param Fact .
+     * @param Fact
      */
     public void buryFact(long factId, long cardId) {
         // TODO: Unbury fact after return to StudyOptions
         String undoName = UNDO_TYPE_BURY_CARD;
-        setUndoStart(undoName, cardId);         
+        setUndoStart(undoName, cardId);
+        // libanki code:
+//        for (long cid : getCardsFromFactId(factId)) {
+//            Card card = cardFromId(cid);
+//            int type = card.getType();
+//            if (type == 0 || type == 1 || type == 2) {
+//                card.setPriority(card.getPriority() - 2);
+//                card.setType(type + 3);
+//                card.setDue(0);
+//            }
+//        }
+        // This differs from libanki:
         getDB().getDatabase().execSQL(
                 "UPDATE cards SET type = priority = -2, isDue = 0, type = type + 3 WHERE type >= 0 AND type <= 3 AND factId = " + factId);
         setUndoEnd(undoName);

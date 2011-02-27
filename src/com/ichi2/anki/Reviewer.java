@@ -753,10 +753,6 @@ public class Reviewer extends Activity {
         }
         menu.findItem(MENU_UNDO).setEnabled(AnkiDroidApp.deck().undoAvailable());
         menu.findItem(MENU_REDO).setEnabled(AnkiDroidApp.deck().redoAvailable());
-        
-        // Disable bury card for now, until unburying works as expected
-        item = menu.findItem(MENU_REMOVE_BURY);
-        item.setEnabled(false);
         return true;
     }
 
@@ -824,8 +820,8 @@ public class Reviewer extends Activity {
                 }
 
             case MENU_REMOVE_BURY:
-//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
-//                        AnkiDroidApp.deck(), mCurrentCard));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+                        AnkiDroidApp.deck(), mCurrentCard));
                 return true;
 
             case MENU_REMOVE_SUSPEND:

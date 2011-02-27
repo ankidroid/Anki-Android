@@ -914,6 +914,11 @@ public class Card {
     }
 
 
+    public int getPriority() {
+        return mPriority;
+    }
+
+
     public int getType() {
         return mType;
     }
