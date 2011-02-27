@@ -22,6 +22,8 @@
 <resources>
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Guardar</string>
+  <string name="CardEditorTags">Tags: %1$s</string>
+  <string name="add_new_tag">Add new tag</string>
   <string name="app_name">AnkiDroid</string>
   <string name="yes">Sí</string>
   <string name="no">No</string>
@@ -39,7 +41,7 @@
   <string name="deckpicker_upgrade_notes_button">Notas</string>
   <string name="deckpicker_download_missing_title">Obteniendo los archivos que faltan</string>
   <string name="deckpicker_download_missing_none">No se han encontrado archivos multimedia ausentes</string>
-  <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
+  <string name="deckpicker_download_missing_success">Recuperados %1$d con éxito, %2$d ausentes</string>
   <string name="deckpicker_download_missing_error">Error con el archivo: %1$s</string>
   <string name="notify_ticker">Actualización de la aplicación</string>
   <string name="notify_title">Ankidroid actualizado</string>
@@ -63,7 +65,7 @@
   <string name="studyoptions_limit_tags_active">Incluir: %1$s</string>
   <string name="studyoptions_limit_tags_inactive">Excluir: %1$s</string>
   <string name="studyoptions_limit_button_text">Limitar</string>
-  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
+  <string name="studyoptions_limit_dialog_title">Limitar el Estudio</string>
   <string name="studyoptions_session">Sesión</string>
   <string name="studyoptions_tag">Por Etiqueta</string>
   <string name="studyoptions_tag_new">Mostrar nuevas tarjetas por etiqueta:</string>
@@ -102,12 +104,12 @@
   <string name="pref_cat_extras">Extras</string>
   <string name="pref_cat_whiteboard">Pizarra</string>
   <string name="pref_cat_sounds">Sonidos</string>
-  <string name="pref_cat_lookup">Búsqueda</string>
+  <string name="pref_cat_lookup">Consultas</string>
   <string name="pref_cat_navigation">Navegación</string>
-  <string name="pref_cat_swipe">Swipe</string>
-  <string name="pref_cat_shake">Shake</string>
+  <string name="pref_cat_swipe">Gestos</string>
+  <string name="pref_cat_shake">Agitado</string>
   <string name="pref_cat_zoom">Zoom</string>
-  <string name="pref_cat_reset">Reset</string>
+  <string name="pref_cat_reset">Restablecimiento</string>
   <string name="pref_cat_other">Otras opciones</string>
   <string name="sync_on_open">Sincronizar al abrir</string>
   <string name="sync_on_close">Sincronizar al cerrar</string>
@@ -131,7 +133,7 @@
   <string name="dictionary">Diccionario</string>
   <string name="dictionary_summ">Diccionario en el que realizar las consultas: XXX</string>
   <string name="reset_languages">Restablecer Idiomas</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_languages_summ">Restablece las asignaciones de idioma (para texto a voz y diccionarios) para todos los mazos. Para restablecer asignaciones individualmente, hazlo desde el selector de mazos</string>
   <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
   <string name="reset_languages_confirmation">Restablecer todas las asignaciones de idiomas</string>
   <string name="use_ruby_support">Soporte para anotacion ruby</string>
@@ -160,7 +162,7 @@
   <string name="play_sounds_at_start">Reproducir Sonidos Inmediatamente</string>
   <string name="play_sounds_at_start_summ">Reproduce los sonidos inmediatamente al mostrar una pregunta/respuesta</string>
   <string name="shake_intensity">Umbral para el Agitado</string>
-  <string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
+  <string name="shake_intensity_summ">Umbral de reconocimiento para el agitado: XXX</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="sync_enabled">Sincronización</string>
   <string name="sync_enabled_in_answer_summ">Todavía hay muchos errores, puede corromper tus mazos. ¡Haz copias de seguridad a menudo!</string>
@@ -185,9 +187,9 @@
   <string name="cards">Tarjetas:</string>
   <string name="add">Añadir</string>
   <string name="close">Cerrar</string>
-  <string name="select_card_model">Select Card Model</string>
-  <string name="select">Select</string>
-  <string name="card_browser">Explorar Tarjetas</string>
+  <string name="select_card_model">Seleccione el modelo de tarjetas</string>
+  <string name="select">Seleccionar</string>
+  <string name="card_browser">Explorador</string>
   <string name="card_browser_load">Cargando las tarjetas</string>
   <string name="card_browser_delete_card">Eliminar tarjeta</string>
   <string name="card_browser_suspend_card">Suspender tarjeta</string>
@@ -197,7 +199,10 @@
   <string name="delete_card_title">Eliminar tarjeta</string>
   <string name="delete_card_message">¿Desea borrar esta tarjeta?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Mostrar tarjetas marcadas</string>
-  <string name="card_browser_show_suspended">Mostrar tarjetas suspendidas</string>
+  <string name="card_browser_search">Search</string>
+  <string name="card_browser_search_suspended">Search suspended</string>
+  <string name="card_browser_search_by_tag">Search by tag</string>
+  <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_change_display_order">Cambiar el orden de presentación</string>
   <string name="card_browser_change_display_order_title">Elige el orden de presentación</string>
   <string name="card_browser_card_details">Detalles de la tarjeta</string>
@@ -295,7 +300,7 @@
   <string name="studyoptions_congrats_reviewearly">Repasar anticipadamente</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir otro mazo</string>
   <string name="studyoptions_congrats_finish">Volver a la pantalla de Estudio</string>
-  <string name="studyoptions_feedback">Comentarios</string>
+  <string name="studyoptions_feedback">Sugerencias</string>
   <string name="username">Usuario</string>
   <string name="password">Contraseña</string>
   <string name="log_in">Iniciar sesión</string>
@@ -342,20 +347,28 @@
   <string name="sync_conflict_local">Mantener la versión local</string>
   <string name="sync_conflict_remote">Mantener la versión remota</string>
   <string name="sync_conflict_cancel">Cancelar Sincronización</string>
-  <string name="error_reporter_title">Reportar Errores</string>
   <string name="error_ok">Informar sobre errores</string>
   <string name="error_cancel">No informar de errores</string>
   <string name="error_reporting_choice">Informar de errores</string>
   <string name="error_reporting_choice_summary">Los errores se pueden enviar automáticamente, nunca, o preguntándote primero</string>
-  <string name="error_collection_information">No recopilamos información personal, como su dirección de correo electrónico, número de teléfono, dirección IP o el IMEI de su teléfono. Recopilamos información sobre el dispositivo, tal como el fabricante, modelo y versión de Android, así como la naturaleza del error mismo.</string>
+  <string name="feedback_disclaimer">Aclaración: No recopilamos información personal, como tu dirección de correo electrónico, número de teléfono, dirección IP o el teléfono IMEI. Recopilamos información sobre el dispositivo, tal como el fabricante, el modelo y la versión de Android, así como la naturaleza del error mismo.</string>
+  <string name="feedback_title">Sugerencias</string>
+  <string name="feedback_send_feedback">Envíanos tus comentarios</string>
+  <string name="feedback_send_feedback_and_errors">Enviar errores y tus comentarios</string>
+  <string name="feedback_message_sent_success">Comentarios recibidos, gracias!</string>
+  <string name="feedback_message_sent_failure">No se han podido enviar sugerencias, código %1$ s</string>
+  <string name="feedback_error_list_header">Lista de errores para enviar</string>
+  <string name="feedback_keep_latest">Mantener el último error</string>
+  <string name="feedback_clear_all">Borrar todos los errores</string>
+  <string name="feedback_default_text">Por favor, introduce tus sugerencias aquí y pulsa Aceptar para enviarlas.</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Umbral de notificación</string>
   <string name="widget_minimum_cards_due_summary">El número mínimo de tarjetas programadas que provoca una notificación: XXX</string>
   <string name="widget_minimum_cards_due_vibrate">Vibración</string>
   <string name="widget_minimum_cards_due_blink">Luz parpadeante</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Tarjetas programadas</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d tarjetas de AnkiDroid programadas</string>
-  <string name="widget_no_cards_due">No hay repasos pendientes</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Tarjetas pendientes</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d repasos pendientes</string>
+  <string name="widget_no_cards_due">No hay tarjetas pendientes</string>
   <string name="soon">Pronto</string>
   <string name="show_next_review_time">Próximo repaso</string>
   <string name="show_next_review_time_summ">Muestra el siguiente tiempo de repaso</string>
@@ -379,6 +392,7 @@
   <string name="new_version_message">Nuevas funciones:</string>
   <string name="no_tts_available_title">Texto-a-Voz</string>
   <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>
+  <string name="tts_no_tts">Don\'t speak</string>
   <string name="statistics_type_title">Elige el tipo de estadística</string>
   <string name="statistics_period_title">Elige el período del informe</string>
   <string name="statistics_period_y_axis">Tarjetas</string>
@@ -393,9 +407,6 @@
   <string name="statistics_zoom_out">Reducir</string>
   <string name="statistics_all_decks">(todos los mazos)</string>
   <string name="calculating_statistics">Calculando estadísticas</string>
-  <string name="feedback_title">Comentarios</string>
-  <string name="feedback_default_text">Por favor, introduce tus comentarios aquí y pulsa Aceptar para enviarlos.</string>
-  <string name="feedback_result_fail">Lo sentimos, no hemos podido enviar tus comentarios. Por favor, inténtalo de nuevo.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Todos los mazos: 1 de %2$d pendientes (%3$s)</item>
     <item quantity="other">Todos los mazos: %1$d de %2$d pendientes (%3$s)</item>
@@ -421,7 +432,7 @@
     <item quantity="other">Hay %d errores para enviar</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 repaso programado en %2$s</item>
+    <item quantity="one">1 tarjeta pendiente en %2$s</item>
     <item quantity="other">%1$d tarjetas pendientes en %2$s</item>
   </plurals>
   <plurals name="widget_decks">

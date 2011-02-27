@@ -22,6 +22,8 @@
 <resources>
   <string name="CardEditorCancelButton">Отмена</string>
   <string name="CardEditorSaveButton">Сохранить</string>
+  <string name="CardEditorTags">Тэги: %1$s</string>
+  <string name="add_new_tag">Добавить новый тэг</string>
   <string name="app_name">AnkiDroid</string>
   <string name="yes">Да</string>
   <string name="no">Нет</string>
@@ -153,7 +155,7 @@
   <string name="swipe_summ_on">Swipe-движение горизонтальное - для перемещения между экранами, вертикальное - для ответа на карты (вниз: снова, вверх: хорошо, двойное постукивание - легко)</string>
   <string name="swipe_sensibility">Чувствительность жестов</string>
   <string name="swipe_sensibility_summ">Чувствительность swipe жестов: XXX</string>
-  <string name="shake">Тряхнуть для отмены</string>
+  <string name="shake">Тряхнуть для отката (отмены)</string>
   <string name="shake_summ">Тряхнуть ваше устройство для отмены последнего действия</string>
   <string name="tts">Преобразование текста в речь</string>
   <string name="tts_summ">Читать вопрос/ответ, если нет прикреплённого звукового файла</string>
@@ -197,7 +199,10 @@
   <string name="delete_card_title">Удалить карту</string>
   <string name="delete_card_message">Действительно удалить эту карту?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Показать отмеченные</string>
-  <string name="card_browser_show_suspended">Показать отложенные</string>
+  <string name="card_browser_search">Search</string>
+  <string name="card_browser_search_suspended">Search suspended</string>
+  <string name="card_browser_search_by_tag">Search by tag</string>
+  <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_change_display_order">Изменение сортировки</string>
   <string name="card_browser_change_display_order_title">Сортировка</string>
   <string name="card_browser_card_details">Информация о карте</string>
@@ -342,12 +347,20 @@
   <string name="sync_conflict_local">Сохранить локальную</string>
   <string name="sync_conflict_remote">Сохранить серверную</string>
   <string name="sync_conflict_cancel">Отменить синхронизацию</string>
-  <string name="error_reporter_title">Генератор отчётов об ошибках</string>
   <string name="error_ok">Отправить отчёт об ошибках</string>
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="error_reporting_choice_summary">Можно посылать ошибки программы автоматически, не посылать или выводить вопрос пользователю</string>
-  <string name="error_collection_information">Мы не собираем никакой личной информации, такой как адрес электронной почты, номер телефона, IP-адреса или IMEI-телефона. Мы собираем информацию общего характера о вашем устройстве, такую, как производитель, модель и версию Android, а также сам характер ошибки.</string>
+  <string name="feedback_disclaimer">Отказ от ответственности: Мы не собираем никакой личной информации, такой как адрес электронной почты, номер телефона, IP-адреса или IMEI-телефона. Мы собираем общую информацию о вашем устройстве, такую, как производитель, модель и версию Android, а также сам характер ошибки.</string>
+  <string name="feedback_title">Обратная связь</string>
+  <string name="feedback_send_feedback">Отправить нам свой отзыв</string>
+  <string name="feedback_send_feedback_and_errors">Отправить ошибки и ваши отзывы</string>
+  <string name="feedback_message_sent_success">Отзыв получен, спасибо!</string>
+  <string name="feedback_message_sent_failure">Не удалось отправить отзыв, code %1$s</string>
+  <string name="feedback_error_list_header">Список ошибок для отправки</string>
+  <string name="feedback_keep_latest">Сохранить последнюю ошибку</string>
+  <string name="feedback_clear_all">Очистить все ошибки</string>
+  <string name="feedback_default_text">Пожалуйста, введите ваш отзыв или информацию о характере ошибки.</string>
   <string name="widget_pref">Виджет</string>
   <string name="widget_minimum_cards_due">Виджет уведомления</string>
   <string name="widget_minimum_cards_due_summary">Минимальное количество карточек для повтора, при котором всплывет уведомление в зоне уведомлений Вашего аппарата: XXX</string>
@@ -363,7 +376,7 @@
   <string name="update_notification_summ">Сообщать, если есть для AnkiDroid обновление</string>
   <string name="per_day">В день</string>
   <string name="undo">Откат</string>
-  <string name="redo">Возврат</string>
+  <string name="redo">Вперёд</string>
   <string name="contextmenu_deckpicker_download_missing_media">Скачать недостающие медиа-файлы</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Сброс языка</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Сброс языка</string>
@@ -379,6 +392,7 @@
   <string name="new_version_message">Новые возможности:</string>
   <string name="no_tts_available_title">Преобразование текста в речь</string>
   <string name="no_tts_available_message">Функция преобразования текста в речь не доступна</string>
+  <string name="tts_no_tts">Не произносить</string>
   <string name="statistics_type_title">Выберите тип статистики</string>
   <string name="statistics_period_title">Выберите отчетный период</string>
   <string name="statistics_period_y_axis">карты</string>
@@ -393,9 +407,6 @@
   <string name="statistics_zoom_out">Уменьшить</string>
   <string name="statistics_all_decks">(все колоды)</string>
   <string name="calculating_statistics">Расчет статистики</string>
-  <string name="feedback_title">Обратная связь</string>
-  <string name="feedback_default_text">Пожалуйста, введите Ваш отзыв здесь и нажмите кнопку внизу, чтобы отправить его.</string>
-  <string name="feedback_result_fail">К сожалению, мы не смогли передать ваш отзыв. Пожалуйста, попробуйте еще раз.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Все колоды: повтор 1 из %2$d (%3$s)</item>
     <item quantity="other">Все колоды: повтор %1$d из %2$d (%3$s)</item>

@@ -22,6 +22,8 @@
 <resources>
   <string name="CardEditorCancelButton">Abbrechen</string>
   <string name="CardEditorSaveButton">Speichern</string>
+  <string name="CardEditorTags">Schlagworte: %1$s</string>
+  <string name="add_new_tag">Neues Schlagwort</string>
   <string name="app_name">AnkiDroid</string>
   <string name="yes">Ja</string>
   <string name="no">Nein</string>
@@ -197,7 +199,10 @@
   <string name="delete_card_title">Karte löschen</string>
   <string name="delete_card_message">Diese Karte wirklich löschen?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Markierte anzeigen</string>
-  <string name="card_browser_show_suspended">Ausgesetzte anzeigen</string>
+  <string name="card_browser_search">Suchen</string>
+  <string name="card_browser_search_suspended">Nach ausgesetzten suchen</string>
+  <string name="card_browser_search_by_tag">Nach Schlagwort suchen</string>
+  <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
   <string name="card_browser_change_display_order">Anzeigereihenfolge</string>
   <string name="card_browser_change_display_order_title">Anzeigereihenfolge</string>
   <string name="card_browser_card_details">Kartendetails</string>
@@ -342,12 +347,20 @@
   <string name="sync_conflict_local">Lokale</string>
   <string name="sync_conflict_remote">Server</string>
   <string name="sync_conflict_cancel">Abbrechen</string>
-  <string name="error_reporter_title">Fehler-Melder</string>
   <string name="error_ok">Fehlermeldung</string>
   <string name="error_cancel">Melde keine Fehler</string>
   <string name="error_reporting_choice">Fehlermeldungs-Modus</string>
   <string name="error_reporting_choice_summary">Fehler können automatisch, nie oder nach Nachfrage gemeldet werden</string>
-  <string name="error_collection_information">Es werden keinerlei persönliche Informationen wie E-Mail- oder IP-Adresse, Telefonnummern, IMEI o.ä. übertragen, sondern lediglich Informationen über den Hersteller, das Modell, die Android-Version und Informationen über den Fehler selbst gesendet.</string>
+  <string name="feedback_disclaimer">Hinweis: Es werden keine persönlichen Daten wie Ihre E-Mail-Adresse, Telefonnummer, IP-Adresse oder Ihre Telefonnummer IMEI übermittelt. Gesendet werden nur einige Informationen über Ihr Gerät wie Hersteller, Modell und Androidversion sowie die Art des Fehlers selbst.</string>
+  <string name="feedback_title">Rückmeldung</string>
+  <string name="feedback_send_feedback">Geben Sie uns Rückmeldung</string>
+  <string name="feedback_send_feedback_and_errors">Senden Sie uns Fehler- und Rückmeldungen</string>
+  <string name="feedback_message_sent_success">Rückmeldung erhalten, vielen Dank!</string>
+  <string name="feedback_message_sent_failure">Rückmeldung konnte nicht gesendet werden, Fehler: %1$s</string>
+  <string name="feedback_error_list_header">Fehlerliste</string>
+  <string name="feedback_keep_latest">Letzte Fehler nicht löschen</string>
+  <string name="feedback_clear_all">Alle Fehlermeldungen löschen</string>
+  <string name="feedback_default_text">Bitte geben Sie hier Ihre Rückmeldung ein und drücken Sie OK, um sie zu senden.</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Benachrichtigungsschwelle</string>
   <string name="widget_minimum_cards_due_summary">Die Mindestanzahl von Karten, bei der eine Benachrichtigung ausgelöst wird: XXX</string>
@@ -379,6 +392,7 @@
   <string name="new_version_message">Neue Funktionen:</string>
   <string name="no_tts_available_title">Vorlesen</string>
   <string name="no_tts_available_message">Keine Vorlese-Sprache verfügbar</string>
+  <string name="tts_no_tts">Nicht vorlesen</string>
   <string name="statistics_type_title">Statistik-Typ</string>
   <string name="statistics_period_title">Berichtszeitraum</string>
   <string name="statistics_period_y_axis">Karten</string>
@@ -393,9 +407,6 @@
   <string name="statistics_zoom_out">Verkleinern</string>
   <string name="statistics_all_decks">(alle Stapel)</string>
   <string name="calculating_statistics">Statistik wird berechnet</string>
-  <string name="feedback_title">Rückmeldung</string>
-  <string name="feedback_default_text">Bitte geben Sie hier Ihre Rückmeldung ein und drücken Sie OK, um sie zu senden.</string>
-  <string name="feedback_result_fail">Leider konnte Ihre Rückmeldung nicht übermittelt werden. Bitte versuchen Sie es erneut.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Alle Stapel: 1 von %2$d fällig (%3$s)</item>
     <item quantity="other">Alle Stapel: %1$d von %2$d fällig (%3$s)</item>

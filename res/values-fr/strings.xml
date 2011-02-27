@@ -22,6 +22,8 @@
 <resources>
   <string name="CardEditorCancelButton">Annuler</string>
   <string name="CardEditorSaveButton">Enregistrer</string>
+  <string name="CardEditorTags">Tags: %1$s</string>
+  <string name="add_new_tag">Add new tag</string>
   <string name="app_name">AnkiDroid</string>
   <string name="yes">Oui</string>
   <string name="no">Non</string>
@@ -197,7 +199,10 @@
   <string name="delete_card_title">Supprimer carte</string>
   <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Montrer les cartes marquées</string>
-  <string name="card_browser_show_suspended">Montrer les cartes suspendues</string>
+  <string name="card_browser_search">Search</string>
+  <string name="card_browser_search_suspended">Search suspended</string>
+  <string name="card_browser_search_by_tag">Search by tag</string>
+  <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_change_display_order">Changer l\'ordre d\'affichage</string>
   <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>
   <string name="card_browser_card_details">Card details</string>
@@ -348,12 +353,20 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="sync_conflict_local">Conserver la version locale</string>
   <string name="sync_conflict_remote">Conserver la version sur le serveur distant</string>
   <string name="sync_conflict_cancel">Annuler la synchronisation</string>
-  <string name="error_reporter_title">Rapporteur d\'erreurs</string>
   <string name="error_ok">Signaler les erreurs</string>
   <string name="error_cancel">Ne pas signaler les erreurs</string>
   <string name="error_reporting_choice">Mode de rapport d\'erreur</string>
   <string name="error_reporting_choice_summary">Les erreurs peuvent être signalées automatiquement, non signalées, ou requérir une confirmation de votre part</string>
-  <string name="error_collection_information">We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string>
+  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string>
+  <string name="feedback_title">Feedback</string>
+  <string name="feedback_send_feedback">Send us your feedback</string>
+  <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
+  <string name="feedback_message_sent_success">Feedback received, thank you!</string>
+  <string name="feedback_message_sent_failure">Unable to send feedback, code %1$s</string>
+  <string name="feedback_error_list_header">List of errors to send</string>
+  <string name="feedback_keep_latest">Keep latest error</string>
+  <string name="feedback_clear_all">Clear all errors</string>
+  <string name="feedback_default_text">Please enter your feedback or information about the nature of the error.</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Seuil de notification de widget</string>
   <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised: XXX</string>
@@ -385,6 +398,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
+  <string name="tts_no_tts">Don\'t speak</string>
   <string name="statistics_type_title">Chose statistic type</string>
   <string name="statistics_period_title">Chose report period</string>
   <string name="statistics_period_y_axis">Cards</string>
@@ -399,9 +413,6 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="statistics_zoom_out">Agrandir l\'\échelle</string>
   <string name="statistics_all_decks">(tous les paquets)</string>
   <string name="calculating_statistics">Calcul des statistiques…</string>
-  <string name="feedback_title">Feedback</string>
-  <string name="feedback_default_text">Please enter your feedback here and press OK to send it.</string>
-  <string name="feedback_result_fail">Sorry, we were unable to submit your feedback. Please try again.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
     <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
