@@ -565,14 +565,26 @@ public class StudyOptions extends Activity {
     }
 
 
-//    @Override 
-//    public void onConfigurationChanged(Configuration newConfig){
-//    	super.onConfigurationChanged(newConfig); 
-//    	
-//    	// TODO: Change layout without reloading deck
-//    	//setContentView(R.layout.studyoptions); 
-//    	//initAllContentViews();
-//    }
+    @Override 
+    public void onConfigurationChanged(Configuration newConfig){
+    	super.onConfigurationChanged(newConfig);
+    	int visibility = mStudyOptionsMain.getVisibility();
+        boolean cramChecked = mToggleCram.isChecked();
+        boolean limitChecked = mToggleLimit.isChecked();
+        boolean limitEnabled = mToggleLimit.isEnabled();
+        boolean nightModeChecekd = mNightMode.isChecked();
+        int limitBarVisibility = mGlobalLimitFrame.getVisibility();
+
+    	initAllContentViews();
+    	showContentView();
+
+        mToggleCram.setChecked(cramChecked);
+        mToggleLimit.setChecked(limitChecked);
+        mToggleLimit.setEnabled(limitEnabled);
+        mNightMode.setChecked(nightModeChecekd);
+        mGlobalLimitFrame.setVisibility(limitBarVisibility);        
+        mStudyOptionsMain.setVisibility(visibility);
+    }
 
 
     /**
