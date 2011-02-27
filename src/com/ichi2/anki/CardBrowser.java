@@ -346,7 +346,7 @@ public class CardBrowser extends Activity {
                         mAllCards.get(i).get("marSus").subSequence(1, 2).equals("1")) { 
                         mCards.add(mAllCards.get(i));
                     }
-                }                    
+                }
                 updateList();
             	return true;
             case MENU_SELECT_TAG:
