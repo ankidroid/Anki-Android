@@ -425,6 +425,10 @@ public class PersonalDeckPicker extends Activity {
                 refreshPersonalDecksList();
             } else {
                 if (mConnectionErrorAlert != null) {
+                    if (data.result != null) {
+                        // Known error
+                        mConnectionErrorAlert.setMessage((String) data.result);
+                    }
                     mConnectionErrorAlert.show();
                 }
             }

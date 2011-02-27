@@ -106,8 +106,8 @@ public class MyAccount extends Activity {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
 
-        Log.i(AnkiDroidApp.TAG, "Username = " + username);
-        Log.i(AnkiDroidApp.TAG, "Password = " + password);
+        // Log.i(AnkiDroidApp.TAG, "Username = " + username);
+        // Log.i(AnkiDroidApp.TAG, "Password = " + password);
 
         /*
          * Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932

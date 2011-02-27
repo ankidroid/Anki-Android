@@ -18,7 +18,6 @@ package com.ichi2.async;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
@@ -35,13 +34,6 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.SyncClient;
 import com.ichi2.anki.Utils;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,16 +46,13 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Connection extends AsyncTask<Connection.Payload, Object, Connection.Payload> {
 
@@ -233,7 +222,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             String password = (String) data.data[1];
             AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 
-            int status = server.connect();
+            int status = server.connect(false);
             if (status != AnkiDroidProxy.LOGIN_OK) {
                 data.success = false;
                 data.returnType = status;
@@ -253,24 +242,39 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         } catch (Exception e) {
             data.success = false;
             data.exception = e;
-            Log.e(AnkiDroidApp.TAG, "Error getting shared decks = " + e.getMessage());
-            e.printStackTrace();
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks - Error getting shared decks = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
         }
         return data;
     }
 
 
     private Payload doInBackgroundGetPersonalDecks(Payload data) {
+        Resources res = sContext.getResources();
+        
         try {
             String username = (String) data.data[0];
             String password = (String) data.data[1];
             AnkiDroidProxy server = new AnkiDroidProxy(username, password);
+
+            int connectResult = server.connect(false);
+            if (connectResult != AnkiDroidProxy.LOGIN_OK) {
+                if (connectResult == AnkiDroidProxy.LOGIN_INVALID_USER_PASS) {
+                    data.result = res.getString(R.string.invalid_username_password);
+                } else if (connectResult == AnkiDroidProxy.LOGIN_OLD_VERSION) {
+                    data.result = String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid));
+                }
+                data.success = false;
+                return data;
+            }
+
             data.result = server.getPersonalDecks();
         } catch (Exception e) {
             data.success = false;
+            data.result = null;
             data.exception = e;
-            Log.e(AnkiDroidApp.TAG, "Error getting personal decks = " + e.getMessage());
-            e.printStackTrace();
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundGetPersonalDecks - Error getting personal decks = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
         }
         return data;
     }
@@ -331,12 +335,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);
         ankiDB.getDatabase().beginTransaction();
         try {
-            // Log.i(AnkiDroidApp.TAG, "Starting sync: username = " + username + ", password = " + password
-            //         + ", deckPath = " + deckPath + ", syncName = " + syncName);
             AnkiDroidProxy server = new AnkiDroidProxy(username, password);
 
             publishProgress(syncName, res.getString(R.string.sync_connecting_message));
-            int connectResult = server.connect();
+            int connectResult = server.connect(true);
             if (connectResult != AnkiDroidProxy.LOGIN_OK) {
                 if (connectResult == AnkiDroidProxy.LOGIN_INVALID_USER_PASS) {
                     syncChangelog.put("message", res.getString(R.string.invalid_username_password));
@@ -755,6 +757,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         public int returnType;
         public Exception exception;
 
+        public Payload() {
+            data = null;
+            success = true;
+        }
 
         public Payload(Object[] data) {
             this.data = data;

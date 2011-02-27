@@ -43,7 +43,7 @@ import java.util.zip.InflaterInputStream;
 public class AnkiDroidProxy {
 
     // Sync protocol version
-    private static final String SYNC_VERSION = "2";
+    public static final String SYNC_VERSION = "2";
 
     /**
      * Connection settings
@@ -115,7 +115,7 @@ public class AnkiDroidProxy {
     }
 
 
-    public int connect() {
+    public int connect(boolean checkClocks) {
         if (mDecks == null) {
             String decksString = getDecks();
             try {
@@ -126,8 +126,8 @@ public class AnkiDroidProxy {
                     mTimestamp = jsonDecks.getDouble("timestamp");
                     mTimediff = Math.abs(mTimestamp - Utils.now());
                     Log.i(AnkiDroidApp.TAG, "Server timestamp = " + mTimestamp);
-                    if (mTimediff > 300) {
-                        Log.e(AnkiDroidApp.TAG, "The clock of the device and that of the server are unsynchronized!");
+                    if (checkClocks && (mTimediff > 300)) {
+                        Log.e(AnkiDroidApp.TAG, "connect - The clock of the device and that of the server are unsynchronized!");
                         return LOGIN_CLOCKS_UNSYNCED;
                     }
 
@@ -138,7 +138,7 @@ public class AnkiDroidProxy {
                     return LOGIN_OLD_VERSION;
                 }
             } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                Log.e(AnkiDroidApp.TAG, "connect - JSONException = " + e.getMessage());
             }
         }
 
@@ -147,7 +147,7 @@ public class AnkiDroidProxy {
 
 
     public boolean hasDeck(String name) {
-        connect();
+        connect(false);
         Iterator decksIterator = mDecks.keys();
         while (decksIterator.hasNext()) {
             String serverDeckName = (String) decksIterator.next();
@@ -163,7 +163,7 @@ public class AnkiDroidProxy {
     public double modified() {
         double lastModified = 0;
 
-        connect();
+        connect(false);
         try {
             JSONArray deckInfo = mDecks.getJSONArray(mDeckName);
             lastModified = deckInfo.getDouble(0);
@@ -178,7 +178,7 @@ public class AnkiDroidProxy {
     public double lastSync() {
         double lastSync = 0;
 
-        connect();
+        connect(false);
         try {
             JSONArray deckInfo = mDecks.getJSONArray(mDeckName);
             lastSync = deckInfo.getDouble(1);
@@ -215,7 +215,6 @@ public class AnkiDroidProxy {
 
 
     public String getDecks() {
-        // Log.i(AnkiDroidApp.TAG, "getDecks - user = " + username + ", password = " + password);
         String decksServer = "{}";
 
         try {
@@ -239,11 +238,11 @@ public class AnkiDroidProxy {
             Log.i(AnkiDroidApp.TAG, "getDecks response = " + decksServer);
 
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Log.e(AnkiDroidApp.TAG, "getDecks - " + Log.getStackTraceString(e));
         } catch (ClientProtocolException e) {
-            Log.i(AnkiDroidApp.TAG, "ClientProtocolException = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "getDecks - ClientProtocolException = " + e.getMessage());
         } catch (IOException e) {
-            Log.i(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "getDecks - IOException = " + e.getMessage());
         }
 
         return decksServer;
@@ -252,9 +251,6 @@ public class AnkiDroidProxy {
 
     public List<String> getPersonalDecks() {
         ArrayList<String> personalDecks = new ArrayList<String>();
-
-        connect();
-
         Iterator decksIterator = mDecks.keys();
         while (decksIterator.hasNext()) {
             personalDecks.add((String) decksIterator.next());
@@ -316,14 +312,10 @@ public class AnkiDroidProxy {
 
         try {
             // FIXME: Try to do the connection without encoding the lastSync in Base 64
-            String data = "p="
-                    + URLEncoder.encode(mPassword, "UTF-8")
-                    + "&u="
-                    + URLEncoder.encode(mUsername, "UTF-8")
-                    + "&d="
-                    + URLEncoder.encode(mDeckName, "UTF-8")
-                    + "&v="
-                    + URLEncoder.encode(SYNC_VERSION, "UTF-8")
+            String data = "p=" + URLEncoder.encode(mPassword, "UTF-8")
+                    + "&u=" + URLEncoder.encode(mUsername, "UTF-8")
+                    + "&d=" + URLEncoder.encode(mDeckName, "UTF-8")
+                    + "&v=" + URLEncoder.encode(SYNC_VERSION, "UTF-8")
                     + "&lastSync="
                     + URLEncoder.encode(Base64.encodeBytes(Utils.compress(String.format(Utils.ENGLISH_LOCALE, "%f",
                             lastSync).getBytes())), "UTF-8") + "&base64=" + URLEncoder.encode("true", "UTF-8");

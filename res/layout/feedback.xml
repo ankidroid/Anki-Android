@@ -6,14 +6,14 @@
 	android:paddingLeft="10dp"
 	android:paddingTop="15dp"
 	android:paddingRight="10dp"
-	android:paddingBottom="15dp">
-	<LinearLayout android:layout_width="fill_parent"
+	android:paddingBottom="15dp" android:gravity="center_vertical">
+	<LinearLayout android:id="@+id/llFeedbackTopLine"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:gravity="center">
+		android:orientation="horizontal" android:gravity="center_vertical|center_horizontal">
 		<Button android:id="@+id/btnFeedbackSend"
 			android:text="@+id/feedback_send_feedback_and_errors"
-			android:layout_width="0dip"
+			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:layout_gravity="center"
 			android:gravity="center"
@@ -23,6 +23,7 @@
 			android:layout_height="wrap_content"
 			android:indeterminate="true"
 			style="?android:attr/progressBarStyleSmall"
+			android:layout_gravity="center_vertical"
 			android:visibility="gone"/>
 	</LinearLayout>
 	<ScrollView android:id="@+id/scrollView1"
@@ -44,9 +45,8 @@
 			android:text="@string/feedback_keep_latest"
 			android:layout_width="0dip"
 			android:layout_height="fill_parent"
-			android:layout_gravity="center"
 			android:gravity="center"
-			android:layout_weight="1"/>
+			android:layout_weight="1" android:layout_gravity="center|center_vertical"/>
 		<Button android:id="@+id/btnFeedbackClearAll" 
 			android:text="@string/feedback_clear_all"
 			android:layout_width="0dip"
