@@ -1689,7 +1689,7 @@ public class StudyOptions extends Activity {
     private void reloadDeck() {
     	Deck deck = AnkiDroidApp.deck(); 
     	if (deck != null){
-		allTags.clear();
+		allTags = new String[0];
     		deck.closeDeck();
     		AnkiDroidApp.setDeck(null);
     	}
@@ -1989,7 +1989,7 @@ public class StudyOptions extends Activity {
             // AnkidroidApp.deck().closeDeck();
             // AnkidroidApp.setDeck(null);
             // }
-            allTags.clear();
+            allTags = new String[0];
 
             switch (result.getInt()) {
                 case DeckTask.DECK_LOADED:
