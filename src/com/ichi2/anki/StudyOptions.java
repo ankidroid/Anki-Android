@@ -996,7 +996,7 @@ public class StudyOptions extends Activity {
     }
 
 
-    // This has to be called every time we open a new deck AND whenever we edit any tags.
+    // allTags must be cleared whenever a new deck is opened AND whenever any tags are edited
     private void recreateTagsDialog() {
         Resources res = getResources();
         if (allTags.length == 0) {
@@ -1689,6 +1689,7 @@ public class StudyOptions extends Activity {
     private void reloadDeck() {
     	Deck deck = AnkiDroidApp.deck(); 
     	if (deck != null){
+		allTags.clear();
     		deck.closeDeck();
     		AnkiDroidApp.setDeck(null);
     	}
@@ -1988,6 +1989,7 @@ public class StudyOptions extends Activity {
             // AnkidroidApp.deck().closeDeck();
             // AnkidroidApp.setDeck(null);
             // }
+            allTags.clear();
 
             switch (result.getInt()) {
                 case DeckTask.DECK_LOADED:

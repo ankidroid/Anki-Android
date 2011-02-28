@@ -201,7 +201,7 @@
   <string name="delete_card_message">Diese Karte wirklich löschen?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Markierte anzeigen</string>
   <string name="card_browser_search">Suchen</string>
-  <string name="card_browser_search_suspended">Nach ausgesetzten suchen</string>
+  <string name="card_browser_search_suspended">Nach Ausgesetzten suchen</string>
   <string name="card_browser_search_by_tag">Nach Schlagwort suchen</string>
   <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
   <string name="card_browser_change_display_order">Anzeigereihenfolge</string>
