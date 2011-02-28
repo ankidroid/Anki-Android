@@ -31,6 +31,7 @@ import com.ichi2.anki.AnkiDroidProxy;
 import com.ichi2.anki.Deck;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
+import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.SyncClient;
 import com.ichi2.anki.Utils;
 
@@ -72,7 +73,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     
     public static final String CONFLICT_RESOLUTION = "ConflictResolutionRequired";
 
-
+    
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
 
         if (!isOnline()) {
@@ -501,7 +502,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     }
 
                     publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
-                    client.applyPayloadReply(payloadReply);
+                    HashMap<String, String> updatedMedia = client.applyPayloadReply(payloadReply);
+                    deck.initDeckvarsCache();
+                    Reviewer.setupMedia(deck); // FIXME: setupMedia should be part of Deck?
+                    
+                    if (updatedMedia != null) {
+                        doInBackgroundDownloadMissingMedia(new Payload(new Object[] {deck, updatedMedia}));
+                    }
                     if (!client.getServer().finish()) {
                         data.success = false;
                         syncChangelog.put("message", res.getString(R.string.sync_log_finish_error));
@@ -621,8 +628,16 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
      */
     private Payload doInBackgroundDownloadMissingMedia(Payload data) {
         Log.i(AnkiDroidApp.TAG, "DownloadMissingMedia");
-        Deck deck = (Deck) data.data[0];
+        HashMap<String, String> missingPaths = new HashMap<String, String>();
+        HashMap<String, String> missingSums = new HashMap<String, String>();
         
+        Deck deck = (Deck) data.data[0];
+        String syncName = deck.getDeckName();
+        HashMap<String, String> syncedMedia = null;
+        if (data.data.length == 2) {
+            syncedMedia = (HashMap<String, String>) data.data[1];
+        }
+                
         data.success = false;
         data.data = new Integer[] {0, 0, 0};
         if (!deck.hasKey("mediaURL")) {
@@ -640,27 +655,41 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         int missing = 0;
         int grabbed = 0;
 
-        HashMap<String, String> missingPaths = new HashMap<String, String>();
-        HashMap<String, String> missingSums = new HashMap<String, String>();
-        Cursor cursor = null;
-        try {
-            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename, originalPath FROM media", null);
+        if (syncedMedia != null) {
+            // Called as part of a sync, only checked the media that was added during the sync
             String path = null;
-            String f = null;
-            while (cursor.moveToNext()) {
-                f = cursor.getString(0);
+            
+            for (String f : syncedMedia.keySet()) {
                 path = mdir + "/" + f;
                 File file = new File(path);
                 if (!file.exists()) {
                     missingPaths.put(f, path);
-                    missingSums.put(f, cursor.getString(1));
+                    missingSums.put(f, syncedMedia.get(f));
                     Log.i(AnkiDroidApp.TAG, "Missing file: " + f);
                 }
             }
-        } finally {
-            deck.closeDeck();
-            if (cursor != null) {
-                cursor.close();
+        } else {
+            // Called from context menu of deck picker, check all files
+            Cursor cursor = null;
+            try {
+                cursor = deck.getDB().getDatabase().rawQuery("SELECT filename, originalPath FROM media", null);
+                String path = null;
+                String f = null;
+                while (cursor.moveToNext()) {
+                    f = cursor.getString(0);
+                    path = mdir + "/" + f;
+                    File file = new File(path);
+                    if (!file.exists()) {
+                        missingPaths.put(f, path);
+                        missingSums.put(f, cursor.getString(1));
+                        Log.i(AnkiDroidApp.TAG, "Missing file: " + f);
+                    }
+                }
+            } finally {
+                deck.closeDeck();
+                if (cursor != null) {
+                    cursor.close();
+                }
             }
         }
 
@@ -670,7 +699,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             data.success = true;
             return data;
         }
-        publishProgress(Boolean.FALSE, new Integer(totalMissing), new Integer(0));
+        publishProgress(Boolean.FALSE, new Integer(totalMissing), new Integer(0), syncName);
 
         URL url = null;
         HttpURLConnection connection = null;
@@ -750,7 +779,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     connection.disconnect();
                 }
             }
-            publishProgress(Boolean.TRUE, new Integer(totalMissing), new Integer(grabbed + missing));
+            publishProgress(Boolean.TRUE, new Integer(totalMissing), new Integer(grabbed + missing), syncName);
         }
 
         data.data[1] = new Integer(grabbed);
