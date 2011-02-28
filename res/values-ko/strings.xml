@@ -199,6 +199,7 @@
   <string name="delete_card_title">Delete Card</string>
   <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
   <string name="card_browser_search">Search</string>
   <string name="card_browser_search_suspended">Search suspended</string>
   <string name="card_browser_search_by_tag">Search by tag</string>
@@ -310,6 +311,7 @@
   <string name="log_out">로그아웃</string>
   <string name="alert_logging_message">Logging in, please wait...</string>
   <string name="invalid_username_password">Invalid username or password.</string>
+  <string name="login_generic_error">Failed to login.</string>
   <string name="download_finished">Download finished</string>
   <string name="deck_downloaded">Deck downloaded</string>
   <string name="connection_error_message">A network error has occurred.</string>
@@ -329,6 +331,7 @@
   <string name="sync_determining_differences_message">Determining differences...</string>
   <string name="sync_transferring_payload_message">Transferring payload...</string>
   <string name="sync_applying_reply_message">Applying reply...</string>
+  <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
   <string name="sync_no_changes_message">No changes found.</string>
   <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
   <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
@@ -342,6 +345,8 @@
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
   <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
   <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
+  <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
+  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
   <string name="sync_conflict_title">Syncing conflict</string>
   <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
   <string name="sync_conflict_local">Keep Local</string>

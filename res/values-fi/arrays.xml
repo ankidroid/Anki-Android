@@ -153,5 +153,6 @@
     <item>lisää korttipakat</item>
     <item>lisää vaihtoehtoja</item>
     <item>pienille ongelmmilla paljon korjauksia</item>
+    <item>tag support for card editor, card adder and card browser</item>
   </string-array>
 </resources>

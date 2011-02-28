@@ -199,6 +199,7 @@
   <string name="delete_card_title">Delete Card</string>
   <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
   <string name="card_browser_search">Search</string>
   <string name="card_browser_search_suspended">Search suspended</string>
   <string name="card_browser_search_by_tag">Search by tag</string>
@@ -310,6 +311,7 @@
   <string name="log_out">Desconnecta</string>
   <string name="alert_logging_message">S\'està iniciant la sessió, un moment...</string>
   <string name="invalid_username_password">El nom d\'usuari o la contrasenya no són vàlids.</string>
+  <string name="login_generic_error">Failed to login.</string>
   <string name="download_finished">Ha acabat la baixada</string>
   <string name="deck_downloaded">S\'ha baixat el paquet</string>
   <string name="connection_error_message">Hi ha hagut un error de la xarxa.</string>
@@ -329,6 +331,7 @@
   <string name="sync_determining_differences_message">S\'estan determinant les diferències...</string>
   <string name="sync_transferring_payload_message">S\'està transferint la càrrega...</string>
   <string name="sync_applying_reply_message">S\'està aplicant la resposta...</string>
+  <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
   <string name="sync_no_changes_message">No s\'ha trobat cap canvi.</string>
   <string name="sync_log_error_message">Error: El paquet no s\'ha sincronitzat</string>
   <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
@@ -342,6 +345,8 @@
   <string name="sync_log_clocks_unsynchronized">El temps de l\'aparell és diferent a la del servidor en %d segons, no es possible sincronitzar.</string>
   <string name="sync_log_old_version">El protocol de sincronització ha canviat, si us plau, actualitzeu a la darrera AnkiDroid. Veieu %s</string>
   <string name="sync_log_conflict_resolution_required">El paquet %s ha canviat tant del costat local com del remot Per resoldre el conflicte heu d\'obrir el paquet i sincronitzar.</string>
+  <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
+  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
   <string name="sync_conflict_title">Conflictes de sincronització</string>
   <string name="sync_conflict_message">El paquet %s ha canviat tant del costat local com del remot. Quin costat voleu mantenir?</string>
   <string name="sync_conflict_local">Manté la còpia local</string>

@@ -153,5 +153,6 @@
     <item>añadir mazos</item>
     <item>más opciones</item>
     <item>muchas correcciones para errores pequeños</item>
+    <item>Soporte de etiquetas para el editor, el creador y el explorador de tarjetas</item>
   </string-array>
 </resources>

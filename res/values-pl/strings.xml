@@ -199,6 +199,7 @@
   <string name="delete_card_title">Delete Card</string>
   <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
   <string name="card_browser_search">Search</string>
   <string name="card_browser_search_suspended">Search suspended</string>
   <string name="card_browser_search_by_tag">Search by tag</string>
@@ -310,6 +311,7 @@
   <string name="log_out">Wyloguj się</string>
   <string name="alert_logging_message">Logowanie, proszę czekać...</string>
   <string name="invalid_username_password">Błędna nazwa użytkownika lub hasło.</string>
+  <string name="login_generic_error">Failed to login.</string>
   <string name="download_finished">Pobieranie zakończone</string>
   <string name="deck_downloaded">Talia pobrana</string>
   <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
@@ -329,6 +331,7 @@
   <string name="sync_determining_differences_message">Określenie różnic...</string>
   <string name="sync_transferring_payload_message">Transfer danych...</string>
   <string name="sync_applying_reply_message">Aplikowanie odpowiedzi...</string>
+  <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
   <string name="sync_no_changes_message">Nie znaleziono zmian.</string>
   <string name="sync_log_error_message">Błąd: Talia nie została zsynchronizowana</string>
   <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
@@ -342,6 +345,8 @@
   <string name="sync_log_clocks_unsynchronized">Czas urządzenia różni się od tego na serwerze o %d sekund, synchronizacja niemożliwa.</string>
   <string name="sync_log_old_version">Zmienił się protokół synchronizacji, należy zaktualizować AnkiDroid do najnowszej wersji. Zobacz http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Talia kart została zmieniona po obu stronach. Proszę otworzyć talię kart i wykonać synchronizację by rozwiązać problem.</string>
+  <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
+  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
   <string name="sync_conflict_title">Konflikt synchronizacji</string>
   <string name="sync_conflict_message">Talia %s została zmieniona po stronie lokalnej i zdalnej. Które zmiany powinny być zachowane?</string>
   <string name="sync_conflict_local">Zachowaj lokalne</string>

@@ -199,6 +199,7 @@
   <string name="delete_card_title">Delete Card</string>
   <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
   <string name="card_browser_search">Search</string>
   <string name="card_browser_search_suspended">Search suspended</string>
   <string name="card_browser_search_by_tag">Search by tag</string>
@@ -310,6 +311,7 @@
   <string name="log_out">Odjavi se</string>
   <string name="alert_logging_message">Prijavljivanje u toku, molimo da sačekate...</string>
   <string name="invalid_username_password">Pogrešno korisničko ime ili lozinka.</string>
+  <string name="login_generic_error">Failed to login.</string>
   <string name="download_finished">Preuzimanje gotovo</string>
   <string name="deck_downloaded">Špil je preuzet</string>
   <string name="connection_error_message">Došlo je do greške sa internetom.</string>
@@ -329,6 +331,7 @@
   <string name="sync_determining_differences_message">Utvrđivanje razlika...</string>
   <string name="sync_transferring_payload_message">Prebacivanje tereta...</string>
   <string name="sync_applying_reply_message">Primena odgovora...</string>
+  <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
   <string name="sync_no_changes_message">Nema promena.</string>
   <string name="sync_log_error_message">Greška: Špil nije sinhronizovan</string>
   <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
@@ -342,6 +345,8 @@
   <string name="sync_log_clocks_unsynchronized">Vreme na vešem uređaju se razlikuje od onog na serveru za %d sekundi, sinhronizacija nije moguća.</string>
   <string name="sync_log_old_version">Protokol sinhronizacije je promenjen, molimo da instalirate najnoviju verziju AnkiDroida. Pogledajte http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Špil je promenjen i lokalno i na serveru. Molimo da otvorite špil i uradite Sinhronizaciju tako da bi rešili konflikt.</string>
+  <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
+  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
   <string name="sync_conflict_title">Konflikt u sinhronizaciji</string>
   <string name="sync_conflict_message">Špil %s je promenjen i lokalno i na serveru. Koju verziju želite da sačuvate?</string>
   <string name="sync_conflict_local">Sačuvaj Lokalnu</string>

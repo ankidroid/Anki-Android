@@ -199,6 +199,7 @@
   <string name="delete_card_title">Delete Card</string>
   <string name="delete_card_message">Really delete this card?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="card_browser_show_suspended">Show suspended cards</string>
   <string name="card_browser_search">Search</string>
   <string name="card_browser_search_suspended">Search suspended</string>
   <string name="card_browser_search_by_tag">Search by tag</string>
@@ -310,6 +311,7 @@
   <string name="log_out">Odhlásit se</string>
   <string name="alert_logging_message">Probíhá přihlašování, čekejte prosím...</string>
   <string name="invalid_username_password">Neplatné uživatelské jméno nebo heslo.</string>
+  <string name="login_generic_error">Failed to login.</string>
   <string name="download_finished">Stahování dokončeno</string>
   <string name="deck_downloaded">Balíček byl stažen</string>
   <string name="connection_error_message">Došlo k síťové chybě.</string>
@@ -329,6 +331,7 @@
   <string name="sync_determining_differences_message">Určování rozdílů...</string>
   <string name="sync_transferring_payload_message">Přenos dat...</string>
   <string name="sync_applying_reply_message">Použití odpovědi...</string>
+  <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
   <string name="sync_no_changes_message">Nenalezeny žádné změny.</string>
   <string name="sync_log_error_message">Chyba: Balíček nebyl synchronizován</string>
   <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
@@ -342,6 +345,8 @@
   <string name="sync_log_clocks_unsynchronized">Čas vašeho přístroje je jiný, než čas serveru o %d sekund, nelze synchronizovat.</string>
   <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Balíček byl změněn zde i na straně serveru. Prosím otevřete balíček a proveďte synchronizaci, aby se tento konflikt vyřešil.</string>
+  <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
+  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
   <string name="sync_conflict_title">Konflikt synchronizace</string>
   <string name="sync_conflict_message">Balíček %s byl změněn jak zde, tak na serveru. Kterou verzi chcete ponechat?</string>
   <string name="sync_conflict_local">Ponechat místní</string>

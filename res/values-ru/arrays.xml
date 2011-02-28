@@ -122,7 +122,7 @@
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Повтор</item>
-    <item>Накопление повторов, если не учить</item>
+    <item>Повторы, если не учить</item>
     <item>Интервалы</item>
     <item>Просмотры</item>
     <item>Общее время просмотров</item>
@@ -153,5 +153,6 @@
     <item>добавление колод</item>
     <item>больше параметров/настроек</item>
     <item>множество исправлений небольших ошибок</item>
+    <item>tag support for card editor, card adder and card browser</item>
   </string-array>
 </resources>
