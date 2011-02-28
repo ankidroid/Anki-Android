@@ -57,7 +57,7 @@ public class AnkiDroidProxy {
     /**
      * Synchronization.
      */
-    public static final int SYNC_ERROR = -1;
+    public static final int LOGIN_ERROR = -1;
     public static final int LOGIN_OK = 0;
     public static final int LOGIN_INVALID_USER_PASS = 1;
     public static final int LOGIN_CLOCKS_UNSYNCED = 2;
@@ -141,6 +141,7 @@ public class AnkiDroidProxy {
                 }
             } catch (JSONException e) {
                 Log.e(AnkiDroidApp.TAG, "connect - JSONException = " + e.getMessage());
+                return LOGIN_ERROR;
             }
         }
 

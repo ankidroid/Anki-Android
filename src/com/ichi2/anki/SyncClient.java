@@ -139,7 +139,7 @@ public class SyncClient {
     }
 
 
-    public JSONArray summaries() {
+    public JSONArray summaries() throws JSONException {
 
         JSONArray summaries = new JSONArray();
         JSONObject sum = summary(mDeck.getLastSync());
@@ -161,8 +161,9 @@ public class SyncClient {
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - summary
      * 
      * @param lastSync
+     * @throws JSONException 
      */
-    public JSONObject summary(double lastSync) {
+    public JSONObject summary(double lastSync) throws JSONException {
         Log.i(AnkiDroidApp.TAG, "Summary Local");
         mDeck.setLastSync(lastSync);
         mDeck.commitToDB();
@@ -220,17 +221,13 @@ public class SyncClient {
     }
 
 
-    private JSONArray cursorToJSONArray(Cursor cursor) {
+    private JSONArray cursorToJSONArray(Cursor cursor) throws JSONException {
         JSONArray jsonArray = new JSONArray();
         while (cursor.moveToNext()) {
             JSONArray element = new JSONArray();
 
-            try {
-                element.put(cursor.getLong(0));
-                element.put(cursor.getDouble(1));
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-            }
+            element.put(cursor.getLong(0));
+            element.put(cursor.getDouble(1));
             jsonArray.put(element);
         }
 
@@ -283,34 +280,30 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - payloadChanges
+     * @throws JSONException 
      */
-    private Object[] payloadChanges(JSONObject payload) {
+    private Object[] payloadChanges(JSONObject payload) throws JSONException {
         Object[] h = new Object[8];
 
-        try {
-            h[0] = payload.getJSONObject("added-facts").getJSONArray("facts").length();
-            h[1] = payload.getJSONArray("missing-facts").length();
-            h[2] = payload.getJSONArray("added-cards").length();
-            h[3] = payload.getJSONArray("missing-cards").length();
-            h[4] = payload.getJSONArray("added-models").length();
-            h[5] = payload.getJSONArray("missing-models").length();
+        h[0] = payload.getJSONObject("added-facts").getJSONArray("facts").length();
+        h[1] = payload.getJSONArray("missing-facts").length();
+        h[2] = payload.getJSONArray("added-cards").length();
+        h[3] = payload.getJSONArray("missing-cards").length();
+        h[4] = payload.getJSONArray("added-models").length();
+        h[5] = payload.getJSONArray("missing-models").length();
 
-            if (mLocalTime > mRemoteTime) {
-                h[6] = "all";
-                h[7] = 0;
-            } else {
-                h[6] = 0;
-                h[7] = "all";
-            }
-        } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+        if (mLocalTime > mRemoteTime) {
+            h[6] = "all";
+            h[7] = 0;
+        } else {
+            h[6] = 0;
+            h[7] = "all";
         }
-
         return h;
     }
 
 
-    public String payloadChangeReport(JSONObject payload) {
+    public String payloadChangeReport(JSONObject payload) throws JSONException {
         return AnkiDroidApp.getAppResources().getString(R.string.change_report_format, payloadChanges(payload));
     }
 
@@ -479,37 +472,29 @@ public class SyncClient {
     }
 
 
-    private void putExistingItems(HashSet<Long> ids, HashMap<Long, Double> dictExistingItems, JSONArray existingItems) {
+    private void putExistingItems(HashSet<Long> ids, HashMap<Long, Double> dictExistingItems, JSONArray existingItems) throws JSONException {
         int nbItems = existingItems.length();
         for (int i = 0; i < nbItems; i++) {
-            try {
-                JSONArray itemModified = existingItems.getJSONArray(i);
-                Long idItem = itemModified.getLong(0);
-                Double modTimeItem = itemModified.getDouble(1);
-                dictExistingItems.put(idItem, modTimeItem);
-                ids.add(idItem);
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-            }
+            JSONArray itemModified = existingItems.getJSONArray(i);
+            Long idItem = itemModified.getLong(0);
+            Double modTimeItem = itemModified.getDouble(1);
+            dictExistingItems.put(idItem, modTimeItem);
+            ids.add(idItem);
         }
     }
 
 
     private HashMap<Long, Double> putDeletedItems(HashSet<Long> ids, HashMap<Long, Double> dictDeletedItems,
-            JSONArray deletedItems) {
+            JSONArray deletedItems) throws JSONException {
         HashMap<Long, Double> deletedIds = new HashMap<Long, Double>();
         int nbItems = deletedItems.length();
         for (int i = 0; i < nbItems; i++) {
-            try {
-                JSONArray itemModified = deletedItems.getJSONArray(i);
-                Long idItem = itemModified.getLong(0);
-                Double modTimeItem = itemModified.getDouble(1);
-                dictDeletedItems.put(idItem, null);
-                deletedIds.put(idItem, modTimeItem);
-                ids.add(idItem);
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-            }
+            JSONArray itemModified = deletedItems.getJSONArray(i);
+            Long idItem = itemModified.getLong(0);
+            Double modTimeItem = itemModified.getDouble(1);
+            dictDeletedItems.put(idItem, null);
+            deletedIds.put(idItem, modTimeItem);
+            ids.add(idItem);
         }
 
         return deletedIds;
@@ -544,23 +529,19 @@ public class SyncClient {
     }
 
 
-    private void updateObjsFromKey(JSONObject payloadReply, String key) {
-        try {
-            if ("models".equalsIgnoreCase(key)) {
-                Log.i(AnkiDroidApp.TAG, "updateModels");
-                updateModels(payloadReply.getJSONArray("added-models"));
-            } else if ("facts".equalsIgnoreCase(key)) {
-                Log.i(AnkiDroidApp.TAG, "updateFacts");
-                updateFacts(payloadReply.getJSONObject("added-facts"));
-            } else if ("cards".equalsIgnoreCase(key)) {
-                Log.i(AnkiDroidApp.TAG, "updateCards");
-                updateCards(payloadReply.getJSONArray("added-cards"));
-            } else if ("media".equalsIgnoreCase(key)) {
-                Log.i(AnkiDroidApp.TAG, "updateMedia");
-                updateMedia(payloadReply.getJSONArray("added-media"));
-            }
-        } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+    private void updateObjsFromKey(JSONObject payloadReply, String key) throws JSONException {
+        if ("models".equalsIgnoreCase(key)) {
+            Log.i(AnkiDroidApp.TAG, "updateModels");
+            updateModels(payloadReply.getJSONArray("added-models"));
+        } else if ("facts".equalsIgnoreCase(key)) {
+            Log.i(AnkiDroidApp.TAG, "updateFacts");
+            updateFacts(payloadReply.getJSONObject("added-facts"));
+        } else if ("cards".equalsIgnoreCase(key)) {
+            Log.i(AnkiDroidApp.TAG, "updateCards");
+            updateCards(payloadReply.getJSONArray("added-cards"));
+        } else if ("media".equalsIgnoreCase(key)) {
+            Log.i(AnkiDroidApp.TAG, "updateMedia");
+            updateMedia(payloadReply.getJSONArray("added-media"));
         }
     }
 
@@ -710,20 +691,16 @@ public class SyncClient {
     }
 
 
-    private void deleteModels(JSONArray ids) {
+    private void deleteModels(JSONArray ids) throws JSONException {
         Log.i(AnkiDroidApp.TAG, "deleteModels");
         int len = ids.length();
         for (int i = 0; i < len; i++) {
-            try {
-                mDeck.deleteModel(ids.getString(i));
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-            }
+            mDeck.deleteModel(ids.getString(i));
         }
     }
 
 
-    private void updateModels(JSONArray models) {
+    private void updateModels(JSONArray models) throws JSONException {
         ArrayList<String> insertedModelsIds = new ArrayList<String>();
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
@@ -733,42 +710,38 @@ public class SyncClient {
         SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
         int len = models.length();
         for (int i = 0; i < len; i++) {
-            try {
-                JSONObject model = models.getJSONObject(i);
+            JSONObject model = models.getJSONObject(i);
 
-                // id
-                String id = model.getString("id");
-                statement.bindString(1, id);
-                // deckId
-                statement.bindLong(2, model.getLong("deckId"));
-                // created
-                statement.bindDouble(3, model.getDouble("created"));
-                // modified
-                statement.bindDouble(4, model.getDouble("modified"));
-                // tags
-                statement.bindString(5, model.getString("tags"));
-                // name
-                statement.bindString(6, model.getString("name"));
-                // description
-                statement.bindString(7, model.getString("name"));
-                // features
-                statement.bindString(8, model.getString("features"));
-                // spacing
-                statement.bindDouble(9, model.getDouble("spacing"));
-                // initialSpacing
-                statement.bindDouble(10, model.getDouble("initialSpacing"));
-                // source
-                statement.bindLong(11, model.getLong("source"));
+            // id
+            String id = model.getString("id");
+            statement.bindString(1, id);
+            // deckId
+            statement.bindLong(2, model.getLong("deckId"));
+            // created
+            statement.bindDouble(3, model.getDouble("created"));
+            // modified
+            statement.bindDouble(4, model.getDouble("modified"));
+            // tags
+            statement.bindString(5, model.getString("tags"));
+            // name
+            statement.bindString(6, model.getString("name"));
+            // description
+            statement.bindString(7, model.getString("name"));
+            // features
+            statement.bindString(8, model.getString("features"));
+            // spacing
+            statement.bindDouble(9, model.getDouble("spacing"));
+            // initialSpacing
+            statement.bindDouble(10, model.getDouble("initialSpacing"));
+            // source
+            statement.bindLong(11, model.getLong("source"));
 
-                statement.execute();
+            statement.execute();
 
-                insertedModelsIds.add(id);
+            insertedModelsIds.add(id);
 
-                mergeFieldModels(id, model.getJSONArray("fieldModels"));
-                mergeCardModels(id, model.getJSONArray("cardModels"));
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-            }
+            mergeFieldModels(id, model.getJSONArray("fieldModels"));
+            mergeCardModels(id, model.getJSONArray("cardModels"));
         }
         statement.close();
 
@@ -777,68 +750,64 @@ public class SyncClient {
     }
 
 
-    private void mergeFieldModels(String modelId, JSONArray fieldModels) {
+    private void mergeFieldModels(String modelId, JSONArray fieldModels) throws JSONException {
         ArrayList<String> ids = new ArrayList<String>();
         
         String sql = "INSERT OR REPLACE INTO fieldModels VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         SQLiteStatement statement = mDeck.getDB().getDatabase().compileStatement(sql);
         int len = fieldModels.length();
         for (int i = 0; i < len; i++) {
-            try {
-                JSONObject fieldModel = fieldModels.getJSONObject(i);
+            JSONObject fieldModel = fieldModels.getJSONObject(i);
 
-                // id
-                String id = fieldModel.getString("id");
-                statement.bindString(1, id);
-                // ordinal
-                statement.bindString(2, fieldModel.getString("ordinal"));
-                // modelId
-                statement.bindLong(3, fieldModel.getLong("modelId"));
-                // name
-                statement.bindString(4, fieldModel.getString("name"));
-                // description
-                statement.bindString(5, fieldModel.getString("description"));
-                // features
-                statement.bindString(6, fieldModel.getString("features"));
-                // required
-                statement.bindLong(7, Utils.booleanToInt(fieldModel.getBoolean("required")));
-                // unique
-                statement.bindLong(8, Utils.booleanToInt(fieldModel.getBoolean("unique")));
-                // numeric
-                statement.bindLong(9, Utils.booleanToInt(fieldModel.getBoolean("numeric")));
-                // quizFontFamily
-                if (fieldModel.isNull("quizFontFamily")) {
-                    statement.bindNull(10);
-                } else {
-                    statement.bindString(10, fieldModel.getString("quizFontFamily"));
-                }
-                // quizFontSize
-                if (fieldModel.isNull("quizFontSize")) {
-                    statement.bindNull(11);
-                } else {
-                    statement.bindString(11, fieldModel.getString("quizFontSize"));
-                }
-                // quizFontColour
-                if (fieldModel.isNull("quizFontColour")) {
-                    statement.bindNull(12);
-                } else {
-                    statement.bindString(12, fieldModel.getString("quizFontColour"));
-                }
-                // editFontFamily
-                if (fieldModel.isNull("editFontFamily")) {
-                    statement.bindNull(13);
-                } else {
-                    statement.bindString(13, fieldModel.getString("editFontFamily"));
-                }
-                // editFontSize
-                statement.bindString(14, fieldModel.getString("editFontSize"));
-
-                statement.execute();
-
-                ids.add(id);
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException");
+            // id
+            String id = fieldModel.getString("id");
+            statement.bindString(1, id);
+            // ordinal
+            statement.bindString(2, fieldModel.getString("ordinal"));
+            // modelId
+            statement.bindLong(3, fieldModel.getLong("modelId"));
+            // name
+            statement.bindString(4, fieldModel.getString("name"));
+            // description
+            statement.bindString(5, fieldModel.getString("description"));
+            // features
+            statement.bindString(6, fieldModel.getString("features"));
+            // required
+            statement.bindLong(7, Utils.booleanToInt(fieldModel.getBoolean("required")));
+            // unique
+            statement.bindLong(8, Utils.booleanToInt(fieldModel.getBoolean("unique")));
+            // numeric
+            statement.bindLong(9, Utils.booleanToInt(fieldModel.getBoolean("numeric")));
+            // quizFontFamily
+            if (fieldModel.isNull("quizFontFamily")) {
+                statement.bindNull(10);
+            } else {
+                statement.bindString(10, fieldModel.getString("quizFontFamily"));
             }
+            // quizFontSize
+            if (fieldModel.isNull("quizFontSize")) {
+                statement.bindNull(11);
+            } else {
+                statement.bindString(11, fieldModel.getString("quizFontSize"));
+            }
+            // quizFontColour
+            if (fieldModel.isNull("quizFontColour")) {
+                statement.bindNull(12);
+            } else {
+                statement.bindString(12, fieldModel.getString("quizFontColour"));
+            }
+            // editFontFamily
+            if (fieldModel.isNull("editFontFamily")) {
+                statement.bindNull(13);
+            } else {
+                statement.bindString(13, fieldModel.getString("editFontFamily"));
+            }
+            // editFontSize
+            statement.bindString(14, fieldModel.getString("editFontSize"));
+
+            statement.execute();
+
+            ids.add(id);
         }
         statement.close();
 
@@ -855,7 +824,7 @@ public class SyncClient {
     }
 
 
-    private void mergeCardModels(String modelId, JSONArray cardModels) {
+    private void mergeCardModels(String modelId, JSONArray cardModels) throws JSONException {
         ArrayList<String> ids = new ArrayList<String>();
 
         String sql = "INSERT OR REPLACE INTO cardModels (id, ordinal, modelId, name, description, active, qformat, "
@@ -867,106 +836,102 @@ public class SyncClient {
         SQLiteStatement statement = mDeck.getDB().getDatabase().compileStatement(sql);
         int len = cardModels.length();
         for (int i = 0; i < len; i++) {
-            try {
-                JSONObject cardModel = cardModels.getJSONObject(i);
+            JSONObject cardModel = cardModels.getJSONObject(i);
 
-                // id
-                String id = cardModel.getString("id");
-                statement.bindString(1, id);
-                // ordinal
-                statement.bindString(2, cardModel.getString("ordinal"));
-                // modelId
-                statement.bindLong(3, cardModel.getLong("modelId"));
-                // name
-                statement.bindString(4, cardModel.getString("name"));
-                // description
-                statement.bindString(5, cardModel.getString("description"));
-                // active
-                statement.bindLong(6, Utils.booleanToInt(cardModel.getBoolean("active")));
-                // qformat
-                statement.bindString(7, cardModel.getString("qformat"));
-                // aformat
-                statement.bindString(8, cardModel.getString("aformat"));
-                // lformat
-                if (cardModel.isNull("lformat")) {
-                    statement.bindNull(9);
-                } else {
-                    statement.bindString(9, cardModel.getString("lformat"));
-                }
-                // qedformat
-                if (cardModel.isNull("qedformat")) {
-                    statement.bindNull(10);
-                } else {
-                    statement.bindString(10, cardModel.getString("qedformat"));
-                }
-                // aedformat
-                if (cardModel.isNull("aedformat")) {
-                    statement.bindNull(11);
-                } else {
-                    statement.bindString(11, cardModel.getString("aedformat"));
-                }
-                // questionInAnswer
-                statement.bindLong(12, Utils.booleanToInt(cardModel.getBoolean("questionInAnswer")));
-                // questionFontFamily
-                statement.bindString(13, cardModel.getString("questionFontFamily"));
-                // questionFontSize
-                statement.bindString(14, cardModel.getString("questionFontSize"));
-                // questionFontColour
-                statement.bindString(15, cardModel.getString("questionFontColour"));
-                // questionAlign
-                statement.bindString(16, cardModel.getString("questionAlign"));
-                // answerFontFamily
-                statement.bindString(17, cardModel.getString("answerFontFamily"));
-                // answerFontSize
-                statement.bindString(18, cardModel.getString("answerFontSize"));
-                // answerFontColour
-                statement.bindString(19, cardModel.getString("answerFontColour"));
-                // answerAlign
-                statement.bindString(20, cardModel.getString("answerAlign"));
-                // lastFontFamily
-                statement.bindString(21, cardModel.getString("lastFontFamily"));
-                // lastFontSize
-                statement.bindString(22, cardModel.getString("lastFontSize"));
-                // lastFontColour
-                statement.bindString(23, cardModel.getString("lastFontColour"));
-                // editQuestionFontFamily
-                if (cardModel.isNull("editQuestionFontFamily")) {
-                    statement.bindNull(24);
-                } else {
-                    statement.bindString(24, cardModel.getString("editQuestionFontFamily"));
-                }
-                // editQuestionFontSize
-                if (cardModel.isNull("editQuestionFontSize")) {
-                    statement.bindNull(25);
-                } else {
-                    statement.bindString(25, cardModel.getString("editQuestionFontSize"));
-                }
-                // editAnswerFontFamily
-                if (cardModel.isNull("editAnswerFontFamily")) {
-                    statement.bindNull(26);
-                } else {
-                    statement.bindString(26, cardModel.getString("editAnswerFontFamily"));
-                }
-                // editAnswerFontSize
-                if (cardModel.isNull("editAnswerFontSize")) {
-                    statement.bindNull(27);
-                } else {
-                    statement.bindString(27, cardModel.getString("editAnswerFontSize"));
-                }
-                // allowEmptyAnswer
-                if (cardModel.isNull("allowEmptyAnswer")) {
-                    cardModel.put("allowEmptyAnswer", true);
-                }
-                statement.bindLong(28, Utils.booleanToInt(cardModel.getBoolean("allowEmptyAnswer")));
-                // typeAnswer
-                statement.bindString(29, cardModel.getString("typeAnswer"));
-
-                statement.execute();
-
-                ids.add(id);
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            // id
+            String id = cardModel.getString("id");
+            statement.bindString(1, id);
+            // ordinal
+            statement.bindString(2, cardModel.getString("ordinal"));
+            // modelId
+            statement.bindLong(3, cardModel.getLong("modelId"));
+            // name
+            statement.bindString(4, cardModel.getString("name"));
+            // description
+            statement.bindString(5, cardModel.getString("description"));
+            // active
+            statement.bindLong(6, Utils.booleanToInt(cardModel.getBoolean("active")));
+            // qformat
+            statement.bindString(7, cardModel.getString("qformat"));
+            // aformat
+            statement.bindString(8, cardModel.getString("aformat"));
+            // lformat
+            if (cardModel.isNull("lformat")) {
+                statement.bindNull(9);
+            } else {
+                statement.bindString(9, cardModel.getString("lformat"));
             }
+            // qedformat
+            if (cardModel.isNull("qedformat")) {
+                statement.bindNull(10);
+            } else {
+                statement.bindString(10, cardModel.getString("qedformat"));
+            }
+            // aedformat
+            if (cardModel.isNull("aedformat")) {
+                statement.bindNull(11);
+            } else {
+                statement.bindString(11, cardModel.getString("aedformat"));
+            }
+            // questionInAnswer
+            statement.bindLong(12, Utils.booleanToInt(cardModel.getBoolean("questionInAnswer")));
+            // questionFontFamily
+            statement.bindString(13, cardModel.getString("questionFontFamily"));
+            // questionFontSize
+            statement.bindString(14, cardModel.getString("questionFontSize"));
+            // questionFontColour
+            statement.bindString(15, cardModel.getString("questionFontColour"));
+            // questionAlign
+            statement.bindString(16, cardModel.getString("questionAlign"));
+            // answerFontFamily
+            statement.bindString(17, cardModel.getString("answerFontFamily"));
+            // answerFontSize
+            statement.bindString(18, cardModel.getString("answerFontSize"));
+            // answerFontColour
+            statement.bindString(19, cardModel.getString("answerFontColour"));
+            // answerAlign
+            statement.bindString(20, cardModel.getString("answerAlign"));
+            // lastFontFamily
+            statement.bindString(21, cardModel.getString("lastFontFamily"));
+            // lastFontSize
+            statement.bindString(22, cardModel.getString("lastFontSize"));
+            // lastFontColour
+            statement.bindString(23, cardModel.getString("lastFontColour"));
+            // editQuestionFontFamily
+            if (cardModel.isNull("editQuestionFontFamily")) {
+                statement.bindNull(24);
+            } else {
+                statement.bindString(24, cardModel.getString("editQuestionFontFamily"));
+            }
+            // editQuestionFontSize
+            if (cardModel.isNull("editQuestionFontSize")) {
+                statement.bindNull(25);
+            } else {
+                statement.bindString(25, cardModel.getString("editQuestionFontSize"));
+            }
+            // editAnswerFontFamily
+            if (cardModel.isNull("editAnswerFontFamily")) {
+                statement.bindNull(26);
+            } else {
+                statement.bindString(26, cardModel.getString("editAnswerFontFamily"));
+            }
+            // editAnswerFontSize
+            if (cardModel.isNull("editAnswerFontSize")) {
+                statement.bindNull(27);
+            } else {
+                statement.bindString(27, cardModel.getString("editAnswerFontSize"));
+            }
+            // allowEmptyAnswer
+            if (cardModel.isNull("allowEmptyAnswer")) {
+                cardModel.put("allowEmptyAnswer", true);
+            }
+            statement.bindLong(28, Utils.booleanToInt(cardModel.getBoolean("allowEmptyAnswer")));
+            // typeAnswer
+            statement.bindString(29, cardModel.getString("typeAnswer"));
+
+            statement.execute();
+
+            ids.add(id);
         }
         statement.close();
 
@@ -1019,7 +984,7 @@ public class SyncClient {
     }
 
 
-    private JSONArray getFact(Long id) {
+    private JSONArray getFact(Long id) throws JSONException {
         JSONArray fact = new JSONArray();
 
         // TODO: Take into account the updateModified boolean (modified = time.time() or modified = "modified"... what
@@ -1028,17 +993,13 @@ public class SyncClient {
                 .rawQuery("SELECT id, modelId, created, modified, tags, spaceUntil, lastCardId FROM facts WHERE id = "
                         + id, null);
         if (cursor.moveToFirst()) {
-            try {
-                fact.put(cursor.getLong(0));
-                fact.put(cursor.getLong(1));
-                fact.put(cursor.getDouble(2));
-                fact.put(cursor.getDouble(3));
-                fact.put(cursor.getString(4));
-                fact.put(cursor.getDouble(5));
-                fact.put(cursor.getLong(6));
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-            }
+            fact.put(cursor.getLong(0));
+            fact.put(cursor.getLong(1));
+            fact.put(cursor.getDouble(2));
+            fact.put(cursor.getDouble(3));
+            fact.put(cursor.getString(4));
+            fact.put(cursor.getDouble(5));
+            fact.put(cursor.getLong(6));
         }
         cursor.close();
 
@@ -1064,87 +1025,83 @@ public class SyncClient {
     }
 
 
-    private void updateFacts(JSONObject factsDict) {
-        try {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
-            JSONArray facts = factsDict.getJSONArray("facts");
-            int lenFacts = facts.length();
+    private void updateFacts(JSONObject factsDict) throws JSONException {
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+        JSONArray facts = factsDict.getJSONArray("facts");
+        int lenFacts = facts.length();
 
-            if (lenFacts > 0) {
-                JSONArray fields = factsDict.getJSONArray("fields");
-                int lenFields = fields.length();
+        if (lenFacts > 0) {
+            JSONArray fields = factsDict.getJSONArray("fields");
+            int lenFields = fields.length();
 
-                // Grab fact ids
-                // They will be used later to recalculate the count of facts and to delete them from DB
-                ArrayList<String> factIds = new ArrayList<String>();
-                for (int i = 0; i < lenFacts; i++) {
-                    factIds.add(facts.getJSONArray(i).getString(0));
-                }
-                String factIdsString = Utils.ids2str(factIds);
-
-                // Update facts
-                String sqlFact = "INSERT OR REPLACE INTO facts (id, modelId, created, modified, tags, spaceUntil, lastCardId)"
-                                + " VALUES(?,?,?,?,?,?,?)";
-                SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sqlFact);
-                for (int i = 0; i < lenFacts; i++) {
-                    JSONArray fact = facts.getJSONArray(i);
-
-                    // id
-                    statement.bindLong(1, fact.getLong(0));
-                    // modelId
-                    statement.bindLong(2, fact.getLong(1));
-                    // created
-                    statement.bindDouble(3, fact.getDouble(2));
-                    // modified
-                    statement.bindDouble(4, fact.getDouble(3));
-                    // tags
-                    statement.bindString(5, fact.getString(4));
-                    // spaceUntil
-                    if (fact.getString(5) == null) {
-                        statement.bindString(6, "");
-                    } else {
-                        statement.bindString(6, fact.getString(5));
-                    }
-                    // lastCardId
-                    if (!fact.isNull(6)) {
-                        statement.bindLong(7, fact.getLong(6));
-                    } else {
-                        statement.bindNull(7);
-                    }
-
-                    statement.execute();
-                    
-                }
-                statement.close();
-
-                // Update fields (and delete first the local ones, since ids may have changed)
-                ankiDB.getDatabase().execSQL("DELETE FROM fields WHERE factId IN " + factIdsString);
-
-                String sqlFields = "INSERT INTO fields (id, factId, fieldModelId, ordinal, value) VALUES(?,?,?,?,?)";
-                statement = ankiDB.getDatabase().compileStatement(sqlFields);
-                for (int i = 0; i < lenFields; i++) {
-                    JSONArray field = fields.getJSONArray(i);
-
-                    // id
-                    statement.bindLong(1, field.getLong(0));
-                    // factId
-                    statement.bindLong(2, field.getLong(1));
-                    // fieldModelId
-                    statement.bindLong(3, field.getLong(2));
-                    // ordinal
-                    statement.bindString(4, field.getString(3));
-                    // value
-                    statement.bindString(5, field.getString(4));
-
-                    statement.execute();
-                }
-                statement.close();
-
-                // Delete inserted facts from deleted
-                ankiDB.getDatabase().execSQL("DELETE FROM factsDeleted WHERE factId IN " + factIdsString);
+            // Grab fact ids
+            // They will be used later to recalculate the count of facts and to delete them from DB
+            ArrayList<String> factIds = new ArrayList<String>();
+            for (int i = 0; i < lenFacts; i++) {
+                factIds.add(facts.getJSONArray(i).getString(0));
             }
-        } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            String factIdsString = Utils.ids2str(factIds);
+
+            // Update facts
+            String sqlFact = "INSERT OR REPLACE INTO facts (id, modelId, created, modified, tags, spaceUntil, lastCardId)"
+                            + " VALUES(?,?,?,?,?,?,?)";
+            SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sqlFact);
+            for (int i = 0; i < lenFacts; i++) {
+                JSONArray fact = facts.getJSONArray(i);
+
+                // id
+                statement.bindLong(1, fact.getLong(0));
+                // modelId
+                statement.bindLong(2, fact.getLong(1));
+                // created
+                statement.bindDouble(3, fact.getDouble(2));
+                // modified
+                statement.bindDouble(4, fact.getDouble(3));
+                // tags
+                statement.bindString(5, fact.getString(4));
+                // spaceUntil
+                if (fact.getString(5) == null) {
+                    statement.bindString(6, "");
+                } else {
+                    statement.bindString(6, fact.getString(5));
+                }
+                // lastCardId
+                if (!fact.isNull(6)) {
+                    statement.bindLong(7, fact.getLong(6));
+                } else {
+                    statement.bindNull(7);
+                }
+
+                statement.execute();
+                
+            }
+            statement.close();
+
+            // Update fields (and delete first the local ones, since ids may have changed)
+            ankiDB.getDatabase().execSQL("DELETE FROM fields WHERE factId IN " + factIdsString);
+
+            String sqlFields = "INSERT INTO fields (id, factId, fieldModelId, ordinal, value) VALUES(?,?,?,?,?)";
+            statement = ankiDB.getDatabase().compileStatement(sqlFields);
+            for (int i = 0; i < lenFields; i++) {
+                JSONArray field = fields.getJSONArray(i);
+
+                // id
+                statement.bindLong(1, field.getLong(0));
+                // factId
+                statement.bindLong(2, field.getLong(1));
+                // fieldModelId
+                statement.bindLong(3, field.getLong(2));
+                // ordinal
+                statement.bindString(4, field.getString(3));
+                // value
+                statement.bindString(5, field.getString(4));
+
+                statement.execute();
+            }
+            statement.close();
+
+            // Delete inserted facts from deleted
+            ankiDB.getDatabase().execSQL("DELETE FROM factsDeleted WHERE factId IN " + factIdsString);
         }
     }
 
@@ -1255,17 +1212,13 @@ public class SyncClient {
     }
 
 
-    private void updateCards(JSONArray cards) {
+    private void updateCards(JSONArray cards) throws JSONException {
         int len = cards.length();
         if (len > 0) {
             AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
             ArrayList<String> ids = new ArrayList<String>();
             for (int i = 0; i < len; i++) {
-                try {
-                    ids.add(cards.getJSONArray(i).getString(0));
-                } catch (JSONException e) {
-                    Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-                }
+                ids.add(cards.getJSONArray(i).getString(0));
             }
             String idsString = Utils.ids2str(ids);
 
@@ -1277,88 +1230,84 @@ public class SyncClient {
                     + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 0)";
             SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
             for (int i = 0; i < len; i++) {
-                try {
-                    JSONArray card = cards.getJSONArray(i);
+                JSONArray card = cards.getJSONArray(i);
 
-                    // id
-                    statement.bindLong(1, card.getLong(0));
-                    // factId
-                    statement.bindLong(2, card.getLong(1));
-                    // cardModelId
-                    statement.bindLong(3, card.getLong(2));
-                    // created
-                    statement.bindDouble(4, card.getDouble(3));
-                    // modified
-                    statement.bindDouble(5, card.getDouble(4));
-                    // tags
-                    statement.bindString(6, card.getString(5));
-                    // ordinal
-                    statement.bindLong(7, card.getInt(6));
-                    // priority
-                    statement.bindLong(8, card.getInt(7));
-                    // interval
-                    statement.bindDouble(9, card.getDouble(8));
-                    // lastInterval
-                    statement.bindDouble(10, card.getDouble(9));
-                    // due
-                    statement.bindDouble(11, card.getDouble(10));
-                    // lastDue
-                    statement.bindDouble(12, card.getDouble(11));
-                    // factor
-                    statement.bindDouble(13, card.getDouble(12));
-                    // firstAnswered
-                    statement.bindDouble(14, card.getDouble(13));
-                    // reps
-                    statement.bindLong(15, card.getInt(14));
-                    // successive
-                    statement.bindLong(16, card.getInt(15));
-                    // averageTime
-                    statement.bindDouble(17, card.getDouble(16));
-                    // reviewTime
-                    statement.bindDouble(18, card.getDouble(17));
-                    // youngEase0
-                    statement.bindLong(19, card.getInt(18));
-                    // youngEase1
-                    statement.bindLong(20, card.getInt(19));
-                    // youngEase2
-                    statement.bindLong(21, card.getInt(20));
-                    // youngEase3
-                    statement.bindLong(22, card.getInt(21));
-                    // youngEase4
-                    statement.bindLong(23, card.getInt(22));
-                    // matureEase0
-                    statement.bindLong(24, card.getInt(23));
-                    // matureEase1
-                    statement.bindLong(25, card.getInt(24));
-                    // matureEase2
-                    statement.bindLong(26, card.getInt(25));
-                    // matureEase3
-                    statement.bindLong(27, card.getInt(26));
-                    // matureEase4
-                    statement.bindLong(28, card.getInt(27));
-                    // yesCount
-                    statement.bindLong(29, card.getInt(28));
-                    // noCount
-                    statement.bindLong(30, card.getInt(29));
-                    // question
-                    statement.bindString(31, card.getString(30));
-                    // answer
-                    statement.bindString(32, card.getString(31));
-                    // lastFactor
-                    statement.bindDouble(33, card.getDouble(32));
-                    // spaceUntil
-                    statement.bindDouble(34, card.getDouble(33));
-                    // type
-                    statement.bindLong(35, card.getInt(34));
-                    // combinedDue
-                    statement.bindDouble(36, card.getDouble(35));
-                    // relativeDelay
-                    statement.bindString(37, genType(card));
+                // id
+                statement.bindLong(1, card.getLong(0));
+                // factId
+                statement.bindLong(2, card.getLong(1));
+                // cardModelId
+                statement.bindLong(3, card.getLong(2));
+                // created
+                statement.bindDouble(4, card.getDouble(3));
+                // modified
+                statement.bindDouble(5, card.getDouble(4));
+                // tags
+                statement.bindString(6, card.getString(5));
+                // ordinal
+                statement.bindLong(7, card.getInt(6));
+                // priority
+                statement.bindLong(8, card.getInt(7));
+                // interval
+                statement.bindDouble(9, card.getDouble(8));
+                // lastInterval
+                statement.bindDouble(10, card.getDouble(9));
+                // due
+                statement.bindDouble(11, card.getDouble(10));
+                // lastDue
+                statement.bindDouble(12, card.getDouble(11));
+                // factor
+                statement.bindDouble(13, card.getDouble(12));
+                // firstAnswered
+                statement.bindDouble(14, card.getDouble(13));
+                // reps
+                statement.bindLong(15, card.getInt(14));
+                // successive
+                statement.bindLong(16, card.getInt(15));
+                // averageTime
+                statement.bindDouble(17, card.getDouble(16));
+                // reviewTime
+                statement.bindDouble(18, card.getDouble(17));
+                // youngEase0
+                statement.bindLong(19, card.getInt(18));
+                // youngEase1
+                statement.bindLong(20, card.getInt(19));
+                // youngEase2
+                statement.bindLong(21, card.getInt(20));
+                // youngEase3
+                statement.bindLong(22, card.getInt(21));
+                // youngEase4
+                statement.bindLong(23, card.getInt(22));
+                // matureEase0
+                statement.bindLong(24, card.getInt(23));
+                // matureEase1
+                statement.bindLong(25, card.getInt(24));
+                // matureEase2
+                statement.bindLong(26, card.getInt(25));
+                // matureEase3
+                statement.bindLong(27, card.getInt(26));
+                // matureEase4
+                statement.bindLong(28, card.getInt(27));
+                // yesCount
+                statement.bindLong(29, card.getInt(28));
+                // noCount
+                statement.bindLong(30, card.getInt(29));
+                // question
+                statement.bindString(31, card.getString(30));
+                // answer
+                statement.bindString(32, card.getString(31));
+                // lastFactor
+                statement.bindDouble(33, card.getDouble(32));
+                // spaceUntil
+                statement.bindDouble(34, card.getDouble(33));
+                // type
+                statement.bindLong(35, card.getInt(34));
+                // combinedDue
+                statement.bindDouble(36, card.getDouble(35));
+                // relativeDelay
+                statement.bindString(37, genType(card));
 
-                    statement.execute();
-                } catch (JSONException e) {
-                    Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-                }
+                statement.execute();
             }
             statement.close();
 
@@ -1445,7 +1394,7 @@ public class SyncClient {
     }
 
 
-    private void updateMedia(JSONArray media) {
+    private void updateMedia(JSONArray media) throws JSONException {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
         ArrayList<String> mediaIds = new ArrayList<String>();
 
@@ -1454,30 +1403,26 @@ public class SyncClient {
         SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
         int len = media.length();
         for (int i = 0; i < len; i++) {
-            try {
-                JSONArray m = media.getJSONArray(i);
+            JSONArray m = media.getJSONArray(i);
 
-                // Grab media ids, to delete them later
-                String id = m.getString(0);
-                mediaIds.add(id);
+            // Grab media ids, to delete them later
+            String id = m.getString(0);
+            mediaIds.add(id);
 
-                // id
-                statement.bindString(1, id);
-                // filename
-                statement.bindString(2, m.getString(1));
-                // size
-                statement.bindString(3, m.getString(2));
-                // created
-                statement.bindDouble(4, m.getDouble(3));
-                // originalPath
-                statement.bindString(5, m.getString(4));
-                // description
-                statement.bindString(6, m.getString(5));
+            // id
+            statement.bindString(1, id);
+            // filename
+            statement.bindString(2, m.getString(1));
+            // size
+            statement.bindString(3, m.getString(2));
+            // created
+            statement.bindDouble(4, m.getDouble(3));
+            // originalPath
+            statement.bindString(5, m.getString(4));
+            // description
+            statement.bindString(6, m.getString(5));
 
-                statement.execute();
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-            }
+            statement.execute();
         }
         statement.close();
 
@@ -1532,33 +1477,28 @@ public class SyncClient {
     }
 
 
-    private void updateDeck(JSONObject deckPayload) {
-        try {
-            JSONArray meta = deckPayload.getJSONArray("meta");
+    private void updateDeck(JSONObject deckPayload) throws JSONException {
+        JSONArray meta = deckPayload.getJSONArray("meta");
 
-            // Update meta information
-            String sqlMeta = "INSERT OR REPLACE INTO deckVars (key, value) VALUES(?,?)";
-            SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase()
-                    .compileStatement(sqlMeta);
-            int lenMeta = meta.length();
-            for (int i = 0; i < lenMeta; i++) {
-                JSONArray deckVar = meta.getJSONArray(i);
+        // Update meta information
+        String sqlMeta = "INSERT OR REPLACE INTO deckVars (key, value) VALUES(?,?)";
+        SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase()
+                .compileStatement(sqlMeta);
+        int lenMeta = meta.length();
+        for (int i = 0; i < lenMeta; i++) {
+            JSONArray deckVar = meta.getJSONArray(i);
 
-                // key
-                statement.bindString(1, deckVar.getString(0));
-                // value
-                statement.bindString(2, deckVar.getString(1));
+            // key
+            statement.bindString(1, deckVar.getString(0));
+            // value
+            statement.bindString(2, deckVar.getString(1));
 
-                statement.execute();
-            }
-            statement.close();
-
-            // Update deck
-            mDeck.updateFromJson(deckPayload);
-        } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+            statement.execute();
         }
+        statement.close();
 
+        // Update deck
+        mDeck.updateFromJson(deckPayload);
     }
 
 
@@ -1595,36 +1535,32 @@ public class SyncClient {
     }
 
 
-    private void updateStats(JSONObject stats) {
-        try {
-            // Update global stats
-            Stats globalStats = Stats.globalStats(mDeck);
-            globalStats.updateFromJson(stats.getJSONObject("global"));
+    private void updateStats(JSONObject stats) throws JSONException {
+        // Update global stats
+        Stats globalStats = Stats.globalStats(mDeck);
+        globalStats.updateFromJson(stats.getJSONObject("global"));
 
-            // Update daily stats
-            Stats stat = new Stats(mDeck);
-            JSONArray remoteDailyStats = stats.getJSONArray("daily");
-            int len = remoteDailyStats.length();
-            for (int i = 0; i < len; i++) {
-                // Get a specific daily stat
-                JSONObject remoteStat = remoteDailyStats.getJSONObject(i);
-                Date dailyStatDate = Utils.ordinalToDate(remoteStat.getInt("day"));
+        // Update daily stats
+        Stats stat = new Stats(mDeck);
+        JSONArray remoteDailyStats = stats.getJSONArray("daily");
+        int len = remoteDailyStats.length();
+        for (int i = 0; i < len; i++) {
+            // Get a specific daily stat
+            JSONObject remoteStat = remoteDailyStats.getJSONObject(i);
+            Date dailyStatDate = Utils.ordinalToDate(remoteStat.getInt("day"));
 
-                // If exists a statistic for this day, get it
-                try {
-                    Long id = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).queryScalar(
-                            "SELECT id FROM stats WHERE type = 1 AND day = \"" + dailyStatDate.toString() + "\"");
-                    stat.fromDB(id);
-                } catch (SQLException e) {
-                    // If it does not exist, create a statistic for this day
-                    stat.create(Stats.STATS_DAY, dailyStatDate);
-                }
-
-                // Update daily stat
-                stat.updateFromJson(remoteStat);
+            // If exists a statistic for this day, get it
+            try {
+                Long id = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).queryScalar(
+                        "SELECT id FROM stats WHERE type = 1 AND day = \"" + dailyStatDate.toString() + "\"");
+                stat.fromDB(id);
+            } catch (SQLException e) {
+                // If it does not exist, create a statistic for this day
+                stat.create(Stats.STATS_DAY, dailyStatDate);
             }
-        } catch (JSONException e) {
-            Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+
+            // Update daily stat
+            stat.updateFromJson(remoteStat);
         }
     }
 
@@ -1676,44 +1612,40 @@ public class SyncClient {
     }
 
 
-    private void updateHistory(JSONArray history) {
+    private void updateHistory(JSONArray history) throws JSONException {
         String sql = "INSERT OR IGNORE INTO reviewHistory (cardId, time, lastInterval, nextInterval, ease, delay, "
                     + "lastFactor, nextFactor, reps, thinkingTime, yesCount, noCount) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().compileStatement(sql);
         int len = history.length();
         for (int i = 0; i < len; i++) {
-            try {
-                JSONArray h = history.getJSONArray(i);
+            JSONArray h = history.getJSONArray(i);
 
-                // cardId
-                statement.bindLong(1, h.getLong(0));
-                // time
-                statement.bindDouble(2, h.getDouble(1));
-                // lastInterval
-                statement.bindDouble(3, h.getDouble(2));
-                // nextInterval
-                statement.bindDouble(4, h.getDouble(3));
-                // ease
-                statement.bindString(5, h.getString(4));
-                // delay
-                statement.bindDouble(6, h.getDouble(5));
-                // lastFactor
-                statement.bindDouble(7, h.getDouble(6));
-                // nextFactor
-                statement.bindDouble(8, h.getDouble(7));
-                // reps
-                statement.bindDouble(9, h.getDouble(8));
-                // thinkingTime
-                statement.bindDouble(10, h.getDouble(9));
-                // yesCount
-                statement.bindDouble(11, h.getDouble(10));
-                // noCount
-                statement.bindDouble(12, h.getDouble(11));
+            // cardId
+            statement.bindLong(1, h.getLong(0));
+            // time
+            statement.bindDouble(2, h.getDouble(1));
+            // lastInterval
+            statement.bindDouble(3, h.getDouble(2));
+            // nextInterval
+            statement.bindDouble(4, h.getDouble(3));
+            // ease
+            statement.bindString(5, h.getString(4));
+            // delay
+            statement.bindDouble(6, h.getDouble(5));
+            // lastFactor
+            statement.bindDouble(7, h.getDouble(6));
+            // nextFactor
+            statement.bindDouble(8, h.getDouble(7));
+            // reps
+            statement.bindDouble(9, h.getDouble(8));
+            // thinkingTime
+            statement.bindDouble(10, h.getDouble(9));
+            // yesCount
+            statement.bindDouble(11, h.getDouble(10));
+            // noCount
+            statement.bindDouble(12, h.getDouble(11));
 
-                statement.execute();
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-            }
+            statement.execute();
         }
         statement.close();
     }
@@ -1747,22 +1679,18 @@ public class SyncClient {
     }
 
 
-    private void updateSources(JSONArray sources) {
+    private void updateSources(JSONArray sources) throws JSONException {
         String sql = "INSERT OR REPLACE INTO sources VALUES(?,?,?,?,?)";
         SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().compileStatement(sql);
         int len = sources.length();
         for (int i = 0; i < len; i++) {
-            try {
-                JSONArray source = sources.getJSONArray(i);
-                statement.bindLong(1, source.getLong(0));
-                statement.bindString(2, source.getString(1));
-                statement.bindDouble(3, source.getDouble(2));
-                statement.bindDouble(4, source.getDouble(3));
-                statement.bindString(5, source.getString(4));
-                statement.execute();
-            } catch (JSONException e) {
-                Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
-            }
+            JSONArray source = sources.getJSONArray(i);
+            statement.bindLong(1, source.getLong(0));
+            statement.bindString(2, source.getString(1));
+            statement.bindDouble(3, source.getDouble(2));
+            statement.bindDouble(4, source.getDouble(3));
+            statement.bindString(5, source.getString(4));
+            statement.execute();
         }
         statement.close();
     }

@@ -263,6 +263,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     data.result = res.getString(R.string.invalid_username_password);
                 } else if (connectResult == AnkiDroidProxy.LOGIN_OLD_VERSION) {
                     data.result = String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid));
+                } else {
+                    data.result = res.getString(R.string.login_generic_error);
                 }
                 data.success = false;
                 return data;
@@ -347,6 +349,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                             (new Double(server.getTimediff())).longValue()));
                 } else if (connectResult == AnkiDroidProxy.LOGIN_OLD_VERSION) {
                     syncChangelog.put("message", String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid)));
+                } else {
+                    syncChangelog.put("message", res.getString(R.string.login_generic_error));
                 }
                 data.result = syncChangelog;
                 data.success = false;
