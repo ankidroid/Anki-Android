@@ -999,7 +999,7 @@ public class StudyOptions extends Activity {
     // allTags must be cleared whenever a new deck is opened AND whenever any tags are edited
     private void recreateTagsDialog() {
         Resources res = getResources();
-        if (allTags.length == 0) {
+        if (allTags == null) {
             allTags = AnkiDroidApp.deck().allTags_();
             Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));            
         }
@@ -1157,8 +1157,6 @@ public class StudyOptions extends Activity {
         mLimitTagNewInactiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
         mLimitTagRevActiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
         mLimitTagRevInactiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
-
-        allTags = new String[0];
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.studyoptions_limit_dialog_title);
@@ -1988,7 +1986,7 @@ public class StudyOptions extends Activity {
             // AnkidroidApp.deck().closeDeck();
             // AnkidroidApp.setDeck(null);
             // }
-            allTags = new String[0];
+            allTags = null;
 
             switch (result.getInt()) {
                 case DeckTask.DECK_LOADED:
