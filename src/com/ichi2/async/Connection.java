@@ -350,13 +350,21 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 }
                 data.result = syncChangelog;
                 data.success = false;
+                ankiDB.getDatabase().endTransaction();
                 return data;
             }
 
             // Exists on server?
             if (!server.hasDeck(syncName)) {
                 Log.i(AnkiDroidApp.TAG, "AnkiOnline does not have this deck: Creating it...");
-                server.createDeck(syncName);
+                Payload result = server.createDeck(syncName);
+                if (result.success != true) {
+                    syncChangelog.put("message", res.getString(R.string.sync_log_create_deck_failed,
+                            ((String)result.result)));
+                    result.result = syncChangelog;
+                    ankiDB.getDatabase().endTransaction();
+                    return result;
+                }
             }
             publishProgress(syncName, res.getString(R.string.sync_syncing_message, new Object[] { syncName }));
             SyncClient client = new SyncClient(deck);
@@ -368,6 +376,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             double localSync = deck.getLastSync();
             double remoteMod = server.modified();
             double remoteSync = server.lastSync();
+            if (remoteMod < 0 || remoteSync < 0) {
+                data.success = false;
+                syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
+                data.result = syncChangelog;
+                ankiDB.getDatabase().endTransaction();
+                return data;
+            }
             double minSync = Math.min(localSync, remoteSync);
             if ((localMod != remoteMod) && (minSync > 0) &&
                     (localMod > minSync) && (remoteMod > minSync)) {
@@ -394,6 +409,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 if (conflictResolution == null) {
                     publishProgress(syncName, res.getString(R.string.sync_summary_from_server_message));
                     sums = client.summaries();
+                    if (sums == null) {
+                        data.success = false;
+                        syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
+                        data.result = syncChangelog;
+                        ankiDB.getDatabase().endTransaction();
+                        return data;
+                    }
                 }
 
                 if ((conflictResolution != null) || client.needFullSync(sums)) {
@@ -459,6 +481,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     publishProgress(syncName, res.getString(R.string.sync_transferring_payload_message));
                     JSONObject payloadReply = client.getServer().applyPayload(payload);
+                    if (payloadReply == null) {
+                        data.success = false;
+                        syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
+                        data.result = syncChangelog;
+                        ankiDB.getDatabase().endTransaction();
+                        return data;
+                    }
                     int factsAddedOnServer = payloadReply.getJSONArray("added-cards").length();
                     if (factsAddedOnServer == 1) {
                         syncChangelog.put("message", res.getString(R.string.sync_log_fact_from_server_message));
@@ -469,7 +498,13 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
                     client.applyPayloadReply(payloadReply);
-                    client.getServer().finish();
+                    if (!client.getServer().finish()) {
+                        data.success = false;
+                        syncChangelog.put("message", res.getString(R.string.sync_log_finish_error));
+                        data.result = syncChangelog;
+                        ankiDB.getDatabase().endTransaction();
+                        return data;
+                    }
                     deck.reset();
 
                     deck.setLastLoaded(deck.getModified());
@@ -484,8 +519,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 publishProgress(syncName, res.getString(R.string.sync_no_changes_message));
                 syncChangelog.put("message", res.getString(R.string.sync_log_no_changes_message));
             }
-        } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG, "Error synchronizing deck = " + e.getMessage());
+        } catch (JSONException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundSyncDeck - JSONException: " + e.getMessage());
             Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
             syncChangelog.put("message", res.getString(R.string.sync_log_error_message));
             data.success = false;

@@ -438,6 +438,8 @@
 <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
 <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
 <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
+<string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
+<string name="sync_log_finish_error">Error while sending finish direction to server</string>
 <string name="sync_conflict_title">Syncing conflict</string>
 <string name="sync_conflict_message">Deck %s has been changed on both the local and remote side. Which side should be kept?</string>
 <string name="sync_conflict_local">Keep Local</string>
