@@ -308,15 +308,18 @@ public class SyncClient {
     }
 
 
-    public void applyPayloadReply(JSONObject payloadReply) throws JSONException {
+    public HashMap<String, String> applyPayloadReply(JSONObject payloadReply) throws JSONException {
         Log.i(AnkiDroidApp.TAG, "applyPayloadReply");
         Keys[] keys = Keys.values();
 
+        HashMap<String, String> updatedMedia = null;
+        HashMap<String, String> tmpMap = null;
         for (int i = 0; i < keys.length; i++) {
             String key = keys[i].name();
-            updateObjsFromKey(payloadReply, key);
-            // JSONObject crasher = null;
-            // crasher.get("nothing");
+            tmpMap = updateObjsFromKey(payloadReply, key);
+            if (tmpMap != null) {
+                updatedMedia = tmpMap;
+            }
         }
 
         if (!payloadReply.isNull("deck")) {
@@ -348,6 +351,8 @@ public class SyncClient {
             Log.e(AnkiDroidApp.TAG, "Facts missing after sync (" + missingFacts + " facts)!");
         }
         assert missingFacts == 0l;
+        
+        return updatedMedia;
     }
 
     private long missingFacts() {
@@ -529,7 +534,8 @@ public class SyncClient {
     }
 
 
-    private void updateObjsFromKey(JSONObject payloadReply, String key) throws JSONException {
+    private HashMap<String, String> updateObjsFromKey(JSONObject payloadReply, String key) throws JSONException {
+        HashMap<String, String> updatedMedia = null;
         if ("models".equalsIgnoreCase(key)) {
             Log.i(AnkiDroidApp.TAG, "updateModels");
             updateModels(payloadReply.getJSONArray("added-models"));
@@ -541,8 +547,9 @@ public class SyncClient {
             updateCards(payloadReply.getJSONArray("added-cards"));
         } else if ("media".equalsIgnoreCase(key)) {
             Log.i(AnkiDroidApp.TAG, "updateMedia");
-            updateMedia(payloadReply.getJSONArray("added-media"));
+            updatedMedia = updateMedia(payloadReply.getJSONArray("added-media"));
         }
+        return updatedMedia;
     }
 
 
@@ -1394,14 +1401,17 @@ public class SyncClient {
     }
 
 
-    private void updateMedia(JSONArray media) throws JSONException {
+    private HashMap<String, String> updateMedia(JSONArray media) throws JSONException {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
         ArrayList<String> mediaIds = new ArrayList<String>();
+        HashMap<String, String> mediaFiles = new HashMap<String, String>();
 
         String sql = "INSERT OR REPLACE INTO media (id, filename, size, created, originalPath, description) "
                     + "VALUES(?,?,?,?,?,?)";
         SQLiteStatement statement = ankiDB.getDatabase().compileStatement(sql);
         int len = media.length();
+        String filename = null;
+        String sum = null;
         for (int i = 0; i < len; i++) {
             JSONArray m = media.getJSONArray(i);
 
@@ -1412,21 +1422,27 @@ public class SyncClient {
             // id
             statement.bindString(1, id);
             // filename
-            statement.bindString(2, m.getString(1));
+            filename = m.getString(1);
+            statement.bindString(2, filename);
             // size
             statement.bindString(3, m.getString(2));
             // created
             statement.bindDouble(4, m.getDouble(3));
             // originalPath
-            statement.bindString(5, m.getString(4));
+            sum = m.getString(4);
+            statement.bindString(5, sum);
             // description
             statement.bindString(6, m.getString(5));
 
             statement.execute();
+            
+            mediaFiles.put(filename, sum);
         }
         statement.close();
 
         ankiDB.getDatabase().execSQL("DELETE FROM mediaDeleted WHERE mediaId IN " + Utils.ids2str(mediaIds));
+        
+        return mediaFiles;
     }
 
 

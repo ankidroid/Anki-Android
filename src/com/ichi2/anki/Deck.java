@@ -478,7 +478,7 @@ public class Deck {
      * deckVars methods
      */
 
-    private void initDeckvarsCache() {
+    public void initDeckvarsCache() {
         mDeckVars.clear();
         Cursor cur = null;
         try {

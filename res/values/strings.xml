@@ -432,6 +432,7 @@
 <string name="sync_determining_differences_message">Determining differences...</string>
 <string name="sync_transferring_payload_message">Transferring payload...</string>
 <string name="sync_applying_reply_message">Applying reply...</string>
+<string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
 <string name="sync_no_changes_message">No changes found.</string>
 <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
 <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>

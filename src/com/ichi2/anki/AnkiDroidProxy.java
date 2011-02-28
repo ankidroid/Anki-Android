@@ -256,17 +256,26 @@ public class AnkiDroidProxy {
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse response = httpClient.execute(httpPost);
+            int respCode = response.getStatusLine().getStatusCode();
+            if (respCode != 200) {
+                Log.e(AnkiDroidApp.TAG, "getDecks error: " + respCode + " " +
+                        response.getStatusLine().getReasonPhrase());
+                return decksServer;
+            }
             HttpEntity entityResponse = response.getEntity();
             InputStream content = entityResponse.getContent();
             decksServer = Utils.convertStreamToString(new InflaterInputStream(content));
             Log.i(AnkiDroidApp.TAG, "getDecks response = " + decksServer);
 
         } catch (UnsupportedEncodingException e) {
+            Log.e(AnkiDroidApp.TAG, "getDecks - UnsupportedEncodingException = " + e.getMessage());
             Log.e(AnkiDroidApp.TAG, "getDecks - " + Log.getStackTraceString(e));
         } catch (ClientProtocolException e) {
             Log.e(AnkiDroidApp.TAG, "getDecks - ClientProtocolException = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "getDecks - " + Log.getStackTraceString(e));
         } catch (IOException e) {
             Log.e(AnkiDroidApp.TAG, "getDecks - IOException = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "getDecks - " + Log.getStackTraceString(e));
         }
 
         return decksServer;
