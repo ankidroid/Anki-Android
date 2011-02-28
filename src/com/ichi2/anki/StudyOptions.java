@@ -1689,7 +1689,6 @@ public class StudyOptions extends Activity {
     private void reloadDeck() {
     	Deck deck = AnkiDroidApp.deck(); 
     	if (deck != null){
-		allTags = new String[0];
     		deck.closeDeck();
     		AnkiDroidApp.setDeck(null);
     	}
