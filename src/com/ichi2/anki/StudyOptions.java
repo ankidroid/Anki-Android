@@ -1679,7 +1679,7 @@ public class StudyOptions extends Activity {
 
             Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
             Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
-            Connection.syncDeck(syncListener, new Connection.Payload(new Object[] { username, password, deck,
+            Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck,
                     mDeckFilename, conflictResolution }));
         } else {
             mUserNotLoggedInAlert.show();
@@ -2037,7 +2037,7 @@ public class StudyOptions extends Activity {
         }
     };
 
-    Connection.TaskListener syncListener = new Connection.TaskListener() {
+    Connection.TaskListener mSyncListener = new Connection.TaskListener() {
 
         @Override
         public void onDisconnected() {
@@ -2062,7 +2062,6 @@ public class StudyOptions extends Activity {
                     // Need to ask user for conflict resolution direction and re-run sync
                     syncDeckWithPrompt();
                 } else {
-                    // connectionFailedAlert.show();
                     if (mConnectionErrorAlert != null) {
                         String errorMessage = ((HashMap<String, String>) data.result).get("message");
                         if ((errorMessage != null) && (errorMessage.length() > 0)) {
