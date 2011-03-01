@@ -135,7 +135,7 @@ public class CardEditor extends Activity {
             }
 
         });
-        allTags = new String[0];
+        allTags = null;
         mSelectedTags = new HashSet<String>();
 
         mSave.setOnClickListener(new View.OnClickListener() {
@@ -287,7 +287,7 @@ public class CardEditor extends Activity {
 
     private void recreateTagsDialog() {
         Resources res = getResources();
-        if (allTags.length == 0) {
+        if (allTags == null) {
             String[] oldTags = AnkiDroidApp.deck().allUserTags();
             Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
             allTags = new String[oldTags.length + 1];

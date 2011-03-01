@@ -3143,8 +3143,13 @@ public class Deck {
 
 
     public String[] allUserTags() {
+        return allUserTags("");
+    }
+
+
+    public String[] allUserTags(String where) {
         ArrayList<String> t = new ArrayList<String>();
-        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts", 0));
+        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts " + where, 0));
         String joined = Utils.joinTags(t);
         String[] parsed = Utils.parseTags(joined);
         List<String> joinedList = Arrays.asList(parsed);
@@ -3225,27 +3230,27 @@ public class Deck {
     	
         Cursor cur = null;
         try {
-        	cur = getDB().getDatabase().rawQuery("SELECT DISTINCT cards.id, cards.question, cards.answer, c.tag, " +
-        			"priority FROM cards LEFT OUTER JOIN (SELECT cardId, GROUP_CONCAT(tag) AS tag FROM " +
-        			"(SELECT DISTINCT cardId, a.tag AS tag FROM cardTags LEFT OUTER JOIN (SELECT id, tag FROM tags) a " +
-        			"ON cardTags.tagId = a.id ORDER BY cardId, a.tag) GROUP BY cardId) c ON cards.id = c.cardId ORDER BY " + order, null);
+        	cur = getDB().getDatabase().rawQuery("SELECT cards.id, cards.question, cards.answer, " +
+        			"facts.tags, models.tags, cardModels.name, cards.priority FROM cards, facts, " +
+        			"models, cardModels WHERE cards.factId == facts.id AND facts.modelId == models.id " +
+        			"AND cards.cardModelId = cardModels.id ORDER BY " + order, null);
             while (cur.moveToNext()) {
             	String[] data = new String[5];
             	data[0] = Long.toString(cur.getLong(0));
             	data[1] = Utils.stripHTML(cur.getString(1));
             	data[2] = Utils.stripHTML(cur.getString(2));
             	String tags = cur.getString(3);
-            	if (tags.contains(TAG_MARKED)) {
-                    data[3] = "1";
-            	} else {
-                    data[3] = "0";            	    
-            	}
-                if (cur.getString(4).equals("-3")) {
+           	    if (tags.contains(TAG_MARKED)) {
+           	        data[3] = "1";
+           	    } else {
+           	        data[3] = "0";            	    
+           	    }
+           	    data[4] = tags + " " + cur.getString(4) + " " + cur.getString(5);
+            	if (cur.getString(6).equals("-3")) {
                     data[3] = data[3] + "1";
                 } else {
                     data[3] = data[3] + "0";                  
                 }
-                data[4] = tags;
             	allCards.add(data);
             }
         } catch (SQLException e) {

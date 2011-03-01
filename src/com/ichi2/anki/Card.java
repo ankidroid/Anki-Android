@@ -25,6 +25,7 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -767,6 +768,11 @@ public class Card {
         builder.append("</td><td>");
         builder.append(DateFormat.getDateFormat(context).format((long) (mModified - mDeck.getUtcOffset()) * 1000l));
         builder.append("</td></tr><tr><td>");        
+        builder.append(res.getString(R.string.card_details_tags));
+        builder.append("</td><td>");
+        String tags = Arrays.toString(mDeck.allUserTags("WHERE id = " + mFactId));
+        builder.append(tags.substring(1, tags.length() - 1));
+        builder.append("</td></tr><tr><td>");
         builder.append(res.getString(R.string.card_details_model));
         builder.append("</td><td>");
         Model model = Model.getModel(mDeck, mCardModelId, false);
