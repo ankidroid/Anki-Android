@@ -43,6 +43,23 @@ public class AnkiDb {
     public AnkiDb(String ankiFilename) throws SQLException {
         mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
                 | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+        if (mDatabase != null) {
+            Cursor cur = null;
+            try {
+                cur = mDatabase.rawQuery("PRAGMA journal_mode", null);
+                if (cur.moveToNext()) {
+                    String journalMode = cur.getString(0);
+                    if (!journalMode.equalsIgnoreCase("delete")) {
+                        Log.w(AnkiDroidApp.TAG, "Journal mode was set to " + journalMode + ", changing it to DELETE");
+                        mDatabase.execSQL("PRAGMA journal_mode = DELETE");
+                    }
+                }
+            } finally {
+                if (cur != null) {
+                    cur.close();
+                }
+            }
+        }
     }
 
 

@@ -237,6 +237,14 @@ public class DeckPicker extends Activity implements Runnable {
 
 		@Override
 		public void onProgressUpdate(Object... values) {
+            if (values[0] instanceof Boolean) {
+                // This is the part Download missing media of syncing
+                Resources res = getResources();
+                int total = ((Integer)values[1]).intValue();
+                int done = ((Integer)values[2]).intValue();
+                values[0] = ((String)values[3]);
+                values[1] = res.getString(R.string.sync_downloading_media, done, total);
+            }
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
 				mProgressDialog = ProgressDialog.show(DeckPicker.this,
 						(String) values[0], (String) values[1]);
