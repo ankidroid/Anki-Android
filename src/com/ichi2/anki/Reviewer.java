@@ -233,8 +233,6 @@ public class Reviewer extends Activity {
     private int mButtonHeight = 0;
     
     private boolean mConfigurationChanged = false;
-    private int mSelectionStarted = 0;
-    private boolean mAnsweringCard = false;
     private int mShowChosenAnswerLength = 600;
     
 	private boolean mShowCongrats = false;
@@ -330,17 +328,17 @@ public class Reviewer extends Activity {
         }
     };
 
-// Commented out because there seems to be a bug with WebView OnLongClickListener not firing
-//    private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener() {
-//        @Override
-//        public boolean onLongClick(View view) {
-//            Log.i(AnkiDroidApp.TAG, "onLongClick");
-//            Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-//            vibratorManager.vibrate(50);
-//            selectAndCopyText();
-//            return true;
-//        }
-//    };
+
+    private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Log.i(AnkiDroidApp.TAG, "onLongClick");
+            Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            vibratorManager.vibrate(50);
+            selectAndCopyText();
+            return true;
+        }
+    };
 
     private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
         @Override
@@ -1005,7 +1003,6 @@ public class Reviewer extends Activity {
         mSessionCurrReps++;
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
                 mCurrentEase, deck, mCurrentCard));
-		mAnsweringCard = false;
     }
 
 
@@ -1041,15 +1038,13 @@ public class Reviewer extends Activity {
         }
 
         if (mPrefTextSelection) {
-			// mCard.setOnLongClickListener(mLongClickHandler);            
+			mCard.setOnLongClickListener(mLongClickHandler);            
 			mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCard.setOnTouchListener(new View.OnTouchListener() { 
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
-					if (event.getAction() == MotionEvent.ACTION_UP && mSelectionStarted != 0) {
-						mSelectionStarted--;
-					} else if (gestureDetector.onTouchEvent(event)) {
+				    if (gestureDetector.onTouchEvent(event)) {
                     	return true;
                 	}
                 	return false;  	           
@@ -1845,9 +1840,6 @@ public class Reviewer extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {
         		try {
-       				if (mSelectionStarted != 0) {
-       					return false;
-       				}
         			if (e2.getY() - e1.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath && !mIsYScrolling) {
                         // down
       					if (sDisplayAnswer) {
@@ -1879,26 +1871,15 @@ public class Reviewer extends Activity {
             }
             return false;
         }
-    	
-       	@Override
-    	public void onLongPress(MotionEvent e) {
-    		if (mPrefTextSelection && !mAnsweringCard) {
-           		mSelectionStarted = 2;
-           		Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            	vibratorManager.vibrate(50);
-           		selectAndCopyText();
-    		}
-    	}
 
     	@Override
     	public boolean onDoubleTapEvent(MotionEvent e) {
-    		if (mSwipeEnabled && mSelectionStarted == 0 && sDisplayAnswer) {
+    		if (mSwipeEnabled && sDisplayAnswer) {
         		if (mCurrentCard.isRev()) {
 					answerCard(Card.EASE_EASY);
         		} else {
 					answerCard(Card.EASE_MID);
         		}
-        		mAnsweringCard = true;
 			}
     		return false;
     	}

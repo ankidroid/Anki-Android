@@ -112,6 +112,7 @@
 	</LinearLayout>
 	<!-- Card and whiteboard -->
 	<WebView android:id="@+id/flashcard"
+		android:longClickable="true"
 		android:layout_below="@+id/red_number"
 		android:layout_above="@+id/answer_nextTime_layout"
 		android:layout_width="fill_parent"
