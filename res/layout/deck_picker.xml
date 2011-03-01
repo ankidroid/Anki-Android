@@ -19,7 +19,7 @@
 		
 		<Button	android:id="@+id/sync_all_button"
 			android:layout_width="0dip"
-			android:layout_height="wrap_content"
+			android:layout_height="fill_parent"
 			android:layout_weight="1"
 			android:layout_marginTop="3dp"
 			android:layout_marginBottom="3dp"
@@ -28,7 +28,7 @@
 		
 		<Button	android:id="@+id/statistics_all_button"
 			android:layout_width="0dip"
-			android:layout_height="wrap_content"
+			android:layout_height="fill_parent"
 			android:layout_weight="1"
 			android:layout_marginTop="3dp"
 			android:layout_marginBottom="3dp"
