@@ -153,8 +153,8 @@
   <string name="swipe">Povolit gesta</string>
   <string name="swipe_summ_off">Použít gesta pro přepínání mezi obrazovkami a zodpovězenými kartami. Toto nastavení není kompatibilní s ovládacími prvky zoomu</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
-  <string name="swipe_sensibility">Gesture Sensibility</string>
-  <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
+  <string name="swipe_sensibility">Gesture Sensitivity</string>
+  <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
   <string name="shake">Zatřepat pro vrácení změn</string>
   <string name="shake_summ">Zatřepejte svým přístrojem pro zpětné vrácení poslední akce</string>
   <string name="tts">Text to Speech</string>

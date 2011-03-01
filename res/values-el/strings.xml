@@ -153,8 +153,8 @@
   <string name="swipe">Ενεργοποίηση χειρονομίων</string>
   <string name="swipe_summ_off">Χρησιμοποιήστε χειρονομίες για να αλλάξετε μεταξύ οθόνων και να απαντήσετε κάρτες. Αυτή η επιλογή δεν είναι συμβατή με τους ελέγχους ζουμ</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
-  <string name="swipe_sensibility">Gesture Sensibility</string>
-  <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
+  <string name="swipe_sensibility">Gesture Sensitivity</string>
+  <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
   <string name="shake">Ανακινήστε για Αναίρεση</string>
   <string name="shake_summ">Ανακινήστε τη συσκευή σας για να αναιρέσετε την τελευταία ενέργεια</string>
   <string name="tts">Text to Speech</string>

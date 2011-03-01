@@ -79,16 +79,16 @@
     <item>anys</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>en 1 hora</item>
+    <item>demà</item>
+    <item>en 1 mes</item>
+    <item>en 1 any</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>en %s hores</item>
+    <item>en %s dies</item>
+    <item>en %s mesos</item>
+    <item>en %s anys</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Mostra les fitxes noves desendreçades</item>
@@ -114,45 +114,45 @@
     <item>Mostra les fallades en 3 dies</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
+    <item>Per pregunta</item>
+    <item>Per resposta</item>
+    <item>Per venciment</item>
+    <item>Per interval</item>
+    <item>Per dificultat</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
-    <item>Cumulative due</item>
+    <item>Pendent</item>
+    <item>Venciment acumulat</item>
     <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>Revisions</item>
+    <item>Temps de revisió</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1 setmana</item>
+    <item>1 mes</item>
+    <item>3 mesos</item>
+    <item>6 mesos</item>
+    <item>1 any</item>
   </string-array>
   <string-array name="new_version_features">
-    <item>card browser</item>
-    <item>statistics</item>
-    <item>text-to-speech</item>
-    <item>deck completion bar on deck picker</item>
-    <item>select card model on fact adder</item>
-    <item>new widget</item>
-    <item>better undo/redo behaviour</item>
-    <item>slider controls</item>
-    <item>language selection</item>
-    <item>more languages</item>
-    <item>progress bars in reviewer</item>
-    <item>feedback within AnkiDroid</item>
-    <item>possibility to set cards active/inactive by tag</item>
-    <item>better syncing</item>
-    <item>better error reporter</item>
-    <item>add decks</item>
-    <item>more options</item>
-    <item>lots of fixes for small errors</item>
-    <item>tag support for card editor, card adder and card browser</item>
+    <item>navegador de fitxes</item>
+    <item>estadístiques</item>
+    <item>text a veu</item>
+    <item>mostra la barra de paquet complet al selector de paquets</item>
+    <item>tria el model de fitxa en afegir un fet</item>
+    <item>nou giny</item>
+    <item>millores en desfer / refer</item>
+    <item>controls lliscants</item>
+    <item>selecció d\'idioma</item>
+    <item>més idiomes</item>
+    <item>mostra la barra de progrés a la pantalla de revisió</item>
+    <item>comentaris dins de AnkiDroid</item>
+    <item>possibilitat d\'activar i desactivar les fitxes segons la seva etiqueta</item>
+    <item>millor sincronització</item>
+    <item>millor informador d\'errors</item>
+    <item>afegeix paquets</item>
+    <item>més opcions</item>
+    <item>un munt de correccions de petits errors</item>
+    <item>gestió d\'etiquetes en editar, afegir i veure les fitxes</item>
   </string-array>
 </resources>

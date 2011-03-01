@@ -153,8 +153,8 @@
   <string name="swipe">Włącz gesty</string>
   <string name="swipe_summ_off">Użyj gestów do przełączania ekranów i kart odpowiedzi. Ta opcja nie jest zgodna z kontrolkami powiększania</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
-  <string name="swipe_sensibility">Gesture Sensibility</string>
-  <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
+  <string name="swipe_sensibility">Gesture Sensitivity</string>
+  <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
   <string name="shake">Wstrząsnij aby cofnąć</string>
   <string name="shake_summ">Wstrząśnij urządzenie aby cofnąć ostatnią akcję</string>
   <string name="tts">Text to Speech</string>

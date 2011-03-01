@@ -153,8 +153,8 @@
   <string name="swipe">Aktivera gester</string>
   <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
-  <string name="swipe_sensibility">Gesture Sensibility</string>
-  <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
+  <string name="swipe_sensibility">Gesture Sensitivity</string>
+  <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
   <string name="shake">Shake to Undo</string>
   <string name="shake_summ">Shake your device to undo the last action</string>
   <string name="tts">Text to Speech</string>
