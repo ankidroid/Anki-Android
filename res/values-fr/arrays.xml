@@ -135,24 +135,24 @@
     <item>année</item>
   </string-array>
   <string-array name="new_version_features">
-    <item>card browser</item>
-    <item>statistics</item>
+    <item>Navigateur de carte</item>
+    <item>statistiques</item>
     <item>text-to-speech</item>
-    <item>deck completion bar on deck picker</item>
+    <item>barre d\'avancement de paquet sur le sélecteur de paquet</item>
     <item>select card model on fact adder</item>
-    <item>new widget</item>
-    <item>better undo/redo behaviour</item>
+    <item>nouveau widget</item>
+    <item>meilleur comportement annuler/refaire</item>
     <item>slider controls</item>
-    <item>language selection</item>
-    <item>more languages</item>
+    <item>sélection de la langue</item>
+    <item>plus de langues</item>
     <item>progress bars in reviewer</item>
     <item>feedback within AnkiDroid</item>
-    <item>possibility to set cards active/inactive by tag</item>
-    <item>better syncing</item>
-    <item>better error reporter</item>
-    <item>add decks</item>
-    <item>more options</item>
-    <item>lots of fixes for small errors</item>
-    <item>tag support for card editor, card adder and card browser</item>
+    <item>possibilité de sélectionner les cartes actives / inactives par label</item>
+    <item>meilleure synchronisation</item>
+    <item>meilleur rapporteur d\'erreurs</item>
+    <item>ajouter des paquets</item>
+    <item>plus d\'options</item>
+    <item>beaucoup de corrections pour de petites erreurs</item>
+    <item>support de label pour l\'éditeur de cartes, support de l\'ajout de cartes et du navigateur de carte</item>
   </string-array>
 </resources>

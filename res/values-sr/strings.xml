@@ -153,8 +153,8 @@
   <string name="swipe">Omogući Geste</string>
   <string name="swipe_summ_off">Koristite geste da bi se prebacivali iz ekrana u ekran i odgovarali na kartice. Ova opcija nije kompatibilna sa kontrolama za zum</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
-  <string name="swipe_sensibility">Gesture Sensibility</string>
-  <string name="swipe_sensibility_summ">Sensibility of swipe gestures: XXX</string>
+  <string name="swipe_sensibility">Gesture Sensitivity</string>
+  <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
   <string name="shake">Tresite da bi Poništili</string>
   <string name="shake_summ">Tresite vaš uređaj da bi poništili zadnji postupak</string>
   <string name="tts">Text to Speech</string>

@@ -101,8 +101,8 @@
     <item>Tarjetas nuevas antes de los repasos</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Repasar tarjetas de intervalo mayor</item>
-    <item>Revisar tarjetas de intervalo menor</item>
+    <item>Repasar antes tarjetas de intervalo mayor</item>
+    <item>Revisar antes tarjetas de intervalo menor</item>
     <item>Revisar tarjetas en el orden programado</item>
     <item>Revisar tarjetas en orden aleatorio</item>
   </string-array>
@@ -121,7 +121,7 @@
     <item>Por dificultad</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Pendientes</item>
+    <item>Programadas</item>
     <item>Programadas acumulativamente</item>
     <item>Intervalos</item>
     <item>Repasos</item>
