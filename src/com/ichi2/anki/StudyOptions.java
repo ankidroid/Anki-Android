@@ -582,7 +582,6 @@ public class StudyOptions extends Activity {
 
     	initAllContentViews();
     	showContentView();
-
         mToggleCram.setChecked(cramChecked);
         mToggleLimit.setChecked(limitChecked);
         mToggleLimit.setEnabled(limitEnabled);
@@ -766,15 +765,6 @@ public class StudyOptions extends Activity {
         mCardBrowser = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
         mStatisticsButton = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
 
-        mBarsMax = (View) mStudyOptionsView.findViewById(R.id.studyoptions_bars_max);
-        ViewTreeObserver vto = mBarsMax.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                mBarsMax.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                updateStatisticBars();
-            }
-        });
         mDailyBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_daily_bar);
         mMatureBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_mature_bar);
         mGlobalLimitFrame = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_limit_bars);
@@ -782,6 +772,17 @@ public class StudyOptions extends Activity {
         mGlobalMatLimitBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_limit_bar);
         mGlobalBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_bar);
         mGlobalMatBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_bar);
+        mBarsMax = (View) mStudyOptionsView.findViewById(R.id.studyoptions_bars_max);
+        if (mDailyBar != null) {
+            ViewTreeObserver vto = mBarsMax.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    mBarsMax.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    updateStatisticBars();
+                }
+            });            
+        }
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
