@@ -1678,23 +1678,22 @@ public class Deck {
 
 
     private boolean queueNotEmpty(LinkedList<QueueItem> queue, Method fillFunc, boolean _new) {
-        while (true) {
+//        while (true) {
             removeSpaced(queue, _new);
             if (!queue.isEmpty()) {
                 return true;
             }
             try {
                 fillFunc.invoke(Deck.this);
-                mSpacedFacts.clear(); // workaround for freezing cards problem. remove this when the code is up to date
                 // with libanki
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "queueNotEmpty: Error while invoking overridable fill method:" + e.toString());
                 return false;
             }
-            if (queue.isEmpty()) {
+//            if (queue.isEmpty()) {
                 return false;
-            }
-        }
+//            }
+//        }
     }
 
 
