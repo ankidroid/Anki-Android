@@ -49,7 +49,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 public class CardBrowser extends Activity {
     private ArrayList<HashMap<String, String>> mCards;
@@ -166,7 +165,7 @@ public class CardBrowser extends Activity {
         setTitle(mDeck.getDeckName());
 
         initAllDialogs();
-        allTags = new String[0];
+        allTags = null;
         mSelectedTags = new HashSet<String>();
 
         getCards();        
@@ -395,7 +394,7 @@ public class CardBrowser extends Activity {
 
     private void recreateTagsDialog() {
         Resources res = getResources();
-        if (allTags.length == 0) {
+        if (allTags == null) {
             String[] oldTags = AnkiDroidApp.deck().allTags_();
             Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
             allTags = new String[oldTags.length];

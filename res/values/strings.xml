@@ -269,6 +269,7 @@
 <string name="card_details_no_count">No count</string>
 <string name="card_details_added">Added</string>
 <string name="card_details_changed">Changed</string>
+<string name="card_details_tags">Tags</string>
 <string name="card_details_model">Model</string>
 <string name="card_details_card_model">Card model</string>
 
