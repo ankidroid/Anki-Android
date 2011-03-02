@@ -642,10 +642,10 @@ public class StudyOptions extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-            closeOpenedDeck();
-            MetaDB.closeDB();
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNLOAD_DECK, mUnloadDeckHandler, new DeckTask.TaskData(
+                    mDeckFilename));
+            return true;
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
@@ -2036,6 +2036,34 @@ public class StudyOptions extends Activity {
             // Pass
         }
     };
+    
+    
+    DeckTask.TaskListener mUnloadDeckHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+                    .getString(R.string.unloading_deck), true);
+        }
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+
+            
+            closeOpenedDeck();
+            MetaDB.closeDB();
+            if (mProgressDialog.isShowing()) {
+                try {
+                    mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+            }
+            finish();
+        }
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            // Pass
+        }
+    };
 
     Connection.TaskListener mSyncListener = new Connection.TaskListener() {
 
@@ -2054,9 +2082,9 @@ public class StudyOptions extends Activity {
                 mProgressDialog.dismiss();
             }
             if (data.success) {
-    			mSyncLogAlert.setMessage(((HashMap<String, String>) data.result).get("message"));
-				reloadDeck();
-				mSyncLogAlert.show();
+                mSyncLogAlert.setMessage(((HashMap<String, String>) data.result).get("message"));
+                reloadDeck();
+                mSyncLogAlert.show();
             } else {
                 if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
                     // Need to ask user for conflict resolution direction and re-run sync
