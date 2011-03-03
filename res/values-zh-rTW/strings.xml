@@ -134,8 +134,8 @@
   <string name="dictionary_summ">Dictionary in which lookups should be performed: XXX</string>
   <string name="reset_languages">重設語言</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
-  <string name="reset_languages_question">Reset all languages assignments?</string>
-  <string name="reset_languages_confirmation">All languages assignments reset</string>
+  <string name="reset_languages_question">Reset all language assignments?</string>
+  <string name="reset_languages_confirmation">All language assignments reset</string>
   <string name="use_ruby_support">支援Ruby語言</string>
   <string name="use_ruby_support_summ">如果包含\'[\'或\']\'符號，當作Ruby語言處理</string>
   <string name="display_font_size">相對顯示字型大小</string>
@@ -169,7 +169,7 @@
   <string name="fix_hebrew_text">強制右到左文字顯示(給希伯來語)</string>
   <string name="fix_hebrew_text_summ">Ankidroid處理希伯來語的暫時解決方式。不支援母音。</string>
   <string name="language">語言</string>
-  <string name="language_summ">Select the language, AnkiDroid should use. At the moment: XXX</string>
+  <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
   <string name="language_system">系統語言</string>
   <string name="select_locale_title">選擇語言</string>
   <string name="personaldeckpicker_title">打開線上牌組</string>
@@ -219,6 +219,7 @@
   <string name="card_details_no_count">No count</string>
   <string name="card_details_added">Added</string>
   <string name="card_details_changed">Changed</string>
+  <string name="card_details_tags">Tags</string>
   <string name="card_details_model">Model</string>
   <string name="card_details_card_model">Card model</string>
   <string name="statistics">統計</string>
@@ -263,7 +264,7 @@
   <string name="studyoptions_nodeck_title">無牌組載入</string>
   <string name="studyoptions_nodeck_message">目前沒有牌組載入。Anki牌組存在SD卡中\"%s\"目錄。您可以指定這個位置(按\"目錄\"然後選擇\"選項\")。</string>
   <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
-  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\nAll information is organized in decks which you can either download from other users (shared decks) or create on your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck via AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">無法載入牌組</string>
   <string name="studyoptions_deck_not_loaded_message">您選擇的牌組不是合格的Anki牌組。請使用電腦版的Anki建立一個合格的牌組，再用Ankidroid載入。\n\n您可以選擇另一牌組，或用下方按鈕載入範例甲板。</string>
   <string name="studyoptions_no_external_storage_title">沒有可用的記憶卡</string>
@@ -398,8 +399,8 @@
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="tts_no_tts">Don\'t speak</string>
-  <string name="statistics_type_title">Chose statistic type</string>
-  <string name="statistics_period_title">Chose report period</string>
+  <string name="statistics_type_title">Choose statistic type</string>
+  <string name="statistics_period_title">Choose report period</string>
   <string name="statistics_period_y_axis">Cards</string>
   <string name="statistics_period_x_axis">Days</string>
   <string name="statistics_period_x_axis_minutes">分鐘</string>
