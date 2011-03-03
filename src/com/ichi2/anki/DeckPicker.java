@@ -113,7 +113,7 @@ public class DeckPicker extends Activity implements Runnable {
 	* Available options performed by other activities
 	*/
     private static final int PREFERENCES_UPDATE = 0;
-
+    private static final int CREATE_DECK = 1;
 
 	private DeckPicker mSelf;
 
@@ -400,7 +400,7 @@ public class DeckPicker extends Activity implements Runnable {
 					return true;
 				}
 				if (view.getId() == R.id.DeckPickerCompletionMat || view.getId() == R.id.DeckPickerCompletionAll) {
-				    if (!text.equals("0")) {
+				    if (!text.equals("-1")) {
 	                    Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text) / 100.0, mDeckListView.getWidth(), 2, false); 				        
 				    }
                 }
@@ -781,7 +781,7 @@ public class DeckPicker extends Activity implements Runnable {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case MENU_CREATE_DECK:
-                startActivity(new Intent(DeckPicker.this, DeckCreator.class));;
+                startActivityForResult(new Intent(DeckPicker.this, DeckCreator.class), CREATE_DECK);;
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                     MyAnimation.slide(DeckPicker.this, MyAnimation.RIGHT);
                 }
@@ -828,6 +828,13 @@ public class DeckPicker extends Activity implements Runnable {
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                     MyAnimation.slide(this, MyAnimation.NONE);
                 }
+            }
+        } else if (requestCode == CREATE_DECK && resultCode == RESULT_OK) {
+            finish();
+            Intent i = new Intent(DeckPicker.this, DeckPicker.class);
+            startActivity(i);
+            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                MyAnimation.slide(this, MyAnimation.NONE);
             }
         }
     }
@@ -878,8 +885,8 @@ public class DeckPicker extends Activity implements Runnable {
 							.getLastModified(absPath)));
 					data.put("filepath", absPath);
                     data.put("showProgress", "true");
-                    data.put("rateOfCompletionMat", "0");
-                    data.put("rateOfCompletionAll", "0");
+                    data.put("rateOfCompletionMat", "-1");
+                    data.put("rateOfCompletionAll", "-1");
 
 					tree.add(data);
 
@@ -914,8 +921,8 @@ public class DeckPicker extends Activity implements Runnable {
 			data.put("due", "");
 			data.put("mod", "1");
 			data.put("showProgress", "false");
-            data.put("rateOfCompletionMat", "0");
-            data.put("rateOfCompletionAll", "0");
+            data.put("rateOfCompletionMat", "-1");
+            data.put("rateOfCompletionAll", "-1");
 
 			tree.add(data);
 		}
