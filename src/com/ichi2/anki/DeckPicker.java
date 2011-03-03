@@ -323,8 +323,10 @@ public class DeckPicker extends Activity implements Runnable {
                     .setMessage(res.getString(R.string.deckpicker_download_missing_error, failedFile));
             }
             mMissingMediaAlert.show();
- 
-        }
+            
+            Deck deck = (Deck) data.result;
+            deck.closeDeck();
+         }
     };
 
 
