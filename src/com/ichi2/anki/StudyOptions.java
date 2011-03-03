@@ -1865,7 +1865,7 @@ public class StudyOptions extends Activity {
             float sens = (200 - sensibility) / 100.0f;
             sSwipeMinDistance = (int)(SWIPE_MIN_DISTANCE_DIP * sens * gestureScale + 0.5f);
             sSwipeThresholdVelocity = (int)(SWIPE_THRESHOLD_VELOCITY_DIP * sens * gestureScale + 0.5f);
-            sSwipeMaxOffPath = (int)(SWIPE_MAX_OFF_PATH_DIP * sens * gestureScale + 0.5f);
+            sSwipeMaxOffPath = (int)(SWIPE_MAX_OFF_PATH_DIP * Math.sqrt(sens) * gestureScale + 0.5f);
         } else {
             sSwipeMinDistance = (int)(SWIPE_MIN_DISTANCE_DIP * gestureScale + 0.5f);
             sSwipeThresholdVelocity = (int)(SWIPE_THRESHOLD_VELOCITY_DIP * gestureScale + 0.5f);

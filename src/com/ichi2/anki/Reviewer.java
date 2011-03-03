@@ -179,6 +179,7 @@ public class Reviewer extends Activity {
     private boolean mShowProgressBars;
     
     private boolean mIsDictionaryAvailable;
+    private boolean mIsSelecting = false;
 
     @SuppressWarnings("unused")
     private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
@@ -834,6 +835,7 @@ public class Reviewer extends Activity {
             case MENU_SEARCH:
                 
             	if (mPrefTextSelection && mClipboard.hasText() && mIsDictionaryAvailable) {
+            	    mIsSelecting = false;
             		switch (mDictionary) {
                     	case DICTIONARY_AEDICT:
                     		Intent aedictSearchIntent = new Intent(mDictionaryAction);
@@ -978,6 +980,7 @@ public class Reviewer extends Activity {
 
 
     private void answerCard(int ease) {
+        mIsSelecting = false;
         Deck deck = AnkiDroidApp.deck();
     	switch (ease) {
     		case Card.EASE_FAILED:
@@ -1426,6 +1429,7 @@ public class Reviewer extends Activity {
             displayString = sb.toString();
         }
 
+        mIsSelecting = false;
         mFlipCard.setVisibility(View.GONE);
         showEaseButtons();
         updateCard(displayString);
@@ -1706,6 +1710,7 @@ public class Reviewer extends Activity {
         try {
             KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
             shiftPressEvent.dispatch(mCard);
+            mIsSelecting = true;
         } catch (Exception e) {
             throw new AssertionError(e);
         }
@@ -1858,7 +1863,7 @@ public class Reviewer extends Activity {
       					} else {
       						displayCardAnswer(); 
       					}
-                     } else if (e2.getX() - e1.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath && !mIsXScrolling) {
+                     } else if (e2.getX() - e1.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath && !mIsXScrolling && !mIsSelecting) {
                        	 // left
                     	 closeReviewer();
                      }
