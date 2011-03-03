@@ -578,7 +578,11 @@ public class StudyOptions extends Activity {
         boolean limitChecked = mToggleLimit.isChecked();
         boolean limitEnabled = mToggleLimit.isEnabled();
         boolean nightModeChecekd = mNightMode.isChecked();
-        int limitBarVisibility = mGlobalLimitFrame.getVisibility();
+        int limitBarVisibility = View.GONE;
+        if (mDailyBar != null) {
+            limitBarVisibility = mGlobalLimitFrame.getVisibility();
+            
+        }
 
     	initAllContentViews();
     	showContentView();
@@ -586,7 +590,9 @@ public class StudyOptions extends Activity {
         mToggleLimit.setChecked(limitChecked);
         mToggleLimit.setEnabled(limitEnabled);
         mNightMode.setChecked(nightModeChecekd);
-        mGlobalLimitFrame.setVisibility(limitBarVisibility);        
+        if (mDailyBar != null) {
+            mGlobalLimitFrame.setVisibility(limitBarVisibility);
+        }
         mStudyOptionsMain.setVisibility(visibility);
     }
 
