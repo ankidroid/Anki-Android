@@ -1592,32 +1592,41 @@ public class SyncClient {
             JSONArray review = new JSONArray();
 
             // cardId
-            review.put(cursor.getLong(0));
+            review.put(0, (long)cursor.getLong(0));
             // time
-            review.put(cursor.getDouble(1));
+            review.put(1, (double)cursor.getDouble(1));
             // lastInterval
-            review.put(cursor.getDouble(2));
+            review.put(2, (double)cursor.getDouble(2));
             // nextInterval
-            review.put(cursor.getDouble(3));
+            review.put(3, (double)cursor.getDouble(3));
             // ease
-            review.put(cursor.getInt(4));
+            review.put(4, (int)cursor.getInt(4));
+            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 1: %s", review.toString()));
             // delay
             delay = cursor.getDouble(5);
-            review.put(delay);
+            Number num = (Number)(new Double(delay));
+            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s",
+                    delay, num.toString(), review.toString()));
+            review.put(5, delay);
+            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 3: %.18f %s %s",
+                    review.getDouble(5), num.toString(), review.toString()));
             // lastFactor
-            review.put(cursor.getDouble(6));
+            review.put(6, (double)cursor.getDouble(6));
+            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 4: %.18f %s %s",
+                    review.getDouble(5), num.toString(), review.toString()));
             // nextFactor
-            review.put(cursor.getDouble(7));
+            review.put(7, (double)cursor.getDouble(7));
             // reps
-            review.put(cursor.getDouble(8));
+            review.put(8, (double)cursor.getDouble(8));
             // thinkingTime
-            review.put(cursor.getDouble(9));
+            review.put(9, (double)cursor.getDouble(9));
             // yesCount
-            review.put(cursor.getDouble(10));
+            review.put(10, (double)cursor.getDouble(10));
             // noCount
-            review.put(cursor.getDouble(11));
+            review.put(11, (double)cursor.getDouble(11));
 
-            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Debugging issue 372: delay = %f, review = %s", delay, review.toString()));
+            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 complete row: %.18f %.18f %s",
+                    delay, review.getDouble(5), review.toString()));
             bundledHistory.put(review);
         }
         cursor.close();
