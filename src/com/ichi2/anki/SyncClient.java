@@ -308,18 +308,13 @@ public class SyncClient {
     }
 
 
-    public HashMap<String, String> applyPayloadReply(JSONObject payloadReply) throws JSONException {
+    public void applyPayloadReply(JSONObject payloadReply) throws JSONException {
         Log.i(AnkiDroidApp.TAG, "applyPayloadReply");
         Keys[] keys = Keys.values();
 
-        HashMap<String, String> updatedMedia = null;
-        HashMap<String, String> tmpMap = null;
         for (int i = 0; i < keys.length; i++) {
             String key = keys[i].name();
-            tmpMap = updateObjsFromKey(payloadReply, key);
-            if (tmpMap != null) {
-                updatedMedia = tmpMap;
-            }
+            updateObjsFromKey(payloadReply, key);
         }
 
         if (!payloadReply.isNull("deck")) {
@@ -352,7 +347,6 @@ public class SyncClient {
         }
         assert missingFacts == 0l;
         
-        return updatedMedia;
     }
 
     private long missingFacts() {
@@ -534,8 +528,7 @@ public class SyncClient {
     }
 
 
-    private HashMap<String, String> updateObjsFromKey(JSONObject payloadReply, String key) throws JSONException {
-        HashMap<String, String> updatedMedia = null;
+    private void updateObjsFromKey(JSONObject payloadReply, String key) throws JSONException {
         if ("models".equalsIgnoreCase(key)) {
             Log.i(AnkiDroidApp.TAG, "updateModels");
             updateModels(payloadReply.getJSONArray("added-models"));
@@ -547,9 +540,8 @@ public class SyncClient {
             updateCards(payloadReply.getJSONArray("added-cards"));
         } else if ("media".equalsIgnoreCase(key)) {
             Log.i(AnkiDroidApp.TAG, "updateMedia");
-            updatedMedia = updateMedia(payloadReply.getJSONArray("added-media"));
+            updateMedia(payloadReply.getJSONArray("added-media"));
         }
-        return updatedMedia;
     }
 
 
@@ -1401,10 +1393,9 @@ public class SyncClient {
     }
 
 
-    private HashMap<String, String> updateMedia(JSONArray media) throws JSONException {
+    void updateMedia(JSONArray media) throws JSONException {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
         ArrayList<String> mediaIds = new ArrayList<String>();
-        HashMap<String, String> mediaFiles = new HashMap<String, String>();
 
         String sql = "INSERT OR REPLACE INTO media (id, filename, size, created, originalPath, description) "
                     + "VALUES(?,?,?,?,?,?)";
@@ -1436,13 +1427,11 @@ public class SyncClient {
 
             statement.execute();
             
-            mediaFiles.put(filename, sum);
         }
         statement.close();
 
         ankiDB.getDatabase().execSQL("DELETE FROM mediaDeleted WHERE mediaId IN " + Utils.ids2str(mediaIds));
         
-        return mediaFiles;
     }
 
 

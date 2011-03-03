@@ -502,13 +502,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     }
 
                     publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
-                    HashMap<String, String> updatedMedia = client.applyPayloadReply(payloadReply);
+                    client.applyPayloadReply(payloadReply);
                     deck.initDeckvarsCache();
                     Reviewer.setupMedia(deck); // FIXME: setupMedia should be part of Deck?
                     
-                    if (updatedMedia != null) {
-                        doInBackgroundDownloadMissingMedia(new Payload(new Object[] {deck, updatedMedia}));
-                    }
+                    doInBackgroundDownloadMissingMedia(new Payload(new Object[] {deck}));
                     if (!client.getServer().finish()) {
                         data.success = false;
                         syncChangelog.put("message", res.getString(R.string.sync_log_finish_error));
@@ -632,11 +630,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         HashMap<String, String> missingSums = new HashMap<String, String>();
         
         Deck deck = (Deck) data.data[0];
+        data.result = deck; // pass it to the return object so we close the deck in the deck picker
         String syncName = deck.getDeckName();
-        HashMap<String, String> syncedMedia = null;
-        if (data.data.length == 2) {
-            syncedMedia = (HashMap<String, String>) data.data[1];
-        }
                 
         data.success = false;
         data.data = new Integer[] {0, 0, 0};
@@ -655,41 +650,24 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         int missing = 0;
         int grabbed = 0;
 
-        if (syncedMedia != null) {
-            // Called as part of a sync, only checked the media that was added during the sync
+        Cursor cursor = null;
+        try {
+            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename, originalPath FROM media", null);
             String path = null;
-            
-            for (String f : syncedMedia.keySet()) {
+            String f = null;
+            while (cursor.moveToNext()) {
+                f = cursor.getString(0);
                 path = mdir + "/" + f;
                 File file = new File(path);
                 if (!file.exists()) {
                     missingPaths.put(f, path);
-                    missingSums.put(f, syncedMedia.get(f));
+                    missingSums.put(f, cursor.getString(1));
                     Log.i(AnkiDroidApp.TAG, "Missing file: " + f);
                 }
             }
-        } else {
-            // Called from context menu of deck picker, check all files
-            Cursor cursor = null;
-            try {
-                cursor = deck.getDB().getDatabase().rawQuery("SELECT filename, originalPath FROM media", null);
-                String path = null;
-                String f = null;
-                while (cursor.moveToNext()) {
-                    f = cursor.getString(0);
-                    path = mdir + "/" + f;
-                    File file = new File(path);
-                    if (!file.exists()) {
-                        missingPaths.put(f, path);
-                        missingSums.put(f, cursor.getString(1));
-                        Log.i(AnkiDroidApp.TAG, "Missing file: " + f);
-                    }
-                }
-            } finally {
-                deck.closeDeck();
-                if (cursor != null) {
-                    cursor.close();
-                }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
             }
         }
 
