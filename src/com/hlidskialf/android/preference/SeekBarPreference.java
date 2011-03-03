@@ -66,8 +66,8 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
             mValue = getPersistedInt(mDefault);
         }
 
-        mSeekBar.setMax((int) ((mMax - mMin) / mInterval));
         mSeekBar.setProgress((int) ((mValue - mMin) / mInterval));
+        mSeekBar.setMax((int) ((mMax - mMin) / mInterval));
 
         String t = String.valueOf(mValue);
         mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
