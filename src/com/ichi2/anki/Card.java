@@ -600,6 +600,7 @@ public class Card {
         }
 
         ContentValues values = new ContentValues();
+        values.put("id", mId);
         values.put("factId", mFactId);
         values.put("cardModelId", mCardModelId);
         values.put("created", mCreated);
@@ -638,7 +639,7 @@ public class Card {
         values.put("combinedDue", Math.max(mSpaceUntil, mDue));
         values.put("relativeDelay", 0.0);
         AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("cards", null, values);
-        
+
     }
 
     public void toDB() {
