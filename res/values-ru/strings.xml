@@ -224,6 +224,7 @@
   <string name="card_details_card_model">Модель карты</string>
   <string name="statistics">Статистика</string>
   <string name="loading_deck">Открытие колоды. Пожалуйста, подождите...</string>
+  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">Нет подключения к Интернету</string>
   <string name="currently_downloading">Загружается</string>
   <string name="personal_decks">Личные колоды</string>
@@ -432,7 +433,7 @@
   </plurals>
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 из %3$d к повтору)</item>
-    <item quantity="other">%1$s (повтор %2$d из %3$d)</item>
+    <item quantity="other">%1$s (%2$d из %3$d к повтору)</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Есть одна ошибка для отчёта</item>

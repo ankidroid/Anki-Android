@@ -698,7 +698,7 @@ public class Reviewer extends Activity {
         item.setIcon(R.drawable.ic_menu_edit);
 
         SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_remove_card);
-        removeDeckSubMenu.setIcon(R.drawable.ic_menu_close_clear_cancel);
+        removeDeckSubMenu.setIcon(R.drawable.ic_menu_stop);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY, Menu.NONE, R.string.menu_bury_card);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.card_browser_delete_card);

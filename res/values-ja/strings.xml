@@ -224,6 +224,7 @@
   <string name="card_details_card_model">Card model</string>
   <string name="statistics">Statistics</string>
   <string name="loading_deck">単語帳をロード中。しばらくお待ちください...</string>
+  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">現在オフラインです。</string>
   <string name="currently_downloading">ダウンロード中</string>
   <string name="personal_decks">Personal Decks</string>
@@ -283,7 +284,7 @@
   <string name="menu_deck_properties">単語帳プロパティー</string>
   <string name="menu_add_card">カードを追加</string>
   <string name="menu_about">このプログラムについて</string>
-  <string name="menu_remove_card">Remove Card</string>
+  <string name="menu_remove_card">Dismiss Card</string>
   <string name="menu_suspend_card">カードの表示を中止</string>
   <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">カードの編集</string>

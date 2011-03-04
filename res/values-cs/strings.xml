@@ -224,6 +224,7 @@
   <string name="card_details_card_model">Card model</string>
   <string name="statistics">Statistics</string>
   <string name="loading_deck">Načítám balíček. Čekejte prosím ...</string>
+  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">Připojení k Internetu nenalezeno</string>
   <string name="currently_downloading">Právě se stahuje</string>
   <string name="personal_decks">Vlastní balíčky</string>
@@ -283,7 +284,7 @@
   <string name="menu_deck_properties">Nastavení balíčku</string>
   <string name="menu_add_card">Přidat kartu</string>
   <string name="menu_about">O aplikaci</string>
-  <string name="menu_remove_card">Remove Card</string>
+  <string name="menu_remove_card">Dismiss Card</string>
   <string name="menu_suspend_card">Vyřadit kartu</string>
   <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">Upravit kartu</string>
