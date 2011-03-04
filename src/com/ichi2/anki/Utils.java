@@ -170,7 +170,7 @@ public class Utils {
                         str.append(ids.get(i)).append(",");
                     }
                 } catch (JSONException e) {
-                    Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                    Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                 }
             }
         }
@@ -385,12 +385,12 @@ public class Utils {
                         Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
                 } catch (JSONException e) {
-                    Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                    Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
                 }
             }
 
         } catch (IOException e1) {
-            Log.i(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
+            Log.e(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
         }
 
     }

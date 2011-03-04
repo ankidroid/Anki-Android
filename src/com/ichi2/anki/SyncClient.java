@@ -33,10 +33,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -1573,52 +1575,65 @@ public class SyncClient {
     private JSONArray bundleHistory() throws JSONException {
         double delay = 0.0;
         JSONArray bundledHistory = new JSONArray();
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
-                        "SELECT cardId, time, lastInterval, nextInterval, ease, delay, lastFactor, nextFactor, reps, "
-                        + "thinkingTime, yesCount, noCount FROM reviewHistory "
-                        + "WHERE time > " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()), null);
-        while (cursor.moveToNext()) {
-            JSONArray review = new JSONArray();
+        Cursor cursor = null;
+        try {
+            cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+                    "SELECT cardId, time, lastInterval, nextInterval, ease, delay, lastFactor, nextFactor, reps, "
+                    + "thinkingTime, yesCount, noCount FROM reviewHistory "
+                    + "WHERE time > " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()), null);
+            BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/bundleHistoryLogs.txt", true));
+            while (cursor.moveToNext()) {
+                JSONArray review = new JSONArray();
 
-            // cardId
-            review.put(0, (long)cursor.getLong(0));
-            // time
-            review.put(1, (double)cursor.getDouble(1));
-            // lastInterval
-            review.put(2, (double)cursor.getDouble(2));
-            // nextInterval
-            review.put(3, (double)cursor.getDouble(3));
-            // ease
-            review.put(4, (int)cursor.getInt(4));
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 1: %s", review.toString()));
-            // delay
-            delay = cursor.getDouble(5);
-            Number num = (Number)(new Double(delay));
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s",
-                    delay, num.toString(), review.toString()));
-            review.put(5, delay);
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 3: %.18f %s %s",
-                    review.getDouble(5), num.toString(), review.toString()));
-            // lastFactor
-            review.put(6, (double)cursor.getDouble(6));
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 4: %.18f %s %s",
-                    review.getDouble(5), num.toString(), review.toString()));
-            // nextFactor
-            review.put(7, (double)cursor.getDouble(7));
-            // reps
-            review.put(8, (double)cursor.getDouble(8));
-            // thinkingTime
-            review.put(9, (double)cursor.getDouble(9));
-            // yesCount
-            review.put(10, (double)cursor.getDouble(10));
-            // noCount
-            review.put(11, (double)cursor.getDouble(11));
+                // cardId
+                review.put(0, (long)cursor.getLong(0));
+                // time
+                review.put(1, (double)cursor.getDouble(1));
+                // lastInterval
+                review.put(2, (double)cursor.getDouble(2));
+                // nextInterval
+                review.put(3, (double)cursor.getDouble(3));
+                // ease
+                review.put(4, (int)cursor.getInt(4));
+                // delay
+                delay = cursor.getDouble(5);
+                Number num = (Number)(new Double(delay));
+                Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s",
+                            delay, num.toString(), review.toString()));
+                buff.write(String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s\n", delay, num.toString(), review.toString()));
+                review.put(5, delay);
+                Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 3: %.18f %s %s",
+                            review.getDouble(5), num.toString(), review.toString()));
+                buff.write(String.format(Utils.ENGLISH_LOCALE, "issue 372 3: %.18f %s %s\n", review.getDouble(5), num.toString(), review.toString()));
+                // lastFactor
+                review.put(6, (double)cursor.getDouble(6));
+                Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 4: %.18f %s %s",
+                            review.getDouble(5), num.toString(), review.toString()));
+                buff.write(String.format(Utils.ENGLISH_LOCALE, "issue 372 4: %.18f %s %s\n", review.getDouble(5), num.toString(), review.toString()));
+                // nextFactor
+                review.put(7, (double)cursor.getDouble(7));
+                // reps
+                review.put(8, (double)cursor.getDouble(8));
+                // thinkingTime
+                review.put(9, (double)cursor.getDouble(9));
+                // yesCount
+                review.put(10, (double)cursor.getDouble(10));
+                // noCount
+                review.put(11, (double)cursor.getDouble(11));
 
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 complete row: %.18f %.18f %s",
-                    delay, review.getDouble(5), review.toString()));
-            bundledHistory.put(review);
+                Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 complete row: %.18f %.18f %s",
+                            delay, review.getDouble(5), review.toString()));
+                buff.write(String.format(Utils.ENGLISH_LOCALE, "issue 372 complete row: %.18f %.18f %s\n", delay, review.getDouble(5), review.toString()));
+                bundledHistory.put(review);
+            }
+            buff.close();
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "IOException = " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        cursor.close();
 
         Log.i(AnkiDroidApp.TAG, "Last sync = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
         Log.i(AnkiDroidApp.TAG, "Bundled history = " + bundledHistory.toString());
