@@ -113,6 +113,9 @@ public class DeckPicker extends Activity implements Runnable {
 	*/
     private static final int PREFERENCES_UPDATE = 0;
     private static final int CREATE_DECK = 1;
+    private static final int DOWNLOAD_PERSONAL_DECK = 2;
+    private static final int DOWNLOAD_SHARED_DECK = 3;
+
 
 	private DeckPicker mSelf;
 
@@ -828,7 +831,7 @@ public class DeckPicker extends Activity implements Runnable {
                     MyAnimation.slide(this, MyAnimation.NONE);
                 }
             }
-        } else if (requestCode == CREATE_DECK && resultCode == RESULT_OK) {
+        } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
             finish();
             Intent i = new Intent(DeckPicker.this, DeckPicker.class);
             startActivity(i);
@@ -1071,7 +1074,7 @@ public class DeckPicker extends Activity implements Runnable {
                 AnkiDroidApp.deck().closeDeck();
                 AnkiDroidApp.setDeck(null);
             }
-            startActivity(new Intent(this, PersonalDeckPicker.class));
+            startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
             if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                 MyAnimation.slide(this, MyAnimation.RIGHT);
             }
@@ -1088,7 +1091,7 @@ public class DeckPicker extends Activity implements Runnable {
             AnkiDroidApp.setDeck(null);
         }
         // deckLoaded = false;
-        startActivity(new Intent(this, SharedDeckPicker.class));
+        startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
             MyAnimation.slide(this, MyAnimation.RIGHT);
         }

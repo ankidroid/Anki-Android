@@ -130,8 +130,9 @@ public class FactAdder extends Activity {
                     current.updateField();
                 }
                 mNewFact.setTags(mFactTags);
-                mDeck.addFact(mNewFact, mSelectedCardModels);
-                setResult(RESULT_OK);
+                if (mDeck.addFact(mNewFact, mSelectedCardModels) != null) {
+	                setResult(RESULT_OK);
+                }
                 closeFactAdder();
             }
 
