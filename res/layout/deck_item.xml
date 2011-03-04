@@ -59,6 +59,7 @@
 			android:layout_height="wrap_content" 
 			android:layout_width="wrap_content"
 			android:layout_alignParentLeft="true"
+			android:layout_toLeftOf="@+id/DeckPickerNew"
 			android:paddingLeft="10dip"
 			android:paddingRight="5dip"
 			android:paddingBottom="5dip"

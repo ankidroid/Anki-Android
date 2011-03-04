@@ -72,7 +72,11 @@ public class DeckCreator extends Activity {
             @Override
             public void onClick(View v) {
                 String filename = mFilename.getText().toString();
-                createDeck(filename);
+                if (!filename.equals("")) {
+                    if (createDeck(filename) == true) {
+                        setResult(RESULT_OK);
+                    }
+                }
                 closeDeckCreator();
             }
         });
@@ -104,7 +108,7 @@ public class DeckCreator extends Activity {
             decksDirectory.mkdirs();
         }
         
-        File destinationFile = new File(mPrefDeckPath, filename + ".anki");
+        File destinationFile = new File(mPrefDeckPath, filename);
         if (destinationFile.exists()) {
             return false;
         }
@@ -119,9 +123,9 @@ public class DeckCreator extends Activity {
             Log.e(AnkiDroidApp.TAG, "onCreate - The copy of empty.anki to the SD card failed.");
             return false;
         }
-        
-        Deck.initializeEmptyDeck(mPrefDeckPath + filename + ".anki");
-        
+
+        Deck.initializeEmptyDeck(mPrefDeckPath + "/" + filename);
+
         return true;
     }
     

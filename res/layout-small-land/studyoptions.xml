@@ -50,17 +50,6 @@
 				android:gravity="center"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent">
-				
-		<TextView 
-			android:id="@+id/studyoptions_title"
-			android:textSize="26dip"
-			android:textStyle="bold"
-			android:textColor="#ffffff"
-			android:gravity="center"
-			android:visibility="gone"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/studyoptions_title"/>
 		<LinearLayout
 			android:layout_marginTop="3dp"		
 			android:orientation="vertical"

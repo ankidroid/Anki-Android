@@ -217,7 +217,6 @@ public class StudyOptions extends Activity {
     private Button mButtonStart;
     private ToggleButton mToggleCram;
     private ToggleButton mToggleLimit;
-    private TextView mTextTitle;
     private TextView mTextDeckName;
     private TextView mTextReviewsDue;
     private TextView mTextNewToday;
@@ -578,7 +577,11 @@ public class StudyOptions extends Activity {
         boolean limitChecked = mToggleLimit.isChecked();
         boolean limitEnabled = mToggleLimit.isEnabled();
         boolean nightModeChecekd = mNightMode.isChecked();
-        int limitBarVisibility = mGlobalLimitFrame.getVisibility();
+        int limitBarVisibility = View.GONE;
+        if (mDailyBar != null) {
+            limitBarVisibility = mGlobalLimitFrame.getVisibility();
+            
+        }
 
     	initAllContentViews();
     	showContentView();
@@ -586,7 +589,9 @@ public class StudyOptions extends Activity {
         mToggleLimit.setChecked(limitChecked);
         mToggleLimit.setEnabled(limitEnabled);
         mNightMode.setChecked(nightModeChecekd);
-        mGlobalLimitFrame.setVisibility(limitBarVisibility);        
+        if (mDailyBar != null) {
+            mGlobalLimitFrame.setVisibility(limitBarVisibility);
+        }
         mStudyOptionsMain.setVisibility(visibility);
     }
 
@@ -754,7 +759,6 @@ public class StudyOptions extends Activity {
       
         mStudyOptionsMain = (View) mStudyOptionsView.findViewById(R.id.studyoptions_main);
 
-        mTextTitle = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_title);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
@@ -1288,10 +1292,8 @@ public class StudyOptions extends Activity {
                 updateValuesFromDeck();
                 if (mCurrentContentView == CONTENT_STUDY_OPTIONS) {
                     mButtonStart.setText(R.string.studyoptions_start);
-                    mTextTitle.setText(R.string.studyoptions_title);
                 } else {
                     mButtonStart.setText(R.string.studyoptions_continue);
-                    mTextTitle.setText(R.string.studyoptions_well_done);
                 }
                 setContentView(mStudyOptionsView);
                 break;

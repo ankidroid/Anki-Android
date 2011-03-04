@@ -3,18 +3,20 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
+  	android:padding="5dip"
   	android:orientation="vertical">
 	<EditText 
 		android:id="@+id/DeckCreatorFilename"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+	  	android:layout_marginTop="5dp"
 		android:lines="1"
 		android:hint="@string/downloaddeck_search"/>
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
 		android:orientation="horizontal"
-		android:layout_marginTop="10dp"
-		android:layout_gravity="right" 
+		android:layout_marginTop="5dp"
+		android:layout_gravity="right"
 		android:id="@+id/CardEditorButtons">
 		<Button android:layout_width="0dip"
 			android:layout_height="fill_parent" 

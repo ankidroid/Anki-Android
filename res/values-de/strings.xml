@@ -219,6 +219,7 @@
   <string name="card_details_no_count">Nein-Antworten</string>
   <string name="card_details_added">Hinzugefügt</string>
   <string name="card_details_changed">Geändert</string>
+  <string name="card_details_tags">Schlagworte</string>
   <string name="card_details_model">Modell</string>
   <string name="card_details_card_model">Kartenvorlage</string>
   <string name="statistics">Lernstatistik</string>
