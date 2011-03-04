@@ -26,7 +26,6 @@
 			android:layout_marginTop="10dip"
 			android:paddingLeft="20dip"
 			android:paddingRight="20dip"
-			android:gravity="center"
 			android:id="@+id/studyoptions_nodeck_message" />
 	</ScrollView>
 	<LinearLayout

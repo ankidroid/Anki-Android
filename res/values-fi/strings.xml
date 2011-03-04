@@ -162,7 +162,7 @@
   <string name="play_sounds_at_start">Toista äänet heti</string>
   <string name="play_sounds_at_start_summ">Toista äänet välittömästi sen jälkeen, kun kysymys/vastaus näytetään</string>
   <string name="shake_intensity">Ravistuksen kynnys</string>
-  <string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
+  <string name="shake_intensity_summ">Ravistuksen tunnustuksen kynnys: XXX</string>
   <string name="pref_cat_experimental">KOKEELLINEN</string>
   <string name="sync_enabled">Sync-ominaisuuksia</string>
   <string name="sync_enabled_in_answer_summ">Löytyy useita vikoja, korttipakat saattavat viottua. Varmuuskopio usein!</string>
@@ -179,7 +179,7 @@
   <string name="deckpreferences_title">Korttipakan asetukset</string>
   <string name="about_title">Tietoja</string>
   <string name="cardeditor_title">Korttien muokkaus</string>
-  <string name="factadder_title">Kortin Yhteenlaskia</string>
+  <string name="factadder_title">Kortin yhteenlaskia</string>
   <string name="deckcreator_title">Korttipakan luoja</string>
   <string name="model">Malli:</string>
   <string name="select_model">Malli</string>
@@ -219,6 +219,7 @@
   <string name="card_details_no_count">Ei vastaus</string>
   <string name="card_details_added">Lisätty</string>
   <string name="card_details_changed">Muutettu</string>
+  <string name="card_details_tags">Tunnisteet</string>
   <string name="card_details_model">Malli</string>
   <string name="card_details_card_model">Korttimalli</string>
   <string name="statistics">Tilastot</string>
@@ -245,8 +246,8 @@
   <string name="pause_download">Keskeytä lataaminen</string>
   <string name="duplicate_download">Tämä korttipakka on jo latauksessa</string>
   <string name="sync_all">Synkronoi kaikki</string>
-  <string name="fact">tosiasia</string>
-  <string name="facts">tosiasiaa</string>
+  <string name="fact">kortti</string>
+  <string name="facts">korttia</string>
   <string name="saving_changes">Tallennetaan muutokset ...</string>
   <string name="about_content">%1$s Flashcards for Android &lt;/h2&gt;&lt;p&gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; To help us make AnkiDroid better, please report any bug %3$s here&lt;/a&gt;; new feature ideas are very welcome too! Please use the %4$s wiki&lt;/a&gt; and say Hi on the %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, so everyone is encouraged to %7$s join&lt;/a&gt; the %8$s contributors&lt;/a&gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&lt;/a&gt; to Anki, or blogging about AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&lt;/a&gt; and the source code is available %11$s here&lt;/a&gt;.</string>
   <string name="studyoptions_title">Opiskeluasetukset</string>
@@ -263,7 +264,7 @@
   <string name="studyoptions_nodeck_title">Korttipakkaa ei ole ladattu</string>
   <string name="studyoptions_nodeck_message">Korttipakkaa ei ole tällä hetkellä ladattuna. Anki-korttipakat on tallennettu hekemistoon \"%s\" SD-kortille. Sijainnin voidaan määrittää asetuksissa (paina \"Menu-painiketta\" ja valitse \"Asetukset\").</string>
   <string name="studyoptions_welcome_title">Tervetuloa AnkiDroidiin</string>
-  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\nAll information is organized in decks which you can either download from other users (shared decks) or create on your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck via AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">Korttipakkaa ei voitu ladata</string>
   <string name="studyoptions_deck_not_loaded_message">Valitsemasi korttipakka ei ole kelvollinen Anki-korttipakka. Luo kelvollinen Anki-korttipakka tietokoneella ennen kuin lataat sen AnkiDroid:in.\n\nSillä välin voit valita toisen korttipakan tai ladata näytekappalekorttipakan alla olevista painikkeista.</string>
   <string name="studyoptions_no_external_storage_title">Ulkoista Muistia Ei Ole Saatavilla</string>

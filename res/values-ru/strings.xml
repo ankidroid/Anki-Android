@@ -91,7 +91,7 @@
   <string name="ease1_learning">Снова</string>
   <string name="ease2_learning">Хорошо</string>
   <string name="ease3_learning">Легко</string>
-  <string name="ease4_learning">Оч.легко</string>
+  <string name="ease4_learning">Очень легко</string>
   <string name="ease1_successive">Снова</string>
   <string name="ease2_successive">Трудно</string>
   <string name="ease3_successive">Хорошо</string>
@@ -219,6 +219,7 @@
   <string name="card_details_no_count">Кол-во Нет</string>
   <string name="card_details_added">Добавлено</string>
   <string name="card_details_changed">Изменено</string>
+  <string name="card_details_tags">Теги</string>
   <string name="card_details_model">Модель</string>
   <string name="card_details_card_model">Модель карты</string>
   <string name="statistics">Статистика</string>

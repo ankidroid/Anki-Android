@@ -35,16 +35,6 @@
 			android:layout_width="fill_parent" 
 			android:layout_height="wrap_content" 
 			android:text="Deck name"/>
-		<TextView
-			android:visibility="gone"
-			android:id="@+id/studyoptions_title"
-			android:textSize="26dip"
-			android:textStyle="bold"
-			android:textColor="#ffffff"
-			android:gravity="center"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/studyoptions_title"/>
 		<TableLayout
 			android:layout_margin="15dp"		
 			android:layout_width="wrap_content"

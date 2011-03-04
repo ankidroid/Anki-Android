@@ -122,7 +122,7 @@
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Määrä</item>
-    <item>Cumulative due</item>
+    <item>Kumulatiivinen määrä</item>
     <item>Jaksot</item>
     <item>Tarkastelut</item>
     <item>Tarkistaminen aika</item>
@@ -145,7 +145,7 @@
     <item>liukusäädinohjain</item>
     <item>kielivalinta</item>
     <item>enemmän kieliä</item>
-    <item>progress bars in reviewer</item>
+    <item>edistymispalkkit tarkastelussa</item>
     <item>feedback within AnkiDroid</item>
     <item>mahdollisuut määrittää kortit aktiiven/passiivinen tunnisteella</item>
     <item>parempi synkronointi</item>

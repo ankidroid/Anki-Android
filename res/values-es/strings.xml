@@ -29,7 +29,7 @@
   <string name="no">No</string>
   <string name="ok">Aceptar</string>
   <string name="deck_upgrade_too_old_version">Los mazos con versiones anteriores a la 39 no están soportados por AnkiDroid, por favor abre el mazo con la versión de escritorio de Anki para actualizarlo a la última versión.</string>
-  <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
+  <string name="deck_upgrade_version_61_has_latex">El mazo no puede ser completamente actualizado, ya que contiene expresiones LaTeX; por favor, abre el mazo con la versión para PC de Anki, para actualizarlo a la última versión y regenerar LaTeX.</string>
   <string name="deckpicker_title_nosdcard">La tarjeta SD no está disponible</string>
   <string name="deckpicker_new">%d nuevas hoy</string>
   <string name="deckpicker_loaddeck">Cargando mazo...</string>
@@ -219,6 +219,7 @@
   <string name="card_details_no_count">Respuestas negativas</string>
   <string name="card_details_added">Añadida</string>
   <string name="card_details_changed">Modificada</string>
+  <string name="card_details_tags">Etiquetas</string>
   <string name="card_details_model">Modelo</string>
   <string name="card_details_card_model">Modelo de tarjetas</string>
   <string name="statistics">Estadísticas</string>
@@ -234,7 +235,7 @@
   <string name="cancelling">Cancelando...</string>
   <string name="loading_personal_decks">Cargando mazos personales disponibles...</string>
   <string name="connection_error_title">Atención</string>
-  <string name="connection_error_return_message">Ha ocurrido un error de red. Vuelva a intentarlo, o cancele y vuelva a la pantalla anterior.</string>
+  <string name="connection_error_return_message">Se ha producido un error de red. Vuelva a intentarlo, o cancele y vuelva a la pantalla anterior.</string>
   <string name="retry">Reintentar</string>
   <string name="cancel">Cancelar</string>
   <string name="shared_decks">Mazos compartidos</string>
@@ -311,7 +312,7 @@
   <string name="log_out">Cerrar sesión</string>
   <string name="alert_logging_message">Iniciando sesión, por favor espere...</string>
   <string name="invalid_username_password">Usuario o contraseña incorrectos.</string>
-  <string name="login_generic_error">Error al iniciar sesión.</string>
+  <string name="login_generic_error">No se pudo iniciar sesión.</string>
   <string name="download_finished">Descarga finalizada</string>
   <string name="deck_downloaded">Mazo descargado</string>
   <string name="connection_error_message">Ha ocurrido un error de red.</string>
@@ -334,7 +335,7 @@
   <string name="sync_downloading_media">Descargando archivos multimedia %1$d/%2$d...</string>
   <string name="sync_no_changes_message">No se encontraron cambios.</string>
   <string name="sync_log_error_message">Error: El mazo no se ha sincronizado</string>
-  <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
+  <string name="sync_log_error_specific">Error de sincronización, tipo: %1$s, mensaje: %2$s</string>
   <string name="sync_log_no_changes_message">No se encontraron cambios</string>
   <string name="sync_log_uploading_message">Sincronización completa desde el cliente</string>
   <string name="sync_log_downloading_message">Sincronización completa desde el servidor</string>
@@ -345,8 +346,8 @@
   <string name="sync_log_clocks_unsynchronized">La hora de tu dispositivo es diferente de la del servidor en %d segundos, no se pudo sincronizar.</string>
   <string name="sync_log_old_version">El protocolo de sincronización ha cambiado, por favor, actualice a la última versión de AnkiDroid. Vea %s</string>
   <string name="sync_log_conflict_resolution_required">El mazo se ha modificado localmente y en servidor. Por favor abre el mazo y sincroniza desde allí para resolver el conflicto.</string>
-  <string name="sync_log_create_deck_failed">Error al crear el mazo en el servidor: %1$s</string>
-  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
+  <string name="sync_log_create_deck_failed">No se pudo crear el mazo en el servidor: %1$s</string>
+  <string name="sync_log_finish_error">Ocurrió un error al enviar la dirección de destino al servidor</string>
   <string name="sync_conflict_title">Conflicto al sincronizar</string>
   <string name="sync_conflict_message">El mazo %s se ha modificado localmente y en servidor. ¿Cuál quieres mantener?</string>
   <string name="sync_conflict_local">Mantener la versión local</string>
@@ -413,8 +414,8 @@
   <string name="statistics_all_decks">(todos los mazos)</string>
   <string name="calculating_statistics">Calculando estadísticas</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Todos los mazos: 1 de %2$d pendientes (%3$s)</item>
-    <item quantity="other">Todos los mazos: %1$d de %2$d pendientes (%3$s)</item>
+    <item quantity="one">Total: 1 de %2$d pend. (%3$s)</item>
+    <item quantity="other">Total: %1$d de %2$d pend. (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 min.</item>

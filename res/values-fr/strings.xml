@@ -219,6 +219,7 @@
   <string name="card_details_no_count">No count</string>
   <string name="card_details_added">Ajoutés</string>
   <string name="card_details_changed">Changés</string>
+  <string name="card_details_tags">Tags</string>
   <string name="card_details_model">Modèle</string>
   <string name="card_details_card_model">Modèle de carte</string>
   <string name="statistics">Statistiques</string>
@@ -269,7 +270,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="studyoptions_nodeck_title">Pas de paquet chargé</string>
   <string name="studyoptions_nodeck_message">Aucun paquet n\'est actuellement chargé. Les paquets Anki sont stockés dans le répertoire \"%s\" sur votre carte SD. Cet emplacement peut être spécifié dans les préférences (pressez le bouton \"Menu\" sur votre appareil et choisissez \"Préférences\").</string>
   <string name="studyoptions_welcome_title">Bienvenue à AnkiDroid</string>
-  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\nAll information is organized in decks which you can either download from other users (shared decks) or create on your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck via AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">Le paquet n\'a pas pu être chargé</string>
   <string name="studyoptions_deck_not_loaded_message">Le paquet que vous avez sélectionné n\'est pas un paquet Anki valide. Veuillez utiliser l\'application Anki sur votre ordinateur pour créer un paquet valide avant de le charger sur Ankidroid.\n\nEn attendant, vous pouvez sélectionner un autre paquet ou charger le paquet de démonstration en utilisant les boutons ci-dessous.</string>
   <string name="studyoptions_no_external_storage_title">Aucun stockage externe disponible</string>

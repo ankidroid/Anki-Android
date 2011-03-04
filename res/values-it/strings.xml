@@ -134,8 +134,8 @@
   <string name="dictionary_summ">Dictionary in which lookups should be performed: XXX</string>
   <string name="reset_languages">Reset Languages</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
-  <string name="reset_languages_question">Reset all languages assignments?</string>
-  <string name="reset_languages_confirmation">All languages assignments reset</string>
+  <string name="reset_languages_question">Reset all language assignments?</string>
+  <string name="reset_languages_confirmation">All language assignments reset</string>
   <string name="use_ruby_support">Fornisce support alle annotazioni ruby</string>
   <string name="use_ruby_support_summ">Se i caratteri \'[\ e \']\' sono nel testo, il testo racchiuso sarà considerato come una annotazione ruby</string>
   <string name="display_font_size">Dimensione carattere del display</string>
@@ -169,7 +169,7 @@
   <string name="fix_hebrew_text">Applica RTL per Ebraico</string>
   <string name="fix_hebrew_text_summ">Soluzione per il limitato supporto alla lingua Ebraica della piattaforma Android. Non supporta le vocali.</string>
   <string name="language">Language</string>
-  <string name="language_summ">Select the language, AnkiDroid should use. At the moment: XXX</string>
+  <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
   <string name="language_system">System Language</string>
   <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Apri il mazzo online</string>
@@ -219,6 +219,7 @@
   <string name="card_details_no_count">No count</string>
   <string name="card_details_added">Added</string>
   <string name="card_details_changed">Changed</string>
+  <string name="card_details_tags">Tags</string>
   <string name="card_details_model">Model</string>
   <string name="card_details_card_model">Card model</string>
   <string name="statistics">Statistics</string>
@@ -263,7 +264,7 @@
   <string name="studyoptions_nodeck_title">Nessun mazzo caricato</string>
   <string name="studyoptions_nodeck_message">Nessun mazzo è attualmente caricato. I mazzi di Anki sono archiviati nella directory \"%s\" sulla scheda SD. Questo percorso può essere specificato nelle preferenze (premere \"Menu\ del tuo device\"pulsante e selezionare \"Preferenze\").</string>
   <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
-  <string name="studyoptions_welcome_message">With AnkiDroid, you can learn efficiently large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget it.\nAll information is organized in decks which you can either download from others users (shared decks) or create by your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck over AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
+  <string name="studyoptions_welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\nAll information is organized in decks which you can either download from other users (shared decks) or create on your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck via AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">Impossibile caricare il mazzo</string>
   <string name="studyoptions_deck_not_loaded_message">Il mazzo che è stato selezionato non è un mazzo di Anki valido. Vi preghiamo di usare l\'applicazione desktop Anki per creare un mazzo valido prima di caricarli in Ankidroid.\n\n Intanto, è possibile selezionare un altro mazzo o caricare il mazzo campione con i pulsanti qui sotto.</string>
   <string name="studyoptions_no_external_storage_title">Nessuna scheda di archiviazione esterna disponibile</string>
@@ -398,8 +399,8 @@
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="tts_no_tts">Don\'t speak</string>
-  <string name="statistics_type_title">Chose statistic type</string>
-  <string name="statistics_period_title">Chose report period</string>
+  <string name="statistics_type_title">Choose statistic type</string>
+  <string name="statistics_period_title">Choose report period</string>
   <string name="statistics_period_y_axis">Cards</string>
   <string name="statistics_period_x_axis">Days</string>
   <string name="statistics_period_x_axis_minutes">Minutes</string>
