@@ -90,8 +90,8 @@ public class Deck {
 
     // Card order strings for building SQL statements
     private static final String[] revOrderStrings = { "priority desc, interval desc", "priority desc, interval",
-            "priority desc, combinedDue", "priority desc, factId, ordinal" };
-    private static final String[] newOrderStrings = { "priority desc, due", "priority desc, due",
+            "priority desc, combinedDue", "priority desc, RANDOM()" };
+    private static final String[] newOrderStrings = { "priority desc, RANDOM()", "priority desc, due",
             "priority desc, due desc" };
 
     // BEGIN: SQL table columns
@@ -314,7 +314,7 @@ public class Deck {
             deck.setUtcOffset();
             deck.mCreated = Utils.now();
         }
-        
+
         deck.initVars();
 
         // Upgrade to latest version
@@ -327,11 +327,11 @@ public class Deck {
             deck.rebuildCounts();
             return deck;
         }
-        
+
         if (deck.mNeedUnpack) {
             deck.addIndices();
         }
-        
+
         double oldMod = deck.mModified;
 
         // Ensure necessary indices are available
@@ -395,16 +395,18 @@ public class Deck {
         }
         assert Math.abs(dbMod - oldMod) < 1.0e-9;
         assert deck.mModified == oldMod;
+        // 4.3.2011: deactivated since it's not used anywhere
         // Create a temporary view for random new cards. Randomizing the cards by themselves
         // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
-        try {
-            deck.getDB().getDatabase().execSQL(
-                    "CREATE TEMPORARY VIEW acqCardsRandom AS SELECT * FROM cards " + "WHERE type = " + Card.TYPE_NEW
-                            + " AND isDue = 1 ORDER BY RANDOM()");
-        } catch (SQLException e) {
-            /* Temporary view may still be present if the DB has not been closed */
-            Log.i(AnkiDroidApp.TAG, "Failed to create temporary view: " + e.getMessage());
-        }
+//        try {
+//            deck.getDB().getDatabase().execSQL(
+//                    "CREATE TEMPORARY VIEW acqCardsRandom AS SELECT * FROM cards " + "WHERE type = " + Card.TYPE_NEW
+//                            + " AND isDue = 1 ORDER BY RANDOM()");
+//        } catch (SQLException e) {
+//            /* Temporary view may still be present if the DB has not been closed */
+//            Log.i(AnkiDroidApp.TAG, "Failed to create temporary view: " + e.getMessage());
+//        }
+
         // Initialize Undo
         deck.initUndo();
         return deck;
