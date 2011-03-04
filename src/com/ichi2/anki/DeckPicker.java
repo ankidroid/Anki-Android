@@ -54,7 +54,6 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
@@ -633,7 +632,7 @@ public class DeckPicker extends Activity implements Runnable {
 			return true;
 		case R.id.optimize_deck:
 			deckPath = data.get("filepath");
-			deck = Deck.openDeck(deckPath);
+			deck = Deck.openDeck(deckPath, false);
 	    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, null));
 			return true;
 		case R.id.download_missing_media:
@@ -977,7 +976,7 @@ public class DeckPicker extends Activity implements Runnable {
 					}
 
 					try {
-						deck = Deck.openDeck(path);
+						deck = Deck.openDeck(path, false);
 						version = deck.getVersion();
 					} catch (SQLException e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
@@ -994,7 +993,7 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("msgtype", MSG_UPGRADE_FAILURE);
 						data.putInt("version", version);
 						data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
-						deck.closeDeck();
+						deck.closeDeck(false);
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					} else {
@@ -1007,7 +1006,7 @@ public class DeckPicker extends Activity implements Runnable {
 						int totalCardsCompletionBar = totalRevCards + totalNewCards;
 
 						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
-						deck.closeDeck();
+						deck.closeDeck(false);
 
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_UPGRADE_SUCCESS);

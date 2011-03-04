@@ -321,9 +321,10 @@ public class Deck {
         deck.upgradeDeck();
 
         if (!rebuild) {
-            // Minimal startup
+            // Minimal startup for deckpicker: only counts are needed
             deck.mGlobalStats = Stats.globalStats(deck);
             deck.mDailyStats = Stats.dailyStats(deck);
+            deck.rebuildCounts();
             return deck;
         }
         
