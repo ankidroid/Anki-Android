@@ -1791,11 +1791,9 @@ public class Deck {
     // Rebuild the type cache. Only necessary on upgrade.
     private void rebuildTypes() {
         getDB().getDatabase().execSQL(
-                "UPDATE cards SET " + "type = (CASE " + "WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END), "
-                        + "relativeDelay = (CASE " + "WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END) "
-                        + "WHERE type >= 0");
-        // old-style suspended cards
-        getDB().getDatabase().execSQL("UPDATE cards SET type = type - 3 WHERE priority = -3 AND type >= 0");
+                "UPDATE cards SET " + "relativeDelay = (CASE WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END)");
+        getDB().getDatabase().execSQL(
+                "UPDATE cards SET " + "type = (CASE WHEN type >= 0 THEN relativeDelay ELSE relativeDelay - 3 END)");
     }
 
 

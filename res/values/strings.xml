@@ -364,7 +364,7 @@
 <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
 <string name="studyoptions_night_mode">Night Mode</string>
 
-<string name="menu_open_deck">Open Deck</string>
+<string name="menu_open_deck">All decks</string>
 <string name="menu_sync">Sync</string>
 <string name="menu_download_deck">Download deck</string>
 <string name="menu_download_shared_deck">Shared deck</string>
