@@ -224,6 +224,7 @@
   <string name="card_details_card_model">Modèle de carte</string>
   <string name="statistics">Statistiques</string>
   <string name="loading_deck">Chargement du paquet. Veuillez patienter...</string>
+  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">Pas de connexion Internet</string>
   <string name="currently_downloading">En cours de téléchargement</string>
   <string name="personal_decks">Paquets personnels</string>

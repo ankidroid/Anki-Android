@@ -224,6 +224,7 @@
   <string name="card_details_card_model">Korttimalli</string>
   <string name="statistics">Tilastot</string>
   <string name="loading_deck">Ladataan korttipakkaa. Odota hetki...</string>
+  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">Ei ole internet-yhteyttä</string>
   <string name="currently_downloading">Nyt ladataan</string>
   <string name="personal_decks">Henkilökohtaiset korttipakat</string>

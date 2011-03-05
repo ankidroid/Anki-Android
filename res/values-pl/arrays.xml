@@ -70,7 +70,7 @@
     <item>godzina</item>
     <item>dzień</item>
     <item>miesiąc</item>
-    <item>year</item>
+    <item>rok</item>
   </string-array>
   <string-array name="next_review_p">
     <item>godziny</item>
@@ -79,16 +79,16 @@
     <item>lata</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>za 1 godzinę</item>
+    <item>za 1 dzień</item>
+    <item>za miesiąc</item>
+    <item>za rok</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>za %s godzin</item>
+    <item>za %s dni</item>
+    <item>za %s miesięcy</item>
+    <item>za %s lat</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Nowe karty w kolejności losowej</item>
@@ -114,45 +114,45 @@
     <item>Pokaż źle rozwiązane karty za 3 dni</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
+    <item>Wg. pytania</item>
+    <item>Wg. odpowiedzi</item>
+    <item>Wg. terminu</item>
+    <item>Wg. przerwy</item>
+    <item>Wg. łatwości</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
-    <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>Do przeglądnięcia</item>
+    <item>Kumulatywnie do przeglądnięcia</item>
+    <item>Przerw</item>
+    <item>Powtórek</item>
+    <item>Czasu powtórek</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1 tydzień</item>
+    <item>1 miesiąc</item>
+    <item>3 miesiące</item>
+    <item>6 miesięcy</item>
+    <item>1 rok</item>
   </string-array>
   <string-array name="new_version_features">
-    <item>card browser</item>
-    <item>statistics</item>
-    <item>text-to-speech</item>
-    <item>deck completion bar on deck picker</item>
-    <item>select card model on fact adder</item>
-    <item>new widget</item>
-    <item>better undo/redo behaviour</item>
-    <item>slider controls</item>
-    <item>language selection</item>
-    <item>more languages</item>
-    <item>progress bars in reviewer</item>
-    <item>feedback within AnkiDroid</item>
-    <item>possibility to set cards active/inactive by tag</item>
-    <item>better syncing</item>
-    <item>better error reporter</item>
-    <item>add decks</item>
-    <item>more options</item>
-    <item>lots of fixes for small errors</item>
-    <item>tag support for card editor, card adder and card browser</item>
+    <item>przeglądaj karty</item>
+    <item>statystyki</item>
+    <item>przetwarzanie tekstu na mowę</item>
+    <item>wskaźnik postępu przy wyborze talii</item>
+    <item>wybór modelu przy dodawaniu karty</item>
+    <item>nowy widżet</item>
+    <item>lepsze zachowanie cofnij/ponów</item>
+    <item>kontrolki suwaków</item>
+    <item>wybór języka</item>
+    <item>więcej języków</item>
+    <item>wskaźnik postępu przy powtórkach</item>
+    <item>Zgłaszanie uwag bezpośrednio w AnkiDroid</item>
+    <item>możliwość ustawienia karty aktywne/nieaktywne przez tag</item>
+    <item>lepsza synchronizacja</item>
+    <item>lepsze raportowanie błędów</item>
+    <item>dodawanie talii</item>
+    <item>więcej opcji</item>
+    <item>wiele drobnych poprawek</item>
+    <item>obsługa tagów przy edycji/dodawaniu/przeglądaniu kart</item>
   </string-array>
 </resources>

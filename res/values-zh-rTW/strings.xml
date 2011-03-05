@@ -224,6 +224,7 @@
   <string name="card_details_card_model">Card model</string>
   <string name="statistics">統計</string>
   <string name="loading_deck">正在載入牌組。請稍等…</string>
+  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">沒有網路連線</string>
   <string name="currently_downloading">目前下載中</string>
   <string name="personal_decks">個人牌組</string>
@@ -283,7 +284,7 @@
   <string name="menu_deck_properties">牌組內容屬性</string>
   <string name="menu_add_card">增加卡片</string>
   <string name="menu_about">關於</string>
-  <string name="menu_remove_card">Remove Card</string>
+  <string name="menu_remove_card">Dismiss Card</string>
   <string name="menu_suspend_card">暫停卡片</string>
   <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">編輯卡片</string>

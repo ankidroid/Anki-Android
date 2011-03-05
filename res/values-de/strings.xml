@@ -196,7 +196,7 @@
   <string name="card_browser_unsuspend_card">Aussetzen aufheben</string>
   <string name="card_browser_mark_card">Karte markieren</string>
   <string name="card_browser_unmark_card">Markierung aufheben</string>
-  <string name="delete_card_title">Karte löschen</string>
+  <string name="delete_card_title">Löschen</string>
   <string name="delete_card_message">Diese Karte wirklich löschen?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Markierte anzeigen</string>
   <string name="card_browser_show_suspended">Ausgesetzte anzeigen</string>
@@ -224,6 +224,7 @@
   <string name="card_details_card_model">Kartenvorlage</string>
   <string name="statistics">Lernstatistik</string>
   <string name="loading_deck">Stapel wird geladen.\nBitte warten...</string>
+  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">Sie sind momentan offline.</string>
   <string name="currently_downloading">Wird gerade heruntergeladen</string>
   <string name="personal_decks">Eigene Stapel</string>
@@ -284,7 +285,7 @@
   <string name="menu_add_card">Karten hinzufügen</string>
   <string name="menu_about">Über</string>
   <string name="menu_remove_card">Karte entfernen</string>
-  <string name="menu_suspend_card">Karte aussetzen</string>
+  <string name="menu_suspend_card">Dauerhaft aussetzen</string>
   <string name="menu_bury_card">Vorläufig aussetzen</string>
   <string name="menu_edit_card">Karte bearbeiten</string>
   <string name="menu_search">In %1$s nachschlagen</string>
