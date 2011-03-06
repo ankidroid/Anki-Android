@@ -41,6 +41,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class AnkiDroidWidget extends AppWidgetProvider {
 
@@ -153,41 +154,52 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 Deck.openDeck(currentDeck.getDeckPath());
             }
 
+            // Build a list of decks with due cards.
+            // Also compute the total number of cards due.
+            ArrayList<DeckInformation> dueDecks = new ArrayList<DeckInformation>();
             int totalDue = 0;
-
-            // Limit the number of decks shown
-            int nbDecks = decks.size();
-
-            if (nbDecks == 0) {
-                updateViews.setTextViewText(R.id.anki_droid_name, "");
-                updateViews.setTextViewText(R.id.anki_droid_status, "");
-            } else {
-                DeckInformation deck = decks.get(0);
-                updateViews.setTextViewText(R.id.anki_droid_name,
-                    deck.mDeckName);
-                updateViews.setTextViewText(R.id.anki_droid_status,
-                    deck.getDeckStatus());
-            }
-
-            int hasDueCount = 0;
-            for (int i = 0; i < nbDecks; i++) {
+            for (int i = 0; i < decks.size(); i++) {
                 DeckInformation deck = decks.get(i);
                 if (deck.mDueCards > 0) {
-                  hasDueCount++;
                   totalDue += deck.mDueCards;
+                  dueDecks.add(deck);
                 }
             }
 
             if (totalDue > 0) {
                 Resources resources = getResources();
                 String decksText = resources.getQuantityString(
-                        R.plurals.widget_decks, hasDueCount, hasDueCount);
+                        R.plurals.widget_decks, dueDecks.size(), dueDecks.size());
                 String text = resources.getQuantityString(
                         R.plurals.widget_cards_in_decks_due, totalDue, totalDue, decksText);
                 updateViews.setTextViewText(R.id.anki_droid_title, text);
+                // Show the name and info from the first due deck.
+                // TODO(flerda): Let the arrows control the current due deck.
+                int currentDueDeck = 0;
+                DeckInformation deckInformation = dueDecks.get(currentDueDeck);
+                updateViews.setTextViewText(R.id.anki_droid_name,
+                    deckInformation.mDeckName);
+                updateViews.setTextViewText(R.id.anki_droid_status,
+                    deckInformation.getDeckStatus());
+                // Enable or disable the prev and next buttons.
+                if (currentDueDeck > 0) {
+                    updateViews.setImageViewResource(R.id.anki_droid_prev, R.drawable.widget_left_arrow);
+                    updateViews.setOnClickPendingIntent(R.id.anki_droid_prev, getPrevPendingIntent(context));
+                } else {
+                    updateViews.setImageViewResource(R.id.anki_droid_prev, R.drawable.widget_left_arrow_disabled);
+                }
+                if (currentDueDeck < dueDecks.size() - 1) {
+                    updateViews.setImageViewResource(R.id.anki_droid_next, R.drawable.widget_right_arrow);
+                    updateViews.setOnClickPendingIntent(R.id.anki_droid_next, getNextPendingIntent(context));
+                } else {
+                    updateViews.setImageViewResource(R.id.anki_droid_next, R.drawable.widget_right_arrow_disabled);
+                }
             } else {
-              updateViews.setTextViewText(R.id.anki_droid_title,
-                  context.getString(R.string.widget_no_cards_due));
+                // No card is currently due.
+                updateViews.setTextViewText(R.id.anki_droid_title,
+                    context.getString(R.string.widget_no_cards_due));
+                updateViews.setTextViewText(R.id.anki_droid_name, "");
+                updateViews.setTextViewText(R.id.anki_droid_status, "");
             }
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
@@ -226,7 +238,6 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             return updateViews;
         }
 
-
 //        @SuppressWarnings("unused")
 //        private ArrayList<DeckInformation> mockFetchDeckInformation() {
 //            final int maxDecks = 10;
@@ -243,6 +254,27 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 //            return information;
 //        }
 
+        /**
+         * Returns a pending intent that updates the widget to show the next deck.
+         */
+        private PendingIntent getNextPendingIntent(Context context) {
+            // TODO(flerda): Use the right intent.
+            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
+            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
+            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            return PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
+        }
+
+        /**
+         * Returns a pending intent that updates the widget to show the previous deck.
+         */
+        private PendingIntent getPrevPendingIntent(Context context) {
+            // TODO(flerda): Use the right intent.
+            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
+            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
+            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            return PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
+        }
 
         private ArrayList<DeckInformation> fetchDeckInformation() {
             Log.i(AnkiDroidApp.TAG, "fetchDeckInformation");
