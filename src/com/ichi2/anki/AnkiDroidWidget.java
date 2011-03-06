@@ -69,6 +69,11 @@ public class AnkiDroidWidget extends AppWidgetProvider {
          */
         private int currentDueDeck = 0;
 
+        /** The cached information about the decks with due cards. */
+        private List<DeckInformation> dueDecks;
+        /** The cached number of total due cards. */
+        private int dueCardsCount;
+
         // Simple class to hold the deck information for the widget
         private class DeckInformation {
 
@@ -123,28 +128,33 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         public void onStart(Intent intent, int startId) {
             Log.i(AnkiDroidApp.TAG, "OnStart");
 
+            boolean updateDueDecksNow = true;
             if (intent != null) {
                 // Bound checks will be done when updating the widget below.
                 if (ACTION_NEXT.equals(intent.getAction())) {
                     currentDueDeck++;
+                    // Do not update the due decks on next action.
+                    // This causes latency.
+                    updateDueDecksNow = false;
                 } else if (ACTION_PREV.equals(intent.getAction())) {
                     currentDueDeck--;
+                    // Do not update the due decks on prev action.
+                    // This causes latency.
+                    updateDueDecksNow = false;
                 }
             }
-            RemoteViews updateViews = buildUpdate(this);
+            RemoteViews updateViews = buildUpdate(this, updateDueDecksNow);
 
             ComponentName thisWidget = new ComponentName(this, AnkiDroidWidget.class);
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             manager.updateAppWidget(thisWidget, updateViews);
         }
 
-
-        private RemoteViews buildUpdate(Context context) {
+        private RemoteViews buildUpdate(Context context, boolean updateDueDecksNow) {
             Log.i(AnkiDroidApp.TAG, "buildUpdate");
 
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
-            Deck currentDeck = AnkiDroidApp.deck();
 
             // Add a click listener to open Anki from the icon.
             // This should be always there, whether there are due cards or not.
@@ -164,37 +174,19 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 return updateViews;
             }
 
-            if (currentDeck != null) {
-                // Close the current deck, otherwise we'll have problems
-                currentDeck.closeDeck();
+            // If we do not have a cached version, always update.
+            if (dueDecks == null || updateDueDecksNow) {
+                // Build a list of decks with due cards.
+                // Also compute the total number of cards due.
+                updateDueDecks();
             }
 
-            // Fetch the deck information, sorted by due cards
-            ArrayList<DeckInformation> decks = fetchDeckInformation();
-
-            if (currentDeck != null) {
-                AnkiDroidApp.setDeck(currentDeck);
-                Deck.openDeck(currentDeck.getDeckPath());
-            }
-
-            // Build a list of decks with due cards.
-            // Also compute the total number of cards due.
-            ArrayList<DeckInformation> dueDecks = new ArrayList<DeckInformation>();
-            int totalDue = 0;
-            for (int i = 0; i < decks.size(); i++) {
-                DeckInformation deck = decks.get(i);
-                if (deck.mDueCards > 0) {
-                  totalDue += deck.mDueCards;
-                  dueDecks.add(deck);
-                }
-            }
-
-            if (totalDue > 0) {
+            if (dueCardsCount > 0) {
                 Resources resources = getResources();
                 String decksText = resources.getQuantityString(
                         R.plurals.widget_decks, dueDecks.size(), dueDecks.size());
                 String text = resources.getQuantityString(
-                        R.plurals.widget_cards_in_decks_due, totalDue, totalDue, decksText);
+                        R.plurals.widget_cards_in_decks_due, dueCardsCount, dueCardsCount, decksText);
                 updateViews.setTextViewText(R.id.anki_droid_title, text);
                 // If the current due deck is out of bound, go back to the first one.
                 if (currentDueDeck < 0 || currentDueDeck > dueDecks.size() - 1) {
@@ -232,14 +224,14 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             int minimumCardsDueForNotification = Integer.parseInt(preferences.getString(
                     "minimumCardsDueForNotification", "25"));
 
-            if (totalDue >= minimumCardsDueForNotification) {
+            if (dueCardsCount >= minimumCardsDueForNotification) {
                 // Raise a notification
                 String ns = Context.NOTIFICATION_SERVICE;
                 NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
                 int icon = R.drawable.anki;
                 CharSequence tickerText = String.format(
-                        getString(R.string.widget_minimum_cards_due_notification_ticker_text), totalDue);
+                        getString(R.string.widget_minimum_cards_due_notification_ticker_text), dueCardsCount);
                 long when = System.currentTimeMillis();
 
                 Notification notification = new Notification(icon, tickerText, when);
@@ -261,6 +253,37 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
 
             return updateViews;
+        }
+
+
+        private void updateDueDecks() {
+            Deck currentDeck = AnkiDroidApp.deck();
+            if (currentDeck != null) {
+                // Close the current deck, otherwise we'll have problems
+                currentDeck.closeDeck();
+            }
+
+            // Fetch the deck information, sorted by due cards
+            ArrayList<DeckInformation> decks = fetchDeckInformation();
+
+            if (currentDeck != null) {
+                AnkiDroidApp.setDeck(currentDeck);
+                Deck.openDeck(currentDeck.getDeckPath());
+            }
+
+            if (dueDecks == null) {
+                dueDecks = new ArrayList<DeckInformation>();
+            } else {
+                dueDecks.clear();
+            }
+            dueCardsCount = 0;
+            for (int i = 0; i < decks.size(); i++) {
+                DeckInformation deck = decks.get(i);
+                if (deck.mDueCards > 0) {
+                  dueCardsCount += deck.mDueCards;
+                  dueDecks.add(deck);
+                }
+            }
         }
 
 //        @SuppressWarnings("unused")
