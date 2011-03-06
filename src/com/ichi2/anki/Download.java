@@ -18,6 +18,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class Download extends HashMap<String, Object> implements Parcelable {
 
@@ -33,6 +34,8 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
     // Download's title
     private String mTitle;
+    // Download's filename
+    private String mFilename;
     // Download URL
     private String mUrl;
     // Size of download in bytes
@@ -49,20 +52,11 @@ public class Download extends HashMap<String, Object> implements Parcelable {
         mSize = -1;
         mDownloaded = 0;
         mStatus = STATUS_STARTED;
+        mFilename = mTitle.replaceAll("[^A-Za-z0-9 ()\\-]", "");
+        if (mFilename.length() > 40) {
+            mFilename = mFilename.substring(0, 40);
+        }
     }
-
-
-    // XXX Unused
-//    public String getUrl() {
-//        return mUrl;
-//    }
-
-
-    // XXX Unused
-//    public void setUrl(String url) {
-//        mUrl = url;
-//        put("filename", url.toString());
-//    }
 
 
     public long getSize() {
@@ -72,30 +66,6 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
     public void setSize(long size) {
         mSize = size;
-        
-        // TODO Remove this code...
-//        float sizeToShow = size;
-//        int divs = 0;
-//        while (sizeToShow > 1000) {
-//            sizeToShow = sizeToShow / 1000;
-//            divs++;
-//        }
-//        DecimalFormat dec = new DecimalFormat("#.##");
-//        switch (divs) {
-//            case 0:
-//                put("size", dec.format(sizeToShow) + "B");
-//                break;
-//            case 1:
-//                put("size", dec.format(sizeToShow) + "KB");
-//                break;
-//            case 2:
-//                put("size", dec.format(sizeToShow) + "MB");
-//                break;
-//            case 3:
-//                put("size", dec.format(sizeToShow) + "GB");
-//                break;
-//        }
-
     }
 
 
@@ -106,29 +76,6 @@ public class Download extends HashMap<String, Object> implements Parcelable {
 
     public void setDownloaded(long downloaded) {
         mDownloaded = downloaded;
-
-        // TODO Remove this code...
-//        float downloadedToShow = downloaded;
-//        int divs = 0;
-//        while (downloadedToShow > 1000) {
-//            downloadedToShow = downloadedToShow / 1000;
-//            divs++;
-//        }
-//        DecimalFormat dec = new DecimalFormat("#.##");
-//        switch (divs) {
-//            case 0:
-//                put("downloaded", dec.format(downloadedToShow) + "B");
-//                break;
-//            case 1:
-//                put("downloaded", dec.format(downloadedToShow) + "KB");
-//                break;
-//            case 2:
-//                put("downloaded", dec.format(downloadedToShow) + "MB");
-//                break;
-//            case 3:
-//                put("downloaded", dec.format(downloadedToShow) + "GB");
-//                break;
-//        }
     }
 
 
@@ -166,9 +113,15 @@ public class Download extends HashMap<String, Object> implements Parcelable {
         this.remove(mTitle);
         this.put(title, true);
         mTitle = title;
+        mFilename = title;
     }
 
+    
+    public String getFilename() {
+        return mFilename;
+    }
 
+    
     /********************************************************************
      * Parcel methods *
      ********************************************************************/

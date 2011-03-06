@@ -208,7 +208,7 @@ public class DownloadManagerService extends Service {
                     SharedDeckDownload download = new SharedDeckDownload(title);
 
                     SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
-                    String pausedPref = "paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
+                    String pausedPref = "paused:" + mDestination + "/tmp/" + download.getFilename() + ".anki.updating";
                     if (pref.getBoolean(pausedPref, false)) {
                         download.setStatus(SharedDeckDownload.STATUS_PAUSED);
                     } else {
@@ -325,9 +325,6 @@ public class DownloadManagerService extends Service {
             try {
                 zipInputStream = new ZipInputStream(new FileInputStream(new File(zipFilename)));
 
-                title = title.replace("^", "");
-                title = title.substring(0, java.lang.Math.min(title.length(), 40));
-
                 if (new File(mDestination + "/" + title + ".anki").exists()) {
                     title += System.currentTimeMillis();
                 }
@@ -389,7 +386,7 @@ public class DownloadManagerService extends Service {
     /**
      * Show a notification informing the user when a deck is ready to be used
      */
-    private void showNotification(String deckTitle) {
+    private void showNotification(String deckTitle, String deckFilename) {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Resources res = getResources();
 
@@ -397,7 +394,7 @@ public class DownloadManagerService extends Service {
         Notification notification = new Notification(R.drawable.anki, res.getString(R.string.download_finished),
                 System.currentTimeMillis());
 
-        Intent loadDeckIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mDestination + "/" + deckTitle + ".anki"),
+        Intent loadDeckIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mDestination + "/" + deckFilename + ".anki"),
                 DownloadManagerService.this, StudyOptions.class);
         // The PendingIntent to launch our activity if the user selects this notification
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, loadDeckIntent, 0);
@@ -645,7 +642,7 @@ public class DownloadManagerService extends Service {
                 }
 
                 // Open file
-                file = new RandomAccessFile(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp", "rw");
+                file = new RandomAccessFile(mDestination + "/tmp/" + download.getFilename() + ".anki.tmp", "rw");
                 // FIXME: Uncomment next line when the connection is fixed on AnkiOnline (= when the connection only
                 // returns the bytes specified on the range property)
                 // file.seek(download.getDownloaded());
@@ -683,14 +680,14 @@ public class DownloadManagerService extends Service {
                 if (download.getStatus() == Download.STATUS_DOWNLOADING) {
                     // Change status to complete if this point was reached because downloading has finished
                     download.setStatus(Download.STATUS_COMPLETE);
-                    new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").renameTo(new File(mDestination
-                            + "/" + download.getTitle() + ".anki"));
+                    new File(mDestination + "/tmp/" + download.getFilename() + ".anki.tmp").renameTo(new File(mDestination
+                            + "/" + download.getFilename() + ".anki"));
                     long finishTime = System.currentTimeMillis();
                     Log.i(AnkiDroidApp.TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
                     Log.i(AnkiDroidApp.TAG, "Downloaded = " + download.getDownloaded());
                 } else if (download.getStatus() == Download.STATUS_CANCELLED) {
                     // Cancelled download, clean up
-                    new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").delete();
+                    new File(mDestination + "/tmp/" + download.getFilename() + ".anki.tmp").delete();
                     Log.i(AnkiDroidApp.TAG, "Download cancelled.");
                 }
                 publishProgress();
@@ -738,11 +735,11 @@ public class DownloadManagerService extends Service {
         protected void onPostExecute(Download download) {
             Log.i(AnkiDroidApp.TAG, "on post execute");
             if (download.getStatus() == Download.STATUS_COMPLETE) {
-                showNotification(download.getTitle());
+                showNotification(download.getTitle(), download.getFilename());
             } else if (download.getStatus() == Download.STATUS_ERROR) {
                 // Error - Clean up
                 Log.i(AnkiDroidApp.TAG, "deleting file");
-                new File(mDestination + "/tmp/" + download.getTitle() + ".anki.tmp").delete();
+                new File(mDestination + "/tmp/" + download.getFilename() + ".anki.tmp").delete();
                 Log.e(AnkiDroidApp.TAG, "Error while downloading personal deck.");
             }
             mPersonalDeckDownloads.remove(download);
@@ -807,7 +804,7 @@ public class DownloadManagerService extends Service {
                 }
 
                 // Open file
-                file = new RandomAccessFile(mDestination + "/tmp/" + download.getTitle() + "." + download.getId()
+                file = new RandomAccessFile(mDestination + "/tmp/" + download.getFilename() + "." + download.getId()
                         + ".shared.zip.tmp", "rw");
                 // FIXME: Uncomment next line when the connection is fixed on AnkiOnline (= when the connection only
                 // returns the bytes specified on the range property)
@@ -839,14 +836,14 @@ public class DownloadManagerService extends Service {
                 if (download.getStatus() == Download.STATUS_DOWNLOADING) {
                     // Change status to complete if this point was reached because downloading has finished
                     download.setStatus(Download.STATUS_COMPLETE);
-                    new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId() + ".shared.zip.tmp")
-                            .renameTo(new File(mDestination + "/tmp/" + download.getTitle() + ".zip"));
+                    new File(mDestination + "/tmp/" + download.getFilename() + "." + download.getId() + ".shared.zip.tmp")
+                            .renameTo(new File(mDestination + "/tmp/" + download.getFilename() + ".zip"));
                     long finishTime = System.currentTimeMillis();
                     Log.i(AnkiDroidApp.TAG, "Finished in " + ((finishTime - startTime) / 1000) + " seconds!");
                     Log.i(AnkiDroidApp.TAG, "Downloaded = " + download.getDownloaded());
                 } else if (download.getStatus() == Download.STATUS_CANCELLED) {
                     // Cancelled download, clean up
-                    new File(mDestination + "/tmp/" + download.getTitle() + "." + download.getId()
+                    new File(mDestination + "/tmp/" + download.getFilename() + "." + download.getId()
                             + ".shared.zip.tmp").delete();
                     Log.i(AnkiDroidApp.TAG, "Download cancelled.");
                 }
@@ -892,14 +889,14 @@ public class DownloadManagerService extends Service {
                 notifySharedDeckObservers();
 
                 // Unzip deck and media
-                String unzippedDeckName = unzipSharedDeckFile(mDestination + "/tmp/" + download.getTitle() + ".zip",
-                        download.getTitle());
+                String unzippedDeckName = unzipSharedDeckFile(mDestination + "/tmp/" + download.getFilename() + ".zip",
+                        download.getFilename());
                 download.setTitle(unzippedDeckName);
 
                 // Update all cards in deck
                 SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
                 Editor editor = pref.edit();
-                editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
+                editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getFilename() + ".anki.updating", 0);
                 editor.commit();
 
                 new UpdateDeckTask().execute(new Payload(new Object[] { download }));
@@ -948,7 +945,7 @@ public class DownloadManagerService extends Service {
                 // deck.updateAllCards();
                 SharedDeckDownload download = (SharedDeckDownload) args[0].data[0];
                 SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
-                String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle()
+                String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getFilename()
                         + ".anki.updating";
                 long totalCards = deck.retrieveCardCount();
                 download.setNumTotalCards((int) totalCards);
@@ -978,11 +975,11 @@ public class DownloadManagerService extends Service {
                     data.success = true;
                 } else if (download.getStatus() == SharedDeckDownload.STATUS_PAUSED) {
                     Editor editor = pref.edit();
-                    String pausedPref = "paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
+                    String pausedPref = "paused:" + mDestination + "/tmp/" + download.getFilename() + ".anki.updating";
                     editor.putBoolean(pausedPref, true);
                     editor.commit();
                     data.success = false;
-                    Log.i(AnkiDroidApp.TAG, "pausing deck " + download.getTitle());
+                    Log.i(AnkiDroidApp.TAG, "pausing deck " + download.getFilename());
                 } else if (download.getStatus() == SharedDeckDownload.STATUS_CANCELLED) {
                     data.success = false;
                 }
@@ -1017,7 +1014,7 @@ public class DownloadManagerService extends Service {
         private Payload doInBackgroundLoadDeck(Payload... params) {
             Payload data = params[0];
             SharedDeckDownload download = (SharedDeckDownload) data.data[0];
-            String deckFilename = mDestination + "/tmp/" + download.getTitle() + ".anki.updating";
+            String deckFilename = mDestination + "/tmp/" + download.getFilename() + ".anki.updating";
             Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
             Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
@@ -1066,25 +1063,25 @@ public class DownloadManagerService extends Service {
             SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
             Editor editor = pref.edit();
 
-            Log.i(AnkiDroidApp.TAG, "Finished deck " + download.getTitle() + " " + result.success);
+            Log.i(AnkiDroidApp.TAG, "Finished deck " + download.getFilename() + " " + result.success);
             if (result.success) {
                 // Put updated cards to 0
                 // TODO: Why do we need to zero the updated cards?
-                editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating", 0);
+                editor.putLong("numUpdatedCards:" + mDestination + "/tmp/" + download.getFilename() + ".anki.updating", 0);
                 editor.commit();
                 // Move deck and media to the default deck path
-                new File(mDestination + "/tmp/" + download.getTitle() + ".anki.updating").renameTo(new File(
-                        mDestination + "/" + download.getTitle() + ".anki"));
-                new File(mDestination + "/tmp/" + download.getTitle() + ".media/").renameTo(new File(mDestination + "/"
-                        + download.getTitle() + ".media/"));
+                new File(mDestination + "/tmp/" + download.getFilename() + ".anki.updating").renameTo(new File(
+                        mDestination + "/" + download.getFilename() + ".anki"));
+                new File(mDestination + "/tmp/" + download.getFilename() + ".media/").renameTo(new File(mDestination + "/"
+                        + download.getFilename() + ".media/"));
                 mSharedDeckDownloads.remove(download);
-                showNotification(download.getTitle());
+                showNotification(download.getTitle(), download.getFilename());
             } else {
                 // If paused do nothing, if cancelled clean up
                 if (download.getStatus() == Download.STATUS_CANCELLED) {
                     try {
-                        new File(mDestination + "/tmp/" + download.getTitle() + ".anki.updating").delete();
-                        File mediaFolder = new File(mDestination + "/tmp/" + download.getTitle() + ".media/");
+                        new File(mDestination + "/tmp/" + download.getFilename() + ".anki.updating").delete();
+                        File mediaFolder = new File(mDestination + "/tmp/" + download.getFilename() + ".media/");
                         if (mediaFolder != null && mediaFolder.listFiles() != null) {
                             for (File f : mediaFolder.listFiles()) {
                                 f.delete();
@@ -1095,8 +1092,8 @@ public class DownloadManagerService extends Service {
                         Log.e(AnkiDroidApp.TAG, "SecurityException = " + e.getMessage());
                         e.printStackTrace();
                     }
-                    editor.remove("numUpdatedCards:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating");
-                    editor.remove("paused:" + mDestination + "/tmp/" + download.getTitle() + ".anki.updating");
+                    editor.remove("numUpdatedCards:" + mDestination + "/tmp/" + download.getFilename() + ".anki.updating");
+                    editor.remove("paused:" + mDestination + "/tmp/" + download.getFilename() + ".anki.updating");
                     editor.commit();
                     mSharedDeckDownloads.remove(download);
                 }

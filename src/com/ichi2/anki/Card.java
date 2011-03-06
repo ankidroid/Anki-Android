@@ -534,7 +534,7 @@ public class Card {
                             + "successive, averageTime, reviewTime, youngEase0, youngEase1, "
                             + "youngEase2, youngEase3, youngEase4, matureEase0, matureEase1, "
                             + "matureEase2, matureEase3, matureEase4, yesCount, noCount, "
-                            + "spaceUntil, isDue, type, combinedDue " + "FROM cards " + "WHERE id = " + id, null);
+                            + "spaceUntil, isDue, type, combinedDue, relativeDelay " + "FROM cards " + "WHERE id = " + id, null);
             if (!cursor.moveToFirst()) {
                 Log.w(AnkiDroidApp.TAG, "Card.java (fromDB(id)): No result from query.");
                 return false;
@@ -577,6 +577,7 @@ public class Card {
             mIsDue = cursor.getInt(34);
             mType = cursor.getInt(35);
             mCombinedDue = cursor.getDouble(36);
+            mRelativeDelay = cursor.getDouble(37);
         } finally {
             if (cursor != null) {
                 cursor.close();

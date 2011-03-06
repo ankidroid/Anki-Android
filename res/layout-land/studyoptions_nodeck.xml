@@ -37,6 +37,13 @@
 		android:orientation="vertical"
 		android:layout_alignParentBottom="true"
 		android:layout_marginTop="10dip">
+		<Button
+       		android:layout_height="fill_parent"
+       		android:layout_width="fill_parent"
+         	android:layout_gravity="center"
+			android:gravity="center"
+			android:id="@+id/studyoptions_load_sample_deck"
+			android:text="@string/studyoptions_load_sample_deck" />
 		<LinearLayout
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
@@ -58,12 +65,5 @@
 				android:id="@+id/studyoptions_download_deck"
 				android:text="@string/menu_download_deck" />
 		</LinearLayout>
-		<Button
-       		android:layout_height="fill_parent"
-       		android:layout_width="fill_parent"
-         	android:layout_gravity="center"
-			android:gravity="center"
-			android:id="@+id/studyoptions_load_sample_deck"
-			android:text="@string/studyoptions_load_sample_deck" />
 	</LinearLayout>
 </RelativeLayout>

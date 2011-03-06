@@ -130,8 +130,6 @@ public class Feedback extends Activity {
         Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);
         ProgressBar pbSpinner = (ProgressBar) findViewById(R.id.pbFeedbackSpinner);
 
-        Log.i(AnkiDroidApp.TAG, "refreshing UI");
-
         int numErrors = mErrorReports.size();
         if (numErrors == 0) {
             mLvErrorList.setVisibility(View.GONE);
@@ -213,18 +211,27 @@ public class Feedback extends Activity {
         mLvErrorList = (ListView) findViewById(R.id.lvFeedbackErrorList);
 
         mErrorAdapter = new SimpleAdapter(this, mErrorReports,
-                R.layout.error_item, new String[] {"name", "state"}, new int[] {
-                    R.id.error_item_text, R.id.error_item_progress });
+                R.layout.error_item, new String[] {"name", "state", "result"}, new int[] {
+                    R.id.error_item_text, R.id.error_item_progress, R.id.error_item_status});
         mErrorAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object arg1, String text) {
-                if (view.getId() == R.id.error_item_progress) {
-                    if (text.equals(STATE_UPLOADING)) {
-                        view.setVisibility(View.VISIBLE);
-                    } else {
-                        view.setVisibility(View.GONE);
-                    }
-                    return true;
+                switch(view.getId()) {
+                    case R.id.error_item_progress:
+                        if (text.equals(STATE_UPLOADING)) {
+                            view.setVisibility(View.VISIBLE);
+                        } else {
+                            view.setVisibility(View.GONE);
+                        }
+                        return true;
+                    case R.id.error_item_status:
+                        if (text.length() == 0) {
+                            view.setVisibility(View.GONE);
+                            return true;
+                        } else {
+                            view.setVisibility(View.VISIBLE);
+                            return false;
+                        }
                 }
                 return false;
             }
@@ -286,6 +293,7 @@ public class Feedback extends Activity {
         for (String file : errors) {
             if (file.endsWith(".stacktrace")) {
                 HashMap<String, String> error = new HashMap<String, String>();
+                error.put("filename", file);
                 error.put("name", file);
                 error.put("state", STATE_WAITING);
                 error.put("result", "");
@@ -300,7 +308,7 @@ public class Feedback extends Activity {
             try {
                 String errorState = mErrorReports.get(i).get("state");
                 if (!onlyProcessed || errorState.equals(STATE_SUCCESSFUL)) {
-                    deleteFile(mErrorReports.get(i).get("name"));
+                    deleteFile(mErrorReports.get(i).get("filename"));
                     mErrorReports.remove(i);
                 } else {
                     i++;
@@ -345,6 +353,49 @@ public class Feedback extends Activity {
 
             if (isErrorType(postType)) {
                 mErrorReports.get(errorIndex).put("state", state);
+                if (!state.equals(Feedback.STATE_UPLOADING)) {
+                    int returnCode = (Integer)values[3];
+                    if (returnCode == 200) {
+                        // The result is either: "new" (for first encountered bug), "known" (for existing bugs) or
+                        // ("issue:xxx:<status>" for known and linked)
+                        String result = (String)values[4];
+                        if (result.equalsIgnoreCase("new")) {
+                            mErrorReports.get(errorIndex).put("name", res.getString(R.string.feedback_error_reply_new));
+                        } else if (result.equalsIgnoreCase("known")) {
+                            mErrorReports.get(errorIndex).put("name", res.getString(R.string.feedback_error_reply_known));
+                        } else if (result.startsWith("issue:")) {
+                            String[] resultPieces = result.split(":");
+                            int issue = Integer.parseInt(resultPieces[1]);
+                            String status = "";
+                            if (resultPieces.length > 1) {
+                                if (resultPieces.length > 2) {
+                                    status = resultPieces[2];
+                                }
+                                if (status.length() == 0) {
+                                    mErrorReports.get(errorIndex).put("name",
+                                            res.getString(R.string.feedback_error_reply_issue_unknown, issue));
+                                } else if (status.equalsIgnoreCase("fixed")) {
+                                    mErrorReports.get(errorIndex).put("name",
+                                            res.getString(R.string.feedback_error_reply_issue_fixed_prod, issue));
+                                } else if (status.equalsIgnoreCase("fixedindev")) {
+                                    mErrorReports.get(errorIndex).put("name",
+                                            res.getString(R.string.feedback_error_reply_issue_fixed_dev, issue));
+                                } else {
+                                    mErrorReports.get(errorIndex).put("name",
+                                            res.getString(R.string.feedback_error_reply_issue_status, issue, status));
+                                }
+                            } else {
+                                mErrorReports.get(errorIndex).put("result",
+                                        res.getString(R.string.feedback_error_reply_malformed));
+                            }
+                        } else {
+                            mErrorReports.get(errorIndex).put("result",
+                                    res.getString(R.string.feedback_error_reply_malformed));
+                        }
+                    } else {
+                        mErrorReports.get(errorIndex).put("result", res.getString(R.string.feedback_error_reply_failed));
+                    }
+                }
                 refreshErrorListView();
             } else {
                 if (state.equals(STATE_SUCCESSFUL)) {
@@ -385,7 +436,7 @@ public class Feedback extends Activity {
         
         pairs.add(new BasicNameValuePair("type", "crash-stacktrace"));
         pairs.add(new BasicNameValuePair("groupid", groupId));
-        pairs.add(new BasicNameValuePair("id", String.valueOf(index)));
+        pairs.add(new BasicNameValuePair("index", String.valueOf(index)));
         addTimestamp(pairs);
 
         String singleLine = null;
@@ -442,7 +493,7 @@ public class Feedback extends Activity {
             pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("type", type));
             pairs.add(new BasicNameValuePair("groupid", groupId));
-            pairs.add(new BasicNameValuePair("id", "0"));
+            pairs.add(new BasicNameValuePair("index", "0"));
             pairs.add(new BasicNameValuePair("message", feedback));
             addTimestamp(pairs);
         } else {
@@ -467,6 +518,7 @@ public class Feedback extends Activity {
                     result.success = true;
                     result.returnType = respCode;
                     result.result = Utils.convertStreamToString(response.getEntity().getContent());
+                    Log.i(AnkiDroidApp.TAG, String.format("postFeedback OK: %s", result.result));
                     break;
 
                 default:
@@ -479,11 +531,11 @@ public class Feedback extends Activity {
                     break;
             }
         } catch (ClientProtocolException ex) {
-            Log.e(AnkiDroidApp.TAG, "net1: " + ex.toString());
+            Log.e(AnkiDroidApp.TAG, "ClientProtocolException: " + ex.toString());
             result.success = false;
             result.result = new String(ex.toString());
         } catch (IOException ex) {
-            Log.e(AnkiDroidApp.TAG, "net2: " + ex.toString());
+            Log.e(AnkiDroidApp.TAG, "IOException: " + ex.toString());
             result.success = false;
             result.result = new String(ex.toString());
         }
