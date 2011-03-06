@@ -30,7 +30,7 @@
 	        android:textSize="18dip"
 	        android:textStyle="bold"
 	        android:textColor="#000000"
-	        android:text="Widget Loading"
+	        android:text="@string/widget_loading"
 	        />
 	    <TextView android:id="@+id/anki_droid_name"
 	        android:layout_width="fill_parent" 
