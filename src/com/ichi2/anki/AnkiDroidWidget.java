@@ -53,6 +53,21 @@ public class AnkiDroidWidget extends AppWidgetProvider {
     }
 
     public static class UpdateService extends Service {
+        /** If this action is used when starting the service, it will move to the next due deck. */
+        private static final String ACTION_NEXT = "org.ichi2.anki.AnkiDroidWidget.NEXT";
+        /**
+         * If this action is used when starting the service, it will move to the previous due
+         * deck.
+         */
+        private static final String ACTION_PREV = "org.ichi2.anki.AnkiDroidWidget.PREV";
+
+        /**
+         * The current due deck that is shown in the widget.
+         *
+         * <p>This value is kept around until as long as the service is running and it is shared
+         * by all instances of the widget.
+         */
+        private int currentDueDeck = 0;
 
         // Simple class to hold the deck information for the widget
         private class DeckInformation {
@@ -108,6 +123,14 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         public void onStart(Intent intent, int startId) {
             Log.i(AnkiDroidApp.TAG, "OnStart");
 
+            if (intent != null) {
+                // Bound checks will be done when updating the widget below.
+                if (ACTION_NEXT.equals(intent.getAction())) {
+                    currentDueDeck++;
+                } else if (ACTION_PREV.equals(intent.getAction())) {
+                    currentDueDeck--;
+                }
+            }
             RemoteViews updateViews = buildUpdate(this);
 
             ComponentName thisWidget = new ComponentName(this, AnkiDroidWidget.class);
@@ -173,9 +196,11 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 String text = resources.getQuantityString(
                         R.plurals.widget_cards_in_decks_due, totalDue, totalDue, decksText);
                 updateViews.setTextViewText(R.id.anki_droid_title, text);
-                // Show the name and info from the first due deck.
-                // TODO(flerda): Let the arrows control the current due deck.
-                int currentDueDeck = 0;
+                // If the current due deck is out of bound, go back to the first one.
+                if (currentDueDeck < 0 || currentDueDeck > dueDecks.size() - 1) {
+                    currentDueDeck = 0;
+                }
+                // Show the name and info from the current due deck.
                 DeckInformation deckInformation = dueDecks.get(currentDueDeck);
                 updateViews.setTextViewText(R.id.anki_droid_name,
                     deckInformation.mDeckName);
@@ -258,22 +283,18 @@ public class AnkiDroidWidget extends AppWidgetProvider {
          * Returns a pending intent that updates the widget to show the next deck.
          */
         private PendingIntent getNextPendingIntent(Context context) {
-            // TODO(flerda): Use the right intent.
-            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
-            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            return PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
+            Intent ankiDroidIntent = new Intent(context, UpdateService.class);
+            ankiDroidIntent.setAction(ACTION_NEXT);
+            return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
         /**
          * Returns a pending intent that updates the widget to show the previous deck.
          */
         private PendingIntent getPrevPendingIntent(Context context) {
-            // TODO(flerda): Use the right intent.
-            Intent ankiDroidIntent = new Intent(context, StudyOptions.class);
-            ankiDroidIntent.setAction(Intent.ACTION_MAIN);
-            ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            return PendingIntent.getActivity(context, 0, ankiDroidIntent, 0);
+            Intent ankiDroidIntent = new Intent(context, UpdateService.class);
+            ankiDroidIntent.setAction(ACTION_PREV);
+            return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
         private ArrayList<DeckInformation> fetchDeckInformation() {
