@@ -444,7 +444,9 @@
 <string name="sync_log_facts_to_server_message">%d cards to server</string>
 <string name="sync_log_fact_from_server_message">1 card from server</string>
 <string name="sync_log_facts_from_server_message">%d cards from server</string>
-<string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
+<string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %1$d sec%2$s; unable to sync.</string>
+<string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
+<string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
 <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
 <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
 <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
