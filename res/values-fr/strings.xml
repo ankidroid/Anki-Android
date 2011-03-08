@@ -224,7 +224,6 @@
   <string name="card_details_card_model">Modèle de carte</string>
   <string name="statistics">Statistiques</string>
   <string name="loading_deck">Chargement du paquet. Veuillez patienter...</string>
-  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">Pas de connexion Internet</string>
   <string name="currently_downloading">En cours de téléchargement</string>
   <string name="personal_decks">Paquets personnels</string>
@@ -279,7 +278,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="studyoptions_load_other_deck">Charger un autre paquet</string>
   <string name="studyoptions_load_sample_deck">Charger un paquet d\'exemple</string>
   <string name="studyoptions_night_mode">Mode nuit</string>
-  <string name="menu_open_deck">Ouvrir paquet</string>
+  <string name="menu_open_deck">All decks</string>
   <string name="menu_sync">Synchronisation</string>
   <string name="menu_download_deck">Télécharger le paquet</string>
   <string name="menu_download_shared_deck">Paquet partagé</string>
@@ -350,7 +349,9 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="sync_log_facts_to_server_message">%d éléments au serveur</string>
   <string name="sync_log_fact_from_server_message">1 élément du serveur</string>
   <string name="sync_log_facts_from_server_message">%d éléments du serveur</string>
-  <string name="sync_log_clocks_unsynchronized">L\'heure de votre périphérique est différente de celle du serveur par %d sec, synchronisation impossible.</string>
+  <string name="sync_log_clocks_unsynchronized">L\'heure de votre périphérique est différente de celle du serveur par %1$d sec%2$s, synchronisation impossible.</string>
+  <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
   <string name="sync_log_old_version">Le protocole de synchrnonisation a changé, veuillez mettre à jour AnkiDroid. Voir http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Le paquet a été modifié en local et sur le serveur distante. Ouvrez le paquet et réalisez une synchronisation à partir de ce point pour résoudre le conflit.</string>
   <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
@@ -374,6 +375,14 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
   <string name="feedback_default_text">Please enter your feedback or information about the nature of the error.</string>
+  <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
+  <string name="feedback_error_reply_known">Known issue, pending investigation</string>
+  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
+  <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
+  <string name="feedback_error_reply_issue_fixed_dev">Issue %1$d, fixed but not released yet</string>
+  <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
+  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
+  <string name="feedback_error_reply_failed">Failed to send</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Seuil de notification de widget</string>
   <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised: XXX</string>

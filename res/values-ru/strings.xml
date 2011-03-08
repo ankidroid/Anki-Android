@@ -224,7 +224,6 @@
   <string name="card_details_card_model">Модель карты</string>
   <string name="statistics">Статистика</string>
   <string name="loading_deck">Открытие колоды. Пожалуйста, подождите...</string>
-  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">Нет подключения к Интернету</string>
   <string name="currently_downloading">Загружается</string>
   <string name="personal_decks">Личные колоды</string>
@@ -273,7 +272,7 @@
   <string name="studyoptions_load_other_deck">Открыть другие колоды</string>
   <string name="studyoptions_load_sample_deck">Открыть колоду с примерами</string>
   <string name="studyoptions_night_mode">Ночной режим</string>
-  <string name="menu_open_deck">Открыть колоду</string>
+  <string name="menu_open_deck">Все колоды</string>
   <string name="menu_sync">Синхронизация</string>
   <string name="menu_download_deck">Скачать колоду</string>
   <string name="menu_download_shared_deck">Общедоступная колода</string>
@@ -344,7 +343,9 @@
   <string name="sync_log_facts_to_server_message">%d факт(ов) на сервер</string>
   <string name="sync_log_fact_from_server_message">1 карта с сервера</string>
   <string name="sync_log_facts_from_server_message">%d факт(ов) с сервера</string>
-  <string name="sync_log_clocks_unsynchronized">Время на вашем Android-устройстве отличается на %d секунд от времени сервера, поэтому невозможно синхронизировать.</string>
+  <string name="sync_log_clocks_unsynchronized">Время на вашем Android-устройстве отличается на %1$d секунд от времени сервера%2$s, поэтому невозможно синхронизировать.</string>
+  <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
   <string name="sync_log_old_version">Протокол синхронизации был изменён, пожалуйста, установите последнюю версию AnkiDroid. (См. http://code.google.com/p/ankidroid)</string>
   <string name="sync_log_conflict_resolution_required">У колоды несколько версий. Она была изменена локально и на сервере. Пожалуйста, откройте колоду и вызовете синхронизацию при этом, чтобы избежать конфликтов.</string>
   <string name="sync_log_create_deck_failed">Не удалось создать колоду на сервере: %1$s</string>
@@ -369,6 +370,14 @@
   <string name="feedback_keep_latest">Сохранить последнюю ошибку</string>
   <string name="feedback_clear_all">Очистить все ошибки</string>
   <string name="feedback_default_text">Пожалуйста, введите ваш отзыв или информацию о характере ошибки.</string>
+  <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
+  <string name="feedback_error_reply_known">Known issue, pending investigation</string>
+  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
+  <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
+  <string name="feedback_error_reply_issue_fixed_dev">Issue %1$d, fixed but not released yet</string>
+  <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
+  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
+  <string name="feedback_error_reply_failed">Failed to send</string>
   <string name="widget_pref">Виджет</string>
   <string name="widget_minimum_cards_due">Виджет уведомления</string>
   <string name="widget_minimum_cards_due_summary">Минимальное количество карточек для повтора, при котором всплывет уведомление в зоне уведомлений Вашего аппарата: XXX</string>

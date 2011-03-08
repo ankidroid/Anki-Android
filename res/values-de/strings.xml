@@ -224,7 +224,6 @@
   <string name="card_details_card_model">Kartenvorlage</string>
   <string name="statistics">Lernstatistik</string>
   <string name="loading_deck">Stapel wird geladen.\nBitte warten...</string>
-  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">Sie sind momentan offline.</string>
   <string name="currently_downloading">Wird gerade heruntergeladen</string>
   <string name="personal_decks">Eigene Stapel</string>
@@ -273,7 +272,7 @@
   <string name="studyoptions_load_other_deck">Stapel öffnen</string>
   <string name="studyoptions_load_sample_deck">Beispielstapel öffnen</string>
   <string name="studyoptions_night_mode">Nachtmodus</string>
-  <string name="menu_open_deck">Stapel öffnen</string>
+  <string name="menu_open_deck">Alle Stapel</string>
   <string name="menu_sync">Synchronisieren</string>
   <string name="menu_download_deck">Stapel herunterladen</string>
   <string name="menu_download_shared_deck">Öffentlicher Stapel</string>
@@ -344,7 +343,9 @@
   <string name="sync_log_facts_to_server_message">%d Fakten hochgeladen</string>
   <string name="sync_log_fact_from_server_message">Einen Fakt heruntergeladen</string>
   <string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
-  <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %d Sekunden von der Server-Zeit ab, es kann deshalb nicht synchronisiert werden.</string>
+  <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %1$d Sekunden von der Server-Zeit ab%2$s, es kann deshalb nicht synchronisiert werden.</string>
+  <string name="sync_log_clocks_unsynchronized_tz"> (die Zeitzone des Geräts ist vermutlich falsch eingestellt)</string>
+  <string name="sync_log_clocks_unsynchronized_date"> (vermutlich stimmt das Gerätedatum nicht)</string>
   <string name="sync_log_old_version">Das Synchronisierungsprotokoll wurde verändert. Bitte aktualisieren Sie Ihre AnkiDroid-Version. Besuchen Sie für weitere Informationen http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Der Stapel wurde lokal und auf dem Server geändert. Bitte öffnen Sie den Stapel und synchronisieren von dort, um den Konflikt zu beheben.</string>
   <string name="sync_log_create_deck_failed">Stapel konnte nicht auf dem Server erstellt werden: %1$s</string>
@@ -368,6 +369,14 @@
   <string name="feedback_keep_latest">Letzte Fehler nicht löschen</string>
   <string name="feedback_clear_all">Alle Fehlermeldungen löschen</string>
   <string name="feedback_default_text">Bitte geben Sie hier Ihre Rückmeldung ein und drücken Sie OK, um sie zu senden.</string>
+  <string name="feedback_error_reply_new">Unbekannter Fehler, neu angelegt</string>
+  <string name="feedback_error_reply_known">Bekannter Fehler, Untersuchung ausstehend</string>
+  <string name="feedback_error_reply_issue_unknown">Fehler %1$d, unbekannter Status</string>
+  <string name="feedback_error_reply_issue_status">Fehler %1$d, Status: %2$s</string>
+  <string name="feedback_error_reply_issue_fixed_dev">Fehler %1$d, behoben, ist in der nächsten Version enthalten</string>
+  <string name="feedback_error_reply_issue_fixed_prod">Fehler %1$d, in der neuesten Version behoben</string>
+  <string name="feedback_error_reply_malformed">Archivierter Fehler, keine Antwort</string>
+  <string name="feedback_error_reply_failed">Senden fehlgeschlagen</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Benachrichtigungsschwelle</string>
   <string name="widget_minimum_cards_due_summary">Die Mindestanzahl von Karten, bei der eine Benachrichtigung ausgelöst wird: XXX</string>

@@ -224,7 +224,6 @@
   <string name="card_details_card_model">Card model</string>
   <string name="statistics">統計</string>
   <string name="loading_deck">正在載入牌組。請稍等…</string>
-  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">沒有網路連線</string>
   <string name="currently_downloading">目前下載中</string>
   <string name="personal_decks">個人牌組</string>
@@ -273,7 +272,7 @@
   <string name="studyoptions_load_other_deck">載入其他牌組</string>
   <string name="studyoptions_load_sample_deck">載入示範牌組</string>
   <string name="studyoptions_night_mode">夜間模式</string>
-  <string name="menu_open_deck">開啟牌組</string>
+  <string name="menu_open_deck">All decks</string>
   <string name="menu_sync">同步化</string>
   <string name="menu_download_deck">下載牌組</string>
   <string name="menu_download_shared_deck">共享牌組</string>
@@ -344,7 +343,9 @@
   <string name="sync_log_facts_to_server_message">%d cards to server</string>
   <string name="sync_log_fact_from_server_message">1 card from server</string>
   <string name="sync_log_facts_from_server_message">%d cards from server</string>
-  <string name="sync_log_clocks_unsynchronized">手機的時間和伺服器時間相差%d秒，無法同步。</string>
+  <string name="sync_log_clocks_unsynchronized">手機的時間和伺服器時間相差%1$d秒%2$s，無法同步。</string>
+  <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
   <string name="sync_log_old_version">同步協定已更改，請升級到最新版的AnkiDroid。請參閱 http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">此牌組在本地端和伺服器端都被修改過。請打開此牌組並執行同步化，化解衝突情形。</string>
   <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
@@ -368,6 +369,14 @@
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
   <string name="feedback_default_text">Please enter your feedback or information about the nature of the error.</string>
+  <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
+  <string name="feedback_error_reply_known">Known issue, pending investigation</string>
+  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
+  <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
+  <string name="feedback_error_reply_issue_fixed_dev">Issue %1$d, fixed but not released yet</string>
+  <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
+  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
+  <string name="feedback_error_reply_failed">Failed to send</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Widget通知標準</string>
   <string name="widget_minimum_cards_due_summary">有多少累積該複習的卡片時要顯示通知：XXX</string>
