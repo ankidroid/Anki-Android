@@ -60,6 +60,13 @@ public class AnkiDroidWidget extends AppWidgetProvider {
          * deck.
          */
         private static final String ACTION_PREV = "org.ichi2.anki.AnkiDroidWidget.PREV";
+        /**
+         * When received, this action is ignored by the service.
+         * <p>
+         * It is used to associate with elements that at some point need to have a pending intent
+         * associated with them, but want to clear it off afterwards.
+         */
+        private static final String ACTION_IGNORE = "org.ichi2.anki.AnkiDroidWidget.IGNORE";
 
         /**
          * The current due deck that is shown in the widget.
