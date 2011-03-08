@@ -603,7 +603,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             if (error.containsKey("state") && error.get("state").equals(Feedback.STATE_WAITING)) {
                 postType = Feedback.TYPE_STACKTRACE; 
                 publishProgress(postType, i, Feedback.STATE_UPLOADING);
-                Payload reply = Feedback.postFeedback(errorUrl, postType, error.get("name"), groupId, i, app);
+                Payload reply = Feedback.postFeedback(errorUrl, postType, error.get("filename"), groupId, i, app);
                 if (reply.success) {
                     publishProgress(postType, i, Feedback.STATE_SUCCESSFUL, reply.returnType, reply.result);
                 } else {
@@ -634,7 +634,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         String syncName = deck.getDeckName();
                 
         data.success = false;
-        data.data = new Integer[] {0, 0, 0};
+        data.data = new Object[] {0, 0, 0};
         if (!deck.hasKey("mediaURL")) {
             data.success = true;
             return data;
@@ -723,7 +723,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         missing++;
                     } else {
                         data.success = false;
-                        data.data[0] = file;
+                        data.data = new Object[] {file};
                         return data;
                     }
                 }
@@ -738,7 +738,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     missing++;
                 } else {
                     data.success = false;
-                    data.data[0] = file;
+                    data.data = new Object[] {file};
                     return data;
                 }
             } catch (IOException e) {
@@ -749,7 +749,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     missing++;
                 } else {
                     data.success = false;
-                    data.data[0] = file;
+                    data.data = new Object[] {file};
                     return data;
                 }
             } finally {

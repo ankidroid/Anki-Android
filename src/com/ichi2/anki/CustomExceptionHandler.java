@@ -92,7 +92,6 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
             mInformation.put("VersionName", pi.versionName); // Version
             mInformation.put("PackageName", pi.packageName); // Package name
-            mInformation.put("PhoneModel", android.os.Build.MODEL); // Device model
             mInformation.put("AndroidVersion", android.os.Build.VERSION.RELEASE); // Android version
             mInformation.put("Board", android.os.Build.BOARD);
             mInformation.put("Brand", android.os.Build.BRAND);
@@ -147,7 +146,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             reportInformation.append(String.format("%s=%s\n", key.toLowerCase(), value));
         }
 
-        reportInformation.append(String.format("stacktrace="));
+        reportInformation.append("stacktrace=\nBegin Stacktrace\n");
 
         // Stack trace
         final Writer result = new StringWriter();
@@ -155,7 +154,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         e.printStackTrace(printWriter);
         reportInformation.append(String.format("%s\n", result.toString()));
 
-        reportInformation.append(String.format("End Stacktrace\n\nBegin Inner exceptions\n\n"));
+        reportInformation.append("End Stacktrace\n\nBegin Inner exceptions\n");
 
         // Cause, inner exceptions
         Throwable cause = e.getCause();
@@ -164,6 +163,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             reportInformation.append(String.format("%s\n", result.toString()));
             cause = cause.getCause();
         }
+        reportInformation.append("End Inner exceptions");
 
         printWriter.close();
 

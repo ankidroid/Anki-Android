@@ -33,10 +33,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -1590,7 +1592,6 @@ public class SyncClient {
             review.put(3, (double)cursor.getDouble(3));
             // ease
             review.put(4, (int)cursor.getInt(4));
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 1: %s", review.toString()));
             // delay
             delay = cursor.getDouble(5);
             Number num = (Number)(new Double(delay));
