@@ -3252,7 +3252,7 @@ public class Deck {
             }
         } catch (SQLException e) {
             Log.e(AnkiDroidApp.TAG, "getAllCards: " + e.toString());
-            throw new RuntimeException(e);
+            return null;
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();

@@ -588,18 +588,39 @@ public class CardBrowser extends Activity {
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mAllCards.clear();
             ArrayList<String[]> allCards = values[0].getAllCards();
-
-            for (String[] item : allCards) {
-                HashMap<String, String> data = new HashMap<String, String>();
-                data.put("id", item[0]);
-                data.put("question",  item[1]);
-                data.put("answer",  item[2]);
-                data.put("marSus", item[3]);
-                data.put("tags", item[4]);
-                mAllCards.add(data);
+            if (allCards == null) {
+                Resources res = getResources();
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardBrowser.this);
+                builder.setTitle(res.getString(R.string.error));
+                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.setMessage(res.getString(R.string.card_browser_cardloading_error));
+                builder.setPositiveButton(res.getString(R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CardBrowser.this.finish();
+                            }
+                        });
+                builder.setOnCancelListener(new OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                CardBrowser.this.finish();
+                            }            
+                        });
+                builder.create().show();
+            } else {
+                for (String[] item : allCards) {
+                    HashMap<String, String> data = new HashMap<String, String>();
+                    data.put("id", item[0]);
+                    data.put("question",  item[1]);
+                    data.put("answer",  item[2]);
+                    data.put("marSus", item[3]);
+                    data.put("tags", item[4]);
+                    mAllCards.add(data);
+                }
+                updateCardsList();                
             }
-            updateCardsList();
-            
+
             // This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems
             // that emulator does not do)
             if (mProgressDialog.isShowing()) {
