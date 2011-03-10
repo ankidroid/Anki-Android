@@ -191,6 +191,7 @@
   <string name="select">選擇</string>
   <string name="card_browser">卡片瀏覽器</string>
   <string name="card_browser_load">正在載入卡片</string>
+  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
   <string name="card_browser_delete_card">刪除卡片</string>
   <string name="card_browser_suspend_card">暫停卡片</string>
   <string name="card_browser_unsuspend_card">取消暫停卡片</string>

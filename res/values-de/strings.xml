@@ -191,6 +191,7 @@
   <string name="select">Auswählen</string>
   <string name="card_browser">Kartenübersicht</string>
   <string name="card_browser_load">Karten werden geladen</string>
+  <string name="card_browser_cardloading_error">Fehler beim Laden der Karten. Vermutlich hängt dies mit einem zu geringen Gerätespeicher zusammen. Versuchen Sie es mit einer kleineren Stapel</string>
   <string name="card_browser_delete_card">Karte löschen</string>
   <string name="card_browser_suspend_card">Karte aussetzen</string>
   <string name="card_browser_unsuspend_card">Aussetzen aufheben</string>

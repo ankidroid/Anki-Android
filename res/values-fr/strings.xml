@@ -191,6 +191,7 @@
   <string name="select">Sélectionner</string>
   <string name="card_browser">Voir cartes</string>
   <string name="card_browser_load">Chargement des cartes</string>
+  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
   <string name="card_browser_delete_card">Supprimer la carte</string>
   <string name="card_browser_suspend_card">Suspendre la carte</string>
   <string name="card_browser_unsuspend_card">Dé-suspendre la carte</string>

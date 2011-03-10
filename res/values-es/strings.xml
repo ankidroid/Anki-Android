@@ -191,6 +191,7 @@
   <string name="select">Seleccionar</string>
   <string name="card_browser">Explorador</string>
   <string name="card_browser_load">Cargando las tarjetas</string>
+  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
   <string name="card_browser_delete_card">Eliminar Tarjeta</string>
   <string name="card_browser_suspend_card">Suspender Tarjeta</string>
   <string name="card_browser_unsuspend_card">Reactivar Tarjeta</string>
@@ -284,8 +285,8 @@
   <string name="menu_add_card">Añadir tarjeta</string>
   <string name="menu_about">Acerca de</string>
   <string name="menu_remove_card">Quitar Tarjeta</string>
-  <string name="menu_suspend_card">Suspender</string>
-  <string name="menu_bury_card">Enterrar</string>
+  <string name="menu_suspend_card">Suspender Tarjeta</string>
+  <string name="menu_bury_card">Enterrar Tarjeta</string>
   <string name="menu_edit_card">Editar tarjeta</string>
   <string name="menu_search">Búsqueda en %1$s</string>
   <string name="menu_mark_card">Marcar Tarjeta</string>
