@@ -361,15 +361,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Deck deck = params[0].getDeck();
         String order = params[0].getOrder();
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-        	publishProgress(new TaskData(deck.getAllCards(order)));
-        	ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
+       	publishProgress(new TaskData(deck.getAllCards(order)));
         return null;
     }
 
