@@ -505,8 +505,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
         public TaskData(ArrayList<String[]> allCards) {
-        	mAllCards = new ArrayList<String[]>();
-        	mAllCards.addAll(allCards);
+		if (allCards != null) {
+			mAllCards = new ArrayList<String[]>();
+	   		mAllCards.addAll(allCards);
+		}
         }
 
 
