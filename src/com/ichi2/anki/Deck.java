@@ -3236,8 +3236,18 @@ public class Deck {
             while (cur.moveToNext()) {
             	String[] data = new String[5];
             	data[0] = Long.toString(cur.getLong(0));
-            	data[1] = Utils.stripHTML(cur.getString(1));
-            	data[2] = Utils.stripHTML(cur.getString(2));
+                String string = Utils.stripHTML(cur.getString(1));
+            	if (string.length() < 55) {
+                    data[1] = string;
+            	} else {
+                    data[1] = string.substring(0, 55) + "...";                   
+            	}
+            	string = Utils.stripHTML(cur.getString(2));
+                if (string.length() < 55) {
+                    data[2] = string;
+                } else {
+                    data[2] = string.substring(0, 55) + "...";                   
+                }
             	String tags = cur.getString(3);
            	    if (tags.contains(TAG_MARKED)) {
            	        data[3] = "1";
