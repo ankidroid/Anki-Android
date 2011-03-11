@@ -536,6 +536,9 @@ public class Reviewer extends Activity {
                     mDictionaryAction = "android.intent.action.SEND";                   
                     mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction, new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
                     break;
+                default:
+                    mIsDictionaryAvailable = false;
+                    break;
             }
             Log.i(AnkiDroidApp.TAG, "Is intent available = " + mIsDictionaryAvailable);
 
