@@ -66,8 +66,8 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
             mValue = getPersistedInt(mDefault);
         }
 
-        mSeekBar.setProgress((int) ((mValue - mMin) / mInterval));
         mSeekBar.setMax((int) ((mMax - mMin) / mInterval));
+        mSeekBar.setProgress((int) ((mValue - mMin) / mInterval));
 
         String t = String.valueOf(mValue);
         mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
@@ -96,9 +96,11 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 
 
     public void onProgressChanged(SeekBar seek, int value, boolean fromTouch) {
-        mValue = (value * mInterval) + mMin;
-        String t = String.valueOf(mValue);
-        mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
+        if (fromTouch) {
+            mValue = (value * mInterval) + mMin;
+            String t = String.valueOf(mValue);
+            mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));            
+        }
     }
 
 
