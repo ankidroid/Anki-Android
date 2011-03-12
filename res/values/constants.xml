@@ -75,7 +75,7 @@
 		<item>combinedDue ASC</item>
 		<item>interval ASC</item>
 		<item>factor DESC</item>
-		<item>created DESC</item>
+		<item>cards.created DESC</item>
 	</string-array>
 	<string-array name="statistics_type_values">
 		<item>0</item>
