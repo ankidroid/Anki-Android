@@ -93,7 +93,7 @@ public class CardBrowser extends Activity {
 
     private boolean mShowOnlyMarSus = false;
 
-    private int mSelectedOrder = 0;
+    private int mSelectedOrder = 5;
     
     private String[] allTags;
     private HashSet<String> mSelectedTags;
