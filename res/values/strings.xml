@@ -176,6 +176,8 @@
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative display font size</string>
 <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
+<string name="card_browser_font_size">Relative font size used in card browser main view</string>
+<string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
 <string name="button_size">Relative button size</string>
 <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
 <string name="hide_question_in_answer">Hide question in answer?</string>

@@ -30,7 +30,6 @@
 		<item>Smallest interval first</item>
 		<item>Order due</item>
 		<item>Random order</item>
-		<item>Date created</item>
 	</string-array>
 	<string-array name="hideQuestionInAnswerLabels">
 		<item>Hide the question in answer</item>
@@ -115,6 +114,7 @@
 		<item>By due time</item>
 		<item>By interval</item>
 		<item>By ease</item>
+		<item>Date created</item>
 	</string-array>	
 	<string-array name="statistics_type_labels">
 		<item>Due</item>

@@ -104,6 +104,15 @@
         	android:max="150" 
         	app:interval="10" />
 		<com.hlidskialf.android.preference.SeekBarPreference 
+      		android:key="relativeCardBrowserFontSize"
+        	android:title="@string/card_browser_font_size"
+        	android:summary="@string/card_browser_font_size_summ"
+			android:defaultValue="100"
+        	android:text=" %"
+        	app:min="10"
+        	android:max="200" 
+        	app:interval="10" />        	
+		<com.hlidskialf.android.preference.SeekBarPreference 
       		android:key="answerButtonSize"
         	android:title="@string/button_size"
         	android:summary="@string/button_size_summ"
