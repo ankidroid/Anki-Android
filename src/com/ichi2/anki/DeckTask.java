@@ -260,8 +260,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundSaveDeck(TaskData... params) {
     	Deck deck = params[0].getDeck();
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveAndResetDeck");
-        deck.commitToDB();
-        deck.updateCutoff();
+        if (deck != null) {
+            deck.commitToDB();
+            deck.updateCutoff();
+            if (AnkiDroidApp.deck().hasFinishScheduler()) {
+                AnkiDroidApp.deck().finishScheduler();
+            }
+        }
         return null;
     }
 

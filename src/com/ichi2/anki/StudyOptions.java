@@ -1736,12 +1736,10 @@ public class StudyOptions extends Activity {
         } else if (requestCode == REQUEST_REVIEW) {
             Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             // Return to standard scheduler
-            if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
-                AnkiDroidApp.deck().finishScheduler();
-            }
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
                     mCurrentContentView = CONTENT_SESSION_COMPLETE;
+                	setContentView(mStudyOptionsView);
                     break;
                 case Reviewer.RESULT_NO_MORE_CARDS:
                 	mCurrentContentView = CONTENT_CONGRATS;
@@ -1751,6 +1749,7 @@ public class StudyOptions extends Activity {
                     break;
                 default:
                 	mCurrentContentView = CONTENT_STUDY_OPTIONS;
+                	setContentView(mStudyOptionsView);
                     break;
             }
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), ""));            
