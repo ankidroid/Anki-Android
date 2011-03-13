@@ -19,6 +19,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -192,7 +193,8 @@ public class Reviewer extends Activity {
      * Searches
      */
     private static final int DICTIONARY_AEDICT = 0;
-    private static final int DICTIONARY_LEO = 1;	// German web dictionary for English, French, Spanish, Italian, Chinese, Russian
+    private static final int DICTIONARY_LEO_WEB = 1;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
+    private static final int DICTIONARY_LEO_APP = 2;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
     
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -524,12 +526,20 @@ public class Reviewer extends Activity {
             switch (mDictionary) {
             	case DICTIONARY_AEDICT:
             		mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
+                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
             		break;
-            	case DICTIONARY_LEO:
-            		mDictionaryAction = "android.intent.action.VIEW";
-            		break;
+                case DICTIONARY_LEO_WEB:
+                    mDictionaryAction = "android.intent.action.VIEW";
+                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
+                    break;
+                case DICTIONARY_LEO_APP:
+                    mDictionaryAction = "android.intent.action.SEND";                   
+                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction, new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+                    break;
+                default:
+                    mIsDictionaryAvailable = false;
+                    break;
             }
-            mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
             Log.i(AnkiDroidApp.TAG, "Is intent available = " + mIsDictionaryAvailable);
 
             // Load the template for the card and set on it the available width for images
@@ -843,7 +853,7 @@ public class Reviewer extends Activity {
                     		startActivity(aedictSearchIntent);
                             mClipboard.setText("");
                             return true;
-                    	case DICTIONARY_LEO:
+                    	case DICTIONARY_LEO_WEB:
                     		// localisation is needless here since leo.org translates only into or out of German 
                     		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
                     		String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
@@ -870,6 +880,13 @@ public class Reviewer extends Activity {
                     		AlertDialog alert = builder.create();
                     		alert.show();
                     		return true;
+                        case DICTIONARY_LEO_APP:
+                            Intent leoSearchIntent = new Intent(mDictionaryAction);
+                            leoSearchIntent.putExtra(Intent.EXTRA_TEXT, mClipboard.getText());
+                            leoSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+                            startActivity(leoSearchIntent);
+                            mClipboard.setText("");
+                            return true;
                 	}
                 }
                 return true;

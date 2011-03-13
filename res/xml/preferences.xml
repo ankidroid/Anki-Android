@@ -41,11 +41,11 @@
 				android:key="study_options" />
 		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_decks">
-			<CheckBoxPreference
+<!--		<CheckBoxPreference
 				android:title="@string/sample_deck"
 				android:defaultValue="true"
 				android:summary="@string/sample_deck_summ"
-				android:key="generateSampleDeck" />
+				android:key="generateSampleDeck" />-->
 			<EditTextPreference
 				android:title="@string/deck_path"
 				android:defaultValue="/sdcard/AnkiDroid"
