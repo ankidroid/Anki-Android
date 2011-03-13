@@ -243,6 +243,8 @@ public class Reviewer extends Activity {
     private int mStatisticBarsMax;
     private int mStatisticBarsHeight;
 
+    private boolean mClosing = false;
+
     private long mSavedTimer = 0;
 	/** 
 	 * Shake Detection
@@ -584,9 +586,11 @@ public class Reviewer extends Activity {
         if (mCurrentCard != null) {
            mCurrentCard.stopTimer();
         }
-        // Save changes
-        Deck deck = AnkiDroidApp.deck();
-        deck.commitToDB();
+        if (!mClosing) {
+            // Save changes
+            Deck deck = AnkiDroidApp.deck();
+            deck.commitToDB();
+        }
 
         if (mShakeEnabled) {
             mSensorManager.unregisterListener(mSensorListener);    	  
@@ -1843,6 +1847,7 @@ public class Reviewer extends Activity {
 
 
     private void closeReviewer() {
+    	mClosing = true;
     	finish();
     	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
     		if (mShowCongrats) {

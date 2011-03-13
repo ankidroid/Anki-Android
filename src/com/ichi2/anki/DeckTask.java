@@ -34,17 +34,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_LOAD_DECK = 0;
     public static final int TASK_TYPE_UNLOAD_DECK = 1;
     public static final int TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS = 2;
-    public static final int TASK_TYPE_ANSWER_CARD = 3;
-    public static final int TASK_TYPE_SUSPEND_CARD = 4;
-    public static final int TASK_TYPE_MARK_CARD = 5;
-    public static final int TASK_TYPE_UPDATE_FACT = 6;
-    public static final int TASK_TYPE_UNDO = 7;
-    public static final int TASK_TYPE_REDO = 8;
-    public static final int TASK_TYPE_LOAD_CARDS = 9;
-    public static final int TASK_TYPE_BURY_CARD = 10;
-    public static final int TASK_TYPE_DELETE_CARD = 11;
-    public static final int TASK_TYPE_LOAD_STATISTICS = 12;
-    public static final int TASK_TYPE_OPTIMIZE_DECK = 13;
+    public static final int TASK_TYPE_SAVE_DECK = 3;
+    public static final int TASK_TYPE_ANSWER_CARD = 4;
+    public static final int TASK_TYPE_SUSPEND_CARD = 5;
+    public static final int TASK_TYPE_MARK_CARD = 6;
+    public static final int TASK_TYPE_UPDATE_FACT = 7;
+    public static final int TASK_TYPE_UNDO = 8;
+    public static final int TASK_TYPE_REDO = 9;
+    public static final int TASK_TYPE_LOAD_CARDS = 10;
+    public static final int TASK_TYPE_BURY_CARD = 11;
+    public static final int TASK_TYPE_DELETE_CARD = 12;
+    public static final int TASK_TYPE_LOAD_STATISTICS = 13;
+    public static final int TASK_TYPE_OPTIMIZE_DECK = 14;
 
     /**
      * Possible outputs trying to load a deck.
@@ -112,6 +113,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                     taskData.mCard = taskData.mDeck.getCurrentCard();
                 }
                 return taskData;
+
+            case TASK_TYPE_SAVE_DECK:
+                return doInBackgroundSaveDeck(params);
 
             case TASK_TYPE_ANSWER_CARD:
                 return doInBackgroundAnswerCard(params);
@@ -250,6 +254,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
             return new TaskData(DECK_EMPTY);
         }
+    }
+
+
+    private TaskData doInBackgroundSaveDeck(TaskData... params) {
+    	Deck deck = params[0].getDeck();
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveAndResetDeck");
+        deck.commitToDB();
+        deck.updateCutoff();
+        return null;
     }
 
 
