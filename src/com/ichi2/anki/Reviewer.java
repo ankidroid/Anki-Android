@@ -680,6 +680,7 @@ public class Reviewer extends Activity {
         if (mInvertedColors) {
             invertColors();
         }
+        updateStatisticBars();
         mConfigurationChanged = false;
     }
 
