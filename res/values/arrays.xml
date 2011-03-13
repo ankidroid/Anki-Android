@@ -30,7 +30,6 @@
 		<item>Smallest interval first</item>
 		<item>Order due</item>
 		<item>Random order</item>
-		<item>Date created</item>
 	</string-array>
 	<string-array name="hideQuestionInAnswerLabels">
 		<item>Hide the question in answer</item>
