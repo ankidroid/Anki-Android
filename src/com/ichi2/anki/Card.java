@@ -477,8 +477,12 @@ public class Card {
 
 
     public boolean isMarked() {
-        loadTags();
-        return (allTags().indexOf(Deck.TAG_MARKED) != -1);
+    	int markedId = mDeck.getMarketTagId();
+    	if (markedId == -1) {
+    		return false;
+    	} else {
+    		return (AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).queryScalar("SELECT count(*) FROM cardTags WHERE cardId = " + mId + " AND tagId = " + markedId + " LIMIT 1") != 0);
+    	}
     }
 
     // FIXME: Should be removed. Calling code should directly interact with Model

@@ -213,6 +213,8 @@ public class Deck {
     private Stats mDailyStats;
 
     private long mCurrentCardId;
+    
+    private int markedTagId = 0;
 
     private HashMap<String, String> mDeckVars = new HashMap<String, String>();
 
@@ -3274,6 +3276,24 @@ public class Deck {
     }
 
 
+    public int getMarketTagId() {
+    	if (markedTagId == 0) {
+    		markedTagId = -1;
+            Cursor cur = null;
+            try {
+                cur = getDB().getDatabase().rawQuery("SELECT id FROM tags WHERE tag = \"" + TAG_MARKED + "\"", null);
+                while (cur.moveToNext()) {
+                	markedTagId = cur.getInt(0);
+                }
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+    	}
+    	return markedTagId;
+    }
+    
     /*
      * Tags: adding/removing in bulk*********************************************************
      */

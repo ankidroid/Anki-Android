@@ -731,8 +731,7 @@ public class Reviewer extends Activity {
         if (mCurrentCard == null){
         	return false;
         }
-        mCurrentCard.loadTags();
-        if (mCurrentCard.hasTag(Deck.TAG_MARKED)) {
+        if (mCurrentCard.isMarked()) {
             item.setTitle(R.string.menu_marked);
             item.setIcon(R.drawable.ic_menu_star_on);
         } else {
