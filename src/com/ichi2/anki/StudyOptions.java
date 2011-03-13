@@ -579,10 +579,10 @@ public class StudyOptions extends Activity {
         int limitBarVisibility = View.GONE;
         if (mDailyBar != null) {
             limitBarVisibility = mGlobalLimitFrame.getVisibility();
-            
         }
 
     	initAllContentViews();
+    	updateValuesFromDeck();
     	showContentView();
         mToggleCram.setChecked(cramChecked);
         mToggleLimit.setChecked(limitChecked);
