@@ -1290,8 +1290,8 @@ public class StudyOptions extends Activity {
                 setContentView(mStudyOptionsView);
                 break;
             case CONTENT_CONGRATS:
-                setContentView(mCongratsView);
                 setCongratsMessage();
+                setContentView(mCongratsView);
                 break;
             case CONTENT_NO_EXTERNAL_STORAGE:
                 setTitle(R.string.app_name);
@@ -1745,6 +1745,7 @@ public class StudyOptions extends Activity {
                     break;
                 case Reviewer.RESULT_NO_MORE_CARDS:
                 	mCurrentContentView = CONTENT_CONGRATS;
+                	setContentView(mCongratsView);
                     break;
                 default:
                 	mCurrentContentView = CONTENT_STUDY_OPTIONS;
