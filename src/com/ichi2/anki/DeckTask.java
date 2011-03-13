@@ -313,11 +313,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             if (currentCard != null) {
                 String undoName = Deck.UNDO_TYPE_MARK_CARD;
                 deck.setUndoStart(undoName, currentCard.getId());
-            	if (currentCard.hasTag(Deck.TAG_MARKED)) {
+            	if (currentCard.isMarked()) {
                     deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 } else {
                     deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 }
+            	deck.resetMarkedTagId();
             	deck.setUndoEnd(undoName);
             }
 

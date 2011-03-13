@@ -3293,6 +3293,11 @@ public class Deck {
     	}
     	return markedTagId;
     }
+
+
+    public void resetMarkedTagId() {
+    	markedTagId = 0;
+    }
     
     /*
      * Tags: adding/removing in bulk*********************************************************
