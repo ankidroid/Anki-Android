@@ -89,7 +89,6 @@ public class StudyOptions extends Activity {
     private static final int MENU_PREFERENCES = 5;
     private static final int MENU_ADD_FACT = 6;
     private static final int MENU_MORE_OPTIONS = 7;
-    private static final int MENU_FEEDBACK = 8;
 
     /**
 * Available options performed by other activities
@@ -103,7 +102,6 @@ public class StudyOptions extends Activity {
     private static final int ADD_FACT = 6;
     private static final int BROWSE_CARDS = 7;
     private static final int STATISTICS = 8;
-    private static final int REPORT_FEEDBACK = 9;
 
     /**
 * Constants for selecting which content view to display
@@ -1497,8 +1495,6 @@ public class StudyOptions extends Activity {
         item.setIcon(R.drawable.ic_menu_archive);
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
-        item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
-        item.setIcon(R.drawable.ic_menu_send);
         return true;
     }
 
@@ -1546,9 +1542,6 @@ public class StudyOptions extends Activity {
                 }
                 return true;
 
-            case MENU_FEEDBACK:
-            	startFeedback();
-            	return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -1576,11 +1569,6 @@ public class StudyOptions extends Activity {
         }
     }
     
-    private void startFeedback() {
-        Intent feedbackReporter = new Intent(StudyOptions.this, Feedback.class);
-        startActivityForResult(feedbackReporter, REPORT_FEEDBACK);
-    }
-
 
     private void openStatistics(int period) {
         if (AnkiDroidApp.deck() != null) {
@@ -1780,7 +1768,6 @@ public class StudyOptions extends Activity {
             reloadDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
             reloadDeck();
-        } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
         	showContentView(CONTENT_STUDY_OPTIONS);
         }
