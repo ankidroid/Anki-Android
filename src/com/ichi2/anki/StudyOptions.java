@@ -1362,7 +1362,7 @@ public class StudyOptions extends Activity {
             if (newCards == 1) {
             	newca = res.getString(R.string.studyoptions_congrats_card);
             }
-            mTextCongratsMessage.setText(String.format(res.getString(R.string.studyoptions_congrats_message), revCards, revca, newCards, newca));        	
+            mTextCongratsMessage.setText(String.format(res.getString(R.string.studyoptions_congrats_message), revCards, revca, newCards, newca));
         }
     }
 
@@ -1745,6 +1745,8 @@ public class StudyOptions extends Activity {
                     break;
                 case Reviewer.RESULT_NO_MORE_CARDS:
                 	mCurrentContentView = CONTENT_CONGRATS;
+                	Resources res = getResources();
+                	mTextCongratsMessage.setText(String.format(res.getString(R.string.studyoptions_congrats_message), 0, res.getString(R.string.studyoptions_congrats_cards), 0, res.getString(R.string.studyoptions_congrats_cards)));
                 	setContentView(mCongratsView);
                     break;
                 default:
