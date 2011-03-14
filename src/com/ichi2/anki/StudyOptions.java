@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -2041,6 +2042,7 @@ public class StudyOptions extends Activity {
             Log.i(AnkiDroidApp.TAG, "onPostExecute");
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             }
             if (data.success) {
     			mSyncLogAlert.setMessage(((HashMap<String, String>) data.result).get("message"));
@@ -2081,6 +2083,8 @@ public class StudyOptions extends Activity {
             }
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = ProgressDialog.show(StudyOptions.this, (String) values[0], (String) values[1]);
+                // Forbid orientation changes as long as progress dialog is shown
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
             } else {
                 mProgressDialog.setTitle((String) values[0]);
                 mProgressDialog.setMessage((String) values[1]);
