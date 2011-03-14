@@ -91,7 +91,7 @@ public class AnkiDb {
         long scalar;
         try {
             cursor = mDatabase.rawQuery(query, null);
-            if (!cursor.moveToFirst()) {
+            if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
             }
 
