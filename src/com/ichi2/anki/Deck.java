@@ -4155,7 +4155,7 @@ public class Deck {
 
         try {
             getDB().getDatabase()
-                    .execSQL("CREATE TEMPORARY TABLE undoLog (seq INTEGER PRIMARY KEY NOT NULL, sql TEXT)");
+                    .execSQL("CREATE TEMPORARY TABLE IF NOT EXISTS undoLog (seq INTEGER PRIMARY KEY NOT NULL, sql TEXT)");
         } catch (SQLException e) {
             /* Temporary table may still be present if the DB has not been closed */
             Log.i(AnkiDroidApp.TAG, "Failed to create temporary table: " + e.getMessage());
@@ -4172,12 +4172,12 @@ public class Deck {
             ArrayList<String> columns = getDB().queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
             // Insert trigger
             StringBuilder sql = new StringBuilder(512);
-            sql.append("CREATE TEMP TRIGGER _undo_%s_it AFTER INSERT ON %s BEGIN INSERT INTO undoLog VALUES ").append(
+            sql.append("CREATE TEMP TRIGGER IF NOT EXISTS _undo_%s_it AFTER INSERT ON %s BEGIN INSERT INTO undoLog VALUES ").append(
                     "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END");
             getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, sql.toString(), table, table, table));
             // Update trigger
             sql = new StringBuilder(512);
-            sql.append(String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_ut AFTER UPDATE ON %s BEGIN "
+            sql.append(String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER IF NOT EXISTS _undo_%s_ut AFTER UPDATE ON %s BEGIN "
                     + "INSERT INTO undoLog VALUES (null, 'UPDATE %s ", table, table, table));
             String sep = "SET ";
             for (String column : columns) {
@@ -4191,7 +4191,7 @@ public class Deck {
             getDB().getDatabase().execSQL(sql.toString());
             // Delete trigger
             sql = new StringBuilder(512);
-            sql.append(String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER _undo_%s_dt BEFORE DELETE ON %s BEGIN "
+            sql.append(String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER IF NOT EXISTS _undo_%s_dt BEFORE DELETE ON %s BEGIN "
                     + "INSERT INTO undoLog VALUES (null, 'INSERT INTO %s (rowid", table, table, table));
             for (String column : columns) {
                 sql.append(String.format(Utils.ENGLISH_LOCALE, ",\"%s\"", column));
