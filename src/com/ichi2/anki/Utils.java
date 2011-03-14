@@ -49,6 +49,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.StringBuilder;
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
@@ -553,11 +554,28 @@ public class Utils {
             return base;
         } else {
             // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
-            // Reviewer.onCreate() and use the value from there
-            base = mediaDir;
-            if (base != null) {
-                base = "file://" + base + "/";
+            // Reviewer.onCreate() and use the value from there            
+            if (mediaDir != null) {                              
+                base = urlEncodeMediaDir(mediaDir);
             }
+        }
+        return base;
+    }
+
+    public static String urlEncodeMediaDir(String mediaDir) {
+        String base;
+        File mediaDirFile = new File(mediaDir);
+        File parentFile = mediaDirFile.getParentFile();
+        String mediaDirName = mediaDirFile.getName();
+        
+        try {
+            // Use URLEncoder class to ensure the deckName part of the url is properly encoded
+            mediaDirName = URLEncoder.encode(mediaDirName, "UTF-8");
+            // Build complete URL
+            base = parentFile.toURL().toExternalForm() + "/" + mediaDirName + "/";
+        } catch (Exception ex) {
+            Log.e(AnkiDroidApp.TAG, "Building media base URL");
+            throw new RuntimeException(ex);
         }
         return base;
     }
