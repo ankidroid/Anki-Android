@@ -304,13 +304,13 @@ public class Media {
                 if (!file.exists()) {
                    if (!md5.equals("")) {
                        deck.getDB().getDatabase().execSQL("UPDATE media SET originalPath = '', created = " +
-                               cursor.getString(1) + ", filename = '" + fname + "'");
+                               cursor.getString(1) + " where filename = '" + fname + "'");
                    }
                 } else {
                     String sum = Utils.fileChecksum(path);
                     if (!md5.equals(sum)) {
                        deck.getDB().getDatabase().execSQL("UPDATE media SET originalPath = '" + sum +
-                               "', created = " + cursor.getString(1) + ", filename = '" + fname + "'");
+                               "', created = " + cursor.getString(1) + " where filename = '" + fname + "'");
                     }
                 }
             }
