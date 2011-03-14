@@ -1516,7 +1516,7 @@ public class Reviewer extends Activity {
             content = applyFixForHebrew(content);
         }
 
-        // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
+        Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         String card = mCardTemplate.replace("::content::", content);
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
