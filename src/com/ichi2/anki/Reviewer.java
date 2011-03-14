@@ -1475,7 +1475,7 @@ public class Reviewer extends Activity {
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
-            baseUrl = "file://" + mDeckFilename.replace(".anki", ".media/");
+            baseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
         }
 
         // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
