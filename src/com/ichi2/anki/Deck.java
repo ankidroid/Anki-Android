@@ -626,6 +626,7 @@ public class Deck {
         String dir = null;
         File mediaDir = null;
         if (mDeckPath != null && !mDeckPath.equals("")) {
+            Log.i(AnkiDroidApp.TAG, "mediaDir - mediaPrefix = " + mMediaPrefix);
             if (mMediaPrefix != null) {
                 dir = mMediaPrefix + "/" + mDeckName + ".media";
             } else {
@@ -656,6 +657,7 @@ public class Deck {
                 return null;
             }
         }
+        Log.i(AnkiDroidApp.TAG, "mediaDir - mediaDir = " + dir);
         return dir;
     }
     
@@ -1519,15 +1521,15 @@ public class Deck {
         fillFailedQueue();
         fillRevQueue();
         fillNewQueue();
-        for (QueueItem i : mFailedQueue) {
-            Log.i(AnkiDroidApp.TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: " + i.getDue());
-        }
-        for (QueueItem i : mRevQueue) {
-            Log.i(AnkiDroidApp.TAG, "rev queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
-        }
-        for (QueueItem i : mNewQueue) {
-            Log.i(AnkiDroidApp.TAG, "new queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
-        }
+        //for (QueueItem i : mFailedQueue) {
+        //    Log.i(AnkiDroidApp.TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: " + i.getDue());
+        //}
+        //for (QueueItem i : mRevQueue) {
+        //    Log.i(AnkiDroidApp.TAG, "rev queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
+        //}
+        //for (QueueItem i : mNewQueue) {
+        //    Log.i(AnkiDroidApp.TAG, "new queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
+        //}
     }
 
 
@@ -1865,8 +1867,8 @@ public class Deck {
         } else {
             mNewCardModulus = 0;
         }
-        // Recache css
-        rebuildCSS();
+        // Recache css - Removed for speed optim, we don't use this cache anyway
+        // rebuildCSS();
 
         // Spacing for delayed cards - not to be confused with newCardSpacing above
         mNewSpacing = getFloat("newSpacing");
@@ -4164,6 +4166,7 @@ public class Deck {
         ArrayList<String> tables = getDB().queryColumn(String.class,
                 "SELECT name FROM sqlite_master WHERE type = 'table'", 0);
         Iterator<String> iter = tables.iterator();
+        
         while (iter.hasNext()) {
             String table = iter.next();
             if (table.equals("undoLog") || table.equals("sqlite_stat1")) {
@@ -4172,29 +4175,30 @@ public class Deck {
             ArrayList<String> columns = getDB().queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
             // Insert trigger
             StringBuilder sql = new StringBuilder(512);
-            sql.append("CREATE TEMP TRIGGER IF NOT EXISTS _undo_%s_it AFTER INSERT ON %s BEGIN INSERT INTO undoLog VALUES ").append(
-                    "(null, 'DELETE FROM %s WHERE rowid = ' || new.rowid); END");
-            getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, sql.toString(), table, table, table));
+            sql.append("CREATE TEMP TRIGGER IF NOT EXISTS _undo_").append(table).append("_it AFTER INSERT ON ").append(table).
+                    append(" BEGIN INSERT INTO undoLog VALUES (null, 'DELETE FROM ").append(table).
+                    append(" WHERE rowid = ' || new.rowid); END");
+            getDB().getDatabase().execSQL(sql.toString());
             // Update trigger
             sql = new StringBuilder(512);
-            sql.append(String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER IF NOT EXISTS _undo_%s_ut AFTER UPDATE ON %s BEGIN "
-                    + "INSERT INTO undoLog VALUES (null, 'UPDATE %s ", table, table, table));
+            sql.append("CREATE TEMP TRIGGER IF NOT EXISTS _undo_").append(table).append("_ut AFTER UPDATE ON ").append(table).
+                    append(" BEGIN INSERT INTO undoLog VALUES (null, 'UPDATE ").append(table).append(" ");
             String sep = "SET ";
             for (String column : columns) {
                 if (column.equals("unique")) {
                     continue;
                 }
-                sql.append(String.format(Utils.ENGLISH_LOCALE, "%s%s=' || quote(old.%s) || '", sep, column, column));
+                sql.append(sep).append(column).append("=' || quote(old.").append(column).append(") || '");
                 sep = ",";
             }
             sql.append(" WHERE rowid = ' || old.rowid); END");
             getDB().getDatabase().execSQL(sql.toString());
             // Delete trigger
             sql = new StringBuilder(512);
-            sql.append(String.format(Utils.ENGLISH_LOCALE, "CREATE TEMP TRIGGER IF NOT EXISTS _undo_%s_dt BEFORE DELETE ON %s BEGIN "
-                    + "INSERT INTO undoLog VALUES (null, 'INSERT INTO %s (rowid", table, table, table));
+            sql.append("CREATE TEMP TRIGGER IF NOT EXISTS _undo_").append(table).append("_dt BEFORE DELETE ON ").append(table).
+                    append(" BEGIN INSERT INTO undoLog VALUES (null, 'INSERT INTO ").append(table).append(" (rowid");
             for (String column : columns) {
-                sql.append(String.format(Utils.ENGLISH_LOCALE, ",\"%s\"", column));
+                sql.append(",\"").append(column).append("\"");
             }
             sql.append(") VALUES (' || old.rowid ||'");
             for (String column : columns) {
@@ -4202,7 +4206,7 @@ public class Deck {
                     sql.append(",1");
                     continue;
                 }
-                sql.append(String.format(Utils.ENGLISH_LOCALE, ", ' || quote(old.%s) ||'", column));
+                sql.append(", ' || quote(old.").append(column).append(") ||'");
             }
             sql.append(")'); END");
             getDB().getDatabase().execSQL(sql.toString());
