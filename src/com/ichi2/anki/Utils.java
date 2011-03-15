@@ -567,17 +567,20 @@ public class Utils {
         return base;
     }
 
+    /**
+     * @param mediaDir media directory path on SD card
+     * @return path converted to file URL, properly UTF-8 URL encoded
+     */
     public static String urlEncodeMediaDir(String mediaDir) {
         String base;
-        File mediaDirFile = new File(mediaDir);
-        
-        try {
-            // Build complete URL
-            base = Uri.fromFile(mediaDirFile).toString() + "/";
-        } catch (Exception ex) {
-            Log.e(AnkiDroidApp.TAG, "Building media base URL");
-            throw new RuntimeException(ex);
-        }
+        // Use android.net.Uri class to ensure whole path is properly encoded
+        // File.toURL() does not work here, and URLEncoder class is not directly usable
+        // with existing slashes
+        Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
+
+        // Build complete URL
+        base = mediaDirUri.toString() +"/";
+
         return base;
     }
 
