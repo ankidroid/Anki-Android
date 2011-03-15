@@ -572,7 +572,7 @@ public class Utils {
             // Use URLEncoder class to ensure the deckName part of the url is properly encoded
             mediaDirName = URLEncoder.encode(mediaDirName, "UTF-8");
             // Build complete URL
-            base = parentFile.toURL().toExternalForm() + "/" + mediaDirName + "/";
+            base = parentFile.toURL().toExternalForm() + mediaDirName + "/";
         } catch (Exception ex) {
             Log.e(AnkiDroidApp.TAG, "Building media base URL");
             throw new RuntimeException(ex);

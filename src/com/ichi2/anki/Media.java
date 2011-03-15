@@ -17,6 +17,7 @@
 package com.ichi2.anki;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.io.File;
@@ -293,9 +294,10 @@ public class Media {
         String path = null;
         fname = null;
         String md5 = null;
-        deck.getDB().getDatabase().beginTransaction();
+        SQLiteDatabase db = deck.getDB().getDatabase();
+        db.beginTransaction();
         try {
-            cursor = deck.getDB().getDatabase().rawQuery("SELECT filename, created, originalPath FROM media", null);
+            cursor = db.query("media", new String[] {"filename", "created", "originalPath"}, null, null, null, null, null);
             while (cursor.moveToNext()) {
                 fname = cursor.getString(0);
                 md5 = cursor.getString(2);
@@ -303,14 +305,16 @@ public class Media {
                 File file = new File(path);
                 if (!file.exists()) {
                    if (!md5.equals("")) {
-                       deck.getDB().getDatabase().execSQL("UPDATE media SET originalPath = '', created = " +
-                               cursor.getString(1) + " where filename = '" + fname + "'");
+                       db.execSQL(String.format(Utils.ENGLISH_LOCALE, 
+                               "UPDATE media SET originalPath = '', created = %f where filename = '%s'",
+                               Utils.now(), fname));
                    }
                 } else {
                     String sum = Utils.fileChecksum(path);
                     if (!md5.equals(sum)) {
-                       deck.getDB().getDatabase().execSQL("UPDATE media SET originalPath = '" + sum +
-                               "', created = " + cursor.getString(1) + " where filename = '" + fname + "'");
+                       db.execSQL(String.format(Utils.ENGLISH_LOCALE,
+                               "UPDATE media SET originalPath = '%s', created = %f where filename = '%s'",
+                               sum, Utils.now(), fname));
                     }
                 }
             }
@@ -319,8 +323,8 @@ public class Media {
                 cursor.close();
             }
         }
-        deck.getDB().getDatabase().setTransactionSuccessful();
-        deck.getDB().getDatabase().endTransaction();
+        db.setTransactionSuccessful();
+        db.endTransaction();
 
         // Update deck and get return info
         if (dirty) {
