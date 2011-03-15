@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -78,7 +79,6 @@ public class Utils {
 
     public static final int CHUNK_SIZE = 32768;
 
-    private static final long MILLIS_IN_A_DAY = 86400000;
     private static final int DAYS_BEFORE_1970 = 719163;
 
     private static TreeSet<Long> sIdTree;
@@ -553,11 +553,24 @@ public class Utils {
             return base;
         } else {
             // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
-            // Reviewer.onCreate() and use the value from there
-            base = mediaDir;
-            if (base != null) {
-                base = "file://" + base + "/";
+            // Reviewer.onCreate() and use the value from there            
+            if (mediaDir != null) {                              
+                base = urlEncodeMediaDir(mediaDir);
             }
+        }
+        return base;
+    }
+
+    public static String urlEncodeMediaDir(String mediaDir) {
+        String base;
+        File mediaDirFile = new File(mediaDir);
+        
+        try {
+            // Build complete URL
+            base = Uri.fromFile(mediaDirFile).toString() + "/";
+        } catch (Exception ex) {
+            Log.e(AnkiDroidApp.TAG, "Building media base URL");
+            throw new RuntimeException(ex);
         }
         return base;
     }
