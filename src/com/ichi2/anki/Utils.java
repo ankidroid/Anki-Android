@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -49,7 +50,6 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.StringBuilder;
 import java.math.BigInteger;
-import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
@@ -79,7 +79,6 @@ public class Utils {
 
     public static final int CHUNK_SIZE = 32768;
 
-    private static final long MILLIS_IN_A_DAY = 86400000;
     private static final int DAYS_BEFORE_1970 = 719163;
 
     private static TreeSet<Long> sIdTree;
@@ -565,14 +564,10 @@ public class Utils {
     public static String urlEncodeMediaDir(String mediaDir) {
         String base;
         File mediaDirFile = new File(mediaDir);
-        File parentFile = mediaDirFile.getParentFile();
-        String mediaDirName = mediaDirFile.getName();
         
         try {
-            // Use URLEncoder class to ensure the deckName part of the url is properly encoded
-            mediaDirName = URLEncoder.encode(mediaDirName, "UTF-8");
             // Build complete URL
-            base = parentFile.toURL().toExternalForm() + mediaDirName + "/";
+            base = Uri.fromFile(mediaDirFile).toString() + "/";
         } catch (Exception ex) {
             Log.e(AnkiDroidApp.TAG, "Building media base URL");
             throw new RuntimeException(ex);
