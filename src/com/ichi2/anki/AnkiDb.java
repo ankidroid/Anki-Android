@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,6 +26,7 @@ import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -103,6 +105,87 @@ public class AnkiDb {
         }
 
         return scalar;
+    }
+
+    public long insert(Deck deck, String table, String nullColumnHack, ContentValues values) {
+    	return insert(deck, table, nullColumnHack, values, true);
+    }
+    public long insert(Deck deck, String table, String nullColumnHack, ContentValues values, boolean saveUndoInformation) {
+    	long rowid = mDatabase.insert(table, nullColumnHack, values);
+    	if (rowid != -1 && saveUndoInformation) {
+        	deck.mUndoCommands.add(new StringBuilder().append("DELETE FROM ").append(table).append(" WHERE rowid = ").append(rowid).toString());   		
+    	}
+    	return rowid;
+    }
+
+    public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs) {
+    	update(deck, table, values, whereClause, whereArgs, true);
+    }
+    public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean saveUndoInformation) {
+    	if (saveUndoInformation) {
+        	ArrayList<String> ar = new ArrayList<String>();
+            for (Entry<String, Object> entry : values.valueSet()) {
+            	 ar.add(entry.getKey());
+            }
+            int len = ar.size();
+            String[] columns = new String[len + 1];
+            ar.toArray(columns);
+            columns[len] = "rowid";
+
+            Cursor cursor = null;
+            try {
+                cursor = mDatabase.query(table, columns, whereClause, null, null, null, null);
+                while (cursor.moveToNext()) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("UPDATE ").append(table).append(" SET ");
+                    for (int i = 0; i < len - 1; i++) {
+                        sb.append(columns[i]).append(" = \'").append(cursor.getString(i)).append("\', ");
+                    }
+                    sb.append(columns[len - 1]).append(" = \'").append(cursor.getString(len - 1)).append("\'");
+                    sb.append(" WHERE rowid = ").append(cursor.getString(len));
+                	deck.mUndoCommands.add(sb.toString());
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }    		
+    	}
+    	mDatabase.update(table, values, whereClause, whereArgs);
+    }
+
+    public void delete(Deck deck, String table, String whereClause, String[] whereArgs) {
+    	delete(deck, table, whereClause, whereArgs, true);
+    }
+    public void delete(Deck deck, String table, String whereClause, String[] whereArgs, boolean saveUndoInformation) {
+    	if (saveUndoInformation) {
+    		ArrayList<String> ar = queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
+        	int len = ar.size();
+        	String[] columns = new String[len + 1];
+            ar.toArray(columns);
+
+            Cursor cursor = null;
+            try {
+                cursor = mDatabase.query(table, columns, whereClause, null, null, null, null);
+                while (cursor.moveToNext()) {
+                    StringBuilder keys = new StringBuilder();
+                    StringBuilder values = new StringBuilder();
+                    for (int i = 0; i < len - 1; i++) {
+                    	keys.append(columns[i]).append(", ");
+                    	values.append("\'").append(cursor.getString(i)).append("\', ");
+                    }
+                    keys.append(columns[len - 1]);
+                    values.append("\'").append(cursor.getString(len - 1)).append("\'");
+                	deck.mUndoCommands.add(new StringBuilder().append("INSERT INTO ").append(table).append(" (").append(keys.toString())
+                			.append(") VALUES (").append(values.toString()).append(")").toString());
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }  		
+    	}
+    	mDatabase.delete(table, whereClause, whereArgs);
     }
 
 

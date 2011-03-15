@@ -172,7 +172,7 @@ public class Stats {
         values.put("matureEase2", 0);
         values.put("matureEase3", 0);
         values.put("matureEase4", 0);
-        mId = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("stats", null, values);
+        mId = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).insert(mDeck, "stats", null, values);
     }
 
 
@@ -199,7 +199,7 @@ public class Stats {
         values.put("matureEase3", mMatureEase3);
         values.put("matureEase4", mMatureEase4);
 
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("stats", values, "id = " + mId, null);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "stats", values, "id = " + mId, null);
     }
 
 

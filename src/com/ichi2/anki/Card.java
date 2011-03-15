@@ -643,7 +643,7 @@ public class Card {
         values.put("type", mType);
         values.put("combinedDue", Math.max(mSpaceUntil, mDue));
         values.put("relativeDelay", 0.0);
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("cards", null, values);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).insert(mDeck, "cards", null, values);
 
     }
 
@@ -687,7 +687,7 @@ public class Card {
         values.put("type", mType);
         values.put("combinedDue", mCombinedDue);
         values.put("relativeDelay", mRelativeDelay);
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("cards", values, "id = " + mId, null);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "cards", values, "id = " + mId, null, true);
 
         // TODO: Should also write JOINED entries: CardModel and Fact.
     }
@@ -702,7 +702,7 @@ public class Card {
         values.put("modified", mModified);
         values.put("question", mQuestion);
         values.put("answer", mAnswer);
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("cards", values, "id = " + mId, null);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "cards", values, "id = " + mId, null);
     }
 
 
