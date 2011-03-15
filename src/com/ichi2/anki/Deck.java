@@ -90,8 +90,8 @@ public class Deck {
 
     // Card order strings for building SQL statements
     private static final String[] revOrderStrings = { "priority desc, interval desc", "priority desc, interval",
-            "priority desc, combinedDue", "priority desc, factId, ordinal" };
-    private static final String[] newOrderStrings = { "priority desc, due", "priority desc, due",
+            "priority desc, combinedDue", "priority desc, RANDOM()" };
+    private static final String[] newOrderStrings = { "priority desc, RANDOM()", "priority desc, due",
             "priority desc, due desc" };
 
     // BEGIN: SQL table columns
@@ -142,6 +142,7 @@ public class Deck {
 
     // New card spacing global variable
     private double mNewSpacing;
+    private double mRevSpacing;
     private boolean mNewFromCache;
 
     // Limit the number of failed cards in play
@@ -212,6 +213,8 @@ public class Deck {
     private Stats mDailyStats;
 
     private long mCurrentCardId;
+    
+    private int markedTagId = 0;
 
     private HashMap<String, String> mDeckVars = new HashMap<String, String>();
 
@@ -313,23 +316,24 @@ public class Deck {
             deck.setUtcOffset();
             deck.mCreated = Utils.now();
         }
-        
+
         deck.initVars();
 
         // Upgrade to latest version
         deck.upgradeDeck();
 
         if (!rebuild) {
-            // Minimal startup
+            // Minimal startup for deckpicker: only counts are needed
             deck.mGlobalStats = Stats.globalStats(deck);
             deck.mDailyStats = Stats.dailyStats(deck);
+            deck.rebuildCounts();
             return deck;
         }
-        
+
         if (deck.mNeedUnpack) {
             deck.addIndices();
         }
-        
+
         double oldMod = deck.mModified;
 
         // Ensure necessary indices are available
@@ -393,16 +397,18 @@ public class Deck {
         }
         assert Math.abs(dbMod - oldMod) < 1.0e-9;
         assert deck.mModified == oldMod;
+        // 4.3.2011: deactivated since it's not used anywhere
         // Create a temporary view for random new cards. Randomizing the cards by themselves
         // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
-        try {
-            deck.getDB().getDatabase().execSQL(
-                    "CREATE TEMPORARY VIEW acqCardsRandom AS SELECT * FROM cards " + "WHERE type = " + Card.TYPE_NEW
-                            + " AND isDue = 1 ORDER BY RANDOM()");
-        } catch (SQLException e) {
-            /* Temporary view may still be present if the DB has not been closed */
-            Log.i(AnkiDroidApp.TAG, "Failed to create temporary view: " + e.getMessage());
-        }
+//        try {
+//            deck.getDB().getDatabase().execSQL(
+//                    "CREATE TEMPORARY VIEW acqCardsRandom AS SELECT * FROM cards " + "WHERE type = " + Card.TYPE_NEW
+//                            + " AND isDue = 1 ORDER BY RANDOM()");
+//        } catch (SQLException e) {
+//            /* Temporary view may still be present if the DB has not been closed */
+//            Log.i(AnkiDroidApp.TAG, "Failed to create temporary view: " + e.getMessage());
+//        }
+
         // Initialize Undo
         deck.initUndo();
         return deck;
@@ -583,7 +589,7 @@ public class Deck {
         // lastSessionStart = 0;
         mQueueLimit = 200;
         // If most recent deck var not defined, make sure defaults are set
-        if (!hasKey("latexPost")) {
+        if (!hasKey("revSpacing")) {
             setVarDefault("suspendLeeches", "1");
             setVarDefault("leechFails", "16");
             setVarDefault("perDay", "1");
@@ -597,6 +603,7 @@ public class Deck {
                     + "\\usepackage[utf8]{inputenc}\n" + "\\usepackage{amssymb,amsmath}\n" + "\\pagestyle{empty}\n"
                     + "\\begin{document}\n");
             setVarDefault("latexPost", "\\end{document}");
+            setVarDefault("revSpacing", "0.1");
             // FIXME: The next really belongs to the dropbox setup module, it's not supposed to be empty if the user
             // wants to use dropbox. ankiqt/ankiqt/ui/main.py : setupMedia
             // setVarDefault("mediaLocation", "");
@@ -1872,6 +1879,7 @@ public class Deck {
 
         // Spacing for delayed cards - not to be confused with newCardSpacing above
         mNewSpacing = getFloat("newSpacing");
+        mRevSpacing = getFloat("revSpacing");
     }
 
 
@@ -2937,16 +2945,12 @@ public class Deck {
     private void _spaceCards(Card card) {
         // Update new counts
         double _new = Utils.now() + mNewSpacing;
-        // Space reviews too if integer minute
-        String lim = "= 2";
-        if (mNewSpacing % 60 == 0) {
-            lim = "BETWEEN 1 AND 2";
-        }
         getDB().getDatabase().execSQL(
-                String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET combinedDue = (CASE WHEN type = 1 THEN %f " 
-                        + "WHEN type = 2 THEN %f END), modified = %f, isDue = 0 WHERE id != %d AND factId = %d " 
-                        + "AND combinedDue < %f AND type %s",
-                        mDueCutoff, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff, lim));
+                String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET combinedDue = (CASE WHEN type = 1 THEN " +
+                		"combinedDue + 86400 * (CASE WHEN interval*%f < 1 THEN 0 ELSE interval*%f END) " +
+                		"WHEN type = 2 THEN %f ELSE combinedDue END), modified = %f, isDue = 0 WHERE id != %d AND factId = %d " 
+                        + "AND combinedDue < %f AND type BETWEEN 1 AND 2",
+                        mRevSpacing, mRevSpacing, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff));
         // Update local cache of seen facts
         mSpacedFacts.put(card.getFactId(), _new);
     }
@@ -3236,8 +3240,18 @@ public class Deck {
             while (cur.moveToNext()) {
             	String[] data = new String[5];
             	data[0] = Long.toString(cur.getLong(0));
-            	data[1] = Utils.stripHTML(cur.getString(1));
-            	data[2] = Utils.stripHTML(cur.getString(2));
+                String string = Utils.stripHTML(cur.getString(1));
+            	if (string.length() < 55) {
+                    data[1] = string;
+            	} else {
+                    data[1] = string.substring(0, 55) + "...";                   
+            	}
+            	string = Utils.stripHTML(cur.getString(2));
+                if (string.length() < 55) {
+                    data[2] = string;
+                } else {
+                    data[2] = string.substring(0, 55) + "...";                   
+                }
             	String tags = cur.getString(3);
            	    if (tags.contains(TAG_MARKED)) {
            	        data[3] = "1";
@@ -3264,6 +3278,29 @@ public class Deck {
     }
 
 
+    public int getMarketTagId() {
+    	if (markedTagId == 0) {
+    		markedTagId = -1;
+            Cursor cur = null;
+            try {
+                cur = getDB().getDatabase().rawQuery("SELECT id FROM tags WHERE tag = \"" + TAG_MARKED + "\"", null);
+                while (cur.moveToNext()) {
+                	markedTagId = cur.getInt(0);
+                }
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+    	}
+    	return markedTagId;
+    }
+
+
+    public void resetMarkedTagId() {
+    	markedTagId = 0;
+    }
+    
     /*
      * Tags: adding/removing in bulk*********************************************************
      */

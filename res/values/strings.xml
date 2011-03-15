@@ -158,10 +158,10 @@
 <string name="show_whiteboard_summ">Lets you write on the screen</string>
 <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
 <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>
-<string name="sample_deck">Sample deck</string>
+<!--<string name="sample_deck">Sample deck</string>
 <string name="sample_deck_summ">Generate capitals deck if none found</string>
-<!--<string name="corporal_punishments">Corporal punishments</string>-->
-<!--<string name="corporal_punishments_summ">Vibrate on error, that will teach you</string>-->
+<string name="corporal_punishments">Corporal punishments</string>
+<string name="corporal_punishments_summ">Vibrate on error, that will teach you</string>-->
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
 <string name="text_selection">Allow text selection</string>
@@ -176,6 +176,8 @@
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
 <string name="display_font_size">Relative display font size</string>
 <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
+<string name="card_browser_font_size">Relative font size used in card browser main view</string>
+<string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
 <string name="button_size">Relative button size</string>
 <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
 <string name="hide_question_in_answer">Hide question in answer?</string>
@@ -279,6 +281,7 @@
 <!-- AnkiDroid.java -->
 <!--<string name="loading_new_card">Loading new card...</string>-->
 <string name="loading_deck">Loading deck. Please wait...</string>
+<string name="unloading_deck">Closing deck. Please wait...</string>
 <!--<string name="connection_unsuccessful">The connection was unsuccessful. Check your connection settings and try again, please.</string>-->
 <string name="connection_needed">You are currently offline.</string>
 <!--<string name="study_options">Study Options</string>-->
@@ -495,6 +498,7 @@
 <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
 <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
 <string name="widget_no_cards_due">No cards due</string>
+<string name="widget_loading">Widget loading...</string>
 <plurals name="widget_cards_in_decks_due">
   <item quantity="one">1 card due in %2$s</item>
   <item quantity="other">%1$d cards due in %2$s</item>

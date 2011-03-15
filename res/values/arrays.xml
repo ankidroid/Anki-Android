@@ -114,6 +114,7 @@
 		<item>By due time</item>
 		<item>By interval</item>
 		<item>By ease</item>
+		<item>Date created</item>
 	</string-array>	
 	<string-array name="statistics_type_labels">
 		<item>Due</item>
@@ -130,24 +131,7 @@
 		<item>1 year</item>
 	</string-array>
 	<string-array name="new_version_features">
-		<item>card browser</item>
-		<item>statistics</item>
-		<item>text-to-speech</item>
-		<item>deck completion bar on deck picker</item>
-		<item>select card model on fact adder</item>
-		<item>new widget</item>
-		<item>better undo/redo behaviour</item>
-		<item>slider controls</item>
-		<item>language selection</item>
-		<item>more languages</item>
-		<item>progress bars in reviewer</item>
-		<item>feedback within AnkiDroid</item>
-		<item>possibility to set cards active/inactive by tag</item>
-		<item>better syncing</item>
-		<item>better error reporter</item>
-		<item>add decks</item>
-		<item>more options</item>
-		<item>lots of fixes for small errors</item>
-		<item>tag support for card editor, card adder and card browser</item>
+		<item>better sibling spacing</item>
+		<item>increase in deck picker startup</item>
 	</string-array>
 </resources>

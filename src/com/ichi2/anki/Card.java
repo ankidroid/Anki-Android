@@ -477,8 +477,12 @@ public class Card {
 
 
     public boolean isMarked() {
-        loadTags();
-        return (allTags().indexOf(Deck.TAG_MARKED) != -1);
+    	int markedId = mDeck.getMarketTagId();
+    	if (markedId == -1) {
+    		return false;
+    	} else {
+    		return (AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).queryScalar("SELECT count(*) FROM cardTags WHERE cardId = " + mId + " AND tagId = " + markedId + " LIMIT 1") != 0);
+    	}
     }
 
     // FIXME: Should be removed. Calling code should directly interact with Model
@@ -601,6 +605,7 @@ public class Card {
         }
 
         ContentValues values = new ContentValues();
+        values.put("id", mId);
         values.put("factId", mFactId);
         values.put("cardModelId", mCardModelId);
         values.put("created", mCreated);
@@ -639,7 +644,7 @@ public class Card {
         values.put("combinedDue", Math.max(mSpaceUntil, mDue));
         values.put("relativeDelay", 0.0);
         AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("cards", null, values);
-        
+
     }
 
     public void toDB() {

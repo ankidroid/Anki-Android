@@ -32,18 +32,20 @@ import android.util.Log;
 public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData> {
 
     public static final int TASK_TYPE_LOAD_DECK = 0;
-    public static final int TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS = 1;
-    public static final int TASK_TYPE_ANSWER_CARD = 2;
-    public static final int TASK_TYPE_SUSPEND_CARD = 3;
-    public static final int TASK_TYPE_MARK_CARD = 4;
-    public static final int TASK_TYPE_UPDATE_FACT = 5;
-    public static final int TASK_TYPE_UNDO = 6;
-    public static final int TASK_TYPE_REDO = 7;
-    public static final int TASK_TYPE_LOAD_CARDS = 8;
-    public static final int TASK_TYPE_BURY_CARD = 9;
-    public static final int TASK_TYPE_DELETE_CARD = 10;
-    public static final int TASK_TYPE_LOAD_STATISTICS = 11;
-    public static final int TASK_TYPE_OPTIMIZE_DECK = 12;
+    public static final int TASK_TYPE_UNLOAD_DECK = 1;
+    public static final int TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS = 2;
+    public static final int TASK_TYPE_SAVE_DECK = 3;
+    public static final int TASK_TYPE_ANSWER_CARD = 4;
+    public static final int TASK_TYPE_SUSPEND_CARD = 5;
+    public static final int TASK_TYPE_MARK_CARD = 6;
+    public static final int TASK_TYPE_UPDATE_FACT = 7;
+    public static final int TASK_TYPE_UNDO = 8;
+    public static final int TASK_TYPE_REDO = 9;
+    public static final int TASK_TYPE_LOAD_CARDS = 10;
+    public static final int TASK_TYPE_BURY_CARD = 11;
+    public static final int TASK_TYPE_DELETE_CARD = 12;
+    public static final int TASK_TYPE_LOAD_STATISTICS = 13;
+    public static final int TASK_TYPE_OPTIMIZE_DECK = 14;
 
     /**
      * Possible outputs trying to load a deck.
@@ -101,6 +103,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_LOAD_DECK:
                 return doInBackgroundLoadDeck(params);
 
+            case TASK_TYPE_UNLOAD_DECK:
+                return doInBackgroundUnloadDeck(params);
+
             case TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS:
                 TaskData taskData = doInBackgroundLoadDeck(params);
                 if (taskData.mInteger == DECK_LOADED) {
@@ -108,6 +113,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                     taskData.mCard = taskData.mDeck.getCurrentCard();
                 }
                 return taskData;
+
+            case TASK_TYPE_SAVE_DECK:
+                return doInBackgroundSaveDeck(params);
 
             case TASK_TYPE_ANSWER_CARD:
                 return doInBackgroundAnswerCard(params);
@@ -249,6 +257,39 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    private TaskData doInBackgroundSaveDeck(TaskData... params) {
+    	Deck deck = params[0].getDeck();
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveAndResetDeck");
+        if (deck != null) {
+            deck.commitToDB();
+            deck.updateCutoff();
+            if (AnkiDroidApp.deck().hasFinishScheduler()) {
+                AnkiDroidApp.deck().finishScheduler();
+            }
+        }
+        return null;
+    }
+
+
+    private TaskData doInBackgroundUnloadDeck(TaskData... params) {
+        Deck deck = params[0].getDeck();
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundUnloadDeck");
+
+        try {
+            if (deck != null) {
+                deck.closeDeck();
+                AnkiDroidApp.setDeck(null);                
+            }
+            Log.i(AnkiDroidApp.TAG, "Deck unloaded!");
+            
+            return null;
+        } catch (SQLException e) {
+            Log.i(AnkiDroidApp.TAG, "The database could not be closed = " + e.getMessage());
+        }
+        return null;
+    }
+
+
     private TaskData doInBackgroundSuspendCard(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card oldCard = params[0].getCard();
@@ -290,11 +331,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             if (currentCard != null) {
                 String undoName = Deck.UNDO_TYPE_MARK_CARD;
                 deck.setUndoStart(undoName, currentCard.getId());
-            	if (currentCard.hasTag(Deck.TAG_MARKED)) {
+            	if (currentCard.isMarked()) {
                     deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 } else {
                     deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 }
+            	deck.resetMarkedTagId();
             	deck.setUndoEnd(undoName);
             }
 

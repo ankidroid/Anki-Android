@@ -17,6 +17,7 @@
 
 package com.ichi2.anki;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -540,13 +541,18 @@ public class Utils {
      * @return True if an Intent with the specified action can be sent and responded to, false otherwise.
      */
     public static boolean isIntentAvailable(Context context, String action) {
+        return isIntentAvailable(context, action, null);
+    }
+
+    public static boolean isIntentAvailable(Context context, String action, ComponentName componentName) {
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(action);
+        intent.setComponent(componentName);
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
 
-
+    
     public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
         String base = model.getFeatures().trim();
         if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {

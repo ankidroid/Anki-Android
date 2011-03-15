@@ -140,6 +140,8 @@
   <string name="use_ruby_support_summ">Si les caractères \'[\' et \']\' sont trouvés, considérer le texte comme une annotation ruby</string>
   <string name="display_font_size">Fonte d\'affichage en taille relative</string>
   <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
+  <string name="card_browser_font_size">Taille relative d\'affichage dans le navigateur de cartes</string>
+  <string name="card_browser_size_summ">La taille de fonte utilisée dans le navigateur de cartes. Actuellement : XXX %</string> 
   <string name="button_size">Taille relative des boutons</string>
   <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
   <string name="hide_question_in_answer">Ne pas montrer la question dans la réponse ?</string>

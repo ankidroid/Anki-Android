@@ -41,11 +41,11 @@
 				android:key="study_options" />
 		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_decks">
-			<CheckBoxPreference
+<!--		<CheckBoxPreference
 				android:title="@string/sample_deck"
 				android:defaultValue="true"
 				android:summary="@string/sample_deck_summ"
-				android:key="generateSampleDeck" />
+				android:key="generateSampleDeck" />-->
 			<EditTextPreference
 				android:title="@string/deck_path"
 				android:defaultValue="/sdcard/AnkiDroid"
@@ -103,6 +103,15 @@
         	app:min="10"
         	android:max="150" 
         	app:interval="10" />
+		<com.hlidskialf.android.preference.SeekBarPreference 
+      		android:key="relativeCardBrowserFontSize"
+        	android:title="@string/card_browser_font_size"
+        	android:summary="@string/card_browser_font_size_summ"
+			android:defaultValue="100"
+        	android:text=" %"
+        	app:min="10"
+        	android:max="200" 
+        	app:interval="10" />        	
 		<com.hlidskialf.android.preference.SeekBarPreference 
       		android:key="answerButtonSize"
         	android:title="@string/button_size"

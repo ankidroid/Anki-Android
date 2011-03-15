@@ -48,11 +48,13 @@
 	</string-array>
 	<string-array name="dictionary_labels">
 		<item>Aedict</item>
-		<item>Leo.org</item>
+		<item>Leo.org (Web)</item>
+		<item>Leo.org (App)</item>
 	</string-array>
 	<string-array name="dictionary_values">
 		<item>0</item>
 		<item>1</item>
+		<item>2</item>
 	</string-array>
 	<string-array name="error_reporting_choice_values">
 		<item>0</item>
@@ -75,6 +77,7 @@
 		<item>combinedDue ASC</item>
 		<item>interval ASC</item>
 		<item>factor DESC</item>
+		<item>cards.created DESC</item>
 	</string-array>
 	<string-array name="statistics_type_values">
 		<item>0</item>
