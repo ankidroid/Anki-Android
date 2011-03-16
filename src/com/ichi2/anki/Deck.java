@@ -224,7 +224,8 @@ public class Deck {
     private Stack<UndoRow> mUndoStack;
     private Stack<UndoRow> mRedoStack;
     private boolean mUndoEnabled = false;
-    public ArrayList<String> mUndoCommands;
+    public ArrayList<UndoCommand> mUndoCommands;
+    private boolean mRecordUndoInformation = false;
 
 
     public static synchronized Deck openDeck(String path) throws SQLException {
@@ -2953,14 +2954,7 @@ public class Deck {
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
         values.put("isDue", 0);
         getDB().update(this, "cards", values, String.format(Utils.ENGLISH_LOCALE, "id != %d AND factId = %d " 
-                + "AND combinedDue < %f AND type BETWEEN 1 AND 2", card.getId(), card.getFactId(), mDueCutoff), null, true);
-//        getDatabase().execSQL(
-//                String.format(Utils.ENGLISH_LOCALE, "UPDATE cards SET combinedDue = (CASE WHEN type = 1 THEN " +
-//                		"combinedDue + 86400 * (CASE WHEN interval*%f < 1 THEN 0 ELSE interval*%f END) " +
-//                		"WHEN type = 2 THEN %f ELSE combinedDue END), modified = %f, isDue = 0 WHERE id != %d AND factId = %d " 
-//                        + "AND combinedDue < %f AND type BETWEEN 1 AND 2",
-//                        mRevSpacing, mRevSpacing, _new, Utils.now(), card.getId(), card.getFactId(), mDueCutoff));
-        // Update local cache of seen facts
+                + "AND combinedDue < %f AND type BETWEEN 1 AND 2", card.getId(), card.getFactId(), mDueCutoff), null, false);
         mSpacedFacts.put(card.getFactId(), _new);
     }
 
@@ -3351,7 +3345,6 @@ public class Deck {
             	ContentValues values = new ContentValues();
             	values.put("tags", newTags);
             	values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-            	values.put("tags", newTags);
                 getDB().update(this, "facts", values, "id = " + factIds[i], null);
             }
         }
@@ -3417,10 +3410,6 @@ public class Deck {
                 values.put("tags", newTags);
                 values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
                 getDB().update(this, "facts", values, "id = " + factIds[i], null);
-//                
-//                getDB().getDatabase().execSQL(
-//                        "update facts set " + "tags = \"" + newTags + "\", " + "modified = "
-//                                + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()) + " where id = " + factIds[i]);
             }
         }
 
@@ -3457,11 +3446,7 @@ public class Deck {
         values.put("priority", -3);
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
         values.put("isDue", 0);
-        getDB().update(this, "cards", values, "type >= 0 AND id IN " + Utils.ids2str(ids), null);
-//        getDB().getDatabase().execSQL(
-//                "UPDATE cards SET type = relativeDelay -3, priority = -3, modified = "
-//                        + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
-//                        + ", isDue = 0 WHERE type >= 0 AND id IN " + Utils.ids2str(ids));
+        getDB().update(this, "cards", values, "type >= 0 AND id IN " + Utils.ids2str(ids), null, false);
         Log.i(AnkiDroidApp.TAG, "Cards suspended");
         flushMod();
     }
@@ -3478,12 +3463,8 @@ public class Deck {
         values.put("priority", 0);
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
         values.put("isDue", 0);
-        getDB().update(this, "cards", values, "type < 0 AND id IN " + Utils.ids2str(ids), null);
-//    	getDB().getDatabase().execSQL(
-//                "UPDATE cards SET type = relativeDelay, priority = 0, " + "modified = "
-//                        + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()) + " WHERE type < 0 AND id IN "
-//                        + Utils.ids2str(ids));
-//        Log.i(AnkiDroidApp.TAG, "Cards unsuspended");
+        getDB().update(this, "cards", values, "type < 0 AND id IN " + Utils.ids2str(ids), null, false);
+        Log.i(AnkiDroidApp.TAG, "Cards unsuspended");
         updatePriorities(ids);
         flushMod();
     }
@@ -3519,10 +3500,7 @@ public class Deck {
         values.put("priority", -2);
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
         values.put("isDue", 0);
-        getDB().update(this, "cards", values, "type >= 0 AND type <= 3 AND factId = " + factId, null);
-//        
-//        getDB().getDatabase().execSQL(
-//                "UPDATE cards SET type = priority = -2, isDue = 0, type = type + 3 WHERE type >= 0 AND type <= 3 AND factId = " + factId);
+        getDB().update(this, "cards", values, "type >= 0 AND type <= 3 AND factId = " + factId, null, false);
         setUndoEnd(undoName);
         flushMod();
     }
@@ -3633,8 +3611,6 @@ public class Deck {
             	ContentValues values = new ContentValues();
                 values.put("priority", newPriorities.get(tagId));
                 getDB().update(this, "tags", values, "id = " + tagId, null);
-//                getDB().getDatabase().execSQL(
-//                        "UPDATE tags SET priority = " + newPriorities.get(tagId) + " WHERE id = " + tagId);
             } catch (SQLException e) {
                 Log.e(AnkiDroidApp.TAG, "updatePriorities: Error while updating tag priorities for tag " + tag + ": "
                         + e.toString());
@@ -3671,7 +3647,6 @@ public class Deck {
         	ContentValues values = new ContentValues();
             values.put("priority", 0);
             getDB().update(this, "tags", values, "id in " + Utils.ids2str(ids), null);
-//            getDB().getDatabase().execSQL("UPDATE tags SET priority = 0 WHERE id in " + Utils.ids2str(ids));
         }
 
         String limit = "";
@@ -3714,9 +3689,6 @@ public class Deck {
                 	ContentValues values = new ContentValues();
                     values.put("priority", pri + extra);
                     getDB().update(this, "cards", values, "id IN " + Utils.ids2str(cs) + " AND priority != " + pri + " AND " + "priority >= -2", null);
-//                    getDB().getDatabase().execSQL(
-//                            "UPDATE cards " + "SET priority = " + pri + extra + " WHERE id in " + Utils.ids2str(cs)
-//                                    + " and " + "priority != " + pri + " and " + "priority >= -2");
                 }
             }
         } finally {
@@ -3909,7 +3881,7 @@ public class Deck {
                 values.put("factId", id);
                 values.put("deletedTime", String.format(Utils.ENGLISH_LOCALE, "%f", now));
             	Log.i(AnkiDroidApp.TAG, "inserting into factsDeleted");
-                getDB().insert(this, "fields", null, values);
+                getDB().insert(this, "factsDeleted", null, values);
             }
             setModified();
         }
@@ -4228,75 +4200,26 @@ public class Deck {
     }
 
 
+    private class UndoCommand {
+        private String mCommand;
+        private String mTable;
+        private ContentValues mValues;
+        private String mWhereClause;
+
+        UndoCommand(String command, String table, ContentValues values, String whereClause) {
+        	mCommand = command;
+        	mTable = table;
+        	mValues = values;
+        	mWhereClause = whereClause;
+        }
+    }
+
+
     private void initUndo() {
         mUndoStack = new Stack<UndoRow>();
         mRedoStack = new Stack<UndoRow>();
         mUndoEnabled = true;
-        mUndoCommands = new ArrayList<String>();
-//
-//        try {
-//            getDB().getDatabase()
-//                    .execSQL("CREATE TEMPORARY TABLE IF NOT EXISTS undoLog (seq INTEGER PRIMARY KEY NOT NULL, sql TEXT)");
-//        } catch (SQLException e) {
-//            /* Temporary table may still be present if the DB has not been closed */
-//            Log.i(AnkiDroidApp.TAG, "Failed to create temporary table: " + e.getMessage());
-//        }
-//
-//        ArrayList<String> tables = getDB().queryColumn(String.class,
-//                "SELECT name FROM sqlite_master WHERE type = 'table'", 0);
-//        Iterator<String> iter = tables.iterator();
-//        String muh;
-//        while (iter.hasNext()) {
-//            String table = iter.next();
-//            if (table.equals("undoLog") || table.equals("sqlite_stat1")) {
-//                continue;
-//            }
-//            ArrayList<String> columns = getDB().queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
-//            // Insert trigger
-//            StringBuilder sql = new StringBuilder(512);
-//            sql.append("CREATE TEMP TRIGGER IF NOT EXISTS _undo_").append(table).append("_it AFTER INSERT ON ").append(table).
-//                    append(" BEGIN INSERT INTO undoLog VALUES (null, 'DELETE FROM ").append(table).
-//                    append(" WHERE rowid = ' || new.rowid); END");
-//            getDB().getDatabase().execSQL(sql.toString());
-//            // Update trigger
-//            sql = new StringBuilder(512);
-//            sql.append("CREATE TEMP TRIGGER IF NOT EXISTS _undo_").append(table).append("_ut AFTER UPDATE ON ").append(table).
-//                    append(" BEGIN INSERT INTO undoLog VALUES (null, 'UPDATE ").append(table).append(" ");
-//            String sep = "SET ";
-//            muh = sql.toString();
-//            for (String column : columns) {
-//                if (column.equals("unique")) {
-//                    continue;
-//                }
-//                muh = sql.toString();
-//                sql.append(sep).append(column).append("=' || quote(old.").append(column).append(") || '");
-//                muh = sql.toString();
-//                sep = ",";
-//            }
-//            muh = sql.toString();
-//            sql.append(" WHERE rowid = ' || old.rowid); END");
-//            getDB().getDatabase().execSQL(sql.toString());
-//            // Delete trigger
-//            sql = new StringBuilder(512);
-//            sql.append("CREATE TEMP TRIGGER IF NOT EXISTS _undo_").append(table).append("_dt BEFORE DELETE ON ").append(table).
-//                    append(" BEGIN INSERT INTO undoLog VALUES (null, 'INSERT INTO ").append(table).append(" (rowid");
-//            muh = sql.toString();
-//            for (String column : columns) {
-//                sql.append(",\"").append(column).append("\"");
-//                muh = sql.toString();
-//            }
-//            muh = sql.toString();
-//            sql.append(") VALUES (' || old.rowid ||'");
-//            for (String column : columns) {
-//                if (column.equals("unique")) {
-//                    sql.append(",1");
-//                    continue;
-//                }
-//                sql.append(", ' || quote(old.").append(column).append(") ||'");
-//            }
-//            sql.append(")'); END");
-//            getDB().getDatabase().execSQL(sql.toString());
-//        }
+        mUndoCommands = new ArrayList<UndoCommand>();
     }
 
 
@@ -4321,11 +4244,6 @@ public class Deck {
 
 
     public void resetUndo() {
-//    	try {
-//            getDB().getDatabase().execSQL("delete from undoLog");
-//        } catch (SQLException e) {
-//
-//        }
         mUndoCommands.clear();
         mUndoStack.clear();
         mRedoStack.clear();
@@ -4360,8 +4278,6 @@ public class Deck {
         if (!mUndoEnabled) {
             return;
         }
-//
-//        commitToDB();
         if (merge && !mUndoStack.isEmpty()) {
             if ((mUndoStack.peek() != null) && (mUndoStack.peek().mName.equals(name))) {
                 // libanki: merge with last entry?
@@ -4369,6 +4285,7 @@ public class Deck {
             }
         }
         mUndoStack.push(new UndoRow(name, cardId, latestUndoRow(), 0));
+        mRecordUndoInformation = true;
     }
 
 
@@ -4376,7 +4293,6 @@ public class Deck {
         if (!mUndoEnabled) {
             return;
         }
-//        commitToDB();
         int end = latestUndoRow();
         while (mUndoStack.peek() == null) {
             mUndoStack.pop(); // Strip off barrier
@@ -4388,25 +4304,27 @@ public class Deck {
         } else {
             mRedoStack.clear();
         }
+        mRecordUndoInformation = false;
+    }
+
+
+    public boolean recordUndoInformation() {
+    	return mRecordUndoInformation;
+    }
+
+
+    public void addUndoCommand(String command, String table, ContentValues values, String whereClause) {
+    	mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
     }
 
 
     private int latestUndoRow() {
-//        long result = 0;
-//        try {
-//            result = getDB().queryScalar("SELECT MAX(rowid) FROM undoLog");
-//        } catch (SQLException e) {
-//            Log.i(AnkiDroidApp.TAG, e.getMessage());
-//        }
-//        return result;
     	return mUndoCommands.size();
     }
 
 
     private long undoredo(Stack<UndoRow> src, Stack<UndoRow> dst, long oldCardId, boolean inReview) {
-
         UndoRow row;
-//        commitToDB();
         while (true) {
             row = src.pop();
             if (row != null) {
@@ -4419,17 +4337,12 @@ public class Deck {
             end = latestUndoRow();
         }
         
-        ArrayList<String> sql = new ArrayList<String>(); 
-        sql.addAll(mUndoCommands.subList(start, end));
-//        	
-//        	
-//        	getDB().queryColumn(
-//                String.class,
-//                String.format(Utils.ENGLISH_LOCALE, "SELECT sql FROM undoLog " + "WHERE seq > %d and seq <= %d "
-//                        + "ORDER BY seq DESC", start, end), 0);
+        LinkedList<UndoCommand> commands = new LinkedList<UndoCommand>();
+        commands.addAll(mUndoCommands.subList(start, end));
+
         int newstart = latestUndoRow();
-        for (String s : sql) {
-            getDB().getDatabase().execSQL(s);
+        for (UndoCommand u : commands) {
+            getDB().execSQL(this, u.mCommand, u.mTable, u.mValues, u.mWhereClause);
         }
         mCurrentUndoRedoType = row.mName;        
         int newend = latestUndoRow();
