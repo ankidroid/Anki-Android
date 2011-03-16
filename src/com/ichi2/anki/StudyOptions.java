@@ -1227,7 +1227,7 @@ public class StudyOptions extends Activity {
             mEditSessionTime.setText(String.valueOf(timeLimit));
         }
         if (repLimit != 0) {
-            mEditSessionTime.setText(String.valueOf(repLimit));
+            mEditSessionQuestions.setText(String.valueOf(repLimit));
         }
 
         updateLimitTagText(LIMIT_NEW_ACTIVE, deck.getVar("newActive"));
