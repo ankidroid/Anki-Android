@@ -133,7 +133,6 @@ public class AnkiDb {
     	long rowid = mDatabase.insert(table, nullColumnHack, values);
     	if (rowid != -1 && deck.recordUndoInformation()) {
         	deck.addUndoCommand("DEL", table, null, "rowid = " + rowid);
-
     	}
     	return rowid;
     }
@@ -158,7 +157,14 @@ public class AnkiDb {
      * @param onlyFixedValues Set this to true, if 'values' contains only fixed values (no sql code). Otherwise, it must be set to false and fixed string values have to be extra quoted ("\'example-value\'").
      */
     public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues) {
-    	if (deck.recordUndoInformation()) {
+        update(deck, table, values, whereClause, whereArgs, onlyFixedValues, null, null);
+    }
+    public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues, ContentValues[] oldValuesArray, String[] whereClauseArray) {
+        if (oldValuesArray != null) {
+            for (int i = 0; i < oldValuesArray.length; i++) {
+                deck.addUndoCommand("UPD", table, oldValuesArray[i], "rowid = " + whereClauseArray[i]);
+            }
+    	} else if (deck.recordUndoInformation()) {
             ArrayList<String> ar = new ArrayList<String>();
             for (Entry<String, Object> entry : values.valueSet()) {
             	 ar.add(entry.getKey());
@@ -171,8 +177,9 @@ public class AnkiDb {
             Cursor cursor = null;
             try {
                 cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
+                ContentValues oldvalues = new ContentValues();
                 while (cursor.moveToNext()) {
-                	ContentValues oldvalues = new ContentValues();
+                    oldvalues.clear();
                     for (int i = 0; i < len; i++) {
                     	oldvalues.put(columns[i], cursor.getString(i));
                     }
@@ -208,7 +215,14 @@ public class AnkiDb {
      * Method for deleting rows of the database with simultaneous storing of undo information.
      */
     public void delete(Deck deck, String table, String whereClause, String[] whereArgs) {
-    	if (deck.recordUndoInformation()) {
+	delete(deck, table, whereClause, whereArgs, null);
+    }
+    public void delete(Deck deck, String table, String whereClause, String[] whereArgs, ContentValues[] oldValuesArray) {
+        if (oldValuesArray != null) {
+            for (int i = 0; i < oldValuesArray.length; i++) {
+                deck.addUndoCommand("INS", table, oldValuesArray[i], null);
+            }
+    	} else if (deck.recordUndoInformation()) {
     		ArrayList<String> ar = queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
         	int len = ar.size();
         	String[] columns = new String[len + 1];
@@ -217,8 +231,9 @@ public class AnkiDb {
             Cursor cursor = null;
             try {
                 cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
+                ContentValues oldvalues = new ContentValues();
                 while (cursor.moveToNext()) {
-                	ContentValues oldvalues = new ContentValues();
+                    oldvalues.clear();
                     for (int i = 0; i < len; i++) {
                     	oldvalues.put(columns[i], cursor.getString(i));
                     }

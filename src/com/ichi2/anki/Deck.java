@@ -2226,7 +2226,7 @@ public class Deck {
         values.put("newCount", mNewCount);
         values.put("revCardOrder", mRevCardOrder);
 
-        getDB().getDatabase().update("decks", values, "id = " + mId, null);
+        getDB().update(this, "decks", values, "id = " + mId, null);
     }
 
 
@@ -2861,9 +2861,11 @@ public class Deck {
 
     public void _answerCard(Card card, int ease) {
         Log.i(AnkiDroidApp.TAG, "answerCard");
-        String undoName = UNDO_TYPE_ANSWER_CARD;
-        setUndoStart(undoName, card.getId());
         double now = Utils.now();
+	long id = card.getId();
+
+        String undoName = UNDO_TYPE_ANSWER_CARD;
+        setUndoStart(undoName, id);
 
         // Old state
         String oldState = card.getState();
@@ -2871,6 +2873,7 @@ public class Deck {
         double lastDelaySecs = Utils.now() - card.getCombinedDue();
         double lastDelay = lastDelaySecs / 86400.0;
         boolean oldIsRev = card.isRev();
+        ContentValues oldvalues = card.getAnswerValues();
 
         // update card details
         double last = card.getInterval();
@@ -2921,7 +2924,8 @@ public class Deck {
 
         // Save
         card.setCombinedDue(card.getDue());
-        card.toDB();
+        // card.toDB();
+        getDB().update(this, "cards", card.getAnswerValues(), "id = " + id, null, true, new ContentValues[] {oldvalues}, new String[] {"id = " + id});
 
         // global/daily stats
         Stats.updateAllStats(mGlobalStats, mDailyStats, card, ease, oldState);
@@ -4018,9 +4022,6 @@ public class Deck {
     	ContentValues values = new ContentValues();
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
         getDB().update(this, "models", values, "id = " + modelId, null);
-//        getDB().getDatabase().execSQL(
-//                "UPDATE models SET modified = " + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
-//                        + " WHERE id = " + modelId);
         flushMod();
     }
 
@@ -4041,9 +4042,6 @@ public class Deck {
     	ContentValues values = new ContentValues();
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
         getDB().update(this, "models", values, "id = " + modelId, null);
-//        getDB().getDatabase().execSQL(
-//                "UPDATE models SET modified = " + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
-//                        + " WHERE id = " + modelId);
         flushMod();
     }
 
@@ -4337,21 +4335,25 @@ public class Deck {
             end = latestUndoRow();
         }
         
-        LinkedList<UndoCommand> commands = new LinkedList<UndoCommand>();
+        ArrayList<UndoCommand> commands = new ArrayList<UndoCommand>();
         commands.addAll(mUndoCommands.subList(start, end));
 
         int newstart = latestUndoRow();
+	mRecordUndoInformation = true;
         for (UndoCommand u : commands) {
             getDB().execSQL(this, u.mCommand, u.mTable, u.mValues, u.mWhereClause);
         }
-        mCurrentUndoRedoType = row.mName;        
+	mRecordUndoInformation = false;
+        mCurrentUndoRedoType = row.mName;
         int newend = latestUndoRow();
 
-        if (inReview) {
-        	dst.push(new UndoRow(row.mName, row.mCardId, newstart, newend));
-        } else {
-        	dst.push(new UndoRow(row.mName, oldCardId, newstart, newend));
-        }
+	if (newstart != newend) {
+           if (inReview) {
+           	   dst.push(new UndoRow(row.mName, row.mCardId, newstart, newend));
+           } else {
+           	   dst.push(new UndoRow(row.mName, oldCardId, newstart, newend));
+           }
+	}
         return row.mCardId;
     }
 
