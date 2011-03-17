@@ -2862,7 +2862,7 @@ public class Deck {
     public void _answerCard(Card card, int ease) {
         Log.i(AnkiDroidApp.TAG, "answerCard");
         double now = Utils.now();
-	long id = card.getId();
+        long id = card.getId();
 
         String undoName = UNDO_TYPE_ANSWER_CARD;
         setUndoStart(undoName, id);
@@ -4307,7 +4307,7 @@ public class Deck {
 
 
     public boolean recordUndoInformation() {
-    	return mRecordUndoInformation;
+    	return mUndoEnabled && mRecordUndoInformation;
     }
 
 
@@ -4337,23 +4337,29 @@ public class Deck {
         
         ArrayList<UndoCommand> commands = new ArrayList<UndoCommand>();
         commands.addAll(mUndoCommands.subList(start, end));
-
         int newstart = latestUndoRow();
-	mRecordUndoInformation = true;
-        for (UndoCommand u : commands) {
-            getDB().execSQL(this, u.mCommand, u.mTable, u.mValues, u.mWhereClause);
+        getDB().getDatabase().beginTransaction();
+        try {
+            mRecordUndoInformation = true;
+            for (UndoCommand u : commands) {
+                getDB().execSQL(this, u.mCommand, u.mTable, u.mValues, u.mWhereClause);
+            }
+            mRecordUndoInformation = false;
+            getDB().getDatabase().setTransactionSuccessful();
+        } finally {
+        	getDB().getDatabase().endTransaction();
         }
-	mRecordUndoInformation = false;
+
         mCurrentUndoRedoType = row.mName;
         int newend = latestUndoRow();
 
-	if (newstart != newend) {
+        if (newstart != newend) {
            if (inReview) {
            	   dst.push(new UndoRow(row.mName, row.mCardId, newstart, newend));
            } else {
            	   dst.push(new UndoRow(row.mName, oldCardId, newstart, newend));
            }
-	}
+        }
         return row.mCardId;
     }
 

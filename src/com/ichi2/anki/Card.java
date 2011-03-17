@@ -733,8 +733,6 @@ public class Card {
         values.put("matureEase4", mMatureEase4);
         values.put("yesCount", mYesCount);
         values.put("noCount", mNoCount);
-        values.put("spaceUntil", mSpaceUntil);
-        values.put("isDue", 0);
         values.put("type", mType);
         values.put("combinedDue", mCombinedDue);
         values.put("relativeDelay", mRelativeDelay);

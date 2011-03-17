@@ -162,7 +162,7 @@ public class AnkiDb {
     public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues, ContentValues[] oldValuesArray, String[] whereClauseArray) {
         if (oldValuesArray != null) {
             for (int i = 0; i < oldValuesArray.length; i++) {
-                deck.addUndoCommand("UPD", table, oldValuesArray[i], "rowid = " + whereClauseArray[i]);
+                deck.addUndoCommand("UPD", table, oldValuesArray[i], whereClauseArray[i]);
             }
     	} else if (deck.recordUndoInformation()) {
             ArrayList<String> ar = new ArrayList<String>();
@@ -215,14 +215,7 @@ public class AnkiDb {
      * Method for deleting rows of the database with simultaneous storing of undo information.
      */
     public void delete(Deck deck, String table, String whereClause, String[] whereArgs) {
-	delete(deck, table, whereClause, whereArgs, null);
-    }
-    public void delete(Deck deck, String table, String whereClause, String[] whereArgs, ContentValues[] oldValuesArray) {
-        if (oldValuesArray != null) {
-            for (int i = 0; i < oldValuesArray.length; i++) {
-                deck.addUndoCommand("INS", table, oldValuesArray[i], null);
-            }
-    	} else if (deck.recordUndoInformation()) {
+        if (deck.recordUndoInformation()) {
     		ArrayList<String> ar = queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
         	int len = ar.size();
         	String[] columns = new String[len + 1];
