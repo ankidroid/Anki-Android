@@ -1363,7 +1363,6 @@ public class Reviewer extends Activity {
 
     private void displayCardQuestion() {
         sDisplayAnswer = false;
-        hideEaseButtons();
         
         if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
         	mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
@@ -1400,6 +1399,7 @@ public class Reviewer extends Activity {
         }
 
         updateCard(displayString);
+        hideEaseButtons();
     }
 
 
@@ -1452,8 +1452,8 @@ public class Reviewer extends Activity {
 
         mIsSelecting = false;
         mFlipCard.setVisibility(View.GONE);
-        showEaseButtons();
         updateCard(displayString);
+        showEaseButtons();
     }
 
 

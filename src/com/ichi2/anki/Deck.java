@@ -224,8 +224,7 @@ public class Deck {
     private Stack<UndoRow> mUndoStack;
     private Stack<UndoRow> mRedoStack;
     private boolean mUndoEnabled = false;
-    public ArrayList<UndoCommand> mUndoCommands;
-    private boolean mRecordUndoInformation = false;
+    private Stack<UndoRow> mUndoReStackToRecord = null;
 
 
     public static synchronized Deck openDeck(String path) throws SQLException {
@@ -4184,16 +4183,13 @@ public class Deck {
 
     private class UndoRow {
         private String mName;
-        private int mStart;
-        private int mEnd;
         private Long mCardId;
+        private ArrayList<UndoCommand> mUndoCommands;
 
-
-        UndoRow(String name, Long cardId, int start, int end) {
+        UndoRow(String name, Long cardId) {
             mName = name;
             mCardId = cardId;
-            mStart = start;
-            mEnd = end;
+            mUndoCommands = new ArrayList<UndoCommand>();
         }
     }
 
@@ -4217,7 +4213,6 @@ public class Deck {
         mUndoStack = new Stack<UndoRow>();
         mRedoStack = new Stack<UndoRow>();
         mUndoEnabled = true;
-        mUndoCommands = new ArrayList<UndoCommand>();
     }
 
 
@@ -4242,7 +4237,6 @@ public class Deck {
 
 
     public void resetUndo() {
-        mUndoCommands.clear();
         mUndoStack.clear();
         mRedoStack.clear();
     }
@@ -4282,8 +4276,11 @@ public class Deck {
                 return;
             }
         }
-        mUndoStack.push(new UndoRow(name, cardId, latestUndoRow(), 0));
-        mRecordUndoInformation = true;
+        mUndoStack.push(new UndoRow(name, cardId));
+	if (mUndoStack.size() > 20) {
+		mUndoStack.removeElement(0);
+	}
+        mUndoReStackToRecord = mUndoStack;
     }
 
 
@@ -4291,33 +4288,26 @@ public class Deck {
         if (!mUndoEnabled) {
             return;
         }
-        int end = latestUndoRow();
         while (mUndoStack.peek() == null) {
             mUndoStack.pop(); // Strip off barrier
         }
         UndoRow row = mUndoStack.peek();
-        row.mEnd = end;
-        if (row.mStart == row.mEnd) {
+        if (row.mUndoCommands.size() == 0) {
             mUndoStack.pop();
         } else {
             mRedoStack.clear();
         }
-        mRecordUndoInformation = false;
+        mUndoReStackToRecord = null;
     }
 
 
     public boolean recordUndoInformation() {
-    	return mUndoEnabled && mRecordUndoInformation;
+    	return mUndoEnabled && (mUndoReStackToRecord != null);
     }
 
 
     public void addUndoCommand(String command, String table, ContentValues values, String whereClause) {
-    	mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
-    }
-
-
-    private int latestUndoRow() {
-    	return mUndoCommands.size();
+    	mUndoReStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
     }
 
 
@@ -4329,37 +4319,26 @@ public class Deck {
                 break;
             }
         }
-        int start = row.mStart;
-        int end = row.mEnd;
-        if (end == 0) {
-            end = latestUndoRow();
+        if (inReview) {
+           dst.push(new UndoRow(row.mName, row.mCardId));
+        } else {
+           dst.push(new UndoRow(row.mName, oldCardId));
         }
-        
-        ArrayList<UndoCommand> commands = new ArrayList<UndoCommand>();
-        commands.addAll(mUndoCommands.subList(start, end));
-        int newstart = latestUndoRow();
+        mUndoReStackToRecord = mRedoStack;
         getDB().getDatabase().beginTransaction();
         try {
-            mRecordUndoInformation = true;
-            for (UndoCommand u : commands) {
+            for (UndoCommand u : row.mUndoCommands) {
                 getDB().execSQL(this, u.mCommand, u.mTable, u.mValues, u.mWhereClause);
             }
-            mRecordUndoInformation = false;
             getDB().getDatabase().setTransactionSuccessful();
         } finally {
+        	mUndoReStackToRecord = null;
         	getDB().getDatabase().endTransaction();
         }
-
-        mCurrentUndoRedoType = row.mName;
-        int newend = latestUndoRow();
-
-        if (newstart != newend) {
-           if (inReview) {
-           	   dst.push(new UndoRow(row.mName, row.mCardId, newstart, newend));
-           } else {
-           	   dst.push(new UndoRow(row.mName, oldCardId, newstart, newend));
-           }
+        if (row.mUndoCommands.size() == 0) {
+        	dst.pop();
         }
+        mCurrentUndoRedoType = row.mName;
         return row.mCardId;
     }
 

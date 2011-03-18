@@ -160,36 +160,37 @@ public class AnkiDb {
         update(deck, table, values, whereClause, whereArgs, onlyFixedValues, null, null);
     }
     public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues, ContentValues[] oldValuesArray, String[] whereClauseArray) {
-        if (oldValuesArray != null) {
-            for (int i = 0; i < oldValuesArray.length; i++) {
-                deck.addUndoCommand("UPD", table, oldValuesArray[i], whereClauseArray[i]);
-            }
-    	} else if (deck.recordUndoInformation()) {
-            ArrayList<String> ar = new ArrayList<String>();
-            for (Entry<String, Object> entry : values.valueSet()) {
-            	 ar.add(entry.getKey());
-            }
-            int len = ar.size();
-            String[] columns = new String[len + 1];
-            ar.toArray(columns);
-            columns[len] = "rowid";
+    	if (deck.recordUndoInformation()) {
+        	if (oldValuesArray != null) {
+                for (int i = 0; i < oldValuesArray.length; i++) {
+                    deck.addUndoCommand("UPD", table, oldValuesArray[i], whereClauseArray[i]);
+                }
+        	} else {
+                ArrayList<String> ar = new ArrayList<String>();
+                for (Entry<String, Object> entry : values.valueSet()) {
+                	 ar.add(entry.getKey());
+                }
+                int len = ar.size();
+                String[] columns = new String[len + 1];
+                ar.toArray(columns);
+                columns[len] = "rowid";
 
-            Cursor cursor = null;
-            try {
-                cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
-                ContentValues oldvalues = new ContentValues();
-                while (cursor.moveToNext()) {
-                    oldvalues.clear();
-                    for (int i = 0; i < len; i++) {
-                    	oldvalues.put(columns[i], cursor.getString(i));
+                Cursor cursor = null;
+                try {
+                    cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
+                    while (cursor.moveToNext()) {
+                        ContentValues oldvalues = new ContentValues();
+                        for (int i = 0; i < len; i++) {
+                        	oldvalues.put(columns[i], cursor.getString(i));
+                        }
+                        deck.addUndoCommand("UPD", table, oldvalues, "rowid = " + cursor.getString(len));
                     }
-                    deck.addUndoCommand("UPD", table, oldvalues, "rowid = " + cursor.getString(len));
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
                 }
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
-            }
+        	}    		
     	}
     	if (onlyFixedValues) {
     		mDatabase.update(table, values, whereClause, whereArgs);
@@ -224,9 +225,8 @@ public class AnkiDb {
             Cursor cursor = null;
             try {
                 cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
-                ContentValues oldvalues = new ContentValues();
                 while (cursor.moveToNext()) {
-                    oldvalues.clear();
+                    ContentValues oldvalues = new ContentValues();
                     for (int i = 0; i < len; i++) {
                     	oldvalues.put(columns[i], cursor.getString(i));
                     }
