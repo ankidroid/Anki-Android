@@ -16,6 +16,8 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
+import java.net.URI;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -158,6 +160,9 @@ public class Sound {
         	if (sSoundPaths.contains(soundPath)) {
             sMediaPlayer = new MediaPlayer();
             try {
+                // soundPath is usually an URI, but Media player requires a path not url encoded
+                URI soundURI = new URI(soundPath);
+                soundPath = new File(soundURI).getAbsolutePath();
                 sMediaPlayer.setDataSource(soundPath);
                 sMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
                 sMediaPlayer.prepare();
