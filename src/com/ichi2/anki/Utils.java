@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -80,7 +81,6 @@ public class Utils {
 
     public static final int CHUNK_SIZE = 32768;
 
-    private static final long MILLIS_IN_A_DAY = 86400000;
     private static final int DAYS_BEFORE_1970 = 719163;
 
     private static TreeSet<Long> sIdTree;
@@ -568,21 +568,21 @@ public class Utils {
         return base;
     }
 
+
+    /**
+     * @param mediaDir media directory path on SD card
+     * @return path converted to file URL, properly UTF-8 URL encoded
+     */
     public static String urlEncodeMediaDir(String mediaDir) {
         String base;
-        File mediaDirFile = new File(mediaDir);
-        File parentFile = mediaDirFile.getParentFile();
-        String mediaDirName = mediaDirFile.getName();
-        
-        try {
-            // Use URLEncoder class to ensure the deckName part of the url is properly encoded
-            mediaDirName = URLEncoder.encode(mediaDirName, "UTF-8");
-            // Build complete URL
-            base = parentFile.toURL().toExternalForm() + "/" + mediaDirName + "/";
-        } catch (Exception ex) {
-            Log.e(AnkiDroidApp.TAG, "Building media base URL");
-            throw new RuntimeException(ex);
-        }
+        // Use android.net.Uri class to ensure whole path is properly encoded
+        // File.toURL() does not work here, and URLEncoder class is not directly usable
+        // with existing slashes
+        Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
+
+        // Build complete URL
+        base = mediaDirUri.toString() +"/";
+
         return base;
     }
 

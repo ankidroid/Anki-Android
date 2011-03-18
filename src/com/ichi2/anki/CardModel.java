@@ -199,7 +199,7 @@ public class CardModel implements Comparator<CardModel> {
         values.put("answerFontColour", mAnswerFontColour);
         values.put("answerAlign", mAnswerAlign);
         values.put("lastFontColour", mLastFontColour);
-        deck.getDB().getDatabase().update("cardModels", values, "id = " + mId, null);
+        deck.getDB().update(deck, "cardModels", values, "id = " + mId, null);
     }
 
 

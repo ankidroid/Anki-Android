@@ -172,11 +172,21 @@ public class Stats {
         values.put("matureEase2", 0);
         values.put("matureEase3", 0);
         values.put("matureEase4", 0);
-        mId = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("stats", null, values);
+        mId = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).insert(mDeck, "stats", null, values);
     }
 
 
     public void toDB() {
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "stats", getValues(), "id = " + mId, null);
+    }
+
+
+    public void toDB(ContentValues oldValues) {
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "stats", getValues(), "id = " + mId, null, true, new ContentValues[] {oldValues}, new String[] {"id = " + mId});
+    }
+
+
+    private ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put("type", mType);
         values.put("day", mDay.toString());
@@ -198,8 +208,7 @@ public class Stats {
         values.put("matureEase2", mMatureEase2);
         values.put("matureEase3", mMatureEase3);
         values.put("matureEase4", mMatureEase4);
-
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("stats", values, "id = " + mId, null);
+	return values;
     }
 
 
@@ -210,6 +219,7 @@ public class Stats {
 
 
     public static void updateStats(Stats stats, Card card, int ease, String oldState) {
+    	ContentValues oldValues = stats.getValues();
         char[] newState = oldState.toCharArray();
         stats.mReps += 1;
         double delay = card.totalTime();
@@ -229,8 +239,7 @@ public class Stats {
         } catch (Exception e) {
             Log.e(AnkiDroidApp.TAG, "Failed to update " + attr + " : " + e.getMessage());
         }
-
-        stats.toDB();
+        stats.toDB(oldValues);
     }
 
 
