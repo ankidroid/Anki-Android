@@ -33,6 +33,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -67,6 +68,10 @@ public class AnkiDroidWidget extends AppWidgetProvider {
          * associated with them, but want to clear it off afterwards.
          */
         private static final String ACTION_IGNORE = "org.ichi2.anki.AnkiDroidWidget.IGNORE";
+        /**
+         * If this action is used when starting the service, it will open the current due deck.
+         */
+        private static final String ACTION_OPEN = "org.ichi2.anki.AnkiDroidWidget.OPEN";
 
         /**
          * The current due deck that is shown in the widget.
@@ -150,6 +155,17 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     updateDueDecksNow = false;
                 } else if (ACTION_IGNORE.equals(intent.getAction())) {
                     updateDueDecksNow = false;
+                } else if (ACTION_OPEN.equals(intent.getAction())) {
+                    if (currentDueDeck >= 0 && currentDueDeck < dueDecks.size()) {
+                        Intent openDeckIntent = new Intent(this, StudyOptions.class);
+                        openDeckIntent.setAction(Intent.ACTION_MAIN);
+                        openDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        // TODO(flerda): Tell the activity which deck to open.
+                        // DeckInformation dueDeck = dueDecks.get(currentDueDeck);
+                        // openDeckIntent.putExtra(StudyOptions.EXTRA_DECK, dueDeck.mDeckName);
+                        startActivity(openDeckIntent);
+                    }
+                    updateDueDecksNow = false;
                 }
             }
             RemoteViews updateViews = buildUpdate(this, updateDueDecksNow);
@@ -207,6 +223,9 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     deckInformation.mDeckName);
                 updateViews.setTextViewText(R.id.anki_droid_status,
                     deckInformation.getDeckStatus());
+                PendingIntent openPendingIntent = getOpenPendingIntent(context);
+                updateViews.setOnClickPendingIntent(R.id.anki_droid_name, openPendingIntent);
+                updateViews.setOnClickPendingIntent(R.id.anki_droid_status, openPendingIntent);
                 // Enable or disable the prev and next buttons.
                 if (currentDueDeck > 0) {
                     updateViews.setImageViewResource(R.id.anki_droid_prev, R.drawable.widget_left_arrow);
@@ -222,12 +241,20 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     updateViews.setImageViewResource(R.id.anki_droid_next, R.drawable.widget_right_arrow_disabled);
                     updateViews.setOnClickPendingIntent(R.id.anki_droid_next, getIgnoredPendingIntent(context));
                 }
+                updateViews.setViewVisibility(R.id.anki_droid_name, View.VISIBLE);
+                updateViews.setViewVisibility(R.id.anki_droid_status, View.VISIBLE);
+                updateViews.setViewVisibility(R.id.anki_droid_next, View.VISIBLE);
+                updateViews.setViewVisibility(R.id.anki_droid_prev, View.VISIBLE);
             } else {
                 // No card is currently due.
                 updateViews.setTextViewText(R.id.anki_droid_title,
                     context.getString(R.string.widget_no_cards_due));
                 updateViews.setTextViewText(R.id.anki_droid_name, "");
                 updateViews.setTextViewText(R.id.anki_droid_status, "");
+                updateViews.setViewVisibility(R.id.anki_droid_name, View.INVISIBLE);
+                updateViews.setViewVisibility(R.id.anki_droid_status, View.INVISIBLE);
+                updateViews.setViewVisibility(R.id.anki_droid_next, View.INVISIBLE);
+                updateViews.setViewVisibility(R.id.anki_droid_prev, View.INVISIBLE);
             }
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
@@ -337,6 +364,15 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         private PendingIntent getIgnoredPendingIntent(Context context) {
             Intent ankiDroidIntent = new Intent(context, UpdateService.class);
             ankiDroidIntent.setAction(ACTION_IGNORE);
+            return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
+        }
+
+        /**
+         * Returns a pending intent that opens the current deck.
+         */
+        private PendingIntent getOpenPendingIntent(Context context) {
+            Intent ankiDroidIntent = new Intent(context, UpdateService.class);
+            ankiDroidIntent.setAction(ACTION_OPEN);
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
