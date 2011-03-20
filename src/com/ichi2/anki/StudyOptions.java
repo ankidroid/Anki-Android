@@ -2016,7 +2016,9 @@ public class StudyOptions extends Activity {
                 }
             }
             Deck deck = AnkiDroidApp.deck();
-            mToggleLimit.setChecked(deck.isLimitedByTag() || deck.getSessionRepLimit() + deck.getSessionTimeLimit() > 0);
+            if (deck != null) {
+                mToggleLimit.setChecked(deck.isLimitedByTag() || deck.getSessionRepLimit() + deck.getSessionTimeLimit() > 0);            	
+            }
             mStudyOptionsMain.setVisibility(View.VISIBLE);
         }
 
