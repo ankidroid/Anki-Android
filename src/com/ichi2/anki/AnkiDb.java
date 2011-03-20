@@ -109,6 +109,47 @@ public class AnkiDb {
 
 
     /**
+     * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
+     * the specified class. See Deck.initUndo() for a usage example.
+     *
+     * @param type The class of the column's data type. Example: int.class, String.class.
+     * @param query The SQL query statement.
+     * @param column The column id in the result set to return.
+     * @return An ArrayList with the contents of the specified column.
+     */
+    public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
+        ArrayList<T> results = new ArrayList<T>();
+        Cursor cursor = null;
+
+        try {
+            cursor = mDatabase.rawQuery(query, null);
+            String methodName = getCursorMethodName(type.getSimpleName());
+            while (cursor.moveToNext()) {
+                // The magical line. Almost as illegible as python code ;)
+                results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+            }
+        } catch (NoSuchMethodException e) {
+            // This is really coding error, so it should be revealed if it ever happens
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            // This is really coding error, so it should be revealed if it ever happens
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            // This is really coding error, so it should be revealed if it ever happens
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return results;
+    }
+
+
+    /**
      * Method for executing db commands with simultaneous storing of undo information. This should only be called from undo method.
      */
     public void execSQL(Deck deck, String command, String table, ContentValues values, String whereClause) {
@@ -166,9 +207,9 @@ public class AnkiDb {
                     deck.addUndoCommand("UPD", table, oldValuesArray[i], whereClauseArray[i]);
                 }
         	} else {
-                ArrayList<String> ar = new ArrayList<String>();
+        		ArrayList<String> ar = new ArrayList<String>();
                 for (Entry<String, Object> entry : values.valueSet()) {
-                	 ar.add(entry.getKey());
+                	ar.add(entry.getKey());
                 }
                 int len = ar.size();
                 String[] columns = new String[len + 1];
@@ -181,7 +222,25 @@ public class AnkiDb {
                     while (cursor.moveToNext()) {
                         ContentValues oldvalues = new ContentValues();
                         for (int i = 0; i < len; i++) {
-                        	oldvalues.put(columns[i], cursor.getString(i));
+//                        	String typeName;
+//                        	if (values.get(columns[i]) != null) {
+//                        		typeName = values.get(columns[i]).getClass().getSimpleName();
+//                        	} else {
+//                        		typeName = "String";
+//                        	}
+//                    		if (typeName.equals("String")) {
+//                    			oldvalues.put(columns[i], cursor.getString(i));
+//                            } else if (typeName.equals("Long")) {
+//                            	oldvalues.put(columns[i], cursor.getLong(i));
+//                            } else if (typeName.equals("Double")) {
+//                            	oldvalues.put(columns[i], cursor.getDouble(i));
+//                            } else if (typeName.equals("Integer")) {
+//                            	oldvalues.put(columns[i], cursor.getInt(i));
+//                            } else if (typeName.equals("Float")) {
+//                            	oldvalues.put(columns[i], cursor.getFloat(i));
+//                            } else {
+                            	oldvalues.put(columns[i], cursor.getString(i));
+//                            }
                         }
                         deck.addUndoCommand("UPD", table, oldvalues, "rowid = " + cursor.getString(len));
                     }
@@ -217,69 +276,64 @@ public class AnkiDb {
      */
     public void delete(Deck deck, String table, String whereClause, String[] whereArgs) {
         if (deck.recordUndoInformation()) {
-    		ArrayList<String> ar = queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
-        	int len = ar.size();
-        	String[] columns = new String[len + 1];
-            ar.toArray(columns);
-
+        	ArrayList<String> columnsNames = new ArrayList<String>();
+//        	ArrayList<String> columnTypes = new ArrayList<String>();
             Cursor cursor = null;
+
             try {
-                cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
+                cursor = mDatabase.rawQuery("PRAGMA TABLE_INFO(" + table + ")", null);
                 while (cursor.moveToNext()) {
-                    ContentValues oldvalues = new ContentValues();
-                    for (int i = 0; i < len; i++) {
-                    	oldvalues.put(columns[i], cursor.getString(i));
-                    }
-                    deck.addUndoCommand("INS", table, oldvalues, null);
+                	columnsNames.add(cursor.getString(1));
+//                	String t = cursor.getString(2).toLowerCase();
+//                    String typeName = "";
+//                    if (t.subSequence(0, 3).equals("int")) {
+//                    	typeName = "Long";
+//                    } else if (t.equals("float")) {
+//                    	typeName = "Double";
+//                    } else {
+//                    	typeName = "String";
+//                    }
+//                    columnTypes.add(typeName);
                 }
             } finally {
                 if (cursor != null) {
                     cursor.close();
                 }
             }
+            
+        	int len = columnsNames.size();
+        	String[] columns = new String[len];
+        	columnsNames.toArray(columns);
+
+            try {
+                cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
+                while (cursor.moveToNext()) {
+                    ContentValues oldvalues = new ContentValues();
+                    for (int i = 0; i < len; i++) {
+//                    	String typeName = columnTypes.get(i);
+//                		if (typeName.equals("String")) {
+//                			oldvalues.put(columns[i], cursor.getString(i));
+//                        } else if (typeName.equals("Long")) {
+//                        	oldvalues.put(columns[i], cursor.getLong(i));
+//                        } else if (typeName.equals("Double")) {
+//                        	oldvalues.put(columns[i], cursor.getDouble(i));
+//                        } else if (typeName.equals("Integer")) {
+//                        	oldvalues.put(columns[i], cursor.getInt(i));
+//                        } else if (typeName.equals("Float")) {
+//                        	oldvalues.put(columns[i], cursor.getFloat(i));
+//                        } else {
+                        	oldvalues.put(columns[i], cursor.getString(i));
+//                        }
+                    }
+                    deck.addUndoCommand("INS", table, oldvalues, null);
+                }
+			} finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
     	}
     	mDatabase.delete(table, whereClause, whereArgs);
-    }
-
-
-    /**
-     * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
-     * the specified class. See Deck.initUndo() for a usage example.
-     *
-     * @param type The class of the column's data type. Example: int.class, String.class.
-     * @param query The SQL query statement.
-     * @param column The column id in the result set to return.
-     * @return An ArrayList with the contents of the specified column.
-     */
-    public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
-        ArrayList<T> results = new ArrayList<T>();
-        Cursor cursor = null;
-
-        try {
-            cursor = mDatabase.rawQuery(query, null);
-            String methodName = getCursorMethodName(type.getSimpleName());
-            while (cursor.moveToNext()) {
-                // The magical line. Almost as illegible as python code ;)
-                results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
-            }
-        } catch (NoSuchMethodException e) {
-            // This is really coding error, so it should be revealed if it ever happens
-            throw new RuntimeException(e);
-        } catch (IllegalArgumentException e) {
-            // This is really coding error, so it should be revealed if it ever happens
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            // This is really coding error, so it should be revealed if it ever happens
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        return results;
     }
 
 

@@ -224,7 +224,7 @@ public class Deck {
     private Stack<UndoRow> mUndoStack;
     private Stack<UndoRow> mRedoStack;
     private boolean mUndoEnabled = false;
-    private Stack<UndoRow> mUndoReStackToRecord = null;
+    private Stack<UndoRow> mUndoRedoStackToRecord = null;
 
 
     public static synchronized Deck openDeck(String path) throws SQLException {
@@ -4277,10 +4277,10 @@ public class Deck {
             }
         }
         mUndoStack.push(new UndoRow(name, cardId));
-	if (mUndoStack.size() > 20) {
-		mUndoStack.removeElement(0);
-	}
-        mUndoReStackToRecord = mUndoStack;
+        if (mUndoStack.size() > 20) {
+        	mUndoStack.removeElement(0);
+        }
+        mUndoRedoStackToRecord = mUndoStack;
     }
 
 
@@ -4297,17 +4297,17 @@ public class Deck {
         } else {
             mRedoStack.clear();
         }
-        mUndoReStackToRecord = null;
+        mUndoRedoStackToRecord = null;
     }
 
 
     public boolean recordUndoInformation() {
-    	return mUndoEnabled && (mUndoReStackToRecord != null);
+    	return mUndoEnabled && (mUndoRedoStackToRecord != null);
     }
 
 
     public void addUndoCommand(String command, String table, ContentValues values, String whereClause) {
-    	mUndoReStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
+    	mUndoRedoStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
     }
 
 
@@ -4324,7 +4324,7 @@ public class Deck {
         } else {
            dst.push(new UndoRow(row.mName, oldCardId));
         }
-        mUndoReStackToRecord = mRedoStack;
+        mUndoRedoStackToRecord = dst;
         getDB().getDatabase().beginTransaction();
         try {
             for (UndoCommand u : row.mUndoCommands) {
@@ -4332,7 +4332,7 @@ public class Deck {
             }
             getDB().getDatabase().setTransactionSuccessful();
         } finally {
-        	mUndoReStackToRecord = null;
+        	mUndoRedoStackToRecord = null;
         	getDB().getDatabase().endTransaction();
         }
         if (row.mUndoCommands.size() == 0) {
