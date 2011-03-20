@@ -516,7 +516,10 @@ public class Reviewer extends Activity {
             if (mPrefFullscreenReview) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                requestWindowFeature(Window.FEATURE_NO_TITLE);
+                // Do not hide the title bar in Honeycomb, since it contains the action bar.
+                if (Integer.valueOf(android.os.Build.VERSION.SDK) < 11) {
+                    requestWindowFeature(Window.FEATURE_NO_TITLE);
+                }
             }
 
             requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -704,13 +707,13 @@ public class Reviewer extends Activity {
         MenuItem item;
         Resources res = getResources();
         if (mPrefWhiteboard) {
-            item = menu.add(Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.show_whiteboard);
-            item.setIcon(R.drawable.ic_menu_compose);
-            item = menu.add(Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE, R.string.clear_whiteboard);
-            item.setIcon(R.drawable.ic_menu_clear_playlist);
+            Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE,
+                    R.string.show_whiteboard, R.drawable.ic_menu_compose);
+            Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE,
+                    R.string.clear_whiteboard, R.drawable.ic_menu_clear_playlist);
         }
-        item = menu.add(Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card);
-        item.setIcon(R.drawable.ic_menu_edit);
+        Utils.addMenuItem(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card,
+                R.drawable.ic_menu_edit);
 
         SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_remove_card);
         removeDeckSubMenu.setIcon(R.drawable.ic_menu_stop);
@@ -723,10 +726,10 @@ public class Reviewer extends Activity {
             item.setIcon(R.drawable.ic_menu_search);
         }
         item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
-        item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
-        item.setIcon(R.drawable.ic_menu_revert);
-        item = menu.add(Menu.NONE, MENU_REDO, Menu.NONE, R.string.redo);
-        item.setIcon(R.drawable.ic_menu_redo);        	
+        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo,
+                R.drawable.ic_menu_revert);
+        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_REDO, Menu.NONE, R.string.redo,
+                R.drawable.ic_menu_redo);
         return true;
     }
 
