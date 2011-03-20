@@ -23,6 +23,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -48,6 +50,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.StringBuilder;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -789,5 +794,46 @@ public class Utils {
         Calendar cal = Calendar.getInstance();
         // 4am
         return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+    }
+
+    /**
+     * Adds a menu item to the given menu.
+     */
+    public static MenuItem addMenuItem(Menu menu, int groupId, int itemId, int order, int titleRes,
+            int iconRes) {
+        MenuItem item = menu.add(groupId, itemId, order, titleRes);
+        item.setIcon(iconRes);
+        return item;
+    }
+
+    /**
+     * Adds a menu item to the given menu and marks it as a candidate to be in the action bar.
+     */
+    public static MenuItem addMenuItemInActionBar(Menu menu, int groupId, int itemId, int order,
+            int titleRes, int iconRes) {
+        MenuItem item = addMenuItem(menu, groupId, itemId, order, titleRes, iconRes);
+        setShowAsActionIfRoom(item);
+        return item;
+    }
+
+    /**
+     * Sets the menu item to appear in the action bar via reflection.
+     * <p>
+     * This method uses reflection so that it works on all platforms. It any error occurs, assume
+     * the action bar is not available and just proceed.
+     */
+    private static void setShowAsActionIfRoom(MenuItem item) {
+        try {
+            Field showAsActionIfRoom = item.getClass().getField("SHOW_AS_ACTION_IF_ROOM");
+            Method setShowAsAction = item.getClass().getMethod("setShowAsAction", int.class);
+            setShowAsAction.invoke(item, showAsActionIfRoom.get(null));
+        } catch (SecurityException e) {
+        } catch (NoSuchMethodException e) {
+        } catch (NoSuchFieldException e) {
+        } catch (IllegalArgumentException e) {
+        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException e) {
+        } catch (NullPointerException e) {
+        }
     }
 }
