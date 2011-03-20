@@ -4278,7 +4278,7 @@ public class Deck {
         }
         mUndoStack.push(new UndoRow(name, cardId));
         if (mUndoStack.size() > 20) {
-        	mUndoStack.removeElement(0);
+        	mUndoStack.removeElementAt(0);
         }
         mUndoRedoStackToRecord = mUndoStack;
     }
