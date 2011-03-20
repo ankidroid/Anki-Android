@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,6 +26,7 @@ import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -91,7 +93,7 @@ public class AnkiDb {
         long scalar;
         try {
             cursor = mDatabase.rawQuery(query, null);
-            if (!cursor.moveToFirst()) {
+            if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
             }
 
@@ -103,6 +105,140 @@ public class AnkiDb {
         }
 
         return scalar;
+    }
+
+
+    /**
+     * Method for executing db commands with simultaneous storing of undo information. This should only be called from undo method.
+     */
+    public void execSQL(Deck deck, String command, String table, ContentValues values, String whereClause) {
+    	if (command.equals("INS")) {
+			insert(deck, table, null, values);
+    	} else if (command.equals("UPD")) {
+			update(deck, table, values, whereClause, null);
+    	} else if (command.equals("DEL")) {
+    		delete(deck, table, whereClause, null);
+    	} else {
+    		Log.i(AnkiDroidApp.TAG, "wrong command. no action performed");
+    	}
+    }
+
+
+    /**
+     * Method for inserting rows into the db with simultaneous storing of undo information.
+     * 
+     * @return The id of the inserted row.
+     */
+    public long insert(Deck deck, String table, String nullColumnHack, ContentValues values) {
+    	long rowid = mDatabase.insert(table, nullColumnHack, values);
+    	if (rowid != -1 && deck.recordUndoInformation()) {
+        	deck.addUndoCommand("DEL", table, null, "rowid = " + rowid);
+    	}
+    	return rowid;
+    }
+
+
+    /**
+     * Method for updating rows of the database with simultaneous storing of undo information.
+     * 
+     * @param values A map from column names to new column values. Values must not contain sql code/variables. Otherwise use update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues) with 'onlyFixedValues' = false.
+     * @param whereClause The optional WHERE clause to apply when updating. Passing null will update all rows.
+     * @param whereArgs Arguments which will replace all '?'s of the whereClause.
+     */
+    public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs) {
+    	update(deck, table, values, whereClause, whereArgs, true);
+    }
+    /**
+     * Method for updating rows of the database with simultaneous storing of undo information.
+     * 
+     * @param values A map from column names to new column values. null is a valid value that will be translated to NULL.
+     * @param whereClause The optional WHERE clause to apply when updating. Passing null will update all rows.
+     * @param whereArgs Arguments which will replace all '?'s of the whereClause.
+     * @param onlyFixedValues Set this to true, if 'values' contains only fixed values (no sql code). Otherwise, it must be set to false and fixed string values have to be extra quoted ("\'example-value\'").
+     */
+    public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues) {
+        update(deck, table, values, whereClause, whereArgs, onlyFixedValues, null, null);
+    }
+    public void update(Deck deck, String table, ContentValues values, String whereClause, String[] whereArgs, boolean onlyFixedValues, ContentValues[] oldValuesArray, String[] whereClauseArray) {
+    	if (deck.recordUndoInformation()) {
+        	if (oldValuesArray != null) {
+                for (int i = 0; i < oldValuesArray.length; i++) {
+                    deck.addUndoCommand("UPD", table, oldValuesArray[i], whereClauseArray[i]);
+                }
+        	} else {
+                ArrayList<String> ar = new ArrayList<String>();
+                for (Entry<String, Object> entry : values.valueSet()) {
+                	 ar.add(entry.getKey());
+                }
+                int len = ar.size();
+                String[] columns = new String[len + 1];
+                ar.toArray(columns);
+                columns[len] = "rowid";
+
+                Cursor cursor = null;
+                try {
+                    cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
+                    while (cursor.moveToNext()) {
+                        ContentValues oldvalues = new ContentValues();
+                        for (int i = 0; i < len; i++) {
+                        	oldvalues.put(columns[i], cursor.getString(i));
+                        }
+                        deck.addUndoCommand("UPD", table, oldvalues, "rowid = " + cursor.getString(len));
+                    }
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                }
+        	}    		
+    	}
+    	if (onlyFixedValues) {
+    		mDatabase.update(table, values, whereClause, whereArgs);
+    	} else {
+    		StringBuilder sb = new StringBuilder();
+    		sb.append("UPDATE ").append(table).append(" SET ");
+    		for (Entry<String, Object> entry : values.valueSet()) {
+				sb.append(entry.getKey()).append(" = ").append(entry.getValue()).append(", ");
+    		}
+    		sb.deleteCharAt(sb.length() - 2);
+    		if (whereArgs != null) {
+        		for (int i = 0; i < whereArgs.length; i++) {
+        			whereClause = whereClause.replaceFirst("?", whereArgs[i]);
+        		}    			
+    		}
+    		sb.append("WHERE ").append(whereClause);
+		    mDatabase.execSQL(sb.toString());
+		}
+    }
+
+
+    /**
+     * Method for deleting rows of the database with simultaneous storing of undo information.
+     */
+    public void delete(Deck deck, String table, String whereClause, String[] whereArgs) {
+        if (deck.recordUndoInformation()) {
+    		ArrayList<String> ar = queryColumn(String.class, "PRAGMA TABLE_INFO(" + table + ")", 1);
+        	int len = ar.size();
+        	String[] columns = new String[len + 1];
+            ar.toArray(columns);
+
+            Cursor cursor = null;
+            try {
+                cursor = mDatabase.query(table, columns, whereClause, whereArgs, null, null, null);
+                while (cursor.moveToNext()) {
+                    ContentValues oldvalues = new ContentValues();
+                    for (int i = 0; i < len; i++) {
+                    	oldvalues.put(columns[i], cursor.getString(i));
+                    }
+                    deck.addUndoCommand("INS", table, oldvalues, null);
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+    	}
+    	mDatabase.delete(table, whereClause, whereArgs);
     }
 
 

@@ -186,14 +186,14 @@ public class Fact {
         updateValues.put("modified", now);
         updateValues.put("tags", mTags);
         updateValues.put("spaceUntil", mSpaceUntil);
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("facts", updateValues, "id = ?",
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "facts", updateValues, "id = ?",
                 new String[] { "" + mId });
 
         // update fields table
         for (Field f : mFields) {
             updateValues = new ContentValues();
             updateValues.put("value", f.mValue);
-            AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("fields", updateValues, "id = ?",
+            AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "fields", updateValues, "id = ?",
                     new String[] { "" + f.mFieldId });
         }
     }

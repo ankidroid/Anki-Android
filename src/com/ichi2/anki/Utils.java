@@ -17,10 +17,12 @@
 
 package com.ichi2.anki;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -54,6 +56,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
@@ -83,7 +86,6 @@ public class Utils {
 
     public static final int CHUNK_SIZE = 32768;
 
-    private static final long MILLIS_IN_A_DAY = 86400000;
     private static final int DAYS_BEFORE_1970 = 719163;
 
     private static TreeSet<Long> sIdTree;
@@ -545,25 +547,47 @@ public class Utils {
      * @return True if an Intent with the specified action can be sent and responded to, false otherwise.
      */
     public static boolean isIntentAvailable(Context context, String action) {
+        return isIntentAvailable(context, action, null);
+    }
+
+    public static boolean isIntentAvailable(Context context, String action, ComponentName componentName) {
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(action);
+        intent.setComponent(componentName);
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
 
-
+    
     public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
         String base = model.getFeatures().trim();
         if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
             return base;
         } else {
             // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
-            // Reviewer.onCreate() and use the value from there
-            base = mediaDir;
-            if (base != null) {
-                base = "file://" + base + "/";
+            // Reviewer.onCreate() and use the value from there            
+            if (mediaDir != null) {                              
+                base = urlEncodeMediaDir(mediaDir);
             }
         }
+        return base;
+    }
+
+
+    /**
+     * @param mediaDir media directory path on SD card
+     * @return path converted to file URL, properly UTF-8 URL encoded
+     */
+    public static String urlEncodeMediaDir(String mediaDir) {
+        String base;
+        // Use android.net.Uri class to ensure whole path is properly encoded
+        // File.toURL() does not work here, and URLEncoder class is not directly usable
+        // with existing slashes
+        Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
+
+        // Build complete URL
+        base = mediaDirUri.toString() +"/";
+
         return base;
     }
 

@@ -130,7 +130,7 @@ public class FieldModel implements Comparator<FieldModel> {
         values.put("quizFontFamily", mQuizFontFamily);
         values.put("quizFontSize", mQuizFontSize);
         values.put("quizFontColour", mQuizFontColour);
-        deck.getDB().getDatabase().update("fieldModels", values, "id = " + mId, null);
+        deck.getDB().update(deck, "fieldModels", values, "id = " + mId, null);
     }
 
 

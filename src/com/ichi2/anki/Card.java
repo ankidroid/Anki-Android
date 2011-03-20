@@ -477,8 +477,12 @@ public class Card {
 
 
     public boolean isMarked() {
-        loadTags();
-        return (allTags().indexOf(Deck.TAG_MARKED) != -1);
+    	int markedId = mDeck.getMarketTagId();
+    	if (markedId == -1) {
+    		return false;
+    	} else {
+    		return (AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).queryScalar("SELECT count(*) FROM cardTags WHERE cardId = " + mId + " AND tagId = " + markedId + " LIMIT 1") != 0);
+    	}
     }
 
     // FIXME: Should be removed. Calling code should directly interact with Model
@@ -639,7 +643,7 @@ public class Card {
         values.put("type", mType);
         values.put("combinedDue", Math.max(mSpaceUntil, mDue));
         values.put("relativeDelay", 0.0);
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("cards", null, values);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).insert(mDeck, "cards", null, values);
 
     }
 
@@ -683,7 +687,7 @@ public class Card {
         values.put("type", mType);
         values.put("combinedDue", mCombinedDue);
         values.put("relativeDelay", mRelativeDelay);
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("cards", values, "id = " + mId, null);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "cards", values, "id = " + mId, null, true);
 
         // TODO: Should also write JOINED entries: CardModel and Fact.
     }
@@ -698,7 +702,41 @@ public class Card {
         values.put("modified", mModified);
         values.put("question", mQuestion);
         values.put("answer", mAnswer);
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("cards", values, "id = " + mId, null);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "cards", values, "id = " + mId, null);
+    }
+
+
+    public ContentValues getAnswerValues() {
+	ContentValues values = new ContentValues();
+        values.put("modified", mModified);
+        values.put("priority", mPriority);
+        values.put("interval", mInterval);
+        values.put("lastInterval", mLastInterval);
+        values.put("due", mDue);
+        values.put("lastDue", mLastDue);
+        values.put("factor", mFactor);
+        values.put("lastFactor", mLastFactor);
+        values.put("firstAnswered", mFirstAnswered);
+        values.put("reps", mReps);
+        values.put("successive", mSuccessive);
+        values.put("averageTime", mAverageTime);
+        values.put("reviewTime", mReviewTime);
+        values.put("youngEase0", mYoungEase0);
+        values.put("youngEase1", mYoungEase1);
+        values.put("youngEase2", mYoungEase2);
+        values.put("youngEase3", mYoungEase3);
+        values.put("youngEase4", mYoungEase4);
+        values.put("matureEase0", mMatureEase0);
+        values.put("matureEase1", mMatureEase1);
+        values.put("matureEase2", mMatureEase2);
+        values.put("matureEase3", mMatureEase3);
+        values.put("matureEase4", mMatureEase4);
+        values.put("yesCount", mYesCount);
+        values.put("noCount", mNoCount);
+        values.put("type", mType);
+        values.put("combinedDue", mCombinedDue);
+        values.put("relativeDelay", mRelativeDelay);
+	return values;
     }
 
 

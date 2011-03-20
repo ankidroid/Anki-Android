@@ -99,6 +99,7 @@ public class DeckPicker extends Activity implements Runnable {
     private static final int MENU_DOWNLOAD_SHARED_DECK = 22;
     private static final int MENU_PREFERENCES = 3;
     private static final int MENU_MY_ACCOUNT = 4;
+    private static final int MENU_FEEDBACK = 5;
 
 
 	/**
@@ -115,7 +116,7 @@ public class DeckPicker extends Activity implements Runnable {
     private static final int CREATE_DECK = 1;
     private static final int DOWNLOAD_PERSONAL_DECK = 2;
     private static final int DOWNLOAD_SHARED_DECK = 3;
-
+    private static final int REPORT_FEEDBACK = 2;
 
 	private DeckPicker mSelf;
 
@@ -763,6 +764,8 @@ public class DeckPicker extends Activity implements Runnable {
         item.setIcon(R.drawable.ic_menu_home);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
+        item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
+        item.setIcon(R.drawable.ic_menu_send);
         return true;
     }
 
@@ -811,11 +814,18 @@ public class DeckPicker extends Activity implements Runnable {
                         PREFERENCES_UPDATE);
                 return true;
 
+            case MENU_FEEDBACK:
+                startActivityForResult(
+                        new Intent(DeckPicker.this, Feedback.class),
+                        REPORT_FEEDBACK);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
     
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -838,6 +848,7 @@ public class DeckPicker extends Activity implements Runnable {
             if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                 MyAnimation.slide(this, MyAnimation.NONE);
             }
+        } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         }
     }
 

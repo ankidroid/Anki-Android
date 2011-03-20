@@ -191,6 +191,7 @@
   <string name="select">Select</string>
   <string name="card_browser">Card Browser</string>
   <string name="card_browser_load">Loading cards</string>
+  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
   <string name="card_browser_delete_card">Delete card</string>
   <string name="card_browser_suspend_card">Suspend card</string>
   <string name="card_browser_unsuspend_card">Unsuspend card</string>
@@ -224,7 +225,6 @@
   <string name="card_details_card_model">Card model</string>
   <string name="statistics">Statistics</string>
   <string name="loading_deck">正在加载牌组。请稍等…</string>
-  <string name="unloading_deck">Closing deck. Please wait...</string>
   <string name="connection_needed">没有Internet连接</string>
   <string name="currently_downloading">Currently downloading</string>
   <string name="personal_decks">Personal Decks</string>
@@ -273,7 +273,7 @@
   <string name="studyoptions_load_other_deck">Load Other Deck</string>
   <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
   <string name="studyoptions_night_mode">Night Mode</string>
-  <string name="menu_open_deck">Open Deck</string>
+  <string name="menu_open_deck">All decks</string>
   <string name="menu_sync">Sync</string>
   <string name="menu_download_deck">Download deck</string>
   <string name="menu_download_shared_deck">Shared deck</string>
@@ -344,7 +344,9 @@
   <string name="sync_log_facts_to_server_message">%d cards to server</string>
   <string name="sync_log_fact_from_server_message">1 card from server</string>
   <string name="sync_log_facts_from_server_message">%d cards from server</string>
-  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %d sec; unable to sync.</string>
+  <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %1$d sec%2$s; unable to sync.</string>
+  <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
   <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
   <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
@@ -368,6 +370,14 @@
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
   <string name="feedback_default_text">Please enter your feedback or information about the nature of the error.</string>
+  <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
+  <string name="feedback_error_reply_known">Known issue, pending investigation</string>
+  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
+  <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
+  <string name="feedback_error_reply_issue_fixed_dev">Issue %1$d, fixed but not released yet</string>
+  <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
+  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
+  <string name="feedback_error_reply_failed">Failed to send</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Widget notification threshold</string>
   <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised: XXX</string>

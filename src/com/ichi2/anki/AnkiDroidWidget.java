@@ -60,6 +60,13 @@ public class AnkiDroidWidget extends AppWidgetProvider {
          * deck.
          */
         private static final String ACTION_PREV = "org.ichi2.anki.AnkiDroidWidget.PREV";
+        /**
+         * When received, this action is ignored by the service.
+         * <p>
+         * It is used to associate with elements that at some point need to have a pending intent
+         * associated with them, but want to clear it off afterwards.
+         */
+        private static final String ACTION_IGNORE = "org.ichi2.anki.AnkiDroidWidget.IGNORE";
 
         /**
          * The current due deck that is shown in the widget.
@@ -141,6 +148,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     // Do not update the due decks on prev action.
                     // This causes latency.
                     updateDueDecksNow = false;
+                } else if (ACTION_IGNORE.equals(intent.getAction())) {
+                    updateDueDecksNow = false;
                 }
             }
             RemoteViews updateViews = buildUpdate(this, updateDueDecksNow);
@@ -204,12 +213,14 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     updateViews.setOnClickPendingIntent(R.id.anki_droid_prev, getPrevPendingIntent(context));
                 } else {
                     updateViews.setImageViewResource(R.id.anki_droid_prev, R.drawable.widget_left_arrow_disabled);
+                    updateViews.setOnClickPendingIntent(R.id.anki_droid_prev, getIgnoredPendingIntent(context));
                 }
                 if (currentDueDeck < dueDecks.size() - 1) {
                     updateViews.setImageViewResource(R.id.anki_droid_next, R.drawable.widget_right_arrow);
                     updateViews.setOnClickPendingIntent(R.id.anki_droid_next, getNextPendingIntent(context));
                 } else {
                     updateViews.setImageViewResource(R.id.anki_droid_next, R.drawable.widget_right_arrow_disabled);
+                    updateViews.setOnClickPendingIntent(R.id.anki_droid_next, getIgnoredPendingIntent(context));
                 }
             } else {
                 // No card is currently due.
@@ -317,6 +328,15 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         private PendingIntent getPrevPendingIntent(Context context) {
             Intent ankiDroidIntent = new Intent(context, UpdateService.class);
             ankiDroidIntent.setAction(ACTION_PREV);
+            return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
+        }
+
+        /**
+         * Returns a pending intent that is ignored by the service.
+         */
+        private PendingIntent getIgnoredPendingIntent(Context context) {
+            Intent ankiDroidIntent = new Intent(context, UpdateService.class);
+            ankiDroidIntent.setAction(ACTION_IGNORE);
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 

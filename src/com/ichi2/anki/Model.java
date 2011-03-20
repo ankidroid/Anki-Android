@@ -249,7 +249,7 @@ public class Model {
         values.put("spacing", mSpacing);
         values.put("initialSpacing", mInitialSpacing);
         values.put("source", mSource);
-        deck.getDB().getDatabase().update("models", values, "id = " + mId, null);
+        deck.getDB().update(deck, "models", values, "id = " + mId, null);
 
     }
 

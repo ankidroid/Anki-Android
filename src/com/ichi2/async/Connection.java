@@ -346,8 +346,20 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                 if (connectResult == AnkiDroidProxy.LOGIN_INVALID_USER_PASS) {
                     syncChangelog.put("message", res.getString(R.string.invalid_username_password));
                 } else if (connectResult == AnkiDroidProxy.LOGIN_CLOCKS_UNSYNCED) {
-                    syncChangelog.put("message", String.format(res.getString(R.string.sync_log_clocks_unsynchronized),
-                            (new Double(server.getTimediff())).longValue()));
+                    double diff = server.getTimediff();
+                    if (Math.abs(diff) >= 86400.0) {
+                        // The difference if more than a day
+                        syncChangelog.put("message", res.getString(R.string.sync_log_clocks_unsynchronized,
+                                ((long) diff), res.getString(R.string.sync_log_clocks_unsynchronized_date)));
+                    } else if (Math.abs((Math.abs(diff) % 3600.0) - 1800.0) >= 1500.0) {
+                        // The difference would be within limit if we adjusted the time by few hours
+                        // It doesn't work for all timezones, but it covers most and it's a guess anyway
+                        syncChangelog.put("message", res.getString(R.string.sync_log_clocks_unsynchronized,
+                                ((long) diff), res.getString(R.string.sync_log_clocks_unsynchronized_tz)));
+                    } else {
+                        syncChangelog.put("message", res.getString(R.string.sync_log_clocks_unsynchronized,
+                                ((long) diff), ""));
+                    }
                 } else if (connectResult == AnkiDroidProxy.LOGIN_OLD_VERSION) {
                     syncChangelog.put("message", String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid)));
                 } else {

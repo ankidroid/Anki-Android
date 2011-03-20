@@ -21,6 +21,8 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.util.Log;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -86,7 +88,7 @@ public class Sound {
                         + soundPath
                         + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
-            // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
+            Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
         if (!soundAvailable && ttsEnabled && !ReadText.getLanguage(qa).equals(ReadText.NO_TTS)) {
             stringBuilder.append(content.substring(0, content.length() - 9));        
@@ -158,6 +160,9 @@ public class Sound {
         	if (sSoundPaths.contains(soundPath)) {
             sMediaPlayer = new MediaPlayer();
             try {
+                // soundPath is usually an URI, but Media player requires a path not url encoded
+                URI soundURI = new URI(soundPath);
+                soundPath = new File(soundURI).getAbsolutePath();
                 sMediaPlayer.setDataSource(soundPath);
                 sMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
                 sMediaPlayer.prepare();
