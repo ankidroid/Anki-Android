@@ -154,6 +154,7 @@ public class Whiteboard extends View {
      */
     public void clear() {
         mBitmap.eraseColor(mBackgroundColor);
+        invalidate();
         unlock();
     }
 
