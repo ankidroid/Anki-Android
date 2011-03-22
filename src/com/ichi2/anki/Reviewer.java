@@ -485,7 +485,43 @@ public class Reviewer extends Activity {
         }
     };
 
-	private Handler mTimerHandler = new Handler();
+
+    DeckTask.TaskListener mSaveAndResetDeckHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
+        	} else {
+                mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                        .getString(R.string.saving_changes), true);        		
+        	}
+        }
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	if (mProgressDialog.isShowing()) {
+                try {
+                    mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+            }
+        	finish();
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        		if (mShowCongrats) {
+        			MyAnimation.slide(Reviewer.this, MyAnimation.FADE);
+        		} else {
+        			MyAnimation.slide(Reviewer.this, MyAnimation.RIGHT);
+        		}
+        	}
+        }
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            // Pass
+        }
+    };
+
+
+    private Handler mTimerHandler = new Handler();
 
     private Runnable removeChosenAnswerText=new Runnable() {
     	public void run() {
@@ -1852,14 +1888,7 @@ public class Reviewer extends Activity {
 
     private void closeReviewer() {
     	mClosing = true;
-    	finish();
-    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-    		if (mShowCongrats) {
-    			MyAnimation.slide(this, MyAnimation.FADE);
-    		} else {
-    			MyAnimation.slide(this, MyAnimation.RIGHT);
-    		}
-    	}
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), ""));
     }
 
     class MyGestureDetector extends SimpleOnGestureListener {

@@ -32,20 +32,19 @@ import android.util.Log;
 public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, DeckTask.TaskData> {
 
     public static final int TASK_TYPE_LOAD_DECK = 0;
-    public static final int TASK_TYPE_UNLOAD_DECK = 1;
-    public static final int TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS = 2;
-    public static final int TASK_TYPE_SAVE_DECK = 3;
-    public static final int TASK_TYPE_ANSWER_CARD = 4;
-    public static final int TASK_TYPE_SUSPEND_CARD = 5;
-    public static final int TASK_TYPE_MARK_CARD = 6;
-    public static final int TASK_TYPE_UPDATE_FACT = 7;
-    public static final int TASK_TYPE_UNDO = 8;
-    public static final int TASK_TYPE_REDO = 9;
-    public static final int TASK_TYPE_LOAD_CARDS = 10;
-    public static final int TASK_TYPE_BURY_CARD = 11;
-    public static final int TASK_TYPE_DELETE_CARD = 12;
-    public static final int TASK_TYPE_LOAD_STATISTICS = 13;
-    public static final int TASK_TYPE_OPTIMIZE_DECK = 14;
+    public static final int TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS = 1;
+    public static final int TASK_TYPE_SAVE_DECK = 2;
+    public static final int TASK_TYPE_ANSWER_CARD = 3;
+    public static final int TASK_TYPE_SUSPEND_CARD = 4;
+    public static final int TASK_TYPE_MARK_CARD = 5;
+    public static final int TASK_TYPE_UPDATE_FACT = 6;
+    public static final int TASK_TYPE_UNDO = 7;
+    public static final int TASK_TYPE_REDO = 8;
+    public static final int TASK_TYPE_LOAD_CARDS = 9;
+    public static final int TASK_TYPE_BURY_CARD = 10;
+    public static final int TASK_TYPE_DELETE_CARD = 11;
+    public static final int TASK_TYPE_LOAD_STATISTICS = 12;
+    public static final int TASK_TYPE_OPTIMIZE_DECK = 13;
 
     /**
      * Possible outputs trying to load a deck.
@@ -102,9 +101,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         switch (mType) {
             case TASK_TYPE_LOAD_DECK:
                 return doInBackgroundLoadDeck(params);
-
-            case TASK_TYPE_UNLOAD_DECK:
-                return doInBackgroundUnloadDeck(params);
 
             case TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS:
                 TaskData taskData = doInBackgroundLoadDeck(params);
@@ -265,25 +261,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             if (AnkiDroidApp.deck().hasFinishScheduler()) {
                 AnkiDroidApp.deck().finishScheduler();
             }
-        }
-        return null;
-    }
-
-
-    private TaskData doInBackgroundUnloadDeck(TaskData... params) {
-        Deck deck = params[0].getDeck();
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundUnloadDeck");
-
-        try {
-            if (deck != null) {
-                deck.closeDeck();
-                AnkiDroidApp.setDeck(null);                
-            }
-            Log.i(AnkiDroidApp.TAG, "Deck unloaded!");
-            
-            return null;
-        } catch (SQLException e) {
-            Log.i(AnkiDroidApp.TAG, "The database could not be closed = " + e.getMessage());
+            deck.reset();
         }
         return null;
     }

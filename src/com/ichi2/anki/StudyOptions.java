@@ -321,7 +321,7 @@ public class StudyOptions extends Activity {
                         mCramTagsDialog.show();
                     } else {
                         onCramStop();
-                        updateValuesFromDeck();
+                        resetAndUpdateValuesFromDeck();
                     }
                     return;
                 case R.id.studyoptions_limit:
@@ -488,7 +488,7 @@ public class StudyOptions extends Activity {
             	} else {
             		mEditNewPerDay.setText("0");
             	}
-        		updateValuesFromDeck();
+            	updateValuesFromDeck();
             }
             boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked(); 
           	deck.setPerDay(mCheckBoxPerDay.isChecked());
@@ -497,7 +497,7 @@ public class StudyOptions extends Activity {
             dialog.dismiss();
             if (perDayChanged){
                 deck.updateCutoff();
-                updateValuesFromDeck();
+                resetAndUpdateValuesFromDeck();
             }
         }
     };
@@ -647,8 +647,9 @@ public class StudyOptions extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNLOAD_DECK, mUnloadDeckHandler, new DeckTask.TaskData(
-                    mDeckFilename));
+            closeOpenedDeck();
+            MetaDB.closeDB();
+            finish();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -1205,7 +1206,7 @@ public class StudyOptions extends Activity {
                     changed = true;
                 }
                 if (changed) {
-                    updateValuesFromDeck();
+                	resetAndUpdateValuesFromDeck();
                 }
                 mToggleLimit.setChecked((mSessionLimitCheckBox.isChecked() && !(textTime.length() == 0 && textReps.length() == 0)) || (mLimitTagsCheckBox.isChecked() && (mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
                         || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked())));
@@ -1288,10 +1289,12 @@ public class StudyOptions extends Activity {
                 } else {
                     mButtonStart.setText(R.string.studyoptions_continue);
                 }
+                updateValuesFromDeck();
                 setContentView(mStudyOptionsView);
                 break;
             case CONTENT_CONGRATS:
                 setCongratsMessage();
+                updateValuesFromDeck();
                 setContentView(mCongratsView);
                 break;
             case CONTENT_NO_EXTERNAL_STORAGE:
@@ -1368,12 +1371,20 @@ public class StudyOptions extends Activity {
     }
 
 
-    private void updateValuesFromDeck() {
+    private void resetAndUpdateValuesFromDeck() {
         Deck deck = AnkiDroidApp.deck();
-        Resources res = getResources();
         DeckTask.waitToFinish();
         if (deck != null) {
             deck.reset();
+        	updateValuesFromDeck();        	
+        }
+    }
+
+
+    private void updateValuesFromDeck() {
+        Deck deck = AnkiDroidApp.deck();
+        Resources res = getResources();
+        if (deck != null) {
             // TODO: updateActives() from anqiqt/ui/main.py
             int dueCount = deck.getDueCount();
             int cardsCount = deck.getCardCount();
@@ -1454,7 +1465,7 @@ public class StudyOptions extends Activity {
         AnkiDroidApp.deck().setupCramScheduler(activeCramTags.toArray(new String[activeCramTags.size()]), cramOrder);
         // Timeboxing only supported using the standard scheduler
         mToggleLimit.setEnabled(false);
-        updateValuesFromDeck();
+        resetAndUpdateValuesFromDeck();
     }
 
     /**
@@ -1738,25 +1749,19 @@ public class StudyOptions extends Activity {
             // Return to standard scheduler
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
-                    mCurrentContentView = CONTENT_SESSION_COMPLETE;
-                	setContentView(mStudyOptionsView);
+                	showContentView(CONTENT_SESSION_COMPLETE);
                     break;
                 case Reviewer.RESULT_NO_MORE_CARDS:
-                	mCurrentContentView = CONTENT_CONGRATS;
-                	Resources res = getResources();
-                	mTextCongratsMessage.setText(String.format(res.getString(R.string.studyoptions_congrats_message), 0, res.getString(R.string.studyoptions_congrats_cards), 0, res.getString(R.string.studyoptions_congrats_cards)));
-                	setContentView(mCongratsView);
+                	showContentView(CONTENT_CONGRATS);
                     break;
                 default:
-                	mCurrentContentView = CONTENT_STUDY_OPTIONS;
-                	setContentView(mStudyOptionsView);
+                	showContentView(CONTENT_STUDY_OPTIONS);
                     break;
             }
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), ""));            
         } else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
-            updateValuesFromDeck();
+        	resetAndUpdateValuesFromDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
-            updateValuesFromDeck();
+        	resetAndUpdateValuesFromDeck();
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
         	showContentView(CONTENT_STUDY_OPTIONS);
         }
@@ -2017,59 +2022,7 @@ public class StudyOptions extends Activity {
             // Pass
         }
     };
-    
-    
-    DeckTask.TaskListener mUnloadDeckHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
-                    .getString(R.string.unloading_deck), true);
-        }
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
 
-            
-            closeOpenedDeck();
-            MetaDB.closeDB();
-            if (mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
-            finish();
-        }
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            // Pass
-        }
-    };
-    
-    
-    DeckTask.TaskListener mSaveAndResetDeckHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
-                    .getString(R.string.saving_changes), true);
-        }
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            updateValuesFromDeck();
-        	if (mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
-            showContentView();
-        }
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            // Pass
-        }
-    };
 
     Connection.TaskListener mSyncListener = new Connection.TaskListener() {
 
@@ -2091,7 +2044,7 @@ public class StudyOptions extends Activity {
             if (data.success) {
                 mSyncLogAlert.setMessage(((HashMap<String, String>) data.result).get("message"));
                 AnkiDroidApp.deck().updateCutoff();
-                updateValuesFromDeck();
+                resetAndUpdateValuesFromDeck();
                 mSyncLogAlert.show();
             } else {
                 if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
