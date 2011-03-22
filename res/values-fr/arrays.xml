@@ -137,16 +137,16 @@
   <string-array name="new_version_features">
     <item>Navigateur de carte</item>
     <item>statistiques</item>
-    <item>text-to-speech</item>
+    <item>synthèse vocale</item>
     <item>barre d\'avancement de paquet sur le sélecteur de paquet</item>
-    <item>select card model on fact adder</item>
+    <item>Sélectionnez le modèle de carte lors de l\'ajout de carte</item>
     <item>nouveau widget</item>
     <item>meilleur comportement annuler/refaire</item>
-    <item>slider controls</item>
+    <item>Barres de scrolling</item>
     <item>sélection de la langue</item>
     <item>plus de langues</item>
-    <item>progress bars in reviewer</item>
-    <item>feedback within AnkiDroid</item>
+    <item>Barres de progression en étudiant</item>
+    <item>Dialogue de feedback</item>
     <item>possibilité de sélectionner les cartes actives / inactives par label</item>
     <item>meilleure synchronisation</item>
     <item>meilleur rapporteur d\'erreurs</item>
