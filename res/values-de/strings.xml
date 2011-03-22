@@ -340,10 +340,10 @@
   <string name="sync_log_no_changes_message">Keine Veränderungen gefunden</string>
   <string name="sync_log_uploading_message">Voll-Synchronisierung des lokalen Stapels</string>
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
-  <string name="sync_log_fact_to_server_message">Einen Fakt hochgeladen</string>
-  <string name="sync_log_facts_to_server_message">%d Fakten hochgeladen</string>
-  <string name="sync_log_fact_from_server_message">Einen Fakt heruntergeladen</string>
-  <string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
+  <string name="sync_log_fact_to_server_message">Eine Karte hochgeladen</string>
+  <string name="sync_log_facts_to_server_message">%d Karten hochgeladen</string>
+  <string name="sync_log_fact_from_server_message">Eine Karte heruntergeladen</string>
+  <string name="sync_log_facts_from_server_message">%d Karten heruntergeladen</string>
   <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %1$d Sekunden von der Server-Zeit ab%2$s, es kann deshalb nicht synchronisiert werden.</string>
   <string name="sync_log_clocks_unsynchronized_tz"> (die Zeitzone des Geräts ist vermutlich falsch eingestellt)</string>
   <string name="sync_log_clocks_unsynchronized_date"> (vermutlich stimmt das Gerätedatum nicht)</string>
