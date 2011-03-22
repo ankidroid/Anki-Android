@@ -338,7 +338,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
         	oldCardId = deck.undo(currentCardId, inReview);
             newCard = deck.getCard();
-            if (oldCardId != 0 && oldCardId != newCard.getId()) {
+            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
             	newCard = deck.cardFromId(oldCardId);
             }
             publishProgress(new TaskData(newCard));
@@ -363,7 +363,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
         	oldCardId = deck.redo(currentCardId, inReview);
             newCard = deck.getCard();
-            if (oldCardId != 0 && oldCardId != newCard.getId()) {
+            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
             	newCard = deck.cardFromId(oldCardId);
             }
             publishProgress(new TaskData(newCard));
