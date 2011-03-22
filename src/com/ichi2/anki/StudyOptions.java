@@ -1502,11 +1502,11 @@ public class StudyOptions extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean deckChangable = (AnkiDroidApp.deck() != null) && mSdCardAvailable && !mToggleCram.isChecked(); 
+        boolean deckChangeable = (AnkiDroidApp.deck() != null) && mSdCardAvailable && !mToggleCram.isChecked(); 
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
-        menu.findItem(MENU_ADD_FACT).setEnabled(deckChangable);
-        menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangable);
-		menu.findItem(MENU_SYNC).setEnabled(deckChangable);
+        menu.findItem(MENU_ADD_FACT).setEnabled(deckChangeable);
+        menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangeable);
+		menu.findItem(MENU_SYNC).setEnabled(deckChangeable);
 
         // Show sync menu items only if sync is enabled.
 		menu.findItem(MENU_SYNC).setVisible(mSyncEnabled);
