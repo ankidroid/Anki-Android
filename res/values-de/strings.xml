@@ -340,10 +340,10 @@
   <string name="sync_log_no_changes_message">Keine Veränderungen gefunden</string>
   <string name="sync_log_uploading_message">Voll-Synchronisierung des lokalen Stapels</string>
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
-  <string name="sync_log_fact_to_server_message">Einen Fakt hochgeladen</string>
-  <string name="sync_log_facts_to_server_message">%d Fakten hochgeladen</string>
-  <string name="sync_log_fact_from_server_message">Einen Fakt heruntergeladen</string>
-  <string name="sync_log_facts_from_server_message">%d Fakten heruntergeladen</string>
+  <string name="sync_log_fact_to_server_message">Eine Karte hochgeladen</string>
+  <string name="sync_log_facts_to_server_message">%d Karten hochgeladen</string>
+  <string name="sync_log_fact_from_server_message">Eine Karte heruntergeladen</string>
+  <string name="sync_log_facts_from_server_message">%d Karten heruntergeladen</string>
   <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %1$d Sekunden von der Server-Zeit ab%2$s, es kann deshalb nicht synchronisiert werden.</string>
   <string name="sync_log_clocks_unsynchronized_tz"> (die Zeitzone des Geräts ist vermutlich falsch eingestellt)</string>
   <string name="sync_log_clocks_unsynchronized_date"> (vermutlich stimmt das Gerätedatum nicht)</string>
@@ -360,7 +360,7 @@
   <string name="error_cancel">Melde keine Fehler</string>
   <string name="error_reporting_choice">Fehlermeldungs-Modus</string>
   <string name="error_reporting_choice_summary">Fehler können automatisch, nie oder nach Nachfrage gemeldet werden</string>
-  <string name="feedback_disclaimer">Hinweis: Es werden keine persönlichen Daten wie Ihre E-Mail-Adresse, Telefonnummer, IP-Adresse oder Ihre Telefonnummer IMEI übermittelt. Gesendet werden nur einige Informationen über Ihr Gerät wie Hersteller, Modell und Androidversion sowie die Art des Fehlers selbst.</string>
+  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
   <string name="feedback_title">Rückmeldung</string>
   <string name="feedback_send_feedback">Geben Sie uns Rückmeldung</string>
   <string name="feedback_send_feedback_and_errors">Senden Sie uns Fehler- und Rückmeldungen</string>
@@ -369,7 +369,7 @@
   <string name="feedback_error_list_header">Fehlerliste</string>
   <string name="feedback_keep_latest">Letzte Fehler nicht löschen</string>
   <string name="feedback_clear_all">Alle Fehlermeldungen löschen</string>
-  <string name="feedback_default_text">Bitte geben Sie hier Ihre Rückmeldung ein und drücken Sie OK, um sie zu senden.</string>
+  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
   <string name="feedback_error_reply_new">Unbekannter Fehler, neu angelegt</string>
   <string name="feedback_error_reply_known">Bekannter Fehler, Untersuchung ausstehend</string>
   <string name="feedback_error_reply_issue_unknown">Fehler %1$d, unbekannter Status</string>

@@ -234,7 +234,7 @@ public class Reviewer extends Activity {
     private int mButtonHeight = 0;
     
     private boolean mConfigurationChanged = false;
-    private int mShowChosenAnswerLength = 600;
+    private int mShowChosenAnswerLength = 900;
     
 	private boolean mShowCongrats = false;
 

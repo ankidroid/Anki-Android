@@ -63,6 +63,7 @@
 			android:paddingLeft="10dip"
 			android:paddingRight="5dip"
 			android:paddingBottom="5dip"
+			android:maxLines="2"
 			android:textSize="17sp">
 		</TextView>
 		
@@ -74,6 +75,7 @@
 			android:paddingRight="10dip"
 			android:paddingLeft="5dip"
 			android:paddingBottom="5dip"
+			android:maxLines="2"
 			android:textSize="17sp">
 		</TextView>
 		

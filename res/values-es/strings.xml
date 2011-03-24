@@ -191,7 +191,7 @@
   <string name="select">Seleccionar</string>
   <string name="card_browser">Explorador</string>
   <string name="card_browser_load">Cargando las tarjetas</string>
-  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
+  <string name="card_browser_cardloading_error">Error al cargar tarjetas. Probablemente esté relacionado con las restricciones de memoria de su aparato. Inténtelo de nuevo con un mazo más pequeño</string>
   <string name="card_browser_delete_card">Eliminar Tarjeta</string>
   <string name="card_browser_suspend_card">Suspender Tarjeta</string>
   <string name="card_browser_unsuspend_card">Reactivar Tarjeta</string>
@@ -360,7 +360,7 @@
   <string name="error_cancel">No informar de errores</string>
   <string name="error_reporting_choice">Informar de errores</string>
   <string name="error_reporting_choice_summary">Los errores se pueden enviar automáticamente, nunca, o preguntándote primero</string>
-  <string name="feedback_disclaimer">Aclaración: No recopilamos información personal, como tu dirección de correo electrónico, número de teléfono, dirección IP o el teléfono IMEI. Recopilamos información sobre el dispositivo, tal como el fabricante, el modelo y la versión de Android, así como la naturaleza del error mismo.</string>
+  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
   <string name="feedback_title">Sugerencias</string>
   <string name="feedback_send_feedback">Envíanos tus comentarios</string>
   <string name="feedback_send_feedback_and_errors">Enviar errores y tus comentarios</string>
@@ -369,7 +369,7 @@
   <string name="feedback_error_list_header">Lista de errores para enviar</string>
   <string name="feedback_keep_latest">Mantener el último error</string>
   <string name="feedback_clear_all">Borrar todos los errores</string>
-  <string name="feedback_default_text">Por favor, introduce tus sugerencias aquí y pulsa Aceptar para enviarlas.</string>
+  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
   <string name="feedback_error_reply_new">Problema desconocido, archivado como defecto nuevo</string>
   <string name="feedback_error_reply_known">Problema conocido, pendiente de investigación</string>
   <string name="feedback_error_reply_issue_unknown">Problema %1$d, estado desconocido</string>

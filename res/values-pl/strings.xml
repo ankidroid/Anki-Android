@@ -360,7 +360,7 @@
   <string name="error_cancel">Nie zgłaszaj błędów</string>
   <string name="error_reporting_choice">Tryb raportowania błędów</string>
   <string name="error_reporting_choice_summary">Błędy mogą być zgłaszane automatycznie, nigdy nie zgłaszane, lub może zostać wyświetlony monit</string>
-  <string name="feedback_disclaimer">Uwaga: Nie zbieramy żadnych danych osobowych takich jak adres e-mail, numer telefonu, adres IP lub numer IMEI telefonu. Gromadzimy informacje na temat urządzenia, takie jak producent, model i wersja Androida, jak również rodzaj samego błędu.</string>
+  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
   <string name="feedback_title">Opinie</string>
   <string name="feedback_send_feedback">Wyślij nam swoją opinię</string>
   <string name="feedback_send_feedback_and_errors">Wyślij błędy i swoje opinie</string>
@@ -369,7 +369,7 @@
   <string name="feedback_error_list_header">Lista błędów do wysłania</string>
   <string name="feedback_keep_latest">Zachowaj ostatni błąd</string>
   <string name="feedback_clear_all">Wyczyść wszystkie błędy</string>
-  <string name="feedback_default_text">Proszę wprowadzić opinię lub informacje na temat błędu.</string>
+  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
   <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
   <string name="feedback_error_reply_known">Known issue, pending investigation</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
