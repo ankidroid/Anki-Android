@@ -253,6 +253,7 @@ public class StudyOptions extends Activity {
     private TextView mTextCongratsMessage;
     private Button mButtonCongratsLearnMore;
     private Button mButtonCongratsReviewEarly;
+    private Button mButtonCongratsSyncDeck;
     private Button mButtonCongratsOpenOtherDeck;
     private Button mButtonCongratsFinish;
 
@@ -333,6 +334,9 @@ public class StudyOptions extends Activity {
                 	return;
                 case R.id.studyoptions_congrats_reviewearly:
                 	startEarlyReview();
+                    return;
+                case R.id.studyoptions_congrats_syncdeck:
+                	syncDeck(null);
                     return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     openDeckPicker();
@@ -836,11 +840,13 @@ public class StudyOptions extends Activity {
         mTextCongratsMessage.setOnClickListener(mButtonClickListener);
         mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
         mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
+        mButtonCongratsSyncDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_syncdeck);
         mButtonCongratsOpenOtherDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_open_other_deck);
         mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
 
         mButtonCongratsLearnMore.setOnClickListener(mButtonClickListener);
         mButtonCongratsReviewEarly.setOnClickListener(mButtonClickListener);
+        mButtonCongratsSyncDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
         
@@ -1356,17 +1362,14 @@ public class StudyOptions extends Activity {
     	Resources res = getResources();
         Deck deck = AnkiDroidApp.deck();
         if (deck != null) {
-            int revCards = deck.getNextDueCards(1) + deck.getFailedDelayedCount();
+    		int failedCards = deck.getFailedDelayedCount();
+            int revCards = deck.getNextDueCards(1);
+            int revFailedCards = failedCards + revCards;
             int newCards = deck.getNextNewCards();
-            String revca = res.getString(R.string.studyoptions_congrats_cards);
-            String newca = res.getString(R.string.studyoptions_congrats_cards);
-            if (revCards == 1) {
-            	revca = res.getString(R.string.studyoptions_congrats_card);
-            }
-            if (newCards == 1) {
-            	newca = res.getString(R.string.studyoptions_congrats_card);
-            }
-            mTextCongratsMessage.setText(String.format(res.getString(R.string.studyoptions_congrats_message), revCards, revca, newCards, newca));
+            int eta = deck.getETA(failedCards, revCards, newCards);
+            String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
+            String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
+            mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText));
         }
     }
 
@@ -1394,9 +1397,9 @@ public class StudyOptions extends Activity {
             mTextReviewsDue.setText(String.valueOf(dueCount));
             mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
             String etastr = "-";
-            int eta = (int) deck.getStats(Stats.TYPE_ETA)[0];
+            int eta = deck.getETA();
             if (eta != -1) {
-            	etastr = Integer.toString(eta / 60);
+            	etastr = Integer.toString(eta);
             }
             mTextETA.setText(etastr);
             int totalNewCount = deck.getNewCount(false);
@@ -1404,10 +1407,9 @@ public class StudyOptions extends Activity {
 
             // Progress bars are not shown on small screens
             if (mDailyBar != null) {
-                double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
                 double totalCardsCount = cardsCount;
-                mProgressTodayYes = values[0];
-                mProgressMatureYes = values[1];
+                mProgressTodayYes = deck.getProgress(false);
+                mProgressMatureYes = deck.getProgress(true);
                 double mature = deck.getMatureCardCount(false);
                 mProgressMature = mature / totalCardsCount;
                 double allRev = deck.getTotalRevFailedCount(false);

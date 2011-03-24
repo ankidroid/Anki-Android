@@ -33,24 +33,37 @@
 			android:layout_width="fill_parent"
 			android:orientation="horizontal">
 			<Button
-			android:layout_height="wrap_content"
+			android:layout_height="fill_parent"
 			android:layout_width="0dip"
 			android:layout_weight="1"
 			android:gravity="center"
 			android:id="@+id/studyoptions_congrats_learnmore"
 			android:text="@string/studyoptions_congrats_learnmore" />
 		<Button
-			android:layout_height="wrap_content"
+			android:layout_height="fill_parent"
 			android:layout_width="0dip"
 			android:layout_weight="1"
 			android:gravity="center"
 			android:id="@+id/studyoptions_congrats_reviewearly"
 			android:text="@string/studyoptions_congrats_reviewearly" />
 	</LinearLayout>
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:orientation="horizontal">	
 	<Button
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+			android:layout_width="0dip"
+			android:layout_weight="1"
+		android:gravity="center"
+		android:id="@+id/studyoptions_congrats_syncdeck"
+		android:text="@string/studyoptions_congrats_syncdeck" />
+	<Button
+		android:layout_height="fill_parent"
+			android:layout_width="0dip"
+			android:layout_weight="1"
 		android:gravity="center"
 		android:id="@+id/studyoptions_congrats_finish"
 		android:text="@string/studyoptions_congrats_finish" />
+	</LinearLayout>
 </LinearLayout>

@@ -1139,7 +1139,7 @@ public class Deck {
     	try {
             cur = getDB().getDatabase().rawQuery(String.format(Utils.ENGLISH_LOCALE,
             		"SELECT reps, (matureease1 + matureease2 + matureease3 + matureease4 +  youngease1 + youngease2 + youngease3 + youngease4), " +
-            		"(matureease1 + matureease2 + matureease3 + matureease4)  FROM stats WHERE day = \'%tF\' AND reps > 0 AND id > 1", value), null);
+            		"(matureease1 + matureease2 + matureease3 + matureease4) FROM stats WHERE day = \'%tF\' AND type = %d", value, Stats.STATS_DAY), null);
             while (cur.moveToNext()) {
             	count[0] = cur.getInt(0);
             	count[1] = cur.getInt(1);
@@ -1164,7 +1164,7 @@ public class Deck {
     	int count = 0;
     	try {
             cur = getDB().getDatabase().rawQuery(String.format(Utils.ENGLISH_LOCALE,
-            		"SELECT reviewTime FROM stats WHERE day = \'%tF\' AND reps > 0 AND id > 1", value), null);
+            		"SELECT reviewTime FROM stats WHERE day = \'%tF\' AND reps > 0 AND type = %d", value, Stats.STATS_DAY), null);
             while (cur.moveToNext()) {
             	count = cur.getInt(0);
             }
@@ -1180,51 +1180,48 @@ public class Deck {
     /*
      * Stats ******************************
      */
-    public double[] getStats(int which) {
-    	double[] stats = Stats.getStats(this, mGlobalStats, mDailyStats);
-    	double[] result;
-    	switch (which) {
-    	    case Stats.TYPE_ETA:
-    	        result = new double[1];
-    	        if (stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME] != 0 && stats[Stats.STATSARRAY_DAILY_REPS] / (mNewCountToday + mRevCount + stats[Stats.STATSARRAY_DAILY_REPS]) > 0.1) {
-    	            result[0] = getETA(stats[Stats.STATSARRAY_DAILY_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
-    	        } else if (stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME] != 0) {
-    	            result[0] = getETA(stats[Stats.STATSARRAY_GLOBAL_AVERAGE_TIME], stats[Stats.STATSARRAY_GLOBAL_YOUNG_NO_SHARE]); 
-    	        } else {
-    	            result[0] = -1;
-    	        }
-    	        break;
-            case Stats.TYPE_YES_SHARES:
-                result = new double[2];
-                result[0] = 1 - stats[Stats.STATSARRAY_DAILY_NO] / (stats[Stats.STATSARRAY_DAILY_REPS]);
-                result[1] = stats[Stats.STATSARRAY_GLOBAL_MATURE_YES] / (stats[Stats.STATSARRAY_GLOBAL_MATURE_YES] + stats[Stats.STATSARRAY_GLOBAL_MATURE_NO]);
-                break;
-	        default:
-	            result = new double[1];
-	            result[0] = 0;;
-                break;
+
+    public double getProgress(boolean global) {
+    	if (global) {
+    		return mGlobalStats.getMatureYesShare();
+    	} else {
+    		return mDailyStats.getYesShare();
     	}
-    	return result;
     }
 
 
-    private double getETA(double averageTime, double globalYoungNoShare) {
+    public int getETA() {
+    	return getETA(mFailedSoonCount, mRevCount, mNewCountToday);
+    }
+
+
+    public int getETA(int failedCards, int revCards, int newCards) {
     	double left;
     	double count;
+    	double averageTime;
+    	if (mDailyStats.getReps() >= 10 && mDailyStats.getAverageTime() > 0) {
+    		averageTime = mDailyStats.getAverageTime();
+		} else if (mGlobalStats.getAverageTime() > 0) {
+			averageTime = mDailyStats.getAverageTime();		
+		} else {
+			return -1;
+		}
+ 
+    	double globalYoungNoShare = mGlobalStats.getYoungNoShare();
 
     	// rev + new cards first, account for failures
-    	count = mNewCountToday + mRevCount;
-    	count *= 1 + (globalYoungNoShare / 100.0);
+    	count = newCards + revCards;
+    	count *= 1 + globalYoungNoShare;
     	left = count * averageTime;
-    	
+
     	//failed - higher time per card for higher amount of cards
     	double failedBaseMulti = 1.5;
     	double failedMod = 0.07;
     	double failedBaseCount = 20;
-    	double factor = (failedBaseMulti + (failedMod * (mFailedSoonCount - failedBaseCount)));
-    	left += mFailedSoonCount * averageTime * factor;
+    	double factor = (failedBaseMulti + (failedMod * (failedCards - failedBaseCount)));
+    	left += failedCards * averageTime * factor;
         	
-    	return left;
+    	return (int) (left / 60);
     }
 
 

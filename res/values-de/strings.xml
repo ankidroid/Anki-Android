@@ -296,12 +296,31 @@
   <string name="studyoptions_continue">Lernen fortsetzen</string>
   <string name="studyoptions_well_done">Gut gemacht!</string>
   <string name="studyoptions_congrats_title">Herzlichen Glückwunsch!</string>
-  <string name="studyoptions_congrats_message">Sie sind für\'s erste fertig.\nMorgen sind %1$d %2$s zu wiederholen\nund %3$d %4$s neu zu lernen.</string>
+  <string name="studyoptions_congrats_message">Sie sind für\'s erste fertig.\nMorgen sind %1$d %2$s zu wiederholen\nund %3$d %4$s neu zu lernen.\nGeschätzte Zeit: %5$d Min.</string>
+  <plurals name="studyoptions_congrats_message">
+  <item quantity="one">Sie sind für\'s erste fertig.\nMorgen ist 1 Karte zu wiederholen\nund %2$s neu zu lernen.\nGeschätzte Zeit: %3$s</item>
+  <item quantity="other">Sie sind für\'s erste fertig.\nMorgen sind %1$d Karten zu wiederholen\nund %2$s neu zu lernen.\nGeschätzte Zeit: %3$s</item>
+</plurals>
+<plurals name="studyoptions_congrats_new_cards">
+  <item quantity="one">1 Karte</item>
+  <item quantity="other">%1$d Karten</item>
+</plurals>
+<plurals name="studyoptions_congrats_eta">
+  <item quantity="one">1 Min.</item>
+  <item quantity="other">%1$d Min.</item>
+</plurals>
+
+<plurals name="reviewer_window_title">
+  <item quantity="one">%1$s (noch 1 Min.)</item>
+  <item quantity="other">%1$s (noch %2$d Min.)</item>
+</plurals>
+
   <string name="studyoptions_congrats_card">Karte</string>
   <string name="studyoptions_congrats_cards">Karten</string>
   <string name="studyoptions_congrats_learnmore">Mehr Lernen</string>
   <string name="studyoptions_congrats_reviewearly">Früher Wiederholen</string>
   <string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>
+  <string name="studyoptions_congrats_syncdeck">Stapel synchronisieren</string>
   <string name="studyoptions_congrats_finish">Zurück zu den Lerneinstellungen</string>
   <string name="studyoptions_feedback">Rückmeldung</string>
   <string name="username">Benutzername</string>

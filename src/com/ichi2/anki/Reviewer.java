@@ -445,6 +445,8 @@ public class Reviewer extends Activity {
                         Toast.LENGTH_SHORT);
             } else if (mIsLastCard) {
                 mNoMoreCards = true;
+                mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                        .getString(R.string.saving_changes), true);
             } else {
                 // session limits not reached, show next card
                 Card newCard = values[0].getCard();
@@ -452,6 +454,8 @@ public class Reviewer extends Activity {
                 // If the card is null means that there are no more cards scheduled for review.
                 if (newCard == null) {
                     mNoMoreCards = true;
+                    mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                            .getString(R.string.saving_changes), true);
                     return;
                 }
 
@@ -493,7 +497,7 @@ public class Reviewer extends Activity {
         		mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
         	} else {
                 mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
-                        .getString(R.string.saving_changes), true);        		
+                        .getString(R.string.saving_changes), true);
         	}
         }
         @Override
@@ -1357,8 +1361,12 @@ public class Reviewer extends Activity {
 
     private void updateScreenCounts() {
         Deck deck = AnkiDroidApp.deck();
-        int due = deck.getDueCount();
-        setTitle(getResources().getQuantityString(R.plurals.studyoptions_window_title, due, deck.getDeckName(), due, deck.getCardCount()));
+        int eta = deck.getETA();
+        if (deck.hasFinishScheduler() || eta < 1) {
+            setTitle(deck.getDeckName());
+        } else {
+            setTitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, deck.getDeckName(), eta));        	
+        }
 
         int _failedSoonCount = deck.getFailedSoonCount();
         int _revCount = deck.getRevCount();
@@ -1394,9 +1402,8 @@ public class Reviewer extends Activity {
             mStatisticBarsHeight = view.getHeight();
         }
         Deck deck = AnkiDroidApp.deck();
-        double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
-        Utils.updateProgressBars(this, mDailyBar, values[0], mStatisticBarsMax, mStatisticBarsHeight, true);
-        Utils.updateProgressBars(this, mGlobalBar, values[1], mStatisticBarsMax, mStatisticBarsHeight, true);
+        Utils.updateProgressBars(this, mDailyBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
+        Utils.updateProgressBars(this, mGlobalBar, deck.getProgress(true), mStatisticBarsMax, mStatisticBarsHeight, true);
     }  
 
 

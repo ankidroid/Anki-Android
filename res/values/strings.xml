@@ -84,6 +84,10 @@
 <string name="suspend_leeches">Suspend Leeches</string>
 <string name="leech_suspend_notification">Card marked as leech and suspended</string>
 <string name="leech_notification">Card marked as leech</string>
+<plurals name="reviewer_window_title">
+  <item quantity="one">%1$s (1 min. left)</item>
+  <item quantity="other">%1$s (%2$d min. left)</item>
+</plurals>
 
 <!-- deck_preferences.xml -->
 <string name="newcards_day_summ">The maximum number of new cards shown per day.</string>
@@ -390,11 +394,24 @@
 <string name="studyoptions_continue">Continue Reviewing</string>
 <string name="studyoptions_well_done">Well Done!</string>
 <string name="studyoptions_congrats_title">Congratulations!</string>
-<string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
+<string name="studyoptions_congrats_message"></string>
+<plurals name="studyoptions_congrats_message">
+  <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
+  <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+</plurals>
+<plurals name="studyoptions_congrats_new_cards">
+  <item quantity="one">1 card</item>
+  <item quantity="other">%1$d new cards</item>
+</plurals>
+<plurals name="studyoptions_congrats_eta">
+  <item quantity="one">1 min.</item>
+  <item quantity="other">%1$d min.</item>
+</plurals>
 <string name="studyoptions_congrats_card">card</string>
 <string name="studyoptions_congrats_cards">cards</string>
 <string name="studyoptions_congrats_learnmore">Learn More</string>
 <string name="studyoptions_congrats_reviewearly">Review Early</string>
+<string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
 <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
 <string name="studyoptions_congrats_finish">Back to Study Screen</string>
 <string name="studyoptions_feedback">Feedback</string>
