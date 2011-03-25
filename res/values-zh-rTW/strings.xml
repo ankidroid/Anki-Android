@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">取消</string>
   <string name="CardEditorSaveButton">儲存</string>
   <string name="CardEditorTags">Tags: %1$s</string>
-  <string name="add_new_tag">Add new tag</string>
+  <string name="add_new_tag">增加標籤</string>
   <string name="app_name">AnkiDroid</string>
   <string name="yes">是</string>
   <string name="no">否</string>
@@ -69,7 +69,7 @@
   <string name="studyoptions_session">Session</string>
   <string name="studyoptions_tag">By Tag</string>
   <string name="studyoptions_tag_new">Show new cards by tag:</string>
-  <string name="studyoptions_tag_rev">Show review cards by tag:</string>
+  <string name="studyoptions_tag_rev">顯示此標籤的卡片：</string>
   <string name="studyoptions_session_minutes">回合最長幾分鐘：</string>
   <string name="studyoptions_session_questions">回合最多幾張卡片：</string>
   <string name="session_time_limit">回合時間限制</string>
@@ -154,10 +154,10 @@
   <string name="swipe_summ_off">使用手勢來切換屏幕和答案卡。此選項無法與縮放控制併用。</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
   <string name="swipe_sensibility">手勢敏感度</string>
-  <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
+  <string name="swipe_sensibility_summ">手勢靈敏度：XXX</string>
   <string name="shake">搖晃手機以復原</string>
   <string name="shake_summ">搖晃你的手機，以復原上一個動作</string>
-  <string name="tts">Text to Speech</string>
+  <string name="tts">朗讀文字</string>
   <string name="tts_summ">如果沒有內含音效檔，則大聲讀出問題和答案</string>
   <string name="play_sounds_at_start">馬上播放聲音</string>
   <string name="play_sounds_at_start_summ">呈現問題/答案後立即播放聲音</string>
@@ -169,7 +169,7 @@
   <string name="fix_hebrew_text">強制右到左文字顯示(給希伯來語)</string>
   <string name="fix_hebrew_text_summ">Ankidroid處理希伯來語的暫時解決方式。不支援母音。</string>
   <string name="language">語言</string>
-  <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
+  <string name="language_summ">選擇 AnkiDroid 應使用的語言。目前： XXX</string>
   <string name="language_system">系統語言</string>
   <string name="select_locale_title">選擇語言</string>
   <string name="personaldeckpicker_title">打開線上牌組</string>
@@ -180,7 +180,7 @@
   <string name="about_title">關於</string>
   <string name="cardeditor_title">卡片編輯器</string>
   <string name="factadder_title">增加卡片</string>
-  <string name="deckcreator_title">Deck Creator</string>
+  <string name="deckcreator_title">牌組編輯器</string>
   <string name="model">模型：</string>
   <string name="select_model">模型</string>
   <string name="card">卡片：</string>
@@ -201,28 +201,28 @@
   <string name="delete_card_message">真的要刪除這張卡片嗎？\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">顯示標記卡片</string>
   <string name="card_browser_show_suspended">顯示暫停卡片</string>
-  <string name="card_browser_search">Search</string>
-  <string name="card_browser_search_suspended">Search suspended</string>
-  <string name="card_browser_search_by_tag">Search by tag</string>
+  <string name="card_browser_search">搜尋</string>
+  <string name="card_browser_search_suspended">暫停搜尋</string>
+  <string name="card_browser_search_by_tag">搜尋標籤</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_change_display_order">更改顯示順序</string>
   <string name="card_browser_change_display_order_title">選擇顯示順序</string>
   <string name="card_browser_card_details">卡片詳細資訊</string>
   <string name="card_details_question">問題</string>
   <string name="card_details_answer">答案</string>
-  <string name="card_details_due">Due</string>
-  <string name="card_details_now">Now</string>
+  <string name="card_details_due">到期</string>
+  <string name="card_details_now">現在</string>
   <string name="card_details_interval">間隔</string>
-  <string name="card_details_ease">Ease</string>
-  <string name="card_details_average_time">Average time</string>
-  <string name="card_details_total_time">Total time</string>
+  <string name="card_details_ease">難易度</string>
+  <string name="card_details_average_time">平均時間</string>
+  <string name="card_details_total_time">總時間</string>
   <string name="card_details_yes_count">Yes count</string>
   <string name="card_details_no_count">No count</string>
-  <string name="card_details_added">Added</string>
-  <string name="card_details_changed">Changed</string>
-  <string name="card_details_tags">Tags</string>
-  <string name="card_details_model">Model</string>
-  <string name="card_details_card_model">Card model</string>
+  <string name="card_details_added">新增</string>
+  <string name="card_details_changed">更改</string>
+  <string name="card_details_tags">標籤</string>
+  <string name="card_details_model">模型</string>
+  <string name="card_details_card_model">卡片模型</string>
   <string name="statistics">統計</string>
   <string name="loading_deck">正在載入牌組。請稍等…</string>
   <string name="connection_needed">沒有網路連線</string>
@@ -256,7 +256,7 @@
   <string name="studyoptions_reviews_due">到期的複習：</string>
   <string name="studyoptions_new_today">今日新卡片：</string>
   <string name="studyoptions_new_total">所有新卡片：</string>
-  <string name="studyoptions_eta">Estimated time (min):</string>
+  <string name="studyoptions_eta">估計時間(分鐘)：</string>
   <string name="studyoptions_new_cards_per_day">每天新卡片上限：</string>
   <string name="studyoptions_start">開始複習</string>
   <string name="studyoptions_more">學習選項</string>
@@ -264,7 +264,7 @@
   <string name="studyoptions_more_save">儲存</string>
   <string name="studyoptions_nodeck_title">無牌組載入</string>
   <string name="studyoptions_nodeck_message">目前沒有牌組載入。Anki牌組存在SD卡中\"%s\"目錄。您可以指定這個位置(按\"目錄\"然後選擇\"選項\")。</string>
-  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="studyoptions_welcome_title">歡迎來到 AnkiDroid</string>
   <string name="studyoptions_welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\nAll information is organized in decks which you can either download from other users (shared decks) or create on your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck via AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">無法載入牌組</string>
   <string name="studyoptions_deck_not_loaded_message">您選擇的牌組不是合格的Anki牌組。請使用電腦版的Anki建立一個合格的牌組，再用Ankidroid載入。\n\n您可以選擇另一牌組，或用下方按鈕載入範例甲板。</string>
@@ -273,7 +273,7 @@
   <string name="studyoptions_load_other_deck">載入其他牌組</string>
   <string name="studyoptions_load_sample_deck">載入示範牌組</string>
   <string name="studyoptions_night_mode">夜間模式</string>
-  <string name="menu_open_deck">All decks</string>
+  <string name="menu_open_deck">所有牌組</string>
   <string name="menu_sync">同步化</string>
   <string name="menu_download_deck">下載牌組</string>
   <string name="menu_download_shared_deck">共享牌組</string>
@@ -303,7 +303,7 @@
   <string name="studyoptions_congrats_reviewearly">提早複習</string>
   <string name="studyoptions_congrats_open_other_deck">打開其他牌組</string>
   <string name="studyoptions_congrats_finish">回到學習畫面</string>
-  <string name="studyoptions_feedback">Feedback</string>
+  <string name="studyoptions_feedback">回饋意見</string>
   <string name="username">使用者名稱</string>
   <string name="password">密碼</string>
   <string name="log_in">登入</string>
@@ -313,7 +313,7 @@
   <string name="log_out">登出</string>
   <string name="alert_logging_message">正在登入，請稍候...</string>
   <string name="invalid_username_password">不正確的使用者名稱或密碼.</string>
-  <string name="login_generic_error">Failed to login.</string>
+  <string name="login_generic_error">無法登入。</string>
   <string name="download_finished">下載完成</string>
   <string name="deck_downloaded">牌組已下載</string>
   <string name="connection_error_message">網路出了點問題。</string>
@@ -329,7 +329,7 @@
   <string name="sync_preparing_full_sync_message">正在準備完整同步...</string>
   <string name="sync_uploading_message">上傳中...</string>
   <string name="sync_downloading_message">下載中...</string>
-  <string name="sync_complete_message">Closing...</string>
+  <string name="sync_complete_message">正在關閉中</string>
   <string name="sync_determining_differences_message">判定差異中...</string>
   <string name="sync_transferring_payload_message">傳輸資料中...</string>
   <string name="sync_applying_reply_message">伺服器回應中...</string>
@@ -340,10 +340,10 @@
   <string name="sync_log_no_changes_message">沒有新的更新。</string>
   <string name="sync_log_uploading_message">由本地端完整同步</string>
   <string name="sync_log_downloading_message">由伺服器端完整同步</string>
-  <string name="sync_log_fact_to_server_message">1 card to server</string>
-  <string name="sync_log_facts_to_server_message">%d cards to server</string>
-  <string name="sync_log_fact_from_server_message">1 card from server</string>
-  <string name="sync_log_facts_from_server_message">%d cards from server</string>
+  <string name="sync_log_fact_to_server_message">上傳1張卡片至伺服器</string>
+  <string name="sync_log_facts_to_server_message">上傳%d張卡片至伺服器</string>
+  <string name="sync_log_fact_from_server_message">從伺服器取得1張卡片</string>
+  <string name="sync_log_facts_from_server_message">從伺服器取得%d張卡片</string>
   <string name="sync_log_clocks_unsynchronized">手機的時間和伺服器時間相差%1$d秒%2$s，無法同步。</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
@@ -360,7 +360,7 @@
   <string name="error_cancel">不要回報錯誤</string>
   <string name="error_reporting_choice">錯誤報告模式</string>
   <string name="error_reporting_choice_summary">若有錯誤，可以自動報告、從不報告，也可以請問您</string>
-  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
+  <string name="feedback_disclaimer">免責聲明：我們不會收集任何個人資訊，如您的電子信箱、電話號碼、IP或手機IMEI。但我們會收集關於您手機的資訊，例如製造商、型號和Android版本，及報告錯誤本身的一些資訊。</string>
   <string name="feedback_title">回饋意見</string>
   <string name="feedback_send_feedback">Send us your feedback</string>
   <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
@@ -369,15 +369,15 @@
   <string name="feedback_error_list_header">List of errors to send</string>
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
-  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
-  <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
-  <string name="feedback_error_reply_known">Known issue, pending investigation</string>
+  <string name="feedback_default_text">請輸入您的意見，或關於此錯誤的任何資訊。</string>
+  <string name="feedback_error_reply_new">未知的問題，提出新的 bug</string>
+  <string name="feedback_error_reply_known">已知問題，待調查</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
   <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Issue %1$d, fixed but not released yet</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
-  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
-  <string name="feedback_error_reply_failed">Failed to send</string>
+  <string name="feedback_error_reply_issue_fixed_dev">問題%1$d，已解決但還沒發佈新版本</string>
+  <string name="feedback_error_reply_issue_fixed_prod">問題%1$d，最新版本中已解決</string>
+  <string name="feedback_error_reply_malformed">已送出bug，沒有回應</string>
+  <string name="feedback_error_reply_failed">發送失敗</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Widget通知標準</string>
   <string name="widget_minimum_cards_due_summary">有多少累積該複習的卡片時要顯示通知：XXX</string>
@@ -395,12 +395,12 @@
   <string name="undo">還原</string>
   <string name="redo">取消還原</string>
   <string name="contextmenu_deckpicker_download_missing_media">正在下載缺少的媒體</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">重設語言</string>
   <string name="contextmenu_deckpicker_reset_reset_message">重設語言</string>
   <string name="contextmenu_deckpicker_optimize_deck">最佳化資料庫</string>
   <string name="optimize_deck_title">最佳化資料庫</string>
   <string name="optimize_deck_dialog">正在最佳化資料庫</string>
-  <string name="optimize_deck_message">Database optimized.\nShrunk by %d kb</string>
+  <string name="optimize_deck_message">已完成最佳化。\n縮小資料庫%d kb</string>
   <string name="contextmenu_deckpicker_delete_deck">刪除牌組</string>
   <string name="delete_deck_title">刪除牌組</string>
   <string name="delete_deck_message">確定要刪除牌組%s嗎？</string>
@@ -409,39 +409,39 @@
   <string name="new_version_message">新功能：</string>
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
-  <string name="tts_no_tts">Don\'t speak</string>
-  <string name="statistics_type_title">Choose statistic type</string>
-  <string name="statistics_period_title">Choose report period</string>
-  <string name="statistics_period_y_axis">Cards</string>
-  <string name="statistics_period_x_axis">Days</string>
+  <string name="tts_no_tts">不要發音</string>
+  <string name="statistics_type_title">選擇統計類型</string>
+  <string name="statistics_period_title">選擇報告期間</string>
+  <string name="statistics_period_y_axis">卡片</string>
+  <string name="statistics_period_x_axis">天</string>
   <string name="statistics_period_x_axis_minutes">分鐘</string>
-  <string name="statistics_new_cards">New cards</string>
-  <string name="statistics_young_cards">Young cards</string>
-  <string name="statistics_mature_cards">Mature cards</string>
-  <string name="statistics_failed_cards">Failed cards</string>
+  <string name="statistics_new_cards">新卡片</string>
+  <string name="statistics_young_cards">年輕卡片</string>
+  <string name="statistics_mature_cards">熟練的卡片</string>
+  <string name="statistics_failed_cards">失敗的卡片</string>
   <string name="statistics_fullscreen">切換全螢幕</string>
   <string name="statistics_zoom_in">放大</string>
   <string name="statistics_zoom_out">縮小</string>
   <string name="statistics_all_decks">(all decks)</string>
-  <string name="calculating_statistics">Calculating statistics</string>
+  <string name="calculating_statistics">正在統計</string>
   <plurals name="deckpicker_title">
     <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
     <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1分鐘</item>
-    <item quantity="other">%d min.</item>
+    <item quantity="other">%d分鐘</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 of %2$d due</item>
+    <item quantity="one">%2$d之1到期</item>
     <item quantity="other">%2$d張中的%1$d張待複習</item>
   </plurals>
   <plurals name="card_browser_title">
-    <item quantity="one">%1$s: 1 of %3$d cards shown</item>
-    <item quantity="other">%1$s: %2$d of %3$d cards shown</item>
+    <item quantity="one">%1$s：顯示%3$d張中的1張</item>
+    <item quantity="other">%1$s：顯示%3$d張中的%2$d張</item>
   </plurals>
   <plurals name="studyoptions_window_title">
-    <item quantity="one">%1$s (1 of %3$d due)</item>
+    <item quantity="one">%1$s (%3$d張中的1張到期)</item>
     <item quantity="other">%1$s (%3$d之%2$d到期)</item>
   </plurals>
   <plurals name="error_message">
@@ -449,11 +449,11 @@
     <item quantity="other">有%d個錯誤報告</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 card due in %2$s</item>
+    <item quantity="one">1張卡片於%2$s到期</item>
     <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 deck</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">1個牌組</item>
+    <item quantity="other">%1$d個牌組</item>
   </plurals>
 </resources>

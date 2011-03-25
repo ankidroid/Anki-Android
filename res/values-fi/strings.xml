@@ -191,7 +191,7 @@
   <string name="select">Valitse</string>
   <string name="card_browser">Korttiselain</string>
   <string name="card_browser_load">Ladataan kortit</string>
-  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
+  <string name="card_browser_cardloading_error">Virhe ladattaessa kortteja. Ongelma luultavasti liittyy laitteesi muistin rajoitukseen. Yritä uudelleen pienemmällä korttipakalla</string>
   <string name="card_browser_delete_card">Poista kortti</string>
   <string name="card_browser_suspend_card">Keskeytä kortti</string>
   <string name="card_browser_unsuspend_card">Jatka korttia</string>
@@ -345,8 +345,8 @@
   <string name="sync_log_fact_from_server_message">1 seikka palvelimelta</string>
   <string name="sync_log_facts_from_server_message">%d seikkaa palvelimelta</string>
   <string name="sync_log_clocks_unsynchronized">Laitteen aika on eri kuin palvelimen %1$d sek%2$s; synkrointi ei onnistu.</string>
-  <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
-  <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_tz">, laitteen aikavyöhyke on ehkä väärä</string>
+  <string name="sync_log_clocks_unsynchronized_date">, laitteen päivämäärä on mahdollisesti väärä</string>
   <string name="sync_log_old_version">Synkronointiprotokolla on muuttunut, päivitä uusimpaan AnkiDroid:in. Katso %s</string>
   <string name="sync_log_conflict_resolution_required">Korttipakka on muutettu paikallis- ja etäpuolella. Avaa korttipakka ja suorita synkronointi ristariidan ratkaisemiseksi.</string>
   <string name="sync_log_create_deck_failed">Korttipakan luominen palvelimelle epäonnistui: %1$s</string>
@@ -374,8 +374,8 @@
   <string name="feedback_error_reply_known">Known issue, pending investigation</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
   <string name="feedback_error_reply_issue_status">Virhe %1$d, tila: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Issue %1$d, fixed but not released yet</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
+  <string name="feedback_error_reply_issue_fixed_dev">Virhe %1$d, korjattu, mutta ei vielä julkaistu</string>
+  <string name="feedback_error_reply_issue_fixed_prod">Virhe %1$d, korjattu uusimmassa versiossa</string>
   <string name="feedback_error_reply_malformed">Filed bug, no response</string>
   <string name="feedback_error_reply_failed">Lähettäminen epäonnistui</string>
   <string name="widget_pref">Widget</string>
