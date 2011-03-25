@@ -17,6 +17,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,6 +27,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -37,6 +39,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ichi2.anki.Fact.Field;
 
@@ -48,7 +51,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -98,6 +100,38 @@ public class FactAdder extends Activity {
     private AlertDialog mTagsDialog;
     private AlertDialog mAddNewTag;
 
+    private ProgressDialog mProgressDialog;
+
+
+    private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+        	Resources res = getResources();
+        	mProgressDialog = ProgressDialog.show(FactAdder.this, "", res.getString(R.string.saving_facts), true);
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            if (values[0].getBoolean()) {
+                setResult(RESULT_OK);
+        		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
+        		populateEditFields();
+            } else {
+                Toast failureNotice = Toast.makeText(FactAdder.this, getResources().getString(R.string.factadder_saving_error), Toast.LENGTH_SHORT);
+                failureNotice.show();
+            }
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            	mProgressDialog.dismiss();
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,12 +165,8 @@ public class FactAdder extends Activity {
                     current.updateField();
                 }
                 mNewFact.setTags(mFactTags);
-                if (mDeck.addFact(mNewFact, mSelectedCardModels) != null) {
-	                setResult(RESULT_OK);
-                }
-                closeFactAdder();
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mDeck, mNewFact, mSelectedCardModels));                
             }
-
         });
 
         mModelButton.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +190,6 @@ public class FactAdder extends Activity {
         mCloseButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                setResult(RESULT_CANCELED);
                 closeFactAdder();
             }
 
