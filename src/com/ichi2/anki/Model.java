@@ -23,6 +23,7 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -79,7 +80,7 @@ public class Model {
     private Deck mDeck;
 
     /** Map for convenience and speed which contains CardModels from current model */
-    private TreeMap<Long, CardModel> mCardModelsMap = new TreeMap<Long, CardModel>();
+    private LinkedHashMap<Long, CardModel> mCardModelsMap = new LinkedHashMap<Long, CardModel>();
 
     /** Map for convenience and speed which contains FieldModels from current model */
     private TreeMap<Long, FieldModel> mFieldModelsMap = new TreeMap<Long, FieldModel>();

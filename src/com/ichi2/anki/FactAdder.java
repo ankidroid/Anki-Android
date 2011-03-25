@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -82,10 +83,10 @@ public class FactAdder extends Activity {
     private Long mCurrentSelectedModelId;
 
     private LinkedList<FieldEditText> mEditFields;
-    private TreeMap<Long, CardModel> mCardModels;
+    private LinkedHashMap<Long, CardModel> mCardModels;
     
-    private TreeMap<Long, CardModel> mSelectedCardModels;
-	private TreeMap<Long, CardModel> mNewSelectedCardModels;       
+    private LinkedHashMap<Long, CardModel> mSelectedCardModels;
+	private LinkedHashMap<Long, CardModel> mNewSelectedCardModels;       
 	private ArrayList<Long> cardModelIds = new ArrayList<Long>();
 
     private Fact mNewFact;
@@ -119,7 +120,7 @@ public class FactAdder extends Activity {
 
         mModels = Model.getModels(mDeck);
         mCurrentSelectedModelId = mDeck.getCurrentModelId();
-        mNewSelectedCardModels = new TreeMap<Long, CardModel>();
+        mNewSelectedCardModels = new LinkedHashMap<Long, CardModel>();
         cardModelIds = new ArrayList<Long>();
         modelChanged();
 
@@ -173,7 +174,7 @@ public class FactAdder extends Activity {
             public void onClick(View v) {
                 recreateTagsDialog();
                 if (!mTagsDialog.isShowing()) {
-                    mTagsDialog.show();                    
+                    mTagsDialog.show();
                 }
             }
 
@@ -290,7 +291,7 @@ public class FactAdder extends Activity {
 
     private void modelChanged() {
 		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
-		mSelectedCardModels = mDeck.availableCardModels(mNewFact);
+		mSelectedCardModels = mDeck.activeCardModels(mNewFact);
 
 		mModelButton.setText(getResources().getString(R.string.model) + " " + mModels.get(mCurrentSelectedModelId).getName());
 		cardModelsChanged();

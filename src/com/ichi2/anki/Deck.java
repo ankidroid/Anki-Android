@@ -41,6 +41,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -461,22 +462,20 @@ public class Deck {
         return mFact;
     }
 
-    public TreeMap<Long, CardModel> availableCardModels(Fact fact) {
-        TreeMap<Long, CardModel> cardModels = new TreeMap<Long, CardModel>();
-        TreeMap<Long, CardModel> availableCardModels = new TreeMap<Long, CardModel>();
-        CardModel.fromDb(this, fact.getModelId(), cardModels);
-        for (Map.Entry<Long, CardModel> entry : cardModels.entrySet()) {
+    public LinkedHashMap<Long, CardModel> activeCardModels(Fact fact) {
+    	LinkedHashMap<Long, CardModel> activeCM = new LinkedHashMap<Long, CardModel>();
+        for (Map.Entry<Long, CardModel> entry : cardModels(fact).entrySet()) {
             CardModel cardmodel = entry.getValue();
             if (cardmodel.isActive()) {
                 // TODO: check for emptiness
-                availableCardModels.put(cardmodel.getId(), cardmodel);
+            	activeCM.put(cardmodel.getId(), cardmodel);
             }
         }
-        return availableCardModels;
+        return activeCM;
     }
 
-    public TreeMap<Long, CardModel> cardModels(Fact fact) {
-        TreeMap<Long, CardModel> cardModels = new TreeMap<Long, CardModel>();
+    public LinkedHashMap<Long, CardModel> cardModels(Fact fact) {
+    	LinkedHashMap<Long, CardModel> cardModels = new LinkedHashMap<Long, CardModel>();
         CardModel.fromDb(this, fact.getModelId(), cardModels);
         return cardModels;
     }
@@ -3795,12 +3794,12 @@ public class Deck {
     /**
      * Add a fact to the deck. Return list of new cards
      */
-    public Fact addFact(Fact fact, TreeMap<Long, CardModel> cardModels) {
+    public Fact addFact(Fact fact, HashMap<Long, CardModel> cardModels) {
         return addFact(fact, cardModels, true);
     }
 
 
-    public Fact addFact(Fact fact, TreeMap<Long, CardModel> cardModels, boolean reset) {
+    public Fact addFact(Fact fact, HashMap<Long, CardModel> cardModels, boolean reset) {
         // TODO: assert fact is Valid
         // TODO: assert fact is Unique
         double now = Utils.now();
