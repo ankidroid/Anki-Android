@@ -1366,7 +1366,7 @@ public class StudyOptions extends Activity {
             int revCards = deck.getNextDueCards(1);
             int revFailedCards = failedCards + revCards;
             int newCards = deck.getNextNewCards();
-            int eta = deck.getETA(failedCards, revCards, newCards);
+            int eta = deck.getETA(failedCards, revCards, newCards, true);
             String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
             String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
             mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText));

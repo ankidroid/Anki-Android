@@ -1191,20 +1191,24 @@ public class Deck {
 
 
     public int getETA() {
-    	return getETA(mFailedSoonCount, mRevCount, mNewCountToday);
+    	if (mDailyStats.getReps() >= 10 && mDailyStats.getAverageTime() > 0) {
+    		return getETA(mFailedSoonCount, mRevCount, mNewCountToday, false);
+		} else if (mGlobalStats.getAverageTime() > 0) {
+			return getETA(mFailedSoonCount, mRevCount, mNewCountToday, true);
+		} else {
+			return -1;
+		}
     }
 
 
-    public int getETA(int failedCards, int revCards, int newCards) {
+    public int getETA(int failedCards, int revCards, int newCards, boolean global) {
     	double left;
     	double count;
     	double averageTime;
-    	if (mDailyStats.getReps() >= 10 && mDailyStats.getAverageTime() > 0) {
-    		averageTime = mDailyStats.getAverageTime();
-		} else if (mGlobalStats.getAverageTime() > 0) {
-			averageTime = mDailyStats.getAverageTime();		
+    	if (global) {
+			averageTime = mGlobalStats.getAverageTime();		
 		} else {
-			return -1;
+    		averageTime = mDailyStats.getAverageTime();
 		}
  
     	double globalYoungNoShare = mGlobalStats.getYoungNoShare();
