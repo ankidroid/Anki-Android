@@ -1698,6 +1698,7 @@ public class StudyOptions extends Activity {
             mInDeckPicker = false;
 
             if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_OK) {
+                showContentView(CONTENT_SESSION_COMPLETE);
                 mStudyOptionsMain.setVisibility(View.INVISIBLE);
             } else if ((requestCode == DOWNLOAD_SHARED_DECK || requestCode == DOWNLOAD_PERSONAL_DECK) && resultCode == RESULT_OK) {
             	openDeckPicker();
