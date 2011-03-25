@@ -27,7 +27,6 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -120,15 +119,15 @@ public class FactAdder extends Activity {
             } else {
                 Toast failureNotice = Toast.makeText(FactAdder.this, getResources().getString(R.string.factadder_saving_error), Toast.LENGTH_SHORT);
                 failureNotice.show();
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                	mProgressDialog.dismiss();
+                }
             }
         }
 
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            	mProgressDialog.dismiss();
-            }
         }
     };
 

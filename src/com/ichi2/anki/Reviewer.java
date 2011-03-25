@@ -375,11 +375,6 @@ public class Reviewer extends Activity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mCurrentCard = values[0].getCard();
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
             }
@@ -389,9 +384,13 @@ public class Reviewer extends Activity {
                 mCardTimer.start();
             }
             reviewNextCard();
-            mShakeActionStarted = false;
             mProgressDialog.dismiss();
+        }
 
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            mShakeActionStarted = false;
         }
     };
 
