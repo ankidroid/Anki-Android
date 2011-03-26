@@ -2469,7 +2469,7 @@ public class Deck {
         if (restrictToActive) {
             return (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
         } else {
-            return (int) getDB().queryScalar(sql);            
+            return (int) getDB().queryScalar(sql);
         }
     }
 
