@@ -1389,13 +1389,13 @@ public class Reviewer extends Activity {
         boolean isDue = true; // mCurrentCard.isDue();
         int type = mCurrentCard.getType();
 
-        if (isDue && (type == Card.TYPE_NEW) && (_failedSoonCount + _revCount != 0)) {
+        if (isDue && (type == Card.TYPE_NEW)) {
             newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
         }
-        if (isDue && (type == Card.TYPE_REV) && (_failedSoonCount + _newCount != 0)) {
+        if (isDue && (type == Card.TYPE_REV)) {
             revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
         }
-        if (isDue && (type == Card.TYPE_FAILED) && (_revCount + _newCount != 0)) {
+        if (isDue && (type == Card.TYPE_FAILED)) {
             failedSoonCount.setSpan(new UnderlineSpan(), 0, failedSoonCount.length(), 0);
         }
 
