@@ -990,8 +990,8 @@ public class StudyOptions extends Activity {
         builder.setPositiveButton(res.getString(R.string.begin_cram), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                onCram();
                 mToggleCram.setChecked(true);
+                onCram();
             }
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
@@ -1409,12 +1409,16 @@ public class StudyOptions extends Activity {
                 double allRev = deck.getTotalRevFailedCount(false);
                 mProgressAll = allRev / totalCardsCount;
                 if (deck.isLimitedByTag()) {
-                    mGlobalLimitFrame.setVisibility(View.VISIBLE);
-                    mature = deck.getMatureCardCount(true);
-                    allRev = deck.getTotalRevFailedCount(true);
-                    totalCardsCount = allRev + deck.getNewCount(true);
-                    mProgressMatureLimit = mature / totalCardsCount;
-                    mProgressAllLimit = allRev / totalCardsCount;
+                	if (mToggleCram.isChecked()) {
+                		mGlobalLimitFrame.setVisibility(View.GONE);
+                	} else {
+                        mGlobalLimitFrame.setVisibility(View.VISIBLE);
+                        mature = deck.getMatureCardCount(true);
+                        allRev = deck.getTotalRevFailedCount(true);
+                        totalCardsCount = allRev + deck.getNewCount(true);
+                        mProgressMatureLimit = mature / totalCardsCount;
+                        mProgressAllLimit = allRev / totalCardsCount;                		
+                	}
                 } else {
                     mGlobalLimitFrame.setVisibility(View.GONE);
                 }
