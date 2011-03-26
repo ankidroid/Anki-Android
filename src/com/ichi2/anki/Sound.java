@@ -18,9 +18,11 @@ package com.ichi2.anki;
 
 import java.io.File;
 import java.net.URI;
+
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -69,12 +71,9 @@ public class Sound {
         	soundAvailable = true;
             // Get the sound file name
             String sound = matcher.group(1);
-            // Log.i(AnkiDroidApp.TAG, "Sound " + matcher.groupCount() + ": " + sound);
 
             // Construct the sound path and store it
-            //String soundPath = deckFilename.replace(".anki", ".media/") + sound;
-            String soundPath = soundDir + sound;
-            // Log.i(AnkiDroidApp.TAG, "parseSounds - soundPath = " + soundPath);
+            String soundPath = soundDir + Uri.encode(sound);
             sSoundPaths.add(soundPath);
 
             // Construct the new content, appending the substring from the beginning of the content left until the
@@ -125,47 +124,36 @@ public class Sound {
      * @param soundToPlayIndex
      */
     private static void playSound(int soundToPlayIndex) {
-        sMediaPlayer = new MediaPlayer();
-        try {
-            sMediaPlayer.setDataSource(sSoundPaths.get(soundToPlayIndex));
-            sMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
-            sMediaPlayer.prepare();
-            sMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    releaseSound();
-                    sNumSoundsPlayed++;
-
-                    // If there is still more sounds to play for the current card, play the next one
-                    if (sNumSoundsPlayed < sSoundPaths.size()) {
-                        playSound(sNumSoundsPlayed);
-                    }
-                }
-            });
-
-            sMediaPlayer.start();
-        } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG,
-                    "playSounds - Error reproducing sound " + (soundToPlayIndex + 1) + " = " + e.getMessage());
-            releaseSound();
-        }
+        playSound(sSoundPaths.get(soundToPlayIndex), true);
     }
 
-
-    public static void playSound(String soundPath) {
+    public static void playSound(String soundPath, boolean playAll) {
         if (soundPath.substring(0, 3).equals("tts")) {
         	ReadText.textToSpeech(soundPath.substring(4, soundPath.length()), Integer.parseInt(soundPath.substring(3, 4)));
-        } else 
-        	if (sSoundPaths.contains(soundPath)) {
-            sMediaPlayer = new MediaPlayer();
-            try {
-                // soundPath is usually an URI, but Media player requires a path not url encoded
+        } else if (sSoundPaths.contains(soundPath)) {
+    	    sMediaPlayer = new MediaPlayer();
+    	    try {
+    	        // soundPath is usually an URI, but Media player requires a path not url encoded
                 URI soundURI = new URI(soundPath);
                 soundPath = new File(soundURI).getAbsolutePath();
                 sMediaPlayer.setDataSource(soundPath);
                 sMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
                 sMediaPlayer.prepare();
+                if (playAll) {
+                    sMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            releaseSound();
+                            sNumSoundsPlayed++;
+
+                            // If there is still more sounds to play for the current card, play the next one
+                            if (sNumSoundsPlayed < sSoundPaths.size()) {
+                                playSound(sNumSoundsPlayed);
+                            }
+                        }
+                    });
+                }
                 sMediaPlayer.start();
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
