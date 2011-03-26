@@ -292,7 +292,7 @@ public class Reviewer extends Activity {
         @Override
         public void handleMessage(Message msg) {
             Sound.stopSounds();
-            Sound.playSound((String) msg.obj);
+            Sound.playSound((String) msg.obj, false);
         }
     };
 

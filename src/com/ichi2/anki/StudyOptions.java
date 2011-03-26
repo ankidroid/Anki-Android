@@ -1380,7 +1380,7 @@ public class StudyOptions extends Activity {
         Resources res = getResources();
         DeckTask.waitToFinish();
         if (deck != null) {
-            // deck.reset();
+            deck.reset();
             // TODO: updateActives() from anqiqt/ui/main.py
             int dueCount = deck.getDueCount();
             int cardsCount = deck.getCardCount();

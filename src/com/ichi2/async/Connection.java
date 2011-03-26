@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -700,8 +701,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         for (String file : missingPaths.keySet()) {
             
             try {
-                android.net.Uri uri = android.net.Uri.parse(urlbase + file);
-                url = new URI(uri.getScheme(), uri.getHost(), uri.getPath(), null).toURL();
+                android.net.Uri uri = android.net.Uri.parse(urlbase + Uri.encode(file));
+                url = new URI(uri.toString()).toURL();
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 if (connection.getResponseCode() == 200) {
