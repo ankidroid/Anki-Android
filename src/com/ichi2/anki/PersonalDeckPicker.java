@@ -66,7 +66,7 @@ public class PersonalDeckPicker extends Activity {
     private ProgressDialog mProgressDialog;
     private AlertDialog mNoConnectionAlert;
     private AlertDialog mConnectionErrorAlert;
-    private AlertDialog mSyncDublicateAlert;
+    private AlertDialog mDownloadOverwriteAlert;
 
     private Intent mDownloadManagerServiceIntent;
     // Service interface we will use to call the service
@@ -79,16 +79,7 @@ public class PersonalDeckPicker extends Activity {
     private PersonalDecksAdapter mPersonalDecksAdapter;
     private EditText mSearchEditText;
     private String mDestination;
-
-    public Download getmDeckToDownload() {
-        return mDeckToDownload;
-    }
-
-    public void setmDeckToDownload(Download mDeckToDownload) {
-        this.mDeckToDownload = mDeckToDownload;
-    }
-
-    private Download mDeckToDownload;
+    private Download DeckToDownload;
 
     private boolean mDownloadSuccessful = false;
 
@@ -127,25 +118,15 @@ public class PersonalDeckPicker extends Activity {
                 String deckName = (String) deckNameObject;
                 Download personalDeckDownload = new Download(deckName);
                 mDestination = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory());
-                setmDeckToDownload(personalDeckDownload);
+                setDeckToDownload(personalDeckDownload);
                 if (new File(mDestination + "/" + deckName + ".anki").exists()) {
-                    mSyncDublicateAlert.setMessage(String.format(getResources().getString(R.string.sync_dublicate_message), deckName));
-                    mSyncDublicateAlert.show();
+                    mDownloadOverwriteAlert.setMessage(getResources().getString(R.string.download_message, deckName));
+                    mDownloadOverwriteAlert.show();
                     Log.d(AnkiDroidApp.TAG, "Download Deck already exists");
                 } else {
                     downloadPersonalDeck(personalDeckDownload);
                     Log.d(AnkiDroidApp.TAG, "Download Deck not exists");
-                }/*
-                mPersonalDeckDownloads.add(personalDeckDownload);
-                refreshPersonalDecksList();
-                try {
-                    startService(mDownloadManagerServiceIntent);
-                    mDownloadManagerService.downloadFile(personalDeckDownload);
-                } catch (RemoteException e) {
-                    // There is nothing special we need to do if the service has crashed
-                    Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
-                    e.printStackTrace();
-                }*/
+                }
             }
 
         });
@@ -341,11 +322,11 @@ public class PersonalDeckPicker extends Activity {
         builder = new AlertDialog.Builder(this);
         builder.setTitle(res.getString(R.string.sync_conflict_title));
         builder.setIcon(android.R.drawable.ic_input_get);
-        builder.setMessage(res.getString(R.string.sync_dublicate_message));
-        builder.setPositiveButton(res.getString(R.string.sync_dublicate_overwrite), mSyncDublicateAlertListener);
-        builder.setNegativeButton(res.getString(R.string.sync_dublicate_cancel), mSyncDublicateAlertListener);
+        builder.setMessage(res.getString(R.string.download_message));
+        builder.setPositiveButton(res.getString(R.string.download_overwrite), mSyncDublicateAlertListener);
+        builder.setNegativeButton(res.getString(R.string.download_cancel), mSyncDublicateAlertListener);
         builder.setCancelable(false);
-        mSyncDublicateAlert = builder.create();
+        mDownloadOverwriteAlert = builder.create();
     }
 
 
@@ -357,6 +338,13 @@ public class PersonalDeckPicker extends Activity {
         mConnectionErrorAlert = null;
     }
 
+    public Download getDeckToDownload() {
+        return DeckToDownload;
+    }
+
+    public void setDeckToDownload(Download deckToDownload) {
+        this.DeckToDownload = deckToDownload;
+    }
 
     private void refreshPersonalDecksList() {
         mAllPersonalDecks.clear();
@@ -509,7 +497,7 @@ public class PersonalDeckPicker extends Activity {
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
                 case AlertDialog.BUTTON_POSITIVE:
-                    downloadPersonalDeck(getmDeckToDownload());
+                    downloadPersonalDeck(getDeckToDownload());
                     break;
                 case AlertDialog.BUTTON_NEGATIVE:
                 default:
