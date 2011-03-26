@@ -373,7 +373,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         return new TaskData(deck.getUndoType(), oldCardId);
     }
 
-    
+
     private TaskData doInBackgroundRedo(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card newCard;

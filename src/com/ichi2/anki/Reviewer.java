@@ -1205,6 +1205,17 @@ public class Reviewer extends Activity {
         if (mPrefWhiteboard) {
             mWhiteboard.setInvertedColor(true);
         }
+        mFlipCard.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mEase1.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mEase2.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mEase3.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mEase4.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mFlipCard.setTextColor(fgColor);
+        mEase1.setTextColor(fgColor);
+        mEase2.setTextColor(fgColor);
+        mEase3.setTextColor(fgColor);
+        mEase4.setTextColor(fgColor);
+
         fgColor = res.getColor(R.color.progressbar_border_inverted);
         bgColor = res.getColor(R.color.progressbar_background_inverted);
         findViewById(R.id.progress_bars_border1).setBackgroundColor(fgColor);
