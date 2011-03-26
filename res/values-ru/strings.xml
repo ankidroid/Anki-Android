@@ -53,12 +53,12 @@
   <string name="show_whiteboard">Показать доску</string>
   <string name="hide_whiteboard">Скрыть доску</string>
   <string name="clear_whiteboard">Очистка доски</string>
-  <string name="session_question_limit_reached">Достигнут лимит вопросов сеансов</string>
-  <string name="session_time_limit_reached">Достигнут лимит времени сеанса</string>
+  <string name="session_question_limit_reached">Конец урока (Лимит вопросов)</string>
+  <string name="session_time_limit_reached">Конец урока (Лимит времени)</string>
   <string name="cram_edit_warning">Редактирование карты заблокировано во время \`Зубрёжки\`</string>
   <string name="suspend_leeches">Откладывать \"приставучие\"</string>
   <string name="leech_suspend_notification">Карта помечена как \"приставучая\" и отложена</string>
-  <string name="leech_notification">Карта помечена как лишняя</string>
+  <string name="leech_notification">Карта помечена как \"приставучая\"</string>
   <string name="newcards_day_summ">Максимальное количество новых карт в день было показано.</string>
   <string name="newcards_day">Новых карт в день</string>
   <string name="studyoptions_limit_select_tags">Выберите теги</string>
@@ -66,16 +66,16 @@
   <string name="studyoptions_limit_tags_inactive">Без: %1$s</string>
   <string name="studyoptions_limit_button_text">Лимит</string>
   <string name="studyoptions_limit_dialog_title">Ограничение обучения</string>
-  <string name="studyoptions_session">Сессия</string>
+  <string name="studyoptions_session">Урок</string>
   <string name="studyoptions_tag">По тегам</string>
   <string name="studyoptions_tag_new">Показать новые карты по тегам:</string>
   <string name="studyoptions_tag_rev">Выборка карт с учётом тегов:</string>
   <string name="studyoptions_session_minutes">Урок составляет (мин):</string>
   <string name="studyoptions_session_questions">Вопросов в уроке:</string>
-  <string name="session_time_limit">Лимит времени сеанса</string>
-  <string name="session_time_limit_summ">Количество минут в сеансе. Выберите 0 для отмены ограничения.</string>
-  <string name="session_question_limit">Лимит вопросов в сеансе</string>
-  <string name="session_question_limit_summ">Количество вопросов в сеансе. Выберите 0 для отмены ограничения.</string>
+  <string name="session_time_limit">Ограничение урока по времени</string>
+  <string name="session_time_limit_summ">Количество минут в уроке. Выберите 0 для отмены ограничения.</string>
+  <string name="session_question_limit">Лимит вопросов в уроке</string>
+  <string name="session_question_limit_summ">Количество вопросов в уроке. Выберите 0 для отмены ограничения.</string>
   <string name="new_cards_order">Новый порядок карт</string>
   <string name="new_cards_order_summ">Порядок, в котором будут показаны новые карточки.</string>
   <string name="show_new_cards_in">Показать новые карты в...</string>
@@ -241,7 +241,7 @@
   <string name="cancel">Отмена</string>
   <string name="shared_decks">Общедоступные колоды</string>
   <string name="updating">Обновление...</string>
-  <string name="loading_shared_decks">Загрузка общедоступных колод...</string>
+  <string name="loading_shared_decks">Загрузка общедоступных колод.</string>
   <string name="cancel_download">Отменить загрузку</string>
   <string name="resume_download">Продолжить загрузку</string>
   <string name="pause_download">Приостановить закачку</string>
@@ -250,7 +250,7 @@
   <string name="fact">факт</string>
   <string name="facts">факты</string>
   <string name="saving_changes">Сохранение изменений...</string>
-  <string name="about_content">%1$s Флэш-карты для Android &lt;/h2&gt;&lt;p&gt; AnkiDroid может читать .anki файлы, созданные настольной версией %2$s Anki&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках %3$s здесь&lt;/a&gt;, предлагайте новые функции (идеи)! Также используйте %4$s wiki&lt;/a&gt; и наш %5$s форум&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid - %6$s open-source программное обеспечение&lt;/a&gt;, и любой желающий может %7$s принять участие&lt;/a&gt; как %8$s разработчик&lt;/a&gt; :-) Не-программисты могут также участвовать: обновляя wiki и скриншоты, %9$s помогая материально&lt;/a&gt;, или могут написать о AnkiDroid в интернете (например, в своём блоге)! &lt;/p&gt;&lt;p&gt; AnkiDroid создана под %10$s GNU-GPL v3 лицензией&lt;/a&gt; исходный код доступен %11$s здесь&lt;/a&gt;.</string>
+  <string name="about_content">%1$s Учебные карточки \n(для Android) &lt;/h2&gt;&lt;p&gt; AnkiDroid может читать .anki файлы, созданные настольной версией %2$s Anki&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках %3$s здесь&lt;/a&gt;, предлагайте новые функции (идеи)! Также используйте %4$s wiki&lt;/a&gt; и наш %5$s форум&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid - %6$s open-source программное обеспечение&lt;/a&gt;, и любой желающий может %7$s принять участие&lt;/a&gt; как %8$s разработчик&lt;/a&gt; :-) Не-программисты могут также участвовать: обновляя wiki и скриншоты, %9$s помогая материально&lt;/a&gt;, или могут написать о AnkiDroid в интернете (например, в своём блоге)! &lt;/p&gt;&lt;p&gt; AnkiDroid создана под %10$s GNU-GPL v3 лицензией&lt;/a&gt; исходный код доступен %11$s здесь&lt;/a&gt;.</string>
   <string name="studyoptions_title">Параметры обучения</string>
   <string name="studyoptions_deck_name">Название колоды</string>
   <string name="studyoptions_reviews_due">Повторов:</string>
@@ -361,7 +361,7 @@
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="error_reporting_choice_summary">Можно посылать ошибки программы автоматически, не посылать или выводить вопрос пользователю</string>
-  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
+  <string name="feedback_disclaimer">Отказ от ответственности: Мы не собираем никакой личной информации, такой как адрес электронной почты, номер телефона, IP-адреса или IMEI телефона. Мы собираем некоторую общего характера информацию о вашем устройстве, такую, как производитель, модель и версия Android, а также сам характер ошибки.</string>
   <string name="feedback_title">Обратная связь</string>
   <string name="feedback_send_feedback">Отправить нам свой отзыв</string>
   <string name="feedback_send_feedback_and_errors">Отправить ошибки и ваши отзывы</string>
@@ -370,7 +370,7 @@
   <string name="feedback_error_list_header">Список ошибок для отправки</string>
   <string name="feedback_keep_latest">Сохранить последнюю ошибку</string>
   <string name="feedback_clear_all">Очистить все ошибки</string>
-  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
+  <string name="feedback_default_text">Пожалуйста, введите Ваш отзыв, или информацию о характере ошибки, которую Вы хотите сообщить.</string>
   <string name="feedback_error_reply_new">Неизвестная проблема, зарегистрирована новая ошибка</string>
   <string name="feedback_error_reply_known">Известная проблема, над ней работают</string>
   <string name="feedback_error_reply_issue_unknown">Тема %1$d, неизвестный статус</string>
@@ -454,7 +454,7 @@
     <item quantity="other">повтор %1$d из %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 колода</item>
+    <item quantity="one">1 колоды</item>
     <item quantity="other">%1$d колод</item>
   </plurals>
 </resources>
