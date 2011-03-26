@@ -80,6 +80,16 @@ public class PersonalDeckPicker extends Activity {
     private EditText mSearchEditText;
     private String mDestination;
 
+    public Download getmDeckToDownload() {
+        return mDeckToDownload;
+    }
+
+    public void setmDeckToDownload(Download mDeckToDownload) {
+        this.mDeckToDownload = mDeckToDownload;
+    }
+
+    private Download mDeckToDownload;
+
     private boolean mDownloadSuccessful = false;
 
     /********************************************************************
@@ -117,6 +127,7 @@ public class PersonalDeckPicker extends Activity {
                 String deckName = (String) deckNameObject;
                 Download personalDeckDownload = new Download(deckName);
                 mDestination = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory());
+                setmDeckToDownload(personalDeckDownload);
                 if (new File(mDestination + "/" + deckName + ".anki").exists()) {
                     mSyncDublicateAlert.setMessage(String.format(getResources().getString(R.string.sync_dublicate_message), deckName));
                     mSyncDublicateAlert.show();
@@ -498,8 +509,7 @@ public class PersonalDeckPicker extends Activity {
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
                 case AlertDialog.BUTTON_POSITIVE:
-                    downloadPersonalDeck(personalDeck);
-                    // syncDeck("keepLocal");
+                    downloadPersonalDeck(getmDeckToDownload());
                     break;
                 case AlertDialog.BUTTON_NEGATIVE:
                 default:
