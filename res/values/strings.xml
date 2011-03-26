@@ -459,7 +459,7 @@
 <string name="sync_conflict_cancel">Cancel Syncing</string>
 <string name="sync_dublicate_overwrite">Overwrite</string>
 <string name="sync_dublicate_cancel">Cancel Download</string>
-<string name="sync_dublicate_message">Deck %s already exist in Local. Which side we should be kept?</string>
+<string name="sync_dublicate_message">Deck %s already exist in Local. Do you want to overwrite?</string>
 
 <!-- Feedback.java -->
 <plurals name="error_message">
