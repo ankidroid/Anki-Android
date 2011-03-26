@@ -148,7 +148,6 @@ public class StudyOptions extends Activity {
     
     private int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
-    boolean mSyncEnabled = false;
     boolean mNewVersion = false;
     boolean mShowWelcomeScreen = false;
     boolean mInvertedColors = false;
@@ -730,17 +729,12 @@ public class StudyOptions extends Activity {
 
         builder.setTitle(res.getString(R.string.menu_download_deck));
         CharSequence[] items;
-        if (mSyncEnabled) {
-        	items = new CharSequence[2];
-        	items[0] = res.getString(R.string.menu_download_personal_deck);
-        	items[1] = res.getString(R.string.menu_download_shared_deck);
-        } else {
-        	items = new CharSequence[1];
-        	items[0] = res.getString(R.string.menu_download_shared_deck);
-        }
+    	items = new CharSequence[2];
+    	items[0] = res.getString(R.string.menu_download_personal_deck);
+    	items[1] = res.getString(R.string.menu_download_shared_deck);
         builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
-				if (item == 0 && mSyncEnabled) {
+				if (item == 0) {
 	            	openPersonalDeckPicker();
 				} else {
 	            	openSharedDeckPicker();
@@ -1513,7 +1507,7 @@ public class StudyOptions extends Activity {
 		menu.findItem(MENU_SYNC).setEnabled(deckChangeable);
 
         // Show sync menu items only if sync is enabled.
-		menu.findItem(MENU_SYNC).setVisible(mSyncEnabled);
+		menu.findItem(MENU_SYNC).setVisible(true);
         return true;
     }
 
@@ -1829,7 +1823,6 @@ public class StudyOptions extends Activity {
         mStartupMode = Integer.parseInt(preferences.getString("startup_mode",
                 Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
-        mSyncEnabled = preferences.getBoolean("syncEnabled", false);
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         if (!preferences.getString("lastVersion", "").equals(getVersion())) {
         	Editor editor = preferences.edit();
