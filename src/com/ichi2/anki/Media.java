@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -43,7 +44,7 @@ public class Media {
 
     // File Handling
     // *************
-    
+
     /**
      * Copy PATH to MEDIADIR, and return new filename.
      * If a file with the same md5sum exists in the DB, return that.
@@ -198,7 +199,7 @@ public class Media {
     // *************
 
     /**
-     * Rebuilds the reference counts, potentially deletes unused media files, 
+     * Rebuilds the reference counts, potentially deletes unused media files,
      *
      * @param deck The deck to perform the operation on
      * @param delete If true, then unused (unreferenced in question/answer fields) media files will be deleted
@@ -248,8 +249,8 @@ public class Media {
         }
 
         // Update ref counts
-        for (String fname : refs.keySet()) {
-            updateMediaCount(deck, fname, refs.get(fname));
+        for (Entry<String, Integer> entry : refs.entrySet()) {
+            updateMediaCount(deck, entry.getKey(), entry.getValue());
         }
         String fname = null;
 
@@ -305,7 +306,7 @@ public class Media {
                 File file = new File(path);
                 if (!file.exists()) {
                    if (!md5.equals("")) {
-                       db.execSQL(String.format(Utils.ENGLISH_LOCALE, 
+                       db.execSQL(String.format(Utils.ENGLISH_LOCALE,
                                "UPDATE media SET originalPath = '', created = %f where filename = '%s'",
                                Utils.now(), fname));
                    }

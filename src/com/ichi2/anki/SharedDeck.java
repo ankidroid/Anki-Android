@@ -33,6 +33,10 @@ public class SharedDeck extends HashMap<String, Object> {
     private int mCount;
     private double mModified;
     private String mFileName;
+    /**
+     * on demand cache for filtering only
+     */
+    private String mLowerCaseTitle;
 
 
     public int getId() {
@@ -129,4 +133,13 @@ public class SharedDeck extends HashMap<String, Object> {
         Log.i(AnkiDroidApp.TAG, "        modified = " + mModified);
         Log.i(AnkiDroidApp.TAG, "        fileName = " + mFileName);
     }
+
+
+	public boolean matchesLowerCaseFilter(String searchText) {
+		// cache our own lower case title, so the next letters in the filter string will be faster
+		if (mLowerCaseTitle == null) {
+			mLowerCaseTitle = getTitle().toLowerCase();
+		}
+		return mLowerCaseTitle.contains(searchText);
+	}
 }

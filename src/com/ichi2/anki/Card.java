@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * A card is a presentation of a fact, and has two sides: a question and an answer. Any number of fields can appear on
@@ -155,7 +156,7 @@ public class Card {
         mTimerStarted = Double.NaN;
         mTimerStopped = Double.NaN;
         mModified = Utils.now();
-        if (created != Double.NaN) {
+        if (Double.isNaN(created)) {
             mCreated = created;
             mDue = created;
         } else {
@@ -212,8 +213,8 @@ public class Card {
                     }
                 }
                 // Update media counts if we're attached to deck
-                for (String f : files.keySet()) {
-                    Media.updateMediaCount(deck, f, files.get(f));
+                for (Entry<String, Integer> entry : files.entrySet()) {
+                    Media.updateMediaCount(deck, entry.getKey(), entry.getValue());
                 }
             } else {
                 // Update q/a
@@ -283,7 +284,7 @@ public class Card {
     }
 
     public void genFuzz() {
-        // Random rand = new Random();        
+        // Random rand = new Random();
         // mFuzz = 0.95 + (0.1 * rand.nextDouble());
         mFuzz = (double) Math.random();
     }
@@ -639,7 +640,7 @@ public class Card {
         values.put("combinedDue", Math.max(mSpaceUntil, mDue));
         values.put("relativeDelay", 0.0);
         AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("cards", null, values);
-        
+
     }
 
     public void toDB() {
@@ -725,7 +726,7 @@ public class Card {
         } else if (mCombinedDue < mDeck.getDueCutoff()) {
             builder.append(res.getString(R.string.card_details_now));
         } else {
-            builder.append(Utils.getReadableInterval(context, (mCombinedDue - Utils.now()) / 86400.0, true));        	
+            builder.append(Utils.getReadableInterval(context, (mCombinedDue - Utils.now()) / 86400.0, true));
         }
         builder.append("</td></tr><tr><td>");
         builder.append(res.getString(R.string.card_details_interval));
@@ -733,7 +734,7 @@ public class Card {
         if (mInterval == 0) {
             builder.append("-");
         } else {
-            builder.append(Utils.getReadableInterval(context, mInterval));        	
+            builder.append(Utils.getReadableInterval(context, mInterval));
         }
         builder.append("</td></tr><tr><td>");
         builder.append(res.getString(R.string.card_details_ease));
@@ -768,7 +769,7 @@ public class Card {
         builder.append(res.getString(R.string.card_details_changed));
         builder.append("</td><td>");
         builder.append(DateFormat.getDateFormat(context).format((long) (mModified - mDeck.getUtcOffset()) * 1000l));
-        builder.append("</td></tr><tr><td>");        
+        builder.append("</td></tr><tr><td>");
         builder.append(res.getString(R.string.card_details_tags));
         builder.append("</td><td>");
         String tags = Arrays.toString(mDeck.allUserTags("WHERE id = " + mFactId));

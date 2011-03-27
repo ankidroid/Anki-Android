@@ -79,7 +79,7 @@ public class PersonalDeckPicker extends Activity {
     private PersonalDecksAdapter mPersonalDecksAdapter;
     private EditText mSearchEditText;
     private String mDestination;
-    private Download DeckToDownload;
+    private Download mDeckToDownload;
 
     private boolean mDownloadSuccessful = false;
 
@@ -339,11 +339,11 @@ public class PersonalDeckPicker extends Activity {
     }
 
     public Download getDeckToDownload() {
-        return DeckToDownload;
+        return mDeckToDownload;
     }
 
     public void setDeckToDownload(Download deckToDownload) {
-        this.DeckToDownload = deckToDownload;
+        this.mDeckToDownload = deckToDownload;
     }
 
     private void refreshPersonalDecksList() {

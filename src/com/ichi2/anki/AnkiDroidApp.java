@@ -72,7 +72,7 @@ public class AnkiDroidApp extends Application {
 
         // Error Reporter
         CustomExceptionHandler customExceptionHandler = CustomExceptionHandler.getInstance();
-        customExceptionHandler.Init(sInstance.getApplicationContext());
+        customExceptionHandler.init(sInstance.getApplicationContext());
         Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
 
         SharedPreferences preferences = PrefSettings.getSharedPrefs(this);
