@@ -144,8 +144,7 @@
 <string name="pref_cat_zoom">Zoom</string>
 <string name="pref_cat_reset">Reset</string>
 <string name="pref_cat_other">Other</string>
-<string name="sync_on_open">Sync on open</string>
-<string name="sync_on_close">Sync on close</string>
+<string name="pref_cat_experimental">EXPERIMENTAL</string>
 <string name="show_study_options_on_deck_load">Study options on load</string>
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
 <string name="startup_mode">Startup Mode</string>
@@ -199,9 +198,8 @@
 <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
 <string name="shake_intensity">Shake threshold</string>
 <string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
-<string name="pref_cat_experimental">EXPERIMENTAL</string>
-<string name="sync_enabled">Sync features</string>
-<string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
+<string name="sync_fetch_missing_media">Fetch media on sync</string>
+<string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
 <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
 <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
 <string name="language">Language</string>
@@ -444,10 +442,15 @@
 <string name="sync_log_no_changes_message">No changes found</string>
 <string name="sync_log_uploading_message">Full sync from local</string>
 <string name="sync_log_downloading_message">Full sync from server</string>
-<string name="sync_log_fact_to_server_message">1 card to server</string>
-<string name="sync_log_facts_to_server_message">%d cards to server</string>
-<string name="sync_log_fact_from_server_message">1 card from server</string>
-<string name="sync_log_facts_from_server_message">%d cards from server</string>
+<string name="sync_log_zero_facts">Completed, no cards changed</string>
+<plurals name="sync_log_facts_to_server_message">
+	<item quantity="one">1 card to server</item>
+	<item quantity="other">%1$d cards to server</item>
+</plurals>
+<plurals name="sync_log_facts_from_server_message">
+	<item quantity="one">1 card from server</item>
+	<item quantity="other">%1$d cards from server</item>
+</plurals>
 <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %1$d sec%2$s; unable to sync.</string>
 <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
 <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
