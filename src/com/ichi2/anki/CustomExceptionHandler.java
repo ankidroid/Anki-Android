@@ -52,7 +52,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
     }
 
 
-    public void Init(Context context) {
+    public void init(Context context) {
         mPreviousHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
         mCurContext = context;

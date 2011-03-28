@@ -112,7 +112,7 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, prepareSync
-     * 
+     *
      * @return
      */
     public boolean prepareSync(double timediff) {
@@ -161,9 +161,9 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - summary
-     * 
+     *
      * @param lastSync
-     * @throws JSONException 
+     * @throws JSONException
      */
     public JSONObject summary(double lastSync) throws JSONException {
         Log.i(AnkiDroidApp.TAG, "Summary Local");
@@ -241,7 +241,7 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - genPayload
-     * @throws JSONException 
+     * @throws JSONException
      */
     public JSONObject genPayload(JSONArray summaries) throws JSONException {
         // Log.i(AnkiDroidApp.TAG, "genPayload");
@@ -282,7 +282,7 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - payloadChanges
-     * @throws JSONException 
+     * @throws JSONException
      */
     private Object[] payloadChanges(JSONObject payload) throws JSONException {
         Object[] h = new Object[8];
@@ -348,7 +348,7 @@ public class SyncClient {
             Log.e(AnkiDroidApp.TAG, "Facts missing after sync (" + missingFacts + " facts)!");
         }
         assert missingFacts == 0l;
-        
+
     }
 
     private long missingFacts() {
@@ -383,7 +383,7 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - diffSummary
-     * @throws JSONException 
+     * @throws JSONException
      */
     private JSONArray diffSummary(JSONObject summaryLocal, JSONObject summaryServer, String key) throws JSONException {
         JSONArray locallyEdited = new JSONArray();
@@ -554,10 +554,10 @@ public class SyncClient {
     // TODO: Include the case with updateModified
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - getModels
-     * 
+     *
      * @param ids
      * @return
-     * @throws JSONException 
+     * @throws JSONException
      */
     private JSONArray getModels(JSONArray ids) throws JSONException// , boolean updateModified)
     {
@@ -574,10 +574,10 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - bundleModel
-     * 
+     *
      * @param id
      * @return
-     * @throws JSONException 
+     * @throws JSONException
      */
     private JSONObject bundleModel(Long id) throws JSONException// , boolean updateModified
     {
@@ -610,10 +610,10 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - bundleFieldModel
-     * 
+     *
      * @param id
      * @return
-     * @throws JSONException 
+     * @throws JSONException
      */
     private JSONArray bundleFieldModels(Long id) throws JSONException {
         JSONArray fieldModels = new JSONArray();
@@ -753,7 +753,7 @@ public class SyncClient {
 
     private void mergeFieldModels(String modelId, JSONArray fieldModels) throws JSONException {
         ArrayList<String> ids = new ArrayList<String>();
-        
+
         String sql = "INSERT OR REPLACE INTO fieldModels VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         SQLiteStatement statement = mDeck.getDB().getDatabase().compileStatement(sql);
         int len = fieldModels.length();
@@ -957,7 +957,7 @@ public class SyncClient {
     // exactly do that?)
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - getFacts
-     * @throws JSONException 
+     * @throws JSONException
      */
     private JSONObject getFacts(JSONArray ids) throws JSONException// , boolean updateModified)
     {
@@ -1074,7 +1074,7 @@ public class SyncClient {
                 }
 
                 statement.execute();
-                
+
             }
             statement.close();
 
@@ -1113,7 +1113,7 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - getCards
-     * @throws JSONException 
+     * @throws JSONException
      */
     private JSONArray getCards(JSONArray ids) throws JSONException {
         JSONArray cards = new JSONArray();
@@ -1334,7 +1334,7 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - getMedia
-     * @throws JSONException 
+     * @throws JSONException
      */
     private JSONArray getMedia(JSONArray ids) throws JSONException {
         JSONArray media = new JSONArray();
@@ -1428,18 +1428,18 @@ public class SyncClient {
             statement.bindString(6, m.getString(5));
 
             statement.execute();
-            
+
         }
         statement.close();
 
         ankiDB.getDatabase().execSQL("DELETE FROM mediaDeleted WHERE mediaId IN " + Utils.ids2str(mediaIds));
-        
+
     }
 
 
     /**
      * Deck/Stats/History/Sources
-     * @throws JSONException 
+     * @throws JSONException
      */
 
     private JSONObject bundleDeck() throws JSONException {
@@ -1594,7 +1594,7 @@ public class SyncClient {
             review.put(4, (int)cursor.getInt(4));
             // delay
             delay = cursor.getDouble(5);
-            Number num = (Number)(new Double(delay));
+            Number num = Double.valueOf(delay);
             Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s",
                     delay, num.toString(), review.toString()));
             review.put(5, delay);
@@ -1717,10 +1717,10 @@ public class SyncClient {
 
     /**
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - needFullSync
-     * 
+     *
      * @param sums
      * @return
-     * @throws JSONException 
+     * @throws JSONException
      */
     @SuppressWarnings("unchecked")
     public boolean needFullSync(JSONArray sums) throws JSONException {
@@ -1733,7 +1733,7 @@ public class SyncClient {
 
         int len = sums.length();
         for (int i = 0; i < len; i++) {
-        
+
             JSONObject summary = sums.getJSONObject(i);
             Iterator keys = summary.keys();
             while (keys.hasNext()) {
@@ -1835,7 +1835,7 @@ public class SyncClient {
             httpPost.setEntity(new FileEntity(tmpFile, "application/octet-stream"));
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpResponse resp = httpClient.execute(httpPost);
-            
+
             // Ensure we got the HTTP 200 response code
             String response = Utils.convertStreamToString(resp.getEntity().getContent());
             int responseCode = resp.getStatusLine().getStatusCode();
@@ -1870,7 +1870,7 @@ public class SyncClient {
             result.put("code", "IOException");
             exc = e;
         }
-        
+
         if (exc != null) {
             // Sometimes the exception has null message and we have to get it from its cause
             while (exc.getMessage() == null && exc.getCause() != null) {
@@ -1927,7 +1927,7 @@ public class SyncClient {
             result.put("code", "IOException");
             exc = e;
         }
-    
+
         if (exc != null) {
             // Sometimes the exception has null message and we have to get it from its cause
             while (exc.getMessage() == null && exc.getCause() != null) {

@@ -18,7 +18,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 public class Download extends HashMap<String, Object> implements Parcelable {
 
@@ -52,7 +51,7 @@ public class Download extends HashMap<String, Object> implements Parcelable {
         mSize = -1;
         mDownloaded = 0;
         mStatus = STATUS_STARTED;
-        mFilename = mTitle.replaceAll("[^A-Za-z0-9 ()\\-]", "");
+        mFilename = mTitle.replaceAll("[^A-Za-z0-9äöüß ()\\-]", "");
         if (mFilename.length() > 40) {
             mFilename = mFilename.substring(0, 40);
         }
@@ -116,12 +115,12 @@ public class Download extends HashMap<String, Object> implements Parcelable {
         mFilename = title;
     }
 
-    
+
     public String getFilename() {
         return mFilename;
     }
 
-    
+
     /********************************************************************
      * Parcel methods *
      ********************************************************************/

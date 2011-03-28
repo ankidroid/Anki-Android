@@ -23,7 +23,7 @@
   <string name="CardEditorCancelButton">Ακύρωση</string>
   <string name="CardEditorSaveButton">Αποθήκευση</string>
   <string name="CardEditorTags">Tags: %1$s</string>
-  <string name="add_new_tag">Add new tag</string>
+  <string name="add_new_tag">Προσθήκη νέας ετικέτας</string>
   <string name="app_name">AnkiDroid</string>
   <string name="yes">Ναι</string>
   <string name="no">Όχι</string>
@@ -111,8 +111,7 @@
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Reset</string>
   <string name="pref_cat_other">Other</string>
-  <string name="sync_on_open">Συγχρονισμός στο άνοιγμα</string>
-  <string name="sync_on_close">Συγχρονισμός στο κλείσιμο</string>
+  <string name="pref_cat_experimental">ΠΕΙΡΑΜΑΤΙΚΌ</string>
   <string name="show_study_options_on_deck_load">Επιλογές μελέτης στο φόρτωμα</string>
   <string name="show_study_options_on_deck_load_summ">Δείχνει την οθόνη των επιλογών μελέτης όταν φορτώνετε μια τράπουλα</string>
   <string name="startup_mode">Λειτουργία εκκίνησης</string>
@@ -157,21 +156,20 @@
   <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
   <string name="shake">Ανακινήστε για Αναίρεση</string>
   <string name="shake_summ">Ανακινήστε τη συσκευή σας για να αναιρέσετε την τελευταία ενέργεια</string>
-  <string name="tts">Text to Speech</string>
+  <string name="tts">Κείμενο σε ομιλία</string>
   <string name="tts_summ">Reads out question and answer if no sound file is included</string>
-  <string name="play_sounds_at_start">Play Sounds Instantly</string>
+  <string name="play_sounds_at_start">Αναπαραγωγή ήχων αμέσως</string>
   <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Όριο ανακίνησης</string>
   <string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
-  <string name="pref_cat_experimental">ΠΕΙΡΑΜΑΤΙΚΌ</string>
-  <string name="sync_enabled">Χαρακτηριστικά συγχρονισμού</string>
-  <string name="sync_enabled_in_answer_summ">Ακόμη πολλά σφάλματα, ίσως να κατεστρέψει τις τράπουλές σας. Κρατήστε αντίγραφα συχνά!</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">Επιβολή RTL για τα εβραϊκά</string>
   <string name="fix_hebrew_text_summ">Εναλλακτική λύση για περιορισμένη υποστήριξη για εβραϊκά από το Android. Δεν υποστηρίζει φωνήεντα.</string>
   <string name="language">Language</string>
   <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
   <string name="language_system">System Language</string>
-  <string name="select_locale_title">Select Language</string>
+  <string name="select_locale_title">Επιλογή Γλώσσας</string>
   <string name="personaldeckpicker_title">Ανοίξτε τράπουλα από το δίκτυο</string>
   <string name="shareddeckpicker_title">Επιλέξτε την τράπουλα που θέλετε να κατεβάσετε</string>
   <string name="downloaddeck_search">Αναζήτηση</string>
@@ -223,7 +221,7 @@
   <string name="card_details_tags">Tags</string>
   <string name="card_details_model">Model</string>
   <string name="card_details_card_model">Card model</string>
-  <string name="statistics">Statistics</string>
+  <string name="statistics">Στατιστικά</string>
   <string name="loading_deck">Φόρτωση τράπουλας. Παρακαλώ περιμένετε...</string>
   <string name="connection_needed">Αυτή τη στιγμή είστε χωρίς σύνδεση.</string>
   <string name="currently_downloading">Λήψεις σε εξέλιξη</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">Παρουσιάστηκε ένα σφάλμα δικτύου. Επανάληψη, ή ακύρωση και επιστροφή στην προηγούμενη οθόνη.</string>
   <string name="retry">Ξαναδοκίμασε</string>
   <string name="cancel">Ακύρωση</string>
+  <string name="download_overwrite">Overwrite</string>
+  <string name="download_cancel">Cancel Download</string>
+  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
   <string name="shared_decks">Κοινόχρηστες τράπουλες</string>
   <string name="updating">Ενημέρωση...</string>
   <string name="loading_shared_decks">Φόρτωση διαθέσιμων κοινόχρηστων τραπουλών...</string>
@@ -272,7 +273,7 @@
   <string name="studyoptions_no_external_storage_message">Δεν υπάρχει διαθέσιμη εξωτερική αποθήκευση αυτή τη στιγμή. Το AnkiDroid χρειάζεται να έχει πρόσβαση στην κάρτα SD σας για να διαβάσει και να φορτώσει τις Anki τράπουλές σας. Ελέγξτε ότι η κάρτα SD σας είναι τοποθετημένη και προσπαθήστε ξανά.</string>
   <string name="studyoptions_load_other_deck">Φορτώστε άλλη τράπουλα</string>
   <string name="studyoptions_load_sample_deck">Φορτώστε την τράπουλα δείγμα</string>
-  <string name="studyoptions_night_mode">Night Mode</string>
+  <string name="studyoptions_night_mode">Νυκτερινή λειτουργία</string>
   <string name="menu_open_deck">All decks</string>
   <string name="menu_sync">Συγχρονισμός</string>
   <string name="menu_download_deck">Λήψη τράπουλας</string>
@@ -340,10 +341,7 @@
   <string name="sync_log_no_changes_message">Δε βρέθηκαν αλλαγές</string>
   <string name="sync_log_uploading_message">Πλήρης συγχρονισμός από το τοπικό</string>
   <string name="sync_log_downloading_message">Πλήρης συγχρονισμός από το διακομιστή</string>
-  <string name="sync_log_fact_to_server_message">1 γεγονός στο διακομιστή</string>
-  <string name="sync_log_facts_to_server_message">%d γεγονότα στο διακομιστή</string>
-  <string name="sync_log_fact_from_server_message">1 γεγονός από το διακομιστή</string>
-  <string name="sync_log_facts_from_server_message">%d γεγονότα από το διακομιστή</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">Η ώρα της συσκευής σας είναι διαφορετική από εκείνη του διακομιστή κατά %1$d δευτερόλεπτα%2$s· δεν είναι δυνατός ο συγχρονισμός.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
@@ -360,7 +358,7 @@
   <string name="error_cancel">Μην αναφέρετε σφάλματα</string>
   <string name="error_reporting_choice">Λειτουργία αναφοράς σφαλμάτων</string>
   <string name="error_reporting_choice_summary">Σφάλματα μπορεί να αναφερθούν αυτόματα, ποτέ, ή μπορεί να σας ζητηθεί</string>
-  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string>
+  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_send_feedback">Send us your feedback</string>
   <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
@@ -369,7 +367,7 @@
   <string name="feedback_error_list_header">List of errors to send</string>
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
-  <string name="feedback_default_text">Please enter your feedback or information about the nature of the error.</string>
+  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
   <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
   <string name="feedback_error_reply_known">Known issue, pending investigation</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
@@ -407,7 +405,7 @@
   <string name="delete_deck_confirm">Διαγράψτε το</string>
   <string name="new_version_title">New Version:</string>
   <string name="new_version_message">New Features:</string>
-  <string name="no_tts_available_title">Text-to-Speech</string>
+  <string name="no_tts_available_title">Μετατροπή κειμένου σε ομιλία</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="tts_no_tts">Don\'t speak</string>
   <string name="statistics_type_title">Choose statistic type</string>
@@ -443,6 +441,14 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 of %3$d due)</item>
     <item quantity="other">%1$s (%2$d από %3$d αναμένουν)</item>
+  </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Υπάρχει ένα σφάλμα προς αναφορά</item>

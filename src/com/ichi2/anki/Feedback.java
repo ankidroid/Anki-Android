@@ -75,14 +75,14 @@ public class Feedback extends Activity {
     public static String TYPE_FEEDBACK = "feedback";
     public static String TYPE_ERROR_FEEDBACK = "error-feedback";
     public static String TYPE_OTHER_ERROR = "other-error";
-	
+
     protected static SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
     protected static SimpleDateFormat df2 = new SimpleDateFormat("Z", Locale.US);
     protected static TimeZone localTz = TimeZone.getDefault();
 
 	// This is used to group the batch of bugs and notes sent on the server side
 	protected long mNonce;
-	
+
 	protected List<HashMap<String, String>> mErrorReports;
     protected SimpleAdapter mErrorAdapter;
     protected ListView mLvErrorList;
@@ -91,17 +91,17 @@ public class Feedback extends Activity {
     protected InputMethodManager mImm = null;
     protected AlertDialog mNoConnectionAlert = null;
 
-    
-    protected String mFeedbackUrl; 
-    protected String mErrorUrl; 
-    
+
+    protected String mFeedbackUrl;
+    protected String mErrorUrl;
+
     @Override
     public void onBackPressed() {
         deleteFiles(true, false);
         setResult(RESULT_OK);
         finish();
     }
-    
+
     /**
      * Create AlertDialogs used on all the activity
      */
@@ -148,7 +148,7 @@ public class Feedback extends Activity {
                 btnKeepLatest.setEnabled(true);
             }
         }
-        
+
         if (mPostingFeedback) {
             int buttonHeight = btnSend.getHeight();
             btnSend.setVisibility(View.GONE);
@@ -168,13 +168,13 @@ public class Feedback extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         Resources res = getResources();
 
         Context context = getBaseContext();
         SharedPreferences sharedPreferences = PrefSettings.getSharedPrefs(context);
         String reportErrorMode = sharedPreferences.getString("reportErrorMode", REPORT_ASK);
-        
+
         mNonce = UUID.randomUUID().getMostSignificantBits();
         mFeedbackUrl = res.getString(R.string.feedback_post_url);
         mErrorUrl = res.getString(R.string.error_post_url);
@@ -279,13 +279,13 @@ public class Feedback extends Activity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        
+
     }
 
     private void refreshErrorListView() {
         mErrorAdapter.notifyDataSetChanged();
     }
-    
+
     private void getErrorFiles() {
         mErrorReports = new ArrayList<HashMap<String, String>>();
         String[] errors = fileList();
@@ -303,7 +303,7 @@ public class Feedback extends Activity {
     }
 
     private void deleteFiles(boolean onlyProcessed, boolean keepLatest) {
-        
+
         for (int i = (keepLatest? 1: 0); i < mErrorReports.size(); ) {
             try {
                 String errorState = mErrorReports.get(i).get("state");
@@ -346,7 +346,7 @@ public class Feedback extends Activity {
         @Override
         public void onProgressUpdate(Object... values) {
             Resources res = getResources();
-            
+
             String postType = (String)values[0];
             int errorIndex = (Integer)values[1];
             String state = (String)values[2];
@@ -421,7 +421,7 @@ public class Feedback extends Activity {
     private static void addTimestamp(List<NameValuePair> pairs) {
         Date ts = new Date();
         df1.setTimeZone(TimeZone.getTimeZone("UTC"));
-        
+
         String reportsentutc = String.format("%s", df1.format(ts));
         String reportsenttzoffset = String.format("%s", df2.format(ts));
         String reportsenttz = String.format("%s", localTz.getID());
@@ -433,7 +433,7 @@ public class Feedback extends Activity {
 
     private static List<NameValuePair> extractPairsFromError(String type, String errorFile, String groupId, int index, Application app) {
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        
+
         pairs.add(new BasicNameValuePair("type", "crash-stacktrace"));
         pairs.add(new BasicNameValuePair("groupid", groupId));
         pairs.add(new BasicNameValuePair("index", String.valueOf(index)));
@@ -444,21 +444,21 @@ public class Feedback extends Activity {
             BufferedReader br = new BufferedReader(new InputStreamReader(app.openFileInput(errorFile)));
             while((singleLine = br.readLine()) != null) {
                 int indexOfEquals = singleLine.indexOf('=');
-                
+
                 if(indexOfEquals==-1)
                     continue;
-                
+
                 String key = singleLine.substring(0, indexOfEquals).toLowerCase();
                 String value = singleLine.substring(indexOfEquals+1,singleLine.length());
-                
+
                 if(key.equals("stacktrace")) {
                     StringBuilder sb = new StringBuilder(value);
-                    
+
                     while((singleLine = br.readLine()) != null) {
                         sb.append(singleLine);
                         sb.append("\n");
                     }
-                    
+
                     value = sb.toString();
                 }
                 pairs.add(new BasicNameValuePair(key, value));
@@ -471,16 +471,16 @@ public class Feedback extends Activity {
             Log.w(AnkiDroidApp.TAG, "Couldn't read crash report " + errorFile);
             return null;
         }
-        
+
         return pairs;
     }
-    
+
     /**
      * Posting feedback or error info to the server.
      * This is called from the AsyncTask.
      * @param url The url to post the feedback to.
      * @param type The type of the info, eg Feedback.TYPE_CRASH_STACKTRACE.
-     * @param feedback For feedback types this is the message. For error/crash types this is the path to the error file. 
+     * @param feedback For feedback types this is the message. For error/crash types this is the path to the error file.
      * @param groupId A single time generated ID, so that errors/feedback send together can be grouped together.
      * @param index The index of the error in the list
      * @return A Payload file showing success, response code and response message.
@@ -489,7 +489,7 @@ public class Feedback extends Activity {
         Payload result = new Payload(null);
 
         List<NameValuePair> pairs = null;
-        if (!isErrorType(type)) { 
+        if (!isErrorType(type)) {
             pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("type", type));
             pairs.add(new BasicNameValuePair("groupid", groupId));
@@ -533,14 +533,14 @@ public class Feedback extends Activity {
         } catch (ClientProtocolException ex) {
             Log.e(AnkiDroidApp.TAG, "ClientProtocolException: " + ex.toString());
             result.success = false;
-            result.result = new String(ex.toString());
+            result.result = ex.toString();
         } catch (IOException ex) {
             Log.e(AnkiDroidApp.TAG, "IOException: " + ex.toString());
             result.success = false;
-            result.result = new String(ex.toString());
+            result.result = ex.toString();
         }
         return result;
     }
-    
+
 }
 

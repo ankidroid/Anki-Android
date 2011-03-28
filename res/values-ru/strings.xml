@@ -22,8 +22,8 @@
 <resources>
   <string name="CardEditorCancelButton">Отмена</string>
   <string name="CardEditorSaveButton">Сохранить</string>
-  <string name="CardEditorTags">Тэги: %1$s</string>
-  <string name="add_new_tag">Добавить новый тэг</string>
+  <string name="CardEditorTags">Теги: %1$s</string>
+  <string name="add_new_tag">Добавить новый тег</string>
   <string name="app_name">AnkiDroid</string>
   <string name="yes">Да</string>
   <string name="no">Нет</string>
@@ -31,7 +31,7 @@
   <string name="deck_upgrade_too_old_version">Колоды версий до 39 не поддерживаются AnkiDroid, пожалуйста, откройте колоду настольной версией Anki для обновлении колоды до последней версии.</string>
   <string name="deck_upgrade_version_61_has_latex">Колода не может быть полностью обновлена, так как она содержит LaTeX-выражения; пожалуйста откройте колоду в десктоп-версии Anki и пересохраните файл колоды (чтобы обновить её до последнего нового формата и перегенерировать LaTeX).</string>
   <string name="deckpicker_title_nosdcard">SD-карта отмонтирована</string>
-  <string name="deckpicker_new">%d нов.сегодня</string>
+  <string name="deckpicker_new">%d новых сегодня</string>
   <string name="deckpicker_loaddeck">Открытие колоды...</string>
   <string name="deckpicker_nodeck">Не найдено ни одной колоды.</string>
   <string name="sync_log_title">Ход выполнения синхронизации</string>
@@ -53,29 +53,29 @@
   <string name="show_whiteboard">Показать доску</string>
   <string name="hide_whiteboard">Скрыть доску</string>
   <string name="clear_whiteboard">Очистка доски</string>
-  <string name="session_question_limit_reached">Достигнут лимит вопросов сеансов</string>
-  <string name="session_time_limit_reached">Достигнут лимит времени сеанса</string>
+  <string name="session_question_limit_reached">Конец урока (Лимит вопросов)</string>
+  <string name="session_time_limit_reached">Конец урока (Лимит времени)</string>
   <string name="cram_edit_warning">Редактирование карты заблокировано во время \`Зубрёжки\`</string>
   <string name="suspend_leeches">Откладывать \"приставучие\"</string>
   <string name="leech_suspend_notification">Карта помечена как \"приставучая\" и отложена</string>
-  <string name="leech_notification">Карта помечена как лишняя</string>
+  <string name="leech_notification">Карта помечена как \"приставучая\"</string>
   <string name="newcards_day_summ">Максимальное количество новых карт в день было показано.</string>
   <string name="newcards_day">Новых карт в день</string>
-  <string name="studyoptions_limit_select_tags">Выберите тэги</string>
+  <string name="studyoptions_limit_select_tags">Выберите теги</string>
   <string name="studyoptions_limit_tags_active">С: %1$s</string>
   <string name="studyoptions_limit_tags_inactive">Без: %1$s</string>
   <string name="studyoptions_limit_button_text">Лимит</string>
   <string name="studyoptions_limit_dialog_title">Ограничение обучения</string>
-  <string name="studyoptions_session">Сессия</string>
-  <string name="studyoptions_tag">По тэгам</string>
+  <string name="studyoptions_session">Урок</string>
+  <string name="studyoptions_tag">По тегам</string>
   <string name="studyoptions_tag_new">Показать новые карты по тегам:</string>
-  <string name="studyoptions_tag_rev">Показать обзор карты по тегам:</string>
+  <string name="studyoptions_tag_rev">Выборка карт с учётом тегов:</string>
   <string name="studyoptions_session_minutes">Урок составляет (мин):</string>
   <string name="studyoptions_session_questions">Вопросов в уроке:</string>
-  <string name="session_time_limit">Лимит времени сеанса</string>
-  <string name="session_time_limit_summ">Количество минут в сеансе. Выберите 0 для отмены ограничения.</string>
-  <string name="session_question_limit">Лимит вопросов в сеансе</string>
-  <string name="session_question_limit_summ">Количество вопросов в сеансе. Выберите 0 для отмены ограничения.</string>
+  <string name="session_time_limit">Ограничение урока по времени</string>
+  <string name="session_time_limit_summ">Количество минут в уроке. Выберите 0 для отмены ограничения.</string>
+  <string name="session_question_limit">Лимит вопросов в уроке</string>
+  <string name="session_question_limit_summ">Количество вопросов в уроке. Выберите 0 для отмены ограничения.</string>
   <string name="new_cards_order">Новый порядок карт</string>
   <string name="new_cards_order_summ">Порядок, в котором будут показаны новые карточки.</string>
   <string name="show_new_cards_in">Показать новые карты в...</string>
@@ -111,9 +111,8 @@
   <string name="pref_cat_zoom">Масштабирование</string>
   <string name="pref_cat_reset">Сброс</string>
   <string name="pref_cat_other">Прочие</string>
-  <string name="sync_on_open">Синхронизация при открытии</string>
-  <string name="sync_on_close">Синхронизация при закрытии</string>
-  <string name="show_study_options_on_deck_load">Параметры обучения при загрузке колоды</string>
+  <string name="pref_cat_experimental">Экспериментальное</string>
+  <string name="show_study_options_on_deck_load">Параметры обучения</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
   <string name="startup_mode">Режим при запуске</string>
   <string name="startup_mode_summ">Выбрать если вы ходите начинать с окна параметров обучения или окна оглавления колод:</string>
@@ -125,7 +124,7 @@
   <string name="whiteboard_stroke_width">Ширина штриха</string>
   <string name="whiteboard_stroke_width_summ">Ширина штриха: XXX</string>
   <string name="sample_deck">Колода с примерами</string>
-  <string name="sample_deck_summ">Создать колоду столиц для примера, если нет ни одной колоды</string>
+  <string name="sample_deck_summ">Создать колоду столиц для примера, если нет ни одной колоды в каталоге колод, где хранятся колоды</string>
   <string name="write_answers">Писать ответы</string>
   <string name="write_answers_summ">Позволяет вам написать ответ и сравнивать с правильными</string>
   <string name="text_selection">Разрешить выделение текста</string>
@@ -147,7 +146,7 @@
   <string name="deck_path">Путь к колодам</string>
   <string name="deck_path_summ">Путь, где хранятся ваши колоды</string>
   <string name="fullscreen_review">Просмотр в полный экран</string>
-  <string name="fullscreen_review_summ">Вы можете решить, хотите ли вы использовать все доступное место экрана для просмотра</string>
+  <string name="fullscreen_review_summ">Использовать все доступное место экрана для просмотра</string>
   <string name="zoom">Включить масштабирование</string>
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
   <string name="swipe">Включить жесты</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">Воспроизведение звуков сразу после показа вопрос/ответ</string>
   <string name="shake_intensity">Уровень трясения</string>
   <string name="shake_intensity_summ">Пороговое значение для признания встряски: XXX</string>
-  <string name="pref_cat_experimental">Экспериментальное</string>
-  <string name="sync_enabled">Синхронизация</string>
-  <string name="sync_enabled_in_answer_summ">Синхронизация в разработке. При синхронизации колоды могут быть повреждены. Делайте чаще резервные копии!</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">Обратный порядок написания (RTL) для иврита</string>
   <string name="fix_hebrew_text_summ">Ограниченная поддержка иврита для Android-платформы. Не поддерживаются гласные буквы.</string>
   <string name="language">Язык</string>
@@ -188,7 +186,7 @@
   <string name="add">Добавить</string>
   <string name="close">Закрыть</string>
   <string name="select_card_model">Выберите модель карты</string>
-  <string name="select">Выберите</string>
+  <string name="select">Ок</string>
   <string name="card_browser">Редактор карт</string>
   <string name="card_browser_load">Открытие карт</string>
   <string name="card_browser_cardloading_error">Ошибка при загрузке карт. Вероятно это связано с ограничением памяти вашего устройства. Попробуйте еще раз с меньшей колодой</string>
@@ -202,9 +200,9 @@
   <string name="card_browser_show_marked">Показать отмеченные</string>
   <string name="card_browser_show_suspended">Показать отложенные</string>
   <string name="card_browser_search">Поиск</string>
-  <string name="card_browser_search_suspended">Поиск приостановлен</string>
+  <string name="card_browser_search_suspended">Поиск \"приостановленных\"</string>
   <string name="card_browser_search_by_tag">Поиск по тегам</string>
-  <string name="card_browser_tags_shown">Тэги: %1$s</string>
+  <string name="card_browser_tags_shown">Теги: %1$s</string>
   <string name="card_browser_change_display_order">Изменение сортировки</string>
   <string name="card_browser_change_display_order_title">Сортировка</string>
   <string name="card_browser_card_details">Информация о карте</string>
@@ -239,9 +237,12 @@
   <string name="connection_error_return_message">Ошибка сети. Повторите, отмените действие или возвратитесь на предыдущий экран.</string>
   <string name="retry">Повторить</string>
   <string name="cancel">Отмена</string>
+  <string name="download_overwrite">Заменить</string>
+  <string name="download_cancel">Отменить скачивание</string>
+  <string name="download_message">Уже существует колода %1$s в вашем устройстве. Переписать?</string>
   <string name="shared_decks">Общедоступные колоды</string>
   <string name="updating">Обновление...</string>
-  <string name="loading_shared_decks">Загрузка общедоступных колод...</string>
+  <string name="loading_shared_decks">Загрузка общедоступных колод.</string>
   <string name="cancel_download">Отменить загрузку</string>
   <string name="resume_download">Продолжить загрузку</string>
   <string name="pause_download">Приостановить закачку</string>
@@ -250,7 +251,7 @@
   <string name="fact">факт</string>
   <string name="facts">факты</string>
   <string name="saving_changes">Сохранение изменений...</string>
-  <string name="about_content">%1$s Флэш-карты для Android &lt;/h2&gt;&lt;p&gt; AnkiDroid может читать .anki файлы, созданные настольной версией %2$s Anki&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках %3$s здесь&lt;/a&gt;, предлагайте новые функции (идеи)! Также используйте %4$s wiki&lt;/a&gt; и наш %5$s форум&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid - %6$s open-source программное обеспечение&lt;/a&gt;, и любой желающий может %7$s принять участие&lt;/a&gt; как %8$s разработчик&lt;/a&gt; :-) Не-программисты могут также участвовать: обновляя wiki и скриншоты, %9$s помогая материально&lt;/a&gt;, или могут написать о AnkiDroid в интернете (например, в своём блоге)! &lt;/p&gt;&lt;p&gt; AnkiDroid создана под %10$s GNU-GPL v3 лицензией&lt;/a&gt; исходный код доступен %11$s здесь&lt;/a&gt;.</string>
+  <string name="about_content">%1$s Флэш-карты &lt;/h2&gt;&lt;p&gt; AnkiDroid может читать .anki файлы, созданные настольной версией %2$s Anki&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках %3$s здесь&lt;/a&gt;, предлагайте новые функции (идеи)! Также используйте %4$s wiki&lt;/a&gt; и наш %5$s форум&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid - %6$s open-source программное обеспечение&lt;/a&gt;, и любой желающий может %7$s принять участие&lt;/a&gt; как %8$s разработчик&lt;/a&gt; :-) Не-программисты могут также участвовать: обновляя wiki и скриншоты, %9$s помогая материально&lt;/a&gt;, или могут написать о AnkiDroid в интернете (например, в своём блоге)! &lt;/p&gt;&lt;p&gt; AnkiDroid создана под %10$s GNU-GPL v3 лицензией&lt;/a&gt; исходный код доступен %11$s здесь&lt;/a&gt;.</string>
   <string name="studyoptions_title">Параметры обучения</string>
   <string name="studyoptions_deck_name">Название колоды</string>
   <string name="studyoptions_reviews_due">Повторов:</string>
@@ -319,7 +320,7 @@
   <string name="connection_error_message">Ошибка сети.</string>
   <string name="no_user_password_error_message">Для того, чтобы продолжить эту операцию, вы должны иметь AnkiOnline-аккаунт (это бесплатно) и указать логин и пароль в настройках AnkiDroid.</string>
   <string name="sync_progress_bar_title">Синхронизировано %s</string>
-  <string name="studyoptions_cram_dialog_title">Что \`Зубрить\`</string>
+  <string name="studyoptions_cram_dialog_title">Что \"зубрить\" (теги)</string>
   <string name="begin_cram">Старт \`Зубрёжки\`</string>
   <string name="end_cram">Стоп \`Зубрёжки\`</string>
   <string name="cram">Зубрёжка</string>
@@ -340,10 +341,7 @@
   <string name="sync_log_no_changes_message">Не найдено изменений</string>
   <string name="sync_log_uploading_message">Полностью синхронизировано с локальными данными</string>
   <string name="sync_log_downloading_message">Полная синхронизация с сервером</string>
-  <string name="sync_log_fact_to_server_message">1 карта на сервер</string>
-  <string name="sync_log_facts_to_server_message">%d факт(ов) на сервер</string>
-  <string name="sync_log_fact_from_server_message">1 карта с сервера</string>
-  <string name="sync_log_facts_from_server_message">%d факт(ов) с сервера</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">Время на вашем Android-устройстве отличается на %1$d секунд от времени сервера%2$s, поэтому невозможно синхронизировать.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, установленная временная зона устройства возможно ошибочна</string>
   <string name="sync_log_clocks_unsynchronized_date">, дата, установленная в устройстве возможно неверная</string>
@@ -361,7 +359,7 @@
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="error_reporting_choice_summary">Можно посылать ошибки программы автоматически, не посылать или выводить вопрос пользователю</string>
-  <string name="feedback_disclaimer">Отказ от ответственности: Мы не собираем никакой личной информации, такой как адрес электронной почты, номер телефона, IP-адреса или IMEI-телефона. Мы собираем общую информацию о вашем устройстве, такую, как производитель, модель и версию Android, а также сам характер ошибки.</string>
+  <string name="feedback_disclaimer">Отказ от ответственности: Мы не собираем никакой личной информации, такой как адрес электронной почты, номер телефона, IP-адреса или IMEI телефона. Мы собираем некоторую общего характера информацию о вашем устройстве, такую, как производитель, модель и версия Android, а также сам характер ошибки.</string>
   <string name="feedback_title">Обратная связь</string>
   <string name="feedback_send_feedback">Отправить нам свой отзыв</string>
   <string name="feedback_send_feedback_and_errors">Отправить ошибки и ваши отзывы</string>
@@ -370,7 +368,7 @@
   <string name="feedback_error_list_header">Список ошибок для отправки</string>
   <string name="feedback_keep_latest">Сохранить последнюю ошибку</string>
   <string name="feedback_clear_all">Очистить все ошибки</string>
-  <string name="feedback_default_text">Пожалуйста, введите ваш отзыв или информацию о характере ошибки.</string>
+  <string name="feedback_default_text">Пожалуйста, введите Ваш отзыв, или информацию о характере ошибки, которую Вы хотите сообщить.</string>
   <string name="feedback_error_reply_new">Неизвестная проблема, зарегистрирована новая ошибка</string>
   <string name="feedback_error_reply_known">Известная проблема, над ней работают</string>
   <string name="feedback_error_reply_issue_unknown">Тема %1$d, неизвестный статус</string>
@@ -445,6 +443,14 @@
     <item quantity="one">%1$s (1 из %3$d к повтору)</item>
     <item quantity="other">%1$s (%2$d из %3$d к повтору)</item>
   </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
+  </plurals>
   <plurals name="error_message">
     <item quantity="one">Есть одна ошибка для отчёта</item>
     <item quantity="other">Найдено %d ошибки для отчета</item>
@@ -454,7 +460,7 @@
     <item quantity="other">повтор %1$d из %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 колода</item>
+    <item quantity="one">1 колоды</item>
     <item quantity="other">%1$d колод</item>
   </plurals>
 </resources>

@@ -18,9 +18,11 @@ package com.ichi2.async;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -34,6 +36,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.SyncClient;
 import com.ichi2.anki.Utils;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -489,11 +492,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     JSONObject payload = client.genPayload(sums);
                     int factsAddedOnLocal = payload.getJSONArray("added-cards").length();
-                    if (factsAddedOnLocal == 1) {
-                        syncChangelog.put("message", res.getString(R.string.sync_log_fact_to_server_message));
-                    } else if (factsAddedOnLocal > 1) {
-                        syncChangelog.put("message",
-                                res.getString(R.string.sync_log_facts_to_server_message, factsAddedOnLocal));
+                    if (factsAddedOnLocal > 0) {
+                        syncChangelog.put("message", res.getQuantityString(R.plurals.sync_log_facts_to_server_message,
+                                factsAddedOnLocal, factsAddedOnLocal));
                     }
 
                     publishProgress(syncName, res.getString(R.string.sync_transferring_payload_message));
@@ -506,19 +507,23 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                         return data;
                     }
                     int factsAddedOnServer = payloadReply.getJSONArray("added-cards").length();
-                    if (factsAddedOnServer == 1) {
-                        syncChangelog.put("message", res.getString(R.string.sync_log_fact_from_server_message));
-                    } else if (payloadReply.getJSONArray("added-cards").length() > 1) {
-                        syncChangelog.put("message",
-                                res.getString(R.string.sync_log_facts_from_server_message, factsAddedOnServer));
+                    if (factsAddedOnLocal == 0 && factsAddedOnServer == 0) {
+                        syncChangelog.put("message", res.getString(R.string.sync_log_zero_facts));
+                    } else if (factsAddedOnServer > 0) {
+                        syncChangelog.put("message", res.getQuantityString(R.plurals.sync_log_facts_from_server_message,
+                                factsAddedOnServer, factsAddedOnServer));
                     }
 
                     publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
                     client.applyPayloadReply(payloadReply);
                     deck.initDeckvarsCache();
-                    Reviewer.setupMedia(deck); // FIXME: setupMedia should be part of Deck?
                     
-                    doInBackgroundDownloadMissingMedia(new Payload(new Object[] {deck}));
+                    Reviewer.setupMedia(deck); // FIXME: setupMedia should be part of Deck?
+                    SharedPreferences preferences = PrefSettings.getSharedPrefs(sContext);
+                    if (preferences.getBoolean("syncFetchMedia", true)) {
+                        doInBackgroundDownloadMissingMedia(new Payload(new Object[] {deck}));
+                    }
+                    
                     if (!client.getServer().finish()) {
                         data.success = false;
                         syncChangelog.put("message", res.getString(R.string.sync_log_finish_error));
@@ -700,8 +705,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         for (String file : missingPaths.keySet()) {
             
             try {
-                android.net.Uri uri = android.net.Uri.parse(urlbase + file);
-                url = new URI(uri.getScheme(), uri.getHost(), uri.getPath(), null).toURL();
+                android.net.Uri uri = android.net.Uri.parse(urlbase + Uri.encode(file));
+                url = new URI(uri.toString()).toURL();
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 if (connection.getResponseCode() == 200) {

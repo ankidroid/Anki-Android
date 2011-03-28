@@ -111,8 +111,7 @@
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Restablecimiento</string>
   <string name="pref_cat_other">Otras opciones</string>
-  <string name="sync_on_open">Sincronizar al abrir</string>
-  <string name="sync_on_close">Sincronizar al cerrar</string>
+  <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="show_study_options_on_deck_load">Opciones de estudio al cargar</string>
   <string name="show_study_options_on_deck_load_summ">Mostrar opciones de estudio al cargar un mazo</string>
   <string name="startup_mode">Modo de inicio</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">Reproduce los sonidos inmediatamente al mostrar una pregunta/respuesta</string>
   <string name="shake_intensity">Umbral para el Agitado</string>
   <string name="shake_intensity_summ">Umbral de reconocimiento para el agitado: XXX</string>
-  <string name="pref_cat_experimental">EXPERIMENTAL</string>
-  <string name="sync_enabled">Sincronización</string>
-  <string name="sync_enabled_in_answer_summ">Todavía hay muchos errores, puede corromper tus mazos. ¡Haz copias de seguridad a menudo!</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">Forzar RTL para idioma hebreo</string>
   <string name="fix_hebrew_text_summ">Solución al soporte limitado de la plataforma Android al idioma Hebreo. No soporta vocales.</string>
   <string name="language">Idioma</string>
@@ -191,7 +189,7 @@
   <string name="select">Seleccionar</string>
   <string name="card_browser">Explorador</string>
   <string name="card_browser_load">Cargando las tarjetas</string>
-  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
+  <string name="card_browser_cardloading_error">Error al cargar tarjetas. Probablemente esté relacionado con las restricciones de memoria de su aparato. Inténtelo de nuevo con un mazo más pequeño</string>
   <string name="card_browser_delete_card">Eliminar Tarjeta</string>
   <string name="card_browser_suspend_card">Suspender Tarjeta</string>
   <string name="card_browser_unsuspend_card">Reactivar Tarjeta</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">Se ha producido un error de red. Vuelva a intentarlo, o cancele y vuelva a la pantalla anterior.</string>
   <string name="retry">Reintentar</string>
   <string name="cancel">Cancelar</string>
+  <string name="download_overwrite">Sobrescribir</string>
+  <string name="download_cancel">Cancelar Descarga</string>
+  <string name="download_message">El mazo %1$s ya existe en el archivo local. ¿Desea sobreescribirlo?</string>
   <string name="shared_decks">Mazos compartidos</string>
   <string name="updating">Actualizando...</string>
   <string name="loading_shared_decks">Cargando mazos compartidos disponibles...</string>
@@ -265,7 +266,7 @@
   <string name="studyoptions_nodeck_title">No hay ningún mazo cargado</string>
   <string name="studyoptions_nodeck_message">No hay ningún mazo cargado actualmente. Los mazos de Anki se guardan en el directorio \"%s\" en la tarjeta de memoria. Puedes especificar esta localización en el menú de preferencias (pulsa el botón de \"Menú\" en tu dispositivo y selecciona \"Preferencias\").</string>
   <string name="studyoptions_welcome_title">Bienvenido a AnkiDroid</string>
-  <string name="studyoptions_welcome_message">Con AnkiDroid, puedes memorizar de manera eficiente grandes cantidades de vocabulario, o de cualquier otro material. AnkiDroid te muestra lo que debes estudiar justo antes de que lo olvides.\nToda la información está organizada en mazos que puedes, o bien descargar de otros usuarios (mazos compartidos), o bien crear tú mismo con AkiDroid o con Anki Desktop. En este último caso puedes sincronizar tu mazo a través de AnkiWeb, o copiarlo directamente en la carpeta %s.\nHaz click en este texto para aprender más.</string>
+  <string name="studyoptions_welcome_message">Con AnkiDroid, puedes memorizar de manera eficiente grandes cantidades de vocabulario, o de cualquier otro material. AnkiDroid te muestra lo que debes estudiar justo antes de que lo olvides.\nToda la información está organizada en mazos que puedes, o bien descargar de otros usuarios (mazos compartidos), o bien crear tú mismo con AnkiDroid o con Anki Desktop. En este último caso puedes sincronizar tu mazo a través de AnkiWeb, o copiarlo directamente en la carpeta %s.\nHaz click en este texto para aprender más.</string>
   <string name="studyoptions_deck_not_loaded_title">El mazo no se pudo cargar</string>
   <string name="studyoptions_deck_not_loaded_message">El mazo seleccionado no es un mazo de Anki válido. Por favor usa la aplicación de escritorio Anki para crear un mazo válido antes de cargarlo en Ankidroid.\n\nMientras tanto, puedes seleccionar otro mazo o cargar el mazo de ejemplo.</string>
   <string name="studyoptions_no_external_storage_title">Almacenamiento externo no disponible</string>
@@ -340,10 +341,7 @@
   <string name="sync_log_no_changes_message">No se encontraron cambios</string>
   <string name="sync_log_uploading_message">Sincronización completa desde el cliente</string>
   <string name="sync_log_downloading_message">Sincronización completa desde el servidor</string>
-  <string name="sync_log_fact_to_server_message">1 hecho al servidor</string>
-  <string name="sync_log_facts_to_server_message">%d hechos al servidor</string>
-  <string name="sync_log_fact_from_server_message">1 hecho del servidor</string>
-  <string name="sync_log_facts_from_server_message">%d hechos del servidor</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">La hora de tu dispositivo es diferente de la del servidor en %1$d seg%2$s; no se pudo sincronizar.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, la zona horaria del dispositivo es probablemente errónea</string>
   <string name="sync_log_clocks_unsynchronized_date">, la fecha de dispositivo probablemente es errónea</string>
@@ -360,7 +358,7 @@
   <string name="error_cancel">No informar de errores</string>
   <string name="error_reporting_choice">Informar de errores</string>
   <string name="error_reporting_choice_summary">Los errores se pueden enviar automáticamente, nunca, o preguntándote primero</string>
-  <string name="feedback_disclaimer">Aclaración: No recopilamos información personal, como tu dirección de correo electrónico, número de teléfono, dirección IP o el teléfono IMEI. Recopilamos información sobre el dispositivo, tal como el fabricante, el modelo y la versión de Android, así como la naturaleza del error mismo.</string>
+  <string name="feedback_disclaimer">Aclaración: No recogemos ninguna información personal como tu dirección de correo electrónico, número de teléfono, dirección IP o el IMEI del teléfono. Recopilamos cierta información acerca del dispositivo, tal como el fabricante, el modelo y versión de Android, así como la naturaleza de los errores reportados.</string>
   <string name="feedback_title">Sugerencias</string>
   <string name="feedback_send_feedback">Envíanos tus comentarios</string>
   <string name="feedback_send_feedback_and_errors">Enviar errores y tus comentarios</string>
@@ -369,7 +367,7 @@
   <string name="feedback_error_list_header">Lista de errores para enviar</string>
   <string name="feedback_keep_latest">Mantener el último error</string>
   <string name="feedback_clear_all">Borrar todos los errores</string>
-  <string name="feedback_default_text">Por favor, introduce tus sugerencias aquí y pulsa Aceptar para enviarlas.</string>
+  <string name="feedback_default_text">Por favor, introduce tus sugerencias, o información sobre la naturaleza de cualquier error que estés experimentando.</string>
   <string name="feedback_error_reply_new">Problema desconocido, archivado como defecto nuevo</string>
   <string name="feedback_error_reply_known">Problema conocido, pendiente de investigación</string>
   <string name="feedback_error_reply_issue_unknown">Problema %1$d, estado desconocido</string>
@@ -443,6 +441,14 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 de %3$d programada)</item>
     <item quantity="other">%1$s (%2$d de %3$d programadas)</item>
+  </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Hay un error para enviar</item>

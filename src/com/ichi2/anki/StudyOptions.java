@@ -120,7 +120,7 @@ public class StudyOptions extends Activity {
     private static final int SUM_DECKPICKER = 1;
     private static final int SUM_DECKPICKER_ON_FIRST_START = 2;
 
-    
+
     /**
 * Download Manager Service stub
 */
@@ -143,16 +143,15 @@ public class StudyOptions extends Activity {
     private String mDeckFilename;
     private int mStartupMode;
     private boolean mSwipeEnabled;
-    
+
     private int mCurrentContentView;
-    
+
     private int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
-    boolean mSyncEnabled = false;
     boolean mNewVersion = false;
     boolean mShowWelcomeScreen = false;
     boolean mInvertedColors = false;
-    
+
     /**
 * Alerts to inform the user about different situations
 */
@@ -225,7 +224,7 @@ public class StudyOptions extends Activity {
     private CheckBox mNightMode;
     private Button mCardBrowser;
     private Button mStatisticsButton;
-    
+
     /**
 * UI elements for "More Options" dialog
 */
@@ -235,7 +234,7 @@ public class StudyOptions extends Activity {
     private Spinner mSpinnerRevCardOrder;
     private Spinner mSpinnerFailCardOption;
     private EditText mEditNewPerDay;
-    
+
     private CheckBox mCheckBoxPerDay;
     private CheckBox mCheckBoxSuspendLeeches;
 
@@ -267,10 +266,10 @@ public class StudyOptions extends Activity {
 */
     private ListView mCramTagsListView;
     private Spinner mSpinnerCramOrder;
-    
+
     /**
     * Swipe Detection
-    */    
+    */
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
 
@@ -284,7 +283,7 @@ public class StudyOptions extends Activity {
 
     /**
 	* Statistics
-	*/    
+	*/
 	public static int mStatisticType;
     private int mStatisticBarsMax = 0;
     private int mStatisticBarsHeight;
@@ -302,7 +301,7 @@ public class StudyOptions extends Activity {
     private double mProgressAllLimit;
     private double mProgressMature;
     private double mProgressAll;
-    
+
     /**
 * Callbacks for UI events
 */
@@ -390,7 +389,7 @@ public class StudyOptions extends Activity {
                     if (mLimitTagNewActiveCheckBox.isChecked()) {
                         mSelectedLimitTagText = LIMIT_NEW_ACTIVE;
                         recreateTagsDialog();
-                        mTagsDialog.show();                        
+                        mTagsDialog.show();
                     }
                     return;
                 case R.id.studyoptions_limit_tag_tv3:
@@ -451,7 +450,7 @@ public class StudyOptions extends Activity {
             }
             return;
         }
-        
+
     };
 
 
@@ -486,7 +485,7 @@ public class StudyOptions extends Activity {
             String inputText = mEditNewPerDay.getText().toString();
             if (!inputText.equals(Integer.toString(deck.getNewCardsPerDay()))) {
             	if (inputText.equals("")) {
-            		deck.setNewCardsPerDay(0);                		
+            		deck.setNewCardsPerDay(0);
             	} else if (isValidInt(inputText)) {
             		deck.setNewCardsPerDay(Integer.parseInt(inputText));
             	} else {
@@ -494,10 +493,10 @@ public class StudyOptions extends Activity {
             	}
             	updateValuesFromDeck();
             }
-            boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked(); 
+            boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked();
           	deck.setPerDay(mCheckBoxPerDay.isChecked());
           	deck.setSuspendLeeches(mCheckBoxSuspendLeeches.isChecked());
-            // TODO: Update number of due cards after change of per day scheduling 
+            // TODO: Update number of due cards after change of per day scheduling
             dialog.dismiss();
             if (perDayChanged){
                 deck.updateCutoff();
@@ -528,7 +527,7 @@ public class StudyOptions extends Activity {
 
         initAllContentViews();
         initAllDialogs();
-        
+
         if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
             AnkiDroidApp.deck().finishScheduler();
         }
@@ -560,7 +559,7 @@ public class StudyOptions extends Activity {
             	}
             }
         }
-        
+
         gestureDetector = new GestureDetector(new MyGestureDetector());
        	gestureListener = new View.OnTouchListener() {
        		public boolean onTouch(View v, MotionEvent event) {
@@ -573,7 +572,7 @@ public class StudyOptions extends Activity {
     }
 
 
-    @Override 
+    @Override
     public void onConfigurationChanged(Configuration newConfig){
     	super.onConfigurationChanged(newConfig);
     	int visibility = mStudyOptionsMain.getVisibility();
@@ -667,7 +666,7 @@ public class StudyOptions extends Activity {
     		startActivityForResult(reviewer, REQUEST_REVIEW);
         	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
        			MyAnimation.slide(this, MyAnimation.LEFT);
-        	}    		
+        	}
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
     		startEarlyReview();
     	}
@@ -699,7 +698,7 @@ public class StudyOptions extends Activity {
         	startActivityForResult(reviewer, REQUEST_REVIEW);
     		if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
     			MyAnimation.slide(this, MyAnimation.LEFT);
-    		}    	
+    		}
         }
     }
 
@@ -736,17 +735,12 @@ public class StudyOptions extends Activity {
 
         builder.setTitle(res.getString(R.string.menu_download_deck));
         CharSequence[] items;
-        if (mSyncEnabled) {
-        	items = new CharSequence[2];
-        	items[0] = res.getString(R.string.menu_download_personal_deck);
-        	items[1] = res.getString(R.string.menu_download_shared_deck);
-        } else {
-        	items = new CharSequence[1];
-        	items[0] = res.getString(R.string.menu_download_shared_deck);
-        }
+    	items = new CharSequence[2];
+    	items[0] = res.getString(R.string.menu_download_personal_deck);
+    	items[1] = res.getString(R.string.menu_download_shared_deck);
         builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
-				if (item == 0 && mSyncEnabled) {
+				if (item == 0) {
 	            	openPersonalDeckPicker();
 				} else {
 	            	openSharedDeckPicker();
@@ -761,7 +755,7 @@ public class StudyOptions extends Activity {
     private void initAllContentViews() {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
-      
+
         mStudyOptionsMain = (View) mStudyOptionsView.findViewById(R.id.studyoptions_main);
 
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
@@ -790,7 +784,7 @@ public class StudyOptions extends Activity {
                     mBarsMax.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     updateStatisticBars();
                 }
-            });            
+            });
         }
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
@@ -805,7 +799,7 @@ public class StudyOptions extends Activity {
             boolean isChecked) {
                 if (mInvertedColors != isChecked) {
                     mInvertedColors = isChecked;
-                    savePreferences("invertedColors");                    
+                    savePreferences("invertedColors");
                 }
             }
             });
@@ -817,7 +811,7 @@ public class StudyOptions extends Activity {
         mToggleLimit.setOnClickListener(mButtonClickListener);
         mCardBrowser.setOnClickListener(mButtonClickListener);
         mStatisticsButton.setOnClickListener(mButtonClickListener);
-        
+
         mDialogMoreOptions = createMoreOptionsDialog();
         mLimitSessionDialog = createLimitSessionDialog();
 
@@ -849,7 +843,7 @@ public class StudyOptions extends Activity {
         mButtonCongratsSyncDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
-        
+
         // The view to use when there is no external storage available
         mNoExternalStorageView = getLayoutInflater().inflate(R.layout.studyoptions_nostorage, null);
     }
@@ -1013,7 +1007,7 @@ public class StudyOptions extends Activity {
         Resources res = getResources();
         if (allTags == null) {
             allTags = AnkiDroidApp.deck().allTags_();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));            
+            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
         }
         mSelectedTags.clear();
         List<String> selectedList = Arrays.asList(Utils.parseTags(getSelectedTags(mSelectedLimitTagText)));
@@ -1038,7 +1032,7 @@ public class StudyOptions extends Activity {
                         } else {
                             Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
                             mSelectedTags.add(tag);
-                        }  
+                        }
                     }
                 });
         builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
@@ -1059,7 +1053,7 @@ public class StudyOptions extends Activity {
             public void onCancel(DialogInterface dialog) {
                 updateLimitTagText(mSelectedLimitTagText, getSelectedTags(mSelectedLimitTagText));
             }
-            
+
         });
         mTagsDialog = builder.create();
     }
@@ -1185,7 +1179,7 @@ public class StudyOptions extends Activity {
                   } else if (isValidLong(textTime)) {
                       deck.setSessionTimeLimit(Long.parseLong(textTime) * 60);
                   }
-                }   
+                }
                 String textReps = mEditSessionQuestions.getText().toString();
                 if (!textReps.equals(Long.toString(deck.getSessionRepLimit()))) {
                     if (textReps.equals("")) {
@@ -1423,7 +1417,7 @@ public class StudyOptions extends Activity {
                         allRev = deck.getTotalRevFailedCount(true);
                         totalCardsCount = allRev + deck.getNewCount(true);
                         mProgressMatureLimit = mature / totalCardsCount;
-                        mProgressAllLimit = allRev / totalCardsCount;                		
+                        mProgressAllLimit = allRev / totalCardsCount;
                 	}
                 } else {
                     mGlobalLimitFrame.setVisibility(View.GONE);
@@ -1437,15 +1431,15 @@ public class StudyOptions extends Activity {
     private void updateStatisticBars() {
         if (mStatisticBarsMax == 0) {
             mStatisticBarsMax = mBarsMax.getWidth();
-            mStatisticBarsHeight = mBarsMax.getHeight();                
+            mStatisticBarsHeight = mBarsMax.getHeight();
         }
-        Utils.updateProgressBars(this, mDailyBar, mProgressTodayYes, mStatisticBarsMax, mStatisticBarsHeight, true);            
+        Utils.updateProgressBars(this, mDailyBar, mProgressTodayYes, mStatisticBarsMax, mStatisticBarsHeight, true);
         Utils.updateProgressBars(this, mMatureBar,mProgressMatureYes, mStatisticBarsMax, mStatisticBarsHeight, true);
         Utils.updateProgressBars(this, mGlobalMatLimitBar, mProgressMatureLimit, mStatisticBarsMax, mStatisticBarsHeight, false);
         Utils.updateProgressBars(this, mGlobalLimitBar, (mProgressAllLimit == 1.0) ? 1.0 : mProgressAllLimit - mProgressMatureLimit, mStatisticBarsMax, mStatisticBarsHeight, false);
         Utils.updateProgressBars(this, mGlobalMatBar, mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
         Utils.updateProgressBars(this, mGlobalBar, (mProgressAll == 1.0) ? 1.0 : mProgressAll - mProgressMature, mStatisticBarsMax, mStatisticBarsHeight, false);
-    } 
+    }
 
 
     /*
@@ -1511,14 +1505,14 @@ public class StudyOptions extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean deckChangable = (AnkiDroidApp.deck() != null) && mSdCardAvailable && !mToggleCram.isChecked(); 
+        boolean deckChangeable = (AnkiDroidApp.deck() != null) && mSdCardAvailable && !mToggleCram.isChecked();
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
-        menu.findItem(MENU_ADD_FACT).setEnabled(deckChangable);
-        menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangable);
-		menu.findItem(MENU_SYNC).setEnabled(deckChangable);
+        menu.findItem(MENU_ADD_FACT).setEnabled(deckChangeable);
+        menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangeable);
+		menu.findItem(MENU_SYNC).setEnabled(deckChangeable);
 
         // Show sync menu items only if sync is enabled.
-		menu.findItem(MENU_SYNC).setVisible(mSyncEnabled);
+		menu.findItem(MENU_SYNC).setVisible(true);
         return true;
     }
 
@@ -1538,7 +1532,7 @@ public class StudyOptions extends Activity {
             case MENU_MORE_OPTIONS:
                 showMoreOptionsDialog();
                 return true;
-                
+
             case MENU_PREFERENCES:
                 startActivityForResult(
                         new Intent(StudyOptions.this, Preferences.class),
@@ -1578,7 +1572,7 @@ public class StudyOptions extends Activity {
             MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
         }
     }
-    
+
 
     private void openStatistics(int period) {
         if (AnkiDroidApp.deck() != null) {
@@ -1625,7 +1619,7 @@ public class StudyOptions extends Activity {
         if (!decksDirectory.isDirectory()) {
             decksDirectory.mkdirs();
         }
-        
+
         File sampleDeckFile = new File(mPrefDeckPath, SAMPLE_DECK_NAME);
 
         if (!sampleDeckFile.exists()) {
@@ -1735,7 +1729,7 @@ public class StudyOptions extends Activity {
             savePreferences("deckFilename");
     		if (mShowWelcomeScreen) {
             	mShowWelcomeScreen = false;
-            	savePreferences("welcome");            			
+            	savePreferences("welcome");
     		}
 
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
@@ -1778,17 +1772,17 @@ public class StudyOptions extends Activity {
     	switch (mStartupMode) {
     	case SUM_STUDY_OPTIONS:
             return false;
-    	
+
     	case SUM_DECKPICKER:
     		return true;
-    	
+
     	case SUM_DECKPICKER_ON_FIRST_START:
-            
+
     		Calendar cal = Calendar.getInstance();
     		if (cal.get(Calendar.HOUR_OF_DAY) < mNewDayStartsAt) {
                 cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) - 24 + mNewDayStartsAt);
     		} else {
-                cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) + mNewDayStartsAt);    			
+                cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) + mNewDayStartsAt);
     		}
             cal.add(Calendar.MINUTE, -cal.get(Calendar.MINUTE));
             cal.add(Calendar.SECOND, -cal.get(Calendar.SECOND));
@@ -1799,19 +1793,19 @@ public class StudyOptions extends Activity {
             }
     	default:
     		return false;
-    	}        
+    	}
     }
-        
+
     private void savePreferences(String str) {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         Editor editor = preferences.edit();
-        if (str == "deckFilename") {
-            editor.putString("deckFilename", mDeckFilename); 
-        } else if (str == "close") {
+        if (str.equals("deckFilename")) {
+            editor.putString("deckFilename", mDeckFilename);
+        } else if (str.equals("close")) {
         	editor.putLong("lastTimeOpened", System.currentTimeMillis());
-        } else if (str == "welcome") {
+        } else if (str.equals("welcome")) {
         	editor.putBoolean("welcome", mShowWelcomeScreen);
-        } else if (str == "invertedColors") {
+        } else if (str.equals("invertedColors")) {
             editor.putBoolean("invertedColors", mInvertedColors);
         }
         editor.commit();
@@ -1825,7 +1819,6 @@ public class StudyOptions extends Activity {
         mStartupMode = Integer.parseInt(preferences.getString("startup_mode",
                 Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
-        mSyncEnabled = preferences.getBoolean("syncEnabled", false);
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         if (!preferences.getString("lastVersion", "").equals(getVersion())) {
         	Editor editor = preferences.edit();
@@ -1859,7 +1852,7 @@ public class StudyOptions extends Activity {
         } else {
             sSwipeMinDistance = (int)(SWIPE_MIN_DISTANCE_DIP * gestureScale + 0.5f);
             sSwipeThresholdVelocity = (int)(SWIPE_THRESHOLD_VELOCITY_DIP * gestureScale + 0.5f);
-            sSwipeMaxOffPath = (int)(SWIPE_MAX_OFF_PATH_DIP * gestureScale + 0.5f);            
+            sSwipeMaxOffPath = (int)(SWIPE_MAX_OFF_PATH_DIP * gestureScale + 0.5f);
         }
 
         mInvertedColors = preferences.getBoolean("invertedColors", false);
@@ -1902,7 +1895,7 @@ public class StudyOptions extends Activity {
     	if (language.equals("")) {
         	locale = Locale.getDefault();
     	} else {
-        	locale = new Locale(language);    		
+        	locale = new Locale(language);
     	}
         Configuration config = new Configuration();
         config.locale = locale;
@@ -1928,7 +1921,7 @@ public class StudyOptions extends Activity {
 
         	mToggleCram.setChecked(false);
         	mToggleLimit.setEnabled(true);
-            
+
             if (updateAllCards) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
                         new DeckTask.TaskData(mDeckFilename));
@@ -1954,8 +1947,8 @@ public class StudyOptions extends Activity {
         // displaySdError();
         // }
     }
-    
-    
+
+
     DeckTask.TaskListener mLoadDeckHandler = new DeckTask.TaskListener() {
 
         @Override
@@ -2018,7 +2011,7 @@ public class StudyOptions extends Activity {
             }
             Deck deck = AnkiDroidApp.deck();
             if (deck != null) {
-                mToggleLimit.setChecked(deck.isLimitedByTag() || deck.getSessionRepLimit() + deck.getSessionTimeLimit() > 0);            	
+                mToggleLimit.setChecked(deck.isLimitedByTag() || deck.getSessionRepLimit() + deck.getSessionTimeLimit() > 0);
             }
             mStudyOptionsMain.setVisibility(View.VISIBLE);
         }
@@ -2097,7 +2090,7 @@ public class StudyOptions extends Activity {
         }
 
     };
- 
+
 
     DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
 
@@ -2115,7 +2108,7 @@ public class StudyOptions extends Activity {
 		    	startActivityForResult(intent, STATISTICS);
 		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 		            MyAnimation.slide(StudyOptions.this, MyAnimation.DOWN);
-		        }				
+		        }
 			}
 		}
 
@@ -2128,7 +2121,7 @@ public class StudyOptions extends Activity {
 		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 		}
-    	
+
     };
 
 

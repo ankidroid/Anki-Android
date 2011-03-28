@@ -111,8 +111,7 @@
   <string name="pref_cat_zoom">Powiększenie</string>
   <string name="pref_cat_reset">Zresetuj</string>
   <string name="pref_cat_other">Inne</string>
-  <string name="sync_on_open">Synchronizuj przy otwieraniu</string>
-  <string name="sync_on_close">Synchronizuj przy zamykaniu</string>
+  <string name="pref_cat_experimental">Eksperymentalne</string>
   <string name="show_study_options_on_deck_load">Pokaż opcje przy ładowaniu</string>
   <string name="show_study_options_on_deck_load_summ">Pokaż ustawienia nauki przy ładowaniu talii</string>
   <string name="startup_mode">Tryb uruchamiania</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">Odtwarza dźwięki natychmiast po pokazaniu pytania/odpowiedzi</string>
   <string name="shake_intensity">Czułość wstrząsania</string>
   <string name="shake_intensity_summ">Próg pozwalający na uznanie potrząsania: XXX</string>
-  <string name="pref_cat_experimental">Eksperymentalne</string>
-  <string name="sync_enabled">Funkcje synchronizacji</string>
-  <string name="sync_enabled_in_answer_summ">Wciąż wiele błędów, może uszkodzić talię. Rób często kopie zapasowe!</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">Wymuszaj RTL dla języka hebrajskiego</string>
   <string name="fix_hebrew_text_summ">Obejście problemu ograniczonej obsługi języka hebrajskiego przez platformę Android. Nie obsługuje samogłosek.</string>
   <string name="language">Język</string>
@@ -191,7 +189,7 @@
   <string name="select">Wybierz</string>
   <string name="card_browser">Przeglądarka kart</string>
   <string name="card_browser_load">Wczytywanie kart</string>
-  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
+  <string name="card_browser_cardloading_error">Błąd podczas wczytywania kart.  Możliwą przyczyną jest ograniczenie pamięci na urządzeniu.  Spróbuj ponownie z mniejszą talią</string>
   <string name="card_browser_delete_card">Usuń kartę</string>
   <string name="card_browser_suspend_card">Zawieś kartę</string>
   <string name="card_browser_unsuspend_card">Odwieś kartę</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">Wystąpił błąd sieciowy. Spróbuj ponownie lub anuluj i powrócić do poprzedniego ekranu.</string>
   <string name="retry">Próbuj ponownie</string>
   <string name="cancel">Anuluj</string>
+  <string name="download_overwrite">Zastąp</string>
+  <string name="download_cancel">Anuluj pobieranie</string>
+  <string name="download_message">Jest już lokalna kopia talii %1$s.  Czy chcesz ją zastąpić?</string>
   <string name="shared_decks">Udostępnione talie</string>
   <string name="updating">Aktualizacja...</string>
   <string name="loading_shared_decks">Ładowanie dostępnych udostępnionych talii...</string>
@@ -273,7 +274,7 @@
   <string name="studyoptions_load_other_deck">Wczytaj inną talię</string>
   <string name="studyoptions_load_sample_deck">Wczytaj przykładową talię</string>
   <string name="studyoptions_night_mode">Tryb nocny</string>
-  <string name="menu_open_deck">All decks</string>
+  <string name="menu_open_deck">Wszystkie talie</string>
   <string name="menu_sync">Synchronizuj</string>
   <string name="menu_download_deck">Pobierz talię</string>
   <string name="menu_download_shared_deck">Udostępniona talia</string>
@@ -284,7 +285,7 @@
   <string name="menu_deck_properties">Właściwości talii</string>
   <string name="menu_add_card">Dodaj kartę</string>
   <string name="menu_about">O programie</string>
-  <string name="menu_remove_card">Dismiss Card</string>
+  <string name="menu_remove_card">Odrzuć kartę</string>
   <string name="menu_suspend_card">Zawieś kartę</string>
   <string name="menu_bury_card">Zakop kartę</string>
   <string name="menu_edit_card">Edytuj kartę</string>
@@ -340,13 +341,10 @@
   <string name="sync_log_no_changes_message">Nie znaleziono zmian</string>
   <string name="sync_log_uploading_message">Pełna synchronizacja do serwera</string>
   <string name="sync_log_downloading_message">Pełna synchronizacja z serwera</string>
-  <string name="sync_log_fact_to_server_message">1 fakt do serwera</string>
-  <string name="sync_log_facts_to_server_message">%d fakty do serwera</string>
-  <string name="sync_log_fact_from_server_message">1 fakt z serwera</string>
-  <string name="sync_log_facts_from_server_message">%d fakty z serwera</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">Czas urządzenia różni się od tego na serwerze o %1$d sekund%2$s, synchronizacja niemożliwa.</string>
-  <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
-  <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_tz">, być może źle ustawiono strefę czasową</string>
+  <string name="sync_log_clocks_unsynchronized_date">, być może źle ustawiono datę</string>
   <string name="sync_log_old_version">Zmienił się protokół synchronizacji, należy zaktualizować AnkiDroid do najnowszej wersji. Zobacz http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Talia kart została zmieniona po obu stronach. Proszę otworzyć talię kart i wykonać synchronizację by rozwiązać problem.</string>
   <string name="sync_log_create_deck_failed">Nie udało się utworzyć talii na serwerze: %1$s</string>
@@ -360,7 +358,7 @@
   <string name="error_cancel">Nie zgłaszaj błędów</string>
   <string name="error_reporting_choice">Tryb raportowania błędów</string>
   <string name="error_reporting_choice_summary">Błędy mogą być zgłaszane automatycznie, nigdy nie zgłaszane, lub może zostać wyświetlony monit</string>
-  <string name="feedback_disclaimer">Uwaga: Nie zbieramy żadnych danych osobowych takich jak adres e-mail, numer telefonu, adres IP lub numer IMEI telefonu. Gromadzimy informacje na temat urządzenia, takie jak producent, model i wersja Androida, jak również rodzaj samego błędu.</string>
+  <string name="feedback_disclaimer">Disclaimer: Nie zbieramy żadnych informacji osobistych typu adres e-mail, numer telefonu, adres IP lub numer IMEI.  Pobierane są niektóre informacje na temat twojego urządzenia: producent, model, wersja Androida oraz rodzaj zgłaszanych błędów.</string>
   <string name="feedback_title">Opinie</string>
   <string name="feedback_send_feedback">Wyślij nam swoją opinię</string>
   <string name="feedback_send_feedback_and_errors">Wyślij błędy i swoje opinie</string>
@@ -369,15 +367,15 @@
   <string name="feedback_error_list_header">Lista błędów do wysłania</string>
   <string name="feedback_keep_latest">Zachowaj ostatni błąd</string>
   <string name="feedback_clear_all">Wyczyść wszystkie błędy</string>
-  <string name="feedback_default_text">Proszę wprowadzić opinię lub informacje na temat błędu.</string>
-  <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
-  <string name="feedback_error_reply_known">Known issue, pending investigation</string>
-  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
-  <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Issue %1$d, fixed but not released yet</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
-  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
-  <string name="feedback_error_reply_failed">Failed to send</string>
+  <string name="feedback_default_text">Wpisz swoje uwagi lub opisz błędy, które chcesz zgłosić.</string>
+  <string name="feedback_error_reply_new">Nieznany problem, zgłoszony nowy błąd</string>
+  <string name="feedback_error_reply_known">Znany problem, czeka na sprawdzenie</string>
+  <string name="feedback_error_reply_issue_unknown">Problem %1$d, status nieznany</string>
+  <string name="feedback_error_reply_issue_status">Problem %1$d, status: %2$s</string>
+  <string name="feedback_error_reply_issue_fixed_dev">Problem %1$d, poprawiony, lecz nie włączony jeszcze do oficjalnej wersji</string>
+  <string name="feedback_error_reply_issue_fixed_prod">Problem %1$d, poprawiony w najnowszej wersji</string>
+  <string name="feedback_error_reply_malformed">Zgłoszony błąd, brak odpowiedzi</string>
+  <string name="feedback_error_reply_failed">Wysłanie nieudane</string>
   <string name="widget_pref">Widżet</string>
   <string name="widget_minimum_cards_due">Próg powiadomienia widżeta</string>
   <string name="widget_minimum_cards_due_summary">Minimalna liczba kart przy której zostanie wyświetlone powiadomienie: XXX</string>
@@ -443,6 +441,14 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 z %3$d zaległe)</item>
     <item quantity="other">%1$s (%2$d z %3$d do przeglądnięcia)</item>
+  </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Jest jeden błąd do zgłoszenia</item>

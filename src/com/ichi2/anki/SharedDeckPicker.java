@@ -111,7 +111,7 @@ public class SharedDeckPicker extends Activity {
         mSharedDecksListView = (ListView) findViewById(R.id.list);
         mSharedDecksListView.setAdapter(mSharedDecksAdapter);
         registerForContextMenu(mSharedDecksListView);
-        
+
         mSearchEditText = (EditText) findViewById(R.id.shared_deck_download_search);
         mSearchEditText.addTextChangedListener(new TextWatcher() {
         	public void afterTextChanged(Editable s) {
@@ -391,8 +391,9 @@ public class SharedDeckPicker extends Activity {
             mFoundSharedDecks = mSharedDecks;
         } else {
             List<SharedDeck> foundDecks = new ArrayList<SharedDeck>();
+            String searchText = mSearchEditText.getText().toString().toLowerCase();
             for (SharedDeck sharedDeck : mSharedDecks) {
-                if (sharedDeck.get("title").toString().toLowerCase().indexOf(mSearchEditText.getText().toString().toLowerCase()) != -1) { 
+				if (sharedDeck.matchesLowerCaseFilter(searchText)) {
                     foundDecks.add(sharedDeck);
                 }
             }
@@ -525,7 +526,7 @@ public class SharedDeckPicker extends Activity {
 
     };
 
-    
+
     /********************************************************************
      * Callbacks *
      ********************************************************************/

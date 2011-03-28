@@ -23,6 +23,7 @@ import android.util.Log;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -69,8 +70,8 @@ public class Fact {
         TreeMap<Long, FieldModel> mFieldModels = new TreeMap<Long, FieldModel>();
         FieldModel.fromDb(deck, mModelId, mFieldModels);
         mFields = new TreeSet<Field>(new FieldOrdinalComparator());
-        for (Long i : mFieldModels.keySet()) {
-            mFields.add(new Field(mId, mFieldModels.get(i)));
+        for (Entry<Long, FieldModel> entry : mFieldModels.entrySet()) {
+            mFields.add(new Field(mId, entry.getValue()));
         }
     }
 

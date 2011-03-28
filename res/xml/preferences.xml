@@ -52,12 +52,12 @@
 				android:summary="@string/deck_path_summ"
 				android:key="deckPath" />
 		</PreferenceCategory>
-		<PreferenceCategory android:title="@string/pref_cat_experimental">
+		<PreferenceCategory android:title="@string/pref_cat_sync">
 			<CheckBoxPreference
-				android:title="@string/sync_enabled"
-				android:summary="@string/sync_enabled_in_answer_summ"
-				android:defaultValue="false"
-				android:key="syncEnabled"/>
+				android:title="@string/sync_fetch_missing_media"
+				android:summary="@string/sync_fetch_missing_media_summ"
+				android:defaultValue="true"
+				android:key="syncFetchMedia"/>
 		</PreferenceCategory>
 	</PreferenceScreen>
 	

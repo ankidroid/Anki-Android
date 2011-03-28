@@ -111,8 +111,7 @@
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Reset</string>
   <string name="pref_cat_other">Other</string>
-  <string name="sync_on_open">Sinkronizacija na otvaranju programa</string>
-  <string name="sync_on_close">Sinkronizacija na izlasku iz programa</string>
+  <string name="pref_cat_experimental">Eksperimentalno</string>
   <string name="show_study_options_on_deck_load">Opcije za Učenje na učitavanju</string>
   <string name="show_study_options_on_deck_load_summ">Prikazuje ekrazn za opcije za učenje tokom učitavanja špila</string>
   <string name="startup_mode">Početni Ekran</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Jačina tresanja</string>
   <string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
-  <string name="pref_cat_experimental">Eksperimentalno</string>
-  <string name="sync_enabled">Funkcije za sinhronizaciju</string>
-  <string name="sync_enabled_in_answer_summ">Još uvek postoji mnogo grešaka koje mogu pokvariti vaše špilove. Sačuvajte često!</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">Forsiraj Desno-Na-Levo za Hebrejski</string>
   <string name="fix_hebrew_text_summ">Privremeno rešanja za hebrejski jezik na Androidu. Ne podržava vokale.</string>
   <string name="language">Language</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">Došlo je do greške sa internetom. Pokušajte ponovo ili otkažite i vratite se na prethodni ekran.</string>
   <string name="retry">Ponovi</string>
   <string name="cancel">Otkaži</string>
+  <string name="download_overwrite">Overwrite</string>
+  <string name="download_cancel">Cancel Download</string>
+  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
   <string name="shared_decks">Zajednički Špilovi</string>
   <string name="updating">Ažuriranje...</string>
   <string name="loading_shared_decks">Učitavanje špilova na raspolaganju...</string>
@@ -340,10 +341,7 @@
   <string name="sync_log_no_changes_message">Nema promena</string>
   <string name="sync_log_uploading_message">Puna sinhronizacija sa lokalnih špilova</string>
   <string name="sync_log_downloading_message">Puna sinhronizacija sa serverom</string>
-  <string name="sync_log_fact_to_server_message">1 podatak na serveru</string>
-  <string name="sync_log_facts_to_server_message">%d podataka na serveru</string>
-  <string name="sync_log_fact_from_server_message">1 podatak na serveru</string>
-  <string name="sync_log_facts_from_server_message">%d podataka na serveru</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %1$d sec%2$s; unable to sync.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
@@ -360,7 +358,7 @@
   <string name="error_cancel">Ne prijavljuj greške</string>
   <string name="error_reporting_choice">Prijavljivanje grešaka</string>
   <string name="error_reporting_choice_summary">Greške se mogu automatski prijaviti, nikada prijaviti ili se možete svaki put upitati</string>
-  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string>
+  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_send_feedback">Send us your feedback</string>
   <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
@@ -369,7 +367,7 @@
   <string name="feedback_error_list_header">List of errors to send</string>
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
-  <string name="feedback_default_text">Please enter your feedback or information about the nature of the error.</string>
+  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
   <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
   <string name="feedback_error_reply_known">Known issue, pending investigation</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
@@ -443,6 +441,14 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 of %3$d due)</item>
     <item quantity="other">%1$s (%2$d od %3$d na redu)</item>
+  </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Postoji jedna greška za prijaviti</item>

@@ -156,8 +156,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onPause() {
         super.onPause();
-        // Reschedule the checking in case the user has changed the veecheck
-        // switch
+        // Reschedule the checking in case the user has changed the veecheck switch
         if (mVeecheckStatus ^ mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, mVeecheckStatus)) {
             sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
         }

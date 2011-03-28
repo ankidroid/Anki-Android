@@ -52,6 +52,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +66,7 @@ public class PersonalDeckPicker extends Activity {
     private ProgressDialog mProgressDialog;
     private AlertDialog mNoConnectionAlert;
     private AlertDialog mConnectionErrorAlert;
+    private AlertDialog mDownloadOverwriteAlert;
 
     private Intent mDownloadManagerServiceIntent;
     // Service interface we will use to call the service
@@ -76,6 +78,8 @@ public class PersonalDeckPicker extends Activity {
     private ListView mPersonalDecksListView;
     private PersonalDecksAdapter mPersonalDecksAdapter;
     private EditText mSearchEditText;
+    private String mDestination;
+    private Download mDeckToDownload;
 
     private boolean mDownloadSuccessful = false;
 
@@ -104,6 +108,7 @@ public class PersonalDeckPicker extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Object deckNameObject = mAllPersonalDecks.get(position);
                 // If we click twice very fast, the second click tries to download the download that was triggered
                 // by the first click and causes crash
@@ -112,15 +117,15 @@ public class PersonalDeckPicker extends Activity {
                 }
                 String deckName = (String) deckNameObject;
                 Download personalDeckDownload = new Download(deckName);
-                mPersonalDeckDownloads.add(personalDeckDownload);
-                refreshPersonalDecksList();
-                try {
-                    startService(mDownloadManagerServiceIntent);
-                    mDownloadManagerService.downloadFile(personalDeckDownload);
-                } catch (RemoteException e) {
-                    // There is nothing special we need to do if the service has crashed
-                    Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
-                    e.printStackTrace();
+                mDestination = PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory());
+                setDeckToDownload(personalDeckDownload);
+                if (new File(mDestination + "/" + deckName + ".anki").exists()) {
+                    mDownloadOverwriteAlert.setMessage(getResources().getString(R.string.download_message, deckName));
+                    mDownloadOverwriteAlert.show();
+                    Log.d(AnkiDroidApp.TAG, "Download Deck already exists");
+                } else {
+                    downloadPersonalDeck(personalDeckDownload);
+                    Log.d(AnkiDroidApp.TAG, "Download Deck not exists");
                 }
             }
 
@@ -147,6 +152,20 @@ public class PersonalDeckPicker extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         
         getPersonalDecks();
+    }
+
+    private void downloadPersonalDeck(Download personalDeck) {
+
+        mPersonalDeckDownloads.add(personalDeck);
+        refreshPersonalDecksList();
+        try {
+            startService(mDownloadManagerServiceIntent);
+            mDownloadManagerService.downloadFile(personalDeck);
+        } catch (RemoteException e) {
+            // There is nothing special we need to do if the service has crashed
+            Log.e(AnkiDroidApp.TAG, "RemoteException = " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 
@@ -299,6 +318,15 @@ public class PersonalDeckPicker extends Activity {
 
         });
         mConnectionErrorAlert = builder.create();
+
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(res.getString(R.string.sync_conflict_title));
+        builder.setIcon(android.R.drawable.ic_input_get);
+        builder.setMessage(res.getString(R.string.download_message));
+        builder.setPositiveButton(res.getString(R.string.download_overwrite), mSyncDublicateAlertListener);
+        builder.setNegativeButton(res.getString(R.string.download_cancel), mSyncDublicateAlertListener);
+        builder.setCancelable(false);
+        mDownloadOverwriteAlert = builder.create();
     }
 
 
@@ -310,6 +338,13 @@ public class PersonalDeckPicker extends Activity {
         mConnectionErrorAlert = null;
     }
 
+    public Download getDeckToDownload() {
+        return mDeckToDownload;
+    }
+
+    public void setDeckToDownload(Download deckToDownload) {
+        this.mDeckToDownload = deckToDownload;
+    }
 
     private void refreshPersonalDecksList() {
         mAllPersonalDecks.clear();
@@ -450,6 +485,19 @@ public class PersonalDeckPicker extends Activity {
             // Pass
         }
 
+    };
+
+    private OnClickListener mSyncDublicateAlertListener = new OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case AlertDialog.BUTTON_POSITIVE:
+                    downloadPersonalDeck(getDeckToDownload());
+                    break;
+                case AlertDialog.BUTTON_NEGATIVE:
+                default:
+            }
+        }
     };
 
     /********************************************************************

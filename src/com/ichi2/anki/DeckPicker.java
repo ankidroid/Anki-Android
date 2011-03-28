@@ -776,7 +776,6 @@ public class DeckPicker extends Activity implements Runnable {
         menu.findItem(SUBMENU_DOWNLOAD).setEnabled(sdCardAvailable);
         menu.findItem(MENU_DOWNLOAD_PERSONAL_DECK).setVisible(sdCardAvailable);
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-        menu.findItem(MENU_MY_ACCOUNT).setVisible(preferences.getBoolean("syncEnabled", false));
         return true;
     }
 
@@ -911,13 +910,6 @@ public class DeckPicker extends Activity implements Runnable {
 				}
 			}
 		    
-	        // Show "Sync all" button only if sync is enabled.
-	        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-	        Log.d(AnkiDroidApp.TAG, "syncEnabled=" + preferences.getBoolean("syncEnabled", false));
-	        if (!preferences.getBoolean("syncEnabled", false)) {
-	            mSyncAllButton.setVisibility(View.GONE);
-	        }
-
 			Thread thread = new Thread(this);
 			thread.start();
 		} else {

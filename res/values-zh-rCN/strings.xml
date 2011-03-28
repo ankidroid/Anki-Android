@@ -111,8 +111,7 @@
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Reset</string>
   <string name="pref_cat_other">Other</string>
-  <string name="sync_on_open">同步打开</string>
-  <string name="sync_on_close">同步关闭</string>
+  <string name="pref_cat_experimental">EXPERIMENTAL</string>
   <string name="show_study_options_on_deck_load">Study options on load</string>
   <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
   <string name="startup_mode">Startup Mode</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
   <string name="shake_intensity">Shake threshold</string>
   <string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
-  <string name="pref_cat_experimental">EXPERIMENTAL</string>
-  <string name="sync_enabled">Sync features</string>
-  <string name="sync_enabled_in_answer_summ">Still many bugs, might corrupt your decks. Backup often!</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
   <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
   <string name="language">Language</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">A network error has occurred. Retry, or cancel and return to the previous screen.</string>
   <string name="retry">Retry</string>
   <string name="cancel">Cancel</string>
+  <string name="download_overwrite">Overwrite</string>
+  <string name="download_cancel">Cancel Download</string>
+  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
   <string name="shared_decks">Shared Decks</string>
   <string name="updating">Updating...</string>
   <string name="loading_shared_decks">Loading available shared decks...</string>
@@ -340,10 +341,7 @@
   <string name="sync_log_no_changes_message">No changes found</string>
   <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Full sync from server</string>
-  <string name="sync_log_fact_to_server_message">1 card to server</string>
-  <string name="sync_log_facts_to_server_message">%d cards to server</string>
-  <string name="sync_log_fact_from_server_message">1 card from server</string>
-  <string name="sync_log_facts_from_server_message">%d cards from server</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %1$d sec%2$s; unable to sync.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
@@ -360,7 +358,7 @@
   <string name="error_cancel">Do not report errors</string>
   <string name="error_reporting_choice">Error reporting mode</string>
   <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
-  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android as well as the nature of the error itself.</string>
+  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_send_feedback">Send us your feedback</string>
   <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
@@ -369,7 +367,7 @@
   <string name="feedback_error_list_header">List of errors to send</string>
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
-  <string name="feedback_default_text">Please enter your feedback or information about the nature of the error.</string>
+  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
   <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
   <string name="feedback_error_reply_known">Known issue, pending investigation</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
@@ -443,6 +441,14 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 of %3$d due)</item>
     <item quantity="other">%1$s (%2$d of %3$d due)</item>
+  </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">There is one error to report</item>
