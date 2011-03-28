@@ -111,8 +111,7 @@
   <string name="pref_cat_zoom">Powiększenie</string>
   <string name="pref_cat_reset">Zresetuj</string>
   <string name="pref_cat_other">Inne</string>
-  <string name="sync_on_open">Synchronizuj przy otwieraniu</string>
-  <string name="sync_on_close">Synchronizuj przy zamykaniu</string>
+  <string name="pref_cat_experimental">Eksperymentalne</string>
   <string name="show_study_options_on_deck_load">Pokaż opcje przy ładowaniu</string>
   <string name="show_study_options_on_deck_load_summ">Pokaż ustawienia nauki przy ładowaniu talii</string>
   <string name="startup_mode">Tryb uruchamiania</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">Odtwarza dźwięki natychmiast po pokazaniu pytania/odpowiedzi</string>
   <string name="shake_intensity">Czułość wstrząsania</string>
   <string name="shake_intensity_summ">Próg pozwalający na uznanie potrząsania: XXX</string>
-  <string name="pref_cat_experimental">Eksperymentalne</string>
-  <string name="sync_enabled">Funkcje synchronizacji</string>
-  <string name="sync_enabled_in_answer_summ">Wciąż wiele błędów, może uszkodzić talię. Rób często kopie zapasowe!</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">Wymuszaj RTL dla języka hebrajskiego</string>
   <string name="fix_hebrew_text_summ">Obejście problemu ograniczonej obsługi języka hebrajskiego przez platformę Android. Nie obsługuje samogłosek.</string>
   <string name="language">Język</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">Wystąpił błąd sieciowy. Spróbuj ponownie lub anuluj i powrócić do poprzedniego ekranu.</string>
   <string name="retry">Próbuj ponownie</string>
   <string name="cancel">Anuluj</string>
+  <string name="download_overwrite">Zastąp</string>
+  <string name="download_cancel">Anuluj pobieranie</string>
+  <string name="download_message">Jest już lokalna kopia talii %1$s.  Czy chcesz ją zastąpić?</string>
   <string name="shared_decks">Udostępnione talie</string>
   <string name="updating">Aktualizacja...</string>
   <string name="loading_shared_decks">Ładowanie dostępnych udostępnionych talii...</string>
@@ -340,10 +341,7 @@
   <string name="sync_log_no_changes_message">Nie znaleziono zmian</string>
   <string name="sync_log_uploading_message">Pełna synchronizacja do serwera</string>
   <string name="sync_log_downloading_message">Pełna synchronizacja z serwera</string>
-  <string name="sync_log_fact_to_server_message">1 fakt do serwera</string>
-  <string name="sync_log_facts_to_server_message">%d fakty do serwera</string>
-  <string name="sync_log_fact_from_server_message">1 fakt z serwera</string>
-  <string name="sync_log_facts_from_server_message">%d fakty z serwera</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">Czas urządzenia różni się od tego na serwerze o %1$d sekund%2$s, synchronizacja niemożliwa.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, być może źle ustawiono strefę czasową</string>
   <string name="sync_log_clocks_unsynchronized_date">, być może źle ustawiono datę</string>
@@ -443,6 +441,14 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 z %3$d zaległe)</item>
     <item quantity="other">%1$s (%2$d z %3$d do przeglądnięcia)</item>
+  </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Jest jeden błąd do zgłoszenia</item>

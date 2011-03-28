@@ -111,8 +111,7 @@
   <string name="pref_cat_zoom">Vergrößern</string>
   <string name="pref_cat_reset">Zurücksetzen</string>
   <string name="pref_cat_other">Sonstiges</string>
-  <string name="sync_on_open">Beim Start synchronisieren</string>
-  <string name="sync_on_close">Beim Beenden synchronisieren</string>
+  <string name="pref_cat_experimental">EXPERIMENTELL</string>
   <string name="show_study_options_on_deck_load">Lerneinstellungen zeigen</string>
   <string name="show_study_options_on_deck_load_summ">Lerneinstellungen beim Laden eines Stapels zeigen</string>
   <string name="startup_mode">Startmodus</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">Sounds beim Anzeigen der Frage/Antwort sofort abspielen</string>
   <string name="shake_intensity">Schüttel-Schwellwert</string>
   <string name="shake_intensity_summ">Schwelle, ab der ein Schütteln erkannt wird: XXX</string>
-  <string name="pref_cat_experimental">EXPERIMENTELL</string>
-  <string name="sync_enabled">Synchronisierung</string>
-  <string name="sync_enabled_in_answer_summ">Die Synchronisierung hat noch Fehler und könnte Ihre Stapel gefährden. Machen Sie häufig Backups!</string>
+  <string name="sync_fetch_missing_media">Mediadaten ebenfalls synchronisieren</string>
+  <string name="sync_fetch_missing_media_summ">Mediadaten automatisch beziehen, wenn synchronisiert wird.</string>
   <string name="fix_hebrew_text">Umgekehrte Textrichtung für Hebräisch</string>
   <string name="fix_hebrew_text_summ">Erzwingt umgekehrte Textrichtung, um Hebräisch auf dem Android-System darzustellen. Vokale werden nicht unterstützt</string>
   <string name="language">Sprache</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">Ein Netzwerkfehler ist aufgetreten. Versuchen Sie es erneut oder brechen Sie ab und kehren zum vorherigen Fenster zurück.</string>
   <string name="retry">Erneut versuchen</string>
   <string name="cancel">Abbrechen</string>
+  <string name="download_overwrite">Überschreiben</string>
+  <string name="download_cancel">Abbrechen</string>
+  <string name="download_message">Stapel %1$s existiert bereits. Soll er überschrieben werden?</string>
   <string name="shared_decks">Öffentliche Stapel</string>
   <string name="updating">Aktualisiere...</string>
   <string name="loading_shared_decks">Verfügbare öffentliche Stapel werden geladen...</string>
@@ -340,10 +341,7 @@
   <string name="sync_log_no_changes_message">Keine Veränderungen gefunden</string>
   <string name="sync_log_uploading_message">Voll-Synchronisierung des lokalen Stapels</string>
   <string name="sync_log_downloading_message">Voll-Synchronisierung vom Server</string>
-  <string name="sync_log_fact_to_server_message">Eine Karte hochgeladen</string>
-  <string name="sync_log_facts_to_server_message">%d Karten hochgeladen</string>
-  <string name="sync_log_fact_from_server_message">Eine Karte heruntergeladen</string>
-  <string name="sync_log_facts_from_server_message">%d Karten heruntergeladen</string>
+  <string name="sync_log_zero_facts">Fertiggestellt, keine Karten geändert</string>
   <string name="sync_log_clocks_unsynchronized">Die Zeit auf Ihrem Android-Gerät weicht um %1$d Sekunden von der Server-Zeit ab%2$s, es kann deshalb nicht synchronisiert werden.</string>
   <string name="sync_log_clocks_unsynchronized_tz"> (die Zeitzone des Geräts ist vermutlich falsch eingestellt)</string>
   <string name="sync_log_clocks_unsynchronized_date"> (vermutlich stimmt das Gerätedatum nicht)</string>
@@ -443,6 +441,14 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 von %3$d fällig)</item>
     <item quantity="other">%1$s (%2$d von %3$d fällig)</item>
+  </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 Karte hochgeladen</item>
+    <item quantity="other">%1$d Karten hochgeladen</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 Karte heruntergeladen</item>
+    <item quantity="other">%1$d Karten heruntergeladen</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Es gibt einen Fehler zu melden</item>

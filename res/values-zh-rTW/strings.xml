@@ -22,14 +22,14 @@
 <resources>
   <string name="CardEditorCancelButton">取消</string>
   <string name="CardEditorSaveButton">儲存</string>
-  <string name="CardEditorTags">Tags: %1$s</string>
+  <string name="CardEditorTags">標籤：%1$s</string>
   <string name="add_new_tag">增加標籤</string>
   <string name="app_name">AnkiDroid</string>
   <string name="yes">是</string>
   <string name="no">否</string>
   <string name="ok">確定</string>
   <string name="deck_upgrade_too_old_version">AnkiDroid不支援39版以前的牌組。請用電腦上的Anki打開該牌組，以便更新到最新版本。</string>
-  <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
+  <string name="deck_upgrade_version_61_has_latex">排組無法完全升級，因為它包含LaTeX敘述式；請打開Anki桌面版升級到最新版本並重新產生LaTeX。</string>
   <string name="deckpicker_title_nosdcard">SD卡已卸載</string>
   <string name="deckpicker_new">今天有%d張新卡片</string>
   <string name="deckpicker_loaddeck">正在讀取牌組…</string>
@@ -40,9 +40,9 @@
   <string name="deckpicker_upgrade_notes_title">牌組升級結果</string>
   <string name="deckpicker_upgrade_notes_button">備註</string>
   <string name="deckpicker_download_missing_title">正在取得缺少的媒體</string>
-  <string name="deckpicker_download_missing_none">No media files found missing</string>
-  <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
-  <string name="deckpicker_download_missing_error">Error with file: %1$s</string>
+  <string name="deckpicker_download_missing_none">沒有找不到的媒體檔</string>
+  <string name="deckpicker_download_missing_success">成功取得%1$d，缺少%2$d</string>
+  <string name="deckpicker_download_missing_error">檔案錯誤：%1$s</string>
   <string name="notify_ticker">更新程式</string>
   <string name="notify_title">Ankidroid 更新成功</string>
   <string name="notify_message">下載新版本</string>
@@ -68,7 +68,7 @@
   <string name="studyoptions_limit_dialog_title">Limit Learning</string>
   <string name="studyoptions_session">Session</string>
   <string name="studyoptions_tag">By Tag</string>
-  <string name="studyoptions_tag_new">Show new cards by tag:</string>
+  <string name="studyoptions_tag_new">按標籤顯示新卡片：</string>
   <string name="studyoptions_tag_rev">顯示此標籤的卡片：</string>
   <string name="studyoptions_session_minutes">回合最長幾分鐘：</string>
   <string name="studyoptions_session_questions">回合最多幾張卡片：</string>
@@ -111,8 +111,7 @@
   <string name="pref_cat_zoom">縮放</string>
   <string name="pref_cat_reset">重設</string>
   <string name="pref_cat_other">其他</string>
-  <string name="sync_on_open">開啟時同步</string>
-  <string name="sync_on_close">關閉時同步</string>
+  <string name="pref_cat_experimental">實驗中功能</string>
   <string name="show_study_options_on_deck_load">載入時顯示學習選項</string>
   <string name="show_study_options_on_deck_load_summ">載入牌組時顯示學習選項</string>
   <string name="startup_mode">啟動模式</string>
@@ -139,9 +138,9 @@
   <string name="use_ruby_support">支援Ruby語言</string>
   <string name="use_ruby_support_summ">如果包含\'[\'或\']\'符號，當作Ruby語言處理</string>
   <string name="display_font_size">相對顯示字型大小</string>
-  <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
+  <string name="display_font_size_summ">相對定義的大小顯示的字體。目前：XXX%</string>
   <string name="button_size">相對按鈕大小</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
+  <string name="button_size_summ">複習時按鈕的相對大小。目前：XXX%</string>
   <string name="hide_question_in_answer">隱藏題目？</string>
   <string name="hide_question_in_answer_summ">顯示答案時是否隱藏題目。</string>
   <string name="deck_path">牌組路徑</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">呈現問題/答案後立即播放聲音</string>
   <string name="shake_intensity">搖晃閾值</string>
   <string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
-  <string name="pref_cat_experimental">實驗中功能</string>
-  <string name="sync_enabled">同步功能</string>
-  <string name="sync_enabled_in_answer_summ">還有很多小問題，可能會損壞你的牌組。記得經常備份！</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">強制右到左文字顯示(給希伯來語)</string>
   <string name="fix_hebrew_text_summ">Ankidroid處理希伯來語的暫時解決方式。不支援母音。</string>
   <string name="language">語言</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">發生網路錯誤。請再試一次，或取消並返回。</string>
   <string name="retry">重試</string>
   <string name="cancel">取消</string>
+  <string name="download_overwrite">Overwrite</string>
+  <string name="download_cancel">Cancel Download</string>
+  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
   <string name="shared_decks">共享牌組</string>
   <string name="updating">更新中...</string>
   <string name="loading_shared_decks">正在載入共享牌組...</string>
@@ -333,17 +334,14 @@
   <string name="sync_determining_differences_message">判定差異中...</string>
   <string name="sync_transferring_payload_message">傳輸資料中...</string>
   <string name="sync_applying_reply_message">伺服器回應中...</string>
-  <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
+  <string name="sync_downloading_media">正在下載媒體 %1$d/%2$d...</string>
   <string name="sync_no_changes_message">沒有新的更新。</string>
   <string name="sync_log_error_message">錯誤：牌組未同步</string>
-  <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
+  <string name="sync_log_error_specific">同步錯誤，類型：%1$s，訊息：%2$s</string>
   <string name="sync_log_no_changes_message">沒有新的更新。</string>
   <string name="sync_log_uploading_message">由本地端完整同步</string>
   <string name="sync_log_downloading_message">由伺服器端完整同步</string>
-  <string name="sync_log_fact_to_server_message">上傳1張卡片至伺服器</string>
-  <string name="sync_log_facts_to_server_message">上傳%d張卡片至伺服器</string>
-  <string name="sync_log_fact_from_server_message">從伺服器取得1張卡片</string>
-  <string name="sync_log_facts_from_server_message">從伺服器取得%d張卡片</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">手機的時間和伺服器時間相差%1$d秒%2$s，無法同步。</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
@@ -362,18 +360,18 @@
   <string name="error_reporting_choice_summary">若有錯誤，可以自動報告、從不報告，也可以請問您</string>
   <string name="feedback_disclaimer">免責聲明：我們不會收集任何個人資訊，如您的電子信箱、電話號碼、IP或手機IMEI。但我們會收集關於您手機的資訊，例如製造商、型號和Android版本，及報告錯誤本身的一些資訊。</string>
   <string name="feedback_title">回饋意見</string>
-  <string name="feedback_send_feedback">Send us your feedback</string>
-  <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
-  <string name="feedback_message_sent_success">Feedback received, thank you!</string>
+  <string name="feedback_send_feedback">回饋您的意見</string>
+  <string name="feedback_send_feedback_and_errors">回饋錯誤和您的意見</string>
+  <string name="feedback_message_sent_success">收到您的回饋，謝謝！</string>
   <string name="feedback_message_sent_failure">Unable to send feedback, code %1$s</string>
   <string name="feedback_error_list_header">List of errors to send</string>
   <string name="feedback_keep_latest">Keep latest error</string>
-  <string name="feedback_clear_all">Clear all errors</string>
+  <string name="feedback_clear_all">清除所有錯誤</string>
   <string name="feedback_default_text">請輸入您的意見，或關於此錯誤的任何資訊。</string>
   <string name="feedback_error_reply_new">未知的問題，提出新的 bug</string>
   <string name="feedback_error_reply_known">已知問題，待調查</string>
-  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
-  <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
+  <string name="feedback_error_reply_issue_unknown">問題%1$d，未知狀態</string>
+  <string name="feedback_error_reply_issue_status">問題%1$d，狀態：%2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">問題%1$d，已解決但還沒發佈新版本</string>
   <string name="feedback_error_reply_issue_fixed_prod">問題%1$d，最新版本中已解決</string>
   <string name="feedback_error_reply_malformed">已送出bug，沒有回應</string>
@@ -407,8 +405,8 @@
   <string name="delete_deck_confirm">刪除</string>
   <string name="new_version_title">新版本：</string>
   <string name="new_version_message">新功能：</string>
-  <string name="no_tts_available_title">Text-to-Speech</string>
-  <string name="no_tts_available_message">No text-to-speech language available</string>
+  <string name="no_tts_available_title">朗讀</string>
+  <string name="no_tts_available_message">沒有可用的朗讀語言</string>
   <string name="tts_no_tts">不要發音</string>
   <string name="statistics_type_title">選擇統計類型</string>
   <string name="statistics_period_title">選擇報告期間</string>
@@ -422,7 +420,7 @@
   <string name="statistics_fullscreen">切換全螢幕</string>
   <string name="statistics_zoom_in">放大</string>
   <string name="statistics_zoom_out">縮小</string>
-  <string name="statistics_all_decks">(all decks)</string>
+  <string name="statistics_all_decks">(所有牌組)</string>
   <string name="calculating_statistics">正在統計</string>
   <plurals name="deckpicker_title">
     <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
@@ -444,13 +442,21 @@
     <item quantity="one">%1$s (%3$d張中的1張到期)</item>
     <item quantity="other">%1$s (%3$d之%2$d到期)</item>
   </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
+  </plurals>
   <plurals name="error_message">
     <item quantity="one">有一個錯誤要報告</item>
     <item quantity="other">有%d個錯誤報告</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1張卡片於%2$s到期</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="other">%1$d張卡片於%2$s到期</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1個牌組</item>

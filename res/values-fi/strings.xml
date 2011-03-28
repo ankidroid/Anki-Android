@@ -111,8 +111,7 @@
   <string name="pref_cat_zoom">Zoomaus</string>
   <string name="pref_cat_reset">Palautus</string>
   <string name="pref_cat_other">Muu</string>
-  <string name="sync_on_open">Synkronoi avattaessa</string>
-  <string name="sync_on_close">Synkronoi suljettaessa</string>
+  <string name="pref_cat_experimental">KOKEELLINEN</string>
   <string name="show_study_options_on_deck_load">Opiskeluasetukset latauksessa</string>
   <string name="show_study_options_on_deck_load_summ">Näytä opiskelu-asetukset näyttö ladattaessa korttipakkaa</string>
   <string name="startup_mode">Käynnistystila</string>
@@ -141,7 +140,7 @@
   <string name="display_font_size">Näyttöfontin suhteellinen koko</string>
   <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
   <string name="button_size">Painikkeen koko</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
+  <string name="button_size_summ">Suhteutta painikkeiden koko uudelleen näyttöön. Tällä hetkellät: XXX %</string>
   <string name="hide_question_in_answer">Piilota kysymys vastauksen yhteydessä?</string>
   <string name="hide_question_in_answer_summ">Määrittää piilotetaanko kysymys kun vastaus näytetään.</string>
   <string name="deck_path">Korttipakan polku</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">Toista äänet välittömästi sen jälkeen, kun kysymys/vastaus näytetään</string>
   <string name="shake_intensity">Ravistuksen kynnys</string>
   <string name="shake_intensity_summ">Ravistuksen tunnustuksen kynnys: XXX</string>
-  <string name="pref_cat_experimental">KOKEELLINEN</string>
-  <string name="sync_enabled">Sync-ominaisuuksia</string>
-  <string name="sync_enabled_in_answer_summ">Löytyy useita vikoja, korttipakat saattavat viottua. Varmuuskopio usein!</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">Pakota RTL heprealle</string>
   <string name="fix_hebrew_text_summ">Heprean kiertotapa rajoitetulle Android-alustalle Ei tue vokaaleja.</string>
   <string name="language">Kieli</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">Verkko virhe. Yritä uudelleen tai peruuta muutokset ja palaa edelliseen näyttöön.</string>
   <string name="retry">Yritä uudelleen</string>
   <string name="cancel">Peru</string>
+  <string name="download_overwrite">Overwrite</string>
+  <string name="download_cancel">Cancel Download</string>
+  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
   <string name="shared_decks">Jaetut korttipakat</string>
   <string name="updating">Päivitetään...</string>
   <string name="loading_shared_decks">Saatavilla olevia jaettuja korttipakkoja ladataan...</string>
@@ -340,10 +341,7 @@
   <string name="sync_log_no_changes_message">Muutoksia ei löytynyt</string>
   <string name="sync_log_uploading_message">Täysi synkronointi sijainnista</string>
   <string name="sync_log_downloading_message">Täysi synkronointi palvelimesta</string>
-  <string name="sync_log_fact_to_server_message">1 seikka palvelimelle</string>
-  <string name="sync_log_facts_to_server_message">%d seikkaa palvelimelle</string>
-  <string name="sync_log_fact_from_server_message">1 seikka palvelimelta</string>
-  <string name="sync_log_facts_from_server_message">%d seikkaa palvelimelta</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">Laitteen aika on eri kuin palvelimen %1$d sek%2$s; synkrointi ei onnistu.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, laitteen aikavyöhyke on ehkä väärä</string>
   <string name="sync_log_clocks_unsynchronized_date">, laitteen päivämäärä on mahdollisesti väärä</string>
@@ -369,14 +367,14 @@
   <string name="feedback_error_list_header">Lähetä virhelista</string>
   <string name="feedback_keep_latest">Säilytä viimeisin virhe</string>
   <string name="feedback_clear_all">Poista kaikki virheet</string>
-  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
-  <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
+  <string name="feedback_default_text">Ana palautetta tai anna yleistietoa virheistä josta ilmoitat.</string>
+  <string name="feedback_error_reply_new">Tuntematon virhe, arkistoida uusi virhe</string>
   <string name="feedback_error_reply_known">Known issue, pending investigation</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
   <string name="feedback_error_reply_issue_status">Virhe %1$d, tila: %2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">Virhe %1$d, korjattu, mutta ei vielä julkaistu</string>
   <string name="feedback_error_reply_issue_fixed_prod">Virhe %1$d, korjattu uusimmassa versiossa</string>
-  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
+  <string name="feedback_error_reply_malformed">Arkistoitu virhe, ei vastausta</string>
   <string name="feedback_error_reply_failed">Lähettäminen epäonnistui</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Widget-ilmoituksen kynnys</string>
@@ -443,6 +441,14 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 / %3$d korttia)</item>
     <item quantity="other">%1$s (%2$d / %3$d korttia)</item>
+  </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Yksi virhe raportissa</item>

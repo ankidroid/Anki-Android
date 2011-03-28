@@ -43,13 +43,13 @@
   </string-array>
   <string-array name="startup_mode_labels">
     <item>Mostra les opcions d\'estudi</item>
-    <item>Tria la coberta</item>
-    <item>Tria la coberta en obrir el primer paquet del dia</item>
+    <item>Trieu la pantalla inicial</item>
+    <item>Trieu la pantalla en obrir el primer paquet del dia</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Informa sempre</item>
-    <item>No informis</item>
-    <item>Demana-ho</item>
+    <item>Envia-ho sempre</item>
+    <item>No ho enviïs mai</item>
+    <item>Pregunta-ho</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -139,7 +139,7 @@
     <item>estadístiques</item>
     <item>text a veu</item>
     <item>mostra la barra de paquet complet al selector de paquets</item>
-    <item>tria el model de fitxa en afegir un fet</item>
+    <item>Trieu el model de fitxa per afegir un fet</item>
     <item>nou giny</item>
     <item>millores en desfer / refer</item>
     <item>controls lliscants</item>

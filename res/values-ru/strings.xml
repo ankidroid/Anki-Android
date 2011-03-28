@@ -111,9 +111,8 @@
   <string name="pref_cat_zoom">Масштабирование</string>
   <string name="pref_cat_reset">Сброс</string>
   <string name="pref_cat_other">Прочие</string>
-  <string name="sync_on_open">Синхронизация при открытии</string>
-  <string name="sync_on_close">Синхронизация при закрытии</string>
-  <string name="show_study_options_on_deck_load">Параметры обучения при загрузке колоды</string>
+  <string name="pref_cat_experimental">Экспериментальное</string>
+  <string name="show_study_options_on_deck_load">Параметры обучения</string>
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
   <string name="startup_mode">Режим при запуске</string>
   <string name="startup_mode_summ">Выбрать если вы ходите начинать с окна параметров обучения или окна оглавления колод:</string>
@@ -125,7 +124,7 @@
   <string name="whiteboard_stroke_width">Ширина штриха</string>
   <string name="whiteboard_stroke_width_summ">Ширина штриха: XXX</string>
   <string name="sample_deck">Колода с примерами</string>
-  <string name="sample_deck_summ">Создать колоду столиц для примера, если нет ни одной колоды</string>
+  <string name="sample_deck_summ">Создать колоду столиц для примера, если нет ни одной колоды в каталоге колод, где хранятся колоды</string>
   <string name="write_answers">Писать ответы</string>
   <string name="write_answers_summ">Позволяет вам написать ответ и сравнивать с правильными</string>
   <string name="text_selection">Разрешить выделение текста</string>
@@ -163,9 +162,8 @@
   <string name="play_sounds_at_start_summ">Воспроизведение звуков сразу после показа вопрос/ответ</string>
   <string name="shake_intensity">Уровень трясения</string>
   <string name="shake_intensity_summ">Пороговое значение для признания встряски: XXX</string>
-  <string name="pref_cat_experimental">Экспериментальное</string>
-  <string name="sync_enabled">Синхронизация</string>
-  <string name="sync_enabled_in_answer_summ">Синхронизация в разработке. При синхронизации колоды могут быть повреждены. Делайте чаще резервные копии!</string>
+  <string name="sync_fetch_missing_media">Fetch media on sync</string>
+  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
   <string name="fix_hebrew_text">Обратный порядок написания (RTL) для иврита</string>
   <string name="fix_hebrew_text_summ">Ограниченная поддержка иврита для Android-платформы. Не поддерживаются гласные буквы.</string>
   <string name="language">Язык</string>
@@ -239,6 +237,9 @@
   <string name="connection_error_return_message">Ошибка сети. Повторите, отмените действие или возвратитесь на предыдущий экран.</string>
   <string name="retry">Повторить</string>
   <string name="cancel">Отмена</string>
+  <string name="download_overwrite">Заменить</string>
+  <string name="download_cancel">Отменить скачивание</string>
+  <string name="download_message">Уже существует колода %1$s в вашем устройстве. Переписать?</string>
   <string name="shared_decks">Общедоступные колоды</string>
   <string name="updating">Обновление...</string>
   <string name="loading_shared_decks">Загрузка общедоступных колод.</string>
@@ -250,7 +251,7 @@
   <string name="fact">факт</string>
   <string name="facts">факты</string>
   <string name="saving_changes">Сохранение изменений...</string>
-  <string name="about_content">%1$s Учебные карточки \n(для Android) &lt;/h2&gt;&lt;p&gt; AnkiDroid может читать .anki файлы, созданные настольной версией %2$s Anki&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках %3$s здесь&lt;/a&gt;, предлагайте новые функции (идеи)! Также используйте %4$s wiki&lt;/a&gt; и наш %5$s форум&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid - %6$s open-source программное обеспечение&lt;/a&gt;, и любой желающий может %7$s принять участие&lt;/a&gt; как %8$s разработчик&lt;/a&gt; :-) Не-программисты могут также участвовать: обновляя wiki и скриншоты, %9$s помогая материально&lt;/a&gt;, или могут написать о AnkiDroid в интернете (например, в своём блоге)! &lt;/p&gt;&lt;p&gt; AnkiDroid создана под %10$s GNU-GPL v3 лицензией&lt;/a&gt; исходный код доступен %11$s здесь&lt;/a&gt;.</string>
+  <string name="about_content">%1$s Флэш-карты &lt;/h2&gt;&lt;p&gt; AnkiDroid может читать .anki файлы, созданные настольной версией %2$s Anki&lt;/a&gt;. &lt;/p&gt;&lt;p&gt; Чтобы помочь нам сделать AnkiDroid лучше, пожалуйста, сообщайте об ошибках %3$s здесь&lt;/a&gt;, предлагайте новые функции (идеи)! Также используйте %4$s wiki&lt;/a&gt; и наш %5$s форум&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid - %6$s open-source программное обеспечение&lt;/a&gt;, и любой желающий может %7$s принять участие&lt;/a&gt; как %8$s разработчик&lt;/a&gt; :-) Не-программисты могут также участвовать: обновляя wiki и скриншоты, %9$s помогая материально&lt;/a&gt;, или могут написать о AnkiDroid в интернете (например, в своём блоге)! &lt;/p&gt;&lt;p&gt; AnkiDroid создана под %10$s GNU-GPL v3 лицензией&lt;/a&gt; исходный код доступен %11$s здесь&lt;/a&gt;.</string>
   <string name="studyoptions_title">Параметры обучения</string>
   <string name="studyoptions_deck_name">Название колоды</string>
   <string name="studyoptions_reviews_due">Повторов:</string>
@@ -340,10 +341,7 @@
   <string name="sync_log_no_changes_message">Не найдено изменений</string>
   <string name="sync_log_uploading_message">Полностью синхронизировано с локальными данными</string>
   <string name="sync_log_downloading_message">Полная синхронизация с сервером</string>
-  <string name="sync_log_fact_to_server_message">1 карта на сервер</string>
-  <string name="sync_log_facts_to_server_message">%d факт(ов) на сервер</string>
-  <string name="sync_log_fact_from_server_message">1 карта с сервера</string>
-  <string name="sync_log_facts_from_server_message">%d факт(ов) с сервера</string>
+  <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">Время на вашем Android-устройстве отличается на %1$d секунд от времени сервера%2$s, поэтому невозможно синхронизировать.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, установленная временная зона устройства возможно ошибочна</string>
   <string name="sync_log_clocks_unsynchronized_date">, дата, установленная в устройстве возможно неверная</string>
@@ -444,6 +442,14 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 из %3$d к повтору)</item>
     <item quantity="other">%1$s (%2$d из %3$d к повтору)</item>
+  </plurals>
+  <plurals name="sync_log_facts_to_server_message">
+    <item quantity="one">1 card to server</item>
+    <item quantity="other">%1$d cards to server</item>
+  </plurals>
+  <plurals name="sync_log_facts_from_server_message">
+    <item quantity="one">1 card from server</item>
+    <item quantity="other">%1$d cards from server</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Есть одна ошибка для отчёта</item>
