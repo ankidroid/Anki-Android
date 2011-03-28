@@ -187,6 +187,8 @@
 <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown</string>
 <string name="deck_path">Deck path</string>
 <string name="deck_path_summ">Path to where your decks are stored</string>
+<string name="deck_order">Deck order</string>
+<string name="deck_order_summ">Order in which decks are listed in deck picker</string>
 <string name="fullscreen_review">Review in fullscreen</string>
 <string name="fullscreen_review_summ">You can decide if you want to use all available screen space during card reviewing</string>
 <string name="zoom">Enable Zoom</string>

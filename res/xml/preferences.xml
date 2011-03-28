@@ -51,6 +51,13 @@
 				android:defaultValue="/sdcard/AnkiDroid"
 				android:summary="@string/deck_path_summ"
 				android:key="deckPath" />
+			<ListPreference
+				android:title="@string/deck_order"
+				android:summary="@string/deck_order_summ"
+				android:key="deckOrder"
+				android:defaultValue="0"
+				android:entries="@array/deck_order_labels"
+				android:entryValues="@array/deck_order_values" />	
 		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_sync">
 			<CheckBoxPreference

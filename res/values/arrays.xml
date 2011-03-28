@@ -130,6 +130,12 @@
 		<item>6 month</item>
 		<item>1 year</item>
 	</string-array>
+		<string-array name="deck_order_labels">
+		<item>By last access</item>
+		<item>Alphabetical</item>
+		<item>By number of due cards</item>
+		<item>By number of total cards</item>
+	</string-array>
 	<string-array name="new_version_features">
 		<item>better sibling spacing</item>
 		<item>increase in deck picker startup</item>
