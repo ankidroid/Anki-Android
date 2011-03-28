@@ -116,6 +116,7 @@ public class DeckPicker extends Activity implements Runnable {
 	private static final int ORDER_ALPHABETICAL = 1;
 	private static final int ORDER_BY_DUE_CARDS = 2;
 	private static final int ORDER_BY_TOTAL_CARDS = 3;
+	private static final int ORDER_BY_REMAINING_NEW_CARDS = 4;
 
     /**
 	* Available options performed by other activities
@@ -195,8 +196,9 @@ public class DeckPicker extends Activity implements Runnable {
 
 			String path = data.getString("absPath");
 			int msgtype = data.getInt("msgtype");
-			int due = 0;
-			int total = 0;
+			int due = data.getInt("due");
+			int total = data.getInt("total");
+			int totalNew = data.getInt("totalNew");
 
 			if (msgtype == DeckPicker.MSG_UPGRADE_NEEDED) {
 				dueString = res.getString(R.string.deckpicker_upgrading);
@@ -207,8 +209,6 @@ public class DeckPicker extends Activity implements Runnable {
 				newString = "";
 				showProgress = "false";
 			} else if (msgtype == DeckPicker.MSG_UPGRADE_SUCCESS) {
-			    due = data.getInt("due");
-			    total = data.getInt("total");
 				dueString = res.getQuantityString(R.plurals.deckpicker_due, due, due, total);
 				newString = String
 						.format(res.getString(R.string.deckpicker_new), data
@@ -230,6 +230,7 @@ public class DeckPicker extends Activity implements Runnable {
                     map.put("rateOfCompletionAll", completionAll);
                     map.put("dueInt", Integer.toString(due));                    
                     map.put("total", Integer.toString(total));                    
+                    map.put("totalNew", Integer.toString(totalNew));                    
 				}
 			}
 			
@@ -1034,6 +1035,7 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("due", dueCards);
 						data.putInt("total", totalCards);
 						data.putInt("new", newCards);
+						data.putInt("totalNew", totalNewCards);
 						data.putString("notes", upgradeNotes);
 
 						int rateOfCompletionMat;
@@ -1333,9 +1335,9 @@ public class DeckPicker extends Activity implements Runnable {
 		    	if (mPrefDeckOrder == ORDER_BY_DUE_CARDS) {
 					return - Integer.valueOf(object1.get("dueInt")).compareTo(Integer.valueOf(object2.get("dueInt")));
 		    	} else if (mPrefDeckOrder == ORDER_BY_TOTAL_CARDS) {
-		    		Log.e(object1.get("filepath"),object1.get("total"));
-		    		Log.e(object2.get("filepath"),object2.get("total"));
 		    		return - Integer.valueOf(object1.get("total")).compareTo(Integer.valueOf(object2.get("total")));
+		    	} else if (mPrefDeckOrder == ORDER_BY_REMAINING_NEW_CARDS) {
+		    		return - Integer.valueOf(object1.get("totalNew")).compareTo(Integer.valueOf(object2.get("totalNew")));
 				} else {
 					return 0;
 				}

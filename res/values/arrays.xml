@@ -135,6 +135,7 @@
 		<item>Alphabetical</item>
 		<item>By number of due cards</item>
 		<item>By number of total cards</item>
+		<item>By number of total new cards</item>
 	</string-array>
 	<string-array name="new_version_features">
 		<item>better sibling spacing</item>
