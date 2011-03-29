@@ -31,7 +31,7 @@
   <string name="deck_upgrade_too_old_version">Колоды версий до 39 не поддерживаются AnkiDroid, пожалуйста, откройте колоду настольной версией Anki для обновлении колоды до последней версии.</string>
   <string name="deck_upgrade_version_61_has_latex">Колода не может быть полностью обновлена, так как она содержит LaTeX-выражения; пожалуйста откройте колоду в десктоп-версии Anki и пересохраните файл колоды (чтобы обновить её до последнего нового формата и перегенерировать LaTeX).</string>
   <string name="deckpicker_title_nosdcard">SD-карта отмонтирована</string>
-  <string name="deckpicker_new">%d новых сегодня</string>
+  <string name="deckpicker_new">%d нов. сегодня</string>
   <string name="deckpicker_loaddeck">Открытие колоды...</string>
   <string name="deckpicker_nodeck">Не найдено ни одной колоды.</string>
   <string name="sync_log_title">Ход выполнения синхронизации</string>
@@ -162,8 +162,8 @@
   <string name="play_sounds_at_start_summ">Воспроизведение звуков сразу после показа вопрос/ответ</string>
   <string name="shake_intensity">Уровень трясения</string>
   <string name="shake_intensity_summ">Пороговое значение для признания встряски: XXX</string>
-  <string name="sync_fetch_missing_media">Fetch media on sync</string>
-  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
+  <string name="sync_fetch_missing_media">Доставлять медиа</string>
+  <string name="sync_fetch_missing_media_summ">Автоматически доставлять отсутствующие медиа-файлы при синхронизации.</string>
   <string name="fix_hebrew_text">Обратный порядок написания (RTL) для иврита</string>
   <string name="fix_hebrew_text_summ">Ограниченная поддержка иврита для Android-платформы. Не поддерживаются гласные буквы.</string>
   <string name="language">Язык</string>
@@ -341,7 +341,7 @@
   <string name="sync_log_no_changes_message">Не найдено изменений</string>
   <string name="sync_log_uploading_message">Полностью синхронизировано с локальными данными</string>
   <string name="sync_log_downloading_message">Полная синхронизация с сервером</string>
-  <string name="sync_log_zero_facts">Completed, no cards changed</string>
+  <string name="sync_log_zero_facts">Завершено, карты не изменены</string>
   <string name="sync_log_clocks_unsynchronized">Время на вашем Android-устройстве отличается на %1$d секунд от времени сервера%2$s, поэтому невозможно синхронизировать.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, установленная временная зона устройства возможно ошибочна</string>
   <string name="sync_log_clocks_unsynchronized_date">, дата, установленная в устройстве возможно неверная</string>
@@ -432,8 +432,8 @@
     <item quantity="other">%d мин.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">повтор 1 из %2$d</item>
-    <item quantity="other">повтор %1$d из %2$d</item>
+    <item quantity="one">повт. 1 из %2$d</item>
+    <item quantity="other">повт. %1$d из %2$d</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 из %3$d карт показано</item>
@@ -444,12 +444,12 @@
     <item quantity="other">%1$s (%2$d из %3$d к повтору)</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 card to server</item>
-    <item quantity="other">%1$d cards to server</item>
+    <item quantity="one">1 карта на сервер</item>
+    <item quantity="other">%1$d карт на сервер</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
-    <item quantity="one">1 card from server</item>
-    <item quantity="other">%1$d cards from server</item>
+    <item quantity="one">1 карта с сервера</item>
+    <item quantity="other">%1$d карт с сервера</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Есть одна ошибка для отчёта</item>
