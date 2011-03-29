@@ -85,6 +85,7 @@
 		<activity android:name="com.ichi2.veecheck.Notification" 
 			android:label="@string/notification_title"
 			android:configChanges="locale"/>
+		<activity android:name="com.zeemote.zc.ui.android.ControllerAndroidUi$Activity" />
 		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
 					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
 			<intent-filter>
@@ -122,11 +123,13 @@
 		<!-- Service to perform web API queries -->
 		<service android:name=".AnkiDroidWidget$UpdateService" />
 </application>
-	<uses-sdk android:minSdkVersion="3"/>
+	<uses-sdk android:minSdkVersion="8"/>
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 	<supports-screens 
 		android:largeScreens="true" 
 		android:normalScreens="true" 

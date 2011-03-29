@@ -71,8 +71,18 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Reviewer extends Activity {
+//zeemote imports
+import com.zeemote.zc.Controller;
+import com.zeemote.zc.event.ButtonEvent;
+import com.zeemote.zc.event.IButtonListener;
+import com.zeemote.zc.ui.android.ControllerAndroidUi;
 
+
+public class Reviewer extends Activity implements IButtonListener{
+	//zeemote stuff
+	private Controller controller;
+	private ControllerAndroidUi controllerUi;
+	
     /**
      * Result codes that are returned when this activity finishes.
      */
@@ -557,6 +567,11 @@ public class Reviewer extends Activity {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
                     deck, null));
         }
+        //zeemote stuff
+        controller = new Controller(Controller.CONTROLLER_1);       
+		controller.addButtonListener(this);
+		controllerUi = new ControllerAndroidUi(this, controller);
+		controllerUi.startConnectionProcess();
     }
 
 
@@ -1909,4 +1924,20 @@ public class Reviewer extends Activity {
 	    else
 	    	return false;
     }
+
+
+	@Override
+	public void buttonPressed(ButtonEvent arg0) {
+		Log.d(AnkiDroidApp.TAG,"Button pressed, id: "+arg0.getButtonID());
+	}
+
+
+	@Override
+	public void buttonReleased(ButtonEvent arg0) {
+		Log.d(AnkiDroidApp.TAG,"Button released, id: "+arg0.getButtonID());
+		switch(arg0.getButtonID()){
+		case 0: answerCard(Card.EASE_MID);
+		break;
+		}
+	}
 }
