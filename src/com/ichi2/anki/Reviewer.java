@@ -606,6 +606,12 @@ public class Reviewer extends Activity {
             	ReadText.initializeTts(this, mDeckFilename);
             }
 
+            // Get last whiteboard state
+            if (mPrefWhiteboard && MetaDB.getWhiteboardState(this, mDeckFilename) == 1) {
+            	mShowWhiteboard = true;
+            	mWhiteboard.setVisibility(View.VISIBLE);
+            }
+
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
@@ -746,8 +752,13 @@ public class Reviewer extends Activity {
         MenuItem item;
         Resources res = getResources();
         if (mPrefWhiteboard) {
-            Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE,
-                    R.string.show_whiteboard, R.drawable.ic_menu_compose);
+            if (mShowWhiteboard) {
+                Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE,
+                        R.string.hide_whiteboard, R.drawable.ic_menu_compose);
+            } else {
+                Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE,
+                        R.string.show_whiteboard, R.drawable.ic_menu_compose);            	
+            }
             Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE,
                     R.string.clear_whiteboard, R.drawable.ic_menu_clear_playlist);
         }
@@ -846,10 +857,12 @@ public class Reviewer extends Activity {
                     // Show whiteboard
                     mWhiteboard.setVisibility(View.VISIBLE);
                     item.setTitle(R.string.hide_whiteboard);
+                    MetaDB.storeWhiteboardState(this, mDeckFilename, 1);
                 } else {
                     // Hide whiteboard
                     mWhiteboard.setVisibility(View.GONE);
                     item.setTitle(R.string.show_whiteboard);
+                    MetaDB.storeWhiteboardState(this, mDeckFilename, 0);
                 }
                 return true;
 
@@ -1167,7 +1180,7 @@ public class Reviewer extends Activity {
             mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if (mWhiteboard.getVisibility() == View.VISIBLE) {
+                    if (mShowWhiteboard) {
                         return false;
                     }
                     if (gestureDetector.onTouchEvent(event)) {
