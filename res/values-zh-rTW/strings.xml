@@ -55,19 +55,19 @@
   <string name="clear_whiteboard">清除白板</string>
   <string name="session_question_limit_reached">超過回合限制題數</string>
   <string name="session_time_limit_reached">超過回合限制時間</string>
-  <string name="cram_edit_warning">編輯卡片時不允許惡補</string>
+  <string name="cram_edit_warning">惡補時無法編輯卡片</string>
   <string name="suspend_leeches">暫停榨時卡片</string>
   <string name="leech_suspend_notification">卡片標為榨時卡，已暫停</string>
   <string name="leech_notification">卡片標為榨時卡</string>
   <string name="newcards_day_summ">一天最多顯示幾張新卡片</string>
   <string name="newcards_day">新卡片數</string>
-  <string name="studyoptions_limit_select_tags">Select Tags</string>
-  <string name="studyoptions_limit_tags_active">With: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
+  <string name="studyoptions_limit_select_tags">選擇標籤</string>
+  <string name="studyoptions_limit_tags_active">有：%1$s</string>
+  <string name="studyoptions_limit_tags_inactive">除了：%1$s</string>
   <string name="studyoptions_limit_button_text">限制</string>
-  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
-  <string name="studyoptions_session">Session</string>
-  <string name="studyoptions_tag">By Tag</string>
+  <string name="studyoptions_limit_dialog_title">學習限制</string>
+  <string name="studyoptions_session">回合</string>
+  <string name="studyoptions_tag">依標籤</string>
   <string name="studyoptions_tag_new">按標籤顯示新卡片：</string>
   <string name="studyoptions_tag_rev">顯示此標籤的卡片：</string>
   <string name="studyoptions_session_minutes">回合最長幾分鐘：</string>
@@ -119,7 +119,7 @@
   <string name="show_timer">顯示計時器</string>
   <string name="show_timer_summ">監控您回答時間的計時器</string>
   <string name="show_progress_bars">顯示進度條</string>
-  <string name="show_progress_bars_summ">Shows proportion of today\'s yes answers and proportion of total yes answers on mature cards</string>
+  <string name="show_progress_bars_summ">顯示今天答對的比例和熟練的卡片答對的總數</string>
   <string name="show_whiteboard_summ">讓你可以在螢幕上畫畫</string>
   <string name="whiteboard_stroke_width">白板筆劃寬度</string>
   <string name="whiteboard_stroke_width_summ">筆劃寬度：XXX</string>
@@ -132,9 +132,9 @@
   <string name="dictionary">字典</string>
   <string name="dictionary_summ">Dictionary in which lookups should be performed: XXX</string>
   <string name="reset_languages">重設語言</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
-  <string name="reset_languages_question">Reset all language assignments?</string>
-  <string name="reset_languages_confirmation">All language assignments reset</string>
+  <string name="reset_languages_summ">重設所有牌組的語言(用於發音和字典)。您也可以從牌組選擇畫面重設特定牌組的語言</string>
+  <string name="reset_languages_question">確定要重設所有的語言？</string>
+  <string name="reset_languages_confirmation">已重設所有的語言</string>
   <string name="use_ruby_support">支援Ruby語言</string>
   <string name="use_ruby_support_summ">如果包含\'[\'或\']\'符號，當作Ruby語言處理</string>
   <string name="display_font_size">相對顯示字型大小</string>
@@ -214,8 +214,8 @@
   <string name="card_details_ease">難易度</string>
   <string name="card_details_average_time">平均時間</string>
   <string name="card_details_total_time">總時間</string>
-  <string name="card_details_yes_count">Yes count</string>
-  <string name="card_details_no_count">No count</string>
+  <string name="card_details_yes_count">答對總數</string>
+  <string name="card_details_no_count">答錯總數</string>
   <string name="card_details_added">新增</string>
   <string name="card_details_changed">更改</string>
   <string name="card_details_tags">標籤</string>
@@ -320,10 +320,10 @@
   <string name="connection_error_message">網路出了點問題。</string>
   <string name="no_user_password_error_message">要繼續進行下一步，您需要有一個AnkiOnline的帳戶，並登入完成。</string>
   <string name="sync_progress_bar_title">%s同步化中</string>
-  <string name="studyoptions_cram_dialog_title">要填鴨的標籤</string>
-  <string name="begin_cram">啟動填鴨模式</string>
-  <string name="end_cram">結束填鴨模式</string>
-  <string name="cram">填鴨式學習</string>
+  <string name="studyoptions_cram_dialog_title">要惡補的標籤</string>
+  <string name="begin_cram">啟動惡補模式</string>
+  <string name="end_cram">結束惡補模式</string>
+  <string name="cram">惡補</string>
   <string name="sync_connecting_message">連線中...</string>
   <string name="sync_syncing_message">%s同步化中</string>
   <string name="sync_summary_from_server_message">從伺服器讀取摘要中...</string>
@@ -363,9 +363,9 @@
   <string name="feedback_send_feedback">回饋您的意見</string>
   <string name="feedback_send_feedback_and_errors">回饋錯誤和您的意見</string>
   <string name="feedback_message_sent_success">收到您的回饋，謝謝！</string>
-  <string name="feedback_message_sent_failure">Unable to send feedback, code %1$s</string>
-  <string name="feedback_error_list_header">List of errors to send</string>
-  <string name="feedback_keep_latest">Keep latest error</string>
+  <string name="feedback_message_sent_failure">無法傳送回饋意見，錯誤 %1$s</string>
+  <string name="feedback_error_list_header">要傳送的錯誤列表</string>
+  <string name="feedback_keep_latest">保持剛剛的錯誤</string>
   <string name="feedback_clear_all">清除所有錯誤</string>
   <string name="feedback_default_text">請輸入您的意見，或關於此錯誤的任何資訊。</string>
   <string name="feedback_error_reply_new">未知的問題，提出新的 bug</string>
@@ -423,8 +423,8 @@
   <string name="statistics_all_decks">(所有牌組)</string>
   <string name="calculating_statistics">正在統計</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
-    <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
+    <item quantity="one">所有牌組：%2$d 之 1 到期 (%3$s)</item>
+    <item quantity="other">所有牌組：%2$d 之 %1$d 到期 (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1分鐘</item>
@@ -443,12 +443,12 @@
     <item quantity="other">%1$s (%3$d之%2$d到期)</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 card to server</item>
-    <item quantity="other">%1$d cards to server</item>
+    <item quantity="one">上傳1張卡片至伺服器</item>
+    <item quantity="other">上傳%1$d張卡片至伺服器</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
-    <item quantity="one">1 card from server</item>
-    <item quantity="other">%1$d cards from server</item>
+    <item quantity="one">從伺服器下載1張卡片</item>
+    <item quantity="other">從伺服器下載%1$d張卡片</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">有一個錯誤要報告</item>

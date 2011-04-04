@@ -140,7 +140,7 @@
   <string name="display_font_size">Fonte d\'affichage en taille relative</string>
   <string name="display_font_size_summ">Taille de la police à utiliser dans l\'affichage relatif aux définitions du paquet. Pour le moment: XXX %</string>
   <string name="button_size">Taille relative des boutons</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
+  <string name="button_size_summ">Taille relative des boutons sur l\'écran de revue. Actuellement: XXX %</string>
   <string name="hide_question_in_answer">Ne pas montrer la question dans la réponse ?</string>
   <string name="hide_question_in_answer_summ">Détermine si la question doit être montrée en même temps que la réponse.</string>
   <string name="deck_path">Chemin d\'accès au paquet</string>
@@ -429,8 +429,8 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="statistics_all_decks">(tous les paquets)</string>
   <string name="calculating_statistics">Calcul des statistiques…</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
-    <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
+    <item quantity="one">Tous les paquets: 1 dû parmi %2$d (%3$s)</item>
+    <item quantity="other">Tous les paquets: %1$d dûs parmi %2$d (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 minute.</item>

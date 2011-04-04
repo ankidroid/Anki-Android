@@ -162,8 +162,8 @@
   <string name="play_sounds_at_start_summ">Toista äänet välittömästi sen jälkeen, kun kysymys/vastaus näytetään</string>
   <string name="shake_intensity">Ravistuksen kynnys</string>
   <string name="shake_intensity_summ">Ravistuksen tunnustuksen kynnys: XXX</string>
-  <string name="sync_fetch_missing_media">Fetch media on sync</string>
-  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
+  <string name="sync_fetch_missing_media">Hae media synkronointi</string>
+  <string name="sync_fetch_missing_media_summ">Hakee automaattisesti puuttuvat mediat kun synkronoidaan.</string>
   <string name="fix_hebrew_text">Pakota RTL heprealle</string>
   <string name="fix_hebrew_text_summ">Heprean kiertotapa rajoitetulle Android-alustalle Ei tue vokaaleja.</string>
   <string name="language">Kieli</string>
@@ -237,9 +237,9 @@
   <string name="connection_error_return_message">Verkko virhe. Yritä uudelleen tai peruuta muutokset ja palaa edelliseen näyttöön.</string>
   <string name="retry">Yritä uudelleen</string>
   <string name="cancel">Peru</string>
-  <string name="download_overwrite">Overwrite</string>
-  <string name="download_cancel">Cancel Download</string>
-  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
+  <string name="download_overwrite">Korvaa</string>
+  <string name="download_cancel">Peruuta lataus</string>
+  <string name="download_message">Korttipakka %1$s on jo olemassa paikallisessa. Haluatko korvata sen?</string>
   <string name="shared_decks">Jaetut korttipakat</string>
   <string name="updating">Päivitetään...</string>
   <string name="loading_shared_decks">Saatavilla olevia jaettuja korttipakkoja ladataan...</string>
@@ -341,7 +341,7 @@
   <string name="sync_log_no_changes_message">Muutoksia ei löytynyt</string>
   <string name="sync_log_uploading_message">Täysi synkronointi sijainnista</string>
   <string name="sync_log_downloading_message">Täysi synkronointi palvelimesta</string>
-  <string name="sync_log_zero_facts">Completed, no cards changed</string>
+  <string name="sync_log_zero_facts">Valmistui, kortteja ei muutettu</string>
   <string name="sync_log_clocks_unsynchronized">Laitteen aika on eri kuin palvelimen %1$d sek%2$s; synkrointi ei onnistu.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, laitteen aikavyöhyke on ehkä väärä</string>
   <string name="sync_log_clocks_unsynchronized_date">, laitteen päivämäärä on mahdollisesti väärä</string>
@@ -370,7 +370,7 @@
   <string name="feedback_default_text">Ana palautetta tai anna yleistietoa virheistä josta ilmoitat.</string>
   <string name="feedback_error_reply_new">Tuntematon virhe, arkistoida uusi virhe</string>
   <string name="feedback_error_reply_known">Known issue, pending investigation</string>
-  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
+  <string name="feedback_error_reply_issue_unknown">Ongelma %1$d, tuntematon tila</string>
   <string name="feedback_error_reply_issue_status">Virhe %1$d, tila: %2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">Virhe %1$d, korjattu, mutta ei vielä julkaistu</string>
   <string name="feedback_error_reply_issue_fixed_prod">Virhe %1$d, korjattu uusimmassa versiossa</string>
@@ -443,20 +443,20 @@
     <item quantity="other">%1$s (%2$d / %3$d korttia)</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 card to server</item>
-    <item quantity="other">%1$d cards to server</item>
+    <item quantity="one">1 kortti palvelimelle</item>
+    <item quantity="other">%1$d korttia palvelimelle</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
-    <item quantity="one">1 card from server</item>
-    <item quantity="other">%1$d cards from server</item>
+    <item quantity="one">1 kortti palvelimelta</item>
+    <item quantity="other">%1$d korttia palvelimelta</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Yksi virhe raportissa</item>
     <item quantity="other">On %d raportoitavaa virhettä</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">1 kortti määrästä %2$s</item>
+    <item quantity="other">%1$d korttia %2$s kortista</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1 korttipakka</item>

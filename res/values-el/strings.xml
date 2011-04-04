@@ -39,7 +39,7 @@
   <string name="deckpicker_upgrade_failed">Η αναβάθμιση απέτυχε!</string>
   <string name="deckpicker_upgrade_notes_title">Αποτελέσματα αναβάθμισης τράπουλας</string>
   <string name="deckpicker_upgrade_notes_button">Σημειώσεις</string>
-  <string name="deckpicker_download_missing_title">Fetching missing media</string>
+  <string name="deckpicker_download_missing_title">Ανάκτηση λοιπών πολυμέσων</string>
   <string name="deckpicker_download_missing_none">Δεν βρέθηκαν αρχεία πολυμέσων που λείπουν</string>
   <string name="deckpicker_download_missing_success">Ανακτήθηκαν με επιτυχία %1$d, λείπουν %2$d</string>
   <string name="deckpicker_download_missing_error">Σφάλμα στο αρχείο: %1$s</string>
@@ -122,7 +122,7 @@
   <string name="show_progress_bars_summ">Shows proportion of today\'s yes answers and proportion of total yes answers on mature cards</string>
   <string name="show_whiteboard_summ">Σας επιτρέπει να γράψετε στην οθόνη</string>
   <string name="whiteboard_stroke_width">Πάχος γραμμής στον πίνακα</string>
-  <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>
+  <string name="whiteboard_stroke_width_summ">Πλάτος του περιγράμματος: XXX</string>
   <string name="sample_deck">Τράπουλα δείγμα</string>
   <string name="sample_deck_summ">Δημιουργία τράπουλας με πρωτεύουσες, αν δεν βρεθεί καμμία τράπουλα</string>
   <string name="write_answers">Εγγραφή απαντήσεων</string>
@@ -138,7 +138,7 @@
   <string name="use_ruby_support">Υποστήριξη οδηγειών για ruby</string>
   <string name="use_ruby_support_summ">Αν βρεθούν οι χαρακτήρες \'[\' and \']\', τότε το εσώκλειστο κείμενο θα χρησιμοποιηθεί ως οδηγεία για ruby</string>
   <string name="display_font_size">Σχετικό μέγεθος γραμματοσειράς</string>
-  <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
+  <string name="display_font_size_summ">Το μέγεθος της γραμματοσειράς για χρήση στην απεικόνιση σε σχέση με τους ορισμούς στην τράπουλα. Αυτή τη στιγμή: XXX%</string>
   <string name="button_size">Σχετικό μέγεθος πλήκτρου</string>
   <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
   <string name="hide_question_in_answer">Απόκρυψη ερώτησης στην απάντηση;</string>
@@ -152,12 +152,12 @@
   <string name="swipe">Ενεργοποίηση χειρονομίων</string>
   <string name="swipe_summ_off">Χρησιμοποιήστε χειρονομίες για να αλλάξετε μεταξύ οθόνων και να απαντήσετε κάρτες. Αυτή η επιλογή δεν είναι συμβατή με τους ελέγχους ζουμ</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
-  <string name="swipe_sensibility">Gesture Sensitivity</string>
-  <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
+  <string name="swipe_sensibility">Ευαισθησία Χειρονομίας</string>
+  <string name="swipe_sensibility_summ">Ευαισθησία των swipe χειρονομιών: XXX</string>
   <string name="shake">Ανακινήστε για Αναίρεση</string>
   <string name="shake_summ">Ανακινήστε τη συσκευή σας για να αναιρέσετε την τελευταία ενέργεια</string>
   <string name="tts">Κείμενο σε ομιλία</string>
-  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="tts_summ">Εκφόνηση των ερωτήσεως και απαντήσεων εάν δεν περιλαμβάνεται αρχείο ήχου</string>
   <string name="play_sounds_at_start">Αναπαραγωγή ήχων αμέσως</string>
   <string name="play_sounds_at_start_summ">Αναπαράγωγή ήχου αμέσως μετά την εμφάνιση μιας ερώτησης/απάντησης</string>
   <string name="shake_intensity">Όριο ανακίνησης</string>
@@ -167,7 +167,7 @@
   <string name="fix_hebrew_text">Επιβολή RTL για τα εβραϊκά</string>
   <string name="fix_hebrew_text_summ">Εναλλακτική λύση για περιορισμένη υποστήριξη για εβραϊκά από το Android. Δεν υποστηρίζει φωνήεντα.</string>
   <string name="language">Γλώσσα</string>
-  <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
+  <string name="language_summ">Επιλέξτε τη γλώσσα που θα χρησιμοποιεί το AnkiDroid. Επιλεγμένη γλώσσα: XXX</string>
   <string name="language_system">Γλώσσα συστήματος</string>
   <string name="select_locale_title">Επιλογή Γλώσσας</string>
   <string name="personaldeckpicker_title">Ανοίξτε τράπουλα από το δίκτυο</string>
@@ -199,10 +199,10 @@
   <string name="delete_card_message">Θέλετε πραγματικά να διαγράψετε αυτή την κάρτα;\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Show marked cards</string>
   <string name="card_browser_show_suspended">Show suspended cards</string>
-  <string name="card_browser_search">Search</string>
-  <string name="card_browser_search_suspended">Search suspended</string>
-  <string name="card_browser_search_by_tag">Search by tag</string>
-  <string name="card_browser_tags_shown">Tags: %1$s</string>
+  <string name="card_browser_search">Αναζήτηση</string>
+  <string name="card_browser_search_suspended">Αναζήτηση αναστάλθηκε</string>
+  <string name="card_browser_search_by_tag">Αναζήτηση από την ετικέτα</string>
+  <string name="card_browser_tags_shown">Ετικέτες: %1$s</string>
   <string name="card_browser_change_display_order">Αλλαγή σειράς εμφάνισης</string>
   <string name="card_browser_change_display_order_title">Επιλέξτε τη σειρά εμφάνισης</string>
   <string name="card_browser_card_details">Λεπτομέρειες κάρτας</string>
@@ -218,7 +218,7 @@
   <string name="card_details_no_count">Όχι καταμέτρηση</string>
   <string name="card_details_added">Προστέθηκε</string>
   <string name="card_details_changed">Άλλαξε</string>
-  <string name="card_details_tags">Tags</string>
+  <string name="card_details_tags">Ετικέτες</string>
   <string name="card_details_model">Μοντέλο</string>
   <string name="card_details_card_model">Υπόδειγμα κάρτα</string>
   <string name="statistics">Στατιστικά</string>
@@ -239,7 +239,7 @@
   <string name="cancel">Ακύρωση</string>
   <string name="download_overwrite">Αντικατάσταση</string>
   <string name="download_cancel">Ακύρωση λήψης</string>
-  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
+  <string name="download_message">Η τράπουλα %1$s υπάρχει ήδη στην Τοπική Μνήμη. Θέλετε να αντικατασταθεί;</string>
   <string name="shared_decks">Κοινόχρηστες τράπουλες</string>
   <string name="updating">Ενημέρωση...</string>
   <string name="loading_shared_decks">Φόρτωση διαθέσιμων κοινόχρηστων τραπουλών...</string>
@@ -314,7 +314,7 @@
   <string name="log_out">Αποσύνδεση</string>
   <string name="alert_logging_message">Σύνδεση, παρακαλώ περιμένετε...</string>
   <string name="invalid_username_password">Άκυρο όνομα χρήστη ή κωδικός πρόσβασης.</string>
-  <string name="login_generic_error">Failed to login.</string>
+  <string name="login_generic_error">Αποτυχία κατά την είσοδο.</string>
   <string name="download_finished">Η λήψη ολοκληρώθηκε</string>
   <string name="deck_downloaded">Η τράπουλα κατέβηκε</string>
   <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
@@ -341,13 +341,13 @@
   <string name="sync_log_no_changes_message">Δε βρέθηκαν αλλαγές</string>
   <string name="sync_log_uploading_message">Πλήρης συγχρονισμός από το τοπικό</string>
   <string name="sync_log_downloading_message">Πλήρης συγχρονισμός από το διακομιστή</string>
-  <string name="sync_log_zero_facts">Completed, no cards changed</string>
+  <string name="sync_log_zero_facts">Ολοκληρώθηκε, δεν άλλαξε καμία κάρτα</string>
   <string name="sync_log_clocks_unsynchronized">Η ώρα της συσκευής σας είναι διαφορετική από εκείνη του διακομιστή κατά %1$d δευτερόλεπτα%2$s· δεν είναι δυνατός ο συγχρονισμός.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
-  <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_date">, η ημερομηνία της συσκευής είναι πιθανώς λάθος</string>
   <string name="sync_log_old_version">Το πρωτόκολλο συγχρονισμού έχει αλλάξει, παρακαλούμε αναβαθμίστε στην τελευταία έκδοση AnkiDroid. Δείτε http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Η τράπουλα έχει αλλάξει και τοπικά και στο διακομιστή. Παρακαλούμε ανοίξτε την τράπουλα και συγχρονίστε από εκεί για να επιλύσετε την αντίφαση.</string>
-  <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
+  <string name="sync_log_create_deck_failed">Αποτυχία δημιουργίας τράπουλας στον διακομιστή: %1$s</string>
   <string name="sync_log_finish_error">Error while sending finish direction to server</string>
   <string name="sync_conflict_title">Αντίφαση κατά το συγχρονισμό</string>
   <string name="sync_conflict_message">Η τράπουλα %s έχει αλλάξει και τοπικά και στο διακομιστή. Ποια πλευρά να επικρατήσει;</string>
@@ -367,8 +367,8 @@
   <string name="feedback_error_list_header">Λίστα σφαλμάτων για την αποστολή</string>
   <string name="feedback_keep_latest">Διατηρείτε το πιο πρόσφατο σφάλμα</string>
   <string name="feedback_clear_all">Διαγραφή όλων των σφαλμάτων</string>
-  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
-  <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
+  <string name="feedback_default_text">Παρακαλώ εισάγετε τα σχόλιά σας ή πληροφορίες σχετικά με τη φύση των τυχών λάθών που αναφέρετε.</string>
+  <string name="feedback_error_reply_new">Άγνωστο θέμα, κατατέθηκε νέο σφάλμα</string>
   <string name="feedback_error_reply_known">Known issue, pending investigation</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
   <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
@@ -378,12 +378,12 @@
   <string name="feedback_error_reply_failed">Αποστολή απέτυχε</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Όριο κοινοποίησης του Widget</string>
-  <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised: XXX</string>
+  <string name="widget_minimum_cards_due_summary">Ο ελάχιστος αριθμός δέουσων καρτών στον οποίο γίνεται κοινοποίηση</string>
   <string name="widget_minimum_cards_due_vibrate">Δόνηση</string>
   <string name="widget_minimum_cards_due_blink">Αναβόσβηση φωτός</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Αναμένουσες Κάρτες</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d κάρτες AnkiDroid εις αναμονή</string>
-  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_no_cards_due">Δεν απομένουν επαναλήψεις</string>
   <string name="soon">Σύντομα</string>
   <string name="show_next_review_time">Ώρα επόμενης επανάληψης</string>
   <string name="show_next_review_time_summ">Δείχνει την ώρα της επόμενης επανάληψης ανάλογα με την επιλογή σας</string>
@@ -393,7 +393,7 @@
   <string name="undo">Αναίρεση</string>
   <string name="redo">Επαναφορά</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Επαναφορά καταχωρήσεων Γλωσσών</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Επαναφορά γλώσσας</string>
   <string name="contextmenu_deckpicker_optimize_deck">Βελτιστοποίηση βάσης δεδομένων</string>
   <string name="optimize_deck_title">Βελτιστοποίηση βάσης δεδομένων</string>
@@ -407,7 +407,7 @@
   <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Μετατροπή κειμένου σε ομιλία</string>
   <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
-  <string name="tts_no_tts">Don\'t speak</string>
+  <string name="tts_no_tts">Σίγαση</string>
   <string name="statistics_type_title">Choose statistic type</string>
   <string name="statistics_period_title">Choose report period</string>
   <string name="statistics_period_y_axis">Κάρτες</string>
@@ -443,8 +443,8 @@
     <item quantity="other">%1$s (%2$d από %3$d αναμένουν)</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 card to server</item>
-    <item quantity="other">%1$d cards to server</item>
+    <item quantity="one">1 κάρτα στο διακομιστή</item>
+    <item quantity="other">%1$d κάρτες στο διακομιστή</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
     <item quantity="one">1 κάρτα από το διακομιστή</item>

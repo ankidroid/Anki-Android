@@ -118,12 +118,12 @@
     <item>Από την απάντηση</item>
     <item>By due time</item>
     <item>By interval</item>
-    <item>By ease</item>
+    <item>Με την ευκολία</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
+    <item>Λόγω</item>
     <item>Cumulative due</item>
-    <item>Intervals</item>
+    <item>Διαστήματα</item>
     <item>Αναθεωρήσεις</item>
     <item>χρόνος αναθεώρησης</item>
   </string-array>
@@ -142,11 +142,11 @@
     <item>select card model on fact adder</item>
     <item>νέο widget</item>
     <item>καλύτερη συμπεριφορά Αναίρεσης/Επανάληψης</item>
-    <item>slider controls</item>
+    <item>έλεγχοι slider</item>
     <item>επιλογή γλώσσας</item>
     <item>περισσότερες γλώσσες</item>
     <item>μπάρες προόδου στον αναθεωρητή</item>
-    <item>feedback within AnkiDroid</item>
+    <item>σχόλια εντός AnkiDroid</item>
     <item>δυνατότητα να ρυθμίσετε τις κάρτες ενεργές / ανενεργές από την ετικέτα</item>
     <item>καλύτερος συγχρονισμός</item>
     <item>καλύτερη αναφορά λαθών</item>
