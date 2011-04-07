@@ -460,15 +460,15 @@ public class Utils {
     	}
    		if (!inFormat) {
    	    	if (adjustedInterval == 1){
-   	       		return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_s)[type];
+   	       		return context.getResources().getStringArray(R.array.next_review_s)[type];
    	       	} else {
-   	   			return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_p)[type];
+   	       		return String.format(context.getResources().getStringArray(R.array.next_review_p)[type], formatDouble(type, adjustedInterval));
    	    	}   			
    		} else {
    	    	if (adjustedInterval == 1){
-   	       		return String.format(context.getResources().getStringArray(R.array.next_review_in_s)[type], formatDouble(type, adjustedInterval));       			       			
+   	       		return context.getResources().getStringArray(R.array.next_review_in_s)[type]; 			       			
    	       	} else {
-   	   			return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval));
+   	       		return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval));
    	    	}   			
    		}
     }

@@ -62,16 +62,16 @@
 		<item>Show in random order</item>
 	</string-array>
 	<string-array name="next_review_s">
-		<item>hour</item>
-		<item>day</item>
-		<item>month</item>
-		<item>year</item>
+		<item>1 hour</item>
+		<item>1 day</item>
+		<item>1 month</item>
+		<item>1 year</item>
 	</string-array>
 	<string-array name="next_review_p">
-		<item>hours</item>
-		<item>days</item>
-		<item>months</item>
-		<item>years</item>
+		<item>%s hours</item>
+		<item>%s days</item>
+		<item>%s months</item>
+		<item>%s years</item>
 	</string-array>
 	<string-array name="next_review_in_s">
 		<item>in 1 hour</item>
