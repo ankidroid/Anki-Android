@@ -139,20 +139,20 @@
     <item>tilastot</item>
     <item>tekstin puheeksi</item>
     <item>deck completion bar on deck picker</item>
-    <item>select card model on fact adder</item>
+    <item>valitse korttimalli korttilisääjästä</item>
     <item>uusi widget</item>
     <item>parempi kumoa/tehdä uudelleen käyttäytyminen</item>
     <item>liukusäädinohjain</item>
     <item>kielivalinta</item>
     <item>enemmän kieliä</item>
     <item>edistymispalkkit tarkastelussa</item>
-    <item>feedback within AnkiDroid</item>
+    <item>Anna palautetta AnkiDroid-sovelluksen kautta</item>
     <item>mahdollisuut määrittää kortit aktiiven/passiivinen tunnisteella</item>
     <item>parempi synkronointi</item>
     <item>parempi virheilmoittaja</item>
     <item>lisää korttipakat</item>
     <item>lisää vaihtoehtoja</item>
     <item>pienille ongelmmilla paljon korjauksia</item>
-    <item>tag support for card editor, card adder and card browser</item>
+    <item>Tunnistetuki kortti-editorille, -lisääjälle ja -selaimelle</item>
   </string-array>
 </resources>

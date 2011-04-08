@@ -177,7 +177,7 @@
   <string name="deckpreferences_title">Korttipakan asetukset</string>
   <string name="about_title">Tietoja</string>
   <string name="cardeditor_title">Korttien muokkaus</string>
-  <string name="factadder_title">Kortin yhteenlaskia</string>
+  <string name="factadder_title">Korttilisääjä</string>
   <string name="deckcreator_title">Korttipakan luoja</string>
   <string name="model">Malli:</string>
   <string name="select_model">Malli</string>

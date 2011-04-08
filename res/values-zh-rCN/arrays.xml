@@ -23,17 +23,17 @@
   <string-array name="newCardOrderLabels">
     <item>随机顺序</item>
     <item>添加的顺序</item>
-    <item>添加顺序反过来</item>
+    <item>与添加相反的顺序</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>穿插在复习中</item>
-    <item>复习之后</item>
-    <item>复习之前</item>
+    <item>复习后</item>
+    <item>复习前</item>
   </string-array>
   <string-array name="revCardOrderLabels">
-    <item>间隔最久的先</item>
-    <item>间隔最短的先</item>
-    <item>照排列顺序来</item>
+    <item>先复习间隔最久的卡片</item>
+    <item>先复习间隔最短的卡片</item>
+    <item>根据到期顺序</item>
     <item>随机顺序</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
@@ -42,9 +42,9 @@
     <item>按照卡片模式的设置</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>每次运行都显示学习选项</item>
-    <item>每次运行总是先选择牌组</item>
-    <item>每天首次运行时选择牌组</item>
+    <item>每次启动都显示学习选项</item>
+    <item>每次启动总是先选择牌组</item>
+    <item>每天首次启动时选择牌组</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>总是发送报告</item>
@@ -121,8 +121,8 @@
     <item>按难易程度</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>到期</item>
-    <item>Cumulative due</item>
+    <item>到期卡片数量</item>
+    <item>累积到期卡片数量</item>
     <item>复习间隔</item>
     <item>复习次数</item>
     <item>复习时间</item>
@@ -142,13 +142,13 @@
     <item>在条目添加器中选择卡片模式</item>
     <item>新的桌面小部件</item>
     <item>优化了撤销/重做</item>
-    <item>slider controls</item>
+    <item>滑动控制</item>
     <item>选择语言</item>
     <item>更多语言</item>
     <item>复习界面增加进度条</item>
     <item>在AnkiDroid中进行反馈</item>
     <item>可以按照标签设置卡片是否是活动的</item>
-    <item>优化了同步功能</item>
+    <item>更好的同步功能</item>
     <item>优化错误报告</item>
     <item>添加牌组</item>
     <item>更多选项设置</item>
