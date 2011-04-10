@@ -37,19 +37,19 @@
     <item>隨機順序</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Hide the question in answer</item>
-    <item>Show the question in answer</item>
-    <item>As defined in CardModel</item>
+    <item>顯示答案時隱藏問題</item>
+    <item>顯示答案時同時顯示問題</item>
+    <item>按照卡片模式中的設置</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>啟動時先顯示學習選項</item>
+    <item>啟動時先​​選擇牌組</item>
+    <item>每天首次啟動時選擇牌組</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>總是發送報告</item>
+    <item>從不發送報告</item>
+    <item>詢問我</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -59,12 +59,12 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>從不</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
+    <item>按最早修改順序顯示</item>
     <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>按隨機順序顯示</item>
   </string-array>
   <string-array name="next_review_s">
     <item>小時</item>
@@ -123,9 +123,9 @@
   <string-array name="statistics_type_labels">
     <item>到期</item>
     <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>複習間隔</item>
+    <item>複習次數</item>
+    <item>複習時間</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 week</item>
@@ -135,24 +135,24 @@
     <item>1 year</item>
   </string-array>
   <string-array name="new_version_features">
-    <item>card browser</item>
-    <item>statistics</item>
-    <item>text-to-speech</item>
-    <item>deck completion bar on deck picker</item>
-    <item>select card model on fact adder</item>
-    <item>new widget</item>
+    <item>卡片瀏覽器</item>
+    <item>統計</item>
+    <item>文字轉語音（TTS）</item>
+    <item>選擇牌組時顯示牌組完成進度</item>
+    <item>在條目添加器中選擇卡片模式</item>
+    <item>新的桌面小部件</item>
     <item>better undo/redo behaviour</item>
     <item>slider controls</item>
-    <item>language selection</item>
-    <item>more languages</item>
-    <item>progress bars in reviewer</item>
-    <item>feedback within AnkiDroid</item>
-    <item>possibility to set cards active/inactive by tag</item>
-    <item>better syncing</item>
-    <item>better error reporter</item>
-    <item>add decks</item>
-    <item>more options</item>
+    <item>選擇語言</item>
+    <item>更多語言</item>
+    <item>複習界面增加進度條</item>
+    <item>在AnkiDroid中進行反饋</item>
+    <item>可以按照標籤設置卡片是否是活動的</item>
+    <item>優化了同步功能</item>
+    <item>優化了錯誤報告</item>
+    <item>添加牌組</item>
+    <item>更多選項設置</item>
     <item>lots of fixes for small errors</item>
-    <item>tag support for card editor, card adder and card browser</item>
+    <item>在卡片編輯器、卡片添加器和卡片瀏覽器中添加對標籤的支持</item>
   </string-array>
 </resources>

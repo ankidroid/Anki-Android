@@ -162,8 +162,8 @@
   <string name="play_sounds_at_start_summ">Reproduce los sonidos inmediatamente al mostrar una pregunta/respuesta</string>
   <string name="shake_intensity">Umbral para el Agitado</string>
   <string name="shake_intensity_summ">Umbral de reconocimiento para el agitado: XXX</string>
-  <string name="sync_fetch_missing_media">Fetch media on sync</string>
-  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
+  <string name="sync_fetch_missing_media">Buscar archivos multimedia al sincronizar</string>
+  <string name="sync_fetch_missing_media_summ">Buscar automáticamente archivos multimedia faltantes al sincronizar.</string>
   <string name="fix_hebrew_text">Forzar RTL para idioma hebreo</string>
   <string name="fix_hebrew_text_summ">Solución al soporte limitado de la plataforma Android al idioma Hebreo. No soporta vocales.</string>
   <string name="language">Idioma</string>
@@ -341,7 +341,7 @@
   <string name="sync_log_no_changes_message">No se encontraron cambios</string>
   <string name="sync_log_uploading_message">Sincronización completa desde el cliente</string>
   <string name="sync_log_downloading_message">Sincronización completa desde el servidor</string>
-  <string name="sync_log_zero_facts">Completed, no cards changed</string>
+  <string name="sync_log_zero_facts">Completado, sin cambios en las tarjetas</string>
   <string name="sync_log_clocks_unsynchronized">La hora de tu dispositivo es diferente de la del servidor en %1$d seg%2$s; no se pudo sincronizar.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, la zona horaria del dispositivo es probablemente errónea</string>
   <string name="sync_log_clocks_unsynchronized_date">, la fecha de dispositivo probablemente es errónea</string>
@@ -443,12 +443,12 @@
     <item quantity="other">%1$s (%2$d de %3$d programadas)</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 card to server</item>
-    <item quantity="other">%1$d cards to server</item>
+    <item quantity="one">1 tarjeta al servidor</item>
+    <item quantity="other">%1$d tarjetas al servidor</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
-    <item quantity="one">1 card from server</item>
-    <item quantity="other">%1$d cards from server</item>
+    <item quantity="one">1 tarjeta del servidor</item>
+    <item quantity="other">%1$d tarjetas del servidor</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Hay un error para enviar</item>
