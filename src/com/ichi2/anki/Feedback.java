@@ -302,6 +302,12 @@ public class Feedback extends Activity {
         }
     }
 
+    /**
+     * Delete the crash log files.
+     * @param onlyProcessed only delete the log files that have been sent.
+     * @param keepLatest keep the latest log file. If the file has not been sent yet, it is
+     * not deleted even if this value is set to false.
+     */
     private void deleteFiles(boolean onlyProcessed, boolean keepLatest) {
 
         for (int i = (keepLatest? 1: 0); i < mErrorReports.size(); ) {
@@ -335,6 +341,7 @@ public class Feedback extends Activity {
         @Override
         public void onPostExecute(Payload data) {
             mPostingFeedback = false;
+            deleteFiles(true, false);
             refreshInterface();
         }
 
