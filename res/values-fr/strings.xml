@@ -437,8 +437,8 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
     <item quantity="other">%d minute</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d parmi %2$d dûes</item>
-    <item quantity="other">%1$d parmi %2$d dûe</item>
+    <item quantity="one">1 parmi %2$d dûe</item>
+    <item quantity="other">%1$d parmi %2$d dûes</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 parmi %3$d cartes montrée</item>
@@ -461,8 +461,8 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
     <item quantity="other">Il y a %d erreurs à signaler</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 carte due dans %2$s</item>
-    <item quantity="other">%1$d cartes dûes dans %2$s</item>
+    <item quantity="one">1 carte due parmi %2$s</item>
+    <item quantity="other">%1$d cartes dûes parmi %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1 paquet</item>
