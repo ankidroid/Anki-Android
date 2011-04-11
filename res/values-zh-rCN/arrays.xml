@@ -38,13 +38,13 @@
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
     <item>显示答案时隐藏问题</item>
-    <item>显示答案时同时显示问题</item>
+    <item>显示答案时也显示问题</item>
     <item>按照卡片模式的设置</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>每次启动都显示学习选项</item>
-    <item>每次启动总是先选择牌组</item>
-    <item>每天首次启动时选择牌组</item>
+    <item>启动时先显示学习选项</item>
+    <item>启动时先选择牌组</item>
+    <item>每天首次启动选择牌组</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>总是发送报告</item>
@@ -62,7 +62,7 @@
     <item>从不</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>按最早修改顺序显示</item>
+    <item>按修改顺序先显示</item>
     <item>按添加顺序显示</item>
     <item>按随机顺序显示</item>
   </string-array>
@@ -92,11 +92,11 @@
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>按随机顺序学习新卡片</item>
-    <item>按添加的顺序学习新卡片</item>
+    <item>按添加顺序学习新卡片</item>
     <item>按与添加相反的顺序学习新卡片</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>复习旧卡片与学习新卡片穿插进行</item>
+    <item>复习与学习新卡片穿插进行</item>
     <item>先复习再显示新卡片</item>
     <item>先显示新卡片再复习</item>
   </string-array>
@@ -122,7 +122,7 @@
   </string-array>
   <string-array name="statistics_type_labels">
     <item>到期卡片数量</item>
-    <item>累积到期卡片数量</item>
+    <item>到期卡片累积数量</item>
     <item>复习间隔</item>
     <item>复习次数</item>
     <item>复习时间</item>
@@ -136,8 +136,8 @@
   </string-array>
   <string-array name="new_version_features">
     <item>卡片浏览器</item>
-    <item>统计</item>
-    <item>文字转语音</item>
+    <item>统计功能</item>
+    <item>文字转语音(TTS)</item>
     <item>选择牌组时显示牌组完成进度</item>
     <item>在条目添加器中选择卡片模式</item>
     <item>新的桌面小部件</item>
