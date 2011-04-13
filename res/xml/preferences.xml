@@ -221,6 +221,14 @@
 				android:summary="@string/zoom_summ"
 				android:key="zoom"/>
 		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_zeemote">
+			<CheckBoxPreference
+				android:id="@+id/zeemote_checkbox"
+				android:title="@string/zeemote"
+				android:defaultValue="false"
+				android:summary="@string/zeemote_summ"
+				android:key="zeemote"/>
+		</PreferenceCategory>
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/widget_pref">
 		<ListPreference

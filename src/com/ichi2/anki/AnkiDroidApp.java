@@ -35,12 +35,13 @@ import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
+import com.zeemote.zc.Controller;
 
 /**
  * Application class. This file mainly contains Veecheck stuff.
  */
 public class AnkiDroidApp extends Application {
-
+	
 	public static final String LIBANKI_VERSION = "1.2.5";
 	public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
 
@@ -59,6 +60,8 @@ public class AnkiDroidApp extends Application {
      */
     private Deck mLoadedDeck;
 
+    
+    private Controller mZeemoteController;
 
     /**
      * On application creation.
@@ -130,7 +133,14 @@ public class AnkiDroidApp extends Application {
         return sInstance.mLoadedDeck;
     }
 
-
+    public static Controller zeemoteController() {
+    	return sInstance.mZeemoteController;
+    }
+    
+    public static void setZeemoteController(Controller controller) {
+    	sInstance.mZeemoteController = controller;
+    }
+    
     public static void setDeck(Deck deck) {
         sInstance.mLoadedDeck = deck;
     }
@@ -216,5 +226,5 @@ public class AnkiDroidApp extends Application {
         }
         return null;
     }
-
+    
 }
