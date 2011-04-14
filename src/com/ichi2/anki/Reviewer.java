@@ -659,7 +659,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Sound.stopSounds();
 
         if (AnkiDroidApp.zeemoteController() != null) { 
-        	Log.d("Zeemote","Removing listener in on Pause");
+        	Log.d("Zeemote","Removing listener in onPause");
         	AnkiDroidApp.zeemoteController().removeButtonListener(this);
         }
     }
@@ -687,10 +687,6 @@ public class Reviewer extends Activity implements IButtonListener{
     protected void onStop() {
       if (mShakeEnabled) {
           mSensorManager.unregisterListener(mSensorListener);    	  
-      }
-      if (AnkiDroidApp.zeemoteController() != null) { 
-      	Log.d("Zeemote","Removing listener in onStop");
-      	AnkiDroidApp.zeemoteController().removeButtonListener(this);
       }
       super.onStop();
     }
