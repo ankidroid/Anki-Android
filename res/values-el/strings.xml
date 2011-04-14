@@ -66,7 +66,7 @@
   <string name="studyoptions_limit_tags_inactive">Χωρίς: %1$s</string>
   <string name="studyoptions_limit_button_text">Όριο</string>
   <string name="studyoptions_limit_dialog_title">Όριο Μάθησης</string>
-  <string name="studyoptions_session">Session</string>
+  <string name="studyoptions_session">Περίοδος</string>
   <string name="studyoptions_tag">Από την ετικέτα</string>
   <string name="studyoptions_tag_new">Εμφάνιση νέων καρτών από την ετικέτα:</string>
   <string name="studyoptions_tag_rev">Εμφάνιση κάρτες αναθεώρηση από την ετικέτα:</string>
@@ -106,8 +106,8 @@
   <string name="pref_cat_sounds">Ήχοι</string>
   <string name="pref_cat_lookup">Αναζήτηση</string>
   <string name="pref_cat_navigation">Πλοήγηση</string>
-  <string name="pref_cat_swipe">Swipe</string>
-  <string name="pref_cat_shake">Shake</string>
+  <string name="pref_cat_swipe">Χειρονομίες</string>
+  <string name="pref_cat_shake">Ανακίνηση</string>
   <string name="pref_cat_zoom">Ζουμ</string>
   <string name="pref_cat_reset">Επαναφορά</string>
   <string name="pref_cat_other">Άλλα</string>
@@ -119,7 +119,7 @@
   <string name="show_timer">Εμφάνιση χρονόμετρου</string>
   <string name="show_timer_summ">Χρονόμετρο που δείχνει το χρόνο που σας παίρνει για να απαντήσετε</string>
   <string name="show_progress_bars">Εμφάνιση γραμμών προόδου</string>
-  <string name="show_progress_bars_summ">Shows proportion of today\'s yes answers and proportion of total yes answers on mature cards</string>
+  <string name="show_progress_bars_summ">Δείχνει ποσοστό των σημερινών ναι απαντήσεων και ποσοστό των συνολικών ναι απαντήσεων για τις ώριμες κάρτες</string>
   <string name="show_whiteboard_summ">Σας επιτρέπει να γράψετε στην οθόνη</string>
   <string name="whiteboard_stroke_width">Πάχος γραμμής στον πίνακα</string>
   <string name="whiteboard_stroke_width_summ">Πλάτος του περιγράμματος: XXX</string>
@@ -132,7 +132,7 @@
   <string name="dictionary">Λεξικό</string>
   <string name="dictionary_summ">Λεξικό στο οποίο θα εκτελούνται οι αναζητήσεις: XXX</string>
   <string name="reset_languages">Επαναφορά Γλώσσών</string>
-  <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_languages_summ">Επαναφορά αναθέσεων γλώσσας (για κείμενο σε ομιλία και λεξικά) για όλες τις τράπουλες. Επαναφέρετε αναθέσεις για συγκεκριμένες τράπουλες στον επιλογέα τραπουλών</string>
   <string name="reset_languages_question">Επαναφορά όλων των αναθέσεων γλωσσών;</string>
   <string name="reset_languages_confirmation">Όλες οι γλώσσες επαναφέρθηκαν</string>
   <string name="use_ruby_support">Υποστήριξη οδηγειών για ruby</string>
@@ -140,7 +140,7 @@
   <string name="display_font_size">Σχετικό μέγεθος γραμματοσειράς</string>
   <string name="display_font_size_summ">Το μέγεθος της γραμματοσειράς για χρήση στην απεικόνιση σε σχέση με τους ορισμούς στην τράπουλα. Αυτή τη στιγμή: XXX%</string>
   <string name="button_size">Σχετικό μέγεθος πλήκτρου</string>
-  <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
+  <string name="button_size_summ">Σχετικό μέγεθος των πλήκτρων στην οθόνη επανάληψης. Προς το παρόν XXX %</string>
   <string name="hide_question_in_answer">Απόκρυψη ερώτησης στην απάντηση;</string>
   <string name="hide_question_in_answer_summ">Καθορίζει αν η ερώτηση θα πρέπει να κρύβεται, όταν η απάντηση εμφανίζεται</string>
   <string name="deck_path">Διαδρομή για τράπουλες</string>
@@ -151,7 +151,7 @@
   <string name="zoom_summ">Εμφάνιση ελέγχων ζουμ κατά την επανάληψη</string>
   <string name="swipe">Ενεργοποίηση χειρονομίων</string>
   <string name="swipe_summ_off">Χρησιμοποιήστε χειρονομίες για να αλλάξετε μεταξύ οθόνων και να απαντήσετε κάρτες. Αυτή η επιλογή δεν είναι συμβατή με τους ελέγχους ζουμ</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
+  <string name="swipe_summ_on">Σαρώστε οριζόντια για να αλλάξετε οθόνες και κατακόρυφα για να απαντήσετε κάρτες (κάτω: Ξανά, πάνω: Καλά, διπλό-άγγιγμα: Εύκολα)</string>
   <string name="swipe_sensibility">Ευαισθησία Χειρονομίας</string>
   <string name="swipe_sensibility_summ">Ευαισθησία των swipe χειρονομιών: XXX</string>
   <string name="shake">Ανακινήστε για Αναίρεση</string>
@@ -161,9 +161,9 @@
   <string name="play_sounds_at_start">Αναπαραγωγή ήχων αμέσως</string>
   <string name="play_sounds_at_start_summ">Αναπαράγωγή ήχου αμέσως μετά την εμφάνιση μιας ερώτησης/απάντησης</string>
   <string name="shake_intensity">Όριο ανακίνησης</string>
-  <string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
-  <string name="sync_fetch_missing_media">Fetch media on sync</string>
-  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
+  <string name="shake_intensity_summ">Κατώτατο όριο για την αναγνώριση ανακίνησης: XXX</string>
+  <string name="sync_fetch_missing_media">Λήψη μέσων κατά τον συγχρονισμό</string>
+  <string name="sync_fetch_missing_media_summ">Αυτόματη λήψη απόντων μέσων κατά τον συγχρονισμό.</string>
   <string name="fix_hebrew_text">Επιβολή RTL για τα εβραϊκά</string>
   <string name="fix_hebrew_text_summ">Εναλλακτική λύση για περιορισμένη υποστήριξη για εβραϊκά από το Android. Δεν υποστηρίζει φωνήεντα.</string>
   <string name="language">Γλώσσα</string>
@@ -187,18 +187,18 @@
   <string name="close">Κλείσιμο</string>
   <string name="select_card_model">Επιλέξτε το μοντέλο της κάρτας</string>
   <string name="select">Επιλέξτε</string>
-  <string name="card_browser">Card Browser</string>
+  <string name="card_browser">Ευρετήριο Καρτών</string>
   <string name="card_browser_load">Φόρτωση κάρτών</string>
   <string name="card_browser_cardloading_error">Σφάλμα κατά τη φόρτωση καρτών. Αυτό πιθανώς σχετίζεται με τη περιορισμένη μνήμη της συσκευή σας. Δοκιμάστε ξανά με μικρότερο μέγεθος τράπουλας</string>
   <string name="card_browser_delete_card">Διαγραφή κάρτας</string>
-  <string name="card_browser_suspend_card">Suspend card</string>
-  <string name="card_browser_unsuspend_card">Unsuspend card</string>
-  <string name="card_browser_mark_card">Mark card</string>
-  <string name="card_browser_unmark_card">Unmark card</string>
+  <string name="card_browser_suspend_card">Αναστολή κάρτας</string>
+  <string name="card_browser_unsuspend_card">Επαναφορά κάρτας</string>
+  <string name="card_browser_mark_card">Σήμανση της κάρτας</string>
+  <string name="card_browser_unmark_card">Αποσήμανση της κάρτας</string>
   <string name="delete_card_title">Διαγραφή Κάρτας</string>
   <string name="delete_card_message">Θέλετε πραγματικά να διαγράψετε αυτή την κάρτα;\n%1$s\n%2$s</string>
-  <string name="card_browser_show_marked">Show marked cards</string>
-  <string name="card_browser_show_suspended">Show suspended cards</string>
+  <string name="card_browser_show_marked">Εμφάνιση σημαδεμένων καρτών</string>
+  <string name="card_browser_show_suspended">Εμφάνισε ανεστελμένων καρτών</string>
   <string name="card_browser_search">Αναζήτηση</string>
   <string name="card_browser_search_suspended">Αναζήτηση αναστάλθηκε</string>
   <string name="card_browser_search_by_tag">Αναζήτηση από την ετικέτα</string>
@@ -208,7 +208,7 @@
   <string name="card_browser_card_details">Λεπτομέρειες κάρτας</string>
   <string name="card_details_question">Ερώτηση</string>
   <string name="card_details_answer">Απάντηση</string>
-  <string name="card_details_due">Due</string>
+  <string name="card_details_due">Δέον χρόνος</string>
   <string name="card_details_now">Τώρα</string>
   <string name="card_details_interval">Χρονικό διάστημα</string>
   <string name="card_details_ease">Ευκολία</string>
@@ -266,7 +266,7 @@
   <string name="studyoptions_nodeck_title">Δεν έχει φορτωθεί τράπουλα</string>
   <string name="studyoptions_nodeck_message">Δεν έχει φορτωθεί τράπουλα ακόμη. Οι τράπουλες του Anki αποθηκεύονται στον κατάλογο \"%s\" στην κάρτα SD. Αυτή η θέση μπορεί να καθοριστεί στις προτιμήσεις (πατήστε το πλήκτρο \"Μενού\" και επιλέξτε \"Προτιμήσεις\").</string>
   <string name="studyoptions_welcome_title">Καλώς ήρθατε στο AnkiDroid</string>
-  <string name="studyoptions_welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\nAll information is organized in decks which you can either download from other users (shared decks) or create on your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck via AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
+  <string name="studyoptions_welcome_message">Με το AnkiDroid μπορείτε να μάθετε αποτελεσματικά μεγάλο αριθμό λεξιλογίου ή άλλων πληροφοριών. Το AnkiDroid σας δείχνει τα στοιχεία για να τα μάθετε ακριβώς πριν τα ξεχάσετε.\nΌλη η πληροφορία είναι οργανωμένη σε τράπουλες τις οποίες μπορείτε είτε να κατεβάσετε από άλλους χρήστες (κοινοποιημένες τράπουλες), είτε να δημιουργήσετε τις δικές σας με το AnkiDroid ή το Anki. Στη δεύτερη περίπτωση μπορείτε να συγχρονίσετε την τράπουλά σας μέσω του AnkiWeb, ή να την αντιγράψετε στο λεξικό %s.\nΠατήστε σε αυτό το κείμενο για να μάθετε περισσότερα.</string>
   <string name="studyoptions_deck_not_loaded_title">Η τράπουλα δεν ήταν δυνατό το φορτωθεί</string>
   <string name="studyoptions_deck_not_loaded_message">Η τράπουλα που επιλέξατε δεν είναι έγκυρη τράπουλα Anki. Παρακαλούμε χρησιμοποιήστε την desktop εφαρμογή Anki για να δημιουργήσετε μία έγκυρη τράπουλα, πριν την φόρτωσή τους στο Ankidroid.\n\nΕν τω μεταξύ, μπορείτε να επιλέξετε μια άλλη τράπουλα ή να φορτώσετε την τράπουλα δείγμα με τα παρακάτω πλήκτρα.</string>
   <string name="studyoptions_no_external_storage_title">Μη διαθέσιμη εξωτερική αποθήκευση</string>
@@ -285,9 +285,9 @@
   <string name="menu_deck_properties">Ιδιότητες τράπουλας</string>
   <string name="menu_add_card">Προσθήκη κάρτας</string>
   <string name="menu_about">Σχετικά</string>
-  <string name="menu_remove_card">Dismiss Card</string>
+  <string name="menu_remove_card">Διώξιμο κάρτας</string>
   <string name="menu_suspend_card">Αναστολή κάρτας</string>
-  <string name="menu_bury_card">Bury Card</string>
+  <string name="menu_bury_card">Θάψιμο κάρτας</string>
   <string name="menu_edit_card">Επεξεργασία κάρτας</string>
   <string name="menu_search">Αναζήτηση στο %1$s</string>
   <string name="menu_mark_card">Σημάδεμα κάρτας</string>
@@ -343,12 +343,12 @@
   <string name="sync_log_downloading_message">Πλήρης συγχρονισμός από το διακομιστή</string>
   <string name="sync_log_zero_facts">Ολοκληρώθηκε, δεν άλλαξε καμία κάρτα</string>
   <string name="sync_log_clocks_unsynchronized">Η ώρα της συσκευής σας είναι διαφορετική από εκείνη του διακομιστή κατά %1$d δευτερόλεπτα%2$s· δεν είναι δυνατός ο συγχρονισμός.</string>
-  <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_tz">, η χρονική ζώνη της συσκευής είναι πιθανόν λανθασμένη</string>
   <string name="sync_log_clocks_unsynchronized_date">, η ημερομηνία της συσκευής είναι πιθανώς λάθος</string>
   <string name="sync_log_old_version">Το πρωτόκολλο συγχρονισμού έχει αλλάξει, παρακαλούμε αναβαθμίστε στην τελευταία έκδοση AnkiDroid. Δείτε http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Η τράπουλα έχει αλλάξει και τοπικά και στο διακομιστή. Παρακαλούμε ανοίξτε την τράπουλα και συγχρονίστε από εκεί για να επιλύσετε την αντίφαση.</string>
   <string name="sync_log_create_deck_failed">Αποτυχία δημιουργίας τράπουλας στον διακομιστή: %1$s</string>
-  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
+  <string name="sync_log_finish_error">Σφάλμα κατά την αποστολή της οδηγίας finish στο διακομιστή</string>
   <string name="sync_conflict_title">Αντίφαση κατά το συγχρονισμό</string>
   <string name="sync_conflict_message">Η τράπουλα %s έχει αλλάξει και τοπικά και στο διακομιστή. Ποια πλευρά να επικρατήσει;</string>
   <string name="sync_conflict_local">Κρατήστε αυτή στη Συσκευή</string>
@@ -369,12 +369,12 @@
   <string name="feedback_clear_all">Διαγραφή όλων των σφαλμάτων</string>
   <string name="feedback_default_text">Παρακαλώ εισάγετε τα σχόλιά σας ή πληροφορίες σχετικά με τη φύση των τυχών λάθών που αναφέρετε.</string>
   <string name="feedback_error_reply_new">Άγνωστο θέμα, κατατέθηκε νέο σφάλμα</string>
-  <string name="feedback_error_reply_known">Known issue, pending investigation</string>
-  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
-  <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Issue %1$d, fixed but not released yet</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
-  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
+  <string name="feedback_error_reply_known">Γνωστό πρόβλημα, εν αναμονή έρευνας</string>
+  <string name="feedback_error_reply_issue_unknown">Πρόβλημα %1$d, άγνωστη κατάσταση</string>
+  <string name="feedback_error_reply_issue_status">Πρόβλημα %1$d, κατάσταση: %2$s</string>
+  <string name="feedback_error_reply_issue_fixed_dev">Πρόβλημα %1$d, επιλυμένο αλλά ακόμη εκτός κυκλοφορίας</string>
+  <string name="feedback_error_reply_issue_fixed_prod">Πρόβλημα %1$d, επιλυμένο στην τελευταία έκδοση</string>
+  <string name="feedback_error_reply_malformed">Αρχειοθετημένο πρόβλημα, καμία απάντηση</string>
   <string name="feedback_error_reply_failed">Αποστολή απέτυχε</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Όριο κοινοποίησης του Widget</string>
@@ -392,7 +392,7 @@
   <string name="per_day">Ανά Ημέρα</string>
   <string name="undo">Αναίρεση</string>
   <string name="redo">Επαναφορά</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Λήψη απόντων μέσων</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Επαναφορά καταχωρήσεων Γλωσσών</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Επαναφορά γλώσσας</string>
   <string name="contextmenu_deckpicker_optimize_deck">Βελτιστοποίηση βάσης δεδομένων</string>
@@ -404,17 +404,17 @@
   <string name="delete_deck_message">Θέλετε πραγματικά να διαγράψετε την τράπουλα %s;</string>
   <string name="delete_deck_confirm">Διαγράψτε το</string>
   <string name="new_version_title">Νέα Έκδοση:</string>
-  <string name="new_version_message">New Features:</string>
+  <string name="new_version_message">Νέες δυνατότητες:</string>
   <string name="no_tts_available_title">Μετατροπή κειμένου σε ομιλία</string>
   <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
   <string name="tts_no_tts">Σίγαση</string>
-  <string name="statistics_type_title">Choose statistic type</string>
-  <string name="statistics_period_title">Choose report period</string>
+  <string name="statistics_type_title">Επιλέξτε τον τύπο στατιστικής</string>
+  <string name="statistics_period_title">Επιλέξτε την περίοδο της αναφοράς</string>
   <string name="statistics_period_y_axis">Κάρτες</string>
   <string name="statistics_period_x_axis">Ημέρες</string>
   <string name="statistics_period_x_axis_minutes">λεπτά</string>
   <string name="statistics_new_cards">Νέες κάρτες</string>
-  <string name="statistics_young_cards">Young cards</string>
+  <string name="statistics_young_cards">Νέες κάρτες</string>
   <string name="statistics_mature_cards">Ώριμες κάρτες</string>
   <string name="statistics_failed_cards">Αποτυχημένες κάρτες</string>
   <string name="statistics_fullscreen">Πλήρης Οθόνη</string>
@@ -423,23 +423,23 @@
   <string name="statistics_all_decks">(όλες οι τράπουλες)</string>
   <string name="calculating_statistics">Υπολογισμός στατιστικών</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
-    <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
+    <item quantity="one">Όλες οι τράπουλες: 1 από %2$d δέουσες (%3$s)</item>
+    <item quantity="other">Όλες οι τράπουλες: %1$d από %2$d δέουσες (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 λεπτό.</item>
     <item quantity="other">%d λεπτά.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 of %2$d due</item>
+    <item quantity="one">1 από %2$d δέουσες</item>
     <item quantity="other">%1$d από %2$d σε αναμονή</item>
   </plurals>
   <plurals name="card_browser_title">
-    <item quantity="one">%1$s: 1 of %3$d cards shown</item>
+    <item quantity="one">%1$s: 1 από %3$d εμφανιζόμενες κάρτες</item>
     <item quantity="other">%1$s: %2$d από %3$d κάρτες εμφανίζονται</item>
   </plurals>
   <plurals name="studyoptions_window_title">
-    <item quantity="one">%1$s (1 of %3$d due)</item>
+    <item quantity="one">%1$s (1 από %3$d δέοντα)</item>
     <item quantity="other">%1$s (%2$d από %3$d αναμένουν)</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
@@ -455,8 +455,8 @@
     <item quantity="other">Υπάρχουν %d σφάλματα προς αναφορά</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">1 δέουσα κάρτα στο %2$s</item>
+    <item quantity="other">%1$d δέουσες κάρτες στο %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1 τράπουλα</item>

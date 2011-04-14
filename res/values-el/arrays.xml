@@ -114,15 +114,15 @@
     <item>Εμφάνιση αποτυχημένων καρτών σε 3 μέρες</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>Από ερώτημα</item>
-    <item>Από την απάντηση</item>
-    <item>By due time</item>
-    <item>By interval</item>
+    <item>Με την ερώτηση</item>
+    <item>Με την απάντηση</item>
+    <item>Με το δέοντα χρόνο</item>
+    <item>Με το διάστημα</item>
     <item>Με την ευκολία</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Λόγω</item>
-    <item>Cumulative due</item>
+    <item>Δέον χρόνος</item>
+    <item>Με το συνολικό δέοντα χρόνο</item>
     <item>Διαστήματα</item>
     <item>Αναθεωρήσεις</item>
     <item>χρόνος αναθεώρησης</item>
@@ -135,11 +135,11 @@
     <item>1 χρόνος</item>
   </string-array>
   <string-array name="new_version_features">
-    <item>card browser</item>
+    <item>Ευρετήριο κάρτας</item>
     <item>Στατιστικά στοιχεία</item>
     <item>μετατροπή κειμένου σε ομιλία</item>
     <item>μπάρα ολοκλήρωσης τράπουλας στον επιλογέα τράπουλας</item>
-    <item>select card model on fact adder</item>
+    <item>Επιλέξτε το μοντέλο κάρτας στην προσθήκη γεγονότος</item>
     <item>νέο widget</item>
     <item>καλύτερη συμπεριφορά Αναίρεσης/Επανάληψης</item>
     <item>έλεγχοι slider</item>
@@ -153,6 +153,6 @@
     <item>προσθήκη τράπουλας</item>
     <item>περισσότερες επιλογές</item>
     <item>πολλές διορθώσεις για μικρά λάθη</item>
-    <item>tag support for card editor, card adder and card browser</item>
+    <item>Υποστήριξη ετικετών για τον επεξεργαστή κάρτασ, την προσθήκη κάρτας και το ευρετήριο καρτών</item>
   </string-array>
 </resources>
