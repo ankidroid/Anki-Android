@@ -12,4 +12,4 @@ sdk.dir=/home/nico/programs/android-sdk
 
 === Zeemote JS1 support ===
 
-The controller must be paired first.  Turn on Bluetooth, Go to Preferences -> Navigation and check "Zeemote support".  Start reviewing a deck and use the zeemote buttons to show answers and answer cards.
+The controller must be paired first.  Turn on Bluetooth, Go to Preferences -> Navigation and check "Zeemote support".  Start reviewing a deck and use the zeemote buttons to show answers and answer cards (A - Good, B - Fail, D - Easy).
