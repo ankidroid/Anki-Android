@@ -100,6 +100,22 @@
 		<item>3</item>
 		<item>4</item>
 	</string-array>
+	<string-array name="gestures_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+		<item>11</item>
+		<item>12</item>
+		<item>13</item>
+	</string-array>
 	<string name="link_anki">http://ankisrs.net</string>
 	<string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
 	<string name="link_forum">http://groups.google.com/group/anki-android</string>
@@ -122,6 +138,7 @@
 	<!--<string name="change_report_format">&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;%1$s&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;%2$s&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;%3$s&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%4$s&lt;/td&gt;&lt;td&gt;%5$s&lt;/td&gt;&lt;td&gt;%6$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%7$s&lt;/td&gt;&lt;td&gt;%8$s&lt;/td>&lt;td&gt;9$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%10$s&lt;/td&gt;&lt;td&gt;%11$s&lt;/td&gt;&lt;td&gt;%12$s&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%13$s&lt;/td&gt;&lt;td&gt;%14$s&lt;/td&gt;&lt;td&gt;%15$s&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</string>-->
 
 	<string-array name="new_version_features">
+		<item>gestures can be chosen now</item>
 		<item>better sibling spacing</item>
 		<item>increase in deck picker startup</item>
 		<item>speed improvements for answering cards</item>

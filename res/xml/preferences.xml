@@ -198,6 +198,90 @@
 				android:summaryOff="@string/swipe_summ_off"
 				android:key="swipe"
 				android:disableDependentsState="false"/>
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_actions">
+			<ListPreference
+				android:title="@string/gestures_swipe_up"
+				android:summary=""
+				android:key="gestureSwipeUp"
+				android:defaultValue="5"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
+				android:title="@string/gestures_swipe_down"
+				android:summary=""
+				android:key="gestureSwipeDown"
+				android:defaultValue="1"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
+				android:title="@string/gestures_swipe_left"
+				android:summary=""
+				android:key="gestureSwipeLeft"
+				android:defaultValue="0"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
+				android:title="@string/gestures_swipe_right"
+				android:summary=""
+				android:key="gestureSwipeRight"
+				android:defaultValue="13"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
+				android:title="@string/gestures_double_tap"
+				android:summary=""
+				android:key="gestureDoubleTap"
+				android:defaultValue="6"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
+				android:title="@string/gestures_tap_top"
+				android:summary=""
+				android:key="gestureTapTop"
+				android:defaultValue="0"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
+				android:title="@string/gestures_tap_bottom"
+				android:summary=""
+				android:key="gestureTapBottom"
+				android:defaultValue="0"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
+				android:title="@string/gestures_tap_left"
+				android:summary=""
+				android:key="gestureTapLeft"
+				android:defaultValue="0"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
+				android:title="@string/gestures_tap_right"
+				android:summary=""
+				android:key="gestureTapRight"
+				android:defaultValue="0"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+			<ListPreference
+				android:title="@string/gestures_shake"
+				android:summary=""
+				android:key="gestureShake"
+				android:defaultValue="7"
+				android:dependency="swipe"
+				android:entries="@array/gestures_labels"
+				android:entryValues="@array/gestures_values" />
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_navigation_sensitivity">
 			<com.hlidskialf.android.preference.SeekBarPreference 
       			android:key="swipeSensibility"
        	 		android:title="@string/swipe_sensibility"
@@ -209,20 +293,12 @@
    	    	 	app:min="20"
         		android:max="180"
 	        	app:interval="1" />
-		</PreferenceCategory>
-		<PreferenceCategory android:title="@string/pref_cat_shake">
-	 		<CheckBoxPreference
-				android:title="@string/shake"
-				android:defaultValue="false"
-				android:summary="@string/shake_summ"
-				android:key="shake"
-				android:disableDependentsState="false"/>
 			<com.hlidskialf.android.preference.SeekBarPreference 
  	     		android:key="minShakeIntensity"
    	     		android:title="@string/shake_intensity"
    	     		android:summary="@string/shake_intensity_summ"
    	    	 	android:dialogMessage="@string/shake_intensity_summ"
-				android:dependency="shake"
+				android:dependency="swipe"
 				android:defaultValue="70"
         		android:text=""
         		app:min="10"
