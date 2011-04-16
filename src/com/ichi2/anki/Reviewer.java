@@ -1940,7 +1940,7 @@ public class Reviewer extends Activity {
     		break;
     	case GESTURE_ANSWER_EASE2:
 			if (sDisplayAnswer) {
-				answerCard(Card.EASE_EASY);
+				answerCard(Card.EASE_HARD);
 			} else {
 		        displayCardAnswer();
 			}    		
@@ -1954,7 +1954,7 @@ public class Reviewer extends Activity {
     		break;
     	case GESTURE_ANSWER_EASE4:
 			if (sDisplayAnswer) {
-				answerCard(Card.EASE_HARD);
+				answerCard(Card.EASE_EASY);
 			} else {
 		        displayCardAnswer();
 			}
