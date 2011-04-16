@@ -2612,6 +2612,11 @@ public class Deck {
     }
 
 
+    public String getScheduler() {
+        return mScheduler;
+    }
+
+
     public ArrayList<Long> getCardsFromFactId(Long factId) {
         Cursor cursor = null;
         ArrayList<Long> cardIds = new ArrayList<Long>();

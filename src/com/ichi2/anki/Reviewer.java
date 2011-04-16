@@ -488,6 +488,9 @@ public class Reviewer extends Activity {
 
                 // Start reviewing next card
                 mCurrentCard = newCard;
+                if (mChosenAnswer.getText().equals("")) {
+                    setDueMessage();
+                }
                 Reviewer.this.setProgressBarIndeterminateVisibility(false);
                 // Reviewer.this.enableControls();
                 Reviewer.this.unblockControls();
@@ -557,6 +560,7 @@ public class Reviewer extends Activity {
     private Runnable removeChosenAnswerText=new Runnable() {
     	public void run() {
     		mChosenAnswer.setText("");
+    		setDueMessage();
     	}
     };
 
@@ -1408,6 +1412,16 @@ public class Reviewer extends Activity {
         } else {
             displayCardQuestion();
         }
+    }
+
+
+    private void setDueMessage() {
+		if (mCurrentCard != null && AnkiDroidApp.deck().getScheduler().equals("reviewEarly")) {
+			double due = (mCurrentCard.getCombinedDue() - Utils.now()) / 86400.0;
+			if (due > 0.041) {
+	    		mChosenAnswer.setText(Utils.getReadableInterval(Reviewer.this, due, true));				
+			}
+		}
     }
 
 
