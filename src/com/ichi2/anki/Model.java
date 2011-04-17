@@ -454,6 +454,6 @@ public class Model {
 		if(mTags.equals(tag))
 			return true;
 		
-    	return Arrays.asList(mTags.split(" ")).contains(tag);
+    	return Arrays.asList(mTags.split(", ")).contains(tag);
     }
 }
