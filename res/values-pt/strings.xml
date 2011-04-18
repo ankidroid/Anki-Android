@@ -338,14 +338,14 @@
   <string name="sync_no_changes_message">No changes found.</string>
   <string name="sync_log_error_message">Error: Deck has not been synchronized</string>
   <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
-  <string name="sync_log_no_changes_message">No changes found</string>
+  <string name="sync_log_no_changes_message">Nenhuma modificação encontrada</string>
   <string name="sync_log_uploading_message">Full sync from local</string>
   <string name="sync_log_downloading_message">Full sync from server</string>
   <string name="sync_log_zero_facts">Completed, no cards changed</string>
   <string name="sync_log_clocks_unsynchronized">The time of your device is different than that of the server by %1$d sec%2$s; unable to sync.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, the device\'s time zone is possibly wrong</string>
   <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
-  <string name="sync_log_old_version">The synchronization protocol has changed, please upgrade to the latest AnkiDroid. See %s</string>
+  <string name="sync_log_old_version">O protocolo de sincronização mudou. Por favor faça o upgrade para a ultima versão de AnkiDroid. Veja %s</string>
   <string name="sync_log_conflict_resolution_required">The deck has been changed on both local and remote side. Please open the deck and perform Sync from there to resolve the conflict.</string>
   <string name="sync_log_create_deck_failed">Failed to create deck on server: %1$s</string>
   <string name="sync_log_finish_error">Error while sending finish direction to server</string>
@@ -381,14 +381,14 @@
   <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised: XXX</string>
   <string name="widget_minimum_cards_due_vibrate">Vibrar</string>
   <string name="widget_minimum_cards_due_blink">Piscar luz</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Cards Programados</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_no_cards_due">Sem cards programados</string>
   <string name="soon">Logo</string>
   <string name="show_next_review_time">Next review time</string>
   <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
   <string name="update_notification">Notificações de atualização</string>
-  <string name="update_notification_summ">Notify me when AnkiDroid is updated</string>
+  <string name="update_notification_summ">Notificar-me quando Ankidroid for atualizado</string>
   <string name="per_day">Por dia</string>
   <string name="undo">Desfazer</string>
   <string name="redo">Refazer</string>
@@ -432,7 +432,7 @@
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 of %2$d due</item>
-    <item quantity="other">%1$d of %2$d due</item>
+    <item quantity="other">%1$d de %2$d programados</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 of %3$d cards shown</item>
@@ -455,7 +455,7 @@
     <item quantity="other">There are %d errors to report</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 card due in %2$s</item>
+    <item quantity="one">1 card programado em %2$s</item>
     <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">

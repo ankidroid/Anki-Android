@@ -29,7 +29,7 @@
   <string name="no">No</string>
   <string name="ok">OK</string>
   <string name="deck_upgrade_too_old_version">I mazzi con una versione più vecchia della 39 non sono usabili in AnkiDroid, si suggerisce di aprire il mazzo con Anki Desktop e aggiornare il mazzo all\'ultima versione.</string>
-  <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
+  <string name="deck_upgrade_version_61_has_latex">Il corso non può essere aggiornato in quanto contiene espressioni LaTex; si prega di arpire il corso con Anki desktop per aggiornarlo alla ultima versione e rigenerare LaTex.</string>
   <string name="deckpicker_title_nosdcard">La scheda SD non è montata</string>
   <string name="deckpicker_new">%d nuove oggi</string>
   <string name="deckpicker_loaddeck">Caricamento mazzo...</string>
@@ -153,7 +153,7 @@
   <string name="swipe_summ_off">Utilizzare le gestures per passare tra le schermate e le risposte. Questa opzione non è compatibile con i comandi dello zoom</string>
   <string name="swipe_summ_on">Scorrere orizzontalmente per passare tra gli schermi e verticalmente per rispondere alle schede (giù: di nuovo, su: Buono, tocca due volte: Facile)</string>
   <string name="swipe_sensibility">Sensibilità gesture</string>
-  <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
+  <string name="swipe_sensibility_summ">Sensibilità dei gesti swipe: XXX</string>
   <string name="shake">Scuotere per annullare</string>
   <string name="shake_summ">Scuotere il dispositivo per annullare l\'ultima azione</string>
   <string name="tts">Text to Speech</string>
@@ -162,8 +162,8 @@
   <string name="play_sounds_at_start_summ">Riproduce i suoni immediatamente dopo aver mostrato una domanda/risposta</string>
   <string name="shake_intensity">Limite di scuotimento</string>
   <string name="shake_intensity_summ">Soglia per il riconoscimento di agitare: XXX</string>
-  <string name="sync_fetch_missing_media">Fetch media on sync</string>
-  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
+  <string name="sync_fetch_missing_media">Recuperare i media con sincronizzazione</string>
+  <string name="sync_fetch_missing_media_summ">Recupera automaticamente i contenuti multimediali durante la sincronizzazione.</string>
   <string name="fix_hebrew_text">Applica RTL per Ebraico</string>
   <string name="fix_hebrew_text_summ">Soluzione per il limitato supporto alla lingua Ebraica della piattaforma Android. Non supporta le vocali.</string>
   <string name="language">Lingua</string>
@@ -214,8 +214,8 @@
   <string name="card_details_ease">Facilità</string>
   <string name="card_details_average_time">Tempo medio</string>
   <string name="card_details_total_time">Tempo totale</string>
-  <string name="card_details_yes_count">Yes count</string>
-  <string name="card_details_no_count">No count</string>
+  <string name="card_details_yes_count">Sì conteggio</string>
+  <string name="card_details_no_count">Nessun conteggio</string>
   <string name="card_details_added">Aggiunto</string>
   <string name="card_details_changed">Cambiato</string>
   <string name="card_details_tags">Tags</string>
@@ -266,7 +266,7 @@
   <string name="studyoptions_nodeck_title">Nessun mazzo caricato</string>
   <string name="studyoptions_nodeck_message">Nessun mazzo è attualmente caricato. I mazzi di Anki sono archiviati nella directory \"%s\" sulla scheda SD. Questo percorso può essere specificato nelle preferenze (premere \"Menu\ del tuo device\"pulsante e selezionare \"Preferenze\").</string>
   <string name="studyoptions_welcome_title">Benvenuti in AnkiDroid</string>
-  <string name="studyoptions_welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\nAll information is organized in decks which you can either download from other users (shared decks) or create on your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck via AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
+  <string name="studyoptions_welcome_message">Con AnkiDroid, è possibile imparare in modo efficiente grandi quantità di vocaboli o di qualsiasi altro materiale. AnkiDroid ripropone le cose da imparare qualche attimo prima di essere dimenticate. \nTutte le informazioni sono organizzato in corsi, che potete scaricare da altri utenti (corsi condivisa) o creare da soli o con AnkiDroid Anki Desktop. In quest\'ultimo caso è possibile sincronizzare il corso attraverso AnkiWeb o copiarlo nella directory %s.\nClick su questo pulsante per saperne di più.</string>
   <string name="studyoptions_deck_not_loaded_title">Impossibile caricare il mazzo</string>
   <string name="studyoptions_deck_not_loaded_message">Il mazzo che è stato selezionato non è un mazzo di Anki valido. Vi preghiamo di usare l\'applicazione desktop Anki per creare un mazzo valido prima di caricarli in Ankidroid.\n\n Intanto, è possibile selezionare un altro mazzo o caricare il mazzo campione con i pulsanti qui sotto.</string>
   <string name="studyoptions_no_external_storage_title">Nessuna scheda di archiviazione esterna disponibile</string>
@@ -344,7 +344,7 @@
   <string name="sync_log_zero_facts">Completato, le carte non sono cambiate</string>
   <string name="sync_log_clocks_unsynchronized">L\'orario del tuo dispositivo è differente da quello del server di %1$d sec%2$s,impossibile eseguire la sincronizzazione.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, L\'ora del dispositivo è forse sbagliata</string>
-  <string name="sync_log_clocks_unsynchronized_date">, the device\'s date is possibly wrong</string>
+  <string name="sync_log_clocks_unsynchronized_date">, la data del dispositivo è forse sbagliata</string>
   <string name="sync_log_old_version">Il protocollo di sincronizzazione è cambiato, si prega di aggiornare AnkiDroid. Vedi http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">Il mazzo è stato modificato sia in locale che in remoto. Aprire il mazzo ed eseguire la sincronizzazione per risolvere il conflitto.</string>
   <string name="sync_log_create_deck_failed">Creazione del corso sul server fallita: %1$s</string>
@@ -371,10 +371,10 @@
   <string name="feedback_error_reply_new">Problema sconosciuto, segnalato nuovo bug</string>
   <string name="feedback_error_reply_known">Problema conosciuto, in attesa di indagine</string>
   <string name="feedback_error_reply_issue_unknown">Problema %1$d, stato sconosciuto</string>
-  <string name="feedback_error_reply_issue_status">Issue %1$d, status: %2$s</string>
+  <string name="feedback_error_reply_issue_status">Problema %1$d, stato: %2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">Problema %1$d, risolto ma non ancora rilasciato</string>
   <string name="feedback_error_reply_issue_fixed_prod">Problema %1$d, risolto nell\'ultima versione</string>
-  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
+  <string name="feedback_error_reply_malformed">Bug archiviato, nessuna risposta</string>
   <string name="feedback_error_reply_failed">Impossibile inviare</string>
   <string name="widget_pref">Widget</string>
   <string name="widget_minimum_cards_due">Soglia di notifica del widget</string>
@@ -439,7 +439,7 @@
     <item quantity="other">%1$s: %2$d di %3$d carte mostrate</item>
   </plurals>
   <plurals name="studyoptions_window_title">
-    <item quantity="one">%1$s (1 of %3$d due)</item>
+    <item quantity="one">%1$s (1 di %3$d scadute)</item>
     <item quantity="other">%1$s (%2$d di %3$d scadute)</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
