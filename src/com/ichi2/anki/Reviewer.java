@@ -286,8 +286,11 @@ public class Reviewer extends Activity {
  	private static final int GESTURE_EDIT = 9;
  	private static final int GESTURE_MARK = 10;
  	private static final int GESTURE_LOOKUP = 11;
- 	private static final int GESTURE_CLEAR_WHITEBOARD = 12;
- 	private static final int GESTURE_EXIT = 13;
+ 	private static final int GESTURE_BURY= 12;
+ 	private static final int GESTURE_SUSPEND = 13;
+ 	private static final int GESTURE_DELETE = 14;
+ 	private static final int GESTURE_CLEAR_WHITEBOARD = 15;
+ 	private static final int GESTURE_EXIT = 16;
 
 
     // ----------------------------------------------------------------------------
@@ -2017,6 +2020,17 @@ public class Reviewer extends Activity {
     		break;
     	case GESTURE_LOOKUP:
     		lookUp();
+    		break;
+    	case GESTURE_BURY:
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+                    AnkiDroidApp.deck(), mCurrentCard));
+    		break;
+    	case GESTURE_SUSPEND:
+    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+                    AnkiDroidApp.deck(), mCurrentCard));
+    		break;
+    	case GESTURE_DELETE:
+    		showDeleteCardDialog();
     		break;
     	case GESTURE_CLEAR_WHITEBOARD:
             if (mPrefWhiteboard) {            	

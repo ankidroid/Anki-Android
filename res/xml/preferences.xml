@@ -228,7 +228,7 @@
 				android:title="@string/gestures_swipe_right"
 				android:summary=""
 				android:key="gestureSwipeRight"
-				android:defaultValue="13"
+				android:defaultValue="16"
 				android:dependency="swipe"
 				android:entries="@array/gestures_labels"
 				android:entryValues="@array/gestures_values" />

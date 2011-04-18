@@ -115,6 +115,9 @@
 		<item>11</item>
 		<item>12</item>
 		<item>13</item>
+		<item>14</item>
+		<item>15</item>
+		<item>16</item>
 	</string-array>
 	<string name="link_anki">http://ankisrs.net</string>
 	<string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
