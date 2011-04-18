@@ -106,7 +106,7 @@
   <string name="pref_cat_sounds">音效</string>
   <string name="pref_cat_lookup">查詢</string>
   <string name="pref_cat_navigation">導覽</string>
-  <string name="pref_cat_swipe">Swipe</string>
+  <string name="pref_cat_swipe">滑過螢幕</string>
   <string name="pref_cat_shake">搖晃</string>
   <string name="pref_cat_zoom">縮放</string>
   <string name="pref_cat_reset">重設</string>
@@ -285,9 +285,9 @@
   <string name="menu_deck_properties">牌組內容屬性</string>
   <string name="menu_add_card">增加卡片</string>
   <string name="menu_about">關於</string>
-  <string name="menu_remove_card">Dismiss Card</string>
+  <string name="menu_remove_card">Dismiss卡片</string>
   <string name="menu_suspend_card">暫停卡片</string>
-  <string name="menu_bury_card">Bury Card</string>
+  <string name="menu_bury_card">Bury卡片</string>
   <string name="menu_edit_card">編輯卡片</string>
   <string name="menu_search">在%1$s中查詢</string>
   <string name="menu_mark_card">標記卡片</string>
@@ -348,7 +348,7 @@
   <string name="sync_log_old_version">同步協定已更改，請升級到最新版的AnkiDroid。請參閱 http://code.google.com/p/ankidroid</string>
   <string name="sync_log_conflict_resolution_required">此牌組在本地端和伺服器端都被修改過。請打開此牌組並執行同步化，化解衝突情形。</string>
   <string name="sync_log_create_deck_failed">在伺服器上創建牌組失敗： %1$s</string>
-  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
+  <string name="sync_log_finish_error">發送結束訊息到伺服器時出現錯誤</string>
   <string name="sync_conflict_title">同步衝突</string>
   <string name="sync_conflict_message">%s牌組在本地端和伺服器端都被修改過。要保留那一邊的版本？</string>
   <string name="sync_conflict_local">保留本地端版本</string>

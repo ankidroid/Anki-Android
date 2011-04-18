@@ -63,7 +63,7 @@
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>按最早修改順序顯示</item>
-    <item>Show in order added</item>
+    <item>依新加入順序顯示</item>
     <item>按隨機順序顯示</item>
   </string-array>
   <string-array name="next_review_s">
@@ -79,16 +79,16 @@
     <item>年</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>1小時內</item>
+    <item>1天後</item>
+    <item>1個月後</item>
+    <item>1年後</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>%s小時後</item>
+    <item>%s天後</item>
+    <item>%s個月後</item>
+    <item>%s年後</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>隨機順序顯示新卡片</item>
@@ -114,25 +114,25 @@
     <item>3天內顯示失敗的卡片</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
+    <item>依問題</item>
+    <item>依答案</item>
+    <item>依到期時間</item>
+    <item>依間隔</item>
+    <item>依難易度</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>到期</item>
-    <item>Cumulative due</item>
+    <item>累積到期</item>
     <item>複習間隔</item>
     <item>複習次數</item>
     <item>複習時間</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1周</item>
+    <item>1個月</item>
+    <item>3個月</item>
+    <item>6個月</item>
+    <item>1年</item>
   </string-array>
   <string-array name="new_version_features">
     <item>卡片瀏覽器</item>
@@ -141,8 +141,8 @@
     <item>選擇牌組時顯示牌組完成進度</item>
     <item>在條目添加器中選擇卡片模式</item>
     <item>新的桌面小部件</item>
-    <item>better undo/redo behaviour</item>
-    <item>slider controls</item>
+    <item>更棒的復原/重來功能</item>
+    <item>滑動控制</item>
     <item>選擇語言</item>
     <item>更多語言</item>
     <item>複習界面增加進度條</item>
@@ -152,7 +152,7 @@
     <item>優化了錯誤報告</item>
     <item>添加牌組</item>
     <item>更多選項設置</item>
-    <item>lots of fixes for small errors</item>
+    <item>修復很多小錯誤</item>
     <item>在卡片編輯器、卡片添加器和卡片瀏覽器中添加對標籤的支持</item>
   </string-array>
 </resources>
