@@ -195,6 +195,7 @@ public class Reviewer extends Activity {
     private static final int DICTIONARY_AEDICT = 0;
     private static final int DICTIONARY_LEO_WEB = 1;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
     private static final int DICTIONARY_LEO_APP = 2;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
+    private static final int DICTIONARY_COLORDICT = 3;
     
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -614,6 +615,10 @@ public class Reviewer extends Activity {
                 case DICTIONARY_LEO_APP:
                     mDictionaryAction = "android.intent.action.SEND";                   
                     mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction, new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+                    break;
+                case DICTIONARY_COLORDICT:
+                    mDictionaryAction = "colordict.intent.action.SEARCH";                   
+                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
                     break;
                 default:
                     mIsDictionaryAvailable = false;
@@ -1073,6 +1078,12 @@ public class Reviewer extends Activity {
                     startActivity(leoSearchIntent);
                     mClipboard.setText("");
                     return true;
+            	case DICTIONARY_COLORDICT:
+            		Intent colordictSearchIntent = new Intent(mDictionaryAction);
+            		colordictSearchIntent.putExtra("EXTRA_QUERY", mClipboard.getText());
+            		startActivity(colordictSearchIntent);
+                    mClipboard.setText("");
+                    return true;     
         	}
         }
         return true;

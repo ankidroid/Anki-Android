@@ -50,11 +50,13 @@
 		<item>Aedict</item>
 		<item>Leo.org (Web)</item>
 		<item>Leo.org (App)</item>
+		<item>ColorDict</item>
 	</string-array>
 	<string-array name="dictionary_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
+		<item>3</item>
 	</string-array>
 	<string-array name="error_reporting_choice_values">
 		<item>0</item>
