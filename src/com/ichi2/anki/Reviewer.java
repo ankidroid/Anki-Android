@@ -14,6 +14,11 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -42,6 +47,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,7 +56,6 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -59,18 +64,14 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.FrameLayout.LayoutParams;
 
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
-
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Reviewer extends Activity {
 
@@ -1656,7 +1657,8 @@ public class Reviewer extends Activity {
         }
 
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
-        String card = mCardTemplate.replace("::content::", content);
+        String style = getCustomFontsStyle();
+        String card = mCardTemplate.replace("::content::", content).replace("::style::", style);
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
@@ -1670,6 +1672,45 @@ public class Reviewer extends Activity {
         		Sound.playSounds(Utils.stripHTML(mCurrentCard.getAnswer()), MetaDB.LANGUAGE_ANSWER);            	
             } 
         }
+    }
+
+
+    /** Returns the filename without the extension. */
+    private String removeExtension(String filename) {
+      int dotPosition = filename.lastIndexOf('.');
+      if (dotPosition == -1) {
+        return filename;
+      }
+      return filename.substring(0, dotPosition);
+    }
+
+
+    /*
+     * Returns the CSS used to handle custom fonts.
+     * <p>
+     * Custom fonts live in fonts directory in the directory used to store decks.
+     * <p>
+     * Each font is mapped to the font family by the same name as the name of the font fint without
+     * the extension.
+     */
+    private String getCustomFontsStyle() {
+      SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+      String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
+      String fontsPath = deckPath + "/fonts/";
+      File fontsDir = new File(fontsPath);
+      if (!fontsDir.exists() || !fontsDir.isDirectory()) {
+        return "";
+      }
+      StringBuilder builder = new StringBuilder();
+      for (File fontFile : fontsDir.listFiles()) {
+        String fontFace = String.format(
+            "@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
+            removeExtension(fontFile.getName()), fontFile.getAbsolutePath());
+        Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
+        builder.append(fontFace);
+        builder.append('\n');
+      }
+      return builder.toString();
     }
 
 
