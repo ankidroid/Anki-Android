@@ -11,7 +11,7 @@
 		android:layout_height="wrap_content"
 	  	android:layout_marginTop="5dp"
 		android:lines="1"
-		android:hint="@string/downloaddeck_search"/>
+		android:hint="@string/studyoptions_deck_name"/>
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
 		android:orientation="horizontal"
