@@ -791,6 +791,7 @@ public class DeckPicker extends Activity implements Runnable {
                 return true;
 
             case MENU_ABOUT:
+                // int i = 123/0; // Intentional Exception for feedback testing purpose
                 startActivity(new Intent(DeckPicker.this, About.class));
                 return true;
 
