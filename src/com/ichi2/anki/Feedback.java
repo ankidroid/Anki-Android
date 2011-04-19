@@ -91,7 +91,7 @@ public class Feedback extends Activity {
     protected InputMethodManager mImm = null;
     protected AlertDialog mNoConnectionAlert = null;
 
-
+    protected String mReportErrorMode;
     protected String mFeedbackUrl;
     protected String mErrorUrl;
 
@@ -124,44 +124,46 @@ public class Feedback extends Activity {
     }
 
     private void refreshInterface() {
-        Resources res = getResources();
-        Button btnSend = (Button) findViewById(R.id.btnFeedbackSend);
-        Button btnKeepLatest = (Button) findViewById(R.id.btnFeedbackKeepLatest);
-        Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);
-        ProgressBar pbSpinner = (ProgressBar) findViewById(R.id.pbFeedbackSpinner);
-
-        int numErrors = mErrorReports.size();
-        if (numErrors == 0) {
-            mLvErrorList.setVisibility(View.GONE);
-            btnKeepLatest.setVisibility(View.GONE);
-            btnClearAll.setVisibility(View.GONE);
-            btnSend.setText(res.getString(R.string.feedback_send_feedback));
-        } else {
-            mLvErrorList.setVisibility(View.VISIBLE);
-            btnKeepLatest.setVisibility(View.VISIBLE);
-            btnClearAll.setVisibility(View.VISIBLE);
-            btnSend.setText(res.getString(R.string.feedback_send_feedback_and_errors));
-            refreshErrorListView();
-            if (numErrors == 1) {
-                btnKeepLatest.setEnabled(false);
+        if (mReportErrorMode.equals(REPORT_ASK)) {
+            Resources res = getResources();
+            Button btnSend = (Button) findViewById(R.id.btnFeedbackSend);
+            Button btnKeepLatest = (Button) findViewById(R.id.btnFeedbackKeepLatest);
+            Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);
+            ProgressBar pbSpinner = (ProgressBar) findViewById(R.id.pbFeedbackSpinner);
+    
+            int numErrors = mErrorReports.size();
+            if (numErrors == 0) {
+                mLvErrorList.setVisibility(View.GONE);
+                btnKeepLatest.setVisibility(View.GONE);
+                btnClearAll.setVisibility(View.GONE);
+                btnSend.setText(res.getString(R.string.feedback_send_feedback));
             } else {
-                btnKeepLatest.setEnabled(true);
+                mLvErrorList.setVisibility(View.VISIBLE);
+                btnKeepLatest.setVisibility(View.VISIBLE);
+                btnClearAll.setVisibility(View.VISIBLE);
+                btnSend.setText(res.getString(R.string.feedback_send_feedback_and_errors));
+                refreshErrorListView();
+                if (numErrors == 1) {
+                    btnKeepLatest.setEnabled(false);
+                } else {
+                    btnKeepLatest.setEnabled(true);
+                }
             }
-        }
-
-        if (mPostingFeedback) {
-            int buttonHeight = btnSend.getHeight();
-            btnSend.setVisibility(View.GONE);
-            pbSpinner.setVisibility(View.VISIBLE);
-            LinearLayout topLine = (LinearLayout) findViewById(R.id.llFeedbackTopLine);
-            topLine.setMinimumHeight(buttonHeight);
-
-            mEtFeedbackText.setEnabled(false);
-            mImm.hideSoftInputFromWindow(mEtFeedbackText.getWindowToken(), 0);
-        } else {
-            btnSend.setVisibility(View.VISIBLE);
-            pbSpinner.setVisibility(View.GONE);
-            mEtFeedbackText.setEnabled(true);
+    
+            if (mPostingFeedback) {
+                int buttonHeight = btnSend.getHeight();
+                btnSend.setVisibility(View.GONE);
+                pbSpinner.setVisibility(View.VISIBLE);
+                LinearLayout topLine = (LinearLayout) findViewById(R.id.llFeedbackTopLine);
+                topLine.setMinimumHeight(buttonHeight);
+    
+                mEtFeedbackText.setEnabled(false);
+                mImm.hideSoftInputFromWindow(mEtFeedbackText.getWindowToken(), 0);
+            } else {
+                btnSend.setVisibility(View.VISIBLE);
+                pbSpinner.setVisibility(View.GONE);
+                mEtFeedbackText.setEnabled(true);
+            }
         }
     }
 
@@ -173,7 +175,7 @@ public class Feedback extends Activity {
 
         Context context = getBaseContext();
         SharedPreferences sharedPreferences = PrefSettings.getSharedPrefs(context);
-        String reportErrorMode = sharedPreferences.getString("reportErrorMode", REPORT_ASK);
+        mReportErrorMode = sharedPreferences.getString("reportErrorMode", REPORT_ASK);
 
         mNonce = UUID.randomUUID().getMostSignificantBits();
         mFeedbackUrl = res.getString(R.string.feedback_post_url);
@@ -184,19 +186,27 @@ public class Feedback extends Activity {
         initAllAlertDialogs();
 
         getErrorFiles();
-        if (reportErrorMode.equals(REPORT_ALWAYS)) { // Always report
+        if (mReportErrorMode.equals(REPORT_ALWAYS)) { // Always report
             try {
-                //sendErrorReports();
+                String feedback = "Automatically sent";
+                Connection.sendFeedback(mSendListener, new Payload(new Object[] {
+                        mFeedbackUrl, mErrorUrl, feedback, mErrorReports, mNonce, getApplication()}));
+                if (mErrorReports.size() > 0) {
+                    mPostingFeedback = true;
+                }
+                if (feedback.length() > 0) {
+                    mPostingFeedback = true;
+                }
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, e.toString());
             }
 
             deleteFiles(true, false);
-            //setResult(RESULT_OK);
-            //finish();
+            setResult(RESULT_OK);
+            finish();
 
             return;
-        } else if (reportErrorMode.equals(REPORT_NEVER)) { // Never report
+        } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
             deleteFiles(false, false);
             //setResult(RESULT_OK);
             //finish();
@@ -283,7 +293,9 @@ public class Feedback extends Activity {
     }
 
     private void refreshErrorListView() {
-        mErrorAdapter.notifyDataSetChanged();
+        if (mReportErrorMode.equals(REPORT_ASK)) {
+            mErrorAdapter.notifyDataSetChanged();
+        }
     }
 
     private void getErrorFiles() {
@@ -405,17 +417,19 @@ public class Feedback extends Activity {
                 }
                 refreshErrorListView();
             } else {
-                if (state.equals(STATE_SUCCESSFUL)) {
-                    mEtFeedbackText.setText("");
-                    Toast.makeText(Feedback.this,
-                            res.getString(R.string.feedback_message_sent_success), Toast.LENGTH_LONG).show();
-                } else if (state.equals(STATE_FAILED)) {
-                    int respCode = (Integer)values[3];
-                    if (respCode == 0) {
-                        onDisconnected();
-                    } else {
-                        Toast.makeText(Feedback.this, res.getString(R.string.feedback_message_sent_failure, respCode),
-                                Toast.LENGTH_LONG).show();
+                if (mReportErrorMode.equals(REPORT_ASK)) {
+                    if (state.equals(STATE_SUCCESSFUL)) {
+                        mEtFeedbackText.setText("");
+                        Toast.makeText(Feedback.this,
+                                res.getString(R.string.feedback_message_sent_success), Toast.LENGTH_LONG).show();
+                    } else if (state.equals(STATE_FAILED)) {
+                        int respCode = (Integer)values[3];
+                        if (respCode == 0) {
+                            onDisconnected();
+                        } else {
+                            Toast.makeText(Feedback.this, res.getString(R.string.feedback_message_sent_failure, respCode),
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
