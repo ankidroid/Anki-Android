@@ -1212,7 +1212,7 @@ public class Reviewer extends Activity {
         mCardTimer.setTextSize(headTextSize);
 
         mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
-        mChosenAnswer.setTextSize((float) (headTextSize * 1.1));
+        mChosenAnswer.setTextSize((float) (headTextSize * 1.02));
 
         if (mPrefWhiteboard) {
             mWhiteboard = new Whiteboard(this, null);
@@ -2129,7 +2129,7 @@ public class Reviewer extends Activity {
     	
     	@Override
     	public boolean onSingleTapConfirmed(MotionEvent e) {
-    		if (mGesturesEnabled) {
+    		if (mGesturesEnabled && !mIsSelecting) {
     			int height = mCard.getHeight();
     			int width = mCard.getWidth();
     			float posX = e.getX();
@@ -2147,7 +2147,9 @@ public class Reviewer extends Activity {
     		       		executeCommand(mGestureTapLeft);
     				}    				
     			}
- 			}    		
+ 			} else {
+ 				mIsSelecting = false;
+ 			}
     		return false;
     	}
     	
