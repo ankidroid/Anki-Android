@@ -160,6 +160,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                         Intent openDeckIntent = new Intent(this, StudyOptions.class);
                         openDeckIntent.setAction(Intent.ACTION_MAIN);
                         openDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        openDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         // TODO(flerda): Tell the activity which deck to open.
                         // DeckInformation dueDeck = dueDecks.get(currentDueDeck);
                         // openDeckIntent.putExtra(StudyOptions.EXTRA_DECK, dueDeck.mDeckName);
