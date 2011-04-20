@@ -20,7 +20,7 @@
 # Below is the list of official AnkiDroid localizations.
 # Add a language if it is more than 40% translated.
 # Do not remove languages.
-languages = ['ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'it', 'ja', 'ko', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'zh-CN', 'zh-TW'];
+languages = ['ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'zh-CN', 'zh-TW'];
 
 
 
