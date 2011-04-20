@@ -208,8 +208,8 @@ public class Feedback extends Activity {
             return;
         } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
             deleteFiles(false, false);
-            //setResult(RESULT_OK);
-            //finish();
+            setResult(RESULT_OK);
+            finish();
         }
 
         setContentView(R.layout.feedback);
