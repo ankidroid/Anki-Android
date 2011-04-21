@@ -51,12 +51,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.StringBuilder;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
-import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
@@ -326,20 +324,30 @@ public class Utils {
         Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
         new File(destination).createNewFile();
 
+        long startTimeMillis = System.currentTimeMillis();
         OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
 
         // Transfer bytes, from source to destination.
         byte[] buf = new byte[CHUNK_SIZE];
+        long sizeBytes = 0;
         int len;
         if (source == null) {
             Log.i(AnkiDroidApp.TAG, "source is null!");
         }
         while ((len = source.read(buf)) > 0) {
             output.write(buf, 0, len);
-            Log.i(AnkiDroidApp.TAG, "Write...");
+            sizeBytes += len;
+            // Log.i(AnkiDroidApp.TAG, "Write...");
         }
+        long endTimeMillis = System.currentTimeMillis();
 
         Log.i(AnkiDroidApp.TAG, "Finished writing!");
+        long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
+        long sizeKb = sizeBytes / 1024;
+        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: "
+            + "Size: " + sizeKb + "Kb, "
+            + "Duration: " + durationSeconds + "s, "
+            + "Speed: " + (sizeKb / durationSeconds) + "Kb/s");
         output.close();
     }
 
