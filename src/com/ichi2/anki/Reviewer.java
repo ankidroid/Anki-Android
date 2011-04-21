@@ -35,6 +35,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -1627,6 +1628,7 @@ public class Reviewer extends Activity {
             baseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + content;
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
+            mMainLayout.setBackgroundColor(Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors)));
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             baseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
