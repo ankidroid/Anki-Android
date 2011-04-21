@@ -14,8 +14,11 @@
 
 package com.ichi2.anki;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1668,8 +1671,11 @@ public class Reviewer extends Activity {
         }
 
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
-        String style = getCustomFontsStyle();
-        String card = mCardTemplate.replace("::content::", content).replace("::style::", style);
+        StringBuilder style = new StringBuilder();
+        style.append(getCustomFontsStyle());
+        style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
+        String card =
+            mCardTemplate.replace("::content::", content).replace("::style::", style.toString());
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
@@ -1695,6 +1701,29 @@ public class Reviewer extends Activity {
       return filename.substring(0, dotPosition);
     }
 
+    private String getDeckStyle(String deckPath) {
+      File styleFile = new File(removeExtension(deckPath) + ".css");
+      if (!styleFile.exists() || !styleFile.canRead()) {
+        return "";
+      }
+      StringBuilder style = new StringBuilder();
+      try {
+        BufferedReader styleReader =
+          new BufferedReader(new InputStreamReader(new FileInputStream(styleFile)));
+        while (true) {
+          String line = styleReader.readLine();
+          if (line == null) {
+            break;
+          }
+          style.append(line);
+          style.append('\n');
+        }
+      } catch (IOException e) {
+        Log.e(AnkiDroidApp.TAG, "Error reading style file: " + styleFile.getAbsolutePath(), e);
+        return "";
+      }
+      return style.toString();
+    }
 
     /*
      * Returns the CSS used to handle custom fonts.
