@@ -86,24 +86,6 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
-        /**
-         * Simple class to hold the current status of a deck.
-         */
-        public static class DeckStatus {
-            public String mDeckName;
-            public int mNewCards;
-            public int mDueCards;
-            public int mFailedCards;
-
-
-            public DeckStatus(String deckName, int newCards, int dueCards, int failedCards) {
-                mDeckName = deckName;
-                mNewCards = newCards;
-                mDueCards = dueCards;
-                mFailedCards = failedCards;
-            }
-        }
-
         private CharSequence getDeckStatusString(DeckStatus deck) {
             SpannableStringBuilder sb = new SpannableStringBuilder();
 
