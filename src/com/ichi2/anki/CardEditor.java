@@ -179,7 +179,7 @@ public class CardEditor extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
             closeCardEditor();
             return true;
         }
@@ -255,7 +255,7 @@ public class CardEditor extends Activity {
                 } else {
                     String[] oldTags = allTags;
                     mFactTags += ", " + tag;
-                    Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+                    // Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
                     allTags = new String[oldTags.length + 1];
                     allTags[0] = oldTags[0]; 
                     allTags[1] = tag;
@@ -289,7 +289,7 @@ public class CardEditor extends Activity {
         Resources res = getResources();
         if (allTags == null) {
             String[] oldTags = AnkiDroidApp.deck().allUserTags();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+            // Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
             allTags = new String[oldTags.length + 1];
             allTags[0] = res.getString(R.string.add_new_tag);
             for (int i = 0; i < oldTags.length; i++) {
@@ -319,10 +319,10 @@ public class CardEditor extends Activity {
                         } else {
                             String tag = allTags[whichButton];
                             if (!isChecked) {
-                                Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                                // Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
                                 mSelectedTags.remove(tag);
                             } else {
-                                Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                                // Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
                                 mSelectedTags.add(tag);
                             }                              
                         }

@@ -183,7 +183,7 @@ public class CardBrowser extends Activity {
         if (mSelectedCard.isMarked()) {
             item = menu.add(Menu.NONE, CONTEXT_MENU_MARK, Menu.NONE, res.getString(R.string.card_browser_unmark_card));
             mIsMarked = true;
-            Log.i(AnkiDroidApp.TAG, "Selected Card is currently marked");
+            // Log.i(AnkiDroidApp.TAG, "Selected Card is currently marked");
         } else {
             item = menu.add(Menu.NONE, CONTEXT_MENU_MARK, Menu.NONE, res.getString(R.string.card_browser_mark_card));
             mIsMarked = false;
@@ -191,7 +191,7 @@ public class CardBrowser extends Activity {
         if (mSelectedCard.getSuspendedState()) {
             item = menu.add(Menu.NONE, CONTEXT_MENU_SUSPEND, Menu.NONE, res.getString(R.string.card_browser_unsuspend_card));
             mIsSuspended = true;
-            Log.i(AnkiDroidApp.TAG, "Selected Card is currently suspended");
+            // Log.i(AnkiDroidApp.TAG, "Selected Card is currently suspended");
         } else {
             item = menu.add(Menu.NONE, CONTEXT_MENU_SUSPEND, Menu.NONE, res.getString(R.string.card_browser_suspend_card));
             mIsSuspended = false;
@@ -254,7 +254,7 @@ public class CardBrowser extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
             if (mSearchEditText.getText().length() == 0 && !mShowOnlyMarSus && mSelectedTags.size() == 0) {
                 setResult(RESULT_OK);
                 finish();
@@ -365,7 +365,7 @@ public class CardBrowser extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == EDIT_CARD && resultCode == RESULT_OK) {
-            Log.i(AnkiDroidApp.TAG, "Saving card...");
+            // Log.i(AnkiDroidApp.TAG, "Saving card...");
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(0,
                     mDeck, mSelectedCard));
             // TODO: code to save the changes made to the current card.
@@ -396,7 +396,7 @@ public class CardBrowser extends Activity {
         Resources res = getResources();
         if (allTags == null) {
             String[] oldTags = AnkiDroidApp.deck().allTags_();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+            // Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
             allTags = new String[oldTags.length];
             for (int i = 0; i < oldTags.length; i++) {
                 allTags[i] = oldTags[i];
@@ -411,10 +411,10 @@ public class CardBrowser extends Activity {
                     public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
                         String tag = allTags[whichButton];
                         if (!isChecked) {
-                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                            // Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
                             mSelectedTags.remove(tag);
                         } else {
-                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                            // Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
                             mSelectedTags.add(tag);
                         }
                     }
@@ -557,7 +557,7 @@ public class CardBrowser extends Activity {
                 data.put("allCardPos", Integer.toString(i));
                 mDeletedCards.add(data);
                 mAllCards.remove(i);
-                Log.i(AnkiDroidApp.TAG, "Remove card from list");
+                // Log.i(AnkiDroidApp.TAG, "Remove card from list");
                 break;
             }
         }

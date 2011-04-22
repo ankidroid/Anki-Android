@@ -116,22 +116,22 @@ public class SyncClient {
      * @return
      */
     public boolean prepareSync(double timediff) {
-        Log.i(AnkiDroidApp.TAG, "prepareSync = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
+        // Log.i(AnkiDroidApp.TAG, "prepareSync = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
 
         mLocalTime = mDeck.getModified();
         mRemoteTime = mServer.modified();
 
-        Log.i(AnkiDroidApp.TAG, "localTime = " + mLocalTime);
-        Log.i(AnkiDroidApp.TAG, "remoteTime = " + mRemoteTime);
+        // Log.i(AnkiDroidApp.TAG, "localTime = " + mLocalTime);
+        // Log.i(AnkiDroidApp.TAG, "remoteTime = " + mRemoteTime);
 
         if (mLocalTime == mRemoteTime) {
             return false;
         }
 
         double l = mDeck.getLastSync();
-        Log.i(AnkiDroidApp.TAG, "lastSync local = " + l);
+        // Log.i(AnkiDroidApp.TAG, "lastSync local = " + l);
         double r = mServer.lastSync();
-        Log.i(AnkiDroidApp.TAG, "lastSync remote = " + r);
+        // Log.i(AnkiDroidApp.TAG, "lastSync remote = " + r);
 
         // Set lastSync to the lower of the two sides, and account for slow clocks & assume it took up to 10 seconds
         // for the reply to arrive
@@ -166,7 +166,7 @@ public class SyncClient {
      * @throws JSONException
      */
     public JSONObject summary(double lastSync) throws JSONException {
-        Log.i(AnkiDroidApp.TAG, "Summary Local");
+        // Log.i(AnkiDroidApp.TAG, "Summary Local");
         mDeck.setLastSync(lastSync);
         mDeck.commitToDB();
 
@@ -216,7 +216,7 @@ public class SyncClient {
             return null;
         }
 
-        Log.i(AnkiDroidApp.TAG, "Summary Local = ");
+        // Log.i(AnkiDroidApp.TAG, "Summary Local = ");
         Utils.printJSONObject(summary, false);
 
         return summary;
@@ -244,7 +244,7 @@ public class SyncClient {
      * @throws JSONException
      */
     public JSONObject genPayload(JSONArray summaries) throws JSONException {
-        // Log.i(AnkiDroidApp.TAG, "genPayload");
+        // // Log.i(AnkiDroidApp.TAG, "genPayload");
         // Ensure global stats are available (queue may not be built)
         preSyncRefresh();
 
@@ -253,7 +253,7 @@ public class SyncClient {
         Keys[] keys = Keys.values();
 
         for (int i = 0; i < keys.length; i++) {
-            // Log.i(AnkiDroidApp.TAG, "Key " + keys[i].name());
+            // // Log.i(AnkiDroidApp.TAG, "Key " + keys[i].name());
             String key = keys[i].name();
             // Handle models, facts, cards and media
             JSONArray diff = diffSummary((JSONObject) summaries.get(0), (JSONObject) summaries.get(1), key);
@@ -273,7 +273,7 @@ public class SyncClient {
             payload.put("deck", bundleDeck());
         }
 
-        Log.i(AnkiDroidApp.TAG, "Payload =");
+        // Log.i(AnkiDroidApp.TAG, "Payload =");
         Utils.printJSONObject(payload, true);
 
         return payload;
@@ -311,7 +311,7 @@ public class SyncClient {
 
 
     public void applyPayloadReply(JSONObject payloadReply) throws JSONException {
-        Log.i(AnkiDroidApp.TAG, "applyPayloadReply");
+        // Log.i(AnkiDroidApp.TAG, "applyPayloadReply");
         Keys[] keys = Keys.values();
 
         for (int i = 0; i < keys.length; i++) {
@@ -391,10 +391,10 @@ public class SyncClient {
         JSONArray remotelyEdited = new JSONArray();
         JSONArray remotelyDeleted = new JSONArray();
 
-        Log.i(AnkiDroidApp.TAG, "\ndiffSummary - Key = " + key);
-        Log.i(AnkiDroidApp.TAG, "\nSummary local = ");
+        // Log.i(AnkiDroidApp.TAG, "\ndiffSummary - Key = " + key);
+        // Log.i(AnkiDroidApp.TAG, "\nSummary local = ");
         Utils.printJSONObject(summaryLocal, false);
-        Log.i(AnkiDroidApp.TAG, "\nSummary server = ");
+        // Log.i(AnkiDroidApp.TAG, "\nSummary server = ");
         Utils.printJSONObject(summaryServer, false);
 
         // Hash of all modified ids
@@ -416,48 +416,48 @@ public class SyncClient {
             Double localModTime = localMod.get(id);
             Double remoteModTime = remoteMod.get(id);
 
-            Log.i(AnkiDroidApp.TAG, "\nid = " + id + ", localModTime = " + localModTime + ", remoteModTime = " + remoteModTime);
+            // Log.i(AnkiDroidApp.TAG, "\nid = " + id + ", localModTime = " + localModTime + ", remoteModTime = " + remoteModTime);
             // Changed/Existing on both sides
             if (localModTime != null && remoteModTime != null) {
-                Log.i(AnkiDroidApp.TAG, "localModTime not null AND remoteModTime not null");
+                // Log.i(AnkiDroidApp.TAG, "localModTime not null AND remoteModTime not null");
                 if (localModTime < remoteModTime) {
-                    Log.i(AnkiDroidApp.TAG, "Remotely edited");
+                    // Log.i(AnkiDroidApp.TAG, "Remotely edited");
                     remotelyEdited.put(id);
                 } else if (localModTime > remoteModTime) {
-                    Log.i(AnkiDroidApp.TAG, "Locally edited");
+                    // Log.i(AnkiDroidApp.TAG, "Locally edited");
                     locallyEdited.put(id);
                 }
             }
             // If it's missing on server or newer here, sync
             else if (localModTime != null && remoteModTime == null) {
-                Log.i(AnkiDroidApp.TAG, "localModTime not null AND remoteModTime null");
+                // Log.i(AnkiDroidApp.TAG, "localModTime not null AND remoteModTime null");
                 if (!rdeletedIds.containsKey(id) || rdeletedIds.get(id) < localModTime) {
-                    Log.i(AnkiDroidApp.TAG, "Locally edited");
+                    // Log.i(AnkiDroidApp.TAG, "Locally edited");
                     locallyEdited.put(id);
                 } else {
-                    Log.i(AnkiDroidApp.TAG, "Remotely deleted");
+                    // Log.i(AnkiDroidApp.TAG, "Remotely deleted");
                     remotelyDeleted.put(id);
                 }
             }
             // If it's missing locally or newer there, sync
             else if (remoteModTime != null && localModTime == null) {
-                Log.i(AnkiDroidApp.TAG, "remoteModTime not null AND localModTime null");
+                // Log.i(AnkiDroidApp.TAG, "remoteModTime not null AND localModTime null");
                 if (!ldeletedIds.containsKey(id) || ldeletedIds.get(id) < remoteModTime) {
-                    Log.i(AnkiDroidApp.TAG, "Remotely edited");
+                    // Log.i(AnkiDroidApp.TAG, "Remotely edited");
                     remotelyEdited.put(id);
                 } else {
-                    Log.i(AnkiDroidApp.TAG, "Locally deleted");
+                    // Log.i(AnkiDroidApp.TAG, "Locally deleted");
                     locallyDeleted.put(id);
                 }
             }
             // Deleted or not modified in both sides
             else {
-                Log.i(AnkiDroidApp.TAG, "localModTime null AND remoteModTime null");
+                // Log.i(AnkiDroidApp.TAG, "localModTime null AND remoteModTime null");
                 if (ldeletedIds.containsKey(id) && !rdeletedIds.containsKey(id)) {
-                    Log.i(AnkiDroidApp.TAG, "Locally deleted");
+                    // Log.i(AnkiDroidApp.TAG, "Locally deleted");
                     locallyDeleted.put(id);
                 } else if (rdeletedIds.containsKey(id) && !ldeletedIds.containsKey(id)) {
-                    Log.i(AnkiDroidApp.TAG, "Remotely deleted");
+                    // Log.i(AnkiDroidApp.TAG, "Remotely deleted");
                     remotelyDeleted.put(id);
                 }
             }
@@ -532,16 +532,16 @@ public class SyncClient {
 
     private void updateObjsFromKey(JSONObject payloadReply, String key) throws JSONException {
         if ("models".equalsIgnoreCase(key)) {
-            Log.i(AnkiDroidApp.TAG, "updateModels");
+            // Log.i(AnkiDroidApp.TAG, "updateModels");
             updateModels(payloadReply.getJSONArray("added-models"));
         } else if ("facts".equalsIgnoreCase(key)) {
-            Log.i(AnkiDroidApp.TAG, "updateFacts");
+            // Log.i(AnkiDroidApp.TAG, "updateFacts");
             updateFacts(payloadReply.getJSONObject("added-facts"));
         } else if ("cards".equalsIgnoreCase(key)) {
-            Log.i(AnkiDroidApp.TAG, "updateCards");
+            // Log.i(AnkiDroidApp.TAG, "updateCards");
             updateCards(payloadReply.getJSONArray("added-cards"));
         } else if ("media".equalsIgnoreCase(key)) {
-            Log.i(AnkiDroidApp.TAG, "updateMedia");
+            // Log.i(AnkiDroidApp.TAG, "updateMedia");
             updateMedia(payloadReply.getJSONArray("added-media"));
         }
     }
@@ -601,7 +601,7 @@ public class SyncClient {
         }
         cursor.close();
 
-        Log.i(AnkiDroidApp.TAG, "Model = ");
+        // Log.i(AnkiDroidApp.TAG, "Model = ");
         Utils.printJSONObject(model, false);
 
         return model;
@@ -693,7 +693,7 @@ public class SyncClient {
 
 
     private void deleteModels(JSONArray ids) throws JSONException {
-        Log.i(AnkiDroidApp.TAG, "deleteModels");
+        // Log.i(AnkiDroidApp.TAG, "deleteModels");
         int len = ids.length();
         for (int i = 0; i < len; i++) {
             mDeck.deleteModel(ids.getString(i));
@@ -961,7 +961,7 @@ public class SyncClient {
      */
     private JSONObject getFacts(JSONArray ids) throws JSONException// , boolean updateModified)
     {
-        Log.i(AnkiDroidApp.TAG, "getFacts");
+        // Log.i(AnkiDroidApp.TAG, "getFacts");
 
         JSONObject facts = new JSONObject();
 
@@ -978,7 +978,7 @@ public class SyncClient {
         facts.put("facts", factsArray);
         facts.put("fields", fieldsArray);
 
-        Log.i(AnkiDroidApp.TAG, "facts = ");
+        // Log.i(AnkiDroidApp.TAG, "facts = ");
         Utils.printJSONObject(facts, false);
 
         return facts;
@@ -1367,7 +1367,7 @@ public class SyncClient {
 
 
     private void deleteMedia(JSONArray ids) throws JSONException {
-        Log.i(AnkiDroidApp.TAG, "deleteMedia");
+        // Log.i(AnkiDroidApp.TAG, "deleteMedia");
 
         String idsString = Utils.ids2str(ids);
 
@@ -1383,14 +1383,14 @@ public class SyncClient {
         SQLiteStatement statement = mDeck.getDB().getDatabase().compileStatement(sqlInsert);
         int len = ids.length();
         for (int i = 0; i < len; i++) {
-            Log.i(AnkiDroidApp.TAG, "Inserting media " + ids.getLong(i) + " into mediaDeleted");
+            // Log.i(AnkiDroidApp.TAG, "Inserting media " + ids.getLong(i) + " into mediaDeleted");
             statement.bindLong(1, ids.getLong(i));
             statement.executeInsert();
         }
         statement.close();
 
         // Delete media
-        Log.i(AnkiDroidApp.TAG, "Deleting media in = " + idsString);
+        // Log.i(AnkiDroidApp.TAG, "Deleting media in = " + idsString);
         mDeck.getDB().getDatabase().execSQL("DELETE FROM media WHERE id IN " + idsString);
     }
 
@@ -1448,11 +1448,11 @@ public class SyncClient {
         // Ensure modified is not greater than server time
         if ((mServer != null) && (mServer.getTimestamp() != 0.0)) {
             mDeck.setModified(Math.min(mDeck.getModified(), mServer.getTimestamp()));
-            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Modified: %f", mDeck.getModified()));
+            // Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Modified: %f", mDeck.getModified()));
         }
         // And ensure lastSync is greater than modified
         mDeck.setLastSync(Math.max(Utils.now(), mDeck.getModified() + 1));
-        Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "LastSync: %f", mDeck.getLastSync()));
+        // Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "LastSync: %f", mDeck.getLastSync()));
 
         bundledDeck = mDeck.bundleJson(bundledDeck);
 
@@ -1477,7 +1477,7 @@ public class SyncClient {
         cursor.close();
         bundledDeck.put("meta", meta);
 
-        Log.i(AnkiDroidApp.TAG, "Deck =");
+        // Log.i(AnkiDroidApp.TAG, "Deck =");
         Utils.printJSONObject(bundledDeck, false);
 
         return bundledDeck;
@@ -1510,13 +1510,13 @@ public class SyncClient {
 
 
     private JSONObject bundleStats() throws JSONException {
-        Log.i(AnkiDroidApp.TAG, "bundleStats");
+        // Log.i(AnkiDroidApp.TAG, "bundleStats");
 
         JSONObject bundledStats = new JSONObject();
 
         // Get daily stats since the last day the deck was synchronized
         Date lastDay = new Date(java.lang.Math.max(0, (long) (mDeck.getLastSync() - 60 * 60 * 24) * 1000));
-        Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString());
+        // Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString());
         ArrayList<Long> ids = mDeck.getDB().queryColumn(Long.class,
                 "SELECT id FROM stats WHERE type = 1 and day >= \"" + lastDay.toString() + "\"", 0);
 
@@ -1535,7 +1535,7 @@ public class SyncClient {
         }
         bundledStats.put("daily", dailyStats);
 
-        Log.i(AnkiDroidApp.TAG, "Stats =");
+        // Log.i(AnkiDroidApp.TAG, "Stats =");
         Utils.printJSONObject(bundledStats, false);
 
         return bundledStats;
@@ -1595,12 +1595,12 @@ public class SyncClient {
             // delay
             delay = cursor.getDouble(5);
             Number num = Double.valueOf(delay);
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s", delay, num.toString(), review.toString()));
+            // Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s", delay, num.toString(), review.toString()));
             review.put(5, delay);
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 3: %.18f %s %s", review.getDouble(5), num.toString(), review.toString()));
+            // Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 3: %.18f %s %s", review.getDouble(5), num.toString(), review.toString()));
             // lastFactor
             review.put(6, (double)cursor.getDouble(6));
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 4: %.18f %s %s", review.getDouble(5), num.toString(), review.toString()));
+            // Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 4: %.18f %s %s", review.getDouble(5), num.toString(), review.toString()));
             // nextFactor
             review.put(7, (double)cursor.getDouble(7));
             // reps
@@ -1612,13 +1612,13 @@ public class SyncClient {
             // noCount
             review.put(11, (double)cursor.getDouble(11));
 
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 complete row: %.18f %.18f %s", delay, review.getDouble(5), review.toString()));
+            // Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 complete row: %.18f %.18f %s", delay, review.getDouble(5), review.toString()));
             bundledHistory.put(review);
         }
         cursor.close();
 
-        Log.i(AnkiDroidApp.TAG, "Last sync = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
-        Log.i(AnkiDroidApp.TAG, "Bundled history = " + bundledHistory.toString());
+        // Log.i(AnkiDroidApp.TAG, "Last sync = " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()));
+        // Log.i(AnkiDroidApp.TAG, "Bundled history = " + bundledHistory.toString());
         return bundledHistory;
     }
 
@@ -1685,7 +1685,7 @@ public class SyncClient {
         }
         cursor.close();
 
-        Log.i(AnkiDroidApp.TAG, "Bundled sources = " + bundledSources);
+        // Log.i(AnkiDroidApp.TAG, "Bundled sources = " + bundledSources);
         return bundledSources;
     }
 
@@ -1720,10 +1720,10 @@ public class SyncClient {
      */
     @SuppressWarnings("unchecked")
     public boolean needFullSync(JSONArray sums) throws JSONException {
-        Log.i(AnkiDroidApp.TAG, "needFullSync - lastSync = " + mDeck.getLastSync());
+        // Log.i(AnkiDroidApp.TAG, "needFullSync - lastSync = " + mDeck.getLastSync());
 
         if (mDeck.getLastSync() <= 0) {
-            Log.i(AnkiDroidApp.TAG, "deck.lastSync <= 0");
+            // Log.i(AnkiDroidApp.TAG, "deck.lastSync <= 0");
             return true;
         }
 
@@ -1735,9 +1735,9 @@ public class SyncClient {
             while (keys.hasNext()) {
                 String key = (String) keys.next();
                 JSONArray l = (JSONArray) summary.get(key);
-                Log.i(AnkiDroidApp.TAG, "Key " + key + ", length = " + l.length());
+                // Log.i(AnkiDroidApp.TAG, "Key " + key + ", length = " + l.length());
                 if (l.length() > 500) {
-                    Log.i(AnkiDroidApp.TAG, "Length of key > 500");
+                    // Log.i(AnkiDroidApp.TAG, "Length of key > 500");
                     return true;
                 }
             }
@@ -1746,16 +1746,16 @@ public class SyncClient {
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
         if (ankiDB.queryScalar("SELECT count() FROM reviewHistory WHERE time > " + mDeck.getLastSync()) > 500) {
-            Log.i(AnkiDroidApp.TAG, "reviewHistory since lastSync > 500");
+            // Log.i(AnkiDroidApp.TAG, "reviewHistory since lastSync > 500");
             return true;
         }
         Date lastDay = new Date(java.lang.Math.max(0, (long) (mDeck.getLastSync() - 60 * 60 * 24) * 1000));
 
-        Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString() + ", lastDayInMillis = " + lastDay.getTime());
+        // Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString() + ", lastDayInMillis = " + lastDay.getTime());
 
-        Log.i(AnkiDroidApp.TAG, "Count stats = " + ankiDB.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\""));
+        // Log.i(AnkiDroidApp.TAG, "Count stats = " + ankiDB.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\""));
         if (ankiDB.queryScalar("SELECT count() FROM stats WHERE day >= \"" + lastDay.toString() + "\"") > 100) {
-            Log.i(AnkiDroidApp.TAG, "stats since lastDay > 100");
+            // Log.i(AnkiDroidApp.TAG, "stats since lastDay > 100");
             return true;
         }
 
@@ -1782,14 +1782,14 @@ public class SyncClient {
         HashMap<String, String> result = new HashMap<String, String>();
         Throwable exc = null;
         try {
-            Log.i(AnkiDroidApp.TAG, "Fullup");
+            // Log.i(AnkiDroidApp.TAG, "Fullup");
             // We need to write the output to a temporary file, so that FileEntity knows the length
             String tmpPath = (new File(deck.getDeckPath())).getParent();
             File tmpFile = new File(tmpPath + "/fulluploadPayload.tmp");
             if (tmpFile.exists()) {
                 tmpFile.delete();
             }
-            Log.i(AnkiDroidApp.TAG, "Writing temporary payload file...");
+            // Log.i(AnkiDroidApp.TAG, "Writing temporary payload file...");
             tmpFile.createNewFile();
             DataOutputStream tmp = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(tmpFile)));
             tmp.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + END);
@@ -1813,7 +1813,7 @@ public class SyncClient {
             DeflaterOutputStream dos = new DeflaterOutputStream(tmp, deflater);
             while ((length = fStream.read(buffer)) != -1) {
                 dos.write(buffer, 0, length);
-                Log.i(AnkiDroidApp.TAG, "Length = " + length);
+                // Log.i(AnkiDroidApp.TAG, "Length = " + length);
             }
             dos.finish();
             fStream.close();
@@ -1822,7 +1822,7 @@ public class SyncClient {
             tmp.writeBytes(TWO_HYPHENS + MIME_BOUNDARY + TWO_HYPHENS + END + END);
             tmp.flush();
             tmp.close();
-            Log.i(AnkiDroidApp.TAG, "Payload file ready, size: " + tmpFile.length());
+            // Log.i(AnkiDroidApp.TAG, "Payload file ready, size: " + tmpFile.length());
 
             HttpPost httpPost = new HttpPost(AnkiDroidProxy.SYNC_URL + "fullup?v=" +
                     URLEncoder.encode(AnkiDroidProxy.SYNC_VERSION, "UTF-8"));
@@ -1835,7 +1835,7 @@ public class SyncClient {
             // Ensure we got the HTTP 200 response code
             String response = Utils.convertStreamToString(resp.getEntity().getContent());
             int responseCode = resp.getStatusLine().getStatusCode();
-            Log.i(AnkiDroidApp.TAG, "Response code = " + responseCode);
+            // Log.i(AnkiDroidApp.TAG, "Response code = " + responseCode);
             // Read the response
 			if (response.substring(0,2).equals("OK")) {
 				// Update lastSync
@@ -1846,7 +1846,7 @@ public class SyncClient {
 			    // Remove temp file
 			    tmpFile.delete();
 			}
-            Log.i(AnkiDroidApp.TAG, "Finished!");
+            // Log.i(AnkiDroidApp.TAG, "Finished!");
             result.put("code", String.valueOf(responseCode));
             result.put("message", response);
         } catch (ClientProtocolException e) {
@@ -1885,7 +1885,7 @@ public class SyncClient {
             String data = "p=" + URLEncoder.encode(password, "UTF-8") + "&u=" + URLEncoder.encode(username, "UTF-8")
                     + "&d=" + URLEncoder.encode(deckName, "UTF-8");
 
-            // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
+            // // Log.i(AnkiDroidApp.TAG, "Data json = " + data);
             HttpPost httpPost = new HttpPost(AnkiDroidProxy.SYNC_URL + "fulldown");
             StringEntity entity = new StringEntity(data);
             httpPost.setEntity(entity);
