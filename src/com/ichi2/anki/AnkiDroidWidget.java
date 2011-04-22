@@ -86,53 +86,46 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
-        // Simple class to hold the deck information for the widget
-        private class DeckInformation {
+        /**
+         * Simple class to hold the current status of a deck.
+         */
+        public static class DeckInformation {
+            public String mDeckName;
+            public int mNewCards;
+            public int mDueCards;
+            public int mFailedCards;
 
-            private String mDeckName;
-            private int mNewCards;
-            private int mDueCards;
-            private int mFailedCards;
 
-
-            private DeckInformation(String deckName, int newCards, int dueCards, int failedCards) {
+            public DeckInformation(String deckName, int newCards, int dueCards, int failedCards) {
                 mDeckName = deckName;
-                mNewCards = newCards;       // Blue
-                mDueCards = dueCards;       // Black
-                mFailedCards = failedCards; // Red
+                mNewCards = newCards;
+                mDueCards = dueCards;
+                mFailedCards = failedCards;
             }
+        }
 
+        private CharSequence getDeckStatus(DeckInformation deck) {
+            SpannableStringBuilder sb = new SpannableStringBuilder();
 
-            @Override
-            public String toString() {
-                return String.format("%s %d %d", mDeckName, mNewCards, mDueCards);
-            }
+            SpannableString red = new SpannableString(Integer.toString(deck.mFailedCards));
+            red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+            SpannableString black = new SpannableString(Integer.toString(deck.mDueCards));
+            black.setSpan(new ForegroundColorSpan(Color.BLACK), 0, black.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            private CharSequence getDeckStatus() {
-                SpannableStringBuilder sb = new SpannableStringBuilder();
+            SpannableString blue = new SpannableString(Integer.toString(deck.mNewCards));
+            blue.setSpan(new ForegroundColorSpan(Color.BLUE), 0, blue.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                SpannableString red = new SpannableString(Integer.toString(mFailedCards));
-                red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(),
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            sb.append(red);
+            sb.append(" ");
+            sb.append(black);
+            sb.append(" ");
+            sb.append(blue);
 
-                SpannableString black = new SpannableString(Integer.toString(mDueCards));
-                black.setSpan(new ForegroundColorSpan(Color.BLACK), 0, black.length(),
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                SpannableString blue = new SpannableString(Integer.toString(mNewCards));
-                blue.setSpan(new ForegroundColorSpan(Color.BLUE), 0, blue.length(),
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                sb.append(red);
-                sb.append(" ");
-                sb.append(black);
-                sb.append(" ");
-                sb.append(blue);
-
-                return sb;
-            }
-
+            return sb;
         }
 
 
@@ -220,10 +213,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 }
                 // Show the name and info from the current due deck.
                 DeckInformation deckInformation = dueDecks.get(currentDueDeck);
-                updateViews.setTextViewText(R.id.anki_droid_name,
-                    deckInformation.mDeckName);
-                updateViews.setTextViewText(R.id.anki_droid_status,
-                    deckInformation.getDeckStatus());
+                updateViews.setTextViewText(R.id.anki_droid_name, deckInformation.mDeckName);
+                updateViews.setTextViewText(R.id.anki_droid_status, getDeckStatus(deckInformation));
                 PendingIntent openPendingIntent = getOpenPendingIntent(context);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_name, openPendingIntent);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_status, openPendingIntent);
