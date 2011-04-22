@@ -36,7 +36,7 @@ public class MetaDB {
     }
 
     public static void closeDB() {
-        if (mMetaDb != null && !mMetaDb.isOpen()) {
+        if (mMetaDb != null && mMetaDb.isOpen()) {
             mMetaDb.close();
             Log.i(AnkiDroidApp.TAG, "Closing MetaDB");
         }
