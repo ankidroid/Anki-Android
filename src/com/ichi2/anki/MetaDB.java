@@ -71,8 +71,7 @@ public class MetaDB {
     	try {
     		cur = mMetaDb.rawQuery("SELECT language FROM languages" + " WHERE deckpath = \'" + deckPath + "\' AND modelid = "
     					+ modelId + " AND cardmodelid = " + cardModelId + " AND qa = " + qa + " LIMIT 1", null);
-    		Log.i(AnkiDroidApp.TAG, "SELECT language FROM languages" + " WHERE deckpath = \'" + deckPath + "\' AND modelid = "
-					+ modelId + " AND cardmodelid = " + cardModelId + " AND qa = " + qa + " LIMIT 1");
+    		Log.i(AnkiDroidApp.TAG, "SELECT language FROM languages" + " WHERE deckpath = \'" + deckPath + "\' AND modelid = " + modelId + " AND cardmodelid = " + cardModelId + " AND qa = " + qa + " LIMIT 1");
     		if (cur.moveToNext()) {
     			language = cur.getString(0);
     		}

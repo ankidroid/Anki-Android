@@ -321,8 +321,7 @@ public class AnkiDroidProxy {
                 result.result = reason;
                 return result;
             } else {
-                Log.i(AnkiDroidApp.TAG, "createDeck - response = " +
-                        Utils.convertStreamToString(new InflaterInputStream(content)));
+                Log.i(AnkiDroidApp.TAG, "createDeck - response = " + Utils.convertStreamToString(new InflaterInputStream(content)));
                 result.success = true;
                 result.returnType = 200;
                 // Add created deck to the list of decks on server
@@ -382,8 +381,7 @@ public class AnkiDroidProxy {
             HttpResponse response = httpClient.execute(httpPost);
             int respCode = response.getStatusLine().getStatusCode();
             if (respCode != 200) {
-                Log.e(AnkiDroidApp.TAG, "Error getting server summary: " + respCode + " " +
-                        response.getStatusLine().getReasonPhrase());
+                Log.e(AnkiDroidApp.TAG, "Error getting server summary: " + respCode + " " + response.getStatusLine().getReasonPhrase());
                 return null;
             }
             HttpEntity entityResponse = response.getEntity();
