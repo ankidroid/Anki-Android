@@ -281,7 +281,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
 
             // Fetch the deck information, sorted by due cards
-            ArrayList<DeckStatus> decks = WidgetStatus.fetch(getBaseContext());
+            DeckStatus[] decks = WidgetStatus.fetch(getBaseContext());
 
             if (currentDeck != null) {
                 AnkiDroidApp.setDeck(currentDeck);
@@ -294,8 +294,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 dueDecks.clear();
             }
             dueCardsCount = 0;
-            for (int i = 0; i < decks.size(); i++) {
-                DeckStatus deck = decks.get(i);
+            for (DeckStatus deck : decks) {
                 if (deck.mDueCards > 0) {
                   dueCardsCount += deck.mDueCards;
                   dueDecks.add(deck);

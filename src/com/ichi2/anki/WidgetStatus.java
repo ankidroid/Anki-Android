@@ -33,6 +33,8 @@ import java.util.Collections;
  * It contains the status of each of the decks.
  */
 public final class WidgetStatus {
+    private static final DeckStatus[] EMPTY_DECK_STATUS = new DeckStatus[0];
+
     /** This class should not be instantiated. */
     private WidgetStatus() {}
 
@@ -44,22 +46,23 @@ public final class WidgetStatus {
     }
 
     /** Returns the status of each of the decks. */
-    public static ArrayList<DeckStatus> fetch(Context context) {
+    public static DeckStatus[] fetch(Context context) {
         Log.i(AnkiDroidApp.TAG, "fetchDeckStatus");
 
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-        String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
+        String deckPath = preferences.getString("deckPath",
+                AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
 
         File dir = new File(deckPath);
 
         File[] fileList = dir.listFiles(new AnkiFileFilter());
 
         if (fileList == null || fileList.length == 0) {
-            return new ArrayList<DeckStatus>();
+            return EMPTY_DECK_STATUS;
         }
 
         // For the deck information
-        ArrayList<DeckStatus> information = new ArrayList<DeckStatus>(fileList.length);
+        ArrayList<DeckStatus> decks = new ArrayList<DeckStatus>(fileList.length);
 
         for (File file : fileList) {
             try {
@@ -74,22 +77,22 @@ public final class WidgetStatus {
                 deck.closeDeck();
 
                 // Add the information about the deck
-                information.add(new DeckStatus(deckName, newCards, dueCards, failedCards));
+                decks.add(new DeckStatus(deckName, newCards, dueCards, failedCards));
             } catch (SQLException e) {
                 Log.i(AnkiDroidApp.TAG, "Could not open deck");
                 Log.e(AnkiDroidApp.TAG, e.toString());
             }
         }
 
-        if (!information.isEmpty() && information.size() > 1) {
+        if (!decks.isEmpty() && decks.size() > 1) {
             // Sort and reverse the list if there are decks
             Log.i(AnkiDroidApp.TAG, "Sorting deck");
 
             // Ordered by reverse due cards number
-            Collections.sort(information, new ByDueComparator());
+            Collections.sort(decks, new ByDueComparator());
         }
 
-        return information;
+        return decks.toArray(EMPTY_DECK_STATUS);
     }
 
     /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */
