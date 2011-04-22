@@ -409,7 +409,6 @@
 <string name="studyoptions_continue">Continue Reviewing</string>
 <string name="studyoptions_well_done">Well Done!</string>
 <string name="studyoptions_congrats_title">Congratulations!</string>
-<string name="studyoptions_congrats_message"></string>
 <plurals name="studyoptions_congrats_message">
   <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
   <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
