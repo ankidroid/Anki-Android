@@ -82,21 +82,21 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         private int currentDueDeck = 0;
 
         /** The cached information about the decks with due cards. */
-        private List<DeckInformation> dueDecks;
+        private List<DeckStatus> dueDecks;
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
         /**
          * Simple class to hold the current status of a deck.
          */
-        public static class DeckInformation {
+        public static class DeckStatus {
             public String mDeckName;
             public int mNewCards;
             public int mDueCards;
             public int mFailedCards;
 
 
-            public DeckInformation(String deckName, int newCards, int dueCards, int failedCards) {
+            public DeckStatus(String deckName, int newCards, int dueCards, int failedCards) {
                 mDeckName = deckName;
                 mNewCards = newCards;
                 mDueCards = dueCards;
@@ -104,7 +104,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
         }
 
-        private CharSequence getDeckStatus(DeckInformation deck) {
+        private CharSequence getDeckStatusString(DeckStatus deck) {
             SpannableStringBuilder sb = new SpannableStringBuilder();
 
             SpannableString red = new SpannableString(Integer.toString(deck.mFailedCards));
@@ -155,8 +155,6 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                         openDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                         openDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         // TODO(flerda): Tell the activity which deck to open.
-                        // DeckInformation dueDeck = dueDecks.get(currentDueDeck);
-                        // openDeckIntent.putExtra(StudyOptions.EXTRA_DECK, dueDeck.mDeckName);
                         startActivity(openDeckIntent);
                     }
                     updateDueDecksNow = false;
@@ -212,9 +210,9 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     currentDueDeck = 0;
                 }
                 // Show the name and info from the current due deck.
-                DeckInformation deckInformation = dueDecks.get(currentDueDeck);
-                updateViews.setTextViewText(R.id.anki_droid_name, deckInformation.mDeckName);
-                updateViews.setTextViewText(R.id.anki_droid_status, getDeckStatus(deckInformation));
+                DeckStatus deckStatus = dueDecks.get(currentDueDeck);
+                updateViews.setTextViewText(R.id.anki_droid_name, deckStatus.mDeckName);
+                updateViews.setTextViewText(R.id.anki_droid_status, getDeckStatusString(deckStatus));
                 PendingIntent openPendingIntent = getOpenPendingIntent(context);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_name, openPendingIntent);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_status, openPendingIntent);
@@ -294,7 +292,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
 
             // Fetch the deck information, sorted by due cards
-            ArrayList<DeckInformation> decks = fetchDeckInformation();
+            ArrayList<DeckStatus> decks = fetchDeckStatus();
 
             if (currentDeck != null) {
                 AnkiDroidApp.setDeck(currentDeck);
@@ -302,35 +300,19 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
 
             if (dueDecks == null) {
-                dueDecks = new ArrayList<DeckInformation>();
+                dueDecks = new ArrayList<DeckStatus>();
             } else {
                 dueDecks.clear();
             }
             dueCardsCount = 0;
             for (int i = 0; i < decks.size(); i++) {
-                DeckInformation deck = decks.get(i);
+                DeckStatus deck = decks.get(i);
                 if (deck.mDueCards > 0) {
                   dueCardsCount += deck.mDueCards;
                   dueDecks.add(deck);
                 }
             }
         }
-
-//        @SuppressWarnings("unused")
-//        private ArrayList<DeckInformation> mockFetchDeckInformation() {
-//            final int maxDecks = 10;
-//            ArrayList<DeckInformation> information = new ArrayList<DeckInformation>(maxDecks);
-//
-//            for (int i = 0; i < maxDecks; i++) {
-//                String deckName = String.format("my anki deck number %d", i);
-//                information.add(new DeckInformation(deckName, i * 20, i * 25, i * 5));
-//            }
-//
-//            Collections.sort(information, new ByDueComparator());
-//            Collections.reverse(information);
-//
-//            return information;
-//        }
 
         /**
          * Returns a pending intent that updates the widget to show the next deck.
@@ -368,8 +350,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
-        private ArrayList<DeckInformation> fetchDeckInformation() {
-            Log.i(AnkiDroidApp.TAG, "fetchDeckInformation");
+        private ArrayList<DeckStatus> fetchDeckStatus() {
+            Log.i(AnkiDroidApp.TAG, "fetchDeckStatus");
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
             String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
@@ -379,11 +361,11 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             File[] fileList = dir.listFiles(new AnkiFileFilter());
 
             if (fileList == null || fileList.length == 0) {
-                return new ArrayList<DeckInformation>();
+                return new ArrayList<DeckStatus>();
             }
 
             // For the deck information
-            ArrayList<DeckInformation> information = new ArrayList<DeckInformation>(fileList.length);
+            ArrayList<DeckStatus> information = new ArrayList<DeckStatus>(fileList.length);
 
             for (File file : fileList) {
                 try {
@@ -398,7 +380,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     deck.closeDeck();
 
                     // Add the information about the deck
-                    information.add(new DeckInformation(deckName, newCards, dueCards, failedCards));
+                    information.add(new DeckStatus(deckName, newCards, dueCards, failedCards));
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());
@@ -417,9 +399,9 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         }
 
         // Sorter for the decks based on number due
-        public class ByDueComparator implements java.util.Comparator<DeckInformation> {
+        public class ByDueComparator implements java.util.Comparator<DeckStatus> {
             @Override
-            public int compare(DeckInformation deck1, DeckInformation deck2) {
+            public int compare(DeckStatus deck1, DeckStatus deck2) {
                 // Reverse due cards number order
                 return deck2.mDueCards - deck1.mDueCards;
             }
