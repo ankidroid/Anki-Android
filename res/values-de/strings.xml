@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Nachschlagen</string>
   <string name="pref_cat_navigation">Navigation</string>
   <string name="pref_cat_swipe">Wischen</string>
-  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
+  <string name="pref_cat_navigation_sensitivity">Empfindlichkeit</string>
   <string name="pref_cat_zoom">Vergrößern</string>
   <string name="pref_cat_reset">Zurücksetzen</string>
   <string name="pref_cat_other">Sonstiges</string>
@@ -137,35 +137,35 @@
   <string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
   <string name="display_font_size">Relative Schriftgröße</string>
   <string name="display_font_size_summ">Schriftgröße im Lernbildschirm relativ zu der im Stapel definierten Schriftgröße. Im Moment: XXX %</string>
-  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
-  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
+  <string name="card_browser_font_size">Schriftgröße in der Kartenübersicht</string>
+  <string name="card_browser_font_size_summ">Relative Größe der Schrift in der Kartenübersicht. Momentan: XXX %</string>
   <string name="button_size">Schaltflächengröße</string>
   <string name="button_size_summ">Größe der Antworten-Schaltflächen im Lernbildschirm. Im Moment: XXX %</string>
   <string name="hide_question_in_answer">Frage ausblenden</string>
   <string name="hide_question_in_answer_summ">Bestimmt, ob die Frage ausgeblendet werden soll, wenn die Antwort angezeigt wird</string>
   <string name="deck_path">Stapelverzeichnis</string>
   <string name="deck_path_summ">Verzeichnis in dem Stapel gespeichert werden</string>
-  <string name="deck_order">Deck order</string>
-  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
+  <string name="deck_order">Stapelreihenfolge</string>
+  <string name="deck_order_summ">Reihenfolge, in der die Stapel in der Übersicht aufgeführt sind: XXX</string>
   <string name="fullscreen_review">Vollbildmodus</string>
   <string name="fullscreen_review_summ">Nutzt sämtlichen vorhandenen Platz auf dem Bildschirm</string>
   <string name="zoom">Zoom aktivieren</string>
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
-  <string name="pref_cat_actions">Actions</string>
-  <string name="gestures_shake">Shake</string>
-  <string name="gestures_swipe_up">Swipe up</string>
-  <string name="gestures_swipe_down">Swipe down</string>
-  <string name="gestures_swipe_left">Swipe left</string>
-  <string name="gestures_swipe_right">Swipe right</string>
-  <string name="gestures_double_tap">Double tap</string>
-  <string name="gestures_tap_top">Tap top</string>
-  <string name="gestures_tap_bottom">Tap bottom</string>
-  <string name="gestures_tap_left">Tap left</string>
-  <string name="gestures_tap_right">Tap right</string>
-  <string name="swipe_sensibility">Swipe Sensitivity</string>
+  <string name="swipe_summ_on">Fensterwechsel mit horizontalem Wischen. Konfigurieren Sie zusätzliche Aktionen weiter unten</string>
+  <string name="pref_cat_actions">Aktionen</string>
+  <string name="gestures_shake">Schütteln</string>
+  <string name="gestures_swipe_up">Nach oben wischen</string>
+  <string name="gestures_swipe_down">Nach unten wischen</string>
+  <string name="gestures_swipe_left">Nach links wischen</string>
+  <string name="gestures_swipe_right">Nach rechts wischen</string>
+  <string name="gestures_double_tap">Doppelt antippen</string>
+  <string name="gestures_tap_top">Oben antippen</string>
+  <string name="gestures_tap_bottom">Unten antippen</string>
+  <string name="gestures_tap_left">Links antippen</string>
+  <string name="gestures_tap_right">Rechts antippen</string>
+  <string name="swipe_sensibility">Wischempfindlichkeit</string>
   <string name="swipe_sensibility_summ">Empfindlichkeit der Wisch-Gesten: XXX</string>
   <string name="tts">Vorlesen</string>
   <string name="tts_summ">Liest Frage und Antwort vor, wenn keine anderen Sounds enthalten sind</string>
@@ -189,8 +189,8 @@
   <string name="about_title">Über</string>
   <string name="cardeditor_title">Fakteneditor</string>
   <string name="factadder_title">Karten hinzufügen</string>
-  <string name="factadder_saving_error">Error saving fact</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="factadder_saving_error">Fehler beim Speichern des Fakts</string>
+  <string name="saving_facts">Fakt wird gespeichert</string>
   <string name="deckcreator_title">Stapel erstellen</string>
   <string name="model">Modell:</string>
   <string name="select_model">Modell</string>
@@ -310,12 +310,11 @@
   <string name="studyoptions_continue">Lernen fortsetzen</string>
   <string name="studyoptions_well_done">Gut gemacht!</string>
   <string name="studyoptions_congrats_title">Herzlichen Glückwunsch!</string>
-  <string name="studyoptions_congrats_message">&lt;string name="studyoptions_congrats_message"/&gt;</string>
   <string name="studyoptions_congrats_card">Karte</string>
   <string name="studyoptions_congrats_cards">Karten</string>
   <string name="studyoptions_congrats_learnmore">Mehr Lernen</string>
   <string name="studyoptions_congrats_reviewearly">Früher Wiederholen</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_syncdeck">Stapel synchronisieren</string>
   <string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>
   <string name="studyoptions_congrats_finish">Zurück zu den Lerneinstellungen</string>
   <string name="studyoptions_feedback">Rückmeldung</string>
@@ -398,7 +397,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Fällige Karten</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-Karten fällig</string>
   <string name="widget_no_cards_due">Keine Karten fällig</string>
-  <string name="widget_loading">Widget loading...</string>
+  <string name="widget_loading">Widget wird geladen...</string>
   <string name="soon">Bald</string>
   <string name="show_next_review_time">Intervall anzeigen</string>
   <string name="show_next_review_time_summ">Zeigt während des Lernens die Zeit bis zur nächsten Fälligkeit der Karte abhängig von der Wahl des Schwierigkeitsgrades</string>
@@ -450,8 +449,8 @@
     <item quantity="other">%1$d von %2$d fällig</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1$s (noch 1 Min.)</item>
+    <item quantity="other">%1$s (noch %2$d Min.)</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 von %3$d Karten</item>
@@ -462,16 +461,16 @@
     <item quantity="other">%1$s (%2$d von %3$d fällig)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Sie sind für heute fertig.\nMorgen gibt es 1 Karte zu wiederholen und %2$s.\nGeschätzte Zeit: %3$s</item>
+    <item quantity="other">Sie sind für heute fertig.\nMorgen gibt es %1$d Karten zu wiederholen und %2$s.\nGeschätzte Zeit: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">1 Karte neu zu lernen</item>
+    <item quantity="other">%1$d Karten neu zu lernen</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%1$d min.</item>
+    <item quantity="one">1 Min.</item>
+    <item quantity="other">%1$d Min.</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 Karte hochgeladen</item>
