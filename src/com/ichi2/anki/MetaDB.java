@@ -35,6 +35,12 @@ public class MetaDB {
         }
     }
 
+    private static void openDBIfClosed(Context context) {
+        if (mMetaDb == null || !mMetaDb.isOpen()) {
+            openDB(context);
+        }
+    }
+
     public static void closeDB() {
         if (mMetaDb != null && mMetaDb.isOpen()) {
             mMetaDb.close();
@@ -43,14 +49,12 @@ public class MetaDB {
     }
 
     public static boolean resetDB(Context context) {
-        if (mMetaDb == null || !mMetaDb.isOpen()) {
-            openDB(context);
-        }
+        openDBIfClosed(context);
         try {
             mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
-            mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
-            openDB(context);
             Log.i(AnkiDroidApp.TAG, "Resetting all language assignment");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
+            Log.i(AnkiDroidApp.TAG, "Resetting whiteboard state");
             return true;
         } catch(Exception e) {
             Log.e("Error", "Error resetting MetaDB ", e);
@@ -59,9 +63,7 @@ public class MetaDB {
     }
 
     public static void storeLanguage(Context context, String deckPath, long modelId, long cardModelId, int qa, String language) {
-        if (mMetaDb == null || !mMetaDb.isOpen()) {
-            openDB(context);
-        }
+        openDBIfClosed(context);
         try {
             mMetaDb.execSQL(
                     "INSERT INTO languages (deckpath, modelid, cardmodelid, qa, language) "
@@ -74,9 +76,7 @@ public class MetaDB {
     }
 
     public static String getLanguage(Context context, String deckPath, long modelId, long cardModelId, int qa) {
-        if (mMetaDb == null || !mMetaDb.isOpen()) {
-            openDB(context);
-        }
+        openDBIfClosed(context);
         String language = "";
         Cursor cur = null;
         try {
@@ -103,9 +103,7 @@ public class MetaDB {
     }
 
     public static boolean resetDeckLanguages(Context context, String deckPath) {
-        if (mMetaDb == null || !mMetaDb.isOpen()) {
-            openDB(context);
-        }
+        openDBIfClosed(context);
         try {
             mMetaDb.execSQL("DELETE FROM languages WHERE deckpath = \'" + deckPath + "\';");
             Log.i(AnkiDroidApp.TAG, "Resetting language assignment for deck " + deckPath);
@@ -117,9 +115,7 @@ public class MetaDB {
     }
 
     public static int getWhiteboardState(Context context, String deckPath) {
-        if (mMetaDb == null || !mMetaDb.isOpen()) {
-            openDB(context);
-        }
+        openDBIfClosed(context);
         Cursor cur = null;
         try {
             cur = mMetaDb.rawQuery("SELECT state FROM whiteboardState"
@@ -141,9 +137,7 @@ public class MetaDB {
 
 
     public static void storeWhiteboardState(Context context, String deckPath, int state) {
-        if (mMetaDb == null || !mMetaDb.isOpen()) {
-            openDB(context);
-        }
+        openDBIfClosed(context);
         Cursor cur = null;
         try {
             cur = mMetaDb.rawQuery("SELECT _id FROM whiteboardState"
