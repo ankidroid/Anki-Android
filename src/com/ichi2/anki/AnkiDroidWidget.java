@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.SQLException;
 import android.graphics.Color;
 import android.os.IBinder;
 import android.text.SpannableString;
@@ -38,10 +37,7 @@ import android.widget.RemoteViews;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class AnkiDroidWidget extends AppWidgetProvider {
@@ -274,7 +270,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
 
             // Fetch the deck information, sorted by due cards
-            ArrayList<DeckStatus> decks = fetchDeckStatus();
+            ArrayList<DeckStatus> decks = WidgetStatus.fetch(getBaseContext());
 
             if (currentDeck != null) {
                 AnkiDroidApp.setDeck(currentDeck);
@@ -331,71 +327,6 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             ankiDroidIntent.setAction(ACTION_OPEN);
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
-
-        private ArrayList<DeckStatus> fetchDeckStatus() {
-            Log.i(AnkiDroidApp.TAG, "fetchDeckStatus");
-
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-            String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
-
-            File dir = new File(deckPath);
-
-            File[] fileList = dir.listFiles(new AnkiFileFilter());
-
-            if (fileList == null || fileList.length == 0) {
-                return new ArrayList<DeckStatus>();
-            }
-
-            // For the deck information
-            ArrayList<DeckStatus> information = new ArrayList<DeckStatus>(fileList.length);
-
-            for (File file : fileList) {
-                try {
-                    // Run through the decks and get the information
-                    String absPath = file.getAbsolutePath();
-                    String deckName = file.getName().replaceAll(".anki", "");
-
-                    Deck deck = Deck.openDeck(absPath);
-                    int dueCards = deck.getDueCount();
-                    int newCards = deck.getNewCountToday();
-                    int failedCards = deck.getFailedSoonCount();
-                    deck.closeDeck();
-
-                    // Add the information about the deck
-                    information.add(new DeckStatus(deckName, newCards, dueCards, failedCards));
-                } catch (SQLException e) {
-                    Log.i(AnkiDroidApp.TAG, "Could not open deck");
-                    Log.e(AnkiDroidApp.TAG, e.toString());
-                }
-            }
-
-            if (!information.isEmpty() && information.size() > 1) {
-                // Sort and reverse the list if there are decks
-                Log.i(AnkiDroidApp.TAG, "Sorting deck");
-
-                // Ordered by reverse due cards number
-                Collections.sort(information, new ByDueComparator());
-            }
-
-            return information;
-        }
-
-        // Sorter for the decks based on number due
-        public class ByDueComparator implements java.util.Comparator<DeckStatus> {
-            @Override
-            public int compare(DeckStatus deck1, DeckStatus deck2) {
-                // Reverse due cards number order
-                return deck2.mDueCards - deck1.mDueCards;
-            }
-        }
-
-        private static final class AnkiFileFilter implements FileFilter {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.isFile() && pathname.getName().endsWith(".anki");
-            }
-        }
-
 
         @Override
         public IBinder onBind(Intent arg0) {
