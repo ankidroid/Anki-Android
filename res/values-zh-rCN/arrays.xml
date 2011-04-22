@@ -67,16 +67,16 @@
     <item>按随机顺序显示</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>一小时</item>
-    <item>一天</item>
-    <item>一个月</item>
-    <item>一年</item>
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>小时</item>
-    <item>天</item>
-    <item>个月</item>
-    <item>年</item>
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>1小时后</item>
@@ -119,6 +119,7 @@
     <item>按到期时间</item>
     <item>按复习间隔</item>
     <item>按难易程度</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>到期卡片数量</item>
@@ -134,25 +135,30 @@
     <item>6个月</item>
     <item>1年</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>卡片浏览器</item>
-    <item>统计功能</item>
-    <item>文字转语音(TTS)</item>
-    <item>选择牌组时显示牌组完成进度</item>
-    <item>在条目添加器中选择卡片模式</item>
-    <item>新的桌面小部件</item>
-    <item>优化了撤销/重做</item>
-    <item>滑动控制</item>
-    <item>选择语言</item>
-    <item>更多语言</item>
-    <item>复习界面增加进度条</item>
-    <item>在AnkiDroid中进行反馈</item>
-    <item>可以按照标签设置卡片是否是活动的</item>
-    <item>更好的同步功能</item>
-    <item>优化错误报告</item>
-    <item>添加牌组</item>
-    <item>更多选项设置</item>
-    <item>修正了大量小错误</item>
-    <item>在卡片编辑器、卡片添加器和卡片浏览器中添加对标签的支持</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

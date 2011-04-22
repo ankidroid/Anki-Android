@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Lookup</string>
   <string name="pref_cat_navigation">Navigation</string>
   <string name="pref_cat_swipe">Swipe</string>
-  <string name="pref_cat_shake">Shake</string>
+  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Reset</string>
   <string name="pref_cat_other">Other</string>
@@ -123,8 +123,6 @@
   <string name="show_whiteboard_summ">Vă permite să scrieţi pe ecran</string>
   <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
   <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>
-  <string name="sample_deck">Pachet mostră</string>
-  <string name="sample_deck_summ">Generează pachet cu capitale dacă nu găsesti nici un pachet</string>
   <string name="write_answers">Afiseaza răspunsuri</string>
   <string name="write_answers_summ">Vă permite să scrieti răspunsul şi să-l comparaţi cu cel corect</string>
   <string name="text_selection">Allow text selection</string>
@@ -139,23 +137,36 @@
   <string name="use_ruby_support_summ">Dacă gasesc caracterele \'[\' şi \']\', tratez textul cuprins intre ele ca o anotare Ruby</string>
   <string name="display_font_size">Dimensiunea relativă a fontului de afişare</string>
   <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
+  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
+  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
   <string name="button_size">Relative button size</string>
   <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
   <string name="hide_question_in_answer">Ascunde întrebarea în răspuns?</string>
   <string name="hide_question_in_answer_summ">Determină dacă întrebarea va fi ascunsa când se afiseaza răspunsul.</string>
   <string name="deck_path">Director pachet</string>
   <string name="deck_path_summ">Calea unde sunt stocate pachetele</string>
+  <string name="deck_order">Deck order</string>
+  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">Review in fullscreen</string>
   <string name="fullscreen_review_summ">You can decide if you want use all available screen space during card reviewing</string>
   <string name="zoom">Enable Zoom</string>
   <string name="zoom_summ">Show Zoom Controls when reviewing</string>
   <string name="swipe">Enable Gestures</string>
   <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
-  <string name="swipe_sensibility">Gesture Sensitivity</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
+  <string name="pref_cat_actions">Actions</string>
+  <string name="gestures_shake">Shake</string>
+  <string name="gestures_swipe_up">Swipe up</string>
+  <string name="gestures_swipe_down">Swipe down</string>
+  <string name="gestures_swipe_left">Swipe left</string>
+  <string name="gestures_swipe_right">Swipe right</string>
+  <string name="gestures_double_tap">Double tap</string>
+  <string name="gestures_tap_top">Tap top</string>
+  <string name="gestures_tap_bottom">Tap bottom</string>
+  <string name="gestures_tap_left">Tap left</string>
+  <string name="gestures_tap_right">Tap right</string>
+  <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
-  <string name="shake">Shake to Undo</string>
-  <string name="shake_summ">Shake your device to undo the last action</string>
   <string name="tts">Text to Speech</string>
   <string name="tts_summ">Reads out question and answer if no sound file is included</string>
   <string name="play_sounds_at_start">Play Sounds Instantly</string>
@@ -178,6 +189,8 @@
   <string name="about_title">Despre</string>
   <string name="cardeditor_title">Editor de fise</string>
   <string name="factadder_title">Card Adder</string>
+  <string name="factadder_saving_error">Error saving fact</string>
+  <string name="saving_facts">Saving facts</string>
   <string name="deckcreator_title">Deck Creator</string>
   <string name="model">Model:</string>
   <string name="select_model">Model</string>
@@ -297,11 +310,12 @@
   <string name="studyoptions_continue">Continue Reviewing</string>
   <string name="studyoptions_well_done">Well Done!</string>
   <string name="studyoptions_congrats_title">Congratulations!</string>
-  <string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
+  <string name="studyoptions_congrats_message">&lt;string name="studyoptions_congrats_message"/&gt;</string>
   <string name="studyoptions_congrats_card">card</string>
   <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">Learn More</string>
   <string name="studyoptions_congrats_reviewearly">Review Early</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
   <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
   <string name="studyoptions_congrats_finish">Back to Study Screen</string>
   <string name="studyoptions_feedback">Feedback</string>
@@ -384,6 +398,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
   <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_loading">Widget loading...</string>
   <string name="soon">Soon</string>
   <string name="show_next_review_time">Next review time</string>
   <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
@@ -434,6 +449,10 @@
     <item quantity="one">1 of %2$d due</item>
     <item quantity="other">%1$d din %2$d scadente</item>
   </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">%1$s (1 min. left)</item>
+    <item quantity="other">%1$s (%2$d min. left)</item>
+  </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 of %3$d cards shown</item>
     <item quantity="other">%1$s: %2$d of %3$d cards shown</item>
@@ -441,6 +460,18 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 of %3$d due)</item>
     <item quantity="other">%1$s (%2$d of %3$d due)</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_message">
+    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_new_cards">
+    <item quantity="one">1 card</item>
+    <item quantity="other">%1$d new cards</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_eta">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%1$d min.</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 card to server</item>

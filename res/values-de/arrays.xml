@@ -66,6 +66,18 @@
     <item>In der Reihenfolge des Hinzufügens</item>
     <item>In umgekehrter Reihenfolge des Hinzufügens</item>
   </string-array>
+  <string-array name="next_review_s">
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
+  </string-array>
+  <string-array name="next_review_p">
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
+  </string-array>
   <string-array name="next_review_in_s">
     <item>in 1 Stunde</item>
     <item>in 1 Tag</item>
@@ -107,6 +119,7 @@
     <item>Nach Fälligkeit</item>
     <item>Nach Intervall</item>
     <item>Nach Schwierigkeit</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Fälligkeit</item>
@@ -122,25 +135,30 @@
     <item>6 Monate</item>
     <item>1 Jahr</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>Kartenübersicht</item>
-    <item>Statistik</item>
-    <item>Vorlesefunktion</item>
-    <item>Fortschrittsanzeige in der Stapelauswahl</item>
-    <item>Kartenvorlage kann nun beim Hinzufügen gewählt werden</item>
-    <item>neues Widget</item>
-    <item>verbesserte Rückgängig-Funktion</item>
-    <item>Schieberegler</item>
-    <item>mehr Sprachen</item>
-    <item>Auswahl der Sprache</item>
-    <item>Erfolgsanzeige beim Lernen</item>
-    <item>Rückmeldung innerhalb von AnkiDroid</item>
-    <item>Möglichkeiten, Karten nach Schlagworten zu aktivieren/deaktivieren</item>
-    <item>Bessere Synchronisierung</item>
-    <item>Bessere Fehlermeldungen</item>
-    <item>Stapel hinzufügen</item>
-    <item>Mehr Optionen</item>
-    <item>Viele kleine Fehler behoben</item>
-    <item>Unterstützung für Schlagworte beim Karten ändern und erstellen sowie in der Kartenübersicht</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

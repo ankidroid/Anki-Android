@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Поиск</string>
   <string name="pref_cat_navigation">Навигация</string>
   <string name="pref_cat_swipe">Swipe</string>
-  <string name="pref_cat_shake">Трясение</string>
+  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Масштабирование</string>
   <string name="pref_cat_reset">Сброс</string>
   <string name="pref_cat_other">Прочие</string>
@@ -123,8 +123,6 @@
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>
   <string name="whiteboard_stroke_width">Ширина штриха</string>
   <string name="whiteboard_stroke_width_summ">Ширина штриха: XXX</string>
-  <string name="sample_deck">Колода с примерами</string>
-  <string name="sample_deck_summ">Создать колоду столиц для примера, если нет ни одной колоды в каталоге колод, где хранятся колоды</string>
   <string name="write_answers">Писать ответы</string>
   <string name="write_answers_summ">Позволяет вам написать ответ и сравнивать с правильными</string>
   <string name="text_selection">Разрешить выделение текста</string>
@@ -139,23 +137,36 @@
   <string name="use_ruby_support_summ">Если найдены символы \'[\' и \']\', то заключенный в них текст будет рассмотрен как Ruby-аннотация</string>
   <string name="display_font_size">Размер шрифта</string>
   <string name="display_font_size_summ">Размер шрифта для использования на дисплее относительно размера шрифта, сохранённого в колоде. На данный момент: XXX %</string>
+  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
+  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
   <string name="button_size">Размер кнопок</string>
   <string name="button_size_summ">Относительный размер кнопок на экране обзора. На данный момент: XXX %</string>
   <string name="hide_question_in_answer">Вопрос при ответе?</string>
   <string name="hide_question_in_answer_summ">Должен ли быть вопрос скрыт, когда ответ показан.</string>
   <string name="deck_path">Путь к колодам</string>
   <string name="deck_path_summ">Путь, где хранятся ваши колоды</string>
+  <string name="deck_order">Deck order</string>
+  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">Просмотр в полный экран</string>
   <string name="fullscreen_review_summ">Использовать все доступное место экрана для просмотра</string>
   <string name="zoom">Включить масштабирование</string>
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
   <string name="swipe">Включить жесты</string>
   <string name="swipe_summ_off">Используйте жесты (при swipe) для переключения между экранами. Не работает одновременно с кнопками масштабирования</string>
-  <string name="swipe_summ_on">Swipe-движение горизонтальное - для перемещения между экранами, вертикальное - для ответа на карты (вниз: снова, вверх: хорошо, двойное постукивание - легко)</string>
-  <string name="swipe_sensibility">Чувствительность жестов</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
+  <string name="pref_cat_actions">Actions</string>
+  <string name="gestures_shake">Shake</string>
+  <string name="gestures_swipe_up">Swipe up</string>
+  <string name="gestures_swipe_down">Swipe down</string>
+  <string name="gestures_swipe_left">Swipe left</string>
+  <string name="gestures_swipe_right">Swipe right</string>
+  <string name="gestures_double_tap">Double tap</string>
+  <string name="gestures_tap_top">Tap top</string>
+  <string name="gestures_tap_bottom">Tap bottom</string>
+  <string name="gestures_tap_left">Tap left</string>
+  <string name="gestures_tap_right">Tap right</string>
+  <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">Чувствительность swipe жестов: XXX</string>
-  <string name="shake">Тряхнуть для отката (отмены)</string>
-  <string name="shake_summ">Тряхнуть ваше устройство для отмены последнего действия</string>
   <string name="tts">Преобразование текста в речь</string>
   <string name="tts_summ">Читать вопрос/ответ, если нет прикреплённого звукового файла</string>
   <string name="play_sounds_at_start">Воспроизведение звука сразу</string>
@@ -178,6 +189,8 @@
   <string name="about_title">О программе</string>
   <string name="cardeditor_title">Редактор карты</string>
   <string name="factadder_title">Автор карты</string>
+  <string name="factadder_saving_error">Error saving fact</string>
+  <string name="saving_facts">Saving facts</string>
   <string name="deckcreator_title">Создание колоды</string>
   <string name="model">Модель:</string>
   <string name="select_model">Модель</string>
@@ -297,11 +310,12 @@
   <string name="studyoptions_continue">Продолжить обзор</string>
   <string name="studyoptions_well_done">Отлично!</string>
   <string name="studyoptions_congrats_title">Поздравляем!</string>
-  <string name="studyoptions_congrats_message">На сегодня Вы закончили.\nЗавтра будет %1$d %2$s для повторения\nи %3$d %4$s новых к изучению.</string>
+  <string name="studyoptions_congrats_message">&lt;string name="studyoptions_congrats_message"/&gt;</string>
   <string name="studyoptions_congrats_card">Карточка</string>
   <string name="studyoptions_congrats_cards">карт</string>
   <string name="studyoptions_congrats_learnmore">Учить дальше</string>
   <string name="studyoptions_congrats_reviewearly">Просмотренные ранее</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
   <string name="studyoptions_congrats_open_other_deck">Открыть другие колоды</string>
   <string name="studyoptions_congrats_finish">Вернуться к окну \"Начало урока\"</string>
   <string name="studyoptions_feedback">Обратная связь</string>
@@ -385,6 +399,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Есть карты для повтора</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">повтор %d карт</string>
   <string name="widget_no_cards_due">Карт для повтора нет</string>
+  <string name="widget_loading">Widget loading...</string>
   <string name="soon">Скоро</string>
   <string name="show_next_review_time">Время у кнопок показывать</string>
   <string name="show_next_review_time_summ">Показывать добавляемое время у кнопок ответа (Скоро, +1, +5 и т.д.)</string>
@@ -435,6 +450,10 @@
     <item quantity="one">повт. 1 из %2$d</item>
     <item quantity="other">повт. %1$d из %2$d</item>
   </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">%1$s (1 min. left)</item>
+    <item quantity="other">%1$s (%2$d min. left)</item>
+  </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 из %3$d карт показано</item>
     <item quantity="other">&gt;%1$s: %2$d из %3$d карт показано</item>
@@ -442,6 +461,18 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 из %3$d к повтору)</item>
     <item quantity="other">%1$s (%2$d из %3$d к повтору)</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_message">
+    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_new_cards">
+    <item quantity="one">1 card</item>
+    <item quantity="other">%1$d new cards</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_eta">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%1$d min.</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 карта на сервер</item>
