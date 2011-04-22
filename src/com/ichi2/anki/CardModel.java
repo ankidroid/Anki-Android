@@ -26,8 +26,8 @@ import com.samskivert.mustache.Template;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -136,13 +136,14 @@ public class CardModel implements Comparator<CardModel> {
      * @return unordered CardModels which are related to a given Model and eventually active put into the parameter
      *         "models"
      */
-    protected static final void fromDb(Deck deck, long modelId, TreeMap<Long, CardModel> models) {
+    protected static final void fromDb(Deck deck, long modelId, LinkedHashMap<Long, CardModel> models) {
         Cursor cursor = null;
         CardModel myCardModel = null;
         try {
             StringBuffer query = new StringBuffer(SELECT_STRING);
             query.append(" WHERE modelId = ");
             query.append(modelId);
+            query.append(" ORDER BY ordinal");
 
             cursor = AnkiDatabaseManager.getDatabase(deck.getDeckPath()).getDatabase().rawQuery(query.toString(), null);
 
@@ -199,7 +200,7 @@ public class CardModel implements Comparator<CardModel> {
         values.put("answerFontColour", mAnswerFontColour);
         values.put("answerAlign", mAnswerAlign);
         values.put("lastFontColour", mLastFontColour);
-        deck.getDB().getDatabase().update("cardModels", values, "id = " + mId, null);
+        deck.getDB().update(deck, "cardModels", values, "id = " + mId, null);
     }
 
 

@@ -17,6 +17,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,6 +38,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ichi2.anki.Fact.Field;
 
@@ -44,10 +46,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -82,10 +84,10 @@ public class FactAdder extends Activity {
     private Long mCurrentSelectedModelId;
 
     private LinkedList<FieldEditText> mEditFields;
-    private TreeMap<Long, CardModel> mCardModels;
+    private LinkedHashMap<Long, CardModel> mCardModels;
     
-    private TreeMap<Long, CardModel> mSelectedCardModels;
-	private TreeMap<Long, CardModel> mNewSelectedCardModels;       
+    private LinkedHashMap<Long, CardModel> mSelectedCardModels;
+	private LinkedHashMap<Long, CardModel> mNewSelectedCardModels;       
 	private ArrayList<Long> cardModelIds = new ArrayList<Long>();
 
     private Fact mNewFact;
@@ -96,6 +98,38 @@ public class FactAdder extends Activity {
     private EditText mNewTagEditText;
     private AlertDialog mTagsDialog;
     private AlertDialog mAddNewTag;
+
+    private ProgressDialog mProgressDialog;
+
+
+    private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+        	Resources res = getResources();
+        	mProgressDialog = ProgressDialog.show(FactAdder.this, "", res.getString(R.string.saving_facts), true);
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            if (values[0].getBoolean()) {
+                setResult(RESULT_OK);
+        		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
+        		populateEditFields();
+            } else {
+                Toast failureNotice = Toast.makeText(FactAdder.this, getResources().getString(R.string.factadder_saving_error), Toast.LENGTH_SHORT);
+                failureNotice.show();
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                	mProgressDialog.dismiss();
+                }
+            }
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        }
+    };
 
 
     @Override
@@ -119,7 +153,7 @@ public class FactAdder extends Activity {
 
         mModels = Model.getModels(mDeck);
         mCurrentSelectedModelId = mDeck.getCurrentModelId();
-        mNewSelectedCardModels = new TreeMap<Long, CardModel>();
+        mNewSelectedCardModels = new LinkedHashMap<Long, CardModel>();
         cardModelIds = new ArrayList<Long>();
         modelChanged();
 
@@ -130,11 +164,8 @@ public class FactAdder extends Activity {
                     current.updateField();
                 }
                 mNewFact.setTags(mFactTags);
-                mDeck.addFact(mNewFact, mSelectedCardModels);
-                setResult(RESULT_OK);
-                closeFactAdder();
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mDeck, mNewFact, mSelectedCardModels));                
             }
-
         });
 
         mModelButton.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +189,6 @@ public class FactAdder extends Activity {
         mCloseButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                setResult(RESULT_CANCELED);
                 closeFactAdder();
             }
 
@@ -172,7 +202,7 @@ public class FactAdder extends Activity {
             public void onClick(View v) {
                 recreateTagsDialog();
                 if (!mTagsDialog.isShowing()) {
-                    mTagsDialog.show();                    
+                    mTagsDialog.show();
                 }
             }
 
@@ -289,7 +319,7 @@ public class FactAdder extends Activity {
 
     private void modelChanged() {
 		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
-		mSelectedCardModels = mDeck.availableCardModels(mNewFact);
+		mSelectedCardModels = mDeck.activeCardModels(mNewFact);
 
 		mModelButton.setText(getResources().getString(R.string.model) + " " + mModels.get(mCurrentSelectedModelId).getName());
 		cardModelsChanged();

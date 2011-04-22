@@ -17,6 +17,7 @@
 
 package com.ichi2.anki;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,6 +25,8 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -49,7 +52,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.StringBuilder;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
@@ -453,15 +460,15 @@ public class Utils {
     	}
    		if (!inFormat) {
    	    	if (adjustedInterval == 1){
-   	       		return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_s)[type];
+   	       		return context.getResources().getStringArray(R.array.next_review_s)[type];
    	       	} else {
-   	   			return formatDouble(type, adjustedInterval) + " " + context.getResources().getStringArray(R.array.next_review_p)[type];
+   	       		return String.format(context.getResources().getStringArray(R.array.next_review_p)[type], formatDouble(type, adjustedInterval));
    	    	}   			
    		} else {
    	    	if (adjustedInterval == 1){
-   	       		return String.format(context.getResources().getStringArray(R.array.next_review_in_s)[type], formatDouble(type, adjustedInterval));       			       			
+   	       		return context.getResources().getStringArray(R.array.next_review_in_s)[type]; 			       			
    	       	} else {
-   	   			return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval));
+   	       		return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval));
    	    	}   			
    		}
     }
@@ -540,13 +547,18 @@ public class Utils {
      * @return True if an Intent with the specified action can be sent and responded to, false otherwise.
      */
     public static boolean isIntentAvailable(Context context, String action) {
+        return isIntentAvailable(context, action, null);
+    }
+
+    public static boolean isIntentAvailable(Context context, String action, ComponentName componentName) {
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(action);
+        intent.setComponent(componentName);
         List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
 
-
+    
     public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
         String base = model.getFeatures().trim();
         if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
@@ -560,6 +572,7 @@ public class Utils {
         }
         return base;
     }
+
 
     /**
      * @param mediaDir media directory path on SD card
@@ -805,5 +818,46 @@ public class Utils {
         Calendar cal = Calendar.getInstance();
         // 4am
         return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+    }
+
+    /**
+     * Adds a menu item to the given menu.
+     */
+    public static MenuItem addMenuItem(Menu menu, int groupId, int itemId, int order, int titleRes,
+            int iconRes) {
+        MenuItem item = menu.add(groupId, itemId, order, titleRes);
+        item.setIcon(iconRes);
+        return item;
+    }
+
+    /**
+     * Adds a menu item to the given menu and marks it as a candidate to be in the action bar.
+     */
+    public static MenuItem addMenuItemInActionBar(Menu menu, int groupId, int itemId, int order,
+            int titleRes, int iconRes) {
+        MenuItem item = addMenuItem(menu, groupId, itemId, order, titleRes, iconRes);
+        setShowAsActionIfRoom(item);
+        return item;
+    }
+
+    /**
+     * Sets the menu item to appear in the action bar via reflection.
+     * <p>
+     * This method uses reflection so that it works on all platforms. It any error occurs, assume
+     * the action bar is not available and just proceed.
+     */
+    private static void setShowAsActionIfRoom(MenuItem item) {
+        try {
+            Field showAsActionIfRoom = item.getClass().getField("SHOW_AS_ACTION_IF_ROOM");
+            Method setShowAsAction = item.getClass().getMethod("setShowAsAction", int.class);
+            setShowAsAction.invoke(item, showAsActionIfRoom.get(null));
+        } catch (SecurityException e) {
+        } catch (NoSuchMethodException e) {
+        } catch (NoSuchFieldException e) {
+        } catch (IllegalArgumentException e) {
+        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException e) {
+        } catch (NullPointerException e) {
+        }
     }
 }

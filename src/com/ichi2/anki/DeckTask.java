@@ -18,6 +18,7 @@
 package com.ichi2.anki;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -33,17 +34,19 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     public static final int TASK_TYPE_LOAD_DECK = 0;
     public static final int TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS = 1;
-    public static final int TASK_TYPE_ANSWER_CARD = 2;
-    public static final int TASK_TYPE_SUSPEND_CARD = 3;
-    public static final int TASK_TYPE_MARK_CARD = 4;
-    public static final int TASK_TYPE_UPDATE_FACT = 5;
-    public static final int TASK_TYPE_UNDO = 6;
-    public static final int TASK_TYPE_REDO = 7;
-    public static final int TASK_TYPE_LOAD_CARDS = 8;
-    public static final int TASK_TYPE_BURY_CARD = 9;
-    public static final int TASK_TYPE_DELETE_CARD = 10;
-    public static final int TASK_TYPE_LOAD_STATISTICS = 11;
-    public static final int TASK_TYPE_OPTIMIZE_DECK = 12;
+    public static final int TASK_TYPE_SAVE_DECK = 2;
+    public static final int TASK_TYPE_ANSWER_CARD = 3;
+    public static final int TASK_TYPE_SUSPEND_CARD = 4;
+    public static final int TASK_TYPE_MARK_CARD = 5;
+    public static final int TASK_TYPE_ADD_FACT = 6;
+    public static final int TASK_TYPE_UPDATE_FACT = 7;
+    public static final int TASK_TYPE_UNDO = 8;
+    public static final int TASK_TYPE_REDO = 9;
+    public static final int TASK_TYPE_LOAD_CARDS = 10;
+    public static final int TASK_TYPE_BURY_CARD = 11;
+    public static final int TASK_TYPE_DELETE_CARD = 12;
+    public static final int TASK_TYPE_LOAD_STATISTICS = 13;
+    public static final int TASK_TYPE_OPTIMIZE_DECK = 14;
 
     /**
      * Possible outputs trying to load a deck.
@@ -109,6 +112,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 }
                 return taskData;
 
+            case TASK_TYPE_SAVE_DECK:
+                return doInBackgroundSaveDeck(params);
+
             case TASK_TYPE_ANSWER_CARD:
                 return doInBackgroundAnswerCard(params);
 
@@ -117,6 +123,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_MARK_CARD:
                 return doInBackgroundMarkCard(params);
+
+            case TASK_TYPE_ADD_FACT:
+                return doInBackgroundAddFact(params);
 
             case TASK_TYPE_UPDATE_FACT:
                 return doInBackgroundUpdateFact(params);
@@ -166,6 +175,24 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    private TaskData doInBackgroundAddFact(TaskData[] params) {
+        // Save the fact
+        Deck deck = params[0].getDeck();
+        Fact editFact = params[0].getFact();
+        LinkedHashMap<Long, CardModel> cardModels = params[0].getCardModels();
+
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+        ankiDB.getDatabase().beginTransaction();
+        try {
+        	publishProgress(new TaskData(deck.addFact(editFact, cardModels) != null));
+            ankiDB.getDatabase().setTransactionSuccessful();
+        } finally {
+            ankiDB.getDatabase().endTransaction();
+        }
+        return null;
+    }
+
+
     private TaskData doInBackgroundUpdateFact(TaskData[] params) {
         // Save the fact
         Deck deck = params[0].getDeck();
@@ -208,7 +235,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 deck.answerCard(oldCard, ease);
                 Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
             }
-
             newCard = deck.getCard();
             if (oldCard != null) {
                 publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
@@ -246,6 +272,21 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             Log.i(AnkiDroidApp.TAG, "The deck has no cards = " + e.getMessage());
             return new TaskData(DECK_EMPTY);
         }
+    }
+
+
+    private TaskData doInBackgroundSaveDeck(TaskData... params) {
+    	Deck deck = params[0].getDeck();
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveAndResetDeck");
+        if (deck != null) {
+            deck.commitToDB();
+            deck.updateCutoff();
+            if (AnkiDroidApp.deck().hasFinishScheduler()) {
+                AnkiDroidApp.deck().finishScheduler();
+            }
+            deck.reset();
+        }
+        return null;
     }
 
 
@@ -290,11 +331,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             if (currentCard != null) {
                 String undoName = Deck.UNDO_TYPE_MARK_CARD;
                 deck.setUndoStart(undoName, currentCard.getId());
-            	if (currentCard.hasTag(Deck.TAG_MARKED)) {
+            	if (currentCard.isMarked()) {
                     deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 } else {
                     deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
                 }
+            	deck.resetMarkedTagId();
             	deck.setUndoEnd(undoName);
             }
 
@@ -319,7 +361,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
         	oldCardId = deck.undo(currentCardId, inReview);
             newCard = deck.getCard();
-            if (oldCardId != 0) {
+            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
             	newCard = deck.cardFromId(oldCardId);
             }
             publishProgress(new TaskData(newCard));
@@ -331,7 +373,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         return new TaskData(deck.getUndoType(), oldCardId);
     }
 
-    
+
     private TaskData doInBackgroundRedo(TaskData... params) {
         Deck deck = params[0].getDeck();
         Card newCard;
@@ -344,7 +386,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
         	oldCardId = deck.redo(currentCardId, inReview);
             newCard = deck.getCard();
-            if (oldCardId != 0) {
+            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
             	newCard = deck.cardFromId(oldCardId);
             }
             publishProgress(new TaskData(newCard));
@@ -453,6 +495,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static class TaskData {
         private Deck mDeck;
         private Card mCard;
+        private Fact mFact;
         private int mInteger;
         private String mMsg;
         private boolean previousCardLeech;     // answer card resulted in card marked as leech
@@ -464,6 +507,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private Context mContext;
         private int mType;
         private String[] mDeckList;
+        private LinkedHashMap<Long, CardModel> mCardModels;
 
 
         public TaskData(int value, Deck deck, Card card) {
@@ -496,11 +540,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
+        public TaskData(Deck deck, Fact fact, LinkedHashMap<Long, CardModel> cardModels) {
+        	mDeck = deck;
+        	mFact = fact;
+        	mCardModels = cardModels;
+        }
+
+
         public TaskData(ArrayList<String[]> allCards) {
-		if (allCards != null) {
-			mAllCards = new ArrayList<String[]>();
-	   		mAllCards.addAll(allCards);
-		}
+        	if (allCards != null) {
+        		mAllCards = new ArrayList<String[]>();
+        		mAllCards.addAll(allCards);
+        	}
         }
 
 
@@ -564,6 +615,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
+        public Fact getFact() {
+            return mFact;
+        }
+
+
         public long getLong() {
             return mLong;
         }
@@ -601,6 +657,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public int getType() {
             return mType;
+        }
+
+
+        public LinkedHashMap<Long, CardModel> getCardModels() {
+            return mCardModels;
         }
 
 

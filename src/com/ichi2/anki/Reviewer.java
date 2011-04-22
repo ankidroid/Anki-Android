@@ -14,11 +14,17 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +32,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -41,6 +48,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,7 +57,6 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -58,18 +65,14 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.FrameLayout.LayoutParams;
 
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
-
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Reviewer extends Activity {
 
@@ -167,8 +170,8 @@ public class Reviewer extends Activity {
     private int mRelativeButtonSize;
     private String mDictionaryAction;
     private int mDictionary;
-    private boolean mSwipeEnabled;
-    private boolean mShakeEnabled;
+    private boolean mGesturesEnabled;
+    private boolean mShakeEnabled = false;
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
@@ -192,7 +195,9 @@ public class Reviewer extends Activity {
      * Searches
      */
     private static final int DICTIONARY_AEDICT = 0;
-    private static final int DICTIONARY_LEO = 1;	// German web dictionary for English, French, Spanish, Italian, Chinese, Russian
+    private static final int DICTIONARY_LEO_WEB = 1;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
+    private static final int DICTIONARY_LEO_APP = 2;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
+    private static final int DICTIONARY_COLORDICT = 3;
     
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -241,6 +246,8 @@ public class Reviewer extends Activity {
     private int mStatisticBarsMax;
     private int mStatisticBarsHeight;
 
+    private boolean mClosing = false;
+
     private long mSavedTimer = 0;
 	/** 
 	 * Shake Detection
@@ -255,6 +262,38 @@ public class Reviewer extends Activity {
      */    
  	private GestureDetector gestureDetector;
  	View.OnTouchListener gestureListener;
+
+	/**
+     * Gesture Allocation
+     */
+ 	private int mGestureSwipeUp;
+ 	private int mGestureSwipeDown;
+ 	private int mGestureSwipeLeft;
+ 	private int mGestureSwipeRight;
+ 	private int mGestureShake;
+ 	private int mGestureDoubleTap;
+ 	private int mGestureTapLeft;
+ 	private int mGestureTapRight;
+ 	private int mGestureTapTop;
+ 	private int mGestureTapBottom;
+
+ 	private static final int GESTURE_NOTHING = 0;
+ 	private static final int GESTURE_ANSWER_EASE1 = 1;
+ 	private static final int GESTURE_ANSWER_EASE2 = 2;
+ 	private static final int GESTURE_ANSWER_EASE3 = 3;
+ 	private static final int GESTURE_ANSWER_EASE4 = 4;
+ 	private static final int GESTURE_ANSWER_RECOMMENDED = 5;
+ 	private static final int GESTURE_ANSWER_BETTER_THAN_RECOMMENDED = 6;
+ 	private static final int GESTURE_UNDO = 7;
+ 	private static final int GESTURE_REDO = 8;
+ 	private static final int GESTURE_EDIT = 9;
+ 	private static final int GESTURE_MARK = 10;
+ 	private static final int GESTURE_LOOKUP = 11;
+ 	private static final int GESTURE_BURY= 12;
+ 	private static final int GESTURE_SUSPEND = 13;
+ 	private static final int GESTURE_DELETE = 14;
+ 	private static final int GESTURE_CLEAR_WHITEBOARD = 15;
+ 	private static final int GESTURE_EXIT = 16;
 
 
     // ----------------------------------------------------------------------------
@@ -275,10 +314,9 @@ public class Reviewer extends Activity {
  	      mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
  	      float delta = mAccelCurrent - mAccelLast;
  	      mAccel = mAccel * 0.9f + delta; // perform low-cut filter
- 	      if (!mShakeActionStarted && mAccel >= (mShakeIntensity / 10) && AnkiDroidApp.deck().undoAvailable()) {
+ 	      if (!mShakeActionStarted && mAccel >= (mShakeIntensity / 10)) {
  	    	  mShakeActionStarted = true;
- 	    	  DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
-                      AnkiDroidApp.deck(), mCurrentCard));
+ 	    	  executeCommand(mGestureShake);
  	      }
  	    }
 
@@ -371,11 +409,6 @@ public class Reviewer extends Activity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mCurrentCard = values[0].getCard();
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
             }
@@ -385,9 +418,13 @@ public class Reviewer extends Activity {
                 mCardTimer.start();
             }
             reviewNextCard();
-            mShakeActionStarted = false;
             mProgressDialog.dismiss();
+        }
 
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            mShakeActionStarted = false;
         }
     };
 
@@ -441,6 +478,8 @@ public class Reviewer extends Activity {
                         Toast.LENGTH_SHORT);
             } else if (mIsLastCard) {
                 mNoMoreCards = true;
+                mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                        .getString(R.string.saving_changes), true);
             } else {
                 // session limits not reached, show next card
                 Card newCard = values[0].getCard();
@@ -448,11 +487,16 @@ public class Reviewer extends Activity {
                 // If the card is null means that there are no more cards scheduled for review.
                 if (newCard == null) {
                     mNoMoreCards = true;
+                    mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                            .getString(R.string.saving_changes), true);
                     return;
                 }
 
                 // Start reviewing next card
                 mCurrentCard = newCard;
+                if (mChosenAnswer.getText().equals("")) {
+                    setDueMessage();
+                }
                 Reviewer.this.setProgressBarIndeterminateVisibility(false);
                 // Reviewer.this.enableControls();
                 Reviewer.this.unblockControls();
@@ -481,11 +525,48 @@ public class Reviewer extends Activity {
         }
     };
 
-	private Handler mTimerHandler = new Handler();
+
+    DeckTask.TaskListener mSaveAndResetDeckHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
+        	} else {
+                mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                        .getString(R.string.saving_changes), true);
+        	}
+        }
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	if (mProgressDialog.isShowing()) {
+                try {
+                    mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+            }
+        	finish();
+        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        		if (mShowCongrats) {
+        			MyAnimation.slide(Reviewer.this, MyAnimation.FADE);
+        		} else {
+        			MyAnimation.slide(Reviewer.this, MyAnimation.RIGHT);
+        		}
+        	}
+        }
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            // Pass
+        }
+    };
+
+
+    private Handler mTimerHandler = new Handler();
 
     private Runnable removeChosenAnswerText=new Runnable() {
     	public void run() {
     		mChosenAnswer.setText("");
+    		setDueMessage();
     	}
     };
 
@@ -512,7 +593,10 @@ public class Reviewer extends Activity {
             if (mPrefFullscreenReview) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                requestWindowFeature(Window.FEATURE_NO_TITLE);
+                // Do not hide the title bar in Honeycomb, since it contains the action bar.
+                if (Integer.valueOf(android.os.Build.VERSION.SDK) < 11) {
+                    requestWindowFeature(Window.FEATURE_NO_TITLE);
+                }
             }
 
             requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -524,12 +608,24 @@ public class Reviewer extends Activity {
             switch (mDictionary) {
             	case DICTIONARY_AEDICT:
             		mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
+                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
             		break;
-            	case DICTIONARY_LEO:
-            		mDictionaryAction = "android.intent.action.VIEW";
-            		break;
+                case DICTIONARY_LEO_WEB:
+                    mDictionaryAction = "android.intent.action.VIEW";
+                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
+                    break;
+                case DICTIONARY_LEO_APP:
+                    mDictionaryAction = "android.intent.action.SEND";                   
+                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction, new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+                    break;
+                case DICTIONARY_COLORDICT:
+                    mDictionaryAction = "colordict.intent.action.SEARCH";                   
+                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
+                    break;
+                default:
+                    mIsDictionaryAvailable = false;
+                    break;
             }
-            mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
             Log.i(AnkiDroidApp.TAG, "Is intent available = " + mIsDictionaryAvailable);
 
             // Load the template for the card and set on it the available width for images
@@ -550,6 +646,12 @@ public class Reviewer extends Activity {
             // Initialize text-to-speech. This is an asynchronous operation.
             if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
             	ReadText.initializeTts(this, mDeckFilename);
+            }
+
+            // Get last whiteboard state
+            if (mPrefWhiteboard && MetaDB.getWhiteboardState(this, mDeckFilename) == 1) {
+            	mShowWhiteboard = true;
+            	mWhiteboard.setVisibility(View.VISIBLE);
             }
 
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
@@ -574,9 +676,11 @@ public class Reviewer extends Activity {
         if (mCurrentCard != null) {
            mCurrentCard.stopTimer();
         }
-        // Save changes
-        Deck deck = AnkiDroidApp.deck();
-        deck.commitToDB();
+        if (!mClosing) {
+            // Save changes
+            Deck deck = AnkiDroidApp.deck();
+            deck.commitToDB();
+        }
 
         if (mShakeEnabled) {
             mSensorManager.unregisterListener(mSensorListener);    	  
@@ -690,13 +794,18 @@ public class Reviewer extends Activity {
         MenuItem item;
         Resources res = getResources();
         if (mPrefWhiteboard) {
-            item = menu.add(Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.show_whiteboard);
-            item.setIcon(R.drawable.ic_menu_compose);
-            item = menu.add(Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE, R.string.clear_whiteboard);
-            item.setIcon(R.drawable.ic_menu_clear_playlist);
+            if (mShowWhiteboard) {
+                Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE,
+                        R.string.hide_whiteboard, R.drawable.ic_menu_compose);
+            } else {
+                Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE,
+                        R.string.show_whiteboard, R.drawable.ic_menu_compose);            	
+            }
+            Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE,
+                    R.string.clear_whiteboard, R.drawable.ic_menu_clear_playlist);
         }
-        item = menu.add(Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card);
-        item.setIcon(R.drawable.ic_menu_edit);
+        Utils.addMenuItem(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card,
+                R.drawable.ic_menu_edit);
 
         SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_remove_card);
         removeDeckSubMenu.setIcon(R.drawable.ic_menu_stop);
@@ -709,10 +818,10 @@ public class Reviewer extends Activity {
             item.setIcon(R.drawable.ic_menu_search);
         }
         item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
-        item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
-        item.setIcon(R.drawable.ic_menu_revert);
-        item = menu.add(Menu.NONE, MENU_REDO, Menu.NONE, R.string.redo);
-        item.setIcon(R.drawable.ic_menu_redo);        	
+        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo,
+                R.drawable.ic_menu_revert);
+        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_REDO, Menu.NONE, R.string.redo,
+                R.drawable.ic_menu_redo);
         return true;
     }
 
@@ -722,8 +831,7 @@ public class Reviewer extends Activity {
         if (mCurrentCard == null){
         	return false;
         }
-        mCurrentCard.loadTags();
-        if (mCurrentCard.hasTag(Deck.TAG_MARKED)) {
+        if (mCurrentCard.isMarked()) {
             item.setTitle(R.string.menu_marked);
             item.setIcon(R.drawable.ic_menu_star_on);
         } else {
@@ -791,10 +899,12 @@ public class Reviewer extends Activity {
                     // Show whiteboard
                     mWhiteboard.setVisibility(View.VISIBLE);
                     item.setTitle(R.string.hide_whiteboard);
+                    MetaDB.storeWhiteboardState(this, mDeckFilename, 1);
                 } else {
                     // Hide whiteboard
                     mWhiteboard.setVisibility(View.GONE);
                     item.setTitle(R.string.show_whiteboard);
+                    MetaDB.storeWhiteboardState(this, mDeckFilename, 0);
                 }
                 return true;
 
@@ -803,21 +913,7 @@ public class Reviewer extends Activity {
                 return true;
 
             case MENU_EDIT:
-                if (isCramming()) {
-                    Toast cramEditWarning = 
-                        Toast.makeText(Reviewer.this, 
-                                getResources().getString(R.string.cram_edit_warning), Toast.LENGTH_SHORT);
-                    cramEditWarning.show();
-                    return false;
-                } else {
-                    Intent editCard = new Intent(Reviewer.this, CardEditor.class);
-                	sEditorCard = mCurrentCard;
-                    startActivityForResult(editCard, EDIT_CURRENT_CARD);
-                    if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                        MyAnimation.slide(Reviewer.this, MyAnimation.LEFT);
-                    }
-                    return true;
-                }
+            	return editCard();
 
             case MENU_REMOVE_BURY:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
@@ -834,46 +930,7 @@ public class Reviewer extends Activity {
                 return true;
 
             case MENU_SEARCH:
-                
-            	if (mPrefTextSelection && mClipboard.hasText() && mIsDictionaryAvailable) {
-            	    mIsSelecting = false;
-            		switch (mDictionary) {
-                    	case DICTIONARY_AEDICT:
-                    		Intent aedictSearchIntent = new Intent(mDictionaryAction);
-                    		aedictSearchIntent.putExtra("kanjis", mClipboard.getText());
-                    		startActivity(aedictSearchIntent);
-                            mClipboard.setText("");
-                            return true;
-                    	case DICTIONARY_LEO:
-                    		// localisation is needless here since leo.org translates only into or out of German 
-                    		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
-                    		String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
-                    		for (int i = 0; i < itemValues.length; i++) {
-                        		if (language.equals(itemValues[i])) {
-                    		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
-                            		startActivity(leoSearchIntent);
-                                    mClipboard.setText("");
-                                    return true;
-                        		}                    			
-                    		}
-                    		final CharSequence[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
-                    		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    		builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
-                    		builder.setItems(items, new DialogInterface.OnClickListener() {
-                    			public void onClick(DialogInterface dialog, int item) {
-                    				String language = itemValues[item].toString();
-                    				Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
-                    				startActivity(leoSearchIntent);
-                    				mClipboard.setText("");
-                    				storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
-                    			}
-                    		});
-                    		AlertDialog alert = builder.create();
-                    		alert.show();
-                    		return true;
-                	}
-                }
-                return true;
+                return lookUp();
 
             case MENU_MARK:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
@@ -957,6 +1014,81 @@ public class Reviewer extends Activity {
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
         closeReviewer();
+    }
+
+
+    private boolean editCard() {
+        if (isCramming()) {
+            Toast cramEditWarning = 
+                Toast.makeText(Reviewer.this, 
+                        getResources().getString(R.string.cram_edit_warning), Toast.LENGTH_SHORT);
+            cramEditWarning.show();
+            return false;
+        } else {
+            Intent editCard = new Intent(Reviewer.this, CardEditor.class);
+        	sEditorCard = mCurrentCard;
+            startActivityForResult(editCard, EDIT_CURRENT_CARD);
+            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                MyAnimation.slide(Reviewer.this, MyAnimation.LEFT);
+            }
+            return true;
+        }
+    }
+
+
+    private boolean lookUp() {
+    	if (mPrefTextSelection && mClipboard.hasText() && mIsDictionaryAvailable) {
+    	    mIsSelecting = false;
+    		switch (mDictionary) {
+            	case DICTIONARY_AEDICT:
+            		Intent aedictSearchIntent = new Intent(mDictionaryAction);
+            		aedictSearchIntent.putExtra("kanjis", mClipboard.getText());
+            		startActivity(aedictSearchIntent);
+                    mClipboard.setText("");
+                    return true;
+            	case DICTIONARY_LEO_WEB:
+            		// localisation is needless here since leo.org translates only into or out of German 
+            		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
+            		String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
+            		for (int i = 0; i < itemValues.length; i++) {
+                		if (language.equals(itemValues[i])) {
+            		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
+                    		startActivity(leoSearchIntent);
+                            mClipboard.setText("");
+                            return true;
+                		}                    			
+            		}
+            		final CharSequence[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
+            		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            		builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
+            		builder.setItems(items, new DialogInterface.OnClickListener() {
+            			public void onClick(DialogInterface dialog, int item) {
+            				String language = itemValues[item].toString();
+            				Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
+            				startActivity(leoSearchIntent);
+            				mClipboard.setText("");
+            				storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
+            			}
+            		});
+            		AlertDialog alert = builder.create();
+            		alert.show();
+            		return true;
+                case DICTIONARY_LEO_APP:
+                    Intent leoSearchIntent = new Intent(mDictionaryAction);
+                    leoSearchIntent.putExtra(Intent.EXTRA_TEXT, mClipboard.getText());
+                    leoSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+                    startActivity(leoSearchIntent);
+                    mClipboard.setText("");
+                    return true;
+            	case DICTIONARY_COLORDICT:
+            		Intent colordictSearchIntent = new Intent(mDictionaryAction);
+            		colordictSearchIntent.putExtra("EXTRA_QUERY", mClipboard.getText());
+            		startActivity(colordictSearchIntent);
+                    mClipboard.setText("");
+                    return true;     
+        	}
+        }
+        return true;
     }
 
 
@@ -1093,7 +1225,7 @@ public class Reviewer extends Activity {
         mCardTimer.setTextSize(headTextSize);
 
         mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
-        mChosenAnswer.setTextSize((float) (headTextSize * 1.1));
+        mChosenAnswer.setTextSize((float) (headTextSize * 1.02));
 
         if (mPrefWhiteboard) {
             mWhiteboard = new Whiteboard(this, null);
@@ -1105,7 +1237,7 @@ public class Reviewer extends Activity {
             mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if (mWhiteboard.getVisibility() == View.VISIBLE) {
+                    if (mShowWhiteboard) {
                         return false;
                     }
                     if (gestureDetector.onTouchEvent(event)) {
@@ -1143,6 +1275,17 @@ public class Reviewer extends Activity {
         if (mPrefWhiteboard) {
             mWhiteboard.setInvertedColor(true);
         }
+        mFlipCard.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mEase1.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mEase2.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mEase3.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mEase4.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        mFlipCard.setTextColor(fgColor);
+        mEase1.setTextColor(fgColor);
+        mEase2.setTextColor(fgColor);
+        mEase3.setTextColor(fgColor);
+        mEase4.setTextColor(fgColor);
+
         fgColor = res.getColor(R.color.progressbar_border_inverted);
         bgColor = res.getColor(R.color.progressbar_background_inverted);
         findViewById(R.id.progress_bars_border1).setBackgroundColor(fgColor);
@@ -1251,13 +1394,29 @@ public class Reviewer extends Activity {
                 Integer.toString(HQIA_DO_SHOW)));
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
-        mSwipeEnabled = preferences.getBoolean("swipe", false);
-        mShakeEnabled = preferences.getBoolean("shake", false);
-        mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
+
+        mGesturesEnabled = preferences.getBoolean("swipe", false);
+        if (mGesturesEnabled) {
+         	mGestureShake = Integer.parseInt(preferences.getString("gestureShake", "0"));
+         	if (mGestureShake != 0) {
+         		mShakeEnabled = true;
+         	}
+            mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
+
+            mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "0"));
+         	mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
+         	mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "13"));
+         	mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "0"));
+         	mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "0"));
+         	mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "0"));
+         	mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "0"));
+         	mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "0"));
+         	mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
+        }
 
         return preferences;
     }
@@ -1269,6 +1428,16 @@ public class Reviewer extends Activity {
         } else {
             displayCardQuestion();
         }
+    }
+
+
+    private void setDueMessage() {
+		if (mCurrentCard != null && AnkiDroidApp.deck().getScheduler().equals("reviewEarly")) {
+			double due = (mCurrentCard.getCombinedDue() - Utils.now()) / 86400.0;
+			if (due > 0.041) {
+	    		mChosenAnswer.setText(Utils.getReadableInterval(Reviewer.this, due, true));				
+			}
+		}
     }
 
 
@@ -1298,8 +1467,12 @@ public class Reviewer extends Activity {
 
     private void updateScreenCounts() {
         Deck deck = AnkiDroidApp.deck();
-        int due = deck.getDueCount();
-        setTitle(getResources().getQuantityString(R.plurals.studyoptions_window_title, due, deck.getDeckName(), due, deck.getCardCount()));
+        int eta = deck.getETA();
+        if (deck.hasFinishScheduler() || eta < 1) {
+            setTitle(deck.getDeckName());
+        } else {
+            setTitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, deck.getDeckName(), eta));        	
+        }
 
         int _failedSoonCount = deck.getFailedSoonCount();
         int _revCount = deck.getRevCount();
@@ -1312,13 +1485,13 @@ public class Reviewer extends Activity {
         boolean isDue = true; // mCurrentCard.isDue();
         int type = mCurrentCard.getType();
 
-        if (isDue && (type == Card.TYPE_NEW) && (_failedSoonCount + _revCount != 0)) {
+        if (isDue && (type == Card.TYPE_NEW)) {
             newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
         }
-        if (isDue && (type == Card.TYPE_REV) && (_failedSoonCount + _newCount != 0)) {
+        if (isDue && (type == Card.TYPE_REV)) {
             revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
         }
-        if (isDue && (type == Card.TYPE_FAILED) && (_revCount + _newCount != 0)) {
+        if (isDue && (type == Card.TYPE_FAILED)) {
             failedSoonCount.setSpan(new UnderlineSpan(), 0, failedSoonCount.length(), 0);
         }
 
@@ -1335,15 +1508,13 @@ public class Reviewer extends Activity {
             mStatisticBarsHeight = view.getHeight();
         }
         Deck deck = AnkiDroidApp.deck();
-        double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
-        Utils.updateProgressBars(this, mDailyBar, values[0], mStatisticBarsMax, mStatisticBarsHeight, true);
-        Utils.updateProgressBars(this, mGlobalBar, values[1], mStatisticBarsMax, mStatisticBarsHeight, true);
+        Utils.updateProgressBars(this, mDailyBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
+        Utils.updateProgressBars(this, mGlobalBar, deck.getProgress(true), mStatisticBarsMax, mStatisticBarsHeight, true);
     }  
 
 
     private void displayCardQuestion() {
         sDisplayAnswer = false;
-        hideEaseButtons();
         
         if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
         	mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
@@ -1380,6 +1551,7 @@ public class Reviewer extends Activity {
         }
 
         updateCard(displayString);
+        hideEaseButtons();
     }
 
 
@@ -1432,8 +1604,8 @@ public class Reviewer extends Activity {
 
         mIsSelecting = false;
         mFlipCard.setVisibility(View.GONE);
-        showEaseButtons();
         updateCard(displayString);
+        showEaseButtons();
     }
 
 
@@ -1453,6 +1625,7 @@ public class Reviewer extends Activity {
             baseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + content;
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
+            mMainLayout.setBackgroundColor(Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors)));
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             baseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
@@ -1497,7 +1670,8 @@ public class Reviewer extends Activity {
         }
 
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
-        String card = mCardTemplate.replace("::content::", content);
+        String style = getCustomFontsStyle();
+        String card = mCardTemplate.replace("::content::", content).replace("::style::", style);
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
@@ -1511,6 +1685,45 @@ public class Reviewer extends Activity {
         		Sound.playSounds(Utils.stripHTML(mCurrentCard.getAnswer()), MetaDB.LANGUAGE_ANSWER);            	
             } 
         }
+    }
+
+
+    /** Returns the filename without the extension. */
+    private String removeExtension(String filename) {
+      int dotPosition = filename.lastIndexOf('.');
+      if (dotPosition == -1) {
+        return filename;
+      }
+      return filename.substring(0, dotPosition);
+    }
+
+
+    /*
+     * Returns the CSS used to handle custom fonts.
+     * <p>
+     * Custom fonts live in fonts directory in the directory used to store decks.
+     * <p>
+     * Each font is mapped to the font family by the same name as the name of the font fint without
+     * the extension.
+     */
+    private String getCustomFontsStyle() {
+      SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+      String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
+      String fontsPath = deckPath + "/fonts/";
+      File fontsDir = new File(fontsPath);
+      if (!fontsDir.exists() || !fontsDir.isDirectory()) {
+        return "";
+      }
+      StringBuilder builder = new StringBuilder();
+      for (File fontFile : fontsDir.listFiles()) {
+        String fontFace = String.format(
+            "@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
+            removeExtension(fontFile.getName()), fontFile.getAbsolutePath());
+        Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
+        builder.append(fontFace);
+        builder.append('\n');
+      }
+      return builder.toString();
     }
 
 
@@ -1784,6 +1997,103 @@ public class Reviewer extends Activity {
         return sb.toString();
     }
 
+
+    private void executeCommand(int which) {
+    	switch(which) {
+    	case GESTURE_NOTHING:
+    		break;
+    	case GESTURE_ANSWER_EASE1:
+			if (sDisplayAnswer) {
+				answerCard(Card.EASE_FAILED);
+			} else {
+		        displayCardAnswer();
+			}
+    		break;
+    	case GESTURE_ANSWER_EASE2:
+			if (sDisplayAnswer) {
+				answerCard(Card.EASE_HARD);
+			} else {
+		        displayCardAnswer();
+			}    		
+    		break;
+    	case GESTURE_ANSWER_EASE3:
+			if (sDisplayAnswer) {
+				answerCard(Card.EASE_MID);
+			} else {
+		        displayCardAnswer();
+			}
+    		break;
+    	case GESTURE_ANSWER_EASE4:
+			if (sDisplayAnswer) {
+				answerCard(Card.EASE_EASY);
+			} else {
+		        displayCardAnswer();
+			}
+    		break;
+    	case GESTURE_ANSWER_RECOMMENDED:
+			if (sDisplayAnswer) {
+				if (mCurrentCard.isRev()) {
+					answerCard(Card.EASE_MID);
+				} else {
+					answerCard(Card.EASE_HARD);
+				}
+			} else {
+				displayCardAnswer();
+			}
+    		break;
+    	case GESTURE_ANSWER_BETTER_THAN_RECOMMENDED:
+			if (sDisplayAnswer) {
+				if (mCurrentCard.isRev()) {
+					answerCard(Card.EASE_EASY);
+				} else {
+					answerCard(Card.EASE_MID);
+				}
+			}
+    		break;
+    	case GESTURE_EXIT:
+       	 	closeReviewer();
+    		break;
+    	case GESTURE_UNDO:
+    		if (AnkiDroidApp.deck().undoAvailable()) {
+        		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+                        AnkiDroidApp.deck(), mCurrentCard));    			
+    		}
+    		break;
+    	case GESTURE_REDO:
+    		if (AnkiDroidApp.deck().redoAvailable()) {
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));    			
+    		}
+    		break;
+    	case GESTURE_EDIT:
+        	editCard();
+    		break;
+    	case GESTURE_MARK:
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
+                    AnkiDroidApp.deck(), mCurrentCard));
+    		break;
+    	case GESTURE_LOOKUP:
+    		lookUp();
+    		break;
+    	case GESTURE_BURY:
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+                    AnkiDroidApp.deck(), mCurrentCard));
+    		break;
+    	case GESTURE_SUSPEND:
+    		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+                    AnkiDroidApp.deck(), mCurrentCard));
+    		break;
+    	case GESTURE_DELETE:
+    		showDeleteCardDialog();
+    		break;
+    	case GESTURE_CLEAR_WHITEBOARD:
+            if (mPrefWhiteboard) {            	
+        		mWhiteboard.clear();
+            }
+    		break;
+    	}
+    }
+
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
@@ -1828,14 +2138,8 @@ public class Reviewer extends Activity {
 
 
     private void closeReviewer() {
-    	finish();
-    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-    		if (mShowCongrats) {
-    			MyAnimation.slide(this, MyAnimation.FADE);
-    		} else {
-    			MyAnimation.slide(this, MyAnimation.RIGHT);
-    		}
-    	}
+    	mClosing = true;
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), ""));
     }
 
     class MyGestureDetector extends SimpleOnGestureListener {
@@ -1844,30 +2148,21 @@ public class Reviewer extends Activity {
 
     	@Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (mSwipeEnabled) {
+            if (mGesturesEnabled) {
         		try {
         			if (e2.getY() - e1.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath && !mIsYScrolling) {
                         // down
-      					if (sDisplayAnswer) {
-           					answerCard(Card.EASE_FAILED);
-       					} else {
-           			        displayCardAnswer();    						
-       					}
+        				executeCommand(mGestureSwipeDown);
        		        } else if (e1.getY() - e2.getY() > StudyOptions.sSwipeMinDistance && Math.abs(velocityY) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < StudyOptions.sSwipeMaxOffPath && !mIsYScrolling) {
                         // up
-      					if (sDisplayAnswer) {
-      						if (mCurrentCard.isRev()) {
-           						answerCard(Card.EASE_MID);
-      						} else {
-      							answerCard(Card.EASE_HARD);
-      						}
-      					} else {
-      						displayCardAnswer(); 
-      					}
-                     } else if (e2.getX() - e1.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath && !mIsXScrolling && !mIsSelecting) {
-                       	 // left
-                    	 closeReviewer();
-                     }
+        				executeCommand(mGestureSwipeUp);
+       		        } else if (e2.getX() - e1.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath && !mIsXScrolling && !mIsSelecting) {
+                      	 // right
+       		        	executeCommand(mGestureSwipeRight);
+                    } else if (e1.getX() - e2.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath && !mIsXScrolling && !mIsSelecting) {
+                    	// left
+                    	executeCommand(mGestureSwipeLeft);
+                    }
                		mIsXScrolling = false;        		
                		mIsYScrolling = false;        		
                  }
@@ -1879,14 +2174,36 @@ public class Reviewer extends Activity {
         }
 
     	@Override
-    	public boolean onDoubleTapEvent(MotionEvent e) {
-    		if (mSwipeEnabled && sDisplayAnswer) {
-        		if (mCurrentCard.isRev()) {
-					answerCard(Card.EASE_EASY);
-        		} else {
-					answerCard(Card.EASE_MID);
-        		}
+    	public boolean onDoubleTap(MotionEvent e) {
+    		if (mGesturesEnabled) {
+        		executeCommand(mGestureDoubleTap);            	
 			}
+    		return false;
+    	}
+    	
+    	@Override
+    	public boolean onSingleTapConfirmed(MotionEvent e) {
+    		if (mGesturesEnabled && !mIsSelecting) {
+    			int height = mCard.getHeight();
+    			int width = mCard.getWidth();
+    			float posX = e.getX();
+    			float posY = e.getY();
+    			if (posX > posY / height * width) {
+    				if (posY > height * (1 - posX / width)) {
+    		       		executeCommand(mGestureTapRight);
+    				} else {
+    		       		executeCommand(mGestureTapTop);
+    				}
+    			} else {
+    				if (posY > height * (1 - posX / width)) {
+    		       		executeCommand(mGestureTapBottom);    					
+    				} else {
+    		       		executeCommand(mGestureTapLeft);
+    				}    				
+    			}
+ 			} else {
+ 				mIsSelecting = false;
+ 			}
     		return false;
     	}
     	
@@ -1896,7 +2213,7 @@ public class Reviewer extends Activity {
         		mIsYScrolling = true;        		
         	}
         	if (mCard.getScrollX() != 0) {
-        		mIsXScrolling = true;        		
+        		mIsXScrolling = true;
         	}  
             return super.onScroll(e1, e2, distanceX, distanceY);
         }

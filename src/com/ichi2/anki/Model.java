@@ -25,6 +25,7 @@ import com.mindprod.common11.StringTools;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -81,13 +82,15 @@ public class Model {
     private Deck mDeck;
 
     /** Map for convenience and speed which contains CardModels from current model */
-    private TreeMap<Long, CardModel> mCardModelsMap = new TreeMap<Long, CardModel>();
+    private LinkedHashMap<Long, CardModel> mCardModelsMap = new LinkedHashMap<Long, CardModel>();
 
     /** Map for convenience and speed which contains FieldModels from current model */
     private TreeMap<Long, FieldModel> mFieldModelsMap = new TreeMap<Long, FieldModel>();
 
     /** Map for convenience and speed which contains the CSS code related to a CardModel */
     private HashMap<Long, String> mCssCardModelMap = new HashMap<Long, String>();
+
+    private HashMap<Long, String> mColorCardModelMap = new HashMap<Long, String>();
 
     /**
      * The percentage chosen in preferences for font sizing at the time when the css for the CardModels related to this
@@ -251,7 +254,7 @@ public class Model {
         values.put("spacing", mSpacing);
         values.put("initialSpacing", mInitialSpacing);
         values.put("source", mSource);
-        deck.getDB().getDatabase().update("models", values, "id = " + mId, null);
+        deck.getDB().update(deck, "models", values, "id = " + mId, null);
 
     }
 
@@ -320,6 +323,20 @@ public class Model {
 
 
     /**
+     * Prepares the Background Colors for all CardModels in this Model
+     */
+    private void prepareColorForCardModels(boolean invertedColors) {
+        CardModel myCardModel = null;
+        String color = null;
+        for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
+            myCardModel = entry.getValue();
+            color = invertColor(myCardModel.getLastFontColour(), invertedColors);
+            mColorCardModelMap.put(myCardModel.getId(), color);
+        }
+    }
+
+
+    /**
      * Returns a cached CSS for the font color and font size of a given CardModel taking into account the included
      * fields
      *
@@ -336,6 +353,19 @@ public class Model {
             prepareCSSForCardModels(invertedColors);
         }
         return mCssCardModelMap.get(myCardModelId);
+    }
+
+
+    protected final String getBackgroundColor(long myCardModelId, boolean invertedColors) {
+    	if (mColorCardModelMap.size() == 0) {
+    		prepareColorForCardModels(invertedColors);
+    	}
+		String color = mColorCardModelMap.get(myCardModelId);
+		if (color != null) {
+			return color;
+		} else {
+			return "#FFFFFF";
+        }
     }
 
 

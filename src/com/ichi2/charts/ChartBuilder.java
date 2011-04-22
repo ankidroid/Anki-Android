@@ -196,6 +196,7 @@ public class ChartBuilder extends Activity {
                 SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
                 Editor editor = preferences.edit();
                 editor.putBoolean("fullScreen", !mFullScreen);
+                Statistics.sZoom = zoom;
                 editor.commit();
                 finish();
                 Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
@@ -281,6 +282,10 @@ public class ChartBuilder extends Activity {
         		return false;
         		}
         	});
+        zoom = Statistics.sZoom;
+        if (zoom > 0) {
+        	zoom();
+        }
     }
 
 

@@ -119,6 +119,7 @@
     <item>Par échéance</item>
     <item>Par intervalle</item>
     <item>Par difficulté</item>
+    <item>Par date de Création</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Échéance</item>
