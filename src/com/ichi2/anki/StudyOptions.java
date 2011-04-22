@@ -647,6 +647,14 @@ public class StudyOptions extends Activity {
 
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        // Update the widget when pausing this activity.
+        WidgetStatus.update(getBaseContext());
+    }
+
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
