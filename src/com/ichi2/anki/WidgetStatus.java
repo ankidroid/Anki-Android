@@ -17,6 +17,7 @@ package com.ichi2.anki;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.SQLException;
 import android.util.Log;
@@ -31,7 +32,17 @@ import java.util.Collections;
  * <p>
  * It contains the status of each of the decks.
  */
-public class WidgetStatus {
+public final class WidgetStatus {
+    /** This class should not be instantiated. */
+    private WidgetStatus() {}
+
+    /** Request the widget to update its status. */
+    public static void update(Context context) {
+        Intent intent = new Intent(context, AnkiDroidWidget.UpdateService.class);
+        intent.setAction(AnkiDroidWidget.UpdateService.ACTION_UPDATE);
+        context.startService(intent);
+    }
+
     /** Returns the status of each of the decks. */
     public static ArrayList<DeckStatus> fetch(Context context) {
         Log.i(AnkiDroidApp.TAG, "fetchDeckStatus");

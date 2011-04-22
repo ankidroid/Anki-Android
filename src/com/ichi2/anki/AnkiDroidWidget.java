@@ -46,17 +46,19 @@ public class AnkiDroidWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i(AnkiDroidApp.TAG, "onUpdate");
-        context.startService(new Intent(context, UpdateService.class));
+        WidgetStatus.update(context);
     }
 
     public static class UpdateService extends Service {
         /** If this action is used when starting the service, it will move to the next due deck. */
         private static final String ACTION_NEXT = "org.ichi2.anki.AnkiDroidWidget.NEXT";
+
         /**
          * If this action is used when starting the service, it will move to the previous due
          * deck.
          */
         private static final String ACTION_PREV = "org.ichi2.anki.AnkiDroidWidget.PREV";
+
         /**
          * When received, this action is ignored by the service.
          * <p>
@@ -64,10 +66,16 @@ public class AnkiDroidWidget extends AppWidgetProvider {
          * associated with them, but want to clear it off afterwards.
          */
         private static final String ACTION_IGNORE = "org.ichi2.anki.AnkiDroidWidget.IGNORE";
+
         /**
          * If this action is used when starting the service, it will open the current due deck.
          */
         private static final String ACTION_OPEN = "org.ichi2.anki.AnkiDroidWidget.OPEN";
+
+        /**
+         * Update the state of the widget.
+         */
+        public static final String ACTION_UPDATE = "org.ichi2.anki.AnkiDroidWidget.UPDATE";
 
         /**
          * The current due deck that is shown in the widget.
@@ -136,6 +144,9 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                         startActivity(openDeckIntent);
                     }
                     updateDueDecksNow = false;
+                } else if (ACTION_UPDATE.equals(intent.getAction())) {
+                    // Updating the widget is done below for all actions.
+                    Log.d(AnkiDroidApp.TAG, "AnkiDroidWidget.UpdateService: UPDATE");
                 }
             }
             RemoteViews updateViews = buildUpdate(this, updateDueDecksNow);
