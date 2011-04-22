@@ -126,7 +126,9 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<supports-screens 
+	<supports-screens
+		android:resizeable="true"
+		android:xlargeScreens="true"
 		android:largeScreens="true" 
 		android:normalScreens="true" 
 		android:smallScreens="true" 
