@@ -14,6 +14,8 @@
 
 package com.ichi2.anki;
 
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -27,6 +29,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.IBinder;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -35,8 +38,6 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -88,15 +89,22 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
         // Simple class to hold the deck information for the widget
         private class DeckInformation {
-
+            /** The name of the deck, used to identify the deck in the UI. */
             private String mDeckName;
+            /** The path of the deck on disk. */
+            private String mDeckPath;
+            /** The number of new cards that are to be studied. */
             private int mNewCards;
+            /** The number of due cards to review. */
             private int mDueCards;
+            /** The number of failed cards to review. */
             private int mFailedCards;
 
 
-            private DeckInformation(String deckName, int newCards, int dueCards, int failedCards) {
+            private DeckInformation(String deckName, String deckPath, int newCards, int dueCards,
+                    int failedCards) {
                 mDeckName = deckName;
+                mDeckPath = deckPath;
                 mNewCards = newCards;       // Blue
                 mDueCards = dueCards;       // Black
                 mFailedCards = failedCards; // Red
@@ -109,6 +117,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
 
 
+            /** Returns a string representing the status of the deck. */
             private CharSequence getDeckStatus() {
                 SpannableStringBuilder sb = new SpannableStringBuilder();
 
@@ -156,16 +165,10 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 } else if (ACTION_IGNORE.equals(intent.getAction())) {
                     updateDueDecksNow = false;
                 } else if (ACTION_OPEN.equals(intent.getAction())) {
-                    if (currentDueDeck >= 0 && currentDueDeck < dueDecks.size()) {
-                        Intent openDeckIntent = new Intent(this, StudyOptions.class);
-                        openDeckIntent.setAction(Intent.ACTION_MAIN);
-                        openDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-                        openDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        // TODO(flerda): Tell the activity which deck to open.
-                        // DeckInformation dueDeck = dueDecks.get(currentDueDeck);
-                        // openDeckIntent.putExtra(StudyOptions.EXTRA_DECK, dueDeck.mDeckName);
-                        startActivity(openDeckIntent);
-                    }
+                    Intent loadDeckIntent =
+                        new Intent(Intent.ACTION_VIEW, intent.getData(), this, StudyOptions.class);
+                    loadDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(loadDeckIntent);
                     updateDueDecksNow = false;
                 }
             }
@@ -224,7 +227,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     deckInformation.mDeckName);
                 updateViews.setTextViewText(R.id.anki_droid_status,
                     deckInformation.getDeckStatus());
-                PendingIntent openPendingIntent = getOpenPendingIntent(context);
+                PendingIntent openPendingIntent = getOpenPendingIntent(context,
+                        deckInformation.mDeckPath);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_name, openPendingIntent);
                 updateViews.setOnClickPendingIntent(R.id.anki_droid_status, openPendingIntent);
                 // Enable or disable the prev and next buttons.
@@ -371,9 +375,10 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         /**
          * Returns a pending intent that opens the current deck.
          */
-        private PendingIntent getOpenPendingIntent(Context context) {
+        private PendingIntent getOpenPendingIntent(Context context, String deckPath) {
             Intent ankiDroidIntent = new Intent(context, UpdateService.class);
             ankiDroidIntent.setAction(ACTION_OPEN);
+            ankiDroidIntent.setData(Uri.parse("file://" + deckPath));
             return PendingIntent.getService(context, 0, ankiDroidIntent, 0);
         }
 
@@ -407,7 +412,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     deck.closeDeck();
 
                     // Add the information about the deck
-                    information.add(new DeckInformation(deckName, newCards, dueCards, failedCards));
+                    information.add(new DeckInformation(deckName, absPath, newCards, dueCards,
+                            failedCards));
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());
