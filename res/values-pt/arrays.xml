@@ -67,16 +67,16 @@
     <item>Mostrar em ordem aleatória</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hora</item>
-    <item>dia</item>
-    <item>mês</item>
-    <item>ano</item>
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>horas</item>
-    <item>dias</item>
-    <item>meses</item>
-    <item>anos</item>
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>em 1 hora</item>
@@ -119,6 +119,7 @@
     <item>Por tempo programado</item>
     <item>Por intervalo</item>
     <item>Pela dificuldade</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Programado</item>
@@ -134,25 +135,30 @@
     <item>6 meses</item>
     <item>1 ano</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>listagem de cards</item>
-    <item>estatísticas</item>
-    <item>text-to-speech</item>
-    <item>barra de completo no seletor de decks</item>
-    <item>selecionar modelo de card ao adicionar cards</item>
-    <item>novo widget</item>
-    <item>melhor comportamento de desfazer/refazer</item>
-    <item>controles deslizantes</item>
-    <item>seletor de linguagem</item>
-    <item>mais línguas</item>
-    <item>barras de progresso ao revisar</item>
-    <item>feedback within AnkiDroid</item>
-    <item>possibilidade de setar cards ativos/inativos por tag</item>
-    <item>melhor sincronização</item>
-    <item>melhor relator de erro</item>
-    <item>adicionar decks</item>
-    <item>mais opções</item>
-    <item>muitas correções de erros pequenos</item>
-    <item>suporte à tag ao editar/adicionar cards, e na listagem de cards</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

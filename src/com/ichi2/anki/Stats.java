@@ -33,18 +33,6 @@ public class Stats {
 
     public static final int STATS_LIFE = 0;
     public static final int STATS_DAY = 1;
-
-    public static final int STATSARRAY_SIZE = 7;
-    public static final int STATSARRAY_DAILY_AVERAGE_TIME = 0;
-    public static final int STATSARRAY_GLOBAL_AVERAGE_TIME = 1;
-    public static final int STATSARRAY_GLOBAL_YOUNG_NO_SHARE = 2;
-    public static final int STATSARRAY_DAILY_REPS = 3;
-    public static final int STATSARRAY_DAILY_NO = 4;
-    public static final int STATSARRAY_GLOBAL_MATURE_YES = 5;
-    public static final int STATSARRAY_GLOBAL_MATURE_NO = 6;
-    
-    public static final int TYPE_ETA = 0;
-    public static final int TYPE_YES_SHARES = 1;
     
     // BEGIN: SQL table columns
     private long mId;
@@ -172,11 +160,21 @@ public class Stats {
         values.put("matureEase2", 0);
         values.put("matureEase3", 0);
         values.put("matureEase4", 0);
-        mId = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("stats", null, values);
+        mId = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).insert(mDeck, "stats", null, values);
     }
 
 
     public void toDB() {
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "stats", getValues(), "id = " + mId, null);
+    }
+
+
+    public void toDB(ContentValues oldValues) {
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "stats", getValues(), "id = " + mId, null, true, new ContentValues[] {oldValues}, new String[] {"id = " + mId});
+    }
+
+
+    private ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put("type", mType);
         values.put("day", mDay.toString());
@@ -198,8 +196,7 @@ public class Stats {
         values.put("matureEase2", mMatureEase2);
         values.put("matureEase3", mMatureEase3);
         values.put("matureEase4", mMatureEase4);
-
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().update("stats", values, "id = " + mId, null);
+	return values;
     }
 
 
@@ -210,6 +207,7 @@ public class Stats {
 
 
     public static void updateStats(Stats stats, Card card, int ease, String oldState) {
+    	ContentValues oldValues = stats.getValues();
         char[] newState = oldState.toCharArray();
         stats.mReps += 1;
         double delay = card.totalTime();
@@ -222,15 +220,15 @@ public class Stats {
         // update eases
         // We want attr to be of the form mYoungEase3
         newState[0] = Character.toUpperCase(newState[0]);
-        String attr = "m" + String.valueOf(newState) + String.format("Ease%d", ease);
+        StringBuilder attr = new StringBuilder();
+		attr.append("m").append(String.valueOf(newState)).append(String.format("Ease%d", ease));
         try {
-            Field f = stats.getClass().getDeclaredField(attr);
+            Field f = stats.getClass().getDeclaredField(attr.toString());
             f.setInt(stats, f.getInt(stats) + 1);
         } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG, "Failed to update " + attr + " : " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, "Failed to update " + attr.toString() + " : " + e.getMessage());
         }
-
-        stats.toDB();
+        stats.toDB(oldValues);
     }
 
 
@@ -358,24 +356,6 @@ public class Stats {
         return stats;
     }
 
-
-    public static double[] getStats(Deck deck, Stats globalStats, Stats dailyStats) {
-    	double[] stats = new double[STATSARRAY_SIZE];
-    	stats[STATSARRAY_DAILY_AVERAGE_TIME] = dailyStats.mAverageTime;
-    	stats[STATSARRAY_GLOBAL_AVERAGE_TIME] = globalStats.mAverageTime;
-    	stats[STATSARRAY_DAILY_REPS] = dailyStats.mReps;
-    	double globalYoungNo = globalStats.mYoungEase0 + globalStats.mYoungEase1;
-    	double globalYoungTotal = globalYoungNo + globalStats.mYoungEase2 + globalStats.mYoungEase3 + globalStats.mYoungEase4;
-    	if (globalYoungTotal != 0) {
-        	stats[STATSARRAY_GLOBAL_YOUNG_NO_SHARE] = globalYoungNo / globalYoungTotal * 100;
-    	} else {
-        	stats[STATSARRAY_GLOBAL_YOUNG_NO_SHARE] = 0;
-    	}
-    	stats[STATSARRAY_DAILY_NO] = dailyStats.mNewEase0 + dailyStats.mNewEase1 + dailyStats.mYoungEase0 + dailyStats.mYoungEase1 + dailyStats.mMatureEase0 + dailyStats.mMatureEase1;
-    	stats[STATSARRAY_GLOBAL_MATURE_YES] = globalStats.mMatureEase2 + globalStats.mMatureEase3 + globalStats.mMatureEase4;
-    	stats[STATSARRAY_GLOBAL_MATURE_NO] = globalStats.mMatureEase0 + globalStats.mMatureEase1;
-    	return stats;
-    }
     
     /**
      * @return the reps
@@ -386,10 +366,58 @@ public class Stats {
 
 
     /**
+     * @return the average time
+     */
+    public double getAverageTime() {
+        return mAverageTime;
+    }
+
+
+    /**
      * @return the day
      */
     public Date getDay() {
         return mDay;
+    }
+
+
+    /**
+     * @return the share of no answers on young cards
+     */
+    public double getYesShare() {
+    	if (mReps != 0) {
+        	return 1 - (((double)(mNewEase0 + mNewEase1 + mYoungEase0 + mYoungEase1 + mMatureEase0 + mMatureEase1)) / (double)mReps);
+    	} else {
+        	return 0;
+    	}
+    }
+
+
+    /**
+     * @return the share of no answers on young cards
+     */
+    public double getMatureYesShare() {
+    	double matureNo = mMatureEase0 + mMatureEase1;
+    	double matureTotal = matureNo + mMatureEase2 + mMatureEase3 + mMatureEase4;
+    	if (matureTotal != 0) {
+        	return 1 - (matureNo / matureTotal);
+    	} else {
+        	return 0;
+    	}
+    }
+
+
+    /**
+     * @return the share of no answers on mature cards
+     */
+    public double getYoungNoShare() {
+	double youngNo = mYoungEase0 + mYoungEase1;
+	double youngTotal = youngNo + mYoungEase2 + mYoungEase3 + mYoungEase4;
+    	if (youngTotal != 0) {
+        	return youngNo / youngTotal;
+    	} else {
+        	return 0;
+    	}
     }
 
 

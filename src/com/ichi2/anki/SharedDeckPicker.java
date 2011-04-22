@@ -425,16 +425,11 @@ public class SharedDeckPicker extends Activity {
     	if (mDownloadSuccessful) {
     		Intent intent = SharedDeckPicker.this.getIntent();
     		setResult(RESULT_OK, intent);
-            finish();
-            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                MyAnimation.slide(this, MyAnimation.RIGHT);
-            }
-    	} else {
-            finish();
-            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                MyAnimation.slide(this, MyAnimation.LEFT);
-            }
     	}
+        finish();
+        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+            MyAnimation.slide(this, MyAnimation.LEFT);
+        }           
     }
 
     /********************************************************************

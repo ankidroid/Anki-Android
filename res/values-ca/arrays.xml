@@ -67,16 +67,16 @@
     <item>Mostra-les desordenades</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hora</item>
-    <item>dia</item>
-    <item>mes</item>
-    <item>any</item>
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>hores</item>
-    <item>dies</item>
-    <item>mesos</item>
-    <item>anys</item>
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>en 1 hora</item>
@@ -119,6 +119,7 @@
     <item>Per venciment</item>
     <item>Per interval</item>
     <item>Per dificultat</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Pendent</item>
@@ -134,25 +135,30 @@
     <item>6 mesos</item>
     <item>1 any</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>navegador de fitxes</item>
-    <item>estadístiques</item>
-    <item>text a veu</item>
-    <item>mostra la barra de paquet complet al selector de paquets</item>
-    <item>Trieu el model de fitxa per afegir un fet</item>
-    <item>nou giny</item>
-    <item>millores en desfer / refer</item>
-    <item>controls lliscants</item>
-    <item>selecció d\'idioma</item>
-    <item>més idiomes</item>
-    <item>mostra la barra de progrés a la pantalla de revisió</item>
-    <item>comentaris dins de AnkiDroid</item>
-    <item>possibilitat d\'activar i desactivar les fitxes segons la seva etiqueta</item>
-    <item>millor sincronització</item>
-    <item>millor informador d\'errors</item>
-    <item>afegeix paquets</item>
-    <item>més opcions</item>
-    <item>un munt de correccions de petits errors</item>
-    <item>gestió d\'etiquetes en editar, afegir i veure les fitxes</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

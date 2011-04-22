@@ -67,16 +67,16 @@
     <item>Au hasard</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>heure</item>
-    <item>jour</item>
-    <item>mois</item>
-    <item>année</item>
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>heures</item>
-    <item>jours</item>
-    <item>mois</item>
-    <item>années</item>
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>dans 1 h</item>
@@ -119,6 +119,7 @@
     <item>Par échéance</item>
     <item>Par intervalle</item>
     <item>Par difficulté</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Échéance</item>
@@ -134,25 +135,30 @@
     <item>semestre</item>
     <item>année</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>Navigateur de carte</item>
-    <item>statistiques</item>
-    <item>synthèse vocale</item>
-    <item>barre d\'avancement de paquet sur le sélecteur de paquet</item>
-    <item>Sélectionnez le modèle de carte lors de l\'ajout de carte</item>
-    <item>nouveau widget</item>
-    <item>meilleur comportement annuler/refaire</item>
-    <item>Barres de scrolling</item>
-    <item>sélection de la langue</item>
-    <item>plus de langues</item>
-    <item>Barres de progression en étudiant</item>
-    <item>Dialogue de feedback</item>
-    <item>possibilité de sélectionner les cartes actives / inactives par label</item>
-    <item>meilleure synchronisation</item>
-    <item>meilleur rapporteur d\'erreurs</item>
-    <item>ajouter des paquets</item>
-    <item>plus d\'options</item>
-    <item>beaucoup de corrections pour de petites erreurs</item>
-    <item>support de label pour l\'éditeur de cartes, support de l\'ajout de cartes et du navigateur de carte</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

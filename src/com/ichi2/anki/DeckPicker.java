@@ -54,7 +54,6 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
@@ -68,6 +67,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -102,7 +102,6 @@ public class DeckPicker extends Activity implements Runnable {
     private static final int MENU_MY_ACCOUNT = 4;
     private static final int MENU_FEEDBACK = 5;
 
-
 	/**
 	 * Message types
 	 */
@@ -110,11 +109,22 @@ public class DeckPicker extends Activity implements Runnable {
 	private static final int MSG_UPGRADE_SUCCESS = 1;
 	private static final int MSG_UPGRADE_FAILURE = 2;
 
+	/**
+	 * Deck orders
+	 */
+	private static final int ORDER_BY_DATE = 0;
+	private static final int ORDER_ALPHABETICAL = 1;
+	private static final int ORDER_BY_DUE_CARDS = 2;
+	private static final int ORDER_BY_TOTAL_CARDS = 3;
+	private static final int ORDER_BY_REMAINING_NEW_CARDS = 4;
+
     /**
 	* Available options performed by other activities
 	*/
     private static final int PREFERENCES_UPDATE = 0;
     private static final int CREATE_DECK = 1;
+    private static final int DOWNLOAD_PERSONAL_DECK = 2;
+    private static final int DOWNLOAD_SHARED_DECK = 3;
     private static final int REPORT_FEEDBACK = 2;
 
 	private DeckPicker mSelf;
@@ -141,6 +151,7 @@ public class DeckPicker extends Activity implements Runnable {
 	private BroadcastReceiver mUnmountReceiver = null;
 
 	private String mPrefDeckPath = null;
+	private int mPrefDeckOrder = 0;
 	private String mRemoveDeckFilename = null;
 	private String mRemoveDeckPath = null;
 
@@ -185,6 +196,9 @@ public class DeckPicker extends Activity implements Runnable {
 
 			String path = data.getString("absPath");
 			int msgtype = data.getInt("msgtype");
+			int due = data.getInt("due");
+			int total = data.getInt("total");
+			int totalNew = data.getInt("totalNew");
 
 			if (msgtype == DeckPicker.MSG_UPGRADE_NEEDED) {
 				dueString = res.getString(R.string.deckpicker_upgrading);
@@ -195,8 +209,7 @@ public class DeckPicker extends Activity implements Runnable {
 				newString = "";
 				showProgress = "false";
 			} else if (msgtype == DeckPicker.MSG_UPGRADE_SUCCESS) {
-			    int due = data.getInt("due");
-				dueString = res.getQuantityString(R.plurals.deckpicker_due, due, due, data.getInt("total"));
+				dueString = res.getQuantityString(R.plurals.deckpicker_due, due, due, total);
 				newString = String
 						.format(res.getString(R.string.deckpicker_new), data
 								.getInt("new"));
@@ -214,10 +227,14 @@ public class DeckPicker extends Activity implements Runnable {
 					map.put("showProgress", showProgress);
                     map.put("notes", notes);
                     map.put("rateOfCompletionMat", completionMat);                    
-                    map.put("rateOfCompletionAll", completionAll);                    
+                    map.put("rateOfCompletionAll", completionAll);
+                    map.put("dueInt", Integer.toString(due));                    
+                    map.put("total", Integer.toString(total));                    
+                    map.put("totalNew", Integer.toString(totalNew));                    
 				}
 			}
-
+			
+			Collections.sort(mDeckList, new HashMapCompare());
 			mDeckListAdapter.notifyDataSetChanged();
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
 			setTitleText();
@@ -438,6 +455,7 @@ public class DeckPicker extends Activity implements Runnable {
 		SharedPreferences preferences = PrefSettings
 				.getSharedPrefs(getBaseContext());
 		mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
+		mPrefDeckOrder = Integer.parseInt(preferences.getString("deckOrder", "0"));
 		populateDeckList(mPrefDeckPath);
 
 		mSwipeEnabled = preferences.getBoolean("swipe", false);
@@ -635,7 +653,7 @@ public class DeckPicker extends Activity implements Runnable {
 			return true;
 		case R.id.optimize_deck:
 			deckPath = data.get("filepath");
-			deck = Deck.openDeck(deckPath);
+			deck = Deck.openDeck(deckPath, false);
 	    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, null));
 			return true;
 		case R.id.download_missing_media:
@@ -831,8 +849,7 @@ public class DeckPicker extends Activity implements Runnable {
 
         if (requestCode == PREFERENCES_UPDATE) {
             SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-            String newPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
-            if (!mPrefDeckPath.equals(newPath)) {
+            if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
                 finish();
                 Intent i = new Intent(DeckPicker.this, DeckPicker.class);
                 startActivity(i);
@@ -840,7 +857,7 @@ public class DeckPicker extends Activity implements Runnable {
                     MyAnimation.slide(this, MyAnimation.NONE);
                 }
             }
-        } else if (requestCode == CREATE_DECK && resultCode == RESULT_OK) {
+        } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
             finish();
             Intent i = new Intent(DeckPicker.this, DeckPicker.class);
             startActivity(i);
@@ -866,8 +883,8 @@ public class DeckPicker extends Activity implements Runnable {
 		Resources res = getResources();
 		int len = 0;
 		File[] fileList;
-		TreeSet<HashMap<String, String>> tree = new TreeSet<HashMap<String, String>>(
-				new HashMapCompare());
+
+		TreeSet<HashMap<String, String>> tree = new TreeSet<HashMap<String, String>>(new HashMapCompareLoad());
 
 		File dir = new File(mPrefDeckPath);
 		fileList = dir.listFiles(new AnkiFilter());
@@ -982,7 +999,7 @@ public class DeckPicker extends Activity implements Runnable {
 					}
 
 					try {
-						deck = Deck.openDeck(path);
+						deck = Deck.openDeck(path, false);
 						version = deck.getVersion();
 					} catch (SQLException e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
@@ -999,7 +1016,7 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("msgtype", MSG_UPGRADE_FAILURE);
 						data.putInt("version", version);
 						data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
-						deck.closeDeck();
+						deck.closeDeck(false);
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					} else {
@@ -1012,13 +1029,14 @@ public class DeckPicker extends Activity implements Runnable {
 						int totalCardsCompletionBar = totalRevCards + totalNewCards;
 
 						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
-						deck.closeDeck();
+						deck.closeDeck(false);
 
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_UPGRADE_SUCCESS);
 						data.putInt("due", dueCards);
 						data.putInt("total", totalCards);
 						data.putInt("new", newCards);
+						data.putInt("totalNew", totalNewCards);
 						data.putString("notes", upgradeNotes);
 
 						int rateOfCompletionMat;
@@ -1036,7 +1054,7 @@ public class DeckPicker extends Activity implements Runnable {
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
-						mTotalTime += Math.max(deck.getStats(Stats.TYPE_ETA)[0] / 60, 0);
+						mTotalTime += Math.max(deck.getETA(), 0);
 						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);
@@ -1077,7 +1095,7 @@ public class DeckPicker extends Activity implements Runnable {
                 AnkiDroidApp.deck().closeDeck();
                 AnkiDroidApp.setDeck(null);
             }
-            startActivity(new Intent(this, PersonalDeckPicker.class));
+            startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
             if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                 MyAnimation.slide(this, MyAnimation.RIGHT);
             }
@@ -1094,7 +1112,7 @@ public class DeckPicker extends Activity implements Runnable {
             AnkiDroidApp.setDeck(null);
         }
         // deckLoaded = false;
-        startActivity(new Intent(this, SharedDeckPicker.class));
+        startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
             MyAnimation.slide(this, MyAnimation.RIGHT);
         }
@@ -1285,26 +1303,54 @@ public class DeckPicker extends Activity implements Runnable {
 		}
 	}
 
-	private static final class HashMapCompare implements
-			Comparator<HashMap<String, String>> {
+
+	private class HashMapCompareLoad implements
+	Comparator<HashMap<String, String>> {
 		@Override
 		public int compare(HashMap<String, String> object1,
 				HashMap<String, String> object2) {
-			// Order by last modification date (last deck modified first)
-			if (object2.get("mod").compareToIgnoreCase(object1.get("mod")) != 0) {
-				return object2.get("mod").compareToIgnoreCase(
-						object1.get("mod"));
-				// But if there are two decks with the same date of
-				// modification, order them in alphabetical order
-			} else {
-				return object1.get("filepath").compareToIgnoreCase(
-						object2.get("filepath"));
-			}
+			if (mPrefDeckOrder == ORDER_BY_DATE) {
+	    		// Order by last modification date (last deck modified first)
+				if (object2.get("mod").compareToIgnoreCase(object1.get("mod")) != 0) {
+					return object2.get("mod").compareToIgnoreCase(
+							object1.get("mod"));
+					// But if there are two decks with the same date of
+					// modification, order them in alphabetical order
+				} else {
+					return object1.get("filepath").compareToIgnoreCase(
+							object2.get("filepath"));
+				}
+	    	} else {
+	    		return object1.get("filepath").compareToIgnoreCase(object2.get("filepath"));
+	    	}
 		}
 	}
 
 
-    class MyGestureDetector extends SimpleOnGestureListener {	
+	private class HashMapCompare implements
+	Comparator<HashMap<String, String>> {
+		@Override
+		public int compare(HashMap<String, String> object1,
+				HashMap<String, String> object2) {
+		    try {
+		    	if (mPrefDeckOrder == ORDER_BY_DUE_CARDS) {
+					return - Integer.valueOf(object1.get("dueInt")).compareTo(Integer.valueOf(object2.get("dueInt")));
+		    	} else if (mPrefDeckOrder == ORDER_BY_TOTAL_CARDS) {
+		    		return - Integer.valueOf(object1.get("total")).compareTo(Integer.valueOf(object2.get("total")));
+		    	} else if (mPrefDeckOrder == ORDER_BY_REMAINING_NEW_CARDS) {
+		    		return - Integer.valueOf(object1.get("totalNew")).compareTo(Integer.valueOf(object2.get("totalNew")));
+				} else {
+					return 0;
+				}
+		    }
+		    catch( Exception e ) {
+		        return 0;
+		    }
+		}
+	}
+
+
+	class MyGestureDetector extends SimpleOnGestureListener {	
     	@Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled) {

@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Cerca</string>
   <string name="pref_cat_navigation">Navegació</string>
   <string name="pref_cat_swipe">Dóna un cop</string>
-  <string name="pref_cat_shake">Sacseja</string>
+  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Reinicia</string>
   <string name="pref_cat_other">Altres</string>
@@ -123,8 +123,6 @@
   <string name="show_whiteboard_summ">Permet escriure a la pantalla</string>
   <string name="whiteboard_stroke_width">Amplada del traç a la pissarra</string>
   <string name="whiteboard_stroke_width_summ">Amplada del traç: XXX</string>
-  <string name="sample_deck">Paquet de mostra</string>
-  <string name="sample_deck_summ">Genera un paquet de capitals si no en troba cap</string>
   <string name="write_answers">Escriure les respostes</string>
   <string name="write_answers_summ">Permet escriure la resposta i comparar-la amb la solució correcta</string>
   <string name="text_selection">Permet triar el text</string>
@@ -139,23 +137,36 @@
   <string name="use_ruby_support_summ">El text inclòs entre corxets  \'[\' i \']\' es tractaràn con una anotació de ruby</string>
   <string name="display_font_size">Tipus de lletra de mida relativa</string>
   <string name="display_font_size_summ">Mida de lletra de la pantalla en relació amb les definicions del paquet. Ara és: XXX%</string>
+  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
+  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
   <string name="button_size">Mida relativa dels botons</string>
   <string name="button_size_summ">Mida relativa dels botons a la pantalla de revisió. Ara: XXX%</string>
   <string name="hide_question_in_answer">Voleu amagar la pregunta a la resposta?</string>
   <string name="hide_question_in_answer_summ">Indica si la pregunta s\'ha de mostrar quan es mostri la resposta</string>
   <string name="deck_path">Ruta per als paquets</string>
   <string name="deck_path_summ">Ruta de la carpeta dels vostres paquets</string>
+  <string name="deck_order">Deck order</string>
+  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">Revisa a pantalla completa</string>
   <string name="fullscreen_review_summ">Podeu fer servit tota la pantalla al revisar les fitxes</string>
   <string name="zoom">Activa l\'ampliació</string>
   <string name="zoom_summ">Mostra els botons d\'ampliació a les fitxes</string>
   <string name="swipe">Habilita els gestos</string>
   <string name="swipe_summ_off">Feu servir gestos per canviar entre les pantalles i fitxes de resposta. Aquesta opció no és compatible amb els controls de zoom</string>
-  <string name="swipe_summ_on">Passeu horitzontalment per canviar entre pantalles i verticalment per respondre les fitxes (cap a baix: Repeteix, cap amunt: Bé, dos cops: Fàcil)</string>
-  <string name="swipe_sensibility">Sensibilitat dels gestos</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
+  <string name="pref_cat_actions">Actions</string>
+  <string name="gestures_shake">Shake</string>
+  <string name="gestures_swipe_up">Swipe up</string>
+  <string name="gestures_swipe_down">Swipe down</string>
+  <string name="gestures_swipe_left">Swipe left</string>
+  <string name="gestures_swipe_right">Swipe right</string>
+  <string name="gestures_double_tap">Double tap</string>
+  <string name="gestures_tap_top">Tap top</string>
+  <string name="gestures_tap_bottom">Tap bottom</string>
+  <string name="gestures_tap_left">Tap left</string>
+  <string name="gestures_tap_right">Tap right</string>
+  <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">Sensibilitat dels gestos: XXX</string>
-  <string name="shake">Sacsegeu el dispositiu per desfer</string>
-  <string name="shake_summ">Sacsegeu el dispositiu per desfer la darrera acció</string>
   <string name="tts">Síntesi de veu</string>
   <string name="tts_summ">Llegeix en veu alta les preguntes i respostes si no s\'inclou arxiu de so</string>
   <string name="play_sounds_at_start">Reprodueix els sons de seguida</string>
@@ -178,6 +189,8 @@
   <string name="about_title">Quant a</string>
   <string name="cardeditor_title">Editor de fitxes</string>
   <string name="factadder_title">Afegeix una fitxa</string>
+  <string name="factadder_saving_error">Error saving fact</string>
+  <string name="saving_facts">Saving facts</string>
   <string name="deckcreator_title">Autor del paquet</string>
   <string name="model">Plantilla:</string>
   <string name="select_model">Plantilla</string>
@@ -297,11 +310,11 @@
   <string name="studyoptions_continue">Continua amb la revisió</string>
   <string name="studyoptions_well_done">Ben fet!</string>
   <string name="studyoptions_congrats_title">Enhorabona!</string>
-  <string name="studyoptions_congrats_message">Per avui heu acabat\n Demà hi haurà:\n%1$d %2$s per revisar i %3$d nous %4$s.</string>
   <string name="studyoptions_congrats_card">fitxa</string>
   <string name="studyoptions_congrats_cards">fitxes</string>
   <string name="studyoptions_congrats_learnmore">Aprendre més</string>
   <string name="studyoptions_congrats_reviewearly">Revisa aviat</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
   <string name="studyoptions_congrats_open_other_deck">Obre un altre paquet</string>
   <string name="studyoptions_congrats_finish">Torna a la pantalla d\'aprenentatge</string>
   <string name="studyoptions_feedback">Comentaris</string>
@@ -384,6 +397,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Fitxes pendents</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d fitxes pendents</string>
   <string name="widget_no_cards_due">No hi ha fitxes pendents</string>
+  <string name="widget_loading">Widget loading...</string>
   <string name="soon">Aviat</string>
   <string name="show_next_review_time">La nova revisió serà</string>
   <string name="show_next_review_time_summ">Mostra l\'hora de la propera revisió en funció de la meva tria</string>
@@ -434,6 +448,10 @@
     <item quantity="one">1 de %2$d pendent</item>
     <item quantity="other">%1$d de %2$d pendents</item>
   </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">%1$s (1 min. left)</item>
+    <item quantity="other">%1$s (%2$d min. left)</item>
+  </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: Es mostra a fitxa de %3$d</item>
     <item quantity="other">%1$s: Es mostren %2$d fitxes de %3$d</item>
@@ -441,6 +459,18 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 de %3$d pendent)</item>
     <item quantity="other">%1$s (%2$d de %3$d pendents)</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_message">
+    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_new_cards">
+    <item quantity="one">1 card</item>
+    <item quantity="other">%1$d new cards</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_eta">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%1$d min.</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 card to server</item>

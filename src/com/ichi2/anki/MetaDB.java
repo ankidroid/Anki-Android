@@ -19,7 +19,9 @@ public class MetaDB {
   	  try {
   		  mMetaDb = context.openOrCreateDatabase(DATENBANK_NAME,  0, null);
 		  mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS languages (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-				  			+ "deckpath TEXT NOT NULL, modelid INTEGER NOT NULL, cardmodelid INTEGER NOT NULL, qa INTEGER, language TEXT)");
+		  			+ "deckpath TEXT NOT NULL, modelid INTEGER NOT NULL, cardmodelid INTEGER NOT NULL, qa INTEGER, language TEXT)");
+		  mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+		  			+ "deckpath TEXT NOT NULL, state INTEGER)");
 		  Log.i(AnkiDroidApp.TAG, "Opening MetaDB");
 	  } catch(Exception e) {
 		  Log.e("Error", "Error opening MetaDB ", e);
@@ -38,9 +40,9 @@ public class MetaDB {
     		openDB(context);
    	  	}
     	try {
-  		  mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
-		  mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS languages (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-		  			+ "deckpath TEXT NOT NULL, modelid INTEGER NOT NULL, cardmodelid INTEGER NOT NULL, qa INTEGER, language TEXT)");
+    		  mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
+      		  mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
+      		  openDB(context);
   		  Log.i(AnkiDroidApp.TAG, "Resetting all language assignment");
   		  return true;
   	  } catch(Exception e) {
@@ -97,5 +99,51 @@ public class MetaDB {
     		Log.e("Error", "Error resetting deck language", e);
     	}
     	return false;
+    }
+
+    public static int getWhiteboardState(Context context, String deckPath) {
+    	if (mMetaDb == null || !mMetaDb.isOpen()) {
+    		openDB(context);
+   	  	}
+    	Cursor cur = null;
+    	try {
+    		cur = mMetaDb.rawQuery("SELECT state FROM whiteboardState" + " WHERE deckpath = \'" + deckPath + "\'", null);
+    		if (cur.moveToNext()) {
+    			return cur.getInt(0);
+    		} else {
+    			return 0;
+    		}
+    	} catch(Exception e) {
+     		  Log.e("Error", "Error retrieving whiteboard state from MetaDB ", e);
+     		  return 0;
+    	} finally {
+    		if (cur != null && !cur.isClosed()) {
+    			cur.close();
+    	  	}
+    	}
+    }
+
+
+    public static void storeWhiteboardState(Context context, String deckPath, int state) {
+    	if (mMetaDb == null || !mMetaDb.isOpen()) {
+    		openDB(context);
+   	  	}
+    	Cursor cur = null;
+    	try {
+    		cur = mMetaDb.rawQuery("SELECT _id FROM whiteboardState" + " WHERE deckpath = \'" + deckPath + "\'", null);
+    		if (cur.moveToNext()) {
+        		mMetaDb.execSQL("UPDATE whiteboardState SET deckpath=\'" + deckPath + "\', state=" + Integer.toString(state) + " WHERE _id=" + cur.getString(0) + ";");
+        		Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + deckPath);  			
+    		} else {
+        		mMetaDb.execSQL("INSERT INTO whiteboardState (deckpath, state) VALUES (\'" + deckPath + "\', " + Integer.toString(state) + ");");
+        		Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + deckPath);    			
+    		}
+    	} catch(Exception e) {
+     		  Log.e("Error", "Error storing whiteboard state in MetaDB ", e);
+    	} finally {
+    		if (cur != null && !cur.isClosed()) {
+    			cur.close();
+    	  	}
+    	}
     }
 }

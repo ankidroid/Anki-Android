@@ -30,6 +30,8 @@ public class Statistics {
     private static Deck sDeck;
     public static int sType;
 
+    public static int sZoom = 0;
+
     /**
 	* Types
 	*/    
@@ -73,6 +75,7 @@ public class Statistics {
             		break;
             }
         }
+        sZoom = 0;
     }
 
 

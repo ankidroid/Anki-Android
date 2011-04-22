@@ -252,6 +252,7 @@ public class StudyOptions extends Activity {
     private TextView mTextCongratsMessage;
     private Button mButtonCongratsLearnMore;
     private Button mButtonCongratsReviewEarly;
+    private Button mButtonCongratsSyncDeck;
     private Button mButtonCongratsOpenOtherDeck;
     private Button mButtonCongratsFinish;
 
@@ -320,7 +321,7 @@ public class StudyOptions extends Activity {
                         mCramTagsDialog.show();
                     } else {
                         onCramStop();
-                        updateValuesFromDeck();
+                        resetAndUpdateValuesFromDeck();
                     }
                     return;
                 case R.id.studyoptions_limit:
@@ -332,6 +333,9 @@ public class StudyOptions extends Activity {
                 	return;
                 case R.id.studyoptions_congrats_reviewearly:
                 	startEarlyReview();
+                    return;
+                case R.id.studyoptions_congrats_syncdeck:
+                	syncDeck(null);
                     return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     openDeckPicker();
@@ -487,7 +491,7 @@ public class StudyOptions extends Activity {
             	} else {
             		mEditNewPerDay.setText("0");
             	}
-        		updateValuesFromDeck();
+            	updateValuesFromDeck();
             }
             boolean perDayChanged = deck.getPerDay() ^ mCheckBoxPerDay.isChecked();
           	deck.setPerDay(mCheckBoxPerDay.isChecked());
@@ -495,7 +499,8 @@ public class StudyOptions extends Activity {
             // TODO: Update number of due cards after change of per day scheduling
             dialog.dismiss();
             if (perDayChanged){
-            	reloadDeck();
+                deck.updateCutoff();
+                resetAndUpdateValuesFromDeck();
             }
         }
     };
@@ -578,10 +583,10 @@ public class StudyOptions extends Activity {
         int limitBarVisibility = View.GONE;
         if (mDailyBar != null) {
             limitBarVisibility = mGlobalLimitFrame.getVisibility();
-
         }
 
     	initAllContentViews();
+    	updateValuesFromDeck();
     	showContentView();
         mToggleCram.setChecked(cramChecked);
         mToggleLimit.setChecked(limitChecked);
@@ -647,8 +652,9 @@ public class StudyOptions extends Activity {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
             closeOpenedDeck();
             MetaDB.closeDB();
+            finish();
+            return true;
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
@@ -828,11 +834,13 @@ public class StudyOptions extends Activity {
         mTextCongratsMessage.setOnClickListener(mButtonClickListener);
         mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
         mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);
+        mButtonCongratsSyncDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_syncdeck);
         mButtonCongratsOpenOtherDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_open_other_deck);
         mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
 
         mButtonCongratsLearnMore.setOnClickListener(mButtonClickListener);
         mButtonCongratsReviewEarly.setOnClickListener(mButtonClickListener);
+        mButtonCongratsSyncDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
         mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
 
@@ -1163,7 +1171,7 @@ public class StudyOptions extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Deck deck = AnkiDroidApp.deck();
-                int changed = 0;
+                boolean changed = false;
                 String textTime = mEditSessionTime.getText().toString();
                 if (!textTime.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
                   if (textTime.equals("")) {
@@ -1179,28 +1187,26 @@ public class StudyOptions extends Activity {
                     } else if (isValidLong(textReps)) {
                         deck.setSessionRepLimit(Long.parseLong(textReps));
                     }
-                    changed = 1;
+                    changed = true;
                 }
                 if (!deck.getVar("newActive").equals(mLimitNewActive)) {
                     deck.setVar("newActive", mLimitNewActive);
-                    changed = 2;
-                }
+                    changed = true;
+                } 
                 if (!deck.getVar("newInactive").equals(mLimitNewInactive)) {
                     deck.setVar("newInactive", mLimitNewInactive);
-                    changed = 2;
-                }
+                    changed = true;
+                } 
                 if (!deck.getVar("revActive").equals(mLimitRevActive)) {
                     deck.setVar("revActive", mLimitRevActive);
-                    changed = 2;
-                }
+                    changed = true;
+                } 
                 if (!deck.getVar("revInactive").equals(mLimitRevInactive)) {
                     deck.setVar("revInactive", mLimitRevInactive);
-                    changed = 2;
+                    changed = true;
                 }
-                if (changed == 2) {
-                    reloadDeck();
-                } else if (changed == 1) {
-                    updateValuesFromDeck();
+                if (changed) {
+                	resetAndUpdateValuesFromDeck();
                 }
                 mToggleLimit.setChecked((mSessionLimitCheckBox.isChecked() && !(textTime.length() == 0 && textReps.length() == 0)) || (mLimitTagsCheckBox.isChecked() && (mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
                         || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked())));
@@ -1278,22 +1284,18 @@ public class StudyOptions extends Activity {
                     mToggleCram.setChecked(false);
                     mToggleLimit.setEnabled(true);
                 }
-                // Return to standard scheduler
-                if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
-                    AnkiDroidApp.deck().finishScheduler();
-                }
-                updateValuesFromDeck();
                 if (mCurrentContentView == CONTENT_STUDY_OPTIONS) {
                     mButtonStart.setText(R.string.studyoptions_start);
                 } else {
                     mButtonStart.setText(R.string.studyoptions_continue);
                 }
+                updateValuesFromDeck();
                 setContentView(mStudyOptionsView);
                 break;
             case CONTENT_CONGRATS:
+                setCongratsMessage();
                 updateValuesFromDeck();
                 setContentView(mCongratsView);
-                setCongratsMessage();
                 break;
             case CONTENT_NO_EXTERNAL_STORAGE:
                 setTitle(R.string.app_name);
@@ -1354,17 +1356,24 @@ public class StudyOptions extends Activity {
     	Resources res = getResources();
         Deck deck = AnkiDroidApp.deck();
         if (deck != null) {
-            int revCards = deck.getNextDueCards(1) + deck.getFailedDelayedCount();
+    		int failedCards = deck.getFailedDelayedCount();
+            int revCards = deck.getNextDueCards(1);
+            int revFailedCards = failedCards + revCards;
             int newCards = deck.getNextNewCards();
-            String revca = res.getString(R.string.studyoptions_congrats_cards);
-            String newca = res.getString(R.string.studyoptions_congrats_cards);
-            if (revCards == 1) {
-            	revca = res.getString(R.string.studyoptions_congrats_card);
-            }
-            if (newCards == 1) {
-            	newca = res.getString(R.string.studyoptions_congrats_card);
-            }
-            mTextCongratsMessage.setText(String.format(res.getString(R.string.studyoptions_congrats_message), revCards, revca, newCards, newca));
+            int eta = deck.getETA(failedCards, revCards, newCards, true);
+            String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
+            String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
+            mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText));
+        }
+    }
+
+
+    private void resetAndUpdateValuesFromDeck() {
+        Deck deck = AnkiDroidApp.deck();
+        DeckTask.waitToFinish();
+        if (deck != null) {
+            deck.reset();
+        	updateValuesFromDeck();        	
         }
     }
 
@@ -1372,9 +1381,7 @@ public class StudyOptions extends Activity {
     private void updateValuesFromDeck() {
         Deck deck = AnkiDroidApp.deck();
         Resources res = getResources();
-        DeckTask.waitToFinish();
         if (deck != null) {
-            deck.reset();
             // TODO: updateActives() from anqiqt/ui/main.py
             int dueCount = deck.getDueCount();
             int cardsCount = deck.getCardCount();
@@ -1384,9 +1391,9 @@ public class StudyOptions extends Activity {
             mTextReviewsDue.setText(String.valueOf(dueCount));
             mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
             String etastr = "-";
-            int eta = (int) deck.getStats(Stats.TYPE_ETA)[0];
+            int eta = deck.getETA();
             if (eta != -1) {
-            	etastr = Integer.toString(eta / 60);
+            	etastr = Integer.toString(eta);
             }
             mTextETA.setText(etastr);
             int totalNewCount = deck.getNewCount(false);
@@ -1394,10 +1401,9 @@ public class StudyOptions extends Activity {
 
             // Progress bars are not shown on small screens
             if (mDailyBar != null) {
-                double[] values = deck.getStats(Stats.TYPE_YES_SHARES);
                 double totalCardsCount = cardsCount;
-                mProgressTodayYes = values[0];
-                mProgressMatureYes = values[1];
+                mProgressTodayYes = deck.getProgress(false);
+                mProgressMatureYes = deck.getProgress(true);
                 double mature = deck.getMatureCardCount(false);
                 mProgressMature = mature / totalCardsCount;
                 double allRev = deck.getTotalRevFailedCount(false);
@@ -1459,7 +1465,7 @@ public class StudyOptions extends Activity {
         AnkiDroidApp.deck().setupCramScheduler(activeCramTags.toArray(new String[activeCramTags.size()]), cramOrder);
         // Timeboxing only supported using the standard scheduler
         mToggleLimit.setEnabled(false);
-        updateValuesFromDeck();
+        resetAndUpdateValuesFromDeck();
     }
 
     /**
@@ -1483,17 +1489,16 @@ public class StudyOptions extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	MenuItem item;
-        item = menu.add(Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck);
-        item.setIcon(R.drawable.ic_menu_manage);
-        item = menu.add(Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync);
-        item.setIcon(R.drawable.ic_menu_refresh);
-        item = menu.add(Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card);
-        item.setIcon(R.drawable.ic_menu_add);
-        item = menu.add(Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more);
-        item.setIcon(R.drawable.ic_menu_archive);
-        item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
-        item.setIcon(R.drawable.ic_menu_preferences);
+        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck,
+                R.drawable.ic_menu_manage);
+        Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync,
+                R.drawable.ic_menu_refresh);
+        Utils.addMenuItem(menu, Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card,
+                R.drawable.ic_menu_add);
+        Utils.addMenuItem(menu, Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more,
+                R.drawable.ic_menu_archive);
+        Utils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences,
+                R.drawable.ic_menu_preferences);
         return true;
     }
 
@@ -1674,15 +1679,6 @@ public class StudyOptions extends Activity {
         }
     }
 
-    private void reloadDeck() {
-    	Deck deck = AnkiDroidApp.deck();
-    	if (deck != null){
-    		deck.closeDeck();
-    		AnkiDroidApp.setDeck(null);
-    	}
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(
-                mDeckFilename));
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -1700,6 +1696,7 @@ public class StudyOptions extends Activity {
             mInDeckPicker = false;
 
             if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_OK) {
+                showContentView(CONTENT_SESSION_COMPLETE);
                 mStudyOptionsMain.setVisibility(View.INVISIBLE);
             } else if ((requestCode == DOWNLOAD_SHARED_DECK || requestCode == DOWNLOAD_PERSONAL_DECK) && resultCode == RESULT_OK) {
             	openDeckPicker();
@@ -1750,23 +1747,22 @@ public class StudyOptions extends Activity {
             // }
         } else if (requestCode == REQUEST_REVIEW) {
             Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
-            AnkiDroidApp.deck().updateCutoff();
-            AnkiDroidApp.deck().reset();
+            // Return to standard scheduler
             switch (resultCode) {
                 case Reviewer.RESULT_SESSION_COMPLETED:
-                    showContentView(CONTENT_SESSION_COMPLETE);
+                	showContentView(CONTENT_SESSION_COMPLETE);
                     break;
                 case Reviewer.RESULT_NO_MORE_CARDS:
-                    showContentView(CONTENT_CONGRATS);
+                	showContentView(CONTENT_CONGRATS);
                     break;
                 default:
-                    showContentView(CONTENT_STUDY_OPTIONS);
+                	showContentView(CONTENT_STUDY_OPTIONS);
                     break;
             }
         } else if (requestCode == ADD_FACT && resultCode == RESULT_OK) {
-            reloadDeck();
+        	resetAndUpdateValuesFromDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
-            reloadDeck();
+        	resetAndUpdateValuesFromDeck();
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
         	showContentView(CONTENT_STUDY_OPTIONS);
         }
@@ -1983,6 +1979,7 @@ public class StudyOptions extends Activity {
                     AnkiDroidApp.setDeck(result.getDeck());
 
                     if (mPrefStudyOptions) {
+                        updateValuesFromDeck();
                         showContentView(CONTENT_STUDY_OPTIONS);
                     } else {
                         startActivityForResult(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
@@ -2026,6 +2023,7 @@ public class StudyOptions extends Activity {
         }
     };
 
+
     Connection.TaskListener mSyncListener = new Connection.TaskListener() {
 
         @Override
@@ -2044,9 +2042,10 @@ public class StudyOptions extends Activity {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             }
             if (data.success) {
-    			mSyncLogAlert.setMessage(((HashMap<String, String>) data.result).get("message"));
-				reloadDeck();
-				mSyncLogAlert.show();
+                mSyncLogAlert.setMessage(((HashMap<String, String>) data.result).get("message"));
+                AnkiDroidApp.deck().updateCutoff();
+                resetAndUpdateValuesFromDeck();
+                mSyncLogAlert.show();
             } else {
                 if (data.returnType == AnkiDroidProxy.SYNC_CONFLICT_RESOLUTION) {
                     // Need to ask user for conflict resolution direction and re-run sync

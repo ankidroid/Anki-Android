@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">查找</string>
   <string name="pref_cat_navigation">操作控制</string>
   <string name="pref_cat_swipe">手势</string>
-  <string name="pref_cat_shake">摇动</string>
+  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">缩放</string>
   <string name="pref_cat_reset">重置</string>
   <string name="pref_cat_other">其他</string>
@@ -123,8 +123,6 @@
   <string name="show_whiteboard_summ">允许你在屏幕上涂写</string>
   <string name="whiteboard_stroke_width">白板画笔宽度</string>
   <string name="whiteboard_stroke_width_summ">画笔宽度: XXX</string>
-  <string name="sample_deck">示例牌组</string>
-  <string name="sample_deck_summ">如果找不到任何牌组，就生成国家首都的示例牌组</string>
   <string name="write_answers">填写答案</string>
   <string name="write_answers_summ">允许你填写答案，与正确答案进行比对</string>
   <string name="text_selection">允许选择文本</string>
@@ -139,23 +137,36 @@
   <string name="use_ruby_support_summ">如果找到\'[\'和\']\'，则括号内部的文本被当做注音标示处理</string>
   <string name="display_font_size">显示的相对字体大小</string>
   <string name="display_font_size_summ">该显示的字体大小为相对于牌组中定义的字体大小。现在是: XXX %</string>
+  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
+  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
   <string name="button_size">相对按钮大小</string>
   <string name="button_size_summ">复习界面的相对按钮大小。现在是: XXX %</string>
   <string name="hide_question_in_answer">显示答案时是否隐藏问题</string>
   <string name="hide_question_in_answer_summ">选择在显示答案时是否同时隐藏问题</string>
   <string name="deck_path">牌组路径</string>
   <string name="deck_path_summ">设置保存牌组的目录</string>
+  <string name="deck_order">Deck order</string>
+  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">复习时显示全屏</string>
   <string name="fullscreen_review_summ">在复习卡片时占据整个可用的屏幕空间</string>
   <string name="zoom">开启缩放</string>
   <string name="zoom_summ">复习时显示缩放控制</string>
   <string name="swipe">开启手势</string>
   <string name="swipe_summ_off">用手势切换答案和下一个问题。该功能与缩放控制不兼容</string>
-  <string name="swipe_summ_on">水平滑动在界面间进行切换，垂直滑动来回答卡片（向下:再来; 向上:一般; 双击:简单）</string>
-  <string name="swipe_sensibility">手势灵敏度</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
+  <string name="pref_cat_actions">Actions</string>
+  <string name="gestures_shake">Shake</string>
+  <string name="gestures_swipe_up">Swipe up</string>
+  <string name="gestures_swipe_down">Swipe down</string>
+  <string name="gestures_swipe_left">Swipe left</string>
+  <string name="gestures_swipe_right">Swipe right</string>
+  <string name="gestures_double_tap">Double tap</string>
+  <string name="gestures_tap_top">Tap top</string>
+  <string name="gestures_tap_bottom">Tap bottom</string>
+  <string name="gestures_tap_left">Tap left</string>
+  <string name="gestures_tap_right">Tap right</string>
+  <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">手势的灵敏度: XXX</string>
-  <string name="shake">摇动撤销</string>
-  <string name="shake_summ">摇动设备来撤销上一个动作</string>
   <string name="tts">文字转语音(TTS)</string>
   <string name="tts_summ">若没有附带声音文件则读出问题和答案</string>
   <string name="play_sounds_at_start">立即播放声音</string>
@@ -178,6 +189,8 @@
   <string name="about_title">关于</string>
   <string name="cardeditor_title">编辑条目</string>
   <string name="factadder_title">添加卡片</string>
+  <string name="factadder_saving_error">Error saving fact</string>
+  <string name="saving_facts">Saving facts</string>
   <string name="deckcreator_title">牌组创建器</string>
   <string name="model">模型:</string>
   <string name="select_model">模型</string>
@@ -297,11 +310,11 @@
   <string name="studyoptions_continue">继续复习</string>
   <string name="studyoptions_well_done">干得好！</string>
   <string name="studyoptions_congrats_title">恭喜！</string>
-  <string name="studyoptions_congrats_message">你完成了当前的任务。明天将有：\n %1$d 张%2$s需要复习，\n和 %3$d 张新%4$s需要学习。</string>
   <string name="studyoptions_congrats_card">卡片</string>
   <string name="studyoptions_congrats_cards">卡片</string>
   <string name="studyoptions_congrats_learnmore">继续学习</string>
   <string name="studyoptions_congrats_reviewearly">提前复习</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
   <string name="studyoptions_congrats_open_other_deck">打开其他牌组</string>
   <string name="studyoptions_congrats_finish">返回学习界面</string>
   <string name="studyoptions_feedback">反馈</string>
@@ -384,6 +397,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">卡片到期</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">有%d张AnkiDroid卡片到期需要复习</string>
   <string name="widget_no_cards_due">没有卡片到期</string>
+  <string name="widget_loading">Widget loading...</string>
   <string name="soon">马上</string>
   <string name="show_next_review_time">下次复习时间</string>
   <string name="show_next_review_time_summ">显示依难易程度而定的下次复习时间</string>
@@ -434,6 +448,10 @@
     <item quantity="one">%2$d中有1个到期</item>
     <item quantity="other">%2$d张中的%1$d张待复习</item>
   </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">%1$s (1 min. left)</item>
+    <item quantity="other">%1$s (%2$d min. left)</item>
+  </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 显示1张\/共%3$d张卡片</item>
     <item quantity="other">%1$s: 显示%2$d张\/共%3$d张卡片</item>
@@ -441,6 +459,18 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s(1张到期\/共%3$d张卡片)</item>
     <item quantity="other">%1$s(%2$d张到期\/共%3$d张卡片)</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_message">
+    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_new_cards">
+    <item quantity="one">1 card</item>
+    <item quantity="other">%1$d new cards</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_eta">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%1$d min.</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">向服务器同步了1张卡片</item>

@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Wyszukiwanie</string>
   <string name="pref_cat_navigation">Nawigacja</string>
   <string name="pref_cat_swipe">Swipe</string>
-  <string name="pref_cat_shake">Wstrząsanie</string>
+  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Powiększenie</string>
   <string name="pref_cat_reset">Zresetuj</string>
   <string name="pref_cat_other">Inne</string>
@@ -123,8 +123,6 @@
   <string name="show_whiteboard_summ">Umożliwia pisanie na ekranie</string>
   <string name="whiteboard_stroke_width">Szerokość linii na tablicy</string>
   <string name="whiteboard_stroke_width_summ">Szerokość linii: XXX</string>
-  <string name="sample_deck">Przykładowa talia</string>
-  <string name="sample_deck_summ">Generowanie głównej talii jeśli inna nie została znaleziona</string>
   <string name="write_answers">Napisz odpowiedzi</string>
   <string name="write_answers_summ">Pozwala napisać odpowiedź i porównać ją z właściwą</string>
   <string name="text_selection">Pozwól na zaznaczanie tekstu</string>
@@ -139,23 +137,36 @@
   <string name="use_ruby_support_summ">W razie znalezienia znaków \'[\' i \']\', tekst zawarty między nimi będzie traktowany jako notacja ruby</string>
   <string name="display_font_size">Względna wielkość czcionki wyświetlacza</string>
   <string name="display_font_size_summ">Rozmiar czcionki względem zdefiniowanego w talii. W tej chwili: XXX %</string>
+  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
+  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
   <string name="button_size">Względna wielkości przycisku</string>
   <string name="button_size_summ">Względny rozmiar przycisków na ekranie powtórek. W tej chwili: XXX %</string>
   <string name="hide_question_in_answer">Ukryć pytanie przy odpowiedzi?</string>
   <string name="hide_question_in_answer_summ">Określa, czy pytanie powinno być ukryte, gdy odpowiedź jest widoczna.</string>
   <string name="deck_path">Ścieżka talii</string>
   <string name="deck_path_summ">Ścieżka do miejsca w której Twoje talie są przechowywane</string>
+  <string name="deck_order">Deck order</string>
+  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">Nauka na pełnym ekranie</string>
   <string name="fullscreen_review_summ">Możesz zdecydować, czy chcesz korzystać ze całego dostępnego miejsca na ekranie podczas powtarzania kart</string>
   <string name="zoom">Włącz powiększenie</string>
   <string name="zoom_summ">Pokaż kontrolki zbliżenia podczas powtórek</string>
   <string name="swipe">Włącz gesty</string>
   <string name="swipe_summ_off">Użyj gestów do przełączania ekranów i kart odpowiedzi. Ta opcja nie jest zgodna z kontrolkami powiększania</string>
-  <string name="swipe_summ_on">Przesuń poziomo do przełączania ekranów i pionowo aby odpowiedzieć (w dół: Znowu w górę: Dobra, dotknij dwukrotnie: Łatwo)</string>
-  <string name="swipe_sensibility">Czułość gestów</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
+  <string name="pref_cat_actions">Actions</string>
+  <string name="gestures_shake">Shake</string>
+  <string name="gestures_swipe_up">Swipe up</string>
+  <string name="gestures_swipe_down">Swipe down</string>
+  <string name="gestures_swipe_left">Swipe left</string>
+  <string name="gestures_swipe_right">Swipe right</string>
+  <string name="gestures_double_tap">Double tap</string>
+  <string name="gestures_tap_top">Tap top</string>
+  <string name="gestures_tap_bottom">Tap bottom</string>
+  <string name="gestures_tap_left">Tap left</string>
+  <string name="gestures_tap_right">Tap right</string>
+  <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">Czułość gestów swipe: XXX</string>
-  <string name="shake">Wstrząsnij aby cofnąć</string>
-  <string name="shake_summ">Wstrząśnij urządzenie aby cofnąć ostatnią akcję</string>
   <string name="tts">Tekst na mowę</string>
   <string name="tts_summ">Odczytuje pytanie i odpowiedź jeżeli nie dołączono pliku dźwiękowego</string>
   <string name="play_sounds_at_start">Odtwórz dźwięki natychmiast</string>
@@ -178,6 +189,8 @@
   <string name="about_title">O programie</string>
   <string name="cardeditor_title">Edytor kart</string>
   <string name="factadder_title">Dodawanie kart</string>
+  <string name="factadder_saving_error">Error saving fact</string>
+  <string name="saving_facts">Saving facts</string>
   <string name="deckcreator_title">Twórca talii</string>
   <string name="model">Model:</string>
   <string name="select_model">Model</string>
@@ -297,11 +310,11 @@
   <string name="studyoptions_continue">Kontynuuj powtórki</string>
   <string name="studyoptions_well_done">Dobra robota!</string>
   <string name="studyoptions_congrats_title">Gratulacje!</string>
-  <string name="studyoptions_congrats_message">To wszystko na teraz.\nJutro będzie: %1$d %2$s do powtórzenia i %3$d nowych %4$s.</string>
   <string name="studyoptions_congrats_card">karta</string>
   <string name="studyoptions_congrats_cards">kart</string>
   <string name="studyoptions_congrats_learnmore">Dowiedz się więcej</string>
   <string name="studyoptions_congrats_reviewearly">Powtarzaj wcześnie</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
   <string name="studyoptions_congrats_open_other_deck">Otwórz inną talię</string>
   <string name="studyoptions_congrats_finish">Wróć do ekranu nauki</string>
   <string name="studyoptions_feedback">Informacje zwrotne</string>
@@ -384,6 +397,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Karty do przeglądnięcia</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d kart AnkiDroid do przeglądnięcia</string>
   <string name="widget_no_cards_due">Nie ma więcej kart do przejrzenia</string>
+  <string name="widget_loading">Widget loading...</string>
   <string name="soon">Wkrótce</string>
   <string name="show_next_review_time">Czas kolejnego przeglądnięcia</string>
   <string name="show_next_review_time_summ">Pokazuje czas następnego przeglądnięcia w zależności od wyboru</string>
@@ -434,6 +448,10 @@
     <item quantity="one">1 z %2$d zaległe</item>
     <item quantity="other">%1$d z %2$d zaległych</item>
   </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">%1$s (1 min. left)</item>
+    <item quantity="other">%1$s (%2$d min. left)</item>
+  </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 z %3$d kart widoczna</item>
     <item quantity="other">%1$s: %2$d z %3$d kart wyświetlanych</item>
@@ -441,6 +459,18 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 z %3$d zaległe)</item>
     <item quantity="other">%1$s (%2$d z %3$d do przeglądnięcia)</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_message">
+    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_new_cards">
+    <item quantity="one">1 card</item>
+    <item quantity="other">%1$d new cards</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_eta">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%1$d min.</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 karta na serwer</item>

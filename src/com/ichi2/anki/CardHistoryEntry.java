@@ -83,6 +83,6 @@ public class CardHistoryEntry {
         values.put("noCount", mNoCount);
         values.put("time", Utils.now());
 
-        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().insert("reviewHistory", null, values);
+        AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).insert(mDeck, "reviewHistory", null, values);
     }
 }
