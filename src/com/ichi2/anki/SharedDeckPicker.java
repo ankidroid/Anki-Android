@@ -166,7 +166,7 @@ public class SharedDeckPicker extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "SharedDeckPicker - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "SharedDeckPicker - onBackPressed()");
             closeSharedDeckPicker();
             return true;
         }
@@ -229,7 +229,7 @@ public class SharedDeckPicker extends Activity {
 
     @Override
     protected void onResume() {
-        // Log.i(AnkiDroidApp.TAG, "onResume");
+        Log.i(AnkiDroidApp.TAG, "onResume");
         super.onResume();
         if (mDownloadManagerService != null) {
             try {
@@ -455,7 +455,7 @@ public class SharedDeckPicker extends Activity {
             // representation of that from the raw service object.
             mDownloadManagerService = IDownloadManagerService.Stub.asInterface(service);
 
-            // Log.i(AnkiDroidApp.TAG, "onServiceConnected");
+            Log.i(AnkiDroidApp.TAG, "onServiceConnected");
             // We want to monitor the service for as long as we are
             // connected to it.
             try {
@@ -483,7 +483,7 @@ public class SharedDeckPicker extends Activity {
 
         @Override
         public void onDisconnected() {
-            // Log.i(AnkiDroidApp.TAG, "onDisconnected");
+            Log.i(AnkiDroidApp.TAG, "onDisconnected");
             if (mNoConnectionAlert != null) {
                 mNoConnectionAlert.show();
             }
@@ -547,7 +547,7 @@ public class SharedDeckPicker extends Activity {
          */
         @Override
         public void publishProgress(List<SharedDeckDownload> downloads) throws RemoteException {
-            // Log.i(AnkiDroidApp.TAG, "publishProgress");
+            Log.i(AnkiDroidApp.TAG, "publishProgress");
             setSharedDeckDownloads(downloads);
         }
     };

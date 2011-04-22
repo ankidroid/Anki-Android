@@ -287,7 +287,7 @@ public class ChartBuilder extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "ChartBuilder - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "ChartBuilder - onBackPressed()");
             closeChartBuilder();
         }
         return super.onKeyDown(keyCode, event);

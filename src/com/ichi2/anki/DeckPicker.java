@@ -219,7 +219,7 @@ public class DeckPicker extends Activity implements Runnable {
 			}
 
 			mDeckListAdapter.notifyDataSetChanged();
-			// Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
+			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
 			setTitleText();
 			enableButtons(mLoadingFinished == 0);
 		}
@@ -258,7 +258,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 		@Override
 		public void onPostExecute(Payload data) {
-			// Log.i(AnkiDroidApp.TAG, "onPostExecute");
+			Log.i(AnkiDroidApp.TAG, "onPostExecute");
 			if (mProgressDialog != null) {
 				mProgressDialog.dismiss();
 			}
@@ -302,7 +302,7 @@ public class DeckPicker extends Activity implements Runnable {
 
         @Override
         public void onPostExecute(Payload data) {
-            // Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            Log.i(AnkiDroidApp.TAG, "onPostExecute");
             Resources res = getResources();
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
@@ -339,7 +339,7 @@ public class DeckPicker extends Activity implements Runnable {
 	/** Called when the activity is first created. */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) throws SQLException {
-		// Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
+		Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
 		super.onCreate(savedInstanceState);
 
 		setTitleText();
@@ -454,7 +454,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 	@Override
 	protected void onPause() {
-		// Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
+		Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
 
 		super.onPause();
 		waitForDeckLoaderThread();
@@ -463,7 +463,7 @@ public class DeckPicker extends Activity implements Runnable {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		// Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
+		Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
 		if (mUnmountReceiver != null) {
 			unregisterReceiver(mUnmountReceiver);
 		}
@@ -653,7 +653,7 @@ public class DeckPicker extends Activity implements Runnable {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-        	// Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
+        	Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
         	closeDeckPicker();
         	return true;
         }
@@ -853,7 +853,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 
     private void populateDeckList(String location) {
-		// Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList");
+		Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList");
 
 		if (!location.equals(mPrefDeckPath)) {
 		    mPrefDeckPath = location;
@@ -880,11 +880,11 @@ public class DeckPicker extends Activity implements Runnable {
 
 		mFileList = fileList;
 		if (len > 0 && fileList != null) {
-			// Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
+			Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, number of anki files = " + len);
 			for (File file : fileList) {
 				String absPath = file.getAbsolutePath();
 
-				// Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, file:" + file.getName());
+				Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, file:" + file.getName());
 
 				try {
 					HashMap<String, String> data = new HashMap<String, String>();
@@ -913,9 +913,9 @@ public class DeckPicker extends Activity implements Runnable {
 			Thread thread = new Thread(this);
 			thread.start();
 		} else {
-			// Log.i(AnkiDroidApp.TAG, "populateDeckList - No decks found.");
+			Log.i(AnkiDroidApp.TAG, "populateDeckList - No decks found.");
 			if (!AnkiDroidApp.isSdCardMounted()) {
-				// Log.i(AnkiDroidApp.TAG, "populateDeckList - No sd card.");
+				Log.i(AnkiDroidApp.TAG, "populateDeckList - No sd card.");
 				setTitle(R.string.deckpicker_title_nosdcard);
 				showDialog(DIALOG_NO_SDCARD);
 			}
@@ -935,24 +935,24 @@ public class DeckPicker extends Activity implements Runnable {
 		mDeckList.addAll(tree);
 		mDeckListView.clearChoices();
 		mDeckListAdapter.notifyDataSetChanged();
-		// Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, Ending");
+		Log.i(AnkiDroidApp.TAG, "DeckPicker - populateDeckList, Ending");
 	}
 
 	@Override
 	public void run() {
-		// Log.i(AnkiDroidApp.TAG, "Thread run - Beginning");
+		Log.i(AnkiDroidApp.TAG, "Thread run - Beginning");
 
 		if (mFileList != null && mFileList.length > 0) {
 			mLock.lock();
 			try {
-				// Log.i(AnkiDroidApp.TAG, "Thread run - Inside lock");
+				Log.i(AnkiDroidApp.TAG, "Thread run - Inside lock");
 
 				mIsFinished = false;
 				for (File file : mFileList) {
 
 					// Don't load any more decks if one has already been
 					// selected.
-					// Log.i(AnkiDroidApp.TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
+					Log.i(AnkiDroidApp.TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
 					if (mDeckIsSelected) {
 						break;
 					}
@@ -1112,7 +1112,7 @@ public class DeckPicker extends Activity implements Runnable {
 		deckFilename = data.get("filepath");
 
 		if (deckFilename != null) {
-			// Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
+			Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
 			Intent intent = this.getIntent();
 			intent.putExtra(StudyOptions.OPT_DB, deckFilename);
 			setResult(RESULT_OK, intent);
@@ -1138,14 +1138,14 @@ public class DeckPicker extends Activity implements Runnable {
 			File file = new File(deckFilename);
 			boolean deleted = file.delete();
 			if (deleted) {
-				// Log.i(AnkiDroidApp.TAG, "DeckPicker - " + deckFilename + " deleted");
+				Log.i(AnkiDroidApp.TAG, "DeckPicker - " + deckFilename + " deleted");
 				mDeckIsSelected = false;
 				
 				// remove media directory
 				String mediaDir = deckFilename.replace(".anki", ".media");
 				boolean mediadeleted = removeDir(new File(mediaDir));
 				if (mediadeleted) {
-					// Log.i(AnkiDroidApp.TAG, "DeckPicker - " + mediaDir + " deleted");					
+					Log.i(AnkiDroidApp.TAG, "DeckPicker - " + mediaDir + " deleted");					
 				} else {
 					Log.e(AnkiDroidApp.TAG, "Error: Could not delete " + mediaDir);										
 				}

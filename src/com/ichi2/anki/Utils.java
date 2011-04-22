@@ -316,7 +316,7 @@ public class Utils {
      * @throws IOException 
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
-        // Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
+        Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
         new File(destination).createNewFile();
 
         OutputStream output = new BufferedOutputStream(new FileOutputStream(destination));
@@ -325,14 +325,14 @@ public class Utils {
         byte[] buf = new byte[CHUNK_SIZE];
         int len;
         if (source == null) {
-            // Log.i(AnkiDroidApp.TAG, "source is null!");
+            Log.i(AnkiDroidApp.TAG, "source is null!");
         }
         while ((len = source.read(buf)) > 0) {
             output.write(buf, 0, len);
-            // Log.i(AnkiDroidApp.TAG, "Write...");
+            Log.i(AnkiDroidApp.TAG, "Write...");
         }
 
-        // Log.i(AnkiDroidApp.TAG, "Finished writing!");
+        Log.i(AnkiDroidApp.TAG, "Finished writing!");
         output.close();
     }
 
@@ -373,7 +373,7 @@ public class Utils {
                             buff.newLine();
                             buff.close();
                         }
-                        // Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
                         printJSONObject((JSONObject) value, indentation + "-", writeToFile);
                     } else {
                         if (writeToFile) {
@@ -382,7 +382,7 @@ public class Utils {
                             buff.newLine();
                             buff.close();
                         }
-                        // Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
                 } catch (JSONException e) {
                     Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -397,7 +397,7 @@ public class Utils {
 
 
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
-        // Log.i(AnkiDroidApp.TAG, "saveJSONObject");
+        Log.i(AnkiDroidApp.TAG, "saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();
