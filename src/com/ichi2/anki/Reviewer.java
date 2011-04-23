@@ -1747,7 +1747,7 @@ public class Reviewer extends Activity {
     private String getDefaultFontStyle() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         String defaultFont = preferences.getString("customFonts", null);
-        if (defaultFont == null) {
+        if (defaultFont == null || "".equals(defaultFont)) {
             return "";
         }
         return "BODY { font-family: '" + defaultFont + "' }\n";
