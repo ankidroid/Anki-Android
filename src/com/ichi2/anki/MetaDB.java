@@ -51,6 +51,21 @@ public class MetaDB {
   	  return false;
     }
 
+    public static boolean resetLanguages(Context context) {
+        if (mMetaDb == null || !mMetaDb.isOpen()) {
+            openDB(context);
+        }
+        try {
+            Log.i(AnkiDroidApp.TAG, "Resetting all language assignments");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
+            openDB(context);
+            return true;
+        } catch(Exception e) {
+            Log.e("Error", "Error resetting MetaDB ", e);
+        }
+        return false;
+    }
+
     public static void storeLanguage(Context context, String deckPath, long modelId, long cardModelId, int qa, String language) {
     	if (mMetaDb == null || !mMetaDb.isOpen()) {
     		openDB(context);
