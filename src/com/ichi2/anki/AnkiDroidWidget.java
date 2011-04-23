@@ -277,19 +277,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
 
         private void updateDueDecks() {
-            Deck currentDeck = AnkiDroidApp.deck();
-            if (currentDeck != null) {
-                // Close the current deck, otherwise we'll have problems
-                currentDeck.closeDeck();
-            }
-
             // Fetch the deck information, sorted by due cards
             DeckStatus[] decks = WidgetStatus.fetch(getBaseContext());
-
-            if (currentDeck != null) {
-                AnkiDroidApp.setDeck(currentDeck);
-                Deck.openDeck(currentDeck.getDeckPath());
-            }
 
             if (dueDecks == null) {
                 dueDecks = new ArrayList<DeckStatus>();

@@ -84,11 +84,16 @@ public final class WidgetStatus {
 
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
-                    Deck deck = Deck.openDeck(absPath);
+                    Deck deck = Deck.openDeck(absPath, false);
                     int dueCards = deck.getDueCount();
                     int newCards = deck.getNewCountToday();
                     int failedCards = deck.getFailedSoonCount();
-                    deck.closeDeck();
+                    // Close the database connection, but only if this is not the current database.
+                    // Probably we need to make this atomic to be sure it will not cause a failure.
+                    Deck currentDeck = AnkiDroidApp.deck();
+                    if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
+                        deck.closeDeck();
+                    }
 
                     // Add the information about the deck
                     decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards));
