@@ -394,8 +394,8 @@ public class DownloadManagerService extends Service {
         Notification notification = new Notification(R.drawable.anki, res.getString(R.string.download_finished),
                 System.currentTimeMillis());
 
-        Intent loadDeckIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mDestination + "/" + deckFilename + ".anki"),
-                DownloadManagerService.this, StudyOptions.class);
+        String deckPath = mDestination + "/" + deckFilename + ".anki";
+        Intent loadDeckIntent = StudyOptions.getLoadDeckIntent(this, deckPath);
         // The PendingIntent to launch our activity if the user selects this notification
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, loadDeckIntent, 0);
 
