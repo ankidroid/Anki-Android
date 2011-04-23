@@ -121,6 +121,8 @@ public class StudyOptions extends Activity {
     private static final int SUM_DECKPICKER_ON_FIRST_START = 2;
 
 
+    public static final String EXTRA_DECK = "deck";
+
     /**
 * Download Manager Service stub
 */
@@ -533,9 +535,14 @@ public class StudyOptions extends Activity {
         }
 
         Intent intent = getIntent();
-        if ("android.intent.action.VIEW".equalsIgnoreCase(intent.getAction()) && intent.getDataString() != null) {
+        if (Intent.ACTION_VIEW.equalsIgnoreCase(intent.getAction())
+                && intent.getDataString() != null) {
             mDeckFilename = Uri.parse(intent.getDataString()).getPath();
-            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from intent: " + mDeckFilename);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from VIEW intent: " + mDeckFilename);
+        } else if (Intent.ACTION_MAIN.equalsIgnoreCase(intent.getAction())
+                && intent.hasExtra(EXTRA_DECK)) {
+            mDeckFilename = intent.getStringExtra(EXTRA_DECK);
+            Log.i(AnkiDroidApp.TAG, "onCreate - deckFilename from MAIN intent: " + mDeckFilename);
         } else if (savedInstanceState != null) {
             // Use the same deck as last time Ankidroid was used.
             mDeckFilename = savedInstanceState.getString("deckFilename");
@@ -2158,4 +2165,20 @@ public class StudyOptions extends Activity {
 	    	return false;
     }
 
+
+    /**
+     * Creates an intent to load a deck given the full pathname of it.
+     * <p>
+     * The constructed intent is equivalent (modulo the extras) to the open used by the launcher
+     * shortcut, which means it will not open a new study options window but bring the existing one
+     * to the front.
+     */
+    public static Intent getLoadDeckIntent(Context context, String deckPath) {
+        Intent loadDeckIntent = new Intent(context, StudyOptions.class);
+        loadDeckIntent.setAction(Intent.ACTION_MAIN);
+        loadDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        loadDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        loadDeckIntent.putExtra(StudyOptions.EXTRA_DECK, deckPath);
+        return loadDeckIntent;
+    }
 }

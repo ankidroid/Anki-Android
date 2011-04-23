@@ -165,10 +165,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 } else if (ACTION_IGNORE.equals(intent.getAction())) {
                     updateDueDecksNow = false;
                 } else if (ACTION_OPEN.equals(intent.getAction())) {
-                    Intent loadDeckIntent =
-                        new Intent(Intent.ACTION_VIEW, intent.getData(), this, StudyOptions.class);
-                    loadDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(loadDeckIntent);
+                    startActivity(StudyOptions.getLoadDeckIntent(this, intent.getData().getPath()));
                     updateDueDecksNow = false;
                 }
             }
