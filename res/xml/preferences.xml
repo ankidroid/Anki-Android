@@ -351,9 +351,9 @@
 				android:defaultValue="false"
 				android:key="fixHebrewText"/>
 			<ListPreference
-				android:title="@string/custom_fonts"
-				android:summary="@string/custom_fonts_summ"
-				android:key="customFonts"
+				android:title="@string/default_font"
+				android:summary="@string/default_font_summ"
+				android:key="defaultFont"
 				android:defaultValue=""/>
 		</PreferenceCategory>
 	</PreferenceScreen>

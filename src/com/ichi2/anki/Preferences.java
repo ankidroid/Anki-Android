@@ -158,10 +158,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     /** Initializes the list of custom fonts shown in the preferences. */
     private void initializeCustomFontsDialog() {
         ListPreference customFontsPreference =
-            (ListPreference) getPreferenceScreen().findPreference("customFonts");
-        String[] customFonts = getCustomFonts();
-        customFontsPreference.setEntries(customFonts);
-        customFontsPreference.setEntryValues(customFonts);
+            (ListPreference) getPreferenceScreen().findPreference("defaultFont");
+        customFontsPreference.setEntries(getCustomFonts("System default"));
+        customFontsPreference.setEntryValues(getCustomFonts(""));
     }
 
 
@@ -191,15 +190,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
 
     /** Returns a list of the names of the installed custom fonts. */
-    private String[] getCustomFonts() {
+    private String[] getCustomFonts(String defaultValue) {
         File[] files = Utils.getCustomFonts(this);
         int count = files.length;
         Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
-        String[] names = new String[count];
+        String[] names = new String[count + 1];
         for (int index = 0; index < count; ++index) {
             names[index] = Utils.removeExtension(files[index].getName());
             Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
         }
+        names[count] = defaultValue;
         return names;
     }
 }
