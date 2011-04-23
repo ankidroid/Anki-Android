@@ -165,9 +165,14 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                 } else if (ACTION_IGNORE.equals(intent.getAction())) {
                     updateDueDecksNow = false;
                 } else if (ACTION_OPEN.equals(intent.getAction())) {
-                    Intent loadDeckIntent =
-                        new Intent(Intent.ACTION_VIEW, intent.getData(), this, StudyOptions.class);
+                    // We want this intent to match with the one from the launcher, so that a new
+                    // instance of the study options activity is not started on top of one that
+                    // might already be open.
+                    Intent loadDeckIntent = new Intent(this, StudyOptions.class);
+                    loadDeckIntent.setAction(Intent.ACTION_MAIN);
+                    loadDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                     loadDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    loadDeckIntent.putExtra(StudyOptions.EXTRA_DECK, intent.getData().getPath());
                     startActivity(loadDeckIntent);
                     updateDueDecksNow = false;
                 }
