@@ -1675,7 +1675,9 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         StringBuilder style = new StringBuilder();
         style.append(getCustomFontsStyle());
+        style.append(getDefaultFontStyle());
         style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
+        Log.i(AnkiDroidApp.TAG, "::style::" + style);
         String card =
             mCardTemplate.replace("::content::", content).replace("::style::", style.toString());
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
@@ -1718,7 +1720,8 @@ public class Reviewer extends Activity {
       return style.toString();
     }
 
-    /*
+
+    /**
      * Returns the CSS used to handle custom fonts.
      * <p>
      * Custom fonts live in fonts directory in the directory used to store decks.
@@ -1737,6 +1740,17 @@ public class Reviewer extends Activity {
         builder.append('\n');
       }
       return builder.toString();
+    }
+
+
+    /** Returns the CSS used to set the default font. */
+    private String getDefaultFontStyle() {
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        String defaultFont = preferences.getString("customFonts", null);
+        if (defaultFont == null) {
+            return "";
+        }
+        return "BODY { font-family: '" + defaultFont + "' }\n";
     }
 
 
