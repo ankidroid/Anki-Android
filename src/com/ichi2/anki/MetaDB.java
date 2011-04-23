@@ -32,7 +32,8 @@ public class MetaDB {
                     + "state INTEGER)");
             mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS widgetStatus ("
-                    + "deckName TEXT NOT NULL PRIMARY KEY, "
+                    + "deckPath TEXT NOT NULL PRIMARY KEY, "
+                    + "deckName TEXT NOT NULL, "
                     + "newCards INTEGER NOT NULL, "
                     + "dueCards INTEGER NOT NULL, "
                     + "failedCards INTEGER NOT NULL)");
@@ -187,6 +188,7 @@ public class MetaDB {
                     throw new SQLiteException("cursor count was incorrect");
                 }
                 decks[index] = new DeckStatus(
+                        cursor.getString(cursor.getColumnIndex("deckPath")),
                         cursor.getString(cursor.getColumnIndex("deckName")),
                         cursor.getInt(cursor.getColumnIndex("newCards")),
                         cursor.getInt(cursor.getColumnIndex("dueCards")),
@@ -208,9 +210,9 @@ public class MetaDB {
         mMetaDb.execSQL("DELETE FROM widgetStatus");
         try {
             for (DeckStatus deck : decks) {
-                mMetaDb.execSQL("INSERT INTO widgetStatus(deckName, newCards, dueCards, failedCards) "
+                mMetaDb.execSQL("INSERT INTO widgetStatus(deckPath, deckName, newCards, dueCards, failedCards) "
                         + "VALUES (?, ?, ?, ?)",
-                        new Object[]{deck.mDeckName, deck.mNewCards, deck.mDueCards, deck.mFailedCards}
+                        new Object[]{deck.mDeckPath, deck.mDeckName, deck.mNewCards, deck.mDueCards, deck.mFailedCards}
                         );
             }
             mMetaDb.setTransactionSuccessful();

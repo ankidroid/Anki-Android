@@ -91,7 +91,7 @@ public final class WidgetStatus {
                     deck.closeDeck();
 
                     // Add the information about the deck
-                    decks.add(new DeckStatus(deckName, newCards, dueCards, failedCards));
+                    decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards));
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());
