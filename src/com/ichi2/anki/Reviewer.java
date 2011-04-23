@@ -1694,17 +1694,8 @@ public class Reviewer extends Activity {
     }
 
 
-    /** Returns the filename without the extension. */
-    private String removeExtension(String filename) {
-      int dotPosition = filename.lastIndexOf('.');
-      if (dotPosition == -1) {
-        return filename;
-      }
-      return filename.substring(0, dotPosition);
-    }
-
     private String getDeckStyle(String deckPath) {
-      File styleFile = new File(removeExtension(deckPath) + ".css");
+      File styleFile = new File(Utils.removeExtension(deckPath) + ".css");
       if (!styleFile.exists() || !styleFile.canRead()) {
         return "";
       }
@@ -1736,18 +1727,11 @@ public class Reviewer extends Activity {
      * the extension.
      */
     private String getCustomFontsStyle() {
-      SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-      String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
-      String fontsPath = deckPath + "/fonts/";
-      File fontsDir = new File(fontsPath);
-      if (!fontsDir.exists() || !fontsDir.isDirectory()) {
-        return "";
-      }
       StringBuilder builder = new StringBuilder();
-      for (File fontFile : fontsDir.listFiles()) {
+      for (File fontFile : Utils.getCustomFonts(getBaseContext())) {
         String fontFace = String.format(
             "@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
-            removeExtension(fontFile.getName()), fontFile.getAbsolutePath());
+            Utils.removeExtension(fontFile.getName()), fontFile.getAbsolutePath());
         Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
         builder.append(fontFace);
         builder.append('\n');

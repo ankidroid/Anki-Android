@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
@@ -69,6 +70,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
         initializeLanguageDialog();
+        initializeCustomFontsDialog();
         for (String key : mShowValueInSummList) {
             updateListPreference(key);
         }
@@ -153,6 +155,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
+    /** Initializes the list of custom fonts shown in the preferences. */
+    private void initializeCustomFontsDialog() {
+        ListPreference customFontsPreference =
+            (ListPreference) getPreferenceScreen().findPreference("customFonts");
+        String[] customFonts = getCustomFonts();
+        customFontsPreference.setEntries(customFonts);
+        customFontsPreference.setEntryValues(customFonts);
+    }
+
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -177,4 +189,17 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+
+    /** Returns a list of the names of the installed custom fonts. */
+    private String[] getCustomFonts() {
+        File[] files = Utils.getCustomFonts(this);
+        int count = files.length;
+        Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
+        String[] names = new String[count];
+        for (int index = 0; index < count; ++index) {
+            names[index] = Utils.removeExtension(files[index].getName());
+            Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+        }
+        return names;
+    }
 }

@@ -220,6 +220,8 @@
 <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
 <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
 <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
+<string name="custom_fonts">Custom fonts</string>
+<string name="custom_fonts_summ">Show a list of installed custom fonts. Selecting any of the fonts has no effect.</string>
 <string name="language">Language</string>
 <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
 <string name="language_system">System Language</string>
