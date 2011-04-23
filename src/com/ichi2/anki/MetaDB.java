@@ -179,7 +179,7 @@ public class MetaDB {
         Cursor cursor = null;
         try {
             cursor = mMetaDb.query("widgetStatus",
-                    new String[]{"deckName", "newCards", "dueCards", "failedCards"},
+                    new String[]{"deckPath", "deckName", "newCards", "dueCards", "failedCards"},
                     null, null, null, null, "deckName");
             int count = cursor.getCount();
             DeckStatus[] decks = new DeckStatus[count];
@@ -188,11 +188,11 @@ public class MetaDB {
                     throw new SQLiteException("cursor count was incorrect");
                 }
                 decks[index] = new DeckStatus(
-                        cursor.getString(cursor.getColumnIndex("deckPath")),
-                        cursor.getString(cursor.getColumnIndex("deckName")),
-                        cursor.getInt(cursor.getColumnIndex("newCards")),
-                        cursor.getInt(cursor.getColumnIndex("dueCards")),
-                        cursor.getInt(cursor.getColumnIndex("failedCards")));
+                        cursor.getString(cursor.getColumnIndexOrThrow("deckPath")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("deckName")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("newCards")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("dueCards")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("failedCards")));
             }
             return decks;
         } catch (SQLiteException e) {
@@ -211,7 +211,7 @@ public class MetaDB {
         try {
             for (DeckStatus deck : decks) {
                 mMetaDb.execSQL("INSERT INTO widgetStatus(deckPath, deckName, newCards, dueCards, failedCards) "
-                        + "VALUES (?, ?, ?, ?)",
+                        + "VALUES (?, ?, ?, ?, ?)",
                         new Object[]{deck.mDeckPath, deck.mDeckName, deck.mNewCards, deck.mDueCards, deck.mFailedCards}
                         );
             }
