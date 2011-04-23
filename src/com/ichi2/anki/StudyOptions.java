@@ -2165,4 +2165,20 @@ public class StudyOptions extends Activity {
 	    	return false;
     }
 
+
+    /**
+     * Creates an intent to load a deck given the full pathname of it.
+     * <p>
+     * The constructed intent is equivalent (modulo the extras) to the open used by the launcher
+     * shortcut, which means it will not open a new study options window but bring the existing one
+     * to the front.
+     */
+    public static Intent getLoadDeckIntent(Context context, String deckPath) {
+        Intent loadDeckIntent = new Intent(context, StudyOptions.class);
+        loadDeckIntent.setAction(Intent.ACTION_MAIN);
+        loadDeckIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        loadDeckIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        loadDeckIntent.putExtra(StudyOptions.EXTRA_DECK, deckPath);
+        return loadDeckIntent;
+    }
 }
