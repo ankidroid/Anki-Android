@@ -40,7 +40,8 @@ public class RubyParser {
      * @return html ruby markup equivalent of the input text.
      */
     public static String ankiRubyToMarkup(String sourceText) {
-        int cursorIndex = 0;
+        return sourceText.replaceAll(" ?([^ >]+?)\\[([^(sound:)].*?)\\]", "<ruby><rb>$1</rb><rt>$2</rt></ruby>");
+        /*int cursorIndex = 0;
 
         int nextRubyTextStart; // The first '[' after the cursorIndex
         int nextSpacer; // The first spacer (' ', or '、') after the cursorIndex
@@ -100,7 +101,7 @@ public class RubyParser {
             }
         }
 
-        return builder.toString();
+        return builder.toString();*/
 
     }
 

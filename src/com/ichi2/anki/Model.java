@@ -20,6 +20,8 @@ package com.ichi2.anki;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.mindprod.common11.StringTools;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -412,6 +414,9 @@ public class Model {
 
     private static String invertColor(String color, boolean invert) {
     	if (invert) {
+    	    if (color != null) {
+    	        color = StringTools.toUpperCase(color);
+    	    }
             final char[] items = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
             final char[] tmpItems = {'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v'};
             for (int i = 0; i < 16; i++) {

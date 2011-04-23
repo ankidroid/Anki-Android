@@ -37,19 +37,19 @@
     <item>隨機順序</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
-    <item>Hide the question in answer</item>
-    <item>Show the question in answer</item>
-    <item>As defined in CardModel</item>
+    <item>顯示答案時隱藏問題</item>
+    <item>顯示答案時同時顯示問題</item>
+    <item>按照卡片模式中的設置</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>啟動時先顯示學習選項</item>
+    <item>啟動時先​​選擇牌組</item>
+    <item>每天首次啟動時選擇牌組</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>總是發送報告</item>
+    <item>從不發送報告</item>
+    <item>詢問我</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -59,36 +59,36 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>從不</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>按最早修改順序顯示</item>
+    <item>依新加入順序顯示</item>
+    <item>按隨機順序顯示</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>小時</item>
-    <item>天</item>
-    <item>月</item>
-    <item>年</item>
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>小時</item>
-    <item>天</item>
-    <item>月</item>
-    <item>年</item>
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>1小時內</item>
+    <item>1天後</item>
+    <item>1個月後</item>
+    <item>1年後</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>%s小時後</item>
+    <item>%s天後</item>
+    <item>%s個月後</item>
+    <item>%s年後</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>隨機順序顯示新卡片</item>
@@ -114,45 +114,51 @@
     <item>3天內顯示失敗的卡片</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
+    <item>依問題</item>
+    <item>依答案</item>
+    <item>依到期時間</item>
+    <item>依間隔</item>
+    <item>依難易度</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>到期</item>
-    <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>累積到期</item>
+    <item>複習間隔</item>
+    <item>複習次數</item>
+    <item>複習時間</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1周</item>
+    <item>1個月</item>
+    <item>3個月</item>
+    <item>6個月</item>
+    <item>1年</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>card browser</item>
-    <item>statistics</item>
-    <item>text-to-speech</item>
-    <item>deck completion bar on deck picker</item>
-    <item>select card model on fact adder</item>
-    <item>new widget</item>
-    <item>better undo/redo behaviour</item>
-    <item>slider controls</item>
-    <item>language selection</item>
-    <item>more languages</item>
-    <item>progress bars in reviewer</item>
-    <item>feedback within AnkiDroid</item>
-    <item>possibility to set cards active/inactive by tag</item>
-    <item>better syncing</item>
-    <item>better error reporter</item>
-    <item>add decks</item>
-    <item>more options</item>
-    <item>lots of fixes for small errors</item>
-    <item>tag support for card editor, card adder and card browser</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

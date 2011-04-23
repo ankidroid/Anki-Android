@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Haku</string>
   <string name="pref_cat_navigation">Ohjaus</string>
   <string name="pref_cat_swipe">Pyyhkäisy</string>
-  <string name="pref_cat_shake">Ravistus</string>
+  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Zoomaus</string>
   <string name="pref_cat_reset">Palautus</string>
   <string name="pref_cat_other">Muu</string>
@@ -123,8 +123,6 @@
   <string name="show_whiteboard_summ">Voit kirjoittaa ruudulle</string>
   <string name="whiteboard_stroke_width">Valkotaulun reunanleveys</string>
   <string name="whiteboard_stroke_width_summ">Viivan leveys: XXX</string>
-  <string name="sample_deck">Näytekappalekorttipakka</string>
-  <string name="sample_deck_summ">Luo korttipakka pääkaupungeista, jos pakkaa ei löydy</string>
   <string name="write_answers">Kirjoita vastaukset</string>
   <string name="write_answers_summ">Voit kirjoittaa vastauksen, ja verrata sitä oikean vastaukseen</string>
   <string name="text_selection">Salli tekstin valinta</string>
@@ -139,31 +137,44 @@
   <string name="use_ruby_support_summ">Merkkien \'[\' ja \']\' välissä olevaa tekstiä käsitellään ruby-huomautuksena</string>
   <string name="display_font_size">Näyttöfontin suhteellinen koko</string>
   <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
+  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
+  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
   <string name="button_size">Painikkeen koko</string>
   <string name="button_size_summ">Suhteutta painikkeiden koko uudelleen näyttöön. Tällä hetkellät: XXX %</string>
   <string name="hide_question_in_answer">Piilota kysymys vastauksen yhteydessä?</string>
   <string name="hide_question_in_answer_summ">Määrittää piilotetaanko kysymys kun vastaus näytetään.</string>
   <string name="deck_path">Korttipakan polku</string>
   <string name="deck_path_summ">Polku jonne korttipakkasi on tallennettu</string>
+  <string name="deck_order">Deck order</string>
+  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">Tarkastele kokoruudulla</string>
   <string name="fullscreen_review_summ">Voit päättää, halutako käyttää kaikkia käytettävissä olevaa näytön tilaa kortin tarkastamisen aikana</string>
   <string name="zoom">Ota zoomaus käyttöön</string>
   <string name="zoom_summ">Näytä zoomaussäätimet tarjastekun aikana</string>
   <string name="swipe">Ota eleet käyttöön</string>
   <string name="swipe_summ_off">Käytä eleitä vaihtaaksesi näyttöjä ja vastaessa kortteihin. Tämä vaihtoehto ei ole yhteensopiva zoomaussäätimen kanssa</string>
-  <string name="swipe_summ_on">Pyyhkäise vaakasuoraan vaihtaaksesi näyttö ja pystysuunnassa vastataaksesi kortteihin (alas: Uudelleen, ylös: Hyvä, kaksoiskosketus: Helppo)</string>
-  <string name="swipe_sensibility">Eleen herkkyys</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
+  <string name="pref_cat_actions">Actions</string>
+  <string name="gestures_shake">Shake</string>
+  <string name="gestures_swipe_up">Swipe up</string>
+  <string name="gestures_swipe_down">Swipe down</string>
+  <string name="gestures_swipe_left">Swipe left</string>
+  <string name="gestures_swipe_right">Swipe right</string>
+  <string name="gestures_double_tap">Double tap</string>
+  <string name="gestures_tap_top">Tap top</string>
+  <string name="gestures_tap_bottom">Tap bottom</string>
+  <string name="gestures_tap_left">Tap left</string>
+  <string name="gestures_tap_right">Tap right</string>
+  <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">Pyyhkäisyeleen herkkyys: XXX</string>
-  <string name="shake">Ravista kumoaksesi viimeisimmän toiminnon</string>
-  <string name="shake_summ">Kumoa viimeinen toiminto ravistelemalla laitetta</string>
   <string name="tts">Teksti puheeksi</string>
   <string name="tts_summ">Lue kysymys ja vausta, jos äänitiedosto ei tule mukana</string>
   <string name="play_sounds_at_start">Toista äänet heti</string>
   <string name="play_sounds_at_start_summ">Toista äänet välittömästi sen jälkeen, kun kysymys/vastaus näytetään</string>
   <string name="shake_intensity">Ravistuksen kynnys</string>
   <string name="shake_intensity_summ">Ravistuksen tunnustuksen kynnys: XXX</string>
-  <string name="sync_fetch_missing_media">Fetch media on sync</string>
-  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
+  <string name="sync_fetch_missing_media">Hae media synkronointi</string>
+  <string name="sync_fetch_missing_media_summ">Hakee automaattisesti puuttuvat mediat kun synkronoidaan.</string>
   <string name="fix_hebrew_text">Pakota RTL heprealle</string>
   <string name="fix_hebrew_text_summ">Heprean kiertotapa rajoitetulle Android-alustalle Ei tue vokaaleja.</string>
   <string name="language">Kieli</string>
@@ -177,7 +188,9 @@
   <string name="deckpreferences_title">Korttipakan asetukset</string>
   <string name="about_title">Tietoja</string>
   <string name="cardeditor_title">Korttien muokkaus</string>
-  <string name="factadder_title">Kortin yhteenlaskia</string>
+  <string name="factadder_title">Korttilisääjä</string>
+  <string name="factadder_saving_error">Error saving fact</string>
+  <string name="saving_facts">Saving facts</string>
   <string name="deckcreator_title">Korttipakan luoja</string>
   <string name="model">Malli:</string>
   <string name="select_model">Malli</string>
@@ -237,9 +250,9 @@
   <string name="connection_error_return_message">Verkko virhe. Yritä uudelleen tai peruuta muutokset ja palaa edelliseen näyttöön.</string>
   <string name="retry">Yritä uudelleen</string>
   <string name="cancel">Peru</string>
-  <string name="download_overwrite">Overwrite</string>
-  <string name="download_cancel">Cancel Download</string>
-  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
+  <string name="download_overwrite">Korvaa</string>
+  <string name="download_cancel">Peruuta lataus</string>
+  <string name="download_message">Korttipakka %1$s on jo olemassa paikallisessa. Haluatko korvata sen?</string>
   <string name="shared_decks">Jaetut korttipakat</string>
   <string name="updating">Päivitetään...</string>
   <string name="loading_shared_decks">Saatavilla olevia jaettuja korttipakkoja ladataan...</string>
@@ -297,11 +310,11 @@
   <string name="studyoptions_continue">Jatka tarkistamista</string>
   <string name="studyoptions_well_done">Hyvin tehty!</string>
   <string name="studyoptions_congrats_title">Onneksi olkoon!</string>
-  <string name="studyoptions_congrats_message">Olet valmis.\nHuomenna on:\n%1$d %2$s tarkasteltavana ja %3$d uutta %4$s.</string>
   <string name="studyoptions_congrats_card">kortti</string>
   <string name="studyoptions_congrats_cards">Kortit</string>
   <string name="studyoptions_congrats_learnmore">Opi lisää</string>
   <string name="studyoptions_congrats_reviewearly">Tarkista etuajassa</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
   <string name="studyoptions_congrats_open_other_deck">Avaa muu korttipakka</string>
   <string name="studyoptions_congrats_finish">Takaisin opiskeluruutuun</string>
   <string name="studyoptions_feedback">Palaute</string>
@@ -341,7 +354,7 @@
   <string name="sync_log_no_changes_message">Muutoksia ei löytynyt</string>
   <string name="sync_log_uploading_message">Täysi synkronointi sijainnista</string>
   <string name="sync_log_downloading_message">Täysi synkronointi palvelimesta</string>
-  <string name="sync_log_zero_facts">Completed, no cards changed</string>
+  <string name="sync_log_zero_facts">Valmistui, kortteja ei muutettu</string>
   <string name="sync_log_clocks_unsynchronized">Laitteen aika on eri kuin palvelimen %1$d sek%2$s; synkrointi ei onnistu.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, laitteen aikavyöhyke on ehkä väärä</string>
   <string name="sync_log_clocks_unsynchronized_date">, laitteen päivämäärä on mahdollisesti väärä</string>
@@ -370,7 +383,7 @@
   <string name="feedback_default_text">Ana palautetta tai anna yleistietoa virheistä josta ilmoitat.</string>
   <string name="feedback_error_reply_new">Tuntematon virhe, arkistoida uusi virhe</string>
   <string name="feedback_error_reply_known">Known issue, pending investigation</string>
-  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
+  <string name="feedback_error_reply_issue_unknown">Ongelma %1$d, tuntematon tila</string>
   <string name="feedback_error_reply_issue_status">Virhe %1$d, tila: %2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">Virhe %1$d, korjattu, mutta ei vielä julkaistu</string>
   <string name="feedback_error_reply_issue_fixed_prod">Virhe %1$d, korjattu uusimmassa versiossa</string>
@@ -384,6 +397,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Kortien määrä</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
   <string name="widget_no_cards_due">Ei ole tiedossa korttien määrää</string>
+  <string name="widget_loading">Widget loading...</string>
   <string name="soon">Pian</string>
   <string name="show_next_review_time">Seuraava tarkastelun aika</string>
   <string name="show_next_review_time_summ">Näyttää seuraavan tarkistuken kerran, riippuen valinnastasi</string>
@@ -434,6 +448,10 @@
     <item quantity="one">1 / %2$d korttia</item>
     <item quantity="other">%1$d / %2$d jäljellä</item>
   </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">%1$s (1 min. left)</item>
+    <item quantity="other">%1$s (%2$d min. left)</item>
+  </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 / %3$d  korttia näytetään</item>
     <item quantity="other">%1$s: %2$d / %3$d korttia näytetään</item>
@@ -442,21 +460,33 @@
     <item quantity="one">%1$s (1 / %3$d korttia)</item>
     <item quantity="other">%1$s (%2$d / %3$d korttia)</item>
   </plurals>
+  <plurals name="studyoptions_congrats_message">
+    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_new_cards">
+    <item quantity="one">1 card</item>
+    <item quantity="other">%1$d new cards</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_eta">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%1$d min.</item>
+  </plurals>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 card to server</item>
-    <item quantity="other">%1$d cards to server</item>
+    <item quantity="one">1 kortti palvelimelle</item>
+    <item quantity="other">%1$d korttia palvelimelle</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
-    <item quantity="one">1 card from server</item>
-    <item quantity="other">%1$d cards from server</item>
+    <item quantity="one">1 kortti palvelimelta</item>
+    <item quantity="other">%1$d korttia palvelimelta</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Yksi virhe raportissa</item>
     <item quantity="other">On %d raportoitavaa virhettä</item>
   </plurals>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">1 kortti määrästä %2$s</item>
+    <item quantity="other">%1$d korttia %2$s kortista</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1 korttipakka</item>

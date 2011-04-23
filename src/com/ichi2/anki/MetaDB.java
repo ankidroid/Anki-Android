@@ -90,7 +90,7 @@ public class MetaDB {
         Cursor cur = null;
         try {
             String query =
-                "SELECT language FROM languagesv"
+                "SELECT language FROM languages"
                 + "WHERE deckpath = \'" + deckPath+ "\' "
                 + "AND modelid = " + modelId + " "
                 + "AND cardmodelid = " + cardModelId + " "

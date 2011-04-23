@@ -59,7 +59,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Mai</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Mostra per primo l\'ultimo modificato</item>
@@ -67,28 +67,28 @@
     <item>Mostra in ordine casuale</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>ora</item>
-    <item>giorno</item>
-    <item>mese</item>
-    <item>anno</item>
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>ore</item>
-    <item>giorni</item>
-    <item>mesi</item>
-    <item>anni</item>
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>in 1 ora</item>
+    <item>in 1 giorno</item>
+    <item>in 1 mese</item>
+    <item>in 1 anno</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>in %s ore</item>
+    <item>in %s giorni</item>
+    <item>in %s mesi</item>
+    <item>in %s anni</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Mostra le carte nuove in ordine casuale</item>
@@ -114,45 +114,51 @@
     <item>Mostra le carte sbagliate tra 3 giorni</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
+    <item>Per domanda</item>
+    <item>Per risposta</item>
+    <item>Per tempo scaduto</item>
+    <item>Per intervallo</item>
+    <item>Per facilità</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
-    <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>Scadute</item>
+    <item>Cumulativo scadute</item>
+    <item>Intervalli</item>
+    <item>Revisioni</item>
+    <item>Tempo per la revisione</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1 settimana</item>
+    <item>1 mese</item>
+    <item>3 mesi</item>
+    <item>6 mesi</item>
+    <item>1 anno</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>card browser</item>
-    <item>statistics</item>
-    <item>text-to-speech</item>
-    <item>deck completion bar on deck picker</item>
-    <item>select card model on fact adder</item>
-    <item>new widget</item>
-    <item>better undo/redo behaviour</item>
-    <item>slider controls</item>
-    <item>language selection</item>
-    <item>more languages</item>
-    <item>progress bars in reviewer</item>
-    <item>feedback within AnkiDroid</item>
-    <item>possibility to set cards active/inactive by tag</item>
-    <item>better syncing</item>
-    <item>better error reporter</item>
-    <item>add decks</item>
-    <item>more options</item>
-    <item>lots of fixes for small errors</item>
-    <item>tag support for card editor, card adder and card browser</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

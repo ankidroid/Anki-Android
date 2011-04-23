@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Lookup</string>
   <string name="pref_cat_navigation">Navigation</string>
   <string name="pref_cat_swipe">Swipe</string>
-  <string name="pref_cat_shake">Shake</string>
+  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Reset</string>
   <string name="pref_cat_other">Other</string>
@@ -123,8 +123,6 @@
   <string name="show_whiteboard_summ">Lets you write on the screen</string>
   <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
   <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>
-  <string name="sample_deck">Sample deck</string>
-  <string name="sample_deck_summ">Generate capitals deck if none found</string>
   <string name="write_answers">Write answers</string>
   <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
   <string name="text_selection">Allow text selection</string>
@@ -139,23 +137,36 @@
   <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
   <string name="display_font_size">Relative display font size</string>
   <string name="display_font_size_summ">The font size to use in the display relative to the definitions in the deck. At the moment: XXX %</string>
+  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
+  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
   <string name="button_size">Relative button size</string>
   <string name="button_size_summ">Relative size of the buttons on the reviewing screen. At the moment: XXX %</string>
   <string name="hide_question_in_answer">Hide question in answer?</string>
   <string name="hide_question_in_answer_summ">Determines whether the question should be hidden when the answer is shown</string>
   <string name="deck_path">Deck path</string>
   <string name="deck_path_summ">Path to where your decks are stored</string>
+  <string name="deck_order">Deck order</string>
+  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">Review in fullscreen</string>
   <string name="fullscreen_review_summ">You can decide if you want to use all available screen space during card reviewing</string>
   <string name="zoom">Enable Zoom</string>
   <string name="zoom_summ">Show zoom controls when reviewing</string>
   <string name="swipe">Enable Gestures</string>
   <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens and vertically to answer cards (down: Again, up: Good, double-tap: Easy)</string>
-  <string name="swipe_sensibility">Gesture Sensitivity</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
+  <string name="pref_cat_actions">Actions</string>
+  <string name="gestures_shake">Shake</string>
+  <string name="gestures_swipe_up">Swipe up</string>
+  <string name="gestures_swipe_down">Swipe down</string>
+  <string name="gestures_swipe_left">Swipe left</string>
+  <string name="gestures_swipe_right">Swipe right</string>
+  <string name="gestures_double_tap">Double tap</string>
+  <string name="gestures_tap_top">Tap top</string>
+  <string name="gestures_tap_bottom">Tap bottom</string>
+  <string name="gestures_tap_left">Tap left</string>
+  <string name="gestures_tap_right">Tap right</string>
+  <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
-  <string name="shake">Shake to Undo</string>
-  <string name="shake_summ">Shake your device to undo the last action</string>
   <string name="tts">Text to Speech</string>
   <string name="tts_summ">Reads out question and answer if no sound file is included</string>
   <string name="play_sounds_at_start">Play Sounds Instantly</string>
@@ -178,6 +189,8 @@
   <string name="about_title">About</string>
   <string name="cardeditor_title">Fact Editor</string>
   <string name="factadder_title">Card Adder</string>
+  <string name="factadder_saving_error">Error saving fact</string>
+  <string name="saving_facts">Saving facts</string>
   <string name="deckcreator_title">Deck Creator</string>
   <string name="model">Model:</string>
   <string name="select_model">Model</string>
@@ -236,7 +249,7 @@
   <string name="connection_error_title">Attention</string>
   <string name="connection_error_return_message">A network error has occurred. Retry, or cancel and return to the previous screen.</string>
   <string name="retry">Retry</string>
-  <string name="cancel">Cancel</string>
+  <string name="cancel">취소</string>
   <string name="download_overwrite">Overwrite</string>
   <string name="download_cancel">Cancel Download</string>
   <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
@@ -274,7 +287,7 @@
   <string name="studyoptions_load_other_deck">Load Other Deck</string>
   <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
   <string name="studyoptions_night_mode">Night Mode</string>
-  <string name="menu_open_deck">All decks</string>
+  <string name="menu_open_deck">모든 묶음</string>
   <string name="menu_sync">Sync</string>
   <string name="menu_download_deck">Download deck</string>
   <string name="menu_download_shared_deck">Shared deck</string>
@@ -297,11 +310,11 @@
   <string name="studyoptions_continue">Continue Reviewing</string>
   <string name="studyoptions_well_done">잘한다!</string>
   <string name="studyoptions_congrats_title">Congratulations!</string>
-  <string name="studyoptions_congrats_message">You have finished for now.\nTomorrow there will be:\n%1$d %2$s to review and %3$d new %4$s.</string>
   <string name="studyoptions_congrats_card">card</string>
   <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">더 배우기</string>
   <string name="studyoptions_congrats_reviewearly">Review Early</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
   <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
   <string name="studyoptions_congrats_finish">Back to Study Screen</string>
   <string name="studyoptions_feedback">Feedback</string>
@@ -376,14 +389,15 @@
   <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
   <string name="feedback_error_reply_malformed">Filed bug, no response</string>
   <string name="feedback_error_reply_failed">Failed to send</string>
-  <string name="widget_pref">Widget</string>
+  <string name="widget_pref">위젯</string>
   <string name="widget_minimum_cards_due">Widget notification threshold</string>
   <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibrate</string>
+  <string name="widget_minimum_cards_due_vibrate">진동</string>
   <string name="widget_minimum_cards_due_blink">Blink light</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
   <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_loading">Widget loading...</string>
   <string name="soon">Soon</string>
   <string name="show_next_review_time">Next review time</string>
   <string name="show_next_review_time_summ">Shows the next review time depending on your choice</string>
@@ -399,11 +413,11 @@
   <string name="optimize_deck_title">Optimize database</string>
   <string name="optimize_deck_dialog">Optimizing database</string>
   <string name="optimize_deck_message">Database optimized.\nShrunk by %d kb</string>
-  <string name="contextmenu_deckpicker_delete_deck">Delete Deck</string>
-  <string name="delete_deck_title">Delete Deck</string>
+  <string name="contextmenu_deckpicker_delete_deck">묶음 삭제</string>
+  <string name="delete_deck_title">묶음 삭제</string>
   <string name="delete_deck_message">Do you really want to delete deck %s?</string>
   <string name="delete_deck_confirm">Delete it</string>
-  <string name="new_version_title">New Version:</string>
+  <string name="new_version_title">새로운 버전 :</string>
   <string name="new_version_message">New Features:</string>
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
@@ -434,6 +448,10 @@
     <item quantity="one">1 of %2$d due</item>
     <item quantity="other">%1$d of %2$d due</item>
   </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">%1$s (1 min. left)</item>
+    <item quantity="other">%1$s (%2$d min. left)</item>
+  </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 of %3$d cards shown</item>
     <item quantity="other">%1$s: %2$d of %3$d cards shown</item>
@@ -441,6 +459,18 @@
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 of %3$d due)</item>
     <item quantity="other">%1$s (%2$d of %3$d due)</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_message">
+    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_new_cards">
+    <item quantity="one">1 card</item>
+    <item quantity="other">%1$d new cards</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_eta">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%1$d min.</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 card to server</item>

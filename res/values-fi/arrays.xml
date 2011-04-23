@@ -67,16 +67,16 @@
     <item>Näytä satunnaisessa järjestyksessä</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>tunti</item>
-    <item>päivä</item>
-    <item>kuukausi</item>
-    <item>vuosi</item>
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>tuntia</item>
-    <item>päivää</item>
-    <item>Kuukautta</item>
-    <item>vuotta</item>
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>tunnin kuluttua</item>
@@ -119,6 +119,7 @@
     <item>Määräajan mukaan</item>
     <item>Aikavälin mukaan</item>
     <item>Helppouden mukaan</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Määrä</item>
@@ -134,25 +135,30 @@
     <item>6 kuukautta</item>
     <item>1 vuosi</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>korttiselain</item>
-    <item>tilastot</item>
-    <item>tekstin puheeksi</item>
-    <item>deck completion bar on deck picker</item>
-    <item>select card model on fact adder</item>
-    <item>uusi widget</item>
-    <item>parempi kumoa/tehdä uudelleen käyttäytyminen</item>
-    <item>liukusäädinohjain</item>
-    <item>kielivalinta</item>
-    <item>enemmän kieliä</item>
-    <item>edistymispalkkit tarkastelussa</item>
-    <item>feedback within AnkiDroid</item>
-    <item>mahdollisuut määrittää kortit aktiiven/passiivinen tunnisteella</item>
-    <item>parempi synkronointi</item>
-    <item>parempi virheilmoittaja</item>
-    <item>lisää korttipakat</item>
-    <item>lisää vaihtoehtoja</item>
-    <item>pienille ongelmmilla paljon korjauksia</item>
-    <item>tag support for card editor, card adder and card browser</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

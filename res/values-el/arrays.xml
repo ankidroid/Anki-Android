@@ -67,28 +67,28 @@
     <item>Εμφάνιση κατά τυχαία σειρά</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>ώρα</item>
-    <item>ημέρα</item>
-    <item>μήνας</item>
-    <item>έτος</item>
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>ώρες</item>
-    <item>ημέρες</item>
-    <item>μήνες</item>
-    <item>χρόνια</item>
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>σε 1 ώρα</item>
+    <item>σε 1 ημέρα</item>
+    <item>σε 1 μήνα</item>
+    <item>σε 1 χρόνο</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>σε %s ώρες</item>
+    <item>σε %s ημέρες</item>
+    <item>σε %s μήνες</item>
+    <item>σε %s χρόνια</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Νέες κάρτες σε τυχαία σειρά</item>
@@ -114,45 +114,51 @@
     <item>Εμφάνιση αποτυχημένων καρτών σε 3 μέρες</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
+    <item>Με την ερώτηση</item>
+    <item>Με την απάντηση</item>
+    <item>Με το δέοντα χρόνο</item>
+    <item>Με το διάστημα</item>
+    <item>Με την ευκολία</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
-    <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>Δέον χρόνος</item>
+    <item>Με το συνολικό δέοντα χρόνο</item>
+    <item>Διαστήματα</item>
+    <item>Αναθεωρήσεις</item>
+    <item>χρόνος αναθεώρησης</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1 εβδομάδα</item>
+    <item>1 μήνας</item>
+    <item>3 μήνες</item>
+    <item>6 μήνες</item>
+    <item>1 χρόνος</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>card browser</item>
-    <item>statistics</item>
-    <item>text-to-speech</item>
-    <item>deck completion bar on deck picker</item>
-    <item>select card model on fact adder</item>
-    <item>new widget</item>
-    <item>better undo/redo behaviour</item>
-    <item>slider controls</item>
-    <item>language selection</item>
-    <item>more languages</item>
-    <item>progress bars in reviewer</item>
-    <item>feedback within AnkiDroid</item>
-    <item>possibility to set cards active/inactive by tag</item>
-    <item>better syncing</item>
-    <item>better error reporter</item>
-    <item>add decks</item>
-    <item>more options</item>
-    <item>lots of fixes for small errors</item>
-    <item>tag support for card editor, card adder and card browser</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

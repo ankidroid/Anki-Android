@@ -66,6 +66,18 @@
     <item>In der Reihenfolge des Hinzufügens</item>
     <item>In umgekehrter Reihenfolge des Hinzufügens</item>
   </string-array>
+  <string-array name="next_review_s">
+    <item>1 Stunde</item>
+    <item>1 Tag</item>
+    <item>1 Monat</item>
+    <item>1 Jahr</item>
+  </string-array>
+  <string-array name="next_review_p">
+    <item>%s Stunden</item>
+    <item>%s Tage</item>
+    <item>%s Monate</item>
+    <item>%s Jahre</item>
+  </string-array>
   <string-array name="next_review_in_s">
     <item>in 1 Stunde</item>
     <item>in 1 Tag</item>
@@ -107,6 +119,7 @@
     <item>Nach Fälligkeit</item>
     <item>Nach Intervall</item>
     <item>Nach Schwierigkeit</item>
+    <item>Erstellungsdatum</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Fälligkeit</item>
@@ -122,25 +135,30 @@
     <item>6 Monate</item>
     <item>1 Jahr</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>Kartenübersicht</item>
-    <item>Statistik</item>
-    <item>Vorlesefunktion</item>
-    <item>Fortschrittsanzeige in der Stapelauswahl</item>
-    <item>Kartenvorlage kann nun beim Hinzufügen gewählt werden</item>
-    <item>neues Widget</item>
-    <item>verbesserte Rückgängig-Funktion</item>
-    <item>Schieberegler</item>
-    <item>mehr Sprachen</item>
-    <item>Auswahl der Sprache</item>
-    <item>Erfolgsanzeige beim Lernen</item>
-    <item>Rückmeldung innerhalb von AnkiDroid</item>
-    <item>Möglichkeiten, Karten nach Schlagworten zu aktivieren/deaktivieren</item>
-    <item>Bessere Synchronisierung</item>
-    <item>Bessere Fehlermeldungen</item>
-    <item>Stapel hinzufügen</item>
-    <item>Mehr Optionen</item>
-    <item>Viele kleine Fehler behoben</item>
-    <item>Unterstützung für Schlagworte beim Karten ändern und erstellen sowie in der Kartenübersicht</item>
+  <string-array name="deck_order_labels">
+    <item>Nach letztem Zugriff</item>
+    <item>Alphabetisch</item>
+    <item>Nach Anzahl fälliger Karten</item>
+    <item>Nach Anzahl der Gesamtkarten</item>
+    <item>Nach Anzahl aller neuen Karten</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>Keine Aktion</item>
+    <item>Antwort Schaltfläche 1</item>
+    <item>Antwort Schaltfläche 2</item>
+    <item>Antwort Schaltfläche 3</item>
+    <item>Antwort Schaltfläche 4</item>
+    <item>Empfohlene Antwort (grün)</item>
+    <item>Besser als empfohlene Antwort</item>
+    <item>Rückgängig</item>
+    <item>Wiederholen</item>
+    <item>Karte bearbeiten</item>
+    <item>Karte markieren</item>
+    <item>Nachschlagen</item>
+    <item>Vorläufig aussetzen</item>
+    <item>Dauerhaft aussetzen</item>
+    <item>Karte löschen</item>
+    <item>Tafel säubern</item>
+    <item>Lernen beenden</item>
   </string-array>
 </resources>

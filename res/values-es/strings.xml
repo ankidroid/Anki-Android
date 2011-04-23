@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Consultas</string>
   <string name="pref_cat_navigation">Navegación</string>
   <string name="pref_cat_swipe">Gestos</string>
-  <string name="pref_cat_shake">Agitado</string>
+  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Restablecimiento</string>
   <string name="pref_cat_other">Otras opciones</string>
@@ -123,8 +123,6 @@
   <string name="show_whiteboard_summ">Te permite escribir en la pantalla</string>
   <string name="whiteboard_stroke_width">Ancho del trazo en la pizarra</string>
   <string name="whiteboard_stroke_width_summ">Ancho del trazo: XXX</string>
-  <string name="sample_deck">Mazo de muestra</string>
-  <string name="sample_deck_summ">Crea un mazo de "Capitales del Mundo" si no se encuentra ningún otro mazo</string>
   <string name="write_answers">Escribir respuestas</string>
   <string name="write_answers_summ">Te permite escribir la respuesta y compararla con la solución correcta</string>
   <string name="text_selection">Permitir la selección de texto</string>
@@ -139,31 +137,44 @@
   <string name="use_ruby_support_summ">En caso de encontrarse los caracteres \'[\' y \']\', el texto es tratado como una anotación Ruby</string>
   <string name="display_font_size">Tamaño de letra relativo</string>
   <string name="display_font_size_summ">El tamaño de fuente a mostrar, en relación a las definiciones del mazo. En este momento: XXX %</string>
+  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
+  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
   <string name="button_size">Tamaño de botones relativo</string>
   <string name="button_size_summ">Tamaño relativo de los botones en la pantalla de repaso. En este momento: XXX %</string>
   <string name="hide_question_in_answer">¿Ocultar la pregunta?</string>
   <string name="hide_question_in_answer_summ">Determina si la pregunta debería de ocultarse al mostrar la respuesta.</string>
   <string name="deck_path">Directorio mazos</string>
   <string name="deck_path_summ">Directorio donde tus mazos están almacenados</string>
+  <string name="deck_order">Deck order</string>
+  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">Pantalla completa</string>
   <string name="fullscreen_review_summ">Usa todo el espacio disponible de la pantalla durante el repaso</string>
   <string name="zoom">Habilitar Zoom</string>
   <string name="zoom_summ">Mostrar controles de zoom durante el repaso</string>
   <string name="swipe">Habilitar gestos</string>
   <string name="swipe_summ_off">Usa gestos para moverte entre las pantallas y responder tarjetas. Esta opción es incompatible con los controles de zoom</string>
-  <string name="swipe_summ_on">Desliza el dedo horizontalmente para alternar entre pantallas, y verticalmente para responder tarjetas (abajo: Una vez más; arriba: Bien; doble toque: Fácil)</string>
-  <string name="swipe_sensibility">Sensibilidad de Gestos</string>
+  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
+  <string name="pref_cat_actions">Actions</string>
+  <string name="gestures_shake">Shake</string>
+  <string name="gestures_swipe_up">Swipe up</string>
+  <string name="gestures_swipe_down">Swipe down</string>
+  <string name="gestures_swipe_left">Swipe left</string>
+  <string name="gestures_swipe_right">Swipe right</string>
+  <string name="gestures_double_tap">Double tap</string>
+  <string name="gestures_tap_top">Tap top</string>
+  <string name="gestures_tap_bottom">Tap bottom</string>
+  <string name="gestures_tap_left">Tap left</string>
+  <string name="gestures_tap_right">Tap right</string>
+  <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">Sensibilidad de los gestos: XXX</string>
-  <string name="shake">Agitar para Deshacer</string>
-  <string name="shake_summ">Agita tu dispositivo para deshacer la última acción</string>
   <string name="tts">Texto a Voz</string>
   <string name="tts_summ">Lee en voz alta las preguntas y las respuestas si no hay ningún archivo de sonido incluido</string>
   <string name="play_sounds_at_start">Reproducir Sonidos Inmediatamente</string>
   <string name="play_sounds_at_start_summ">Reproduce los sonidos inmediatamente al mostrar una pregunta/respuesta</string>
   <string name="shake_intensity">Umbral para el Agitado</string>
   <string name="shake_intensity_summ">Umbral de reconocimiento para el agitado: XXX</string>
-  <string name="sync_fetch_missing_media">Fetch media on sync</string>
-  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
+  <string name="sync_fetch_missing_media">Buscar archivos multimedia al sincronizar</string>
+  <string name="sync_fetch_missing_media_summ">Buscar automáticamente archivos multimedia faltantes al sincronizar.</string>
   <string name="fix_hebrew_text">Forzar RTL para idioma hebreo</string>
   <string name="fix_hebrew_text_summ">Solución al soporte limitado de la plataforma Android al idioma Hebreo. No soporta vocales.</string>
   <string name="language">Idioma</string>
@@ -178,6 +189,8 @@
   <string name="about_title">Acerca de</string>
   <string name="cardeditor_title">Editor de tarjetas</string>
   <string name="factadder_title">Añadir Tarjeta</string>
+  <string name="factadder_saving_error">Error saving fact</string>
+  <string name="saving_facts">Saving facts</string>
   <string name="deckcreator_title">Creador de Mazos</string>
   <string name="model">Modelo:</string>
   <string name="select_model">Modelo</string>
@@ -297,11 +310,11 @@
   <string name="studyoptions_continue">Continuar el repaso</string>
   <string name="studyoptions_well_done">¡Bien hecho!</string>
   <string name="studyoptions_congrats_title">¡Enhorabuena!</string>
-  <string name="studyoptions_congrats_message">Has terminado por ahora.\nMañana habrá:\n%1$d %2$s para repasar y %3$d nuevas %4$s.</string>
   <string name="studyoptions_congrats_card">tarjeta</string>
   <string name="studyoptions_congrats_cards">tarjetas</string>
   <string name="studyoptions_congrats_learnmore">Aprender más</string>
   <string name="studyoptions_congrats_reviewearly">Repasar anticipadamente</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir otro mazo</string>
   <string name="studyoptions_congrats_finish">Volver a la pantalla de Estudio</string>
   <string name="studyoptions_feedback">Sugerencias</string>
@@ -341,7 +354,7 @@
   <string name="sync_log_no_changes_message">No se encontraron cambios</string>
   <string name="sync_log_uploading_message">Sincronización completa desde el cliente</string>
   <string name="sync_log_downloading_message">Sincronización completa desde el servidor</string>
-  <string name="sync_log_zero_facts">Completed, no cards changed</string>
+  <string name="sync_log_zero_facts">Completado, sin cambios en las tarjetas</string>
   <string name="sync_log_clocks_unsynchronized">La hora de tu dispositivo es diferente de la del servidor en %1$d seg%2$s; no se pudo sincronizar.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, la zona horaria del dispositivo es probablemente errónea</string>
   <string name="sync_log_clocks_unsynchronized_date">, la fecha de dispositivo probablemente es errónea</string>
@@ -384,6 +397,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Tarjetas pendientes</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d repasos pendientes</string>
   <string name="widget_no_cards_due">No hay tarjetas pendientes</string>
+  <string name="widget_loading">Widget loading...</string>
   <string name="soon">Pronto</string>
   <string name="show_next_review_time">Próximo repaso</string>
   <string name="show_next_review_time_summ">Muestra el siguiente tiempo de repaso</string>
@@ -434,6 +448,10 @@
     <item quantity="one">1 de %2$d pendiente</item>
     <item quantity="other">%1$d de %2$d pendientes</item>
   </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">%1$s (1 min. left)</item>
+    <item quantity="other">%1$s (%2$d min. left)</item>
+  </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 de %3$d tarjetas mostradas</item>
     <item quantity="other">%1$s: %2$d de %3$d tarjetas mostradas</item>
@@ -442,13 +460,25 @@
     <item quantity="one">%1$s (1 de %3$d programada)</item>
     <item quantity="other">%1$s (%2$d de %3$d programadas)</item>
   </plurals>
+  <plurals name="studyoptions_congrats_message">
+    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_new_cards">
+    <item quantity="one">1 card</item>
+    <item quantity="other">%1$d new cards</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_eta">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%1$d min.</item>
+  </plurals>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 card to server</item>
-    <item quantity="other">%1$d cards to server</item>
+    <item quantity="one">1 tarjeta al servidor</item>
+    <item quantity="other">%1$d tarjetas al servidor</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
-    <item quantity="one">1 card from server</item>
-    <item quantity="other">%1$d cards from server</item>
+    <item quantity="one">1 tarjeta del servidor</item>
+    <item quantity="other">%1$d tarjetas del servidor</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Hay un error para enviar</item>

@@ -67,16 +67,16 @@
     <item>Mostrar en order aleatorio</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>hora</item>
-    <item>día</item>
-    <item>mes</item>
-    <item>año</item>
+    <item>1 hour</item>
+    <item>1 day</item>
+    <item>1 month</item>
+    <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>horas</item>
-    <item>días</item>
-    <item>meses</item>
-    <item>años</item>
+    <item>%s hours</item>
+    <item>%s days</item>
+    <item>%s months</item>
+    <item>%s years</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>en 1 hora</item>
@@ -119,6 +119,7 @@
     <item>Por tiempo programado</item>
     <item>Por intervalo</item>
     <item>Por dificultad</item>
+    <item>Date created</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Programadas</item>
@@ -134,25 +135,30 @@
     <item>6 meses</item>
     <item>1 año</item>
   </string-array>
-  <string-array name="new_version_features">
-    <item>Explorador de tarjetas</item>
-    <item>Estadísticas</item>
-    <item>texto-a-voz</item>
-    <item>barra de progreso de mazo en la pantalla de selección de mazos</item>
-    <item>seleccionar el modelo de la tarjeta en añadir elementos</item>
-    <item>nuevo widget</item>
-    <item>comportamiento mejorado para deshacer/rehacer</item>
-    <item>controles deslizantes</item>
-    <item>selección de idioma</item>
-    <item>más idiomas</item>
-    <item>barras de progreso en la pantalla de revisión</item>
-    <item>enviar comentarios desde AnkiDroid</item>
-    <item>posibilidad de establecer tarjetas en activas/inactivas mediante etiquetas</item>
-    <item>sincronización mejorada</item>
-    <item>reporte de errores mejorado</item>
-    <item>añadir mazos</item>
-    <item>más opciones</item>
-    <item>muchas correcciones para errores pequeños</item>
-    <item>Soporte de etiquetas para el editor, el creador y el explorador de tarjetas</item>
+  <string-array name="deck_order_labels">
+    <item>By last access</item>
+    <item>Alphabetical</item>
+    <item>By number of due cards</item>
+    <item>By number of total cards</item>
+    <item>By number of total new cards</item>
+  </string-array>
+  <string-array name="gestures_labels">
+    <item>No action</item>
+    <item>Answer button 1</item>
+    <item>Answer button 2</item>
+    <item>Answer button 3</item>
+    <item>Answer button 4</item>
+    <item>Answer recommended (green)</item>
+    <item>Answer better than recommended</item>
+    <item>Undo</item>
+    <item>Redo</item>
+    <item>Edit card</item>
+    <item>Mark card</item>
+    <item>Lookup expression</item>
+    <item>Bury card</item>
+    <item>Suspend card</item>
+    <item>Delete card</item>
+    <item>Clear Whiteboard</item>
+    <item>Abort learning</item>
   </string-array>
 </resources>

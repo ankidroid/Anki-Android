@@ -1595,15 +1595,12 @@ public class SyncClient {
             // delay
             delay = cursor.getDouble(5);
             Number num = Double.valueOf(delay);
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s",
-                    delay, num.toString(), review.toString()));
+            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s", delay, num.toString(), review.toString()));
             review.put(5, delay);
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 3: %.18f %s %s",
-                    review.getDouble(5), num.toString(), review.toString()));
+            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 3: %.18f %s %s", review.getDouble(5), num.toString(), review.toString()));
             // lastFactor
             review.put(6, (double)cursor.getDouble(6));
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 4: %.18f %s %s",
-                    review.getDouble(5), num.toString(), review.toString()));
+            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 4: %.18f %s %s", review.getDouble(5), num.toString(), review.toString()));
             // nextFactor
             review.put(7, (double)cursor.getDouble(7));
             // reps
@@ -1615,8 +1612,7 @@ public class SyncClient {
             // noCount
             review.put(11, (double)cursor.getDouble(11));
 
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 complete row: %.18f %.18f %s",
-                    delay, review.getDouble(5), review.toString()));
+            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 complete row: %.18f %.18f %s", delay, review.getDouble(5), review.toString()));
             bundledHistory.put(review);
         }
         cursor.close();

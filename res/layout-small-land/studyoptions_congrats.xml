@@ -18,7 +18,7 @@
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:gravity="center"
-		android:text="@string/studyoptions_congrats_message"
+		android:text=""
 		android:layout_marginBottom="10dip"
 		android:id="@+id/studyoptions_congrats_message" />
 	<Button
