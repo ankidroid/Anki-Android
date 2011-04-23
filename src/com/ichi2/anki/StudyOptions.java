@@ -2166,6 +2166,18 @@ public class StudyOptions extends Activity {
     }
 
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String deck = intent.getStringExtra(EXTRA_DECK);
+        Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent + ", deck=" + deck);
+        if (deck != null && !deck.equals(mDeckFilename)) {
+            mDeckFilename = deck;
+            loadPreviousDeck();
+        }
+    }
+
+
     /**
      * Creates an intent to load a deck given the full pathname of it.
      * <p>

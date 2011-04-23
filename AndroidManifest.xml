@@ -25,6 +25,7 @@
 	android:installLocation="auto">
 	<application android:label="@string/app_name" android:icon="@drawable/anki" android:name="AnkiDroidApp" android:debuggable="true">
 		<activity android:name="StudyOptions" 
+				android:launchMode="singleTask"
 				android:configChanges="keyboardHidden|orientation|locale">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
