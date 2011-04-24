@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Haku</string>
   <string name="pref_cat_navigation">Ohjaus</string>
   <string name="pref_cat_swipe">Pyyhkäisy</string>
-  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
+  <string name="pref_cat_navigation_sensitivity">Herkkyys</string>
   <string name="pref_cat_zoom">Zoomaus</string>
   <string name="pref_cat_reset">Palautus</string>
   <string name="pref_cat_other">Muu</string>
@@ -145,7 +145,7 @@
   <string name="hide_question_in_answer_summ">Määrittää piilotetaanko kysymys kun vastaus näytetään.</string>
   <string name="deck_path">Korttipakan polku</string>
   <string name="deck_path_summ">Polku jonne korttipakkasi on tallennettu</string>
-  <string name="deck_order">Deck order</string>
+  <string name="deck_order">Korttipakan järjestys</string>
   <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">Tarkastele kokoruudulla</string>
   <string name="fullscreen_review_summ">Voit päättää, halutako käyttää kaikkia käytettävissä olevaa näytön tilaa kortin tarkastamisen aikana</string>
@@ -441,16 +441,16 @@
     <item quantity="other">Kaikki korttipakat: %1$d / %2$d korttia (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min</item>
-    <item quantity="other">%d min</item>
+    <item quantity="one">1 minuuttia</item>
+    <item quantity="other">%d minuuttia</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">1 / %2$d korttia</item>
     <item quantity="other">%1$d / %2$d jäljellä</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1$s (1 minnutti jäljellä)</item>
+    <item quantity="other">%1$s (%2$d minnuttia jäljellä)</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 / %3$d  korttia näytetään</item>
@@ -465,12 +465,12 @@
     <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">1 kortti</item>
+    <item quantity="other">%1$d uutta korttia</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%1$d min.</item>
+    <item quantity="one">1 minuutti</item>
+    <item quantity="other">%1$d minuuttia</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 kortti palvelimelle</item>

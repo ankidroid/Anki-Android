@@ -67,16 +67,16 @@
     <item>Näytä satunnaisessa järjestyksessä</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>1 tunti</item>
+    <item>1 päivä</item>
+    <item>1 kuukausi</item>
+    <item>1 vuosi</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s tuntia</item>
+    <item>%s päivää</item>
+    <item>%s kuukautta</item>
+    <item>%s vuotta</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>tunnin kuluttua</item>
@@ -119,7 +119,7 @@
     <item>Määräajan mukaan</item>
     <item>Aikavälin mukaan</item>
     <item>Helppouden mukaan</item>
-    <item>Date created</item>
+    <item>Luontipäivämäärä</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Määrä</item>
@@ -136,8 +136,8 @@
     <item>1 vuosi</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
+    <item>Viimeisen käytön mukaan</item>
+    <item>Aakkosjärjestyksessä</item>
     <item>By number of due cards</item>
     <item>By number of total cards</item>
     <item>By number of total new cards</item>
@@ -150,14 +150,14 @@
     <item>Answer button 4</item>
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
-    <item>Edit card</item>
+    <item>Kumoa</item>
+    <item>Tee uudelleen</item>
+    <item>Muokkaa korttia</item>
     <item>Mark card</item>
     <item>Lookup expression</item>
     <item>Bury card</item>
     <item>Suspend card</item>
-    <item>Delete card</item>
+    <item>Poista kortti</item>
     <item>Clear Whiteboard</item>
     <item>Abort learning</item>
   </string-array>
