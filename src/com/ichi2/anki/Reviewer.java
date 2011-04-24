@@ -1675,7 +1675,9 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
         StringBuilder style = new StringBuilder();
         style.append(getCustomFontsStyle());
+        style.append(getDefaultFontStyle());
         style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
+        Log.i(AnkiDroidApp.TAG, "::style::" + style);
         String card =
             mCardTemplate.replace("::content::", content).replace("::style::", style.toString());
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
@@ -1694,17 +1696,8 @@ public class Reviewer extends Activity {
     }
 
 
-    /** Returns the filename without the extension. */
-    private String removeExtension(String filename) {
-      int dotPosition = filename.lastIndexOf('.');
-      if (dotPosition == -1) {
-        return filename;
-      }
-      return filename.substring(0, dotPosition);
-    }
-
     private String getDeckStyle(String deckPath) {
-      File styleFile = new File(removeExtension(deckPath) + ".css");
+      File styleFile = new File(Utils.removeExtension(deckPath) + ".css");
       if (!styleFile.exists() || !styleFile.canRead()) {
         return "";
       }
@@ -1727,7 +1720,8 @@ public class Reviewer extends Activity {
       return style.toString();
     }
 
-    /*
+
+    /**
      * Returns the CSS used to handle custom fonts.
      * <p>
      * Custom fonts live in fonts directory in the directory used to store decks.
@@ -1736,23 +1730,27 @@ public class Reviewer extends Activity {
      * the extension.
      */
     private String getCustomFontsStyle() {
-      SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-      String deckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
-      String fontsPath = deckPath + "/fonts/";
-      File fontsDir = new File(fontsPath);
-      if (!fontsDir.exists() || !fontsDir.isDirectory()) {
-        return "";
-      }
       StringBuilder builder = new StringBuilder();
-      for (File fontFile : fontsDir.listFiles()) {
+      for (File fontFile : Utils.getCustomFonts(getBaseContext())) {
         String fontFace = String.format(
             "@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
-            removeExtension(fontFile.getName()), fontFile.getAbsolutePath());
+            Utils.removeExtension(fontFile.getName()), fontFile.getAbsolutePath());
         Log.d(AnkiDroidApp.TAG, "adding to style: " + fontFace);
         builder.append(fontFace);
         builder.append('\n');
       }
       return builder.toString();
+    }
+
+
+    /** Returns the CSS used to set the default font. */
+    private String getDefaultFontStyle() {
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        String defaultFont = preferences.getString("defaultFont", null);
+        if (defaultFont == null || "".equals(defaultFont)) {
+            return "";
+        }
+        return "BODY { font-family: '" + defaultFont + "' }\n";
     }
 
 

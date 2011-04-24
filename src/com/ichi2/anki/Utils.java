@@ -20,6 +20,7 @@ package com.ichi2.anki;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
@@ -32,6 +33,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.mindprod.common11.BigDate;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -868,5 +870,27 @@ public class Utils {
         } catch (InvocationTargetException e) {
         } catch (NullPointerException e) {
         }
+    }
+
+    /** Returns the filename without the extension. */
+    public static String removeExtension(String filename) {
+      int dotPosition = filename.lastIndexOf('.');
+      if (dotPosition == -1) {
+        return filename;
+      }
+      return filename.substring(0, dotPosition);
+    }
+
+    /** Returns a list of files for the installed custom fonts. */
+    public static File[] getCustomFonts(Context context) {
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        String deckPath = preferences.getString("deckPath",
+                AnkiDroidApp.getStorageDirectory() + "/AnkiDroid");
+        String fontsPath = deckPath + "/fonts/";
+        File fontsDir = new File(fontsPath);
+        if (!fontsDir.exists() || !fontsDir.isDirectory()) {
+          return new File[0];
+        }
+        return fontsDir.listFiles();
     }
 }
