@@ -36,7 +36,7 @@ public class LanguageDialogPreference extends DialogPreference implements Dialog
 
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            if (MetaDB.resetDB(mContext)) {
+            if (MetaDB.resetLanguages(mContext)) {
                 Toast successReport = 
                     Toast.makeText(this.getContext() , 
                             AnkiDroidApp.getAppResources().getString(R.string.reset_languages_confirmation), Toast.LENGTH_SHORT);

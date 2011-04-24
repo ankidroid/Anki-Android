@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Cerca</string>
   <string name="pref_cat_navigation">Navegació</string>
   <string name="pref_cat_swipe">Dóna un cop</string>
-  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
+  <string name="pref_cat_navigation_sensitivity">Sensibilitat</string>
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Reinicia</string>
   <string name="pref_cat_other">Altres</string>
@@ -137,35 +137,35 @@
   <string name="use_ruby_support_summ">El text inclòs entre corxets  \'[\' i \']\' es tractaràn con una anotació de ruby</string>
   <string name="display_font_size">Tipus de lletra de mida relativa</string>
   <string name="display_font_size_summ">Mida de lletra de la pantalla en relació amb les definicions del paquet. Ara és: XXX%</string>
-  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
-  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
+  <string name="card_browser_font_size">Mida relativa del tipus de lletra utilitzada de vista principal del navegador de fitxes</string>
+  <string name="card_browser_font_size_summ">La mida del tipus de lletra a usar al navegador de fitxes. Ara és: XXX%</string>
   <string name="button_size">Mida relativa dels botons</string>
   <string name="button_size_summ">Mida relativa dels botons a la pantalla de revisió. Ara: XXX%</string>
   <string name="hide_question_in_answer">Voleu amagar la pregunta a la resposta?</string>
   <string name="hide_question_in_answer_summ">Indica si la pregunta s\'ha de mostrar quan es mostri la resposta</string>
   <string name="deck_path">Ruta per als paquets</string>
   <string name="deck_path_summ">Ruta de la carpeta dels vostres paquets</string>
-  <string name="deck_order">Deck order</string>
-  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
+  <string name="deck_order">Ordre del paquet</string>
+  <string name="deck_order_summ">Ordre en què s\'enumeren els paquets al selector de paquets: XXX</string>
   <string name="fullscreen_review">Revisa a pantalla completa</string>
   <string name="fullscreen_review_summ">Podeu fer servit tota la pantalla al revisar les fitxes</string>
   <string name="zoom">Activa l\'ampliació</string>
   <string name="zoom_summ">Mostra els botons d\'ampliació a les fitxes</string>
   <string name="swipe">Habilita els gestos</string>
   <string name="swipe_summ_off">Feu servir gestos per canviar entre les pantalles i fitxes de resposta. Aquesta opció no és compatible amb els controls de zoom</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
-  <string name="pref_cat_actions">Actions</string>
-  <string name="gestures_shake">Shake</string>
-  <string name="gestures_swipe_up">Swipe up</string>
-  <string name="gestures_swipe_down">Swipe down</string>
-  <string name="gestures_swipe_left">Swipe left</string>
-  <string name="gestures_swipe_right">Swipe right</string>
-  <string name="gestures_double_tap">Double tap</string>
-  <string name="gestures_tap_top">Tap top</string>
-  <string name="gestures_tap_bottom">Tap bottom</string>
-  <string name="gestures_tap_left">Tap left</string>
-  <string name="gestures_tap_right">Tap right</string>
-  <string name="swipe_sensibility">Swipe Sensitivity</string>
+  <string name="swipe_summ_on">Passeu el dit horitzontalment per canviar entre les pantalles. Ajusteu diverses accions a sota</string>
+  <string name="pref_cat_actions">Accions</string>
+  <string name="gestures_shake">Sacseja</string>
+  <string name="gestures_swipe_up">Passeu el dit cap amunt</string>
+  <string name="gestures_swipe_down">Passeu el dit cap a sota</string>
+  <string name="gestures_swipe_left">Passseu el dit cap a l\'esquerra</string>
+  <string name="gestures_swipe_right">Passeu el dit cap a la dreta</string>
+  <string name="gestures_double_tap">Doble toc</string>
+  <string name="gestures_tap_top">Toqueu la part superior</string>
+  <string name="gestures_tap_bottom">Toqueu la part inferior</string>
+  <string name="gestures_tap_left">Toqueu a l\'esquerra</string>
+  <string name="gestures_tap_right">Toqueu a la dreta</string>
+  <string name="swipe_sensibility">Sensibilitat per passar el dit</string>
   <string name="swipe_sensibility_summ">Sensibilitat dels gestos: XXX</string>
   <string name="tts">Síntesi de veu</string>
   <string name="tts_summ">Llegeix en veu alta les preguntes i respostes si no s\'inclou arxiu de so</string>
@@ -173,8 +173,8 @@
   <string name="play_sounds_at_start_summ">Reprodueix sons immediatament després de mostrar una pregunta / resposta</string>
   <string name="shake_intensity">Llindar per sacsejar</string>
   <string name="shake_intensity_summ">Llindar de reconeixement per sacsejar: XXX</string>
-  <string name="sync_fetch_missing_media">Fetch media on sync</string>
-  <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
+  <string name="sync_fetch_missing_media">Recupera els media en sincronitzar</string>
+  <string name="sync_fetch_missing_media_summ">Recupera automàticament els mitjans que falten al sincronitzar.</string>
   <string name="fix_hebrew_text">Feu complir RTL per l\'hebreu</string>
   <string name="fix_hebrew_text_summ">Solució per al suport limitat de la llengua hebrea de la plataforma Android No permet l\'ús de vocals.</string>
   <string name="language">Idioma</string>
@@ -189,8 +189,8 @@
   <string name="about_title">Quant a</string>
   <string name="cardeditor_title">Editor de fitxes</string>
   <string name="factadder_title">Afegeix una fitxa</string>
-  <string name="factadder_saving_error">Error saving fact</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="factadder_saving_error">Hi ha hagut un error en desar el fet</string>
+  <string name="saving_facts">S\'estant desant els fets</string>
   <string name="deckcreator_title">Autor del paquet</string>
   <string name="model">Plantilla:</string>
   <string name="select_model">Plantilla</string>
@@ -314,7 +314,7 @@
   <string name="studyoptions_congrats_cards">fitxes</string>
   <string name="studyoptions_congrats_learnmore">Aprendre més</string>
   <string name="studyoptions_congrats_reviewearly">Revisa aviat</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_syncdeck">Sincronitza el paquet</string>
   <string name="studyoptions_congrats_open_other_deck">Obre un altre paquet</string>
   <string name="studyoptions_congrats_finish">Torna a la pantalla d\'aprenentatge</string>
   <string name="studyoptions_feedback">Comentaris</string>
@@ -354,7 +354,7 @@
   <string name="sync_log_no_changes_message">No s\'ha trobat cap canvi</string>
   <string name="sync_log_uploading_message">Sincronització completa dels paquets locals</string>
   <string name="sync_log_downloading_message">Sincronització completa del servidor</string>
-  <string name="sync_log_zero_facts">Completed, no cards changed</string>
+  <string name="sync_log_zero_facts">S\'ha acabat, no ha canviat cap fitxa</string>
   <string name="sync_log_clocks_unsynchronized">El temps de l\'aparell és diferent a la del servidor en %1$d segons%2$s, no es possible sincronitzar.</string>
   <string name="sync_log_clocks_unsynchronized_tz">Sembla que la zona horària del dispositiu és incorrecta</string>
   <string name="sync_log_clocks_unsynchronized_date">Sembla que la data del dispositiu podria ser incorrecta</string>
@@ -397,7 +397,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Fitxes pendents</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d fitxes pendents</string>
   <string name="widget_no_cards_due">No hi ha fitxes pendents</string>
-  <string name="widget_loading">Widget loading...</string>
+  <string name="widget_loading">S\'està carregant el giny ...</string>
   <string name="soon">Aviat</string>
   <string name="show_next_review_time">La nova revisió serà</string>
   <string name="show_next_review_time_summ">Mostra l\'hora de la propera revisió en funció de la meva tria</string>
@@ -449,8 +449,8 @@
     <item quantity="other">%1$d de %2$d pendents</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1 $s (falta 1 min.)</item>
+    <item quantity="other">%1$s (falten %2$d min.)</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: Es mostra a fitxa de %3$d</item>
@@ -461,24 +461,24 @@
     <item quantity="other">%1$s (%2$d de %3$d pendents)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Heu acabat per ara.\nDemà hi haurà:.\n1 fitxa per revisar i %2$s.\n Temps estimat: %3$s</item>
+    <item quantity="other">Heu acabat per ara.\nDemà hi haurà:.\n%1$d fitxes per revisar i %2$s.\n Temps estimat: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">1 fitxa</item>
+    <item quantity="other">%1$d fitxes noves</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1 min.</item>
     <item quantity="other">%1$d min.</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 card to server</item>
-    <item quantity="other">%1$d cards to server</item>
+    <item quantity="one">1 fitxa al servidor</item>
+    <item quantity="other">%1 $d fitxes al servidor</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
-    <item quantity="one">1 card from server</item>
-    <item quantity="other">%1$d cards from server</item>
+    <item quantity="one">Una fitxa del servidor</item>
+    <item quantity="other">%1 $d fitxes del servidor</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Hi ha un error pendent d\'informar</item>

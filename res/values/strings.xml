@@ -220,6 +220,8 @@
 <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
 <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
 <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
+<string name="default_font">Default font</string>
+<string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
 <string name="language">Language</string>
 <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
 <string name="language_system">System Language</string>

@@ -67,16 +67,16 @@
     <item>Показывать в случайном порядке</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>1 час</item>
+    <item>1 день</item>
+    <item>1 месяц</item>
+    <item>1 год</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s часов</item>
+    <item>%s дней</item>
+    <item>%s месяцев</item>
+    <item>%s лет</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>в течение 1 часа</item>
@@ -119,7 +119,7 @@
     <item>по времени повтора</item>
     <item>по интервалу</item>
     <item>по сложности</item>
-    <item>Date created</item>
+    <item>Дата создания</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Повтор</item>
@@ -136,29 +136,29 @@
     <item>1 год</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>В порядке использования</item>
+    <item>По алфавиту</item>
+    <item>По количеству карт к повтору</item>
+    <item>По количеству общего числа карт</item>
+    <item>По количеству новых карт</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
-    <item>Abort learning</item>
+    <item>Нет действия</item>
+    <item>Для ответа кнопка 1</item>
+    <item>Для ответа кнопка 2</item>
+    <item>Для ответа кнопка 3</item>
+    <item>Для ответа кнопка 4</item>
+    <item>Рекомендованный ответ (зелёный)</item>
+    <item>Лучше, чем рекомендованный ответ</item>
+    <item>Откат</item>
+    <item>Впёред</item>
+    <item>Изменить карту</item>
+    <item>Отметить карту</item>
+    <item>Поиск выражения</item>
+    <item>Скрыть карту</item>
+    <item>Приостановить карту</item>
+    <item>Удалить карту</item>
+    <item>Очистка доски</item>
+    <item>Прервать обучения</item>
   </string-array>
 </resources>
