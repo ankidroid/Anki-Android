@@ -17,8 +17,10 @@ package com.ichi2.anki;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1683,7 +1685,15 @@ public class Reviewer extends Activity {
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
         mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
-      
+        try {
+            PrintWriter w = new PrintWriter(new File(mDeckFilename + ".card.html"));
+            w.write(card);
+            w.close();
+            Log.d(AnkiDroidApp.TAG, "Card HTML saved");
+        } catch (FileNotFoundException e) {
+            Log.d(AnkiDroidApp.TAG, "Could not save card HTML");
+        }
+
         if (!mConfigurationChanged && mPlaySoundsAtStart) {
         	if (!mSpeakText) {
         		Sound.playSounds(null, 0);
