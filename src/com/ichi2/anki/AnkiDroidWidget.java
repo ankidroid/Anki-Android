@@ -102,7 +102,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            SpannableString black = new SpannableString(Integer.toString(deck.mDueCards));
+            int revCards = deck.mDueCards - deck.mFailedCards;
+            SpannableString black = new SpannableString(Integer.toString(revCards));
             black.setSpan(new ForegroundColorSpan(Color.BLACK), 0, black.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
