@@ -85,6 +85,18 @@ public final class WidgetStatus {
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
                     Deck deck = Deck.openDeck(absPath, false);
+                    if (deck == null) {
+                        Log.e(AnkiDroidApp.TAG, "Skipping null deck: " + absPath);
+                        // Use the data from the last time we updated the deck, if available.
+                        for (DeckStatus deckStatus : mDecks) {
+                            if (absPath.equals(deckStatus.mDeckPath)) {
+                                Log.d(AnkiDroidApp.TAG, "Using previous value");
+                                decks.add(deckStatus);
+                                break;
+                            }
+                        }
+                        continue;
+                    }
                     int dueCards = deck.getDueCount();
                     int newCards = deck.getNewCountToday();
                     int failedCards = deck.getFailedSoonCount();
