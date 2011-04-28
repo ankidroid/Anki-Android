@@ -33,12 +33,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -331,8 +329,6 @@ public class SyncClient {
 
         mDeck.commitToDB();
 
-        // Rebuild priorities on client
-
         // Get card ids
         JSONArray cards = payloadReply.getJSONArray("added-cards");
         int len = cards.length();
@@ -341,7 +337,6 @@ public class SyncClient {
             cardIds[i] = cards.getJSONArray(i).getLong(0);
         }
         mDeck.updateCardTags(cardIds);
-        rebuildPriorities(cardIds);
 
         long missingFacts = missingFacts();
         if (missingFacts != 0l) {
@@ -365,19 +360,6 @@ public class SyncClient {
      */
     private void preSyncRefresh() {
         Stats.globalStats(mDeck);
-    }
-
-
-    private void rebuildPriorities(long[] cardIds) {
-        rebuildPriorities(cardIds, null);
-    }
-    private void rebuildPriorities(long[] cardIds, String[] suspend) {
-        //try {
-            mDeck.updateAllPriorities(true, false);
-            mDeck.updatePriorities(cardIds, suspend, false);
-        //} catch (SQLException e) {
-        //    Log.e(TAG, "SQLException e = " + e.getMessage());
-        //}
     }
 
 
@@ -1306,7 +1288,7 @@ public class SyncClient {
                 // combinedDue
                 statement.bindDouble(36, card.getDouble(35));
                 // relativeDelay
-                statement.bindString(37, genType(card));
+                statement.bindLong(37, card.getInt(36));
 
                 statement.execute();
             }
@@ -1314,17 +1296,6 @@ public class SyncClient {
 
             ankiDB.getDatabase().execSQL("DELETE FROM cardsDeleted WHERE cardId IN " + idsString);
         }
-    }
-    private String genType(JSONArray row) throws JSONException {
-        if (row.length() >= 37) {
-            return row.getString(36);
-        }
-        if (row.getInt(15) != 0) {
-            return "1";
-        } else if (row.getInt(14) != 0) {
-            return "0";
-        }
-        return "2";
     }
 
 

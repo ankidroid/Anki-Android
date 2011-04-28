@@ -51,18 +51,6 @@ public class Card {
     public static final String STATE_YOUNG = "young";
     public static final String STATE_MATURE = "mature";
 
-    /** Auto priorities. */
-    public static final int PRIORITY_NONE = 0;
-    public static final int PRIORITY_LOW = 1;
-    public static final int PRIORITY_NORMAL = 2;
-    public static final int PRIORITY_MEDIUM = 3;
-    public static final int PRIORITY_HIGH = 4;
-
-    /** Manual priorities. */
-    public static final int PRIORITY_REVIEW_EARLY = -1;
-    public static final int PRIORITY_BURIED = -2;
-    public static final int PRIORITY_SUSPENDED = -3;
-
     /** Ease. */
     public static final int EASE_NONE = 0;
     public static final int EASE_FAILED = 1;
@@ -88,10 +76,10 @@ public class Card {
     private double mModified = Utils.now();
     private String mTags = "";
     private int mOrdinal;
-    // Cached - changed on fact update
+    // q/a cached - changed on fact update
     private String mQuestion = "";
     private String mAnswer = "";
-    private int mPriority = PRIORITY_NORMAL;
+    private int mPriority = 2; // obsolete
     private double mInterval = 0;
     private double mLastInterval = 0;
     private double mDue = Utils.now();
@@ -367,13 +355,17 @@ public class Card {
 
     public double adjustedDelay(int ease) {
         double now = Utils.now();
+	double dueCutoff = mDeck.getDueCutoff();
         if (isNew()) {
             return 0;
         }
-        if (mCombinedDue <= now) {
-            return (now -mDue) / 86400.0;
+	if (mReps != 0 && mSuccessive == 0) {
+            return 0;
+	}
+        if (mCombinedDue <= dueCutoff) {
+            return (dueCutoff - mDue) / 86400.0;
         } else {
-            return (now - mCombinedDue) / 86400.0;
+            return (dueCutoff - mCombinedDue) / 86400.0;
         }
     }
 

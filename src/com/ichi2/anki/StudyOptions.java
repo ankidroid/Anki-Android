@@ -1462,12 +1462,6 @@ public class StudyOptions extends Activity {
 */
 
     private void reset() {
-        reset(false);
-    }
-    private void reset(boolean priorities) {
-        if (priorities) {
-            AnkiDroidApp.deck().updateAllPriorities();
-        }
         AnkiDroidApp.deck().reset();
     }
 

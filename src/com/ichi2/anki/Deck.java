@@ -59,7 +59,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 65;
+    public static final int DECK_VERSION = 70;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -90,10 +90,10 @@ public class Deck {
 
 
     // Card order strings for building SQL statements
-    private static final String[] revOrderStrings = { "priority desc, interval desc", "priority desc, interval",
-            "priority desc, combinedDue", "priority desc, RANDOM()" };
-    private static final String[] newOrderStrings = { "priority desc, RANDOM()", "priority desc, due",
-            "priority desc, due desc" };
+    private static final String[] revOrderStrings = { "interval desc", "interval",
+            "combinedDue", "RANDOM()" };
+    private static final String[] newOrderStrings = { "RANDOM()", "due",
+            "due desc" };
 
     // BEGIN: SQL table columns
     private long mId;
@@ -129,11 +129,11 @@ public class Deck {
     // Collapsing future cards
     private double mCollapseTime;
 
-    // Priorities and postponing
+    // Priorities and postponing - all obsolete
     private String mHighPriority;
     private String mMedPriority;
     private String mLowPriority;
-    private String mSuspended; // obsolete in libanki 1.1
+    private String mSuspended;
 
     // 0 is random, 1 is by input date
     private int mNewCardOrder;
@@ -205,6 +205,7 @@ public class Deck {
     // Cramming
     private String[] mActiveCramTags;
     private String mCramOrder;
+    private double mCramLastInterval;
 
     // Not in Anki Desktop
     private String mDeckPath;
@@ -341,22 +342,16 @@ public class Deck {
         // Ensure necessary indices are available
         deck.updateDynamicIndices();
 
-        // FIXME: Temporary code for upgrade - ensure cards suspended on older clients are recognized
-        // Ensure cards suspended on older clients are recognized
-        deck.getDB().getDatabase().execSQL(
-                "UPDATE cards SET type = type - 3 WHERE type BETWEEN 0 AND 2 AND priority = -3");
-
         // - New delay1 handling
         if (deck.mDelay1 > 7l) {
             deck.mDelay1 = 0l;
         }
 
         ArrayList<Long> ids = new ArrayList<Long>();
-        // Unsuspend buried/rev early - can remove priorities in the future
+        // Unsuspend buried/rev early
         ids = deck.getDB().queryColumn(Long.class,
-                "SELECT id FROM cards WHERE type > 2 OR (priority BETWEEN -2 AND -1)", 0);
+                "SELECT id FROM cards WHERE type > 2", 0);
         if (!ids.isEmpty()) {
-            deck.updatePriorities(Utils.toPrimitive(ids));
             deck.getDB().getDatabase().execSQL("UPDATE cards SET type = relativeDelay WHERE type > 2");
             // Save deck to database
             deck.commitToDB();
@@ -589,7 +584,7 @@ public class Deck {
         // lastSessionStart = 0;
         mQueueLimit = 200;
         // If most recent deck var not defined, make sure defaults are set
-        if (!hasKey("revSpacing")) {
+        if (!hasKey("schemaMod")) {
             setVarDefault("suspendLeeches", "1");
             setVarDefault("leechFails", "16");
             setVarDefault("perDay", "1");
@@ -604,6 +599,7 @@ public class Deck {
                     + "\\begin{document}\n");
             setVarDefault("latexPost", "\\end{document}");
             setVarDefault("revSpacing", "0.1");
+            setVarDefault("schemaMod", "0");
             // FIXME: The next really belongs to the dropbox setup module, it's not supposed to be empty if the user
             // wants to use dropbox. ankiqt/ankiqt/ui/main.py : setupMedia
             // setVarDefault("mediaLocation", "");
@@ -694,21 +690,10 @@ public class Deck {
         double oldmod = mModified;
 
         upgradeNotes = new ArrayList<Integer>();
-        if (mVersion < 39) {
+        if (mVersion < 43) {
             // Unsupported version
             upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_too_old_version);
             return false;
-        }
-        if (mVersion < 40) {
-            // Now stores media url
-            getDB().getDatabase().execSQL("UPDATE models SET features = ''");
-            mVersion = 40;
-            commitToDB();
-        }
-        if (mVersion < 43) {
-            getDB().getDatabase().execSQL("UPDATE fieldModels SET features = ''");
-            mVersion = 43;
-            commitToDB();
         }
         if (mVersion < 44) {
             // Leaner indices
@@ -719,12 +704,6 @@ public class Deck {
         if (mVersion < 48) {
             updateFieldCache(Utils.toPrimitive(getDB().queryColumn(Long.class, "SELECT id FROM facts", 0)));
             mVersion = 48;
-            commitToDB();
-        }
-        if (mVersion < 50) {
-            // more new type handling
-            rebuildTypes();
-            mVersion = 50;
             commitToDB();
         }
         if (mVersion < 52) {
@@ -755,11 +734,6 @@ public class Deck {
             // editFontFamily now used as a boolean, but in integer type, so set to 1 == true
             getDB().getDatabase().execSQL("UPDATE fieldModels SET editFontFamily = 1");
             mVersion = 54;
-            commitToDB();
-        }
-        if (mVersion < 57) {
-            // Add an index for priority & modified
-            mVersion = 57;
             commitToDB();
         }
         if (mVersion < 61) {
@@ -838,14 +812,8 @@ public class Deck {
         }
         if (mVersion < 62) {
             // Updated Indices
-            String[] indices = { "intervalDesc", "intervalAsc", "randomOrder", "dueAsc", "dueDesc" };
-            for (String d : indices) {
-                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d + "2");
-            }
             getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_typeCombined");
             addIndices();
-            updateDynamicIndices();
-            getDB().getDatabase().execSQL("VACUUM");
             mVersion = 62;
             commitToDB();
         }
@@ -855,12 +823,6 @@ public class Deck {
             for (String d : oldStaticIndices) {
                 getDB().getDatabase().execSQL("DROP INDEX IF EXISTS " + d);
             }
-            // Remove old dynamic indices
-            String[] oldDynamicIndices = { "intervalDesc", "intervalAsc", "randomOrder", "dueAsc", "dueDesc" };
-            for (String d : oldDynamicIndices) {
-                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d);
-            }
-            getDB().getDatabase().execSQL("ANALYZE");
             mVersion = 64;
             commitToDB();
             // Note: we keep the priority index for now
@@ -870,6 +832,21 @@ public class Deck {
             // everything is set correctly
             rebuildTypes();
             mVersion = 65;
+            commitToDB();
+        }
+	// skip a few to allow for updates to stable tree
+        if (mVersion < 70) {
+            // update dynamic indices given we don't use priority anymore
+            String[] oldDynamicIndices = { "intervalDesc", "intervalAsc", "randomOrder", "dueAsc", "dueDesc" };
+            for (String d : oldDynamicIndices) {
+                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d + "2");
+                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d);
+            }
+            updateDynamicIndices();
+            getDB().getDatabase().execSQL("VACUUM");
+            getDB().getDatabase().execSQL("ANALYZE");
+            rebuildTypes();
+            mVersion = 70;
             commitToDB();
         }
         // Executing a pragma here is very slow on large decks, so we store our own record
@@ -1793,10 +1770,12 @@ public class Deck {
     }
 
 
-    // Rebuild the type cache. Only necessary on upgrade.
+    // Rebuild the type cache. Only necessary on upgrade. 
     private void rebuildTypes() {
+        // set canonical type first
         getDB().getDatabase().execSQL(
                 "UPDATE cards SET " + "relativeDelay = (CASE WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END)");
+        // then current type based on that
         getDB().getDatabase().execSQL(
                 "UPDATE cards SET " + "type = (CASE WHEN type >= 0 THEN relativeDelay ELSE relativeDelay - 3 END)");
     }
@@ -1885,9 +1864,10 @@ public class Deck {
 
 
     // Checks if the day has rolled over.
-    private void checkDailyStats() {
+    private void checkDay() {
         if (!Utils.genToday(mUtcOffset).toString().equals(mDailyStats.getDay().toString())) {
-            mDailyStats = Stats.dailyStats(this);
+            updateCutoff();
+            reset();
         }
     }
 
@@ -1920,17 +1900,8 @@ public class Deck {
 
     private void resetAfterReviewEarly() {
         // Put temporarily suspended cards back into play. Caller must .reset()
-        // FIXME: Can ignore priorities in the future (following libanki)
-        ArrayList<Long> ids = getDB().queryColumn(Long.class,
-                "SELECT id FROM cards WHERE type BETWEEN 6 AND 8 OR priority = -1", 0);
-
-        if (!ids.isEmpty()) {
-            updatePriorities(Utils.toPrimitive(ids));
-            getDB().getDatabase().execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8");
-            flushMod();
-        }
+    	getDB().getDatabase().execSQL("UPDATE cards SET type = type -6 WHERE type BETWEEN 6 AND 8");
     }
-
 
     @SuppressWarnings("unused")
     private void _onReviewEarlyFinished() {
@@ -1944,7 +1915,6 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _rebuildRevEarlyCount() {
         // In the future it would be nice to skip the first x days of due cards
-
         mRevCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", String.format(Utils.ENGLISH_LOCALE,
                         "SELECT count() FROM cards c WHERE type = 1 AND combinedDue > %f", mDueCutoff)));
     }
@@ -2036,6 +2006,7 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private void _answerCramCard(Card card, int ease) {
+	mCramLastInterval = card.getLastInterval();
         _answerCard(card, ease);
         if (ease == 1) {
             mFailedCramQueue.addFirst(new QueueItem(card.getId(), card.getFactId()));
@@ -2045,7 +2016,7 @@ public class Deck {
 
     @SuppressWarnings("unused")
     private long _getCramCardId(boolean check) {
-        checkDailyStats();
+        checkDay();
         fillQueues();
 
         if ((mFailedCardMax != 0) && (mFailedSoonCount >= mFailedCardMax)) {
@@ -2166,6 +2137,7 @@ public class Deck {
     @SuppressWarnings("unused")
     private void _cramPreSave(Card card, int ease) {
         // prevent it from appearing in next queue fill
+	card.setLastInterval(mCramLastInterval);
         card.setType(card.getType() + 6);
     }
 
@@ -2668,7 +2640,7 @@ public class Deck {
      */
     @SuppressWarnings("unused")
     private long _getCardId(boolean check) {
-        checkDailyStats();
+        checkDay();
         fillQueues();
         updateNewCountToday();
         if (!mFailedQueue.isEmpty()) {
@@ -2733,17 +2705,6 @@ public class Deck {
         }
         if (mNewCardSpacing == NEW_CARDS_FIRST) {
             return true;
-        }
-        // Force review if there are very high priority cards
-        try {
-            if (!mRevQueue.isEmpty()) {
-                if (getDB().queryScalar(
-                        "SELECT 1 FROM cards WHERE id = " + mRevQueue.getLast().getCardID() + " AND priority = 4") == 1) {
-                    return false;
-                }
-            }
-        } catch (Exception e) {
-            // No result from query.
         }
         if (mNewCardModulus != 0) {
             return (mDailyStats.getReps() % mNewCardModulus == 0);
@@ -2882,9 +2843,7 @@ public class Deck {
         // update card details
         double last = card.getInterval();
         card.setInterval(nextInterval(card, ease));
-        if (lastDelay >= 0) {
-            card.setLastInterval(last); // keep last interval if reviewing early
-        }
+        card.setLastInterval(last);
         if (!card.isNew()) {
             card.setLastDue(card.getDue()); // only update if card was not new
         }
@@ -2892,8 +2851,8 @@ public class Deck {
         card.setIsDue(0);
         card.setLastFactor(card.getFactor());
         card.setSpaceUntil(0);
-        if (lastDelay >= 0) {
-            card.updateFactor(ease, mAverageFactor); // don't update factor if learning ahead
+        if (!hasFinishScheduler()) {
+            card.updateFactor(ease, mAverageFactor); // don't update factor in custom schedulers
         }
 
         // Spacing
@@ -2958,7 +2917,7 @@ public class Deck {
         ContentValues values = new ContentValues();
         values.put("combinedDue", String.format(Utils.ENGLISH_LOCALE, "(CASE WHEN type = 1 THEN " +
                 		"combinedDue + 86400 * (CASE WHEN interval*%f < 1 THEN 0 ELSE interval*%f END) " +
-                		"WHEN type = 2 THEN %f ELSE combinedDue END)", mRevSpacing, mRevSpacing, _new));
+                		"WHEN type = 2 THEN %f END)", mRevSpacing, mRevSpacing, _new));
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
         values.put("isDue", 0);
         getDB().update(this, "cards", values, String.format(Utils.ENGLISH_LOCALE, "id != %d AND factId = %d " 
@@ -3024,8 +2983,8 @@ public class Deck {
         double interval = card.getInterval();
         double factor = card.getFactor();
 
-        // if shown early and not failed
-        if ((delay < 0) && card.isRev()) {
+        // if cramming / reviewing early
+        if (delay < 0) {
             // FIXME: From libanki: This should recreate lastInterval from interval /
             // lastFactor, or we lose delay information when reviewing early
             interval = Math.max(card.getLastInterval(), card.getInterval() + delay);
@@ -3074,7 +3033,7 @@ public class Deck {
         double due;
         if (ease == Card.EASE_FAILED) {
         	// 600 is a magic value which means no bonus, and is used to ease upgrades
-            if (oldState.equals(Card.STATE_MATURE) && mDelay1 != 0 && mDelay1 != 600) {
+            if (!mScheduler.equals("cram") && oldState.equals(Card.STATE_MATURE) && mDelay1 != 0 && mDelay1 != 600) {
                 // user wants a bonus of 1+ days. put the failed cards at the
             	// start of the future day, so that failures that day will come
             	// after the waiting cards
@@ -3237,7 +3196,7 @@ public class Deck {
         	values.put("src",  ditem.get("src"));
             getDB().insert(this, "cardTags", null, values);
         }
-        getDB().delete(this, "tags", "priority = 2 AND id NOT IN (SELECT DISTINCT tagId FROM cardTags)", null);
+	deleteUnusedTags();
     }
 
 
@@ -3317,6 +3276,10 @@ public class Deck {
     /*
      * Tags: adding/removing in bulk*********************************************************
      */
+
+    public void deleteUnusedTags() {
+	getDB().delete(this, "tags", "id NOT IN (SELECT DISTINCT tagId FROM cardTags)", null);
+    }
 
     public ArrayList<String> factTags(long[] factIds) {
         return getDB().queryColumn(String.class, "SELECT tags FROM facts WHERE id IN " + Utils.ids2str(factIds), 0);
@@ -3451,10 +3414,8 @@ public class Deck {
      */
     public void suspendCards(long[] ids) {
     	ContentValues values = new ContentValues();
-        values.put("type", "relativeDelay -3");
-        values.put("priority", -3);
+        values.put("type", "relativeDelay - 3");
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-        values.put("isDue", 0);
         getDB().update(this, "cards", values, "type >= 0 AND id IN " + Utils.ids2str(ids), null, false);
         Log.i(AnkiDroidApp.TAG, "Cards suspended");
         flushMod();
@@ -3469,12 +3430,9 @@ public class Deck {
     public void unsuspendCards(long[] ids) {
     	ContentValues values = new ContentValues();
         values.put("type", "relativeDelay");
-        values.put("priority", 0);
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-        values.put("isDue", 0);
-        getDB().update(this, "cards", values, "type < 0 AND id IN " + Utils.ids2str(ids), null, false);
+        getDB().update(this, "cards", values, "type BETWEEN -3 and -1 AND id IN " + Utils.ids2str(ids), null, false);
         Log.i(AnkiDroidApp.TAG, "Cards unsuspended");
-        updatePriorities(ids);
         flushMod();
     }
 
@@ -3506,205 +3464,10 @@ public class Deck {
         // This differs from libanki:
     	ContentValues values = new ContentValues();
         values.put("type", "type + 3");
-        values.put("priority", -2);
         values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-        values.put("isDue", 0);
         getDB().update(this, "cards", values, "type >= 0 AND type <= 3 AND factId = " + factId, null, false);
         setUndoEnd(undoName);
         flushMod();
-    }
-
-
-    /**
-     * Priorities
-     *******************************/
-
-    /**
-     * Update all card priorities if changed. If partial is true, only updates cards with tags defined as priority low,
-     * med or high in the deck, or with tags whose priority is set to 2 and they are not found in the priority tags of
-     * the deck. If false, it updates all card priorities Caller must .reset()
-     *
-     * @param partial Partial update (true) or not (false)
-     * @param dirty Passed to updatePriorities(), if true it updates the modified field of the cards
-     */
-    public void updateAllPriorities() {
-        updateAllPriorities(false, true);
-    }
-
-
-    public void updateAllPriorities(boolean partial) {
-        updateAllPriorities(partial, true);
-    }
-
-
-    public void updateAllPriorities(boolean partial, boolean dirty) {
-        HashMap<Long, Integer> newPriorities = updateTagPriorities();
-        if (!partial) {
-            newPriorities.clear();
-            Cursor cur = null;
-            try {
-                cur = getDB().getDatabase().rawQuery("SELECT id, priority AS pri FROM tags", null);
-                while (cur.moveToNext()) {
-                    newPriorities.put(cur.getLong(0), cur.getInt(1));
-                }
-            } catch (SQLException e) {
-                Log.e(AnkiDroidApp.TAG, "updateAllPriorities: Error while getting all tags: " + e.toString());
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
-            }
-            ArrayList<Long> cids = getDB().queryColumn(
-                    Long.class,
-                    "SELECT DISTINCT cardId FROM cardTags WHERE tagId in "
-                            + Utils.ids2str(Utils.toPrimitive(newPriorities.keySet())), 0);
-            updatePriorities(Utils.toPrimitive(cids), null, dirty);
-        }
-    }
-
-
-    /**
-     * Update priority setting on tags table
-     */
-    private HashMap<Long, Integer> updateTagPriorities() {
-        // Make sure all priority tags exist
-        for (String s : new String[] { mLowPriority, mMedPriority, mHighPriority }) {
-            tagIds(Utils.parseTags(s));
-        }
-
-        HashMap<Long, Integer> newPriorities = new HashMap<Long, Integer>();
-        Cursor cur = null;
-        ArrayList<String> tagNames = null;
-        ArrayList<Long> tagIdList = null;
-        ArrayList<Integer> tagPriorities = null;
-        try {
-            tagNames = new ArrayList<String>();
-            tagIdList = new ArrayList<Long>();
-            tagPriorities = new ArrayList<Integer>();
-            cur = getDB().getDatabase().rawQuery("SELECT tag, id, priority FROM tags", null);
-            while (cur.moveToNext()) {
-                tagNames.add(cur.getString(0).toLowerCase());
-                tagIdList.add(cur.getLong(1));
-                tagPriorities.add(cur.getInt(2));
-            }
-        } catch (SQLException e) {
-            Log.e(AnkiDroidApp.TAG, "updateTagPriorities: Error while tag priorities: " + e.toString());
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-        HashMap<String, Integer> typeAndPriorities = new HashMap<String, Integer>();
-        typeAndPriorities.put(mLowPriority, 1);
-        typeAndPriorities.put(mMedPriority, 3);
-        typeAndPriorities.put(mHighPriority, 4);
-        HashMap<String, Integer> up = new HashMap<String, Integer>();
-        for (Entry<String, Integer> entry : typeAndPriorities.entrySet()) {
-            for (String tag : Utils.parseTags(entry.getKey().toLowerCase())) {
-                up.put(tag, entry.getValue());
-            }
-        }
-        String tag = null;
-        long tagId = 0l;
-        for (int i = 0; i < tagNames.size(); i++) {
-            tag = tagNames.get(i);
-            tagId = tagIdList.get(i).longValue();
-            if (up.containsKey(tag) && (up.get(tag).compareTo(tagPriorities.get(i)) == 0)) {
-                newPriorities.put(tagId, up.get(tag));
-            } else if ((!up.containsKey(tag)) && (tagPriorities.get(i).intValue() != 2)) {
-                newPriorities.put(tagId, 2);
-            } else {
-                continue;
-            }
-            try {
-            	ContentValues values = new ContentValues();
-                values.put("priority", newPriorities.get(tagId));
-                getDB().update(this, "tags", values, "id = " + tagId, null);
-            } catch (SQLException e) {
-                Log.e(AnkiDroidApp.TAG, "updatePriorities: Error while updating tag priorities for tag " + tag + ": "
-                        + e.toString());
-                continue;
-            }
-        }
-        return newPriorities;
-    }
-
-
-    /**
-     * Update priorities for cardIds in bulk. Caller must .reset().
-     *
-     * @param cardIds List of card IDs identifying whose cards' priorities to update.
-     * @param suspend List of tags. The cards from the above list that have those tags will be suspended.
-     * @param dirty If true will update the modified value of each card handled.
-     */
-    private void updatePriorities(long[] cardIds) {
-        updatePriorities(cardIds, null, true);
-    }
-
-
-    private void updatePriorities(long[] cardIds, String[] suspend) {
-        updatePriorities(cardIds, suspend, true);
-    }
-
-
-    void updatePriorities(long[] cardIds, String[] suspend, boolean dirty) {
-        Cursor cursor = null;
-        Log.i(AnkiDroidApp.TAG, "updatePriorities - Updating priorities...");
-        // Any tags to suspend
-        if (suspend != null && suspend.length > 0) {
-            long ids[] = Utils.toPrimitive(tagIds(suspend, false).values());
-        	ContentValues values = new ContentValues();
-            values.put("priority", 0);
-            getDB().update(this, "tags", values, "id in " + Utils.ids2str(ids), null);
-        }
-
-        String limit = "";
-        if (cardIds.length <= 1000) {
-            limit = "and cardTags.cardId in " + Utils.ids2str(cardIds);
-        }
-        String query = "SELECT cardTags.cardId, CASE WHEN max(tags.priority) > 2 THEN max(tags.priority) "
-                + "WHEN min(tags.priority) = 1 THEN 1 ELSE 2 END FROM cardTags,tags "
-                + "WHERE cardTags.tagId = tags.id " + limit + " GROUP BY cardTags.cardId";
-        try {
-            cursor = getDB().getDatabase().rawQuery(query, null);
-            if (cursor.moveToFirst()) {
-                int len = cursor.getCount();
-                long[][] cards = new long[len][2];
-                for (int i = 0; i < len; i++) {
-                    cards[i][0] = cursor.getLong(0);
-                    cards[i][1] = cursor.getInt(1);
-                }
-
-                String extra = "";
-                if (dirty) {
-                    extra = ", modified = " + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now());
-                }
-                for (int pri = Card.PRIORITY_NONE; pri <= Card.PRIORITY_HIGH; pri++) {
-                    int count = 0;
-                    for (int i = 0; i < len; i++) {
-                        if (cards[i][1] == pri) {
-                            count++;
-                        }
-                    }
-                    long[] cs = new long[count];
-                    int j = 0;
-                    for (int i = 0; i < len; i++) {
-                        if (cards[i][1] == pri) {
-                            cs[j] = cards[i][0];
-                            j++;
-                        }
-                    }
-                    // Catch review early & buried but not suspended cards
-                	ContentValues values = new ContentValues();
-                    values.put("priority", pri + extra);
-                    getDB().update(this, "cards", values, "id IN " + Utils.ids2str(cs) + " AND priority != " + pri + " AND " + "priority >= -2", null);
-                }
-            }
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
     }
 
 
@@ -3781,9 +3544,7 @@ public class Deck {
                 }
             }
 
-            // Delete unused tags
-            getDB().delete(this, "tags", "id in " + Utils.ids2str(unusedTags) + " and priority = "
-                            + Card.PRIORITY_NORMAL, null);
+	    deleteUnusedTags();
 
             // Remove any dangling fact
             deleteDanglingFacts();
@@ -3856,9 +3617,6 @@ public class Deck {
         // Update card q/a
         fact.setModified(true, this);
         updateFactTags(new long[] { fact.getId() });
-
-        // This will call reset() which will update counts
-        updatePriorities(Utils.toPrimitive(newCardIds));
 
         flushMod();
         if (reset) {
@@ -4388,11 +4146,13 @@ public class Deck {
     private void updateDynamicIndices() {
         Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
         HashMap<String, String> indices = new HashMap<String, String>();
-        indices.put("intervalDesc", "(type, priority desc, interval desc, factId, combinedDue)");
-        indices.put("intervalAsc", "(type, priority desc, interval, factId, combinedDue)");
-        indices.put("randomOrder", "(type, priority desc, factId, ordinal, combinedDue)");
-        indices.put("dueAsc", "(type, priority desc, due, factId, combinedDue)");
-        indices.put("dueDesc", "(type, priority desc, due desc, factId, combinedDue)");
+        indices.put("intervalDesc", "(type, interval desc, factId, combinedDue)");
+        indices.put("intervalAsc", "(type, interval, factId, combinedDue)");
+        indices.put("randomOrder", "(type, factId, ordinal, combinedDue)");
+	// new cards are sorted by due, not combinedDue, so that even if
+	// they are spaced, they retain their original sort order
+        indices.put("dueAsc", "(type, due, factId, combinedDue)");
+        indices.put("dueDesc", "(type, due desc, factId, combinedDue)");
 
         ArrayList<String> required = new ArrayList<String>();
         if (mRevCardOrder == REV_CARDS_OLD_FIRST) {
@@ -4419,7 +4179,7 @@ public class Deck {
         String indexName = null;
         while (iter.hasNext()) {
             Entry<String, String> entry = iter.next();
-            indexName = "ix_cards_" + entry.getKey() + "2";
+            indexName = "ix_cards_" + entry.getKey();
             if (required.contains(entry.getKey())) {
                 Cursor cursor = null;
                 try {
@@ -4435,7 +4195,6 @@ public class Deck {
                     }
                 }
             } else {
-                // Leave old indices for older clients
                 getDB().getDatabase().execSQL("DROP INDEX IF EXISTS " + indexName);
             }
         }

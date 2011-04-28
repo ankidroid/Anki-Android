@@ -93,7 +93,7 @@ public class Media {
      */
     private static String uniquePath(String dir, String base) {
         // Remove any dangerous characters
-        base = base.replaceAll("[][<>:/\\", "");
+        base = base.replaceAll("[][<>:/\\&", "");
         // Find a unique name
         int extensionOffset = base.lastIndexOf(".");
         String root = base.substring(0, extensionOffset);
