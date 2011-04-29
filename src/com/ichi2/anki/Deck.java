@@ -59,7 +59,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 70;
+    public static final int DECK_VERSION = 72;
 
     private static final int NEW_CARDS_DISTRIBUTE = 0;
     private static final int NEW_CARDS_LAST = 1;
@@ -76,7 +76,6 @@ public class Deck {
 
     public static final double FACTOR_FOUR = 1.3;
     public static final double INITIAL_FACTOR = 2.5;
-    private static final double MINIMUM_AVERAGE = 1.7;
     private static final double MAX_SCHEDULE_TIME = 36500.0;
 
     public static final String UNDO_TYPE_ANSWER_CARD = "Answer Card";
@@ -311,10 +310,11 @@ public class Deck {
             deck.createMetadata();
         }
 
-        deck.mNeedUnpack = false;
-        if (Math.abs(deck.getUtcOffset() - 1.0) < 1e-9 || Math.abs(deck.getUtcOffset() - 2.0) < 1e-9) {
+//        deck.mNeedUnpack = false;
+//        if (Math.abs(deck.getUtcOffset() - 1.0) < 1e-9 || Math.abs(deck.getUtcOffset() - 2.0) < 1e-9) {
+        if (Math.abs(deck.getUtcOffset() - 2.0) < 1e-9) {
             // do the rest later
-            deck.mNeedUnpack = (Math.abs(deck.getUtcOffset() - 1.0) < 1e-9);
+//            deck.mNeedUnpack = (Math.abs(deck.getUtcOffset() - 1.0) < 1e-9);
             // make sure we do this before initVars
             deck.setUtcOffset();
             deck.mCreated = Utils.now();
@@ -333,9 +333,9 @@ public class Deck {
             return deck;
         }
 
-        if (deck.mNeedUnpack) {
-            deck.addIndices();
-        }
+//        if (deck.mNeedUnpack) {
+//            deck.addIndices();
+//        }
 
         double oldMod = deck.mModified;
 
@@ -349,39 +349,18 @@ public class Deck {
 
         ArrayList<Long> ids = new ArrayList<Long>();
         // Unsuspend buried/rev early
-        ids = deck.getDB().queryColumn(Long.class,
-                "SELECT id FROM cards WHERE type > 2", 0);
-        if (!ids.isEmpty()) {
-            deck.getDB().getDatabase().execSQL("UPDATE cards SET type = relativeDelay WHERE type > 2");
-            // Save deck to database
-            deck.commitToDB();
-        }
-
+        deck.getDB().getDatabase().execSQL("UPDATE cards SET type = relativeDelay WHERE type > 2");
+        // Save deck to database
+        deck.commitToDB();
+        
         // Determine starting factor for new cards
-        Cursor cur = null;
-        try {
-            cur = deck.getDB().getDatabase().rawQuery("SELECT avg(factor) FROM cards WHERE type = 1", null);
-            if (cur.moveToNext()) {
-                deck.mAverageFactor = cur.getDouble(0);
-            } else {
-                deck.mAverageFactor = INITIAL_FACTOR;
-            }
-            if (deck.mAverageFactor == 0.0) {
-                deck.mAverageFactor = INITIAL_FACTOR;
-            }
-        } catch (Exception e) {
-            deck.mAverageFactor = INITIAL_FACTOR;
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-        deck.mAverageFactor = Math.max(deck.mAverageFactor, MINIMUM_AVERAGE);
+        deck.mAverageFactor = 2.5;
 
         // Rebuild queue
         deck.reset();
         // Make sure we haven't accidentally bumped the modification time
         double dbMod = 0.0;
+        Cursor cur = null;
         try {
             cur = deck.getDB().getDatabase().rawQuery("SELECT modified FROM decks", null);
             if (cur.moveToNext()) {
@@ -834,7 +813,7 @@ public class Deck {
             mVersion = 65;
             commitToDB();
         }
-	// skip a few to allow for updates to stable tree
+        // skip a few to allow for updates to stable tree
         if (mVersion < 70) {
             // update dynamic indices given we don't use priority anymore
             String[] oldDynamicIndices = { "intervalDesc", "intervalAsc", "randomOrder", "dueAsc", "dueDesc" };
@@ -842,11 +821,22 @@ public class Deck {
                 getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d + "2");
                 getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d);
             }
+            rebuildTypes();
+            mVersion = 70;
+            commitToDB();
+        }
+        if (mVersion < 71) {
+        	// remove the expensive value cache
+            getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_fields_value");
+            mVersion = 71;
+            commitToDB();
+        }
+        if (mVersion < 72) {
+            getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_factor");
+            mVersion = 72;
             updateDynamicIndices();
             getDB().getDatabase().execSQL("VACUUM");
             getDB().getDatabase().execSQL("ANALYZE");
-            rebuildTypes();
-            mVersion = 70;
             commitToDB();
         }
         // Executing a pragma here is very slow on large decks, so we store our own record

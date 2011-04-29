@@ -36,7 +36,17 @@ import java.util.Map.Entry;
  * others generate more than one.
  *
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
+ * 
+ * 
+ * Type: 0=lapsed, 1=due, 2=new, 3=drilled
+ * Queue: under normal circumstances, same as type.
+ * -1=suspended, -2=user buried, -3=sched buried (rev early, etc)
+ * Ordinal: card template # for fact
+ * Position: sorting position, only for new cards
+ * Flags: unused; reserved for future use
  */
+
+
 public class Card {
 
     // TODO: Javadoc.
@@ -72,46 +82,26 @@ public class Card {
     private long mId; // Primary key
     private long mFactId; // Foreign key facts.id
     private long mCardModelId; // Foreign key cardModels.id
+    // general
     private double mCreated = Utils.now();
     private double mModified = Utils.now();
-    private String mTags = "";
-    private int mOrdinal;
-    // q/a cached - changed on fact update
     private String mQuestion = "";
     private String mAnswer = "";
-    private int mPriority = 2; // obsolete
-    private double mInterval = 0;
+    private int mFlags = 0;
+    // ordering
+    private int mOrdinal;
+    private int mPosition;
+    // scheduling data
+    private int mType = TYPE_NEW;
+    private int mQueue = TYPE_NEW;
     private double mLastInterval = 0;
-    private double mDue = Utils.now();
-    private double mLastDue = 0;
+    private double mInterval = 0;
+    private double mDue;
     private double mFactor = Deck.INITIAL_FACTOR;
-    private double mLastFactor = Deck.INITIAL_FACTOR;
-    private double mFirstAnswered = 0;
-    // Stats
+    // counters
     private int mReps = 0;
     private int mSuccessive = 0;
-    private double mAverageTime = 0;
-    private double mReviewTime = 0;
-    private int mYoungEase0 = 0;
-    private int mYoungEase1 = 0;
-    private int mYoungEase2 = 0;
-    private int mYoungEase3 = 0;
-    private int mYoungEase4 = 0;
-    private int mMatureEase0 = 0;
-    private int mMatureEase1 = 0;
-    private int mMatureEase2 = 0;
-    private int mMatureEase3 = 0;
-    private int mMatureEase4 = 0;
-    // This duplicates the above data, because there's no way to map imported
-    // data to the above
-    private int mYesCount = 0;
-    private int mNoCount = 0;
-    private double mSpaceUntil = 0;      // obsolete in libanki 1.1.4
-    // relativeDelay is reused as type without scheduling (ie, it remains 0-2 even if card is suspended, etc)
-    private double mRelativeDelay = 0;
-    private int mIsDue = 0;              // obsolete in libanki 1.1
-    private int mType = TYPE_NEW;
-    private double mCombinedDue = 0;
+    private int mLapses = 0;
     // END SQL table entries
 
     public Deck mDeck;
@@ -131,7 +121,6 @@ public class Card {
     private boolean isLeechSuspended;
 
     public Card(Deck deck, Fact fact, CardModel cardModel, double created) {
-        mTags = "";
         mTagsBySrc = new String[TAGS_TEMPL + 1];
         mTagsBySrc[TAGS_FACT] = "";
         mTagsBySrc[TAGS_MODEL] = "";
@@ -139,10 +128,6 @@ public class Card {
 
         mId = Utils.genID();
         // New cards start as new & due
-        mType = TYPE_NEW;
-        mRelativeDelay = mType;
-        mTimerStarted = Double.NaN;
-        mTimerStopped = Double.NaN;
         mModified = Utils.now();
         if (Double.isNaN(created)) {
             mCreated = created;
@@ -151,7 +136,7 @@ public class Card {
             mDue = mModified;
         }
         isLeechSuspended = false;
-        mCombinedDue = mDue;
+        mPosition = mDue;
         mDeck = deck;
         mFact = fact;
         if (fact != null) {
@@ -162,10 +147,42 @@ public class Card {
             mCardModelId = cardModel.getId();
             mOrdinal = cardModel.getOrdinal();
         }
+        mTimerStarted = Double.NaN;
     }
 
+
+    public void setModified() {
+        mModified = Utils.now();
+    }
+
+
+    public void startTimer() {
+        mTimerStarted = Utils.now();
+    }
+
+
+    public void stopTimer() {
+        mTimerStopped = Utils.now();
+    }
+
+
+    public void resumeTimer() {
+        if (!Double.isNaN(mTimerStarted) && !Double.isNaN(mTimerStopped)) {
+            mTimerStarted += Utils.now() - mTimerStopped;
+            mTimerStopped = Double.NaN;
+        } else {
+            Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
+        }
+    }
+
+
+    public double userTime() {
+        return Math.min((Utils.now() - mTimerStarted), MAX_TIMER);
+    }
+
+
 	/**
-	 * Format qa
+	 * Questions and answers
 	 */
 	public void rebuildQA(Deck deck) {
 		rebuildQA(deck, true);
@@ -173,7 +190,7 @@ public class Card {
 	public void rebuildQA(Deck deck, boolean media) {
         // Format qa
 		if (mFact != null && mCardModel != null) {
-			HashMap<String, String> qa = CardModel.formatQA(mFact, mCardModel, splitTags());
+			HashMap<String, String> qa = CardModel.formatQA(mFact, mCardModel, _splitTags());
 
             if (media) {
                 // Find old media references
@@ -225,44 +242,6 @@ public class Card {
         return mFact;
     }
 
-
-    public void setModified() {
-        mModified = Utils.now();
-    }
-
-
-    public void startTimer() {
-        mTimerStarted = Utils.now();
-    }
-
-
-    public void stopTimer() {
-        mTimerStopped = Utils.now();
-    }
-
-
-    public void resumeTimer() {
-        if (!Double.isNaN(mTimerStarted) && !Double.isNaN(mTimerStopped)) {
-            mTimerStarted += Utils.now() - mTimerStopped;
-            mTimerStopped = Double.NaN;
-        } else {
-            Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
-        }
-    }
-
-
-    public double thinkingTime() {
-        if (Double.isNaN(mTimerStopped)) {
-            return (Utils.now() - mTimerStarted);
-        } else {
-            return (mTimerStopped - mTimerStarted);
-        }
-    }
-
-
-    public double totalTime() {
-        return (Utils.now() - mTimerStarted);
-    }
 
     public double getFuzz() {
     	if (mFuzz == 0) {
@@ -354,7 +333,6 @@ public class Card {
 
 
     public double adjustedDelay(int ease) {
-        double now = Utils.now();
 	double dueCutoff = mDeck.getDueCutoff();
         if (isNew()) {
             return 0;
@@ -442,7 +420,7 @@ public class Card {
     }
 
 
-    public String[] splitTags() {
+    public String[] _splitTags() {
         String[] tags = new String[]{
             getFact().getTags(),
             Model.getModel(mDeck, getFact().getModelId(), true).getTags(),
@@ -526,7 +504,7 @@ public class Card {
         try {
             cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
                     "SELECT id, factId, cardModelId, created, modified, tags, "
-                            + "ordinal, question, answer, priority, interval, lastInterval, "
+                            + "ordinal, question, answer, interval, lastInterval, "
                             + "due, lastDue, factor, lastFactor, firstAnswered, reps, "
                             + "successive, averageTime, reviewTime, youngEase0, youngEase1, "
                             + "youngEase2, youngEase3, youngEase4, matureEase0, matureEase1, "
@@ -546,35 +524,34 @@ public class Card {
             mOrdinal = cursor.getInt(6);
             mQuestion = cursor.getString(7);
             mAnswer = cursor.getString(8);
-            mPriority = cursor.getInt(9);
-            mInterval = cursor.getDouble(10);
-            mLastInterval = cursor.getDouble(11);
-            mDue = cursor.getDouble(12);
-            mLastDue = cursor.getDouble(13);
-            mFactor = cursor.getDouble(14);
-            mLastFactor = cursor.getDouble(15);
-            mFirstAnswered = cursor.getDouble(16);
-            mReps = cursor.getInt(17);
-            mSuccessive = cursor.getInt(18);
-            mAverageTime = cursor.getDouble(19);
-            mReviewTime = cursor.getDouble(20);
-            mYoungEase0 = cursor.getInt(21);
-            mYoungEase1 = cursor.getInt(22);
-            mYoungEase2 = cursor.getInt(23);
-            mYoungEase3 = cursor.getInt(24);
-            mYoungEase4 = cursor.getInt(25);
-            mMatureEase0 = cursor.getInt(26);
-            mMatureEase1 = cursor.getInt(27);
-            mMatureEase2 = cursor.getInt(28);
-            mMatureEase3 = cursor.getInt(29);
-            mMatureEase4 = cursor.getInt(30);
-            mYesCount = cursor.getInt(31);
-            mNoCount = cursor.getInt(32);
-            mSpaceUntil = cursor.getDouble(33);
-            mIsDue = cursor.getInt(34);
-            mType = cursor.getInt(35);
-            mCombinedDue = cursor.getDouble(36);
-            mRelativeDelay = cursor.getDouble(37);
+            mInterval = cursor.getDouble(9);
+            mLastInterval = cursor.getDouble(10);
+            mDue = cursor.getDouble(11);
+            mLastDue = cursor.getDouble(12);
+            mFactor = cursor.getDouble(13);
+            mLastFactor = cursor.getDouble(14);
+            mFirstAnswered = cursor.getDouble(15);
+            mReps = cursor.getInt(16);
+            mSuccessive = cursor.getInt(17);
+            mAverageTime = cursor.getDouble(18);
+            mReviewTime = cursor.getDouble(19);
+            mYoungEase0 = cursor.getInt(20);
+            mYoungEase1 = cursor.getInt(21);
+            mYoungEase2 = cursor.getInt(22);
+            mYoungEase3 = cursor.getInt(23);
+            mYoungEase4 = cursor.getInt(24);
+            mMatureEase0 = cursor.getInt(25);
+            mMatureEase1 = cursor.getInt(26);
+            mMatureEase2 = cursor.getInt(27);
+            mMatureEase3 = cursor.getInt(28);
+            mMatureEase4 = cursor.getInt(29);
+            mYesCount = cursor.getInt(30);
+            mNoCount = cursor.getInt(31);
+            mSpaceUntil = cursor.getDouble(32);
+            mIsDue = cursor.getInt(33);
+            mType = cursor.getInt(34);
+            mCombinedDue = cursor.getDouble(35);
+            mRelativeDelay = cursor.getDouble(36);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -607,7 +584,6 @@ public class Card {
         values.put("ordinal", mOrdinal);
         values.put("question", mQuestion);
         values.put("answer", mAnswer);
-        values.put("priority", mPriority);
         values.put("interval", mInterval);
         values.put("lastInterval", mLastInterval);
         values.put("due", mDue);
@@ -651,7 +627,6 @@ public class Card {
         values.put("ordinal", mOrdinal);
         values.put("question", mQuestion);
         values.put("answer", mAnswer);
-        values.put("priority", mPriority);
         values.put("interval", mInterval);
         values.put("lastInterval", mLastInterval);
         values.put("due", mDue);
@@ -702,7 +677,6 @@ public class Card {
     public ContentValues getAnswerValues() {
 	ContentValues values = new ContentValues();
         values.put("modified", mModified);
-        values.put("priority", mPriority);
         values.put("interval", mInterval);
         values.put("lastInterval", mLastInterval);
         values.put("due", mDue);
@@ -945,16 +919,6 @@ public class Card {
 
     public void setRelativeDelay(double relativeDelay) {
         mRelativeDelay = relativeDelay;
-    }
-
-
-    public void setPriority(int priority) {
-        mPriority = priority;
-    }
-
-
-    public int getPriority() {
-        return mPriority;
     }
 
 

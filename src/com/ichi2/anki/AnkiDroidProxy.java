@@ -50,7 +50,7 @@ public class AnkiDroidProxy {
      * Connection settings
      */
     // ankiweb.net hosted at 78.46.104.19
-    public static final String SYNC_HOST = "ankiweb.net";
+    public static final String SYNC_HOST = "dev.ankiweb.net";
     public static final String SYNC_URL = "http://" + SYNC_HOST + "/sync/";
     public static final String SYNC_SEARCH = "http://" + SYNC_HOST + "/file/search";
 
