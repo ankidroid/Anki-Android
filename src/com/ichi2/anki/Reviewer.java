@@ -1640,32 +1640,39 @@ public class Reviewer extends Activity {
 
         // don't play question sound again when displaying answer 
         int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
+        String question = "";
+        String answer = "";
         if (isQuestionDisplayed()) {
         	if (sDisplayAnswer && (questionStartsAt != -1)) {
-        	content = Sound.parseSounds(baseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION)
-        			+ Sound.parseSounds(baseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
+        		question = Sound.parseSounds(baseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION);
+        		answer = Sound.parseSounds(baseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
         	} else {
-            	content = Sound.parseSounds(baseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
+            	question = Sound.parseSounds(baseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
         	}
         } else {
         	int qa = MetaDB.LANGUAGE_QUESTION;
         	if (sDisplayAnswer) {
         		qa = MetaDB.LANGUAGE_ANSWER;
         	}
-        	content = Sound.parseSounds(baseUrl, content, mSpeakText, qa);
+        	answer = Sound.parseSounds(baseUrl, content, mSpeakText, qa);
         }
 
         // Parse out the LaTeX images
-        content = LaTeX.parseLaTeX(AnkiDroidApp.deck(), content);
+        question = LaTeX.parseLaTeX(AnkiDroidApp.deck(), question);
+        answer = LaTeX.parseLaTeX(AnkiDroidApp.deck(), answer);
+
+       
+        // If ruby annotation support is activated, then parse and handle:
+        // Strip kanji in question, add furigana in answer
+        if (mPrefUseRubySupport && isJapaneseModel) {
+          	content = RubyParser.ankiStripKanji(question) + RubyParser.ankiRubyToMarkup(answer);
+        } else {
+        	content = question + answer;
+        }
         
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
         content = content.replace("font-weight:600;", "font-weight:700;");
-
-        // If ruby annotation support is activated, then parse and add markup
-        if (mPrefUseRubySupport && isJapaneseModel) {
-            content = RubyParser.ankiRubyToMarkup(content);
-        }
 
         // Find hebrew text
         if (isHebrewFixEnabled()) {
