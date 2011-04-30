@@ -86,7 +86,7 @@ public final class WidgetStatus {
 
                     Deck deck = Deck.openDeck(absPath, false);
                     int dueCards = deck.getDueCount();
-                    int newCards = deck.getNewCountToday();
+                    int newCards = deck.getNewCount();
                     int failedCards = deck.getFailedSoonCount();
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.

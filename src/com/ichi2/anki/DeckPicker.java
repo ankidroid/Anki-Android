@@ -1022,7 +1022,7 @@ public class DeckPicker extends Activity implements Runnable {
 					} else {
 						int dueCards = deck.getDueCount();
 						int totalCards = deck.getCardCount();
-						int newCards = deck.getNewCountToday();
+						int newCards = deck.getNewCount();
 						int totalNewCards = deck.getNewCount(mCompletionBarRestrictToActive);
 						int matureCards = deck.getMatureCardCount(mCompletionBarRestrictToActive);
 						int totalRevCards = deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);

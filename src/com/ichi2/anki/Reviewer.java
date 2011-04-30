@@ -1121,7 +1121,7 @@ public class Reviewer extends Activity {
     	switch (ease) {
     		case Card.EASE_FAILED:
     	    	mChosenAnswer.setText(mEase1.getText());
-    	    	if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
+    	    	if ((deck.getDueCount() + deck.getNewCount()) == 1) {
     	    		mIsLastCard = true;
                 }
     			break;
@@ -1479,7 +1479,7 @@ public class Reviewer extends Activity {
 
         int _failedSoonCount = deck.getFailedSoonCount();
         int _revCount = deck.getRevCount();
-        int _newCount = deck.getNewCountToday();
+        int _newCount = deck.getNewCount();
         
         SpannableString failedSoonCount = new SpannableString(String.valueOf(_failedSoonCount));
         SpannableString revCount = new SpannableString(String.valueOf(_revCount));

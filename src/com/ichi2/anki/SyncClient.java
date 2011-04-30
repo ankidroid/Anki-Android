@@ -1547,41 +1547,28 @@ public class SyncClient {
         double delay = 0.0;
         JSONArray bundledHistory = new JSONArray();
         Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
-                        "SELECT cardId, time, lastInterval, nextInterval, ease, delay, lastFactor, nextFactor, reps, "
-                        + "thinkingTime, yesCount, noCount FROM reviewHistory "
-                        + "WHERE time > " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()), null);
+                        "SELECT time, cardId, ease, rep, lastInterval, interval, factor, userTime, flags FROM revlog WHERE time > " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()), null);
         while (cursor.moveToNext()) {
             JSONArray review = new JSONArray();
 
-            // cardId
-            review.put(0, (long)cursor.getLong(0));
             // time
-            review.put(1, (double)cursor.getDouble(1));
-            // lastInterval
-            review.put(2, (double)cursor.getDouble(2));
-            // nextInterval
-            review.put(3, (double)cursor.getDouble(3));
+            review.put(0, (long)cursor.getLong(0));
+            // cardId
+            review.put(1, (long)cursor.getLong(1));
             // ease
-            review.put(4, (int)cursor.getInt(4));
-            // delay
-            delay = cursor.getDouble(5);
-            Number num = Double.valueOf(delay);
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 2: %.18f %s %s", delay, num.toString(), review.toString()));
-            review.put(5, delay);
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 3: %.18f %s %s", review.getDouble(5), num.toString(), review.toString()));
-            // lastFactor
+            review.put(2, (int)cursor.getInt(2));
+            // rep
+            review.put(3, (int)cursor.getInt(3));
+            // lastInterval
+            review.put(4, (double)cursor.getDouble(4));
+            // interval
+            review.put(5, (double)cursor.getDouble(5));
+            // factor
             review.put(6, (double)cursor.getDouble(6));
-            Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 4: %.18f %s %s", review.getDouble(5), num.toString(), review.toString()));
-            // nextFactor
-            review.put(7, (double)cursor.getDouble(7));
-            // reps
-            review.put(8, (double)cursor.getDouble(8));
-            // thinkingTime
-            review.put(9, (double)cursor.getDouble(9));
-            // yesCount
-            review.put(10, (double)cursor.getDouble(10));
-            // noCount
-            review.put(11, (double)cursor.getDouble(11));
+            // userTime
+            review.put(7, (long)cursor.getLong(7));
+            // flags
+            review.put(8, (int)cursor.getInt(8));
 
             Log.d(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "issue 372 complete row: %.18f %.18f %s", delay, review.getDouble(5), review.toString()));
             bundledHistory.put(review);
@@ -1595,37 +1582,31 @@ public class SyncClient {
 
 
     private void updateHistory(JSONArray history) throws JSONException {
-        String sql = "INSERT OR IGNORE INTO reviewHistory (cardId, time, lastInterval, nextInterval, ease, delay, "
-                    + "lastFactor, nextFactor, reps, thinkingTime, yesCount, noCount) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT OR IGNORE INTO revlog VALUES (time, cardId, ease, rep, lastInterval, interval, factor, userTime, flags) " +
+        		"VALUES(?,?,?,?,?,?,?,?,?)";
         SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().compileStatement(sql);
         int len = history.length();
         for (int i = 0; i < len; i++) {
-            JSONArray h = history.getJSONArray(i);
-
-            // cardId
-            statement.bindLong(1, h.getLong(0));
+            JSONArray h = history.getJSONArray(i); 
+            
             // time
-            statement.bindDouble(2, h.getDouble(1));
-            // lastInterval
-            statement.bindDouble(3, h.getDouble(2));
-            // nextInterval
-            statement.bindDouble(4, h.getDouble(3));
+            statement.bindLong(1, h.getLong(0));
+            // cardId
+            statement.bindLong(2, h.getLong(1));
             // ease
-            statement.bindString(5, h.getString(4));
-            // delay
+            statement.bindString(3, h.getString(2));
+            // rep
+            statement.bindString(4, h.getString(3));          
+            // lastInterval
+            statement.bindDouble(5, h.getDouble(4));
+            // interval
             statement.bindDouble(6, h.getDouble(5));
-            // lastFactor
+            // factor
             statement.bindDouble(7, h.getDouble(6));
-            // nextFactor
-            statement.bindDouble(8, h.getDouble(7));
-            // reps
-            statement.bindDouble(9, h.getDouble(8));
-            // thinkingTime
-            statement.bindDouble(10, h.getDouble(9));
-            // yesCount
-            statement.bindDouble(11, h.getDouble(10));
-            // noCount
-            statement.bindDouble(12, h.getDouble(11));
+            // userTime
+            statement.bindLong(8, h.getLong(7));
+            // flags
+            statement.bindString(8, h.getString(8));          
 
             statement.execute();
         }
@@ -1716,8 +1697,8 @@ public class SyncClient {
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
 
-        if (ankiDB.queryScalar("SELECT count() FROM reviewHistory WHERE time > " + mDeck.getLastSync()) > 500) {
-            Log.i(AnkiDroidApp.TAG, "reviewHistory since lastSync > 500");
+        if (ankiDB.queryScalar("SELECT count() FROM revlog WHERE time > " + mDeck.getLastSync()) > 500) {
+            Log.i(AnkiDroidApp.TAG, "revlog since lastSync > 500");
             return true;
         }
         Date lastDay = new Date(java.lang.Math.max(0, (long) (mDeck.getLastSync() - 60 * 60 * 24) * 1000));

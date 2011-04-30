@@ -1404,7 +1404,7 @@ public class StudyOptions extends Activity {
 
             mTextDeckName.setText(deck.getDeckName());
             mTextReviewsDue.setText(String.valueOf(dueCount));
-            mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
+            mTextNewToday.setText(String.valueOf(deck.getNewCount()));
             String etastr = "-";
             int eta = deck.getETA();
             if (eta != -1) {
