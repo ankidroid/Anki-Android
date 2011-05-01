@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteStatement;
+import android.text.format.Time;
 import android.util.Log;
 
 import com.ichi2.anki.Fact.Field;
@@ -48,6 +49,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -59,24 +61,7 @@ public class Deck {
 
     public static final String TAG_MARKED = "Marked";
 
-    public static final int DECK_VERSION = 75;
 
-    private static final int NEW_CARDS_DISTRIBUTE = 0;
-    private static final int NEW_CARDS_LAST = 1;
-    private static final int NEW_CARDS_FIRST = 2;
-
-    private static final int NEW_CARDS_RANDOM = 0;
-    private static final int NEW_CARDS_OLD_FIRST = 1;
-    private static final int NEW_CARDS_NEW_FIRST = 2;
-
-    private static final int REV_CARDS_OLD_FIRST = 0;
-    private static final int REV_CARDS_NEW_FIRST = 1;
-    private static final int REV_CARDS_DUE_FIRST = 2;
-    private static final int REV_CARDS_RANDOM = 3;
-
-    public static final double FACTOR_FOUR = 1.3;
-    public static final double INITIAL_FACTOR = 2.5;
-    private static final double MAX_SCHEDULE_TIME = 36500.0;
 
     public static final String UNDO_TYPE_ANSWER_CARD = "Answer Card";
     public static final String UNDO_TYPE_SUSPEND_CARD = "Suspend Card";
@@ -87,90 +72,60 @@ public class Deck {
 
     public String mCurrentUndoRedoType = "";
 
+    // Any comments resulting from upgrading the deck should be stored here, both in success and failure
+    public ArrayList<Integer> upgradeNotes;
 
-    // Card order strings for building SQL statements
-    private static final String[] revOrderStrings = { "interval desc", "interval",
-            "due", "RANDOM()" };
-    private static final String[] newOrderStrings = { "RANDOM()", "due",
-            "due desc" };
 
     // BEGIN: SQL table columns
     private long mId;
     private double mCreated;
     private double mModified;
-    private String mDescription;
+    private double mSchemaMod = 0;
     private int mVersion;
     private long mCurrentModelId;
-
-    // syncName stores an md5sum of the deck path when syncing is enabled.
-    // If it doesn't match the current deck path, the deck has been moved,
-    // and syncing is disabled on load.
-    private String mSyncName;
-    private double mLastSync;
+    private String mSyncName = "";
+    private double mLastSync = 0;
 
     private boolean mNeedUnpack = false;
 
-    // Scheduling
-    // Initial intervals
-    private double mHardIntervalMin;
-    private double mHardIntervalMax;
-    private double mMidIntervalMin;
-    private double mMidIntervalMax;
-    private double mEasyIntervalMin;
-    private double mEasyIntervalMax;
 
-    // Delays on failure
-    private long mDelay0;
-    // Days to delay mature fails
-    private long mDelay1;
-    private double mDelay2;
+//
+//    // Collapsing future cards
+//    private double mCollapseTime;
+//
+//    // Priorities and postponing - all obsolete
+//    private String mHighPriority;
+//    private String mMedPriority;
+//    private String mLowPriority;
+//    private String mSuspended;
+//
+//    // 0 is random, 1 is by input date
+    private int mUtcOffset = -2;
+//    
 
-    // Collapsing future cards
-    private double mCollapseTime;
-
-    // Priorities and postponing - all obsolete
-    private String mHighPriority;
-    private String mMedPriority;
-    private String mLowPriority;
-    private String mSuspended;
-
-    // 0 is random, 1 is by input date
-    private int mNewCardOrder;
-
-    // When to show new cards
-    private int mNewCardSpacing;
-
-    // New card spacing global variable
-    private double mNewSpacing;
-    private double mRevSpacing;
-    private boolean mNewFromCache;
-
-    // Limit the number of failed cards in play
-    private int mFailedCardMax;
-
-    // Number of new cards to show per day
-    private int mNewCardsPerDay;
-
-    // Currently unused
-    private long mSessionRepLimit;
-    private long mSessionTimeLimit;
-
-    // Stats offset
-    private double mUtcOffset;
-
-    // Count cache
-    private int mCardCount;
-    private int mFactCount;
-    private int mRepsToday;
-    private int mNewSeenToday;
-    private int mFailedNowCount; // obsolete in libanki 1.1
-    private int mFailedSoonCount;
-    private int mRevCount;
-    private int mNewAvail;
-
-    // Review order
-    private int mRevCardOrder;
-
+//
+//    // Limit the number of failed cards in play
+//    private int mFailedCardMax;
+//
+//    // Number of new cards to show per day
+    private int mNewCardsPerDay = 20;
+    private int mCollapseTime = 600;
+    // timeboxing
+    private long mSessionRepLimit = 0;
+    private long mSessionTimeLimit = 600;
+    // leeches
+    private boolean mSuspendLeeches = true;
+    private int mLeechFails = 16;
+    // selective study
+    private String mNewActive = "";
+    private String mNewInactive = "";
+    private String mRevActive = "";
+    private String mRevInactive = "";
+//    private int mFactCount;
+//    private int mFailedNowCount; // obsolete in libanki 1.1
+//    private int mFailedSoonCount;
+//    private int mRevCount;
+//    private int mNewAvail;
     // END: SQL table columns
 
     // BEGIN JOINed variables
@@ -178,42 +133,23 @@ public class Deck {
     // ArrayList<Model> models; // Deck.id = Model.deckId
     // END JOINed variables
 
-    private double mAverageFactor;
-    private int mNewCardModulus;
     private int mNewCount;
     private double mLastLoaded;
     private boolean mNewEarly;
     private boolean mReviewEarly;
     private String mMediaPrefix;
 
-    private double mDueCutoff;
     private double mFailedCutoff;
 
     private String mScheduler;
 
-    // Any comments resulting from upgrading the deck should be stored here, both in success and failure
-    private ArrayList<Integer> upgradeNotes;
+    private Scheduler mSched;
 
-    // Queues
-    private LinkedList<QueueItem> mFailedQueue;
-    private LinkedList<QueueItem> mRevQueue;
-    private LinkedList<QueueItem> mNewQueue;
-    private LinkedList<QueueItem> mFailedCramQueue;
-    private HashMap<Long, Double> mSpacedFacts;
-    private LinkedList<SpacedCardsItem> mSpacedCards;
-    private int mQueueLimit;
 
-    // Cramming
-    private String[] mActiveCramTags;
-    private String mCramOrder;
-    private double mCramLastInterval;
 
     // Not in Anki Desktop
     private String mDeckPath;
     private String mDeckName;
-
-    private Stats mGlobalStats;
-    private Stats mDailyStats;
 
     private long mCurrentCardId;
     
@@ -308,7 +244,7 @@ public class Deck {
         deck.initDeckvarsCache();
         deck.mDeckName = (new File(path)).getName().replace(".anki", "");
 
-        if (deck.mVersion < DECK_VERSION) {
+        if (deck.mVersion < Upgrade.DECK_VERSION) {
             deck.createMetadata();
         }
 
@@ -323,9 +259,10 @@ public class Deck {
         }
 
         deck.initVars();
-
+        // deck.initTagTables();
+        deck.updateDynamicIndices();
         // Upgrade to latest version
-        deck.upgradeDeck();
+        Upgrade.upgradeDeck(deck);
 
         if (!rebuild) {
             // Minimal startup for deckpicker: only counts are needed
@@ -333,29 +270,12 @@ public class Deck {
             return deck;
         }
 
-//        if (deck.mNeedUnpack) {
-//            deck.addIndices();
-//        }
-
-        double oldMod = deck.mModified;
-
-        // Ensure necessary indices are available
-        deck.updateDynamicIndices();
-
-        // - New delay1 handling
-        if (deck.mDelay1 > 7l) {
-            deck.mDelay1 = 0l;
-        }
-
         ArrayList<Long> ids = new ArrayList<Long>();
+
+        double oldMod = deck.getModified();
         // Unsuspend buried/rev early
         deck.getDB().getDatabase().execSQL("UPDATE cards SET queue = type WHERE queue BETWEEN -3 AND -2");
-        // Save deck to database
         deck.commitToDB();
-        
-        // Determine starting factor for new cards
-        deck.mAverageFactor = 2.5;
-
         // Rebuild queue
         deck.reset();
         // Make sure we haven't accidentally bumped the modification time
@@ -373,9 +293,10 @@ public class Deck {
         }
         assert Math.abs(dbMod - oldMod) < 1.0e-9;
         assert deck.mModified == oldMod;
-        // 4.3.2011: deactivated since it's not used anywhere
-        // Create a temporary view for random new cards. Randomizing the cards by themselves
-        // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
+
+//        // 4.3.2011: deactivated since it's not used anywhere
+//        // Create a temporary view for random new cards. Randomizing the cards by themselves
+//        // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
 //        try {
 //            deck.getDB().getDatabase().execSQL(
 //                    "CREATE TEMPORARY VIEW acqCardsRandom AS SELECT * FROM cards " + "WHERE type = " + Card.TYPE_NEW
@@ -553,38 +474,29 @@ public class Deck {
 
 
     private void initVars() {
-        // tmpMediaDir = null;
+    	if (mUtcOffset == -2) {
+    		// shared deck; reset timezone and creation date
+    		mUtcOffset = (int) Utils.utcOffset();
+    		mCreated = Utils.now();
+    	}
         mMediaPrefix = null;
-        // lastTags = "";
         mLastLoaded = Utils.now();
         // undoEnabled = false;
         // sessionStartReps = 0;
         // sessionStartTime = 0;
         // lastSessionStart = 0;
-        mQueueLimit = 200;
         // If most recent deck var not defined, make sure defaults are set
-        if (!hasKey("schemaMod")) {
-            setVarDefault("suspendLeeches", "1");
-            setVarDefault("leechFails", "16");
-            setVarDefault("perDay", "1");
-            setVarDefault("newActive", "");
-            setVarDefault("revActive", "");
-            setVarDefault("newInactive", mSuspended);
-            setVarDefault("revInactive", mSuspended);
-            setVarDefault("newSpacing", "60");
+        if (!hasKey("latexPost")) {
             setVarDefault("mediaURL", "");
             setVarDefault("latexPre", "\\documentclass[12pt]{article}\n" + "\\special{papersize=3in,5in}\n"
                     + "\\usepackage[utf8]{inputenc}\n" + "\\usepackage{amssymb,amsmath}\n" + "\\pagestyle{empty}\n"
                     + "\\begin{document}\n");
             setVarDefault("latexPost", "\\end{document}");
-            setVarDefault("revSpacing", "0.1");
-            setVarDefault("schemaMod", "0");
             // FIXME: The next really belongs to the dropbox setup module, it's not supposed to be empty if the user
             // wants to use dropbox. ankiqt/ankiqt/ui/main.py : setupMedia
             // setVarDefault("mediaLocation", "");
         }
-        updateCutoff();
-        setupStandardScheduler();
+        mSched = new Scheduler(this);
     }
 
 
@@ -651,129 +563,6 @@ public class Deck {
     }
 
 
-    /**
-     * Upgrade deck to latest version. Any comments resulting from the upgrade, should be stored in upgradeNotes, as
-     * R.string.id, successful or not. The idea is to have Deck.java generate the notes from upgrading and not the UI.
-     * Still we need access to a Resources object and it's messy to pass that in openDeck. Instead we store the ids for
-     * the messages and make a separate call from the UI to static upgradeNotesToMessages in order to properly translate
-     * the IDs to messages for viewing. We shouldn't do this directly from the UI, as the messages contain %s variables
-     * that need to be populated from deck values, and it's better to contain the libanki logic to the relevant classes.
-     *
-     * @return True if the upgrade is supported, false if the upgrade needs to be performed by Anki Desktop
-     */
-    private boolean upgradeDeck() {
-        // Oldest versions in existence are 31 as of 11/07/2010
-        // We support upgrading from 39 and up.
-        // Unsupported are about 135 decks, missing about 6% as of 11/07/2010
-        //
-        double oldmod = mModified;
-
-        upgradeNotes = new ArrayList<Integer>();
-        if (mVersion < 65) {
-            // Unsupported version
-            upgradeNotes.add(com.ichi2.anki.R.string.deck_upgrade_too_old_version);
-            return false;
-        }
-        // skip a few to allow for updates to stable tree
-        if (mVersion < 70) {
-            // update dynamic indices given we don't use priority anymore
-            String[] oldDynamicIndices = { "intervalDesc", "intervalAsc", "randomOrder", "dueAsc", "dueDesc" };
-            for (String d : oldDynamicIndices) {
-                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d + "2");
-                getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_" + d);
-            }
-            rebuildTypes();
-            mVersion = 70;
-            commitToDB();
-        }
-        if (mVersion < 71) {
-        	// remove the expensive value cache
-            getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_fields_value");
-            mVersion = 71;
-            commitToDB();
-        }
-        if (mVersion < 72) {
-        	// this was only used for calculating average factor
-            getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_factor");
-            mVersion = 72;
-            updateDynamicIndices();
-            getDB().getDatabase().execSQL("VACUUM");
-            getDB().getDatabase().execSQL("ANALYZE");
-            commitToDB();
-        }
-        if (mVersion < 73) {
-    	  	// remove stats, as it's all in the revlog now
-        	getDB().getDatabase().execSQL("DROP TABLE IF EXISTS stats");
-            mVersion = 73;
-            commitToDB();
-        }
-        if (mVersion < 74) {
-    	  	// migrate revlog data to new table
-        	getDB().getDatabase().execSQL("INSERT INTO revlog SELECT CAST(time * 1000 AS INT), cardId, ease, reps, lastInterval, nextInterval, nextFactor, CAST(MIN(thinkingTime, 60) * 1000 AS INT), 0 FROM reviewHistory");
-        	getDB().getDatabase().execSQL("DROP TABLE reviewHistory");
-        	// convert old ease0 into ease1
-        	getDB().getDatabase().execSQL("UPDATE revlog SET ease = 1 WHERE ease = 0");
-        	// remove priority index
-        	getDB().getDatabase().execSQL("DROP INDEX IF EXISTS ix_cards_priority");
-            mVersion = 74;
-            commitToDB();
-        }
-        if (mVersion < 75) {
-        	// upgrade schema
-    	  	// copy cards into new temporary table
-            Cursor cursor = null;
-            String sql = "";
-            try {
-                cursor = getDB().getDatabase().rawQuery(
-                        "SELECT sql FROM sqlite_master WHERE name = \'cards\'", null);
-                while (cursor.moveToNext()) {
-                	sql = cursor.getString(0);
-                }
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
-            }
-        	getDB().getDatabase().execSQL(sql.replace("TABLE cards", "temporary table cards2"));
-        	getDB().getDatabase().execSQL("INSERT INTO cards2 SELECT * FROM cards");
-        	// drop the old cards table and create the new one
-        	getDB().getDatabase().execSQL("DROP TABLE cards");
-        	// move data across and delete temp table
-        	getDB().getDatabase().execSQL("INSERT INTO cards SELECT id, factId, cardModelId, created, modified, " +
-        			"question, answer, 0, ordinal, 0, relativeDelay, type, lastInterval, interval, " +
-        			"due, factor, reps, successive, noCount FROM cards2");
-        	getDB().getDatabase().execSQL("DROP TABLE cards2");
-        	
-        	// suspended cards don't use ranges anymore
-        	getDB().getDatabase().execSQL("UPDATE cards SET queue -1 WHERE queue BETWEEN -3 AND -1");
-        	getDB().getDatabase().execSQL("UPDATE cards SET queue -2 WHERE queue BETWEEN 3 AND 5");
-        	getDB().getDatabase().execSQL("UPDATE cards SET queue -3 WHERE queue BETWEEN 6 AND 8");
-        	// new indics for new cards table
-        	addIndices();
-            mVersion = 74;
-            commitToDB();            
-    	}
-        // Executing a pragma here is very slow on large decks, so we store our own record
-        if ((!hasKey("pageSize")) || (getInt("pageSize") != 4096)) {
-            commitToDB();
-            getDB().getDatabase().execSQL("PRAGMA page_size = 4096");
-            getDB().getDatabase().execSQL("PRAGMA legacy_file_format = 0");
-            getDB().getDatabase().execSQL("VACUUM");
-            setVar("pageSize", "4096", false);
-            commitToDB();
-        }
-        assert (mModified == oldmod);
-        return true;
-    }
-
-
-    public static String upgradeNotesToMessages(Deck deck, Resources res) {
-        String notes = "";
-        for (Integer note : deck.upgradeNotes) {
-            notes = notes.concat(res.getString(note.intValue()) + "\n");
-        }
-        return notes;
-    }
 
     private boolean hasLaTeX() {
         Cursor cursor = null;
@@ -794,45 +583,6 @@ public class Deck {
         return false;
     }
 
-    /**
-     * Add indices to the DB.
-     */
-    private void addIndices() {
-        // due counts, failed card queue
-        getDB().getDatabase().execSQL(
-                "CREATE INDEX IF NOT EXISTS ix_cards_queueDue ON cards (queue, " + "due, factId)");
-        // counting cards of a given type
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_type ON cards (type)");
-        // sync summaries
-        // Index on modified, to speed up sync summaries
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_modified ON cards (modified)");
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_facts_modified ON facts (modified)");
-        // Card spacing
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cards_factId ON cards (factId)");
-        // Fields
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_fields_factId ON fields (factId)");
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_fields_fieldModelId ON fields (fieldModelId)");
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_fields_value ON fields (value)");
-        // Media
-        getDB().getDatabase().execSQL("CREATE UNIQUE INDEX IF NOT EXISTS ix_media_filename ON media (filename)");
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_media_originalPath ON media (originalPath)");
-        // Deletion tracking
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardsDeleted_cardId ON cardsDeleted (cardId)");
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_modelsDeleted_modelId ON modelsDeleted (modelId)");
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_factsDeleted_factId ON factsDeleted (factId)");
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_mediaDeleted_factId ON mediaDeleted (mediaId)");
-        // Tags
-        String txt = "CREATE UNIQUE INDEX IF NOT EXISTS ix_tags_tag on tags (tag)";
-        try {
-            getDB().getDatabase().execSQL(txt);
-        } catch (SQLException e) {
-            getDB().getDatabase().execSQL("DELETE FROM tags WHERE EXISTS (SELECT 1 FROM tags t2 " +
-                    "WHERE tags.tag = t2.tag AND tags.rowid > t2.rowid)");
-            getDB().getDatabase().execSQL(txt);
-        }
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_tagCard ON cardTags (tagId, cardId)");
-        getDB().getDatabase().execSQL("CREATE INDEX IF NOT EXISTS ix_cardTags_cardId ON cardTags (cardId)");
-    }
 
 
     /*
@@ -865,7 +615,7 @@ public class Deck {
 
         if (r.size() > 0) {
             getDB().getDatabase().beginTransaction();
-            SQLiteStatement st = getDB().getDatabase().compileStatement("UPDATE facts SET spaceUntil=? WHERE id=?");
+            SQLiteStatement st = getDB().getDatabase().compileStatement("UPDATE facts SET cache=? WHERE id=?");
             for (Entry<Long, String> entry : r.entrySet()) {
                 st.bindString(1, entry.getValue());
                 st.bindLong(2, entry.getKey().longValue());
@@ -896,65 +646,7 @@ public class Deck {
     }
 
 
-    /*
-     * Queue Management*****************************
-     */
 
-    private class QueueItem {
-        private long cardID;
-        private long factID;
-        private double due;
-
-
-        QueueItem(long cardID, long factID) {
-            this.cardID = cardID;
-            this.factID = factID;
-            this.due = 0.0;
-        }
-
-
-        QueueItem(long cardID, long factID, double due) {
-            this.cardID = cardID;
-            this.factID = factID;
-            this.due = due;
-        }
-
-
-        long getCardID() {
-            return cardID;
-        }
-
-
-        long getFactID() {
-            return factID;
-        }
-
-
-        double getDue() {
-            return due;
-        }
-    }
-
-    private class SpacedCardsItem {
-        private double space;
-        private ArrayList<Long> cards;
-
-
-        SpacedCardsItem(double space, ArrayList<Long> cards) {
-            this.space = space;
-            this.cards = cards;
-        }
-
-
-        double getSpace() {
-            return space;
-        }
-
-
-        ArrayList<Long> getCards() {
-            return cards;
-        }
-    }
 
 
     /*
@@ -1103,264 +795,7 @@ public class Deck {
     }
 
 
-    /*
-     * Scheduler related overridable methods******************************
-     */
-    private Method getCardIdMethod;
-    private Method fillFailedQueueMethod;
-    private Method fillRevQueueMethod;
-    private Method fillNewQueueMethod;
-    private Method rebuildFailedCountMethod;
-    private Method rebuildRevCountMethod;
-    private Method rebuildNewCountMethod;
-    private Method requeueCardMethod;
-    private Method timeForNewCardMethod;
-    private Method updateNewCountTodayMethod;
-    private Method cardQueueMethod;
-    private Method finishSchedulerMethod;
-    private Method answerCardMethod;
-    private Method cardLimitMethod;
-    private Method answerPreSaveMethod;
-    private Method spaceCardsMethod;
 
-
-    private long getCardId() {
-        try {
-            return ((Long) getCardIdMethod.invoke(Deck.this, true)).longValue();
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private long getCardId(boolean check) {
-        try {
-            return ((Long) getCardIdMethod.invoke(Deck.this, check)).longValue();
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void fillFailedQueue() {
-        try {
-            fillFailedQueueMethod.invoke(Deck.this);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void fillRevQueue() {
-        try {
-            fillRevQueueMethod.invoke(Deck.this);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void fillNewQueue() {
-        try {
-            fillNewQueueMethod.invoke(Deck.this);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void rebuildFailedCount() {
-        try {
-            rebuildFailedCountMethod.invoke(Deck.this);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void rebuildRevCount() {
-        try {
-            rebuildRevCountMethod.invoke(Deck.this);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void rebuildNewCount() {
-        try {
-            rebuildNewCountMethod.invoke(Deck.this);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void requeueCard(Card card, boolean oldIsRev) {
-        try {
-            requeueCardMethod.invoke(Deck.this, card, oldIsRev);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private boolean timeForNewCard() {
-        try {
-            return ((Boolean) timeForNewCardMethod.invoke(Deck.this)).booleanValue();
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void updateNewCountToday() {
-        try {
-            updateNewCountTodayMethod.invoke(Deck.this);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private int cardQueue(Card card) {
-        try {
-            return ((Integer) cardQueueMethod.invoke(Deck.this, card)).intValue();
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void finishScheduler() {
-        try {
-            finishSchedulerMethod.invoke(Deck.this);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void answerCard(Card card, int ease) {
-        try {
-            answerCardMethod.invoke(Deck.this, card, ease);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private String cardLimit(String active, String inactive, String sql) {
-        try {
-            return ((String) cardLimitMethod.invoke(Deck.this, active, inactive, sql));
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private String cardLimit(String[] active, String[] inactive, String sql) {
-        try {
-            return ((String) cardLimitMethod.invoke(Deck.this, active, inactive, sql));
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void answerPreSave(Card card, int ease) {
-        try {
-            answerPreSaveMethod.invoke(Deck.this, card, ease);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void spaceCards(Card card) {
-        try {
-            spaceCardsMethod.invoke(Deck.this, card);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public boolean hasFinishScheduler() {
-        return !(finishSchedulerMethod == null);
-    }
 
 
     public String name() {
@@ -1368,691 +803,16 @@ public class Deck {
     }
 
 
-    /*
-     * Standard Scheduling*****************************
-     */
-    public void setupStandardScheduler() {
-        try {
-            getCardIdMethod = Deck.class.getDeclaredMethod("_getCardId", boolean.class);
-            fillFailedQueueMethod = Deck.class.getDeclaredMethod("_fillFailedQueue");
-            fillRevQueueMethod = Deck.class.getDeclaredMethod("_fillRevQueue");
-            fillNewQueueMethod = Deck.class.getDeclaredMethod("_fillNewQueue");
-            rebuildFailedCountMethod = Deck.class.getDeclaredMethod("_rebuildFailedCount");
-            rebuildRevCountMethod = Deck.class.getDeclaredMethod("_rebuildRevCount");
-            rebuildNewCountMethod = Deck.class.getDeclaredMethod("_rebuildNewCount");
-            requeueCardMethod = Deck.class.getDeclaredMethod("_requeueCard", Card.class, boolean.class);
-            timeForNewCardMethod = Deck.class.getDeclaredMethod("_timeForNewCard");
-            updateNewCountTodayMethod = Deck.class.getDeclaredMethod("_updateNewCountToday");
-            cardQueueMethod = Deck.class.getDeclaredMethod("_cardQueue", Card.class);
-            finishSchedulerMethod = null;
-            answerCardMethod = Deck.class.getDeclaredMethod("_answerCard", Card.class, int.class);
-            cardLimitMethod = Deck.class.getDeclaredMethod("_cardLimit", String.class, String.class, String.class);
-            answerPreSaveMethod = null;
-            spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCards", Card.class);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-        mScheduler = "standard";
-        // Restore any cards temporarily suspended by alternate schedulers
-        if (mVersion == DECK_VERSION) {
-            resetAfterReviewEarly();
-        }
-    }
-
-
-    private void fillQueues() {
-        fillFailedQueue();
-        fillRevQueue();
-        fillNewQueue();
-        //for (QueueItem i : mFailedQueue) {
-        //    Log.i(AnkiDroidApp.TAG, "failed queue: cid: " + i.getCardID() + " fid: " + i.getFactID() + " cd: " + i.getDue());
-        //}
-        //for (QueueItem i : mRevQueue) {
-        //    Log.i(AnkiDroidApp.TAG, "rev queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
-        //}
-        //for (QueueItem i : mNewQueue) {
-        //    Log.i(AnkiDroidApp.TAG, "new queue: cid: " + i.getCardID() + " fid: " + i.getFactID());
-        //}
-    }
-
-
-    public long retrieveCardCount() {
-        return getDB().queryScalar("SELECT count(*) from cards");
-    }
-
-
-    private void rebuildCounts() {
-        // global counts
-        try {
-            mCardCount = (int) getDB().queryScalar("SELECT count(*) from cards");
-            mFactCount = (int) getDB().queryScalar("SELECT count(*) from facts");
-        } catch (SQLException e) {
-            Log.e(AnkiDroidApp.TAG, "rebuildCounts: Error while getting global counts: " + e.toString());
-            mCardCount = 0;
-            mFactCount = 0;
-        }
-        // day count
-        Cursor cursor = null;
-        ArrayList<Long> cardIds = new ArrayList<Long>();
-        try {
-            cursor = getDB().getDatabase().rawQuery(
-                    "SELECT count(), SUM(CASE WHEN rep = 1 THEN 1 ELSE 0 END) FROM revlog WHERE time > = " + mFailedCutoff + 86400, null);
-            while (cursor.moveToNext()) {
-            	mRepsToday = cursor.getInt(0);
-            	mNewSeenToday = cursor.getInt(1);
-            }
-        } catch (SQLException e) {
-            Log.e(AnkiDroidApp.TAG, "rebuildCounts: Error while getting day counts: " + e.toString());
-            mRepsToday = 0;
-            mNewSeenToday = 0;
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        // due counts
-        rebuildFailedCount();
-        rebuildRevCount();
-        rebuildNewCount();
-    }
-
-
-    @SuppressWarnings("unused")
-    private String _cardLimit(String active, String inactive, String sql) {
-        String[] yes = Utils.parseTags(getVar(active));
-        String[] no = Utils.parseTags(getVar(inactive));
-        if (yes.length > 0) {
-            long yids[] = Utils.toPrimitive(tagIds(yes).values());
-            long nids[] = Utils.toPrimitive(tagIds(no).values());
-            return sql.replace("WHERE", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
-                    + Utils.ids2str(yids) + ") AND +c.id NOT IN (SELECT cardId FROM " + "cardTags WHERE tagId in "
-                    + Utils.ids2str(nids) + ") AND");
-        } else if (no.length > 0) {
-            long nids[] = Utils.toPrimitive(tagIds(no).values());
-            return sql.replace("WHERE", "WHERE +c.id NOT IN (SELECT cardId FROM cardTags WHERE tagId IN "
-                    + Utils.ids2str(nids) + ") AND");
-        } else {
-            return sql;
-        }
-    }
-
-
-    /**
-     * This is a count of all failed cards within the current day cutoff. The cards may not be ready for review yet, but
-     * can still be displayed if failedCardsMax is reached.
-     */
-    @SuppressWarnings("unused")
-    private void _rebuildFailedCount() {
-        String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE queue = 0 AND due < %f", mFailedCutoff);
-        mFailedSoonCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _rebuildRevCount() {
-        String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE queue = 1 AND due < %f", mDueCutoff);
-        mRevCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", sql));
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _rebuildNewCount() {
-        String sql = String.format(Utils.ENGLISH_LOCALE,
-                "SELECT count(*) FROM cards c WHERE queue = 2 AND due < %f", mDueCutoff);
-        mNewAvail = (int) getDB().queryScalar(cardLimit("newActive", "newInactive", sql));
-        updateNewCountToday();
-        mSpacedCards.clear();
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _updateNewCountToday() {
-        mNewCount = Math.max(Math.min(mNewAvail, mNewCardsPerDay - mNewSeenToday), 0);
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _fillFailedQueue() {
-        if ((mFailedSoonCount != 0) && mFailedQueue.isEmpty()) {
-            Cursor cur = null;
-            try {
-                String sql = "SELECT c.id, factId, due FROM cards c WHERE queue = 0 AND due < "
-                        + mFailedCutoff + " ORDER BY due LIMIT " + mQueueLimit;
-                cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
-                while (cur.moveToNext()) {
-                    QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1), cur.getDouble(2));
-                    mFailedQueue.add(0, qi); // Add to front, so list is reversed as it is built
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
-            }
-        }
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _fillRevQueue() {
-        if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            Cursor cur = null;
-            try {
-                String sql = "SELECT c.id, factId FROM cards c WHERE queue = 1 AND due < "
-                        + mDueCutoff + " ORDER BY " + revOrder() + " LIMIT " + mQueueLimit;
-                cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", sql), null);
-                while (cur.moveToNext()) {
-                    QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
-                    mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
-            }
-        }
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _fillNewQueue() {
-        if ((mNewCount != 0) && mNewQueue.isEmpty() && mSpacedCards.isEmpty()) {
-            Cursor cur = null;
-            try {
-                String sql = "SELECT c.id, factId FROM cards c WHERE queue = 2 AND due < "
-                        + mDueCutoff + " ORDER BY " + newOrder() + " LIMIT " + mQueueLimit;
-                cur = getDB().getDatabase().rawQuery(cardLimit("newActive", "newInactive", sql), null);
-                while (cur.moveToNext()) {
-                    QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
-                    mNewQueue.addFirst(qi); // Add to front, so list is reversed as it is built
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
-            }
-        }
-    }
-
-
-    private boolean queueNotEmpty(LinkedList<QueueItem> queue, Method fillFunc) {
-        return queueNotEmpty(queue, fillFunc, false);
-    }
-
-
-    private boolean queueNotEmpty(LinkedList<QueueItem> queue, Method fillFunc, boolean _new) {
-//        while (true) {
-            removeSpaced(queue, _new);
-            if (!queue.isEmpty()) {
-                return true;
-            }
-            try {
-                fillFunc.invoke(Deck.this);
-                // with libanki
-            } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "queueNotEmpty: Error while invoking overridable fill method:" + e.toString());
-                return false;
-            }
-//            if (queue.isEmpty()) {
-                return false;
-//            }
-//        }
-    }
-
-
-    private void removeSpaced(LinkedList<QueueItem> queue) {
-        removeSpaced(queue, false);
-    }
-
-
-    private void removeSpaced(LinkedList<QueueItem> queue, boolean _new) {
-        ArrayList<Long> popped = new ArrayList<Long>();
-        double delay = 0.0;
-        while (!queue.isEmpty()) {
-            long fid = ((QueueItem) queue.getLast()).getFactID();
-            if (mSpacedFacts.containsKey(fid)) {
-                // Still spaced
-                long id = queue.removeLast().getCardID();
-                // Assuming 10 cards/minute, track id if likely to expire before queue refilled
-                if (_new && (mNewSpacing < (double) mQueueLimit * 6.0)) {
-                    popped.add(id);
-                    delay = mSpacedFacts.get(fid);
-                }
-            } else {
-                if (!popped.isEmpty()) {
-                    mSpacedCards.add(new SpacedCardsItem(delay, popped));
-                }
-                break;
-            }
-        }
-    }
-
-
-    private boolean revNoSpaced() {
-        return queueNotEmpty(mRevQueue, fillRevQueueMethod);
-    }
-
-
-    private boolean newNoSpaced() {
-        return queueNotEmpty(mNewQueue, fillNewQueueMethod, true);
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _requeueCard(Card card, boolean oldIsRev) {
-        int newType = 0;
-        // try {
-        if (card.getReps() == 1) {
-            if (mNewFromCache) {
-                // Fetched from spaced cache
-                newType = 2;
-                ArrayList<Long> cards = mSpacedCards.remove().getCards();
-                // Reschedule the siblings
-                if (cards.size() > 1) {
-                    cards.remove(0);
-                    mSpacedCards.addLast(new SpacedCardsItem(Utils.now() + mNewSpacing, cards));
-                }
-            } else {
-                // Fetched from normal queue
-                newType = 1;
-                mNewQueue.removeLast();
-            }
-        } else if (!oldIsRev) {
-            mFailedQueue.removeLast();
-        } else {
-            // try {
-                mRevQueue.removeLast();
-            // }
-            // catch(NoSuchElementException e) {
-            //     Log.w(AnkiDroidApp.TAG, "mRevQueue empty");
-            // }
-        }
-        // } catch (Exception e) {
-        // throw new RuntimeException("requeueCard() failed. Counts: " +
-        // mFailedSoonCount + " " + mRevCount + " " + mNewCountToday + ", Queue: " +
-        // mFailedQueue.size() + " " + mRevQueue.size() + " " + mNewQueue.size() + ", Card info: " +
-        // card.getReps() + " " + card.isRev() + " " + oldIsRev);
-        // }
-    }
-
-
-    private String revOrder() {
-        return revOrderStrings[mRevCardOrder];
-    }
-
-
-    private String newOrder() {
-        return newOrderStrings[mNewCardOrder];
-    }
-
-
-    // Rebuild the type cache. Only necessary on upgrade. 
-    private void rebuildTypes() {
-        // set type first
-        getDB().getDatabase().execSQL(
-                "UPDATE cards SET type = (CASE WHEN successive THEN 1 WHEN reps THEN 0 ELSE 2 END)");
-        // then queue
-        getDB().getDatabase().execSQL(
-                "UPDATE cards SET type = queue WHEN queue != -1");
-    }
-
-
-    @SuppressWarnings("unused")
-    private int _cardQueue(Card card) {
-        return cardType(card);
-    }
-
-
-    // Return the type of the current card (what queue it's in)
-    private int cardType(Card card) {
-        if (card.isRev()) {
-            return 1;
-        } else if (!card.isNew()) {
-            return 0;
-        } else {
-            return 2;
-        }
-    }
-
-
-    public void updateCutoff() {
-        Calendar cal = Calendar.getInstance();
-        int newday = (int) mUtcOffset + (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
-        cal.add(Calendar.MILLISECOND, -cal.get(Calendar.ZONE_OFFSET) - cal.get(Calendar.DST_OFFSET));
-        cal.add(Calendar.SECOND, (int) -mUtcOffset + 86400);
-        cal.set(Calendar.AM_PM, Calendar.AM);
-        cal.set(Calendar.HOUR, 0); // Yes, verbose but crystal clear
-        cal.set(Calendar.MINUTE, 0); // Apologies for that, here was my rant
-        cal.set(Calendar.SECOND, 0); // But if you can improve this bit and
-        cal.set(Calendar.MILLISECOND, 0); // collapse it to one statement please do
-        cal.getTimeInMillis();
-
-        Log.d(AnkiDroidApp.TAG, "New day happening at " + newday + " sec after 00:00 UTC");
-        cal.add(Calendar.SECOND, newday);
-        long cutoff = cal.getTimeInMillis() / 1000;
-        // Cutoff must not be in the past
-        while (cutoff < System.currentTimeMillis() / 1000) {
-            cutoff += 86400.0;
-        }
-        // Cutoff must not be more than 24 hours in the future
-        cutoff = Math.min(System.currentTimeMillis() / 1000 + 86400, cutoff);
-        mFailedCutoff = cutoff;
-        if (getBool("perDay")) {
-            mDueCutoff = (double) cutoff;
-        } else {
-            mDueCutoff = (double) Utils.now();
-        }
-    }
-
 
     public void reset() {
-        // Recheck counts
-        rebuildCounts();
-        // Empty queues; will be refilled by getCard()
-        mFailedQueue.clear();
-        mRevQueue.clear();
-        mNewQueue.clear();
-        mSpacedFacts.clear();
-        // Determine new card distribution
-        if (mNewCardSpacing == NEW_CARDS_DISTRIBUTE) {
-            if (mNewCount != 0) {
-                mNewCardModulus = (mNewCount + mRevCount) / mNewCount;
-                // If there are cards to review, ensure modulo >= 2
-                if (mRevCount != 0) {
-                    mNewCardModulus = Math.max(2, mNewCardModulus);
-                }
-            } else {
-                mNewCardModulus = 0;
-            }
-        } else {
-            mNewCardModulus = 0;
-        }
-        // Recache css - Removed for speed optim, we don't use this cache anyway
-        // rebuildCSS();
-
-        // Spacing for delayed cards - not to be confused with newCardSpacing above
-        mNewSpacing = getFloat("newSpacing");
-        mRevSpacing = getFloat("revSpacing");
+        mSched.reset();
+        rebuildCSS();
     }
 
 
-    // Checks if the day has rolled over.
-    private void checkDay() {
-        if (Utils.now() > mFailedCutoff) {
-            updateCutoff();
-            reset();
-        }
-    }
-
-
-    /*
-     * Review early*****************************
-     */
-
-    public void setupReviewEarlyScheduler() {
-        try {
-            fillRevQueueMethod = Deck.class.getDeclaredMethod("_fillRevEarlyQueue");
-            rebuildRevCountMethod = Deck.class.getDeclaredMethod("_rebuildRevEarlyCount");
-            finishSchedulerMethod = Deck.class.getDeclaredMethod("_onReviewEarlyFinished");
-            answerPreSaveMethod = Deck.class.getDeclaredMethod("_reviewEarlyPreSave", Card.class, int.class);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-        mScheduler = "reviewEarly";
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _reviewEarlyPreSave(Card card, int ease) {
-        if (ease > 1) {
-            // Prevent it from appearing in next queue fill
-            card.setQueue(-3);
-        }
-    }
-
-
-    private void resetAfterReviewEarly() {
-        // Put temporarily suspended cards back into play. Caller must .reset()
-    	getDB().getDatabase().execSQL("UPDATE cards SET queue = type WHERE queue = -3");
-    }
-
-    @SuppressWarnings("unused")
-    private void _onReviewEarlyFinished() {
-        // Clean up buried cards
-        resetAfterReviewEarly();
-        // And go back to regular scheduler
-        setupStandardScheduler();
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _rebuildRevEarlyCount() {
-        // In the future it would be nice to skip the first x days of due cards
-        mRevCount = (int) getDB().queryScalar(cardLimit("revActive", "revInactive", String.format(Utils.ENGLISH_LOCALE,
-                        "SELECT count() FROM cards c WHERE queue = 1 AND due > %f", mDueCutoff)));
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _fillRevEarlyQueue() {
-        if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            Cursor cur = null;
-            try {
-                cur = getDB().getDatabase().rawQuery(cardLimit("revActive", "revInactive", String.format(
-                                Utils.ENGLISH_LOCALE,
-                                "SELECT id, factId FROM cards c WHERE queue = 1 AND due > %f " +
-                                "ORDER BY due LIMIT %d", mDueCutoff, mQueueLimit)), null);
-                while (cur.moveToNext()) {
-                    QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
-                    mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
-            }
-        }
-    }
-
-
-    /*
-     * Learn more*****************************
-     */
-
-    public void setupLearnMoreScheduler() {
-        try {
-            rebuildNewCountMethod = Deck.class.getDeclaredMethod("_rebuildLearnMoreCount");
-            updateNewCountTodayMethod = Deck.class.getDeclaredMethod("_updateLearnMoreCountToday");
-            finishSchedulerMethod = Deck.class.getDeclaredMethod("setupStandardScheduler");
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-        mScheduler = "learnMore";
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _rebuildLearnMoreCount() {
-        mNewAvail = (int) getDB().queryScalar(
-                cardLimit("newActive", "newInactive", String.format(Utils.ENGLISH_LOCALE,
-                        "SELECT count(*) FROM cards c WHERE queue = 2 AND due < %f", mDueCutoff)));
-        mSpacedCards.clear();
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _updateLearnMoreCountToday() {
-        mNewCount = mNewAvail;
-    }
-
-
-    /*
-     * Cramming*****************************
-     */
-
-    public void setupCramScheduler(String[] active, String order) {
-        try {
-            getCardIdMethod = Deck.class.getDeclaredMethod("_getCramCardId", boolean.class);
-            mActiveCramTags = active;
-            mCramOrder = order;
-            rebuildFailedCountMethod = Deck.class.getDeclaredMethod("_rebuildFailedCramCount");
-            rebuildRevCountMethod = Deck.class.getDeclaredMethod("_rebuildCramCount");
-            rebuildNewCountMethod = Deck.class.getDeclaredMethod("_rebuildNewCramCount");
-            fillFailedQueueMethod = Deck.class.getDeclaredMethod("_fillFailedCramQueue");
-            fillRevQueueMethod = Deck.class.getDeclaredMethod("_fillCramQueue");
-            finishSchedulerMethod = Deck.class.getDeclaredMethod("setupStandardScheduler");
-            mFailedCramQueue.clear();
-            requeueCardMethod = Deck.class.getDeclaredMethod("_requeueCramCard", Card.class, boolean.class);
-            cardQueueMethod = Deck.class.getDeclaredMethod("_cramCardQueue", Card.class);
-            answerCardMethod = Deck.class.getDeclaredMethod("_answerCramCard", Card.class, int.class);
-            spaceCardsMethod = Deck.class.getDeclaredMethod("_spaceCramCards", Card.class);
-            // Reuse review early's code
-            answerPreSaveMethod = Deck.class.getDeclaredMethod("_cramPreSave", Card.class, int.class);
-            cardLimitMethod = Deck.class.getDeclaredMethod("_cramCardLimit", String[].class, String[].class,
-                    String.class);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-        mScheduler = "cram";
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _answerCramCard(Card card, int ease) {
-	mCramLastInterval = card.getLastInterval();
-        _answerCard(card, ease);
-        if (ease == 1) {
-            mFailedCramQueue.addFirst(new QueueItem(card.getId(), card.getFactId()));
-        }
-    }
-
-
-    @SuppressWarnings("unused")
-    private long _getCramCardId(boolean check) {
-        checkDay();
-        fillQueues();
-
-        if ((mFailedCardMax != 0) && (mFailedSoonCount >= mFailedCardMax)) {
-            return ((QueueItem) mFailedQueue.getLast()).getCardID();
-        }
-        // Card due for review?
-        if (revNoSpaced()) {
-            return ((QueueItem) mRevQueue.getLast()).getCardID();
-        }
-        if (!mFailedQueue.isEmpty()) {
-            return ((QueueItem) mFailedQueue.getLast()).getCardID();
-        }
-        if (check) {
-            // Collapse spaced cards before reverting back to old scheduler
-            reset();
-            return getCardId(false);
-        }
-        // If we're in a custom scheduler, we may need to switch back
-        if (finishSchedulerMethod != null) {
-            finishScheduler();
-            reset();
-            return getCardId();
-        }
-        return 0l;
-    }
-
-
-    @SuppressWarnings("unused")
-    private int _cramCardQueue(Card card) {
-        if ((!mRevQueue.isEmpty()) && (((QueueItem) mRevQueue.getLast()).getCardID() == card.getId())) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _requeueCramCard(Card card, boolean oldIsRev) {
-        if (cardQueue(card) == 1) {
-            mRevQueue.removeLast();
-        } else {
-            mFailedCramQueue.removeLast();
-        }
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _rebuildNewCramCount() {
-        mNewAvail = 0;
-    	mNewCount = 0;
-    }
-
-
-    @SuppressWarnings("unused")
-    private String _cramCardLimit(String active[], String inactive[], String sql) {
-        // inactive is (currently) ignored
-        if (active.length > 0) {
-            long yids[] = Utils.toPrimitive(tagIds(active).values());
-            return sql.replace("WHERE ", "WHERE +c.id IN (SELECT cardId FROM cardTags WHERE " + "tagId IN "
-                    + Utils.ids2str(yids) + ") AND ");
-        } else {
-            return sql;
-        }
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _fillCramQueue() {
-        if ((mRevCount != 0) && mRevQueue.isEmpty()) {
-            Cursor cur = null;
-            try {
-                Log.i(AnkiDroidApp.TAG, "fill cram queue: " + Arrays.toString(mActiveCramTags) + " " + mCramOrder + " " + mQueueLimit);
-                String sql = "SELECT id, factId FROM cards c WHERE queue BETWEEN 0 AND 2 ORDER BY " + mCramOrder
-                        + " LIMIT " + mQueueLimit;
-                sql = cardLimit(mActiveCramTags, null, sql);
-                Log.i(AnkiDroidApp.TAG, "SQL: " + sql);
-                cur = getDB().getDatabase().rawQuery(sql, null);
-                while (cur.moveToNext()) {
-                    QueueItem qi = new QueueItem(cur.getLong(0), cur.getLong(1));
-                    mRevQueue.add(0, qi); // Add to front, so list is reversed as it is built
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
-            }
-
-        }
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _rebuildCramCount() {
-        mRevCount = (int) getDB().queryScalar(
-                cardLimit(mActiveCramTags, null, "SELECT count(*) FROM cards c WHERE queue BETWEEN 0 AND 2"));
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _rebuildFailedCramCount() {
-        mFailedSoonCount = mFailedCramQueue.size();
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _fillFailedCramQueue() {
-        mFailedQueue = mFailedCramQueue;
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _spaceCramCards(Card card) {
-        mSpacedFacts.put(card.getFactId(), Utils.now() + mNewSpacing);
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _cramPreSave(Card card, int ease) {
-        // prevent it from appearing in next queue fill
-    	card.setLastInterval(mCramLastInterval);
-    	card.setType(-3);
+    public Card getCard() {
+    	return mSched.getCard();
+    	// ...
     }
 
 
@@ -2063,6 +823,11 @@ public class Deck {
 
     public void setModified(double mod) {
         mModified = mod;
+    }
+
+
+    public void setSchemaModified() {
+        mSchemaMod = Utils.now();
     }
 
 
@@ -2485,9 +1250,14 @@ public class Deck {
     }
 
 
+    public void setVersion(int version) {
+        mVersion = version;
+    }
+
     public int getVersion() {
         return mVersion;
     }
+
 
     public boolean isUnpackNeeded() {
         return mNeedUnpack;
@@ -2521,452 +1291,6 @@ public class Deck {
     }
 
 
-    /*
-     * Getting the next card*****************************
-     */
-
-    /**
-     * Return the next card object.
-     *
-     * @return The next due card or null if nothing is due.
-     */
-    public Card getCard() {
-        mCurrentCardId = getCardId();
-        if (mCurrentCardId != 0l) {
-            return cardFromId(mCurrentCardId);
-        } else {
-            return null;
-        }
-    }
-
-
-    // Refreshes the current card and returns it (used when editing cards)
-    public Card getCurrentCard() {
-        return cardFromId(mCurrentCardId);
-    }
-
-
-    /**
-     * Return the next due card Id, or 0
-     *
-     * @param check Check for expired, or new day rollover
-     * @return The Id of the next card, or 0 in case of error
-     */
-    @SuppressWarnings("unused")
-    private long _getCardId(boolean check) {
-        checkDay();
-        fillQueues();
-        updateNewCountToday();
-        if (!mFailedQueue.isEmpty()) {
-            // Failed card due?
-            if (mDelay0 != 0l) {
-                if ((long) ((QueueItem) mFailedQueue.getLast()).getDue() + mDelay0 < System.currentTimeMillis() / 1000) {
-                    return mFailedQueue.getLast().getCardID();
-                }
-            }
-            // Failed card queue too big?
-            if ((mFailedCardMax != 0) && (mFailedSoonCount >= mFailedCardMax)) {
-                return mFailedQueue.getLast().getCardID();
-            }
-        }
-        // Distribute new cards?
-        if (newNoSpaced() && timeForNewCard()) {
-            long id = getNewCard();
-            if (id != 0L) {
-                return id;
-            }
-        }
-        // Card due for review?
-        if (revNoSpaced()) {
-            return mRevQueue.getLast().getCardID();
-        }
-        // New cards left?
-        if (mNewCount != 0) {
-            return getNewCard();
-        }
-        if (check) {
-            // Check for expired cards, or new day rollover
-            updateCutoff();
-            reset();
-            return getCardId(false);
-        }
-        // Display failed cards early/last
-        if ((!check) && showFailedLast() && (!mFailedQueue.isEmpty())) {
-            return mFailedQueue.getLast().getCardID();
-        }
-        // If we're in a custom scheduler, we may need to switch back
-        if (finishSchedulerMethod != null) {
-            finishScheduler();
-            reset();
-            return getCardId();
-        }
-        return 0l;
-    }
-
-
-    /*
-     * Get card: helper functions*****************************
-     */
-
-    @SuppressWarnings("unused")
-    private boolean _timeForNewCard() {
-        // True if it's time to display a new card when distributing.
-        if (mNewCount == 0) {
-            return false;
-        }
-        if (mNewCardSpacing == NEW_CARDS_LAST) {
-            return false;
-        }
-        if (mNewCardSpacing == NEW_CARDS_FIRST) {
-            return true;
-        }
-        if (mNewCardModulus != 0) {
-            return (mRepsToday % mNewCardModulus == 0);
-        } else {
-            return false;
-        }
-    }
-
-
-    private long getNewCard() {
-        int src = 0;
-        if ((!mSpacedCards.isEmpty()) && (mSpacedCards.get(0).getSpace() < Utils.now())) {
-            // Spaced card has expired
-            src = 0;
-        } else if (!mNewQueue.isEmpty()) {
-            // Card left in new queue
-            src = 1;
-        } else if (!mSpacedCards.isEmpty()) {
-            // Card left in spaced queue
-            src = 0;
-        } else {
-            // Only cards spaced to another day left
-            return 0L;
-        }
-
-        if (src == 0) {
-            mNewFromCache = true;
-            return mSpacedCards.get(0).getCards().get(0);
-        } else {
-            mNewFromCache = false;
-            return mNewQueue.getLast().getCardID();
-        }
-    }
-
-
-    private boolean showFailedLast() {
-        return ((mCollapseTime != 0.0) || (mDelay0 == 0));
-    }
-
-
-    /**
-     * Given a card ID, return a card and start the card timer.
-     *
-     * @param id The ID of the card to be returned
-     */
-
-    public Card cardFromId(long id) {
-        if (id == 0) {
-            return null;
-        }
-        Card card = new Card(this);
-        boolean result = card.fromDB(id);
-
-        if (!result) {
-            return null;
-        }
-        card.mDeck = this;
-//        card.genFuzz();
-        card.startTimer();
-        return card;
-    }
-
-
-    // TODO: The real methods to update cards on Anki should be implemented instead of this
-    public void updateAllCards() {
-        updateAllCardsFromPosition(0, Long.MAX_VALUE);
-    }
-
-
-    public long updateAllCardsFromPosition(long numUpdatedCards, long limitCards) {
-        // TODO: Cache this query, order by FactId, Id
-        Cursor cursor = null;
-        try {
-            cursor = getDB().getDatabase().rawQuery(
-                    "SELECT id, factId " + "FROM cards " + "ORDER BY factId, id " + "LIMIT " + limitCards + " OFFSET "
-                            + numUpdatedCards, null);
-
-            getDB().getDatabase().beginTransaction();
-            while (cursor.moveToNext()) {
-                // Get card
-                Card card = new Card(this);
-                card.fromDB(cursor.getLong(0));
-                Log.i(AnkiDroidApp.TAG, "Card id = " + card.getId() + ", numUpdatedCards = " + numUpdatedCards);
-
-                // Load tags
-                card.loadTags();
-
-                // Get the related fact
-                Fact fact = card.getFact();
-                // Log.i(AnkiDroidApp.TAG, "Fact id = " + fact.id);
-
-                // Generate the question and answer for this card and update it
-                HashMap<String, String> newQA = CardModel.formatQA(fact, card.getCardModel(), card.splitTags());
-                card.setQuestion(newQA.get("question"));
-                Log.i(AnkiDroidApp.TAG, "Question = " + card.getQuestion());
-                card.setAnswer(newQA.get("answer"));
-                Log.i(AnkiDroidApp.TAG, "Answer = " + card.getAnswer());
-
-                card.updateQAfields();
-
-                numUpdatedCards++;
-
-            }
-            getDB().getDatabase().setTransactionSuccessful();
-        } finally {
-            getDB().getDatabase().endTransaction();
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-
-        return numUpdatedCards;
-    }
-
-
-    /*
-     * Answering a card*****************************
-     */
-
-    public void _answerCard(Card card, int ease) {
-        Log.i(AnkiDroidApp.TAG, "answerCard");
-        double now = Utils.now();
-        long id = card.getId();
-
-        String undoName = UNDO_TYPE_ANSWER_CARD;
-        setUndoStart(undoName, id);
-
-        // Old state
-        String oldState = card.getState();
-        int oldQueue = cardQueue(card);
-        double lastDelaySecs = Utils.now() - card.getDue();
-        double lastDelay = lastDelaySecs / 86400.0;
-        boolean oldIsRev = card.isRev();
-        ContentValues oldvalues = card.getAnswerValues();
-
-        // update card details
-        double last = card.getInterval();
-        card.setInterval(nextInterval(card, ease));
-        card.setLastInterval(last);
-        if (!card.isNew()) {
-            card.setLastDue(card.getDue()); // only update if card was not new
-        }
-        card.setDue(nextDue(card, ease, oldState));
-        card.setSpaceUntil(0);
-        if (!hasFinishScheduler()) {
-            card.updateFactor(ease, mAverageFactor); // don't update factor in custom schedulers
-        }
-
-        // Spacing
-        spaceCards(card);
-        // Adjust counts for current card
-        if (ease == 1) {
-            if (card.getDue() < mFailedCutoff) {
-                mFailedSoonCount += 1;
-            }
-        }
-        if (oldQueue == 0) {
-            mFailedSoonCount -= 1;
-        } else if (oldQueue == 1) {
-            mRevCount -= 1;
-        } else {
-            mNewAvail -= 1;
-        }
-
-        // card stats
-        updateCardStats(card, ease, oldState);
-        // Update type & ensure past cutoff
-        card.setType(cardType(card));
-        card.setQueue(card.getType());
-        if (ease != 1) {
-            card.setDue(Math.max(card.getDue(), mDueCutoff + 1));
-        }
-
-        // Allow custom schedulers to munge the card
-        if (answerPreSaveMethod != null) {
-            answerPreSave(card, ease);
-        }
-
-        // Save
-        card.setDue(card.getDue());
-        // card.toDB();
-        getDB().update(this, "cards", card.getAnswerValues(), "id = " + id, null, true, new ContentValues[] {oldvalues}, new String[] {"id = " + id});
-
-        // review history
-        RevLog.logReview(this, card, ease, 0);
-        mModified = now;
-        setUndoEnd(undoName);
-
-        // Remove form queue
-        requeueCard(card, oldIsRev);
-
-        // Leech handling - we need to do this after the queue, as it may cause a reset
-        if (isLeech(card)) {
-            Log.i(AnkiDroidApp.TAG, "card is leech!");
-            handleLeech(card);
-        }
-    }
-
-
-    private void updateCardStats(Card card, int ease, String state) {
-    	card.setReps(card.getReps() + 1);
-    	if (ease == 1) {
-    		card.setSuccessive(0);
-    		card.setLapses(card.getLapses() + 1);
-    	} else {
-    		card.setSuccessive(card.getSuccessive() + 1);
-    	}
-    	// if (card.getFirstAnswered == 0) {
-    	//     card.setFirstAnswered(Utils.now());
-    	// }
-    	card.setModified();
-    }
-
-
-    @SuppressWarnings("unused")
-    private void _spaceCards(Card card) {
-        // Update new counts
-        double _new = Utils.now() + mNewSpacing;
-        ContentValues values = new ContentValues();
-        values.put("due", String.format(Utils.ENGLISH_LOCALE, "(CASE WHEN queue = 1 THEN " +
-                		"due + 86400 * (CASE WHEN interval*%f < 1 THEN 0 ELSE interval*%f END) " +
-                		"WHEN queue = 2 THEN %f END)", mRevSpacing, mRevSpacing, _new));
-        values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-        getDB().update(this, "cards", values, String.format(Utils.ENGLISH_LOCALE, "id != %d AND factId = %d " 
-                + "AND due < %f AND queue BETWEEN 1 AND 2", card.getId(), card.getFactId(), mDueCutoff), null, false);
-        mSpacedFacts.put(card.getFactId(), _new);
-    }
-
-
-    private boolean isLeech(Card card) {
-        int no = card.getLapses();
-        int fmax = 0;
-        if (hasKey("leechFails")) {
-            fmax = getInt("leechFails");
-        } else {
-            // No leech threshold found in DeckVars
-            return false;
-        }
-        Log.i(AnkiDroidApp.TAG, "leech handling: " + card.getSuccessive() + " successive fails and " + no + " total fails, threshold at " + fmax);
-        // Return true if:
-        // - The card failed AND
-        // - The number of failures exceeds the leech threshold AND
-        // - There were at least threshold/2 reps since last time
-        if (!card.isRev() && (no >= fmax) && ((fmax - no) % Math.max(fmax / 2, 1) == 0)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    private void handleLeech(Card card) {
-        Card scard = cardFromId(card.getId());
-        String tags = scard.getFact().getTags();
-        tags = Utils.addTags("Leech", tags);
-        scard.getFact().setTags(Utils.canonifyTags(tags));
-        // FIXME: Inefficient, we need to save the fact so that the modified tags can be used in setModified,
-        // then after setModified we need to save again! Just make setModified to use the tags from the fact,
-        // not reload them from the DB.
-        scard.getFact().toDb();
-        scard.getFact().setModified(true, this);
-        scard.getFact().toDb();
-        updateFactTags(new long[] { scard.getFact().getId() });
-        card.setLeechFlag(true);
-        if (getBool("suspendLeeches")) {
-            suspendCards(new long[] { card.getId() });
-            card.setSuspendedFlag(true);
-        }
-        reset();
-    }
-
-
-    /*
-     * Interval management*********************************************************
-     */
-
-    public double nextInterval(Card card, int ease) {
-        double delay = card.adjustedDelay(ease);
-        return nextInterval(card, delay, ease);
-    }
-
-
-    private double nextInterval(Card card, double delay, int ease) {
-        double interval = card.getInterval();
-        double factor = card.getFactor();
-
-        // if cramming / reviewing early
-        if (delay < 0) {
-            interval = Math.max(card.getLastInterval(), card.getInterval() + delay);
-            if (interval < mMidIntervalMin) {
-                interval = 0;
-            }
-            delay = 0;
-        }
-
-        // if interval is less than mid interval, use presets
-        if (ease == Card.EASE_FAILED) {
-            interval *= mDelay2;
-            if (interval < mHardIntervalMin) {
-                interval = 0;
-            }
-        } else if (interval == 0) {
-            if (ease == Card.EASE_HARD) {
-                interval = mHardIntervalMin + card.getFuzz() * (mHardIntervalMax - mHardIntervalMin);
-            } else if (ease == Card.EASE_MID) {
-                interval = mMidIntervalMin + card.getFuzz() * (mMidIntervalMax - mMidIntervalMin);
-            } else if (ease == Card.EASE_EASY) {
-                interval = mEasyIntervalMin + card.getFuzz() * (mEasyIntervalMax - mEasyIntervalMin);
-            }
-        } else {
-            // if not cramming, boost initial 2
-            if ((interval < mHardIntervalMax) && (interval > 0.166)) {
-                double mid = (mMidIntervalMin + mMidIntervalMax) / 2.0;
-                interval = mid / factor;
-            }
-            // multiply last interval by factor
-            if (ease == Card.EASE_HARD) {
-                interval = (interval + delay / 4.0) * 1.2;
-            } else if (ease == Card.EASE_MID) {
-                interval = (interval + delay / 2.0) * factor;
-            } else if (ease == Card.EASE_EASY) {
-                interval = (interval + delay) * factor * FACTOR_FOUR;
-            }
-            interval *= 0.95 + card.getFuzz() * (1.05 - 0.95);
-        }
-        interval = Math.min(interval, MAX_SCHEDULE_TIME);
-        return interval;
-    }
-
-
-    private double nextDue(Card card, int ease, String oldState) {
-        double due;
-        if (ease == Card.EASE_FAILED) {
-        	// 600 is a magic value which means no bonus, and is used to ease upgrades
-            if (!mScheduler.equals("cram") && oldState.equals(Card.STATE_MATURE) && mDelay1 != 0 && mDelay1 != 600) {
-                // user wants a bonus of 1+ days. put the failed cards at the
-            	// start of the future day, so that failures that day will come
-            	// after the waiting cards
-            	return mFailedCutoff + (mDelay1 - 1) * 86400;
-            } else {
-                due = 0.0;
-            }
-        } else {
-            due = card.getInterval() * 86400.0;
-        }
-        return (due + Utils.now());
-    }
-
 
     /*
      * Tags: Querying*****************************
@@ -2989,7 +1313,7 @@ public class Deck {
         HashMap<Long, List<String>> results = new HashMap<Long, List<String>>();
         try {
             cur = getDB().getDatabase().rawQuery(
-                    "SELECT cards.id, facts.tags, models.tags, cardModels.name "
+                    "SELECT cards.id, facts.tags, models.name, cardModels.name "
                             + "FROM cards, facts, models, cardModels "
                             + "WHERE cards.factId == facts.id AND facts.modelId == models.id "
                             + "AND cards.cardModelId = cardModels.id " + where, null);
@@ -3025,7 +1349,7 @@ public class Deck {
     private String[] allTags_(String where) {
         ArrayList<String> t = new ArrayList<String>();
         t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts " + where, 0));
-        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM models", 0));
+        t.addAll(getDB().queryColumn(String.class, "SELECT name FROM models", 0));
         t.addAll(getDB().queryColumn(String.class, "SELECT name FROM cardModels", 0));
         String joined = Utils.joinTags(t);
         String[] parsed = Utils.parseTags(joined);
@@ -3188,6 +1512,7 @@ public class Deck {
     	return markedTagId;
     }
 
+    
 
     public void resetMarkedTagId() {
     	markedTagId = 0;
@@ -3488,7 +1813,7 @@ public class Deck {
         values.put("created", now);
         values.put("modified", now);
         values.put("tags", fact.getTags());
-        values.put("spaceUntil", 0);
+        values.put("cache", 0);
         getDB().insert(this, "facts", null, values);
 
         // get cardmodels for the new fact
@@ -4054,7 +2379,7 @@ public class Deck {
      * Dynamic indices*********************************************************
      */
 
-    private void updateDynamicIndices() {
+    public void updateDynamicIndices() {
         Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
         HashMap<String, String> indices = new HashMap<String, String>();
         indices.put("intervalDesc", "(queue, interval desc, factId, due)");

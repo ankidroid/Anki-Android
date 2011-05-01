@@ -38,9 +38,9 @@ import java.util.Map.Entry;
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  * 
  * 
- * Type: 0=lapsed, 1=due, 2=new, 3=drilled
- * Queue: under normal circumstances, same as type.
- * -1=suspended, -2=user buried, -3=sched buried (rev early, etc)
+ * Type: 0=new+learning, 1=due, 2=new, 3=failed+learning, 4=cram+learning
+ * Queue: 0=learning, 1=due, 2=new, 3=new today,
+ *        -1=suspended, -2=user buried, -3=sched buried (rev early, etc)
  * Ordinal: card template # for fact
  * Position: sorting position, only for new cards
  * Flags: unused; reserved for future use
@@ -268,35 +268,7 @@ public class Card {
 //    }
 
 
-    public void updateFactor(int ease, double averageFactor) {
-        if (isNew()) {
-            mFactor = averageFactor; // card is new, inherit beginning factor
-        }
-        if (isRev() && !isBeingLearnt()) {
-            if (ease == EASE_FAILED) {
-                mFactor -= 0.20;
-            } else if (ease == EASE_HARD) {
-                mFactor -= 0.15;
-            }
-        }
-        if (ease == EASE_EASY) {
-            mFactor += 0.10;
-        }
-        mFactor = Math.max(Deck.FACTOR_FOUR, mFactor);
-    }
 
-
-    public double adjustedDelay(int ease) {
-    	double dueCutoff = mDeck.getDueCutoff();
-        if (isNew()) {
-            return 0;
-        }
-        if (mDue <= dueCutoff) {
-            return (dueCutoff - mDue) / 86400.0;
-        } else {
-            return (dueCutoff - mDue) / 86400.0;
-        }
-    }
 
 
     /**
@@ -365,7 +337,7 @@ public class Card {
     public String[] _splitTags() {
         String[] tags = new String[]{
             getFact().getTags(),
-            Model.getModel(mDeck, getFact().getModelId(), true).getTags(),
+            Model.getModel(mDeck, getFact().getModelId(), true).getName(),
             getCardModel().getName()
         };
         return tags;
@@ -686,6 +658,11 @@ public class Card {
 
     public double getFactor() {
         return mFactor;
+    }
+
+
+    public void setFactor(double factor) {
+        mFactor = factor;
     }
 
 

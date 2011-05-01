@@ -31,6 +31,9 @@ import java.util.TreeSet;
  * Anki fact.
  * A fact is a single piece of information, made up of a number of fields.
  * See http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Facts
+ * 
+ * Cache: a HTML-stripped amalgam of the field contents, so we can perform
+ * searches of marked up text in a reasonable time.
  */
 public class Fact {
 
@@ -42,9 +45,9 @@ public class Fact {
     private long mModelId;
     private double mCreated;
     private double mModified;
-    private String mTags;
-    private String mSpaceUntil; // Once obsolete, under libanki1.1 spaceUntil is reused as a html-stripped cache of the fields
-
+    private String mTags = "";
+    private String mCache = "";
+    
     private Model mModel;
     private TreeSet<Field> mFields;
     private Deck mDeck;
@@ -122,7 +125,7 @@ public class Fact {
         Cursor cursor = null;
 
         try {
-            cursor = ankiDB.getDatabase().rawQuery("SELECT id, modelId, created, modified, tags, spaceUntil "
+            cursor = ankiDB.getDatabase().rawQuery("SELECT id, modelId, created, modified, tags, cache "
                     + "FROM facts " + "WHERE id = " + id, null);
             if (!cursor.moveToFirst()) {
                 Log.w(AnkiDroidApp.TAG, "Fact.java (constructor): No result from query.");
@@ -134,7 +137,7 @@ public class Fact {
             mCreated = cursor.getDouble(2);
             mModified = cursor.getDouble(3);
             mTags = cursor.getString(4);
-            mSpaceUntil = cursor.getString(5);
+            mCache = cursor.getString(5);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -186,7 +189,7 @@ public class Fact {
         ContentValues updateValues = new ContentValues();
         updateValues.put("modified", now);
         updateValues.put("tags", mTags);
-        updateValues.put("spaceUntil", mSpaceUntil);
+        updateValues.put("cache", mCache);
         AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "facts", updateValues, "id = ?",
                 new String[] { "" + mId });
 
@@ -258,15 +261,15 @@ public class Fact {
         mModified = Utils.now();
         if (textChanged) {
             assert (deck != null);
-            mSpaceUntil = "";
+            mCache = "";
             StringBuilder str = new StringBuilder(1024);
             for (Field f : getFields()) {
                 str.append(f.getValue()).append(" ");
             }
-            mSpaceUntil = str.toString();
-            mSpaceUntil.substring(0, mSpaceUntil.length() - 1);
-            mSpaceUntil = Utils.stripHTMLMedia(mSpaceUntil);
-            Log.d(AnkiDroidApp.TAG, "spaceUntil = " + mSpaceUntil);
+            mCache = str.toString();
+            mCache.substring(0, mCache.length() - 1);
+            mCache = Utils.stripHTMLMedia(mCache);
+            Log.d(AnkiDroidApp.TAG, "cache = " + mCache);
             for (Card card : getUpdatedRelatedCards()) {
                 card.setModified();
                 card.toDB();

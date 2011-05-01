@@ -41,6 +41,17 @@ import java.util.TreeMap;
  * modelId % using the modelId we can get all FieldModels from the DB % (alternatively in the CardModel the qformat and
  * aformat fields could be parsed for relevant field names and then this used to only get the necessary fields. But this
  * adds a lot overhead vs. using a bit more memory)
+ * 
+ * 
+ * ...Schedule: fail, pass1, pass2, etc in minutes
+ * ...Intervals: graduation, first remove, later remove
+ * maybe define a random cutoff at say +/-30% which controls exit interval
+ * variation - 30% of 1 day is 0.7 or 1.3 so always 1 day; 30% of 4 days is
+ * 2.8-5.2, so any time from 3-5 days is acceptable
+ * collapse time should be bigger than default failSchedule
+ * need to think about failed interval handling - if the final drill is
+ * optional, what intervals should the default be? 3 days or more if cards are
+ * over that interval range? and what about failed mature bonus?
  */
 public class Model {
 
@@ -67,16 +78,18 @@ public class Model {
 
     // BEGIN SQL table entries
     private long mId; // Primary key
-    private long mDeckId; // Foreign key
     private double mCreated = Utils.now();
     private double mModified = Utils.now();
-    private String mTags = "";
     private String mName;
-    private String mDescription = "";
-    private String mFeatures = ""; // used as the media url
-    private double mSpacing = 0.1; // obsolete as of libanki 1.1.4
-    private double mInitialSpacing = 60; // obsolete as of libanki 1.1.4
-    private int mSource = 0;
+    // new cards
+    private String mNewSched = "[0.5, 3, 10]";
+    private String mNewInts = "[1, 7, 4]";
+    // failed cards
+    private String mFailedSched = "[0.5, 3, 10]";
+    private String mFailedInts = "[1, 7, 4]";
+    private double mFailedMult = 0.0;
+    // other scheduling
+    private double mFactor = 2.5;    
     // BEGIN SQL table entries
 
     private Deck mDeck;
@@ -462,14 +475,6 @@ public class Model {
      */
     public String getName() {
         return mName;
-    }
-
-
-    /**
-     * @return the tags
-     */
-    public String getTags() {
-        return mTags;
     }
 
 
