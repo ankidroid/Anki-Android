@@ -177,6 +177,8 @@
   <string name="sync_fetch_missing_media_summ">同步时自动获取缺失的媒体文件</string>
   <string name="fix_hebrew_text">为希伯来语打开RTL</string>
   <string name="fix_hebrew_text_summ">解决Android对希伯来语支持的问题。不支持元音。</string>
+  <string name="default_font">Default font</string>
+  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
   <string name="language">语言</string>
   <string name="language_summ">选择AnkiDroid使用的语言。当前选择: XXX</string>
   <string name="language_system">系统语言</string>

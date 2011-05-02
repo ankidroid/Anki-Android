@@ -107,7 +107,7 @@
   <string name="pref_cat_lookup">Recherche</string>
   <string name="pref_cat_navigation">Navigation</string>
   <string name="pref_cat_swipe">Passer le doigt</string>
-  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
+  <string name="pref_cat_navigation_sensitivity">Sensibilité</string>
   <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_reset">Réinitialiser</string>
   <string name="pref_cat_other">Autre</string>
@@ -137,15 +137,15 @@
   <string name="use_ruby_support_summ">Si les caractères \'[\' et \']\' sont trouvés, considérer le texte comme une annotation ruby</string>
   <string name="display_font_size">Fonte d\'affichage en taille relative</string>
   <string name="display_font_size_summ">Taille de la police à utiliser dans l\'affichage relatif aux définitions du paquet. Pour le moment: XXX %</string>
-  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
-  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
+  <string name="card_browser_font_size">Taille relative de la police utilisée dans la vue principale du navigateur de cartes</string>
+  <string name="card_browser_font_size_summ">Taille de la police à utiliser dans le navigateur de cartes. Actuellement: XXX %</string>
   <string name="button_size">Taille relative des boutons</string>
   <string name="button_size_summ">Taille relative des boutons sur l\'écran de revue. Actuellement: XXX %</string>
   <string name="hide_question_in_answer">Ne pas montrer la question dans la réponse ?</string>
   <string name="hide_question_in_answer_summ">Détermine si la question doit être montrée en même temps que la réponse.</string>
   <string name="deck_path">Chemin d\'accès au paquet</string>
   <string name="deck_path_summ">Chemin où vos paquets sont stockés</string>
-  <string name="deck_order">Deck order</string>
+  <string name="deck_order">Ordre des paquets</string>
   <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
   <string name="fullscreen_review">Réviser en plein écran</string>
   <string name="fullscreen_review_summ">Vous pouvez décider si vous voulez utiliser tout l\'écran pendant la révision</string>
@@ -155,7 +155,7 @@
   <string name="swipe_summ_off">Utilisez des gestes pour basculer entre les écrans et les cartes de réponse. Cette option n\'est pas compatible avec les commandes de contrôle du zoom</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
   <string name="pref_cat_actions">Actions</string>
-  <string name="gestures_shake">Shake</string>
+  <string name="gestures_shake">Secouer</string>
   <string name="gestures_swipe_up">Swipe up</string>
   <string name="gestures_swipe_down">Swipe down</string>
   <string name="gestures_swipe_left">Swipe left</string>
@@ -177,6 +177,8 @@
   <string name="sync_fetch_missing_media_summ">Lors de la synchronisation, automatiquement télécharger les médias disparus.</string>
   <string name="fix_hebrew_text">Hébreu gauche-à-droite</string>
   <string name="fix_hebrew_text_summ">Support limité de l\'hébreu, pas de voyelles.</string>
+  <string name="default_font">Police par défaut</string>
+  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
   <string name="language">Langue</string>
   <string name="language_summ">Sélectionnez la langue, AnkiDroid doit utiliser. À l\'heure actuelle: XXX</string>
   <string name="language_system">Langue du système</string>
@@ -471,7 +473,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
     <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
+    <item quantity="one">1 carte</item>
     <item quantity="other">%1$d new cards</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">

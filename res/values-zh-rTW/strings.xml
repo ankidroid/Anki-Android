@@ -177,6 +177,8 @@
   <string name="sync_fetch_missing_media_summ">同步時自動獲取缺失的媒體文件</string>
   <string name="fix_hebrew_text">強制右到左文字顯示(給希伯來語)</string>
   <string name="fix_hebrew_text_summ">Ankidroid處理希伯來語的暫時解決方式。不支援母音。</string>
+  <string name="default_font">Default font</string>
+  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
   <string name="language">語言</string>
   <string name="language_summ">選擇 AnkiDroid 應使用的語言。目前： XXX</string>
   <string name="language_system">系統語言</string>

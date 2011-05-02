@@ -177,6 +177,8 @@
   <string name="sync_fetch_missing_media_summ">Buscar automáticamente archivos multimedia faltantes al sincronizar.</string>
   <string name="fix_hebrew_text">Forzar RTL para idioma hebreo</string>
   <string name="fix_hebrew_text_summ">Solución al soporte limitado de la plataforma Android al idioma Hebreo. No soporta vocales.</string>
+  <string name="default_font">Fuente predeterminada</string>
+  <string name="default_font_summ">Permite definir la fuente predeterminada que se utiliza para mostrar las tarjetas. Las fuentes personalizadas deben instalarse en la tarjeta SD, en una carpeta llamada \'fonts\' en tu carpeta Anki.</string>
   <string name="language">Idioma</string>
   <string name="language_summ">Selecciona el idioma que deba usar AnkiDroid. En este momento: XXX</string>
   <string name="language_system">Idioma del Sistema</string>

@@ -67,16 +67,16 @@
     <item>Au hasard</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>1 heure</item>
+    <item>1 jour</item>
+    <item>1 mois</item>
+    <item>1 année</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s heures</item>
+    <item>%s jours</item>
+    <item>%s mois</item>
+    <item>%s années</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>dans 1 h</item>
@@ -119,7 +119,7 @@
     <item>Par échéance</item>
     <item>Par intervalle</item>
     <item>Par difficulté</item>
-    <item>Date created</item>
+    <item>Date de création</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Échéance</item>
@@ -137,9 +137,9 @@
   </string-array>
   <string-array name="deck_order_labels">
     <item>By last access</item>
-    <item>Alphabetical</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
+    <item>Alphabétique</item>
+    <item>Par nombre de cartes dues</item>
+    <item>Par nombre total de cartes</item>
     <item>By number of total new cards</item>
   </string-array>
   <string-array name="gestures_labels">

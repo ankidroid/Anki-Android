@@ -177,6 +177,8 @@
   <string name="sync_fetch_missing_media_summ">Автоматически доставлять отсутствующие медиа-файлы при синхронизации.</string>
   <string name="fix_hebrew_text">Обратный порядок написания (RTL) для иврита</string>
   <string name="fix_hebrew_text_summ">Ограниченная поддержка иврита для Android-платформы. Не поддерживаются гласные буквы.</string>
+  <string name="default_font">Шрифт по умолчанию</string>
+  <string name="default_font_summ">Установить шрифт, используемый для отрисовки карт. Дополнительный шрифт должен быть установлен в папку \'fonts\' каталога с колодами на SD-карточке.</string>
   <string name="language">Язык</string>
   <string name="language_summ">Выберите язык, который следует использовать AnkiDroid. На данный момент: XXX</string>
   <string name="language_system">Системный язык</string>

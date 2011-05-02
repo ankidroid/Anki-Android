@@ -177,6 +177,8 @@
   <string name="sync_fetch_missing_media_summ">Automatycznie pobierz brakujące media podczas synchronizacji.</string>
   <string name="fix_hebrew_text">Wymuszaj RTL dla języka hebrajskiego</string>
   <string name="fix_hebrew_text_summ">Obejście problemu ograniczonej obsługi języka hebrajskiego przez platformę Android. Nie obsługuje samogłosek.</string>
+  <string name="default_font">Default font</string>
+  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
   <string name="language">Język</string>
   <string name="language_summ">Wybierz język którego AnkiDroid ma używać. W tej chwili: XXX</string>
   <string name="language_system">Język systemu</string>
