@@ -812,7 +812,11 @@ public class Deck {
 
     public Card getCard() {
     	return mSched.getCard();
-    	// ...
+   }
+
+
+    public void answerCard(Card card, int ease) {
+    	mSched.answerCard(;, ease)
     }
 
 

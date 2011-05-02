@@ -38,11 +38,10 @@ import java.util.Map.Entry;
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  * 
  * 
- * Type: 0=new+learning, 1=due, 2=new, 3=failed+learning, 4=cram+learning
- * Queue: 0=learning, 1=due, 2=new, 3=new today,
- *        -1=suspended, -2=user buried, -3=sched buried (rev early, etc)
+ * Type: 0=learning, 1=due, 2=new
+ * Queue: 0=learning, 1=due, 2=new
+ *        -1=suspended, -2=user buried, -3=sched buried
  * Ordinal: card template # for fact
- * Position: sorting position, only for new cards
  * Flags: unused; reserved for future use
  */
 
@@ -81,27 +80,26 @@ public class Card {
     // BEGIN SQL table entries
     private long mId; // Primary key
     private long mFactId; // Foreign key facts.id
+    private long mModelId;
     private long mCardModelId; // Foreign key cardModels.id
     // general
     private double mCreated = Utils.now();
     private double mModified = Utils.now();
     private String mQuestion = "";
     private String mAnswer = "";
-    private int mFlags = 0;
-    // ordering
     private int mOrdinal;
-    private int mPosition;
-    // scheduling data
+    private int mFlags = 0;
+    // shared scheduling
     private int mType = TYPE_NEW;
     private int mQueue = TYPE_NEW;
-    private double mLastInterval = 0;
-    private double mInterval = 0;
     private double mDue;
-    private double mFactor = Deck.INITIAL_FACTOR;
-    // counters
+    // sm2
+    private double mInterval = 0;
+    private double mFactor = 2.5;
     private int mReps = 0;
-    private int mSuccessive = 0;
-    private int mLapses = 0;
+    // learn
+    private int mGrade = 0;
+    private int mCycles = 0;
     // END SQL table entries
 
     public Deck mDeck;
@@ -141,6 +139,7 @@ public class Card {
         mFact = fact;
         if (fact != null) {
             mFactId = fact.getId();
+            mModelId = fact.getModelId();
         }
         mCardModel = cardModel;
         if (cardModel != null) {
@@ -411,10 +410,10 @@ public class Card {
 
         try {
             cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
-                    "SELECT id, factId, cardModelId, created, modified, "
-                            + "question, answer, flags, ordinal, position, type, queue, "
-                            + "lastInterval, interval, due, factor, reps, "
-                            + "successive, lapses " + "FROM cards " + "WHERE id = " + id, null);
+                    "SELECT id, factId, modelId, cardModelId, created, modified, "
+                            + "question, answer, ordinal, flags, type, queue, "
+                            + "due, interval, factor, reps, streak, lapses, "
+                            + "grade, cycles FROM cards " + "WHERE id = " + id, null);
             if (!cursor.moveToFirst()) {
                 Log.w(AnkiDroidApp.TAG, "Card.java (fromDB(id)): No result from query.");
                 return false;
@@ -422,23 +421,24 @@ public class Card {
 
             mId = cursor.getLong(0);
             mFactId = cursor.getLong(1);
-            mCardModelId = cursor.getLong(2);
-            mCreated = cursor.getDouble(3);
-            mModified = cursor.getDouble(4);
-            mQuestion = cursor.getString(5);
-            mAnswer = cursor.getString(6);
-            mFlags = cursor.getInt(7);
+            mModelId = cursor.getLong(2);
+            mCardModelId = cursor.getLong(3);
+            mCreated = cursor.getDouble(4);
+            mModified = cursor.getDouble(5);
+            mQuestion = cursor.getString(6);
+            mAnswer = cursor.getString(7);
             mOrdinal = cursor.getInt(8);
-            mPosition = cursor.getInt(9);
+            mFlags = cursor.getInt(9);
             mType = cursor.getInt(10);
             mQueue = cursor.getInt(11);
-            mLastInterval = cursor.getDouble(12);
+            mDue = cursor.getDouble(12);
             mInterval = cursor.getDouble(13);
-            mDue = cursor.getDouble(14);
-            mFactor = cursor.getDouble(15);
-            mReps = cursor.getInt(16);
-            mSuccessive = cursor.getInt(17);
-            mLapses = cursor.getInt(18);
+            mFactor = cursor.getDouble(14);
+            mReps = cursor.getInt(15);
+            mStreak = cursor.getInt(16);
+            mLapses = cursor.getInt(17);
+            mGrade = cursor.getInt(18);
+            mCycles = cursor.getInt(19);
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -464,23 +464,24 @@ public class Card {
         ContentValues values = new ContentValues();
         values.put("id", mId); 
         values.put("factId", mFactId);
+        values.put("modelId", mModelId);
         values.put("cardModelId", mCardModelId);
         values.put("created", mCreated);
         values.put("modified", mModified);
         values.put("question", mQuestion);
         values.put("answer", mAnswer);
-        values.put("flags", mFlags);
         values.put("ordinal", mOrdinal);
-        values.put("position", mPosition);
+        values.put("flags", mFlags);
         values.put("type", mType);
         values.put("queue", mQueue);
-        values.put("lastInterval", mLastInterval);        
-        values.put("interval", mInterval);
         values.put("due", mDue);
+        values.put("interval", mInterval);
         values.put("factor", mFactor);
         values.put("reps", mReps);
-        values.put("successive", mSuccessive);
+        values.put("streak", mStreak);
         values.put("lapses", mLapses);
+        values.put("grade", mGrade);
+        values.put("cycles", mCycles);
         
         AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).insert(mDeck, "cards", null, values);
 
@@ -488,25 +489,27 @@ public class Card {
 
     public void toDB() {
 
-        ContentValues values = new ContentValues();
+        ContentValues values = new ContentValues(); 
         values.put("factId", mFactId);
+        values.put("modelId", mModelId);
         values.put("cardModelId", mCardModelId);
         values.put("created", mCreated);
         values.put("modified", mModified);
         values.put("question", mQuestion);
         values.put("answer", mAnswer);
-        values.put("flags", mFlags);
         values.put("ordinal", mOrdinal);
-        values.put("position", mPosition);
+        values.put("flags", mFlags);
         values.put("type", mType);
         values.put("queue", mQueue);
-        values.put("lastInterval", mLastInterval);        
-        values.put("interval", mInterval);
         values.put("due", mDue);
+        values.put("interval", mInterval);
         values.put("factor", mFactor);
         values.put("reps", mReps);
-        values.put("successive", mSuccessive);
+        values.put("streak", mStreak);
         values.put("lapses", mLapses);
+        values.put("grade", mGrade);
+        values.put("cycles", mCycles);
+
         AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).update(mDeck, "cards", values, "id = " + mId, null, true);
 
         // TODO: Should also write JOINED entries: CardModel and Fact.
