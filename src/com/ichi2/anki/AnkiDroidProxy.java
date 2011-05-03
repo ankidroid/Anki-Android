@@ -46,6 +46,12 @@ public class AnkiDroidProxy {
     // Sync protocol version
     public static final String SYNC_VERSION = "2";
 
+    // The possible values for the status response from the AnkiWeb server.
+    private static final String ANKIWEB_STATUS_OK = "OK";
+    private static final String ANKIWEB_STATUS_INVALID_USER_PASS = "invalidUserPass";
+    private static final String ANKIWEB_STATUS_OLD_VERSION = "oldVersion";
+    private static final String ANKIWEB_STATUS_TOO_BUSY =
+        "AnkiWeb is too busy right now. Please try again later.";
     /**
      * Connection settings
      */
@@ -63,6 +69,8 @@ public class AnkiDroidProxy {
     public static final int LOGIN_CLOCKS_UNSYNCED = 2;
     public static final int SYNC_CONFLICT_RESOLUTION = 3;
     public static final int LOGIN_OLD_VERSION = 4;
+    /** The server is too busy to serve the request. */
+    public static final int LOGIN_TOO_BUSY = 5;
 
     /**
      * Shared deck's fields
@@ -122,7 +130,8 @@ public class AnkiDroidProxy {
             String decksString = getDecks();
             try {
                 JSONObject jsonDecks = new JSONObject(decksString);
-                if ("OK".equalsIgnoreCase(jsonDecks.getString("status"))) {
+                String status = jsonDecks.getString("status");
+                if (ANKIWEB_STATUS_OK.equalsIgnoreCase(status)) {
                     mDecks = jsonDecks.getJSONObject("decks");
                     Log.i(AnkiDroidApp.TAG, "Server decks = " + mDecks.toString());
                     mTimestamp = jsonDecks.getDouble("timestamp");
@@ -132,12 +141,16 @@ public class AnkiDroidProxy {
                         Log.e(AnkiDroidApp.TAG, "connect - The clock of the device and that of the server are unsynchronized!");
                         return LOGIN_CLOCKS_UNSYNCED;
                     }
-
                     return LOGIN_OK;
-                } else if ("invalidUserPass".equalsIgnoreCase(jsonDecks.getString("status"))) {
+                } else if (ANKIWEB_STATUS_INVALID_USER_PASS.equalsIgnoreCase(status)) {
                     return LOGIN_INVALID_USER_PASS;
-                } else if ("oldVersion".equalsIgnoreCase(jsonDecks.getString("status"))) {
+                } else if (ANKIWEB_STATUS_OLD_VERSION.equalsIgnoreCase(status)) {
                     return LOGIN_OLD_VERSION;
+                } else if (ANKIWEB_STATUS_TOO_BUSY.equalsIgnoreCase(status)) {
+                    return LOGIN_TOO_BUSY;
+                } else {
+                    Log.e(AnkiDroidApp.TAG, "connect - unexpected status: " + status);
+                    return LOGIN_ERROR;
                 }
             } catch (JSONException e) {
                 Log.e(AnkiDroidApp.TAG, "connect - JSONException = " + e.getMessage());
@@ -149,8 +162,18 @@ public class AnkiDroidProxy {
     }
 
 
+    /**
+     * Returns true if the server has the given deck.
+     * <p>
+     * It assumes connect() has already been called and will fail if it was not or the connection
+     * was unsuccessful.
+     *
+     * @param name the name of the deck to look for
+     * @return true if the server has the given deck, false otherwise
+     */
     public boolean hasDeck(String name) {
-        connect(false);
+        // We assume that gets have already been loading by doing a connect.
+        if (mDecks == null) throw new IllegalStateException("Should have called connect first");
         Iterator decksIterator = mDecks.keys();
         while (decksIterator.hasNext()) {
             String serverDeckName = (String) decksIterator.next();
