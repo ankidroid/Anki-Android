@@ -522,8 +522,6 @@ public class StudyOptions extends Activity {
         SharedPreferences preferences = restorePreferences();
         registerExternalStorageListener();
 
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
         activeCramTags = new HashSet<String>();
         mSelectedTags = new HashSet<String>();
 
