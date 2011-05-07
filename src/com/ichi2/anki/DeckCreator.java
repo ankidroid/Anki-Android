@@ -27,6 +27,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
@@ -124,7 +126,7 @@ public class DeckCreator extends Activity {
             return false;
         }
 
-        Deck.initializeEmptyDeck(mPrefDeckPath + "/" + filename);
+//        Deck.initializeEmptyDeck(mPrefDeckPath + "/" + filename);
 
         return true;
     }

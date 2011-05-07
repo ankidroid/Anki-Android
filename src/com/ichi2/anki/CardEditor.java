@@ -33,7 +33,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ichi2.anki.Fact.Field;
+import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Fact;
+import com.ichi2.libanki.Utils;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -67,7 +69,7 @@ public class CardEditor extends Activity {
     private Card mEditorCard;
     private Fact mEditorFact;
 
-    private LinkedList<FieldEditText> mEditFields;
+//    private LinkedList<FieldEditText> mEditFields;
 
     private boolean mModified;
 
@@ -105,24 +107,24 @@ public class CardEditor extends Activity {
         // Card -> FactID -> FieldIDs -> FieldModels
 
         mEditorFact = mEditorCard.getFact();
-        TreeSet<Field> fields = mEditorFact.getFields();
-
-        mEditFields = new LinkedList<FieldEditText>();
-
-        mModified = false;
-
-        // Generate a new EditText for each field
-        Iterator<Field> iter = fields.iterator();
-        while (iter.hasNext()) {
-            FieldEditText newTextbox = new FieldEditText(this, iter.next());
-            TextView label = newTextbox.getLabel();
-            mEditFields.add(newTextbox);
-
-            mFieldsLayoutContainer.addView(label);
-            mFieldsLayoutContainer.addView(newTextbox);
-        }
-
-        mFactTags = mEditorFact.getTags();
+//        TreeSet<Field> fields = mEditorFact.getFields();
+//
+//        mEditFields = new LinkedList<FieldEditText>();
+//
+//        mModified = false;
+//
+//        // Generate a new EditText for each field
+//        Iterator<Field> iter = fields.iterator();
+//        while (iter.hasNext()) {
+//            FieldEditText newTextbox = new FieldEditText(this, iter.next());
+//            TextView label = newTextbox.getLabel();
+//            mEditFields.add(newTextbox);
+//
+//            mFieldsLayoutContainer.addView(label);
+//            mFieldsLayoutContainer.addView(newTextbox);
+//        }
+//
+//        mFactTags = mEditorFact.getTags();
         mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
         mTags.setOnClickListener(new View.OnClickListener() {
 
@@ -142,15 +144,15 @@ public class CardEditor extends Activity {
 
             @Override
             public void onClick(View v) {
-            	Iterator<FieldEditText> iter = mEditFields.iterator();
-                while (iter.hasNext()) {
-                    FieldEditText current = iter.next();
-                    mModified |= current.updateField();
-                }
-                if (!mEditorFact.getTags().equals(mFactTags)) {
-                    mEditorFact.setTags(mFactTags);
-                    mModified = true;
-                }
+//            	Iterator<FieldEditText> iter = mEditFields.iterator();
+//                while (iter.hasNext()) {
+//                    FieldEditText current = iter.next();
+//                    mModified |= current.updateField();
+//                }
+//                if (!mEditorFact.getTags().equals(mFactTags)) {
+//                    mEditorFact.setTags(mFactTags);
+//                    mModified = true;
+//                }
                 // Only send result to save if something was actually changed
                 if (mModified) {
                     setResult(RESULT_OK);
@@ -286,90 +288,90 @@ public class CardEditor extends Activity {
 
 
     private void recreateTagsDialog() {
-        Resources res = getResources();
-        if (allTags == null) {
-            String[] oldTags = AnkiDroidApp.deck().allUserTags();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
-            allTags = new String[oldTags.length + 1];
-            allTags[0] = res.getString(R.string.add_new_tag);
-            for (int i = 0; i < oldTags.length; i++) {
-                allTags[i + 1] = oldTags[i];
-            }
-        }
-        mSelectedTags.clear();
-        List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
-        int length = allTags.length;
-        boolean[] checked = new boolean[length];
-        for (int i = 0; i < length; i++) {
-            String tag = allTags[i];
-            if (selectedList.contains(tag)) {
-                checked[i] = true;
-                mSelectedTags.add(tag);
-            }
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.studyoptions_limit_select_tags);
-        builder.setMultiChoiceItems(allTags, checked,
-                new DialogInterface.OnMultiChoiceClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-                        if (whichButton == 0) {
-                            dialog.dismiss();
-                            mNewTagEditText.setText("");
-                            mAddNewTag.show();
-                        } else {
-                            String tag = allTags[whichButton];
-                            if (!isChecked) {
-                                Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                                mSelectedTags.remove(tag);
-                            } else {
-                                Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                                mSelectedTags.add(tag);
-                            }                              
-                        }
-                    }
-                });
-        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String tags = mSelectedTags.toString();
-                mFactTags = tags.substring(1, tags.length() - 1);
-                mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), null);
-        mTagsDialog = builder.create();
+//        Resources res = getResources();
+//        if (allTags == null) {
+//            String[] oldTags = AnkiDroidApp.deck().allUserTags();
+//            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+//            allTags = new String[oldTags.length + 1];
+//            allTags[0] = res.getString(R.string.add_new_tag);
+//            for (int i = 0; i < oldTags.length; i++) {
+//                allTags[i + 1] = oldTags[i];
+//            }
+//        }
+//        mSelectedTags.clear();
+//        List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
+//        int length = allTags.length;
+//        boolean[] checked = new boolean[length];
+//        for (int i = 0; i < length; i++) {
+//            String tag = allTags[i];
+//            if (selectedList.contains(tag)) {
+//                checked[i] = true;
+//                mSelectedTags.add(tag);
+//            }
+//        }
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle(R.string.studyoptions_limit_select_tags);
+//        builder.setMultiChoiceItems(allTags, checked,
+//                new DialogInterface.OnMultiChoiceClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+//                        if (whichButton == 0) {
+//                            dialog.dismiss();
+//                            mNewTagEditText.setText("");
+//                            mAddNewTag.show();
+//                        } else {
+//                            String tag = allTags[whichButton];
+//                            if (!isChecked) {
+//                                Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+//                                mSelectedTags.remove(tag);
+//                            } else {
+//                                Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+//                                mSelectedTags.add(tag);
+//                            }                              
+//                        }
+//                    }
+//                });
+//        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                String tags = mSelectedTags.toString();
+//                mFactTags = tags.substring(1, tags.length() - 1);
+//                mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
+//            }
+//        });
+//        builder.setNegativeButton(res.getString(R.string.cancel), null);
+//        mTagsDialog = builder.create();
     }
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
-    private class FieldEditText extends EditText {
+//    private class FieldEditText extends EditText {
 
-        private Field mPairField;
-
-
-        public FieldEditText(Context context, Field pairField) {
-            super(context);
-            mPairField = pairField;
-            this.setText(pairField.getValue());
-        }
-
-
-        public TextView getLabel() {
-            TextView label = new TextView(this.getContext());
-            label.setText(mPairField.getFieldModel().getName());
-            return label;
-        }
-
-
-        public boolean updateField() {
-            String newValue = this.getText().toString();
-            if (!mPairField.getValue().equals(newValue)) {
-                mPairField.setValue(newValue);
-                return true;
-            }
-            return false;
-        }
-    }
+//        private Field mPairField;
+//
+//
+//        public FieldEditText(Context context, Field pairField) {
+//            super(context);
+//            mPairField = pairField;
+//            this.setText(pairField.getValue());
+//        }
+//
+//
+//        public TextView getLabel() {
+//            TextView label = new TextView(this.getContext());
+//            label.setText(mPairField.getFieldModel().getName());
+//            return label;
+//        }
+//
+//
+//        public boolean updateField() {
+//            String newValue = this.getText().toString();
+//            if (!mPairField.getValue().equals(newValue)) {
+//                mPairField.setValue(newValue);
+//                return true;
+//            }
+//            return false;
+//        }
+//    }
 
 }

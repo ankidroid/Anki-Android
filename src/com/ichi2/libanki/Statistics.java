@@ -14,7 +14,12 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.                             *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.libanki;
+
+import com.ichi2.anki.AnkiDatabaseManager;
+import com.ichi2.anki.AnkiDb;
+import com.ichi2.anki.R;
+import com.ichi2.anki.R.string;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -177,10 +182,10 @@ public class Statistics {
 
     public static double[] getCardsByDue(int length, boolean cumulative) {
         double series[] = new double[length];
-        series[0] = sDeck.getDueCount();
+//        series[0] = sDeck.getDueCount();
         for (int i = 1; i < length; i++) {
             int count = 0;
-            count = sDeck.getNextDueCards(i);
+//            count = sDeck.getNextDueCards(i);
             if (cumulative) {
                 series[i] = count + series[i - 1];
             } else {
@@ -195,7 +200,7 @@ public class Statistics {
         double series[] = new double[length];
         for (int i = 0; i < length; i++) {
             int count = 0;
-            count = sDeck.getNextDueMatureCards(i);
+//            count = sDeck.getNextDueMatureCards(i);
             if (cumulative && i > 0) {
                 series[i] = count + series[i - 1];
             } else {
@@ -208,8 +213,8 @@ public class Statistics {
 
     public static double[] getFailedCardsByDue(int length, boolean cumulative) {
         double series[] = new double[length];
-        series[0] = sDeck.getFailedSoonCount();
-        series[1] = sDeck.getFailedDelayedCount();
+//        series[0] = sDeck.getFailedSoonCount();
+//        series[1] = sDeck.getFailedDelayedCount();
         if (cumulative) {
             series[1] += series[0];
             for (int i = 2; i < length; i++) {
@@ -223,10 +228,10 @@ public class Statistics {
     public static double[][] getReviews(int length) {
         double series[][] = new double[3][length];
         for (int i = 0; i < length; i++) {
-        	int result[] = sDeck.getDaysReviewed(i - length + 1);
-            series[0][i] = result[0];
-            series[1][i] = result[1];
-            series[2][i] = result[2];
+//        	int result[] = sDeck.getDaysReviewed(i - length + 1);
+//            series[0][i] = result[0];
+//            series[1][i] = result[1];
+//            series[2][i] = result[2];
         }
         return series;
     }
@@ -235,7 +240,7 @@ public class Statistics {
     public static double[] getReviewTime(int length) {
         double series[] = new double[length];
         for (int i = 0; i < length; i++) {
-            series[i] = sDeck.getReviewTime(i - length + 1) / 60;
+//            series[i] = sDeck.getReviewTime(i - length + 1) / 60;
         }
         return series;
     }
@@ -244,7 +249,7 @@ public class Statistics {
     public static double[] getCardsByInterval(int length) {
         double series[] = new double[length];
         for (int i = 0; i < length; i++) {
-            series[i] = sDeck.getCardsByInterval(i);
+//            series[i] = sDeck.getCardsByInterval(i);
         }
         return series;
     }

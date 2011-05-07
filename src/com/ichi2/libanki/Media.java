@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.libanki;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,6 +29,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
+import com.ichi2.anki.AnkiDroidApp;
 
 /**
  * Class with static functions related with media handling (images and sounds).

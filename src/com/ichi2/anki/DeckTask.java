@@ -20,6 +20,11 @@ package com.ichi2.anki;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Fact;
+import com.ichi2.libanki.Statistics;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
@@ -106,10 +111,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS:
                 TaskData taskData = doInBackgroundLoadDeck(params);
-                if (taskData.mInteger == DECK_LOADED) {
-                    taskData.mDeck.updateAllCards();
-                    taskData.mCard = taskData.mDeck.getCurrentCard();
-                }
+//                if (taskData.mInteger == DECK_LOADED) {
+//                    taskData.mDeck.updateAllCards();
+//                    taskData.mCard = taskData.mDeck.getCurrentCard();
+//                }
                 return taskData;
 
             case TASK_TYPE_SAVE_DECK:
@@ -179,44 +184,44 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         // Save the fact
         Deck deck = params[0].getDeck();
         Fact editFact = params[0].getFact();
-        LinkedHashMap<Long, CardModel> cardModels = params[0].getCardModels();
-
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-        	publishProgress(new TaskData(deck.addFact(editFact, cardModels) != null));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
+//        LinkedHashMap<Long, CardModel> cardModels = params[0].getCardModels();
+//
+//        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+//        ankiDB.getDatabase().beginTransaction();
+//        try {
+//        	publishProgress(new TaskData(deck.addFact(editFact, cardModels) != null));
+//            ankiDB.getDatabase().setTransactionSuccessful();
+//        } finally {
+//            ankiDB.getDatabase().endTransaction();
+//        }
         return null;
     }
 
 
     private TaskData doInBackgroundUpdateFact(TaskData[] params) {
         // Save the fact
-        Deck deck = params[0].getDeck();
-        Card editCard = params[0].getCard();
-        Fact editFact = editCard.getFact();
-
-        // Start undo routine
-        String undoName = Deck.UNDO_TYPE_EDIT_CARD;
-        deck.setUndoStart(undoName, editCard.getId());
-
-        // Set modified also updates the text of cards and their modified flags
-        editFact.setModified(true, deck, false);
-        editFact.toDb();
-
-        deck.flushMod();
-
-        // Find all cards based on this fact and update them with the updateCard method.
-        // for (Card modifyCard : editFact.getUpdatedRelatedCards()) {
-        //     modifyCard.updateQAfields();
-        // }
-
-        // deck.reset();
-        deck.setUndoEnd(undoName);
-        publishProgress(new TaskData(deck.getCurrentCard()));
+//        Deck deck = params[0].getDeck();
+//        Card editCard = params[0].getCard();
+//        Fact editFact = editCard.getFact();
+//
+//        // Start undo routine
+//        String undoName = Deck.UNDO_TYPE_EDIT_CARD;
+//        deck.setUndoStart(undoName, editCard.getId());
+//
+//        // Set modified also updates the text of cards and their modified flags
+//        editFact.setModified(true, deck, false);
+//        editFact.toDb();
+//
+//        deck.flushMod();
+//
+//        // Find all cards based on this fact and update them with the updateCard method.
+//        // for (Card modifyCard : editFact.getUpdatedRelatedCards()) {
+//        //     modifyCard.updateQAfields();
+//        // }
+//
+//        // deck.reset();
+//        deck.setUndoEnd(undoName);
+//        publishProgress(new TaskData(deck.getCurrentCard()));
 
         return null;
     }
@@ -232,12 +237,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         ankiDB.getDatabase().beginTransaction();
         try {
             if (oldCard != null) {
-                deck.answerCard(oldCard, ease);
-                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
+                deck.getSched().answerCard(oldCard, ease);
+//                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
             }
-            newCard = deck.getCard();
+            newCard = deck.getSched().getCard();
             if (oldCard != null) {
-                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
+//                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
             } else {
                 publishProgress(new TaskData(newCard));
             }
@@ -280,10 +285,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveAndResetDeck");
         if (deck != null) {
             deck.commitToDB();
-            deck.updateCutoff();
-            if (AnkiDroidApp.deck().hasFinishScheduler()) {
-                AnkiDroidApp.deck().finishScheduler();
-            }
+//            deck.updateCutoff();
+//            if (AnkiDroidApp.deck().hasFinishScheduler()) {
+//                AnkiDroidApp.deck().finishScheduler();
+//            }
             deck.reset();
         }
         return null;
@@ -291,184 +296,187 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundSuspendCard(TaskData... params) {
-        Deck deck = params[0].getDeck();
-        Card oldCard = params[0].getCard();
-        Card newCard = null;
-
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-            if (oldCard != null) {
-                String undoName = Deck.UNDO_TYPE_SUSPEND_CARD;
-                deck.setUndoStart(undoName, oldCard.getId());
-                if (oldCard.getSuspendedState()) {
-                    oldCard.unsuspend();
-                    newCard = oldCard;
-                } else {
-                    oldCard.suspend();
-                    newCard = deck.getCard();
-                }
-                deck.setUndoEnd(undoName);
-            }
-            
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
+//        Deck deck = params[0].getDeck();
+//        Card oldCard = params[0].getCard();
+//        Card newCard = null;
+//
+//        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+//        ankiDB.getDatabase().beginTransaction();
+//        try {
+//            if (oldCard != null) {
+//                String undoName = Deck.UNDO_TYPE_SUSPEND_CARD;
+//                deck.setUndoStart(undoName, oldCard.getId());
+//                if (oldCard.getSuspendedState()) {
+//                    oldCard.unsuspend();
+//                    newCard = oldCard;
+//                } else {
+//                    oldCard.suspend();
+//                    newCard = deck.getCard();
+//                }
+//                deck.setUndoEnd(undoName);
+//            }
+//            
+//            publishProgress(new TaskData(newCard));
+//            ankiDB.getDatabase().setTransactionSuccessful();
+//        } finally {
+//            ankiDB.getDatabase().endTransaction();
+//        }
 
         return null;
     }
 
 
     private TaskData doInBackgroundMarkCard(TaskData... params) {
-        Deck deck = params[0].getDeck();
-        Card currentCard = params[0].getCard();
-
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-            if (currentCard != null) {
-                String undoName = Deck.UNDO_TYPE_MARK_CARD;
-                deck.setUndoStart(undoName, currentCard.getId());
-            	if (currentCard.isMarked()) {
-                    deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
-                } else {
-                    deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
-                }
-            	deck.resetMarkedTagId();
-            	deck.setUndoEnd(undoName);
-            }
-
-            publishProgress(new TaskData(currentCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
+//        Deck deck = params[0].getDeck();
+//        Card currentCard = params[0].getCard();
+//
+//        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+//        ankiDB.getDatabase().beginTransaction();
+//        try {
+//            if (currentCard != null) {
+//                String undoName = Deck.UNDO_TYPE_MARK_CARD;
+//                deck.setUndoStart(undoName, currentCard.getId());
+//            	if (currentCard.isMarked()) {
+//                    deck.deleteTag(currentCard.getFactId(), Deck.TAG_MARKED);
+//                } else {
+//                    deck.addTag(currentCard.getFactId(), Deck.TAG_MARKED);
+//                }
+//            	deck.resetMarkedTagId();
+//            	deck.setUndoEnd(undoName);
+//            }
+//
+//            publishProgress(new TaskData(currentCard));
+//            ankiDB.getDatabase().setTransactionSuccessful();
+//        } finally {
+//            ankiDB.getDatabase().endTransaction();
+//        }
 
         return null;
     }
 
     private TaskData doInBackgroundUndo(TaskData... params) {
-        Deck deck = params[0].getDeck();
-        Card newCard;
-        long currentCardId = params[0].getLong();
-        boolean inReview = params[0].getBoolean();
-        long oldCardId = 0;
-
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-        	oldCardId = deck.undo(currentCardId, inReview);
-            newCard = deck.getCard();
-            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
-            	newCard = deck.cardFromId(oldCardId);
-            }
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
-
-        return new TaskData(deck.getUndoType(), oldCardId);
+//        Deck deck = params[0].getDeck();
+//        Card newCard;
+//        long currentCardId = params[0].getLong();
+//        boolean inReview = params[0].getBoolean();
+//        long oldCardId = 0;
+//
+//        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+//        ankiDB.getDatabase().beginTransaction();
+//        try {
+//        	oldCardId = deck.undo(currentCardId, inReview);
+//            newCard = deck.getCard();
+//            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
+//            	newCard = deck.cardFromId(oldCardId);
+//            }
+//            publishProgress(new TaskData(newCard));
+//            ankiDB.getDatabase().setTransactionSuccessful();
+//        } finally {
+//            ankiDB.getDatabase().endTransaction();
+//        }
+//
+//        return new TaskData(deck.getUndoType(), oldCardId);
+    	return null;
     }
 
 
     private TaskData doInBackgroundRedo(TaskData... params) {
-        Deck deck = params[0].getDeck();
-        Card newCard;
-        long currentCardId = params[0].getLong();
-        boolean inReview = params[0].getBoolean();
-        long oldCardId = 0;
+//        Deck deck = params[0].getDeck();
+//        Card newCard;
+//        long currentCardId = params[0].getLong();
+//        boolean inReview = params[0].getBoolean();
+//        long oldCardId = 0;
+//
+//        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+//        ankiDB.getDatabase().beginTransaction();
+//        try {
+//        	oldCardId = deck.redo(currentCardId, inReview);
+//            newCard = deck.getCard();
+//            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
+//            	newCard = deck.cardFromId(oldCardId);
+//            }
+//            publishProgress(new TaskData(newCard));
+//            ankiDB.getDatabase().setTransactionSuccessful();
+//        } finally {
+//            ankiDB.getDatabase().endTransaction();
+//        }
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-        	oldCardId = deck.redo(currentCardId, inReview);
-            newCard = deck.getCard();
-            if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
-            	newCard = deck.cardFromId(oldCardId);
-            }
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
-
-        return new TaskData(deck.getUndoType(), oldCardId);
+//        return new TaskData(deck.getUndoType(), oldCardId);
+        return null;
     }
 
 
     private TaskData doInBackgroundLoadCards(TaskData... params) {
-        Deck deck = params[0].getDeck();
-        String order = params[0].getOrder();
-    	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-       	publishProgress(new TaskData(deck.getAllCards(order)));
+//        Deck deck = params[0].getDeck();
+//        String order = params[0].getOrder();
+//    	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
+//       	publishProgress(new TaskData(deck.getAllCards(order)));
         return null;
     }
 
 
     private TaskData doInBackgroundDeleteCard(TaskData... params) {
-        Deck deck = params[0].getDeck();
-        Card card = params[0].getCard();
-        Card newCard = null;
-        Long id = 0l;
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
-
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-            id = card.getId();
-            card.delete();
-            deck.reset();
-            newCard = deck.getCard();
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
-        return new TaskData(String.valueOf(id));
+//        Deck deck = params[0].getDeck();
+//        Card card = params[0].getCard();
+//        Card newCard = null;
+//        Long id = 0l;
+//        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteCard");
+//
+//        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+//        ankiDB.getDatabase().beginTransaction();
+//        try {
+//            id = card.getId();
+//            card.delete();
+//            deck.reset();
+//            newCard = deck.getCard();
+//            publishProgress(new TaskData(newCard));
+//            ankiDB.getDatabase().setTransactionSuccessful();
+//        } finally {
+//            ankiDB.getDatabase().endTransaction();
+//        }
+//        return new TaskData(String.valueOf(id));
+    	return null;
     }
 
 
     private TaskData doInBackgroundBuryCard(TaskData... params) {
-        Deck deck = params[0].getDeck();
-        Card card = params[0].getCard();
-        Card newCard = null;
+//        Deck deck = params[0].getDeck();
+//        Card card = params[0].getCard();
+//        Card newCard = null;
         Long id = 0l;
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundBuryCard");
-
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
-        ankiDB.getDatabase().beginTransaction();
-        try {
-            id = card.getId();
-            deck.buryFact(card.getFactId(), id);
-            deck.reset();
-            newCard = deck.getCard();
-            publishProgress(new TaskData(newCard));
-            ankiDB.getDatabase().setTransactionSuccessful();
-        } finally {
-            ankiDB.getDatabase().endTransaction();
-        }
+//        Log.i(AnkiDroidApp.TAG, "doInBackgroundBuryCard");
+//
+//        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+//        ankiDB.getDatabase().beginTransaction();
+//        try {
+//            id = card.getId();
+//            deck.buryFact(card.getFactId(), id);
+//            deck.reset();
+//            newCard = deck.getCard();
+//            publishProgress(new TaskData(newCard));
+//            ankiDB.getDatabase().setTransactionSuccessful();
+//        } finally {
+//            ankiDB.getDatabase().endTransaction();
+//        }
         return new TaskData(String.valueOf(id));
     }
 
 
     private TaskData doInBackgroundLoadStatistics(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
-        int type = params[0].getType();
-        int period = params[0].getInt();
-        Context context = params[0].getContext();
-        String[] deckList = params[0].getDeckList();;
+//        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
+//        int type = params[0].getType();
+//        int period = params[0].getInt();
+//        Context context = params[0].getContext();
+//        String[] deckList = params[0].getDeckList();;
         boolean result = false;
-
-        Resources res = context.getResources();
-        if (deckList.length == 1 && deckList[0].equals("") && AnkiDroidApp.deck() != null) {
-        	result = Statistics.refreshDeckStatistics(context, AnkiDroidApp.deck(), type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        	
-        } else {
-        	result = Statistics.refreshAllDeckStatistics(context, deckList, type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type] + " " + res.getString(R.string.statistics_all_decks));        	
-        }
-       	publishProgress(new TaskData(result));
+//
+//        Resources res = context.getResources();
+//        if (deckList.length == 1 && deckList[0].equals("") && AnkiDroidApp.deck() != null) {
+//        	result = Statistics.refreshDeckStatistics(context, AnkiDroidApp.deck(), type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        	
+//        } else {
+//        	result = Statistics.refreshAllDeckStatistics(context, deckList, type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type] + " " + res.getString(R.string.statistics_all_decks));        	
+//        }
+//       	publishProgress(new TaskData(result));
         return new TaskData(result);
     }
 
@@ -477,7 +485,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundOptimizeDeck");
     	Deck deck = params[0].getDeck();
         long result = 0;
-    	result = deck.optimizeDeck();
+    	result = deck.optimize();
         return new TaskData(deck, result);
     }
 
@@ -507,7 +515,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private Context mContext;
         private int mType;
         private String[] mDeckList;
-        private LinkedHashMap<Long, CardModel> mCardModels;
 
 
         public TaskData(int value, Deck deck, Card card) {
@@ -537,13 +544,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             mDeckList = deckList;
             mType = type;
         	mInteger = period;
-        }
-
-
-        public TaskData(Deck deck, Fact fact, LinkedHashMap<Long, CardModel> cardModels) {
-        	mDeck = deck;
-        	mFact = fact;
-        	mCardModels = cardModels;
         }
 
 
@@ -657,11 +657,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public int getType() {
             return mType;
-        }
-
-
-        public LinkedHashMap<Long, CardModel> getCardModels() {
-            return mCardModels;
         }
 
 

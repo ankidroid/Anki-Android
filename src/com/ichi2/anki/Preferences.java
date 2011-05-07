@@ -35,6 +35,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 

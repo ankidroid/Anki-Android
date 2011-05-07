@@ -30,12 +30,12 @@ import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
-import com.ichi2.anki.Deck;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
-import com.ichi2.anki.SyncClient;
-import com.ichi2.anki.Utils;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.SyncClient;
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.json.JSONArray;
@@ -516,7 +516,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     publishProgress(syncName, res.getString(R.string.sync_applying_reply_message));
                     client.applyPayloadReply(payloadReply);
-                    deck.initDeckvarsCache();
+//                    deck.initDeckvarsCache();
                     
                     Reviewer.setupMedia(deck); // FIXME: setupMedia should be part of Deck?
                     SharedPreferences preferences = PrefSettings.getSharedPrefs(sContext);
@@ -535,7 +535,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
                     deck.setLastLoaded(deck.getModified());
                     deck.commitToDB();
-                    Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Modified: %f, LastSync: %f, LastLoaded: %f", deck.getModified(), deck.getLastSync(), deck.getLastLoaded()));
+//                    Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Modified: %f, LastSync: %f, LastLoaded: %f", deck.getModified(), deck.getLastSync(), deck.getLastLoaded()));
 
                     ankiDB.getDatabase().setTransactionSuccessful();
                     publishProgress(syncName, res.getString(R.string.sync_complete_message));
@@ -648,15 +648,15 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         
         Deck deck = (Deck) data.data[0];
         data.result = deck; // pass it to the return object so we close the deck in the deck picker
-        String syncName = deck.getDeckName();
+        String syncName = "";//deck.getDeckName();
                 
         data.success = false;
         data.data = new Object[] {0, 0, 0};
-        if (!deck.hasKey("mediaURL")) {
-            data.success = true;
-            return data;
-        }
-        String urlbase = deck.getVar("mediaURL");
+//        if (!deck.hasKey("mediaURL")) {
+//            data.success = true;
+//            return data;
+//        }
+        String urlbase = "";//deck.getVar("mediaURL");
         if (urlbase.equals("")) {
             data.success = true;
             return data;

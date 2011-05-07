@@ -62,6 +62,10 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Scheduler;
+import com.ichi2.libanki.Statistics;
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
@@ -1015,20 +1019,21 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_UPGRADE_FAILURE);
 						data.putInt("version", version);
-						data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
+//						data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
 						deck.closeDeck(false);
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					} else {
-						int dueCards = deck.getDueCount();
-						int totalCards = deck.getCardCount();
-						int newCards = deck.getNewCount();
-						int totalNewCards = deck.getNewCount(mCompletionBarRestrictToActive);
-						int matureCards = deck.getMatureCardCount(mCompletionBarRestrictToActive);
-						int totalRevCards = deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);
+						int[] counts = deck.getSched().counts();
+						int dueCards = counts[Scheduler.COUNTS_REV] + counts[Scheduler.COUNTS_LRN];
+						int totalCards = deck.cardCount();
+						int newCards = counts[Scheduler.COUNTS_NEW];
+						int totalNewCards = deck.getTotalNewCount();
+						int matureCards = 0;//deck.getMatureCardCount(mCompletionBarRestrictToActive);
+						int totalRevCards = 0;//deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);
 						int totalCardsCompletionBar = totalRevCards + totalNewCards;
 
-						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
+//						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
 						deck.closeDeck(false);
 
 						data.putString("absPath", path);
@@ -1037,7 +1042,7 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("total", totalCards);
 						data.putInt("new", newCards);
 						data.putInt("totalNew", totalNewCards);
-						data.putString("notes", upgradeNotes);
+//						data.putString("notes", upgradeNotes);
 
 						int rateOfCompletionMat;
 						int rateOfCompletionAll;
@@ -1054,7 +1059,7 @@ public class DeckPicker extends Activity implements Runnable {
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
-						mTotalTime += Math.max(deck.getETA(), 0);
+//						mTotalTime += Math.max(deck.getETA(), 0);
 						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);

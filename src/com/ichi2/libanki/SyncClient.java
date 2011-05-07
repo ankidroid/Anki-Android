@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.libanki;
 
 import android.database.Cursor;
 import android.database.SQLException;
@@ -31,6 +31,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.ichi2.anki.AnkiDatabaseManager;
+import com.ichi2.anki.AnkiDb;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.AnkiDroidProxy;
+import com.ichi2.anki.R;
+import com.ichi2.anki.R.string;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
@@ -168,7 +175,7 @@ public class SyncClient {
         mDeck.setLastSync(lastSync);
         mDeck.commitToDB();
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+        AnkiDb ankiDB = mDeck.getDB();
 
         String lastSyncString = String.format(Utils.ENGLISH_LOCALE, "%f", lastSync);
         // Cards
@@ -336,7 +343,7 @@ public class SyncClient {
         for (int i = 0; i < len; i++) {
             cardIds[i] = cards.getJSONArray(i).getLong(0);
         }
-        mDeck.updateCardTags(cardIds);
+//        mDeck.updateCardTags(cardIds);
 
         long missingFacts = missingFacts();
         if (missingFacts != 0l) {
@@ -359,7 +366,7 @@ public class SyncClient {
      * Anki Desktop -> libanki/anki/sync.py, SyncTools - preSyncRefresh
      */
     private void preSyncRefresh() {
-        Stats.globalStats(mDeck);
+//        Stats.globalStats(mDeck);
     }
 
 
@@ -503,9 +510,9 @@ public class SyncClient {
         if ("models".equalsIgnoreCase(key)) {
             deleteModels(ids);
         } else if ("facts".equalsIgnoreCase(key)) {
-            mDeck.deleteFacts(Utils.jsonArrayToListString(ids));
+//            mDeck.deleteFacts(Utils.jsonArrayToListString(ids));
         } else if ("cards".equalsIgnoreCase(key)) {
-            mDeck.deleteCards(Utils.jsonArrayToListString(ids));
+//            mDeck.deleteCards(Utils.jsonArrayToListString(ids));
         } else if ("media".equalsIgnoreCase(key)) {
             deleteMedia(ids);
         }
@@ -564,7 +571,7 @@ public class SyncClient {
     private JSONObject bundleModel(Long id) throws JSONException// , boolean updateModified
     {
         JSONObject model = new JSONObject();
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = mDeck.getDB().getDatabase().rawQuery(
                 "SELECT * FROM models WHERE id = " + id, null);
         if (cursor.moveToFirst()) {
             model.put("id", cursor.getLong(0));
@@ -600,7 +607,7 @@ public class SyncClient {
     private JSONArray bundleFieldModels(Long id) throws JSONException {
         JSONArray fieldModels = new JSONArray();
 
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = mDeck.getDB().getDatabase().rawQuery(
                 "SELECT * FROM fieldModels WHERE modelId = " + id, null);
         while (cursor.moveToNext()) {
             JSONObject fieldModel = new JSONObject();
@@ -631,7 +638,7 @@ public class SyncClient {
     private JSONArray bundleCardModels(Long id) throws JSONException {
         JSONArray cardModels = new JSONArray();
 
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = mDeck.getDB().getDatabase().rawQuery(
                 "SELECT * FROM cardModels WHERE modelId = " + id, null);
         while (cursor.moveToNext()) {
             JSONObject cardModel = new JSONObject();
@@ -678,14 +685,14 @@ public class SyncClient {
         Log.i(AnkiDroidApp.TAG, "deleteModels");
         int len = ids.length();
         for (int i = 0; i < len; i++) {
-            mDeck.deleteModel(ids.getString(i));
+//            mDeck.deleteModel(ids.getString(i));
         }
     }
 
 
     private void updateModels(JSONArray models) throws JSONException {
         ArrayList<String> insertedModelsIds = new ArrayList<String>();
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+        AnkiDb ankiDB = mDeck.getDB();
 
         String sql = "INSERT OR REPLACE INTO models"
                     + " (id, deckId, created, modified, tags, name, description, features, spacing, initialSpacing, source)"
@@ -800,7 +807,7 @@ public class SyncClient {
         if (fieldModelsIds != null) {
             for (String fieldModelId : fieldModelsIds) {
                 if (!ids.contains(fieldModelId)) {
-                    mDeck.deleteFieldModel(modelId, fieldModelId);
+//                    mDeck.deleteFieldModel(modelId, fieldModelId);
                 }
             }
         }
@@ -924,7 +931,7 @@ public class SyncClient {
         if (cardModelsIds != null) {
             for (String cardModelId : cardModelsIds) {
                 if (!ids.contains(cardModelId)) {
-                    mDeck.deleteCardModel(modelId, cardModelId);
+//                    mDeck.deleteCardModel(modelId, cardModelId);
                 }
             }
         }
@@ -972,7 +979,7 @@ public class SyncClient {
 
         // TODO: Take into account the updateModified boolean (modified = time.time() or modified = "modified"... what
         // does exactly do that?)
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase()
+        Cursor cursor = mDeck.getDB().getDatabase()
                 .rawQuery("SELECT id, modelId, created, modified, tags, spaceUntil, lastCardId FROM facts WHERE id = "
                         + id, null);
         if (cursor.moveToFirst()) {
@@ -991,7 +998,7 @@ public class SyncClient {
 
 
     private void putFields(JSONArray fields, Long id) {
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = mDeck.getDB().getDatabase().rawQuery(
                 "SELECT * FROM fields WHERE factId = " + id, null);
         while (cursor.moveToNext()) {
             JSONArray field = new JSONArray();
@@ -1009,7 +1016,7 @@ public class SyncClient {
 
 
     private void updateFacts(JSONObject factsDict) throws JSONException {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+        AnkiDb ankiDB = mDeck.getDB();
         JSONArray facts = factsDict.getJSONArray("facts");
         int lenFacts = facts.length();
 
@@ -1107,7 +1114,7 @@ public class SyncClient {
         // matureEase0, matureEase1, matureEase2, matureEase3, matureEase4, yesCount, noCount, question, answer,
         // lastFactor, spaceUntil, relativeDelay,
         // type, combinedDue FROM cards WHERE id IN " + ids2str(ids)
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = mDeck.getDB().getDatabase().rawQuery(
                 "SELECT * FROM cards WHERE id IN " + Utils.ids2str(ids), null);
         while (cursor.moveToNext()) {
             JSONArray card = new JSONArray();
@@ -1198,7 +1205,7 @@ public class SyncClient {
     private void updateCards(JSONArray cards) throws JSONException {
         int len = cards.length();
         if (len > 0) {
-            AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+            AnkiDb ankiDB = mDeck.getDB();
             ArrayList<String> ids = new ArrayList<String>();
             for (int i = 0; i < len; i++) {
                 ids.add(cards.getJSONArray(i).getString(0));
@@ -1310,7 +1317,7 @@ public class SyncClient {
     private JSONArray getMedia(JSONArray ids) throws JSONException {
         JSONArray media = new JSONArray();
 
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = mDeck.getDB().getDatabase().rawQuery(
                 "SELECT id, filename, size, created, originalPath, description FROM media WHERE id IN "
                         + Utils.ids2str(ids), null);
         while (cursor.moveToNext()) {
@@ -1367,7 +1374,7 @@ public class SyncClient {
 
 
     void updateMedia(JSONArray media) throws JSONException {
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+        AnkiDb ankiDB = mDeck.getDB();
         ArrayList<String> mediaIds = new ArrayList<String>();
 
         String sql = "INSERT OR REPLACE INTO media (id, filename, size, created, originalPath, description) "
@@ -1437,7 +1444,7 @@ public class SyncClient {
 
         // Add meta information of the deck (deckVars table)
         JSONArray meta = new JSONArray();
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = mDeck.getDB().getDatabase().rawQuery(
                 "SELECT * FROM deckVars", null);
         while (cursor.moveToNext()) {
             JSONArray deckVar = new JSONArray();
@@ -1460,7 +1467,7 @@ public class SyncClient {
 
         // Update meta information
         String sqlMeta = "INSERT OR REPLACE INTO deckVars (key, value) VALUES(?,?)";
-        SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase()
+        SQLiteStatement statement = mDeck.getDB().getDatabase()
                 .compileStatement(sqlMeta);
         int lenMeta = meta.length();
         for (int i = 0; i < lenMeta; i++) {
@@ -1485,29 +1492,29 @@ public class SyncClient {
 
         JSONObject bundledStats = new JSONObject();
 
-        // Get daily stats since the last day the deck was synchronized
-        Date lastDay = new Date(java.lang.Math.max(0, (long) (mDeck.getLastSync() - 60 * 60 * 24) * 1000));
-        Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString());
-        ArrayList<Long> ids = mDeck.getDB().queryColumn(Long.class,
-                "SELECT id FROM stats WHERE type = 1 and day >= \"" + lastDay.toString() + "\"", 0);
-
-        Stats stat = new Stats(mDeck);
-        // Put global stats
-        bundledStats.put("global", Stats.globalStats(mDeck).bundleJson());
-        // Put daily stats
-        JSONArray dailyStats = new JSONArray();
-        if (ids != null) {
-            for (Long id : ids) {
-                // Update stat with the values of the stat with id ids.get(i)
-                stat.fromDB(id);
-                // Bundle this stat and add it to dailyStats
-                dailyStats.put(stat.bundleJson());
-            }
-        }
-        bundledStats.put("daily", dailyStats);
-
-        Log.i(AnkiDroidApp.TAG, "Stats =");
-        Utils.printJSONObject(bundledStats, false);
+//        // Get daily stats since the last day the deck was synchronized
+//        Date lastDay = new Date(java.lang.Math.max(0, (long) (mDeck.getLastSync() - 60 * 60 * 24) * 1000));
+//        Log.i(AnkiDroidApp.TAG, "lastDay = " + lastDay.toString());
+//        ArrayList<Long> ids = mDeck.getDB().queryColumn(Long.class,
+//                "SELECT id FROM stats WHERE type = 1 and day >= \"" + lastDay.toString() + "\"", 0);
+//
+////        Stats stat = new Stats(mDeck);
+//        // Put global stats
+////        bundledStats.put("global", Stats.globalStats(mDeck).bundleJson());
+//        // Put daily stats
+//        JSONArray dailyStats = new JSONArray();
+//        if (ids != null) {
+//            for (Long id : ids) {
+//                // Update stat with the values of the stat with id ids.get(i)
+//                stat.fromDB(id);
+//                // Bundle this stat and add it to dailyStats
+//                dailyStats.put(stat.bundleJson());
+//            }
+//        }
+//        bundledStats.put("daily", dailyStats);
+//
+//        Log.i(AnkiDroidApp.TAG, "Stats =");
+//        Utils.printJSONObject(bundledStats, false);
 
         return bundledStats;
     }
@@ -1515,38 +1522,38 @@ public class SyncClient {
 
     private void updateStats(JSONObject stats) throws JSONException {
         // Update global stats
-        Stats globalStats = Stats.globalStats(mDeck);
-        globalStats.updateFromJson(stats.getJSONObject("global"));
-
-        // Update daily stats
-        Stats stat = new Stats(mDeck);
-        JSONArray remoteDailyStats = stats.getJSONArray("daily");
-        int len = remoteDailyStats.length();
-        for (int i = 0; i < len; i++) {
-            // Get a specific daily stat
-            JSONObject remoteStat = remoteDailyStats.getJSONObject(i);
-            Date dailyStatDate = Utils.ordinalToDate(remoteStat.getInt("day"));
-
-            // If exists a statistic for this day, get it
-            try {
-                Long id = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).queryScalar(
-                        "SELECT id FROM stats WHERE type = 1 AND day = \"" + dailyStatDate.toString() + "\"");
-                stat.fromDB(id);
-            } catch (SQLException e) {
-                // If it does not exist, create a statistic for this day
-                stat.create(Stats.STATS_DAY, dailyStatDate);
-            }
-
-            // Update daily stat
-            stat.updateFromJson(remoteStat);
-        }
+//        Stats globalStats = Stats.globalStats(mDeck);
+//        globalStats.updateFromJson(stats.getJSONObject("global"));
+//
+//        // Update daily stats
+//        Stats stat = new Stats(mDeck);
+//        JSONArray remoteDailyStats = stats.getJSONArray("daily");
+//        int len = remoteDailyStats.length();
+//        for (int i = 0; i < len; i++) {
+//            // Get a specific daily stat
+//            JSONObject remoteStat = remoteDailyStats.getJSONObject(i);
+//            Date dailyStatDate = Utils.ordinalToDate(remoteStat.getInt("day"));
+//
+//            // If exists a statistic for this day, get it
+//            try {
+//                Long id = mDeck.getDB().queryScalar(
+//                        "SELECT id FROM stats WHERE type = 1 AND day = \"" + dailyStatDate.toString() + "\"");
+//                stat.fromDB(id);
+//            } catch (SQLException e) {
+//                // If it does not exist, create a statistic for this day
+//                stat.create(Stats.STATS_DAY, dailyStatDate);
+//            }
+//
+//            // Update daily stat
+//            stat.updateFromJson(remoteStat);
+//        }
     }
 
 
     private JSONArray bundleHistory() throws JSONException {
         double delay = 0.0;
         JSONArray bundledHistory = new JSONArray();
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = mDeck.getDB().getDatabase().rawQuery(
                         "SELECT time, cardId, ease, rep, lastInterval, interval, factor, userTime, flags FROM revlog WHERE time > " + String.format(Utils.ENGLISH_LOCALE, "%f", mDeck.getLastSync()), null);
         while (cursor.moveToNext()) {
             JSONArray review = new JSONArray();
@@ -1584,7 +1591,7 @@ public class SyncClient {
     private void updateHistory(JSONArray history) throws JSONException {
         String sql = "INSERT OR IGNORE INTO revlog VALUES (time, cardId, ease, rep, lastInterval, interval, factor, userTime, flags) " +
         		"VALUES(?,?,?,?,?,?,?,?,?)";
-        SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().compileStatement(sql);
+        SQLiteStatement statement = mDeck.getDB().getDatabase().compileStatement(sql);
         int len = history.length();
         for (int i = 0; i < len; i++) {
             JSONArray h = history.getJSONArray(i); 
@@ -1617,7 +1624,7 @@ public class SyncClient {
     private JSONArray bundleSources() throws JSONException {
         JSONArray bundledSources = new JSONArray();
 
-        Cursor cursor = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().rawQuery(
+        Cursor cursor = mDeck.getDB().getDatabase().rawQuery(
                 "SELECT * FROM sources", null);
         while (cursor.moveToNext()) {
             JSONArray source = new JSONArray();
@@ -1644,7 +1651,7 @@ public class SyncClient {
 
     private void updateSources(JSONArray sources) throws JSONException {
         String sql = "INSERT OR REPLACE INTO sources VALUES(?,?,?,?,?)";
-        SQLiteStatement statement = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath()).getDatabase().compileStatement(sql);
+        SQLiteStatement statement = mDeck.getDB().getDatabase().compileStatement(sql);
         int len = sources.length();
         for (int i = 0; i < len; i++) {
             JSONArray source = sources.getJSONArray(i);
@@ -1695,7 +1702,7 @@ public class SyncClient {
             }
         }
 
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(mDeck.getDeckPath());
+        AnkiDb ankiDB = mDeck.getDB();
 
         if (ankiDB.queryScalar("SELECT count() FROM revlog WHERE time > " + mDeck.getLastSync()) > 500) {
             Log.i(AnkiDroidApp.TAG, "revlog since lastSync > 500");

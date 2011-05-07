@@ -34,16 +34,16 @@ import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiDroidProxy;
-import com.ichi2.anki.Card;
-import com.ichi2.anki.Deck;
 import com.ichi2.anki.DeckTask;
 import com.ichi2.anki.Download;
 import com.ichi2.anki.R;
 import com.ichi2.anki.SharedDeckDownload;
 import com.ichi2.anki.StudyOptions;
-import com.ichi2.anki.Utils;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.DataOutputStream;
@@ -937,17 +937,17 @@ public class DownloadManagerService extends Service {
                 double now = System.currentTimeMillis();
                 HashMap<String, Object> results = (HashMap<String, Object>) data.result;
                 Deck deck = (Deck) results.get("deck");
-                if (!deck.isUnpackNeeded()) {
-                    data.success = true;
-                    return data;
-                }
+//                if (!deck.isUnpackNeeded()) {
+//                    data.success = true;
+//                    return data;
+//                }
                 // deck.beforeUpdateCards();
                 // deck.updateAllCards();
                 SharedDeckDownload download = (SharedDeckDownload) args[0].data[0];
                 SharedPreferences pref = PrefSettings.getSharedPrefs(getBaseContext());
                 String updatedCardsPref = "numUpdatedCards:" + mDestination + "/tmp/" + download.getFilename()
                         + ".anki.updating";
-                long totalCards = deck.retrieveCardCount();
+                long totalCards = deck.cardCount();
                 download.setNumTotalCards((int) totalCards);
                 long updatedCards = pref.getLong(updatedCardsPref, 0);
                 download.setNumUpdatedCards((int) updatedCards);
@@ -960,7 +960,7 @@ public class DownloadManagerService extends Service {
                 mElapsedTime = 0;
                 while (updatedCards < totalCards && download.getStatus() == SharedDeckDownload.STATUS_UPDATING) {
                     batchStart = System.currentTimeMillis();
-                    updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
+//                    updatedCards = deck.updateAllCardsFromPosition(updatedCards, batchSize);
                     Editor editor = pref.edit();
                     editor.putLong(updatedCardsPref, updatedCards);
                     editor.commit();
@@ -1022,14 +1022,14 @@ public class DownloadManagerService extends Service {
                 // Open the right deck.
                 Deck deck = Deck.openDeck(deckFilename);
                 // Start by getting the first card and displaying it.
-                Card card = deck.getCard();
+//                Card card = deck.getCard();
                 Log.i(AnkiDroidApp.TAG, "Deck loaded!");
 
                 // Set the result
                 data.returnType = DeckTask.DECK_LOADED;
                 HashMap<String, Object> results = new HashMap<String, Object>();
                 results.put("deck", deck);
-                results.put("card", card);
+//                results.put("card", card);
                 results.put("position", download.getNumUpdatedCards());
                 data.result = results;
                 return data;

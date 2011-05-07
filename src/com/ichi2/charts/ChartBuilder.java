@@ -49,8 +49,8 @@ import android.widget.TextView;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.MyAnimation;
 import com.ichi2.anki.R;
-import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptions;
+import com.ichi2.libanki.Statistics;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class ChartBuilder extends Activity {

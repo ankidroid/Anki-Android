@@ -15,7 +15,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.libanki;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -32,6 +32,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
+import com.ichi2.anki.R.array;
+import com.ichi2.anki.R.color;
 import com.mindprod.common11.BigDate;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -136,20 +140,20 @@ public class Utils {
         return Long.toHexString(id);
     }
     
-    public static long dehexifyID(String id) {
-        BigInteger bid = new BigInteger(id, 16);
-        if (bid.compareTo(maxID) >= 0) {
-            bid.subtract(shiftID);
-        }
-        return bid.longValue();
-    }
+//    public static long dehexifyID(String id) {
+//        BigInteger bid = new BigInteger(id, 16);
+//        if (bid.compareTo(maxID) >= 0) {
+//            bid.subtract(shiftID);
+//        }
+//        return bid.longValue();
+//    }
 
     /**
      * Returns a SQL string from an array of integers.
      * @param ids The array of integers to include in the list.
      * @return An SQL compatible string in the format (ids[0],ids[1],..).
      */
-    public static String ids2str(long[] ids) {
+    public static String ids2str(int[] ids) {
         String str = "()";
         if (ids != null) {
             str = Arrays.toString(ids);
@@ -231,6 +235,40 @@ public class Utils {
         return list;
     }
 
+    /**
+     * Fields
+     * ***********************************************************************************************
+     */
+    
+    public static String joinFields(String[] list) {
+        StringBuilder result = new StringBuilder(128);
+        for (String l : list) {
+            result.append(l).append("\\x1f");
+        }
+        return result.toString();
+    }
+
+    
+    public static String[] splitFields(String fields) {
+    	return fields.split("\\x1f");
+    }
+
+
+    /**
+     * IDs
+     * ***********************************************************************************************
+     */
+    
+    public static String hexifyID(int id) {
+        return Integer.toHexString(id);
+    }
+    
+    public static int dehexifyID(String id) {
+    	return Integer.valueOf(id, 16);
+    }
+
+        
+    
     /**
      * Strip HTML but keep media filenames
      */
@@ -442,6 +480,15 @@ public class Utils {
     }
 
 
+    /**
+     * Get the current time in integer seconds since January 1, 1970 UTC.
+     * @return the local system time in integer seconds
+     */
+    public static int intNow() {
+        return (int) now();
+    }
+
+
     public static String getReadableInterval(Context context, double numberOfDays) {
     	return getReadableInterval(context, numberOfDays, false);
     }
@@ -571,16 +618,16 @@ public class Utils {
 
     
     public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
-        String base = model.getFeatures().trim();
-        if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
-            return base;
-        } else {
+        String base = "";//model.getFeatures().trim();
+//        if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
+//            return base;
+//        } else {
             // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
             // Reviewer.onCreate() and use the value from there            
             if (mediaDir != null) {                              
                 base = urlEncodeMediaDir(mediaDir);
             }
-        }
+//        }
         return base;
     }
 
@@ -679,6 +726,7 @@ public class Utils {
         return joinTags(new TreeSet<String>(taglist));
     }
 
+
     /**
      * Find if tag exists in a set of tags. The search is not case-sensitive
      * 
@@ -686,7 +734,7 @@ public class Utils {
      * @param tags The set of tags
      * @return True is the tag is found in the set, false otherwise
      */
-    public static boolean findTag(String tag, List<String> tags) {
+    public static boolean hasTag(String tag, List<String> tags) {
         String lowercase = tag.toLowerCase();
         for (String t : tags) {
             if (t.toLowerCase().compareTo(lowercase) == 0) {
@@ -707,7 +755,7 @@ public class Utils {
     public static String addTags(String tagStr, String tags) {
         ArrayList<String> currentTags = new ArrayList<String>(Arrays.asList(parseTags(tags)));
         for (String tag : parseTags(tagStr)) {
-            if (!findTag(tag, currentTags)) {
+            if (!hasTag(tag, currentTags)) {
                 currentTags.add(tag);
             }
         }

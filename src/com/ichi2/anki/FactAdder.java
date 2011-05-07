@@ -40,7 +40,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ichi2.anki.Fact.Field;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Fact;
+import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,11 +86,11 @@ public class FactAdder extends Activity {
     private Deck mDeck;
     private Long mCurrentSelectedModelId;
 
-    private LinkedList<FieldEditText> mEditFields;
-    private LinkedHashMap<Long, CardModel> mCardModels;
-    
-    private LinkedHashMap<Long, CardModel> mSelectedCardModels;
-	private LinkedHashMap<Long, CardModel> mNewSelectedCardModels;       
+//    private LinkedList<FieldEditText> mEditFields;
+//    private LinkedHashMap<Long, CardModel> mCardModels;
+//    
+//    private LinkedHashMap<Long, CardModel> mSelectedCardModels;
+//	private LinkedHashMap<Long, CardModel> mNewSelectedCardModels;       
 	private ArrayList<Long> cardModelIds = new ArrayList<Long>();
 
     private Fact mNewFact;
@@ -151,20 +154,20 @@ public class FactAdder extends Activity {
 
         mDeck = AnkiDroidApp.deck();
 
-        mModels = Model.getModels(mDeck);
-        mCurrentSelectedModelId = mDeck.getCurrentModelId();
-        mNewSelectedCardModels = new LinkedHashMap<Long, CardModel>();
-        cardModelIds = new ArrayList<Long>();
+//        mModels = Model.getModels(mDeck);
+//        mCurrentSelectedModelId = mDeck.getCurrentModelId();
+//        mNewSelectedCardModels = new LinkedHashMap<Long, CardModel>();
+//        cardModelIds = new ArrayList<Long>();
         modelChanged();
 
         mAddButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                for (FieldEditText current : mEditFields) {
-                    current.updateField();
-                }
-                mNewFact.setTags(mFactTags);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mDeck, mNewFact, mSelectedCardModels));                
+//                for (FieldEditText current : mEditFields) {
+//                    current.updateField();
+//                }
+//                mNewFact.setTags(mFactTags);
+//                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mDeck, mNewFact, mSelectedCardModels));                
             }
         });
 
@@ -295,17 +298,17 @@ public class FactAdder extends Activity {
                     public void onClick(DialogInterface dialog, int item) {
                         long oldModelId = mCurrentSelectedModelId;
                         mCurrentSelectedModelId = dialogIds.get(item);
-                        if (oldModelId != mCurrentSelectedModelId) {
-                            int size = mEditFields.size();
-                        	String[] oldValues = new String[size];
-                        	for (int i = 0; i < size; i++) {
-                                oldValues[i] = mEditFields.get(i).getText().toString();
-                            }
-                        	modelChanged();
-                        	for (int i = 0; i < Math.min(size, mEditFields.size()) ; i++) {
-                                mEditFields.get(i).setText(oldValues[i]);
-                            }
-                        }
+//                        if (oldModelId != mCurrentSelectedModelId) {
+//                            int size = mEditFields.size();
+//                        	String[] oldValues = new String[size];
+//                        	for (int i = 0; i < size; i++) {
+//                                oldValues[i] = mEditFields.get(i).getText().toString();
+//                            }
+//                        	modelChanged();
+//                        	for (int i = 0; i < Math.min(size, mEditFields.size()) ; i++) {
+//                                mEditFields.get(i).setText(oldValues[i]);
+//                            }
+//                        }
                     }
                 });
                 AlertDialog alert = builder.create();
@@ -318,27 +321,27 @@ public class FactAdder extends Activity {
 
 
     private void modelChanged() {
-		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
-		mSelectedCardModels = mDeck.activeCardModels(mNewFact);
-
-		mModelButton.setText(getResources().getString(R.string.model) + " " + mModels.get(mCurrentSelectedModelId).getName());
-		cardModelsChanged();
-		populateEditFields();
+//		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
+//		mSelectedCardModels = mDeck.activeCardModels(mNewFact);
+//
+//		mModelButton.setText(getResources().getString(R.string.model) + " " + mModels.get(mCurrentSelectedModelId).getName());
+//		cardModelsChanged();
+//		populateEditFields();
     }
 
 
     private void cardModelsChanged() {
-		String cardModelNames = ""; 	
-		for (Map.Entry<Long, CardModel> entry : mSelectedCardModels.entrySet()) {
-    		cardModelNames = cardModelNames + entry.getValue().getName() + ", ";
-        }
-    	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
-
-        if (mSelectedCardModels.size() == 1){
-        	mCardModelButton.setText(getResources().getString(R.string.card) + " " + cardModelNames);        	
-        } else {
-        	mCardModelButton.setText(getResources().getString(R.string.cards) + " " + cardModelNames);
-        }
+//		String cardModelNames = ""; 	
+//		for (Map.Entry<Long, CardModel> entry : mSelectedCardModels.entrySet()) {
+//    		cardModelNames = cardModelNames + entry.getValue().getName() + ", ";
+//        }
+//    	cardModelNames = cardModelNames.substring(0, cardModelNames.length() - 2);
+//
+//        if (mSelectedCardModels.size() == 1){
+//        	mCardModelButton.setText(getResources().getString(R.string.card) + " " + cardModelNames);        	
+//        } else {
+//        	mCardModelButton.setText(getResources().getString(R.string.cards) + " " + cardModelNames);
+//        }
     }
 
 
@@ -355,127 +358,127 @@ public class FactAdder extends Activity {
 
 
     private void populateEditFields() {
-        mFieldsLayoutContainer.removeAllViews();
-        mEditFields = new LinkedList<FieldEditText>();
-        TreeSet<Field> fields = mNewFact.getFields();
-        for (Field f : fields) {
-            FieldEditText newTextbox = new FieldEditText(this, f);
-            TextView label = newTextbox.getLabel();
-            mEditFields.add(newTextbox);
-
-            mFieldsLayoutContainer.addView(label);
-            mFieldsLayoutContainer.addView(newTextbox);
-            // Generate a new EditText for each field
-        }
+//        mFieldsLayoutContainer.removeAllViews();
+//        mEditFields = new LinkedList<FieldEditText>();
+//        TreeSet<Field> fields = mNewFact.getFields();
+//        for (Field f : fields) {
+//            FieldEditText newTextbox = new FieldEditText(this, f);
+//            TextView label = newTextbox.getLabel();
+//            mEditFields.add(newTextbox);
+//
+//            mFieldsLayoutContainer.addView(label);
+//            mFieldsLayoutContainer.addView(newTextbox);
+//            // Generate a new EditText for each field
+//        }
     }
 
     private void recreateCardModelDialog() {
-    	Resources res = getResources();
-    	mCardModels = mDeck.cardModels(mNewFact);
-    	int size = mCardModels.size();
-    	String dialogItems[] = new String [size];
-        cardModelIds.clear();       
-    	int i = 0;
-        for (Long id : mCardModels.keySet()) {
-        	dialogItems[i] = mCardModels.get(id).getName();
-        	cardModelIds.add(id);
-            i++;
-        }
-        View contentView = getLayoutInflater().inflate(R.layout.fact_adder_card_model_list, null);
-        mCardModelListView = (ListView) contentView.findViewById(R.id.card_model_list);
-        mCardModelListView.setAdapter(new ArrayAdapter<String>(this, R.layout.dialog_check_item, dialogItems));
-        for (int j = 0; j < size; j++) {;
-        	mCardModelListView.setItemChecked(j, mSelectedCardModels.containsKey(cardModelIds.get(j)));
-        }
-        mNewSelectedCardModels.clear();
-        mNewSelectedCardModels.putAll(mSelectedCardModels);
-        mCardModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            	long m = cardModelIds.get(position);
-            	if (((CheckedTextView)view).isChecked()) {
-            		mNewSelectedCardModels.remove(m);
-                } else {
-                	mNewSelectedCardModels.put(m, mCardModels.get(m));
-                }
-           		mCardModelDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(!mNewSelectedCardModels.isEmpty());
-            }
-        });
-        mCardModelListView.setItemsCanFocus(false);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(res.getString(R.string.select_card_model));
-        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) { 
-            	mSelectedCardModels.clear();
-            	mSelectedCardModels.putAll(mNewSelectedCardModels);
-            	cardModelsChanged();
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.setView(contentView);            	
-        mCardModelDialog = builder.create();
+//    	Resources res = getResources();
+//    	mCardModels = mDeck.cardModels(mNewFact);
+//    	int size = mCardModels.size();
+//    	String dialogItems[] = new String [size];
+//        cardModelIds.clear();       
+//    	int i = 0;
+//        for (Long id : mCardModels.keySet()) {
+//        	dialogItems[i] = mCardModels.get(id).getName();
+//        	cardModelIds.add(id);
+//            i++;
+//        }
+//        View contentView = getLayoutInflater().inflate(R.layout.fact_adder_card_model_list, null);
+//        mCardModelListView = (ListView) contentView.findViewById(R.id.card_model_list);
+//        mCardModelListView.setAdapter(new ArrayAdapter<String>(this, R.layout.dialog_check_item, dialogItems));
+//        for (int j = 0; j < size; j++) {;
+//        	mCardModelListView.setItemChecked(j, mSelectedCardModels.containsKey(cardModelIds.get(j)));
+//        }
+//        mNewSelectedCardModels.clear();
+//        mNewSelectedCardModels.putAll(mSelectedCardModels);
+//        mCardModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            	long m = cardModelIds.get(position);
+//            	if (((CheckedTextView)view).isChecked()) {
+//            		mNewSelectedCardModels.remove(m);
+//                } else {
+//                	mNewSelectedCardModels.put(m, mCardModels.get(m));
+//                }
+//           		mCardModelDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(!mNewSelectedCardModels.isEmpty());
+//            }
+//        });
+//        mCardModelListView.setItemsCanFocus(false);
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle(res.getString(R.string.select_card_model));
+//        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) { 
+//            	mSelectedCardModels.clear();
+//            	mSelectedCardModels.putAll(mNewSelectedCardModels);
+//            	cardModelsChanged();
+//            }
+//        });
+//        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//            }
+//        });
+//        builder.setView(contentView);            	
+//        mCardModelDialog = builder.create();
     }
 
 
     private void recreateTagsDialog() {
-        Resources res = getResources();
-        if (allTags == null) {
-            String[] oldTags = AnkiDroidApp.deck().allUserTags();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
-            allTags = new String[oldTags.length + 1];
-            allTags[0] = res.getString(R.string.add_new_tag);
-            for (int i = 0; i < oldTags.length; i++) {
-                allTags[i + 1] = oldTags[i];
-            }
-        }
-        mSelectedTags.clear();
-        List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
-        int length = allTags.length;
-        boolean[] checked = new boolean[length];
-        for (int i = 0; i < length; i++) {
-            String tag = allTags[i];
-            if (selectedList.contains(tag)) {
-                checked[i] = true;
-                mSelectedTags.add(tag);
-            }
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.studyoptions_limit_select_tags);
-        builder.setMultiChoiceItems(allTags, checked,
-                new DialogInterface.OnMultiChoiceClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-                        if (whichButton == 0) {
-                            dialog.dismiss();
-                            mNewTagEditText.setText("");
-                            mAddNewTag.show();
-                        } else {
-                            String tag = allTags[whichButton];
-                            if (!isChecked) {
-                                Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                                mSelectedTags.remove(tag);
-                            } else {
-                                Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                                mSelectedTags.add(tag);
-                            }                            
-                        }
-                    }
-                });
-        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String tags = mSelectedTags.toString();
-                mFactTags = tags.substring(1, tags.length() - 1);
-                mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), null);
-        mTagsDialog = builder.create();
+//        Resources res = getResources();
+//        if (allTags == null) {
+//            String[] oldTags = AnkiDroidApp.deck().allUserTags();
+//            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+//            allTags = new String[oldTags.length + 1];
+//            allTags[0] = res.getString(R.string.add_new_tag);
+//            for (int i = 0; i < oldTags.length; i++) {
+//                allTags[i + 1] = oldTags[i];
+//            }
+//        }
+//        mSelectedTags.clear();
+//        List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
+//        int length = allTags.length;
+//        boolean[] checked = new boolean[length];
+//        for (int i = 0; i < length; i++) {
+//            String tag = allTags[i];
+//            if (selectedList.contains(tag)) {
+//                checked[i] = true;
+//                mSelectedTags.add(tag);
+//            }
+//        }
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle(R.string.studyoptions_limit_select_tags);
+//        builder.setMultiChoiceItems(allTags, checked,
+//                new DialogInterface.OnMultiChoiceClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+//                        if (whichButton == 0) {
+//                            dialog.dismiss();
+//                            mNewTagEditText.setText("");
+//                            mAddNewTag.show();
+//                        } else {
+//                            String tag = allTags[whichButton];
+//                            if (!isChecked) {
+//                                Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+//                                mSelectedTags.remove(tag);
+//                            } else {
+//                                Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+//                                mSelectedTags.add(tag);
+//                            }                            
+//                        }
+//                    }
+//                });
+//        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                String tags = mSelectedTags.toString();
+//                mFactTags = tags.substring(1, tags.length() - 1);
+//                mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
+//            }
+//        });
+//        builder.setNegativeButton(res.getString(R.string.cancel), null);
+//        mTagsDialog = builder.create();
     }
 
     /**
@@ -514,28 +517,28 @@ public class FactAdder extends Activity {
     }
 
     // TODO: remove redundance with CardEditor.java::FieldEditText
-    private class FieldEditText extends EditText {
-
-        private Field mPairField;
-
-
-        public FieldEditText(Context context, Field pairField) {
-            super(context);
-            mPairField = pairField;
-            this.setMinimumWidth(400);
-        }
-
-
-        public TextView getLabel() {
-            TextView label = new TextView(this.getContext());
-            label.setText(mPairField.getFieldModel().getName());
-            return label;
-        }
-
-
-        public void updateField() {
-            mPairField.setValue(this.getText().toString());
-        }
-    }
+//    private class FieldEditText extends EditText {
+//
+//        private Field mPairField;
+//
+//
+//        public FieldEditText(Context context, Field pairField) {
+//            super(context);
+//            mPairField = pairField;
+//            this.setMinimumWidth(400);
+//        }
+//
+//
+//        public TextView getLabel() {
+//            TextView label = new TextView(this.getContext());
+//            label.setText(mPairField.getFieldModel().getName());
+//            return label;
+//        }
+//
+//
+//        public void updateField() {
+//            mPairField.setValue(this.getText().toString());
+//        }
+//    }
 
 }

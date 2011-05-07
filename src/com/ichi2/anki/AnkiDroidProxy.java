@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.util.Log;
 
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.Utils;
 import com.ichi2.utils.Base64;
 
 import org.apache.http.HttpEntity;

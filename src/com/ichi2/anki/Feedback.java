@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.apache.http.HttpResponse;

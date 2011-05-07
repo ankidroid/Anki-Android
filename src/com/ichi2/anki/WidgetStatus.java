@@ -14,6 +14,8 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Scheduler;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
@@ -85,9 +87,7 @@ public final class WidgetStatus {
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
                     Deck deck = Deck.openDeck(absPath, false);
-                    int dueCards = deck.getDueCount();
-                    int newCards = deck.getNewCount();
-                    int failedCards = deck.getFailedSoonCount();
+                    int[] counts = deck.getSched().counts();
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.
                     Deck currentDeck = AnkiDroidApp.deck();
@@ -96,7 +96,7 @@ public final class WidgetStatus {
                     }
 
                     // Add the information about the deck
-                    decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards));
+                    decks.add(new DeckStatus(absPath, deckName, counts[Scheduler.COUNTS_NEW], counts[Scheduler.COUNTS_REV], counts[Scheduler.COUNTS_LRN]));
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());

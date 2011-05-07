@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.libanki;
 
 import java.io.File;
 import java.net.URI;
@@ -30,6 +30,9 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.ReadText;
 
 /**
  * Class used to parse, load and play sound files on AnkiDroid.

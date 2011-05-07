@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.libanki;
 
 import android.content.ContentValues;
 import android.database.Cursor;

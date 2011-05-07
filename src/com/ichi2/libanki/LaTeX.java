@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.libanki;
 
 import android.text.Html;
 import android.util.Log;
@@ -22,6 +22,10 @@ import android.util.Log;
 import java.lang.StringBuilder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONException;
+
+import com.ichi2.anki.AnkiDroidApp;
 
 /**
  * Class used to display and handle correctly LaTeX.
@@ -54,7 +58,7 @@ public class LaTeX {
      * @param content HTML content of a card
      * @return content Content with the onload events for the img tags
      */
-    public static String parseLaTeX(Deck deck, String content) {
+    public static String parseLaTeX(Model model, String content) {
 
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
@@ -65,7 +69,7 @@ public class LaTeX {
         Matcher matcher = sStandardPattern.matcher(contentLeft);
         while (matcher.find()) {
             latex = matcher.group(1);
-            String img = mungeLatex(deck, latex);
+            String img = mungeLatex(model, latex);
             img = "latex-" + Utils.checksum(img) + ".png";
 
             String imgTag = matcher.group();
@@ -83,7 +87,7 @@ public class LaTeX {
         matcher = sExpressionPattern.matcher(contentLeft);
         while (matcher.find()) {
             latex = matcher.group(1);
-            String img = "$" + mungeLatex(deck, latex) + "$";
+            String img = "$" + mungeLatex(model, latex) + "$";
             img = "latex-" + Utils.checksum(img) + ".png";
 
             String imgTag = matcher.group();
@@ -101,7 +105,7 @@ public class LaTeX {
         matcher = sMathPattern.matcher(contentLeft);
         while (matcher.find()) {
             latex = matcher.group(1);
-            String img = "\\begin{displaymath}" + mungeLatex(deck, latex) + "\\end{displaymath}";
+            String img = "\\begin{displaymath}" + mungeLatex(model, latex) + "\\end{displaymath}";
             img = "latex-" + Utils.checksum(img) + ".png";
 
             String imgTag = matcher.group();
@@ -125,7 +129,7 @@ public class LaTeX {
      * @param latex The latex trsing to be munged
      * @return the latex string transformed as described above
      */
-    private static String mungeLatex(Deck deck, String latex) {
+    private static String mungeLatex(Model model, String latex) {
         // Deal with HTML named entities
         StringBuilder sb = new StringBuilder(latex);
         Matcher namedEntity = htmlNamedEntityPattern.matcher(sb);
@@ -139,7 +143,11 @@ public class LaTeX {
         latex = sBRPattern.matcher(latex).replaceAll("\n");
      
         // Add pre/post-ambles
-        latex = deck.getVar("latexPre") + "\n" + latex + "\n" + deck.getVar("latexPost");
+        try {
+			latex = model.getConf().getString("latexPre") + "\n" + latex + "\n" + model.getConf().getString("latexPost");
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
 
         // TODO: Do we need to convert to UTF-8?
 

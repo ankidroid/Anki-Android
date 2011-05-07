@@ -31,6 +31,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.Deck;
 import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
