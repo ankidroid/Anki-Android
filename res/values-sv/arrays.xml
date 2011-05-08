@@ -23,7 +23,7 @@
   <string-array name="newCardOrderLabels">
     <item>Slumpvis ordning</item>
     <item>Ordningen de lades till</item>
-    <item>Motsatta ordning de lades till</item>
+    <item>Omvänd ordning från hur de lades till</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Fördela bland repetitioner</item>

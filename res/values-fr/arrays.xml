@@ -136,29 +136,29 @@
     <item>année</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
+    <item>Par ordre d\'accès</item>
     <item>Alphabétique</item>
     <item>Par nombre de cartes dues</item>
     <item>Par nombre total de cartes</item>
-    <item>By number of total new cards</item>
+    <item>Par nombre total de nouvelles cartes</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
-    <item>Abort learning</item>
+    <item>Aucune action</item>
+    <item>Bouton de réponse 1</item>
+    <item>Bouton de réponse 2</item>
+    <item>Bouton de réponse 3</item>
+    <item>Bouton de réponse 4</item>
+    <item>Réponse recommandée (vert)</item>
+    <item>Réponse meilleure que celle recommandée</item>
+    <item>Annuler</item>
+    <item>Refaire</item>
+    <item>Modifier la carte</item>
+    <item>Marquer la carte</item>
+    <item>Rechercher l\'expression</item>
+    <item>Enterrer la carte</item>
+    <item>Suspendre la carte</item>
+    <item>Supprimer la carte</item>
+    <item>Effacer le tableau</item>
+    <item>Quitter l\'apprentissage</item>
   </string-array>
 </resources>

@@ -146,26 +146,26 @@
   <string name="deck_path">Chemin d\'accès au paquet</string>
   <string name="deck_path_summ">Chemin où vos paquets sont stockés</string>
   <string name="deck_order">Ordre des paquets</string>
-  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
+  <string name="deck_order_summ">Ordre dans lequel les paquets sont classés dans le sélecteur: XXX</string>
   <string name="fullscreen_review">Réviser en plein écran</string>
   <string name="fullscreen_review_summ">Vous pouvez décider si vous voulez utiliser tout l\'écran pendant la révision</string>
   <string name="zoom">Activer le Zoom</string>
   <string name="zoom_summ">Afficher les contrôles de Zoom lors des révisions</string>
   <string name="swipe">Permettre la commande par geste</string>
   <string name="swipe_summ_off">Utilisez des gestes pour basculer entre les écrans et les cartes de réponse. Cette option n\'est pas compatible avec les commandes de contrôle du zoom</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
+  <string name="swipe_summ_on">Faites glisser horizontalement pour basculer entre les écrans. Configurez les autres actions ci-dessous</string>
   <string name="pref_cat_actions">Actions</string>
   <string name="gestures_shake">Secouer</string>
-  <string name="gestures_swipe_up">Swipe up</string>
-  <string name="gestures_swipe_down">Swipe down</string>
-  <string name="gestures_swipe_left">Swipe left</string>
-  <string name="gestures_swipe_right">Swipe right</string>
-  <string name="gestures_double_tap">Double tap</string>
-  <string name="gestures_tap_top">Tap top</string>
-  <string name="gestures_tap_bottom">Tap bottom</string>
-  <string name="gestures_tap_left">Tap left</string>
-  <string name="gestures_tap_right">Tap right</string>
-  <string name="swipe_sensibility">Swipe Sensitivity</string>
+  <string name="gestures_swipe_up">Glissez vers le haut</string>
+  <string name="gestures_swipe_down">Glissez vers le bas</string>
+  <string name="gestures_swipe_left">Faites glisser vers la gauche</string>
+  <string name="gestures_swipe_right">Faites glisser vers la droite</string>
+  <string name="gestures_double_tap">Double tappe</string>
+  <string name="gestures_tap_top">Tappe sur le haut</string>
+  <string name="gestures_tap_bottom">Tappe sur le bas</string>
+  <string name="gestures_tap_left">Tappe sur la gauche</string>
+  <string name="gestures_tap_right">Tappe sur la droite</string>
+  <string name="swipe_sensibility">Sensibilité du glissé</string>
   <string name="swipe_sensibility_summ">Sensibilité du glissage: XXX</string>
   <string name="tts">Synthèse vocale</string>
   <string name="tts_summ">Lire la question et la réponse si aucun fichier son n\'est inclus</string>
@@ -178,7 +178,7 @@
   <string name="fix_hebrew_text">Hébreu gauche-à-droite</string>
   <string name="fix_hebrew_text_summ">Support limité de l\'hébreu, pas de voyelles.</string>
   <string name="default_font">Police par défaut</string>
-  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
+  <string name="default_font_summ">Permet de définir la police par défaut utilisée pour le rendu des cartes. Les polices personnalisées doivent être installées sur la carte SD dans un dossier nommé \'fonts\' dans votre dossier Anki.</string>
   <string name="language">Langue</string>
   <string name="language_summ">Sélectionnez la langue, AnkiDroid doit utiliser. À l\'heure actuelle: XXX</string>
   <string name="language_system">Langue du système</string>
@@ -191,8 +191,8 @@
   <string name="about_title">À propos</string>
   <string name="cardeditor_title">Éditeur</string>
   <string name="factadder_title">Ajout de carte</string>
-  <string name="factadder_saving_error">Error saving fact</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="factadder_saving_error">Erreur à l\'enregistrement de la carte</string>
+  <string name="saving_facts">Enregistrement des cartes</string>
   <string name="deckcreator_title">Créateur de paquet</string>
   <string name="model">Modèle:</string>
   <string name="select_model">Modèle</string>
@@ -322,7 +322,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="studyoptions_congrats_cards">cartes</string>
   <string name="studyoptions_congrats_learnmore">En savoir plus</string>
   <string name="studyoptions_congrats_reviewearly">Réviser à l\'avance</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_syncdeck">Synchroniser le paquet</string>
   <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre paquet</string>
   <string name="studyoptions_congrats_finish">Retour à l\'écran d\'étude</string>
   <string name="studyoptions_feedback">Commentaires</string>
@@ -405,7 +405,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="widget_minimum_cards_due_notification_ticker_title">Cartes à faire</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d cartes AnkiDroid à faire</string>
   <string name="widget_no_cards_due">Pas de cartes dûes</string>
-  <string name="widget_loading">Widget loading...</string>
+  <string name="widget_loading">Chargement du widget...</string>
   <string name="soon">Bientôt</string>
   <string name="show_next_review_time">Prochain temps de révision</string>
   <string name="show_next_review_time_summ">Montre le prochain temps de révision dépendant de votre choix</string>
@@ -457,8 +457,8 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
     <item quantity="other">%1$d parmi %2$d dûes</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1$s (1 min. restante)</item>
+    <item quantity="other">%1$s (%2$d min. restantes)</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 parmi %3$d cartes montrée</item>
@@ -469,12 +469,12 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
     <item quantity="other">%1$s (%2$d de %3$d dues)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Vous avez terminé pour l\'instant\nDemain il y aura:\n1 carte à revoir et %2$s.\n Temps estimé: %3$s</item>
+    <item quantity="other">Vous avez terminé pour l\'instant\nDemain il y aura:\n%1$d cartes à revoir et %2$s.\n Temps estimé: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 carte</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="other">%1$d nouvelles cartes</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1 min.</item>

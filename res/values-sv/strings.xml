@@ -119,7 +119,7 @@
   <string name="show_timer">Visa timer</string>
   <string name="show_timer_summ">Timer som visar hur lång tid det tar dig att svara</string>
   <string name="show_progress_bars">Visa förloppsmätare</string>
-  <string name="show_progress_bars_summ">Visar andel av dagens ja-svar och andelen av totala ja-svar för mogna kort</string>
+  <string name="show_progress_bars_summ">Visar andelen ja-svar för dagen och andelen totala ja-svar för mogna kort</string>
   <string name="show_whiteboard_summ">Låter dig skriva på skärmen</string>
   <string name="whiteboard_stroke_width">Linjevidd för Whiteboard</string>
   <string name="whiteboard_stroke_width_summ">Linjebredd: XXX</string>
@@ -248,7 +248,7 @@
   <string name="error">Fel</string>
   <string name="cancelling">Avbryter...</string>
   <string name="loading_personal_decks">Laddar tillgängliga egna kortlekar...</string>
-  <string name="connection_error_title">Attention</string>
+  <string name="connection_error_title">Observera</string>
   <string name="connection_error_return_message">Ett nätverksfel har uppstått. Försök igen eller avbryt och återgå till föregående skärm.</string>
   <string name="retry">Försök igen</string>
   <string name="cancel">Avbryt</string>
@@ -266,7 +266,7 @@
   <string name="fact">kort</string>
   <string name="facts">kort</string>
   <string name="saving_changes">Sparar ändringar...</string>
-  <string name="about_content">%1$s Flashcards for Android &lt;/h2&gt;&lt;p&gt; AnkiDroid can read .anki files produced by the desktop %2$s Anki&lt;/a&gt; software. &lt;/p&gt;&lt;p&gt; To help us make AnkiDroid better, please report any bug %3$s here&lt;/a&gt;; new feature ideas are very welcome too! Please use the %4$s wiki&lt;/a&gt; and say Hi on the %5$s forum&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid is %6$s open source software&lt;/a&gt;, so everyone is encouraged to %7$s join&lt;/a&gt; the %8$s contributors&lt;/a&gt; :-) Non-developers can also help, for instance by updating the wiki and screenshots, %9$s donating&lt;/a&gt; to Anki, or blogging about AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid is released under the %10$s GNU-GPL v3 license&lt;/a&gt; and the source code is available %11$s here&lt;/a&gt;.</string>
+  <string name="about_content">%1$s Flashcards för Android &lt;/h2&gt;&lt;p&gt; AnkiDroid kan läsa .anki-filer gjorda av %2$s Anki&lt;/a&gt; för skrivbordet. &lt;/p&gt;&lt;p&gt; För att göra AnkiDroid bättre, var vänlig rapportera buggar %3$s här&lt;/a&gt;; nya idéer på funktioner är också välkomna! Använd %4$s wikin&lt;/a&gt; och säg Hej på %5$s forumet&lt;/a&gt;.&lt;/p&gt;&lt;p&gt; AnkiDroid är %6$s öppen källkod&lt;/a&gt;, så alla är välkomna att %7$s gå med&lt;/a&gt; %8$s bidragsgivarna&lt;/a&gt; :-) Icke-programmerare kan också hjälpa till, exempelvis genom att uppdatera wikin och skärmbilder, %9$s donera&lt;/a&gt; till Anki, eller blogga om AnkiDroid! &lt;/p&gt;&lt;p&gt; AnkiDroid är släppt under %10$s GNU-GPL v3-licensen&lt;/a&gt; och källkoden finns tillgänglig %11$s här&lt;/a&gt;.</string>
   <string name="studyoptions_title">Studieinställningar</string>
   <string name="studyoptions_deck_name">Kortleksnamn</string>
   <string name="studyoptions_reviews_due">Repetitioner i kö:</string>
@@ -363,7 +363,7 @@
   <string name="sync_log_old_version">Synkroniseringsprotokollet har ändrats, var god uppgradera till senaste AnkiDroid. Se %s</string>
   <string name="sync_log_conflict_resolution_required">Kortleken har ändrats både lokalt och på servern. Var god öppna kortleken och utför synkronisering därifrån för att lösa konflikten.</string>
   <string name="sync_log_create_deck_failed">Kunde inte skapa kortlek på server: %1$s</string>
-  <string name="sync_log_finish_error">Error while sending finish direction to server</string>
+  <string name="sync_log_finish_error">Fel vid sändning av slutförandedirektiv till server</string>
   <string name="sync_conflict_title">Synkningskonflikt</string>
   <string name="sync_conflict_message">Kortleken %s har ändrats både lokalt och på servern. Vilken sida ska behållas?</string>
   <string name="sync_conflict_local">Behåll lokal</string>
@@ -418,7 +418,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Ta bort kortlek</string>
   <string name="delete_deck_title">Ta bort kortlek</string>
   <string name="delete_deck_message">Vill du verkligen ta bort kortleken %s?</string>
-  <string name="delete_deck_confirm">Ta bort det</string>
+  <string name="delete_deck_confirm">Ta bort den</string>
   <string name="new_version_title">Ny version:</string>
   <string name="new_version_message">Nya features:</string>
   <string name="no_tts_available_title">Text-till-tal</string>
