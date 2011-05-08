@@ -20,6 +20,7 @@
 package com.ichi2.libanki;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDb;
@@ -55,6 +56,10 @@ public class Scheduler {
 	public static final int REV_CARDS_OLD_FIRST = 0;
 	public static final int REV_CARDS_NEW_FIRST = 1;
 	public static final int REV_CARDS_RANDOM = 2;
+
+	// lech actions
+	public static final int LEECH_ACTION_SUSPEND = 0;
+	public static final int LEECH_ACTION_TAG_ONLY = 1;
 
 	// counts
 	public static final int COUNTS_NEW = 0;
@@ -208,16 +213,16 @@ public class Scheduler {
 //    }
 
 
-    private int countIdx(Card card) {
+    public int countIdx(Card card) {
     	return card.getQueue();
     }
 
 
-    private int answerButtons(Card card) {
+    public boolean lrnButtons(Card card) {
     	if (card.getQueue() == 2) {
-    		return 4;
+    		return false;
     	} else {
-    		return 3;
+    		return true;
     	}
     }
 
@@ -233,9 +238,28 @@ public class Scheduler {
     /**
      * A very rough estimate of time to review.
      */
-    private int eta() {
-    	// TODO
-		return 0;
+    public int eta() {
+    	Cursor cur = null;
+    	int cnt = 0;
+    	int sum = 0;
+    	try {
+            cur = mDb.getDatabase().rawQuery("SELECT count(), sum(taken) FROM (SELECT * FROM revlog " +
+            		"ORDER BY time DESC LIMIT 10)", null);
+            if (cur.moveToFirst()) {
+            	cnt = cur.getInt(0);
+            	sum = cur.getInt(1);
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        if (cnt == 0) {
+        	return 0;
+        }
+        double avg = sum / ((float) cnt);
+        int[] c = counts();
+        return (int)((avg * c[0] * 3 + avg * c[1] * 3 + avg * c[2]) / 1000.0);
     }
 
 
@@ -256,7 +280,7 @@ public class Scheduler {
     /**
      * Return counts for all groups, without building queue.
      */
-    private int[] allCounts() {
+    public int[] allCounts() {
     	JSONArray conf;
 		try {
 			conf = mDeck.getQconf().getJSONArray("groups");
@@ -272,7 +296,7 @@ public class Scheduler {
     }
 
 
-    private void _resetCounts() {
+    public void _resetCounts() {
     	_updateCutoff();
     	_resetLrnCount();
     	_resetRevCount();
@@ -715,9 +739,20 @@ public class Scheduler {
     	} else {
     		ivl = -_delayForGrade(conf, card.getGrade());
     	}
-    	mDb.getDatabase().execSQL("INSERT INTO revlog VALUES (" + (int)(Utils.now() * 1000) + ", " + card.getId() 
-    			+ ", " + ease + ", " + ivl + ", " + lastIvl + ", " + card.getFactor() + ", " + taken + ", " + type + ")");
+    	int time = (int)(Utils.now() * 1000);
+    	try {
+    		log(time, card.getId(), ease, ivl, lastIvl, card.getFactor(), taken, type);
+    	} catch (SQLiteConstraintException e) {
+    		log(time + 10, card.getId(), ease, ivl, lastIvl, card.getFactor(), taken, type);
+    	}
 	}
+
+
+    private void log(int time, int id, int ease, int ivl, int lastIvl, int factor, int taken, int type) {
+//    	mDb.getDatabase().execSQL("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?)", 
+//    			new Object[] {time, id, ease,
+//    			ivl, lastIvl, factor, taken, type});    	
+    }
 
 
     private void removeFailed() {
@@ -828,7 +863,7 @@ public class Scheduler {
 	    	card.setFactor(Math.max(1300, card.getFactor() - 200));
 	    	card.setDue(mToday + card.getIvl());
 	    	// put back in learn queue?
-	    	if (conf.getInt("relearn") == 1) {
+	    	if (conf.getString("relearn").equals("True")) {
 	    		card.setEDue(card.getDue());
 	    		card.setDue((int)(_delayForGrade(conf, 0) + Utils.now()));
 	    		card.setQueue(1);
@@ -869,10 +904,15 @@ public class Scheduler {
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-    	mDb.getDatabase().execSQL("INSERT INTO revlog VALUES (" + (int)(Utils.now() * 1000) + ", " + card.getId() 
-    			+ ", " + ease + ", " + card.getIvl() + ", " + card.getLastIvl() + ", " + card.getFactor() + ", " + taken + ", " + 1 + ")");
-	}
+    	int time = (int)(Utils.now() * 1000);
+    	try {
+    		log(time, card.getId(), ease, card.getId(), card.getLastIvl(), card.getFactor(), taken, 1);
+    	} catch (SQLiteConstraintException e) {
+    		log(time + 10, card.getId(), ease, card.getId(), card.getLastIvl(), card.getFactor(), taken, 1);
+    	}
+    }
 
+ 
     /**
      * Interval management
      * ***********************************************************************************************
@@ -978,12 +1018,12 @@ public class Scheduler {
 	    		Fact f = card.getFact();
 	    		f.addTag("leech");
 	    		f.flush();
+	    		card.setLeechFlag(true);
 	    		// handle
-	    		int a = conf.getInt("leechAction");
-	    		if (a == 0) {
+	    		if (conf.getInt("leechAction") == LEECH_ACTION_SUSPEND) {
 	    			suspendCards(new int[]{card.getId()});
+	    			card.setSuspendedFlag(true);
 	    		}
-	    		// TODO: show message
 	    	}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -1075,6 +1115,62 @@ public class Scheduler {
      * ***********************************************************************************************
      */
 
+    /**
+     * Return the next interval for CARD as a string.
+     */
+    public String nextIvlStr(Card card, int ease) {
+    	return Utils.fmtTimeSpan(nextIvl(card, ease), false);
+    }
+
+
+    /**
+     * Return the next interval for CARD, in seconds.
+     */
+    public int nextIvl(Card card, int ease) {
+		try {
+	    	if (card.getQueue() == 0 || card.getQueue() == 1) {
+	    		return _nextLrnIvl(card, ease);
+	    	} else if (ease == 1) {
+	    		// lapsed
+					JSONObject conf = _cardConf(card).getJSONObject("lapse");
+					if (conf.getString("relearn").equals("True")) {
+						return conf.getJSONArray("delays").getInt(0) * 60;
+					}
+					return _nextLapseIvl(card, conf) * 86400; 
+	    	} else {
+	    		// review
+	    		return _nextRevIvl(card, ease) * 86400;
+	    	}
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
+
+
+    private int _nextLrnIvl(Card card, int ease) {
+    	// this isn't easily extracted from the learn code
+    	JSONObject conf = _lrnConf(card);
+    	if (ease == 1) {
+    		// grade 0
+    		return _delayForGrade(conf, 0);
+    	} else if (ease == 3) {
+    		// early removal
+    		return _graduatingIvl(card, conf, true) * 86400;
+    	} else {
+    		int grade = card.getGrade() + 1;
+    		try {
+				if (grade >= conf.getJSONArray("delays").length()) {
+					// graduate
+					return _graduatingIvl(card, conf, false) * 86400;
+				} else {
+					// next level
+					return _delayForGrade(conf, grade);
+				}
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+    	}
+    }
 
     /**
      * Suspending
@@ -1129,7 +1225,7 @@ public class Scheduler {
     /**
      * Time spent learning today, in seconds.
      */
-    private int timeToday(int fid) {
+    public int timeToday(int fid) {
     	return (int) mDb.queryScalar("SELECT sum(taken / 1000.0) FROM revlog WHERE time > 1000 * " + (mDayCutoff - 86400));
     	// TODO: check for 0?
     }
@@ -1138,10 +1234,26 @@ public class Scheduler {
     /**
      * Number of cards answered today.
      */
-    private int repsToday(int fid) {
+    public int repsToday(int fid) {
     	return (int) mDb.queryScalar("SELECT count() FROM revlog WHERE time > " + (mDayCutoff - 86400));
     }
     
+
+    /**
+     * Number of mature cards.
+     */
+    public int matureCardCount() {
+    	return (int) mDb.queryScalar("SELECT count() FROM cards WHERE ivl >= " + 21);
+    }
+
+
+    /**
+     * Number of mature cards.
+     */
+    public int totalNewCardCount() {
+    	return (int) mDb.queryScalar("SELECT count() FROM cards WHERE queue = 0");
+    }
+
     /**
      * Dynamic indices
      * ***********************************************************************************************

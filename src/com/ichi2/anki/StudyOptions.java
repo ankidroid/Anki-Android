@@ -1404,12 +1404,12 @@ public class StudyOptions extends Activity {
             mTextReviewsDue.setText(String.valueOf(dueCount));
             mTextNewToday.setText(String.valueOf(counts[Scheduler.COUNTS_NEW]));
             String etastr = "-";
-//            int eta = deck.getETA();
-//            if (eta != -1) {
-//            	etastr = Integer.toString(eta);
-//            }
+            int eta = deck.getSched().eta();
+            if (eta != -1) {
+            	etastr = Integer.toString(eta / 60);
+            }
             mTextETA.setText(etastr);
-            int totalNewCount = deck.getTotalNewCount();
+            int totalNewCount = deck.getSched().totalNewCardCount();
             mTextNewTotal.setText(String.valueOf(totalNewCount));
 
             // Progress bars are not shown on small screens

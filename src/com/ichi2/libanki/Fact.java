@@ -43,7 +43,7 @@ public class Fact {
     private int mGId;
     private int mCrt;
     private int mMod;
-    private List<String> mTags;
+    private ArrayList<String> mTags = new ArrayList<String>();
     private String[] mFields;
     private String mData = "";
     
@@ -76,7 +76,6 @@ public class Fact {
 			mMId = model.getId();
 			mCrt = Utils.intNow();
 			mMod = mCrt;
-			mTags = new ArrayList<String>();
 			mFields = new String[mModel.fieldMap().size()];
 			mData = "";
 	        mFMap = mModel.fieldMap();
@@ -96,7 +95,7 @@ public class Fact {
             mGId = cursor.getInt(1);
             mCrt = cursor.getInt(2);
             mMod = cursor.getInt(3);
-            mTags = Arrays.asList(Utils.parseTags(cursor.getString(4)));
+            mTags.addAll(Arrays.asList(Utils.parseTags(cursor.getString(4))));
             mFields = Utils.splitFields(cursor.getString(5));
             mData = cursor.getString(6);
         } finally {
@@ -104,7 +103,7 @@ public class Fact {
                 cursor.close();
             }
         }
-        mModel = mDeck.getModel(mId);
+        mModel = mDeck.getModel(mMId);
         mFMap = mModel.fieldMap();
         return true;
     }

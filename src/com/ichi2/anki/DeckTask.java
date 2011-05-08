@@ -238,11 +238,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         try {
             if (oldCard != null) {
                 deck.getSched().answerCard(oldCard, ease);
-//                Log.i(AnkiDroidApp.TAG, "leech flag: " + oldCard.getLeechFlag());
             }
             newCard = deck.getSched().getCard();
             if (oldCard != null) {
-//                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
+                publishProgress(new TaskData(newCard, oldCard.getLeechFlag(), oldCard.getSuspendedFlag()));
             } else {
                 publishProgress(new TaskData(newCard));
             }

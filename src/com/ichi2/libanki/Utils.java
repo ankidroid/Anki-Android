@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Html;
 import android.util.Log;
@@ -95,6 +96,12 @@ public class Utils {
     private static TreeSet<Long> sIdTree;
     private static long sIdTime;
 
+    private static final int TIME_SECONDS = 0;
+    private static final int TIME_MINUTES = 1;
+    private static final int TIME_HOURS = 2;
+    private static final int TIME_DAYS = 3;
+    private static final int TIME_MONTHS = 4;
+    private static final int TIME_YEARS = 5;
 
     /* Prevent class from being instantiated */
     private Utils() { }
@@ -105,6 +112,92 @@ public class Utils {
     private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
+
+
+    /**
+     * Time handling
+     * ***********************************************************************************************
+     */
+
+    /**
+     * Return a string representing a time span (eg '2 days').
+     * @param inFormat: if true, return eg 'in 2 days'
+     */
+    public static String fmtTimeSpan(double time, boolean inFormat) {
+    	int type;
+    	int unit = 99;
+    	int point = 0;
+    	if (Math.abs(time) < 60 || unit < 1) {
+    		type = TIME_SECONDS;
+    	} else if (Math.abs(time) < 3599 || unit < 2) {
+    		type = TIME_MINUTES;
+    	} else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
+    		type = TIME_HOURS;
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 || unit < 4) {
+    		type = TIME_DAYS;
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 365 || unit < 5) {
+    		type = TIME_MONTHS;
+    		point += 1;
+    	} else {
+    		type = TIME_YEARS;
+    		point += 1;
+    	}
+    	time = convertSecondsTo(time, type);
+		time = Math.round(time * (10^point)) / (10^point);
+		
+    	Resources res = AnkiDroidApp.getAppResources();
+   		if (!inFormat) {
+   	    	if (time == 1){
+   	       		return res.getStringArray(R.array.next_review_s)[type];
+   	       	} else {
+   	       		return String.format(res.getStringArray(R.array.next_review_p)[type], formatDouble(type, time));
+   	    	}   			
+   		} else {
+   	    	if (time == 1){
+   	       		return res.getStringArray(R.array.next_review_in_s)[type]; 			       			
+   	       	} else {
+   	       		return String.format(res.getStringArray(R.array.next_review_in_p)[type], formatDouble(type, time));
+   	    	}   			
+   		}
+    }
+
+
+    private static String formatDouble(int type, double adjustedInterval) {
+    	if (type == 0 || (adjustedInterval * 10) % 10 == 0){
+			return String.valueOf((int) adjustedInterval);        			   			
+    	} else {
+       		return String.valueOf(adjustedInterval); 	
+		}
+    }
+
+
+    private static double convertSecondsTo(double seconds, int type) {
+    	switch (type) {
+    	case TIME_SECONDS:
+    		return seconds;
+    	case TIME_MINUTES:
+    		return seconds / 60.0;
+    	case TIME_HOURS:
+    		return seconds / 3600.0;    		
+    	case TIME_DAYS:
+    		return seconds / 86400.0;    		
+    	case TIME_MONTHS:
+    		return seconds / 2592000.0;    		
+    	case TIME_YEARS:
+    		return seconds / 31536000.0;
+		default:
+    		return 0;
+    	}
+    }
+
+
+    private static int _pluralCount(int time, int point) {
+    	if (point != 0) {
+    		return 2;
+    	}
+    	return Math.round(time);
+    }
+    
     
     public static long genID() {
         long time = System.currentTimeMillis();
@@ -488,57 +581,6 @@ public class Utils {
         return (int) now();
     }
 
-
-    public static String getReadableInterval(Context context, double numberOfDays) {
-    	return getReadableInterval(context, numberOfDays, false);
-    }
-
-
-    public static String getReadableInterval(Context context, double numberOfDays, boolean inFormat) {
-    	double adjustedInterval;
-    	int type;
-    	if (numberOfDays < 1) {
-    		// hours
-    		adjustedInterval = Math.max(1, Math.round(numberOfDays * 24));
-    		type = 0;
-    	} else if (numberOfDays < 30) {
-    		// days
-    		adjustedInterval = Math.round(numberOfDays);
-    		type = 1;
-    	} else if (numberOfDays < 360) {
-    		// months
-    		adjustedInterval = Math.round(numberOfDays / 3);
-    		adjustedInterval /= 10;
-    		type = 2;
-    	} else {
-    		// years
-    		adjustedInterval = Math.round(numberOfDays / 36.5);
-			adjustedInterval /= 10;
-    		type = 3;
-    	}
-   		if (!inFormat) {
-   	    	if (adjustedInterval == 1){
-   	       		return context.getResources().getStringArray(R.array.next_review_s)[type];
-   	       	} else {
-   	       		return String.format(context.getResources().getStringArray(R.array.next_review_p)[type], formatDouble(type, adjustedInterval));
-   	    	}   			
-   		} else {
-   	    	if (adjustedInterval == 1){
-   	       		return context.getResources().getStringArray(R.array.next_review_in_s)[type]; 			       			
-   	       	} else {
-   	       		return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval));
-   	    	}   			
-   		}
-    }
-
-
-    private static String formatDouble(int type, double adjustedInterval) {
-    	if (type == 0 || (adjustedInterval * 10) % 10 == 0){
-			return String.valueOf((int) adjustedInterval);        			   			
-    	} else {
-       		return String.valueOf(adjustedInterval); 	
-		}
-    }
 
     /**
      *  Returns the effective date of the present moment.

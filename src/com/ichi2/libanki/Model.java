@@ -155,13 +155,14 @@ public class Model {
         if (id != 0) {
         	fromDB(id);
         } else {
-            try {
-				mFields = new JSONArray(defaultField);
-	            mTemplates = new JSONArray(defaultTemplate);
-	            mConf = new JSONObject(defaultConf);
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
+        	// no model creation yet!
+//            try {
+//				mFields = new JSONArray(defaultField);
+//	            mTemplates = new JSONArray(defaultTemplate);
+//	            mConf = new JSONObject(defaultConf);
+//			} catch (JSONException e) {
+//				throw new RuntimeException(e);
+//			}
         }
     }
 
@@ -190,7 +191,7 @@ public class Model {
             }
 		}
         mTemplateMap = new TreeMap<Integer, JSONObject>();
-    	for (int i = 0; i < mFields.length(); i++) {
+    	for (int i = 0; i < mTemplates.length(); i++) {
     		try {
     			mTemplateMap.put(mTemplates.getJSONObject(i).getInt("ord"), mTemplates.getJSONObject(i));
 			} catch (JSONException e) {
@@ -256,14 +257,13 @@ public class Model {
 
 		try {
 	        // fields
-	        for (Map.Entry<String, Integer> entry : mFieldMap.entrySet()) {
-	        	JSONObject fconf;
-					fconf = mFields.getJSONObject(entry.getValue());
+			for (int i = 0; i < mFields.length(); i++) {
+				JSONObject fconf = mFields.getJSONObject(i);
 	        	sb.append(_fieldCSS(percentage, 
-	        			String.format(".fm%s-%s", Utils.hexifyID(mId), Utils.hexifyID(entry.getValue())), 
+	        			String.format(".fm%s-%s", Utils.hexifyID(mId), Utils.hexifyID(fconf.getInt("ord"))), 
 	        			fconf.getString("font"), fconf.getInt("qsize"), 
 	        			invertColor(fconf.getString("qcol"), night),
-	        			fconf.getString("rtl").equals("true"), fconf.getString("pre").equals("true")));
+	        			fconf.getString("rtl").equals("True"), fconf.getString("pre").equals("True")));
 	        }
 
 	        // templates

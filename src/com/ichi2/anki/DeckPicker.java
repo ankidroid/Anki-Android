@@ -611,7 +611,6 @@ public class DeckPicker extends Activity implements Runnable {
         		showDialog(DIALOG_SELECT_STATISTICS_PERIOD);
         	} else {
         		dialog.dismiss();
-		    	Resources res = getResources();
 		    	if (mFileList != null && mFileList.length > 0) {
 					String[] deckPaths = new String[mFileList.length];
 					int i = 0;
@@ -914,7 +913,7 @@ public class DeckPicker extends Activity implements Runnable {
 							.put("due", res
 									.getString(R.string.deckpicker_loaddeck));
 					data.put("new", "");
-					data.put("mod", String.format("%f", Deck
+					data.put("mod", String.format("%d", Deck
 							.getLastModified(absPath)));
 					data.put("filepath", absPath);
                     data.put("showProgress", "true");
@@ -1015,7 +1014,7 @@ public class DeckPicker extends Activity implements Runnable {
 					Message msg = Message.obtain();
 
 					// Check if the upgrade failed
-					if (version < Deck.DECK_VERSION) {
+					if (false){//version < Deck.DECK_VERSION) {
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_UPGRADE_FAILURE);
 						data.putInt("version", version);
@@ -1024,16 +1023,14 @@ public class DeckPicker extends Activity implements Runnable {
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					} else {
-						int[] counts = deck.getSched().counts();
+						int[] counts = deck.getSched().allCounts();
 						int dueCards = counts[Scheduler.COUNTS_REV] + counts[Scheduler.COUNTS_LRN];
 						int totalCards = deck.cardCount();
 						int newCards = counts[Scheduler.COUNTS_NEW];
-						int totalNewCards = deck.getTotalNewCount();
-						int matureCards = 0;//deck.getMatureCardCount(mCompletionBarRestrictToActive);
-						int totalRevCards = 0;//deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);
-						int totalCardsCompletionBar = totalRevCards + totalNewCards;
+						int totalNewCards = deck.getSched().totalNewCardCount();
+						int matureCards = deck.getSched().matureCardCount();
 
-//						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
+						String upgradeNotes = "";//Deck.upgradeNotesToMessages(deck, getResources());
 						deck.closeDeck(false);
 
 						data.putString("absPath", path);
@@ -1042,13 +1039,13 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("total", totalCards);
 						data.putInt("new", newCards);
 						data.putInt("totalNew", totalNewCards);
-//						data.putString("notes", upgradeNotes);
+						data.putString("notes", upgradeNotes);
 
 						int rateOfCompletionMat;
 						int rateOfCompletionAll;
-						if (totalCardsCompletionBar != 0) {
-						    rateOfCompletionMat = (matureCards * 100) / totalCardsCompletionBar;
-		                    rateOfCompletionAll = (totalRevCards * 100) / totalCardsCompletionBar; 
+						if (totalCards != 0) {
+						    rateOfCompletionMat = (matureCards * 100) / totalCards;
+		                    rateOfCompletionAll = ((totalCards - totalNewCards) * 100) / totalCards; 
 						} else {
 						    rateOfCompletionMat = 0;
 						    rateOfCompletionAll = 0;
@@ -1059,7 +1056,7 @@ public class DeckPicker extends Activity implements Runnable {
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
-//						mTotalTime += Math.max(deck.getETA(), 0);
+						mTotalTime += deck.getSched().eta() / 60;
 						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);

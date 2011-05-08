@@ -79,6 +79,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.LaTeX;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Scheduler;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.DiffEngine;
@@ -267,6 +268,8 @@ public class Reviewer extends Activity {
 
 	private Card mCurrentCard;
 	private int mCurrentEase;
+	private Scheduler mCurrentScheduler;
+	
 	private long mSessionTimeLimit;
 	private int mSessionCurrReps;
 	private float mScaleInPercent;
@@ -640,6 +643,7 @@ public class Reviewer extends Activity {
 			setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
 			closeReviewer();
 		} else {
+			mCurrentScheduler = deck.getSched();
 			mMediaDir = setupMedia(deck);
 			restorePreferences();
 			deck.resetUndo();
@@ -1421,50 +1425,67 @@ public class Reviewer extends Activity {
 		findViewById(R.id.progress_bars_back2).setBackgroundColor(bgColor);
 	}
 
+
 	private void showEaseButtons() {
 		Resources res = getResources();
 
-		// Set correct label for each button
-		if (true) {// mCurrentCard.isRev()) {
+		// set correct number of buttons
+		if (mCurrentScheduler.lrnButtons(mCurrentCard)) {
+			mEase1.setVisibility(View.VISIBLE);
+			mEase2.setVisibility(View.VISIBLE);
+			mEase3.setVisibility(View.VISIBLE);
+			mEase4.setVisibility(View.GONE);
+
+			// Set correct label for each button
+			mEase1.setText(res.getString(R.string.ease1_learning));
+			mEase2.setText(res.getString(R.string.ease2_learning));
+			mEase3.setText(res.getString(R.string.ease3_learning));
+
+			// Show next review time
+			if (mshowNextReviewTime) {
+				mNext1.setVisibility(View.VISIBLE);
+				mNext2.setVisibility(View.VISIBLE);
+				mNext3.setVisibility(View.VISIBLE);
+				mNext4.setVisibility(View.GONE);
+
+				mNext1.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 1));
+				mNext2.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 2));
+				mNext3.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 3));
+			}
+
+			// Focus default button
+			mEase2.requestFocus();
+			mNext3.setTextColor(mNextTimeTextColor);
+			mNext2.setTextColor(mNextTimeTextRecomColor);
+		} else {
+			mEase1.setVisibility(View.VISIBLE);
+			mEase2.setVisibility(View.VISIBLE);
+			mEase3.setVisibility(View.VISIBLE);
+			mEase4.setVisibility(View.VISIBLE);
+
+			// Set correct label for each button
 			mEase1.setText(res.getString(R.string.ease1_successive));
 			mEase2.setText(res.getString(R.string.ease2_successive));
 			mEase3.setText(res.getString(R.string.ease3_successive));
 			mEase4.setText(res.getString(R.string.ease4_successive));
 
-		} else {
-			mEase1.setText(res.getString(R.string.ease1_learning));
-			mEase2.setText(res.getString(R.string.ease2_learning));
-			mEase3.setText(res.getString(R.string.ease3_learning));
-			mEase4.setText(res.getString(R.string.ease4_learning));
-		}
+			// Show next review time
+			if (mshowNextReviewTime) {
+				mNext1.setVisibility(View.VISIBLE);
+				mNext2.setVisibility(View.VISIBLE);
+				mNext3.setVisibility(View.VISIBLE);
+				mNext4.setVisibility(View.VISIBLE);
 
-		// Show buttons
-		mEase1.setVisibility(View.VISIBLE);
-		mEase2.setVisibility(View.VISIBLE);
-		mEase3.setVisibility(View.VISIBLE);
-		mEase4.setVisibility(View.VISIBLE);
-
-		// Show next review time
-		if (mshowNextReviewTime) {
-			mNext1.setText(nextInterval(1));
-			mNext2.setText(nextInterval(2));
-			mNext3.setText(nextInterval(3));
-			mNext4.setText(nextInterval(4));
-			mNext1.setVisibility(View.VISIBLE);
-			mNext2.setVisibility(View.VISIBLE);
-			mNext3.setVisibility(View.VISIBLE);
-			mNext4.setVisibility(View.VISIBLE);
-		}
-
-		// Focus default button
-		if (true) {// mCurrentCard.isRev()) {
+				mNext1.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 1));
+				mNext2.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 2));
+				mNext3.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 3));
+				mNext4.setText(mCurrentScheduler.nextIvlStr(mCurrentCard, 4));
+			}
+			
+			// Focus default button
 			mEase3.requestFocus();
 			mNext2.setTextColor(mNextTimeTextColor);
 			mNext3.setTextColor(mNextTimeTextRecomColor);
-		} else {
-			mEase2.requestFocus();
-			mNext2.setTextColor(mNextTimeTextRecomColor);
-			mNext3.setTextColor(mNextTimeTextColor);
 		}
 	}
 
@@ -1604,43 +1625,36 @@ public class Reviewer extends Activity {
 
 	private void updateScreenCounts() {
 		Deck deck = AnkiDroidApp.deck();
-		// int eta = deck.getETA();
-		// if (deck.hasFinishScheduler() || eta < 1) {
-		// setTitle(deck.getDeckName());
-		// } else {
-		// setTitle(getResources().getQuantityString(R.plurals.reviewer_window_title,
-		// eta, deck.getDeckName(), eta));
-		// }
-		//
-		// int _failedSoonCount = deck.getFailedSoonCount();
-		// int _revCount = deck.getRevCount();
-		// int _newCount = deck.getNewCount();
-		//
-		// SpannableString failedSoonCount = new
-		// SpannableString(String.valueOf(_failedSoonCount));
-		// SpannableString revCount = new
-		// SpannableString(String.valueOf(_revCount));
-		// SpannableString newCount = new
-		// SpannableString(String.valueOf(_newCount));
-		//
-		// boolean isDue = true; // mCurrentCard.isDue();
-		// int type = mCurrentCard.getType();
-		//
-		// if (isDue && (type == Card.TYPE_NEW)) {
-		// newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
-		// }
-		// if (isDue && (type == Card.TYPE_REV)) {
-		// revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
-		// }
-		// if (isDue && (type == Card.TYPE_FAILED)) {
-		// failedSoonCount.setSpan(new UnderlineSpan(), 0,
-		// failedSoonCount.length(), 0);
-		// }
-		//
-		// mTextBarRed.setText(failedSoonCount);
-		// mTextBarBlack.setText(revCount);
-		// mTextBarBlue.setText(newCount);
+
+		int eta = mCurrentScheduler.eta() / 60;
+		if (eta < 1) {
+			setTitle(deck.getDeckName());
+		 } else {
+			 setTitle(getResources().getQuantityString(R.plurals.reviewer_window_title, eta, deck.getDeckName(), eta));
+		 }
+
+		 int[] counts = mCurrentScheduler.counts();
+		 SpannableString newCount = new SpannableString(String.valueOf(counts[Scheduler.COUNTS_NEW]));
+		 SpannableString lrnCount = new SpannableString(String.valueOf(counts[Scheduler.COUNTS_LRN]));
+		 SpannableString revCount = new SpannableString(String.valueOf(counts[Scheduler.COUNTS_REV]));
+
+		 switch (mCurrentCard.getQueue()) {
+		 case Card.TYPE_NEW:
+			 newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);			 
+			 break;
+		 case Card.TYPE_LRN:
+			 lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);			 
+			 break;
+		 case Card.TYPE_REV:
+			 revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);			 
+			 break;			 
+		 }
+		
+		 mTextBarRed.setText(newCount);
+		 mTextBarBlack.setText(lrnCount);
+		 mTextBarBlue.setText(revCount);
 	}
+
 
 	private void updateStatisticBars() {
 		if (mStatisticBarsMax == 0) {
@@ -1654,6 +1668,7 @@ public class Reviewer extends Activity {
 		// Utils.updateProgressBars(this, mGlobalBar, deck.getProgress(true),
 		// mStatisticBarsMax, mStatisticBarsHeight, true);
 	}
+
 
 	private void displayCardQuestion() {
 		sDisplayAnswer = false;
@@ -1927,8 +1942,7 @@ public class Reviewer extends Activity {
 
 		case HQIA_CARD_MODEL:
 			try {
-				return !mCurrentCard.getTemplate().getString("hideQ")
-						.equals("true");
+				return !mCurrentCard.getTemplate().getString("hideQ").equals("True");
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
@@ -2331,18 +2345,6 @@ public class Reviewer extends Activity {
 			Message msg = Message.obtain();
 			msg.obj = soundPath;
 			mHandler.sendMessage(msg);
-		}
-	}
-
-	private String nextInterval(int ease) {
-		Resources res = getResources();
-
-		if (ease == 1) {
-			return res.getString(R.string.soon);
-		} else {
-			return "";
-			// return Utils.getReadableInterval(this,
-			// mCurrentCard.nextInterval(mCurrentCard, ease));
 		}
 	}
 

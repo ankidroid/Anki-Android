@@ -31,7 +31,7 @@
 		android:paddingLeft="9dp"
 		android:layout_marginTop="4dp"
 		android:text=""
-		android:textColor="#ff0000" />
+		android:textColor="#0000ff" />
 	<TextView android:id="@+id/black_number"
 		android:layout_toRightOf="@+id/red_number"
 		android:layout_alignTop="@+id/red_number"
@@ -39,7 +39,7 @@
 		android:layout_height="wrap_content"
 		android:paddingLeft="8dp"
 		android:text=""
-		android:textColor="#000000" />
+		android:textColor="#ff0000" />
 	<TextView android:id="@+id/blue_number"
 		android:layout_toRightOf="@+id/black_number"
 		android:layout_alignTop="@+id/red_number"
@@ -47,7 +47,7 @@
 		android:layout_height="wrap_content"
 		android:paddingLeft="8dp"
 		android:text=""
-		android:textColor="#0000ff" />
+		android:textColor="#000000" />
 	<TextView android:id="@+id/choosen_answer"
 		android:layout_centerHorizontal="true"
 		android:layout_alignTop="@+id/red_number"

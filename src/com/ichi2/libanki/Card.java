@@ -48,6 +48,10 @@ import com.ichi2.anki.AnkiDroidApp;
 
 public class Card {
 
+    public static final int TYPE_NEW = 0;
+    public static final int TYPE_LRN = 1;
+    public static final int TYPE_REV = 2;    
+
     // BEGIN SQL table entries
     private int mId = 0;
     private int mFId;
@@ -77,9 +81,8 @@ public class Card {
 //    private double mFuzz = 0;
 
     // Leech flags, not read from database, only set to true during the actual suspension
-//    private boolean isLeechMarked;
-//    private boolean isLeechSuspended;
-
+    private boolean mIsLeechTagged;
+    private boolean mIsLeechSuspended;
 
     public Card(Deck deck) {
     	this(deck, 0);
@@ -620,24 +623,27 @@ public class Card {
     public String getData() {
         return mData;
     }
-//
-//
-//    public double nextInterval(Card card, int ease) {
-//        return mDeck.nextInterval(card, ease);
-//    }
-//
-//    // Leech flag
-//    public boolean getLeechFlag() {
-//        return isLeechMarked;
-//    }
-//    public void setLeechFlag(boolean flag) {
-//        isLeechMarked = flag;
-//    }
-//    // Suspended flag
-//    public boolean getSuspendedFlag() {
-//        return isLeechSuspended;
-//    }
-//    public void setSuspendedFlag(boolean flag) {
-//        isLeechSuspended = flag;
-//    }
+
+
+    // Leech flag
+    public boolean getLeechFlag() {
+        return mIsLeechTagged;
+    }
+
+
+    public void setLeechFlag(boolean flag) {
+    	mIsLeechTagged = flag;
+    }
+
+
+    // Suspended flag
+    public boolean getSuspendedFlag() {
+        return mIsLeechSuspended;
+    }
+
+
+    public void setSuspendedFlag(boolean flag) {
+        mIsLeechSuspended = flag;
+    }
+
 }

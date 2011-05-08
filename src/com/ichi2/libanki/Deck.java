@@ -191,6 +191,12 @@ public class Deck {
         deck.mStdSched = new Scheduler(deck);
         deck.mSched = deck.mStdSched;
 
+        if (rebuild) {
+            deck.mSched.reset();        	
+        } else {
+        	deck.mSched._resetCounts();
+        }
+
 //        deck.initDeckvarsCache();
 //
 //        if (deck.mVersion < Upgrade.DECK_VERSION) {
@@ -283,7 +289,7 @@ public class Deck {
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}
-            Log.i(AnkiDroidApp.TAG, "openDeck - Read " + cursor.getColumnCount() + " columns from decks table.");
+            Log.i(AnkiDroidApp.TAG, "openDeck - Read " + cursor.getColumnCount() + " columns from deck table.");
             return true;
         } finally {
             if (cursor != null) {
@@ -511,13 +517,13 @@ public class Deck {
     	for (Map.Entry<Integer, JSONObject> t : fact.getModel().getTemplates().entrySet()) {
     		JSONObject template = t.getValue();
     		try {
-				if (template.getString("actv").equals("true") || !checkActive) {
+				if (template.getString("actv").equals("True") || !checkActive) {
 					HashMap<String, String> now = _renderQA(fact.getModel(), t.getKey(), fact.getFields(), null, null);
 					HashMap<String, String> empty = _renderQA(fact.getModel(), t.getKey(), new String[fact.getFields().length], null, null);
 					if (now.get("q").equals(empty.get("q"))) {
 						continue;
 					}
-					if (!template.getString("emptyAns").equals("true")) {
+					if (!template.getString("emptyAns").equals("True")) {
 						if (now.get("a").equals(empty.get("a"))) {
 							continue;
 						}    				
@@ -570,11 +576,6 @@ public class Deck {
 
     public int cardCount() {
     	return (int) getDB().queryScalar("SELECT count() FROM cards WHERE crt != 0");
-    }
-
-
-    public int getTotalNewCount() {
-    	return (int) getDB().queryScalar("SELECT count() FROM cards WHERE queue = 0");
     }
 
 
@@ -703,7 +704,7 @@ public class Deck {
 	        format = format.replace("cloze", "cq:");
 	        d.put("q", model.getCmpldTemplate(ord)[0].execute(fields));
 	        format = template.getString("afmt");
-	        if (model.getConf().getString("clozectx").equals("true")) {
+	        if (model.getConf().getString("clozectx").equals("True")) {
 	        	format = format.replace("cloze:", "cactx:");
 	        } else {
 	        	format = format.replace("cloze:", "ca:");
@@ -2905,7 +2906,7 @@ public class Deck {
 
         try {
             cursor = AnkiDatabaseManager.getDatabase(deckPath).getDatabase().rawQuery(
-                    "SELECT mod" + " FROM decks" + " LIMIT 1", null);
+                    "SELECT mod" + " FROM deck" + " LIMIT 1", null);
             if (!cursor.moveToFirst()) {
                 value = -1;
             } else {
@@ -2927,7 +2928,7 @@ public class Deck {
 
 
     public static synchronized int getDeckVersion(String path) throws SQLException {
-        int version = (int) AnkiDatabaseManager.getDatabase(path).queryScalar("SELECT ver FROM decks LIMIT 1");
+        int version = (int) AnkiDatabaseManager.getDatabase(path).queryScalar("SELECT ver FROM deck LIMIT 1");
         return version;
     }
 
