@@ -308,7 +308,7 @@ public class Deck {
         values.put("qconf", mQconf.toString());
         values.put("conf", mConf.toString());
         values.put("data", mData.toString());
-        getDB().getDatabase().update("decks", values, null, null);
+        getDB().getDatabase().update("deck", values, null, null);
     }
 
 
@@ -703,7 +703,7 @@ public class Deck {
 	        format = format.replace("cloze", "cq:");
 	        d.put("q", model.getCmpldTemplate(ord)[0].execute(fields));
 	        format = template.getString("afmt");
-	        if (model.getConf().getInt("clozectx") != 0) {
+	        if (model.getConf().getString("clozectx").equals("true")) {
 	        	format = format.replace("cloze:", "cactx:");
 	        } else {
 	        	format = format.replace("cloze:", "ca:");

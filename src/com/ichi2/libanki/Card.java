@@ -71,7 +71,6 @@ public class Card {
     private Deck mDeck;
     private HashMap<String, String> mQA;
 	private Fact mFact;
-	private Model mModel;
 
     private double mTimerStarted;
     private double mTimerStopped;
@@ -144,7 +143,6 @@ public class Card {
                 cursor.close();
             }
         }
-        mQA = new HashMap<String, String>();
         return true;
     }
 
@@ -215,10 +213,11 @@ public class Card {
 
     public HashMap<String, String> _getQA(boolean reload) {
         if (mQA == null || reload) {
+            mQA = new HashMap<String, String>();
         	Cursor cursor = null;
         	String gname = "";
             try {
-                cursor = mDeck.getDB().getDatabase().rawQuery("SELECT name FROM groups WHERE id " + mGId, null);
+                cursor = mDeck.getDB().getDatabase().rawQuery("SELECT name FROM groups WHERE id = " + mGId, null);
                 while (cursor.moveToNext()) {
                 	gname = cursor.getString(0);
                 }
@@ -227,14 +226,15 @@ public class Card {
                     cursor.close();
                 }
             }
-            mQA = mDeck._renderQA(mModel, mOrd, getFact().getFields(), gname, getFact().stringTags());
+            mQA = mDeck._renderQA(getModel(), mOrd, getFact().getFields(), gname, getFact().stringTags());
         }
         return mQA;
     }
 
 
     public String _withClass(String txt, String extra) {
-        return "<div class=\"" + cssClass() + " " + extra + "\">" + txt + "</div>";
+        return new StringBuilder().append("<div class=\"").append(cssClass())
+        	.append(" ").append(extra).append("\">").append(txt).append("</div>").toString();
     }
 
 
@@ -247,7 +247,7 @@ public class Card {
 
 
     public Model getModel() {
-    	return mDeck.getModel(getFact().getId());
+    	return mDeck.getModel(getFact().getMId());
     }
 
 
@@ -258,7 +258,8 @@ public class Card {
 
     public String cssClass() {
         try {
-			return "cm" + Utils.hexifyID(getModel().getId()) + "-" + Utils.hexifyID(getTemplate().getInt("ord"));
+			return new StringBuilder().append("cm").append(Utils.hexifyID(getModel().getId()))
+			.append("-").append(Utils.hexifyID(getTemplate().getInt("ord"))).toString();
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}

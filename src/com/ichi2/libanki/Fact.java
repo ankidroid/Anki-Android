@@ -92,19 +92,19 @@ public class Fact {
                 Log.w(AnkiDroidApp.TAG, "Fact.java (constructor): No result from query.");
                 return false;
             }
-            mId = cursor.getInt(0);
-            mMId = cursor.getInt(1);
-            mGId = cursor.getInt(2);
-            mCrt = cursor.getInt(3);
-            mMod = cursor.getInt(4);
-            mTags = Arrays.asList(Utils.parseTags(cursor.getString(5)));
-            mFields = Utils.splitFields(cursor.getString(6));
-            mData = cursor.getString(7);
+            mMId = cursor.getInt(0);
+            mGId = cursor.getInt(1);
+            mCrt = cursor.getInt(2);
+            mMod = cursor.getInt(3);
+            mTags = Arrays.asList(Utils.parseTags(cursor.getString(4)));
+            mFields = Utils.splitFields(cursor.getString(5));
+            mData = cursor.getString(6);
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
+        mModel = mDeck.getModel(mId);
         mFMap = mModel.fieldMap();
         return true;
     }

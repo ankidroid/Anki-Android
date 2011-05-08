@@ -510,7 +510,7 @@ public class Scheduler {
     private void _resetLrnCount() {
         try {
 			mLrnCount = (int) mDb.queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE queue = 1 " + 
-			        _groupLimit() + " AND due < " + (Utils.intNow() + mDeck.getQconf().getInt("collapseTime")) + " LIMIT " + mReportLimit);
+			        _groupLimit() + " AND due < " + (Utils.intNow() + mDeck.getQconf().getInt("collapseTime")) + " LIMIT " + mReportLimit + ")");
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -693,7 +693,7 @@ public class Scheduler {
     	card.setIvl(_graduatingIvl(card, conf, early));
         card.setDue(mToday + card.getIvl());
         try {
-			card.setFactor(conf.getInt("initalFactor"));
+			card.setFactor(conf.getInt("initialFactor"));
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
@@ -743,7 +743,7 @@ public class Scheduler {
 
     private void _resetRevCount() {
     	mRevCount = (int) mDb.queryScalar("SELECT count() FROM (SELECT id FROM cards " +
-    			"WHERE queue = 2 " + _groupLimit() + " AND due <= " + mToday + "LIMIT " + 
+    			"WHERE queue = 2 " + _groupLimit() + " AND due <= " + mToday + " LIMIT " + 
     			mReportLimit + ")");
 	}
 

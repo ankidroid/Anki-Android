@@ -126,7 +126,7 @@ public class Model {
     private AnkiDb mDb;
 
     /** Map for compiled Mustache Templates */
-    private HashMap<Integer, Template[]> mCmpldTemplateMap;
+    private HashMap<Integer, Template[]> mCmpldTemplateMap = new HashMap<Integer, Template[]>();
 
     /** Map for convenience and speed which contains FieldNames from current model */
     private TreeMap<String, Integer> mFieldMap = new TreeMap<String, Integer>();
@@ -170,7 +170,7 @@ public class Model {
         Cursor cursor = null;
         try {
             cursor = mDb.getDatabase().rawQuery(
-                    "SELECT crt, mod, name, flds, tmpls, conf, css FROM cards WHERE id = " + id, null);
+                    "SELECT crt, mod, name, flds, tmpls, conf, css FROM models WHERE id = " + id, null);
             if (!cursor.moveToFirst()) {
                 Log.w(AnkiDroidApp.TAG, "Card.java (fromDB(id)): No result from query.");
                 return false;
