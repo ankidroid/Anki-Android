@@ -1368,14 +1368,12 @@ public class StudyOptions extends Activity {
     	Resources res = getResources();
         Deck deck = AnkiDroidApp.deck();
         if (deck != null) {
-//    		int failedCards = deck.getFailedDelayedCount();
-//            int revCards = deck.getNextDueCards(1);
-//            int revFailedCards = failedCards + revCards;
-//            int newCards = deck.getNextNewCards();
-//            int eta = deck.getETA(failedCards, revCards, newCards, true);
-//            String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
-//            String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
-//            mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message, revFailedCards, revFailedCards, newCardsText, etaText));
+    		int newCards = deck.getSched().newTomorrow();
+            int revCards = deck.getSched().revTomorrow() + deck.getSched().lrnTomorrow();
+            int eta = 0; // TODO
+            String newCardsText = res.getQuantityString(R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
+            String etaText = res.getQuantityString(R.plurals.studyoptions_congrats_eta, eta, eta);
+            mTextCongratsMessage.setText(res.getQuantityString(R.plurals.studyoptions_congrats_message, revCards, revCards, newCardsText, etaText));
         }
     }
 
@@ -1547,7 +1545,9 @@ public class StudyOptions extends Activity {
                 return true;
 
             case MENU_ADD_FACT:
-            	startActivityForResult(new Intent(StudyOptions.this, FactAdder.class), ADD_FACT);
+            	Intent intent = new Intent(StudyOptions.this, CardEditor.class);
+            	intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+            	startActivityForResult(intent, ADD_FACT);
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                     MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
                 }

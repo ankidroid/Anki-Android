@@ -41,7 +41,6 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -350,7 +349,9 @@ public class CardBrowser extends Activity {
                         true));
                 return true;
             case MENU_ADD_FACT:
-                startActivityForResult(new Intent(CardBrowser.this, FactAdder.class), ADD_FACT);
+            	Intent intent = new Intent(CardBrowser.this, CardEditor.class);
+            	intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+            	startActivityForResult(intent, ADD_FACT);
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                     MyAnimation.slide(CardBrowser.this, MyAnimation.LEFT);
                 }
@@ -667,8 +668,8 @@ public class CardBrowser extends Activity {
                     data.put("id", item[0]);
                     data.put("question", item[1]);
                     data.put("answer", item[2]);
-                    data.put("marSus", item[3]);
-                    data.put("tags", item[4]);
+                    data.put("marSus", "00");//item[3]);
+                    data.put("tags", "");//item[4]);
                     mAllCards.add(data);
                 }
                 updateCardsList();

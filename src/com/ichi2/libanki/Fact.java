@@ -22,6 +22,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.json.JSONException;
@@ -43,7 +44,7 @@ public class Fact {
     private int mGId;
     private int mCrt;
     private int mMod;
-    private ArrayList<String> mTags = new ArrayList<String>();
+    private String[] mTags;
     private String[] mFields;
     private String mData = "";
     
@@ -66,7 +67,7 @@ public class Fact {
         mId = id;
         if (mId != 0) {
         	fromDb(id);
-        } else {
+        } else if (model != null) {
         	mModel = model;
         	try {
 				mGId = mDeck.defaultGroup(model.getConf().getInt("gid"));
@@ -76,11 +77,13 @@ public class Fact {
 			mMId = model.getId();
 			mCrt = Utils.intNow();
 			mMod = mCrt;
-			mFields = new String[mModel.fieldMap().size()];
-			mData = "";
+			mTags = new String[]{""};
 	        mFMap = mModel.fieldMap();
+			mFields = new String[mFMap.size()];
+			mData = "";
         }
     }
+
 
     private boolean fromDb(int id) {
        Cursor cursor = null;
@@ -95,7 +98,7 @@ public class Fact {
             mGId = cursor.getInt(1);
             mCrt = cursor.getInt(2);
             mMod = cursor.getInt(3);
-            mTags.addAll(Arrays.asList(Utils.parseTags(cursor.getString(4))));
+            mTags = Utils.parseTags(cursor.getString(4));
             mFields = Utils.splitFields(cursor.getString(5));
             mData = cursor.getString(6);
         } finally {
@@ -119,14 +122,14 @@ public class Fact {
     	sb.append(mGId).append(", ");
     	sb.append(mCrt).append(", ");
     	sb.append(mMod).append(", ");
-    	sb.append(stringTags()).append(", ");
-    	sb.append(joinedFields()).append(", ");
-    	sb.append(mFields[mModel.sortIdx()]).append(", ");
-    	sb.append(mData).append(")");
+    	sb.append("\"").append(stringTags()).append("\", ");
+    	sb.append("\"").append(joinedFields()).append("\", ");
+    	sb.append("\"").append(mFields[mModel.sortIdx()]).append("\", ");
+    	sb.append("\"").append(mData).append("\")");
     	Cursor cur = null;
         try {
         	cur = mDeck.getDB().getDatabase().rawQuery(sb.toString(), null);
-        	if (!cur.moveToFirst()) {
+        	if (cur.moveToFirst()) {
         		mId = cur.getInt(0);    		
         	}
         } finally {
@@ -178,20 +181,42 @@ public class Fact {
         return mFields;
     }
 
-    
-    
+
+    /**
+     * set the value of a field
+     */
+    public void setFields(String name, String value) {
+        mFields[_fieldOrd(name)] = value;
+    }
+
+
+    public int _fieldOrd(String key) {
+        return mFMap.get(key);
+    }
+
+
+    public String fieldName(int ord) {
+    	for (Entry<String, Integer> e : mFMap.entrySet()) {
+    		if (e.getValue() == ord) {
+    			return e.getKey();
+    		}
+    	}
+    	return null;
+    }
+
+
     /**
      * Tags
      * ***********************************************************************************************
      */
 
     public boolean hasTag(String tag) {
-    	return Utils.hasTag(tag, mTags);
+    	return Utils.hasTag(tag, Arrays.asList(mTags));
     }
 
 
     public String stringTags() {
-    	return Utils.canonifyTags(mTags.toString());
+    	return Utils.canonifyTags(mTags);
     }
 
 
@@ -202,14 +227,23 @@ public class Fact {
     			other.add(t);
     		}
     	}
-    	mTags.clear();
-    	mTags.addAll(other);
+    	mTags = (String[]) other.toArray();
     }
 
 
     public void addTag(String tag) {
     	// duplicates will be stripped on save
-    	mTags.add(tag);
+    	String[] oldtags = mTags;
+    	mTags = new String[oldtags.length + 1];
+    	for (int i = 0; i < mTags.length - 1; i++) {
+    		mTags[i] = oldtags[i];
+    	}
+    	mTags[mTags.length - 1] = tag;
+    }
+
+
+    public void setTags(String tags) {
+    	mTags = Utils.parseTags(tags);
     }
 
     /**

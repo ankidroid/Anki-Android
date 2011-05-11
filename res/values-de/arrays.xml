@@ -66,6 +66,22 @@
     <item>In der Reihenfolge des Hinzufügens</item>
     <item>In umgekehrter Reihenfolge des Hinzufügens</item>
   </string-array>
+  	<string-array name="next_review_s">
+		<item>1 Sekunde</item>
+		<item>1 Minute</item>
+		<item>1 Stunde</item>
+		<item>1 Tag</item>
+		<item>1 Monat</item>
+		<item>1 Jahr</item>
+	</string-array>
+	<string-array name="next_review_p">
+		<item>%s Sekunden</item>
+		<item>%s Minuten</item>
+		<item>%s Stunden</item>
+		<item>%s Tage</item>
+		<item>%s Monate</item>
+		<item>%s Jahre</item>
+	</string-array>
   <string-array name="next_review_in_s">
     <item>in 1 Stunde</item>
     <item>in 1 Tag</item>

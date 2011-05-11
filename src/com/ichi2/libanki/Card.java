@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.libanki.Deck.QAData;
 
 /**
  * A card is a presentation of a fact, and has two sides: a question and an answer. Any number of fields can appear on
@@ -170,7 +171,7 @@ public class Card {
     	sb.append(mGrade).append(", ");
     	sb.append(mCycles).append(", ");
     	sb.append(mEDue).append(", ");
-    	sb.append(mData).append(")");
+    	sb.append("\"").append(mData).append("\")");
     	mDeck.getDB().getDatabase().execSQL(sb.toString());
     }
 
@@ -229,7 +230,7 @@ public class Card {
                     cursor.close();
                 }
             }
-            mQA = mDeck._renderQA(getModel(), mOrd, getFact().getFields(), gname, getFact().stringTags());
+            mQA = mDeck._renderQA(getModel(), gname, mDeck.new QAData(mId, mFId, getModel().getId(), mGId, mOrd, getFact().stringTags(), getFact().joinedFields()));
         }
         return mQA;
     }

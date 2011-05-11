@@ -140,9 +140,9 @@ public class Media {
                         count, Utils.now(), file));
         } else if (count > 0) {
             String sum = Utils.fileChecksum(file);
-            deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "INSERT INTO media " +
-                    "(id, filename, size, created, originalPath, description) " +
-                    "VALUES (%d, '%s', %d, %f, '%s', '')", Utils.genID(), file, count, Utils.now(), sum));
+//            deck.getDB().getDatabase().execSQL(String.format(Utils.ENGLISH_LOCALE, "INSERT INTO media " +
+//                    "(id, filename, size, created, originalPath, description) " +
+//                    "VALUES (%d, '%s', %d, %f, '%s', '')", Utils.genID(), file, count, Utils.now(), sum));
         }
     }
 

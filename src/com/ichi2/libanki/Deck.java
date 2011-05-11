@@ -36,6 +36,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
@@ -150,10 +151,10 @@ public class Deck {
 //    private boolean mNewEarly;
 //    private boolean mReviewEarly;
 //
-//    /**
-//     * Undo/Redo variables.
-//     */
-//    private Stack<UndoRow> mUndoStack;
+    /**
+     * Undo/Redo variables.
+     */
+    private LinkedList<UndoRow> mUndoQueue = new LinkedList<UndoRow>();
 //    private Stack<UndoRow> mRedoStack;
 //    private boolean mUndoEnabled = false;
 //    private Stack<UndoRow> mUndoRedoStackToRecord = null;
@@ -192,7 +193,7 @@ public class Deck {
         deck.mSched = deck.mStdSched;
 
         if (rebuild) {
-            deck.mSched.reset();        	
+            deck.mSched.reset();
         } else {
         	deck.mSched._resetCounts();
         }
@@ -249,20 +250,7 @@ public class Deck {
 //        assert Math.abs(dbMod - oldMod) < 1.0e-9;
 //        assert deck.mModified == oldMod;
 //
-////        // 4.3.2011: deactivated since it's not used anywhere
-////        // Create a temporary view for random new cards. Randomizing the cards by themselves
-////        // as is done in desktop Anki in Deck.randomizeNewCards() takes too long.
-////        try {
-////            deck.getDB().getDatabase().execSQL(
-////                    "CREATE TEMPORARY VIEW acqCardsRandom AS SELECT * FROM cards " + "WHERE type = " + Card.TYPE_NEW
-////                            + " AND isDue = 1 ORDER BY RANDOM()");
-////        } catch (SQLException e) {
-////            /* Temporary view may still be present if the DB has not been closed */
-////            Log.i(AnkiDroidApp.TAG, "Failed to create temporary view: " + e.getMessage());
-////        }
-//
-//        // Initialize Undo
-//        deck.initUndo();
+        // Initialize Undo
         return deck;
     }
 
@@ -432,7 +420,7 @@ public class Deck {
     /**
      * Return a new fact with the current model.
      */
-    public Fact newFact(Long modelId) {
+    public Fact newFact(int modelId) {
         return new Fact(this, currentModel());
     }
 
@@ -514,16 +502,19 @@ public class Deck {
     }
     private JSONObject[] findTemplates(Fact fact, boolean checkActive) {
     	ArrayList<JSONObject> ok = new ArrayList<JSONObject>();
+    	Model model = fact.getModel();
     	for (Map.Entry<Integer, JSONObject> t : fact.getModel().getTemplates().entrySet()) {
     		JSONObject template = t.getValue();
     		try {
-				if (template.getString("actv").equals("True") || !checkActive) {
-					HashMap<String, String> now = _renderQA(fact.getModel(), t.getKey(), fact.getFields(), null, null);
-					HashMap<String, String> empty = _renderQA(fact.getModel(), t.getKey(), new String[fact.getFields().length], null, null);
+				if (template.getString("actv").toLowerCase().equals("true") || !checkActive) {
+					QAData data = new QAData(1, 1, model.getId(), 1, template.getInt("ord"), "", fact.joinedFields());
+					HashMap<String, String> now = _renderQA(model, null, data);
+					data.mFields = "";
+					HashMap<String, String> empty = _renderQA(model, null, data);
 					if (now.get("q").equals(empty.get("q"))) {
 						continue;
 					}
-					if (!template.getString("emptyAns").equals("True")) {
+					if (!template.getString("emptyAns").toLowerCase().toLowerCase().equals("true")) {
 						if (now.get("a").equals(empty.get("a"))) {
 							continue;
 						}    				
@@ -646,70 +637,84 @@ public class Deck {
      * ***********************************************************************************************
      */
 
-//    public ... renderQA() {
-//    	return renderQA(null, "card");
-//    }
-//    public ... renderQA(int[] ids, String type) {
-//    	String where;
-//    	if (type.equals("card")) {
-//    		where = "AND c.id IN " + Utils.ids2str(ids);
-//    	} else if (type.equals("fact")) {
-//    		where = "AND f.id IN " + Utils.ids2str(ids);
-//    	} else if (type.equals("model")) {
-//    		where = "AND m.id IN " + Utils.ids2str(ids);
-//    	} else if (type.equals("all")) {
-//    		where = "";
-//    	}
-//    	LinkedHashMap<Integer, Model> mods = models();
-//    	LinkedHashMap<Integer, String> groups = new TreeMap<Integer, String>();
-//    	Cursor cur = null;
-//    	try {
-//            cur = getDB().getDatabase().rawQuery("SELECT id, name FROM groups", null);
-//            while (cur.moveToNext()) {
-//            	groups.put(cursor.getInt(0), cursor.getString(1));
-//            }
-//        } finally {
-//            if (cur != null && !cur.isClosed()) {
-//                cur.close();
-//            }
-//        }
-//
-//        return [self._renderQA(mods[row[2]], groups[row[3]], row)
-//                for row in self._qaData(where)]
-//    }
+    public ArrayList<String[]> renderQA() {
+    	return renderQA(null, "card");
+    }
+    public ArrayList<String[]> renderQA(int[] ids, String type) {
+    	return renderQA(ids, type, true);
+    }
+    public ArrayList<String[]> renderQA(int[] ids, String type, boolean enrichWithClass) {
+    	String where = "";
+    	if (type.equals("card")) {
+    		where = "AND c.id IN " + Utils.ids2str(ids);
+    	} else if (type.equals("fact")) {
+    		where = "AND f.id IN " + Utils.ids2str(ids);
+    	} else if (type.equals("model")) {
+    		where = "AND m.id IN " + Utils.ids2str(ids);
+    	} else if (type.equals("all")) {
+    		where = "";
+    	}
+    	LinkedHashMap<Integer, Model> mods = models();
+    	LinkedHashMap<Integer, String> groups = new LinkedHashMap<Integer, String>();
+    	Cursor cur = null;
+    	try {
+            cur = getDB().getDatabase().rawQuery("SELECT id, name FROM groups", null);
+            while (cur.moveToNext()) {
+            	groups.put(cur.getInt(0), cur.getString(1));
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        ArrayList<String[]> result = new ArrayList<String[]>();
+        HashMap<String, String> qa = new HashMap<String, String>();
+        for (QAData row : _qaData(where)) {
+        	qa = _renderQA(mods.get(row.mMId), groups.get(row.mGId), row, enrichWithClass);
+        	result.add(new String[]{qa.get("id"), qa.get("q"), qa.get("a")});
+        }
+        return result;
+    }
 
     /**
      * Returns hash of id, question, answer.
      */
-    public HashMap<String, String> _renderQA(Model model, int ord, String[] flist, String gname, String tags) {
+    public HashMap<String, String> _renderQA(Model model, String gname, QAData data) {
+    	return _renderQA(model, gname, data, true);
+    }
+	public HashMap<String, String> _renderQA(Model model, String gname, QAData data, boolean enrichWithClass) {
     	Map<String, String> fields = new HashMap<String, String>();
+    	String[] flist = Utils.splitFields(data.mFields);
         for (Map.Entry<String, Integer> f : model.fieldMap().entrySet()) {
         	fields.put(f.getKey(), flist[f.getValue()]);
             if (fields.get(f.getKey()).length() != 0) {
-            	fields.put(f.getKey(), String.format("<span class=\"fm%s-%s\">%s</span>", 
-            			Utils.hexifyID(model.getId()), Utils.hexifyID(f.getValue()), fields.get(f.getKey())));
+            	if (enrichWithClass) {
+                	fields.put(f.getKey(), String.format("<span class=\"fm%s-%s\">%s</span>", 
+                			Utils.hexifyID(model.getId()), Utils.hexifyID(f.getValue()), fields.get(f.getKey())));            		
+            	}
             } else {
                 fields.put(f.getKey(), "");
             }
         }
-        fields.put("Tags", tags);
+        fields.put("Tags", data.mTags);
         fields.put("Model", model.getName());
         fields.put("Group", gname);
-        JSONObject template = model.getTemplate(ord);
+        JSONObject template = model.getTemplate(data.mOrd);
         try {
 			fields.put("Template", template.getString("name"));
 	        // render q & a
 	        HashMap<String, String> d = new HashMap<String, String>();
+	        d.put("id", Integer.toString(data.mCId));
 	        String format = template.getString("qfmt");
 	        format = format.replace("cloze", "cq:");
-	        d.put("q", model.getCmpldTemplate(ord)[0].execute(fields));
+	        d.put("q", model.getCmpldTemplate(data.mOrd)[0].execute(fields));
 	        format = template.getString("afmt");
-	        if (model.getConf().getString("clozectx").equals("True")) {
+	        if (model.getConf().getString("clozectx").toLowerCase().equals("true")) {
 	        	format = format.replace("cloze:", "cactx:");
 	        } else {
 	        	format = format.replace("cloze:", "ca:");
 	        }
-	        d.put("a", model.getCmpldTemplate(ord)[1].execute(fields));
+	        d.put("a", model.getCmpldTemplate(data.mOrd)[1].execute(fields));
 	        return d;
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
@@ -717,27 +722,49 @@ public class Deck {
     }
 
 
-//    /**
-//     * Return [cid, fid, mid, gid, ord, tags, flds] db query
-//     */
-//    public ... _qaData() {
-//	return _qaData("");
-//    }
-//    public ... _qaData(String where) {
-//    	Cursor cur = null;
-//    	try {
-//            cur = getDB().getDatabase().rawQuery("SELECT c.id, f.id, f.mid, c.gid, c.ord, " +
-//		+ "f.tags, f.flds FROM cards c, facts f WHERE c.fid == f.id " + where, null);
-//            while (cur.moveToNext()) {
-//            	... new QADataItem(cur.getInt(0), cur.getInt(1), cur.getInt(2), cur.getInt(3), cur.getInt(4), cur.getString(5), cur.getString(6));
-//            }
-//        } finally {
-//            if (cur != null && !cur.isClosed()) {
-//                cur.close();
-//            }
-//        }
-//    }
+    /**
+     * Return [cid, fid, mid, gid, ord, tags, flds] db query
+     */
+    public ArrayList<QAData> _qaData() {
+    	return _qaData("");
+    }
+    public ArrayList<QAData> _qaData(String where) {
+        ArrayList<QAData> data = new ArrayList<QAData>();
+    	Cursor cur = null;
+    	try {
+            cur = getDB().getDatabase().rawQuery("SELECT c.id, f.id, f.mid, c.gid, c.ord, " +
+            		 "f.tags, f.flds FROM cards c, facts f WHERE c.fid == f.id " + where, null);
+            while (cur.moveToNext()) {
+            	data.add(new QAData(cur.getInt(0), cur.getInt(1), cur.getInt(2), cur.getInt(3), cur.getInt(4), cur.getString(5), cur.getString(6)));
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        return data;
+    }
 
+
+    public class QAData {
+    	private int mCId;
+    	private int mFId;
+    	private int mMId;
+    	private int mGId;
+    	private int mOrd;
+    	private String mTags;
+    	private String mFields;
+
+    	QAData(int cid, int fid, int mid, int gid, int ord, String tags, String fields) {
+    		mCId = cid;
+    		mFId = fid;
+    		mMId = mid;
+    		mGId = gid;
+    		mOrd = ord;
+    		mTags = tags;
+    		mFields = fields;
+    	}
+    }
 
     /**
      * Tags
@@ -745,7 +772,8 @@ public class Deck {
      */
 
     public String[] tagList() {
-    	return (String[]) getDB().queryColumn(String.class, "SELECT name FROM tags ORDER BY name", 0).toArray();
+    	ArrayList<String> tags = getDB().queryColumn(String.class, "SELECT name FROM tags ORDER BY name", 0);
+    	return (String[]) tags.toArray(new String[tags.size()]);
     }
 
     /**
@@ -986,7 +1014,69 @@ public class Deck {
      * Undo
      * ***********************************************************************************************
      */
+    private class UndoRow {
+    	private int mType;
+    	private Card mCard;
 
+    	UndoRow(int type, Card card) {
+    		mType = type;
+    		mCard = card;
+    	}
+    }
+
+
+    /**
+     * [type, data]
+     * type 1 = review; type 2 = checkpoint
+     */
+    public void clearUndo() {
+    	mUndoQueue.clear();
+    }
+
+
+    public boolean undoAvailable() {
+    	return !mUndoQueue.isEmpty();
+    }
+
+
+    public boolean redoAvailable() {
+    	return false;
+    }
+
+
+    public void undo() {
+    	if (mUndoQueue.getLast().mType == 1) {
+    		_undoReview();
+    	} else {
+//    		_undoOp();
+    	}
+    }
+
+
+    public void markReview(Card card) {
+    	mUndoQueue.add(new UndoRow(1, new Card(this, card.getId())));
+    }
+
+
+    public void _undoReview() {
+    	Card card = mUndoQueue.removeLast().mCard;
+    	// write old data
+    	card.flushSched();
+    	// and delete revlog entry
+    	Cursor cur = null;
+    	int last = 0;
+    	try {
+            cur = getDB().getDatabase().rawQuery("SELECT time FROM revlog WHERE id = " + card.getId() + " ORDER BY time DESC LIMIT 1", null);
+            if (cur.moveToFirst()) {
+            	last = cur.getInt(0);
+            }
+		} finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+		getDB().getDatabase().execSQL("DELETE FROM revlog WHERE time = " + last);
+    }
 
     /**
      * DB maintenance
@@ -1268,39 +1358,6 @@ public class Deck {
 //    }
 //
 //
-//    private boolean modifiedSinceSave() {
-//        return mModified > mLastLoaded;
-//    }
-//
-//
-//
-//
-//
-//
-//    /*
-//     * Stats ******************************
-//     */
-//
-//    public double getProgress(boolean global) {
-//    	if (global) {
-//    		return mGlobalStats.getMatureYesShare();
-//    	} else {
-//    		return mDailyStats.getYesShare();
-//    	}
-//    }
-//
-//
-//    public int getETA() {
-//    	if (mDailyStats.getReps() >= 10 && mDailyStats.getAverageTime() > 0) {
-//    		return getETA(mFailedSoonCount, mRevCount, mNewCount, false);
-//		} else if (mGlobalStats.getAverageTime() > 0) {
-//			return getETA(mFailedSoonCount, mRevCount, mNewCount, true);
-//		} else {
-//			return -1;
-//		}
-//    }
-//
-//
 //    public int getETA(int failedCards, int revCards, int newCards, boolean global) {
 //    	double left;
 //    	double count;
@@ -1427,19 +1484,6 @@ public class Deck {
         }
     }
 
-    //    public boolean getPerDay() {
-//        return getBool("perDay");
-//    }
-//
-//
-//    public void setPerDay(boolean perDay) {
-//        if (perDay) {
-//            setVar("perDay", "1");
-//        } else {
-//            setVar("perDay", "0");
-//        }
-//    }
-//
 //
 //    public boolean getSuspendLeeches() {
 //        return getBool("suspendLeeches");
@@ -1857,30 +1901,6 @@ public class Deck {
 //    }
 //
 //
-//    public int getMarketTagId() {
-//    	if (markedTagId == 0) {
-//    		markedTagId = -1;
-//            Cursor cur = null;
-//            try {
-//                cur = getDB().getDatabase().rawQuery("SELECT id FROM tags WHERE tag = \"" + TAG_MARKED + "\"", null);
-//                while (cur.moveToNext()) {
-//                	markedTagId = cur.getInt(0);
-//                }
-//            } finally {
-//                if (cur != null && !cur.isClosed()) {
-//                    cur.close();
-//                }
-//            }
-//    	}
-//    	return markedTagId;
-//    }
-//
-//    
-//
-//    public void resetMarkedTagId() {
-//    	markedTagId = 0;
-//    }
-//    
 //    /*
 //     * Tags: adding/removing in bulk*********************************************************
 //     */
@@ -2010,404 +2030,6 @@ public class Deck {
 //        flushMod();
 //    }
 //
-//
-//    /*
-//     * Suspending*****************************
-//     */
-//
-//    /**
-//     * Suspend cards in bulk. Caller must .reset()
-//     *
-//     * @param ids List of card IDs of the cards that are to be suspended.
-//     */
-//    public void suspendCards(long[] ids) {
-//    	ContentValues values = new ContentValues();
-//        values.put("queue", "-1");
-//        values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-//        getDB().update(this, "cards", values, "id IN " + Utils.ids2str(ids), null, false);
-//        Log.i(AnkiDroidApp.TAG, "Cards suspended");
-//        flushMod();
-//    }
-//
-//
-//    /**
-//     * Unsuspend cards in bulk. Caller must .reset()
-//     *
-//     * @param ids List of card IDs of the cards that are to be unsuspended.
-//     */
-//    public void unsuspendCards(long[] ids) {
-//    	ContentValues values = new ContentValues();
-//        values.put("queue", "type");
-//        values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-//        getDB().update(this, "cards", values, "queue = -1 AND id IN " + Utils.ids2str(ids), null, false);
-//        Log.i(AnkiDroidApp.TAG, "Cards unsuspended");
-//        flushMod();
-//    }
-//
-//
-//    public boolean getSuspendedState(long id) {
-//        return (getDB().queryScalar("SELECT count(*) from cards WHERE id = " + id + " AND priority = -3") == 1);
-//    }
-//
-//
-//    /**
-//     * Bury all cards for fact until next session. Caller must .reset()
-//     *
-//     * @param Fact
-//     */
-//    public void buryFact(long factId, long cardId) {
-//        // TODO: Unbury fact after return to StudyOptions
-//        String undoName = UNDO_TYPE_BURY_CARD;
-//        setUndoStart(undoName, cardId);
-//        // libanki code:
-////        for (long cid : getCardsFromFactId(factId)) {
-////            Card card = cardFromId(cid);
-////            int type = card.getType();
-////            if (type == 0 || type == 1 || type == 2) {
-////                card.setPriority(card.getPriority() - 2);
-////                card.setType(type + 3);
-////                card.setDue(0);
-////            }
-////        }
-//        // This differs from libanki:
-//    	ContentValues values = new ContentValues();
-//        values.put("queue", "-2");
-//        values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-//        getDB().update(this, "cards", values, "queue >= 0 AND queue <= 2 AND factId = " + factId, null, false);
-//        setUndoEnd(undoName);
-//        flushMod();
-//    }
-//
-//
-//    /*
-//     * Cards CRUD*********************************************************
-//     */
-//
-//    /**
-//     * Bulk delete cards by ID. Caller must .reset()
-//     *
-//     * @param ids List of card IDs of the cards to be deleted.
-//     */
-//    public void deleteCards(List<String> ids) {
-//        Log.i(AnkiDroidApp.TAG, "deleteCards = " + ids.toString());
-//        String undoName = UNDO_TYPE_DELETE_CARD;
-//        if (ids.size() == 1) {
-//            setUndoStart(undoName, Long.parseLong(ids.get(0)));
-//        } else {
-//            setUndoStart(undoName);
-//        }
-//        // Bulk delete cards by ID
-//        if (ids != null && ids.size() > 0) {
-//            commitToDB();
-//            double now = Utils.now();
-//            Log.i(AnkiDroidApp.TAG, "Now = " + now);
-//            String idsString = Utils.ids2str(ids);
-//
-//            // Grab fact ids
-//            // ArrayList<String> factIds = ankiDB.queryColumn(String.class,
-//            // "SELECT factId FROM cards WHERE id in " + idsString,
-//            // 0);
-//
-//            // Delete cards
-//            getDB().delete(this, "cards", "id IN " + idsString, null);
-//
-//            // Note deleted cards
-//            for (String id : ids) {
-//                ContentValues values = new ContentValues();
-//                values.put("cardId", id);
-//                values.put("deletedTime", String.format(Utils.ENGLISH_LOCALE, "%f", now));
-//                getDB().insert(this, "cardsDeleted", null, values);
-//            }
-//
-//            // Gather affected tags (before we delete the corresponding cardTags)
-//            ArrayList<String> tags = getDB().queryColumn(String.class,
-//                    "SELECT tagId FROM cardTags WHERE cardId in " + idsString, 0);
-//
-//            // Delete cardTags
-//            getDB().delete(this, "cardTags", "cardId IN " + idsString, null);
-//
-//            // Find out if this tags are used by anything else
-//            ArrayList<String> unusedTags = new ArrayList<String>();
-//            for (String tagId : tags) {
-//                Cursor cursor = null;
-//                try {
-//                    cursor = getDB().getDatabase().rawQuery(
-//                            "SELECT * FROM cardTags WHERE tagId = " + tagId + " LIMIT 1", null);
-//                    if (!cursor.moveToFirst()) {
-//                        unusedTags.add(tagId);
-//                    }
-//                } finally {
-//                    if (cursor != null && !cursor.isClosed()) {
-//                        cursor.close();
-//                    }
-//                }
-//            }
-//
-//	    deleteUnusedTags();
-//
-//            // Remove any dangling fact
-//            deleteDanglingFacts();
-//            setUndoEnd(undoName);
-//            flushMod();
-//        }
-//    }
-//
-//
-//    /*
-//     * Facts CRUD*********************************************************
-//     */
-//
-//    /**
-//     * Add a fact to the deck. Return list of new cards
-//     */
-//    public Fact addFact(Fact fact, HashMap<Long, CardModel> cardModels) {
-//        return addFact(fact, cardModels, true);
-//    }
-//
-//
-//    public Fact addFact(Fact fact, HashMap<Long, CardModel> cardModels, boolean reset) {
-//        // TODO: assert fact is Valid
-//        // TODO: assert fact is Unique
-//        double now = Utils.now();
-//        // add fact to fact table
-//        ContentValues values = new ContentValues();
-//        values.put("id", fact.getId());
-//        values.put("modelId", fact.getModelId());
-//        values.put("created", now);
-//        values.put("modified", now);
-//        values.put("tags", fact.getTags());
-//        values.put("cache", 0);
-//        getDB().insert(this, "facts", null, values);
-//
-//        // get cardmodels for the new fact
-//        // TreeMap<Long, CardModel> availableCardModels = availableCardModels(fact);
-//        if (cardModels.isEmpty()) {
-//            Log.e(AnkiDroidApp.TAG, "Error while adding fact: No cardmodels for the new fact");
-//            return null;
-//        }
-//        // update counts
-//        mFactCount++;
-//
-//        // add fields to fields table
-//        for (Field f : fact.getFields()) {
-//            // Re-use the content value
-//            values.clear();
-//            values.put("value", f.getValue());
-//            values.put("id", f.getId());
-//            values.put("factId", f.getFactId());
-//            values.put("fieldModelId", f.getFieldModelId());
-//            values.put("ordinal", f.getOrdinal());
-//            getDB().insert(this, "fields", null, values);
-//        }
-//
-//        ArrayList<Long> newCardIds = new ArrayList<Long>();
-//        for (Map.Entry<Long, CardModel> entry : cardModels.entrySet()) {
-//            CardModel cardModel = entry.getValue();
-//            Card newCard = new Card(this, fact, cardModel, Utils.now());
-//            newCard.addToDb();
-//            newCardIds.add(newCard.getId());
-//            mCardCount++;
-//            mNewAvail++;
-//            Log.i(AnkiDroidApp.TAG, entry.getKey().toString());
-//        }
-//        commitToDB();
-//        // TODO: code related to random in newCardOrder
-//
-//        // Update card q/a
-//        fact.setModified(true, this);
-//        updateFactTags(new long[] { fact.getId() });
-//
-//        flushMod();
-//        if (reset) {
-//            reset();
-//        }
-//
-//        return fact;
-//    }
-//
-//
-//    /**
-//     * Bulk delete facts by ID. Don't touch cards, assume any cards have already been removed. Caller must .reset().
-//     *
-//     * @param ids List of fact IDs of the facts to be removed.
-//     */
-//    public void deleteFacts(List<String> ids) {
-//        Log.i(AnkiDroidApp.TAG, "deleteFacts = " + ids.toString());
-//        int len = ids.size();
-//        if (len > 0) {
-//            commitToDB();
-//            double now = Utils.now();
-//            String idsString = Utils.ids2str(ids);
-//            Log.i(AnkiDroidApp.TAG, "DELETE FROM facts WHERE id in " + idsString);
-//            getDB().delete(this, "facts", "id in " + idsString, null);
-//            Log.i(AnkiDroidApp.TAG, "DELETE FROM fields WHERE factId in " + idsString);
-//            getDB().delete(this, "fields", "factId in " + idsString, null);
-//            for (String id : ids) {
-//                ContentValues values = new ContentValues();
-//                values.put("factId", id);
-//                values.put("deletedTime", String.format(Utils.ENGLISH_LOCALE, "%f", now));
-//            	Log.i(AnkiDroidApp.TAG, "inserting into factsDeleted");
-//                getDB().insert(this, "factsDeleted", null, values);
-//            }
-//            setModified();
-//        }
-//    }
-//
-//
-//    /**
-//     * Delete any fact without cards.
-//     *
-//     * @return ArrayList<String> list with the id of the deleted facts
-//     */
-//    private ArrayList<String> deleteDanglingFacts() {
-//        Log.i(AnkiDroidApp.TAG, "deleteDanglingFacts");
-//        ArrayList<String> danglingFacts = getDB().queryColumn(String.class,
-//                "SELECT facts.id FROM facts WHERE facts.id NOT IN (SELECT DISTINCT factId from cards)", 0);
-//
-//        if (danglingFacts.size() > 0) {
-//            deleteFacts(danglingFacts);
-//        }
-//
-//        return danglingFacts;
-//    }
-//
-//
-//    /*
-//     * Models CRUD*********************************************************
-//     */
-//
-//    /**
-//     * Delete MODEL, and all its cards/facts. Caller must .reset() TODO: Handling of the list of models and currentModel
-//     *
-//     * @param id The ID of the model to be deleted.
-//     */
-//    public void deleteModel(String id) {
-//        Log.i(AnkiDroidApp.TAG, "deleteModel = " + id);
-//        Cursor cursor = null;
-//        boolean modelExists = false;
-//
-//        try {
-//            cursor = getDB().getDatabase().rawQuery("SELECT * FROM models WHERE id = " + id, null);
-//            // Does the model exist?
-//            if (cursor.moveToFirst()) {
-//                modelExists = true;
-//            }
-//        } finally {
-//            if (cursor != null && !cursor.isClosed()) {
-//                cursor.close();
-//            }
-//        }
-//
-//        if (modelExists) {
-//            // Delete the cards that use the model id, through fact
-//            ArrayList<String> cardsToDelete = getDB()
-//                    .queryColumn(
-//                            String.class,
-//                            "SELECT cards.id FROM cards, facts WHERE facts.modelId = " + id
-//                                    + " AND facts.id = cards.factId", 0);
-//            deleteCards(cardsToDelete);
-//
-//            // Delete model
-//            getDB().delete(this, "models", "id = " + id, null);
-//
-//            // Note deleted model
-//            ContentValues values = new ContentValues();
-//            values.put("modelId", id);
-//            values.put("deletedTime", Utils.now());
-//            getDB().insert(this, "modelsDeleted", null, values);
-//
-//            flushMod();
-//        }
-//    }
-//
-//
-//    public void deleteFieldModel(String modelId, String fieldModelId) {
-//        Log.i(AnkiDroidApp.TAG, "deleteFieldModel, modelId = " + modelId + ", fieldModelId = " + fieldModelId);
-//
-//        // Delete field model
-//        getDB().delete(this, "fields", "fieldModel = " + fieldModelId, null);
-//
-//        // Note like modified the facts that use this model
-//        getDB().getDatabase().execSQL(
-//                "UPDATE facts SET modified = " + String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now())
-//                        + " WHERE modelId = " + modelId);
-//
-//        // TODO: remove field model from list
-//
-//        // Update Question/Answer formats
-//        // TODO: All these should be done with the field object
-//        String fieldName = "";
-//        Cursor cursor = null;
-//        try {
-//            cursor = getDB().getDatabase().rawQuery("SELECT name FROM fieldModels WHERE id = " + fieldModelId, null);
-//            if (cursor.moveToNext()) {
-//                fieldName = cursor.getString(0);
-//            }
-//        } finally {
-//            if (cursor != null && !cursor.isClosed()) {
-//                cursor.close();
-//            }
-//        }
-//
-//        SQLiteStatement statement = null;
-//        try {
-//            cursor = getDB().getDatabase().rawQuery(
-//                    "SELECT id, qformat, aformat FROM cardModels WHERE modelId = " + modelId, null);
-//            String sql = "UPDATE cardModels SET qformat = ?, aformat = ? WHERE id = ?";
-//            statement = getDB().getDatabase().compileStatement(sql);
-//            while (cursor.moveToNext()) {
-//                String id = cursor.getString(0);
-//                String newQFormat = cursor.getString(1);
-//                String newAFormat = cursor.getString(2);
-//
-//                newQFormat = newQFormat.replace("%%(" + fieldName + ")s", "");
-//                newQFormat = newQFormat.replace("%%(text:" + fieldName + ")s", "");
-//                newAFormat = newAFormat.replace("%%(" + fieldName + ")s", "");
-//                newAFormat = newAFormat.replace("%%(text:" + fieldName + ")s", "");
-//
-//                statement.bindString(1, newQFormat);
-//                statement.bindString(2, newAFormat);
-//                statement.bindString(3, id);
-//
-//                statement.execute();
-//            }
-//        } finally {
-//            if (cursor != null && !cursor.isClosed()) {
-//                cursor.close();
-//            }
-//        }
-//        statement.close();
-//
-//        // TODO: updateCardsFromModel();
-//
-//        // Note the model like modified (TODO: We should use the object model instead handling the DB directly)
-//    	ContentValues values = new ContentValues();
-//        values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-//        getDB().update(this, "models", values, "id = " + modelId, null);
-//        flushMod();
-//    }
-//
-//
-//    public void deleteCardModel(String modelId, String cardModelId) {
-//        Log.i(AnkiDroidApp.TAG, "deleteCardModel, modelId = " + modelId + ", fieldModelId = " + cardModelId);
-//
-//        // Delete all cards that use card model from the deck
-//        ArrayList<String> cardIds = getDB().queryColumn(String.class,
-//                "SELECT id FROM cards WHERE cardModelId = " + cardModelId, 0);
-//        deleteCards(cardIds);
-//
-//        // I assume that the line "model.cardModels.remove(cardModel)" actually deletes cardModel from DB (I might be
-//        // wrong)
-//        getDB().delete(this, "cardModels", "id = " + cardModelId, null);
-//
-//        // Note the model like modified (TODO: We should use the object model instead handling the DB directly)
-//    	ContentValues values = new ContentValues();
-//        values.put("modified", String.format(Utils.ENGLISH_LOCALE, "%f", Utils.now()));
-//        getDB().update(this, "models", values, "id = " + modelId, null);
-//        flushMod();
-//    }
-//
-//
 //    // CSS for all the fields
 //    private String rebuildCSS() {
 //        StringBuilder css = new StringBuilder(512);
@@ -2501,45 +2123,6 @@ public class Deck {
 //        }
 //        setVar("hexCache", jsonObject.toString(), false);
 //    }
-//
-//    //
-//    // Syncing
-//    // *************************
-//    // Toggling does not bump deck mod time, since it may happen on upgrade and the variable is not synced
-//
-//    // public void enableSyncing() {
-//    // enableSyncing(true);
-//    // }
-//
-//    // public void enableSyncing(boolean ls) {
-//    // mSyncName = Utils.checksum(mDeckPath);
-//    // if (ls) {
-//    // mLastSync = 0;
-//    // }
-//    // commitToDB();
-//    // }
-//
-//    // private void disableSyncing() {
-//    // disableSyncing(true);
-//    // }
-//    // private void disableSyncing(boolean ls) {
-//    // mSyncName = "";
-//    // if (ls) {
-//    // mLastSync = 0;
-//    // }
-//    // commitToDB();
-//    // }
-//
-//    // public boolean syncingEnabled() {
-//    // return (mSyncName != null) && !(mSyncName.equals(""));
-//    // }
-//
-//    // private void checkSyncHash() {
-//    // if ((mSyncName != null) && !mSyncName.equals(Utils.checksum(mDeckPath))) {
-//    // disableSyncing();
-//    // }
-//    // }
-//
 //    /*
 //     * Undo/Redo*********************************************************
 //     */
@@ -2785,80 +2368,7 @@ public class Deck {
             Log.i(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
         }
     }
-//
-//
-//    /*
-//     * Utility functions (might be better in a separate class) *********************************************************
-//     */
-//
-//    /**
-//     * Return ID for tag, creating if necessary.
-//     *
-//     * @param tag the tag we are looking for
-//     * @param create whether to create the tag if it doesn't exist in the database
-//     * @return ID of the specified tag, 0 if it doesn't exist, and -1 in the case of error
-//     */
-//    private long tagId(String tag, Boolean create) {
-//        long id = 0;
-//
-//        try {
-//            id = getDB().queryScalar("select id from tags where tag = \"" + tag + "\"");
-//        } catch (SQLException e) {
-//            if (create) {
-//                ContentValues value = new ContentValues();
-//                value.put("tag", tag);
-//                id = getDB().insert(this, "tags", null, value);
-//            } else {
-//                id = 0;
-//            }
-//        }
-//        return id;
-//    }
-//
-//
-//    /**
-//     * Gets the IDs of the specified tags.
-//     *
-//     * @param tags An array of the tags to get IDs for.
-//     * @param create Whether to create the tag if it doesn't exist in the database. Default = true
-//     * @return An array of IDs of the tags.
-//     */
-//    private HashMap<String, Long> tagIds(String[] tags) {
-//        return tagIds(tags, true);
-//    }
-//
-//
-//    private HashMap<String, Long> tagIds(String[] tags, boolean create) {
-//        HashMap<String, Long> results = new HashMap<String, Long>();
-//
-//        if (create) {
-//            for (String tag : tags) {
-//                getDB().getDatabase().execSQL("INSERT OR IGNORE INTO tags (tag) VALUES ('" + tag + "')");
-//            }
-//        }
-//        if (tags.length != 0) {
-//            StringBuilder tagList = new StringBuilder(128);
-//            for (int i = 0; i < tags.length; i++) {
-//                tagList.append("'").append(tags[i]).append("'");
-//                if (i < tags.length - 1) {
-//                    tagList.append(", ");
-//                }
-//            }
-//            Cursor cur = null;
-//            try {
-//                cur = getDB().getDatabase().rawQuery(
-//                        "SELECT tag, id FROM tags WHERE tag in (" + tagList.toString() + ")", null);
-//                while (cur.moveToNext()) {
-//                    results.put(cur.getString(0).toLowerCase(), cur.getLong(1));
-//                }
-//            } finally {
-//                if (cur != null && !cur.isClosed()) {
-//                    cur.close();
-//                }
-//            }
-//        }
-//        return results;
-//    }
+
 //
 //    /**
 //     * Initialize an empty deck that has just been creating by copying the existing "empty.anki" file.
@@ -2946,14 +2456,5 @@ public class Deck {
     public Scheduler getSched() {
     	return mSched;
     }
-
-    public boolean undoAvailable() {
-    	return false;
-    }
-
-    public boolean redoAvailable() {
-    	return false;
-    }
-
 
 }

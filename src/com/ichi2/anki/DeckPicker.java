@@ -1029,6 +1029,7 @@ public class DeckPicker extends Activity implements Runnable {
 						int newCards = counts[Scheduler.COUNTS_NEW];
 						int totalNewCards = deck.getSched().totalNewCardCount();
 						int matureCards = deck.getSched().matureCardCount();
+						int eta = deck.getSched().eta() / 60;
 
 						String upgradeNotes = "";//Deck.upgradeNotesToMessages(deck, getResources());
 						deck.closeDeck(false);
@@ -1056,7 +1057,7 @@ public class DeckPicker extends Activity implements Runnable {
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
-						mTotalTime += deck.getSched().eta() / 60;
+						mTotalTime += eta;
 						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);

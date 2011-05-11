@@ -65,6 +65,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,6 +94,9 @@ public class Utils {
 
     private static final int DAYS_BEFORE_1970 = 719163;
 
+    private static NumberFormat mCurrentNumberFormat;
+    private static NumberFormat mCurrentPercentageFormat;
+
     private static TreeSet<Long> sIdTree;
     private static long sIdTime;
 
@@ -120,6 +124,24 @@ public class Utils {
      */
 
     /**
+     * Get the current time in seconds since January 1, 1970 UTC.
+     * @return the local system time in seconds
+     */
+    public static double now() {
+        return (System.currentTimeMillis() / 1000.0);
+    }
+
+
+    /**
+     * Get the current time in integer seconds since January 1, 1970 UTC.
+     * @return the local system time in integer seconds
+     */
+    public static int intNow() {
+        return (int) now();
+    }
+
+
+    /**
      * Return a string representing a time span (eg '2 days').
      * @param inFormat: if true, return eg 'in 2 days'
      */
@@ -137,37 +159,27 @@ public class Utils {
     		type = TIME_DAYS;
     	} else if (Math.abs(time) < 60 * 60 * 24 * 365 || unit < 5) {
     		type = TIME_MONTHS;
-    		point += 1;
+    		point = 1;
     	} else {
     		type = TIME_YEARS;
-    		point += 1;
+    		point = 1;
     	}
     	time = convertSecondsTo(time, type);
-		time = Math.round(time * (10^point)) / (10^point);
-		
+
     	Resources res = AnkiDroidApp.getAppResources();
    		if (!inFormat) {
    	    	if (time == 1){
    	       		return res.getStringArray(R.array.next_review_s)[type];
    	       	} else {
-   	       		return String.format(res.getStringArray(R.array.next_review_p)[type], formatDouble(type, time));
+   	       		return String.format(res.getStringArray(R.array.next_review_p)[type], fmtDouble(time, point));
    	    	}   			
    		} else {
    	    	if (time == 1){
    	       		return res.getStringArray(R.array.next_review_in_s)[type]; 			       			
    	       	} else {
-   	       		return String.format(res.getStringArray(R.array.next_review_in_p)[type], formatDouble(type, time));
+   	       		return String.format(res.getStringArray(R.array.next_review_in_p)[type], fmtDouble(time, point));
    	    	}   			
    		}
-    }
-
-
-    private static String formatDouble(int type, double adjustedInterval) {
-    	if (type == 0 || (adjustedInterval * 10) % 10 == 0){
-			return String.valueOf((int) adjustedInterval);        			   			
-    	} else {
-       		return String.valueOf(adjustedInterval); 	
-		}
     }
 
 
@@ -191,55 +203,94 @@ public class Utils {
     }
 
 
-    private static int _pluralCount(int time, int point) {
-    	if (point != 0) {
-    		return 2;
+    /**
+     * Locale
+     * ***********************************************************************************************
+     */
+
+    /**
+     * @return double with percentage sign
+     */
+    public static String fmtPercentage(Double value) {
+	return fmtPercentage(value, 0);
+    }
+    public static String fmtPercentage(Double value, int point) {
+    	// only retrieve the percentage format the first time
+    	if (mCurrentPercentageFormat == null) {
+    		mCurrentPercentageFormat = NumberFormat.getPercentInstance(Locale.getDefault());
     	}
-    	return Math.round(time);
-    }
-    
-    
-    public static long genID() {
-        long time = System.currentTimeMillis();
-        long id;
-        long rand;
-
-        if (sIdTree == null) {
-            sIdTree = new TreeSet<Long>();
-            sIdTime = time;
-        } else if (sIdTime != time) {
-            sIdTime = time;
-            sIdTree.clear();
-        }
-
-        while (true) {
-            rand = UUID.randomUUID().getMostSignificantBits();
-            if (!sIdTree.contains(new Long(rand))) {
-                sIdTree.add(new Long(rand));
-                break;
-            }
-        }
-        id = rand << 41 | time;
-        return id;
+    	mCurrentNumberFormat.setMaximumFractionDigits(point);
+    	return mCurrentPercentageFormat.format(value);
     }
 
-    private static final BigInteger shiftID = new BigInteger("18446744073709551616");
-    private static final BigInteger maxID = new BigInteger("9223372036854775808");
-    public static String hexifyID(long id) {
-        if (id < 0) {
-            BigInteger bid = BigInteger.valueOf(id);
-            return bid.add(shiftID).toString(16);
-        }
-        return Long.toHexString(id);
+
+    /**
+     * @return a string with decimal separator according to current locale
+     */
+    public static String fmtDouble(Double value) {
+    	return fmtDouble(value, 1);
     }
-    
-//    public static long dehexifyID(String id) {
-//        BigInteger bid = new BigInteger(id, 16);
-//        if (bid.compareTo(maxID) >= 0) {
-//            bid.subtract(shiftID);
-//        }
-//        return bid.longValue();
-//    }
+    public static String fmtDouble(Double value, int point) {
+    	// only retrieve the number format the first time
+    	if (mCurrentNumberFormat == null) {
+    		mCurrentNumberFormat = NumberFormat.getInstance(Locale.getDefault());
+    	}
+    	mCurrentNumberFormat.setMaximumFractionDigits(point);
+    	return mCurrentNumberFormat.format(value);
+    }
+
+    /**
+     * HTML
+     * ***********************************************************************************************
+     */
+
+    /**
+     * Strip HTML but keep media filenames
+     */
+    public static String stripHTMLMedia(String s) {
+        Matcher imgMatcher = imgPattern.matcher(s);
+        return stripHTML(imgMatcher.replaceAll(" $1 "));
+    }
+
+
+    public static String stripHTML(String s) {
+        Matcher styleMatcher = stylePattern.matcher(s);
+        s = styleMatcher.replaceAll("");
+        Matcher scriptMatcher = scriptPattern.matcher(s);
+        s = scriptMatcher.replaceAll("");
+        Matcher tagMatcher = tagPattern.matcher(s);
+        s = tagMatcher.replaceAll("");
+        return entsToTxt(s);
+    }
+
+
+    private static String entsToTxt(String s) {
+        Matcher htmlEntities = htmlEntitiesPattern.matcher(s);
+        StringBuilder s2 = new StringBuilder(s);
+        while (htmlEntities.find()) {
+            String text = htmlEntities.group();
+            text = Html.fromHtml(text).toString();
+            // TODO: inefficiency below, can get rid of multiple regex searches
+            s2.replace(htmlEntities.start(), htmlEntities.end(), text);
+            htmlEntities = htmlEntitiesPattern.matcher(s2);
+        }
+        return s2.toString();
+    }
+
+    /**
+     * IDs
+     * ***********************************************************************************************
+     */
+
+    public static String hexifyID(int id) {
+        return Integer.toHexString(id);
+    }
+
+
+    public static int dehexifyID(String id) {
+    	return Integer.valueOf(id, 16);
+    }
+
 
     /**
      * Returns a SQL string from an array of integers.
@@ -327,71 +378,216 @@ public class Utils {
 
         return list;
     }
+        
+
+    /**
+     * Tags
+     * ***********************************************************************************************
+     */
+
+    /**
+     * Parse a string and return a list of tags.
+     * 
+     * @param tags A string containing tags separated by space or comma (optionally followed by space)
+     * @return An array of Strings containing the individual tags 
+     */
+    public static String[] parseTags(String tags) {
+        if (tags != null && tags.length() != 0) {
+            return tags.split("\\s");
+        } else {
+            return new String[] {};
+        }
+    }
+
+
+    /**
+     * Join tags into a single string, with leading and trailing spaces.
+     * 
+     * @param tags The list of tags to join
+     * @return The joined tags in a single string 
+     */
+    public static String joinTags(Collection<String> tags) {
+        if (tags == null || tags.size() == 0) {
+            return "";
+        } else {
+            StringBuilder result = new StringBuilder(128);
+            result.append(" ");
+            for (String tag : tags) {
+                result.append(tag).append(" ");
+            }
+            return result.toString();
+        }
+    }
+
+
+    /**
+     * Strip leading/trailing/superfluous spaces and duplicates.
+     * 
+     * @param tags The list of tags
+     * @return The canonified string, as described above
+     */
+    public static String canonifyTags(String[] tags) {
+        for (int i = 0; i < tags.length; i++) {
+            if (tags[i].startsWith(":")) {
+                tags[i].replace("^:+", "");
+            }
+        }
+        return joinTags(new TreeSet<String>(Arrays.asList(tags)));
+    }
+
+
+    /**
+     * Find if tag exists in a set of tags. The search is not case-sensitive
+     * 
+     * @param tag The tag to look for
+     * @param tags The set of tags
+     * @return True is the tag is found in the set, false otherwise
+     */
+    public static boolean hasTag(String tag, List<String> tags) {
+        String lowercase = tag.toLowerCase();
+        for (String t : tags) {
+            if (t.toLowerCase().compareTo(lowercase) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Add tags if they don't exist.
+     * Both parameters are in string format, the tags being separated by space or comma, as in parseTags
+     * 
+     * @param tagStr The new tag(s) that are to be added
+     * @param tags The set of tags where the new ones will be added
+     * @return A string containing the union of tags of the input parameters
+     */
+    public static String addTags(String addtags, String tags) {
+        ArrayList<String> currentTags = new ArrayList<String>(Arrays.asList(parseTags(tags)));
+        for (String tag : parseTags(addtags)) {
+            if (!hasTag(tag, currentTags)) {
+                currentTags.add(tag);
+            }
+        }
+        return canonifyTags((String[]) currentTags.toArray());
+    }
 
     /**
      * Fields
      * ***********************************************************************************************
      */
-    
+
     public static String joinFields(String[] list) {
         StringBuilder result = new StringBuilder(128);
-        for (String l : list) {
-            result.append(l).append("\\x1f");
+        for (int i = 0; i < list.length - 1; i++) {
+            result.append(list[i]).append("\u001f");
         }
+        result.append(list[list.length - 1]);
         return result.toString();
     }
 
-    
+
     public static String[] splitFields(String fields) {
     	return fields.split("\\x1f");
     }
 
 
     /**
-     * IDs
+     * Checksums
      * ***********************************************************************************************
      */
-    
-    public static String hexifyID(int id) {
-        return Integer.toHexString(id);
-    }
-    
-    public static int dehexifyID(String id) {
-    	return Integer.valueOf(id, 16);
-    }
 
-        
-    
     /**
-     * Strip HTML but keep media filenames
+     * MD5 checksum.
+     * Equivalent to python md5.hexdigest()
+     *
+     * @param data the string to generate hash from
+     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of data.
      */
-    public static String stripHTMLMedia(String s) {
-        Matcher imgMatcher = imgPattern.matcher(s);
-        return stripHTML(imgMatcher.replaceAll(" $1 "));
-    }
-    public static String stripHTML(String s) {
-        Matcher styleMatcher = stylePattern.matcher(s);
-        s = styleMatcher.replaceAll("");
-        Matcher scriptMatcher = scriptPattern.matcher(s);
-        s = scriptMatcher.replaceAll("");
-        Matcher tagMatcher = tagPattern.matcher(s);
-        s = tagMatcher.replaceAll("");
-        return entsToTxt(s);
-    }
-    private static String entsToTxt(String s) {
-        Matcher htmlEntities = htmlEntitiesPattern.matcher(s);
-        StringBuilder s2 = new StringBuilder(s);
-        while (htmlEntities.find()) {
-            String text = htmlEntities.group();
-            text = Html.fromHtml(text).toString();
-            // TODO: inefficiency below, can get rid of multiple regex searches
-            s2.replace(htmlEntities.start(), htmlEntities.end(), text);
-            htmlEntities = htmlEntitiesPattern.matcher(s2);
+    public static String checksum(String data) {
+        String result = "";
+        if (data != null) {
+            MessageDigest md = null;
+            byte[] digest = null;
+            try {
+                md = MessageDigest.getInstance("MD5");
+                digest = md.digest(data.getBytes("UTF-8"));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                Log.e(AnkiDroidApp.TAG, "Utils.checksum: " + e.getMessage());
+                e.printStackTrace();
+            }
+            BigInteger biginteger = new BigInteger(1, digest);
+            result = biginteger.toString(16);
+            // pad with zeros to length of 32
+            if (result.length() < 32) {
+                result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
+            }
         }
-        return s2.toString();
+        return result;
     }
 
 
+    /**
+     * @param data the string to generate hash from
+     * @return 32 bit unsigned number from first 8 digits of md5 hash
+     */
+    public static int fieldChecksum(String data) {
+	return Integer.valueOf(checksum(data).substring(0, 8), 16);
+    }
+
+
+    /**
+     * MD5 sum of file.
+     * Equivalent to checksum(open(os.path.join(mdir, file), "rb").read()))
+     *
+     * @param path The full path to the file
+     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of the contents
+     * of the file
+     */
+    public static String fileChecksum(String path) {
+        byte[] bytes = null;
+        try {
+            File file = new File(path);
+            if (file != null && file.isFile()) {
+                bytes = new byte[(int)file.length()];
+                FileInputStream fin = new FileInputStream(file);
+                fin.read(bytes);
+            }
+        } catch (FileNotFoundException e) {
+            Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
+        }
+        if (bytes == null) {
+            Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
+            return "";
+        }
+        MessageDigest md = null;
+        byte[] digest = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+            digest = md.digest(bytes);
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        BigInteger biginteger = new BigInteger(1, digest);
+        String result = biginteger.toString(16);
+        // pad with zeros to length of 32
+        if (result.length() < 32) {
+            result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
+        }
+        return result;
+    }
+
+
+    /**
+     * 
+     * ***********************************************************************************************
+     */
 
     /**
      * Converts an InputStream to a String.
@@ -565,24 +761,6 @@ public class Utils {
 
 
     /**
-     * Get the current time in seconds since January 1, 1970 UTC.
-     * @return the local system time in seconds
-     */
-    public static double now() {
-        return (System.currentTimeMillis() / 1000.0);
-    }
-
-
-    /**
-     * Get the current time in integer seconds since January 1, 1970 UTC.
-     * @return the local system time in integer seconds
-     */
-    public static int intNow() {
-        return (int) now();
-    }
-
-
-    /**
      *  Returns the effective date of the present moment.
      *  If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
      *  otherwise today
@@ -650,6 +828,7 @@ public class Utils {
         return isIntentAvailable(context, action, null);
     }
 
+
     public static boolean isIntentAvailable(Context context, String action, ComponentName componentName) {
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(action);
@@ -658,18 +837,23 @@ public class Utils {
         return list.size() > 0;
     }
 
-    
+
     public static String getBaseUrl(String mediaDir, Model model, Deck deck) {
-        String base = "";//model.getFeatures().trim();
-//        if (deck.getBool("remoteImages") && base.length() != 0 && !base.equalsIgnoreCase("null")) {
-//            return base;
-//        } else {
+        String base;
+		try {
+			base = deck.getConf().getString("mediaURL");
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+        if (base.length() != 0 && !base.equalsIgnoreCase("null")) {
+            return base;
+        } else {
             // Anki desktop calls deck.mediaDir() here, but for efficiency reasons we only call it once in
             // Reviewer.onCreate() and use the value from there            
             if (mediaDir != null) {                              
                 base = urlEncodeMediaDir(mediaDir);
             }
-//        }
+        }
         return base;
     }
 
@@ -717,128 +901,7 @@ public class Utils {
         }
         return results;
     }
-    
-    
-    /*
-     * Tags
-     **************************************/
-    
-    /**
-     * Parse a string and return a list of tags.
-     * 
-     * @param tags A string containing tags separated by space or comma (optionally followed by space)
-     * @return An array of Strings containing the individual tags 
-     */
-    public static String[] parseTags(String tags) {
-        if (tags != null && tags.length() != 0) {
-            return tags.split(" +|, *");
-        } else {
-            return new String[] {};
-        }
-    }
-    
-    /**
-     * Join a list of tags to a string, using spaces as separators
-     * 
-     * @param tags The list of tags to join
-     * @return The joined tags in a single string 
-     */
-    public static String joinTags(Collection<String> tags) {
-        StringBuilder result = new StringBuilder(128);
-        for (String tag : tags) {
-            result.append(tag).append(" ");
-        }
-        return result.toString().trim();
-    }
-    
-    /**
-     * Strip leading/trailing/superfluous spaces/commas from a tags string. Remove duplicates and sort.
-     * 
-     * @param tags The string containing the tags, separated by spaces or commas
-     * @return The canonified string, as described above
-     */
-    public static String canonifyTags(String tags) {
-        List<String> taglist = Arrays.asList(parseTags(tags));
-        for (int i = 0; i < taglist.size(); i++) {
-            String t = taglist.get(i);
-            if (t.startsWith(":")) {
-                taglist.set(i, t.replace("^:+", ""));
-            }
-        }
-        return joinTags(new TreeSet<String>(taglist));
-    }
-
-
-    /**
-     * Find if tag exists in a set of tags. The search is not case-sensitive
-     * 
-     * @param tag The tag to look for
-     * @param tags The set of tags
-     * @return True is the tag is found in the set, false otherwise
-     */
-    public static boolean hasTag(String tag, List<String> tags) {
-        String lowercase = tag.toLowerCase();
-        for (String t : tags) {
-            if (t.toLowerCase().compareTo(lowercase) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    /**
-     * Add tags if they don't exist.
-     * Both parameters are in string format, the tags being separated by space or comma, as in parseTags
-     * 
-     * @param tagStr The new tag(s) that are to be added
-     * @param tags The set of tags where the new ones will be added
-     * @return A string containing the union of tags of the input parameters
-     */
-    public static String addTags(String tagStr, String tags) {
-        ArrayList<String> currentTags = new ArrayList<String>(Arrays.asList(parseTags(tags)));
-        for (String tag : parseTags(tagStr)) {
-            if (!hasTag(tag, currentTags)) {
-                currentTags.add(tag);
-            }
-        }
-        return joinTags(currentTags);
-    }
-
-    // Misc
-    // *************
-
-    /**
-     * MD5 checksum.
-     * Equivalent to python md5.hexdigest()
-     *
-     * @param data the string to generate hash from
-     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of data.
-     */
-    public static String checksum(String data) {
-        String result = "";
-        if (data != null) {
-            MessageDigest md = null;
-            byte[] digest = null;
-            try {
-                md = MessageDigest.getInstance("MD5");
-                digest = md.digest(data.getBytes("UTF-8"));
-            } catch (NoSuchAlgorithmException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
-                throw new RuntimeException(e);
-            } catch (UnsupportedEncodingException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.checksum: " + e.getMessage());
-                e.printStackTrace();
-            }
-            BigInteger biginteger = new BigInteger(1, digest);
-            result = biginteger.toString(16);
-            // pad with zeros to length of 32
-            if (result.length() < 32) {
-                result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
-            }
-        }
-        return result;
-    }
-
+  
 
     public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar) {
         if (view == null) {
@@ -867,51 +930,6 @@ public class Utils {
     }  
 
 
-    /**
-     * MD5 sum of file.
-     * Equivalent to checksum(open(os.path.join(mdir, file), "rb").read()))
-     *
-     * @param path The full path to the file
-     * @return A string of length 32 containing the hexadecimal representation of the MD5 checksum of the contents
-     * of the file
-     */
-    public static String fileChecksum(String path) {
-        byte[] bytes = null;
-        try {
-            File file = new File(path);
-            if (file != null && file.isFile()) {
-                bytes = new byte[(int)file.length()];
-                FileInputStream fin = new FileInputStream(file);
-                fin.read(bytes);
-            }
-        } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
-        } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
-        }
-        if (bytes == null) {
-            Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
-            return "";
-        }
-        MessageDigest md = null;
-        byte[] digest = null;
-        try {
-            md = MessageDigest.getInstance("MD5");
-            digest = md.digest(bytes);
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-        BigInteger biginteger = new BigInteger(1, digest);
-        String result = biginteger.toString(16);
-        // pad with zeros to length of 32
-        if (result.length() < 32) {
-            result = "00000000000000000000000000000000".substring(0, 32 - result.length()) + result;
-        }
-        return result;
-    }
-    
-    
     /**
      * Calculate the UTC offset
      */

@@ -91,9 +91,9 @@ public final class WidgetStatus {
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.
                     Deck currentDeck = AnkiDroidApp.deck();
-                    if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
-                        deck.closeDeck();
-                    }
+//                    if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
+//                        deck.closeDeck();
+//                    }
 
                     // Add the information about the deck
                     decks.add(new DeckStatus(absPath, deckName, counts[Scheduler.COUNTS_NEW], counts[Scheduler.COUNTS_REV], counts[Scheduler.COUNTS_LRN]));

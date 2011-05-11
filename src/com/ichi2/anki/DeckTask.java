@@ -200,9 +200,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundUpdateFact(TaskData[] params) {
         // Save the fact
-//        Deck deck = params[0].getDeck();
-//        Card editCard = params[0].getCard();
-//        Fact editFact = editCard.getFact();
+        Deck deck = params[0].getDeck();
+        Card editCard = params[0].getCard();
+        Fact editFact = editCard.getFact();
 //
 //        // Start undo routine
 //        String undoName = Deck.UNDO_TYPE_EDIT_CARD;
@@ -213,11 +213,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 //        editFact.toDb();
 //
 //        deck.flushMod();
-//
-//        // Find all cards based on this fact and update them with the updateCard method.
-//        // for (Card modifyCard : editFact.getUpdatedRelatedCards()) {
-//        //     modifyCard.updateQAfields();
-//        // }
 //
 //        // deck.reset();
 //        deck.setUndoEnd(undoName);
@@ -406,10 +401,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundLoadCards(TaskData... params) {
-//        Deck deck = params[0].getDeck();
+        Deck deck = params[0].getDeck();
 //        String order = params[0].getOrder();
-//    	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-//       	publishProgress(new TaskData(deck.getAllCards(order)));
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
+       	publishProgress(new TaskData(deck.renderQA(null, "all", false)));
         return null;
     }
 

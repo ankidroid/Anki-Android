@@ -1055,9 +1055,9 @@ public class Reviewer extends Activity {
 		if (requestCode == EDIT_CURRENT_CARD) {
 			if (resultCode == RESULT_OK) {
 				Log.i(AnkiDroidApp.TAG, "Saving card...");
-				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
-						mUpdateCardHandler, new DeckTask.TaskData(0,
-								AnkiDroidApp.deck(), mCurrentCard));
+//				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
+//						mUpdateCardHandler, new DeckTask.TaskData(0,
+//								AnkiDroidApp.deck(), mCurrentCard));
 				// TODO: code to save the changes made to the current card.
 				displayCardQuestion();
 			} else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
@@ -2246,22 +2246,14 @@ public class Reviewer extends Activity {
 			break;
 		case GESTURE_ANSWER_RECOMMENDED:
 			if (sDisplayAnswer) {
-				if (true) {// mCurrentCard.isRev()) {
-					answerCard(EASE_MID);
-				} else {
-					answerCard(EASE_HARD);
-				}
+				answerCard(mCurrentScheduler.recButton(mCurrentCard));
 			} else {
 				displayCardAnswer();
 			}
 			break;
 		case GESTURE_ANSWER_BETTER_THAN_RECOMMENDED:
 			if (sDisplayAnswer) {
-				if (true) {// mCurrentCard.isRev()) {
-					answerCard(EASE_EASY);
-				} else {
-					answerCard(EASE_MID);
-				}
+				answerCard(mCurrentScheduler.recButton(mCurrentCard) + 1);
 			}
 			break;
 		case GESTURE_EXIT:

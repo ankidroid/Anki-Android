@@ -149,7 +149,7 @@ public class Scheduler {
 
     public void answerCard(Card card, int ease) {
         Log.i(AnkiDroidApp.TAG, "answerCard");
-        // mDeck.markReview(card); // TODO: mark for undoing purposes
+        mDeck.markReview(card);
         mReps += 1;
         card.setReps(card.getReps() + 1);
         if (card.getQueue() == 0) {
@@ -166,13 +166,6 @@ public class Scheduler {
         }
         card.setMod();
         card.flushSched();
-//
-//        // Leech handling - we need to do this after the queue, as it may cause a reset
-//        if (isLeech(card)) {
-//            Log.i(AnkiDroidApp.TAG, "card is leech!");
-//            handleLeech(card);
-//        }
-//        setUndoEnd(undoName);
     }
 
 
@@ -188,31 +181,6 @@ public class Scheduler {
     }
 
 
-//    private int dueForecast() {
-//    	return dueForecast(7);
-//    }
-    /**
-     * Return counts over next DAYS. Includes today.
-     */
-//    private int dueForecast(int days) {
-//    	// TODO:
-////    	TreeMap<Integer, Integer> daysd = new TreeMap<Integer, Integer>();
-////    	Cursor cur = null;
-////    	try {
-////            cur = mDb.getDatabase().rawQuery("SELECT due, count() "
-////            			+ "FROM cards WHERE queue = 2 " + _groupLimit() + " AND due BETWEEN "
-////            			+ mToday + " AND " + (mToday + days - 1) + " GROUP BY due ORDER BY due", null);
-////            while (cur.moveToNext()) {
-////            	daysd.put(key, value)
-////            }
-////        } finally {
-////            if (cur != null && !cur.isClosed()) {
-////                cur.close();
-////            }
-////        }
-//    }
-
-
     public int countIdx(Card card) {
     	return card.getQueue();
     }
@@ -223,6 +191,15 @@ public class Scheduler {
     		return false;
     	} else {
     		return true;
+    	}
+    }
+
+
+    public int recButton(Card card) {
+    	if (card.getQueue() == 2) {
+    		return 2;
+    	} else {
+    		return 3;
     	}
     }
 
@@ -313,23 +290,19 @@ public class Scheduler {
      * Returns [groupname, cards, due, new]
      */
     private TreeMap<String, int[]> groupCounts() {
-    	// TODO
     	Cursor cur = null;
     	TreeMap<String, int[]> counts = new TreeMap<String, int[]>();
-    	int[][] gids;
+    	TreeMap<Integer, String> gids = new TreeMap<Integer, String>();
     	try {
+            cur = mDb.getDatabase().rawQuery("SELECT id, name FROM groups ORDER BY name", null);
+            while (cur.moveToNext()) {
+            	gids.put(cur.getInt(0), cur.getString(1));
+            }
             cur = mDb.getDatabase().rawQuery("SELECT gid, count(), "
             		+ "sum(CASE WHEN queue = 2 AND due <= " + mToday + " THEN 1 ELSE 0 END), "
             		+ "sum(CASE WHEN queue = 0 THEN 1 ELSE 0 END) FROM cards GROUP BY gid", null);
-            gids = new int[cur.getCount()][3];
             while (cur.moveToNext()) {
-            	gids[cur.getInt(0)][0] = cur.getInt(1);
-            	gids[cur.getInt(0)][1] = cur.getInt(2);
-            	gids[cur.getInt(0)][2] = cur.getInt(3);
-            }
-            cur = mDb.getDatabase().rawQuery("SELECT id, name FROM groups ORDER BY name", null);
-            while (cur.moveToNext()) {
-            	counts.put(cur.getString(1), gids[cur.getInt(0)]);
+            	counts.put(gids.get(cur.getInt(0)), new int[]{cur.getInt(1), cur.getInt(2), cur.getInt(3)});
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -571,8 +544,8 @@ public class Scheduler {
         			throw new RuntimeException(e);
         		}
             }
-            if (mLrnQueue.getLast()[0] < cutoff) {
-               int id = mLrnQueue.remove()[1];
+            if (mLrnQueue.getFirst()[0] < cutoff) {
+                int id = mLrnQueue.remove()[1];
                 mLrnCount -= 1;
                 return id;
             }
@@ -863,7 +836,7 @@ public class Scheduler {
 	    	card.setFactor(Math.max(1300, card.getFactor() - 200));
 	    	card.setDue(mToday + card.getIvl());
 	    	// put back in learn queue?
-	    	if (conf.getString("relearn").equals("True")) {
+	    	if (conf.getString("relearn").toLowerCase().equals("true")) {
 	    		card.setEDue(card.getDue());
 	    		card.setDue((int)(_delayForGrade(conf, 0) + Utils.now()));
 	    		card.setQueue(1);
@@ -932,13 +905,13 @@ public class Scheduler {
         	interval = (card.getIvl() + delay/2) * fct;
         } else if (ease == 4) {
             try {
-				interval = (card.getIvl() + delay) * fct * conf.getJSONObject("rev").getInt("ease4");
+				interval = (card.getIvl() + delay) * fct * conf.getJSONObject("rev").getDouble("ease4");
 			} catch (JSONException e) {
 				throw new RuntimeException(e);
 			}        	
         }
         // must be at least one day greater than previous interval; two if easy
-        return Math.max(card.getIvl() + ease == 4 ? 2 : 1, (int)interval);
+        return Math.max(card.getIvl() + (ease == 4 ? 2 : 1), (int)interval);
 	}
 
 
@@ -1108,6 +1081,34 @@ public class Scheduler {
      * ***********************************************************************************************
      */
 
+    /**
+     * Number of cards in the learning queue due tomorrow.
+     */
+    public int lrnTomorrow() {
+    	return (int) mDb.queryScalar("SELECT count() FROM cards WHERE queue = 1 AND due < " + mDayCutoff + 86400);
+    }
+
+
+    /**
+     * Number of reviews due tomorrow.
+     */
+    public int revTomorrow() {
+    	return (int) mDb.queryScalar("SELECT count() FROM cards WHERE queue = 2 AND due = " + (mToday + 1) + _groupLimit());
+    }
+
+
+    /**
+     * Number of new cards tomorrow.
+     */
+    public int newTomorrow() {
+    	int lim;
+		try {
+			lim = mDeck.getQconf().getInt("newPerDay");
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    	return (int) mDb.queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE queue = 0 " + _groupLimit() + " LIMIT " + lim + ")");
+    }
 
 
     /**
@@ -1132,11 +1133,11 @@ public class Scheduler {
 	    		return _nextLrnIvl(card, ease);
 	    	} else if (ease == 1) {
 	    		// lapsed
-					JSONObject conf = _cardConf(card).getJSONObject("lapse");
-					if (conf.getString("relearn").equals("True")) {
-						return conf.getJSONArray("delays").getInt(0) * 60;
-					}
-					return _nextLapseIvl(card, conf) * 86400; 
+	    		JSONObject conf = _cardConf(card).getJSONObject("lapse");
+	    		if (conf.getString("relearn").toLowerCase().equals("true")) {
+	    			return conf.getJSONArray("delays").getInt(0) * 60;
+				}
+	    		return _nextLapseIvl(card, conf) * 86400; 
 	    	} else {
 	    		// review
 	    		return _nextRevIvl(card, ease) * 86400;

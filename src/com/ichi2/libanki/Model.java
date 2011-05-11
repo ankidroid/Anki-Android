@@ -29,7 +29,6 @@ import com.samskivert.mustache.Template;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
 
 import org.json.JSONArray;
@@ -368,6 +367,7 @@ public class Model {
     	}
     	return map;
     }
+
 
     public int sortIdx() {
     	try {
