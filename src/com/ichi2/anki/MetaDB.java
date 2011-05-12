@@ -87,7 +87,7 @@ public class MetaDB {
         return false;
     }
 
-    public static void storeLanguage(Context context, String deckPath, long modelId, long cardModelId, int qa, String language) {
+    public static void storeLanguage(Context context, String deckPath, int modelId, int cardModelId, int qa, String language) {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL(
@@ -100,7 +100,7 @@ public class MetaDB {
         }
     }
 
-    public static String getLanguage(Context context, String deckPath, long modelId, long cardModelId, int qa) {
+    public static String getLanguage(Context context, String deckPath, int modelId, int cardModelId, int qa) {
         openDBIfClosed(context);
         String language = "";
         Cursor cur = null;

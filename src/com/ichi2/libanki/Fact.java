@@ -80,6 +80,9 @@ public class Fact {
 			mTags = new String[]{""};
 	        mFMap = mModel.fieldMap();
 			mFields = new String[mFMap.size()];
+			for (int i = 0; i < mFields.length; i++) {
+				mFields[i] = "";
+			}
 			mData = "";
         }
     }

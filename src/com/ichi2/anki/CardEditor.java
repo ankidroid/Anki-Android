@@ -195,13 +195,7 @@ public class CardEditor extends Activity {
         	break;
         }
 
-        mFields = mEditorFact.getFields();
-        mEditFields = new LinkedList<FieldEditText>();
-
-        mModified = false;
-
-        mFactTags = mEditorFact.stringTags();
-        mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
+        initializeFactVariables();
         mTags.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -326,11 +320,21 @@ public class CardEditor extends Activity {
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
 
+    private void initializeFactVariables() {
+        mFields = mEditorFact.getFields();
+        mEditFields = new LinkedList<FieldEditText>();
+        mModified = false;
+        mFactTags = mEditorFact.stringTags();
+        mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));    	
+    }
 
+    
     private void modelChanged() {
     	if (mAddFact) {
     		mEditorFact = new Fact(mDeck, mCurrentModel);
+    		initializeFactVariables();
     		mTemplates = mCurrentModel.getTemplates();
+    		mSelectedTemplates.clear();
     		for (Entry<Integer, JSONObject> entry : mTemplates.entrySet()) {
         		try {
         			if (entry.getValue().getString("actv").toLowerCase().equals("true")) {
@@ -348,7 +352,7 @@ public class CardEditor extends Activity {
 
 
     private void cardModelsChanged() {
-		String cardModelNames = ""; 	
+		String cardModelNames = "";
 		for (Entry<Integer, JSONObject> entry : mSelectedTemplates.entrySet()) {
     		try {
 				cardModelNames = cardModelNames + entry.getValue().getString("name") + ", ";
@@ -369,6 +373,7 @@ public class CardEditor extends Activity {
 
     private void populateEditFields() {
         // Generate a new EditText for each field
+    	mFieldsLayoutContainer.removeAllViews();
         for (int i = 0; i < mFields.length; i++) {
             FieldEditText newTextbox = new FieldEditText(this, mEditorFact, i);
             TextView label = newTextbox.getLabel();
@@ -383,7 +388,6 @@ public class CardEditor extends Activity {
     private Dialog templatesDialog() {
     	Resources res = getResources();
     	mTemplates = mCurrentModel.getTemplates();
-    	mSelectedTemplates.clear();
     	
         int length = mTemplates.size();
         boolean[] checked = new boolean[length];
@@ -392,9 +396,8 @@ public class CardEditor extends Activity {
         	for (int i = 0; i < length; i++) {
             	JSONObject template = mTemplates.get(i);
                 templates[i] = template.getString("name");
-				if (template.getString("actv").toLowerCase().equals("true")) {
+				if (mSelectedTemplates.containsKey(i)) {
 				    checked[i] = true;
-				    mSelectedTemplates.put(i, template);
 				}
             }
 		} catch (JSONException e) {
@@ -406,12 +409,9 @@ public class CardEditor extends Activity {
         builder.setMultiChoiceItems(templates, checked,
                 new DialogInterface.OnMultiChoiceClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-                        String tag = allTags[whichButton];
                         if (!isChecked) {
-                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
                             mSelectedTemplates.remove(whichButton);
                         } else {
-                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
                             mSelectedTemplates.put(whichButton, mTemplates.get(whichButton));
                         }
                     }

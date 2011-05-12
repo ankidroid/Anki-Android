@@ -509,7 +509,7 @@ public class Deck {
 				if (template.getString("actv").toLowerCase().equals("true") || !checkActive) {
 					QAData data = new QAData(1, 1, model.getId(), 1, template.getInt("ord"), "", fact.joinedFields());
 					HashMap<String, String> now = _renderQA(model, null, data);
-					data.mFields = "";
+					data.mFields = Utils.joinFields(new String[fact.getFields().length]);
 					HashMap<String, String> empty = _renderQA(model, null, data);
 					if (now.get("q").equals(empty.get("q"))) {
 						continue;
@@ -525,7 +525,7 @@ public class Deck {
 				throw new RuntimeException(e);
 			}
     	}
-    	return (JSONObject[]) ok.toArray();
+    	return (JSONObject[]) ok.toArray(new JSONObject[ok.size()]);
     }
 
     /**

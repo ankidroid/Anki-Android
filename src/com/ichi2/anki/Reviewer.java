@@ -1117,7 +1117,7 @@ public class Reviewer extends Activity {
 	}
 
 
-	private void lookupLeo(String language, String text) {
+	private void lookupLeo(String language, CharSequence text) {
 		switch(mDictionary) {
 		case DICTIONARY_LEO_WEB:
 			Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language
@@ -1126,10 +1126,10 @@ public class Reviewer extends Activity {
 			break;
 		case DICTIONARY_LEO_APP:
 			Intent leoAppSearchIntent = new Intent(mDictionaryAction);
-			leoAppSearchIntent.putExtra("org.leo.android.dict.DICTIONARY", language + "de";
+			leoAppSearchIntent.putExtra("org.leo.android.dict.DICTIONARY", language + "de");
 			leoAppSearchIntent.putExtra(Intent.EXTRA_TEXT, mClipboard.getText());
 			leoAppSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
-			startActivity(leoSearchIntent);
+			startActivity(leoAppSearchIntent);
 			break;
 		default:
 		}
@@ -1180,7 +1180,7 @@ public class Reviewer extends Activity {
 				String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
 				for (int i = 0; i < itemValues.length; i++) {
 					if (language.equals(itemValues[i])) {
-						lookupLeo(language; mClipboard.getText());
+						lookupLeo(language, mClipboard.getText());
 						mClipboard.setText("");
 						return true;
 					}
@@ -1192,7 +1192,7 @@ public class Reviewer extends Activity {
 				builder.setItems(items, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
 						String language = itemValues[item].toString();
-						lookupLeo(language; mClipboard.getText());
+						lookupLeo(language, mClipboard.getText());
 						mClipboard.setText("");
 						storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
 					}

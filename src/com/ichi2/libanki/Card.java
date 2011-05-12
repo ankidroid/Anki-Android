@@ -160,10 +160,11 @@ public class Card {
     	sb.append(mFId).append(", ");
     	sb.append(mGId).append(", ");
     	sb.append(mOrd).append(", ");
+    	sb.append(mCrt).append(", ");
     	sb.append(mMod).append(", ");
     	sb.append(mType).append(", ");
     	sb.append(mQueue).append(", ");
-    	sb.append(mIvl).append(", ");
+    	sb.append(mDue).append(", ");
     	sb.append(mIvl).append(", ");
     	sb.append(mFactor).append(", ");
     	sb.append(mReps).append(", ");
