@@ -236,6 +236,7 @@ public class StudyOptions extends Activity {
     private Spinner mSpinnerRevCardOrder;
     private Spinner mSpinnerFailCardOption;
     private EditText mEditNewPerDay;
+    private EditText mEditMaxFailCard;
 
     private CheckBox mCheckBoxPerDay;
     private CheckBox mCheckBoxSuspendLeeches;
@@ -484,6 +485,16 @@ public class StudyOptions extends Activity {
             deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
             deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
             // TODO: mSpinnerFailCardOption
+            String maxFailText = mEditMaxFailCard.getText().toString();
+            if (!maxFailText.equals(Integer.toString(deck.getFailedCardMax()))) {
+                if (maxFailText.equals("")) {
+                        deck.setFailedCardMax(0);
+                } else if (isValidInt(maxFailText)) {
+                        deck.setFailedCardMax(Integer.parseInt(maxFailText));
+                } else {
+                        mEditMaxFailCard.setText("0");
+                }
+            }
             String inputText = mEditNewPerDay.getText().toString();
             if (!inputText.equals(Integer.toString(deck.getNewCardsPerDay()))) {
             	if (inputText.equals("")) {
@@ -1081,6 +1092,7 @@ public class StudyOptions extends Activity {
         mSpinnerNewCardSchedule = (Spinner) contentView.findViewById(R.id.studyoptions_new_card_schedule);
         mSpinnerRevCardOrder = (Spinner) contentView.findViewById(R.id.studyoptions_rev_card_order);
         mSpinnerFailCardOption = (Spinner) contentView.findViewById(R.id.studyoptions_fail_card_option);
+        mEditMaxFailCard = (EditText) contentView.findViewById(R.id.studyoptions_max_fail_card);
         mEditNewPerDay = (EditText) contentView.findViewById(R.id.studyoptions_new_cards_per_day);
         mCheckBoxPerDay = (CheckBox) contentView.findViewById(R.id.studyoptions_per_day);
         mCheckBoxSuspendLeeches = (CheckBox) contentView.findViewById(R.id.studyoptions_suspend_leeches);
@@ -1101,6 +1113,7 @@ public class StudyOptions extends Activity {
         mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
         mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
         mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
+        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
         mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
         mCheckBoxPerDay.setChecked(deck.getPerDay());
         mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());
