@@ -159,6 +159,7 @@ public class CardBrowser extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
+                editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_BROWSER_CARD);
                 mPositionInCardsList = position;
                 mSelectedCard = mDeck.getCard(Integer.parseInt(mCards.get(mPositionInCardsList).get("id")));
                 sEditorCard = mSelectedCard;

@@ -172,9 +172,12 @@ public class CardEditor extends Activity {
         	mEditorFact = CardBrowser.getEditorCard().getFact();
         	break;
         case ADD_CARD:
+        	mAddFact = true;
         	mEditorFact = new Fact(mDeck, mCurrentModel);
         	mModelButtons.setVisibility(View.VISIBLE);
-        	mAddFact = true;
+        	Resources res = getResources();
+        	mSave.setText(res.getString(R.string.add));
+        	mCancel.setText(res.getString(R.string.close));
             mModelButton.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
@@ -227,11 +230,12 @@ public class CardEditor extends Activity {
                 	if (mAddFact) {
                 		AnkiDroidApp.deck().addFact(mEditorFact);
                 	} else {
-                    	mEditorFact.flush();                		
+                    	mEditorFact.flush(); 
+                        setResult(RESULT_OK);
+                        finish();
                 	}
-                    setResult(RESULT_OK);
                 } else {
-                    setResult(RESULT_CANCELED);
+                	setResult(RESULT_CANCELED);
                 }
             }
         });
@@ -324,19 +328,21 @@ public class CardEditor extends Activity {
 
 
     private void modelChanged() {
-		mEditorFact = new Fact(mDeck, mCurrentModel);
-		mTemplates = mCurrentModel.getTemplates();
-		for (Entry<Integer, JSONObject> entry : mTemplates.entrySet()) {
-    		try {
-    			if (entry.getValue().getString("actv").toLowerCase().equals("true")) {
-        			mSelectedTemplates.put(entry.getKey(), entry.getValue());    				
+    	if (mAddFact) {
+    		mEditorFact = new Fact(mDeck, mCurrentModel);
+    		mTemplates = mCurrentModel.getTemplates();
+    		for (Entry<Integer, JSONObject> entry : mTemplates.entrySet()) {
+        		try {
+        			if (entry.getValue().getString("actv").toLowerCase().equals("true")) {
+            			mSelectedTemplates.put(entry.getKey(), entry.getValue());    				
+        			}
+    			} catch (JSONException e) {
+    				throw new RuntimeException(e);
     			}
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-        }
-		mModelButton.setText(getResources().getString(R.string.model) + " " + mModels.get(mCurrentModel.getId()).getName());
-		cardModelsChanged();
+            }
+    		mModelButton.setText(getResources().getString(R.string.model) + " " + mModels.get(mCurrentModel.getId()).getName());
+    		cardModelsChanged();    		
+    	}
 		populateEditFields();
     }
 

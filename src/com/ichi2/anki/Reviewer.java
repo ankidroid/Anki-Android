@@ -1059,6 +1059,7 @@ public class Reviewer extends Activity {
 //						mUpdateCardHandler, new DeckTask.TaskData(0,
 //								AnkiDroidApp.deck(), mCurrentCard));
 				// TODO: code to save the changes made to the current card.
+				mCurrentCard._getQA(true);
 				displayCardQuestion();
 			} else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
 				finishNoStorageAvailable();
@@ -1127,6 +1128,7 @@ public class Reviewer extends Activity {
 			return false;
 		} else {
 			Intent editCard = new Intent(Reviewer.this, CardEditor.class);
+			editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_REVIEWER_CARD);
 			sEditorCard = mCurrentCard;
 			startActivityForResult(editCard, EDIT_CURRENT_CARD);
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
