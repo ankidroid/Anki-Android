@@ -50,6 +50,30 @@
 				android:text="50"
 				android:textSize="14dip"/>
 		</LinearLayout>
+		<LinearLayout 
+			android:orientation="horizontal" 
+			android:layout_height="wrap_content" 
+			android:layout_width="fill_parent"> 
+			<TextView 
+				android:layout_height="wrap_content" 
+				android:layout_marginLeft="4dip" 
+				android:layout_width="0dip" 
+				android:textColor="#ffffff" 
+				android:textSize="16dip" 
+				android:layout_weight="4"
+				android:text="@string/studyoptions_max_fail_card"></TextView>
+			<EditText 
+				android:textSize="14dip" 
+				android:inputType="number" 
+				android:layout_height="38dip" 
+				android:layout_width="0dip" 
+				android:gravity="center" 
+				android:layout_weight="1" 
+				android:lines="1" 
+				android:layout_marginRight="4dip" 
+				android:id="@+id/studyoptions_max_fail_card" 
+				android:text="20"></EditText>
+		</LinearLayout>
 		<RelativeLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
