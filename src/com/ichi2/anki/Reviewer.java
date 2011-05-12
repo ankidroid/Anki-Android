@@ -455,6 +455,8 @@ public class Reviewer extends Activity {
             Deck deck = AnkiDroidApp.deck();
             long sessionRepLimit = deck.getSessionRepLimit();
             long sessionTime = deck.getSessionTimeLimit();
+            int failedSoonCount = deck.getFailedSoonCount();
+            int maxFailedCount = deck.getFailedCardMax();
             Toast sessionMessage = null;
             Toast leechMessage = null;
             Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
@@ -480,6 +482,11 @@ public class Reviewer extends Activity {
                 sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_time_limit_reached),
                         Toast.LENGTH_SHORT);
             } else if (mIsLastCard) {
+                mNoMoreCards = true;
+                mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                        .getString(R.string.saving_changes), true);
+            } else if ((maxFailedCount != 0) && (failedSoonCount >= maxFailedCount)) {
+                // maximum fail card exceeded, stop the review for now
                 mNoMoreCards = true;
                 mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
                         .getString(R.string.saving_changes), true);

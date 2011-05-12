@@ -485,6 +485,7 @@ public class StudyOptions extends Activity {
             deck.setNewCardSpacing(mSpinnerNewCardSchedule.getSelectedItemPosition());
             deck.setRevCardOrder(mSpinnerRevCardOrder.getSelectedItemPosition());
             // TODO: mSpinnerFailCardOption
+            // FIXME: invalid entries set to zero(unlimited) for now, better to set to default?
             String maxFailText = mEditMaxFailCard.getText().toString();
             if (!maxFailText.equals(Integer.toString(deck.getFailedCardMax()))) {
                 if (maxFailText.equals("")) {
