@@ -1103,16 +1103,38 @@ public class Reviewer extends Activity {
 		}
 	}
 
+
 	private String getLanguage(int questionAnswer) {
 		String language = MetaDB.getLanguage(this, mDeckFilename, mCurrentCard
 				.getModel().getId(), mCurrentCard.getOrd(), questionAnswer);
 		return language;
 	}
 
+
 	private void storeLanguage(String language, int questionAnswer) {
 		MetaDB.storeLanguage(this, mDeckFilename, mCurrentCard.getModel()
 				.getId(), mCurrentCard.getOrd(), questionAnswer, language);
 	}
+
+
+	private void lookupLeo(String language, String text) {
+		switch(mDictionary) {
+		case DICTIONARY_LEO_WEB:
+			Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language
+				+ "de&search=" + text));
+			startActivity(leoSearchIntent);
+			break;
+		case DICTIONARY_LEO_APP:
+			Intent leoAppSearchIntent = new Intent(mDictionaryAction);
+			leoAppSearchIntent.putExtra("org.leo.android.dict.DICTIONARY", language + "de";
+			leoAppSearchIntent.putExtra(Intent.EXTRA_TEXT, mClipboard.getText());
+			leoAppSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+			startActivity(leoSearchIntent);
+			break;
+		default:
+		}
+	}
+
 
 	private void finishNoStorageAvailable() {
 		setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
@@ -1150,6 +1172,7 @@ public class Reviewer extends Activity {
 				mClipboard.setText("");
 				return true;
 			case DICTIONARY_LEO_WEB:
+			case DICTIONARY_LEO_APP:
 				// localisation is needless here since leo.org translates only
 				// into or out of German
 				final CharSequence[] itemValues = { "en", "fr", "es", "it",
@@ -1157,10 +1180,7 @@ public class Reviewer extends Activity {
 				String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
 				for (int i = 0; i < itemValues.length; i++) {
 					if (language.equals(itemValues[i])) {
-						Intent leoSearchIntent = new Intent(mDictionaryAction,
-								Uri.parse("http://pda.leo.org/?lp=" + language
-										+ "de&search=" + mClipboard.getText()));
-						startActivity(leoSearchIntent);
+						lookupLeo(language; mClipboard.getText());
 						mClipboard.setText("");
 						return true;
 					}
@@ -1168,31 +1188,17 @@ public class Reviewer extends Activity {
 				final CharSequence[] items = { "Englisch", "Französisch",
 						"Spanisch", "Italienisch", "Chinesisch", "Russisch" };
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle("\"" + mClipboard.getText()
-						+ "\" nachschlagen");
+				builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
 				builder.setItems(items, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
 						String language = itemValues[item].toString();
-						Intent leoSearchIntent = new Intent(mDictionaryAction,
-								Uri.parse("http://pda.leo.org/?lp=" + language
-										+ "de&search=" + mClipboard.getText()));
-						startActivity(leoSearchIntent);
+						lookupLeo(language; mClipboard.getText());
 						mClipboard.setText("");
 						storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
 					}
 				});
 				AlertDialog alert = builder.create();
 				alert.show();
-				return true;
-			case DICTIONARY_LEO_APP:
-				Intent leoSearchIntent = new Intent(mDictionaryAction);
-				leoSearchIntent.putExtra(Intent.EXTRA_TEXT,
-						mClipboard.getText());
-				leoSearchIntent
-						.setComponent(new ComponentName("org.leo.android.dict",
-								"org.leo.android.dict.LeoDict"));
-				startActivity(leoSearchIntent);
-				mClipboard.setText("");
 				return true;
 			case DICTIONARY_COLORDICT:
 				Intent colordictSearchIntent = new Intent(mDictionaryAction);
