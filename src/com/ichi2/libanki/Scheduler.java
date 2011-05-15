@@ -197,9 +197,9 @@ public class Scheduler {
 
     public int recButton(Card card) {
         if (card.getQueue() == 2) {
-            return 2;
-        } else {
             return 3;
+        } else {
+            return 2;
         }
     }
 
