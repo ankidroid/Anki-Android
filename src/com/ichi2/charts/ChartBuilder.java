@@ -20,6 +20,7 @@ package com.ichi2.charts;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.BarChart;
+import org.achartengine.chart.LineChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -49,8 +50,8 @@ import android.widget.TextView;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.MyAnimation;
 import com.ichi2.anki.R;
+import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptions;
-import com.ichi2.libanki.Statistics;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class ChartBuilder extends Activity {
@@ -113,9 +114,13 @@ public class ChartBuilder extends Activity {
         	case 1:
                 renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
                 break;
-        	case 2:
+            case 2:
                 renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
-        		break;
+                break;
+            case 3:
+                renderer.setColor(res.getColor(R.color.statistics_due_average_line));
+                renderer.setLineWidth(2f);
+                break;
         	}
         } else if (type == Statistics.TYPE_REVIEWS) {
         	switch (row) {
@@ -145,7 +150,8 @@ public class ChartBuilder extends Activity {
                 mRenderer.setXAxisMin(mPan[0]);
                 mRenderer.setXAxisMax(mPan[1]);
             }
-            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
+//            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
+//            mChartView = ChartFactory.getCombinedXYChartView(this, mDataset, mRenderer, new String[] {BarChart.TYPE, BarChart.TYPE, LineChart.TYPE});
             LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
             layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         }
@@ -243,9 +249,9 @@ public class ChartBuilder extends Activity {
                 setDataset(i);
                 setRenderer(Statistics.sType, i);
             }
-            if (Statistics.sSeriesList.length == 1) {
+//            if (Statistics.sSeriesList.length == 1) {
                 mRenderer.setShowLegend(false);
-            }
+//            }
             mPan = new double[] { Statistics.xAxisData[0] - 1,
                     Statistics.xAxisData[Statistics.xAxisData.length - 1] + 1 };
             mRenderer.setLegendTextSize(17);
@@ -257,6 +263,7 @@ public class ChartBuilder extends Activity {
             mRenderer.setYAxisMin(0);
             mRenderer.setXTitle(Statistics.axisLabels[0]);
             mRenderer.setYTitle(Statistics.axisLabels[1]);
+            mRenderer.setBarSpacing(0.4);
             mRenderer.setZoomEnabled(false, false);
             if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
                 mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
@@ -267,7 +274,8 @@ public class ChartBuilder extends Activity {
             mRenderer.setPanLimits(mPan);
             mRenderer.setXLabelsAlign(Align.CENTER);
             mRenderer.setYLabelsAlign(Align.RIGHT);
-            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
+//            mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
+            mChartView = ChartFactory.getCombinedXYChartView(this, mDataset, mRenderer, new String[] {BarChart.TYPE, BarChart.TYPE, BarChart.TYPE, LineChart.TYPE});
             LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
             layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         } else {

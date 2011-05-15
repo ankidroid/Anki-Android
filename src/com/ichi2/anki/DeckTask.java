@@ -23,7 +23,6 @@ import java.util.LinkedHashMap;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Fact;
-import com.ichi2.libanki.Statistics;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -457,20 +456,20 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
 
     private TaskData doInBackgroundLoadStatistics(TaskData... params) {
-//        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
-//        int type = params[0].getType();
-//        int period = params[0].getInt();
-//        Context context = params[0].getContext();
-//        String[] deckList = params[0].getDeckList();;
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
+        int type = params[0].getType();
+        int period = params[0].getInt();
+        Context context = params[0].getContext();
+        String[] deckList = params[0].getDeckList();;
         boolean result = false;
-//
-//        Resources res = context.getResources();
-//        if (deckList.length == 1 && deckList[0].equals("") && AnkiDroidApp.deck() != null) {
-//        	result = Statistics.refreshDeckStatistics(context, AnkiDroidApp.deck(), type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        	
-//        } else {
-//        	result = Statistics.refreshAllDeckStatistics(context, deckList, type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type] + " " + res.getString(R.string.statistics_all_decks));        	
-//        }
-//       	publishProgress(new TaskData(result));
+
+        Resources res = context.getResources();
+        if (deckList.length == 1 && deckList[0].equals("") && AnkiDroidApp.deck() != null) {
+        	result = Statistics.refreshDeckStatistics(context, AnkiDroidApp.deck(), type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        	
+        } else {
+        	result = Statistics.refreshAllDeckStatistics(context, deckList, type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type] + " " + res.getString(R.string.statistics_all_decks));        	
+        }
+       	publishProgress(new TaskData(result));
         return new TaskData(result);
     }
 

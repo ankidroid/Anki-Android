@@ -36,6 +36,7 @@
 	<color name="statistics_due_young_cards">#FBB117</color>
 	<color name="statistics_due_mature_cards">#F88017</color>	
 	<color name="statistics_due_failed_cards">#FF0000</color>
+	<color name="statistics_due_average_line">#FFFFFF</color>
 	<color name="statistics_reps_new_cards">#5CB3FF</color>	
 	<color name="statistics_reps_young_cards">#488AC7</color>
 	<color name="statistics_reps_mature_cards">#1569C7</color>	

@@ -61,7 +61,6 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Scheduler;
-import com.ichi2.libanki.Statistics;
 import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
