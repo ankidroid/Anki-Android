@@ -39,7 +39,6 @@ public class Statistics {
 
     public static int sZoom = 0;
 
-
     /**
      * Types
      */
@@ -55,11 +54,11 @@ public class Statistics {
         sType = type;
         sTitle = title;
         sStart = 0;
-        if (period >= 365) {
+        if (period >= 365 * 2) {
             sChunk = 30;
             sEnd = period / 30;
             axisLabels[0] = res.getString(R.string.statistics_period_x_axis_months);
-        } else if (period >= 90) {
+        } else if (period >= 180) {
             sChunk = 7;
             sEnd = period / 7;
             axisLabels[0] = res.getString(R.string.statistics_period_x_axis_weeks);
@@ -74,23 +73,27 @@ public class Statistics {
             Titles[0] = res.getString(R.string.statistics_young_cards);
             Titles[1] = res.getString(R.string.statistics_mature_cards);
             Titles[2] = res.getString(R.string.statistics_failed_cards);
-            Titles[2] = ("average");
-        } else if (type == TYPE_REVIEWS) {
-            Titles = new String[3];
-            Titles[0] = res.getString(R.string.statistics_new_cards);
-            Titles[1] = res.getString(R.string.statistics_young_cards);
-            Titles[2] = res.getString(R.string.statistics_mature_cards);
+            Titles[3] = ("average");
+        } else if (type <= TYPE_REVIEWING_TIME) {
+            Titles = new String[6];
+            Titles[0] = "cram";
+            Titles[1] = "learn";
+            Titles[2] = "relearn";
+            Titles[3] = res.getString(R.string.statistics_young_cards);
+            Titles[4] = res.getString(R.string.statistics_mature_cards);
+            Titles[5] = ("average");
             int temp = sStart;
             sStart = -sEnd;
             sEnd = temp;
+            if (type == TYPE_REVIEWING_TIME) {
+                if (sChunk < 30) {
+                    axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_minutes);                    
+                } else {
+                    axisLabels[1] = "hrs";
+                }
+            }
         } else {
             Titles = new String[1];
-            if (type == TYPE_REVIEWING_TIME) {
-                int temp = sStart;
-                sStart = -sEnd;
-                sEnd = temp;
-                axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_minutes);
-            }
         }
         sZoom = 0;
     }
@@ -139,25 +142,30 @@ public class Statistics {
             switch (sType) {
                 case TYPE_DUE:
                 case TYPE_CUMULATIVE_DUE:
-                    seriesList = stripXAxisData(stats.due(sStart, sEnd * sChunk, sChunk), 2);
+                    seriesList = stripXAxisData(stats.due(sStart, sEnd * sChunk, sChunk), sType == TYPE_DUE ? 2 : 1);
                     // add learn cards
-                    seriesList[2][0] = mDeck.getSched().counts()[1];
-                    seriesList[0][0] += seriesList[2][0];
-                    seriesList[1][0] += seriesList[2][0];
                     if (sChunk == 1) {
+                        seriesList[2][0] = mDeck.getSched().counts()[1];
+                        seriesList[0][0] += seriesList[2][0];
+                        seriesList[1][0] += seriesList[2][0];
                         seriesList[2][1] = mDeck.getSched().lrnTomorrow() - seriesList[2][0];
                         seriesList[0][1] += seriesList[2][1];
                         seriesList[1][1] += seriesList[2][1];
+                    } else {
+                        seriesList[2][0] = mDeck.getSched().lrnTomorrow();
+                        seriesList[0][0] += seriesList[2][0];
+                        seriesList[1][0] += seriesList[2][0];
                     }
-                    double average = 0;
-                    for (double d : seriesList[0]) {
-                        average += d;
-                    }
-                    average /= seriesList[1].length;
-                    for (int i = 0; i < seriesList[3].length; i++) {
-                        seriesList[3][i] = average;
-                    }
-                    if (sType == TYPE_CUMULATIVE_DUE) {
+                    if (sType == TYPE_DUE) {
+                        double average = seriesList[2][0] + seriesList[2][1];
+                        for (double d : seriesList[0]) {
+                            average += d;
+                        }
+                        average /= seriesList[1].length;
+                        for (int i = 0; i < seriesList[3].length; i++) {
+                            seriesList[3][i] = average;
+                        }
+                    } else {
                         for (int i = 1; i < seriesList[0].length; i++) {
                             seriesList[0][i] += seriesList[0][i - 1];
                             seriesList[1][i] += seriesList[1][i - 1];
@@ -168,13 +176,18 @@ public class Statistics {
                 case TYPE_INTERVALS:
                     seriesList = stripXAxisData(stats.intervals(sEnd * sChunk, sChunk), 0);
                     break;
-//                 case TYPE_REVIEWS:
-//                     seriesList = getReviews(period);
-//                 break;
-                // case TYPE_REVIEWING_TIME:
-                // seriesList = new double[1][sEnd - sStart];
-                // seriesList[0] = getReviewTime(period);
-                // break;
+                case TYPE_REVIEWS:
+                case TYPE_REVIEWING_TIME:
+                    seriesList = stripXAxisData(stats.reps(-sStart, sChunk, sType == TYPE_REVIEWING_TIME), 1);
+                    double averageReps = 0;
+                    for (double d : seriesList[0]) {
+                        averageReps += d;
+                    }
+                    averageReps /= seriesList[0].length;
+                    for (int i = 0; i < seriesList[5].length; i++) {
+                        seriesList[5][i] = averageReps;
+                    }
+                    break;
                 default:
                     seriesList = null;
             }
