@@ -160,7 +160,6 @@ public class DeckPicker extends Activity implements Runnable {
 	private int mTotalTime = 0;
 
 	int mStatisticType;
-	int mLoadingFinished;
 
 	boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for active cards
 
@@ -238,7 +237,9 @@ public class DeckPicker extends Activity implements Runnable {
 			mDeckListAdapter.notifyDataSetChanged();
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
 			setTitleText();
-			enableButtons(mLoadingFinished == 0);
+            if (data.getBoolean("lastDeck")) {
+                enableButtons(true);
+            }
 		}
 	};
 
@@ -891,7 +892,6 @@ public class DeckPicker extends Activity implements Runnable {
 
 		if (dir.exists() && dir.isDirectory() && fileList != null) {
 			len = fileList.length;
-			mLoadingFinished = len;
 			enableButtons(false);
 		}
 
@@ -965,8 +965,9 @@ public class DeckPicker extends Activity implements Runnable {
 				Log.i(AnkiDroidApp.TAG, "Thread run - Inside lock");
 
 				mIsFinished = false;
+				int i = 0;
 				for (File file : mFileList) {
-
+				    i++;
 					// Don't load any more decks if one has already been
 					// selected.
 					Log.i(AnkiDroidApp.TAG, "Thread run - Before break mDeckIsSelected = " + mDeckIsSelected);
@@ -1050,17 +1051,22 @@ public class DeckPicker extends Activity implements Runnable {
 						}
 						data.putInt("rateOfCompletionMat", rateOfCompletionMat);
                         data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
+                        if (i == mFileList.length) {
+                            data.putBoolean("lastDeck", true);
+                        } else {
+                            data.putBoolean("lastDeck", false);
+                        }
 						msg.setData(data);
 						
 						mTotalDueCards += dueCards;
 						mTotalCards += totalCards;
 						mTotalTime += Math.max(deck.getETA(), 0);
-						mLoadingFinished--;
 
 						mHandler.sendMessage(msg);
 					}
 				}
 				mIsFinished = true;
+				mHandler.sendEmptyMessage(0);
 				mCondFinished.signal();
 			} catch (Exception e) {
 				throw new RuntimeException(e);
