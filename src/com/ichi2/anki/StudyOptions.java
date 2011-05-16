@@ -654,7 +654,9 @@ public class StudyOptions extends Activity {
     protected void onPause() {
         super.onPause();
         // Update the widget when pausing this activity.
-        WidgetStatus.update(getBaseContext());
+        if (!mInDeckPicker) {
+            WidgetStatus.update(getBaseContext());            
+        }
     }
 
 
