@@ -211,6 +211,8 @@ public class MetaDB {
             }
             return decks;
         } catch (SQLiteException e) {
+            Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
+        } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
