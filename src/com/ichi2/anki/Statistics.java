@@ -96,6 +96,9 @@ public class Statistics {
     	for (String dp : deckPaths) {
             double[][] seriesList;
             sDeck = Deck.openDeck(dp);
+            if (sDeck == null) {
+                continue;
+            }
             seriesList = getSeriesList(context, type, period);
             sDeck.closeDeck(false);
             for (int i = 0; i < sSeriesList.length; i++) {

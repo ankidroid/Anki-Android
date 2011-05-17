@@ -23,6 +23,7 @@ import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
@@ -287,6 +288,8 @@ public class Deck {
             deck.mRevCardOrder = cursor.getInt(35);
 
             Log.i(AnkiDroidApp.TAG, "openDeck - Read " + cursor.getColumnCount() + " columns from decks table.");
+        } catch (SQLiteException e) {
+            return null;
         } finally {
             if (cursor != null) {
                 cursor.close();
