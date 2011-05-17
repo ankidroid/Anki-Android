@@ -116,7 +116,7 @@ public class ChartBuilder extends Activity {
                     renderer.setColor(res.getColor(R.color.statistics_due_mature_cards));
                     break;
                 case 2:
-                    renderer.setColor(res.getColor(R.color.statistics_due_failed_cards));
+                    renderer.setColor(res.getColor(R.color.statistics_due_learn_cards));
                     break;
                 case 3:
                     renderer.setColor(res.getColor(R.color.statistics_due_average_line));
@@ -126,13 +126,13 @@ public class ChartBuilder extends Activity {
         } else if (type <= Statistics.TYPE_REVIEWING_TIME) {
             switch (row) {
                 case 0:
-                    renderer.setColor(res.getColor(R.color.statistics_reps_new_cards));
+                    renderer.setColor(res.getColor(R.color.statistics_reps_cram_cards));
                     break;
                 case 1:
-                    renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));
+                    renderer.setColor(res.getColor(R.color.statistics_reps_learn_cards));
                     break;
                 case 2:
-                    renderer.setColor(res.getColor(R.color.statistics_reps_mature_cards));
+                    renderer.setColor(res.getColor(R.color.statistics_reps_relearn_cards));
                     break;
                 case 3:
                     renderer.setColor(res.getColor(R.color.statistics_reps_young_cards));

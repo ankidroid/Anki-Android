@@ -67,7 +67,7 @@ public class Statistics {
             sEnd = period;
             axisLabels[0] = res.getString(R.string.statistics_period_x_axis_days);
         }
-        axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis);
+        axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_cards);
         if (type <= TYPE_CUMULATIVE_DUE) {
             Titles = new String[4];
             Titles[0] = res.getString(R.string.statistics_young_cards);
@@ -76,12 +76,12 @@ public class Statistics {
             Titles[3] = ("average");
         } else if (type <= TYPE_REVIEWING_TIME) {
             Titles = new String[6];
-            Titles[0] = "cram";
-            Titles[1] = "learn";
-            Titles[2] = "relearn";
+            Titles[0] = res.getString(R.string.statistics_cram_cards);
+            Titles[1] = res.getString(R.string.statistics_learn_cards);
+            Titles[2] = res.getString(R.string.statistics_relearn_cards);
             Titles[3] = res.getString(R.string.statistics_young_cards);
             Titles[4] = res.getString(R.string.statistics_mature_cards);
-            Titles[5] = ("average");
+            Titles[5] = res.getString(R.string.statistics_average);
             int temp = sStart;
             sStart = -sEnd;
             sEnd = temp;
@@ -89,7 +89,7 @@ public class Statistics {
                 if (sChunk < 30) {
                     axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_minutes);                    
                 } else {
-                    axisLabels[1] = "hrs";
+                    axisLabels[1] = context.getResources().getString(R.string.statistics_period_y_axis_hours);                    
                 }
             }
         } else {
@@ -209,35 +209,5 @@ public class Statistics {
             }
         }
         return result;
-    }
-
-
-    public static double[][] getReviews(int length) {
-        double series[][] = new double[3][length];
-        for (int i = 0; i < length; i++) {
-            // int result[] = mDeck.getDaysReviewed(i - length + 1);
-            // series[0][i] = result[0];
-            // series[1][i] = result[1];
-            // series[2][i] = result[2];
-        }
-        return series;
-    }
-
-
-    public static double[] getReviewTime(int length) {
-        double series[] = new double[length];
-        for (int i = 0; i < length; i++) {
-            // series[i] = mDeck.getReviewTime(i - length + 1) / 60;
-        }
-        return series;
-    }
-
-
-    public static double[] getCardsByInterval(int length) {
-        double series[] = new double[length];
-        for (int i = 0; i < length; i++) {
-            // series[i] = mDeck.getCardsByInterval(i);
-        }
-        return series;
     }
 }

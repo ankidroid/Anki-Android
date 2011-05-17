@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+	<!--
+		~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> ~ ~
+		This program is free software; you can redistribute it and/or modify
+		it under ~ the terms of the GNU General Public License as published by
+		the Free Software ~ Foundation; either version 3 of the License, or
+		(at your option) any later ~ version. ~ ~ This program is distributed
+		in the hope that it will be useful, but WITHOUT ANY ~ WARRANTY;
+		without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+		~ PARTICULAR PURPOSE. See the GNU General Public License for more
+		details. ~ ~ You should have received a copy of the GNU General Public
+		License along with ~ this program. If not, see
+		<http://www.gnu.org/licenses/>.
+	-->
 <resources>
 	<color name="wb_fg_color">#B00000FF</color>
 	<color name="wb_bg_color">#0000</color>
@@ -34,22 +32,24 @@
 
 	<color name="statistics_default">#FBB117</color>
 	<color name="statistics_due_young_cards">#FBB117</color>
-	<color name="statistics_due_mature_cards">#F88017</color>	
-	<color name="statistics_due_failed_cards">#FF0000</color>
+	<color name="statistics_due_mature_cards">#F88017</color>
+	<color name="statistics_due_learn_cards">#FF0000</color>
 	<color name="statistics_due_average_line">#FFFFFF</color>
-	<color name="statistics_reps_new_cards">#5CB3FF</color>	
-	<color name="statistics_reps_young_cards">#488AC7</color>
-	<color name="statistics_reps_mature_cards">#1569C7</color>	
-	
-	<color name="progressbar_1">#ff0000</color>	
-	<color name="progressbar_2">#ff9100</color>	
-	<color name="progressbar_3">#ffbe00</color>	
-	<color name="progressbar_4">#4aa02c</color>	
+	<color name="statistics_reps_cram_cards">#5CB3FF</color>
+	<color name="statistics_reps_learn_cards">#4AA1F1</color>
+	<color name="statistics_reps_relearn_cards">#398EE3</color>
+	<color name="statistics_reps_young_cards">#277CD5</color>
+	<color name="statistics_reps_mature_cards">#1569C7</color>
+
+	<color name="progressbar_1">#ff0000</color>
+	<color name="progressbar_2">#ff9100</color>
+	<color name="progressbar_3">#ffbe00</color>
+	<color name="progressbar_4">#4aa02c</color>
 	<color name="progressbar_border_inverted">#989898</color>
 	<color name="progressbar_background_inverted">#484848</color>
 
-	<color name="studyoptions_foreground">#ffffff</color>	
+	<color name="studyoptions_foreground">#ffffff</color>
 	<color name="studyoptions_foreground_deactivated">#484848</color>
-	<color name="background">#ffffff</color>	
-	
+	<color name="background">#ffffff</color>
+
 </resources>

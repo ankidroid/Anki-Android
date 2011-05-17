@@ -162,7 +162,7 @@ public class Stats {
         try {
             JSONArray lim = mDeck.getQconf().getJSONArray("groups");
             if (mSelective && lim.length() != 0) {
-                return "cid IN (SELECT id FROM cards WHERE gid in " + Utils.ids2str(lim) + ")";
+                return " AND cid IN (SELECT id FROM cards WHERE gid in " + Utils.ids2str(lim) + ")";
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
