@@ -653,12 +653,12 @@ public class StudyOptions extends Activity {
     }
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Update the widget when pausing this activity.
-        WidgetStatus.update(getBaseContext());
-    }
+    // @Override
+    // protected void onPause() {
+    //     super.onPause();
+    //     // Update the widget when pausing this activity.
+    //     WidgetStatus.update(getBaseContext());
+    // }
 
 
     @Override
