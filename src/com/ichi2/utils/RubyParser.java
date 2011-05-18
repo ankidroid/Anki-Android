@@ -105,7 +105,16 @@ public class RubyParser {
 
     }
 
-
+    /**
+     * Strips kanji from ruby markup. Used for reading in question
+     * 
+     * @param sourceText the japanese text containing ruby text
+     * @return text with kanji substituted by it's reading
+     */
+    public static String ankiStripKanji(String sourceText) {
+    	return sourceText.replaceAll(" ?([^ >]+?)\\[([^(sound:)].*?)\\]", "$2");
+    }
+    
     private static String newRubyPair(String baseText, String rubyText) {
         return "<ruby><rb>" + baseText + "</rb><rt>" + rubyText + "</rt></ruby>";
     }
