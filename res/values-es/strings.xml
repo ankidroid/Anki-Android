@@ -109,6 +109,7 @@
   <string name="pref_cat_swipe">Gestos</string>
   <string name="pref_cat_navigation_sensitivity">Sensibilidad</string>
   <string name="pref_cat_zoom">Zoom</string>
+  <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Restablecimiento</string>
   <string name="pref_cat_other">Otras opciones</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
@@ -151,6 +152,8 @@
   <string name="fullscreen_review_summ">Usa todo el espacio disponible de la pantalla durante el repaso</string>
   <string name="zoom">Habilitar Zoom</string>
   <string name="zoom_summ">Mostrar controles de zoom durante el repaso</string>
+  <string name="zeemote">Soporte para Zeemote JS1</string>
+  <string name="zeemote_summ">Utilice los botones del controlador Zeemote JS1 para navegar por las revisiones. R: Bien, B: Una vez más, D: Fácil</string>
   <string name="swipe">Habilitar gestos</string>
   <string name="swipe_summ_off">Usa gestos para moverte entre las pantallas y responder tarjetas. Esta opción es incompatible con los controles de zoom</string>
   <string name="swipe_summ_on">Desliza el dedo horizontalmente para alternar entre pantallas. Debajo puedes configurar otras acciones</string>
@@ -274,6 +277,7 @@
   <string name="studyoptions_new_total">Nuevas en total:</string>
   <string name="studyoptions_eta">Tiempo estimado (min.):</string>
   <string name="studyoptions_new_cards_per_day">Tarjetas nuevas por día</string>
+  <string name="studyoptions_max_fail_card">Max tarjetas falladas</string>
   <string name="studyoptions_start">Empezar a repasar</string>
   <string name="studyoptions_more">Opciones de estudio</string>
   <string name="studyoptions_more_dialog_title">Opciones de estudio</string>
@@ -329,6 +333,7 @@
   <string name="log_out">Cerrar sesión</string>
   <string name="alert_logging_message">Iniciando sesión, por favor espere...</string>
   <string name="invalid_username_password">Usuario o contraseña incorrectos.</string>
+  <string name="sync_too_busy">Servidor demasiado ocupado. Inténtelo de nuevo más tarde.</string>
   <string name="login_generic_error">No se pudo iniciar sesión.</string>
   <string name="download_finished">Descarga finalizada</string>
   <string name="deck_downloaded">Mazo descargado</string>

@@ -109,6 +109,7 @@
   <string name="pref_cat_swipe">Swipe</string>
   <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Zoom</string>
+  <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Reset</string>
   <string name="pref_cat_other">Other</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
@@ -151,6 +152,8 @@
   <string name="fullscreen_review_summ">You can decide if you want to use all available screen space during card reviewing</string>
   <string name="zoom">Enable Zoom</string>
   <string name="zoom_summ">Show zoom controls when reviewing</string>
+  <string name="zeemote">Zeemote JS1 support</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
   <string name="swipe">Enable Gestures</string>
   <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
@@ -274,6 +277,7 @@
   <string name="studyoptions_new_total">New total:</string>
   <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">New cards per day</string>
+  <string name="studyoptions_max_fail_card">Max fail cards</string>
   <string name="studyoptions_start">Start Reviewing</string>
   <string name="studyoptions_more">Study Options</string>
   <string name="studyoptions_more_dialog_title">More Options</string>
@@ -329,6 +333,7 @@
   <string name="log_out">로그아웃</string>
   <string name="alert_logging_message">Logging in, please wait...</string>
   <string name="invalid_username_password">Invalid username or password.</string>
+  <string name="sync_too_busy">Server too busy. Try again later.</string>
   <string name="login_generic_error">Failed to login.</string>
   <string name="download_finished">Download finished</string>
   <string name="deck_downloaded">Deck downloaded</string>
