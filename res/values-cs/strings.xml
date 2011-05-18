@@ -109,6 +109,7 @@
   <string name="pref_cat_swipe">Swipe</string>
   <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Zoom</string>
+  <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Reset</string>
   <string name="pref_cat_other">Other</string>
   <string name="pref_cat_experimental">EXPERIMENTÁLNÍ</string>
@@ -151,6 +152,8 @@
   <string name="fullscreen_review_summ">Můžete se rozhodnout, zda chcete použít celý dostupný prostor obrazovky během opakování</string>
   <string name="zoom">Povolit zoom</string>
   <string name="zoom_summ">Zobrazit ovládání zoomu během opakování</string>
+  <string name="zeemote">Zeemote JS1 support</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
   <string name="swipe">Povolit gesta</string>
   <string name="swipe_summ_off">Použít gesta pro přepínání mezi obrazovkami a zodpovězenými kartami. Toto nastavení není kompatibilní s ovládacími prvky zoomu</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
@@ -274,6 +277,7 @@
   <string name="studyoptions_new_total">Nových celkově:</string>
   <string name="studyoptions_eta">Estimated time (min):</string>
   <string name="studyoptions_new_cards_per_day">Nových karet na den</string>
+  <string name="studyoptions_max_fail_card">Max fail cards</string>
   <string name="studyoptions_start">Začít opakovat</string>
   <string name="studyoptions_more">Studijní možnosti</string>
   <string name="studyoptions_more_dialog_title">Další volby</string>
@@ -329,6 +333,7 @@
   <string name="log_out">Odhlásit se</string>
   <string name="alert_logging_message">Probíhá přihlašování, čekejte prosím...</string>
   <string name="invalid_username_password">Neplatné uživatelské jméno nebo heslo.</string>
+  <string name="sync_too_busy">Server too busy. Try again later.</string>
   <string name="login_generic_error">Failed to login.</string>
   <string name="download_finished">Stahování dokončeno</string>
   <string name="deck_downloaded">Balíček byl stažen</string>

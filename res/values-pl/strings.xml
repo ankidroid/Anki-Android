@@ -109,6 +109,7 @@
   <string name="pref_cat_swipe">Swipe</string>
   <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">Powiększenie</string>
+  <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Zresetuj</string>
   <string name="pref_cat_other">Inne</string>
   <string name="pref_cat_experimental">Eksperymentalne</string>
@@ -151,6 +152,8 @@
   <string name="fullscreen_review_summ">Możesz zdecydować, czy chcesz korzystać ze całego dostępnego miejsca na ekranie podczas powtarzania kart</string>
   <string name="zoom">Włącz powiększenie</string>
   <string name="zoom_summ">Pokaż kontrolki zbliżenia podczas powtórek</string>
+  <string name="zeemote">Zeemote JS1 support</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
   <string name="swipe">Włącz gesty</string>
   <string name="swipe_summ_off">Użyj gestów do przełączania ekranów i kart odpowiedzi. Ta opcja nie jest zgodna z kontrolkami powiększania</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
@@ -274,6 +277,7 @@
   <string name="studyoptions_new_total">Wszystkie nowe:</string>
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_new_cards_per_day">Nowe karty na dzień</string>
+  <string name="studyoptions_max_fail_card">Max fail cards</string>
   <string name="studyoptions_start">Zacznij powtórki</string>
   <string name="studyoptions_more">Opcje powtórek</string>
   <string name="studyoptions_more_dialog_title">Więcej opcji</string>
@@ -329,6 +333,7 @@
   <string name="log_out">Wyloguj się</string>
   <string name="alert_logging_message">Logowanie, proszę czekać...</string>
   <string name="invalid_username_password">Błędna nazwa użytkownika lub hasło.</string>
+  <string name="sync_too_busy">Server too busy. Try again later.</string>
   <string name="login_generic_error">Nie można się zalogować.</string>
   <string name="download_finished">Pobieranie zakończone</string>
   <string name="deck_downloaded">Talia pobrana</string>

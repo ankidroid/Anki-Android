@@ -107,8 +107,9 @@
   <string name="pref_cat_lookup">Αναζήτηση</string>
   <string name="pref_cat_navigation">Πλοήγηση</string>
   <string name="pref_cat_swipe">Χειρονομίες</string>
-  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
+  <string name="pref_cat_navigation_sensitivity">Ευαισθησία</string>
   <string name="pref_cat_zoom">Ζουμ</string>
+  <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Επαναφορά</string>
   <string name="pref_cat_other">Άλλα</string>
   <string name="pref_cat_experimental">ΠΕΙΡΑΜΑΤΙΚΌ</string>
@@ -151,20 +152,22 @@
   <string name="fullscreen_review_summ">Μπορείτε να αποφασίσετε αν θέλετε να χρησιμοποιήσετε όλο το διαθέσιμο χώρο στην οθόνη κατά τη διάρκεια της επανάληψης κάρτας</string>
   <string name="zoom">Ενεργοποίηση Ζουμ</string>
   <string name="zoom_summ">Εμφάνιση ελέγχων ζουμ κατά την επανάληψη</string>
+  <string name="zeemote">Zeemote JS1 support</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
   <string name="swipe">Ενεργοποίηση χειρονομίων</string>
   <string name="swipe_summ_off">Χρησιμοποιήστε χειρονομίες για να αλλάξετε μεταξύ οθόνων και να απαντήσετε κάρτες. Αυτή η επιλογή δεν είναι συμβατή με τους ελέγχους ζουμ</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
-  <string name="pref_cat_actions">Actions</string>
-  <string name="gestures_shake">Shake</string>
+  <string name="pref_cat_actions">Ενέργειες</string>
+  <string name="gestures_shake">Ανακινήστε</string>
   <string name="gestures_swipe_up">Swipe up</string>
   <string name="gestures_swipe_down">Swipe down</string>
   <string name="gestures_swipe_left">Swipe left</string>
   <string name="gestures_swipe_right">Swipe right</string>
-  <string name="gestures_double_tap">Double tap</string>
-  <string name="gestures_tap_top">Tap top</string>
-  <string name="gestures_tap_bottom">Tap bottom</string>
-  <string name="gestures_tap_left">Tap left</string>
-  <string name="gestures_tap_right">Tap right</string>
+  <string name="gestures_double_tap">Διπλό χτύπημα</string>
+  <string name="gestures_tap_top">Ακουμπήστε κορυφή</string>
+  <string name="gestures_tap_bottom">Ακουμπήστε κάτω</string>
+  <string name="gestures_tap_left">Ακουμπήστε αριστερά</string>
+  <string name="gestures_tap_right">Ακουμπήστε δεξιά</string>
   <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">Ευαισθησία των swipe χειρονομιών: XXX</string>
   <string name="tts">Κείμενο σε ομιλία</string>
@@ -177,7 +180,7 @@
   <string name="sync_fetch_missing_media_summ">Αυτόματη λήψη απόντων μέσων κατά τον συγχρονισμό.</string>
   <string name="fix_hebrew_text">Επιβολή RTL για τα εβραϊκά</string>
   <string name="fix_hebrew_text_summ">Εναλλακτική λύση για περιορισμένη υποστήριξη για εβραϊκά από το Android. Δεν υποστηρίζει φωνήεντα.</string>
-  <string name="default_font">Default font</string>
+  <string name="default_font">Προεπιλεγμένη γραμματοσειρά</string>
   <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
   <string name="language">Γλώσσα</string>
   <string name="language_summ">Επιλέξτε τη γλώσσα που θα χρησιμοποιεί το AnkiDroid. Επιλεγμένη γλώσσα: XXX</string>
@@ -274,6 +277,7 @@
   <string name="studyoptions_new_total">Νέες σύνολο:</string>
   <string name="studyoptions_eta">Εκτιμώμενη διάρκεια (λεπτά):</string>
   <string name="studyoptions_new_cards_per_day">Νέες κάρτες ανά μέρα</string>
+  <string name="studyoptions_max_fail_card">Max fail cards</string>
   <string name="studyoptions_start">Έναρξη επανάληψης</string>
   <string name="studyoptions_more">Επιλογές Μελέτης</string>
   <string name="studyoptions_more_dialog_title">Περισσότερες επιλογές</string>
@@ -329,6 +333,7 @@
   <string name="log_out">Αποσύνδεση</string>
   <string name="alert_logging_message">Σύνδεση, παρακαλώ περιμένετε...</string>
   <string name="invalid_username_password">Άκυρο όνομα χρήστη ή κωδικός πρόσβασης.</string>
+  <string name="sync_too_busy">Server too busy. Try again later.</string>
   <string name="login_generic_error">Αποτυχία κατά την είσοδο.</string>
   <string name="download_finished">Η λήψη ολοκληρώθηκε</string>
   <string name="deck_downloaded">Η τράπουλα κατέβηκε</string>
@@ -468,7 +473,7 @@
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="other">%1$d νέες κάρτες</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1 min.</item>

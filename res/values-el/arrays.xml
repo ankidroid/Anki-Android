@@ -67,16 +67,16 @@
     <item>Εμφάνιση κατά τυχαία σειρά</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>1 ώρα</item>
+    <item>1 ημέρα</item>
+    <item>1 μήνας</item>
+    <item>1 έτος</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s ώρες</item>
+    <item>%s μέρες</item>
+    <item>%s μήνες</item>
+    <item>%s χρόνια</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>σε 1 ώρα</item>
@@ -119,7 +119,7 @@
     <item>Με το δέοντα χρόνο</item>
     <item>Με το διάστημα</item>
     <item>Με την ευκολία</item>
-    <item>Date created</item>
+    <item>Ημερομηνία δημιουργίας</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Δέον χρόνος</item>
@@ -136,14 +136,14 @@
     <item>1 χρόνος</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
+    <item>Με την τελευταία πρόσβαση</item>
+    <item>Αλφαβητική</item>
     <item>By number of due cards</item>
     <item>By number of total cards</item>
     <item>By number of total new cards</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
+    <item>Καμία ενέργεια</item>
     <item>Answer button 1</item>
     <item>Answer button 2</item>
     <item>Answer button 3</item>

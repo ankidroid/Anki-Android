@@ -109,6 +109,7 @@
   <string name="pref_cat_swipe">Dóna un cop</string>
   <string name="pref_cat_navigation_sensitivity">Sensibilitat</string>
   <string name="pref_cat_zoom">Zoom</string>
+  <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Reinicia</string>
   <string name="pref_cat_other">Altres</string>
   <string name="pref_cat_experimental">EXPERIMENTAL</string>
@@ -151,6 +152,8 @@
   <string name="fullscreen_review_summ">Podeu fer servit tota la pantalla al revisar les fitxes</string>
   <string name="zoom">Activa l\'ampliació</string>
   <string name="zoom_summ">Mostra els botons d\'ampliació a les fitxes</string>
+  <string name="zeemote">Controlador Zeemote JS1</string>
+  <string name="zeemote_summ">Valora les fitxes amb els botons del controlador Zeemote JS1. A: Correcte, B: Repeteix-ho, D: Fàcil</string>
   <string name="swipe">Habilita els gestos</string>
   <string name="swipe_summ_off">Feu servir gestos per canviar entre les pantalles i fitxes de resposta. Aquesta opció no és compatible amb els controls de zoom</string>
   <string name="swipe_summ_on">Passeu el dit horitzontalment per canviar entre les pantalles. Ajusteu diverses accions a sota</string>
@@ -177,8 +180,8 @@
   <string name="sync_fetch_missing_media_summ">Recupera automàticament els mitjans que falten al sincronitzar.</string>
   <string name="fix_hebrew_text">Feu complir RTL per l\'hebreu</string>
   <string name="fix_hebrew_text_summ">Solució per al suport limitat de la llengua hebrea de la plataforma Android No permet l\'ús de vocals.</string>
-  <string name="default_font">Default font</string>
-  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
+  <string name="default_font">Tipus de lletra per omissió</string>
+  <string name="default_font_summ">Permet que el tipus de lletra per omissió es faci servir per a les fitxes.</string>
   <string name="language">Idioma</string>
   <string name="language_summ">Trieu l\'idioma em que voleu l\'AnkiDroid. Ara és: XXX</string>
   <string name="language_system">Idioma del sistema</string>
@@ -203,7 +206,7 @@
   <string name="select_card_model">Trieu una plantilla per les fitxes</string>
   <string name="select">Seleccioneu</string>
   <string name="card_browser">Navegador de fitxes</string>
-  <string name="card_browser_load">S\'està càrregant les fitxes</string>
+  <string name="card_browser_load">S\'està carregant les fitxes</string>
   <string name="card_browser_cardloading_error">Hi ha hagut un error al carregar les fitxes. Això probablement té a veure amb les restriccions de memòria del dispositiu. Podeu provar amb un paquet més petit</string>
   <string name="card_browser_delete_card">Suprimeix la fitxa</string>
   <string name="card_browser_suspend_card">Suspèn la fitxa</string>
@@ -274,6 +277,7 @@
   <string name="studyoptions_new_total">Total de noves:</string>
   <string name="studyoptions_eta">Temps estimat (min.):</string>
   <string name="studyoptions_new_cards_per_day">Noves fitxes per dia</string>
+  <string name="studyoptions_max_fail_card">Màxim de fitxes fallades</string>
   <string name="studyoptions_start">Comença</string>
   <string name="studyoptions_more">Opcions d\'aprenentatge</string>
   <string name="studyoptions_more_dialog_title">Més</string>
@@ -329,6 +333,7 @@
   <string name="log_out">Desconnecta</string>
   <string name="alert_logging_message">S\'està iniciant la sessió, un moment...</string>
   <string name="invalid_username_password">El nom d\'usuari o la contrasenya no són vàlids.</string>
+  <string name="sync_too_busy">El servidor està ocupat. Torna-ho a provar més endavant.</string>
   <string name="login_generic_error">No ha estat possible iniciar la sessió.</string>
   <string name="download_finished">Ha acabat la baixada</string>
   <string name="deck_downloaded">S\'ha baixat el paquet</string>
