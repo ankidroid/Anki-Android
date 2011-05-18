@@ -79,8 +79,18 @@ import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-public class Reviewer extends Activity {
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+//zeemote imports
+import com.zeemote.zc.Controller;
+import com.zeemote.zc.event.ButtonEvent;
+import com.zeemote.zc.event.IButtonListener;
+import com.zeemote.zc.ui.android.ControllerAndroidUi;
+
+
+public class Reviewer extends Activity implements IButtonListener{
     /**
      * Result codes that are returned when this activity finishes.
      */
@@ -122,6 +132,12 @@ public class Reviewer extends Activity {
     private static final int MENU_UNDO = 6;
     private static final int MENU_REDO = 7;
 
+    /** Zeemote messages */
+    private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
+    private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
+    private static final int MSG_ZEEMOTE_BUTTON_C = MSG_ZEEMOTE_BUTTON_A+2;
+    private static final int MSG_ZEEMOTE_BUTTON_D = MSG_ZEEMOTE_BUTTON_A+3;
+    
     /** Regex pattern used in removing tags from text before diff */
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
@@ -169,6 +185,7 @@ public class Reviewer extends Activity {
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;    
+    private boolean mZeemoteEnabled;    
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
@@ -300,7 +317,14 @@ public class Reviewer extends Activity {
  	private static final int GESTURE_CLEAR_WHITEBOARD = 15;
  	private static final int GESTURE_EXIT = 16;
 
+ 	/**
+ 	 * Zeemote controller
+ 	 */
+ 	//Controller controller = null;
+ 	ControllerAndroidUi controllerUi;
 
+    private int zEase;
+    
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -581,7 +605,48 @@ public class Reviewer extends Activity {
     		setDueMessage();
     	}
     };
-
+    
+    //Zeemote handler
+	Handler ZeemoteHandler = new Handler() {
+		public void handleMessage(Message msg){
+			switch(msg.what){
+			case MSG_ZEEMOTE_BUTTON_A:
+				if (sDisplayAnswer) {
+						if (mCurrentCard.isRev()) {
+   						answerCard(Card.EASE_MID);
+						} else {
+							answerCard(Card.EASE_HARD);
+						}
+					} else {
+						displayCardAnswer(); 
+					}				
+				break;
+			case MSG_ZEEMOTE_BUTTON_B:
+				if (sDisplayAnswer) {
+   					answerCard(Card.EASE_FAILED);
+					} else {
+   			        displayCardAnswer();    						
+					}
+				break;
+			case MSG_ZEEMOTE_BUTTON_C:
+				   
+				break;
+			case MSG_ZEEMOTE_BUTTON_D:
+				if (sDisplayAnswer) {
+						if (mCurrentCard.isRev()) {
+   						answerCard(Card.EASE_EASY);
+						} else {
+							answerCard(Card.EASE_MID);
+						}
+					} else {
+						displayCardAnswer(); 
+					}				break;
+			}
+			super.handleMessage(msg);
+		}
+	};
+    
+    
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
@@ -600,6 +665,19 @@ public class Reviewer extends Activity {
         } else {
             mMediaDir = setupMedia(deck);
             restorePreferences();
+
+            //Zeemote controller initialization
+    		if (mZeemoteEnabled){
+             
+    		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
+    		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
+    		 if (!AnkiDroidApp.zeemoteController().isConnected())
+    		 {
+        		 Log.d("Zeemote","starting connection in onCreate");
+    			 controllerUi.startConnectionProcess();
+    		 }
+    		}
+            
             deck.resetUndo();
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
@@ -699,6 +777,11 @@ public class Reviewer extends Activity {
         }
 
         Sound.stopSounds();
+
+        if (AnkiDroidApp.zeemoteController() != null) { 
+        	Log.d("Zeemote","Removing listener in onPause");
+        	AnkiDroidApp.zeemoteController().removeButtonListener(this);
+        }
     }
 
     @Override
@@ -713,6 +796,10 @@ public class Reviewer extends Activity {
       if (mPrefTimer && mSavedTimer != 0) {
           mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
           mCardTimer.start();
+      }
+      if (AnkiDroidApp.zeemoteController() != null) {
+    	  Log.d("Zeemote","Adding listener in onResume");
+    	  AnkiDroidApp.zeemoteController().addButtonListener(this);
       }
     }
 
@@ -733,6 +820,15 @@ public class Reviewer extends Activity {
         }
         if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
             ReadText.releaseTts();        	
+        }
+        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
+        	try {
+        		Log.d("Zeemote","trying to disconnect in onDestroy...");
+        		AnkiDroidApp.zeemoteController().disconnect();
+        	}
+        	catch (IOException ex){
+        		Log.e("Zeemote","Error on zeemote disconnection in onDestroy: "+ex.getMessage());
+        	}
         }
     }
 
@@ -1173,10 +1269,10 @@ public class Reviewer extends Activity {
         }
         Log.i(AnkiDroidApp.TAG, "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = " + mCard.isFocusableInTouchMode());
 
-        // initialise swipe
+        // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
         
-        // initialise shake detection
+        // Initialize shake detection
         if (mShakeEnabled) {
             mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
             mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
@@ -1400,6 +1496,7 @@ public class Reviewer extends Activity {
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
+        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", CardModel.DEFAULT_FONT_SIZE_RATIO);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
@@ -2277,4 +2374,21 @@ public class Reviewer extends Activity {
 	    else
 	    	return false;
     }
+
+
+	@Override
+	public void buttonPressed(ButtonEvent arg0) {
+		Log.d("Zeemote","Button pressed, id: "+arg0.getButtonID());
+	}
+
+
+	@Override
+	public void buttonReleased(ButtonEvent arg0) {
+		Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
+		Message msg = Message.obtain();
+		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); //Button A = 0, Button B = 1...
+		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A) && (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { //make sure messages from future buttons don't get throug
+			this.ZeemoteHandler.sendMessage(msg);
+		}
+	}
 }

@@ -26,6 +26,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -35,12 +36,17 @@ import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
+import com.zeemote.zc.Controller;
+import com.zeemote.zc.event.BatteryEvent;
+import com.zeemote.zc.event.ControllerEvent;
+import com.zeemote.zc.event.DisconnectEvent;
+import com.zeemote.zc.event.IStatusListener;
 
 /**
  * Application class. This file mainly contains Veecheck stuff.
  */
-public class AnkiDroidApp extends Application {
-
+public class AnkiDroidApp extends Application implements IStatusListener {
+	
 	public static final String LIBANKI_VERSION = "1.2.5";
 	public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
 
@@ -58,7 +64,9 @@ public class AnkiDroidApp extends Application {
      * Currently loaded Anki deck.
      */
     private Deck mLoadedDeck;
-
+    
+    private Controller mZeemoteController;
+	private PowerManager.WakeLock wakeLock;
 
     /**
      * On application creation.
@@ -130,7 +138,14 @@ public class AnkiDroidApp extends Application {
         return sInstance.mLoadedDeck;
     }
 
-
+    public static Controller zeemoteController() {
+    	return sInstance.mZeemoteController;
+    }
+    
+    public static void setZeemoteController(Controller controller) {
+    	sInstance.mZeemoteController = controller;
+    }
+    
     public static void setDeck(Deck deck) {
         sInstance.mLoadedDeck = deck;
     }
@@ -217,4 +232,25 @@ public class AnkiDroidApp extends Application {
         return null;
     }
 
+	@Override
+	public void batteryUpdate(BatteryEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void connected(ControllerEvent arg0) {
+        final PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+        wakeLock.acquire();
+	}
+
+	@Override
+	public void disconnected(DisconnectEvent arg0) {
+		if (wakeLock!=null) {
+			wakeLock.release();
+			wakeLock = null;
+		}
+	}
+    
 }

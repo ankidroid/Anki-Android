@@ -60,6 +60,8 @@ import android.widget.ToggleButton;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
+import com.zeemote.zc.Controller;
+import com.zeemote.zc.ui.android.ControllerAndroidUi;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,6 +74,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class StudyOptions extends Activity {
+	
     /**
 * Default database.
 */
@@ -588,7 +591,6 @@ public class StudyOptions extends Activity {
        	};
     }
 
-
     @Override
     public void onConfigurationChanged(Configuration newConfig){
     	super.onConfigurationChanged(newConfig);
@@ -652,7 +654,7 @@ public class StudyOptions extends Activity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+    	super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
         closeOpenedDeck();
         MetaDB.closeDB();
