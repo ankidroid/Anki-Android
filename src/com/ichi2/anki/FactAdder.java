@@ -119,9 +119,9 @@ public class FactAdder extends Activity {
             } else {
                 Toast failureNotice = Toast.makeText(FactAdder.this, getResources().getString(R.string.factadder_saving_error), Toast.LENGTH_SHORT);
                 failureNotice.show();
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                	mProgressDialog.dismiss();
-                }
+            }
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
             }
         }
 
