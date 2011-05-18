@@ -2333,6 +2333,19 @@ public class Deck {
     }
 
 
+    public int getFailedCardMax() {
+        return mFailedCardMax;
+    }
+
+
+    public void setFailedCardMax(int num) {
+        if (num >= 0) {
+	    mFailedCardMax = num;
+	    flushMod();
+        }
+    }
+
+
     public boolean getPerDay() {
         return getBool("perDay");
     }

@@ -367,6 +367,7 @@
 <string name="studyoptions_new_total">New total:</string>
 <string name="studyoptions_eta">Estimated time (min):</string>
 <string name="studyoptions_new_cards_per_day">New cards per day</string>
+<string name="studyoptions_max_fail_card">Max fail cards</string>
 <string name="studyoptions_start">Start Reviewing</string>
 <string name="studyoptions_more">Study Options</string>
 <plurals name="studyoptions_window_title">
