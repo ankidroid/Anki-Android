@@ -443,6 +443,7 @@
 <string name="log_out">Log out</string>
 <string name="alert_logging_message">Logging in, please wait...</string>
 <string name="invalid_username_password">Invalid username or password.</string>
+<string name="sync_too_busy">Server too busy. Try again later.</string>
 <string name="login_generic_error">Failed to login.</string>
 
 <!-- DownloadManagerService.java -->

@@ -177,6 +177,8 @@
   <string name="sync_fetch_missing_media_summ">Recupera automàticament els mitjans que falten al sincronitzar.</string>
   <string name="fix_hebrew_text">Feu complir RTL per l\'hebreu</string>
   <string name="fix_hebrew_text_summ">Solució per al suport limitat de la llengua hebrea de la plataforma Android No permet l\'ús de vocals.</string>
+  <string name="default_font">Default font</string>
+  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
   <string name="language">Idioma</string>
   <string name="language_summ">Trieu l\'idioma em que voleu l\'AnkiDroid. Ara és: XXX</string>
   <string name="language_system">Idioma del sistema</string>

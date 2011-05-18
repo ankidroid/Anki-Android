@@ -23,6 +23,7 @@ import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
@@ -287,6 +288,8 @@ public class Deck {
             deck.mRevCardOrder = cursor.getInt(35);
 
             Log.i(AnkiDroidApp.TAG, "openDeck - Read " + cursor.getColumnCount() + " columns from decks table.");
+        } catch (SQLiteException e) {
+            return null;
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -4313,6 +4316,11 @@ public class Deck {
 
 
     public void addUndoCommand(String command, String table, ContentValues values, String whereClause) {
+        Log.d(AnkiDroidApp.TAG,
+                String.format("Deck.addUndoCommand(%s, %s, %s, %s)",
+                        command, table, values, whereClause));
+        Log.d(AnkiDroidApp.TAG, "Deck.addUndoCommand: mUndoRedoStackToRecord.size() = "
+                + mUndoRedoStackToRecord.size());
     	mUndoRedoStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
     }
 

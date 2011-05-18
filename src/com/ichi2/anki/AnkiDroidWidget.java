@@ -38,10 +38,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.tomgibara.android.veecheck.util.PrefSettings;
-
-import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +91,12 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
+        /** The id of the notification for due cards. */
+        private static final int WIDGET_NOTIFY_ID = 1;
+
+        /** The notification service to show notifications of due cards. */
+        private NotificationManager mNotificationManager;
+
         private CharSequence getDeckStatusString(DeckStatus deck) {
             SpannableStringBuilder sb = new SpannableStringBuilder();
 
@@ -102,7 +104,8 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            SpannableString black = new SpannableString(Integer.toString(deck.mDueCards));
+            int revCards = deck.mDueCards - deck.mFailedCards;
+            SpannableString black = new SpannableString(Integer.toString(revCards));
             black.setSpan(new ForegroundColorSpan(Color.BLACK), 0, black.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -117,6 +120,14 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             sb.append(blue);
 
             return sb;
+        }
+
+
+        @Override
+        public void onCreate() {
+            super.onCreate();
+            mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         }
 
 
@@ -237,18 +248,15 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
 
             SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-
             int minimumCardsDueForNotification = Integer.parseInt(preferences.getString(
                     "minimumCardsDueForNotification", "25"));
 
             if (dueCardsCount >= minimumCardsDueForNotification) {
-                // Raise a notification
-                String ns = Context.NOTIFICATION_SERVICE;
-                NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
-
+                // Show a notification
                 int icon = R.drawable.anki;
                 CharSequence tickerText = String.format(
-                        getString(R.string.widget_minimum_cards_due_notification_ticker_text), dueCardsCount);
+                        getString(R.string.widget_minimum_cards_due_notification_ticker_text),
+                        dueCardsCount);
                 long when = System.currentTimeMillis();
 
                 Notification notification = new Notification(icon, tickerText, when);
@@ -265,8 +273,10 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
                 notification.setLatestEventInfo(appContext, contentTitle, tickerText, pendingAnkiDroidIntent);
 
-                final int WIDGET_NOTIFY_ID = 1;
                 mNotificationManager.notify(WIDGET_NOTIFY_ID, notification);
+            } else {
+                // Cancel the existing notification, if any.
+                mNotificationManager.cancel(WIDGET_NOTIFY_ID);
             }
 
             return updateViews;
