@@ -261,7 +261,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mButtonHeight = 0;
     
     private boolean mConfigurationChanged = false;
-    private int mShowChosenAnswerLength = 900;
+    private int mShowChosenAnswerLength = 2000;
     
 	private boolean mShowCongrats = false;
 
@@ -1218,21 +1218,26 @@ public class Reviewer extends Activity implements IButtonListener{
         Deck deck = AnkiDroidApp.deck();
     	switch (ease) {
     		case Card.EASE_FAILED:
-    	    	mChosenAnswer.setText(mEase1.getText());
+    		    mChosenAnswer.setText("\u2022");
+    		    mChosenAnswer.setTextColor(mNext1.getTextColors());
     	    	if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
     	    		mIsLastCard = true;
                 }
     			break;
     		case Card.EASE_HARD:
-    	    	mChosenAnswer.setText(mEase2.getText());
+                mChosenAnswer.setText("\u2022\u2022");
+                mChosenAnswer.setTextColor(mNext2.getTextColors());
     			break;
     		case Card.EASE_MID:
-    	    	mChosenAnswer.setText(mEase3.getText());
+                mChosenAnswer.setText("\u2022\u2022\u2022");
+                mChosenAnswer.setTextColor(mNext3.getTextColors());
     			break;
     		case Card.EASE_EASY:
-    	    	mChosenAnswer.setText(mEase4.getText());    			
+                mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
+                mChosenAnswer.setTextColor(mNext4.getTextColors());
     			break;
     	}
+    	mTimerHandler.removeCallbacks(removeChosenAnswerText);
     	mTimerHandler.postDelayed(removeChosenAnswerText, mShowChosenAnswerLength);
     	Sound.stopSounds();
     	mCurrentEase = ease;
