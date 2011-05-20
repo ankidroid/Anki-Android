@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
@@ -34,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.Fact.Field;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -41,6 +43,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
+
+import org.amr.arabic.ArabicUtilities;
 
 /**
  * Allows the user to edit a fact, for instance if there is a typo.
@@ -77,6 +81,8 @@ public class CardEditor extends Activity {
     private EditText mNewTagEditText;
     private AlertDialog mTagsDialog;
     private AlertDialog mAddNewTag;
+    
+    private boolean mPrefFixArabic;
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -110,6 +116,11 @@ public class CardEditor extends Activity {
         mEditFields = new LinkedList<FieldEditText>();
 
         mModified = false;
+
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
+        // if Arabic reshaping is enabled, disable the Save button to avoid saving the reshaped string to the deck
+        mSave.setEnabled(!mPrefFixArabic);
 
         // Generate a new EditText for each field
         Iterator<Field> iter = fields.iterator();
@@ -351,7 +362,11 @@ public class CardEditor extends Activity {
         public FieldEditText(Context context, Field pairField) {
             super(context);
             mPairField = pairField;
-            this.setText(pairField.getValue());
+            if(mPrefFixArabic) {
+            	this.setText(ArabicUtilities.reshapeSentence(pairField.getValue()));
+            } else {
+            	this.setText(pairField.getValue());
+            }
         }
 
 
