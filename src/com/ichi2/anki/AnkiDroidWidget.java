@@ -42,12 +42,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnkiDroidWidget extends AppWidgetProvider {
-
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i(AnkiDroidApp.TAG, "onUpdate");
         WidgetStatus.update(context);
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        preferences.edit().putBoolean("widgetEnabled", true).commit();
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        super.onDisabled(context);
+        Log.d(AnkiDroidApp.TAG, "Widget disabled");
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        preferences.edit().putBoolean("widgetEnabled", false).commit();
     }
 
     public static class UpdateService extends Service {

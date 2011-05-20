@@ -39,9 +39,17 @@ public final class WidgetStatus {
 
     /** Request the widget to update its status. */
     public static void update(Context context) {
-        Log.d(AnkiDroidApp.TAG, "WidgetStatus.update()");
-        AsyncTask<Context,Void,Context> updateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
-        updateDeckStatusAsyncTask.execute(context);
+        // Only update the widget if it is enabled.
+        // TODO(flerda): Split widget from notifications.
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        if (preferences.getBoolean("widgetEnabled", false)) {
+            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
+            AsyncTask<Context,Void,Context> updateDeckStatusAsyncTask =
+                    new UpdateDeckStatusAsyncTask();
+            updateDeckStatusAsyncTask.execute(context);
+        } else {
+            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): not enabled");
+        }
     }
 
     /** Returns the status of each of the decks. */
