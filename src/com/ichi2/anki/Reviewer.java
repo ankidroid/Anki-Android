@@ -79,10 +79,6 @@ import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 //zeemote imports
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.event.ButtonEvent;
@@ -257,6 +253,7 @@ public class Reviewer extends Activity implements IButtonListener{
     
     private int mNextTimeTextColor;
     private int mNextTimeTextRecomColor;
+    private int mForegroundColor;
     
     private int mButtonHeight = 0;
     
@@ -595,6 +592,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private Runnable removeChosenAnswerText=new Runnable() {
     	public void run() {
     		mChosenAnswer.setText("");
+    		mChosenAnswer.setTextColor(mForegroundColor);
     		setDueMessage();
     	}
     };
@@ -1355,11 +1353,12 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         mAnswerField = (EditText) findViewById(R.id.answer_field);
 
-        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
-        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);            
-
         if (mInvertedColors) {
             invertColors();
+        } else {
+            mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
+            mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);        	
+            mForegroundColor = getResources().getColor(R.color.next_time_usual_color);        	
         }
 
         initControls();
@@ -1375,6 +1374,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mNextTimeTextRecomColor = res.getColor(R.color.next_time_recommended_color_inv);
         mNext4.setTextColor(mNextTimeTextColor);
         mCardTimer.setTextColor(fgColor);
+        mForegroundColor = fgColor;
         mTextBarBlack.setTextColor(fgColor);
         mTextBarBlue.setTextColor(res.getColor(R.color.textbar_blue_color_inv));
         mCard.setBackgroundColor(res.getColor(R.color.background_color_inv));
