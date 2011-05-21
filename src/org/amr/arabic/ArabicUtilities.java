@@ -156,6 +156,11 @@ public class ArabicUtilities {
 				}
 			} 
 		}
+		
+		//add the final Word
+		if(!"".equals(tempWord)){
+			finalWords.add(tempWord);
+		}
 
 		String[] theWords=new String[finalWords.size()];
 		theWords=(String[])finalWords.toArray(theWords);
