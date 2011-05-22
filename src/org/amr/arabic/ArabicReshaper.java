@@ -266,16 +266,28 @@ public class ArabicReshaper{
 	/**
 	 * Constructor of the Class
 	 * @param unshapedWord The unShaped Word
+	 * @param forWebView whether the word will be displayed in a WebView
 	 */
-	public ArabicReshaper(String unshapedWord){
+	public ArabicReshaper(String unshapedWord, boolean forWebView){
 		unshapedWord = replaceLamAlef(unshapedWord);
 		DecomposedWord decomposedWord = new DecomposedWord(unshapedWord);
 		if (decomposedWord.stripedRegularLetters.length > 0) {
 			_returnString=reshapeIt(new String(decomposedWord.stripedRegularLetters));
 		}
 		_returnString = decomposedWord.reconstructWord(_returnString);
+		if(forWebView) {
+			// heuristic trying to determine cases where Android's WebView will forget
+			// to display the arabic words right-to-left:
+			if(decomposedWord.stripedHarakates.length != 0) {
+				// reverse the word to force RTL display
+				_returnString = (new StringBuilder(_returnString)).reverse().toString();
+			}
+		}
 	}
 
+	public ArabicReshaper(String unshapedWord){
+		this(unshapedWord, false);
+	}
 
 
 	/**

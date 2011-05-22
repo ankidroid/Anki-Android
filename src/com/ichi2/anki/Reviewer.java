@@ -1650,7 +1650,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         String question = mCurrentCard.getQuestion();
         if(mPrefFixArabic) {
-        	question = ArabicUtilities.reshapeSentence(question);
+        	question = ArabicUtilities.reshapeSentence(question, true);
         }
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
@@ -1680,8 +1680,8 @@ public class Reviewer extends Activity implements IButtonListener{
         String answer = mCurrentCard.getAnswer(), question = mCurrentCard.getQuestion();
         if(mPrefFixArabic) {
         	// reshape
-        	answer = ArabicUtilities.reshapeSentence(answer);
-        	question = ArabicUtilities.reshapeSentence(question);
+        	answer = ArabicUtilities.reshapeSentence(answer, true);
+        	question = ArabicUtilities.reshapeSentence(question, true);
         }
 
         // If the user wrote an answer
