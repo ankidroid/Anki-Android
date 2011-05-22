@@ -278,7 +278,10 @@ public class ArabicReshaper{
 		if(forWebView) {
 			// heuristic trying to determine cases where Android's WebView will forget
 			// to display the arabic words right-to-left:
-			if(decomposedWord.stripedHarakates.length != 0) {
+			// 1) any diacritic (assumed to match harakates detected during decomposition, this should be checked...)
+			// 2) isolated alif (\u0627)
+			if(decomposedWord.stripedHarakates.length != 0 ||
+					_returnString.indexOf('\u0627') != -1) {
 				// reverse the word to force RTL display
 				_returnString = (new StringBuilder(_returnString)).reverse().toString();
 			}
