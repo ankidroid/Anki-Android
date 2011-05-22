@@ -358,6 +358,11 @@
 				android:summary="@string/fix_hebrew_text_summ"
 				android:defaultValue="false"
 				android:key="fixHebrewText"/>
+			<CheckBoxPreference
+				android:title="@string/fix_arabic_text"
+				android:summary="@string/fix_arabic_text_summ"
+				android:defaultValue="false"
+				android:key="fixArabicText"/>
 			<ListPreference
 				android:title="@string/default_font"
 				android:summary="@string/default_font_summ"

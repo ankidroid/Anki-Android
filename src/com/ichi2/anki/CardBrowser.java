@@ -59,6 +59,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.amr.arabic.ArabicUtilities;
+
 public class CardBrowser extends Activity {
     private ArrayList<HashMap<String, String>> mCards;
     private ArrayList<HashMap<String, String>> mAllCards;
@@ -111,6 +113,8 @@ public class CardBrowser extends Activity {
     private String[] allTags;
     private HashSet<String> mSelectedTags;
     private AlertDialog mTagsDialog;
+    
+    private boolean mPrefFixArabic;
 
 
     @Override
@@ -127,6 +131,7 @@ public class CardBrowser extends Activity {
 
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mrelativeBrowserFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
+        mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
 
         mCards = new ArrayList<HashMap<String, String>>();
         mAllCards = new ArrayList<HashMap<String, String>>();
@@ -660,6 +665,12 @@ public class CardBrowser extends Activity {
                 builder.create().show();
             } else {
                 for (String[] item : allCards) {
+                	// reshape Arabic words
+                	if(mPrefFixArabic) {
+                		item[1] = ArabicUtilities.reshapeSentence(item[1]);
+                		item[2] = ArabicUtilities.reshapeSentence(item[2]);
+                	}
+                	
                     HashMap<String, String> data = new HashMap<String, String>();
                     data.put("id", item[0]);
                     data.put("question", item[1]);

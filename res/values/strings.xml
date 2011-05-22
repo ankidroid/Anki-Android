@@ -597,4 +597,6 @@
 <string name="statistics_zoom_out">Zoom out</string>
 <string name="statistics_all_decks">(all decks)</string>
 <string name="calculating_statistics">Calculating statistics</string>
+<string name="fix_arabic_text">Improve Arabic display</string>
+<string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
 </resources>
