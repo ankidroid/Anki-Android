@@ -79,6 +79,12 @@ import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.amr.arabic.ArabicUtilities;
+
 //zeemote imports
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.event.ButtonEvent;
@@ -193,6 +199,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
+    private boolean mPrefFixArabic;
     private boolean mSpeakText;
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
@@ -1157,7 +1164,7 @@ public class Reviewer extends Activity implements IButtonListener{
                             return true;
                 		}                    			
             		}
-            		final CharSequence[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
+            		final CharSequence[] items = {"Englisch", "Franz√∂sisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
             		AlertDialog.Builder builder = new AlertDialog.Builder(this);
             		builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
             		builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -1502,6 +1509,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mDictionary = Integer.parseInt(preferences.getString("dictionary",
                 Integer.toString(DICTIONARY_AEDICT)));
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
+        mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
@@ -1645,6 +1653,9 @@ public class Reviewer extends Activity implements IButtonListener{
         mFlipCard.requestFocus();
 
         String question = mCurrentCard.getQuestion();
+        if(mPrefFixArabic) {
+        	question = ArabicUtilities.reshapeSentence(question, true);
+        }
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
         String displayString = enrichWithQASpan(question, false);
@@ -1669,6 +1680,13 @@ public class Reviewer extends Activity implements IButtonListener{
         Sound.stopSounds();
 
         String displayString = "";
+        
+        String answer = mCurrentCard.getAnswer(), question = mCurrentCard.getQuestion();
+        if(mPrefFixArabic) {
+        	// reshape
+        	answer = ArabicUtilities.reshapeSentence(answer, true);
+        	question = ArabicUtilities.reshapeSentence(question, true);
+        }
 
         // If the user wrote an answer
         if (mPrefWriteAnswers) {
@@ -1676,7 +1694,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mCurrentCard != null) {
                 // Obtain the user answer and the correct answer
                 String userAnswer = mAnswerField.getText().toString();         
-                Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(mCurrentCard.getAnswer()));
+                Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
                 String correctAnswer = matcher.replaceAll("");
                 matcher = sBrPattern.matcher(correctAnswer);
                 correctAnswer = matcher.replaceAll("\n");
@@ -1690,20 +1708,20 @@ public class Reviewer extends Activity implements IButtonListener{
                 DiffEngine diff = new DiffEngine();
 
                 displayString = enrichWithQASpan(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer))
-                        + "<br/>" + mCurrentCard.getAnswer(), true);
+                        + "<br/>" + answer, true);
             }
 
             // Hide soft keyboard
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
         } else {
-            displayString = enrichWithQASpan(mCurrentCard.getAnswer(), true);
+            displayString = enrichWithQASpan(answer, true);
         }
 
         // Depending on preferences do or do not show the question
         if (isQuestionDisplayed()) {
             StringBuffer sb = new StringBuffer();
-            sb.append(enrichWithQASpan(mCurrentCard.getQuestion(), false));
+            sb.append(enrichWithQASpan(question, false));
             sb.append("<a name=\"question\"></a><hr/>");
             sb.append(displayString);
             displayString = sb.toString();

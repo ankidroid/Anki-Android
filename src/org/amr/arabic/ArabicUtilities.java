@@ -156,6 +156,11 @@ public class ArabicUtilities {
 				}
 			} 
 		}
+		
+		//add the final Word
+		if(!"".equals(tempWord)){
+			finalWords.add(tempWord);
+		}
 
 		String[] theWords=new String[finalWords.size()];
 		theWords=(String[])finalWords.toArray(theWords);
@@ -180,9 +185,10 @@ public class ArabicUtilities {
 	/**
 	 * The Main Reshaping Function to be Used in Android Program
 	 * @param allText The text to be Reshaped
+	 * @param forWebView whether the word will be displayed in a WebView
 	 * @return the Reshaped Text
 	 */
-	public static String reshapeSentence(String sentence){
+	public static String reshapeSentence(String sentence, boolean forWebView){
 		//get the Words from the Text
 		String[] words=getWords(sentence);
 
@@ -199,7 +205,7 @@ public class ArabicUtilities {
 				if(isArabicWord(words[i])){
 
 					//Initiate the ArabicReshaper functionality
-					ArabicReshaper arabicReshaper = new ArabicReshaper(words[i]);
+					ArabicReshaper arabicReshaper = new ArabicReshaper(words[i], forWebView);
 					
 
 					//Append the Reshaped Arabic Word to the Reshaped Whole Text
@@ -213,7 +219,7 @@ public class ArabicUtilities {
 					for(int j=0;j<mixedWords.length;j++){
 
 						//Initiate the ArabicReshaper functionality
-						ArabicReshaper arabicReshaper=new ArabicReshaper(mixedWords[j]);
+						ArabicReshaper arabicReshaper=new ArabicReshaper(mixedWords[j], forWebView);
 
 						//Append the Reshaped Arabic Word to the Reshaped Whole Text
 						reshapedText.append(arabicReshaper.getReshapedWord());
@@ -231,6 +237,10 @@ public class ArabicUtilities {
 
 		//return the final reshaped whole text
 		return reshapedText.toString();
+	}
+	
+	public static String reshapeSentence(String sentence) {
+		return reshapeSentence(sentence, false);
 	}
 	
 	public static TextView getArabicEnabledTextView(Context context, TextView targetTextView) {
