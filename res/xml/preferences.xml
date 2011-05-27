@@ -368,6 +368,19 @@
 				android:summary="@string/default_font_summ"
 				android:key="defaultFont"
 				android:defaultValue=""/>
+                        <CheckBoxPreference
+                               android:title="@string/timeout_answer_text"
+                               android:summary="@string/timeout_answer_summ"
+                               android:defaultValue="false"
+                               android:disableDependentsState="false"
+                               android:key="timeoutAnswer"/>
+                       <com.hlidskialf.android.preference.SeekBarPreference
+                               android:dependency="timeoutAnswer"
+                               android:summary="@string/timeout_answer_seconds"
+                               android:max="30"
+                               android:title="@string/timeout_answer_seconds"
+                               android:defaultValue="6"
+                               android:key="timeoutAnswerSeconds"/>
 		</PreferenceCategory>
 	</PreferenceScreen>
 </PreferenceScreen>

@@ -205,7 +205,8 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mInvertedColors = false;
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
-    
+    private boolean mPrefUseTimer;
+
     private boolean mIsDictionaryAvailable;
     private boolean mIsSelecting = false;
 
@@ -643,6 +644,8 @@ public class Reviewer extends Activity implements IButtonListener{
 			super.handleMessage(msg);
 		}
 	};
+	private int mWaitSecond;
+
     
     
     // ----------------------------------------------------------------------------
@@ -1513,6 +1516,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
+        mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
+        mWaitSecond = preferences.getInt("timeoutAnswerSeconds", 20);
 
         mGesturesEnabled = preferences.getBoolean("swipe", false);
         if (mGesturesEnabled) {
@@ -1670,6 +1675,13 @@ public class Reviewer extends Activity implements IButtonListener{
 
         updateCard(displayString);
         hideEaseButtons();
+
+        // If the user want to show answer automatically
+        if (mPrefUseTimer) {
+            Log.i(AnkiDroidApp.TAG, "using timer '" + mWaitSecond + "'");
+            //use Handler to do timer
+            //mFlipCard.performClick();
+        }
     }
 
 
