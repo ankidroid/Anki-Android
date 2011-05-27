@@ -1632,6 +1632,16 @@ public class Reviewer extends Activity implements IButtonListener{
         Utils.updateProgressBars(this, mGlobalBar, deck.getProgress(true), mStatisticBarsMax, mStatisticBarsHeight, true);
     }  
 
+    private Handler mTimeoutHandler = new Handler();
+
+    private Runnable mShowAnswerTask=new Runnable() {
+	public void run() {
+            if (mPrefTimer) {
+                mCardTimer.stop();
+            }
+            mFlipCard.performClick();
+	}
+    };
 
     private void displayCardQuestion() {
         sDisplayAnswer = false;
@@ -1678,9 +1688,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
         // If the user want to show answer automatically
         if (mPrefUseTimer) {
-            Log.i(AnkiDroidApp.TAG, "using timer '" + mWaitSecond + "'");
-            //use Handler to do timer
-            //mFlipCard.performClick();
+            mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+            mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitSecond * 1000  );            
         }
     }
 
