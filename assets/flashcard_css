@@ -38,3 +38,13 @@ rt
 	line-height: 40%;
 	letter-spacing: 0;
 }
+
+BODY .AnkiDroid
+{
+	display: inline;
+}
+
+BODY .AnkiDesktop
+{
+	display: none;
+}
