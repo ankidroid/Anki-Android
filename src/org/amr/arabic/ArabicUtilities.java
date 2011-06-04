@@ -243,8 +243,6 @@ public class ArabicUtilities {
 					//iterate over mixed Words
 					for(int j=0;j<mixedWords.length;j++){
 						
-						// TODO factoriser la gestion de ces mots et celle des "vrais" mots, trop de code dupliquŽ...
-
 						if(isArabicWord(mixedWords[j])){
 							
 							//Initiate the ArabicReshaper functionality
