@@ -1898,7 +1898,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (defaultFont == null || "".equals(defaultFont)) {
             return "";
         }
-        return "BODY { font-family: '" + defaultFont + "' }\n";
+        return "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";
     }
 
 
