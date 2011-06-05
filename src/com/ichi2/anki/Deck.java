@@ -4329,11 +4329,6 @@ public class Deck {
 
 
     public void addUndoCommand(String command, String table, ContentValues values, String whereClause) {
-        Log.d(AnkiDroidApp.TAG,
-                String.format("Deck.addUndoCommand(%s, %s, %s, %s)",
-                        command, table, values, whereClause));
-        Log.d(AnkiDroidApp.TAG, "Deck.addUndoCommand: mUndoRedoStackToRecord.size() = "
-                + mUndoRedoStackToRecord.size());
     	mUndoRedoStackToRecord.peek().mUndoCommands.add(new UndoCommand(command, table, values, whereClause));
     }
 
