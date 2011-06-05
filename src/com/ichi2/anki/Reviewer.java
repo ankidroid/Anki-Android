@@ -40,6 +40,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -655,6 +656,9 @@ public class Reviewer extends Activity implements IButtonListener{
         super.onCreate(savedInstanceState);
 
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
+
+        // The hardware buttons should control the music volume while reviewing.
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         // Make sure a deck is loaded before continuing.
         Deck deck = AnkiDroidApp.deck();
