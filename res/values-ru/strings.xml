@@ -152,8 +152,8 @@
   <string name="fullscreen_review_summ">Использовать все доступное место экрана для просмотра</string>
   <string name="zoom">Включить масштабирование</string>
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
-  <string name="zeemote">Zeemote JS1 support</string>
-  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
+  <string name="zeemote">Поддержка Zeemote JS1</string>
+  <string name="zeemote_summ">Используйте кнопки управления Zeemote JS1 для навигации при обучении. A: Хорошо, B: Снова, D: Просто</string>
   <string name="swipe">Включить жесты</string>
   <string name="swipe_summ_off">Используйте жесты (при swipe) для переключения между экранами. Не работает одновременно с кнопками масштабирования</string>
   <string name="swipe_summ_on">Горизонтальное движение для переключения между экранами. Настройка других действий ниже</string>
@@ -193,7 +193,7 @@
   <string name="deckpreferences_title">Настройки колоды</string>
   <string name="about_title">О программе</string>
   <string name="cardeditor_title">Редактор карты</string>
-  <string name="factadder_title">Автор карты</string>
+  <string name="factadder_title">Добавление карты</string>
   <string name="factadder_saving_error">Ошибка при сохранении фактов</string>
   <string name="saving_facts">Сохранение фактов</string>
   <string name="deckcreator_title">Создание колоды</string>
@@ -277,7 +277,7 @@
   <string name="studyoptions_new_total">Новые всего:</string>
   <string name="studyoptions_eta">Вероятно займёт (мин):</string>
   <string name="studyoptions_new_cards_per_day">Новых карт в день</string>
-  <string name="studyoptions_max_fail_card">Max fail cards</string>
+  <string name="studyoptions_max_fail_card">Максимум трудных карт</string>
   <string name="studyoptions_start">Начать Просмотр</string>
   <string name="studyoptions_more">Доп. параметры</string>
   <string name="studyoptions_more_dialog_title">Доп. параметры</string>
@@ -333,7 +333,7 @@
   <string name="log_out">Завершить сеанс</string>
   <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
   <string name="invalid_username_password">Неправильное имя пользователя или пароль.</string>
-  <string name="sync_too_busy">Server too busy. Try again later.</string>
+  <string name="sync_too_busy">Сервер перегружен. Попробуйте еще раз позже.</string>
   <string name="login_generic_error">Не удалось войти в систему.</string>
   <string name="download_finished">Загрузка завершена</string>
   <string name="deck_downloaded">Колода скачана</string>
@@ -379,7 +379,7 @@
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="error_reporting_choice_summary">Можно посылать ошибки программы автоматически, не посылать или выводить вопрос пользователю</string>
-  <string name="feedback_disclaimer">Отказ от ответственности: Мы не собираем никакой личной информации, такой как адрес электронной почты, номер телефона, IP-адреса или IMEI телефона. Мы собираем некоторую общего характера информацию о вашем устройстве, такую, как производитель, модель и версия Android, а также сам характер ошибки.</string>
+  <string name="feedback_disclaimer">Внимание: Мы не собираем никакой личной информации, такой как адрес электронной почты, номер телефона, IP-адреса или IMEI телефона. Мы собираем некоторую общего характера информацию о вашем устройстве, такую, как производитель, модель и версия Android, а также сам характер ошибки.</string>
   <string name="feedback_title">Обратная связь</string>
   <string name="feedback_send_feedback">Отправить нам свой отзыв</string>
   <string name="feedback_send_feedback_and_errors">Отправить ошибки и ваши отзывы</string>
@@ -469,8 +469,8 @@
     <item quantity="other">%1$s (%2$d из %3$d к повтору)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">На сегодня Вы всё сделали.\nЗавтра будет:\n1 карта для повторения и %2$s.\n Вероятно займёт: %3$s</item>
-    <item quantity="other">На сегодня Вы всё сделали.\nЗавтра будет:\n%1$d карт для повторения и %2$s.\n Вероятно займёт: %3$s</item>
+    <item quantity="one">На сегодня работа с этой колодой завершена.\nЗавтра будет:\n1 карта для повторения и %2$s.\n Вероятно займёт: %3$s</item>
+    <item quantity="other">На сегодня работа с этой колодой завершена.\nЗавтра будет:\n%1$d карт для повторения и %2$s.\n Вероятно займёт: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 карта</item>

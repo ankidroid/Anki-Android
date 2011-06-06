@@ -42,7 +42,7 @@
   <string name="deckpicker_download_missing_title">Recupero di supporto mancante</string>
   <string name="deckpicker_download_missing_none">Nessun file media trovato mancante</string>
   <string name="deckpicker_download_missing_success">Recuperati con successo %1$d, mancanti %2$d</string>
-  <string name="deckpicker_download_missing_error">Errore con il file: %1$ s</string>
+  <string name="deckpicker_download_missing_error">Errore con il file: %1$s</string>
   <string name="notify_ticker">Aggiornamento applicazione</string>
   <string name="notify_title">Ankidroid Aggiornato</string>
   <string name="notify_message">Scarica una nuova versione</string>

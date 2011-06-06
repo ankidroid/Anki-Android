@@ -383,7 +383,7 @@
   <string name="feedback_send_feedback">Envíanos tus comentarios</string>
   <string name="feedback_send_feedback_and_errors">Enviar errores y tus comentarios</string>
   <string name="feedback_message_sent_success">Comentarios recibidos, gracias!</string>
-  <string name="feedback_message_sent_failure">No se han podido enviar sugerencias, código %1$ s</string>
+  <string name="feedback_message_sent_failure">No se han podido enviar sugerencias, código %1$s</string>
   <string name="feedback_error_list_header">Lista de errores para enviar</string>
   <string name="feedback_keep_latest">Mantener el último error</string>
   <string name="feedback_clear_all">Borrar todos los errores</string>

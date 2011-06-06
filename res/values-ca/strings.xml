@@ -456,7 +456,7 @@
     <item quantity="other">%1$d de %2$d pendents</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1 $s (falta 1 min.)</item>
+    <item quantity="one">%1$s (falta 1 min.)</item>
     <item quantity="other">%1$s (falten %2$d min.)</item>
   </plurals>
   <plurals name="card_browser_title">
@@ -481,11 +481,11 @@
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 fitxa al servidor</item>
-    <item quantity="other">%1 $d fitxes al servidor</item>
+    <item quantity="other">%1$d fitxes al servidor</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
     <item quantity="one">Una fitxa del servidor</item>
-    <item quantity="other">%1 $d fitxes del servidor</item>
+    <item quantity="other">%1$d fitxes del servidor</item>
   </plurals>
   <plurals name="error_message">
     <item quantity="one">Hi ha un error pendent d\'informar</item>

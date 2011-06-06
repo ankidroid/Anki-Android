@@ -67,16 +67,16 @@
     <item>Pokaż w losowej kolejności</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>1 godzina</item>
+    <item>1 dzień</item>
+    <item>1 miesiąc</item>
+    <item>1 rok</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s godzin</item>
+    <item>%s dni</item>
+    <item>%s miesięcy</item>
+    <item>%s lat</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>za 1 godzinę</item>
@@ -119,10 +119,10 @@
     <item>Wg. terminu</item>
     <item>Wg. przerwy</item>
     <item>Wg. łatwości</item>
-    <item>Date created</item>
+    <item>Data utworzenia</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Do przeglądnięcia</item>
+    <item>Do przejrzenia</item>
     <item>Kumulatywnie do przeglądnięcia</item>
     <item>Przerw</item>
     <item>Powtórek</item>
@@ -136,29 +136,29 @@
     <item>1 rok</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>Wg ostatniego dostępu</item>
+    <item>Alfabetycznie</item>
+    <item>Wg ilości kart do przejrzenia</item>
+    <item>Wg łącznej ilości kart</item>
+    <item>Wg łącznej ilości nowych kart</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
-    <item>Abort learning</item>
+    <item>Nic nie rób</item>
+    <item>Przycisk odpowiedzi 1</item>
+    <item>Przycisk odpowiedzi 2</item>
+    <item>Przycisk odpowiedzi 3</item>
+    <item>Przycisk odpowiedzi 4</item>
+    <item>Zalecana odpowiedź (zielony)</item>
+    <item>Odpowiedź lepsza niż zalecana</item>
+    <item>Cofnij</item>
+    <item>Ponów</item>
+    <item>Edytuj kartę</item>
+    <item>Oznacz kartę</item>
+    <item>Wyszukaj wyrażenie</item>
+    <item>Ukryj kartę</item>
+    <item>Wstrzymaj kartę</item>
+    <item>Usuń kartę</item>
+    <item>Wyczyść tablicę</item>
+    <item>Przerwij naukę</item>
   </string-array>
 </resources>

@@ -42,14 +42,14 @@
     <item>Zoals gedefinieerd in CardModel</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>Toon studie-opties</item>
+    <item>Toon dekkiezer</item>
+    <item>Toon dekkiezer bij eerste start van de dag</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Altijd rapporteren</item>
+    <item>Nooit rapporteren</item>
+    <item>Mij vragen</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -59,12 +59,12 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Nooit</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Toon oudste gewijzigde eerst</item>
+    <item>Toon in volgorde toegevoegd</item>
+    <item>Toon in willekeurige volgorde</item>
   </string-array>
   <string-array name="next_review_s">
     <item>1 hour</item>
@@ -73,13 +73,13 @@
     <item>1 year</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s uren</item>
+    <item>%s dagen</item>
+    <item>%s maanden</item>
+    <item>%s jaren</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
+    <item>over 1 uur</item>
     <item>in 1 day</item>
     <item>in 1 month</item>
     <item>in 1 year</item>
@@ -91,12 +91,12 @@
     <item>in %s years</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
+    <item>Nieuwe kaarten in willekeurige volgorde</item>
+    <item>Nieuwe kaarten in volgorde toegevoegd</item>
+    <item>Nieuwe kaarten in omgekeerde volgorde toegevoegd</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
+    <item>Verspreid nieuwe kaarten over overhoringen</item>
     <item>New cards after reviews</item>
     <item>New cards before reviews</item>
   </string-array>
@@ -114,18 +114,18 @@
     <item>Show failed cards in 3 days</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
+    <item>Op vraag</item>
+    <item>Op antwoord</item>
     <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>Date created</item>
+    <item>Op interval</item>
+    <item>Op gemakkelijkheidsgraad</item>
+    <item>Aanmaakdatum</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Due</item>
     <item>Cumulative due</item>
     <item>Intervals</item>
-    <item>Reviews</item>
+    <item>Overhoringen</item>
     <item>Reviewing time</item>
   </string-array>
   <string-array name="statistics_period_labels">
