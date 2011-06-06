@@ -266,32 +266,15 @@ public class ArabicReshaper{
 	/**
 	 * Constructor of the Class
 	 * @param unshapedWord The unShaped Word
-	 * @param forWebView whether the word will be displayed in a WebView
 	 */
-	public ArabicReshaper(String unshapedWord, boolean forWebView){
+	public ArabicReshaper(String unshapedWord){
 		unshapedWord = replaceLamAlef(unshapedWord);
 		DecomposedWord decomposedWord = new DecomposedWord(unshapedWord);
 		if (decomposedWord.stripedRegularLetters.length > 0) {
 			_returnString=reshapeIt(new String(decomposedWord.stripedRegularLetters));
 		}
 		_returnString = decomposedWord.reconstructWord(_returnString);
-		if(forWebView) {
-			// heuristic trying to determine cases where Android's WebView will forget
-			// to display the arabic words right-to-left:
-			// 1) any diacritic (assumed to match harakates detected during decomposition, this should be checked...)
-			// 2) isolated alif (\u0627)
-			if(decomposedWord.stripedHarakates.length != 0 ||
-					_returnString.indexOf('\u0627') != -1) {
-				// reverse the word to force RTL display
-				_returnString = (new StringBuilder(_returnString)).reverse().toString();
-			}
-		}
 	}
-
-	public ArabicReshaper(String unshapedWord){
-		this(unshapedWord, false);
-	}
-
 
 	/**
 	 * Decompose the word into two parts:
@@ -352,7 +335,12 @@ public class ArabicReshaper{
 			for(int index = 0; index < harakatesPositions.length; index++) {
 				wordWithHarakates[harakatesPositions[index]] = stripedHarakates[index];
 			}
-
+			
+			// harakate on the final letter is always badly displayed, and sometimes mixes up all the display, so remove it
+			if(isHaraka(wordWithHarakates[wordWithHarakates.length - 1]))	{
+				
+				return new String(wordWithHarakates, 0, wordWithHarakates.length - 1);
+			}
 
 			return new String(wordWithHarakates);
 

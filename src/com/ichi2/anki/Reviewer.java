@@ -1670,6 +1670,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mFlipCard.requestFocus();
 
         String question = mCurrentCard.getQuestion();
+        
         if(mPrefFixArabic) {
         	question = ArabicUtilities.reshapeSentence(question, true);
         }

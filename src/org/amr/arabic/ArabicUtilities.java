@@ -16,6 +16,7 @@ package org.amr.arabic;
  *
  * */
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -36,6 +37,30 @@ public class ArabicUtilities {
 	private static final String FONTS_LOCATION_PATH = "fonts/DejaVuSans.ttf";
         static Typeface face ;
 
+	// heuristic trying to determine cases where Android's WebView will forget
+	// to display the arabic words right-to-left:
+	// - harakates (taken from ArabicReshaper for now, to be validated...)
+	// - isolated alif (\u0627)
+	// - others?
+    // TODO factoriser
+    private static final Pattern patternBreakingWebView = Pattern.compile(
+    	"[" +
+		"\\u0627" +
+    	"\\u0600\\u0601\\u0602\\u0603\\u0606\\u0607\\u0608\\u0609\\u060A\\u060B\\u060D\\u060E" +	
+		"\\u0610\\u0611\\u0612\\u0613\\u0614\\u0615\\u0616\\u0617\\u0618\\u0619\\u061A\\u061B\\u061E\\u061F" +
+		"\\u0621" +		
+		"\\u063B\\u063C\\u063D\\u063E\\u063F" +		
+		"\\u0640\\u064B\\u064C\\u064D\\u064E\\u064F" +		
+		"\\u0650\\u0651\\u0652\\u0653\\u0654\\u0655\\u0656\\u0657\\u0658\\u0659\\u065A\\u065B\\u065C\\u065D\\u065E" +      
+		"\\u0660\\u066A\\u066B\\u066C\\u066F\\u0670\\u0672'" +
+		"\\u06D4\\u06D5\\u06D6\\u06D7\\u06D8\\u06D9\\u06DA\\u06DB\\u06DC\\u06DF" +
+		"\\u06E0\\u06E1\\u06E2\\u06E3\\u06E4\\u06E5\\u06E6\\u06E7\\u06E8\\u06E9\\u06EA\\u06EB\\u06EC\\u06ED\\u06EE\\u06EF" +
+		"\\u06D6\\u06D7\\u06D8\\u06D9\\u06DA\\u06DB\\u06DC\\u06DD\\u06DE\\u06DF" +
+		"\\u06F0\\u06FD" +
+		"\\uFE70\\uFE71\\uFE72\\uFE73\\uFE74\\uFE75\\uFE76\\uFE77\\uFE78\\uFE79\\uFE7A\\uFE7B\\uFE7C\\uFE7D\\uFE7E\\uFE7F" +
+		"\\uFC5E\\uFC5F\\uFC60\\uFC61\\uFC62\\uFC63" +
+		"]"
+    		);
 
 
 	/**
@@ -194,7 +219,8 @@ public class ArabicUtilities {
 
 		//prepare the Reshaped Text
 		StringBuffer reshapedText=new StringBuffer("");
-
+		//used to buffer arabic text until we encountered non-arabic
+		StringBuffer arabicText = new StringBuffer("");
 		//Iterate over the Words
 		for(int i=0;i<words.length;i++){
 
@@ -205,11 +231,10 @@ public class ArabicUtilities {
 				if(isArabicWord(words[i])){
 
 					//Initiate the ArabicReshaper functionality
-					ArabicReshaper arabicReshaper = new ArabicReshaper(words[i], forWebView);
+					ArabicReshaper arabicReshaper = new ArabicReshaper(words[i]);
 					
-
-					//Append the Reshaped Arabic Word to the Reshaped Whole Text
-					reshapedText.append(arabicReshaper.getReshapedWord());
+					//Append the Reshaped Arabic Word to arabic buffer
+					arabicText.append(arabicReshaper.getReshapedWord());
 				}else{ //The word has Arabic Letters, but its not an Arabic Word, its a mixed word
 
 					//Extract words from the words (split Arabic, and English)
@@ -217,23 +242,46 @@ public class ArabicUtilities {
 
 					//iterate over mixed Words
 					for(int j=0;j<mixedWords.length;j++){
+						
+						if(isArabicWord(mixedWords[j])){
+							
+							//Initiate the ArabicReshaper functionality
+							ArabicReshaper arabicReshaper=new ArabicReshaper(mixedWords[j]);
 
-						//Initiate the ArabicReshaper functionality
-						ArabicReshaper arabicReshaper=new ArabicReshaper(mixedWords[j], forWebView);
-
-						//Append the Reshaped Arabic Word to the Reshaped Whole Text
-						reshapedText.append(arabicReshaper.getReshapedWord());
+							//Append the Reshaped Arabic Word to the Arabic buffer
+							arabicText.append(arabicReshaper.getReshapedWord());
+						}else{
+							
+							// append the buffered arabic text
+							reshapedText.append(manualRTL(arabicText, forWebView));
+							arabicText = new StringBuffer("");
+							// append the word to the whole reshaped Text
+							reshapedText.append(mixedWords[j]);
+						}
 					}
 				}	
 			}else{//The word doesn't have any Arabic Letters
 
-				//Just append the word to the whole reshaped Text
+				// append the buffered arabic text
+				reshapedText.append(manualRTL(arabicText, forWebView));
+				arabicText = new StringBuffer("");
+				// append the word to the whole reshaped Text
 				reshapedText.append(words[i]);
 			}
-
+			
 			//Append the space to separate between words
-			reshapedText.append(" ");
+			//to the arabic buffer if the previous word was arabic, to the reshaped text otherwise
+			if(arabicText.length() > 0){
+
+				arabicText.append(" ");
+			}else{
+				
+				reshapedText.append(" ");
+			}
 		}
+		
+		// append the final arabic sequence
+		reshapedText.append(manualRTL(arabicText, forWebView));
 
 		//return the final reshaped whole text
 		return reshapedText.toString();
@@ -241,6 +289,17 @@ public class ArabicUtilities {
 	
 	public static String reshapeSentence(String sentence) {
 		return reshapeSentence(sentence, false);
+	}
+	
+	public static String manualRTL(StringBuffer arabicText, boolean forWebView){
+
+		if(forWebView){
+
+			if(patternBreakingWebView.matcher(arabicText).find()) {
+				return arabicText.reverse().toString();
+			}
+		}
+		return arabicText.toString();
 	}
 	
 	public static TextView getArabicEnabledTextView(Context context, TextView targetTextView) {
