@@ -120,7 +120,7 @@
   <string name="show_timer">Показать таймер</string>
   <string name="show_timer_summ">Таймер показывает сколько времени Вам остаётся для ответа</string>
   <string name="show_progress_bars">Индикаторы хода выполнения</string>
-  <string name="show_progress_bars_summ">Показывать долю сегодняшних \"да\"-ответов (т.е. при ответе - не \"Скоро\") и долю общих  \"да\"-ответов во всех развитых картах</string>
+  <string name="show_progress_bars_summ">Показывать долю сегодняшних \"да\"-ответов (т.е. была нажата кнопка не \"Скоро\") и долю общих \"да\" ко всем развитым картам</string>
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>
   <string name="whiteboard_stroke_width">Ширина штриха</string>
   <string name="whiteboard_stroke_width_summ">Ширина штриха: XXX</string>
@@ -260,7 +260,7 @@
   <string name="download_message">Уже существует колода %1$s в вашем устройстве. Переписать?</string>
   <string name="shared_decks">Общедоступные колоды</string>
   <string name="updating">Обновление...</string>
-  <string name="loading_shared_decks">Загрузка общедоступных колод.</string>
+  <string name="loading_shared_decks">Загрузка списка общедоступных колод.</string>
   <string name="cancel_download">Отменить загрузку</string>
   <string name="resume_download">Продолжить загрузку</string>
   <string name="pause_download">Приостановить закачку</string>
