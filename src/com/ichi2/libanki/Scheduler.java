@@ -57,6 +57,10 @@ public class Scheduler {
     public static final int REV_CARDS_NEW_FIRST = 1;
     public static final int REV_CARDS_RANDOM = 2;
 
+    // deletion types
+    public static final int DEL_CARD = 0;
+    public static final int DEL_FACT = 1;
+
     // lech actions
     public static final int LEECH_ACTION_SUSPEND = 0;
     public static final int LEECH_ACTION_TAG_ONLY = 1;
@@ -156,6 +160,17 @@ public class Scheduler {
             // put it in the learn queue
             card.setQueue(1);
             card.setType(1);
+			try {
+	            JSONArray ja = mDeck.getQconf().getJSONArray("newToday");
+	            int today = ja.getInt(0);
+	            int cnt = ja.getInt(1);
+	            ja = new JSONArray();
+	            ja.put(today);
+	            ja.put(cnt + 1);
+	            mDeck.getQconf().put("newToday", ja);
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
         }
         if (card.getQueue() == 1) {
             _answerLrnCard(card, ease);

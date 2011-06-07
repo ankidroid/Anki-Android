@@ -39,7 +39,7 @@ import com.ichi2.libanki.Deck.QAData;
  * 
  * Type: 0=new, 1=learning, 2=due
  * Queue: same as above, and:
- *        -1=suspended, -2=user buried, -3=sched buried, -4=deleted
+ *        -1=suspended, -2=user buried, -3=sched buried
  * Due is used differently for different queues.
  * - new queue: fact id or random int
  * - rev queue: integer day

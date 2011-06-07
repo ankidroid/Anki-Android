@@ -322,7 +322,10 @@ public class Deck {
 
 
     private void setModified() {
-        mMod = Utils.intNow();
+        setModified(Utils.intNow());
+    }
+    private void setModified(int mod) {
+        mMod = mod;
     }
 
 
@@ -338,9 +341,11 @@ public class Deck {
         }
     }
 
-
     public void flushMod() {
-        setModified();
+    	flushMod(Utils.intNow());
+    }
+    public void flushMod(int mod) {
+        setModified(mod);
         commitToDB();
     }
 
@@ -408,12 +413,36 @@ public class Deck {
     }
 
     /**
+     * Deletion logging
+     * ***********************************************************************************************
+     */
+
+    public void _logDels(int[] ids, int type) {
+    	if (!syncingEnabled()) {
+    		// no deletion log required if deck not syncable
+    		return;
+    	}
+    	// limit ids to those created prior to last sync
+    	String tbl = type == Scheduler.DEL_CARD ? "cards" : "facts";
+    	ArrayList<Integer> list = getDB().queryColumn(Integer.class, "SELECT id FROM " + tbl + " WHERE crt < " + mLastSync + " AND id IN " + Utils.ids2str(ids), 0);
+    	ids = new int[list.size()];
+    	int i = 0;
+    	for (int l : list) {
+    		ids[i++] = l;
+    	}
+    	// log
+		for (int id : ids) {
+    		getDB().getDatabase().execSQL("INSERT INTO graves VALUES (" + Utils.intNow() + ", " + id + ", " + type + ")");
+    	}
+    }
+
+    /**
      * Facts
      * ***********************************************************************************************
      */
 
     public int factCount() {
-    	return (int) getDB().queryScalar("SELECT count() FROM facts WHERE crt != 0");
+    	return (int) getDB().queryScalar("SELECT count() FROM facts");
     }
 
 
@@ -455,39 +484,30 @@ public class Deck {
     }
 
 
+    public void delFacts(int[] ids) {
+    	ArrayList<Integer> list = getDB().queryColumn(Integer.class, "SELECT id FROM cards WHERE fid in " + Utils.ids2str(ids), 0);
+    	int[] cids = new int[list.size()];
+    	int i = 0;
+    	for (int l : list) {
+    		cids[i++] = l;
+    	}
+    	delCards(cids);
+    }
+
+
     /**
      * Bulk delete facts by ID. Don't call this directly.
      */
     public void _delFacts(int[] ids) {
     	if (ids != null) {
     		String strids = Utils.ids2str(ids);
+    		// we need to log these independently of cards, as one side may have more card templates
+    		_logDels(ids, Scheduler.DEL_FACT);
     		getDB().getDatabase().execSQL("DELETE FROM facts WHERE id IN " + strids);
     		getDB().getDatabase().execSQL("DELETE FROM fsums WHERE id IN " + strids);
     	}
     }
 
-
-    /**
-     * Delete any facts without cards. Don't call this directly.
-     */
-    public int[] _delDanglingFacts() {
-        Cursor cursor = null;
-        int ids[];
-        try {
-            cursor = getDB().getDatabase().rawQuery("SELECT id FROM facts WHERE id NOT IN " +
-            		"(SELECT DISTINCT fid FROM cards)", null);
-            ids = new int[cursor.getCount()];
-            while (cursor.moveToNext()) {
-            	ids[cursor.getPosition()] = cursor.getInt(0);
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        _delFacts(ids);
-        return ids;
-    }
 
     /**
      * Card creation
@@ -566,15 +586,7 @@ public class Deck {
      */
 
     public int cardCount() {
-    	return (int) getDB().queryScalar("SELECT count() FROM cards WHERE crt != 0");
-    }
-
-
-    /**
-     * Delete a card given its id. Delete any unused facts.
-     */
-    public void delCard(int id) {
-    	delCards(new int[]{id});
+    	return (int) getDB().queryScalar("SELECT count() FROM cards");
     }
 
 
@@ -586,13 +598,33 @@ public class Deck {
     		return;
     	}
     	String sids = Utils.ids2str(ids);
-    	// immediate delete?
-        getDB().getDatabase().execSQL("DELETE FROM cards WHERE id IN " + sids);
+    	ArrayList<Integer> list = getDB().queryColumn(Integer.class, "SELECT fid FROM cards WHERE id in " + sids, 0);
+    	int[] fids = new int[list.size()];
+    	int i = 0;
+    	for (int l : list) {
+    		fids[i++] = l;
+    	}
+    	// remove cards
+    	_logDels(ids, Scheduler.DEL_CARD);
+    	getDB().getDatabase().execSQL("DELETE FROM cards WHERE id IN " + sids);
         getDB().getDatabase().execSQL("DELETE FROM revlog WHERE cid IN " + sids);
-        // remove any dangling facts
-        _delDanglingFacts();
-        // TODO: check if schema changed
+        // then facts
+        Cursor cursor = null;
+        try {
+            cursor = getDB().getDatabase().rawQuery("SELECT id FROM facts WHERE id IN " + Utils.ids2str(fids) +
+            		" AND id NOT IN (SELECT fid FROM cards)", null);
+            fids = new int[cursor.getCount()];
+            while (cursor.moveToNext()) {
+            	fids[cursor.getPosition()] = cursor.getInt(0);
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        _delFacts(fids);
     }
+
 
     /**
      * Models
@@ -981,6 +1013,9 @@ public class Deck {
      * ***********************************************************************************************
      */
 
+    public boolean syncingEnabled() {
+    	return !mSyncName.equals("");
+    }
 
 
     /**
