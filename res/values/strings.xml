@@ -442,6 +442,7 @@
 <!-- MyAccount.java -->
 <string name="username">Username</string>
 <string name="password">Password</string>
+<string name="password_warning">Note: Will be sent in clear text</string>
 <string name="log_in">Log in</string>
 <string name="sign_up_description">Don\'t have an AnkiOnline account? It\'s free!</string>
 <string name="sign_up">Sign up</string>

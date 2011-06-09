@@ -346,7 +346,7 @@ public class Model {
      * @return the html contents surrounded by a css style which contains class styles for answer/question and fields
      */
     protected final String getCSSForFontColorSize(long myCardModelId, int percentage, boolean invertedColors) {
-        // tjek whether the percentage is this the same as last time
+        // Check whether the percentage is this the same as last time
         if (mDisplayPercentage != percentage || mInvertedColor != invertedColors) {
             mDisplayPercentage = percentage;
             mInvertedColor = invertedColors;
