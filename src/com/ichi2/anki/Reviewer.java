@@ -1943,7 +1943,7 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private static String enrichWithQASpan(String content, boolean isAnswer) {
         StringBuffer sb = new StringBuffer();
-        sb.append("<p class=\"");
+        sb.append("<span class=\"");
         if (isAnswer) {
             sb.append(ANSWER_CLASS);
         } else {
@@ -1951,7 +1951,7 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         sb.append("\">");
         sb.append(content);
-        sb.append("</p>");
+        sb.append("</span>");
         return sb.toString();
     }
 
