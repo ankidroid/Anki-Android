@@ -1676,7 +1676,7 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
-        String displayString = enrichWithQASpan(question, false);
+        String displayString = enrichWithQADiv(question, false);
         // Show an horizontal line as separation when question is shown in answer
         if (isQuestionDisplayed()) {
             displayString = displayString + "<hr/>";
@@ -1731,7 +1731,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 // Obtain the diff and send it to updateCard
                 DiffEngine diff = new DiffEngine();
 
-                displayString = enrichWithQASpan(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer))
+                displayString = enrichWithQADiv(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer))
                         + "<br/>" + answer, true);
             }
 
@@ -1739,13 +1739,13 @@ public class Reviewer extends Activity implements IButtonListener{
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
         } else {
-            displayString = enrichWithQASpan(answer, true);
+            displayString = enrichWithQADiv(answer, true);
         }
 
         // Depending on preferences do or do not show the question
         if (isQuestionDisplayed()) {
             StringBuffer sb = new StringBuffer();
-            sb.append(enrichWithQASpan(question, false));
+            sb.append(enrichWithQADiv(question, false));
             sb.append("<a name=\"question\"></a><hr/>");
             sb.append(displayString);
             displayString = sb.toString();
@@ -1935,15 +1935,15 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     /**
-     * Adds a span html tag around the contents to have an indication, where answer/question is displayed
+     * Adds a div html tag around the contents to have an indication, where answer/question is displayed
      *
      * @param content
      * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
      * @return
      */
-    private static String enrichWithQASpan(String content, boolean isAnswer) {
+    private static String enrichWithQADiv(String content, boolean isAnswer) {
         StringBuffer sb = new StringBuffer();
-        sb.append("<span class=\"");
+        sb.append("<div class=\"");
         if (isAnswer) {
             sb.append(ANSWER_CLASS);
         } else {
@@ -1951,7 +1951,7 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         sb.append("\">");
         sb.append(content);
-        sb.append("</span>");
+        sb.append("</div>");
         return sb.toString();
     }
 
