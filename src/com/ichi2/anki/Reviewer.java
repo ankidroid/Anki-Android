@@ -19,6 +19,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1977,25 +1980,55 @@ public class Reviewer extends Activity implements IButtonListener{
     	int start = 0;
     	int posFontSize = 0;
     	int posPx = 0;
-    	int relativeSize;
+    	int intSize; //px and pt in integer numbers
+    	double doubleSize; //em in decimals
+    	boolean isEm = true;
+    	String sizeS;
+    	DecimalFormatSymbols symbols;
+    	DecimalFormat dFormat;
     	while (foundNext) {
     		posFontSize = sb.indexOf("font-size:", start);
     		posPx = sb.indexOf("px;", start);
+    		isEm = false;
+    		if (-1 == posPx) {
+    			posPx = sb.indexOf("em;", start);
+    			isEm = true;
+    		}
+    		if (-1 == posPx) {
+    			posPx = sb.indexOf("pt", start);
+    		}
     		if (-1 == posFontSize) {
     			foundNext = false;
-    		} else if (15 < (posPx - posFontSize)) { //assuming max 1 blank and 4 digits
+    		} else if (16 < (posPx - posFontSize)) { //assuming max 1 blank and 4 digits
     			start = posFontSize + 10;
-    			continue; //only take into account font-size specified in px, but try to find next
+    			continue; //only take into account font-size specified in px/em/pt, but try to find next
     		} else {
-    			try {
-    				relativeSize = Integer.parseInt(sb.substring(posFontSize + 10, posPx).trim());
-    			} catch (NumberFormatException e) {
-    				start = posFontSize + 10;
-    				continue; //ignore this one
+    			sizeS = sb.substring(posFontSize + 10, posPx).trim();
+    			if (isEm) {
+    				symbols = new DecimalFormatSymbols();
+    				symbols.setDecimalSeparator('.');
+    				dFormat = new DecimalFormat("0.##");
+    				dFormat.setDecimalFormatSymbols(symbols);
+	    			try {
+	    				doubleSize = dFormat.parse(sizeS).doubleValue();
+	    			} catch (ParseException e) {
+	    				start = posFontSize + 10;
+	    				continue; //ignore this one
+	    			}
+	    			doubleSize = doubleSize * percentage / 100;
+	    			sizeS = dFormat.format(doubleSize);    				
+    			} else {
+	    			try {
+	    				intSize = Integer.parseInt(sizeS);
+	    			} catch (NumberFormatException e) {
+	    				start = posFontSize + 10;
+	    				continue; //ignore this one
+	    			}
+	    			intSize = intSize * percentage / 100;
+	    			sizeS = Integer.toString(intSize);
     			}
-    			relativeSize = relativeSize * percentage / 100;
-    			sb.replace(posFontSize + 10, posPx, Integer.toString(relativeSize));
-    			start = posPx;
+	    		sb.replace(posFontSize + 10, posPx, sizeS);
+    			start = posPx + 3; // needs to be more than posPx due to decimals
     		}
     	}
     	return sb.toString();
