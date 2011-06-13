@@ -1765,6 +1765,10 @@ public class Reviewer extends Activity implements IButtonListener{
         String baseUrl = "";
         Boolean isJapaneseModel = false;
         
+        //Check whether there is a hard coded font-size in the content and apply the relative font size
+        //Check needs to be done before CSS is applied to content;
+        content = recalculateHardCodedFontSize(content, mDisplayFontSize);
+        
         // Add CSS for font color and font size
         if (mCurrentCard != null) {
         	final String japaneseModelTag = "Japanese";
@@ -1953,6 +1957,48 @@ public class Reviewer extends Activity implements IButtonListener{
         sb.append(content);
         sb.append("</div>");
         return sb.toString();
+    }
+    
+    /**
+     * Parses content in question and answer to see, whether someone has hard coded
+     * the font size in a card layout. If this is so, then the font size must be
+     * replaced with one corrected by the relative font size.
+     * @param content
+     * @param percentage the relative font size percentage defined in preferences
+     * @return
+     */
+    private String recalculateHardCodedFontSize(String content, int percentage) {
+    	if (null == content || 0 == content.trim().length()) {
+    		return "";
+    	}
+    	StringBuilder sb = new StringBuilder(content);
+    	
+    	boolean foundNext = true;
+    	int start = 0;
+    	int posFontSize = 0;
+    	int posPx = 0;
+    	int relativeSize;
+    	while (foundNext) {
+    		posFontSize = sb.indexOf("font-size:", start);
+    		posPx = sb.indexOf("px;", start);
+    		if (-1 == posFontSize) {
+    			foundNext = false;
+    		} else if (15 < (posPx - posFontSize)) { //assuming max 1 blank and 4 digits
+    			start = posFontSize + 10;
+    			continue; //only take into account font-size specified in px, but try to find next
+    		} else {
+    			try {
+    				relativeSize = Integer.parseInt(sb.substring(posFontSize + 10, posPx).trim());
+    			} catch (NumberFormatException e) {
+    				start = posFontSize + 10;
+    				continue; //ignore this one
+    			}
+    			relativeSize = relativeSize * percentage / 100;
+    			sb.replace(posFontSize + 10, posPx, Integer.toString(relativeSize));
+    			start = posPx;
+    		}
+    	}
+    	return sb.toString();
     }
 
 
