@@ -1988,21 +1988,25 @@ public class Reviewer extends Activity implements IButtonListener{
     	DecimalFormat dFormat;
     	while (foundNext) {
     		posFontSize = sb.indexOf("font-size:", start);
-    		posPx = sb.indexOf("px;", start);
-    		isEm = false;
-    		if (-1 == posPx) {
-    			posPx = sb.indexOf("em;", start);
-    			isEm = true;
-    		}
-    		if (-1 == posPx) {
-    			posPx = sb.indexOf("pt", start);
-    		}
     		if (-1 == posFontSize) {
     			foundNext = false;
-    		} else if (16 < (posPx - posFontSize)) { //assuming max 1 blank and 4 digits
+    			continue;
+    		} else {
     			start = posFontSize + 10;
+        		posPx = sb.indexOf("px;", start);
+        		isEm = false;
+        		if (-1 == posPx) {
+        			posPx = sb.indexOf("em;", start);
+        			isEm = true;
+        		}
+        		if (-1 == posPx) {
+        			posPx = sb.indexOf("pt", start);
+        		}    			
+    		}
+    		if (17 < (posPx - posFontSize)) { //assuming max 1 blank and 5 digits
     			continue; //only take into account font-size specified in px/em/pt, but try to find next
     		} else {
+    			start = posPx +3; // needs to be more than posPx due to decimals
     			sizeS = sb.substring(posFontSize + 10, posPx).trim();
     			if (isEm) {
     				symbols = new DecimalFormatSymbols();
@@ -2012,7 +2016,6 @@ public class Reviewer extends Activity implements IButtonListener{
 	    			try {
 	    				doubleSize = dFormat.parse(sizeS).doubleValue();
 	    			} catch (ParseException e) {
-	    				start = posFontSize + 10;
 	    				continue; //ignore this one
 	    			}
 	    			doubleSize = doubleSize * percentage / 100;
@@ -2028,7 +2031,6 @@ public class Reviewer extends Activity implements IButtonListener{
 	    			sizeS = Integer.toString(intSize);
     			}
 	    		sb.replace(posFontSize + 10, posPx, sizeS);
-    			start = posPx + 3; // needs to be more than posPx due to decimals
     		}
     	}
     	return sb.toString();
