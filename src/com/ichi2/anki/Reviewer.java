@@ -173,6 +173,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
     /** The percentage of the absolute font size specified in the deck. */
     private int mDisplayFontSize = CardModel.DEFAULT_FONT_SIZE_RATIO;
+    
+    /** The absolute CSS measurement units inclusive semicolon for pattern search */
+    private static final String[] ABSOLUTE_CSS_UNITS = {"px;", "pt;", "in;", "cm;", "mm;", "pc;"};
+    
+    /** The relative CSS measurement units inclusive semicolon for pattern search */
+    private static final String[] RELATIVE_CSS_UNITS = {"%;", "em;"};
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -1966,8 +1972,9 @@ public class Reviewer extends Activity implements IButtonListener{
      * Parses content in question and answer to see, whether someone has hard coded
      * the font size in a card layout. If this is so, then the font size must be
      * replaced with one corrected by the relative font size.
+     * If a relative CSS unit measure is used (e.g. 'em'), then only hierarchy in 'span' tag is taken into account.
      * @param content
-     * @param percentage the relative font size percentage defined in preferences
+     * @param percentage - the relative font size percentage defined in preferences
      * @return
      */
     private String recalculateHardCodedFontSize(String content, int percentage) {
@@ -1976,50 +1983,75 @@ public class Reviewer extends Activity implements IButtonListener{
     	}
     	StringBuilder sb = new StringBuilder(content);
     	
-    	boolean foundNext = true;
+    	boolean fontSizeFound = true; //whether the previous loop found a valid font-size attribute
+    	int spanTagDepth = 0; //to find out whether a relative CSS unit measure is within another one
+    	int outerRelativeSpanTagDepth = 100; //the hierarchy depth of the current outer relative span
     	int start = 0;
+    	int posSpan = 0;
     	int posFontSize = 0;
-    	int posPx = 0;
-    	int intSize; //px and pt in integer numbers
-    	double doubleSize; //em in decimals
-    	boolean isEm = true;
+    	int posUnit = 0;
+    	int intSize; //for absolute css measurement values
+    	double doubleSize; //for relative css measurement values
+    	boolean isRelativeUnit = true; //true if em or %
     	String sizeS;
-    	DecimalFormatSymbols symbols;
-    	DecimalFormat dFormat;
-    	while (foundNext) {
+    	
+    	//formatter for decimal numbers
+    	DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+		symbols.setDecimalSeparator('.');
+		DecimalFormat dFormat = new DecimalFormat("0.##", symbols);
+
+    	while (fontSizeFound) {
     		posFontSize = sb.indexOf("font-size:", start);
     		if (-1 == posFontSize) {
-    			foundNext = false;
+    			fontSizeFound = false;
     			continue;
     		} else {
-    			start = posFontSize + 10;
-        		posPx = sb.indexOf("px;", start);
-        		isEm = false;
-        		if (-1 == posPx) {
-        			posPx = sb.indexOf("em;", start);
-        			isEm = true;
+    			//check whether </span> are found and decrease spanTagDepth accordingly
+        		posSpan = sb.indexOf("</span>", start);
+        		while (-1 != posSpan && posSpan < posFontSize) {
+        			spanTagDepth -= 1;
+        			posSpan = sb.indexOf("</span>", posSpan + 7);
         		}
-        		if (-1 == posPx) {
-        			posPx = sb.indexOf("pt", start);
-        		}    			
+    			start = posFontSize + 10;
+    			for (int a = 0; a < ABSOLUTE_CSS_UNITS.length; a++) {
+    				posUnit = sb.indexOf(ABSOLUTE_CSS_UNITS[a], start);
+    				if (-1 != posUnit) {
+    					isRelativeUnit = false;
+    					break;
+    				}
+    			}
+        		if (-1 == posUnit) {
+        			for (int a = 0; a < RELATIVE_CSS_UNITS.length; a++) {
+        				posUnit = sb.indexOf(RELATIVE_CSS_UNITS[a], start);
+        				if (-1 != posUnit) {
+        					isRelativeUnit = true;
+        					break;
+        				}
+        			}
+        		}
     		}
-    		if (17 < (posPx - posFontSize)) { //assuming max 1 blank and 5 digits
-    			continue; //only take into account font-size specified in px/em/pt, but try to find next
+    		if (-1 == posUnit) {
+    			//only absolute and relative measures are taken into account. E.g. 'xx-small', 'inherit' etc. are not taken into account
+    			fontSizeFound = false;
+    			continue;
+    		} else if (17 < (posUnit - posFontSize)) { //assuming max 1 blank and 5 digits
+    			//only take into account if font-size measurement is close, because theoretically "font-size:" could be part of text
+    			continue; 
     		} else {
-    			start = posPx +3; // needs to be more than posPx due to decimals
-    			sizeS = sb.substring(posFontSize + 10, posPx).trim();
-    			if (isEm) {
-    				symbols = new DecimalFormatSymbols();
-    				symbols.setDecimalSeparator('.');
-    				dFormat = new DecimalFormat("0.##");
-    				dFormat.setDecimalFormatSymbols(symbols);
-	    			try {
-	    				doubleSize = dFormat.parse(sizeS).doubleValue();
-	    			} catch (ParseException e) {
-	    				continue; //ignore this one
-	    			}
-	    			doubleSize = doubleSize * percentage / 100;
-	    			sizeS = dFormat.format(doubleSize);    				
+    			spanTagDepth += 1; //because we assume that font-sizes always are declared in span tags
+    			start = posUnit +3; // needs to be more than posPx due to decimals
+    			sizeS = sb.substring(posFontSize + 10, posUnit).trim();
+    			if (isRelativeUnit) {
+    				if (outerRelativeSpanTagDepth >= spanTagDepth) {
+    					outerRelativeSpanTagDepth = spanTagDepth;
+		    			try {
+		    				doubleSize = dFormat.parse(sizeS).doubleValue();
+		    			} catch (ParseException e) {
+		    				continue; //ignore this one
+		    			}
+		    			doubleSize = doubleSize * percentage / 100;
+		    			sizeS = dFormat.format(doubleSize);
+    				} //else do nothing as relative sizes within relative sizes should not be changed
     			} else {
 	    			try {
 	    				intSize = Integer.parseInt(sizeS);
@@ -2030,7 +2062,7 @@ public class Reviewer extends Activity implements IButtonListener{
 	    			intSize = intSize * percentage / 100;
 	    			sizeS = Integer.toString(intSize);
     			}
-	    		sb.replace(posFontSize + 10, posPx, sizeS);
+	    		sb.replace(posFontSize + 10, posUnit, sizeS);
     		}
     	}
     	return sb.toString();
