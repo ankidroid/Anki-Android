@@ -338,6 +338,15 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private int zEase;
     
+    /**
+     * The answer in the compare to field for the current card if answer should be given by learner.
+     * Null if the CardLayout in the deck says do not type answer. See also Card.getComparedFieldAnswer().
+    */
+    private String comparedFieldAnswer = null;
+    
+    /** The class attribute of the comparedField for formatting */
+    private String comparedFieldClass = null;
+    
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -536,6 +545,13 @@ public class Reviewer extends Activity implements IButtonListener{
 
                 // Start reviewing next card
                 mCurrentCard = newCard;
+                if (mPrefWriteAnswers) { //only bother query deck if needed
+                	String[] answer = mCurrentCard.getComparedFieldAnswer();
+                	comparedFieldAnswer = answer[0];
+                	comparedFieldClass = answer[1];
+                } else {
+                	comparedFieldAnswer = null;
+                }
                 if (mChosenAnswer.getText().equals("")) {
                     setDueMessage();
                 }
@@ -895,7 +911,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mCardTimer.setBase(savedTimer);
             mCardTimer.start();
         }
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setText(savedAnswerField);
         }
         if (mPrefWhiteboard) {
@@ -1499,7 +1515,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mPrefWhiteboard) {
             mWhiteboard.setVisibility(mShowWhiteboard ? View.VISIBLE : View.GONE);            
         }
-        mAnswerField.setVisibility((mPrefWriteAnswers) ? View.VISIBLE : View.GONE);
+        mAnswerField.setVisibility((typeAnswer()) ? View.VISIBLE : View.GONE);
     }
 
 
@@ -1579,7 +1595,7 @@ public class Reviewer extends Activity implements IButtonListener{
     	}
 
         // Clean answer field
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setText("");
         }
 
@@ -1667,7 +1683,7 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         
         // If the user wants to write the answer
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setVisibility(View.VISIBLE);
 
             // Show soft keyboard
@@ -1722,12 +1738,12 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // If the user wrote an answer
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setVisibility(View.GONE);
             if (mCurrentCard != null) {
                 // Obtain the user answer and the correct answer
                 String userAnswer = mAnswerField.getText().toString();         
-                Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
+                Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(ArabicUtilities.reshapeSentence(comparedFieldAnswer, true)));
                 String correctAnswer = matcher.replaceAll("");
                 matcher = sBrPattern.matcher(correctAnswer);
                 correctAnswer = matcher.replaceAll("\n");
@@ -1740,8 +1756,12 @@ public class Reviewer extends Activity implements IButtonListener{
                 // Obtain the diff and send it to updateCard
                 DiffEngine diff = new DiffEngine();
 
-                displayString = enrichWithQADiv(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer))
-                        + "<br/>" + answer, true);
+                StringBuffer span = new StringBuffer();
+                span.append("<span class=\"").append(comparedFieldClass).append("\">");
+                span.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer)));
+                span.append("</span>");
+                span.append("<br/>").append(answer);
+                displayString = enrichWithQADiv(span.toString(), true);
             }
 
             // Hide soft keyboard
@@ -2067,6 +2087,17 @@ public class Reviewer extends Activity implements IButtonListener{
     	}
     	return sb.toString();
     }
+    
+    /**
+     * 
+     * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a field to query
+     */
+    private final boolean typeAnswer() {
+    	if (mPrefWriteAnswers && null != comparedFieldAnswer) {
+    		return true;
+    	}
+    	return false;
+    }
 
 
     /**
@@ -2137,7 +2168,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mWhiteboard.setEnabled(true);
         }
 
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setEnabled(true);
         }
     }
@@ -2192,7 +2223,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mWhiteboard.setEnabled(false);
         }
 
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setEnabled(false);
         }
     }

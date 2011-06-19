@@ -95,7 +95,7 @@ public class CardModel implements Comparator<CardModel> {
     private String mTypeAnswer = "";
     // END SQL table entries
 
-    // Compiled mustache templates
+	// Compiled mustache templates
     private Template mQTemplate = null;
     private Template mATemplate = null;
 
@@ -127,7 +127,7 @@ public class CardModel implements Comparator<CardModel> {
     /** SELECT string with only those fields, which are used in AnkiDroid */
     private static final String SELECT_STRING = "SELECT id, ordinal, modelId, name, description, active, qformat, "
             + "aformat, questionInAnswer, questionFontFamily, questionFontSize, questionFontColour, questionAlign, "
-            + "answerFontFamily, answerFontSize, answerFontColour, answerAlign, lastFontColour" + " FROM cardModels";
+            + "answerFontFamily, answerFontSize, answerFontColour, answerAlign, lastFontColour, typeAnswer" + " FROM cardModels";
 
 
     /**
@@ -169,6 +169,7 @@ public class CardModel implements Comparator<CardModel> {
                     myCardModel.mAnswerFontColour = cursor.getString(15);
                     myCardModel.mAnswerAlign = cursor.getInt(16);
                     myCardModel.mLastFontColour = cursor.getString(17);
+                    myCardModel.mTypeAnswer = cursor.getString(18);
                     myCardModel.refreshTemplates();
                     models.put(myCardModel.mId, myCardModel);
                 } while (cursor.moveToNext());
@@ -496,4 +497,14 @@ public class CardModel implements Comparator<CardModel> {
     public void setAFormat(String aFormat) {
         mAformat = aFormat;
     }
+
+    
+    public long getModelId() {
+		return mModelId;
+	}
+
+
+	public String getTypeAnswer() {
+		return mTypeAnswer;
+	}
 }

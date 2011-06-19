@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 /**
  * A card is a presentation of a fact, and has two sides: a question and an answer. Any number of fields can appear on
@@ -182,6 +183,7 @@ public class Card {
 	public void rebuildQA(Deck deck) {
 		rebuildQA(deck, true);
 	}
+	
 	public void rebuildQA(Deck deck, boolean media) {
         // Format qa
 		if (mFact != null && mCardModel != null) {
@@ -1002,5 +1004,38 @@ public class Card {
 
     public int getSuccessive() {
         return mSuccessive;
+    }
+    
+    /**
+     * The cardModel defines a field typeAnswer. If it is empty, then no answer should be typed.
+     * Otherwise a typed answer should be compared to the value of field related to a cards fact.
+     * A field is found based on the factId in the card and the fieldModelId.
+     * The fieldModel's id is found by searching with the typeAnswer name and cardModel's modelId
+     * 
+     * @return 2 dimensional array with answer value at index=0 and fieldModel's class at index=1
+     * null if typeAnswer is empty (i.e. do not prompt for answer). Otherwise a string (which can be empty) from the actual field value.
+     * The fieldModel's id is correctly hexafied and formatted for class attribute of span for formatting 
+     */
+    public String[] getComparedFieldAnswer() {
+    	String[] returnArray = new String[2];
+    	CardModel myCardModel = this.getCardModel();
+    	String typeAnswer = myCardModel.getTypeAnswer();
+    	if (null == typeAnswer || 0 == typeAnswer.trim().length()) {
+    		returnArray[0] = null;
+    	}
+        Model myModel = Model.getModel(mDeck, myCardModel.getModelId(), true);
+    	TreeMap<Long, FieldModel> fieldModels = myModel.getFieldModels();
+    	FieldModel myFieldModel = null;
+    	long myFieldModelId = 0l;
+    	for (TreeMap.Entry<Long, FieldModel> entry : fieldModels.entrySet()) {
+    		myFieldModel = entry.getValue();
+    		myFieldModelId = myFieldModel.match(myCardModel.getModelId(), typeAnswer);
+    		if (myFieldModelId != 0l) {
+    			break;
+    		}
+    	}
+    	returnArray[0] = com.ichi2.anki.Field.fieldValuefromDb(this.mDeck, this.mFactId, myFieldModelId);
+    	returnArray[1] = "fm" + Long.toHexString(myFieldModelId);
+    	return returnArray;
     }
 }

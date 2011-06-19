@@ -186,8 +186,6 @@ public class Model {
 
 
     public TreeMap<Long, FieldModel> getFieldModels() {
-
-        FieldModel mFieldModel;
         TreeMap<Long, FieldModel> mFieldModels = new TreeMap<Long, FieldModel>();
         FieldModel.fromDb(mDeck, mId, mFieldModels);
         return mFieldModels;
