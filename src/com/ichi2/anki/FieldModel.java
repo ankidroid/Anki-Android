@@ -226,5 +226,17 @@ public class FieldModel implements Comparator<FieldModel> {
     public void setEditFontSize(int editFontSize) {
         mEditFontSize = editFontSize;
     }
-
+    
+    /**
+     * 
+     * @param aModelId
+     * @param aName
+     * @return 0 if the search parameters do not match, the mId else
+     */
+    public long match(long aModelId, String aName) {
+    	if (mName.equalsIgnoreCase(aName) && mModelId == aModelId) {
+    		return mId;
+    	}
+    	return 0l;
+    }
 }
