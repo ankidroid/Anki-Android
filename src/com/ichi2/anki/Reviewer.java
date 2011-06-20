@@ -19,6 +19,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -190,6 +193,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
     /** The percentage of the absolute font size specified in the deck. */
     private int mDisplayFontSize = 100;
+    
+    /** The absolute CSS measurement units inclusive semicolon for pattern search */
+    private static final String[] ABSOLUTE_CSS_UNITS = {"px;", "pt;", "in;", "cm;", "mm;", "pc;"};
+    
+    /** The relative CSS measurement units inclusive semicolon for pattern search */
+    private static final String[] RELATIVE_CSS_UNITS = {"%;", "em;"};
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -360,6 +369,15 @@ public class Reviewer extends Activity implements IButtonListener{
  	ControllerAndroidUi controllerUi;
 
     private int zEase;
+    
+    /**
+     * The answer in the compare to field for the current card if answer should be given by learner.
+     * Null if the CardLayout in the deck says do not type answer. See also Card.getComparedFieldAnswer().
+    */
+    private String comparedFieldAnswer = null;
+    
+    /** The class attribute of the comparedField for formatting */
+    private String comparedFieldClass = null;
     
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -561,6 +579,13 @@ public class Reviewer extends Activity implements IButtonListener{
 
                 // Start reviewing next card
                 mCurrentCard = newCard;
+                if (mPrefWriteAnswers) { //only bother query deck if needed
+                	String[] answer = mCurrentCard.getComparedFieldAnswer();
+                	comparedFieldAnswer = answer[0];
+                	comparedFieldClass = answer[1];
+                } else {
+                	comparedFieldAnswer = null;
+                }
                 if (mChosenAnswer.getText().equals("")) {
                     setDueMessage();
                 }
@@ -934,7 +959,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mCardTimer.setBase(savedTimer);
             mCardTimer.start();
         }
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setText(savedAnswerField);
         }
         if (mPrefWhiteboard) {
@@ -1584,7 +1609,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mPrefWhiteboard) {
             mWhiteboard.setVisibility(mShowWhiteboard ? View.VISIBLE : View.GONE);
         }
-        mAnswerField.setVisibility((mPrefWriteAnswers) ? View.VISIBLE : View.GONE);
+        mAnswerField.setVisibility((typeAnswer()) ? View.VISIBLE : View.GONE);
     }
 
 
@@ -1665,7 +1690,7 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // Clean answer field
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setText("");
         }
 
@@ -1752,7 +1777,7 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // If the user wants to write the answer
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setVisibility(View.VISIBLE);
 
             // Show soft keyboard
@@ -1770,9 +1795,8 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
-        String displayString = enrichWithQASpan(question, false);
-        // Show an horizontal line as separation when question is shown in
-        // answer
+        String displayString = enrichWithQADiv(question, false);
+        // Show an horizontal line as separation when question is shown in answer
         if (isQuestionDisplayed()) {
             displayString = displayString + "<hr/>";
         }
@@ -1808,12 +1832,12 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // If the user wrote an answer
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setVisibility(View.GONE);
             if (mCurrentCard != null) {
                 // Obtain the user answer and the correct answer
-                String userAnswer = mAnswerField.getText().toString();
-                Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(mCurrentCard.getAnswer()));
+                String userAnswer = mAnswerField.getText().toString();         
+                Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(ArabicUtilities.reshapeSentence(comparedFieldAnswer, true)));
                 String correctAnswer = matcher.replaceAll("");
                 matcher = sBrPattern.matcher(correctAnswer);
                 correctAnswer = matcher.replaceAll("\n");
@@ -1826,21 +1850,25 @@ public class Reviewer extends Activity implements IButtonListener{
                 // Obtain the diff and send it to updateCard
                 DiffEngine diff = new DiffEngine();
 
-                displayString = enrichWithQASpan(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer))
-                        + "<br/>" + answer, true);
+                StringBuffer span = new StringBuffer();
+                span.append("<span class=\"").append(comparedFieldClass).append("\">");
+                span.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer)));
+                span.append("</span>");
+                span.append("<br/>").append(answer);
+                displayString = enrichWithQADiv(span.toString(), true);
             }
 
             // Hide soft keyboard
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
         } else {
-            displayString = enrichWithQASpan(answer, true);
+            displayString = enrichWithQADiv(answer, true);
         }
 
         // Depending on preferences do or do not show the question
         if (isQuestionDisplayed()) {
             StringBuffer sb = new StringBuffer();
-            sb.append(enrichWithQASpan(question, false));
+            sb.append(enrichWithQADiv(question, false));
             sb.append("<a name=\"question\"></a><hr/>");
             sb.append(displayString);
             displayString = sb.toString();
@@ -1858,7 +1886,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
         String baseUrl = "";
         Boolean isJapaneseModel = false;
-
+        
+        //Check whether there is a hard coded font-size in the content and apply the relative font size
+        //Check needs to be done before CSS is applied to content;
+        content = recalculateHardCodedFontSize(content, mDisplayFontSize);
+        
         // Add CSS for font color and font size
         if (mCurrentCard != null) {
             final String japaneseModelTag = "Japanese";
@@ -2033,15 +2065,15 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     /**
-     * Adds a span html tag around the contents to have an indication, where answer/question is displayed
-     * 
+     * Adds a div html tag around the contents to have an indication, where answer/question is displayed
+     *
      * @param content
      * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
      * @return
      */
-    private static String enrichWithQASpan(String content, boolean isAnswer) {
+    private static String enrichWithQADiv(String content, boolean isAnswer) {
         StringBuffer sb = new StringBuffer();
-        sb.append("<p class=\"");
+        sb.append("<div class=\"");
         if (isAnswer) {
             sb.append(ANSWER_CLASS);
         } else {
@@ -2049,8 +2081,119 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         sb.append("\">");
         sb.append(content);
-        sb.append("</p>");
+        sb.append("</div>");
         return sb.toString();
+    }
+    
+    /**
+     * Parses content in question and answer to see, whether someone has hard coded
+     * the font size in a card layout. If this is so, then the font size must be
+     * replaced with one corrected by the relative font size.
+     * If a relative CSS unit measure is used (e.g. 'em'), then only hierarchy in 'span' tag is taken into account.
+     * @param content
+     * @param percentage - the relative font size percentage defined in preferences
+     * @return
+     */
+    private String recalculateHardCodedFontSize(String content, int percentage) {
+    	if (null == content || 0 == content.trim().length()) {
+    		return "";
+    	}
+    	StringBuilder sb = new StringBuilder(content);
+    	
+    	boolean fontSizeFound = true; //whether the previous loop found a valid font-size attribute
+    	int spanTagDepth = 0; //to find out whether a relative CSS unit measure is within another one
+    	int outerRelativeSpanTagDepth = 100; //the hierarchy depth of the current outer relative span
+    	int start = 0;
+    	int posSpan = 0;
+    	int posFontSize = 0;
+    	int posUnit = 0;
+    	int intSize; //for absolute css measurement values
+    	double doubleSize; //for relative css measurement values
+    	boolean isRelativeUnit = true; //true if em or %
+    	String sizeS;
+    	
+    	//formatter for decimal numbers
+    	DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+		symbols.setDecimalSeparator('.');
+		DecimalFormat dFormat = new DecimalFormat("0.##", symbols);
+
+    	while (fontSizeFound) {
+    		posFontSize = sb.indexOf("font-size:", start);
+    		if (-1 == posFontSize) {
+    			fontSizeFound = false;
+    			continue;
+    		} else {
+    			//check whether </span> are found and decrease spanTagDepth accordingly
+        		posSpan = sb.indexOf("</span>", start);
+        		while (-1 != posSpan && posSpan < posFontSize) {
+        			spanTagDepth -= 1;
+        			posSpan = sb.indexOf("</span>", posSpan + 7);
+        		}
+    			start = posFontSize + 10;
+    			for (int a = 0; a < ABSOLUTE_CSS_UNITS.length; a++) {
+    				posUnit = sb.indexOf(ABSOLUTE_CSS_UNITS[a], start);
+    				if (-1 != posUnit) {
+    					isRelativeUnit = false;
+    					break;
+    				}
+    			}
+        		if (-1 == posUnit) {
+        			for (int a = 0; a < RELATIVE_CSS_UNITS.length; a++) {
+        				posUnit = sb.indexOf(RELATIVE_CSS_UNITS[a], start);
+        				if (-1 != posUnit) {
+        					isRelativeUnit = true;
+        					break;
+        				}
+        			}
+        		}
+    		}
+    		if (-1 == posUnit) {
+    			//only absolute and relative measures are taken into account. E.g. 'xx-small', 'inherit' etc. are not taken into account
+    			fontSizeFound = false;
+    			continue;
+    		} else if (17 < (posUnit - posFontSize)) { //assuming max 1 blank and 5 digits
+    			//only take into account if font-size measurement is close, because theoretically "font-size:" could be part of text
+    			continue; 
+    		} else {
+    			spanTagDepth += 1; //because we assume that font-sizes always are declared in span tags
+    			start = posUnit +3; // needs to be more than posPx due to decimals
+    			sizeS = sb.substring(posFontSize + 10, posUnit).trim();
+    			if (isRelativeUnit) {
+    				if (outerRelativeSpanTagDepth >= spanTagDepth) {
+    					outerRelativeSpanTagDepth = spanTagDepth;
+		    			try {
+		    				doubleSize = dFormat.parse(sizeS).doubleValue();
+		    			} catch (ParseException e) {
+		    				continue; //ignore this one
+		    			}
+		    			doubleSize = doubleSize * percentage / 100;
+		    			sizeS = dFormat.format(doubleSize);
+    				} //else do nothing as relative sizes within relative sizes should not be changed
+    			} else {
+	    			try {
+	    				intSize = Integer.parseInt(sizeS);
+	    			} catch (NumberFormatException e) {
+	    				start = posFontSize + 10;
+	    				continue; //ignore this one
+	    			}
+	    			intSize = intSize * percentage / 100;
+	    			sizeS = Integer.toString(intSize);
+    			}
+	    		sb.replace(posFontSize + 10, posUnit, sizeS);
+    		}
+    	}
+    	return sb.toString();
+    }
+    
+    /**
+     * 
+     * @return true if the AnkiDroid preference for writing answer is true and if the Anki Deck CardLayout specifies a field to query
+     */
+    private final boolean typeAnswer() {
+    	if (mPrefWriteAnswers && null != comparedFieldAnswer) {
+    		return true;
+    	}
+    	return false;
     }
 
 
@@ -2122,7 +2265,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mWhiteboard.setEnabled(true);
         }
 
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setEnabled(true);
         }
     }
@@ -2177,7 +2320,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mWhiteboard.setEnabled(false);
         }
 
-        if (mPrefWriteAnswers) {
+        if (typeAnswer()) {
             mAnswerField.setEnabled(false);
         }
     }

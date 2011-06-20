@@ -15,11 +15,18 @@
 DEFAULT_BRANCH="nobnago"
 BRANCH=${1:-$DEFAULT_BRANCH}
 
+
+# Change to the AnkiDroid project directory
+cd "$(dirname "$0")/.."
+
+# Pull
 git pull b$BRANCH master
 if [ "$?" -ne "0" ]; then zenity --error --text 'pull failed'; exit 1; fi 
 
+# Compile
 ant compile
 if [ "$?" -ne "0" ]; then zenity --error --text 'compile failed'; exit 1; fi 
 
+# If compile worked, push
 git push
 if [ "$?" -ne "0" ]; then zenity --error --text 'push failed'; exit 1; fi 
