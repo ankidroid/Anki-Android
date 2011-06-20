@@ -301,6 +301,44 @@ public class Model {
     }
 
 
+    // TODO: implement call
+    /**
+     * Returns a string where all colors have been inverted.
+     * It applies to anything that is in a tag and looks like #FFFFFF
+     * 
+     * Example: Here only #000000 will be replaced (#777777 is content)
+     * <span style="color: #000000;">Code #777777 is the grey color</span>
+     * 
+     * This is done with a state machine with 2 states:
+     *  - 0: within content
+     *  - 1: within a tag
+     */
+    public static String invertColors(String text, boolean invert) {
+        if (invert) {
+            int state = 0;
+            StringBuffer inverted = new StringBuffer(text.length());
+            for(int i=0; i<text.length(); i++) {
+                char character = text.charAt(i);
+                if (state == 1 && character == '#') {
+                    inverted.append(invertColor(text.substring(i+1, i+7), true));
+                }
+                else {
+                    if (character == '<') {
+                        state = 1;
+                    }
+                    if (character == '>') {
+                        state = 0;
+                    }
+                    inverted.append(character);
+                }
+            }
+            return inverted.toString();
+        }
+        else {
+            return text;
+        }
+    }
+
     private static String _fieldCSS(int percentage, String prefix, String fontFamily, int fontSize, String fontColour, boolean rtl, boolean pre) {
         StringBuffer sb = new StringBuffer();
         sb.append(prefix).append(" {");

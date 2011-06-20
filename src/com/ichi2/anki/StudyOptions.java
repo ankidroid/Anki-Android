@@ -493,15 +493,15 @@ public class StudyOptions extends Activity {
             // TODO: mSpinnerFailCardOption
             // FIXME: invalid entries set to zero(unlimited) for now, better to set to default?
             String maxFailText = mEditMaxFailCard.getText().toString();
-            if (!maxFailText.equals(Integer.toString(deck.getFailedCardMax()))) {
-                if (maxFailText.equals("")) {
-                        deck.setFailedCardMax(0);
-                } else if (isValidInt(maxFailText)) {
-                        deck.setFailedCardMax(Integer.parseInt(maxFailText));
-                } else {
-                        mEditMaxFailCard.setText("0");
-                }
-            }
+//            if (!maxFailText.equals(Integer.toString(deck.getFailedCardMax()))) {
+//                if (maxFailText.equals("")) {
+//                        deck.setFailedCardMax(0);
+//                } else if (isValidInt(maxFailText)) {
+//                        deck.setFailedCardMax(Integer.parseInt(maxFailText));
+//                } else {
+//                        mEditMaxFailCard.setText("0");
+//                }
+//            }
             String inputText = mEditNewPerDay.getText().toString();
             if (!inputText.equals(Integer.toString(deck.getIntVar("newPerDay")))) {
             	if (inputText.equals("")) {
@@ -1115,7 +1115,7 @@ public class StudyOptions extends Activity {
         mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
         mEditNewPerDay.setText(String.valueOf(deck.getIntVar("newPerDay")));
 //        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());
-        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
+        mEditMaxFailCard.setText("asdf");//String.valueOf(deck.getIntVar("maxFailed")));
 
         mDialogMoreOptions.show();
     }

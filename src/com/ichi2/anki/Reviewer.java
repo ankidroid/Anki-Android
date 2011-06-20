@@ -80,6 +80,7 @@ import android.widget.Toast;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.LaTeX;
 import com.ichi2.libanki.Scheduler;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
@@ -672,10 +673,10 @@ public class Reviewer extends Activity implements IButtonListener{
 			switch(msg.what){
 			case MSG_ZEEMOTE_BUTTON_A:
 				if (sDisplayAnswer) {
-						if (mCurrentCard.isRev()) {
-   						answerCard(Card.EASE_MID);
+						if (mCurrentScheduler.lrnButtons(mCurrentCard)) {
+   						answerCard(3);
 						} else {
-							answerCard(Card.EASE_HARD);
+							answerCard(2);
 						}
 					} else {
 						displayCardAnswer(); 
@@ -683,7 +684,7 @@ public class Reviewer extends Activity implements IButtonListener{
 				break;
 			case MSG_ZEEMOTE_BUTTON_B:
 				if (sDisplayAnswer) {
-   					answerCard(Card.EASE_FAILED);
+   					answerCard(1);
 					} else {
    			        displayCardAnswer();    						
 					}
@@ -693,10 +694,10 @@ public class Reviewer extends Activity implements IButtonListener{
 				break;
 			case MSG_ZEEMOTE_BUTTON_D:
 				if (sDisplayAnswer) {
-						if (mCurrentCard.isRev()) {
-   						answerCard(Card.EASE_EASY);
+						if (mCurrentScheduler.lrnButtons(mCurrentCard)) {
+   						answerCard(4);
 						} else {
-							answerCard(Card.EASE_MID);
+							answerCard(3);
 						}
 					} else {
 						displayCardAnswer(); 
@@ -1935,8 +1936,8 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // Parse out the LaTeX images
-        question = LaTeX.parseLaTeX(AnkiDroidApp.deck(), question);
-        answer = LaTeX.parseLaTeX(AnkiDroidApp.deck(), answer);
+//        question = LaTeX.parseLaTeX(AnkiDroidApp.deck(), question);
+//        answer = LaTeX.parseLaTeX(AnkiDroidApp.deck(), answer);
 
         // If ruby annotation support is activated, then parse and handle:
         // Strip kanji in question, add furigana in answer
