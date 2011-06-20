@@ -23,7 +23,7 @@
   <string-array name="newCardOrderLabels">
     <item>Slumpvis ordning</item>
     <item>Ordningen de lades till</item>
-    <item>Motsatta ordning de lades till</item>
+    <item>Omvänd ordning från hur de lades till</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Fördela bland repetitioner</item>
@@ -42,14 +42,14 @@
     <item>Enligt kortlekens definition</item>
   </string-array>
   <string-array name="startup_mode_labels">
-    <item>Show study options</item>
-    <item>Show deck picker</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>Visa studieinställningar</item>
+    <item>Visa kortleksväljare</item>
+    <item>Visa kortleksväljare under dagens första start</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
-    <item>Always report</item>
-    <item>Never report</item>
-    <item>Ask me</item>
+    <item>Rapportera alltid</item>
+    <item>Rapportera aldrig</item>
+    <item>Fråga mig</item>
   </string-array>
   <string-array name="widget_minimum_cards_due_labels">
     <item>10</item>
@@ -59,52 +59,52 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Aldrig</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>Visa äldsta modifierade först</item>
+    <item>Visa i tillagd ordning</item>
+    <item>Visa i slumpmässig ordning</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>1 timme</item>
+    <item>1 dag</item>
+    <item>1 månad</item>
+    <item>1 år</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s timmar</item>
+    <item>%s dagar</item>
+    <item>%s månader</item>
+    <item>%s år</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>om 1 timme</item>
+    <item>om 1 dag</item>
+    <item>om 1 månad</item>
+    <item>om 1 år</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>om %s timmar</item>
+    <item>om %s dagar</item>
+    <item>om %s månader</item>
+    <item>om %s år</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
+    <item>Nya kort i slumpmässig ordning</item>
+    <item>Nya kort i ordningen de lades till</item>
+    <item>Nya kort i omvänd ordning från hur de lades till</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Fördela nya kort bland repetitioner</item>
+    <item>Nya kort efter repetitioner</item>
+    <item>Nya kort före repetitioner</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
-    <item>Review cards in random order</item>
+    <item>Repetera kort från största intervall</item>
+    <item>Repetera kort från minsta intervall</item>
+    <item>Repetera kort ordnade efter den tid de förfaller</item>
+    <item>Repetera kort i slumpmässig ordning</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
     <item>Visa misslyckade kort snart</item>
@@ -114,51 +114,51 @@
     <item>Visa misslyckade kort om 3 dagar</item>
   </string-array>
   <string-array name="card_browser_order_labels">
-    <item>By question</item>
-    <item>By answer</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>Date created</item>
+    <item>Efter fråga</item>
+    <item>Efter svar</item>
+    <item>Efter förfallodatum</item>
+    <item>Efter intervall</item>
+    <item>Efter lätthet</item>
+    <item>Skapat</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
-    <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
-    <item>Reviewing time</item>
+    <item>I kö</item>
+    <item>Ackumulerat antal i kö</item>
+    <item>Intervall</item>
+    <item>Repetitioner</item>
+    <item>Repetitionstid</item>
   </string-array>
   <string-array name="statistics_period_labels">
-    <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1 vecka</item>
+    <item>1 månad</item>
+    <item>3 månader</item>
+    <item>6 månader</item>
+    <item>1 år</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>Efter senaste access</item>
+    <item>Alfabetisk</item>
+    <item>Efter antal kort i kö</item>
+    <item>Efter totalt antal kort</item>
+    <item>Efter totalt antal nya kort</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
-    <item>Abort learning</item>
+    <item>Ingen åtgärd</item>
+    <item>Svarsknapp 1</item>
+    <item>Svarsknapp 2</item>
+    <item>Svarsknapp 3</item>
+    <item>Svarsknapp 4</item>
+    <item>Svara rekommenderat (grön)</item>
+    <item>Svara bättre än rekommenderat</item>
+    <item>Ångra</item>
+    <item>Gör om</item>
+    <item>Redigera kort</item>
+    <item>Markera kort</item>
+    <item>Sök på uttryck</item>
+    <item>Begrav kort tillfälligt</item>
+    <item>Åsidosätt kort</item>
+    <item>Radera kort</item>
+    <item>Rensa Whiteboard</item>
+    <item>Avbryt inlärning</item>
   </string-array>
 </resources>

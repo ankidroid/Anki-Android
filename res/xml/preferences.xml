@@ -313,6 +313,14 @@
 				android:summary="@string/zoom_summ"
 				android:key="zoom"/>
 		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_zeemote">
+			<CheckBoxPreference
+				android:id="@+id/zeemote_checkbox"
+				android:title="@string/zeemote"
+				android:defaultValue="false"
+				android:summary="@string/zeemote_summ"
+				android:key="zeemote"/>
+		</PreferenceCategory>
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/widget_pref">
 		<ListPreference
@@ -350,11 +358,29 @@
 				android:summary="@string/fix_hebrew_text_summ"
 				android:defaultValue="false"
 				android:key="fixHebrewText"/>
+			<CheckBoxPreference
+				android:title="@string/fix_arabic_text"
+				android:summary="@string/fix_arabic_text_summ"
+				android:defaultValue="false"
+				android:key="fixArabicText"/>
 			<ListPreference
 				android:title="@string/default_font"
 				android:summary="@string/default_font_summ"
 				android:key="defaultFont"
 				android:defaultValue=""/>
+                        <CheckBoxPreference
+                               android:title="@string/timeout_answer_text"
+                               android:summary="@string/timeout_answer_summ"
+                               android:defaultValue="false"
+                               android:disableDependentsState="false"
+                               android:key="timeoutAnswer"/>
+                       <com.hlidskialf.android.preference.SeekBarPreference
+                               android:dependency="timeoutAnswer"
+                               android:summary="@string/timeout_answer_seconds"
+                               android:max="30"
+                               android:title="@string/timeout_answer_seconds"
+                               android:defaultValue="6"
+                               android:key="timeoutAnswerSeconds"/>
 		</PreferenceCategory>
 	</PreferenceScreen>
 </PreferenceScreen>

@@ -144,10 +144,10 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
+    <item>Vastaus-painike 1</item>
+    <item>Vastaus-painike 2</item>
+    <item>Vastaus-painike 3</item>
+    <item>Vastaus-painike 4</item>
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
     <item>Kumoa</item>

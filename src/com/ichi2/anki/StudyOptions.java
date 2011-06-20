@@ -63,6 +63,8 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Scheduler;
 import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
+import com.zeemote.zc.Controller;
+import com.zeemote.zc.ui.android.ControllerAndroidUi;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,6 +77,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class StudyOptions extends Activity {
+	
     /**
 * Default database.
 */
@@ -239,6 +242,7 @@ public class StudyOptions extends Activity {
     private Spinner mSpinnerRevCardOrder;
     private Spinner mSpinnerFailCardOption;
     private EditText mEditNewPerDay;
+    private EditText mEditMaxFailCard;
 
     private CheckBox mCheckBoxPerDay;
     private CheckBox mCheckBoxSuspendLeeches;
@@ -487,6 +491,17 @@ public class StudyOptions extends Activity {
             deck.setIntVar("newSpread", mSpinnerNewCardSchedule.getSelectedItemPosition());
             deck.setIntVar("revOrder", mSpinnerRevCardOrder.getSelectedItemPosition());
             // TODO: mSpinnerFailCardOption
+            // FIXME: invalid entries set to zero(unlimited) for now, better to set to default?
+            String maxFailText = mEditMaxFailCard.getText().toString();
+            if (!maxFailText.equals(Integer.toString(deck.getFailedCardMax()))) {
+                if (maxFailText.equals("")) {
+                        deck.setFailedCardMax(0);
+                } else if (isValidInt(maxFailText)) {
+                        deck.setFailedCardMax(Integer.parseInt(maxFailText));
+                } else {
+                        mEditMaxFailCard.setText("0");
+                }
+            }
             String inputText = mEditNewPerDay.getText().toString();
             if (!inputText.equals(Integer.toString(deck.getIntVar("newPerDay")))) {
             	if (inputText.equals("")) {
@@ -518,8 +533,6 @@ public class StudyOptions extends Activity {
 
         SharedPreferences preferences = restorePreferences();
         registerExternalStorageListener();
-
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         activeCramTags = new HashSet<String>();
         mSelectedTags = new HashSet<String>();
@@ -574,7 +587,6 @@ public class StudyOptions extends Activity {
        		}
        	};
     }
-
 
     @Override
     public void onConfigurationChanged(Configuration newConfig){
@@ -639,7 +651,7 @@ public class StudyOptions extends Activity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+    	super.onDestroy();
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
         closeOpenedDeck();
         MetaDB.closeDB();
@@ -650,14 +662,14 @@ public class StudyOptions extends Activity {
     }
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Update the widget when pausing this activity.
-        if (!mInDeckPicker) {
-            WidgetStatus.update(getBaseContext());            
-        }
-    }
+    // @Override
+    // protected void onPause() {
+    //     super.onPause();
+    //     // Update the widget when pausing this activity.
+    //     if (!mInDeckPicker) {
+    //         WidgetStatus.update(getBaseContext());            
+    //     }
+    // }
 
 
     @Override
@@ -1080,6 +1092,7 @@ public class StudyOptions extends Activity {
         mSpinnerNewCardSchedule = (Spinner) contentView.findViewById(R.id.studyoptions_new_card_schedule);
         mSpinnerRevCardOrder = (Spinner) contentView.findViewById(R.id.studyoptions_rev_card_order);
         mSpinnerFailCardOption = (Spinner) contentView.findViewById(R.id.studyoptions_fail_card_option);
+        mEditMaxFailCard = (EditText) contentView.findViewById(R.id.studyoptions_max_fail_card);
         mEditNewPerDay = (EditText) contentView.findViewById(R.id.studyoptions_new_cards_per_day);
         mCheckBoxPerDay = (CheckBox) contentView.findViewById(R.id.studyoptions_per_day);
         mCheckBoxSuspendLeeches = (CheckBox) contentView.findViewById(R.id.studyoptions_suspend_leeches);
@@ -1102,6 +1115,7 @@ public class StudyOptions extends Activity {
         mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
         mEditNewPerDay.setText(String.valueOf(deck.getIntVar("newPerDay")));
 //        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());
+        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
 
         mDialogMoreOptions.show();
     }
@@ -2164,6 +2178,18 @@ public class StudyOptions extends Activity {
 	        return true;
 	    else
 	    	return false;
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String deck = intent.getStringExtra(EXTRA_DECK);
+        Log.d(AnkiDroidApp.TAG, "StudyOptions.onNewIntent: " + intent + ", deck=" + deck);
+        if (deck != null && !deck.equals(mDeckFilename)) {
+            mDeckFilename = deck;
+            loadPreviousDeck();
+        }
     }
 
 

@@ -107,8 +107,9 @@
   <string name="pref_cat_lookup">Wyszukiwanie</string>
   <string name="pref_cat_navigation">Nawigacja</string>
   <string name="pref_cat_swipe">Swipe</string>
-  <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
+  <string name="pref_cat_navigation_sensitivity">Czułość</string>
   <string name="pref_cat_zoom">Powiększenie</string>
+  <string name="pref_cat_zeemote">Kontroler Zeemote</string>
   <string name="pref_cat_reset">Zresetuj</string>
   <string name="pref_cat_other">Inne</string>
   <string name="pref_cat_experimental">Eksperymentalne</string>
@@ -137,35 +138,37 @@
   <string name="use_ruby_support_summ">W razie znalezienia znaków \'[\' i \']\', tekst zawarty między nimi będzie traktowany jako notacja ruby</string>
   <string name="display_font_size">Względna wielkość czcionki wyświetlacza</string>
   <string name="display_font_size_summ">Rozmiar czcionki względem zdefiniowanego w talii. W tej chwili: XXX %</string>
-  <string name="card_browser_font_size">Relative font size used in card browser main view</string>
-  <string name="card_browser_font_size_summ">The font size to use in the card browser. At the moment: XXX %</string>
+  <string name="card_browser_font_size">Względny rozmiar czcionki w głównym widoku przeglądarki kart</string>
+  <string name="card_browser_font_size_summ">Rozmiar czcionki wykorzystywanej w przeglądarce kart. W tej chwili: XXX%</string>
   <string name="button_size">Względna wielkości przycisku</string>
   <string name="button_size_summ">Względny rozmiar przycisków na ekranie powtórek. W tej chwili: XXX %</string>
   <string name="hide_question_in_answer">Ukryć pytanie przy odpowiedzi?</string>
   <string name="hide_question_in_answer_summ">Określa, czy pytanie powinno być ukryte, gdy odpowiedź jest widoczna.</string>
   <string name="deck_path">Ścieżka talii</string>
   <string name="deck_path_summ">Ścieżka do miejsca w której Twoje talie są przechowywane</string>
-  <string name="deck_order">Deck order</string>
-  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
+  <string name="deck_order">Kolejność talii</string>
+  <string name="deck_order_summ">Kolejność w jakiej ułożone są talie na ekranie wyboru: XXX</string>
   <string name="fullscreen_review">Nauka na pełnym ekranie</string>
   <string name="fullscreen_review_summ">Możesz zdecydować, czy chcesz korzystać ze całego dostępnego miejsca na ekranie podczas powtarzania kart</string>
   <string name="zoom">Włącz powiększenie</string>
   <string name="zoom_summ">Pokaż kontrolki zbliżenia podczas powtórek</string>
+  <string name="zeemote">Wsparcie kontrolera Zeemote JS1</string>
+  <string name="zeemote_summ">Użyj przycisków kontrolera Zeemote JS1, aby obsługiwać przeglądanie.  A: Dobrze, B: Jeszcze raz D: Łatwo</string>
   <string name="swipe">Włącz gesty</string>
   <string name="swipe_summ_off">Użyj gestów do przełączania ekranów i kart odpowiedzi. Ta opcja nie jest zgodna z kontrolkami powiększania</string>
-  <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
-  <string name="pref_cat_actions">Actions</string>
-  <string name="gestures_shake">Shake</string>
-  <string name="gestures_swipe_up">Swipe up</string>
-  <string name="gestures_swipe_down">Swipe down</string>
-  <string name="gestures_swipe_left">Swipe left</string>
-  <string name="gestures_swipe_right">Swipe right</string>
-  <string name="gestures_double_tap">Double tap</string>
-  <string name="gestures_tap_top">Tap top</string>
-  <string name="gestures_tap_bottom">Tap bottom</string>
-  <string name="gestures_tap_left">Tap left</string>
-  <string name="gestures_tap_right">Tap right</string>
-  <string name="swipe_sensibility">Swipe Sensitivity</string>
+  <string name="swipe_summ_on">Przesuń poziomo, aby przełączyć pomiędzy ekranami. Skonfiguruj inne czynności poniżej</string>
+  <string name="pref_cat_actions">Czynności</string>
+  <string name="gestures_shake">Potrząśnij</string>
+  <string name="gestures_swipe_up">Przesuń w górę</string>
+  <string name="gestures_swipe_down">Przesuń w dół</string>
+  <string name="gestures_swipe_left">Przesuń w lewo</string>
+  <string name="gestures_swipe_right">Przesuń w prawo</string>
+  <string name="gestures_double_tap">Naciśnij dwukrotnie</string>
+  <string name="gestures_tap_top">Dotknij u góry</string>
+  <string name="gestures_tap_bottom">Dotknij na dole</string>
+  <string name="gestures_tap_left">Dotknij po lewej</string>
+  <string name="gestures_tap_right">Dotknij po prawej</string>
+  <string name="swipe_sensibility">Czułość dotyku</string>
   <string name="swipe_sensibility_summ">Czułość gestów swipe: XXX</string>
   <string name="tts">Tekst na mowę</string>
   <string name="tts_summ">Odczytuje pytanie i odpowiedź jeżeli nie dołączono pliku dźwiękowego</string>
@@ -177,6 +180,8 @@
   <string name="sync_fetch_missing_media_summ">Automatycznie pobierz brakujące media podczas synchronizacji.</string>
   <string name="fix_hebrew_text">Wymuszaj RTL dla języka hebrajskiego</string>
   <string name="fix_hebrew_text_summ">Obejście problemu ograniczonej obsługi języka hebrajskiego przez platformę Android. Nie obsługuje samogłosek.</string>
+  <string name="default_font">Domyślna czcionka</string>
+  <string name="default_font_summ">Pozwala na ustawienie domyślnej czcionki używanej do renderowania kart. Niestandardowe czcionki powinny być zainstalowane na karcie SD w folderze o nazwie "fonts" w folderze Anki.</string>
   <string name="language">Język</string>
   <string name="language_summ">Wybierz język którego AnkiDroid ma używać. W tej chwili: XXX</string>
   <string name="language_system">Język systemu</string>
@@ -189,8 +194,8 @@
   <string name="about_title">O programie</string>
   <string name="cardeditor_title">Edytor kart</string>
   <string name="factadder_title">Dodawanie kart</string>
-  <string name="factadder_saving_error">Error saving fact</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="factadder_saving_error">Wystąpił błąd podczas zapisywania faktu</string>
+  <string name="saving_facts">Zapisywanie faktów</string>
   <string name="deckcreator_title">Twórca talii</string>
   <string name="model">Model:</string>
   <string name="select_model">Model</string>
@@ -272,6 +277,7 @@
   <string name="studyoptions_new_total">Wszystkie nowe:</string>
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_new_cards_per_day">Nowe karty na dzień</string>
+  <string name="studyoptions_max_fail_card">Maks. ilość źle rozwiązanych kart</string>
   <string name="studyoptions_start">Zacznij powtórki</string>
   <string name="studyoptions_more">Opcje powtórek</string>
   <string name="studyoptions_more_dialog_title">Więcej opcji</string>
@@ -314,7 +320,7 @@
   <string name="studyoptions_congrats_cards">kart</string>
   <string name="studyoptions_congrats_learnmore">Dowiedz się więcej</string>
   <string name="studyoptions_congrats_reviewearly">Powtarzaj wcześnie</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronizuj talię</string>
   <string name="studyoptions_congrats_open_other_deck">Otwórz inną talię</string>
   <string name="studyoptions_congrats_finish">Wróć do ekranu nauki</string>
   <string name="studyoptions_feedback">Informacje zwrotne</string>
@@ -327,6 +333,7 @@
   <string name="log_out">Wyloguj się</string>
   <string name="alert_logging_message">Logowanie, proszę czekać...</string>
   <string name="invalid_username_password">Błędna nazwa użytkownika lub hasło.</string>
+  <string name="sync_too_busy">Serwer jest zbyt zajęty. Spróbuj ponownie później.</string>
   <string name="login_generic_error">Nie można się zalogować.</string>
   <string name="download_finished">Pobieranie zakończone</string>
   <string name="deck_downloaded">Talia pobrana</string>
@@ -397,7 +404,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Karty do przeglądnięcia</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d kart AnkiDroid do przeglądnięcia</string>
   <string name="widget_no_cards_due">Nie ma więcej kart do przejrzenia</string>
-  <string name="widget_loading">Widget loading...</string>
+  <string name="widget_loading">Ładowanie widżetu...</string>
   <string name="soon">Wkrótce</string>
   <string name="show_next_review_time">Czas kolejnego przeglądnięcia</string>
   <string name="show_next_review_time_summ">Pokazuje czas następnego przeglądnięcia w zależności od wyboru</string>
@@ -449,8 +456,8 @@
     <item quantity="other">%1$d z %2$d zaległych</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1$s (pozostała 1 min.)</item>
+    <item quantity="other">%1$s (pozostało %2$d min.)</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 z %3$d kart widoczna</item>
@@ -461,12 +468,12 @@
     <item quantity="other">%1$s (%2$d z %3$d do przeglądnięcia)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Zakończono na dziś.\nJutro będzie:. \n1 kart do przejrzenia i %2$s.\n Szacowany czas: %3$s</item>
+    <item quantity="other">Zakończono na dziś.\nJutro będzie:\n%1$d kart do przejrzenia i %2$s.\n Szacowany czas: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">1 karta</item>
+    <item quantity="other">%1$ d nowych kart</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1 min.</item>

@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
@@ -40,6 +41,7 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Fact;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Utils;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +54,8 @@ import java.util.TreeMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import org.amr.arabic.ArabicUtilities;
 
 /**
  * Allows the user to edit a fact, for instance if there is a typo.
@@ -105,6 +109,8 @@ public class CardEditor extends Activity {
     private EditText mNewTagEditText;
     private AlertDialog mTagsDialog;
     private AlertDialog mAddNewTag;
+    
+    private boolean mPrefFixArabic;
 
     private ProgressDialog mProgressDialog;
 
@@ -194,6 +200,11 @@ public class CardEditor extends Activity {
             });
         	break;
         }
+
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+        mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
+        // if Arabic reshaping is enabled, disable the Save button to avoid saving the reshaped string to the deck
+        mSave.setEnabled(!mPrefFixArabic);
 
         initializeFactVariables();
         mTags.setOnClickListener(new View.OnClickListener() {
@@ -583,7 +594,11 @@ public class CardEditor extends Activity {
             if (content == null) {
             	content = "";
             }
-            this.setText(content);
+            if(mPrefFixArabic) {
+				this.setText(ArabicUtilities.reshapeSentence(content));
+            } else {
+				this.setText(content);
+            }
         }
 
 

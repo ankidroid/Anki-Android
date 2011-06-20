@@ -67,16 +67,16 @@
     <item>按随机顺序显示</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>一小时</item>
+    <item>一天</item>
+    <item>1个月</item>
+    <item>1年</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>％s 小时</item>
+    <item>％s 天</item>
+    <item>％s 月</item>
+    <item>％s 年</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>1小时后</item>
@@ -119,7 +119,7 @@
     <item>按到期时间</item>
     <item>按复习间隔</item>
     <item>按难易程度</item>
-    <item>Date created</item>
+    <item>创建日期</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>到期卡片数量</item>
@@ -144,21 +144,21 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
+    <item>答按钮1</item>
+    <item>答按钮2</item>
+    <item>答按钮3</item>
+    <item>答按钮4</item>
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
+    <item>撤销</item>
+    <item>重做</item>
     <item>Edit card</item>
     <item>Mark card</item>
     <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
+    <item>留到下回合</item>
+    <item>不要复习</item>
+    <item>删除卡片</item>
+    <item>清除白板</item>
     <item>Abort learning</item>
   </string-array>
 </resources>

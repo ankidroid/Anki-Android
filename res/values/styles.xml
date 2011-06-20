@@ -3,4 +3,5 @@
 	<style name="WidgetBackground">
         <item name="android:background">@drawable/widget_bg</item>
     </style>
+    <style name="BottomButton"/>
 </resources>

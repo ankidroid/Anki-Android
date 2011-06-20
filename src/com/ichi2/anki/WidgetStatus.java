@@ -41,9 +41,17 @@ public final class WidgetStatus {
 
     /** Request the widget to update its status. */
     public static void update(Context context) {
-        Log.d(AnkiDroidApp.TAG, "WidgetStatus.update()");
-        AsyncTask<Context,Void,Context> updateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
-        updateDeckStatusAsyncTask.execute(context);
+        // Only update the widget if it is enabled.
+        // TODO(flerda): Split widget from notifications.
+        SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+        if (preferences.getBoolean("widgetEnabled", false)) {
+            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
+            AsyncTask<Context,Void,Context> updateDeckStatusAsyncTask =
+                    new UpdateDeckStatusAsyncTask();
+            updateDeckStatusAsyncTask.execute(context);
+        } else {
+            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): not enabled");
+        }
     }
 
     /** Returns the status of each of the decks. */
@@ -87,6 +95,18 @@ public final class WidgetStatus {
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
                     Deck deck = Deck.openDeck(absPath, false);
+                    if (deck == null) {
+                        Log.e(AnkiDroidApp.TAG, "Skipping null deck: " + absPath);
+                        // Use the data from the last time we updated the deck, if available.
+                        for (DeckStatus deckStatus : mDecks) {
+                            if (absPath.equals(deckStatus.mDeckPath)) {
+                                Log.d(AnkiDroidApp.TAG, "Using previous value");
+                                decks.add(deckStatus);
+                                break;
+                            }
+                        }
+                        continue;
+                    }
                     int[] counts = deck.getSched().counts();
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.

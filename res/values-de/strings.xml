@@ -109,6 +109,7 @@
   <string name="pref_cat_swipe">Wischen</string>
   <string name="pref_cat_navigation_sensitivity">Empfindlichkeit</string>
   <string name="pref_cat_zoom">Vergrößern</string>
+  <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Zurücksetzen</string>
   <string name="pref_cat_other">Sonstiges</string>
   <string name="pref_cat_experimental">EXPERIMENTELL</string>
@@ -151,6 +152,8 @@
   <string name="fullscreen_review_summ">Nutzt sämtlichen vorhandenen Platz auf dem Bildschirm</string>
   <string name="zoom">Zoom aktivieren</string>
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
+  <string name="zeemote">Zeemote JS1 Unterstützung</string>
+  <string name="zeemote_summ">Benutzen Sie die Controllerknöpfe des Zeemote JS1, um zu lernen: A: gut, B: nochmal, D: einfach</string>
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
   <string name="swipe_summ_on">Fensterwechsel mit horizontalem Wischen. Konfigurieren Sie zusätzliche Aktionen weiter unten</string>
@@ -177,6 +180,8 @@
   <string name="sync_fetch_missing_media_summ">Mediadaten automatisch beziehen, wenn synchronisiert wird.</string>
   <string name="fix_hebrew_text">Umgekehrte Textrichtung für Hebräisch</string>
   <string name="fix_hebrew_text_summ">Erzwingt umgekehrte Textrichtung, um Hebräisch auf dem Android-System darzustellen. Vokale werden nicht unterstützt</string>
+  <string name="default_font">Standardschrift</string>
+  <string name="default_font_summ">Standardschrift zum Kartenrendern. Benutzerdefinierte Schriften müssen im Unterordner \'fonts\' im Anki-Ordner liegen.</string>
   <string name="language">Sprache</string>
   <string name="language_summ">Wählen Sie die Sprache, mit der AnkiDroid angezeigt werden soll. Aktuell: XXX</string>
   <string name="language_system">System-Sprache</string>
@@ -272,6 +277,7 @@
   <string name="studyoptions_new_total">Neu insgesamt:</string>
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_new_cards_per_day">Neue Karten pro Tag</string>
+  <string name="studyoptions_max_fail_card">Maximum falscher Karten</string>
   <string name="studyoptions_start">Lernen starten</string>
   <string name="studyoptions_more">Lernoptionen</string>
   <string name="studyoptions_more_dialog_title">Lernoptionen</string>
@@ -327,6 +333,7 @@
   <string name="log_out">Ausloggen</string>
   <string name="alert_logging_message">Einloggen, bitte warten...</string>
   <string name="invalid_username_password">Ungültiger Benutzername oder Passwort.</string>
+  <string name="sync_too_busy">Server überlastet. Versuchen Sie es später erneut.</string>
   <string name="login_generic_error">Fehler beim Anmelden.</string>
   <string name="download_finished">Herunterladen beendet</string>
   <string name="deck_downloaded">Stapel heruntergeladen</string>

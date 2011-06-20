@@ -41,6 +41,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -83,8 +84,20 @@ import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-public class Reviewer extends Activity {
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.amr.arabic.ArabicUtilities;
+
+//zeemote imports
+import com.zeemote.zc.Controller;
+import com.zeemote.zc.event.ButtonEvent;
+import com.zeemote.zc.event.IButtonListener;
+import com.zeemote.zc.ui.android.ControllerAndroidUi;
+
+
+public class Reviewer extends Activity implements IButtonListener{
     /**
      * Result codes that are returned when this activity finishes.
      */
@@ -131,6 +144,12 @@ public class Reviewer extends Activity {
     public static final int EASE_MID = 3;
     public static final int EASE_EASY = 4;
 
+    /** Zeemote messages */
+    private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
+    private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
+    private static final int MSG_ZEEMOTE_BUTTON_C = MSG_ZEEMOTE_BUTTON_A+2;
+    private static final int MSG_ZEEMOTE_BUTTON_D = MSG_ZEEMOTE_BUTTON_A+3;
+    
     /** Regex pattern used in removing tags from text before diff */
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
@@ -187,6 +206,7 @@ public class Reviewer extends Activity {
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;
+    private boolean mZeemoteEnabled;    
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the
@@ -198,13 +218,15 @@ public class Reviewer extends Activity {
     private boolean mShakeEnabled = false;
     private int mShakeIntensity;
     private boolean mShakeActionStarted = false;
-    private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in
+    private boolean mPrefFixHebrew; // Apply manual RTL for hebrew text - bug in Android WebView
+    private boolean mPrefFixArabic;
     // Android WebView
     private boolean mSpeakText;
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
+    private boolean mPrefUseTimer;
 
     private boolean mIsDictionaryAvailable;
     private boolean mIsSelecting = false;
@@ -270,6 +292,8 @@ public class Reviewer extends Activity {
     private int mNextTimeTextColor;
     private int mNextTimeTextRecomColor;
 
+    private int mForegroundColor;
+
     private int mButtonHeight = 0;
 
     private boolean mConfigurationChanged = false;
@@ -329,6 +353,14 @@ public class Reviewer extends Activity {
     private static final int GESTURE_CLEAR_WHITEBOARD = 15;
     private static final int GESTURE_EXIT = 16;
 
+ 	/**
+ 	 * Zeemote controller
+ 	 */
+ 	//Controller controller = null;
+ 	ControllerAndroidUi controllerUi;
+
+    private int zEase;
+    
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -608,6 +640,47 @@ public class Reviewer extends Activity {
             setDueMessage();
         }
     };
+    
+    //Zeemote handler
+	Handler ZeemoteHandler = new Handler() {
+		public void handleMessage(Message msg){
+			switch(msg.what){
+			case MSG_ZEEMOTE_BUTTON_A:
+				if (sDisplayAnswer) {
+						if (mCurrentCard.isRev()) {
+   						answerCard(Card.EASE_MID);
+						} else {
+							answerCard(Card.EASE_HARD);
+						}
+					} else {
+						displayCardAnswer(); 
+					}				
+				break;
+			case MSG_ZEEMOTE_BUTTON_B:
+				if (sDisplayAnswer) {
+   					answerCard(Card.EASE_FAILED);
+					} else {
+   			        displayCardAnswer();    						
+					}
+				break;
+			case MSG_ZEEMOTE_BUTTON_C:
+				   
+				break;
+			case MSG_ZEEMOTE_BUTTON_D:
+				if (sDisplayAnswer) {
+						if (mCurrentCard.isRev()) {
+   						answerCard(Card.EASE_EASY);
+						} else {
+							answerCard(Card.EASE_MID);
+						}
+					} else {
+						displayCardAnswer(); 
+					}				break;
+			}
+			super.handleMessage(msg);
+		}
+	};
+	private int mWaitSecond;
 
 
     // ----------------------------------------------------------------------------
@@ -620,6 +693,9 @@ public class Reviewer extends Activity {
 
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
+        // The hardware buttons should control the music volume while reviewing.
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
         // Make sure a deck is loaded before continuing.
         Deck deck = AnkiDroidApp.deck();
         if (deck == null) {
@@ -629,6 +705,19 @@ public class Reviewer extends Activity {
             mCurrentScheduler = deck.getSched();
             mMediaDir = setupMedia(deck);
             restorePreferences();
+
+            //Zeemote controller initialization
+    		if (mZeemoteEnabled){
+             
+    		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
+    		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
+    		 if (!AnkiDroidApp.zeemoteController().isConnected())
+    		 {
+        		 Log.d("Zeemote","starting connection in onCreate");
+    			 controllerUi.startConnectionProcess();
+    		 }
+    		}
+            
             deck.resetUndo();
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
@@ -733,6 +822,11 @@ public class Reviewer extends Activity {
         }
 
         Sound.stopSounds();
+
+        if (AnkiDroidApp.zeemoteController() != null) { 
+        	Log.d("Zeemote","Removing listener in onPause");
+        	AnkiDroidApp.zeemoteController().removeButtonListener(this);
+        }
     }
 
 
@@ -749,6 +843,10 @@ public class Reviewer extends Activity {
         if (mPrefTimer && mSavedTimer != 0) {
             mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
             mCardTimer.start();
+      }
+      if (AnkiDroidApp.zeemoteController() != null) {
+    	  Log.d("Zeemote","Adding listener in onResume");
+    	  AnkiDroidApp.zeemoteController().addButtonListener(this);
         }
     }
 
@@ -771,6 +869,15 @@ public class Reviewer extends Activity {
         }
         if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
             ReadText.releaseTts();
+        }
+        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
+        	try {
+        		Log.d("Zeemote","trying to disconnect in onDestroy...");
+        		AnkiDroidApp.zeemoteController().disconnect();
+        	}
+        	catch (IOException ex){
+        		Log.e("Zeemote","Error on zeemote disconnection in onDestroy: "+ex.getMessage());
+        	}
         }
     }
 
@@ -1242,7 +1349,7 @@ public class Reviewer extends Activity {
         Log.i(AnkiDroidApp.TAG, "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = "
                 + mCard.isFocusableInTouchMode());
 
-        // initialise swipe
+        // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
 
         // initialise shake detection
@@ -1337,6 +1444,10 @@ public class Reviewer extends Activity {
 
         if (mInvertedColors) {
             invertColors();
+        } else {
+            mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
+            mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);        	
+            mForegroundColor = getResources().getColor(R.color.next_time_usual_color);        	
         }
 
         initControls();
@@ -1352,6 +1463,7 @@ public class Reviewer extends Activity {
         mNextTimeTextRecomColor = res.getColor(R.color.next_time_recommended_color_inv);
         mNext4.setTextColor(mNextTimeTextColor);
         mCardTimer.setTextColor(fgColor);
+        mForegroundColor = fgColor;
         mTextBarBlack.setTextColor(fgColor);
         mTextBarBlue.setTextColor(res.getColor(R.color.textbar_blue_color_inv));
         mCard.setBackgroundColor(res.getColor(R.color.background_color_inv));
@@ -1489,14 +1601,18 @@ public class Reviewer extends Activity {
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", 100);
+        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer", Integer
                 .toString(HQIA_DO_SHOW)));
         mDictionary = Integer.parseInt(preferences.getString("dictionary", Integer.toString(DICTIONARY_AEDICT)));
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
+        mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
+        mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
+        mWaitSecond = preferences.getInt("timeoutAnswerSeconds", 20);
 
         mGesturesEnabled = preferences.getBoolean("swipe", false);
         if (mGesturesEnabled) {
@@ -1612,6 +1728,16 @@ public class Reviewer extends Activity {
         // mStatisticBarsMax, mStatisticBarsHeight, true);
     }
 
+    private Handler mTimeoutHandler = new Handler();
+
+    private Runnable mShowAnswerTask=new Runnable() {
+	public void run() {
+            if (mPrefTimer) {
+                mCardTimer.stop();
+            }
+            mFlipCard.performClick();
+	}
+    };
 
     private void displayCardQuestion() {
         sDisplayAnswer = false;
@@ -1638,6 +1764,10 @@ public class Reviewer extends Activity {
         mFlipCard.requestFocus();
 
         String question = mCurrentCard.getQuestion();
+        
+        if(mPrefFixArabic) {
+        	question = ArabicUtilities.reshapeSentence(question, true);
+        }
         Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
         String displayString = enrichWithQASpan(question, false);
@@ -1653,6 +1783,12 @@ public class Reviewer extends Activity {
 
         updateCard(displayString);
         hideEaseButtons();
+
+        // If the user want to show answer automatically
+        if (mPrefUseTimer) {
+            mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+            mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitSecond * 1000  );            
+        }
     }
 
 
@@ -1663,6 +1799,13 @@ public class Reviewer extends Activity {
         Sound.stopSounds();
 
         String displayString = "";
+        
+        String answer = mCurrentCard.getAnswer(), question = mCurrentCard.getQuestion();
+        if(mPrefFixArabic) {
+        	// reshape
+        	answer = ArabicUtilities.reshapeSentence(answer, true);
+        	question = ArabicUtilities.reshapeSentence(question, true);
+        }
 
         // If the user wrote an answer
         if (mPrefWriteAnswers) {
@@ -1684,20 +1827,20 @@ public class Reviewer extends Activity {
                 DiffEngine diff = new DiffEngine();
 
                 displayString = enrichWithQASpan(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer))
-                        + "<br/>" + mCurrentCard.getAnswer(), true);
+                        + "<br/>" + answer, true);
             }
 
             // Hide soft keyboard
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
         } else {
-            displayString = enrichWithQASpan(mCurrentCard.getAnswer(), true);
+            displayString = enrichWithQASpan(answer, true);
         }
 
         // Depending on preferences do or do not show the question
         if (isQuestionDisplayed()) {
             StringBuffer sb = new StringBuffer();
-            sb.append(enrichWithQASpan(mCurrentCard.getQuestion(), false));
+            sb.append(enrichWithQASpan(question, false));
             sb.append("<a name=\"question\"></a><hr/>");
             sb.append(displayString);
             displayString = sb.toString();
@@ -1742,36 +1885,38 @@ public class Reviewer extends Activity {
 
         // don't play question sound again when displaying answer
         int questionStartsAt = content.indexOf("<a name=\"question\"></a><hr/>");
+        String question = "";
+        String answer = "";
         if (isQuestionDisplayed()) {
-            if (sDisplayAnswer && (questionStartsAt != -1)) {
-                content = Sound.parseSounds(baseUrl, content.substring(0, questionStartsAt), mSpeakText,
-                        MetaDB.LANGUAGE_QUESTION)
-                        + Sound.parseSounds(baseUrl, content.substring(questionStartsAt, content.length()), mSpeakText,
-                                MetaDB.LANGUAGE_ANSWER);
-            } else {
-                content = Sound.parseSounds(baseUrl, content.substring(0, content.length() - 5), mSpeakText,
-                        MetaDB.LANGUAGE_QUESTION)
-                        + "<hr/>";
-            }
+        	if (sDisplayAnswer && (questionStartsAt != -1)) {
+        		question = Sound.parseSounds(baseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION);
+        		answer = Sound.parseSounds(baseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
+        	} else {
+            	question = Sound.parseSounds(baseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
+        	}
         } else {
-            int qa = MetaDB.LANGUAGE_QUESTION;
-            if (sDisplayAnswer) {
-                qa = MetaDB.LANGUAGE_ANSWER;
-            }
-            content = Sound.parseSounds(baseUrl, content, mSpeakText, qa);
+        	int qa = MetaDB.LANGUAGE_QUESTION;
+        	if (sDisplayAnswer) {
+        		qa = MetaDB.LANGUAGE_ANSWER;
+        	}
+        	answer = Sound.parseSounds(baseUrl, content, mSpeakText, qa);
         }
 
         // Parse out the LaTeX images
-        // content = LaTeX.parseLaTeX(AnkiDroidApp.deck(), content);
+        question = LaTeX.parseLaTeX(AnkiDroidApp.deck(), question);
+        answer = LaTeX.parseLaTeX(AnkiDroidApp.deck(), answer);
+
+        // If ruby annotation support is activated, then parse and handle:
+        // Strip kanji in question, add furigana in answer
+        if (mPrefUseRubySupport && isJapaneseModel) {
+          	content = RubyParser.ankiStripKanji(question) + RubyParser.ankiRubyToMarkup(answer);
+        } else {
+        	content = question + answer;
+        }
 
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
         content = content.replace("font-weight:600;", "font-weight:700;");
-
-        // If ruby annotation support is activated, then parse and add markup
-        if (mPrefUseRubySupport && isJapaneseModel) {
-            content = RubyParser.ankiRubyToMarkup(content);
-        }
 
         // Find hebrew text
         if (isHebrewFixEnabled()) {
@@ -1852,7 +1997,7 @@ public class Reviewer extends Activity {
         if (defaultFont == null || "".equals(defaultFont)) {
             return "";
         }
-        return "BODY { font-family: '" + defaultFont + "' }\n";
+        return "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";
     }
 
 
@@ -2363,4 +2508,21 @@ public class Reviewer extends Activity {
         else
             return false;
     }
+
+
+	@Override
+	public void buttonPressed(ButtonEvent arg0) {
+		Log.d("Zeemote","Button pressed, id: "+arg0.getButtonID());
+	}
+
+
+	@Override
+	public void buttonReleased(ButtonEvent arg0) {
+		Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
+		Message msg = Message.obtain();
+		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); //Button A = 0, Button B = 1...
+		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A) && (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { //make sure messages from future buttons don't get throug
+			this.ZeemoteHandler.sendMessage(msg);
+		}
+	}
 }

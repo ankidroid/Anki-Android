@@ -109,6 +109,7 @@
   <string name="pref_cat_swipe">手势</string>
   <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
   <string name="pref_cat_zoom">缩放</string>
+  <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">重置</string>
   <string name="pref_cat_other">其他</string>
   <string name="pref_cat_experimental">试验性功能</string>
@@ -151,6 +152,8 @@
   <string name="fullscreen_review_summ">在复习卡片时占据整个可用的屏幕空间</string>
   <string name="zoom">开启缩放</string>
   <string name="zoom_summ">复习时显示缩放控制</string>
+  <string name="zeemote">Zeemote JS1 support</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
   <string name="swipe">开启手势</string>
   <string name="swipe_summ_off">用手势切换答案和下一个问题。该功能与缩放控制不兼容</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
@@ -177,6 +180,8 @@
   <string name="sync_fetch_missing_media_summ">同步时自动获取缺失的媒体文件</string>
   <string name="fix_hebrew_text">为希伯来语打开RTL</string>
   <string name="fix_hebrew_text_summ">解决Android对希伯来语支持的问题。不支持元音。</string>
+  <string name="default_font">Default font</string>
+  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
   <string name="language">语言</string>
   <string name="language_summ">选择AnkiDroid使用的语言。当前选择: XXX</string>
   <string name="language_system">系统语言</string>
@@ -272,6 +277,7 @@
   <string name="studyoptions_new_total">全部新卡片：</string>
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
   <string name="studyoptions_new_cards_per_day">每天的新卡片数</string>
+  <string name="studyoptions_max_fail_card">Max fail cards</string>
   <string name="studyoptions_start">开始复习</string>
   <string name="studyoptions_more">学习选项</string>
   <string name="studyoptions_more_dialog_title">更多选项</string>
@@ -327,6 +333,7 @@
   <string name="log_out">登出</string>
   <string name="alert_logging_message">登入中，请稍等…</string>
   <string name="invalid_username_password">无效的用户名或密码。</string>
+  <string name="sync_too_busy">Server too busy. Try again later.</string>
   <string name="login_generic_error">Failed to login.</string>
   <string name="download_finished">下载完成</string>
   <string name="deck_downloaded">牌组已下载</string>

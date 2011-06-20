@@ -267,6 +267,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     data.result = res.getString(R.string.invalid_username_password);
                 } else if (connectResult == AnkiDroidProxy.LOGIN_OLD_VERSION) {
                     data.result = String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid));
+                } else if (connectResult == AnkiDroidProxy.LOGIN_TOO_BUSY) {
+                    data.result = res.getString(R.string.sync_too_busy);
                 } else {
                     data.result = res.getString(R.string.login_generic_error);
                 }
@@ -365,6 +367,8 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     }
                 } else if (connectResult == AnkiDroidProxy.LOGIN_OLD_VERSION) {
                     syncChangelog.put("message", String.format(res.getString(R.string.sync_log_old_version), res.getString(R.string.link_ankidroid)));
+                } else if (connectResult == AnkiDroidProxy.LOGIN_TOO_BUSY) {
+                    syncChangelog.put("message", res.getString(R.string.sync_too_busy));
                 } else {
                     syncChangelog.put("message", res.getString(R.string.login_generic_error));
                 }

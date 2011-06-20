@@ -56,6 +56,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class ChartBuilder extends Activity {
     public static final String TYPE = "type";
+    public static final int ZOOM_MAX = 20;
 
     private XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
     private XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
@@ -200,7 +201,7 @@ public class ChartBuilder extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(MENU_ZOOM_IN).setEnabled(zoom < 10);
+        menu.findItem(MENU_ZOOM_IN).setEnabled(zoom < ZOOM_MAX);
         menu.findItem(MENU_ZOOM_OUT).setEnabled(zoom > 0);
         return true;
     }

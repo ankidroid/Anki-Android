@@ -67,10 +67,10 @@
     <item>Show in random order</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>1 시간</item>
+    <item>1 일</item>
+    <item>1 개</item>
+    <item>1 년</item>
   </string-array>
   <string-array name="next_review_p">
     <item>%s 시간</item>
@@ -130,10 +130,10 @@
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 week</item>
-    <item>1 month</item>
-    <item>3 months</item>
-    <item>6 month</item>
-    <item>1 year</item>
+    <item>1 개월</item>
+    <item>3 개월</item>
+    <item>6 개월</item>
+    <item>1 년</item>
   </string-array>
   <string-array name="deck_order_labels">
     <item>By last access</item>
