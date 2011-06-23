@@ -76,6 +76,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import org.json.JSONException;
+
 public class StudyOptions extends Activity {
 	
     /**
@@ -337,9 +339,8 @@ public class StudyOptions extends Activity {
                     }
                     return;
                 case R.id.studyoptions_limit:
+                	mToggleLimit.setChecked(!mToggleLimit.isChecked());
                 	openGroupSelection();
-//                    mToggleLimit.setChecked(!mToggleLimit.isChecked());
-//                    showLimitSessionDialog();
                     return;
                 case R.id.studyoptions_congrats_learnmore:
                 	startLearnMore();
@@ -398,75 +399,13 @@ public class StudyOptions extends Activity {
                         startActivity(new Intent(StudyOptions.this, About.class));
                     }
                     return;
-                case R.id.studyoptions_limit_tag_tv2:
-                    if (mLimitTagNewActiveCheckBox.isChecked()) {
-                        mSelectedLimitTagText = LIMIT_NEW_ACTIVE;
-                        recreateTagsDialog();
-                        mTagsDialog.show();
-                    }
-                    return;
-                case R.id.studyoptions_limit_tag_tv3:
-                    if (mLimitTagNewInactiveCheckBox.isChecked()) {
-                        mSelectedLimitTagText = LIMIT_NEW_INACTIVE;
-                        recreateTagsDialog();
-                        mTagsDialog.show();
-                    }
-                    return;
-                case R.id.studyoptions_limit_tag_tv5:
-                    if (mLimitTagRevActiveCheckBox.isChecked()) {
-                        mSelectedLimitTagText = LIMIT_REV_ACTIVE;
-                        recreateTagsDialog();
-                        mTagsDialog.show();
-                    }
-                    return;
-                case R.id.studyoptions_limit_tag_tv6:
-                    if (mLimitTagRevInactiveCheckBox.isChecked()) {
-                        mSelectedLimitTagText = LIMIT_REV_INACTIVE;
-                        recreateTagsDialog();
-                        mTagsDialog.show();
-                    }
-                    return;
                 default:
                     return;
             }
         }
     };
 
-    private CompoundButton.OnCheckedChangeListener mLimitTagCheckedChangeListener = new CompoundButton.OnCheckedChangeListener(){
-
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (!mLimitSessionDialog.isShowing()) {
-                return;
-            }
-            switch (buttonView.getId()) {
-                case R.id.studyoptions_limit_tag_new_active_check:
-                    mSelectedLimitTagText = LIMIT_NEW_ACTIVE;
-                    break;
-                case R.id.studyoptions_limit_tag_new_inactive_check:
-                    mSelectedLimitTagText = LIMIT_NEW_INACTIVE;
-                    break;
-                case R.id.studyoptions_limit_tag_rev_active_check:
-                    mSelectedLimitTagText = LIMIT_REV_ACTIVE;
-                    break;
-                case R.id.studyoptions_limit_tag_rev_inactive_check:
-                    mSelectedLimitTagText = LIMIT_REV_INACTIVE;
-                    break;
-                default:
-                    return;
-            }
-            if (isChecked) {
-                recreateTagsDialog();
-                mTagsDialog.show();
-            } else {
-                updateLimitTagText(mSelectedLimitTagText, "");
-            }
-            return;
-        }
-
-    };
-
-
+    
     private Boolean isValidInt(String test) {
         try {
             Integer.parseInt(test);
@@ -475,17 +414,6 @@ public class StudyOptions extends Activity {
             return false;
         }
     }
-
-
-    private Boolean isValidLong(String test) {
-        try {
-            Long.parseLong(test);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
 
     private DialogInterface.OnClickListener mDialogSaveListener = new DialogInterface.OnClickListener() {
         @Override
@@ -859,7 +787,6 @@ public class StudyOptions extends Activity {
         mStatisticsButton.setOnClickListener(mButtonClickListener);
 
         mDialogMoreOptions = createMoreOptionsDialog();
-        mLimitSessionDialog = createLimitSessionDialog();
 
         // The view to use when there is no deck loaded yet.
         // TODO: Add and init view here.
@@ -1141,130 +1068,8 @@ public class StudyOptions extends Activity {
     }
 
 
-    private AlertDialog createLimitSessionDialog() {
-        // Custom view for the dialog content.
-        View contentView = getLayoutInflater().inflate(R.layout.studyoptions_limit_dialog_contents, null);
-        mEditSessionTime = (EditText) contentView.findViewById(R.id.studyoptions_session_minutes);
-        mEditSessionQuestions = (EditText) contentView.findViewById(R.id.studyoptions_session_questions);
-        mSessionLimitCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_session_check);
-        mLimitTagsCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_check);
-        mLimitTagNewActiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_new_active_check);
-        mLimitTagNewInactiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_new_inactive_check);
-        mLimitTagRevActiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_rev_active_check);
-        mLimitTagRevInactiveCheckBox = (CheckBox) contentView.findViewById(R.id.studyoptions_limit_tag_rev_inactive_check);
-        mLimitSessionTv1 = (TextView) contentView.findViewById(R.id.studyoptions_limit_session_tv1);
-        mLimitSessionTv2 = (TextView) contentView.findViewById(R.id.studyoptions_limit_session_tv2);
-        mLimitTagTv1 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv1);
-        mLimitTagTv2 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv2);
-        mLimitTagTv3 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv3);
-        mLimitTagTv4 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv4);
-        mLimitTagTv5 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv5);
-        mLimitTagTv6 = (TextView) contentView.findViewById(R.id.studyoptions_limit_tag_tv6);
-        mLimitTagTv2.setOnClickListener(mButtonClickListener);
-        mLimitTagTv3.setOnClickListener(mButtonClickListener);
-        mLimitTagTv5.setOnClickListener(mButtonClickListener);
-        mLimitTagTv6.setOnClickListener(mButtonClickListener);
 
-        mSessionLimitCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mEditSessionTime.setEnabled(isChecked);
-                mEditSessionQuestions.setEnabled(isChecked);
-                if (!isChecked) {
-                    mEditSessionTime.setText("");
-                    mEditSessionQuestions.setText("");
-                    mEditSessionTime.clearFocus();
-                    mEditSessionQuestions.clearFocus();
-                    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditSessionTime.getWindowToken(), 0);
-                }
-                int color = getResources().getColor((isChecked) ? R.color.studyoptions_foreground : R.color.studyoptions_foreground_deactivated);
-                mLimitSessionTv1.setTextColor(color);
-                mLimitSessionTv2.setTextColor(color);
-            }
-            });
-
-        mLimitTagsCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mLimitTagNewActiveCheckBox.setEnabled(isChecked);
-                mLimitTagNewInactiveCheckBox.setEnabled(isChecked);
-                mLimitTagRevActiveCheckBox.setEnabled(isChecked);
-                mLimitTagRevInactiveCheckBox.setEnabled(isChecked);
-                if (!isChecked) {
-                    mLimitTagNewActiveCheckBox.setChecked(false);
-                    mLimitTagNewInactiveCheckBox.setChecked(false);
-                    mLimitTagRevActiveCheckBox.setChecked(false);
-                    mLimitTagRevInactiveCheckBox.setChecked(false);
-                }
-                int color = getResources().getColor((isChecked) ? R.color.studyoptions_foreground : R.color.studyoptions_foreground_deactivated);
-                mLimitTagTv1.setTextColor(color);
-                mLimitTagTv2.setTextColor(color);
-                mLimitTagTv3.setTextColor(color);
-                mLimitTagTv4.setTextColor(color);
-                mLimitTagTv5.setTextColor(color);
-                mLimitTagTv6.setTextColor(color);
-            }
-            });
-
-        mLimitTagNewActiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
-        mLimitTagNewInactiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
-        mLimitTagRevActiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
-        mLimitTagRevInactiveCheckBox.setOnCheckedChangeListener(mLimitTagCheckedChangeListener);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.studyoptions_limit_dialog_title);
-//        builder.setPositiveButton(R.string.studyoptions_more_save, new DialogInterface.OnClickListener() {
-//
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                Deck deck = AnkiDroidApp.deck();
-//                boolean changed = false;
-//                String textTime = mEditSessionTime.getText().toString();
-//                if (!textTime.equals(Long.toString(deck.getSessionTimeLimit() / 60))) {
-//                  if (textTime.equals("")) {
-//                      deck.setSessionTimeLimit(0);
-//                  } else if (isValidLong(textTime)) {
-//                      deck.setSessionTimeLimit(Long.parseLong(textTime) * 60);
-//                  }
-//                }
-//                String textReps = mEditSessionQuestions.getText().toString();
-//                if (!textReps.equals(Long.toString(deck.getSessionRepLimit()))) {
-//                    if (textReps.equals("")) {
-//                        deck.setSessionRepLimit(0);
-//                    } else if (isValidLong(textReps)) {
-//                        deck.setSessionRepLimit(Long.parseLong(textReps));
-//                    }
-//                    changed = true;
-//                }
-//                if (!deck.getVar("newActive").equals(mLimitNewActive)) {
-//                    deck.setVar("newActive", mLimitNewActive);
-//                    changed = true;
-//                } 
-//                if (!deck.getVar("newInactive").equals(mLimitNewInactive)) {
-//                    deck.setVar("newInactive", mLimitNewInactive);
-//                    changed = true;
-//                } 
-//                if (!deck.getVar("revActive").equals(mLimitRevActive)) {
-//                    deck.setVar("revActive", mLimitRevActive);
-//                    changed = true;
-//                } 
-//                if (!deck.getVar("revInactive").equals(mLimitRevInactive)) {
-//                    deck.setVar("revInactive", mLimitRevInactive);
-//                    changed = true;
-//                }
-//                if (changed) {
-//                	resetAndUpdateValuesFromDeck();
-//                }
-//                mToggleLimit.setChecked((mSessionLimitCheckBox.isChecked() && !(textTime.length() == 0 && textReps.length() == 0)) || (mLimitTagsCheckBox.isChecked() && (mLimitTagNewActiveCheckBox.isChecked() || mLimitTagNewInactiveCheckBox.isChecked()
-//                        || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked())));
-//            }
-//        });
-        builder.setView(contentView);
-        return builder.create();
-    }
-
-
-    private void showLimitSessionDialog() {
+//    private void showLimitSessionDialog() {
 //        // Update spinner selections from deck prior to showing the dialog.
 //        Deck deck = AnkiDroidApp.deck();
 //        long timeLimit = deck.getSessionTimeLimit() / 60;
@@ -1286,7 +1091,7 @@ public class StudyOptions extends Activity {
 //                || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked());
 //
 //        mLimitSessionDialog.show();
-    }
+//    }
 
 
     private void showContentView(int which) {
@@ -1348,53 +1153,6 @@ public class StudyOptions extends Activity {
                 setTitle(R.string.app_name);
                 setContentView(mNoExternalStorageView);
                 break;
-        }
-    }
-
-
-    private void updateLimitTagText(int which, String tags) {
-        Resources res = getResources();
-        tags = tags.replaceAll(",", "");
-        boolean checked = !tags.equals("");
-        switch (which) {
-            case LIMIT_NEW_ACTIVE:
-                mLimitNewActive = tags;
-                mLimitTagTv2.setText(res.getString(R.string.studyoptions_limit_tags_active, tags));
-                mLimitTagNewActiveCheckBox.setChecked(checked);
-                return;
-            case LIMIT_NEW_INACTIVE:
-                mLimitNewInactive = tags;
-                mLimitTagTv3.setText(res.getString(R.string.studyoptions_limit_tags_inactive, tags));
-                mLimitTagNewInactiveCheckBox.setChecked(checked);
-                return;
-            case LIMIT_REV_ACTIVE:
-                mLimitRevActive = tags;
-                mLimitTagTv5.setText(res.getString(R.string.studyoptions_limit_tags_active, tags));
-                mLimitTagRevActiveCheckBox.setChecked(checked);
-                return;
-            case LIMIT_REV_INACTIVE:
-                mLimitRevInactive = tags;
-                mLimitTagTv6.setText(res.getString(R.string.studyoptions_limit_tags_inactive, tags));
-                mLimitTagRevInactiveCheckBox.setChecked(checked);
-                return;
-            default:
-                return;
-        }
-    }
-
-
-    private String getSelectedTags(int which) {
-        switch (which) {
-            case LIMIT_NEW_ACTIVE:
-                return mLimitNewActive;
-            case LIMIT_NEW_INACTIVE:
-                return mLimitNewInactive;
-            case LIMIT_REV_ACTIVE:
-                return mLimitRevActive;
-            case LIMIT_REV_INACTIVE:
-                return mLimitRevInactive;
-            default:
-                return "";
         }
     }
 
@@ -1817,6 +1575,12 @@ public class StudyOptions extends Activity {
         	resetAndUpdateValuesFromDeck();
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
         	showContentView(CONTENT_STUDY_OPTIONS);
+        } else if (requestCode == GROUP_SELECTOR) {
+        	if (resultCode == RESULT_OK) {
+            	mToggleLimit.setChecked(true);
+        	} else {
+            	mToggleLimit.setChecked(false);        		
+        	}
         }
     }
 
@@ -2039,7 +1803,12 @@ public class StudyOptions extends Activity {
                     } else {
                         startActivityForResult(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
                     }
-
+                    try {
+            			mToggleLimit.setChecked(!(AnkiDroidApp.deck().getQconf().getJSONArray("groups").length() + 
+            					AnkiDroidApp.deck().getConf().getInt("sessionTimeLimit") + AnkiDroidApp.deck().getConf().getInt("sessionRepLimit") == 0));
+            		} catch (JSONException e) {
+            			throw new RuntimeException(e);
+            		}        	
                     break;
 
                 case DeckTask.DECK_NOT_LOADED:

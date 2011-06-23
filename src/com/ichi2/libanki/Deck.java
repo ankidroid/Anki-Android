@@ -1520,15 +1520,13 @@ public class Deck {
     }
 
 
-    public void setStringVar(String name, int num) {
-        if (num >= 0) {
-        	try {
-				mConf.put(name, num);
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-            flushMod();
-        }
+    public void setStringVar(String name, String string) {
+    	try {
+			mConf.put(name, string);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+        flushMod();
     }
 
 //

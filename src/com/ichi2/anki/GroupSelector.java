@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
@@ -37,6 +38,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -85,6 +87,9 @@ public class GroupSelector extends Activity {
 	ArrayList<HashMap<String, String>> mGroups;
 	ArrayList<HashMap<String, String>> mAllGroups;
 	HashMap<String, String> mCurrentSelectedGroup;
+
+	EditText mSessionTimeLimit;
+	EditText mSessionRepLimit;	
 
 	String[] mConfNames;
 	int[] mConfIds;
@@ -140,7 +145,11 @@ public class GroupSelector extends Activity {
             }
         });
 
-        // TODO: load timeboxing options
+        mSessionTimeLimit = (EditText) findViewById(R.id.session_minutes);
+        mSessionRepLimit = (EditText) findViewById(R.id.session_questions);
+
+        mSessionTimeLimit.setText(mDeck.getStringVar("sessionTimeLimit"));
+        mSessionRepLimit.setText(mDeck.getStringVar("sessionRepLimit"));
 
         prepareDialogs();
         getGroups();
@@ -234,28 +243,67 @@ public class GroupSelector extends Activity {
 
     private void closeGroupSelector() {
         // save selected groups
-        JSONArray ja = new JSONArray();           
+        JSONArray ja = new JSONArray();
+        boolean limited = false;
         for (int i = 0; i < mAllGroups.size(); i++) {
-        	String name = mAllGroups.get(i).get("fullname");
+        	HashMap<String, String> map =  mAllGroups.get(i);
+        	String name = map.get("fullname");
         	boolean checked = mGroupStatus.get(name)[STATUS_CHECKED];
+        	int gid = Integer.parseInt(map.get("gid"));
         	if (checked) {
-            	Integer gid = Integer.parseInt(mAllGroups.get(i).get("gid"));
             	if (gid != 0) {
             		ja.put(gid);
             	}
+        	} else if (gid != 0) {
+        		limited = true;
         	}
     		Log.e(AnkiDroidApp.TAG, "Group " + name + " activated: "+ checked);
+        }
+        if (!limited) {
+        	ja = new JSONArray();
+        }
+        if (ja.length() == 0) {
+        	limited = false;
         }
         try {
 			mDeck.getQconf().put("groups", ja);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-		// TODO: save changed timeboxing options
+
+		String limit = mSessionTimeLimit.getText().toString();
+		if (isValidInt(limit) && !limit.equals("0")) {
+			mDeck.setStringVar("sessionTimeLimit", limit);
+			limited = true;
+		} else {
+			mDeck.setStringVar("sessionTimeLimit", "0");
+		}
+		limit = mSessionRepLimit.getText().toString();
+		if (isValidInt(limit) && !limit.equals("0")) {
+			mDeck.setStringVar("sessionRepLimit", limit);			
+			limited = true;				
+		} else if (isValidInt(limit)){
+			mDeck.setStringVar("sessionRepLimit", "0");
+		}
+		if (limited) {
+			setResult(RESULT_OK, this.getIntent());			
+		} else {
+			setResult(RESULT_CANCELED, this.getIntent());
+		}
         finish();
     	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
    			MyAnimation.slide(GroupSelector.this, MyAnimation.DOWN);
     	}
+    }
+
+ 
+    private Boolean isValidInt(String test) {
+        try {
+            Integer.parseInt(test);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 
@@ -293,14 +341,14 @@ public class GroupSelector extends Activity {
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-
+		// check activated groups
     	for (int i = 0; i < mGroups.size(); i++) {
     		String fullname = mGroups.get(i).get("fullname");
     		if (i < mGroups.size() - 1 && mGroups.get(i + 1).get("fullname").startsWith(fullname + "::")) {
-    			mGroupStatus.put(fullname, new Boolean[]{ true, true, true, selectedGroups.contains(Integer.parseInt(mGroups.get(i).get("gid"))) });
+    			mGroupStatus.put(fullname, new Boolean[]{ true, true, true, selectedGroups.isEmpty() || selectedGroups.contains(Integer.parseInt(mGroups.get(i).get("gid"))) });
     		} else {
     			changeCaption(mGroups.get(i), ARROW_NONE);
-    			mGroupStatus.put(fullname, new Boolean[]{ true, false, false, selectedGroups.contains(Integer.parseInt(mGroups.get(i).get("gid"))) });
+    			mGroupStatus.put(fullname, new Boolean[]{ true, false, false, selectedGroups.isEmpty() || selectedGroups.contains(Integer.parseInt(mGroups.get(i).get("gid"))) });
     		}
     	}
     	mAllGroups.addAll(mGroups);
