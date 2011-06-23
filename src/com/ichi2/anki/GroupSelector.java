@@ -140,6 +140,8 @@ public class GroupSelector extends Activity {
             }
         });
 
+        // TODO: load timeboxing options
+
         prepareDialogs();
         getGroups();
     }
@@ -249,7 +251,7 @@ public class GroupSelector extends Activity {
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-
+		// TODO: save changed timeboxing options
         finish();
     	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
    			MyAnimation.slide(GroupSelector.this, MyAnimation.DOWN);
