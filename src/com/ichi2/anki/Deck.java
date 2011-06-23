@@ -136,7 +136,7 @@ public class Deck {
     private String mLowPriority;
     private String mSuspended; // obsolete in libanki 1.1
 
-    // 0 is random, 1 is by input date
+    // 0 is random, 1 is by input date, 2 is by input date inverse
     private int mNewCardOrder;
 
     // When to show new cards
