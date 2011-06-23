@@ -234,6 +234,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mSpeakText;
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
+    private boolean mSwapQA = false;
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
@@ -1304,7 +1305,7 @@ public class Reviewer extends Activity implements IButtonListener{
         builder.setTitle(res.getString(R.string.delete_card_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(String.format(res.getString(R.string.delete_card_message), Utils.stripHTML(mCurrentCard
-                .getQuestion()), Utils.stripHTML(mCurrentCard.getAnswer())));
+                .getQuestion()), Utils.stripHTML(getAnswer())));
         builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -1622,6 +1623,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefTextSelection = preferences.getBoolean("textSelection", false);
         mDeckFilename = preferences.getString("deckFilename", "");
         mInvertedColors = preferences.getBoolean("invertedColors", false);
+        mSwapQA = preferences.getBoolean("swapqa", false);
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
@@ -1789,7 +1791,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mFlipCard.setVisibility(View.VISIBLE);
         mFlipCard.requestFocus();
 
-        String question = mCurrentCard.getQuestion();
+        String question = getQuestion();
         
         if(mPrefFixArabic) {
         	question = ArabicUtilities.reshapeSentence(question, true);
@@ -1825,7 +1827,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         String displayString = "";
         
-        String answer = mCurrentCard.getAnswer(), question = mCurrentCard.getQuestion();
+        String answer = getAnswer(), question = getQuestion();
         if(mPrefFixArabic) {
         	// reshape
         	answer = ArabicUtilities.reshapeSentence(answer, true);
@@ -1971,11 +1973,29 @@ public class Reviewer extends Activity implements IButtonListener{
             if (!mSpeakText) {
                 Sound.playSounds(null, 0);
             } else if (!sDisplayAnswer) {
-                Sound.playSounds(Utils.stripHTML(mCurrentCard.getQuestion()), MetaDB.LANGUAGE_QUESTION);
+                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGE_QUESTION);
             } else {
-                Sound.playSounds(Utils.stripHTML(mCurrentCard.getAnswer()), MetaDB.LANGUAGE_ANSWER);
+                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGE_ANSWER);
             }
         }
+    }
+
+
+    private String getQuestion() {
+    	if (mSwapQA) {
+    		return mCurrentCard.getAnswer();
+    	} else {
+    		return mCurrentCard.getQuestion();
+    	}
+    }
+
+
+    private String getAnswer() {
+    	if (mSwapQA) {
+    		return mCurrentCard.getQuestion();
+    	} else {
+    		return mCurrentCard.getAnswer();
+    	}
     }
 
 

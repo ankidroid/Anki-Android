@@ -334,6 +334,7 @@ public class Scheduler {
     
     /**
      * Return counts for selected groups, without building queue.
+     * LIBANKI: this differs from libanki
      */
      private TreeMap<String, int[]> _groupChildren(TreeMap<String, int[]> grps) {
     	 return _groupChildren (grps, false);
