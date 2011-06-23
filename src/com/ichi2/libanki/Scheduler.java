@@ -307,16 +307,18 @@ public class Scheduler {
         Cursor cur = null;
         TreeMap<String, int[]> counts = new TreeMap<String, int[]>();
         TreeMap<Integer, String> gids = new TreeMap<Integer, String>();
+        TreeMap<Integer, Integer> gconfids = new TreeMap<Integer, Integer>();
         try {
-            cur = mDb.getDatabase().rawQuery("SELECT id, name FROM groups ORDER BY name", null);
+            cur = mDb.getDatabase().rawQuery("SELECT id, gcid, name FROM groups ORDER BY name", null);
             while (cur.moveToNext()) {
-                gids.put(cur.getInt(0), cur.getString(1));
+                gids.put(cur.getInt(0), cur.getString(2));
+                gconfids.put(cur.getInt(0), cur.getInt(1));                
             }
             cur = mDb.getDatabase().rawQuery(
                     "SELECT gid, count(), " + "sum(CASE WHEN queue = 2 AND due <= " + mToday + " THEN 1 ELSE 0 END), "
                             + "sum(CASE WHEN queue = 0 THEN 1 ELSE 0 END) FROM cards GROUP BY gid", null);
             while (cur.moveToNext()) {
-                counts.put(gids.get(cur.getInt(0)), new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2), cur.getInt(3) });
+                counts.put(gids.get(cur.getInt(0)), new int[] { cur.getInt(0), gconfids.get(cur.getInt(0)), cur.getInt(1), cur.getInt(2), cur.getInt(3) });
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -360,7 +362,7 @@ public class Scheduler {
     				 int newpos = name.indexOf("::", pos + 1);
     				 String subname = name.substring(0, name.indexOf("::", newpos));
     				 if (!subset.containsKey(subname)) {
-    					 subset.put(subname, new int[] { 0, 0, 0, 0});
+    					 subset.put(subname, new int[] { 0, 0, 0, 0, 0});
     				 }
     				 pos = newpos;
     			 }    			 
@@ -381,9 +383,9 @@ public class Scheduler {
    		if (children.size() != 0) {
    	   		for (Map.Entry<String, int[]> c : _groupChildren(children).entrySet()) {
    	   			if (c.getKey().split("::").length == subset.firstKey().split("::").length) {
-   	   	   			subset.get(subset.firstKey())[1] += c.getValue()[1];
    	   	   			subset.get(subset.firstKey())[2] += c.getValue()[2];
-   	   	   			subset.get(subset.firstKey())[3] += c.getValue()[3];   	   				
+   	   	   			subset.get(subset.firstKey())[3] += c.getValue()[3];
+   	   	   			subset.get(subset.firstKey())[4] += c.getValue()[4];   	   				
    	   			}
       		}   			
    		}

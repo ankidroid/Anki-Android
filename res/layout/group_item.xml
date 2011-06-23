@@ -26,12 +26,13 @@
 		android:layout_width="wrap_content"
 		android:layout_centerVertical="true"
 		android:text=""
+		android:focusable="false"
 		android:layout_height="wrap_content"/>
 	<TextView
 		android:id="@+id/group_item_name" 
 		android:layout_toRightOf="@+id/group_item_check"
 		android:layout_height="wrap_content" 
-		android:layout_width="fill_parent"
+		android:layout_width="wrap_content"
 		android:layout_centerVertical="true"
 		android:paddingLeft="8dip"
 		android:textColor="#ffffff"/>
@@ -40,12 +41,8 @@
 		android:layout_toRightOf="@+id/group_item_name"
 		android:layout_height="wrap_content" 
 		android:layout_width="fill_parent"
-		android:gravity="center_horizontal"
-		android:text="Conf"
 		android:layout_centerVertical="true"
 		android:paddingLeft="8dip"
-		android:paddingRight="8dip"
-		android:visibility="invisible"
 		android:textColor="#ffffff"/>
 	<TextView 
 		android:id="@+id/group_item_all"

@@ -75,6 +75,7 @@ public class Deck {
     private int mRepsToday = 0;
 
     private TreeMap<Integer, Model> mModelCache;
+    private TreeMap<Integer, JSONObject> mGroupConfCache;
 
     private String mMediaPrefix;
 
@@ -182,8 +183,9 @@ public class Deck {
         	// TODO
         }
 
-        // Initialize modelCache
+        // Initialize Caches
         deck.mModelCache = new TreeMap<Integer, Model>();
+        deck. mGroupConfCache = new TreeMap<Integer, JSONObject>();
 
         // TODO: undo - load and clear
         deck.mSessionStartReps = 0;
@@ -409,6 +411,7 @@ public class Deck {
      */
     public void reset() {
     	mModelCache.clear();
+    	mGroupConfCache.clear();
     	mSched.reset();
     }
 
@@ -934,22 +937,31 @@ public class Deck {
 
 
     public JSONObject groupConf(int gcid) {
-    	Cursor cur = null;
-    	try {
-            cur = getDB().getDatabase().rawQuery("SELECT conf FROM gconf WHERE id = " + gcid, null);
-            if (cur.moveToFirst()) {
-            	return new JSONObject(cur.getString(0));
+    	if (!mGroupConfCache.containsKey(gcid)) {
+        	Cursor cur = null;
+        	try {
+                cur = getDB().getDatabase().rawQuery("SELECT conf FROM gconf WHERE id = " + gcid, null);
+                if (cur.moveToFirst()) {
+                	mGroupConfCache.put(gcid, new JSONObject(cur.getString(0)));
+                }
+            } catch (JSONException e) {
+    			throw new RuntimeException(e);
+    		} finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
             }
-        } catch (JSONException e) {
-			throw new RuntimeException(e);
-		} finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-		return null;
+    	}
+    	return mGroupConfCache.get(gcid);
     }
 
+
+    /**
+     * LIBANKI: this differs from libanki
+     */
+    public void setGroupConf(String groupName, int confId) {
+    	getDB().getDatabase().execSQL("UPDATE groups SET gcid = " + confId + " WHERE name = \"" + groupName + "\"");
+    }
 
     /**
      * Tag-based selective study

@@ -17,20 +17,31 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.ichi2.libanki.Deck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -55,6 +66,10 @@ public class GroupSelector extends Activity {
 	private static final int STATUS_OPENED = 2;
 	private static final int STATUS_CHECKED = 3;
 
+	private static final int CONTEXT_MENU_SELECT_CONF = 0;
+
+	private AlertDialog mConfDialog;
+
     /**
      * Swipe Detection
      */
@@ -69,6 +84,11 @@ public class GroupSelector extends Activity {
 
 	ArrayList<HashMap<String, String>> mGroups;
 	ArrayList<HashMap<String, String>> mAllGroups;
+	HashMap<String, String> mCurrentSelectedGroup;
+
+	String[] mConfNames;
+	int[] mConfIds;
+	HashMap<Integer, String> mConfs;
 
 	/** for storing extra-information: 0: is visible; 1: has children; 2: is opened; 3: is checked **/
 	HashMap<String, Boolean[]> mGroupStatus;
@@ -100,7 +120,12 @@ public class GroupSelector extends Activity {
                 return false;
             }
         });
+        mGroupListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            }
+        });
         mGroupListView.setAdapter(mGroupsAdapter);
 
         registerForContextMenu(mGroupListView);
@@ -115,6 +140,7 @@ public class GroupSelector extends Activity {
             }
         });
 
+        prepareDialogs();
         getGroups();
     }
 
@@ -130,6 +156,35 @@ public class GroupSelector extends Activity {
     }
 
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        @SuppressWarnings("unused")
+        MenuItem item;
+        item = menu.add(Menu.NONE, CONTEXT_MENU_SELECT_CONF, Menu.NONE, "select configuration");
+        int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
+        if (mGroups.get(position).get("conf") == null) {
+        	item.setEnabled(false);
+        }
+        String[] name = mGroups.get(position).get("fullname").split("::");
+        menu.setHeaderTitle(name[name.length-1]);
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        mCurrentSelectedGroup = mGroups.get(info.position);
+        switch (item.getItemId()) {
+            case CONTEXT_MENU_SELECT_CONF:
+            	mConfDialog.show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mSwipeEnabled = preferences.getBoolean("swipe", false);
@@ -137,8 +192,45 @@ public class GroupSelector extends Activity {
     }
 
 
-    private void closeGroupSelector() {
+    private void prepareDialogs() {
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	
+        builder.setTitle("select conf");
+        builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+        TreeMap<String, Integer> groupconfs = mDeck.groupConfs();
+        int len = groupconfs.size();
+        mConfNames = new String[len];
+        mConfIds = new int[len];
+        mConfs = new HashMap<Integer, String>();
+        int i = 0;
+        for (Map.Entry<String, Integer> g : groupconfs.entrySet()) {
+        	mConfNames[i] = g.getKey();
+        	mConfIds[i] = g.getValue();
+        	mConfs.put(g.getValue(), g.getKey());
+        	i++;
+        }
+        builder.setSingleChoiceItems(mConfNames, 0, new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {            	
+            	// save to db
+            	mDeck.setGroupConf(mCurrentSelectedGroup.get("fullname"), mConfIds[which]);
+            	mCurrentSelectedGroup.put("gcid", Integer.toString(mConfIds[which]));
+            	mCurrentSelectedGroup.put("conf", "(" + mConfs.get(mConfIds[which]) + ")");
+            	int i = 0;
+            	while (!mAllGroups.get(i).get("fullname").equals(mCurrentSelectedGroup.get("fullname"))) {
+            		i++;
+            	}
+            	mAllGroups.get(i).put("gcid", Integer.toString(mConfIds[which]));
+            	mAllGroups.get(i).put("conf", "(" + mConfs.get(mConfIds[which]) + ")");
+            	mGroupsAdapter.notifyDataSetChanged();
+            	dialog.dismiss();
+            }
+        });
+        mConfDialog = builder.create();
+    }
 
+
+    private void closeGroupSelector() {
         // save selected groups
         JSONArray ja = new JSONArray();           
         for (int i = 0; i < mAllGroups.size(); i++) {
@@ -177,11 +269,15 @@ public class GroupSelector extends Activity {
     		sb.append("\u25bd ").append(name[name.length - 1]);
     		map.put("name", sb.toString());
     		map.put("fullname", g.getKey());
-    		map.put("conf", "nix");
-    		map.put("all", Integer.toString(g.getValue()[1]));
-    		map.put("due", Integer.toString(g.getValue()[2]));
-    		map.put("new", Integer.toString(g.getValue()[3]));
+    		map.put("all", Integer.toString(g.getValue()[2]));
+    		map.put("due", Integer.toString(g.getValue()[3]));
+    		map.put("new", Integer.toString(g.getValue()[4]));
     		map.put("gid", Integer.toString(g.getValue()[0]));
+    		int gcid = g.getValue()[1];
+    		map.put("gcid", Integer.toString(gcid));
+    		if (gcid != 0) {
+        		map.put("conf", "(" + mConfs.get(gcid) + ")");    			
+    		}
         	mGroups.add(map);
     	}
 
@@ -265,6 +361,7 @@ public class GroupSelector extends Activity {
                 String[] from, int[] to) {
             super(context, data, resource, from, to);
         }
+
 
         public View getView(final int position, View convertView, ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
