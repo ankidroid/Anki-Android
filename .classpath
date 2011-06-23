@@ -3,10 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="lib/achartengine-0.7.0.r180.jar"/>
 	<classpathentry kind="lib" path="libs/zc-strings-1.4.3.jar"/>
 	<classpathentry kind="lib" path="libs/ZControllerLib-android-1.4.3.jar"/>
 	<classpathentry kind="lib" path="libs/ZControllerLib-android-ui-1.4.3.jar"/>
 	<classpathentry kind="lib" path="libs/ZControllerLib-common-1.4.3.jar"/>
+	<classpathentry kind="lib" path="/home/andreas/Dropbox/AnkiDroid/Anki-Android/libs/achartengine-0.7.0.r180.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

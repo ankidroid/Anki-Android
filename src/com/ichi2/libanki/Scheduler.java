@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -302,7 +303,7 @@ public class Scheduler {
     /**
      * Returns [groupname, cards, due, new]
      */
-    private TreeMap<String, int[]> groupCounts() {
+    public TreeMap<String, int[]> groupCounts() {
         Cursor cur = null;
         TreeMap<String, int[]> counts = new TreeMap<String, int[]>();
         TreeMap<Integer, String> gids = new TreeMap<Integer, String>();
@@ -315,7 +316,7 @@ public class Scheduler {
                     "SELECT gid, count(), " + "sum(CASE WHEN queue = 2 AND due <= " + mToday + " THEN 1 ELSE 0 END), "
                             + "sum(CASE WHEN queue = 0 THEN 1 ELSE 0 END) FROM cards GROUP BY gid", null);
             while (cur.moveToNext()) {
-                counts.put(gids.get(cur.getInt(0)), new int[] { cur.getInt(1), cur.getInt(2), cur.getInt(3) });
+                counts.put(gids.get(cur.getInt(0)), new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2), cur.getInt(3) });
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -326,36 +327,67 @@ public class Scheduler {
     }
 
 
-    // private TreeMap<String, int[]> groupCountTree() {
-    // //TODO return _groupChildren(groupCounts());
-    // }
-    //
-    //
-    // /**
-    // * Like the count tree without the counts. Faster.
-    // */
-    // private TreeMap<String, int[]> groupTree() {
-    // // TODO
-    // // Cursor cur = null;
-    // // TreeMap<String, int[]> counts = new TreeMap<String, int[]>();
-    // // try {
-    // // cur = mDb.getDatabase().rawQuery("SELECT id, name FROM groups ORDER BY name", null);
-    // // while (cur.moveToNext()) {
-    // // counts.put(cur.getString(1), new int[] {0, 0, 0});
-    // // }
-    // // } finally {
-    // // if (cur != null && !cur.isClosed()) {
-    // // cur.close();
-    // // }
-    // // }
-    // }
-
+     public TreeMap<String, int[]> groupCountTree() {
+     	return _groupChildren(groupCounts(), true);
+     }
+    
+    
     /**
      * Return counts for selected groups, without building queue.
      */
-    // private TreeMap<String, int[]> _groupChildren() {
-    // // TODO
-    // }
+     private TreeMap<String, int[]> _groupChildren(TreeMap<String, int[]> grps) {
+    	 return _groupChildren (grps, false);
+     }
+     private TreeMap<String, int[]> _groupChildren(TreeMap<String, int[]> grps, boolean addMissing) {
+    	 TreeMap<String, int[]> tree = new TreeMap<String, int[]>();
+    	 // group and recurse
+    	 TreeMap<String, int[]> subset = new TreeMap<String, int[]>();
+    	 for (Map.Entry<String, int[]> g : grps.entrySet()) {
+    		 String name = g.getKey();
+    		 if (subset.containsKey(name.split("::", 2)[0])) {
+    			 subset.put(g.getKey(), g.getValue());
+    		 } else {
+    			 if (!subset.isEmpty()) {
+    				 tree.putAll(addCounts(subset));
+    			 }
+    			 subset = new TreeMap<String, int[]>();
+    			 subset.put(g.getKey(), g.getValue());
+    		 }
+    		 if (addMissing) {
+        		 int pos = 0;
+    			 for (int i = 1; i < name.split("::").length; i++) {
+    				 int newpos = name.indexOf("::", pos + 1);
+    				 String subname = name.substring(0, name.indexOf("::", newpos));
+    				 if (!subset.containsKey(subname)) {
+    					 subset.put(subname, new int[] { 0, 0, 0, 0});
+    				 }
+    				 pos = newpos;
+    			 }    			 
+    		 }
+    	 }
+		 if (!subset.isEmpty()) {
+			 tree.putAll(addCounts(subset));    				 
+		 }
+    	 return tree;
+     }
+   	 private TreeMap<String, int[]> addCounts(TreeMap<String, int[]> subset) {
+   		TreeMap<String, int[]> children = new TreeMap<String, int[]>();
+   		for (Map.Entry<String, int[]> s : subset.entrySet()) {
+			 if (s.getKey() != subset.firstKey()) {
+				 children.put(s.getKey().split("::", 2)[1], s.getValue());
+			 }
+   		}
+   		if (children.size() != 0) {
+   	   		for (Map.Entry<String, int[]> c : _groupChildren(children).entrySet()) {
+   	   			if (c.getKey().split("::").length == subset.firstKey().split("::").length) {
+   	   	   			subset.get(subset.firstKey())[1] += c.getValue()[1];
+   	   	   			subset.get(subset.firstKey())[2] += c.getValue()[2];
+   	   	   			subset.get(subset.firstKey())[3] += c.getValue()[3];   	   				
+   	   			}
+      		}   			
+   		}
+   		return subset;
+	 }
 
     /**
      * Getting the next card

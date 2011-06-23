@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<ListView android:id="@+id/group_list"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:fastScrollEnabled="true"/>
+
+<!-- 	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		
+		<Button	android:id="@+id/sync_all_button"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:layout_marginTop="3dp"
+			android:layout_marginBottom="3dp"
+			android:enabled="true"
+			android:text="@string/sync_all"/>
+		
+		<Button	android:id="@+id/statistics_all_button"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:layout_marginTop="3dp"
+			android:layout_marginBottom="3dp"
+			android:enabled="true"
+			android:text="@string/statistics"/>
+	</LinearLayout>
+ -->	
+</LinearLayout>

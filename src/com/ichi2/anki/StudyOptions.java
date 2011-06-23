@@ -109,6 +109,7 @@ public class StudyOptions extends Activity {
     private static final int ADD_FACT = 6;
     private static final int BROWSE_CARDS = 7;
     private static final int STATISTICS = 8;
+    private static final int GROUP_SELECTOR = 9;
 
     /**
 * Constants for selecting which content view to display
@@ -334,8 +335,9 @@ public class StudyOptions extends Activity {
                     }
                     return;
                 case R.id.studyoptions_limit:
-                    mToggleLimit.setChecked(!mToggleLimit.isChecked());
-                    showLimitSessionDialog();
+                	openGroupSelection();
+//                    mToggleLimit.setChecked(!mToggleLimit.isChecked());
+//                    showLimitSessionDialog();
                     return;
                 case R.id.studyoptions_congrats_learnmore:
                 	startLearnMore();
@@ -1603,6 +1605,16 @@ public class StudyOptions extends Activity {
     }
 
 
+    private void openGroupSelection() {
+        startActivityForResult(
+                new Intent(StudyOptions.this, GroupSelector.class),
+                GROUP_SELECTOR);
+    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+   			MyAnimation.slide(StudyOptions.this, MyAnimation.UP);
+    	}
+    }
+
+
     public void openPersonalDeckPicker() {
         if (AnkiDroidApp.isUserLoggedIn()) {
             if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
@@ -2162,6 +2174,9 @@ public class StudyOptions extends Activity {
                         // down
                     	mStatisticType = 0;
                     	openStatistics(0);
+                    } else if (e1.getY() - e2.getY() > sSwipeMinDistance && Math.abs(velocityY) > sSwipeThresholdVelocity && Math.abs(e1.getX() - e2.getX()) < sSwipeMaxOffPath) {
+                    	// up
+                    	openGroupSelection();
                     }
 
                 }

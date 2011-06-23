@@ -44,6 +44,9 @@
 		<activity android:name="CardBrowser" 
 			android:label="Card Browser"
 			android:configChanges="keyboardHidden|orientation|locale"/>
+		<activity android:name="GroupSelector" 
+			android:label="Select groups"
+			android:configChanges="keyboardHidden|orientation|locale"/>			
 		<activity android:name="PersonalDeckPicker" 
 			android:label="@string/personaldeckpicker_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
