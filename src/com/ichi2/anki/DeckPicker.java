@@ -164,8 +164,6 @@ public class DeckPicker extends Activity implements Runnable {
 
 	int mStatisticType;
 
-	boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for active cards
-
 	/**
      * Swipe Detection
      */    
@@ -1027,8 +1025,7 @@ public class DeckPicker extends Activity implements Runnable {
 						int dueCards = counts[Scheduler.COUNTS_REV] + counts[Scheduler.COUNTS_LRN];
 						int totalCards = deck.cardCount();
 						int newCards = counts[Scheduler.COUNTS_NEW];
-						int totalNewCards = deck.getSched().totalNewCardCount();
-						int matureCards = deck.getSched().matureCardCount();
+						int totalNewCards = deck.totalNewCardCount(false);
 						int eta = deck.getSched().eta() / 60;
 
 						String upgradeNotes = "";//Deck.upgradeNotesToMessages(deck, getResources());
@@ -1042,17 +1039,9 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("totalNew", totalNewCards);
 						data.putString("notes", upgradeNotes);
 
-						int rateOfCompletionMat;
-						int rateOfCompletionAll;
-						if (totalCards != 0) {
-						    rateOfCompletionMat = (matureCards * 100) / totalCards;
-		                    rateOfCompletionAll = ((totalCards - totalNewCards) * 100) / totalCards; 
-						} else {
-						    rateOfCompletionMat = 0;
-						    rateOfCompletionAll = 0;
-						}
-						data.putInt("rateOfCompletionMat", rateOfCompletionMat);
-                        data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
+						double[] completion = deck.completionRates(false);
+						data.putInt("rateOfCompletionMat", (int) (completion[0] * 100));
+                        data.putInt("rateOfCompletionAll", (int) (Math.max(0, completion[1] - completion[0]) * 100));
                         if (i == mFileList.length) {
                             data.putBoolean("lastDeck", true);
                         } else {

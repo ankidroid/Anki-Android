@@ -81,7 +81,7 @@ public class Scheduler {
     private int mReportLimit;
     private int mReps;
     private int mToday;
-    private int mDayCutoff;
+    public int mDayCutoff;
 
     private int mNewCount;
     private int mLrnCount;
@@ -1296,22 +1296,6 @@ public class Scheduler {
      */
     public int repsToday(int fid) {
         return (int) mDb.queryScalar("SELECT count() FROM revlog WHERE time > " + (mDayCutoff - 86400));
-    }
-
-
-    /**
-     * Number of mature cards.
-     */
-    public int matureCardCount() {
-        return (int) mDb.queryScalar("SELECT count() FROM cards WHERE ivl >= " + 21);
-    }
-
-
-    /**
-     * Number of mature cards.
-     */
-    public int totalNewCardCount() {
-        return (int) mDb.queryScalar("SELECT count() FROM cards WHERE queue = 0");
     }
 
 

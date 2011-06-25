@@ -148,8 +148,8 @@ public class GroupSelector extends Activity {
         mSessionTimeLimit = (EditText) findViewById(R.id.session_minutes);
         mSessionRepLimit = (EditText) findViewById(R.id.session_questions);
 
-        mSessionTimeLimit.setText(mDeck.getStringVar("sessionTimeLimit"));
-        mSessionRepLimit.setText(mDeck.getStringVar("sessionRepLimit"));
+        mSessionTimeLimit.setText(mDeck.getStringVar("sessionTimeLimit", "0"));
+        mSessionRepLimit.setText(mDeck.getStringVar("sessionRepLimit", "0"));
 
         prepareDialogs();
         getGroups();

@@ -20,7 +20,6 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -39,17 +38,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -63,17 +57,13 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Scheduler;
 import com.ichi2.libanki.Utils;
 import com.tomgibara.android.veecheck.util.PrefSettings;
-import com.zeemote.zc.Controller;
-import com.zeemote.zc.ui.android.ControllerAndroidUi;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 
 import org.json.JSONException;
@@ -177,40 +167,7 @@ public class StudyOptions extends Activity {
 	private AlertDialog mStatisticTypeAlert;
 	private AlertDialog mStatisticPeriodAlert;
 
-	/*
-	* Limit session dialog
-	*/
-    private AlertDialog mLimitSessionDialog;
-    private AlertDialog mTagsDialog;
-    private EditText mEditSessionTime;
-    private EditText mEditSessionQuestions;
-    private CheckBox mSessionLimitCheckBox;
-    private CheckBox mLimitTagsCheckBox;
-    private CheckBox mLimitTagNewActiveCheckBox;
-    private CheckBox mLimitTagNewInactiveCheckBox;
-    private CheckBox mLimitTagRevActiveCheckBox;
-    private CheckBox mLimitTagRevInactiveCheckBox;
-    private TextView mLimitSessionTv1;
-    private TextView mLimitSessionTv2;
-    private TextView mLimitTagTv1;
-    private TextView mLimitTagTv2;
-    private TextView mLimitTagTv3;
-    private TextView mLimitTagTv4;
-    private TextView mLimitTagTv5;
-    private TextView mLimitTagTv6;
-    private String mLimitNewActive;
-    private String mLimitNewInactive;
-    private String mLimitRevActive;
-    private String mLimitRevInactive;
-    private HashSet<String> mSelectedTags;
-    private String[] allTags;
-    private int mSelectedLimitTagText;
-    private static final int LIMIT_NEW_ACTIVE = 0;
-    private static final int LIMIT_NEW_INACTIVE = 1;
-    private static final int LIMIT_REV_ACTIVE = 2;
-    private static final int LIMIT_REV_INACTIVE = 3;
-
-    /*
+    /**
 * Cram related
 */
     private AlertDialog mCramTagsDialog;
@@ -467,14 +424,9 @@ public class StudyOptions extends Activity {
         registerExternalStorageListener();
 
         activeCramTags = new HashSet<String>();
-        mSelectedTags = new HashSet<String>();
 
         initAllContentViews();
         initAllDialogs();
-
-//        if ((AnkiDroidApp.deck() != null) && (AnkiDroidApp.deck().hasFinishScheduler())) {
-//            AnkiDroidApp.deck().finishScheduler();
-//        }
 
         Intent intent = getIntent();
         if (Intent.ACTION_VIEW.equalsIgnoreCase(intent.getAction())
@@ -1185,7 +1137,6 @@ public class StudyOptions extends Activity {
         Deck deck = AnkiDroidApp.deck();
         Resources res = getResources();
         if (deck != null) {
-            // TODO: updateActives() from anqiqt/ui/main.py
         	int[] counts = deck.getSched().counts();
         	int dueCount = counts[Scheduler.COUNTS_REV] + counts[Scheduler.COUNTS_LRN];
             int cardsCount = deck.cardCount();
@@ -1200,34 +1151,33 @@ public class StudyOptions extends Activity {
             	etastr = Integer.toString(eta / 60);
             }
             mTextETA.setText(etastr);
-            int totalNewCount = deck.getSched().totalNewCardCount();
-            mTextNewTotal.setText(String.valueOf(totalNewCount));
+
+            boolean limited = deck.isLimitedByGroup();
+            StringBuilder sb = new StringBuilder();
+            if (limited) {
+            	sb.append(String.valueOf(deck.totalNewCardCount(true))).append("/");
+            }
+            sb.append(String.valueOf(deck.totalNewCardCount(false)));
+            mTextNewTotal.setText(sb.toString());
 
             // Progress bars are not shown on small screens
-//            if (mDailyBar != null) {
-//                double totalCardsCount = cardsCount;
-//                mProgressTodayYes = deck.getProgress(false);
-//                mProgressMatureYes = deck.getProgress(true);
-//                double mature = deck.getMatureCardCount(false);
-//                mProgressMature = mature / totalCardsCount;
-//                double allRev = deck.getTotalRevFailedCount(false);
-//                mProgressAll = allRev / totalCardsCount;
-//                if (deck.isLimitedByTag()) {
-//                	if (mToggleCram.isChecked()) {
-//                		mGlobalLimitFrame.setVisibility(View.GONE);
-//                	} else {
-//                        mGlobalLimitFrame.setVisibility(View.VISIBLE);
-//                        mature = deck.getMatureCardCount(true);
-//                        allRev = deck.getTotalRevFailedCount(true);
-//                        totalCardsCount = allRev + deck.getNewCount(true);
-//                        mProgressMatureLimit = mature / totalCardsCount;
-//                        mProgressAllLimit = allRev / totalCardsCount;
-//                	}
-//                } else {
-//                    mGlobalLimitFrame.setVisibility(View.GONE);
-//                }
-//                updateStatisticBars();
-//            }
+            if (mDailyBar != null) {
+            	double[] yesRates = deck.yesRates();
+                mProgressTodayYes = yesRates[0];
+                mProgressMatureYes = yesRates[1];
+                double[] completion = deck.completionRates(false);
+                mProgressMature = completion[0];
+                mProgressAll = completion[1];
+                if (limited) {
+                    mGlobalLimitFrame.setVisibility(View.VISIBLE);
+                    double[] completionLimit = deck.completionRates(true);
+                    mProgressMatureLimit = completionLimit[0];
+                    mProgressAllLimit = completionLimit[1];
+                } else {
+                    mGlobalLimitFrame.setVisibility(View.GONE);
+                }
+                updateStatisticBars();
+            }
         }
     }
 
@@ -1581,6 +1531,7 @@ public class StudyOptions extends Activity {
         	} else {
             	mToggleLimit.setChecked(false);        		
         	}
+    		resetAndUpdateValuesFromDeck();
         }
     }
 
@@ -1789,7 +1740,6 @@ public class StudyOptions extends Activity {
             // AnkidroidApp.deck().closeDeck();
             // AnkidroidApp.setDeck(null);
             // }
-            allTags = null;
 
             switch (result.getInt()) {
                 case DeckTask.DECK_LOADED:
@@ -1803,12 +1753,13 @@ public class StudyOptions extends Activity {
                     } else {
                         startActivityForResult(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
                     }
+                    int lim;
                     try {
-            			mToggleLimit.setChecked(!(AnkiDroidApp.deck().getQconf().getJSONArray("groups").length() + 
-            					AnkiDroidApp.deck().getConf().getInt("sessionTimeLimit") + AnkiDroidApp.deck().getConf().getInt("sessionRepLimit") == 0));
+                    	lim = AnkiDroidApp.deck().getConf().getInt("sessionTimeLimit") + AnkiDroidApp.deck().getConf().getInt("sessionRepLimit");
             		} catch (JSONException e) {
-            			throw new RuntimeException(e);
-            		}        	
+            			lim = 0;
+            		}
+            		mToggleLimit.setChecked(AnkiDroidApp.deck().isLimitedByGroup() || lim > 0);
                     break;
 
                 case DeckTask.DECK_NOT_LOADED:

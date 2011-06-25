@@ -589,7 +589,14 @@ public class Deck {
      */
 
     public int cardCount() {
-    	return (int) getDB().queryScalar("SELECT count() FROM cards");
+    	return cardCount(false);
+    }
+    public int cardCount(boolean limit) {
+    	String lim = "";
+    	if (limit) {
+    		lim = " WHERE id != 0" + getSched()._groupLimit();
+    	}
+    	return (int) getDB().queryScalar("SELECT count() FROM cards" + lim);
     }
 
 
@@ -957,12 +964,25 @@ public class Deck {
 
 
     /**
-     * LIBANKI: this differs from libanki
+     * LIBANKI: not in libanki
      */
     public void setGroupConf(String groupName, int confId) {
     	getDB().getDatabase().execSQL("UPDATE groups SET gcid = " + confId + " WHERE name = \"" + groupName + "\"");
     }
 
+    
+    /**
+     * LIBANKI: not in libanki
+     */
+    public boolean isLimitedByGroup() {
+    	try {
+			return getQconf().getJSONArray("groups").length() > 0;
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+    }
+    
+    
     /**
      * Tag-based selective study
      * ***********************************************************************************************
@@ -1143,7 +1163,14 @@ public class Deck {
         return size;
     }
 
-    
+
+    /**
+     * Getter
+     * LIBANKI: not in libanki
+     * ***********************************************************************************************
+     */
+
+
     public JSONObject getQconf() {
     	return mQconf;
     }
@@ -1163,6 +1190,87 @@ public class Deck {
     	return mCrt;
     }
     
+    
+    /**
+     * Statistic Bars
+     * LIBANKI: not in libanki
+     * ***********************************************************************************************
+     */
+
+    /**
+     * Number of mature cards.
+     */
+    private int matureCardCount(boolean limit) {
+    	String lim = "";
+    	if (limit) {
+    		lim = getSched()._groupLimit();
+    	}
+        return (int) getDB().queryScalar("SELECT count() FROM cards WHERE queue = 2 AND ivl >= " + 21 + lim);
+    }
+
+
+    /**
+     * Number of mature cards.
+     */
+    public int totalNewCardCount(boolean limit) {
+    	String lim = "";
+    	if (limit) {
+    		lim = getSched()._groupLimit();
+    	}
+        return (int) getDB().queryScalar("SELECT count() FROM cards WHERE queue = 0" + lim);
+    }
+
+
+    /**
+     * Number of suspended cards.
+     */
+    private int totalSuspendedCardCount(boolean limit) {
+    	String lim = "";
+    	if (limit) {
+    		lim = getSched()._groupLimit();
+    	}
+        return (int) getDB().queryScalar("SELECT count() FROM cards WHERE queue = -1" + lim);
+    }
+
+
+    /**
+     * Completion rates for all and mature cards
+     * @return matureRate, allRate
+     */
+    public double[] completionRates(boolean limit) {
+    	double total = cardCount(limit) - totalSuspendedCardCount(limit);
+    	if (total == 0.0) {
+    		return new double[] {0, 0};
+    	}
+    	double matureRate = (double)matureCardCount(limit) / total;
+    	double allRate = (total - totalNewCardCount(limit)) / total;
+    	return new double[] { matureRate, allRate};
+    }
+
+
+    /**
+     * Yes counts
+     * @return todayAnswers, todayNoAnswers, matureAnswers, matureNoAnswers
+     */
+    public int[] yesCounts() {
+    	int dayStart = (getSched().mDayCutoff - 86400) * 10000;
+    	int todayAnswers = (int) getDB().queryScalar("SELECT count() FROM revlog WHERE time >= " + dayStart);
+    	int todayNoAnswers = (int) getDB().queryScalar("SELECT count() FROM revlog WHERE time >= " + dayStart + " AND ease = 1");
+    	int matureAnswers = (int) getDB().queryScalar("SELECT count() FROM revlog WHERE lastivl >= 21");
+    	int matureNoAnswers = (int) getDB().queryScalar("SELECT count() FROM revlog WHERE lastivl >= 21 AND ease = 1");
+    	return new int[] { todayAnswers, todayNoAnswers, matureAnswers, matureNoAnswers };
+    }
+
+
+    /**
+     * Yes rates for today's and mature cards
+     * @return todayRate, matureRate
+     */
+    public double[] yesRates() {
+    	int[] counts = yesCounts();
+    	return new double[] { 1 - (double)counts[1]/counts[0], 1 - (double)counts[3]/counts[2] };
+    }
+
 //    
 ///********************************************************************************
 //********************************************************************************
@@ -1491,10 +1599,17 @@ public class Deck {
 //
 //
     public int getIntVar(String name) {
+    	return getIntVar(name, 0);
+    }
+    public int getIntVar(String name, int fallback) {
     	try {
 			return mConf.getInt(name);
 		} catch (JSONException e) {
-			throw new RuntimeException(e);
+			if (fallback != 0) {
+				return 0;
+			} else {
+				throw new RuntimeException(e);				
+			}
 		}
     }
 
@@ -1512,10 +1627,17 @@ public class Deck {
 
 
     public String getStringVar(String name) {
+    	return getStringVar(name, "");
+    }
+    public String getStringVar(String name, String fallback) {
     	try {
 			return mConf.getString(name);
 		} catch (JSONException e) {
-			throw new RuntimeException(e);
+			if (fallback != null) {
+				return "";
+			} else {
+				throw new RuntimeException(e);				
+			}
 		}
     }
 

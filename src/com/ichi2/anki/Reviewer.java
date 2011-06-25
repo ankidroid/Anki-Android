@@ -314,6 +314,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private int mStatisticBarsMax;
     private int mStatisticBarsHeight;
+    private int mStatisticsTodaysCount;
+    private int mStatisticsTodaysNoCount;
+    private int mStatisticsMatureCount;
+    private int mStatisticsMatureNoCount;
+    private boolean mReloadStatistics = true;
 
     private boolean mClosing = false;
 
@@ -1121,11 +1126,13 @@ public class Reviewer extends Activity implements IButtonListener{
                 return true;
 
             case MENU_UNDO:
+            	mReloadStatistics = true;
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));
                 return true;
 
             case MENU_REDO:
+            	mReloadStatistics = true;
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));
                 return true;
@@ -1323,6 +1330,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mIsSelecting = false;
         Deck deck = AnkiDroidApp.deck();
         mChosenAnswer.setText("\u2022");
+        boolean mature = mCurrentCard.getIvl() >= 21;
         switch (ease) {
             case EASE_FAILED:
                 mChosenAnswer.setText("\u2022");
@@ -1330,6 +1338,10 @@ public class Reviewer extends Activity implements IButtonListener{
                 int[] counts = deck.getSched().counts();
                 if (counts[0] + counts[1] + counts[2] == 1) {
                     mIsLastCard = true;
+                }
+                mStatisticsTodaysNoCount++;
+                if (mature) {
+                    mStatisticsMatureNoCount++;
                 }
                 break;
             case EASE_HARD:
@@ -1344,6 +1356,10 @@ public class Reviewer extends Activity implements IButtonListener{
                 mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
                 mChosenAnswer.setTextColor(mNext4.getTextColors());
                 break;
+        }
+        mStatisticsTodaysCount++;
+        if (mature) {
+            mStatisticsMatureCount++;
         }
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
         mTimerHandler.postDelayed(removeChosenAnswerText, mShowChosenAnswerLength);
@@ -1744,16 +1760,23 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void updateStatisticBars() {
+    	if (mReloadStatistics) {
+            int[] counts = AnkiDroidApp.deck().yesCounts();
+            mStatisticsTodaysCount = counts[0];
+            mStatisticsTodaysNoCount = counts[1];
+            mStatisticsMatureCount = counts[2];
+            mStatisticsMatureNoCount = counts[3];
+            mReloadStatistics = false;
+    	}
         if (mStatisticBarsMax == 0) {
             View view = findViewById(R.id.progress_bars_back1);
             mStatisticBarsMax = view.getWidth();
             mStatisticBarsHeight = view.getHeight();
         }
-        Deck deck = AnkiDroidApp.deck();
-        // Utils.updateProgressBars(this, mDailyBar, deck.getProgress(false),
-        // mStatisticBarsMax, mStatisticBarsHeight, true);
-        // Utils.updateProgressBars(this, mGlobalBar, deck.getProgress(true),
-        // mStatisticBarsMax, mStatisticBarsHeight, true);
+        Utils.updateProgressBars(this, mDailyBar, 1 - (double)mStatisticsTodaysNoCount/mStatisticsTodaysCount,
+        		mStatisticBarsMax, mStatisticBarsHeight, true);
+        Utils.updateProgressBars(this, mGlobalBar, 1 - (double)mStatisticsMatureNoCount/mStatisticsMatureCount,
+        		mStatisticBarsMax, mStatisticBarsHeight, true);
     }
 
     private Handler mTimeoutHandler = new Handler();
