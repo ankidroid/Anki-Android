@@ -96,6 +96,8 @@ public class Feedback extends Activity {
     protected String mFeedbackUrl;
     protected String mErrorUrl;
 
+    private boolean mErrorsSent = false;
+
     @Override
     public void onBackPressed() {
         deleteFiles(true, false);
@@ -133,8 +135,10 @@ public class Feedback extends Activity {
             ProgressBar pbSpinner = (ProgressBar) findViewById(R.id.pbFeedbackSpinner);
     
             int numErrors = mErrorReports.size();
-            if (numErrors == 0) {
-                mLvErrorList.setVisibility(View.GONE);
+            if (numErrors == 0 || mErrorsSent) {
+            	if (!mErrorsSent) {
+                    mLvErrorList.setVisibility(View.GONE);
+            	}
                 btnKeepLatest.setVisibility(View.GONE);
                 btnClearAll.setVisibility(View.GONE);
                 btnSend.setText(res.getString(R.string.feedback_send_feedback));
@@ -354,7 +358,7 @@ public class Feedback extends Activity {
         @Override
         public void onPostExecute(Payload data) {
             mPostingFeedback = false;
-            deleteFiles(true, false);
+            mErrorsSent = true;
             refreshInterface();
         }
 

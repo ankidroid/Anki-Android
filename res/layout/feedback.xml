@@ -33,7 +33,6 @@
 		<EditText android:id="@+id/etFeedbackText"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:paddingBottom="15dp"
 			android:gravity="top"
 			android:minLines="4"
 			android:hint="@string/feedback_default_text"/>
