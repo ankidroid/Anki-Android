@@ -82,11 +82,6 @@
             <property name="excludeScope" value="private"/>
             <property name="scope" value="public"/>
         </module>
-        <module name="GenericIllegalRegexp">
-            <metadata name="com.atlassw.tools.eclipse.checkstyle.comment" value="Line has trailing spaces."/>
-            <property name="format" value="\s+$"/>
-            <property name="message" value="Line has trailing spaces."/>
-        </module>
         <module name="LineLength">
             <property name="max" value="120"/>
         </module>
@@ -118,9 +113,13 @@
         </module>
         <module name="MultipleVariableDeclarations"/>
         <module name="VisibilityModifier"/>
-        <module name="TabCharacter"/>
     </module>
-    <module name="PackageHtml"/>
+    <module name="RegexpSingleline">
+        <property name="format" value="\s+$"/>
+        <property name="message" value="Line has trailing spaces."/>
+    </module>
+    <module name="FileTabCharacter"/>
+    <module name="JavadocPackage"/>
     <module name="NewlineAtEndOfFile">
         <property name="lineSeparator" value="lf"/>
     </module>
