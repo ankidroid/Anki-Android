@@ -1601,9 +1601,19 @@ public class Deck {
     public int getIntVar(String name) {
     	return getIntVar(name, 0);
     }
+    public int getIntVar(String name, boolean qconf) {
+    	return getIntVar(name, 0, qconf);
+    }
     public int getIntVar(String name, int fallback) {
+    	return getIntVar(name, fallback, false);
+    }
+    public int getIntVar(String name, int fallback, boolean qconf) {
     	try {
-			return mConf.getInt(name);
+    		if (qconf) {
+    			return mQconf.getInt(name);
+    		} else {
+    			return mConf.getInt(name);
+    		}
 		} catch (JSONException e) {
 			if (fallback != 0) {
 				return 0;

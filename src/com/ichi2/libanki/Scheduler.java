@@ -794,7 +794,7 @@ public class Scheduler {
         }
         mDb.getDatabase().execSQL(
                 "UPDATE cards SET " + "due = edue, queue = 2, mod = " + Utils.intNow()
-                        + "WHERE queue = 1 AND type = 2 " + extra);
+                        + " WHERE queue = 1 AND type = 2 " + extra);
     }
 
 

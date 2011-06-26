@@ -1008,13 +1008,13 @@ public class StudyOptions extends Activity {
     private void showMoreOptionsDialog() {
         // Update spinner selections from deck prior to showing the dialog.
         Deck deck = AnkiDroidApp.deck();
-        mSpinnerNewCardOrder.setSelection(deck.getIntVar("newOrder"));
-        mSpinnerNewCardSchedule.setSelection(deck.getIntVar("newSpread"));
-        mSpinnerRevCardOrder.setSelection(deck.getIntVar("revOrder"));
+        mSpinnerNewCardOrder.setSelection(deck.getIntVar("newOrder", true));
+        mSpinnerNewCardSchedule.setSelection(deck.getIntVar("newSpread", true));
+        mSpinnerRevCardOrder.setSelection(deck.getIntVar("revOrder", true));
         mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
-        mEditNewPerDay.setText(String.valueOf(deck.getIntVar("newPerDay")));
+        mEditNewPerDay.setText(String.valueOf(deck.getIntVar("newPerDay", true)));
 //        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());
-        mEditMaxFailCard.setText("asdf");//String.valueOf(deck.getIntVar("maxFailed")));
+//        mEditMaxFailCard.setText("asdf");//String.valueOf(deck.getIntVar("maxFailed")));
 
         mDialogMoreOptions.show();
     }
