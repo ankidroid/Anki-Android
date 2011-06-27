@@ -138,27 +138,27 @@
   <string-array name="deck_order_labels">
     <item>Με την τελευταία πρόσβαση</item>
     <item>Αλφαβητική</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>Με τον αριθμό δεόντων καρτών</item>
+    <item>Με τον συνολικό αριθμό καρτών</item>
+    <item>Με τον συνολικό αριθμό νέων καρτών</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Καμία ενέργεια</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
-    <item>Abort learning</item>
+    <item>Απάντησε κουμπί 1</item>
+    <item>Απάντησε κουμπί 2</item>
+    <item>Απάντησε κουμπί 3</item>
+    <item>Απάντησε κουμπί 4</item>
+    <item>Απάντησε την προτεινόμενη (πράσινη)</item>
+    <item>Απάντησε καλύτερα από την προτεινόμενη</item>
+    <item>Αναίρεση</item>
+    <item>Ξανακάνε</item>
+    <item>Επεξεργασία κάρτας</item>
+    <item>Σήμανση κάρτας</item>
+    <item>Αναζήτηση έκφρασης</item>
+    <item>Κρύψιμο κάρτας</item>
+    <item>Αναστολή κάρτας</item>
+    <item>Διαγραφή κάρτας</item>
+    <item>Καθαρισμός Πίνακα</item>
+    <item>Ματαίωση μάθησης</item>
   </string-array>
 </resources>
