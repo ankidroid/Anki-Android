@@ -473,7 +473,7 @@
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 karta</item>
-    <item quantity="other">%1$ d nowych kart</item>
+    <item quantity="other">%1$d nowych kart</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1 min.</item>
