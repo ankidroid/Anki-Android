@@ -181,7 +181,7 @@
   <string name="fix_hebrew_text">Επιβολή RTL για τα εβραϊκά</string>
   <string name="fix_hebrew_text_summ">Εναλλακτική λύση για περιορισμένη υποστήριξη για εβραϊκά από το Android. Δεν υποστηρίζει φωνήεντα.</string>
   <string name="default_font">Προεπιλεγμένη γραμματοσειρά</string>
-  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
+  <string name="default_font_summ">Επιτρέπει τη ρύθμιση της ερήμην γραμματοσειράς για την παρουσίαση των καρτών. Οι επιπλέον γραμματοσειρές θα πρέπει να εγκατασταθούν στην κάρτα SD σε ένα φάκελο που ονομάζεται \'fonts\' στο φάκελο Anki.</string>
   <string name="language">Γλώσσα</string>
   <string name="language_summ">Επιλέξτε τη γλώσσα που θα χρησιμοποιεί το AnkiDroid. Επιλεγμένη γλώσσα: XXX</string>
   <string name="language_system">Γλώσσα συστήματος</string>
@@ -195,7 +195,7 @@
   <string name="cardeditor_title">Επεξεργαστής Γεγονότος</string>
   <string name="factadder_title">Προσθήκη Κάρτας</string>
   <string name="factadder_saving_error">Σφάλμα κατά την αποθήκευση γεγονότος</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="saving_facts">Αποθήκευση γεγονότων</string>
   <string name="deckcreator_title">Δημιουργός Τράπουλας</string>
   <string name="model">Μοντέλο:</string>
   <string name="select_model">Μοντέλο</string>
@@ -277,7 +277,7 @@
   <string name="studyoptions_new_total">Νέες σύνολο:</string>
   <string name="studyoptions_eta">Εκτιμώμενη διάρκεια (λεπτά):</string>
   <string name="studyoptions_new_cards_per_day">Νέες κάρτες ανά μέρα</string>
-  <string name="studyoptions_max_fail_card">Max fail cards</string>
+  <string name="studyoptions_max_fail_card">Μέγιστες αποτυχημένες κάρτες</string>
   <string name="studyoptions_start">Έναρξη επανάληψης</string>
   <string name="studyoptions_more">Επιλογές Μελέτης</string>
   <string name="studyoptions_more_dialog_title">Περισσότερες επιλογές</string>
@@ -320,7 +320,7 @@
   <string name="studyoptions_congrats_cards">κάρτες</string>
   <string name="studyoptions_congrats_learnmore">Μάθετε περισσότερα</string>
   <string name="studyoptions_congrats_reviewearly">Πρόωρη επανάληψη</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_syncdeck">Συγχρονισμός τράπουλας</string>
   <string name="studyoptions_congrats_open_other_deck">Ανοίξτε άλλη τράπουλα</string>
   <string name="studyoptions_congrats_finish">Επιστροφή στην Οθόνη Μελέτης</string>
   <string name="studyoptions_feedback">Σχόλια</string>
@@ -404,7 +404,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Αναμένουσες Κάρτες</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d κάρτες AnkiDroid εις αναμονή</string>
   <string name="widget_no_cards_due">Δεν απομένουν επαναλήψεις</string>
-  <string name="widget_loading">Widget loading...</string>
+  <string name="widget_loading">Φόρτωση widget...</string>
   <string name="soon">Σύντομα</string>
   <string name="show_next_review_time">Ώρα επόμενης επανάληψης</string>
   <string name="show_next_review_time_summ">Δείχνει την ώρα της επόμενης επανάληψης ανάλογα με την επιλογή σας</string>
@@ -456,8 +456,8 @@
     <item quantity="other">%1$d από %2$d σε αναμονή</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1$s (1 λεπτό ακόμη)</item>
+    <item quantity="other">%1$s (%2$d λεπτά ακόμη)</item>
   </plurals>
   <plurals name="card_browser_title">
     <item quantity="one">%1$s: 1 από %3$d εμφανιζόμενες κάρτες</item>
@@ -468,16 +468,16 @@
     <item quantity="other">%1$s (%2$d από %3$d αναμένουν)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Έχετε τελειώσει για τώρα.\nΑύριο θα υπάρχει:\n1 κάρτα για επανάληψη και %2$s.\n Εκτιμώμενος χρόνος: %3$s</item>
+    <item quantity="other">Έχετε τελειώσει για τώρα.\nΑύριο θα υπάρχουν:\n%1$d κάρτες για επανάληψη και %2$s.\n Εκτιμώμενος χρόνος: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
+    <item quantity="one">1 κάρτα</item>
     <item quantity="other">%1$d νέες κάρτες</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%1$d min.</item>
+    <item quantity="one">1 λεπτό</item>
+    <item quantity="other">%1$d λεπτά</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 κάρτα στο διακομιστή</item>
