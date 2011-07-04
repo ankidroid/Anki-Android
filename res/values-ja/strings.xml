@@ -69,7 +69,7 @@
   <string name="studyoptions_session">セッション</string>
   <string name="studyoptions_tag">タグで</string>
   <string name="studyoptions_tag_new">新しいカードをタグで表示します:</string>
-  <string name="studyoptions_tag_rev">Show review cards by tag:</string>
+  <string name="studyoptions_tag_rev">復習カードをタグ順で表示</string>
   <string name="studyoptions_session_minutes">セッション毎の時間（分）：</string>
   <string name="studyoptions_session_questions">セッション毎の質問数：</string>
   <string name="session_time_limit">セッション時間の制限</string>
@@ -158,7 +158,7 @@
   <string name="swipe_summ_off">画面と解答カードの切り替えにジェスチャを使用します. このオプションは, ズーム昨日と互換性がありません</string>
   <string name="swipe_summ_on">水平方向のスワイプで画面を切り替えることができます. 他のアクションは下で設定します</string>
   <string name="pref_cat_actions">Actions</string>
-  <string name="gestures_shake">Shake</string>
+  <string name="gestures_shake">シェイク</string>
   <string name="gestures_swipe_up">上にスワイプ</string>
   <string name="gestures_swipe_down">下にスワイプ</string>
   <string name="gestures_swipe_left">左にスワイプ</string>
@@ -211,11 +211,11 @@
   <string name="card_browser_delete_card">カードを消す</string>
   <string name="card_browser_suspend_card">カードを中止する</string>
   <string name="card_browser_unsuspend_card">Unsuspend card</string>
-  <string name="card_browser_mark_card">Mark card</string>
-  <string name="card_browser_unmark_card">Unmark card</string>
+  <string name="card_browser_mark_card">マークをつける</string>
+  <string name="card_browser_unmark_card">マークを外す</string>
   <string name="delete_card_title">カードの削除</string>
-  <string name="delete_card_message">本当にこのカード?\n%1$s\n%2$sを削除しますか</string>
-  <string name="card_browser_show_marked">Show marked cards</string>
+  <string name="delete_card_message">本当にこのカード\n%1$s\n%2$sを削除しますか?</string>
+  <string name="card_browser_show_marked">マークしたカードを表示</string>
   <string name="card_browser_show_suspended">中断されたカードを表示します</string>
   <string name="card_browser_search">検索</string>
   <string name="card_browser_search_suspended">中断されたカードを検索します</string>
@@ -232,8 +232,8 @@
   <string name="card_details_ease">難易度</string>
   <string name="card_details_average_time">平均時間</string>
   <string name="card_details_total_time">合計時間</string>
-  <string name="card_details_yes_count">Yes count</string>
-  <string name="card_details_no_count">No count</string>
+  <string name="card_details_yes_count">正解した数</string>
+  <string name="card_details_no_count">間違った数</string>
   <string name="card_details_added">作成日</string>
   <string name="card_details_changed">更新日</string>
   <string name="card_details_tags">タグ</string>
@@ -334,7 +334,7 @@
   <string name="log_out">ログアウト</string>
   <string name="alert_logging_message">ログインしています。しばらくお待ちください…</string>
   <string name="invalid_username_password">ユーザー名またはパスワードが間違っています。</string>
-  <string name="sync_too_busy">Server too busy. Try again later.</string>
+  <string name="sync_too_busy">サーバが混雑しています。後でやり直してください。</string>
   <string name="login_generic_error">ログインに失敗しました.</string>
   <string name="download_finished">ダウンロードが完了しました。</string>
   <string name="deck_downloaded">単語帳をダウンロードしました</string>
@@ -395,7 +395,7 @@
   <string name="feedback_error_reply_issue_status">問題 %1$d, 状態: %2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">問題 %1$d, 修正済みでが未リリースです</string>
   <string name="feedback_error_reply_issue_fixed_prod">問題 %1$d, 最新版で修正済みです</string>
-  <string name="feedback_error_reply_malformed">Filed bug, no response</string>
+  <string name="feedback_error_reply_malformed">提出されたバグ、無応答</string>
   <string name="feedback_error_reply_failed">送信に失敗しました</string>
   <string name="widget_pref">ウィジェット</string>
   <string name="widget_minimum_cards_due">ウィジェットの通知のしきい値</string>
@@ -477,8 +477,8 @@
     <item quantity="other">%1$d new cards</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%1$d min.</item>
+    <item quantity="one">1分</item>
+    <item quantity="other">%1$d分</item>
   </plurals>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1枚のカードをサーバに送信</item>
