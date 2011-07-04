@@ -67,16 +67,16 @@
     <item>Mostrar em ordem aleatória</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>Uma hora</item>
+    <item>1 dia</item>
+    <item>1 mês</item>
+    <item>1 ano</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s horas</item>
+    <item>%s dias</item>
+    <item>%s meses</item>
+    <item>%s anos</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>em 1 hora</item>
@@ -119,7 +119,7 @@
     <item>Por tempo programado</item>
     <item>Por intervalo</item>
     <item>Pela dificuldade</item>
-    <item>Date created</item>
+    <item>Data de criação</item>
   </string-array>
   <string-array name="statistics_type_labels">
     <item>Programado</item>
@@ -136,29 +136,29 @@
     <item>1 ano</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
+    <item>Por último acesso</item>
+    <item>Alfabético</item>
     <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>Pelo número de total de cards</item>
+    <item>Pelo número total de novos cards</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
+    <item>Nenhuma ação</item>
+    <item>Resposta botão 1</item>
+    <item>Resposta botão 2</item>
+    <item>Resposta botão 3</item>
+    <item>Resposta botão 4</item>
+    <item>Resposta recomendada (verde)</item>
     <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
+    <item>Desfazer</item>
+    <item>Refazer</item>
+    <item>Editar Card</item>
+    <item>Marcar Card</item>
     <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
+    <item>Enterrar card</item>
+    <item>Suspender Card</item>
+    <item>Excluir card</item>
+    <item>Limpar Whiteboard</item>
     <item>Abort learning</item>
   </string-array>
 </resources>

@@ -470,7 +470,7 @@ public class Model {
             int align, boolean isField, boolean invertedColors) {
         StringBuffer sb = new StringBuffer();
         if (null != fontFamily && 0 < fontFamily.trim().length()) {
-            sb.append("font-family:\"").append(fontFamily).append("\";\n");
+//            sb.append("font-family:\"").append(fontFamily).append("\";\n");
         }
         if (null != fontColour && 0 < fontColour.trim().length()) {
             sb.append("color:").append(invertColor(fontColour, invertedColors)).append(";\n");
