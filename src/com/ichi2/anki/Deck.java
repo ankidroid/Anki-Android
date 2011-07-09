@@ -3204,53 +3204,53 @@ public class Deck {
 
 
     public void updateCardTags(long[] cardIds) {
-        HashMap<String, Long> tids = new HashMap<String, Long>();
-        HashMap<Long, List<String>> rows = new HashMap<Long, List<String>>();
+        HashMap<String, Long> tagIds = new HashMap<String, Long>();
+        HashMap<Long, List<String>> cardsWithTags = new HashMap<Long, List<String>>();
         if (cardIds == null) {
             getDB().getDatabase().execSQL("DELETE FROM cardTags");
             getDB().getDatabase().execSQL("DELETE FROM tags");
-            tids = tagIds(allTags_());
-            rows = splitTagsList();
+            tagIds = tagIds(allTags_());
+            cardsWithTags = splitTagsList();
         } else {
             Log.i(AnkiDroidApp.TAG, "updateCardTags cardIds: " + Arrays.toString(cardIds));
             getDB().delete(this, "cardTags", "cardId IN " + Utils.ids2str(cardIds), null);
-            String fids = Utils.ids2str(Utils.toPrimitive(getDB().queryColumn(Long.class,
+            String factIds = Utils.ids2str(Utils.toPrimitive(getDB().queryColumn(Long.class,
                     "SELECT factId FROM cards WHERE id IN " + Utils.ids2str(cardIds), 0)));
-            Log.i(AnkiDroidApp.TAG, "updateCardTags fids: " + fids);
-            tids = tagIds(allTags_("WHERE id IN " + fids));
-            Log.i(AnkiDroidApp.TAG, "updateCardTags tids keys: " + Arrays.toString(tids.keySet().toArray(new String[tids.size()])));
-            Log.i(AnkiDroidApp.TAG, "updateCardTags tids values: " + Arrays.toString(tids.values().toArray(new Long[tids.size()])));
-            rows = splitTagsList("AND facts.id IN " + fids);
-            Log.i(AnkiDroidApp.TAG, "updateCardTags rows keys: " + Arrays.toString(rows.keySet().toArray(new Long[rows.size()])));
-            for (List<String> l : rows.values()) {
-                Log.i(AnkiDroidApp.TAG, "updateCardTags rows values: ");
-                for (String v : l) {
-                    Log.i(AnkiDroidApp.TAG, "updateCardTags row item: " + v);
+            Log.i(AnkiDroidApp.TAG, "updateCardTags factIds: " + factIds);
+            tagIds = tagIds(allTags_("WHERE id IN " + factIds));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags tagIds keys: " + Arrays.toString(tagIds.keySet().toArray(new String[tagIds.size()])));
+            Log.i(AnkiDroidApp.TAG, "updateCardTags tagIds values: " + Arrays.toString(tagIds.values().toArray(new Long[tagIds.size()])));
+            cardsWithTags = splitTagsList("AND facts.id IN " + factIds);
+            Log.i(AnkiDroidApp.TAG, "updateCardTags cardTags keys: " + Arrays.toString(cardsWithTags.keySet().toArray(new Long[cardsWithTags.size()])));
+            for (List<String> tags : cardsWithTags.values()) {
+                Log.i(AnkiDroidApp.TAG, "updateCardTags cardTags values: ");
+                for (String tag : tags) {
+                    Log.i(AnkiDroidApp.TAG, "updateCardTags row item: " + tag);
                 }
             }
         }
 
-        ArrayList<HashMap<String, Long>> d = new ArrayList<HashMap<String, Long>>();
+        ArrayList<HashMap<String, Long>> cardTags = new ArrayList<HashMap<String, Long>>();
 
-        for (Entry<Long, List<String>> entry : rows.entrySet()) {
-        	Long id = entry.getKey();
+        for (Entry<Long, List<String>> card : cardsWithTags.entrySet()) {
+            Long cardId = card.getKey();
             for (int src = 0; src < 3; src++) { // src represents the tag type, fact: 0, model: 1, template: 2
-                for (String tag : Utils.parseTags(entry.getValue().get(src))) {
-                    HashMap<String, Long> ditem = new HashMap<String, Long>();
-                    ditem.put("cardId", id);
-                    ditem.put("tagId", tids.get(tag.toLowerCase()));
-                    ditem.put("src", new Long(src));
-                    Log.i(AnkiDroidApp.TAG, "populating ditem " + src + " " + tag);
-                    d.add(ditem);
+                for (String tag : Utils.parseTags(card.getValue().get(src))) {
+                    HashMap<String, Long> association = new HashMap<String, Long>();
+                    association.put("cardId", cardId);
+                    association.put("tagId", tagIds.get(tag.toLowerCase()));
+                    association.put("src", new Long(src));
+                    Log.i(AnkiDroidApp.TAG, "populating association " + src + " " + tag);
+                    cardTags.add(association);
                 }
             }
         }
 
-        for (HashMap<String, Long> ditem : d) {
-        	ContentValues values = new ContentValues();
-        	values.put("cardId", ditem.get("cardId"));
-        	values.put("tagId", ditem.get("tagId"));
-        	values.put("src",  ditem.get("src"));
+        for (HashMap<String, Long> cardTagAssociation : cardTags) {
+            ContentValues values = new ContentValues();
+            values.put("cardId", cardTagAssociation.get("cardId"));
+            values.put("tagId", cardTagAssociation.get("tagId"));
+            values.put("src",  cardTagAssociation.get("src"));
             getDB().insert(this, "cardTags", null, values);
         }
         getDB().delete(this, "tags", "priority = 2 AND id NOT IN (SELECT DISTINCT tagId FROM cardTags)", null);
