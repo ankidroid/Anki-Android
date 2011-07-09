@@ -642,7 +642,7 @@ public class Utils {
      */
     public static String[] parseTags(String tags) {
         if (tags != null && tags.length() != 0) {
-            return tags.split(" +|, *");
+            return tags.trim().split(" +|, *");
         } else {
             return new String[] {};
         }
