@@ -31,7 +31,7 @@
   <string name="deck_upgrade_too_old_version">39よりも古いバージョンのデッキは, AnkiDroid ではサポートされていません;デッキをデスクトップ版Ankiで開いて最新版に更新してください.</string>
   <string name="deck_upgrade_version_61_has_latex">これはLaTeX式が含まれているので, デッキが完全に更新できませんでした; デッキをデスクトップ版Ankiで開き, 最新版に更新しLaTeXを再生成してください.</string>
   <string name="deckpicker_title_nosdcard">SDカードを取り外すことが出来ます。</string>
-  <string name="deckpicker_new">%d new today</string>
+  <string name="deckpicker_new">今日の新カード %d枚</string>
   <string name="deckpicker_loaddeck">単語帳を読み込んでいます...</string>
   <string name="deckpicker_nodeck">単語帳がありません。</string>
   <string name="sync_log_title">同期の履歴</string>
@@ -61,11 +61,11 @@
   <string name="leech_notification">邪魔カードとして登録されました</string>
   <string name="newcards_day_summ">1日を示す新しいカードの最大数。</string>
   <string name="newcards_day">新しいカード/日</string>
-  <string name="studyoptions_limit_select_tags">Select Tags</string>
-  <string name="studyoptions_limit_tags_active">With: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Without: %1$s</string>
+  <string name="studyoptions_limit_select_tags">タグを選択</string>
+  <string name="studyoptions_limit_tags_active">あり: %1$s</string>
+  <string name="studyoptions_limit_tags_inactive">なし: %1$s</string>
   <string name="studyoptions_limit_button_text">制限</string>
-  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
+  <string name="studyoptions_limit_dialog_title">学習の制限</string>
   <string name="studyoptions_session">セッション</string>
   <string name="studyoptions_tag">タグで</string>
   <string name="studyoptions_tag_new">新しいカードをタグで表示します:</string>
@@ -120,7 +120,7 @@
   <string name="show_timer">タイマーを表示</string>
   <string name="show_timer_summ">解答までの時間をタイマーで表示します</string>
   <string name="show_progress_bars">進行状況バーを表示する</string>
-  <string name="show_progress_bars_summ">Shows proportion of today\'s yes answers and proportion of total yes answers on mature cards</string>
+  <string name="show_progress_bars_summ">今日と累計の, 練習済みカードに対する正解したカードの割合</string>
   <string name="show_whiteboard_summ">画面上に書き込むことができます。</string>
   <string name="whiteboard_stroke_width">ホワイトボードの線幅</string>
   <string name="whiteboard_stroke_width_summ">線幅: XXX</string>
@@ -147,17 +147,17 @@
   <string name="deck_path">単語帳のパス</string>
   <string name="deck_path_summ">デッキ保存場所へのパス</string>
   <string name="deck_order">デッキの順番</string>
-  <string name="deck_order_summ">Order in which decks are listed in deck picker: XXX</string>
+  <string name="deck_order_summ">デッキがデッキピッカーに表示される順序: XXX</string>
   <string name="fullscreen_review">フルスクリーンで確認</string>
   <string name="fullscreen_review_summ">カードの確認に全画面を使用するかどうか選択できます</string>
   <string name="zoom">ズームを有効にする</string>
   <string name="zoom_summ">勉強中にズームコントロールを表示します</string>
-  <string name="zeemote">Zeemote JS1 support</string>
-  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
+  <string name="zeemote">Zeemote JS1のサポート</string>
+  <string name="zeemote_summ">復習のナビゲートにZeemote JS1コン​​トローラーのボタンを使用します. A:良い B:もう一度 D：簡単</string>
   <string name="swipe">ジェスチャーを有効にする</string>
   <string name="swipe_summ_off">画面と解答カードの切り替えにジェスチャを使用します. このオプションは, ズーム昨日と互換性がありません</string>
   <string name="swipe_summ_on">水平方向のスワイプで画面を切り替えることができます. 他のアクションは下で設定します</string>
-  <string name="pref_cat_actions">Actions</string>
+  <string name="pref_cat_actions">アクション</string>
   <string name="gestures_shake">シェイク</string>
   <string name="gestures_swipe_up">上にスワイプ</string>
   <string name="gestures_swipe_down">下にスワイプ</string>
@@ -171,7 +171,7 @@
   <string name="swipe_sensibility">スワイプ感度</string>
   <string name="swipe_sensibility_summ">スワイプのジェスチャーの感度: XXX</string>
   <string name="tts">テキスト読み上げ</string>
-  <string name="tts_summ">Reads out question and answer if no sound file is included</string>
+  <string name="tts_summ">サウンドファイルが含まれていない場合に質問と答えを読み出す</string>
   <string name="play_sounds_at_start">すぐにサウンドを再生する</string>
   <string name="play_sounds_at_start_summ">質問/解答を表示した後すぐにサウンドを再生する</string>
   <string name="shake_intensity">モーションセンサーの反応基準</string>
@@ -194,8 +194,8 @@
   <string name="about_title">情報</string>
   <string name="cardeditor_title">ファクトエディター </string>
   <string name="factadder_title">カードを増やす</string>
-  <string name="factadder_saving_error">Error saving fact</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="factadder_saving_error">エラーを保存するファクト</string>
+  <string name="saving_facts">保存するファクト</string>
   <string name="deckcreator_title">デッキ作成者</string>
   <string name="model">モデル：</string>
   <string name="select_model">モデル</string>
@@ -210,7 +210,7 @@
   <string name="card_browser_cardloading_error">カードの読み込みエラーです. おそらく端末のメモリ制限に関連しています. 小さいデッキで再試行してください</string>
   <string name="card_browser_delete_card">カードを消す</string>
   <string name="card_browser_suspend_card">カードを中止する</string>
-  <string name="card_browser_unsuspend_card">Unsuspend card</string>
+  <string name="card_browser_unsuspend_card">利用停止を解除するカード</string>
   <string name="card_browser_mark_card">マークをつける</string>
   <string name="card_browser_unmark_card">マークを外す</string>
   <string name="delete_card_title">カードの削除</string>
@@ -227,7 +227,7 @@
   <string name="card_details_question">質問</string>
   <string name="card_details_answer">解答</string>
   <string name="card_details_due">期限</string>
-  <string name="card_details_now">Now</string>
+  <string name="card_details_now">今</string>
   <string name="card_details_interval">間隔</string>
   <string name="card_details_ease">難易度</string>
   <string name="card_details_average_time">平均時間</string>
@@ -266,8 +266,8 @@
   <string name="pause_download">ダウンロードを一時停止</string>
   <string name="duplicate_download">このデッキは既にダウンロード中です</string>
   <string name="sync_all">すべて同期する</string>
-  <string name="fact">fact</string>
-  <string name="facts">facts</string>
+  <string name="fact">ファクト</string>
+  <string name="facts">ファクト</string>
   <string name="saving_changes">変更を保存しています...</string>
   <string name="about_content">%1$s Android用学習カード &lt;/h2&gt;&lt;p&gt; AnkiDroidはデスクトップの %2$s Anki&lt;/a&gt;で作成した.ankiファイルを読むことができます. &lt;/p&gt;&lt;p&gt; AnkiDroidをより良くするために, バグ報告を%3$s ここ&lt;/a&gt;にお願いします; 新機能のアイデアも大歓迎です! この %4$s wiki&lt;/a&gt;で%5$s フォーラム&lt;/a&gt;にメッセージを残してください.&lt;/p&gt;&lt;p&gt; AnkiDroid は %6$s オープンソースソフトウェア&lt;/a&gt;であり, %7$s 参加&lt;/a&gt;して%8$s 貢献&lt;/a&gt;して下さる方は誰でも歓迎です:-) 開発者でなくても助けになります. 例えばwikiやスクリーンショットを更新したり, Ankiへの%9$s 寄付&lt;/a&gt;, AnkiDroidについてブログで書いたり! &lt;/p&gt;&lt;p&gt; AnkiDroid は %10$s GNU-GPL v3 license&lt;/a&gt; の下で公開され, ソースコードは%11$s ここ&lt;/a&gt;から入手できます.</string>
   <string name="studyoptions_title">学習設定</string>
@@ -277,7 +277,7 @@
   <string name="studyoptions_new_total">新しいカード（すべて）：</string>
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_new_cards_per_day">一日分の新しいカード：</string>
-  <string name="studyoptions_max_fail_card">Max fail cards</string>
+  <string name="studyoptions_max_fail_card">失敗カードの最大数</string>
   <string name="studyoptions_start">スタート</string>
   <string name="studyoptions_more">学習設定</string>
   <string name="studyoptions_more_dialog_title">その他のオプション</string>
@@ -324,7 +324,7 @@
   <string name="studyoptions_congrats_syncdeck">デッキを同期します</string>
   <string name="studyoptions_congrats_open_other_deck">他の単語帳を開く</string>
   <string name="studyoptions_congrats_finish">戻る</string>
-  <string name="studyoptions_feedback">Feedback</string>
+  <string name="studyoptions_feedback">フィードバック</string>
   <string name="username">ユーザ名</string>
   <string name="password">パスワード</string>
   <string name="log_in">ログイン</string>
@@ -391,7 +391,7 @@
   <string name="feedback_default_text">フィードバックか, 報告するエラーについての情報を入力してください.</string>
   <string name="feedback_error_reply_new">未知の問題, 新しいバグを登録します</string>
   <string name="feedback_error_reply_known">既知の問題, 調査保留中です</string>
-  <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>
+  <string name="feedback_error_reply_issue_unknown">問題%1$d, 不明状態</string>
   <string name="feedback_error_reply_issue_status">問題 %1$d, 状態: %2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">問題 %1$d, 修正済みでが未リリースです</string>
   <string name="feedback_error_reply_issue_fixed_prod">問題 %1$d, 最新版で修正済みです</string>
@@ -445,15 +445,15 @@
   <string name="statistics_all_decks">(すべてのデッキ)</string>
   <string name="calculating_statistics">統計を計算しています</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
-    <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
+    <item quantity="one">すべてのデッキ: 期限切れ%2$d(%3$s)枚中 1枚</item>
+    <item quantity="other">すべてのデッキ: 期限切れ%2$d(%3$s)枚中 %1$d枚</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1分</item>
     <item quantity="other">%d 分</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 of %2$d due</item>
+    <item quantity="one">%2$d期限切れ中 1枚</item>
     <item quantity="other">残り%2$d枚中%1$d枚</item>
   </plurals>
   <plurals name="reviewer_window_title">
@@ -461,11 +461,11 @@
     <item quantity="other">%1$s (残り%2$d分)</item>
   </plurals>
   <plurals name="card_browser_title">
-    <item quantity="one">%1$s: 1 of %3$d cards shown</item>
-    <item quantity="other">%1$s: %2$d of %3$d cards shown</item>
+    <item quantity="one">%1$s: 表示カード %3$d枚中の1枚</item>
+    <item quantity="other">%1$s: 表示カード%3$d枚中の%2$d枚</item>
   </plurals>
   <plurals name="studyoptions_window_title">
-    <item quantity="one">%1$s (1 of %3$d due)</item>
+    <item quantity="one">%1$s (期限切れ %3$d枚中の1枚)</item>
     <item quantity="other">%1$s（%3$d問中残り%2$d問）</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
@@ -473,8 +473,8 @@
     <item quantity="other">今日の分は完了しました.\n明日は:\n復習カード%1$d枚と %2$sがあります.\n 予想時間: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">1枚のカード</item>
+    <item quantity="other">%1$d枚の新カード</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1分</item>
@@ -494,7 +494,7 @@
   </plurals>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">残り%2$s枚中1枚</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="other">%2$s枚中%1$d枚期限切れ</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">1つのデッキ</item>

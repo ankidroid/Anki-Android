@@ -96,7 +96,7 @@
     <item>Uudet kortit päinvastaisessa järjestyksessä lisättyä</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
+    <item>Jaa uudet kortit tarkastelujen kesken</item>
     <item>Uudet kortit tarkastelun jälkeen</item>
     <item>Uudet kortit tarkastelua ennen</item>
   </string-array>
@@ -138,12 +138,12 @@
   <string-array name="deck_order_labels">
     <item>Viimeisen käytön mukaan</item>
     <item>Aakkosjärjestyksessä</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>Erääntyvien korttien määrän mukaan</item>
+    <item>Korttien määrän mukaan</item>
+    <item>Uusien korttien määrän mukaan</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
+    <item>Ei toimintoa</item>
     <item>Vastaus-painike 1</item>
     <item>Vastaus-painike 2</item>
     <item>Vastaus-painike 3</item>
@@ -153,12 +153,12 @@
     <item>Kumoa</item>
     <item>Tee uudelleen</item>
     <item>Muokkaa korttia</item>
-    <item>Mark card</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
+    <item>Merkitse kortti</item>
+    <item>Hakutermi</item>
+    <item>Piilota kortti</item>
+    <item>Keskeytä kortti</item>
     <item>Poista kortti</item>
-    <item>Clear Whiteboard</item>
-    <item>Abort learning</item>
+    <item>Tyhjennä valkotaulu</item>
+    <item>Keskeytä oppiminen</item>
   </string-array>
 </resources>

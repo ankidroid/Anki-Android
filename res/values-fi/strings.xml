@@ -194,8 +194,8 @@
   <string name="about_title">Tietoja</string>
   <string name="cardeditor_title">Korttien muokkaus</string>
   <string name="factadder_title">Korttilisääjä</string>
-  <string name="factadder_saving_error">Error saving fact</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="factadder_saving_error">Virhe tallennettaessa korttiaa</string>
+  <string name="saving_facts">Tallennetaan kortteja</string>
   <string name="deckcreator_title">Korttipakan luoja</string>
   <string name="model">Malli:</string>
   <string name="select_model">Malli</string>
@@ -320,7 +320,7 @@
   <string name="studyoptions_congrats_cards">Kortit</string>
   <string name="studyoptions_congrats_learnmore">Opi lisää</string>
   <string name="studyoptions_congrats_reviewearly">Tarkista etuajassa</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_syncdeck">Synkronoida korttipakka</string>
   <string name="studyoptions_congrats_open_other_deck">Avaa muu korttipakka</string>
   <string name="studyoptions_congrats_finish">Takaisin opiskeluruutuun</string>
   <string name="studyoptions_feedback">Palaute</string>
@@ -389,7 +389,7 @@
   <string name="feedback_clear_all">Poista kaikki virheet</string>
   <string name="feedback_default_text">Ana palautetta tai anna yleistietoa virheistä josta ilmoitat.</string>
   <string name="feedback_error_reply_new">Tuntematon virhe, arkistoida uusi virhe</string>
-  <string name="feedback_error_reply_known">Known issue, pending investigation</string>
+  <string name="feedback_error_reply_known">Tunnettu ongelma, tutkitaan</string>
   <string name="feedback_error_reply_issue_unknown">Ongelma %1$d, tuntematon tila</string>
   <string name="feedback_error_reply_issue_status">Virhe %1$d, tila: %2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">Virhe %1$d, korjattu, mutta ei vielä julkaistu</string>
