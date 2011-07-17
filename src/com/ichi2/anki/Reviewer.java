@@ -1288,7 +1288,8 @@ public class Reviewer extends Activity implements IButtonListener{
         setContentView(layout);
 
         mMainLayout = findViewById(R.id.main_layout);
-        
+        Themes.changeContentColors(mMainLayout, Themes.CALLER_REVIEWER);
+
         mCard = (WebView) findViewById(R.id.flashcard);
         mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
@@ -1429,8 +1430,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mEase3.setTextColor(fgColor);
         mEase4.setTextColor(fgColor);
 
-        fgColor = res.getColor(R.color.progressbar_border_inverted);
-        bgColor = res.getColor(R.color.progressbar_background_inverted);
+        fgColor = res.getColor(R.color.studyoptions_progressbar_frame_light);
+        bgColor = res.getColor(R.color.studyoptions_progressbar_background_light);
         findViewById(R.id.progress_bars_border1).setBackgroundColor(fgColor);
         findViewById(R.id.progress_bars_border2).setBackgroundColor(fgColor);
         findViewById(R.id.progress_bars_back1).setBackgroundColor(bgColor);

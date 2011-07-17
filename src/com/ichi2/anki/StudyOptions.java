@@ -52,6 +52,7 @@ import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -525,6 +526,7 @@ public class StudyOptions extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         Log.i(AnkiDroidApp.TAG, "StudyOptions Activity");
@@ -679,12 +681,17 @@ public class StudyOptions extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-            closeOpenedDeck();
-            MetaDB.closeDB();
-            finish();
+            closeStudyOptions();
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    private void closeStudyOptions() {
+        closeOpenedDeck();
+        MetaDB.closeDB();
+        finish();
     }
 
 
@@ -784,6 +791,7 @@ public class StudyOptions extends Activity {
     private void initAllContentViews() {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
+        Themes.changeContentColors(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
 
         mStudyOptionsMain = (View) mStudyOptionsView.findViewById(R.id.studyoptions_main);
 
@@ -1770,6 +1778,13 @@ public class StudyOptions extends Activity {
         } else if (requestCode == PREFERENCES_UPDATE) {
             restorePreferences();
             showContentView();
+            if (resultCode == RESULT_OK) {
+            	// restarts application in order to apply new themes or localisations
+            	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName());
+            	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            	closeStudyOptions();
+            	startActivity(i);
+            }
             // If there is no deck loaded the controls have not to be shown
             // if(deckLoaded && cardsToReview)
             // {

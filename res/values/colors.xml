@@ -44,11 +44,25 @@
 	<color name="progressbar_2">#ff9100</color>	
 	<color name="progressbar_3">#ffbe00</color>	
 	<color name="progressbar_4">#4aa02c</color>	
-	<color name="progressbar_border_inverted">#989898</color>
-	<color name="progressbar_background_inverted">#484848</color>
 
-	<color name="studyoptions_foreground">#ffffff</color>	
+	<color name="studyoptions_foreground">#FFFF</color>	
+	<color name="studyoptions_background">#000000</color>	
 	<color name="studyoptions_foreground_deactivated">#484848</color>
-	<color name="background">#ffffff</color>	
+	<color name="background">#FFFF</color>
+
+	<color name="studyoptions_progressbar_mature_default">#CDCDCD</color>
+	<color name="studyoptions_progressbar_young_default">#8d8d8d</color>
+	<color name="studyoptions_progressbar_frame_default">#989898</color>
+	<color name="studyoptions_progressbar_background_default">#484848</color>
+	<color name="studyoptions_progressbar_mature_light">#323232</color>
+	<color name="studyoptions_progressbar_young_light">#B0B0B0</color>
+	<color name="studyoptions_progressbar_frame_light">#000000</color>
+	<color name="studyoptions_progressbar_background_light">#FFFF</color>
+	<color name="studyoptions_progressbar_background_blue">#cecfd6</color>
+	<color name="studyoptions_progressbar_young_blue">#8a8a8a</color>
+
+	<color name="deckpicker_background">#dae7ed</color>
+	<color name="deckpicker_listview_color1_blue">#cecfd6</color>
+	<color name="deckpicker_listview_color2_blue">#568499</color>
 	
 </resources>

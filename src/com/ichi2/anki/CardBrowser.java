@@ -119,6 +119,7 @@ public class CardBrowser extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.card_browser);

@@ -66,6 +66,15 @@
 				android:defaultValue="true"
 				android:key="syncFetchMedia"/>
 		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_themes">
+			<ListPreference
+				android:title="@string/select_theme"
+				android:key="theme"
+				android:summary=""
+				android:defaultValue="0"
+				android:entries="@array/theme_labels"
+				android:entryValues="@array/theme_values" />
+		</PreferenceCategory>
 	</PreferenceScreen>
 	
 	<PreferenceScreen android:title="@string/pref_cat_qadisplay">

@@ -23,7 +23,7 @@
 	<LinearLayout 
 		android:id="@+id/DeckPickerHoriz" 
 		android:layout_height="wrap_content" 
-		android:orientation="horizontal" 
+		android:orientation="horizontal"
 		android:layout_width="fill_parent">
 
 		<TextView 
@@ -33,8 +33,7 @@
 			android:gravity="center_horizontal"
 			android:layout_weight="1"
 			android:padding="10dip"
-			android:textSize="24sp"
-			android:textColor="#ffffff">
+			android:textSize="24sp">
 		</TextView>
 		<Button
 			android:id="@+id/DeckPickerUpgradeNotesButton"
@@ -97,7 +96,6 @@
 		android:layout_height="wrap_content" 
 		android:orientation="horizontal" 
 		android:layout_width="fill_parent">
-		
 	<TextView
 		android:id="@+id/DeckPickerCompletionMat"
     	android:layout_width="0dip"

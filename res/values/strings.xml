@@ -150,6 +150,7 @@
 <string name="pref_cat_reset">Reset</string>
 <string name="pref_cat_other">Other</string>
 <string name="pref_cat_experimental">EXPERIMENTAL</string>
+<string name="pref_cat_themes">Themes</string>
 <string name="show_study_options_on_deck_load">Study options on load</string>
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
 <string name="startup_mode">Startup Mode</string>
@@ -233,6 +234,7 @@
 <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
 <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
 <string name="select_locale_title">Select Language</string>
+<string name="select_theme">Theme</string>
 <!-- deck_properties.xml -->
 <!--<string name="deck_properties">Deck properties</string>-->
 <!--<string name="sync_on">Synchronize this deck</string>-->

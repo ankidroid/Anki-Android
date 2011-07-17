@@ -49,6 +49,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnClickListener;
@@ -133,6 +134,7 @@ public class DeckPicker extends Activity implements Runnable {
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mUpgradeNotesAlert;
 	private AlertDialog mMissingMediaAlert;
+	private View mDeckpickerView;
 	private Button mSyncAllButton;
 	private Button mStatisticsAllButton;
 
@@ -358,6 +360,7 @@ public class DeckPicker extends Activity implements Runnable {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) throws SQLException {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
+		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
 		setTitleText();
@@ -366,9 +369,13 @@ public class DeckPicker extends Activity implements Runnable {
 		setContentView(R.layout.deck_picker);
 
 		registerExternalStorageListener();
+
 		initDialogs();
 
+		Themes.changeContentColors((View) findViewById(R.id.deckpicker_buttons), Themes.CALLER_DECKPICKER);
+
 		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
+		Themes.changeContentColors(mSyncAllButton, Themes.CALLER_DECKPICKER);
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -390,6 +397,7 @@ public class DeckPicker extends Activity implements Runnable {
 		});
 
 		mStatisticsAllButton = (Button) findViewById(R.id.statistics_all_button);
+		Themes.changeContentColors(mStatisticsAllButton, Themes.CALLER_DECKPICKER);
 		mStatisticsAllButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -401,7 +409,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 		mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
-		mDeckListAdapter = new SimpleAdapter(this, mDeckList,
+		mDeckListAdapter = new AlternatingAdapter(this, mDeckList,
 				R.layout.deck_item, new String[] { "name", "due", "new",
 						"showProgress", "notes", "rateOfCompletionMat", "rateOfCompletionAll" }, new int[] {
 						R.id.DeckPickerName, R.id.DeckPickerDue,
@@ -422,6 +430,8 @@ public class DeckPicker extends Activity implements Runnable {
 				if (view.getId() == R.id.DeckPickerCompletionMat || view.getId() == R.id.DeckPickerCompletionAll) {
 				    if (!text.equals("-1")) {
 	                    Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text) / 100.0, mDeckListView.getWidth(), 2, false); 				        
+				    } else {
+				    	Themes.changeContentColors(view, Themes.CALLER_DECKPICKER_DECK);
 				    }
                 }
 				if (view.getId() == R.id.DeckPickerUpgradeNotesButton) {
@@ -737,7 +747,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private void enableButtons(boolean enabled) {
 		mSyncAllButton.setEnabled(enabled);
-		mStatisticsAllButton.setEnabled(enabled);		
+		mStatisticsAllButton.setEnabled(enabled);
 	}
 
 
@@ -1298,6 +1308,29 @@ public class DeckPicker extends Activity implements Runnable {
     // ----------------------------------------------------------------------------
 	// INNER CLASSES
 	// ----------------------------------------------------------------------------
+
+
+    public class AlternatingAdapter extends SimpleAdapter {
+        private int[] colors;
+    	 
+    	    public AlternatingAdapter(Context context, ArrayList<HashMap<String, String>> items, int resource, String[] from, int[] to) {
+    	        super(context, items, resource, from, to);
+    	    }
+
+    	    @Override
+    	    public View getView(int position, View convertView, ViewGroup parent) {
+//    	      if (colors == null) {
+//    	    	  colors = Themes.listColors();
+//    	      }
+	    	  View view = super.getView(position, convertView, parent);
+//    	      if (colors[0] != 0) {
+//        	      int colorPos = position % colors.length;
+//        	      view.setBackgroundColor(colors[colorPos]); 	    	  
+//    	      }
+    	      return view;
+    	    }
+    }
+
 
 	private static final class AnkiFilter implements FileFilter {
 		@Override

@@ -24,8 +24,8 @@
 		android:textSize="26sp"
 		android:textStyle="bold" 
 		android:textColor="#ffffff"
-		android:ellipsize="end" 
-		android:lines="2"
+		android:ellipsize="end"
+		android:lines="1"
 		android:gravity="center"
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content" 
@@ -62,13 +62,14 @@
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
 				<FrameLayout 
-					android:background="@color/progressbar_border_inverted"
+					android:id="@+id/studyoptions_progressbar1_border"
+					android:background="@color/studyoptions_progressbar_frame_default"
 					android:layout_width="fill_parent"
 					android:layout_height="5dp"
 					android:padding="0.5dip"
 					android:layout_marginBottom="3dp">	
 					<FrameLayout android:id="@+id/studyoptions_bars_max"
-						android:background="@color/progressbar_background_inverted"
+						android:background="@color/studyoptions_progressbar_background_default"
 						android:layout_width="fill_parent"
 						android:layout_height="fill_parent">
 						<View android:id="@+id/studyoptions_daily_bar"
@@ -78,13 +79,15 @@
 					</FrameLayout>
 				</FrameLayout>
 				<FrameLayout
-					android:background="@color/progressbar_border_inverted"
+					android:id="@+id/studyoptions_progressbar2_border"
+					android:background="@color/studyoptions_progressbar_frame_default"
 					android:layout_width="fill_parent"
 					android:layout_height="5dp"
 					android:padding="0.5dip"
 					android:layout_marginBottom="3dp">	
 					<FrameLayout 
-						android:background="@color/progressbar_background_inverted"
+						android:id="@+id/studyoptions_progressbar2_content"
+						android:background="@color/studyoptions_progressbar_background_default"
 						android:layout_width="fill_parent"
 						android:layout_height="fill_parent">
 						<View android:id="@+id/studyoptions_mature_bar"
@@ -94,43 +97,46 @@
 					</FrameLayout>
 				</FrameLayout>
 				<FrameLayout android:id="@+id/studyoptions_global_limit_bars"
-					android:background="@color/progressbar_border_inverted"
+					android:background="@color/studyoptions_progressbar_frame_default"
 					android:layout_width="fill_parent"
 					android:layout_height="5dp"
 					android:padding="0.5dip"
 					android:visibility="gone"
 					android:layout_marginBottom="3dp">	
-					<LinearLayout 
-						android:background="@color/progressbar_background_inverted"
+					<LinearLayout
+						android:id="@+id/studyoptions_global_limit_bars_content"
+						android:background="@color/studyoptions_progressbar_background_default"
 						android:layout_width="fill_parent"
 						android:layout_height="fill_parent">
 						<View android:id="@+id/studyoptions_global_mat_limit_bar"
 							android:layout_width="0dip"
 							android:layout_height="fill_parent"
-							android:background="#CDCDCD"/>
+							android:background="@color/studyoptions_progressbar_mature_default"/>
 						<View android:id="@+id/studyoptions_global_limit_bar"
 							android:layout_width="0dip"
 							android:layout_height="fill_parent"
-							android:background="#8d8d8d" />
+							android:background="@color/studyoptions_progressbar_young_default" />
 					</LinearLayout>
 				</FrameLayout>
 				<FrameLayout
-					android:background="@color/progressbar_border_inverted"
+					android:id="@+id/studyoptions_progressbar4_border"
+					android:background="@color/studyoptions_progressbar_frame_default"
 					android:layout_width="fill_parent"
 					android:layout_height="5dp"
 					android:padding="0.5dip">	
 					<LinearLayout 
-						android:background="@color/progressbar_background_inverted"
+						android:id="@+id/studyoptions_progressbar4_content"
+						android:background="@color/studyoptions_progressbar_background_default"
 						android:layout_width="fill_parent"
 						android:layout_height="fill_parent">
 						<View android:id="@+id/studyoptions_global_mat_bar"
 							android:layout_width="0dip"
 							android:layout_height="fill_parent"
-							android:background="#CDCDCD"/>
+							android:background="@color/studyoptions_progressbar_mature_default"/>
 						<View android:id="@+id/studyoptions_global_bar"
 							android:layout_width="0dip"
 							android:layout_height="fill_parent"
-							android:background="#8d8d8d" />
+							android:background="@color/studyoptions_progressbar_young_default" />
 					</LinearLayout>
 				</FrameLayout>
 			</LinearLayout>	

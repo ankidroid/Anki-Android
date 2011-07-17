@@ -51,7 +51,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
     private static String[] mAppLanguages = {"ca", "cs", "de", "el", "es_ES", "fi", "fr", "it", "ja", "ko", "pl", "pt_PT", "ro", "ru", "sr", "sv-SE", "zh-CN", "zh-TW", "en"};
-    private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft"};
+    private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme"};
     private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds"};
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
 
@@ -178,9 +178,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         	zoomCheckboxPreference.setChecked(false);
         	zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
         } else if (key.equals("language")) {
-        	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName());
-        	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        	startActivity(i);
+			Intent intent = this.getIntent();
+			setResult(RESULT_OK, intent);
+			finish();
+        } else if (key.equals("theme")) {
+        	Themes.resetTheme();
+			Intent intent = this.getIntent();
+			setResult(RESULT_OK, intent);
+			finish();
         } else if (Arrays.asList(mShowValueInSummList).contains(key)) {
             updateListPreference(key);
         } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {

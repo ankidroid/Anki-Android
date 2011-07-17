@@ -51,6 +51,7 @@ import com.ichi2.anki.MyAnimation;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptions;
+import com.ichi2.anki.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class ChartBuilder extends Activity {
@@ -224,6 +225,7 @@ public class ChartBuilder extends Activity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
         if (mFullScreen) {
