@@ -1363,11 +1363,8 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
-        float headTextSize = (float) (mCardTimer.getTextSize() * 0.63);
-        mCardTimer.setTextSize(headTextSize);
 
         mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
-        mChosenAnswer.setTextSize((float) (headTextSize * 1.02));
 
         if (mPrefWhiteboard) {
             mWhiteboard = new Whiteboard(this, null);
@@ -1391,12 +1388,11 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         mAnswerField = (EditText) findViewById(R.id.answer_field);
 
+        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
+        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);        	
+        mForegroundColor = getResources().getColor(R.color.next_time_usual_color);        	
         if (mInvertedColors) {
             invertColors();
-        } else {
-            mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
-            mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);        	
-            mForegroundColor = getResources().getColor(R.color.next_time_usual_color);        	
         }
 
         initControls();
@@ -1407,35 +1403,39 @@ public class Reviewer extends Activity implements IButtonListener{
         Resources res = getResources();
         int bgColor = res.getColor(R.color.background_color_inv);
         int fgColor = res.getColor(R.color.foreground_color_inv);
-        mMainLayout.setBackgroundColor(bgColor);
-        mNextTimeTextColor = res.getColor(R.color.next_time_usual_color_inv);
-        mNextTimeTextRecomColor = res.getColor(R.color.next_time_recommended_color_inv);
-        mNext4.setTextColor(mNextTimeTextColor);
-        mCardTimer.setTextColor(fgColor);
-        mForegroundColor = fgColor;
-        mTextBarBlack.setTextColor(fgColor);
-        mTextBarBlue.setTextColor(res.getColor(R.color.textbar_blue_color_inv));
+
         mCard.setBackgroundColor(res.getColor(R.color.background_color_inv));
         if (mPrefWhiteboard) {
             mWhiteboard.setInvertedColor(true);
         }
-        mFlipCard.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
-        mEase1.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
-        mEase2.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
-        mEase3.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
-        mEase4.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
-        mFlipCard.setTextColor(fgColor);
-        mEase1.setTextColor(fgColor);
-        mEase2.setTextColor(fgColor);
-        mEase3.setTextColor(fgColor);
-        mEase4.setTextColor(fgColor);
 
-        fgColor = res.getColor(R.color.studyoptions_progressbar_frame_light);
-        bgColor = res.getColor(R.color.studyoptions_progressbar_background_light);
-        findViewById(R.id.progress_bars_border1).setBackgroundColor(fgColor);
-        findViewById(R.id.progress_bars_border2).setBackgroundColor(fgColor);
-        findViewById(R.id.progress_bars_back1).setBackgroundColor(bgColor);
-        findViewById(R.id.progress_bars_back2).setBackgroundColor(bgColor);
+        if (Themes.changeFlashcardBorder()) {
+            mMainLayout.setBackgroundColor(bgColor);
+            mNextTimeTextColor = res.getColor(R.color.next_time_usual_color_inv);
+            mNextTimeTextRecomColor = res.getColor(R.color.next_time_recommended_color_inv);
+            mNext4.setTextColor(mNextTimeTextColor);
+            mCardTimer.setTextColor(fgColor);
+            mForegroundColor = fgColor;
+            mTextBarBlack.setTextColor(fgColor);
+            mTextBarBlue.setTextColor(res.getColor(R.color.textbar_blue_color_inv));
+            mFlipCard.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+            mEase1.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+            mEase2.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+            mEase3.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+            mEase4.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+            mFlipCard.setTextColor(fgColor);
+            mEase1.setTextColor(fgColor);
+            mEase2.setTextColor(fgColor);
+            mEase3.setTextColor(fgColor);
+            mEase4.setTextColor(fgColor);
+
+            fgColor = res.getColor(R.color.studyoptions_progressbar_frame_light);
+            bgColor = res.getColor(R.color.studyoptions_progressbar_background_light);
+            findViewById(R.id.progress_bars_border1).setBackgroundColor(fgColor);
+            findViewById(R.id.progress_bars_border2).setBackgroundColor(fgColor);
+            findViewById(R.id.progress_bars_back1).setBackgroundColor(bgColor);
+            findViewById(R.id.progress_bars_back2).setBackgroundColor(bgColor);
+        }        
     }
 
 
@@ -1808,7 +1808,9 @@ public class Reviewer extends Activity implements IButtonListener{
             baseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + Model.invertColors(content, mInvertedColors);
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
-            mMainLayout.setBackgroundColor(Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors)));
+            if (Themes.changeFlashcardBorder()) {
+                mMainLayout.setBackgroundColor(Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors)));            	
+            }
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             baseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));

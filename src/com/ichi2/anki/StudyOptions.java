@@ -866,6 +866,7 @@ public class StudyOptions extends Activity {
 
         // The view that shows the congratulations view.
         mCongratsView = getLayoutInflater().inflate(R.layout.studyoptions_congrats, null);
+        Themes.changeContentColors(mCongratsView, Themes.CALLER_STUDYOPTIONS_CONGRATS);
 
         mTextCongratsMessage = (TextView) mCongratsView.findViewById(R.id.studyoptions_congrats_message);
         mTextCongratsMessage.setOnClickListener(mButtonClickListener);

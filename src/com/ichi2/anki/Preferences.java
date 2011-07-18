@@ -57,6 +57,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         mPrefMan = getPreferenceManager();

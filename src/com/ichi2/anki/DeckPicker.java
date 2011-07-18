@@ -1319,14 +1319,8 @@ public class DeckPicker extends Activity implements Runnable {
 
     	    @Override
     	    public View getView(int position, View convertView, ViewGroup parent) {
-//    	      if (colors == null) {
-//    	    	  colors = Themes.listColors();
-//    	      }
 	    	  View view = super.getView(position, convertView, parent);
-//    	      if (colors[0] != 0) {
-//        	      int colorPos = position % colors.length;
-//        	      view.setBackgroundColor(colors[colorPos]); 	    	  
-//    	      }
+	    	  Themes.changeContentColors(view, Themes.CALLER_DECKPICKER_DECK);
     	      return view;
     	    }
     }

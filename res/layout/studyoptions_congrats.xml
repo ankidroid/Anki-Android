@@ -5,7 +5,7 @@
 	android:gravity="center"
 	android:layout_width="wrap_content">
 	<TextView
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
 		android:gravity="center"
@@ -15,10 +15,10 @@
 		android:id="@+id/studyoptions_congrats_title" />
 	<TextView
 		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
+		android:layout_width="wrap_content"
 		android:gravity="center"
 		android:text=""
-		android:layout_marginBottom="10dip"
+		android:layout_margin="10dip"
 		android:id="@+id/studyoptions_congrats_message" />
 	<Button
 		android:layout_height="wrap_content"
