@@ -4,4 +4,20 @@
         <item name="android:background">@drawable/widget_bg</item>
     </style>
     <style name="BottomButton"/>
+
+    <style name="Blue">
+        <item name="android:background">@color/reviewer_background</item>
+    </style>
+    <style name="Blue.Button" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/blue_btn_default</item>
+    </style>
+    <style name="Blue.Button.Toggle" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/blue_btn_toggle_bg</item>
+    </style>
+    
+	<style name="Blue.CompoundButton">
+    </style>
+    <style name="Blue.CompoundButton.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+	    <item name="android:button">@drawable/blue_btn_check</item>
+    </style>
 </resources>

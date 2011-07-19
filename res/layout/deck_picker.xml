@@ -4,7 +4,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
-	android:id="@+id/deckpicker_buttons">
+	android:id="@+id/deckpicker_view">
 
 	<ListView android:id="@+id/files"
 		android:layout_width="fill_parent"

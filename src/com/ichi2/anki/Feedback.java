@@ -173,6 +173,7 @@ public class Feedback extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         Resources res = getResources();
@@ -216,8 +217,12 @@ public class Feedback extends Activity {
             finish();
         }
 
-        setContentView(R.layout.feedback);
-
+        View mainView = getLayoutInflater().inflate(R.layout.feedback, null);
+        setContentView(mainView);
+        Themes.setWallpaper(mainView);
+        Themes.setTextViewStyle(findViewById(R.id.tvFeedbackDisclaimer));
+        Themes.setTextViewStyle(findViewById(R.id.lvFeedbackErrorList));
+        
         Button btnSend = (Button) findViewById(R.id.btnFeedbackSend);
         Button btnKeepLatest = (Button) findViewById(R.id.btnFeedbackKeepLatest);
         Button btnClearAll = (Button) findViewById(R.id.btnFeedbackClearAll);

@@ -364,7 +364,7 @@ public class DeckPicker extends Activity implements Runnable {
 		super.onCreate(savedInstanceState);
 
 		setTitleText();
-		
+
 		mSelf = this;
 		setContentView(R.layout.deck_picker);
 
@@ -372,10 +372,9 @@ public class DeckPicker extends Activity implements Runnable {
 
 		initDialogs();
 
-		Themes.changeContentColors((View) findViewById(R.id.deckpicker_buttons), Themes.CALLER_DECKPICKER);
+		Themes.setContentStyle((View) findViewById(R.id.deckpicker_view), Themes.CALLER_DECKPICKER);
 
 		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
-		Themes.changeContentColors(mSyncAllButton, Themes.CALLER_DECKPICKER);
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -397,7 +396,6 @@ public class DeckPicker extends Activity implements Runnable {
 		});
 
 		mStatisticsAllButton = (Button) findViewById(R.id.statistics_all_button);
-		Themes.changeContentColors(mStatisticsAllButton, Themes.CALLER_DECKPICKER);
 		mStatisticsAllButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -431,7 +429,7 @@ public class DeckPicker extends Activity implements Runnable {
 				    if (!text.equals("-1")) {
 	                    Utils.updateProgressBars(DeckPicker.this, view, Double.parseDouble(text) / 100.0, mDeckListView.getWidth(), 2, false); 				        
 				    } else {
-				    	Themes.changeContentColors(view, Themes.CALLER_DECKPICKER_DECK);
+				    	Themes.setContentStyle(view, Themes.CALLER_DECKPICKER_DECK);
 				    }
                 }
 				if (view.getId() == R.id.DeckPickerUpgradeNotesButton) {
@@ -1320,7 +1318,7 @@ public class DeckPicker extends Activity implements Runnable {
     	    @Override
     	    public View getView(int position, View convertView, ViewGroup parent) {
 	    	  View view = super.getView(position, convertView, parent);
-	    	  Themes.changeContentColors(view, Themes.CALLER_DECKPICKER_DECK);
+	    	  Themes.setContentStyle(view, Themes.CALLER_DECKPICKER_DECK);
     	      return view;
     	    }
     }

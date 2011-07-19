@@ -20,6 +20,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -35,7 +36,7 @@ public class Themes {
 	public final static int CALLER_DECKPICKER = 2;
 	public final static int CALLER_DECKPICKER_DECK = 3;
 	public final static int CALLER_REVIEWER= 4;
-	public final static int CALLER_STUDYOPTIONS_CONGRATS = 5;
+	public final static int CALLER_FEEDBACK= 5;
 
 	private static int mCurrentTheme = -1;
 	private static int mProgressbarsBackgroundColor;
@@ -72,8 +73,6 @@ public class Themes {
 				mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_light;
 				mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_blue;
 				mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
-				mButtonStyle = R.drawable.blue_btn_default;
-				mToggleButtonStyle = R.drawable.blue_btn_toggle_bg;
 				mDeckpickerBackground = R.color.deckpicker_background;
 				mReviewerBackground = R.color.reviewer_background;
 				mFlashcardBorder = R.drawable.blue_bg_webview;
@@ -88,14 +87,16 @@ public class Themes {
 		case THEME_DEFAULT:
 			break;
 		case THEME_ANDROID_LIGHT:
-		case THEME_BLUE:
 			context.setTheme(android.R.style.Theme_Light);
+			break;
+		case THEME_BLUE:
+			context.setTheme(R.style.Theme_Blue);
 			break;
 		}
 	}
 
 
-	public static void changeContentColors(View view, int caller) {
+	public static void setContentStyle(View view, int caller) {
 		if (mCurrentTheme == THEME_DEFAULT) {
 			return;
 		}
@@ -116,34 +117,9 @@ public class Themes {
 
 			((View) view.findViewById(R.id.studyoptions_global_limit_bar)).setBackgroundResource(mProgressbarsYoungColor);
 			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
-
-			view.setBackgroundResource(mWallpaper);
-			((View)view.findViewById(R.id.studyoptions_deck_name)).setBackgroundResource(mTitleStyle);
-			((View)view.findViewById(R.id.studyoptions_bottom)).setBackgroundResource(mTitleStyle);
-			((View)view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);
-	        ((View)view.findViewById(R.id.studyoptions_start)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.studyoptions_limit)).setBackgroundResource(mToggleButtonStyle);
-	        ((View)view.findViewById(R.id.studyoptions_cram)).setBackgroundResource(mToggleButtonStyle);
-	        ((View)view.findViewById(R.id.studyoptions_statistics)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.studyoptions_card_browser)).setBackgroundResource(mButtonStyle);
 			break;
-		case CALLER_STUDYOPTIONS_CONGRATS:
-			view.setBackgroundResource(mWallpaper);
-	        ((View)view.findViewById(R.id.studyoptions_congrats_title)).setBackgroundResource(mTitleStyle);
-			((View)view.findViewById(R.id.studyoptions_congrats_message)).setBackgroundResource(mTextViewStyle);
-			
-	        ((View)view.findViewById(R.id.studyoptions_congrats_learnmore)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.studyoptions_congrats_reviewearly)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.studyoptions_congrats_syncdeck)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.studyoptions_congrats_open_other_deck)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.studyoptions_congrats_finish)).setBackgroundResource(mButtonStyle);
-	        break;
 		case CALLER_DECKPICKER:
-			if (view.getId() == R.id.deckpicker_buttons) {
-				view.setBackgroundResource(mDeckpickerBackground);
-			} else {
-				view.setBackgroundResource(mButtonStyle);				
-			}
+			view.setBackgroundResource(mDeckpickerBackground);		
 			break;
 		case CALLER_DECKPICKER_DECK:
 			if (view.getId() == R.id.DeckPickerCompletionMat) {
@@ -155,15 +131,11 @@ public class Themes {
 			}
 			break;
 		case CALLER_REVIEWER:
-	        ((View)view.findViewById(R.id.flip_card)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.ease1)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.ease2)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.ease3)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.ease4)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.ease4)).setBackgroundResource(mButtonStyle);
-	        ((View)view.findViewById(R.id.ease4)).setBackgroundResource(mButtonStyle);
 	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
 	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
+			break;
+		case CALLER_FEEDBACK:
+			((TextView)view).setTextColor(mProgressbarsFrameColor);
 			break;
 		}
 	}
@@ -180,5 +152,30 @@ public class Themes {
 			return false;
 		}
 		return true;
+	}
+
+
+	public static void setWallpaper(View view) {
+		view.setBackgroundResource(mWallpaper);
+	}
+
+
+	public static void setTextViewStyle(View view) {
+		view.setBackgroundResource(mTextViewStyle);
+	}
+
+
+	public static void setTitleStyle(View view) {
+		view.setBackgroundResource(mTitleStyle);
+	}
+
+
+	public static int getForegroundColor() {
+		return mProgressbarsFrameColor;
+	}
+
+
+	public static int getBackgroundColor() {
+		return mDeckpickerBackground;
 	}
 }

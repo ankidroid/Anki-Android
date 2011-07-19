@@ -678,6 +678,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
@@ -1288,7 +1289,7 @@ public class Reviewer extends Activity implements IButtonListener{
         setContentView(layout);
 
         mMainLayout = findViewById(R.id.main_layout);
-        Themes.changeContentColors(mMainLayout, Themes.CALLER_REVIEWER);
+        Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
         mCard = (WebView) findViewById(R.id.flashcard);
         mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
@@ -1348,6 +1349,13 @@ public class Reviewer extends Activity implements IButtonListener{
         mNext3 = (TextView) findViewById(R.id.nextTime3);
         mNext4 = (TextView) findViewById(R.id.nextTime4);
 
+        if (!mshowNextReviewTime) {
+            mNext1.setVisibility(View.GONE);
+            mNext2.setVisibility(View.GONE);
+            mNext3.setVisibility(View.GONE);
+            mNext4.setVisibility(View.GONE);
+        }
+        
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setOnClickListener(mFlipCardListener);
         mFlipCard.setText(getResources().getString(R.string.show_answer));

@@ -233,7 +233,10 @@ public class ChartBuilder extends Activity {
                     .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
-        setContentView(R.layout.statistics);
+        View mainView = getLayoutInflater().inflate(R.layout.statistics, null);
+        setContentView(mainView);
+//        Themes.setWallpaper(mainView);
+//        setContentView(R.layout.statistics);
         mTitle = (TextView) findViewById(R.id.statistics_title);
         if (mChartView == null) {
             if (mFullScreen) {
@@ -260,6 +263,10 @@ public class ChartBuilder extends Activity {
             mRenderer.setYAxisMin(0);
             mRenderer.setXTitle(Statistics.axisLabels[0]);
             mRenderer.setYTitle(Statistics.axisLabels[1]);
+//            mRenderer.setBackgroundColor(Themes.getBackgroundColor());
+//            mRenderer.setMarginsColor(Themes.getBackgroundColor());
+//            mRenderer.setAxesColor(Themes.getForegroundColor());
+//            mRenderer.setLabelsColor(Themes.getForegroundColor());
             mRenderer.setZoomEnabled(false, false);
             if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
                 mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
@@ -285,7 +292,7 @@ public class ChartBuilder extends Activity {
         		return false;
         		}
         	});
-        zoom = Statistics.sZoom;
+		zoom = Statistics.sZoom;
         if (zoom > 0) {
         	zoom();
         }

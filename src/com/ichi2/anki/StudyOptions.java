@@ -791,11 +791,16 @@ public class StudyOptions extends Activity {
     private void initAllContentViews() {
         // The main study options view that will be used when there are reviews left.
         mStudyOptionsView = getLayoutInflater().inflate(R.layout.studyoptions, null);
-        Themes.changeContentColors(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
+        Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
 
         mStudyOptionsMain = (View) mStudyOptionsView.findViewById(R.id.studyoptions_main);
+        Themes.setWallpaper(mStudyOptionsMain);
 
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
+        Themes.setTitleStyle(mTextDeckName);
+
+        Themes.setTextViewStyle(mStudyOptionsView.findViewById(R.id.studyoptions_statistic_field));
+        Themes.setTitleStyle(mStudyOptionsView.findViewById(R.id.studyoptions_bottom));
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
         mToggleCram = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_cram);
@@ -866,9 +871,13 @@ public class StudyOptions extends Activity {
 
         // The view that shows the congratulations view.
         mCongratsView = getLayoutInflater().inflate(R.layout.studyoptions_congrats, null);
-        Themes.changeContentColors(mCongratsView, Themes.CALLER_STUDYOPTIONS_CONGRATS);
+
+        Themes.setWallpaper(mCongratsView);
+        Themes.setTitleStyle(mCongratsView.findViewById(R.id.studyoptions_congrats_title));
 
         mTextCongratsMessage = (TextView) mCongratsView.findViewById(R.id.studyoptions_congrats_message);
+        Themes.setTextViewStyle(mTextCongratsMessage);
+
         mTextCongratsMessage.setOnClickListener(mButtonClickListener);
         mButtonCongratsLearnMore = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_learnmore);
         mButtonCongratsReviewEarly = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_reviewearly);

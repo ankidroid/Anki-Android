@@ -95,9 +95,12 @@ public class CardEditor extends Activity {
 
         registerExternalStorageListener();
 
-        setContentView(R.layout.card_editor);
+        View mainView = getLayoutInflater().inflate(R.layout.card_editor, null);
+        setContentView(mainView);
+        Themes.setWallpaper(mainView);
 
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
+        Themes.setTextViewStyle(mFieldsLayoutContainer);
 
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
