@@ -126,7 +126,9 @@ public class ArabicReshaper{
 		{'\u0686','\uFB7A','\uFB7C','\uFB7D','\uFB7B',4 },
 		{'\u067E','\uFB56','\uFB58','\uFB59','\uFB57',4 },
 		{'\u0698','\uFB8A','\uFB8A','\uFB8B','\uFB8B',2 },
-		{'\u06AF','\uFB92','\uFB94','\uFB95','\uFB93',4 },		
+		{'\u06AF','\uFB92','\uFB94','\uFB95','\uFB93',4 },
+		{'\u06CC','\uFEEF','\uFEF3','\uFEF4','\uFEF0',4 },
+		{'\u06A9','\uFB8E','\uFB90','\uFB91','\uFB8F',4 },
 	};
 
 
