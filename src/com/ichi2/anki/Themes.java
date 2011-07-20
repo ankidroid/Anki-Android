@@ -53,6 +53,7 @@ public class Themes {
 	private static int mTitleStyle = 0;
 	private static int mTextViewStyle= 0;
 	private static int mWallpaper = 0;
+	private static int mBackgroundColor = 0;
 	
 
 	public static void applyTheme(Context context) {
@@ -83,6 +84,7 @@ public class Themes {
 				mTitleStyle = R.drawable.blue_title;
 				mTextViewStyle = R.drawable.blue_textview;
 				mWallpaper = R.drawable.blue_wallpaper;
+				mBackgroundColor = R.color.background_blue;
 				break;
 			}
 		}
@@ -179,6 +181,11 @@ public class Themes {
 
 
 	public static int getBackgroundColor() {
-		return mDeckpickerBackground;
+		return mBackgroundColor;
+	}
+
+
+	public static int getTheme() {
+		return mCurrentTheme;
 	}
 }

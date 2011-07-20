@@ -130,8 +130,12 @@ public class CardBrowser extends Activity {
 
         markedColor = getResources().getColor(R.color.card_browser_marked);
         suspendedColor = getResources().getColor(R.color.card_browser_suspended);
-        backgroundColor = Themes.getBackgroundColor();
-        mainView.setBackgroundResource(backgroundColor);
+        if (Themes.getTheme() == 2) {
+            backgroundColor = getResources().getColor(R.color.background_blue);
+            mainView.setBackgroundResource(Themes.getBackgroundColor());        	
+        } else {
+        	backgroundColor = getResources().getColor(R.color.card_browser_background);
+        }
 
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mrelativeBrowserFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
