@@ -235,6 +235,8 @@
 <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
 <string name="select_locale_title">Select Language</string>
 <string name="select_theme">Theme</string>
+<string name="theme_animations">Animations</string>
+<string name="theme_animations_summ">Show animations when flipping cards</string>
 <!-- deck_properties.xml -->
 <!--<string name="deck_properties">Deck properties</string>-->
 <!--<string name="sync_on">Synchronize this deck</string>-->

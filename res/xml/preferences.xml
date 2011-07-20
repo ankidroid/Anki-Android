@@ -74,6 +74,11 @@
 				android:defaultValue="0"
 				android:entries="@array/theme_labels"
 				android:entryValues="@array/theme_values" />
+			<CheckBoxPreference
+				android:title="@string/theme_animations"
+				android:defaultValue="false"
+				android:summary="@string/theme_animations_summ"
+				android:key="themeAnimations" />
 		</PreferenceCategory>
 	</PreferenceScreen>
 	

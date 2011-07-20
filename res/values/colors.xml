@@ -65,5 +65,6 @@
 	<color name="deckpicker_progressbar_young_light">#999999</color>
 
 	<color name="reviewer_background">#c6cfd6</color>
+	<color name="background_blue">#c6cfd6</color>
 	
 </resources>

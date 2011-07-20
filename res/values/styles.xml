@@ -8,16 +8,35 @@
     <style name="Blue">
         <item name="android:background">@color/reviewer_background</item>
     </style>
+
+    <!-- Button styles -->
     <style name="Blue.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/blue_btn_default</item>
+    </style>
+    <style name="Blue.Button.Small" parent="@android:style/Widget.Button.Small">
+        <item name="android:background">@drawable/blue_btn_small</item>
     </style>
     <style name="Blue.Button.Toggle" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/blue_btn_toggle_bg</item>
     </style>
-    
-	<style name="Blue.CompoundButton">
+    <style name="Blue.CompoundButton">
     </style>
     <style name="Blue.CompoundButton.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
 	    <item name="android:button">@drawable/blue_btn_check</item>
     </style>
+
+    <!-- Dialog styles
+    <style name="Blue.AlertDialog">
+        <item name="fullDark">@android:drawable/popup_full_dark</item>
+        <item name="topDark">@android:drawable/popup_top_dark</item>
+        <item name="centerDark">@android:drawable/popup_center_dark</item>
+        <item name="bottomDark">@android:drawable/popup_bottom_dark</item>
+        <item name="fullBright">@android:drawable/popup_full_bright</item>
+        <item name="topBright">@android:drawable/popup_top_bright</item>
+        <item name="centerBright">@android:drawable/popup_center_bright</item>
+        <item name="bottomBright">@android:drawable/popup_bottom_bright</item>
+        <item name="bottomMedium">@android:drawable/popup_bottom_medium</item>
+        <item name="centerMedium">@android:drawable/popup_center_medium</item>
+    </style> -->
+
 </resources>

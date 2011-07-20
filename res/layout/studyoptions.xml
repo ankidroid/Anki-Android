@@ -221,12 +221,14 @@
 			android:layout_height="wrap_content">
 			<Button android:id="@+id/studyoptions_statistics"
    		     	android:layout_height="fill_parent"
+			style="?android:attr/buttonStyleSmall"
    		     	android:layout_width="0dip"
    		     	android:layout_weight="1"
 				android:text="@string/statistics"/>
 			<Button
 				android:id="@+id/studyoptions_card_browser"
 				android:layout_width="0dip" 
+			style="?android:attr/buttonStyleSmall"
 				android:layout_height="fill_parent"
 				android:layout_weight="1" 
 				android:text="@string/card_browser"/> 

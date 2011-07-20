@@ -64,6 +64,8 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -77,6 +79,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.apis.animation.Rotate3dAnimation;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -214,6 +217,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
+    private boolean mShowAnimations = true;
 
     private boolean mIsDictionaryAvailable;
     private boolean mIsSelecting = false;
@@ -238,6 +242,7 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private View mMainLayout;
     private WebView mCard;
+    private FrameLayout mCardContainer;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
@@ -329,6 +334,11 @@ public class Reviewer extends Activity implements IButtonListener{
  	private static final int GESTURE_DELETE = 14;
  	private static final int GESTURE_CLEAR_WHITEBOARD = 15;
  	private static final int GESTURE_EXIT = 16;
+
+ 	private String mCardContent;
+ 	private String mBaseUrl;
+ 	private static final int ANIMATION_SPEED = 350;
+ 	private boolean mFirstCard = true;
 
  	/**
  	 * Zeemote controller
@@ -616,6 +626,27 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onProgressUpdate(DeckTask.TaskData... values) {
             // Pass
         }
+    };
+
+
+    Animation.AnimationListener mFlipCardAnimationListener = new Animation.AnimationListener() {
+    	boolean muh = false;
+    	public void onAnimationStart(Animation animation) {
+    	}
+
+    	public void onAnimationEnd(Animation animation) {
+    		mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
+    		if (!muh) {
+          		applyRotation(90, 270, 0, true);
+          		muh = true;
+    		} else {
+           		applyRotation(270, 360, ANIMATION_SPEED / 2, false);
+           		muh = false;
+    		}
+    	}
+
+    	public void onAnimationRepeat(Animation animation) {
+    	}
     };
 
 
@@ -1098,6 +1129,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
                 // TODO: code to save the changes made to the current card.
+                // TODO: resume with edited card
                 displayCardQuestion();
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
@@ -1291,6 +1323,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mMainLayout = findViewById(R.id.main_layout);
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
+        mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
+        
         mCard = (WebView) findViewById(R.id.flashcard);
         mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
@@ -1502,10 +1536,12 @@ public class Reviewer extends Activity implements IButtonListener{
         mEase2.setVisibility(View.GONE);
         mEase3.setVisibility(View.GONE);
         mEase4.setVisibility(View.GONE);
-        mNext1.setVisibility(View.INVISIBLE);
-        mNext2.setVisibility(View.INVISIBLE);
-        mNext3.setVisibility(View.INVISIBLE);
-        mNext4.setVisibility(View.INVISIBLE);
+	if (mshowNextReviewTime) {
+            mNext1.setVisibility(View.INVISIBLE);
+            mNext2.setVisibility(View.INVISIBLE);
+            mNext3.setVisibility(View.INVISIBLE);
+            mNext4.setVisibility(View.INVISIBLE);
+	}
     }
 
 
@@ -1573,6 +1609,7 @@ public class Reviewer extends Activity implements IButtonListener{
          	mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "0"));
          	mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
         }
+        mShowAnimations = preferences.getBoolean("themeAnimations", false);
 
         return preferences;
     }
@@ -1800,7 +1837,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Log.i(AnkiDroidApp.TAG, "updateCard");
 
 
-        String baseUrl = "";
+        mBaseUrl = "";
         Boolean isJapaneseModel = false;
         
         //Check whether there is a hard coded font-size in the content and apply the relative font size
@@ -1813,7 +1850,7 @@ public class Reviewer extends Activity implements IButtonListener{
         	
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
-            baseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
+            mBaseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + Model.invertColors(content, mInvertedColors);
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
             if (Themes.changeFlashcardBorder()) {
@@ -1821,7 +1858,7 @@ public class Reviewer extends Activity implements IButtonListener{
             }
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
-            baseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
+            mBaseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
         }
 
         // Log.i(AnkiDroidApp.TAG, "Initial content card = \n" + content);
@@ -1834,17 +1871,17 @@ public class Reviewer extends Activity implements IButtonListener{
         String answer = "";
         if (isQuestionDisplayed()) {
         	if (sDisplayAnswer && (questionStartsAt != -1)) {
-        		question = Sound.parseSounds(baseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION);
-        		answer = Sound.parseSounds(baseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
+        		question = Sound.parseSounds(mBaseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION);
+        		answer = Sound.parseSounds(mBaseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
         	} else {
-            	question = Sound.parseSounds(baseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
+            	question = Sound.parseSounds(mBaseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
         	}
         } else {
         	int qa = MetaDB.LANGUAGE_QUESTION;
         	if (sDisplayAnswer) {
         		qa = MetaDB.LANGUAGE_ANSWER;
         	}
-        	answer = Sound.parseSounds(baseUrl, content, mSpeakText, qa);
+        	answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
         }
 
         // Parse out the LaTeX images
@@ -1875,12 +1912,18 @@ public class Reviewer extends Activity implements IButtonListener{
         style.append(getDefaultFontStyle());
         style.append(getDeckStyle(mCurrentCard.mDeck.getDeckPath()));
         Log.i(AnkiDroidApp.TAG, "::style::" + style);
-        String card =
+        mCardContent =
             mCardTemplate.replace("::content::", content).replace("::style::", style.toString());
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
-        Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
-        mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
-      
+        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl );
+
+	if (mShowAnimations && !mFirstCard) {
+		applyRotation(0, 90, ANIMATION_SPEED / 2, true);
+	} else {
+        	mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
+        	mFirstCard = false;
+	}      
+
         if (!mConfigurationChanged && mPlaySoundsAtStart) {
         	if (!mSpeakText) {
         		Sound.playSounds(null, 0);
@@ -2331,6 +2374,26 @@ public class Reviewer extends Activity implements IButtonListener{
         m.appendTail(sb);
         return sb.toString();
     }
+
+
+    private void applyRotation(float start, float end, int speed, boolean setListener) {
+    	if (mFirstCard) {
+    		return;
+    	}
+    	// Find the center of image
+    	final float centerX = mCard.getWidth() / 2.0f;
+    	final float centerY = mCard.getHeight() / 2.0f;
+
+    	final Rotate3dAnimation rotation = new Rotate3dAnimation(start, end, centerX, centerY, 0, false);
+    	rotation.setDuration(speed);
+    	rotation.setFillAfter(true);
+    	rotation.setInterpolator(new AccelerateInterpolator());
+    	if (setListener) {
+        	rotation.setAnimationListener(mFlipCardAnimationListener);    		
+    	}
+    	mCardContainer.clearAnimation();
+    	mCardContainer.startAnimation(rotation);
+    	}
 
 
     private void executeCommand(int which) {

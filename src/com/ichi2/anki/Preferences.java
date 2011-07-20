@@ -47,6 +47,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private PreferenceManager mPrefMan;
     private CheckBoxPreference zoomCheckboxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
+    private CheckBoxPreference animationsCheckboxPreference;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
@@ -69,6 +70,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
+        animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
+        ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
+        animationsCheckboxPreference.setEnabled(listpref.getValue().equals("2"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
         initializeLanguageDialog();
         initializeCustomFontsDialog();
@@ -191,6 +195,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             updateListPreference(key);
         } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
             updateSeekBarPreference(key);
+        } else if (key.equals("theme")) {
+        	if (sharedPreferences.getString("theme", "0").equals("2")) {
+        		animationsCheckboxPreference.setChecked(false);
+        		animationsCheckboxPreference.setEnabled(false);        		
+        	} else {
+        		animationsCheckboxPreference.setEnabled(true);
+        	}
         }
     }
 
