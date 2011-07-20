@@ -6,4 +6,6 @@
 	android:visibility="gone"
 	android:layout_gravity="center"
 	android:gravity="center"
+	style="?android:attr/buttonStyleSmall"
 	android:layout_alignParentBottom="true"/>
+

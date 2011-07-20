@@ -3,7 +3,6 @@
 	<style name="WidgetBackground">
         <item name="android:background">@drawable/widget_bg</item>
     </style>
-    <style name="BottomButton"/>
 
     <style name="Blue">
         <item name="android:background">@color/reviewer_background</item>
