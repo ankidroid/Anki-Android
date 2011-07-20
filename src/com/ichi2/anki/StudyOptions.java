@@ -860,10 +860,14 @@ public class StudyOptions extends Activity {
         // The view to use when there is no deck loaded yet.
         // TODO: Add and init view here.
         mNoDeckView = getLayoutInflater().inflate(R.layout.studyoptions_nodeck, null);
+        Themes.setWallpaper(mNoDeckView);
 
         mTextNoDeckTitle = (TextView) mNoDeckView.findViewById(R.id.studyoptions_nodeck_title);
+        Themes.setTitleStyle(mTextNoDeckTitle);
         mTextNoDeckMessage = (TextView) mNoDeckView.findViewById(R.id.studyoptions_nodeck_message);
+        Themes.setTextViewStyle(mTextNoDeckMessage);
         mTextNoDeckMessage.setOnClickListener(mButtonClickListener);
+        Themes.setTextViewStyle(mTextNoDeckMessage);
 
         mNoDeckView.findViewById(R.id.studyoptions_load_sample_deck).setOnClickListener(mButtonClickListener);
         mNoDeckView.findViewById(R.id.studyoptions_download_deck).setOnClickListener(mButtonClickListener);
@@ -893,6 +897,9 @@ public class StudyOptions extends Activity {
 
         // The view to use when there is no external storage available
         mNoExternalStorageView = getLayoutInflater().inflate(R.layout.studyoptions_nostorage, null);
+        Themes.setWallpaper(mNoExternalStorageView);
+        Themes.setTitleStyle(mNoExternalStorageView.findViewById(R.id.studyoptions_nostorage_title));
+        Themes.setTextViewStyle(mNoExternalStorageView.findViewById(R.id.studyoptions_nostorage_message));
     }
 
 

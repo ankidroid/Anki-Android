@@ -46,8 +46,8 @@ public class Themes {
 	private static int mProgressbarsDeckpickerYoungColor;
 	private static int mButtonStyle = 0;
 	private static int mToggleButtonStyle = 0;
-	private static int mDeckpickerBackground = 0;;
-	private static int mReviewerBackground = 0;;
+	private static int mDeckpickerBackground = 0;
+	private static int mReviewerBackground = 0;
 	private static int mFlashcardBorder = 0;
 	private static int mDeckpickerItemBorder = 0;
 	private static int mTitleStyle = 0;
@@ -60,6 +60,9 @@ public class Themes {
 			SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
 			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "0"));
 			switch (mCurrentTheme) {
+			case THEME_DEFAULT:
+				mDeckpickerBackground = R.color.card_browser_background;
+				break;
 			case THEME_ANDROID_LIGHT:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_light;
 				mProgressbarsFrameColor = R.color.studyoptions_progressbar_frame_light;

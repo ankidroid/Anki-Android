@@ -119,16 +119,19 @@ public class CardBrowser extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//    	Themes.applyTheme(this);
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.card_browser);
+        View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
+        setContentView(mainView);
+
         mDeck = AnkiDroidApp.deck();
         mDeck.resetUndo();
 
         markedColor = getResources().getColor(R.color.card_browser_marked);
         suspendedColor = getResources().getColor(R.color.card_browser_suspended);
-        backgroundColor = getResources().getColor(R.color.card_browser_background);
+        backgroundColor = Themes.getBackgroundColor();
+        mainView.setBackgroundResource(backgroundColor);
 
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mrelativeBrowserFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);

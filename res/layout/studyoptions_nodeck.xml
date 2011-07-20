@@ -9,7 +9,6 @@
 		android:layout_alignParentTop="true"
 		android:layout_marginTop="10dip"
 		android:layout_height="wrap_content"
-		android:textColor="#ffffff"
 		android:textStyle="bold"
 		android:textSize="28dip"
 		android:gravity="center"
@@ -18,12 +17,14 @@
 	<ScrollView
 		android:layout_below="@+id/studyoptions_nodeck_title"
 		android:layout_above="@+id/studyoptions_nodeck_buttons"
+		android:layout_marginTop="10dip"
+		android:layout_marginLeft="5dip"
+		android:layout_marginRight="5dip"
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"> 
 		<TextView
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
-			android:layout_marginTop="10dip"
 			android:paddingLeft="10dip"
 			android:paddingRight="10dip"
 			android:id="@+id/studyoptions_nodeck_message" />

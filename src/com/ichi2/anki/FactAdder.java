@@ -139,9 +139,12 @@ public class FactAdder extends Activity {
         
         registerExternalStorageListener();
 
-        setContentView(R.layout.fact_adder);
+        View mainView = getLayoutInflater().inflate(R.layout.fact_adder, null);
+        setContentView(mainView);
+        Themes.setWallpaper(mainView);
 
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.FactAdderEditFieldsLayout);
+        Themes.setTextViewStyle(mFieldsLayoutContainer);
 
         mAddButton = (Button) findViewById(R.id.FactAdderAddButton);
         mCloseButton = (Button) findViewById(R.id.FactAdderCloseButton);
