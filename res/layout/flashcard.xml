@@ -73,7 +73,7 @@
 			android:layout_toLeftOf="@+id/card_time"
 			android:orientation="vertical"
 			android:gravity="center"
-			android:visibility="gone"
+			android:visibility="invisible"
 			android:paddingRight="8dp">
 			<FrameLayout android:id="@+id/progress_bars_border1"
 				android:background="#808080"
@@ -113,7 +113,7 @@
 			android:layout_height="wrap_content"
 		android:paddingRight="4dp"
 		android:textSize="14dip"
-		android:visibility="gone"
+		android:visibility="invisible"
 			android:gravity="right"
 			android:textColor="#000000" />
 	</LinearLayout>

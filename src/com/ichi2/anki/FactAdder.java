@@ -40,6 +40,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.Fact.Field;
 
 import java.util.ArrayList;
@@ -507,7 +508,7 @@ public class FactAdder extends Activity {
     private void closeFactAdder() {
     	finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(FactAdder.this, MyAnimation.RIGHT);
+            ActivityTransitionAnimation.slide(FactAdder.this, ActivityTransitionAnimation.RIGHT);
         }
     }
 

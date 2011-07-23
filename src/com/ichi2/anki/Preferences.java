@@ -53,7 +53,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CharSequence[] mLanguageDialogValues;
     private static String[] mAppLanguages = {"ar", "ca", "cs", "de", "el", "es_ES", "fi", "fr", "it", "ja", "ko", "pl", "pt_PT", "ro", "ru", "sr", "sv-SE", "zh-CN", "zh-TW", "en"};
     private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme"};
-    private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds"};
+    private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds", "animationDuration"};
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
 
     @Override
@@ -110,16 +110,20 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private void updateSeekBarPreference(String key) {
         SeekBarPreference seekpref = (SeekBarPreference) getPreferenceScreen().findPreference(key);
-        if (mListsToUpdate.containsKey(key)) {
-            seekpref.setSummary(replaceString(mListsToUpdate.get(key), Integer.toString(seekpref.getValue())));
-        } else {
-            String oldsum = (String) seekpref.getSummary();
-            if (oldsum.contains("XXX")) {
-                mListsToUpdate.put(key, oldsum);
-                seekpref.setSummary(replaceString(oldsum, Integer.toString(seekpref.getValue())));
+        try {
+            if (mListsToUpdate.containsKey(key)) {
+                seekpref.setSummary(replaceString(mListsToUpdate.get(key), Integer.toString(seekpref.getValue())));
             } else {
-                seekpref.setSummary(Integer.toString(seekpref.getValue()));
-            }
+                String oldsum = (String) seekpref.getSummary();
+                if (oldsum.contains("XXX")) {
+                    mListsToUpdate.put(key, oldsum);
+                    seekpref.setSummary(replaceString(oldsum, Integer.toString(seekpref.getValue())));
+                } else {
+                    seekpref.setSummary(Integer.toString(seekpref.getValue()));
+                }
+            }        	
+        } catch (NullPointerException e) {
+        	Log.e(AnkiDroidApp.TAG, "Exception when updating seekbar preference: " + e);
         }
     }
 

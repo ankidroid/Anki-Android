@@ -64,8 +64,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -74,19 +73,18 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ViewFlipper;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.apis.animation.Rotate3dAnimation;
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anim.Animation3D;
+import com.ichi2.anim.ViewAnimation;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
 import com.tomgibara.android.veecheck.util.PrefSettings;
-
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.amr.arabic.ArabicUtilities;
 
@@ -337,8 +335,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
  	private String mCardContent;
  	private String mBaseUrl;
- 	private static final int ANIMATION_SPEED = 350;
  	private boolean mFirstCard = true;
+ 	private boolean mFlipToRight = false;
+    private int mAnimationDurationTurn = 500;
+    private int mAnimationDurationMove = 500;
+
 
  	/**
  	 * Zeemote controller
@@ -356,7 +357,8 @@ public class Reviewer extends Activity implements IButtonListener{
     
     /** The class attribute of the comparedField for formatting */
     private String comparedFieldClass = null;
-    
+
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -616,9 +618,9 @@ public class Reviewer extends Activity implements IButtonListener{
         	finish();
         	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
         		if (mShowCongrats) {
-        			MyAnimation.slide(Reviewer.this, MyAnimation.FADE);
+        			ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.FADE);
         		} else {
-        			MyAnimation.slide(Reviewer.this, MyAnimation.RIGHT);
+        			ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
         		}
         	}
         }
@@ -626,27 +628,6 @@ public class Reviewer extends Activity implements IButtonListener{
         public void onProgressUpdate(DeckTask.TaskData... values) {
             // Pass
         }
-    };
-
-
-    Animation.AnimationListener mFlipCardAnimationListener = new Animation.AnimationListener() {
-    	boolean muh = false;
-    	public void onAnimationStart(Animation animation) {
-    	}
-
-    	public void onAnimationEnd(Animation animation) {
-    		mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
-    		if (!muh) {
-          		applyRotation(90, 270, 0, true);
-          		muh = true;
-    		} else {
-           		applyRotation(270, 360, ANIMATION_SPEED / 2, false);
-           		muh = false;
-    		}
-    	}
-
-    	public void onAnimationRepeat(Animation animation) {
-    	}
     };
 
 
@@ -910,7 +891,8 @@ public class Reviewer extends Activity implements IButtonListener{
         super.onConfigurationChanged(newConfig);
 
         Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
-        
+
+        mFirstCard = true;
         mConfigurationChanged = true;
         
         long savedTimer = mCardTimer.getBase();
@@ -1106,6 +1088,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 return true;
 
             case MENU_UNDO:
+            	mFlipToRight = true;
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));
                 return true;
@@ -1198,7 +1181,7 @@ public class Reviewer extends Activity implements IButtonListener{
         	sEditorCard = mCurrentCard;
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
             if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                MyAnimation.slide(Reviewer.this, MyAnimation.LEFT);
+                ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.LEFT);
             }
             return true;
         }
@@ -1484,13 +1467,15 @@ public class Reviewer extends Activity implements IButtonListener{
     private void showEaseButtons() {
         Resources res = getResources();
 
+        // hide flipcard button
+        switchVisibility(mFlipCard, View.GONE);
+
         // Set correct label for each button
         if (mCurrentCard.isRev()) {
             mEase1.setText(res.getString(R.string.ease1_successive));
             mEase2.setText(res.getString(R.string.ease2_successive));
             mEase3.setText(res.getString(R.string.ease3_successive));
             mEase4.setText(res.getString(R.string.ease4_successive));
-            
         } else {
             mEase1.setText(res.getString(R.string.ease1_learning));
             mEase2.setText(res.getString(R.string.ease2_learning));
@@ -1499,22 +1484,10 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         // Show buttons
-        mEase1.setVisibility(View.VISIBLE);
-        mEase2.setVisibility(View.VISIBLE);
-        mEase3.setVisibility(View.VISIBLE);
-        mEase4.setVisibility(View.VISIBLE);
-       
-        // Show next review time
-        if (mshowNextReviewTime) {
-        mNext1.setText(nextInterval(1));
-        mNext2.setText(nextInterval(2));
-        mNext3.setText(nextInterval(3));
-        mNext4.setText(nextInterval(4));
-        mNext1.setVisibility(View.VISIBLE);
-        mNext2.setVisibility(View.VISIBLE);
-        mNext3.setVisibility(View.VISIBLE);
-        mNext4.setVisibility(View.VISIBLE);
-        }
+        switchVisibility(mEase1, View.VISIBLE);
+        switchVisibility(mEase2, View.VISIBLE);
+        switchVisibility(mEase3, View.VISIBLE);
+        switchVisibility(mEase4, View.VISIBLE);
         
         // Focus default button
         if (mCurrentCard.isRev()) {
@@ -1526,37 +1499,58 @@ public class Reviewer extends Activity implements IButtonListener{
             mNext2.setTextColor(mNextTimeTextRecomColor);
             mNext3.setTextColor(mNextTimeTextColor);
         }
+
+        // Show next review time
+        if (mshowNextReviewTime) {
+        mNext1.setText(nextInterval(1));
+        mNext2.setText(nextInterval(2));
+        mNext3.setText(nextInterval(3));
+        mNext4.setText(nextInterval(4));
+        switchVisibility(mNext1, View.VISIBLE);
+        switchVisibility(mNext2, View.VISIBLE);
+        switchVisibility(mNext3, View.VISIBLE);
+        switchVisibility(mNext4, View.VISIBLE);
+        }
     }
 
 
     private void hideEaseButtons() {
-        // GONE -> It allows to write until the very bottom
-        // INVISIBLE -> The transition between the question and the answer seems more smooth
-        mEase1.setVisibility(View.GONE);
-        mEase2.setVisibility(View.GONE);
-        mEase3.setVisibility(View.GONE);
-        mEase4.setVisibility(View.GONE);
-	if (mshowNextReviewTime) {
-            mNext1.setVisibility(View.INVISIBLE);
-            mNext2.setVisibility(View.INVISIBLE);
-            mNext3.setVisibility(View.INVISIBLE);
-            mNext4.setVisibility(View.INVISIBLE);
-	}
+    	switchVisibility(mEase1, View.GONE);
+    	switchVisibility(mEase2, View.GONE);
+    	switchVisibility(mEase3, View.GONE);
+    	switchVisibility(mEase4, View.GONE);
+    	if (mshowNextReviewTime) {
+    		switchVisibility(mNext1, View.INVISIBLE);
+    		switchVisibility(mNext2, View.INVISIBLE);
+    		switchVisibility(mNext3, View.INVISIBLE);
+    		switchVisibility(mNext4, View.INVISIBLE);
+    	}
+		switchVisibility(mFlipCard, View.VISIBLE);
+    	mFlipCard.requestFocus();
+    }
+
+
+    private void switchVisibility(View view, int visible) {
+    	view.setVisibility(visible);
+    	if (mShowAnimations) {
+    		int duration = mAnimationDurationTurn / 2;
+    		if (visible == View.VISIBLE) {
+        		view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, duration, duration));    			
+    		} else {
+        		view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, duration, 0));
+    		}
+    	}
     }
 
 
     private void initControls() {
-        mCard.setVisibility(View.VISIBLE);
+    	mCard.setVisibility(View.VISIBLE);
         mTextBarRed.setVisibility(View.VISIBLE);
         mTextBarBlack.setVisibility(View.VISIBLE);
         mTextBarBlue.setVisibility(View.VISIBLE);
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCard.setVisibility(View.VISIBLE);
         
-        mCardTimer.setVisibility((mPrefTimer) ? View.VISIBLE : View.GONE);
-        if (mShowProgressBars) {
-            mProgressBars.setVisibility(View.VISIBLE);
-        }
         if (mPrefWhiteboard) {
             mWhiteboard.setVisibility(mShowWhiteboard ? View.VISIBLE : View.GONE);            
         }
@@ -1610,6 +1604,11 @@ public class Reviewer extends Activity implements IButtonListener{
          	mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
         }
         mShowAnimations = preferences.getBoolean("themeAnimations", false);
+        if (mShowAnimations) {
+            int animationDuration = preferences.getInt("animationDuration", 500);
+           	mAnimationDurationTurn = animationDuration;
+           	mAnimationDurationMove = animationDuration;
+        }
 
         return preferences;
     }
@@ -1645,7 +1644,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mAnswerField.setText("");
         }
 
-        if (mPrefWhiteboard) {
+        if (mPrefWhiteboard && !mShowAnimations) {
             mWhiteboard.clear();
         }
 
@@ -1659,6 +1658,13 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void updateScreenCounts() {
+    	if (mFirstCard) {
+            mCardTimer.setVisibility((mPrefTimer) ? View.VISIBLE : View.GONE);
+            if (mShowProgressBars) {
+                mProgressBars.setVisibility(View.VISIBLE);
+            }
+    	}
+    	
         Deck deck = AnkiDroidApp.deck();
         int eta = deck.getETA();
         if (deck.hasFinishScheduler() || eta < 1) {
@@ -1737,9 +1743,6 @@ public class Reviewer extends Activity implements IButtonListener{
             inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
         }
 
-        mFlipCard.setVisibility(View.VISIBLE);
-        mFlipCard.requestFocus();
-
         String question = mCurrentCard.getQuestion();
         
         if(mPrefFixArabic) {
@@ -1758,7 +1761,11 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         updateCard(displayString);
-        hideEaseButtons();
+        if (!mFirstCard) {
+            hideEaseButtons();
+        } else {
+            mFirstCard = false;        	
+        }
 
         // If the user want to show answer automatically
         if (mPrefUseTimer) {
@@ -1827,9 +1834,8 @@ public class Reviewer extends Activity implements IButtonListener{
         }
 
         mIsSelecting = false;
-        mFlipCard.setVisibility(View.GONE);
         updateCard(displayString);
-        showEaseButtons();
+        showEaseButtons();        	
     }
 
 
@@ -1857,7 +1863,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 mMainLayout.setBackgroundColor(Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors)));            	
             }
         } else {
-            mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
+        	mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             mBaseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
         }
 
@@ -1917,12 +1923,11 @@ public class Reviewer extends Activity implements IButtonListener{
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl );
 
-	if (mShowAnimations && !mFirstCard) {
-		applyRotation(0, 90, ANIMATION_SPEED / 2, true);
-	} else {
-        	mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
-        	mFirstCard = false;
-	}      
+        if (!mFirstCard && mShowAnimations) {
+        	fillFlashcard(true);
+        } else {
+        	fillFlashcard(false);
+        }      
 
         if (!mConfigurationChanged && mPlaySoundsAtStart) {
         	if (!mSpeakText) {
@@ -1933,6 +1938,33 @@ public class Reviewer extends Activity implements IButtonListener{
         		Sound.playSounds(Utils.stripHTML(mCurrentCard.getAnswer()), MetaDB.LANGUAGE_ANSWER);            	
             } 
         }
+    }
+
+
+    public void fillFlashcard(boolean flip) {
+    	if (!flip) {
+    		mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
+    	} else {
+    		Animation3D rotation;
+    		if (sDisplayAnswer) {
+    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 5, true, true, true, this);
+    			rotation.setDuration(mAnimationDurationTurn);
+    			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
+    		} else {
+        		if (mShowWhiteboard) {
+    				mWhiteboard.clear();
+        		}
+    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, !mFlipToRight, false, true, this);
+    			mFlipToRight = false;
+    			rotation.setDuration(mAnimationDurationMove);
+    			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
+    		}
+			rotation.reset();
+			mCardContainer.setDrawingCacheEnabled(true);
+			mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
+	    	mCardContainer.clearAnimation();
+	    	mCardContainer.startAnimation(rotation);
+    	}
     }
 
 
@@ -2376,26 +2408,6 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    private void applyRotation(float start, float end, int speed, boolean setListener) {
-    	if (mFirstCard) {
-    		return;
-    	}
-    	// Find the center of image
-    	final float centerX = mCard.getWidth() / 2.0f;
-    	final float centerY = mCard.getHeight() / 2.0f;
-
-    	final Rotate3dAnimation rotation = new Rotate3dAnimation(start, end, centerX, centerY, 0, false);
-    	rotation.setDuration(speed);
-    	rotation.setFillAfter(true);
-    	rotation.setInterpolator(new AccelerateInterpolator());
-    	if (setListener) {
-        	rotation.setAnimationListener(mFlipCardAnimationListener);    		
-    	}
-    	mCardContainer.clearAnimation();
-    	mCardContainer.startAnimation(rotation);
-    	}
-
-
     private void executeCommand(int which) {
     	switch(which) {
     	case GESTURE_NOTHING:
@@ -2453,6 +2465,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		break;
     	case GESTURE_UNDO:
     		if (AnkiDroidApp.deck().undoAvailable()) {
+    			mFlipToRight = true;
         		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));    			
     		}

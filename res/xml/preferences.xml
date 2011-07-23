@@ -78,7 +78,18 @@
 				android:title="@string/theme_animations"
 				android:defaultValue="false"
 				android:summary="@string/theme_animations_summ"
+				android:disableDependentsState="false"
 				android:key="themeAnimations" />
+			<com.hlidskialf.android.preference.SeekBarPreference 
+      			android:key="animationDuration"
+      	  		android:title="@string/animation_speed"
+      	  		android:summary="@string/animation_speed_summ"
+				android:defaultValue="500"
+        		android:dependency="themeAnimations"
+        		android:text=" ms"
+        		app:min="100"
+        		android:max="2000" 
+        		app:interval="50" />
 		</PreferenceCategory>
 	</PreferenceScreen>
 	

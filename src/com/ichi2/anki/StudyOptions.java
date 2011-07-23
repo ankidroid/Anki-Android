@@ -58,6 +58,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -222,6 +224,7 @@ public class StudyOptions extends Activity {
     private ToggleButton mToggleCram;
     private ToggleButton mToggleLimit;
     private TextView mTextDeckName;
+    private LinearLayout mStatisticsField;
     private TextView mTextReviewsDue;
     private TextView mTextNewToday;
     private TextView mTextETA;
@@ -596,7 +599,7 @@ public class StudyOptions extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig){
     	super.onConfigurationChanged(newConfig);
-    	int visibility = mStudyOptionsMain.getVisibility();
+    	hideDeckInformation();
         boolean cramChecked = mToggleCram.isChecked();
         boolean limitChecked = mToggleLimit.isChecked();
         boolean limitEnabled = mToggleLimit.isEnabled();
@@ -616,7 +619,7 @@ public class StudyOptions extends Activity {
         if (mDailyBar != null) {
             mGlobalLimitFrame.setVisibility(limitBarVisibility);
         }
-        mStudyOptionsMain.setVisibility(visibility);
+        showDeckInformation(false);
     }
 
 
@@ -701,7 +704,7 @@ public class StudyOptions extends Activity {
             reviewer.putExtra("deckFilename", mDeckFilename);
     		startActivityForResult(reviewer, REQUEST_REVIEW);
         	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-       			MyAnimation.slide(this, MyAnimation.LEFT);
+       			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
     		startEarlyReview();
@@ -718,7 +721,7 @@ public class StudyOptions extends Activity {
             reviewer.putExtra("deckFilename", mDeckFilename);
             startActivityForResult(reviewer, REQUEST_REVIEW);
         	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-       			MyAnimation.slide(this, MyAnimation.LEFT);
+       			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
         }
     }
@@ -733,7 +736,7 @@ public class StudyOptions extends Activity {
     		reviewer.putExtra("deckFilename", mDeckFilename);
         	startActivityForResult(reviewer, REQUEST_REVIEW);
     		if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-    			MyAnimation.slide(this, MyAnimation.LEFT);
+    			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
     		}
         }
     }
@@ -799,7 +802,9 @@ public class StudyOptions extends Activity {
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         Themes.setTitleStyle(mTextDeckName);
 
-        Themes.setTextViewStyle(mStudyOptionsView.findViewById(R.id.studyoptions_statistic_field));
+        mStatisticsField = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_statistic_field);
+        Themes.setTextViewStyle(mStatisticsField);
+
         Themes.setTitleStyle(mStudyOptionsView.findViewById(R.id.studyoptions_bottom));
 
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
@@ -830,6 +835,7 @@ public class StudyOptions extends Activity {
         }
 
         mTextReviewsDue = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_reviews_due);
+        mTextReviewsDue.setText("    ");
         mTextNewToday = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_today);
         mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
         mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
@@ -1434,6 +1440,24 @@ public class StudyOptions extends Activity {
     }
 
 
+    private void hideDeckInformation() {
+        mTextDeckName.setVisibility(View.INVISIBLE);
+        mStatisticsField.setVisibility(View.INVISIBLE);
+    }
+
+
+    private void showDeckInformation(boolean fade) {
+        mTextDeckName.setVisibility(View.VISIBLE);
+        if (fade) {
+            mTextDeckName.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));        	
+        }
+        mStatisticsField.setVisibility(View.VISIBLE);
+        if (fade) {
+        	mStatisticsField.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+        }
+    }
+
+
     private void updateValuesFromDeck() {
         Deck deck = AnkiDroidApp.deck();
         Resources res = getResources();
@@ -1444,6 +1468,7 @@ public class StudyOptions extends Activity {
             setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dueCount, deck.getDeckName(), dueCount, cardsCount));
 
             mTextDeckName.setText(deck.getDeckName());
+
             mTextReviewsDue.setText(String.valueOf(dueCount));
             mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
             String etastr = "-";
@@ -1598,7 +1623,7 @@ public class StudyOptions extends Activity {
             case MENU_ADD_FACT:
             	startActivityForResult(new Intent(StudyOptions.this, FactAdder.class), ADD_FACT);
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
+                    ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
                 }
                 return true;
 
@@ -1615,7 +1640,7 @@ public class StudyOptions extends Activity {
         mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
     	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-    		MyAnimation.slide(this, MyAnimation.RIGHT);
+    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
     }
@@ -1625,7 +1650,7 @@ public class StudyOptions extends Activity {
         Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(StudyOptions.this, MyAnimation.LEFT);
+            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
         }
     }
 
@@ -1647,7 +1672,7 @@ public class StudyOptions extends Activity {
             startActivityForResult(
                     new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
         	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-        		MyAnimation.slide(this, MyAnimation.RIGHT);
+        		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         	}
         } else {
             mUserNotLoggedInAlert.show();
@@ -1664,7 +1689,7 @@ public class StudyOptions extends Activity {
         // deckLoaded = false;
         startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
     	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-    		MyAnimation.slide(this, MyAnimation.RIGHT);
+    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
     }
 
@@ -1752,8 +1777,7 @@ public class StudyOptions extends Activity {
             mInDeckPicker = false;
 
             if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_OK) {
-                showContentView(CONTENT_SESSION_COMPLETE);
-                mStudyOptionsMain.setVisibility(View.INVISIBLE);
+                showContentView(CONTENT_STUDY_OPTIONS);
             } else if ((requestCode == DOWNLOAD_SHARED_DECK || requestCode == DOWNLOAD_PERSONAL_DECK) && resultCode == RESULT_OK) {
             	openDeckPicker();
             	return;
@@ -2020,6 +2044,7 @@ public class StudyOptions extends Activity {
             // {
             mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
                     .getString(R.string.loading_deck), true);
+	    	hideDeckInformation();
             // }
         }
 
@@ -2044,6 +2069,7 @@ public class StudyOptions extends Activity {
                     if (mPrefStudyOptions) {
                         updateValuesFromDeck();
                         showContentView(CONTENT_STUDY_OPTIONS);
+                        showDeckInformation(true);
                     } else {
                         startActivityForResult(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
                     }
@@ -2076,7 +2102,6 @@ public class StudyOptions extends Activity {
             if (deck != null) {
                 mToggleLimit.setChecked(deck.isLimitedByTag() || deck.getSessionRepLimit() + deck.getSessionTimeLimit() > 0);
             }
-            mStudyOptionsMain.setVisibility(View.VISIBLE);
         }
 
 
@@ -2170,7 +2195,7 @@ public class StudyOptions extends Activity {
 		    	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
 		    	startActivityForResult(intent, STATISTICS);
 		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-		            MyAnimation.slide(StudyOptions.this, MyAnimation.DOWN);
+		            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
 		        }
 			}
 		}

@@ -50,6 +50,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.services.DownloadManagerService;
 import com.ichi2.anki.services.IDownloadManagerService;
 import com.ichi2.anki.services.ISharedDeckServiceCallback;
@@ -428,7 +429,7 @@ public class SharedDeckPicker extends Activity {
     	}
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(this, MyAnimation.LEFT);
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         }           
     }
 

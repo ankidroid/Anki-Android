@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
@@ -133,7 +134,7 @@ public class DeckCreator extends Activity {
     private void closeDeckCreator() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(DeckCreator.this, MyAnimation.LEFT);
+            ActivityTransitionAnimation.slide(DeckCreator.this, ActivityTransitionAnimation.LEFT);
         }    
     }
 

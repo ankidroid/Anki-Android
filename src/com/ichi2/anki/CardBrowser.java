@@ -50,6 +50,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
@@ -176,7 +177,7 @@ public class CardBrowser extends Activity {
                 editCard.putExtra("callfromcardbrowser", true);
                 startActivityForResult(editCard, EDIT_CARD);
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    MyAnimation.slide(CardBrowser.this, MyAnimation.LEFT);
+                    ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
                 }
             }
         });
@@ -301,7 +302,7 @@ public class CardBrowser extends Activity {
                 setResult(RESULT_OK);
                 finish();
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    MyAnimation.slide(CardBrowser.this, MyAnimation.RIGHT);
+                    ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.RIGHT);
                 }
             } else {
                 mSearchEditText.setText("");
@@ -362,7 +363,7 @@ public class CardBrowser extends Activity {
             case MENU_ADD_FACT:
                 startActivityForResult(new Intent(CardBrowser.this, FactAdder.class), ADD_FACT);
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    MyAnimation.slide(CardBrowser.this, MyAnimation.LEFT);
+                    ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
                 }
                 return true;
             case MENU_SHOW_MARKED:

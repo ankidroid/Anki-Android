@@ -22,20 +22,22 @@
     </style>
     <style name="Blue.CompoundButton.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
 	    <item name="android:button">@drawable/blue_btn_check</item>
+    </style><!--
+
+     Dialog styles 
+    <style name="Blue.AlertDialog">
+        <item name="fullDark">@drawable/popup_full_dark</item>
+        <item name="topDark">@drawable/popup_top_dark</item>
+        <item name="centerDark">@drawable/popup_center_dark</item>
+        <item name="bottomDark">@drawable/popup_bottom_dark</item>
+
+        <item name="fullBright">@drawable/popup_full_bright</item>
+        <item name="topBright">@drawable/popup_top_bright</item>
+        <item name="centerBright">@drawable/popup_center_bright</item>
+        <item name="bottomBright">@drawable/popup_bottom_bright</item>
+
+        <item name="bottomMedium">@drawable/popup_bottom_medium</item>
+        <item name="centerMedium">@drawable/popup_center_medium</item>
     </style>
 
-    <!-- Dialog styles
-    <style name="Blue.AlertDialog">
-        <item name="fullDark">@android:drawable/popup_full_dark</item>
-        <item name="topDark">@android:drawable/popup_top_dark</item>
-        <item name="centerDark">@android:drawable/popup_center_dark</item>
-        <item name="bottomDark">@android:drawable/popup_bottom_dark</item>
-        <item name="fullBright">@android:drawable/popup_full_bright</item>
-        <item name="topBright">@android:drawable/popup_top_bright</item>
-        <item name="centerBright">@android:drawable/popup_center_bright</item>
-        <item name="bottomBright">@android:drawable/popup_bottom_bright</item>
-        <item name="bottomMedium">@android:drawable/popup_bottom_medium</item>
-        <item name="centerMedium">@android:drawable/popup_center_medium</item>
-    </style> -->
-
-</resources>
+--></resources>

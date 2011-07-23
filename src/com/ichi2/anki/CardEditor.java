@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.Fact.Field;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -247,7 +248,7 @@ public class CardEditor extends Activity {
     private void closeCardEditor() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(CardEditor.this, MyAnimation.RIGHT);
+            ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.RIGHT);
         }    
     }
 

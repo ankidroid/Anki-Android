@@ -61,6 +61,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -738,7 +739,7 @@ public class DeckPicker extends Activity implements Runnable {
 	private void closeDeckPicker () {
     	finish();
     	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-    		MyAnimation.slide(this, MyAnimation.LEFT);
+    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
     	}
 	}
 
@@ -813,7 +814,7 @@ public class DeckPicker extends Activity implements Runnable {
             case MENU_CREATE_DECK:
                 startActivityForResult(new Intent(DeckPicker.this, DeckCreator.class), CREATE_DECK);;
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    MyAnimation.slide(DeckPicker.this, MyAnimation.RIGHT);
+                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
                 }
                 return true;
 
@@ -863,7 +864,7 @@ public class DeckPicker extends Activity implements Runnable {
                 Intent i = new Intent(DeckPicker.this, DeckPicker.class);
                 startActivity(i);
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    MyAnimation.slide(this, MyAnimation.NONE);
+                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
                 }
             }
         } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
@@ -871,7 +872,7 @@ public class DeckPicker extends Activity implements Runnable {
             Intent i = new Intent(DeckPicker.this, DeckPicker.class);
             startActivity(i);
             if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                MyAnimation.slide(this, MyAnimation.NONE);
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
             }
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         }
@@ -1111,7 +1112,7 @@ public class DeckPicker extends Activity implements Runnable {
             }
             startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
             if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                MyAnimation.slide(this, MyAnimation.RIGHT);
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
             }
         } else {
             showDialog(DIALOG_USER_NOT_LOGGED_IN);
@@ -1128,7 +1129,7 @@ public class DeckPicker extends Activity implements Runnable {
         // deckLoaded = false;
         startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(this, MyAnimation.RIGHT);
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         }
     }
 
@@ -1255,7 +1256,7 @@ public class DeckPicker extends Activity implements Runnable {
 		    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
 		    	startActivity(intent);
 		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-		            MyAnimation.slide(DeckPicker.this, MyAnimation.DOWN);
+		            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
 		        }				
 			}
 		}

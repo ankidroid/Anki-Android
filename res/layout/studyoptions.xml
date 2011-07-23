@@ -2,7 +2,6 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/studyoptions_main"
-	android:visibility="invisible"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:gravity="center"
@@ -32,8 +31,9 @@
 			android:gravity="center" 
 			android:layout_width="fill_parent" 
 			android:layout_height="wrap_content"
+			android:visibility="invisible"
 			android:layout_marginBottom="8dp" 
-			android:text="Deck name"/>
+			android:text=""/>
 		<LinearLayout
 			android:id="@+id/studyoptions_statistic_field" 
 			android:orientation="vertical"
@@ -41,6 +41,7 @@
 			android:layout_gravity="center"
 			android:layout_marginBottom="8dp"
 			android:layout_width="wrap_content"
+			android:visibility="invisible"
 			android:layout_height="wrap_content">
 			<LinearLayout
 				android:layout_width="fill_parent"
@@ -142,7 +143,7 @@
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="4dp"
 						android:gravity="right"
-						android:text="0"/>
+						android:text=""/>
 				</TableRow>
 				<TableRow>
 					<TextView
@@ -155,7 +156,7 @@
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="4dp"
 						android:gravity="right"
-						android:text="0"/>
+						android:text=""/>
 				</TableRow>
 				<TableRow>
 					<TextView
@@ -168,7 +169,7 @@
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="4dp"
 						android:gravity="right"
-						android:text="0"/>
+						android:text=""/>
 				</TableRow>
 				<TableRow>
 					<TextView

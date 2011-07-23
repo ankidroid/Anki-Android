@@ -10,9 +10,9 @@
         <item name="android:colorBackground">@color/background_blue</item>
 
         <!-- Dialog attributes -->
-        <item name="android:alertDialogStyle">@style/Theme_Blue.Dialog</item>
-        <!--<item name="android:dialogTheme">@style/Theme_Blue.Dialog</item>
-        <item name="android:dialogTitleIconsDecorLayout">@layout/dialog_title_icons</item>
+        <!--<item name="android:alertDialogStyle">@style/Blue.AlertDialog</item>-->
+        <!--<item name="android:dialogTheme">@style/Theme_Blue.Dialog</item>-->
+        <!--<item name="android:dialogTitleIconsDecorLayout">@layout/dialog_title_icons</item>
         <item name="android:dialogCustomTitleDecorLayout">@layout/dialog_custom_title</item>
         <item name="android:dialogTitleDecorLayout">@layout/dialog_title</item>
 
@@ -99,53 +99,15 @@
         <item name="homeAsUpIndicator">@android:drawable/ic_ab_back_holo_dark</item>-->
     </style>
 
-    <style name="Theme_Blue.Dialog"><!--
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowTitleStyle">@android:style/DialogWindowTitle</item>
-        <item name="android:windowBackground">@android:drawable/panel_background</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
-        <item name="android:windowCloseOnTouchOutside">@bool/config_closeDialogWhenTouchOutside</item>
-        <item name="android:windowActionModeOverlay">true</item>
-
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        
-        <item name="android:textAppearance">@android:style/TextAppearance</item>
-        <item name="android:textAppearanceInverse">@android:style/TextAppearance.Inverse</item>
-
-        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
-        <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
-        <item name="android:textColorTertiary">@android:color/tertiary_text_dark</item>
-        <item name="android:textColorPrimaryInverse">@android:color/primary_text_light</item>
-        <item name="android:textColorSecondaryInverse">@android:color/secondary_text_light</item>
-        <item name="android:textColorTertiaryInverse">@android:color/tertiary_text_light</item>
-        <item name="android:textColorPrimaryDisableOnly">@android:color/primary_text_dark_disable_only</item>
-        <item name="android:textColorPrimaryInverseDisableOnly">@android:color/primary_text_light_disable_only</item>
-        <item name="android:textColorPrimaryNoDisable">@android:color/primary_text_dark_nodisable</item>
-        <item name="android:textColorSecondaryNoDisable">@android:color/secondary_text_dark_nodisable</item>
-        <item name="android:textColorPrimaryInverseNoDisable">@android:color/primary_text_light_nodisable</item>
-        <item name="android:textColorSecondaryInverseNoDisable">@android:color/secondary_text_light_nodisable</item>
-        <item name="android:textColorHint">@android:color/hint_foreground_dark</item>
-        <item name="android:textColorHintInverse">@android:color/hint_foreground_light</item>
-        <item name="android:textColorSearchUrl">@android:color/search_url_text</item>
-
-        <item name="android:textAppearanceLarge">@android:style/TextAppearance.Large</item>
-        <item name="android:textAppearanceMedium">@android:style/TextAppearance.Medium</item>
-        <item name="android:textAppearanceSmall">@android:style/TextAppearance.Small</item>
-        <item name="android:textAppearanceLargeInverse">@android:style/TextAppearance.Large.Inverse</item>
-        <item name="android:textAppearanceMediumInverse">@android:style/TextAppearance.Medium.Inverse</item>
-        <item name="android:textAppearanceSmallInverse">@android:style/TextAppearance.Small.Inverse</item>
-    --></style>
-    <!-- Default theme for alert dialog windows, which is used by the
-         {@link android.app.AlertDialog} class.  This is basically a dialog
-         but sets the background to empty so it can do two-tone backgrounds. --><!--
+    <style name="Theme_Blue.Dialog">
+        <item name="android:buttonStyle">@style/Blue.Button.Small</item>
+        <item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>
+    </style>
     <style name="Theme_Blue.Dialog.Alert">
-        <item name="android:windowBackground">@android:color/transparent</item>
+      <!--  <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowTitleStyle">@android:style/DialogWindowTitle</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:itemTextAppearance">@android:style/TextAppearance.Large</item>
+        <item name="android:itemTextAppearance">@android:style/TextAppearance.Large</item>-->
     </style>
 
---></resources>
+</resources>

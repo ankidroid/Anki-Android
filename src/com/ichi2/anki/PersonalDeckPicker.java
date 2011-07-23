@@ -45,6 +45,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.services.DownloadManagerService;
 import com.ichi2.anki.services.IDownloadManagerService;
 import com.ichi2.anki.services.IPersonalDeckServiceCallback;
@@ -383,7 +384,7 @@ public class PersonalDeckPicker extends Activity {
     	}
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(this, MyAnimation.LEFT);
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         }
     }
 

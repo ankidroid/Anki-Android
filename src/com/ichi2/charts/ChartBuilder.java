@@ -46,8 +46,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.MyAnimation;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptions;
@@ -157,7 +157,7 @@ public class ChartBuilder extends Activity {
     public void closeChartBuilder() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(this, MyAnimation.UP);
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.UP);
         }
     }
 
@@ -204,7 +204,7 @@ public class ChartBuilder extends Activity {
                 Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
                 startActivity(intent);
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    MyAnimation.slide(this, MyAnimation.FADE);
+                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 }
                 return true;
             case MENU_ZOOM_IN:
