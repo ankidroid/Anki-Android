@@ -429,15 +429,13 @@ public class Feedback extends Activity {
                 if (mReportErrorMode.equals(REPORT_ASK)) {
                     if (state.equals(STATE_SUCCESSFUL)) {
                         mEtFeedbackText.setText("");
-                        Toast.makeText(Feedback.this,
-                                res.getString(R.string.feedback_message_sent_success), Toast.LENGTH_LONG).show();
+                        Themes.showThemedToast(Feedback.this, res.getString(R.string.feedback_message_sent_success), false);
                     } else if (state.equals(STATE_FAILED)) {
                         int respCode = (Integer)values[3];
                         if (respCode == 0) {
                             onDisconnected();
                         } else {
-                            Toast.makeText(Feedback.this, res.getString(R.string.feedback_message_sent_failure, respCode),
-                                    Toast.LENGTH_LONG).show();
+                        	Themes.showThemedToast(Feedback.this, res.getString(R.string.feedback_message_sent_failure, respCode), false);
                         }
                     }
                 }

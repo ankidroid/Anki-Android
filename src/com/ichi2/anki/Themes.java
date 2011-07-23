@@ -23,8 +23,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Themes {
 
@@ -54,6 +56,7 @@ public class Themes {
 	private static int mTextViewStyle= 0;
 	private static int mWallpaper = 0;
 	private static int mBackgroundColor = 0;
+	private static int mToastBackground = 0;
 	
 
 	public static void applyTheme(Context context) {
@@ -85,6 +88,7 @@ public class Themes {
 				mTextViewStyle = R.drawable.blue_textview;
 				mWallpaper = R.drawable.blue_wallpaper;
 				mBackgroundColor = R.color.background_blue;
+				mToastBackground = R.drawable.blue_toast_frame;
 				break;
 			}
 		}
@@ -187,5 +191,14 @@ public class Themes {
 
 	public static int getTheme() {
 		return mCurrentTheme;
+	}
+
+
+	public static void showThemedToast(Context context, String text, boolean shortLength) {
+		Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
+		if (mCurrentTheme >= THEME_BLUE) {
+			result.getView().setBackgroundResource(mToastBackground);
+		}
+        result.show();
 	}
 }

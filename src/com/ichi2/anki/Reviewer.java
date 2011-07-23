@@ -515,30 +515,26 @@ public class Reviewer extends Activity implements IButtonListener{
             Deck deck = AnkiDroidApp.deck();
             long sessionRepLimit = deck.getSessionRepLimit();
             long sessionTime = deck.getSessionTimeLimit();
-            Toast sessionMessage = null;
-            Toast leechMessage = null;
+            String sessionMessage = null;
+            String leechMessage;
             Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
 
             if (values[0].isPreviousCardLeech()) {
                 if (values[0].isPreviousCardSuspended()) {
-                    leechMessage = Toast.makeText(Reviewer.this, res.getString(R.string.leech_suspend_notification),
-                        Toast.LENGTH_LONG);
+                    leechMessage = res.getString(R.string.leech_suspend_notification);
                 } else {
-                    leechMessage = Toast.makeText(Reviewer.this, res.getString(R.string.leech_notification),
-                            Toast.LENGTH_LONG);
+                    leechMessage = res.getString(R.string.leech_notification);
                 }
-                leechMessage.show();
+                Themes.showThemedToast(Reviewer.this, leechMessage, false);
             }
 
             if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
                 mSessionComplete = true;
-                sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_question_limit_reached),
-                        Toast.LENGTH_SHORT);
+                sessionMessage = res.getString(R.string.session_question_limit_reached);
             } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
                 // session time limit reached, flag for halt once async task has completed.
                 mSessionComplete = true;
-                sessionMessage = Toast.makeText(Reviewer.this, res.getString(R.string.session_time_limit_reached),
-                        Toast.LENGTH_SHORT);
+                sessionMessage = res.getString(R.string.session_time_limit_reached);
             } else if (mIsLastCard) {
                 mNoMoreCards = true;
                 mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
@@ -575,7 +571,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
             // Show a message to user if a session limit has been reached.
             if (sessionMessage != null) {
-                sessionMessage.show();
+            	Themes.showThemedToast(Reviewer.this, sessionMessage, true);
             }
         }
 
@@ -1171,10 +1167,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private boolean editCard() {
         if (isCramming()) {
-            Toast cramEditWarning = 
-                Toast.makeText(Reviewer.this, 
-                        getResources().getString(R.string.cram_edit_warning), Toast.LENGTH_SHORT);
-            cramEditWarning.show();
+        	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.cram_edit_warning), true);
             return false;
         } else {
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);

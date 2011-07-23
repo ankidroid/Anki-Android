@@ -1095,10 +1095,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private void resetDeckLanguages(String deckPath) {
 		if (MetaDB.resetDeckLanguages(this, deckPath)) {
-            Toast successReport = 
-                Toast.makeText(this, 
-                        getResources().getString(R.string.contextmenu_deckpicker_reset_reset_message), Toast.LENGTH_SHORT);
-            successReport.show();
+			Themes.showThemedToast(this, getResources().getString(R.string.contextmenu_deckpicker_reset_reset_message), true);
 		}
 	}
 

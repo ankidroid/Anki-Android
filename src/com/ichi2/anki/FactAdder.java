@@ -118,8 +118,7 @@ public class FactAdder extends Activity {
         		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
         		populateEditFields();
             } else {
-                Toast failureNotice = Toast.makeText(FactAdder.this, getResources().getString(R.string.factadder_saving_error), Toast.LENGTH_SHORT);
-                failureNotice.show();
+            	Themes.showThemedToast(FactAdder.this, getResources().getString(R.string.factadder_saving_error), true);
             }
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
