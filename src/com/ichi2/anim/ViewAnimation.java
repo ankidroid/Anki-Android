@@ -20,7 +20,6 @@ public class ViewAnimation {
 
 	
 	public static Animation slide(int type, int duration, int offset) {
-		duration = 500;
         Animation animation;
         switch (type) {
         case SLIDE_IN_FROM_RIGHT:
