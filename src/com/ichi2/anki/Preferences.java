@@ -188,12 +188,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         	zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
         } else if (key.equals("language")) {
 			Intent intent = this.getIntent();
-			setResult(RESULT_OK, intent);
+			setResult(StudyOptions.RESULT_RESTART, intent);
 			finish();
         } else if (key.equals("theme")) {
         	Themes.resetTheme();
 			Intent intent = this.getIntent();
-			setResult(RESULT_OK, intent);
+			setResult(StudyOptions.RESULT_RESTART, intent);
 			finish();
         } else if (Arrays.asList(mShowValueInSummList).contains(key)) {
             updateListPreference(key);

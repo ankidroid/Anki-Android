@@ -127,7 +127,7 @@ public class DeckPicker extends Activity implements Runnable {
     private static final int CREATE_DECK = 1;
     private static final int DOWNLOAD_PERSONAL_DECK = 2;
     private static final int DOWNLOAD_SHARED_DECK = 3;
-    private static final int REPORT_FEEDBACK = 2;
+    private static final int REPORT_FEEDBACK = 4;
 
 	private DeckPicker mSelf;
 
@@ -155,6 +155,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private String mPrefDeckPath = null;
 	private int mPrefDeckOrder = 0;
+	private boolean mPrefStartupDeckPicker = false;
 	private String mRemoveDeckFilename = null;
 	private String mRemoveDeckPath = null;
 
@@ -466,6 +467,7 @@ public class DeckPicker extends Activity implements Runnable {
 				.getSharedPrefs(getBaseContext());
 		mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
 		mPrefDeckOrder = Integer.parseInt(preferences.getString("deckOrder", "0"));
+		mPrefStartupDeckPicker = Integer.parseInt(preferences.getString("startup_mode", "2")) == StudyOptions.SUM_DECKPICKER;
 		populateDeckList(mPrefDeckPath);
 
 		mSwipeEnabled = preferences.getBoolean("swipe", false);
@@ -682,7 +684,7 @@ public class DeckPicker extends Activity implements Runnable {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
         	Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
-        	closeDeckPicker();
+        	closeDeckPicker(true);
         	return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -735,12 +737,20 @@ public class DeckPicker extends Activity implements Runnable {
 		}
 	}
 
-	
-	private void closeDeckPicker () {
-    	finish();
-    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-    	}
+
+	private void closeDeckPicker() {
+		closeDeckPicker(false);
+	}
+	private void closeDeckPicker(boolean backPressed) {
+		if (mPrefStartupDeckPicker && backPressed) {
+    		setResult(StudyOptions.RESULT_CLOSE);
+    		finish();
+		} else {
+			finish();
+			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+	    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+	    	}			
+		}
 	}
 
 
@@ -862,14 +872,19 @@ public class DeckPicker extends Activity implements Runnable {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (requestCode == PREFERENCES_UPDATE) {
-            SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-            if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
-                finish();
-                Intent i = new Intent(DeckPicker.this, DeckPicker.class);
-                startActivity(i);
-                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-                }
+            if (resultCode == StudyOptions.RESULT_RESTART) {
+            	setResult(StudyOptions.RESULT_RESTART);
+            	finish();
+            } else {
+            	SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+                if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
+                    finish();
+                    Intent i = new Intent(DeckPicker.this, DeckPicker.class);
+                    startActivity(i);
+                    if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+                    }
+                }            	
             }
         } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
             finish();

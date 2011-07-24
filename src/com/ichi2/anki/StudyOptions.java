@@ -109,6 +109,9 @@ public class StudyOptions extends Activity {
     private static final int ADD_FACT = 6;
     private static final int BROWSE_CARDS = 7;
     private static final int STATISTICS = 8;
+    
+    public static final int RESULT_RESTART = 100;
+    public static final int RESULT_CLOSE = 101;
 
     /**
 * Constants for selecting which content view to display
@@ -122,9 +125,9 @@ public class StudyOptions extends Activity {
 
 
     /** Startup Mode choices */
-    private static final int SUM_STUDY_OPTIONS = 0;
-    private static final int SUM_DECKPICKER = 1;
-    private static final int SUM_DECKPICKER_ON_FIRST_START = 2;
+    public static final int SUM_STUDY_OPTIONS = 0;
+    public static final int SUM_DECKPICKER = 1;
+    public static final int SUM_DECKPICKER_ON_FIRST_START = 2;
 
 
     public static final String EXTRA_DECK = "deck";
@@ -684,7 +687,13 @@ public class StudyOptions extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-            closeStudyOptions();
+            if (mCurrentContentView == CONTENT_CONGRATS) {
+            	showContentView(CONTENT_SESSION_COMPLETE);
+            } else if (mStartupMode == SUM_DECKPICKER) {
+            	openDeckPicker();
+            } else {
+                closeStudyOptions();            	
+            }
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -695,6 +704,14 @@ public class StudyOptions extends Activity {
         closeOpenedDeck();
         MetaDB.closeDB();
         finish();
+    }
+
+
+    private void restartApp() {
+    	// restarts application in order to apply new themes or localisations
+    	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+    	closeStudyOptions();
+    	startActivity(i);
     }
 
 
@@ -1769,6 +1786,11 @@ public class StudyOptions extends Activity {
             showContentView(CONTENT_NO_EXTERNAL_STORAGE);
         } else if (requestCode == PICK_DECK_REQUEST || requestCode == DOWNLOAD_PERSONAL_DECK
                 || requestCode == DOWNLOAD_SHARED_DECK) {
+        	if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_CLOSE) {
+        		closeStudyOptions();
+        	} else if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_RESTART) {
+        		restartApp();
+        	}
             // Clean the previous card before showing the first of the new loaded deck (so the transition is not so
             // abrupt)
             // updateCard("");
@@ -1819,12 +1841,8 @@ public class StudyOptions extends Activity {
         } else if (requestCode == PREFERENCES_UPDATE) {
             restorePreferences();
             showContentView();
-            if (resultCode == RESULT_OK) {
-            	// restarts application in order to apply new themes or localisations
-            	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName());
-            	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            	closeStudyOptions();
-            	startActivity(i);
+            if (resultCode == RESULT_RESTART) {
+            	restartApp();
             }
             // If there is no deck loaded the controls have not to be shown
             // if(deckLoaded && cardsToReview)

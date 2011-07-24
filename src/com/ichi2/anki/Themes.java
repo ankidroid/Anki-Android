@@ -46,8 +46,6 @@ public class Themes {
 	private static int mProgressbarsMatureColor;
 	private static int mProgressbarsYoungColor;
 	private static int mProgressbarsDeckpickerYoungColor;
-	private static int mButtonStyle = 0;
-	private static int mToggleButtonStyle = 0;
 	private static int mDeckpickerBackground = 0;
 	private static int mReviewerBackground = 0;
 	private static int mFlashcardBorder = 0;
@@ -152,6 +150,20 @@ public class Themes {
 
 	public static void resetTheme(){
 		mCurrentTheme = -1;
+		mProgressbarsBackgroundColor = 0;
+		mProgressbarsFrameColor = 0;
+		mProgressbarsMatureColor = 0;
+		mProgressbarsYoungColor = 0;
+		mProgressbarsDeckpickerYoungColor = 0;
+		mDeckpickerBackground = 0;
+		mReviewerBackground = 0;
+		mFlashcardBorder = 0;
+		mDeckpickerItemBorder = 0;
+		mTitleStyle = 0;
+		mTextViewStyle = 0;
+		mWallpaper = 0;
+		mBackgroundColor = 0;
+		mToastBackground = 0;
 	}
 
 
