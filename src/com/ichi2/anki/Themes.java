@@ -84,7 +84,7 @@ public class Themes {
 				mDeckpickerItemBorder = R.drawable.blue_bg_deckpicker;
 				mTitleStyle = R.drawable.blue_title;
 				mTextViewStyle = R.drawable.blue_textview;
-				mWallpaper = R.drawable.blue_wallpaper;
+				mWallpaper = R.drawable.blue_background;
 				mBackgroundColor = R.color.background_blue;
 				mToastBackground = R.drawable.blue_toast_frame;
 				break;

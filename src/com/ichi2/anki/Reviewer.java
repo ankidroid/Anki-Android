@@ -1115,6 +1115,7 @@ public class Reviewer extends Activity implements IButtonListener{
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
             }
+            mFirstCard = true;
         }
     }
 
