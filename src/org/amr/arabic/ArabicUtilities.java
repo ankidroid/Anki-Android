@@ -253,7 +253,7 @@ public class ArabicUtilities {
 						}else{
 							
 							// append the buffered arabic text
-							reshapedText.append(manualRTL(arabicText, forWebView));
+							reshapedText.append(arabicText);
 							arabicText = new StringBuffer("");
 							// append the word to the whole reshaped Text
 							reshapedText.append(mixedWords[j]);
@@ -263,7 +263,7 @@ public class ArabicUtilities {
 			}else{//The word doesn't have any Arabic Letters
 
 				// append the buffered arabic text
-				reshapedText.append(manualRTL(arabicText, forWebView));
+				reshapedText.append(arabicText);
 				arabicText = new StringBuffer("");
 				// append the word to the whole reshaped Text
 				reshapedText.append(words[i]);
@@ -281,27 +281,87 @@ public class ArabicUtilities {
 		}
 		
 		// append the final arabic sequence
-		reshapedText.append(manualRTL(arabicText, forWebView));
+		reshapedText.append(arabicText);
 
 		//return the final reshaped whole text
-		return reshapedText.toString();
+		return manualRTL(reshapedText, forWebView).toString();
 	}
 	
 	public static String reshapeSentence(String sentence) {
 		return reshapeSentence(sentence, false);
 	}
 	
-	public static String manualRTL(StringBuffer arabicText, boolean forWebView){
+	public static StringBuffer manualRTL(StringBuffer text, boolean forWebView){
 
 		if(forWebView){
-
-			if(patternBreakingWebView.matcher(arabicText).find()) {
-				return arabicText.reverse().toString();
+			if(patternBreakingWebView.matcher(text).find()) {
+				// handle BiDi manually
+				// global direction is LTR because of HTML markup
+				StringBuffer ltr = new StringBuffer(""), rtl = new StringBuffer("");
+				int i = 0;
+				while(i < text.length())
+				{
+					char c  = text.charAt(i);
+					if(isStrongLeftToRight(c) || !isStrongRightToLeft(c))
+					{
+						while(i < text.length() && !isStrongRightToLeft(text.charAt(i)))
+						{
+							ltr.append(text.charAt(i));
+							i++;
+						}
+						if(i == text.length())
+						{
+							break;
+						}
+					}
+					if(isStrongRightToLeft(text.charAt(i)))
+					{
+						while(i < text.length() && !isStrongLeftToRight(text.charAt(i)))
+						{
+							// additional end condition: start of an HTML tag
+							if(text.charAt(i) == '<')
+							{
+								break;
+							}
+							rtl.append(text.charAt(i));
+							i++;
+						}
+						// reverse only words that Android will not display correctly by itself
+						if(patternBreakingWebView.matcher(rtl).find())
+						{
+							ltr.append(rtl.reverse());
+						}
+						else
+						{
+							ltr.append(rtl);
+						}
+						rtl = new StringBuffer("");
+					}
+				}
+				return ltr;
 			}
 		}
-		return arabicText.toString();
+		return text;
 	}
 	
+	public static boolean isStrongLeftToRight(char c)
+	{
+		byte dir = Character.getDirectionality(c);
+		return (dir == Character.DIRECTIONALITY_LEFT_TO_RIGHT) ||
+				(dir == Character.DIRECTIONALITY_LEFT_TO_RIGHT_EMBEDDING) ||
+				(dir == Character.DIRECTIONALITY_LEFT_TO_RIGHT_OVERRIDE);
+	}
+	
+
+	public static boolean isStrongRightToLeft(char c)
+	{
+		byte dir = Character.getDirectionality(c);
+		return (dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT) ||
+				(dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC) ||
+				(dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING) ||
+				(dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE);
+	}
+
 	public static TextView getArabicEnabledTextView(Context context, TextView targetTextView) {
 		//this is a static for testing!
 		if (face == null) {
