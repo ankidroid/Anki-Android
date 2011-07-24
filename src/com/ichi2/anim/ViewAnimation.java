@@ -14,6 +14,7 @@ public class ViewAnimation {
 	public static final int SLIDE_OUT_TO_RIGHT = 1;
 	public static final int SLIDE_IN_FROM_LEFT = 2;
 	public static final int SLIDE_OUT_TO_LEFT = 3;
+	public static final int SLIDE_IN_FROM_BOTTOM = 4;
 
 	public static final int FADE_IN = 0;
 	public static final int FADE_OUT = 1;
@@ -44,6 +45,12 @@ public class ViewAnimation {
             animation = new TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                );
+        	break;
+        case SLIDE_IN_FROM_BOTTOM:
+            animation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f
                 );
         	break;
     	default:

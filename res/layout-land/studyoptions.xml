@@ -211,14 +211,12 @@
 				android:layout_height="wrap_content">
 				<ToggleButton 
 					android:id="@+id/studyoptions_limit" 
-style="?android:attr/buttonStyleSmall"
 					android:layout_height="0dip"
          			android:layout_width="fill_parent"
     		     	android:layout_weight="1"
 					android:textOff="@string/studyoptions_limit_button_text"
 					android:textOn="@string/studyoptions_limit_button_text" />
 				<ToggleButton
-style="?android:attr/buttonStyleSmall"
 					android:id="@+id/studyoptions_cram" 
 					android:layout_height="0dip"
          			android:layout_width="fill_parent"

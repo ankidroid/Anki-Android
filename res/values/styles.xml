@@ -22,22 +22,27 @@
     </style>
     <style name="Blue.CompoundButton.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
 	    <item name="android:button">@drawable/blue_btn_check</item>
-    </style><!--
-
-     Dialog styles 
-    <style name="Blue.AlertDialog">
-        <item name="fullDark">@drawable/popup_full_dark</item>
-        <item name="topDark">@drawable/popup_top_dark</item>
-        <item name="centerDark">@drawable/popup_center_dark</item>
-        <item name="bottomDark">@drawable/popup_bottom_dark</item>
-
-        <item name="fullBright">@drawable/popup_full_bright</item>
-        <item name="topBright">@drawable/popup_top_bright</item>
-        <item name="centerBright">@drawable/popup_center_bright</item>
-        <item name="bottomBright">@drawable/popup_bottom_bright</item>
-
-        <item name="bottomMedium">@drawable/popup_bottom_medium</item>
-        <item name="centerMedium">@drawable/popup_center_medium</item>
     </style>
 
---></resources>
+	<!-- Dialog styles --> 
+    <style name="Blue.AlertDialog">
+        <item name="android:fullDark">@drawable/blue_popup_full_dark</item>
+        <item name="android:topDark">@drawable/blue_popup_top_dark</item>
+        <item name="android:centerDark">@drawable/blue_popup_center_dark</item>
+        <item name="android:bottomDark">@drawable/blue_popup_bottom_dark</item>
+
+        <item name="android:fullBright">@drawable/blue_popup_full_bright</item>
+        <item name="android:topBright">@drawable/blue_popup_top_bright</item>
+        <item name="android:centerBright">@drawable/blue_popup_center_bright</item>
+        <item name="android:bottomBright">@drawable/blue_popup_bottom_bright</item>
+
+        <item name="android:bottomMedium">@drawable/blue_popup_bottom_medium</item>
+        <item name="android:centerMedium">@drawable/blue_popup_center_medium</item>
+        <item name="android:buttonStyle">@style/Blue.Button</item>
+        
+        <item name="android:textColor">#00FF00</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+    
+</resources>

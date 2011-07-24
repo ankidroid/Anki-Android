@@ -105,7 +105,6 @@ public class CardBrowser extends Activity {
 
     private int markedColor;
     private int suspendedColor;
-    private int backgroundColor;
 
     private boolean mShowOnlyMarSus = false;
 
@@ -132,10 +131,7 @@ public class CardBrowser extends Activity {
         markedColor = getResources().getColor(R.color.card_browser_marked);
         suspendedColor = getResources().getColor(R.color.card_browser_suspended);
         if (Themes.getTheme() == 2) {
-            backgroundColor = getResources().getColor(R.color.background_blue);
             mainView.setBackgroundResource(Themes.getBackgroundColor());        	
-        } else {
-        	backgroundColor = getResources().getColor(R.color.card_browser_background);
         }
 
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
@@ -157,8 +153,6 @@ public class CardBrowser extends Activity {
                         view.setBackgroundColor(suspendedColor);
                     } else if (text.substring(0, 1).equals("1")) {
                         view.setBackgroundColor(markedColor);
-                    } else {
-                        view.setBackgroundColor(backgroundColor);
                     }
                     return true;
                 }

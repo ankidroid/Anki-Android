@@ -36,7 +36,6 @@
 					android:layout_height="fill_parent"
 					android:gravity="center_vertical"
 					android:text="@string/studyoptions_session"
-					android:textColor="#ffffff"
 					android:textSize="14dip"/>
 			</LinearLayout>
 		    <LinearLayout
@@ -57,7 +56,6 @@
 					android:layout_height="wrap_content"
 					android:gravity="center_vertical"
 					android:text="@string/studyoptions_tag"
-					android:textColor="#ffffff"
 					android:textSize="14dip"/>
 			</LinearLayout>
 		</LinearLayout>

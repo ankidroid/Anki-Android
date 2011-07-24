@@ -58,10 +58,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anim.ViewAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -135,9 +135,9 @@ public class DeckPicker extends Activity implements Runnable {
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mUpgradeNotesAlert;
 	private AlertDialog mMissingMediaAlert;
-	private View mDeckpickerView;
 	private Button mSyncAllButton;
 	private Button mStatisticsAllButton;
+	private View mDeckpickerButtons;
 
 	private SimpleAdapter mDeckListAdapter;
 	private ArrayList<HashMap<String, String>> mDeckList;
@@ -235,7 +235,7 @@ public class DeckPicker extends Activity implements Runnable {
                     map.put("totalNew", Integer.toString(totalNew));                    
 				}
 			}
-			
+
 			Collections.sort(mDeckList, new HashMapCompare());
 			mDeckListAdapter.notifyDataSetChanged();
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
@@ -375,9 +375,9 @@ public class DeckPicker extends Activity implements Runnable {
 
 		Themes.setContentStyle((View) findViewById(R.id.deckpicker_view), Themes.CALLER_DECKPICKER);
 
+		mDeckpickerButtons = (View) findViewById(R.id.deckpicker_buttons);
 		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				if (AnkiDroidApp.isUserLoggedIn()) {
@@ -745,8 +745,12 @@ public class DeckPicker extends Activity implements Runnable {
 
 
 	private void enableButtons(boolean enabled) {
-		mSyncAllButton.setEnabled(enabled);
-		mStatisticsAllButton.setEnabled(enabled);
+		if (enabled) {
+			mDeckpickerButtons.setVisibility(View.VISIBLE);
+			mDeckpickerButtons.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0)); 
+		} else {
+			mDeckpickerButtons.setVisibility(View.INVISIBLE);
+		}
 	}
 
 
