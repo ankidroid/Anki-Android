@@ -53,6 +53,7 @@ import android.os.Vibrator;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -212,6 +213,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mSpeakText;
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
+    private boolean mBlackWhiteboard = true;
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
@@ -260,7 +262,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private Button mEase4;
     private Chronometer mCardTimer;
     private Whiteboard mWhiteboard;
-    private ClipboardManager mClipboard;
+	private ClipboardManager mClipboard;
     private ProgressDialog mProgressDialog;
 
     private Card mCurrentCard;
@@ -1384,8 +1386,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
         mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
 
-        if (mPrefWhiteboard) {
-            mWhiteboard = new Whiteboard(this, null);
+        if (mPrefWhiteboard) {       	
+            mWhiteboard = new Whiteboard(this, mInvertedColors, mBlackWhiteboard);
             FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
             mWhiteboard.setLayoutParams(lp2);
             FrameLayout fl = (FrameLayout) findViewById(R.id.whiteboard);
@@ -1423,9 +1425,6 @@ public class Reviewer extends Activity implements IButtonListener{
         int fgColor = res.getColor(R.color.foreground_color_inv);
 
         mCard.setBackgroundColor(res.getColor(R.color.background_color_inv));
-        if (mPrefWhiteboard) {
-            mWhiteboard.setInvertedColor(true);
-        }
 
         if (Themes.changeFlashcardBorder()) {
             mMainLayout.setBackgroundColor(bgColor);
@@ -1559,6 +1558,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefTextSelection = preferences.getBoolean("textSelection", false);
         mDeckFilename = preferences.getString("deckFilename", "");
         mInvertedColors = preferences.getBoolean("invertedColors", false);
+        mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
@@ -1937,6 +1937,9 @@ public class Reviewer extends Activity implements IButtonListener{
     public void fillFlashcard(boolean flip) {
     	if (!flip) {
     		mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
+    		if (!sDisplayAnswer && mShowWhiteboard) {
+				mWhiteboard.clear();
+    		}
     	} else {
     		Animation3D rotation;
     		if (sDisplayAnswer) {
@@ -1944,9 +1947,6 @@ public class Reviewer extends Activity implements IButtonListener{
     			rotation.setDuration(mAnimationDurationTurn);
     			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
     		} else {
-        		if (mShowWhiteboard) {
-    				mWhiteboard.clear();
-        		}
     			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, !mFlipToRight, false, true, this);
     			mFlipToRight = false;
     			rotation.setDuration(mAnimationDurationMove);

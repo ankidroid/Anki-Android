@@ -175,6 +175,12 @@
 				android:defaultValue="6"
    	    	 	android:text=""
    		     	android:max="30" />
+			<CheckBoxPreference
+				android:title="@string/whiteboard_black"
+				android:summary="@string/whiteboard_black_summ"
+				android:defaultValue="false"
+				android:dependency="whiteboard"
+				android:key="blackWhiteboard" />
        	</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_sounds">
 			<CheckBoxPreference

@@ -163,6 +163,8 @@
 <string name="show_whiteboard_summ">Lets you write on the screen</string>
 <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
 <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>
+<string name="whiteboard_black">Monochrome</string>
+<string name="whiteboard_black_summ">Use monochrome instead of colored stroke (for devices with lower memory, does not work in night mode)</string>
 <!--<string name="sample_deck">Sample deck</string>
 <string name="sample_deck_summ">Generate capitals deck if none found</string>
 <string name="corporal_punishments">Corporal punishments</string>
