@@ -33,7 +33,7 @@
   <string-array name="revCardOrderLabels">
     <item>الفاصل الزمني الأكبر أولاً</item>
     <item>الفاصل الزمني الأصغر أولاً</item>
-    <item>Order due</item>
+    <item>حسب واجب الأداء</item>
     <item>ترتيب عشوائي</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
@@ -44,7 +44,7 @@
   <string-array name="startup_mode_labels">
     <item>إظهار خيارات الدراسة</item>
     <item>إظهار منتقي السطح</item>
-    <item>Show deck picker on first start of the day</item>
+    <item>إظهار منتقي الحزم في بداية اليوم الأول</item>
   </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>أرسل التقرير دائماً</item>
@@ -62,9 +62,9 @@
     <item>أبداً</item>
   </string-array>
   <string-array name="cram_review_order_labels">
-    <item>Show oldest modified first</item>
-    <item>Show in order added</item>
-    <item>Show in random order</item>
+    <item>إظهار التعديل الأقدم أولاً</item>
+    <item>عرض في ترتيب الإضافة</item>
+    <item>عرض في ترتيب عشوائي</item>
   </string-array>
   <string-array name="next_review_s">
     <item>1 ساعة</item>
@@ -73,37 +73,37 @@
     <item>1 سنة</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>ساعات% s</item>
+    <item>أيام% s</item>
+    <item>أشهر% s</item>
+    <item>سنوات% s</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 hour</item>
+    <item>في ساعة واحدة</item>
     <item>في يوم واحد</item>
     <item>في شهر واحد</item>
-    <item>in 1 year</item>
+    <item>في سنة واحدة</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s hours</item>
-    <item>in %s days</item>
-    <item>in %s months</item>
-    <item>in %s years</item>
+    <item>في ساعات% s</item>
+    <item>في أيام% s</item>
+    <item>في أشهر% s</item>
+    <item>في سنوات% s</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
-    <item>New cards in reverse order added</item>
+    <item>بطاقات جديدة في ترتيب عشوائي</item>
+    <item>بطاقات جديدة حسب ترتيب الإضافة</item>
+    <item>بطاقات جديدة مضافة في ترتيب عكسي</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
+    <item>انتشار البطاقات الجديدة من خلال الاستعراضات</item>
     <item>بطاقات جديدة بعد المراجعات</item>
     <item>بطاقات جديدة قبل المراجعات</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
+    <item>مراجعة البطاقات حسب الفاصل الزمني لأكبر</item>
     <item>مراجعة البطاقات من الفاصل الزمني الأصغر</item>
-    <item>Review cards in order due</item>
+    <item>مراجعة البطاقات حسب واجب الأداء</item>
     <item>مراجعة البطاقات في ترتيب عشوائي</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
@@ -122,10 +122,10 @@
     <item>تاريخ الإنشاء</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>بسبب</item>
+    <item>واجب</item>
     <item>الواجب التراكمي</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
+    <item>فترات</item>
+    <item>مراجعات</item>
     <item>وقت العرض</item>
   </string-array>
   <string-array name="statistics_period_labels">
@@ -136,14 +136,14 @@
     <item>1 سنة</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>حسب آخر وصول</item>
+    <item>أبجدي</item>
+    <item>حسب عدد البطاقات الواجب أداءها</item>
+    <item>حسب عدد البطاقات الكلي</item>
+    <item>حسب عدد البطاقات الجديدة الكلي</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
+    <item>بدون اجراء</item>
     <item>زر الرد 1</item>
     <item>زر الرد 2</item>
     <item>زر الرد 3</item>

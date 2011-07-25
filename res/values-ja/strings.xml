@@ -28,8 +28,8 @@
   <string name="yes">はい</string>
   <string name="no">いいえ</string>
   <string name="ok">OK</string>
-  <string name="deck_upgrade_too_old_version">39よりも古いバージョンのデッキは, AnkiDroid ではサポートされていません;デッキをデスクトップ版Ankiで開いて最新版に更新してください.</string>
-  <string name="deck_upgrade_version_61_has_latex">これはLaTeX式が含まれているので, デッキが完全に更新できませんでした; デッキをデスクトップ版Ankiで開き, 最新版に更新しLaTeXを再生成してください.</string>
+  <string name="deck_upgrade_too_old_version">39よりも古いバージョンの単語帳は, AnkiDroid ではサポートされていません;単語帳をデスクトップ版Ankiで開いて最新版に更新してください.</string>
+  <string name="deck_upgrade_version_61_has_latex">これはLaTeX式が含まれているので, 単語帳が完全に更新できませんでした; 単語帳をデスクトップ版Ankiで開き, 最新版に更新しLaTeXを再生成してください.</string>
   <string name="deckpicker_title_nosdcard">SDカードを取り外すことが出来ます。</string>
   <string name="deckpicker_new">今日の新カード %d枚</string>
   <string name="deckpicker_loaddeck">単語帳を読み込んでいます...</string>
@@ -114,9 +114,9 @@
   <string name="pref_cat_other">その他</string>
   <string name="pref_cat_experimental">編集中の設定（バグを含む）</string>
   <string name="show_study_options_on_deck_load">ロード時に学習設定を表示</string>
-  <string name="show_study_options_on_deck_load_summ">デッキを読み込むときに学習のオプション画面を表示する</string>
+  <string name="show_study_options_on_deck_load_summ">単語帳を読み込むときに学習のオプション画面を表示する</string>
   <string name="startup_mode">起動モード</string>
-  <string name="startup_mode_summ">学習設定とデッキ選択のどちらで開始するかを選択します:</string>
+  <string name="startup_mode_summ">学習設定と単語帳選択のどちらで開始するかを選択します:</string>
   <string name="show_timer">タイマーを表示</string>
   <string name="show_timer_summ">解答までの時間をタイマーで表示します</string>
   <string name="show_progress_bars">進行状況バーを表示する</string>
@@ -131,13 +131,13 @@
   <string name="dictionary">辞書</string>
   <string name="dictionary_summ">この単語を辞書で検索します:XXX</string>
   <string name="reset_languages">言語設定をリセットします</string>
-  <string name="reset_languages_summ">すべてのデッキの言語の設定(テキスト読み上げ, 辞書)をリセットします. デッキ選択で選択したデッキの設定をリセットします</string>
+  <string name="reset_languages_summ">すべての単語帳の言語の設定(テキスト読み上げ, 辞書)をリセットします. 単語帳選択で選択した単語帳の設定をリセットします</string>
   <string name="reset_languages_question">言語の割り当てをリセットしますか?</string>
   <string name="reset_languages_confirmation">言語割り当てのリセット</string>
   <string name="use_ruby_support">ふりがなを振る</string>
   <string name="use_ruby_support_summ">\'[\'と\']\'に囲まれたテキストはふりがなとして処理</string>
   <string name="display_font_size">表示フォントサイズ</string>
-  <string name="display_font_size_summ">フォントサイズをデッキの文字数に合わせます. 現在はXXX % です</string>
+  <string name="display_font_size_summ">フォントサイズを単語帳の文字数に合わせます. 現在はXXX%です</string>
   <string name="card_browser_font_size">表示フォントサイズ</string>
   <string name="card_browser_font_size_summ">カード表示に使うフォントです. 現在値: XXX %</string>
   <string name="button_size">相対的なボタンの大きさ</string>
@@ -145,9 +145,9 @@
   <string name="hide_question_in_answer">解答で質問を隠しますか?</string>
   <string name="hide_question_in_answer_summ">解答を表示するときに質問を隠しておくかどうか選択できます</string>
   <string name="deck_path">単語帳のパス</string>
-  <string name="deck_path_summ">デッキ保存場所へのパス</string>
-  <string name="deck_order">デッキの順番</string>
-  <string name="deck_order_summ">デッキがデッキピッカーに表示される順序: XXX</string>
+  <string name="deck_path_summ">単語帳保存場所へのパス</string>
+  <string name="deck_order">単語帳の順番</string>
+  <string name="deck_order_summ">単語帳が単語帳ピッカーに表示される順序: XXX</string>
   <string name="fullscreen_review">フルスクリーンで確認</string>
   <string name="fullscreen_review_summ">カードの確認に全画面を使用するかどうか選択できます</string>
   <string name="zoom">ズームを有効にする</string>
@@ -196,7 +196,7 @@
   <string name="factadder_title">カードを増やす</string>
   <string name="factadder_saving_error">エラーを保存するファクト</string>
   <string name="saving_facts">保存するファクト</string>
-  <string name="deckcreator_title">デッキ作成者</string>
+  <string name="deckcreator_title">単語帳作成</string>
   <string name="model">モデル：</string>
   <string name="select_model">モデル</string>
   <string name="card">カード：</string>
@@ -207,7 +207,7 @@
   <string name="select">選択</string>
   <string name="card_browser">カードブラウザ</string>
   <string name="card_browser_load">カードをロードします</string>
-  <string name="card_browser_cardloading_error">カードの読み込みエラーです. おそらく端末のメモリ制限に関連しています. 小さいデッキで再試行してください</string>
+  <string name="card_browser_cardloading_error">カードの読み込みエラーです. おそらく端末のメモリ制限に関連しています. 小さい単語帳で再試行してください</string>
   <string name="card_browser_delete_card">カードを消す</string>
   <string name="card_browser_suspend_card">カードを中止する</string>
   <string name="card_browser_unsuspend_card">利用停止を解除するカード</string>
@@ -257,14 +257,14 @@
   <string name="cancel">キャンセル</string>
   <string name="download_overwrite">上書き</string>
   <string name="download_cancel">ダウンロードをキャンセルします</string>
-  <string name="download_message">デッキ %1$s は既に端末上にあります. 上書きしますか?</string>
+  <string name="download_message">単語帳 %1$s は既に端末上にあります. 上書きしますか?</string>
   <string name="shared_decks">共有の単語帳</string>
   <string name="updating">更新中...</string>
   <string name="loading_shared_decks">利用可能な共有単語帳を読み込んでいます。</string>
   <string name="cancel_download">ダウンロードを中止</string>
   <string name="resume_download">ダウンロードを再開</string>
   <string name="pause_download">ダウンロードを一時停止</string>
-  <string name="duplicate_download">このデッキは既にダウンロード中です</string>
+  <string name="duplicate_download">この単語帳は既にダウンロード中です</string>
   <string name="sync_all">すべて同期する</string>
   <string name="fact">ファクト</string>
   <string name="facts">ファクト</string>
@@ -288,7 +288,7 @@
   <string name="studyoptions_welcome_message">AnkiDroidでは, 数多くの単語やその他の事柄を効率的に覚えることができます. AnkiDroidはあなたが忘れる前に復習させてくれます.\n全ての情報はデッキにまとめられており, デッキは他のユーザの(共有デッキ)をダウンロードしたり, AnkiDroidやデスクトップ版Ankiで作成することもできます. 作成したデッキはAnkiWebを通じて同期したり %s ディレクトリにコピーしたりすることができます.\n
 もっと知りたければこのテキストをクリックしてください.</string>
   <string name="studyoptions_deck_not_loaded_title">単語帳を開けませんでした</string>
-  <string name="studyoptions_deck_not_loaded_message">あなたが選択したデッキは, 有効なAnkiデッキではありません. AnkiDroidに読み込む前に, デスクトップのAnkiアプリケーションで有効なデッキを作成してください.\n\nあるいは, 別のデッキを選択するか, 下のボタンを押してサンプルデッキを読み込んでください.</string>
+  <string name="studyoptions_deck_not_loaded_message">あなたが選択した単語帳は, 有効なAnki単語帳ではありません. AnkiDroidに読み込む前に, デスクトップのAnkiアプリケーションで有効な単語帳を作成してください.\n\nあるいは, 別の単語帳を選択するか, 下のボタンを押してサンプル単語帳を読み込んでください.</string>
   <string name="studyoptions_no_external_storage_title">外部メモリーが接続されていません</string>
   <string name="studyoptions_no_external_storage_message">外部メモリーが接続されていません。SDカードがマウントされているかどうか、確認してください。</string>
   <string name="studyoptions_load_other_deck">他の単語帳を開く</string>
@@ -321,7 +321,7 @@
   <string name="studyoptions_congrats_cards">カード</string>
   <string name="studyoptions_congrats_learnmore">学習を続ける</string>
   <string name="studyoptions_congrats_reviewearly">学習の前倒し</string>
-  <string name="studyoptions_congrats_syncdeck">デッキを同期します</string>
+  <string name="studyoptions_congrats_syncdeck">単語帳を同期</string>
   <string name="studyoptions_congrats_open_other_deck">他の単語帳を開く</string>
   <string name="studyoptions_congrats_finish">戻る</string>
   <string name="studyoptions_feedback">フィードバック</string>
@@ -368,7 +368,7 @@
   <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>
   <string name="sync_log_old_version">同期プロトコルに変更がありました。%sを参照し、最新のアンキドロイドにアップグレードしてください。</string>
   <string name="sync_log_conflict_resolution_required">単語帳はサーバーとアンドロイドの両方で変更がありました。どちらを優先して保存しますか？</string>
-  <string name="sync_log_create_deck_failed">サーバー上のデッキ作成に失敗しました: %1$s</string>
+  <string name="sync_log_create_deck_failed">サーバー上の単語帳作成に失敗しました: %1$s</string>
   <string name="sync_log_finish_error">終了データをサーバーに送信中にエラーが発生しました</string>
   <string name="sync_conflict_title">同期失敗</string>
   <string name="sync_conflict_message">単語帳「%s」はサーバーとアンドロイドの両方で変更がありました。どちらを優先して保存しますか？</string>
@@ -442,11 +442,11 @@
   <string name="statistics_fullscreen">フルスクリーンの切り替え</string>
   <string name="statistics_zoom_in">ズームイン</string>
   <string name="statistics_zoom_out">ズームアウト</string>
-  <string name="statistics_all_decks">(すべてのデッキ)</string>
+  <string name="statistics_all_decks">(すべての単語帳)</string>
   <string name="calculating_statistics">統計を計算しています</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">すべてのデッキ: 期限切れ%2$d(%3$s)枚中 1枚</item>
-    <item quantity="other">すべてのデッキ: 期限切れ%2$d(%3$s)枚中 %1$d枚</item>
+    <item quantity="one">すべての単語帳: 期限切れ%2$d(%3$s)枚中 1枚</item>
+    <item quantity="other">すべての単語帳: 期限切れ%2$d(%3$s)枚中 %1$d枚</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1分</item>
@@ -497,7 +497,7 @@
     <item quantity="other">%2$s枚中%1$d枚期限切れ</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1つのデッキ</item>
-    <item quantity="other">%1$dつのデッキ</item>
+    <item quantity="one">1つの単語帳</item>
+    <item quantity="other">%1$dつの単語帳</item>
   </plurals>
 </resources>
