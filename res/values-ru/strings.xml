@@ -329,7 +329,7 @@
   <string name="log_in">Войти</string>
   <string name="sign_up_description">У вас нет AnkiOnline-аккаунта? Заведите бесплатно!</string>
   <string name="sign_up">Зарегистрироваться</string>
-  <string name="logged_as">Вошедший как</string>
+  <string name="logged_as">Будет использован</string>
   <string name="log_out">Завершить сеанс</string>
   <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
   <string name="invalid_username_password">Неправильное имя пользователя или пароль.</string>

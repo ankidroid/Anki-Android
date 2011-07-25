@@ -373,7 +373,14 @@ public class ArabicReshaper{
 
 
 		//for the first letter
-		reshapedWord.append(getReshapedGlphy(wordLetters[0], 2));//2 is the Form when the Letter is at the start of the word
+		if(wordLength > 1)
+		{
+			reshapedWord.append(getReshapedGlphy(wordLetters[0], 2));//2 is the Form when the Letter is at the start of the word
+		}
+		else
+		{
+			reshapedWord.append(getReshapedGlphy(wordLetters[0], 1));//1 isolated
+		}
 
 
 		//iteration from the second till the second to last
