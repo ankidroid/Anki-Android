@@ -1020,9 +1020,12 @@ public class Card {
     	String[] returnArray = new String[2];
     	CardModel myCardModel = this.getCardModel();
     	String typeAnswer = myCardModel.getTypeAnswer();
+        // Check if we have a valid field to use as the answer to type.
     	if (null == typeAnswer || 0 == typeAnswer.trim().length()) {
     		returnArray[0] = null;
+                return returnArray;
     	}
+
         Model myModel = Model.getModel(mDeck, myCardModel.getModelId(), true);
     	TreeMap<Long, FieldModel> fieldModels = myModel.getFieldModels();
     	FieldModel myFieldModel = null;
@@ -1034,6 +1037,14 @@ public class Card {
     			break;
     		}
     	}
+
+        // Just in case we do not find the matching field model.
+        if (myFieldModelId == 0) {
+            Log.e(AnkiDroidApp.TAG, "could not find field model for type answer: " + typeAnswer);
+            returnArray[0] = null;
+            return null;
+        }
+
     	returnArray[0] = com.ichi2.anki.Field.fieldValuefromDb(this.mDeck, this.mFactId, myFieldModelId);
     	returnArray[1] = "fm" + Long.toHexString(myFieldModelId);
     	return returnArray;
