@@ -26,6 +26,11 @@ import android.graphics.Camera;
 import android.graphics.Matrix;
 
 public class Animation3D extends Animation {
+	
+	public static final int ANIMATION_TURN = 0;
+	public static final int ANIMATION_EXCHANGE_CARD = 1;
+	public static final int ANIMATION_SLIDE_IN_CARD = 2;
+
     private final float mValueX;
     private final float mValueY;
     private final float mDepthZ;
@@ -33,16 +38,16 @@ public class Animation3D extends Animation {
     private Reviewer mReviewer;
     boolean mDirection;
     boolean mFlipped = false;
-    boolean mTurn;
+    int mAction;
     boolean mRealTurn;
 
-    public Animation3D(float valueX, float valueY, float depthZ, boolean direction, boolean turn, boolean realturn, Reviewer reviewer) {
+    public Animation3D(float valueX, float valueY, float depthZ, int action, boolean direction, boolean realturn, Reviewer reviewer) {
         mValueX = valueX;
         mValueY = valueY;
         mDepthZ = depthZ;
         mReviewer = reviewer;
         mDirection = direction;
-        mTurn = turn;
+        mAction = action;
         mRealTurn = realturn;
     }
 
@@ -55,14 +60,15 @@ public class Animation3D extends Animation {
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
-        float centerX;
-        float centerY;
+        float centerX = 0;
+        float centerY = 0;
         final Camera camera = mCamera;
         final Matrix matrix = t.getMatrix();
         camera.save();
         float time;
 
-        if (mTurn) {
+        switch (mAction) {
+        case ANIMATION_TURN:
         	if (mRealTurn) {
                 time = interpolatedTime >= 0.5f ? (interpolatedTime - 1.0f) : interpolatedTime;        		
         	} else {
@@ -83,7 +89,8 @@ public class Animation3D extends Animation {
                 centerY = mValueY / 2;
             	camera.rotateY(degrees);
             }
-        } else {
+            break;
+        case ANIMATION_EXCHANGE_CARD:
             if (mDirection) {
             	time = interpolatedTime >= 0.5f ? -(interpolatedTime - 1.0f) : -interpolatedTime;
             } else {
@@ -96,6 +103,21 @@ public class Animation3D extends Animation {
             camera.translate(mValueX * time * 2, 0.0f, mDepthZ * Math.abs(time * 180));
             centerX = mValueX / 2;
             centerY = mValueY / 2;
+            break;
+        case ANIMATION_SLIDE_IN_CARD:
+            if (mDirection) {
+            	time = 1 - interpolatedTime;
+            } else {
+            	time = -1 + interpolatedTime;
+            }
+            if (interpolatedTime >= 0.0f && !mFlipped) {
+                mReviewer.fillFlashcard(false);
+                mFlipped = true;
+            }
+            camera.translate(mValueX * time * 2, 0.0f, mDepthZ * Math.abs(time * 180));
+            centerX = mValueX / 2;
+            centerY = mValueY / 2;
+            break;        	
         }
 
         camera.getMatrix(matrix);

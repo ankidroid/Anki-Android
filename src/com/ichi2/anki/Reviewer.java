@@ -66,6 +66,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -463,6 +464,32 @@ public class Reviewer extends Activity implements IButtonListener{
         }
     };
 
+    private DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+            mCurrentCard = values[0].getCard();
+            if (mPrefWhiteboard) {
+                mWhiteboard.clear();
+            }
+
+            if (mPrefTimer) {
+                mCardTimer.setBase(SystemClock.elapsedRealtime());
+                mCardTimer.start();
+            }
+            displayCardQuestion();
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        }
+    };
+
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
@@ -482,7 +509,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 mCardTimer.setBase(SystemClock.elapsedRealtime());
                 mCardTimer.start();
             }
-            reviewNextCard();
+            displayCardQuestion();
             mProgressDialog.dismiss();
         }
 
@@ -568,7 +595,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 Reviewer.this.setProgressBarIndeterminateVisibility(false);
                 // Reviewer.this.enableControls();
                 Reviewer.this.unblockControls();
-                Reviewer.this.reviewNextCard();
+                Reviewer.this.displayCardQuestion();
             }
 
             // Show a message to user if a session limit has been reached.
@@ -890,9 +917,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
         Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
 
-        mFirstCard = true;
         mConfigurationChanged = true;
-        
+
         long savedTimer = mCardTimer.getBase();
         CharSequence savedAnswerField = mAnswerField.getText();
 
@@ -911,14 +937,6 @@ public class Reviewer extends Activity implements IButtonListener{
         mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
                 + getAvailableWidthInCard() + ";");
 
-        // If the card hasn't loaded yet, don't refresh it
-        // Also skipping the counts (because we don't know which one to underline)
-        // They will be updated when the card loads anyway
-        if (mCurrentCard != null) {
-            refreshCard();
-            updateScreenCounts();
-        }
-
         if (mPrefTimer) {
             mCardTimer.setBase(savedTimer);
             mCardTimer.start();
@@ -932,7 +950,16 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mInvertedColors) {
             invertColors();
         }
-        updateStatisticBars();
+
+        // If the card hasn't loaded yet, don't refresh it
+        // Also skipping the counts (because we don't know which one to underline)
+        // They will be updated when the card loads anyway
+        if (mCurrentCard != null) {
+        	mFirstCard = true;
+            fillFlashcard(false);
+        	updateForNewCard();
+        }
+
         mConfigurationChanged = false;
     }
 
@@ -1064,12 +1091,12 @@ public class Reviewer extends Activity implements IButtonListener{
             	return editCard();
 
             case MENU_REMOVE_BURY:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
                 return true;
 
             case MENU_REMOVE_SUSPEND:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
                 return true;
 
@@ -1106,6 +1133,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         if (requestCode == EDIT_CURRENT_CARD) {
             mFirstCard = true;
+            mFlipToRight = true;
             if (resultCode == RESULT_OK) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(0,
@@ -1119,7 +1147,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 finishNoStorageAvailable();
             } else if (mShowAnimations) {
             	mCardContainer.setVisibility(View.VISIBLE);
-            	mCardContainer.setAnimation(ViewAnimation.slide(ViewAnimation.SLIDE_IN_FROM_RIGHT, mAnimationDurationMove, 0));
+            	mCardContainer.setAnimation(ViewAnimation.slide(ViewAnimation.SLIDE_IN_FROM_LEFT, mAnimationDurationMove, 0));
             }
         }
     }
@@ -1260,7 +1288,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mDismissCardHandler, new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
                     }
                 });
         builder.setNegativeButton(res.getString(R.string.no), null);
@@ -1312,7 +1340,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
-		mCardContainer.setVisibility(mShowAnimations && !mConfigurationChanged ? View.INVISIBLE : View.VISIBLE);
+		mCardContainer.setVisibility(mShowAnimations ? View.INVISIBLE : View.VISIBLE);
 
         mCard = (WebView) findViewById(R.id.flashcard);
         mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
@@ -1528,8 +1556,10 @@ public class Reviewer extends Activity implements IButtonListener{
     		switchVisibility(mNext3, View.INVISIBLE);
     		switchVisibility(mNext4, View.INVISIBLE);
     	}
-		switchVisibility(mFlipCard, View.VISIBLE);
-    	mFlipCard.requestFocus();
+    	if (mFlipCard.getVisibility() != View.VISIBLE) {
+    		switchVisibility(mFlipCard, View.VISIBLE);
+        	mFlipCard.requestFocus();    		
+    	}
     }
 
 
@@ -1637,7 +1667,7 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    private void reviewNextCard() {
+    private void updateForNewCard() {
     	updateScreenCounts();
     	if (mShowProgressBars) {
             updateStatisticBars();    	    
@@ -1656,8 +1686,6 @@ public class Reviewer extends Activity implements IButtonListener{
             mCardTimer.setBase(SystemClock.elapsedRealtime());
             mCardTimer.start();
         }
-
-        displayCardQuestion();
     }
 
 
@@ -1667,6 +1695,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mShowProgressBars) {
                 mProgressBars.setVisibility(View.VISIBLE);
             }
+            mFirstCard = false;
     	}
     	
         Deck deck = AnkiDroidApp.deck();
@@ -1767,8 +1796,6 @@ public class Reviewer extends Activity implements IButtonListener{
         updateCard(displayString);
         if (!mFirstCard) {
             hideEaseButtons();
-        } else {
-            mFirstCard = false;        	
         }
 
         // If the user want to show answer automatically
@@ -1943,33 +1970,38 @@ public class Reviewer extends Activity implements IButtonListener{
 
     public void fillFlashcard(boolean flip) {
     	if (!flip) {
+    		if (mFirstCard) {
+    			mCardContainer.setVisibility(View.VISIBLE);
+        		updateForNewCard();
+    		} else if (!sDisplayAnswer) {
+        		updateForNewCard();
+    		}
     		mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
     		if (!sDisplayAnswer && mShowWhiteboard) {
 				mWhiteboard.clear();
     		}
     	} else {
-    		if (mFirstCard && !mConfigurationChanged) {
+    		Animation3D rotation;
+    		if (mFirstCard) {
         		mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
-        		mCardContainer.setVisibility(View.VISIBLE);
-        		mCardContainer.setAnimation(ViewAnimation.slide(ViewAnimation.SLIDE_IN_FROM_RIGHT, mAnimationDurationMove, 0));
+    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, Animation3D.ANIMATION_SLIDE_IN_CARD, !mFlipToRight, true, this);
+    			rotation.setDuration(mAnimationDurationMove);
+    			rotation.setInterpolator(new DecelerateInterpolator());
+    		} else if (sDisplayAnswer) {
+    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 5, Animation3D.ANIMATION_TURN, true, true, this);
+    			rotation.setDuration(mAnimationDurationTurn);
+    			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
     		} else {
-        		Animation3D rotation;
-        		if (sDisplayAnswer) {
-        			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 5, true, true, true, this);
-        			rotation.setDuration(mAnimationDurationTurn);
-        			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
-        		} else {
-        			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, !mFlipToRight, false, true, this);
-        			mFlipToRight = false;
-        			rotation.setDuration(mAnimationDurationMove);
-        			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
-        		}
-    			rotation.reset();
-    			mCardContainer.setDrawingCacheEnabled(true);
-    			mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
-    	    	mCardContainer.clearAnimation();
-    	    	mCardContainer.startAnimation(rotation);
+    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, Animation3D.ANIMATION_EXCHANGE_CARD, !mFlipToRight, true, this);
+    			mFlipToRight = false;
+    			rotation.setDuration(mAnimationDurationMove);
+    			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
     		}
+			rotation.reset();
+			mCardContainer.setDrawingCacheEnabled(true);
+			mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
+	    	mCardContainer.clearAnimation();
+	    	mCardContainer.startAnimation(rotation);
     	}
     }
 
