@@ -1105,17 +1105,22 @@ public class Reviewer extends Activity implements IButtonListener{
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == EDIT_CURRENT_CARD) {
+            mFirstCard = true;
             if (resultCode == RESULT_OK) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
+                if (!mShowAnimations) {
+                	mCard.loadDataWithBaseURL(mBaseUrl, "", "text/html", "utf-8", null);                	
+                }
                 // TODO: code to save the changes made to the current card.
                 // TODO: resume with edited card
-                displayCardQuestion();
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
+            } else if (mShowAnimations) {
+            	mCardContainer.setVisibility(View.VISIBLE);
+            	mCardContainer.setAnimation(ViewAnimation.slide(ViewAnimation.SLIDE_IN_FROM_RIGHT, mAnimationDurationMove, 0));
             }
-            mFirstCard = true;
         }
     }
 
@@ -1175,6 +1180,10 @@ public class Reviewer extends Activity implements IButtonListener{
         } else {
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);
         	sEditorCard = mCurrentCard;
+        	if (mShowAnimations) {
+                mCardContainer.setVisibility(View.INVISIBLE);
+                mCardContainer.setAnimation(ViewAnimation.slide(ViewAnimation.SLIDE_OUT_TO_LEFT, mAnimationDurationMove, 0));        		
+        	}
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
             if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                 ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.LEFT);
@@ -1303,7 +1312,8 @@ public class Reviewer extends Activity implements IButtonListener{
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
-        
+		mCardContainer.setVisibility(mShowAnimations && !mConfigurationChanged ? View.INVISIBLE : View.VISIBLE);
+
         mCard = (WebView) findViewById(R.id.flashcard);
         mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
@@ -1917,11 +1927,7 @@ public class Reviewer extends Activity implements IButtonListener{
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl );
 
-        if (!mFirstCard && mShowAnimations) {
-        	fillFlashcard(true);
-        } else {
-        	fillFlashcard(false);
-        }      
+    	fillFlashcard(mShowAnimations);
 
         if (!mConfigurationChanged && mPlaySoundsAtStart) {
         	if (!mSpeakText) {
@@ -1942,22 +1948,28 @@ public class Reviewer extends Activity implements IButtonListener{
 				mWhiteboard.clear();
     		}
     	} else {
-    		Animation3D rotation;
-    		if (sDisplayAnswer) {
-    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 5, true, true, true, this);
-    			rotation.setDuration(mAnimationDurationTurn);
-    			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
+    		if (mFirstCard && !mConfigurationChanged) {
+        		mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
+        		mCardContainer.setVisibility(View.VISIBLE);
+        		mCardContainer.setAnimation(ViewAnimation.slide(ViewAnimation.SLIDE_IN_FROM_RIGHT, mAnimationDurationMove, 0));
     		} else {
-    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, !mFlipToRight, false, true, this);
-    			mFlipToRight = false;
-    			rotation.setDuration(mAnimationDurationMove);
-    			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
+        		Animation3D rotation;
+        		if (sDisplayAnswer) {
+        			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 5, true, true, true, this);
+        			rotation.setDuration(mAnimationDurationTurn);
+        			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
+        		} else {
+        			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, !mFlipToRight, false, true, this);
+        			mFlipToRight = false;
+        			rotation.setDuration(mAnimationDurationMove);
+        			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
+        		}
+    			rotation.reset();
+    			mCardContainer.setDrawingCacheEnabled(true);
+    			mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
+    	    	mCardContainer.clearAnimation();
+    	    	mCardContainer.startAnimation(rotation);
     		}
-			rotation.reset();
-			mCardContainer.setDrawingCacheEnabled(true);
-			mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
-	    	mCardContainer.clearAnimation();
-	    	mCardContainer.startAnimation(rotation);
     	}
     }
 
