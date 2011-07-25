@@ -1,26 +1,29 @@
 #!/bin/sh
 
 # Small utility to quickly merge changes from others:
-# 1) Pull from master of given branch
+# 1) Pull from given branch
 # 2) Check whether it compiles or not
 # 3) If it compiles, push to server
 #
 # Usage (from the main AnkiDroid directory):
 #   tools/pull-compile-push.sh flerda
+#   tools/pull-compile-push.sh flerda issue677
 #
 # It assumes that your local name for flerda's branch is called bflerda,
 # you might have to adapt it to your own conventions.
 #
+# Developer selection
+DEFAULT_DEVELOPER="nobnago"
+DEVELOPER=${1:-$DEFAULT_DEVELOPER}
 # Branch selection
-DEFAULT_BRANCH="nobnago"
-BRANCH=${1:-$DEFAULT_BRANCH}
-
+DEFAULT_BRANCH="master"
+BRANCH=${2:-$DEFAULT_BRANCH}
 
 # Change to the AnkiDroid project directory
 cd "$(dirname "$0")/.."
 
 # Pull
-git pull b$BRANCH master
+git pull b$DEVELOPER $BRANCH
 if [ "$?" -ne "0" ]; then zenity --error --text 'pull failed'; exit 1; fi 
 
 # Compile
