@@ -66,5 +66,8 @@
 
 	<color name="reviewer_background">#c6cfd6</color>
 	<color name="background_blue">#c6cfd6</color>
+	<color name="background_dark_blue">#394e65</color>
+	<color name="background_dialog_blue">#10171d</color>
+	<color name="transparent">#00FF0000</color>
 	
 </resources>

@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.util.Log;
@@ -225,7 +226,7 @@ public class ChartBuilder extends Activity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//    	Themes.applyTheme(this);
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
         if (mFullScreen) {
@@ -235,8 +236,7 @@ public class ChartBuilder extends Activity {
         }
         View mainView = getLayoutInflater().inflate(R.layout.statistics, null);
         setContentView(mainView);
-//        Themes.setWallpaper(mainView);
-//        setContentView(R.layout.statistics);
+        Themes.setWallpaper(mainView, true);
         mTitle = (TextView) findViewById(R.id.statistics_title);
         if (mChartView == null) {
             if (mFullScreen) {
@@ -263,10 +263,10 @@ public class ChartBuilder extends Activity {
             mRenderer.setYAxisMin(0);
             mRenderer.setXTitle(Statistics.axisLabels[0]);
             mRenderer.setYTitle(Statistics.axisLabels[1]);
-//            mRenderer.setBackgroundColor(Themes.getBackgroundColor());
-//            mRenderer.setMarginsColor(Themes.getBackgroundColor());
-//            mRenderer.setAxesColor(Themes.getForegroundColor());
-//            mRenderer.setLabelsColor(Themes.getForegroundColor());
+            mRenderer.setBackgroundColor(getResources().getColor(R.color.transparent)); 
+            mRenderer.setMarginsColor(getResources().getColor(R.color.transparent));
+//            mRenderer.setAxesColor(Color.BLACK);
+//            mRenderer.setLabelsColor(Color.BLACK);
             mRenderer.setZoomEnabled(false, false);
             if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
                 mRenderer.setMargins(new int[] { 15, 50, 25, 0 });

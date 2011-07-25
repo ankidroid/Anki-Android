@@ -53,6 +53,7 @@ public class DeckCreator extends Activity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
     	Resources res = getResources();
 
@@ -62,7 +63,9 @@ public class DeckCreator extends Activity {
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
         mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
         
-        setContentView(R.layout.deck_creator);
+        View mainView = getLayoutInflater().inflate(R.layout.deck_creator, null);
+        setContentView(mainView);
+        Themes.setWallpaper(mainView);
         
         mCreate = (Button) findViewById(R.id.DeckCreatorOKButton);
         mCancel = (Button) findViewById(R.id.DeckCreatorCancelButton);

@@ -54,6 +54,8 @@ public class Themes {
 	private static int mTextViewStyle= 0;
 	private static int mWallpaper = 0;
 	private static int mBackgroundColor = 0;
+	private static int mBackgroundDarkColor = 0;
+	private static int mDialogBackgroundColor = 0;
 	private static int mToastBackground = 0;
 	
 
@@ -64,6 +66,7 @@ public class Themes {
 			switch (mCurrentTheme) {
 			case THEME_DEFAULT:
 				mDeckpickerBackground = R.color.card_browser_background;
+				mDialogBackgroundColor = R.color.card_browser_background;
 				break;
 			case THEME_ANDROID_LIGHT:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_light;
@@ -71,6 +74,7 @@ public class Themes {
 				mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_light;
 				mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_light;
 				mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
+				mDialogBackgroundColor = R.color.card_browser_background;
 				break;				
 			case THEME_BLUE:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
@@ -87,6 +91,8 @@ public class Themes {
 				mWallpaper = R.drawable.blue_background;
 				mBackgroundColor = R.color.background_blue;
 				mToastBackground = R.drawable.blue_toast_frame;
+				mDialogBackgroundColor = R.color.background_dialog_blue;
+				mBackgroundDarkColor = R.color.background_dark_blue;
 				break;
 			}
 		}
@@ -177,7 +183,14 @@ public class Themes {
 
 
 	public static void setWallpaper(View view) {
-		view.setBackgroundResource(mWallpaper);
+		setWallpaper(view, false);
+	}
+	public static void setWallpaper(View view, boolean solid) {
+		if (solid) {
+			view.setBackgroundResource(mBackgroundDarkColor);
+		} else {
+			view.setBackgroundResource(mWallpaper);
+		}
 	}
 
 
@@ -198,6 +211,11 @@ public class Themes {
 
 	public static int getBackgroundColor() {
 		return mBackgroundColor;
+	}
+
+
+	public static int getDialogBackgroundColor() {
+		return mDialogBackgroundColor;
 	}
 
 

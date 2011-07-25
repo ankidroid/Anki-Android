@@ -90,9 +90,14 @@ public class PersonalDeckPicker extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.download_deck_picker);
+        View mainView = getLayoutInflater().inflate(R.layout.download_deck_picker, null);
+        setContentView(mainView);
+        if (Themes.getTheme() == 2) {
+        	mainView.setBackgroundResource(Themes.getBackgroundColor());        	
+        }
 
         initDownloadManagerService();
         registerExternalStorageListener();

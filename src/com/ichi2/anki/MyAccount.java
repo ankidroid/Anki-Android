@@ -55,6 +55,7 @@ public class MyAccount extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         initAllContentViews();
@@ -136,6 +137,9 @@ public class MyAccount extends Activity {
 
     private void initAllContentViews() {
         mLoginToMyAccountView = getLayoutInflater().inflate(R.layout.my_account, null);
+        Themes.setWallpaper(mLoginToMyAccountView);
+        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.MyAccountLayout));
+        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.no_account_text));
         mUsername = (EditText) mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = (EditText) mLoginToMyAccountView.findViewById(R.id.password);
 
@@ -161,6 +165,8 @@ public class MyAccount extends Activity {
         });
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
+        Themes.setWallpaper(mLoggedIntoMyAccountView);
+        Themes.setTitleStyle(mLoggedIntoMyAccountView.findViewById(R.id.logged_text));
         mUsernameLoggedIn = (TextView) mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
         Button logoutButton = (Button) mLoggedIntoMyAccountView.findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new OnClickListener() {

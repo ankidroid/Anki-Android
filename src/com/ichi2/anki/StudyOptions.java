@@ -1934,7 +1934,7 @@ public class StudyOptions extends Activity {
             builder.setPositiveButton(getResources().getString(R.string.ok), null);
             View contentView = getLayoutInflater().inflate(R.layout.dialog_webview, null);
             WebView messageWebView = (WebView) contentView.findViewById(R.id.dialog_webview);
-            messageWebView.setBackgroundColor(res.getColor(R.color.card_browser_background));
+            messageWebView.setBackgroundColor(res.getColor(Themes.getDialogBackgroundColor()));
             messageWebView.loadDataWithBaseURL("", getVersionMessage(), "text/html", "utf-8", null);
             builder.setView(contentView);
             builder.setPositiveButton(res.getString(R.string.ok), null);

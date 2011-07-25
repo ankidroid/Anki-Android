@@ -19,6 +19,7 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.webkit.WebView;
 
@@ -30,6 +31,7 @@ public class About extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
     	Resources res = getResources();
 
@@ -38,6 +40,8 @@ public class About extends Activity {
         setContentView(R.layout.about);
 
         WebView webview = (WebView) findViewById(R.id.about);
+        int background = Themes.getBackgroundColor();
+        webview.setBackgroundColor(res.getColor(background == 0 ? Color.WHITE : background));        	
 
         String text = String.format(res.getString(R.string.about_content) + "</p></body></html>", 
                 "<html><body><h2>" + res.getString(R.string.app_name) + ":<br/>", 

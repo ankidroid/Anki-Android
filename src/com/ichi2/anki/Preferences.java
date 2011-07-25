@@ -191,6 +191,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 			setResult(StudyOptions.RESULT_RESTART, intent);
 			finish();
         } else if (key.equals("theme")) {
+        	if (!sharedPreferences.getString("theme", "0").equals("2")) {
+        		animationsCheckboxPreference.setChecked(false);
+        		animationsCheckboxPreference.setEnabled(false);
+        	} else {
+        		animationsCheckboxPreference.setEnabled(true);
+        	}
         	Themes.resetTheme();
 			Intent intent = this.getIntent();
 			setResult(StudyOptions.RESULT_RESTART, intent);
@@ -199,13 +205,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             updateListPreference(key);
         } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
             updateSeekBarPreference(key);
-        } else if (key.equals("theme")) {
-        	if (sharedPreferences.getString("theme", "0").equals("2")) {
-        		animationsCheckboxPreference.setChecked(false);
-        		animationsCheckboxPreference.setEnabled(false);        		
-        	} else {
-        		animationsCheckboxPreference.setEnabled(true);
-        	}
         }
     }
 
