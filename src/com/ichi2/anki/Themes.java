@@ -39,6 +39,7 @@ public class Themes {
 	public final static int CALLER_DECKPICKER_DECK = 3;
 	public final static int CALLER_REVIEWER= 4;
 	public final static int CALLER_FEEDBACK= 5;
+	public final static int CALLER_DOWNLOAD_DECK= 6;
 
 	private static int mCurrentTheme = -1;
 	private static int mProgressbarsBackgroundColor;
@@ -140,7 +141,7 @@ public class Themes {
 			} else if (view.getId() == R.id.DeckPickerCompletionAll) {
 				view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
 			} else if (view.getId() == R.id.deckpicker_deck) {
-				view.setBackgroundResource(mDeckpickerItemBorder);				
+				view.setBackgroundResource(mDeckpickerItemBorder);
 			}
 			break;
 		case CALLER_REVIEWER:
@@ -149,6 +150,9 @@ public class Themes {
 			break;
 		case CALLER_FEEDBACK:
 			((TextView)view).setTextColor(mProgressbarsFrameColor);
+			break;
+		case CALLER_DOWNLOAD_DECK:
+			view.setBackgroundResource(mDeckpickerItemBorder);
 			break;
 		}
 	}

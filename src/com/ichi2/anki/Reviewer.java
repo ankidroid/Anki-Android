@@ -1993,13 +1993,13 @@ public class Reviewer extends Activity implements IButtonListener{
     			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
     		} else {
     			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, Animation3D.ANIMATION_EXCHANGE_CARD, !mFlipToRight, true, this);
-    			mFlipToRight = false;
     			rotation.setDuration(mAnimationDurationMove);
     			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
     		}
-			rotation.reset();
-			mCardContainer.setDrawingCacheEnabled(true);
-			mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
+    		mFlipToRight = false;
+    		rotation.reset();
+    		mCardContainer.setDrawingCacheEnabled(true);
+    		mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
 	    	mCardContainer.clearAnimation();
 	    	mCardContainer.startAnimation(rotation);
     	}

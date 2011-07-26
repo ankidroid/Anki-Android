@@ -23,6 +23,8 @@
 
 
 	<TextView android:id="@+id/header_title"
+		android:paddingTop="5dip"
+		android:paddingLeft="5dip"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:textStyle="bold"
@@ -32,16 +34,16 @@
 	<TextView android:id="@+id/download_title"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:padding="10dip"
+		android:padding="5dip"
 		android:singleLine="true"
 		android:ellipsize="end"
-		android:textSize="24sp"
+		android:textSize="20sp"
 		android:visibility="gone"/>
 
 	<ProgressBar android:id="@+id/progress_bar"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:padding="10dip"
+		android:padding="5dip"
 		style="?android:attr/progressBarStyleHorizontal"
 		android:indeterminate="true"
 		android:indeterminateBehavior="cycle"
@@ -56,7 +58,7 @@
 		<TextView android:id="@+id/progress_text"
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"
-			android:paddingLeft="10dip"
+			android:paddingLeft="5dip"
 			android:paddingBottom="5dip"
 			android:text="@string/downloading"
 			android:visibility="gone"/>
@@ -64,7 +66,7 @@
 		<TextView android:id="@+id/estimated_text"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:paddingRight="10dip"
+			android:paddingRight="5dip"
 			android:paddingBottom="5dip"
 			android:text=""
 			android:gravity="right"
@@ -75,17 +77,17 @@
 	<TextView android:id="@+id/deck_title"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:padding="10dip"
+		android:padding="5dip"
 		android:gravity="center_horizontal"
-		android:textSize="24sp"/>
+		android:textSize="20sp"/>
 
 	<TextView android:id="@+id/deck_facts" 
 		android:layout_height="wrap_content" 
 		android:layout_width="fill_parent"
 		android:gravity="center_horizontal"
-		android:paddingLeft="10dip"
+		android:paddingLeft="5dip"
 		android:paddingRight="5dip"
 		android:paddingBottom="5dip"
-		android:textSize="17sp"/>
+		android:textSize="14sp"/>
 
 </LinearLayout>

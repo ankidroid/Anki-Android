@@ -558,6 +558,7 @@ public class PersonalDeckPicker extends Activity {
 
             if (row == null) {
                 row = getLayoutInflater().inflate(R.layout.download_deck_item, null);
+                Themes.setContentStyle(row, Themes.CALLER_DOWNLOAD_DECK);
                 wrapper = new DownloadViewWrapper(row);
                 row.setTag(wrapper);
             } else {
