@@ -69,6 +69,9 @@ public class ViewAnimation {
 		float startValue = type;
         Animation animation = new AlphaAnimation(startValue, 1.0f - startValue);
         animation.setDuration(duration);
+        if (type == FADE_IN) {
+        	animation.setZAdjustment(Animation.ZORDER_TOP);
+        }
         animation.setStartOffset(offset);
         return animation;
 	}

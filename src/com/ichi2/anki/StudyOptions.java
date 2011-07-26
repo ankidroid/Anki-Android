@@ -351,7 +351,7 @@ public class StudyOptions extends Activity {
                     openDeckPicker();
                     return;
                 case R.id.studyoptions_congrats_finish:
-                    showContentView(CONTENT_SESSION_COMPLETE);
+                	finishCongrats();
                     return;
                 case R.id.studyoptions_load_sample_deck:
                     loadSampleDeck();
@@ -685,7 +685,7 @@ public class StudyOptions extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
             if (mCurrentContentView == CONTENT_CONGRATS) {
-            	showContentView(CONTENT_SESSION_COMPLETE);
+            	finishCongrats();
             } else if (mStartupMode == SUM_DECKPICKER) {
             	openDeckPicker();
             } else {
@@ -1657,6 +1657,17 @@ public class StudyOptions extends Activity {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
+    }
+
+
+    private void finishCongrats() {
+        mStudyOptionsView.setVisibility(View.INVISIBLE);
+        mCongratsView.setVisibility(View.INVISIBLE);
+        mCongratsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
+        showContentView(CONTENT_SESSION_COMPLETE);
+        mCongratsView.setVisibility(View.VISIBLE);
+        mStudyOptionsView.setVisibility(View.VISIBLE);
+        mStudyOptionsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
     }
 
 
