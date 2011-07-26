@@ -185,6 +185,10 @@
   <string name="language">Lingua</string>
   <string name="language_summ">Selezionare la lingua che Ankidroid deve utilizzare. In questo momento: XXX</string>
   <string name="language_system">Lingua del sistema</string>
+  <string name="timeout_answer_text">Automatic display answer</string>
+  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
+  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
+  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
   <string name="select_locale_title">Scegli la lingua</string>
   <string name="personaldeckpicker_title">Apri il mazzo online</string>
   <string name="shareddeckpicker_title">Seleziona il mazzo da scaricare</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Commenti e suggerimenti</string>
   <string name="username">Nome utente</string>
   <string name="password">Password</string>
+  <string name="password_warning">Note: Will be sent in clear text</string>
   <string name="log_in">Entra</string>
   <string name="sign_up_description">Non hai un AnkiOnline account? E\' gratis!</string>
   <string name="sign_up">Registrati</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">Zoom indietro</string>
   <string name="statistics_all_decks">(Tutti i corsi)</string>
   <string name="calculating_statistics">Calcolo statistiche</string>
+  <string name="fix_arabic_text">Improve Arabic display</string>
+  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Tutti i corsi: 1 di %2$d scaduti (%3$s)</item>
     <item quantity="other">Tutti i corsi: %1$d di %2$d scaduti (%3$s)</item>

@@ -185,6 +185,10 @@
   <string name="language">Idioma</string>
   <string name="language_summ">Trieu l\'idioma em que voleu l\'AnkiDroid. Ara és: XXX</string>
   <string name="language_system">Idioma del sistema</string>
+  <string name="timeout_answer_text">Automatic display answer</string>
+  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
+  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
+  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
   <string name="select_locale_title">Seleccioneu l\'idioma</string>
   <string name="personaldeckpicker_title">Obre un paquet de la xarxa</string>
   <string name="shareddeckpicker_title">Trieu el paquet que voleu baixar</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Comentaris</string>
   <string name="username">Nom d\'usuari</string>
   <string name="password">Contrasenya</string>
+  <string name="password_warning">Note: Will be sent in clear text</string>
   <string name="log_in">Inicia la sessió</string>
   <string name="sign_up_description">No teniu un compte a AnkiOnline? És gratuït!</string>
   <string name="sign_up">Registreu-vos</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">Allunya</string>
   <string name="statistics_all_decks">(tots els paquets)</string>
   <string name="calculating_statistics">S\'està càlculant les estadístiques</string>
+  <string name="fix_arabic_text">Improve Arabic display</string>
+  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Tots els paquets:1 de %2$d pendent (%3$s)</item>
     <item quantity="other">Tots els paquets:%1$d de %2$d pendents (%3$s)</item>

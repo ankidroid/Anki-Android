@@ -31,9 +31,9 @@
     <item>Trước khi ôn tập</item>
   </string-array>
   <string-array name="revCardOrderLabels">
-    <item>Largest interval first</item>
-    <item>Smallest interval first</item>
-    <item>Order due</item>
+    <item>Khoảng thời gian lớn nhất trước</item>
+    <item>Khoảng thời gian nhỏ nhất trước</item>
+    <item>Thứ tự tới hạn</item>
     <item>Thứ tự ngẫu nhiên</item>
   </string-array>
   <string-array name="hideQuestionInAnswerLabels">
@@ -96,36 +96,36 @@
     <item>Thẻ mới ngược thứ tự đã nhập vào</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>Spread new cards through reviews</item>
+    <item>Rải đều các thẻ mới trong quá trình ôn tập</item>
     <item>Học thẻ mới sau khi ôn tập thẻ cũ</item>
     <item>Học thẻ mới trước khi ôn tập thẻ cũ</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Review cards from largest interval</item>
-    <item>Review cards from smallest interval</item>
-    <item>Review cards in order due</item>
+    <item>Ôn tập từ thẻ có khoảng thời gian lớn nhất</item>
+    <item>Ôn tập từ thẻ có khoảng thời gian nhỏ nhất</item>
+    <item>Ôn tập thẻ theo thứ tự tới hạn</item>
     <item>Ôn tập thẻ theo thứ tự ngẫu nhiên</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
-    <item>Show failed cards soon</item>
-    <item>Show failed cards at end</item>
-    <item>Show failed cards in 10 minutes</item>
-    <item>Show failed cards in 8 hours</item>
-    <item>Show failed cards in 3 days</item>
+    <item>Hiển thị sớm các thẻ hỏng</item>
+    <item>Hiển thị các thẻ hỏng vào cuối bài</item>
+    <item>Hiển thị các thẻ hỏng trong 10 phút</item>
+    <item>Hiển thị các thẻ hỏng trong 8 giờ</item>
+    <item>Hiển thị các thẻ hỏng trong 3 ngày</item>
   </string-array>
   <string-array name="card_browser_order_labels">
     <item>Theo câu hỏi</item>
     <item>Theo câu trả lời</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
+    <item>Theo hạn</item>
+    <item>Theo khoảng thời gian</item>
+    <item>Theo độ dễ</item>
     <item>Ngày tạo</item>
   </string-array>
   <string-array name="statistics_type_labels">
-    <item>Due</item>
-    <item>Cumulative due</item>
-    <item>Intervals</item>
-    <item>Reviews</item>
+    <item>Tới hạn</item>
+    <item>Tổng tới hạn</item>
+    <item>Các khoảng thời gian</item>
+    <item>Ôn tập</item>
     <item>Thời gian ôn tập</item>
   </string-array>
   <string-array name="statistics_period_labels">
@@ -138,9 +138,9 @@
   <string-array name="deck_order_labels">
     <item>Theo thứ tự lần truy nhập cuối</item>
     <item>Theo thứ tự chữ cái</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>Theo số lượng thẻ tới hạn</item>
+    <item>Theo tổng số thẻ</item>
+    <item>Theo tổng số thẻ mới</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Không làm gì</item>
@@ -148,14 +148,14 @@
     <item>Nút trả lời 2</item>
     <item>Nút trả lời 3</item>
     <item>Nút trả lời 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
+    <item>Câu trả lời đề nghị (màu xanh)</item>
+    <item>Câu trả lời tốt hơn so với đề nghị</item>
     <item>Hoàn tác</item>
     <item>Làm lại</item>
     <item>Chỉnh sửa thẻ</item>
     <item>Đánh dấu thẻ</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
+    <item>Biểu thức tra cứu</item>
+    <item>Tạm dừng thẻ</item>
     <item>Tạm ngưng thẻ</item>
     <item>Xóa thẻ</item>
     <item>Xóa bảng viết</item>
