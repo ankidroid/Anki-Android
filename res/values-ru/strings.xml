@@ -185,6 +185,10 @@
   <string name="language">Язык</string>
   <string name="language_summ">Выберите язык, который следует использовать AnkiDroid. На данный момент: XXX</string>
   <string name="language_system">Системный язык</string>
+  <string name="timeout_answer_text">Автоматически показывать ответ</string>
+  <string name="timeout_answer_summ">После показа вопроса через заданное время будет автоматически показан ответ без нажатия кнопки пользователем</string>
+  <string name="timeout_answer_seconds">Секунд до показа ответа</string>
+  <string name="timeout_answer_seconds_summ">Установка интервала времени, через которое ответ будет автоматически показан</string>
   <string name="select_locale_title">Выберите язык</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
   <string name="shareddeckpicker_title">Выберите колоду, которую вы хотите загрузить</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Обратная связь</string>
   <string name="username">Имя пользователя</string>
   <string name="password">Пароль</string>
+  <string name="password_warning">Внимание: отсылка по сети простым текстом</string>
   <string name="log_in">Войти</string>
   <string name="sign_up_description">У вас нет AnkiOnline-аккаунта? Заведите бесплатно!</string>
   <string name="sign_up">Зарегистрироваться</string>
@@ -444,6 +449,8 @@
   <string name="statistics_zoom_out">Уменьшить</string>
   <string name="statistics_all_decks">(все колоды)</string>
   <string name="calculating_statistics">Расчет статистики</string>
+  <string name="fix_arabic_text">Улучшить арабского показ</string>
+  <string name="fix_arabic_text_summ">Хитрый трюк для ограниченной поддержки арабского для Android-платформы. Если активировать, то будет невозможна модификация карт.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Все колоды: повтор 1 из %2$d (%3$s)</item>
     <item quantity="other">Все колоды: повтор %1$d из %2$d (%3$s)</item>

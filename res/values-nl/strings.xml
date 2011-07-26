@@ -181,10 +181,14 @@
   <string name="fix_hebrew_text">Enforce RTL for Hebrew</string>
   <string name="fix_hebrew_text_summ">Workaround for limited support of Hebrew by Android platform. Doesn\'t support vowels.</string>
   <string name="default_font">Default font</string>
-  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your Anki folder.</string>
+  <string name="default_font_summ">Allow setting the default font used to render cards. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your AnkiDroid folder.</string>
   <string name="language">Taal</string>
   <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
   <string name="language_system">Systeemtaal</string>
+  <string name="timeout_answer_text">Automatic display answer</string>
+  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
+  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
+  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
   <string name="select_locale_title">Select Language</string>
   <string name="personaldeckpicker_title">Open Online Deck</string>
   <string name="shareddeckpicker_title">Selecteer het deck dat u wil downloaden</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Feedback</string>
   <string name="username">Gebruikersnaam</string>
   <string name="password">Wachtwoord</string>
+  <string name="password_warning">Note: Will be sent in clear text</string>
   <string name="log_in">Log in</string>
   <string name="sign_up_description">Don\'t have an AnkiOnline account? It\'s free!</string>
   <string name="sign_up">Sign up</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">Zoom out</string>
   <string name="statistics_all_decks">(alle dekken)</string>
   <string name="calculating_statistics">Statistieken berekenen</string>
+  <string name="fix_arabic_text">Improve Arabic display</string>
+  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
     <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
