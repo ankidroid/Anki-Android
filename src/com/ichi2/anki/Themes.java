@@ -58,6 +58,7 @@ public class Themes {
 	private static int mBackgroundDarkColor = 0;
 	private static int mDialogBackgroundColor = 0;
 	private static int mToastBackground = 0;
+	private static int[] mCardbrowserItemBorder;
 	
 
 	public static void applyTheme(Context context) {
@@ -68,6 +69,7 @@ public class Themes {
 			case THEME_DEFAULT:
 				mDeckpickerBackground = R.color.card_browser_background;
 				mDialogBackgroundColor = R.color.card_browser_background;
+				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				break;
 			case THEME_ANDROID_LIGHT:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_light;
@@ -76,6 +78,7 @@ public class Themes {
 				mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_light;
 				mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
 				mDialogBackgroundColor = R.color.card_browser_background;
+				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				break;				
 			case THEME_BLUE:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
@@ -94,6 +97,7 @@ public class Themes {
 				mToastBackground = R.drawable.blue_toast_frame;
 				mDialogBackgroundColor = R.color.background_dialog_blue;
 				mBackgroundDarkColor = R.color.background_dark_blue;
+				mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
 				break;
 			}
 		}
@@ -225,6 +229,11 @@ public class Themes {
 
 	public static int getTheme() {
 		return mCurrentTheme;
+	}
+
+
+	public static int[] getCardBrowserBackground() {
+		return mCardbrowserItemBorder;
 	}
 
 
