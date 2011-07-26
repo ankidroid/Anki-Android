@@ -21,7 +21,7 @@
 # Add a language if it is more than 40% translated.
 # Do not remove languages.
 # When you add a language, please also add it to mAppLanguages in Preferences.java
-languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'zh-CN', 'zh-TW'];
+languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'vi', 'zh-CN', 'zh-TW'];
 
 
 
