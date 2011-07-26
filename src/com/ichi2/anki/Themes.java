@@ -64,7 +64,7 @@ public class Themes {
 	public static void applyTheme(Context context) {
 		if (mCurrentTheme == -1) {
 			SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
-			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "0"));
+			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "2"));
 			switch (mCurrentTheme) {
 			case THEME_DEFAULT:
 				mDeckpickerBackground = R.color.card_browser_background;

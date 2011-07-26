@@ -71,12 +71,12 @@
 				android:title="@string/select_theme"
 				android:key="theme"
 				android:summary=""
-				android:defaultValue="0"
+				android:defaultValue="2"
 				android:entries="@array/theme_labels"
 				android:entryValues="@array/theme_values" />
 			<CheckBoxPreference
 				android:title="@string/theme_animations"
-				android:defaultValue="false"
+				android:defaultValue="true"
 				android:summary="@string/theme_animations_summ"
 				android:disableDependentsState="false"
 				android:key="themeAnimations" />

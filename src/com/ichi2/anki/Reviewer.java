@@ -1637,7 +1637,7 @@ public class Reviewer extends Activity implements IButtonListener{
          	mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "0"));
          	mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
         }
-        mShowAnimations = preferences.getBoolean("themeAnimations", false);
+        mShowAnimations = preferences.getBoolean("themeAnimations", true);
         if (mShowAnimations) {
             int animationDuration = preferences.getInt("animationDuration", 500);
            	mAnimationDurationTurn = animationDuration;
