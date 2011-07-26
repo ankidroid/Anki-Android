@@ -44,5 +44,9 @@
         <item name="android:typeface">monospace</item>
         <item name="android:textSize">10sp</item>
     </style>
+
+	<style name="Blue.Edittext" parent="@android:style/Widget.EditText">
+ 		<item name="android:background">@drawable/blue_edit_text</item>
+ 	</style>
     
 </resources>
