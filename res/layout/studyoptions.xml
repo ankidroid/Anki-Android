@@ -245,6 +245,14 @@
 				android:id="@+id/studyoptions_night_mode"
 				android:text="@string/studyoptions_night_mode"
 				android:textSize="14dip"
+				android:layout_weight="1"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"/>
+			<CheckBox
+				android:id="@+id/studyoptions_swap"
+				android:text="@string/swap_qa"
+				android:textSize="14dip"
+				android:layout_weight="1"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"/>
 		</LinearLayout>

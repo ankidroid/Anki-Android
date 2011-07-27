@@ -215,6 +215,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
     private boolean mBlackWhiteboard = true;
+    private boolean mSwapQA = false;
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
@@ -1600,6 +1601,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mDeckFilename = preferences.getString("deckFilename", "");
         mInvertedColors = preferences.getBoolean("invertedColors", false);
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
+        mSwapQA = preferences.getBoolean("swapqa", false);
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
@@ -1776,7 +1778,7 @@ public class Reviewer extends Activity implements IButtonListener{
             inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
         }
 
-        String question = mCurrentCard.getQuestion();
+        String question = getQuestion();
         
         if(mPrefFixArabic) {
         	question = ArabicUtilities.reshapeSentence(question, true);
@@ -1814,7 +1816,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         String displayString = "";
         
-        String answer = mCurrentCard.getAnswer(), question = mCurrentCard.getQuestion();
+        String answer = getAnswer(), question = getQuestion();
         if(mPrefFixArabic) {
         	// reshape
         	answer = ArabicUtilities.reshapeSentence(answer, true);
@@ -1866,7 +1868,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         mIsSelecting = false;
         updateCard(displayString);
-        showEaseButtons();        	
+        showEaseButtons();
     }
 
 
@@ -1957,13 +1959,13 @@ public class Reviewer extends Activity implements IButtonListener{
     	fillFlashcard(mShowAnimations);
 
         if (!mConfigurationChanged && mPlaySoundsAtStart) {
-        	if (!mSpeakText) {
-        		Sound.playSounds(null, 0);
-        	} else if (!sDisplayAnswer) {
-        		Sound.playSounds(Utils.stripHTML(mCurrentCard.getQuestion()), MetaDB.LANGUAGE_QUESTION);            	
-        	} else {
-        		Sound.playSounds(Utils.stripHTML(mCurrentCard.getAnswer()), MetaDB.LANGUAGE_ANSWER);            	
-            } 
+            if (!mSpeakText) {
+                Sound.playSounds(null, 0);
+            } else if (!sDisplayAnswer) {
+                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGE_QUESTION);
+            } else {
+                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGE_ANSWER);
+            }
         }
     }
 
@@ -2002,6 +2004,24 @@ public class Reviewer extends Activity implements IButtonListener{
     		mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
 	    	mCardContainer.clearAnimation();
 	    	mCardContainer.startAnimation(rotation);
+    	}
+    }
+
+
+    private String getQuestion() {
+    	if (mSwapQA) {
+    		return mCurrentCard.getAnswer();
+    	} else {
+    		return mCurrentCard.getQuestion();
+    	}
+    }
+
+
+    private String getAnswer() {
+    	if (mSwapQA) {
+    		return mCurrentCard.getQuestion();
+    	} else {
+    		return mCurrentCard.getAnswer();
     	}
     }
 

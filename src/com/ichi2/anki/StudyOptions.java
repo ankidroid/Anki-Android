@@ -159,6 +159,7 @@ public class StudyOptions extends Activity {
     boolean mNewVersion = false;
     boolean mShowWelcomeScreen = false;
     boolean mInvertedColors = false;
+    boolean mSwap = false;
 
     /**
 * Alerts to inform the user about different situations
@@ -231,6 +232,7 @@ public class StudyOptions extends Activity {
     private TextView mTextNewTotal;
     private TextView mHelp;
     private CheckBox mNightMode;
+    private CheckBox mSwapQA;
     private Button mCardBrowser;
     private Button mStatisticsButton;
 
@@ -604,6 +606,7 @@ public class StudyOptions extends Activity {
         boolean limitChecked = mToggleLimit.isChecked();
         boolean limitEnabled = mToggleLimit.isEnabled();
         boolean nightModeChecekd = mNightMode.isChecked();
+        boolean swapQA = mSwapQA.isChecked();
         int limitBarVisibility = View.GONE;
         if (mDailyBar != null) {
             limitBarVisibility = mGlobalLimitFrame.getVisibility();
@@ -616,6 +619,7 @@ public class StudyOptions extends Activity {
         mToggleLimit.setChecked(limitChecked);
         mToggleLimit.setEnabled(limitEnabled);
         mNightMode.setChecked(nightModeChecekd);
+        mSwapQA.setChecked(swapQA);
         if (mDailyBar != null) {
             mGlobalLimitFrame.setVisibility(limitBarVisibility);
         }
@@ -865,6 +869,20 @@ public class StudyOptions extends Activity {
                 }
             }
             });
+        mSwapQA = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_swap);
+        mSwapQA.setChecked(mSwap);
+        mSwapQA.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+            boolean isChecked) {
+                if (mSwap != isChecked) {
+                	mSwap = isChecked;
+                    savePreferences("swapqa");
+                }
+            }
+            });
+
+        
         mHelp = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_help);
         mHelp.setOnClickListener(mButtonClickListener);
 
@@ -1920,6 +1938,8 @@ public class StudyOptions extends Activity {
         	editor.putBoolean("welcome", mShowWelcomeScreen);
         } else if (str.equals("invertedColors")) {
             editor.putBoolean("invertedColors", mInvertedColors);
+        } else if (str.equals("swapqa")) {
+            editor.putBoolean("swapqa", mSwap);
         }
         editor.commit();
     }
@@ -1969,6 +1989,7 @@ public class StudyOptions extends Activity {
         }
 
         mInvertedColors = preferences.getBoolean("invertedColors", false);
+        mSwap = preferences.getBoolean("swapqa", false);
        	setLanguage(preferences.getString("language", ""));
         return preferences;
     }
