@@ -150,5 +150,7 @@
 	<string-array name="new_version_features">
 		<item>two new themes</item>
 		<item>animations</item>
+		<item>possibility of swapping question/answer very easily</item>
+		<item>automatically choose correct leo.org-dictionary </item>
 	</string-array>
 </resources>
