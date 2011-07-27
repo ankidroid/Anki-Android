@@ -959,6 +959,9 @@ public class Reviewer extends Activity implements IButtonListener{
         	mFirstCard = true;
             fillFlashcard(false);
         	updateForNewCard();
+		if (sDisplayAnswer) {
+			showEaseButtons();
+		}
         }
 
         mConfigurationChanged = false;
