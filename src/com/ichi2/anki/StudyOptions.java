@@ -173,6 +173,7 @@ public class StudyOptions extends Activity {
 	private AlertDialog mNewVersionAlert;
 	private AlertDialog mStatisticTypeAlert;
 	private AlertDialog mStatisticPeriodAlert;
+	private AlertDialog mSwapQAAlert;
 
 	/*
 	* Limit session dialog
@@ -871,17 +872,19 @@ public class StudyOptions extends Activity {
             });
         mSwapQA = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_swap);
         mSwapQA.setChecked(mSwap);
-        mSwapQA.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-            boolean isChecked) {
-                if (mSwap != isChecked) {
-                	mSwap = isChecked;
-                    savePreferences("swapqa");
-                }
-            }
-            });
+        mSwapQA.setOnClickListener(new View.OnClickListener() {
 
+        	@Override
+            public void onClick(View view) {
+            	if (mSwapQA.isChecked()) {
+            		mSwapQAAlert.show();
+            	} else if (mSwap){
+            		mSwap = false;
+            		savePreferences("swapqa");
+            	}
+        		mSwapQA.setChecked(false);				
+            }
+        });
         
         mHelp = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_help);
         mHelp.setOnClickListener(mButtonClickListener);
@@ -1004,6 +1007,19 @@ public class StudyOptions extends Activity {
         });
         builder.setNegativeButton(res.getString(R.string.cancel), null);
         mUserNotLoggedInAlert = builder.create();
+
+        builder.setTitle(getResources().getString(R.string.swap_qa_title));
+        builder.setMessage(getResources().getString(R.string.swap_qa_text));
+        builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	mSwapQA.setChecked(true);
+        		mSwap = true;
+        		savePreferences("swapqa");
+            }
+        });
+        mSwapQAAlert = builder.create();
 
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);

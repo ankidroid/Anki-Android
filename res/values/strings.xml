@@ -64,7 +64,8 @@
 <string name="deckpicker_download_missing_none">No media files found missing</string>
 <string name="deckpicker_download_missing_success">Successfully retrieved %1$d, missing %2$d</string>
 <string name="deckpicker_download_missing_error">Error with file: %1$s</string>
-
+<string name="swap_qa_title">Swap Q/A</string>
+<string name="swap_qa_text">Be aware that simply swapping question and answer runs contrary to the concept of spaced repetition. Ideally you should create new cards for the reversed learning direction. You can do this easily with Anki Desktop.\nSwap Q/A anyway?</string>
 <string name="notify_ticker">Application Update</string>
 <string name="notify_title">AnkiDroid Updated</string>
 <string name="notify_message">Download a new version</string>
