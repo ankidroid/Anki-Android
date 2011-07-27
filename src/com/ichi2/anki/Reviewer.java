@@ -1196,6 +1196,25 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
+	private void lookupLeo(String language, CharSequence text) {
+		switch(mDictionary) {
+		case DICTIONARY_LEO_WEB:
+			Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language
+				+ "de&search=" + text));
+			startActivity(leoSearchIntent);
+			break;
+		case DICTIONARY_LEO_APP:
+			Intent leoAppSearchIntent = new Intent(mDictionaryAction);
+			leoAppSearchIntent.putExtra("org.leo.android.dict.DICTIONARY", language + "de");
+			leoAppSearchIntent.putExtra(Intent.EXTRA_TEXT, mClipboard.getText());
+			leoAppSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+			startActivity(leoAppSearchIntent);
+			break;
+		default:
+		}
+	}
+
+
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
         closeReviewer();
@@ -1233,13 +1252,13 @@ public class Reviewer extends Activity implements IButtonListener{
                     mClipboard.setText("");
                     return true;
             	case DICTIONARY_LEO_WEB:
+            	case DICTIONARY_LEO_APP:
             		// localisation is needless here since leo.org translates only into or out of German 
             		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
             		String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
             		for (int i = 0; i < itemValues.length; i++) {
                 		if (language.equals(itemValues[i])) {
-            		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
-                    		startActivity(leoSearchIntent);
+ 						lookupLeo(language, mClipboard.getText());
                             mClipboard.setText("");
                             return true;
                 		}                    			
@@ -1250,8 +1269,7 @@ public class Reviewer extends Activity implements IButtonListener{
             		builder.setItems(items, new DialogInterface.OnClickListener() {
             			public void onClick(DialogInterface dialog, int item) {
             				String language = itemValues[item].toString();
-            				Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
-            				startActivity(leoSearchIntent);
+            				lookupLeo(language, mClipboard.getText());
             				mClipboard.setText("");
             				storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
             			}
@@ -1259,13 +1277,6 @@ public class Reviewer extends Activity implements IButtonListener{
             		AlertDialog alert = builder.create();
             		alert.show();
             		return true;
-                case DICTIONARY_LEO_APP:
-                    Intent leoSearchIntent = new Intent(mDictionaryAction);
-                    leoSearchIntent.putExtra(Intent.EXTRA_TEXT, mClipboard.getText());
-                    leoSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
-                    startActivity(leoSearchIntent);
-                    mClipboard.setText("");
-                    return true;
             	case DICTIONARY_COLORDICT:
             		Intent colordictSearchIntent = new Intent(mDictionaryAction);
             		colordictSearchIntent.putExtra("EXTRA_QUERY", mClipboard.getText());
