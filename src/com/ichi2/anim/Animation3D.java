@@ -30,6 +30,7 @@ public class Animation3D extends Animation {
 	public static final int ANIMATION_TURN = 0;
 	public static final int ANIMATION_EXCHANGE_CARD = 1;
 	public static final int ANIMATION_SLIDE_IN_CARD = 2;
+	public static final int ANIMATION_SLIDE_OUT_CARD = 3;
 
     private final float mValueX;
     private final float mValueY;
@@ -111,6 +112,7 @@ public class Animation3D extends Animation {
             	time = -1 + interpolatedTime;
             }
             if (interpolatedTime >= 0.0f && !mFlipped) {
+                mReviewer.showFlashcard(true);
                 mReviewer.fillFlashcard(false);
                 mFlipped = true;
             }
@@ -118,6 +120,20 @@ public class Animation3D extends Animation {
             centerX = mValueX / 2;
             centerY = mValueY / 2;
             break;        	
+        case ANIMATION_SLIDE_OUT_CARD:
+            if (mDirection) {
+            	time = -interpolatedTime;
+            } else {
+            	time = interpolatedTime;
+            }
+            if (interpolatedTime == 1.0f && !mFlipped) {
+                mReviewer.showFlashcard(false);
+                mFlipped = true;
+            }
+            camera.translate(mValueX * time * 2, 0.0f, mDepthZ * Math.abs(time * 180));
+            centerX = mValueX / 2;
+            centerY = mValueY / 2;
+            break;
         }
 
         camera.getMatrix(matrix);
