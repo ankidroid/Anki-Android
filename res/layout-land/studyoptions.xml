@@ -252,6 +252,7 @@ style="?android:attr/buttonStyleSmall"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="3dp"
+			android:layout_toLeftOf="@+id/studyoptions_help"
 			android:layout_marginBottom="8dp">
 			<CheckBox 
 				android:id="@+id/studyoptions_night_mode"

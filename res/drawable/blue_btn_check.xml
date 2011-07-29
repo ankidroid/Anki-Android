@@ -23,10 +23,10 @@
           android:drawable="@drawable/blue_btn_check_off" />
 
     <item android:state_checked="true" android:state_pressed="true" 
-          android:drawable="@drawable/blue_btn_check_on_pressed" />
+          android:drawable="@drawable/blue_btn_check_on" />
 
     <item android:state_checked="false" android:state_pressed="true" 
-          android:drawable="@drawable/blue_btn_check_off_pressed" />
+          android:drawable="@drawable/blue_btn_check_off" />
 
     <item android:state_checked="true" android:state_window_focused="true"
           android:drawable="@drawable/blue_btn_check_on" />
@@ -35,9 +35,9 @@
           android:drawable="@drawable/blue_btn_check_off" />
 
     <item android:state_checked="true" android:state_pressed="true" android:state_window_focused="true"
-          android:drawable="@drawable/blue_btn_check_on_pressed" />
+          android:drawable="@drawable/blue_btn_check_on" />
 
     <item android:state_checked="false" android:state_pressed="true" android:state_window_focused="true"
-          android:drawable="@drawable/blue_btn_check_off_pressed" />
+          android:drawable="@drawable/blue_btn_check_off" />
 
 </selector>
