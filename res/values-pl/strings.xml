@@ -185,6 +185,10 @@
   <string name="language">Język</string>
   <string name="language_summ">Wybierz język którego AnkiDroid ma używać. W tej chwili: XXX</string>
   <string name="language_system">Język systemu</string>
+  <string name="timeout_answer_text">Automatic display answer</string>
+  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
+  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
+  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
   <string name="select_locale_title">Wybór języka</string>
   <string name="personaldeckpicker_title">Otwórz talię online</string>
   <string name="shareddeckpicker_title">Wybierz talię do pobrania</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Informacje zwrotne</string>
   <string name="username">Użytkownik</string>
   <string name="password">Hasło</string>
+  <string name="password_warning">Note: Will be sent in clear text</string>
   <string name="log_in">Zaloguj się</string>
   <string name="sign_up_description">Nie masz konta AnkiOnline? To nic nie kosztuje!</string>
   <string name="sign_up">Zarejestruj się</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">Pomniejsz</string>
   <string name="statistics_all_decks">(wszystkie talie)</string>
   <string name="calculating_statistics">Obliczanie statystyk</string>
+  <string name="fix_arabic_text">Improve Arabic display</string>
+  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Wszystkie talie: 1 z %2$d zaległa (%3$s)</item>
     <item quantity="other">Wszystkie talie: %1$d z %2$d zaległe (%3$s)</item>

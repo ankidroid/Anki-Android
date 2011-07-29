@@ -185,6 +185,10 @@
   <string name="language">Linguagem</string>
   <string name="language_summ">Selecione o idioma que AnkiDroid deve usar. No momento:XXX</string>
   <string name="language_system">Idioma do Sistema</string>
+  <string name="timeout_answer_text">Automatic display answer</string>
+  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
+  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
+  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
   <string name="select_locale_title">Selecionar idioma</string>
   <string name="personaldeckpicker_title">Abrir Deck Online</string>
   <string name="shareddeckpicker_title">Selecione a deck que você deseja baixar</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Feedback</string>
   <string name="username">Usuário</string>
   <string name="password">Senha</string>
+  <string name="password_warning">Note: Will be sent in clear text</string>
   <string name="log_in">Logar</string>
   <string name="sign_up_description">Não tem uma conta de AnkiOnline? É grátuita!</string>
   <string name="sign_up">Criar uma conta</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">Diminuir o zoom</string>
   <string name="statistics_all_decks">(todos os decks)</string>
   <string name="calculating_statistics">Calculando de estatísticas</string>
+  <string name="fix_arabic_text">Improve Arabic display</string>
+  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Todos decks: %1$d de %2$d due (%3$s)</item>
     <item quantity="other">Todos decks: %1$d de %2$d due (%3$s)</item>
@@ -456,7 +463,7 @@
     <item quantity="other">%1$d de %2$d programados</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$1 (1 min. faltando) </item>
+    <item quantity="one">%1$s (1 min. faltando) </item>
     <item quantity="other">%1$s (%2$d min. faltando)</item>
   </plurals>
   <plurals name="card_browser_title">

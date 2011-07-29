@@ -185,6 +185,10 @@
   <string name="language">语言</string>
   <string name="language_summ">选择AnkiDroid使用的语言。当前选择: XXX</string>
   <string name="language_system">系统语言</string>
+  <string name="timeout_answer_text">Automatic display answer</string>
+  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
+  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
+  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
   <string name="select_locale_title">选择语言</string>
   <string name="personaldeckpicker_title">打开线上牌组</string>
   <string name="shareddeckpicker_title">选择你要下载的牌组</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">反馈</string>
   <string name="username">用户名</string>
   <string name="password">密码</string>
+  <string name="password_warning">Note: Will be sent in clear text</string>
   <string name="log_in">登入</string>
   <string name="sign_up_description">没有AnkiOnline账号？他是免费的！</string>
   <string name="sign_up">注册</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">缩小</string>
   <string name="statistics_all_decks">（所有牌组）</string>
   <string name="calculating_statistics">正在计算统计信息</string>
+  <string name="fix_arabic_text">Improve Arabic display</string>
+  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">所有牌组: %2$d中有1个到期（%3$s）</item>
     <item quantity="other">所有牌组: %2$d中有%1$d个到期（%3$s）</item>

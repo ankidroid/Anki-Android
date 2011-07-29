@@ -185,6 +185,10 @@
   <string name="language">Langue</string>
   <string name="language_summ">Sélectionnez la langue, AnkiDroid doit utiliser. À l\'heure actuelle: XXX</string>
   <string name="language_system">Langue du système</string>
+  <string name="timeout_answer_text">Automatic display answer</string>
+  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
+  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
+  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
   <string name="select_locale_title">Sélectionnez la langue</string>
   <string name="personaldeckpicker_title">Ouvrir un paquet en ligne</string>
   <string name="shareddeckpicker_title">Sélectionnez le paquet que vous voulez télécharger</string>
@@ -332,6 +336,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="studyoptions_feedback">Commentaires</string>
   <string name="username">Nom d\'utilisateur</string>
   <string name="password">Mot de passe</string>
+  <string name="password_warning">Note: Will be sent in clear text</string>
   <string name="log_in">Se connecter</string>
   <string name="sign_up_description">Pas de compte Anki ? C\'est gratuit !</string>
   <string name="sign_up">Inscrivez-vous</string>
@@ -449,6 +454,8 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="statistics_zoom_out">Agrandir l\'\échelle</string>
   <string name="statistics_all_decks">(tous les paquets)</string>
   <string name="calculating_statistics">Calcul des statistiques…</string>
+  <string name="fix_arabic_text">Improve Arabic display</string>
+  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Tous les paquets: 1 dû parmi %2$d (%3$s)</item>
     <item quantity="other">Tous les paquets: %1$d dûs parmi %2$d (%3$s)</item>

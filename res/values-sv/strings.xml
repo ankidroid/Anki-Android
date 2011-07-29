@@ -185,6 +185,10 @@
   <string name="language">Språk</string>
   <string name="language_summ">Välj det språk AnkiDroid ska använda. Just nu: XXX</string>
   <string name="language_system">Systemspråk</string>
+  <string name="timeout_answer_text">Visa svar automatiskt</string>
+  <string name="timeout_answer_summ">Efter att frågan visats en bestämd tid, visas svaret automatiskt</string>
+  <string name="timeout_answer_seconds">Sekunder innan svaret visas</string>
+  <string name="timeout_answer_seconds_summ">Välj hur lång tid innan svaret visas automatiskt</string>
   <string name="select_locale_title">Välj språk</string>
   <string name="personaldeckpicker_title">Öppna online-kortlek</string>
   <string name="shareddeckpicker_title">Välj den kortlek du vill ladda ner</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Feedback</string>
   <string name="username">Användarnamn</string>
   <string name="password">Lösenord</string>
+  <string name="password_warning">OBS: Kommer att skickas i klartext</string>
   <string name="log_in">Logga in</string>
   <string name="sign_up_description">Har du inte ett AnkiOnline-konto? Det är gratis!</string>
   <string name="sign_up">Registrera dig</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">Zooma ut</string>
   <string name="statistics_all_decks">(alla kortlekar)</string>
   <string name="calculating_statistics">Beräknar statistik</string>
+  <string name="fix_arabic_text">Förbättra visning av arabiska</string>
+  <string name="fix_arabic_text_summ">Partiell lösning för Android-plattformens begränsade stöd för arabiska. När detta är aktiverat kan kort ej ändras.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Alla kortlekar: 1 av %2$d i kö (%3$s)</item>
     <item quantity="other">Alla kortlekar: %1$d av %2$d i kö (%3$s)</item>

@@ -185,6 +185,10 @@
   <string name="language">Idioma</string>
   <string name="language_summ">Selecciona el idioma que deba usar AnkiDroid. En este momento: XXX</string>
   <string name="language_system">Idioma del Sistema</string>
+  <string name="timeout_answer_text">Visualización automática de la respuesta</string>
+  <string name="timeout_answer_summ">Después de mostrar la pregunta por un periodo especificado de tiempo, la respuesta se muestra automáticamente sin intervención del usuario</string>
+  <string name="timeout_answer_seconds">Segundos antes de que se muestre la respuesta</string>
+  <string name="timeout_answer_seconds_summ">Selecciona la cantidad de tiempo antes de que la respuesta se muestre automáticamente</string>
   <string name="select_locale_title">Seleccione Idioma</string>
   <string name="personaldeckpicker_title">Abrir Mazo Online</string>
   <string name="shareddeckpicker_title">Selecciona el mazo que deseas descargar</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Sugerencias</string>
   <string name="username">Usuario</string>
   <string name="password">Contraseña</string>
+  <string name="password_warning">Nota: Se enviará en texto sin cifrar</string>
   <string name="log_in">Iniciar sesión</string>
   <string name="sign_up_description">¿No tienes una cuenta de AnkiOnline? ¡Es gratis!</string>
   <string name="sign_up">Regístrate</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">Reducir</string>
   <string name="statistics_all_decks">(todos los mazos)</string>
   <string name="calculating_statistics">Calculando estadísticas</string>
+  <string name="fix_arabic_text">Mejorar la visualización del árabe</string>
+  <string name="fix_arabic_text_summ">Solución parcial para un soporte limitado de la lengua árabe por la plataforma Android. Cuando se activa, no es posible modificar las tarjetas.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Total: 1 de %2$d pend. (%3$s)</item>
     <item quantity="other">Total: %1$d de %2$d pend. (%3$s)</item>

@@ -185,6 +185,10 @@
   <string name="language">Γλώσσα</string>
   <string name="language_summ">Επιλέξτε τη γλώσσα που θα χρησιμοποιεί το AnkiDroid. Επιλεγμένη γλώσσα: XXX</string>
   <string name="language_system">Γλώσσα συστήματος</string>
+  <string name="timeout_answer_text">Automatic display answer</string>
+  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
+  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
+  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
   <string name="select_locale_title">Επιλογή Γλώσσας</string>
   <string name="personaldeckpicker_title">Ανοίξτε τράπουλα από το δίκτυο</string>
   <string name="shareddeckpicker_title">Επιλέξτε την τράπουλα που θέλετε να κατεβάσετε</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Σχόλια</string>
   <string name="username">Όνομα χρήστη</string>
   <string name="password">Κωδικός</string>
+  <string name="password_warning">Note: Will be sent in clear text</string>
   <string name="log_in">Σύνδεση</string>
   <string name="sign_up_description">Δεν έχετε λογαριασμό με το AnkiOnline; Είναι δωρεάν!</string>
   <string name="sign_up">Εγγραφή</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">Σμίκρυνση</string>
   <string name="statistics_all_decks">(όλες οι τράπουλες)</string>
   <string name="calculating_statistics">Υπολογισμός στατιστικών</string>
+  <string name="fix_arabic_text">Improve Arabic display</string>
+  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Όλες οι τράπουλες: 1 από %2$d δέουσες (%3$s)</item>
     <item quantity="other">Όλες οι τράπουλες: %1$d από %2$d δέουσες (%3$s)</item>

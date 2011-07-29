@@ -185,6 +185,10 @@
   <string name="language">Sprache</string>
   <string name="language_summ">Wählen Sie die Sprache, mit der AnkiDroid angezeigt werden soll. Aktuell: XXX</string>
   <string name="language_system">System-Sprache</string>
+  <string name="timeout_answer_text">Antwort zeigen</string>
+  <string name="timeout_answer_summ">Zeige die Antwort automatisch nach einer bestimmten Zeit</string>
+  <string name="timeout_answer_seconds">Sekunden bis zum automatischen Zeigen der Antwort</string>
+  <string name="timeout_answer_seconds_summ">Wählen Sie den Zeitpunkt, ab dem automatisch die Antwort gezeigt werden soll</string>
   <string name="select_locale_title">Sprache wählen</string>
   <string name="personaldeckpicker_title">Online-Stapel herunterladen</string>
   <string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
@@ -326,6 +330,7 @@
   <string name="studyoptions_feedback">Rückmeldung</string>
   <string name="username">Benutzername</string>
   <string name="password">Passwort</string>
+  <string name="password_warning">Hinweis: wird als Klartext gesendet</string>
   <string name="log_in">Einloggen</string>
   <string name="sign_up_description">Haben Sie keinen AnkiOnline-Account? Er ist kostenlos!</string>
   <string name="sign_up">Registrieren</string>
@@ -443,6 +448,8 @@
   <string name="statistics_zoom_out">Verkleinern</string>
   <string name="statistics_all_decks">(alle Stapel)</string>
   <string name="calculating_statistics">Statistik wird berechnet</string>
+  <string name="fix_arabic_text">Arabisch verbessern</string>
+  <string name="fix_arabic_text_summ">Provisorische Lösung für Arabisch-Unterstützung unter Android. Falls aktiviert, ist keine Kartenänderung möglich.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Alle Stapel: 1 von %2$d fällig (%3$s)</item>
     <item quantity="other">Alle Stapel: %1$d von %2$d fällig (%3$s)</item>
