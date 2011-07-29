@@ -591,7 +591,7 @@ public class Reviewer extends Activity implements IButtonListener{
                     mNoMoreCards = true;
                     mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
                             .getString(R.string.saving_changes), true);
-                    setOutAnimation(true);
+                    setOutAnimation(false);
                     return;
                 }
 
