@@ -160,6 +160,7 @@ public class StudyOptions extends Activity {
     boolean mShowWelcomeScreen = false;
     boolean mInvertedColors = false;
     boolean mSwap = false;
+    String mLocale;
 
     /**
 * Alerts to inform the user about different situations
@@ -602,6 +603,7 @@ public class StudyOptions extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig){
     	super.onConfigurationChanged(newConfig);
+       	setLanguage(mLocale);
     	hideDeckInformation();
         boolean cramChecked = mToggleCram.isChecked();
         boolean limitChecked = mToggleLimit.isChecked();
@@ -2006,7 +2008,8 @@ public class StudyOptions extends Activity {
 
         mInvertedColors = preferences.getBoolean("invertedColors", false);
         mSwap = preferences.getBoolean("swapqa", false);
-       	setLanguage(preferences.getString("language", ""));
+        mLocale = preferences.getString("language", "");
+       	setLanguage(mLocale);
         return preferences;
     }
 
@@ -2043,7 +2046,7 @@ public class StudyOptions extends Activity {
     private void setLanguage(String language) {
     	Locale locale;
     	if (language.equals("")) {
-        	locale = Locale.getDefault();
+        	return;
     	} else {
         	locale = new Locale(language);
     	}

@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -221,6 +222,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
     private boolean mShowAnimations = true;
+    private String mLocale;
 
     private boolean mIsDictionaryAvailable;
     private boolean mIsSelecting = false;
@@ -927,7 +929,7 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
+        setLanguage(mLocale);
         Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
 
         mConfigurationChanged = true;
@@ -1202,6 +1204,19 @@ public class Reviewer extends Activity implements IButtonListener{
     
     private void storeLanguage(String language, int questionAnswer) {
     	MetaDB.storeLanguage(this, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);		
+    }
+
+
+    private void setLanguage(String language) {
+    	Locale locale;
+    	if (language.equals("")) {
+        	return;
+    	} else {
+        	locale = new Locale(language);
+    	}
+        Configuration config = new Configuration();
+        config.locale = locale;
+        this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
     }
 
 
@@ -1684,6 +1699,7 @@ public class Reviewer extends Activity implements IButtonListener{
            	mAnimationDurationTurn = animationDuration;
            	mAnimationDurationMove = animationDuration;
         }
+        mLocale = preferences.getString("language", "");
 
         return preferences;
     }
@@ -2007,8 +2023,8 @@ public class Reviewer extends Activity implements IButtonListener{
     }
     private void setOutAnimation(boolean reverse) {
 		mNextAnimation = reverse ? ANIMATION_SLIDE_OUT_TO_RIGHT: ANIMATION_SLIDE_OUT_TO_LEFT;
-    	if (mCardContainer.getVisibility() == View.VISIBLE) {
-        	fillFlashcard(mShowAnimations);	
+    	if (mCardContainer.getVisibility() == View.VISIBLE && mShowAnimations) {
+        	fillFlashcard(true);
     	}
     }
 
