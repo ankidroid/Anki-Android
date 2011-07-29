@@ -4,12 +4,14 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
+	android:background="?android:attr/colorBackground"
 	android:id="@+id/deckpicker_view">
 
 	<ListView android:id="@+id/files"
 		android:layout_width="fill_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1"
+		android:background="?android:attr/colorBackground"
 		android:fastScrollEnabled="true"/>
 
 	<LinearLayout
@@ -17,7 +19,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
-		
+
 		<Button	android:id="@+id/sync_all_button"
 			android:layout_width="0dip"
 			android:layout_height="fill_parent"

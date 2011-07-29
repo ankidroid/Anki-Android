@@ -125,16 +125,11 @@ public class CardBrowser extends Activity {
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
-		View mainView = getLayoutInflater()
-				.inflate(R.layout.card_browser, null);
-		setContentView(mainView);
+		setContentView(R.layout.card_browser);
 
 		mDeck = AnkiDroidApp.deck();
 		mDeck.resetUndo();
 
-		if (Themes.getTheme() == 2) {
-			mainView.setBackgroundResource(Themes.getBackgroundColor());
-		}
 		mBackground = Themes.getCardBrowserBackground();
 
 		SharedPreferences preferences = PrefSettings

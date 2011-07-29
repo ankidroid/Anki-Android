@@ -374,8 +374,6 @@ public class DeckPicker extends Activity implements Runnable {
 
 		initDialogs();
 
-		Themes.setContentStyle((View) findViewById(R.id.deckpicker_view), Themes.CALLER_DECKPICKER);
-
 		mDeckpickerButtons = (View) findViewById(R.id.deckpicker_buttons);
 		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
 		mSyncAllButton.setOnClickListener(new OnClickListener() {

@@ -12,20 +12,20 @@
 		<TextView
 			android:id="@+id/studyoptions_help"
 			android:layout_width="wrap_content"
-			android:layout_height="1dip"
+			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
-			android:layout_margin="2dp" android:visibility="gone"
-			android:drawableLeft="@drawable/help"/>
+			android:layout_margin="2dp"
+			android:drawableLeft="@drawable/help_inverted"/>
 	</RelativeLayout>	
 	<LinearLayout
 		android:orientation="vertical"
 		android:gravity="center"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-		<TextView 
+		<TextView
 			android:id="@+id/studyoptions_deck_name"
 			android:textSize="26sp" 
-			android:textStyle="bold" 
+			android:textStyle="bold"
 			android:ellipsize="end"
 			android:lines="2"
 			android:gravity="center" 
@@ -44,6 +44,7 @@
 			android:visibility="invisible"
 			android:layout_height="wrap_content">
 			<LinearLayout
+				android:visibility="gone"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
@@ -245,6 +246,14 @@
 				android:id="@+id/studyoptions_night_mode"
 				android:text="@string/studyoptions_night_mode"
 				android:textSize="14dip"
+				android:layout_weight="1"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"/>
+			<CheckBox
+				android:id="@+id/studyoptions_swap"
+				android:text="@string/studyoptions_swap_qa"
+				android:textSize="14dip"
+				android:layout_weight="1"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"/>
 		</LinearLayout>

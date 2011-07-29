@@ -99,11 +99,7 @@ public class SharedDeckPicker extends Activity {
     	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
-        View mainView = getLayoutInflater().inflate(R.layout.download_deck_picker, null);
-        setContentView(mainView);
-        if (Themes.getTheme() == 2) {
-        	mainView.setBackgroundResource(Themes.getBackgroundColor());        	
-        }
+        setContentView(R.layout.download_deck_picker);
 
         initDownloadManagerService();
         registerExternalStorageListener();

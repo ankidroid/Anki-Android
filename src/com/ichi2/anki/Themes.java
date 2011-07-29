@@ -35,7 +35,6 @@ public class Themes {
 	private final static int THEME_BLUE= 2;
 
 	public final static int CALLER_STUDYOPTIONS = 1;
-	public final static int CALLER_DECKPICKER = 2;
 	public final static int CALLER_DECKPICKER_DECK = 3;
 	public final static int CALLER_REVIEWER= 4;
 	public final static int CALLER_FEEDBACK= 5;
@@ -47,7 +46,6 @@ public class Themes {
 	private static int mProgressbarsMatureColor;
 	private static int mProgressbarsYoungColor;
 	private static int mProgressbarsDeckpickerYoungColor;
-	private static int mDeckpickerBackground = 0;
 	private static int mReviewerBackground = 0;
 	private static int mFlashcardBorder = 0;
 	private static int mDeckpickerItemBorder = 0;
@@ -67,7 +65,6 @@ public class Themes {
 			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "2"));
 			switch (mCurrentTheme) {
 			case THEME_DEFAULT:
-				mDeckpickerBackground = R.color.card_browser_background;
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				break;
@@ -86,7 +83,6 @@ public class Themes {
 				mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_light;
 				mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_blue;
 				mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
-				mDeckpickerBackground = R.color.deckpicker_background;
 				mReviewerBackground = R.color.reviewer_background;
 				mFlashcardBorder = R.drawable.blue_bg_webview;
 				mDeckpickerItemBorder = R.drawable.blue_bg_deckpicker;
@@ -136,9 +132,6 @@ public class Themes {
 			((View) view.findViewById(R.id.studyoptions_global_limit_bar)).setBackgroundResource(mProgressbarsYoungColor);
 			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
 			break;
-		case CALLER_DECKPICKER:
-			view.setBackgroundResource(mDeckpickerBackground);		
-			break;
 		case CALLER_DECKPICKER_DECK:
 			if (view.getId() == R.id.DeckPickerCompletionMat) {
 				view.setBackgroundResource(mProgressbarsFrameColor);
@@ -169,7 +162,6 @@ public class Themes {
 		mProgressbarsMatureColor = 0;
 		mProgressbarsYoungColor = 0;
 		mProgressbarsDeckpickerYoungColor = 0;
-		mDeckpickerBackground = 0;
 		mReviewerBackground = 0;
 		mFlashcardBorder = 0;
 		mDeckpickerItemBorder = 0;

@@ -2129,11 +2129,11 @@ public class StudyOptions extends Activity {
                     // can access the loaded deck.
                     AnkiDroidApp.setDeck(result.getDeck());
 
-                    if (mPrefStudyOptions) {
-                        updateValuesFromDeck();
-                        showContentView(CONTENT_STUDY_OPTIONS);
-                        showDeckInformation(true);
-                    } else {
+                    updateValuesFromDeck();
+                    showContentView(CONTENT_STUDY_OPTIONS);
+                    showDeckInformation(true);
+
+                    if (!mPrefStudyOptions) {
                         startActivityForResult(new Intent(StudyOptions.this, Reviewer.class), REQUEST_REVIEW);
                     }
 
