@@ -2021,6 +2021,7 @@ public class Reviewer extends Activity implements IButtonListener{
         		if (mShowWhiteboard) {
     				mWhiteboard.clear();        			
         		}
+    		setNextCardAnimation(false);
     		}
     	} else {
     		Animation3D rotation;
@@ -2043,7 +2044,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		case ANIMATION_SLIDE_OUT_TO_LEFT:
         		mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
     			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, Animation3D.ANIMATION_SLIDE_OUT_CARD, directionToLeft, true, this);
-    			rotation.setDuration(mAnimationDurationMove / 4 * 3);
+    			rotation.setDuration(mAnimationDurationMove);
     			rotation.setInterpolator(new AccelerateInterpolator());
     	    	switchTopBarVisibility(View.INVISIBLE);
     			break;
@@ -2052,7 +2053,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		case ANIMATION_SLIDE_IN_FROM_RIGHT:
         		mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
     			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 0, Animation3D.ANIMATION_SLIDE_IN_CARD, directionToLeft, true, this);
-    			rotation.setDuration(mAnimationDurationMove / 4 * 3);
+    			rotation.setDuration(mAnimationDurationMove);
     			rotation.setInterpolator(new DecelerateInterpolator());
     	    	switchTopBarVisibility(View.VISIBLE);
     			break;
@@ -2061,7 +2062,6 @@ public class Reviewer extends Activity implements IButtonListener{
     			return;
     		}
 
-    		setNextCardAnimation(false);
     		rotation.reset();
     		mCardContainer.setDrawingCacheEnabled(true);
     		mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
