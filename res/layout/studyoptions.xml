@@ -15,7 +15,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
 			android:layout_margin="2dp"
-			android:drawableLeft="@drawable/help"/>
+			android:drawableLeft="@drawable/help_inverted"/>
 	</RelativeLayout>	
 	<LinearLayout
 		android:orientation="vertical"

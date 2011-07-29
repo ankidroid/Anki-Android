@@ -246,26 +246,39 @@ style="?android:attr/buttonStyleSmall"
 				<RelativeLayout
 			android:id="@+id/studyoptions_bottom"
 		android:layout_width="fill_parent"
+		android:layout_marginTop="3dip"
+		android:gravity="center_vertical"
 		android:layout_height="wrap_content">
-		<LinearLayout
+				<TextView
 			android:layout_alignParentLeft="true"
+			android:id="@+id/studyoptions_help_placeholder"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="2dp"
+			android:layout_centerInParent="true"
+			android:visibility="invisible"
+			android:drawableLeft="@drawable/help"/>
+		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="3dp"
-			android:layout_toLeftOf="@+id/studyoptions_help"
-			android:layout_marginBottom="8dp">
+			android:gravity="center_vertical"
+			android:layout_centerInParent="true"
+			android:orientation="horizontal"
+			android:layout_toRightOf="@+id/studyoptions_help_placeholder"
+			android:layout_toLeftOf="@+id/studyoptions_help">
 			<CheckBox 
 				android:id="@+id/studyoptions_night_mode"
 				android:text="@string/studyoptions_night_mode"
 				android:textSize="14dip"
-				android:layout_width="fill_parent"
+				android:layout_weight="1"
+				android:layout_width="0dip"
 				android:layout_height="wrap_content"/>
 			<CheckBox
 				android:id="@+id/studyoptions_swap"
 				android:text="@string/studyoptions_swap_qa"
 				android:textSize="14dip"
 				android:layout_weight="1"
-				android:layout_width="fill_parent"
+				android:layout_width="0dip"
 				android:layout_height="wrap_content"/>
 
 		</LinearLayout>
@@ -275,6 +288,7 @@ style="?android:attr/buttonStyleSmall"
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
 			android:layout_margin="2dp"
+			android:layout_centerInParent="true"
 			android:drawableLeft="@drawable/help"/>
 	</RelativeLayout>	
 		
