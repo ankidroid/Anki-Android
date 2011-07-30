@@ -67,7 +67,6 @@ public class Animation3D extends Animation {
         final Matrix matrix = t.getMatrix();
         camera.save();
         float time;
-
         switch (mAction) {
         case ANIMATION_TURN:
         	if (mRealTurn) {

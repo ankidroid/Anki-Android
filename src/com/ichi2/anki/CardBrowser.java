@@ -294,19 +294,7 @@ public class CardBrowser extends Activity {
 			dialog.show();
 			return true;
 		case CONTEXT_MENU_DETAILS:
-			AlertDialog.Builder detailsbuilder = new AlertDialog.Builder(this);
-			detailsbuilder.setPositiveButton(getResources().getString(
-					R.string.ok), null);
-			View contentView = getLayoutInflater().inflate(
-					R.layout.dialog_webview, null);
-			WebView detailsWebView = (WebView) contentView
-					.findViewById(R.id.dialog_webview);
-			detailsWebView.loadDataWithBaseURL("", mSelectedCard
-					.getCardDetails(this), "text/html", "utf-8", null);
-			detailsWebView.setBackgroundColor(getResources().getColor(
-					R.color.card_browser_background));
-			detailsbuilder.setView(contentView);
-			detailsbuilder.create().show();
+			Themes.htmlOkDialog(this, getResources().getString(R.string.card_browser_card_details), mSelectedCard.getCardDetails(this)).show();
 			return true;
 		default:
 			return super.onContextItemSelected(item);

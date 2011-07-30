@@ -156,7 +156,6 @@ public class StudyOptions extends Activity {
 
     private int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
-    boolean mNewVersion = false;
     boolean mShowWelcomeScreen = false;
     boolean mInvertedColors = false;
     boolean mSwap = false;
@@ -1365,11 +1364,11 @@ public class StudyOptions extends Activity {
         switch (mCurrentContentView) {
             case CONTENT_NO_DECK:
                 setTitle(R.string.app_name);
-                if (mNewVersion) {
+                if (mNewVersionAlert != null) {
                 	mShowWelcomeScreen = true;
                 	savePreferences("welcome");
                 	mNewVersionAlert.show();
-                    mNewVersion = false;
+                	mNewVersionAlert = null;
                 }
                 mShowWelcomeScreen = PrefSettings.getSharedPrefs(getBaseContext()).getBoolean("welcome", false);
                 if (!mShowWelcomeScreen) {
@@ -1975,21 +1974,7 @@ public class StudyOptions extends Activity {
         	Editor editor = preferences.edit();
         	editor.putString("lastVersion", getVersion());
         	editor.commit();
-
-        	Resources res = getResources();
-
-        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(res.getString(R.string.new_version_title) + " " + getVersion());
-            builder.setPositiveButton(getResources().getString(R.string.ok), null);
-            View contentView = getLayoutInflater().inflate(R.layout.dialog_webview, null);
-            WebView messageWebView = (WebView) contentView.findViewById(R.id.dialog_webview);
-            messageWebView.setBackgroundColor(res.getColor(Themes.getDialogBackgroundColor()));
-            messageWebView.loadDataWithBaseURL("", getVersionMessage(), "text/html", "utf-8", null);
-            builder.setView(contentView);
-            builder.setPositiveButton(res.getString(R.string.ok), null);
-            builder.setCancelable(true);
-            mNewVersionAlert = builder.create();
-            mNewVersion = true;
+            mNewVersionAlert = Themes.htmlOkDialog(this, getResources().getString(R.string.new_version_title) + " " + getVersion(), getVersionMessage());
         }
 
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
@@ -2159,9 +2144,9 @@ public class StudyOptions extends Activity {
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
-                if (mNewVersion) {
+                if (mNewVersionAlert != null) {
                     mNewVersionAlert.show();
-                    mNewVersion = false;
+                    mNewVersionAlert = null;
                 }
             }
             Deck deck = AnkiDroidApp.deck();

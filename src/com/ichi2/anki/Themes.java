@@ -18,10 +18,12 @@ package com.ichi2.anki;
 
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -236,4 +238,18 @@ public class Themes {
 		}
         result.show();
 	}
+
+
+	public static AlertDialog htmlOkDialog(Context context, String title, String text) {
+    	AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        WebView view = new WebView(context);
+        view.setBackgroundColor(context.getResources().getColor(mDialogBackgroundColor));
+        view.loadData(text, "text/html", "UTF-8");
+        builder.setView(view);
+        builder.setPositiveButton(context.getResources().getString(R.string.ok), null);
+        builder.setCancelable(true);
+        return builder.create();
+	}
+
 }
