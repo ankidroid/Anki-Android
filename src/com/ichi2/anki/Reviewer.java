@@ -250,8 +250,8 @@ public class Reviewer extends Activity implements IButtonListener{
     private TextView mTextBarBlue;
     private TextView mChosenAnswer;
     private LinearLayout mProgressBars;
-    private View mDailyBar;
-    private View mGlobalBar;
+    private View mSessionYesBar;
+    private View mSessionProgressBar;
     private TextView mNext1;
     private TextView mNext2;
     private TextView mNext3;
@@ -1448,8 +1448,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mTextBarBlue = (TextView) findViewById(R.id.blue_number);
 
         if (mShowProgressBars) {
-            mDailyBar = (View) findViewById(R.id.daily_bar);
-            mGlobalBar = (View) findViewById(R.id.global_bar);
+        	mSessionYesBar = (View) findViewById(R.id.daily_bar);
+            mSessionProgressBar = (View) findViewById(R.id.session_progress);
             mProgressBars = (LinearLayout) findViewById(R.id.progress_bars);
         }
 
@@ -1778,9 +1778,9 @@ public class Reviewer extends Activity implements IButtonListener{
             mStatisticBarsHeight = view.getHeight();
         }
         Deck deck = AnkiDroidApp.deck();
-        Utils.updateProgressBars(this, mDailyBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
-        Utils.updateProgressBars(this, mGlobalBar, deck.getProgress(true), mStatisticBarsMax, mStatisticBarsHeight, true);
-    }  
+        Utils.updateProgressBars(this, mSessionProgressBar, deck.getSessionProgress(), mStatisticBarsMax, mStatisticBarsHeight, true, false);
+        Utils.updateProgressBars(this, mSessionYesBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
+    }
 
     private Handler mTimeoutHandler = new Handler();
 

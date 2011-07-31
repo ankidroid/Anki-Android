@@ -754,19 +754,24 @@ public class Utils {
 
 
     public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar) {
+    	updateProgressBars(context, view, progress, maxX, y, singleBar, true);
+    }
+	public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar, boolean changeColor) {
         if (view == null) {
             return;
         }
         if (singleBar) {
-            if (progress < 0.5) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_1));
-            } else if (progress < 0.65) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_2));
-            } else if (progress < 0.75) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_3));
-            } else {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_4));            
-            }            
+        	if (changeColor) {
+                if (progress < 0.5) {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_1));
+                } else if (progress < 0.65) {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_2));
+                } else if (progress < 0.75) {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_3));
+                } else {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_4));            
+                }        		
+        	}
             FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);            
             lparam.height = y;
             lparam.width = (int) (maxX * progress);

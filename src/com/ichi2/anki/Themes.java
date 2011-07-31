@@ -146,6 +146,7 @@ public class Themes {
 		case CALLER_REVIEWER:
 	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
 	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
+	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mProgressbarsYoungColor);	        
 			break;
 		case CALLER_FEEDBACK:
 			((TextView)view).setTextColor(mProgressbarsFrameColor);

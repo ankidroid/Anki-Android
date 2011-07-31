@@ -1191,6 +1191,11 @@ public class Deck {
     	}
     }
 
+    public double getSessionProgress() {
+    	int done = mDailyStats.getReps();
+    	int total = done + mFailedSoonCount + mRevCount + mNewCountToday;
+		return (double) done / total;   	
+    }
 
     public int getETA() {
     	if (mDailyStats.getReps() >= 10 && mDailyStats.getAverageTime() > 0) {
