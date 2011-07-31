@@ -968,7 +968,11 @@ public class StudyOptions extends Activity {
         	if (mStatisticType == -1) {
         		mStatisticType = which;
         		dialog.dismiss();
-        		mStatisticPeriodAlert.show();
+        		if (mStatisticType != Statistics.TYPE_DECK_SUMMARY) {
+            		mStatisticPeriodAlert.show();
+        		} else {
+        			openStatistics(0);
+        		}
         	} else {
         		dialog.dismiss();
         		openStatistics(which);
@@ -2243,11 +2247,15 @@ public class StudyOptions extends Activity {
                 }
             }
             if (result.getBoolean()) {
-		    	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
-		    	startActivityForResult(intent, STATISTICS);
-		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-		            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
-		        }
+		    	if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
+		    		Statistics.showDeckSummary(StudyOptions.this);
+		    	} else {
+	            	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
+			    	startActivityForResult(intent, STATISTICS);
+			        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+			            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
+			        }		    		
+		    	}
 			}
 		}
 

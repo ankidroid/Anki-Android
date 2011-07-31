@@ -611,13 +611,12 @@ public class DeckPicker extends Activity implements Runnable {
     private DialogInterface.OnClickListener mStatisticListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-			if (mStatisticType == -1) {
+			if (mStatisticType == -1 && which != Statistics.TYPE_DECK_SUMMARY) {
 				mStatisticType = which;
         		dialog.dismiss();
-        		showDialog(DIALOG_SELECT_STATISTICS_PERIOD);
+           		showDialog(DIALOG_SELECT_STATISTICS_PERIOD);
         	} else {
         		dialog.dismiss();
-		    	Resources res = getResources();
 		    	if (mFileList != null && mFileList.length > 0) {
 					String[] deckPaths = new String[mFileList.length];
 					int i = 0;
@@ -625,7 +624,12 @@ public class DeckPicker extends Activity implements Runnable {
 			    		deckPaths[i] = file.getAbsolutePath();
 			    		i++;
 					}
-			    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, which));
+			    	if (mStatisticType == -1) {
+			    		mStatisticType = Statistics.TYPE_DECK_SUMMARY;
+				    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, 0));			    		
+			    	} else {
+				    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, deckPaths, mStatisticType, which));
+			    	}
 		    	}
         	}
         }
@@ -1267,11 +1271,15 @@ public class DeckPicker extends Activity implements Runnable {
                 }
             }
             if (result.getBoolean()) {
-		    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
-		    	startActivity(intent);
-		        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-		            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
-		        }				
+		    	if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
+		    		Statistics.showDeckSummary(DeckPicker.this);
+		    	} else {
+			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
+			    	startActivity(intent);
+			        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+			            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
+			        }	
+		    	}
 			}
 		}
 

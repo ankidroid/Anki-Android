@@ -613,4 +613,26 @@
 <string name="calculating_statistics">Calculating statistics</string>
 <string name="fix_arabic_text">Improve Arabic display</string>
 <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
+
+<string name="deck_summary_cards">Number of cards:</string>
+<string name="deck_summary_facts">Number of facts:</string>
+<string name="deck_summary_cards_mature">Mature cards:</string>
+<string name="deck_summary_cards_young">Young cards:</string>
+<string name="deck_summary_cards_unseen">Unseen cards:</string>
+<string name="deck_summary_card_age">Card age</string>
+<string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
+<string name="deck_summary_answers_correct">Correct Answers</string>
+<string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
+<string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
+<string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
+<string name="deck_summary_reviews">Reviews:</string>
+<string name="deck_summary_news">New cards:</string>
+<string name="deck_summary_average_week">Average seen last week</string>
+<string name="deck_summary_average_month">Average seen last month</string>
+<string name="deck_summary_average_year">Average seen last year</string>
+<string name="deck_summary_average_total">Average seen ever</string>
+<string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
+<string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
+<string name="deck_summary_all_decks">All decks</string>
+
 </resources>

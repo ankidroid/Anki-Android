@@ -245,7 +245,7 @@ public class Themes {
         builder.setTitle(title);
         WebView view = new WebView(context);
         view.setBackgroundColor(context.getResources().getColor(mDialogBackgroundColor));
-        view.loadData(text, "text/html", "UTF-8");
+        view.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
         builder.setView(view);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), null);
         builder.setCancelable(true);

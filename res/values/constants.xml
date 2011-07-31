@@ -87,6 +87,7 @@
 		<item>2</item>
 		<item>3</item>
 		<item>4</item>
+		<item>5</item>
 	</string-array>
 	<string-array name="statistics_period_values">
 		<item>8</item>
@@ -150,7 +151,8 @@
 	<string-array name="new_version_features">
 		<item>two new themes</item>
 		<item>animations</item>
+		<item>new statistic: deck summary</item>
 		<item>possibility of swapping question/answer very easily</item>
-		<item>automatically choose correct leo.org-dictionary </item>
+		<item>automatically choose correct leo.org-dictionary</item>
 	</string-array>
 </resources>

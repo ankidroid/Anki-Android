@@ -119,7 +119,7 @@
 	</LinearLayout>
 	<!-- Card and whiteboard -->
 	<FrameLayout android:id="@+id/flashcard_frame"
-		android:layout_margin="2dip"
+		android:layout_margin="3dip"
 		android:layout_below="@+id/red_number"
 		android:layout_above="@+id/answer_nextTime_layout"
 		android:layout_width="fill_parent"
