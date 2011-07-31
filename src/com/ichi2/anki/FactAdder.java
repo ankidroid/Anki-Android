@@ -194,7 +194,7 @@ public class FactAdder extends Activity {
         } else {
             mDeck = AnkiDroidApp.deck();
         	loadContents();
-        }     
+        }
 
         mAddButton.setOnClickListener(new View.OnClickListener() {
 

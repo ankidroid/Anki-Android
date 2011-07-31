@@ -1861,6 +1861,7 @@ public class StudyOptions extends Activity {
                     AnkiDroidApp.setDeck(null);
                     showContentView(CONTENT_NO_DECK);
             	}
+            	showContentView(CONTENT_STUDY_OPTIONS);
                 displayProgressDialogAndLoadDeck();
                 return;
             }
