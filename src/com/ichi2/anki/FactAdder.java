@@ -118,6 +118,7 @@ public class FactAdder extends Activity {
     private String mTargetText;
     private int mSourcePosition = 0;
     private int mTargetPosition = 1;
+    private boolean mCancelled = false;
 
     private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
         @Override
@@ -364,14 +365,23 @@ public class FactAdder extends Activity {
             }
         });
         mDeckSelectDialog = builder.create();
+        mDeckSelectDialog.setOnCancelListener(new OnCancelListener() {
+
+			@Override
+			public void onCancel(DialogInterface arg0) {
+		        mCancelled = true;
+	        }
+        	
+        });
         mDeckSelectDialog.setOnDismissListener(new OnDismissListener() {
 			@Override
 			public void onDismiss(DialogInterface arg0) {
-				if (mDeck == null) {
-					mDeckSelectDialog.show();					
+				if (mCancelled == true) {
+					finish();
+				} else if (mDeck == null) {
+					mDeckSelectDialog.show();
 				}
 			}
-        	
         });
     }
 

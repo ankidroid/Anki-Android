@@ -49,6 +49,7 @@ public class Themes {
 	private static int mProgressbarsYoungColor;
 	private static int mProgressbarsDeckpickerYoungColor;
 	private static int mReviewerBackground = 0;
+	private static int mReviewerProgressbar = 0;
 	private static int mFlashcardBorder = 0;
 	private static int mDeckpickerItemBorder = 0;
 	private static int mTitleStyle = 0;
@@ -78,6 +79,7 @@ public class Themes {
 				mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
+				mReviewerProgressbar = mProgressbarsYoungColor;
 				break;				
 			case THEME_BLUE:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
@@ -95,6 +97,7 @@ public class Themes {
 				mToastBackground = R.drawable.blue_toast_frame;
 				mDialogBackgroundColor = R.color.background_dialog_blue;
 				mBackgroundDarkColor = R.color.background_dark_blue;
+				mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
 				mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
 				break;
 			}
@@ -146,7 +149,7 @@ public class Themes {
 		case CALLER_REVIEWER:
 	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
 	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
-	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mProgressbarsYoungColor);	        
+	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);	        
 			break;
 		case CALLER_FEEDBACK:
 			((TextView)view).setTextColor(mProgressbarsFrameColor);

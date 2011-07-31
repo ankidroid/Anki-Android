@@ -1717,7 +1717,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private void updateForNewCard() {
     	updateScreenCounts();
     	if (mShowProgressBars) {
-            updateStatisticBars();    	    
+            updateStatisticBars();
     	}
 
         // Clean answer field
