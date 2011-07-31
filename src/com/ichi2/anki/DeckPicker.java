@@ -1347,7 +1347,7 @@ public class DeckPicker extends Activity implements Runnable {
     }
 
 
-	private static final class AnkiFilter implements FileFilter {
+	public static final class AnkiFilter implements FileFilter {
 		@Override
 		public boolean accept(File pathname) {
 			if (pathname.isFile() && pathname.getName().endsWith(".anki")) {

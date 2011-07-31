@@ -635,4 +635,9 @@
 <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
 <string name="deck_summary_all_decks">All decks</string>
 
+<string name="fact_adder_intent_title">AnkiDroid Card</string>
+<string name="fact_adder_swap">Swap</string>
+<string name="fact_adder_select_deck">Select deck</string>
+<string name="fact_adder_deck_not_loaded">Deck could not be loaded.\nPlease selected another one</string>
+
 </resources>

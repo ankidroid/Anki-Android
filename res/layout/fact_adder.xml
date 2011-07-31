@@ -37,19 +37,38 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
         </LinearLayout>
-		<Button android:layout_width="fill_parent"
-			android:layout_marginTop="5dp"
-			android:layout_height="wrap_content" 
-			android:id="@+id/FactAdderTagButton"
-style="?android:attr/buttonStyleSmall"
+ 	    <LinearLayout
+ 	    android:layout_marginTop="5dp"
+   		android:id="@+id/FactAdderButtons"
+  		android:layout_height="wrap_content" 
+       	android:layout_width="fill_parent"
+	  	android:orientation="horizontal"
+	  	android:layout_gravity="right" >
+
+			<Button android:layout_width="0dip"
+         		android:layout_weight="2"
+				android:layout_height="fill_parent" 
+				android:id="@+id/FactAdderTagButton"
+				style="?android:attr/buttonStyleSmall"
 				android:text="Tags:"
-			android:layout_gravity="center"
-			android:gravity="left|center_vertical"/>
+				android:layout_gravity="center"
+				android:gravity="left|center_vertical"/>
+			<Button android:layout_width="0dip"
+				android:layout_height="fill_parent" 
+				android:id="@+id/FactAdderSwapButton"
+				style="?android:attr/buttonStyleSmall"
+				android:layout_gravity="center"
+         		android:layout_weight="1"
+         		android:text="@string/fact_adder_swap"
+         		android:visibility="gone"
+				android:gravity="center"/>
+        </LinearLayout>
  	    <LinearLayout
    		android:id="@+id/FactAdderButtons"
   		android:layout_height="wrap_content" 
        	android:layout_width="fill_parent"
 	  	android:orientation="horizontal"
+	  	android:layout_marginTop="3dp"
 	  	android:layout_gravity="right" >
         <Button
         	android:id="@+id/FactAdderAddButton"

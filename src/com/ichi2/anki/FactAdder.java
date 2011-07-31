@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,11 +39,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.DeckPicker.AnkiFilter;
 import com.ichi2.anki.Fact.Field;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -64,6 +67,9 @@ public class FactAdder extends Activity {
 
     private static final int DIALOG_MODEL_SELECT = 0;
 
+    private static final String INTENT_CREATE_FLASHCARD = "org.openintents.indiclash.CREATE_FLASHCARD";
+    private static final String INTENT_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -75,11 +81,13 @@ public class FactAdder extends Activity {
     private Button mAddButton;
     private Button mCloseButton;
     private Button mModelButton;
+    private Button mSwapButton;
     private Button mCardModelButton;
     private ListView mCardModelListView;
     private Button mTags;
 
     private AlertDialog mCardModelDialog;
+    private AlertDialog mDeckSelectDialog;
     
     private Deck mDeck;
     private Long mCurrentSelectedModelId;
@@ -102,6 +110,14 @@ public class FactAdder extends Activity {
 
     private ProgressDialog mProgressDialog;
 
+    private HashMap<String, String> mFullDeckPaths;
+    private CharSequence[] mDeckNames;
+    private String mSourceLanguage;
+    private String mTargetLanguage;
+    private String mSourceText;
+    private String mTargetText;
+    private int mSourcePosition = 0;
+    private int mTargetPosition = 1;
 
     private DeckTask.TaskListener mSaveFactHandler = new DeckTask.TaskListener() {
         @Override
@@ -117,6 +133,9 @@ public class FactAdder extends Activity {
                 setResult(RESULT_OK);
         		mNewFact = mDeck.newFact(mCurrentSelectedModelId);
         		populateEditFields();
+        		mSourceText = null;
+        		mTargetText = null;
+        		mSwapButton.setVisibility(View.GONE);
             } else {
             	Themes.showThemedToast(FactAdder.this, getResources().getString(R.string.factadder_saving_error), true);
             }
@@ -143,23 +162,39 @@ public class FactAdder extends Activity {
         setContentView(mainView);
         Themes.setWallpaper(mainView);
 
+        setTitle(R.string.factadder_title);
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.FactAdderEditFieldsLayout);
         Themes.setTextViewStyle(mFieldsLayoutContainer);
 
         mAddButton = (Button) findViewById(R.id.FactAdderAddButton);
         mCloseButton = (Button) findViewById(R.id.FactAdderCloseButton);
+    	mSwapButton  = (Button) findViewById(R.id.FactAdderSwapButton);
         mModelButton = (Button) findViewById(R.id.FactAdderModelButton);
         mCardModelButton = (Button) findViewById(R.id.FactAdderCardModelButton);
         mTags = (Button) findViewById(R.id.FactAdderTagButton);
         mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
 
-        mDeck = AnkiDroidApp.deck();
-
-        mModels = Model.getModels(mDeck);
-        mCurrentSelectedModelId = mDeck.getCurrentModelId();
         mNewSelectedCardModels = new LinkedHashMap<Long, CardModel>();
         cardModelIds = new ArrayList<Long>();
-        modelChanged();
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        if (action != null && action.equals(INTENT_CREATE_FLASHCARD)) {
+        	prepareForIntentAddition();
+            Bundle extras = intent.getExtras();
+            mSourceLanguage = extras.getString("SOURCE_LANGUAGE");
+            mTargetLanguage = extras.getString("TARGET_LANGUAGE");
+            mSourceText = extras.getString("SOURCE_TEXT");
+            mTargetText = extras.getString("TARGET_TEXT");
+        } else if (action != null && action.equals(INTENT_CREATE_FLASHCARD_SEND)) {
+        	prepareForIntentAddition();
+            Bundle extras = intent.getExtras();
+            mSourceText = extras.getString(Intent.EXTRA_SUBJECT);
+            mTargetText = extras.getString(Intent.EXTRA_TEXT);
+        } else {
+            mDeck = AnkiDroidApp.deck();
+        	loadContents();
+        }     
 
         mAddButton.setOnClickListener(new View.OnClickListener() {
 
@@ -211,7 +246,6 @@ public class FactAdder extends Activity {
             }
 
         });
-        initDialogs();
     }
 
 
@@ -221,6 +255,14 @@ public class FactAdder extends Activity {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
+    }
+
+
+    private void loadContents() {
+        mModels = Model.getModels(mDeck);
+        mCurrentSelectedModelId = mDeck.getCurrentModelId();
+        modelChanged();
+        initDialogs();
     }
 
 
@@ -269,51 +311,115 @@ public class FactAdder extends Activity {
             }
         });
         mAddNewTag = builder.create();
+        
+        
+    }
+
+
+    private void prepareForIntentAddition() {
+    	mSwapButton.setVisibility(View.VISIBLE);
+    	mSwapButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+            	swapText(false);
+            }
+        });
+    	initDeckSelectDialog();
+    	mDeckSelectDialog.show();
+    }
+
+
+    private void initDeckSelectDialog() {
+		int len = 0;
+		File[] fileList;
+
+		File dir = new File(PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+		fileList = dir.listFiles(new AnkiFilter());
+
+		if (dir.exists() && dir.isDirectory() && fileList != null) {
+			len = fileList.length;
+		}
+
+		TreeSet<String> tree = new TreeSet<String>();
+		mFullDeckPaths = new HashMap<String, String>();
+
+		if (len > 0 && fileList != null) {
+			Log.i(AnkiDroidApp.TAG, "FactAdder - populateDeckDialog, number of anki files = " + len);
+			for (File file : fileList) {
+				String name = file.getName().replaceAll(".anki", "");
+				tree.add(name);
+				mFullDeckPaths.put(name, file.getAbsolutePath());
+			}
+		}            
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.fact_adder_select_deck);
+        // Convert to Array
+        mDeckNames = new CharSequence[tree.size()];
+        tree.toArray(mDeckNames);
+
+        builder.setItems(mDeckNames, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+            	loadDeck(item);
+            }
+        });
+        mDeckSelectDialog = builder.create();
+        mDeckSelectDialog.setOnDismissListener(new OnDismissListener() {
+			@Override
+			public void onDismiss(DialogInterface arg0) {
+				if (mDeck == null) {
+					mDeckSelectDialog.show();					
+				}
+			}
+        	
+        });
     }
 
 
     @Override
     protected Dialog onCreateDialog(int id) {
         Dialog dialog;
+        AlertDialog.Builder builder;
 
         switch (id) {
-            case DIALOG_MODEL_SELECT:
-                ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
-                // Use this array to know which ID is associated with each Item(name)
-                final ArrayList<Long> dialogIds = new ArrayList<Long>();
+        case DIALOG_MODEL_SELECT:
+            ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
+            // Use this array to know which ID is associated with each Item(name)
+            final ArrayList<Long> dialogIds = new ArrayList<Long>();
 
-                Model mModel;
+            Model mModel;
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.select_model);
-                for (Long i : mModels.keySet()) {
-                    mModel = mModels.get(i);
-                    dialogItems.add(mModel.getName());
-                    dialogIds.add(i);
-                }
-                // Convert to Array
-                CharSequence[] items = new CharSequence[dialogItems.size()];
-                dialogItems.toArray(items);
+            builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.select_model);
+            for (Long i : mModels.keySet()) {
+                mModel = mModels.get(i);
+                dialogItems.add(mModel.getName());
+                dialogIds.add(i);
+            }
+            // Convert to Array
+            CharSequence[] items = new CharSequence[dialogItems.size()];
+            dialogItems.toArray(items);
 
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        long oldModelId = mCurrentSelectedModelId;
-                        mCurrentSelectedModelId = dialogIds.get(item);
-                        if (oldModelId != mCurrentSelectedModelId) {
-                            int size = mEditFields.size();
-                        	String[] oldValues = new String[size];
-                        	for (int i = 0; i < size; i++) {
-                                oldValues[i] = mEditFields.get(i).getText().toString();
-                            }
-                        	modelChanged();
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+                    long oldModelId = mCurrentSelectedModelId;
+                    mCurrentSelectedModelId = dialogIds.get(item);
+                    if (oldModelId != mCurrentSelectedModelId) {
+                        int size = mEditFields.size();
+                    	String[] oldValues = new String[size];
+                    	for (int i = 0; i < size; i++) {
+                            oldValues[i] = mEditFields.get(i).getText().toString();
+                        }
+                    	modelChanged();
+                    	if ((mSourceText == null || mSourceText.isEmpty()) && (mTargetText == null || mTargetText.isEmpty())) {
                         	for (int i = 0; i < Math.min(size, mEditFields.size()) ; i++) {
                                 mEditFields.get(i).setText(oldValues[i]);
-                            }
-                        }
+                            }                    		
+                    	}
                     }
-                });
-                AlertDialog alert = builder.create();
-                return alert;
+                }
+            });
+            return builder.create();
             default:
                 dialog = null;
         }
@@ -328,6 +434,49 @@ public class FactAdder extends Activity {
 		mModelButton.setText(getResources().getString(R.string.model) + " " + mModels.get(mCurrentSelectedModelId).getName());
 		cardModelsChanged();
 		populateEditFields();
+		swapText(true);
+    }
+
+
+    private void loadDeck(int item) {
+		mDeck = Deck.openDeck(mFullDeckPaths.get(mDeckNames[item]), false);
+		if (mDeck == null) {
+			Themes.showThemedToast(FactAdder.this, getResources().getString(R.string.fact_adder_deck_not_loaded), true);
+		} else {
+			loadContents();
+		}
+    }
+
+
+    private void swapText(boolean reset) {
+		if (mEditFields.size() > mSourcePosition) {
+	    	mEditFields.get(mSourcePosition).setText("");			
+		}
+		if (mEditFields.size() > mTargetPosition) {
+	    	mEditFields.get(mTargetPosition).setText("");			
+		}
+		if (reset) {
+			mSourcePosition = 0;
+			mTargetPosition = 1;
+		} else {
+			mTargetPosition++;
+			while (mTargetPosition == mSourcePosition || mTargetPosition >= mEditFields.size()) {
+				mTargetPosition++;
+				if (mTargetPosition >= mEditFields.size()) {
+					mTargetPosition = 0;
+					mSourcePosition++;
+				}
+				if (mSourcePosition >= mEditFields.size()) {
+					mSourcePosition = 0;
+				}
+	    	}			
+		}
+		if (mSourceText != null) {
+			mEditFields.get(mSourcePosition).setText(mSourceText);			
+		}
+		if (mSourceText != null) {
+			mEditFields.get(mTargetPosition).setText(mTargetText);			
+		}
     }
 
 
@@ -430,7 +579,7 @@ public class FactAdder extends Activity {
     private void recreateTagsDialog() {
         Resources res = getResources();
         if (allTags == null) {
-            String[] oldTags = AnkiDroidApp.deck().allUserTags();
+            String[] oldTags = mDeck.allUserTags();
             Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
             allTags = new String[oldTags.length + 1];
             allTags[0] = res.getString(R.string.add_new_tag);
@@ -541,5 +690,4 @@ public class FactAdder extends Activity {
             mPairField.setValue(this.getText().toString());
         }
     }
-
 }

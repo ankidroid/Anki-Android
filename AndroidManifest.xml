@@ -69,8 +69,18 @@
 			android:label="@string/cardeditor_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
 		<activity android:name="FactAdder" 
-			android:label="@string/factadder_title"
-			android:configChanges="keyboardHidden|orientation|locale"/>
+			android:label="@string/fact_adder_intent_title"
+			android:configChanges="keyboardHidden|orientation|locale">
+            <intent-filter>
+                <action android:name="org.openintents.indiclash.CREATE_FLASHCARD" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
 		<activity android:name="DeckCreator" 
 			android:label="@string/deckcreator_title"
 			android:configChanges="keyboardHidden|orientation|locale"/>
