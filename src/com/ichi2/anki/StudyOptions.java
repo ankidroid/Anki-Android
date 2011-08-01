@@ -148,6 +148,7 @@ public class StudyOptions extends Activity {
     private String mDeckFilename;
     private int mStartupMode;
     private boolean mSwipeEnabled;
+    private int mWalWarning;
 
     private int mCurrentContentView;
 
@@ -167,6 +168,7 @@ public class StudyOptions extends Activity {
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mSyncConflictResolutionAlert;
 	private AlertDialog mNewVersionAlert;
+	private AlertDialog mWalWarningAlert;
 	private AlertDialog mStatisticTypeAlert;
 	private AlertDialog mStatisticPeriodAlert;
 
@@ -1693,6 +1695,11 @@ public class StudyOptions extends Activity {
     }
 
     private void syncDeck(String conflictResolution) {
+    	if (mWalWarning != AnkiDb.NO_WAL_WARNING) {
+    		showWalWarningDialog();
+    		return;
+    	}
+
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 
         String username = preferences.getString("username", "");
@@ -1921,6 +1928,25 @@ public class StudyOptions extends Activity {
     }
 
 
+    private void showWalWarningDialog() {
+    	if (mWalWarningAlert == null) {
+        	Resources res = getResources();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(res.getString(R.string.wal_warning));
+            builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+    			@Override
+    			public void onClick(DialogInterface dialog, int which) {
+    	            mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
+    	            PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
+    			}
+            });
+            builder.setCancelable(true);
+        	mWalWarningAlert = builder.create();    		
+    	}
+    	mWalWarningAlert.show();
+    }
+
+
     private void setLanguage(String language) {
     	Locale locale;
     	if (language.equals("")) {
@@ -2034,6 +2060,10 @@ public class StudyOptions extends Activity {
                     mProgressDialog.dismiss();
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                }
+                mWalWarning = PrefSettings.getSharedPrefs(getBaseContext()).getInt("walWarning", AnkiDb.NO_WAL_WARNING);
+                if (mWalWarning == AnkiDb.WAL_WARNING_SHOW) {
+                	showWalWarningDialog();
                 }
                 if (mNewVersion) {
                     mNewVersionAlert.show();
