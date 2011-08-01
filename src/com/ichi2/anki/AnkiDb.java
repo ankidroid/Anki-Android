@@ -19,6 +19,7 @@
 package com.ichi2.anki;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,6 +28,8 @@ import android.util.Log;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -38,23 +41,32 @@ public class AnkiDb {
      */
     private SQLiteDatabase mDatabase;
 
+    public static final int NO_WAL_WARNING = 0;
+    public static final int WAL_WARNING_SHOW = 1;
+    public static final int WAL_WARNING_ALREADY_SHOWN = 2;
 
     /**
      * Open a database connection to an ".anki" SQLite file.
      */
-    public AnkiDb(String ankiFilename) throws SQLException {
+    public AnkiDb(String ankiFilename) {
         mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
                 | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         if (mDatabase != null) {
             Cursor cur = null;
             try {
-                cur = mDatabase.rawQuery("PRAGMA journal_mode", null);
-                if (cur.moveToNext()) {
-                    String journalMode = cur.getString(0);
-                    if (!journalMode.equalsIgnoreCase("delete")) {
-                        Log.w(AnkiDroidApp.TAG, "Journal mode was set to " + journalMode + ", changing it to DELETE");
-                        mDatabase.execSQL("PRAGMA journal_mode = DELETE");
-                    }
+                cur = mDatabase.rawQuery("PRAGMA journal_mode = DELETE", null);
+                if (cur.moveToFirst()) {
+                	String journalMode = cur.getString(0);
+                    Log.w(AnkiDroidApp.TAG, "Trying to set journal mode to DELETE. Result: " + journalMode);
+                	if (journalMode.equalsIgnoreCase("delete")) {
+                        PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("walWarning", NO_WAL_WARNING).commit();
+                	} else {
+                        Log.e(AnkiDroidApp.TAG, "Journal could not be changed to DELETE. Deck will probably be unreadable on sqlite < 3.7");
+                        SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+                        if (prefs.getInt("walWarning", NO_WAL_WARNING) == NO_WAL_WARNING) {
+                        	prefs.edit().putInt("walWarning", WAL_WARNING_SHOW).commit();
+                        }
+                	}
                 }
             } finally {
                 if (cur != null) {

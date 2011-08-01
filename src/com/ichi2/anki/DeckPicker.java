@@ -758,6 +758,9 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private void enableButtons(boolean enabled) {
 		if (enabled) {
+			if (!PrefSettings.getSharedPrefs(getBaseContext()).getInt("walWarning", AnkiDb.NO_WAL_WARNING) == AnkiDb.NO_WAL_WARNING)) {
+				mSyncAllButton.setVisibility(View.GONE);
+			}
 			mDeckpickerButtons.setVisibility(View.VISIBLE);
 			mDeckpickerButtons.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0)); 
 		} else {
