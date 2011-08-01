@@ -2013,7 +2013,15 @@ public class StudyOptions extends Activity {
             // if(updateDialog == null || !updateDialog.isShowing())
             // {
             mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
-                    .getString(R.string.loading_deck), true);
+                    .getString(R.string.loading_deck), true, true, new OnCancelListener() {
+
+						@Override
+						public void onCancel(DialogInterface dialog) {
+				            closeOpenedDeck();
+				            MetaDB.closeDB();
+				            finish();
+						}
+            });
             // }
         }
 
