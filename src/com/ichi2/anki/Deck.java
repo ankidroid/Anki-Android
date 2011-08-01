@@ -1194,7 +1194,11 @@ public class Deck {
     public double getSessionProgress() {
     	int done = mDailyStats.getReps();
     	int total = done + mFailedSoonCount + mRevCount + mNewCountToday;
-		return (double) done / total;   	
+    	if (hasFinishScheduler()) {
+    		return 1.0d;
+    	} else {
+    		return (double) done / total;    		
+    	}
     }
 
     public int getETA() {
