@@ -453,6 +453,7 @@ public class FactAdder extends Activity {
 		if (mDeck == null) {
 			Themes.showThemedToast(FactAdder.this, getResources().getString(R.string.fact_adder_deck_not_loaded), true);
 		} else {
+			setTitle(mDeckNames[item]);
 			loadContents();
 		}
     }

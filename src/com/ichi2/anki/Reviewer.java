@@ -933,6 +933,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
         long savedTimer = mCardTimer.getBase();
         CharSequence savedAnswerField = mAnswerField.getText();
+        boolean cardVisible = mCardContainer.getVisibility() == View.VISIBLE;
 
         // Reload layout
         initLayout(R.layout.flashcard);
@@ -963,15 +964,23 @@ public class Reviewer extends Activity implements IButtonListener{
         // Also skipping the counts (because we don't know which one to underline)
         // They will be updated when the card loads anyway
         if (mCurrentCard != null) {
-            fillFlashcard(false);
+        	if (cardVisible) {
+                fillFlashcard(false);
+                if (mPrefTimer) {
+                    mCardTimer.setBase(savedTimer);
+                    mCardTimer.start();
+                }        		
+        		if (sDisplayAnswer) {
+        			updateForNewCard();
+            	}
+        	} else {
+        		mCardContainer.setVisibility(View.INVISIBLE);
+        		switchVisibility(mProgressBars, View.INVISIBLE);
+        		switchVisibility(mCardTimer, View.INVISIBLE);
+        	}
     		if (sDisplayAnswer) {
-    			updateForNewCard();
         		showEaseButtons();
         	}
-            if (mPrefTimer) {
-                mCardTimer.setBase(savedTimer);
-                mCardTimer.start();
-            }
         }
 
         mConfigurationChanged = false;
@@ -1105,11 +1114,13 @@ public class Reviewer extends Activity implements IButtonListener{
             	return editCard();
 
             case MENU_REMOVE_BURY:
+            	setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
                 return true;
 
             case MENU_REMOVE_SUSPEND:
+            	setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mDismissCardHandler, new DeckTask.TaskData(0,
                         AnkiDroidApp.deck(), mCurrentCard));
                 return true;
@@ -1319,6 +1330,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                    	setNextCardAnimation(false);
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_CARD, mDismissCardHandler, new DeckTask.TaskData(0, AnkiDroidApp.deck(), mCurrentCard));
                     }
                 });
@@ -2043,7 +2055,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		boolean directionToLeft = true;
     		switch (mNextAnimation) {
     		case ANIMATION_TURN:
-    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 5, Animation3D.ANIMATION_TURN, true, true, this);
+    			rotation = new Animation3D(mCard.getWidth(), mCard.getHeight(), 9, Animation3D.ANIMATION_TURN, true, true, this);
     			rotation.setDuration(mAnimationDurationTurn);
     			rotation.setInterpolator(new AccelerateDecelerateInterpolator());
     			break;
@@ -2628,10 +2640,12 @@ public class Reviewer extends Activity implements IButtonListener{
     		lookUp();
     		break;
     	case GESTURE_BURY:
+        	setNextCardAnimation(false);
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
                     AnkiDroidApp.deck(), mCurrentCard));
     		break;
     	case GESTURE_SUSPEND:
+        	setNextCardAnimation(false);
     		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SUSPEND_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
                     AnkiDroidApp.deck(), mCurrentCard));
     		break;
