@@ -1860,9 +1860,10 @@ public class StudyOptions extends Activity {
             	if (!fileNotDeleted) {
                     AnkiDroidApp.setDeck(null);
                     showContentView(CONTENT_NO_DECK);
+            	} else {
+                	showContentView(CONTENT_STUDY_OPTIONS);
+                    displayProgressDialogAndLoadDeck();            		
             	}
-            	showContentView(CONTENT_STUDY_OPTIONS);
-                displayProgressDialogAndLoadDeck();
                 return;
             }
 
