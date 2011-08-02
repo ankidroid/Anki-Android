@@ -161,7 +161,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             	cursor.close();
             }
         }
-        if (sqliteVersion.length() >= 3 && Double.parseDouble(sqliteVersion.subSequence(0, 3).toString()) >= 3.8) {
+        if (sqliteVersion.length() >= 3 && Double.parseDouble(sqliteVersion.subSequence(0, 3).toString()) >= 3.7) {
         	walModePreference.setEnabled(true);
         } else {
         	Log.e(AnkiDroidApp.TAG, "WAL mode not available due to a SQLite version lower than 3.7.0");
