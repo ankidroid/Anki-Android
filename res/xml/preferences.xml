@@ -66,6 +66,9 @@
 				android:defaultValue="true"
 				android:key="syncFetchMedia"/>
 		</PreferenceCategory>
+	</PreferenceScreen>
+	
+	<PreferenceScreen android:title="@string/pref_cat_qadisplay">
 		<PreferenceCategory android:title="@string/pref_cat_themes">
 			<ListPreference
 				android:title="@string/select_theme"
@@ -91,9 +94,7 @@
         		android:max="2000" 
         		app:interval="50" />
 		</PreferenceCategory>
-	</PreferenceScreen>
-	
-	<PreferenceScreen android:title="@string/pref_cat_qadisplay">
+		<PreferenceCategory android:title="@string/pref_cat_flashcard">
 		<CheckBoxPreference
 			android:title="@string/fullscreen_review"
 			android:defaultValue="true"
@@ -153,6 +154,7 @@
         	app:min="100"
         	android:max="170" 
         	app:interval="10" />	
+	</PreferenceCategory>
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/pref_cat_extras">
 		<CheckBoxPreference
@@ -384,6 +386,11 @@
 			android:entryValues="@array/error_reporting_choice_values"
 			android:key="reportErrorMode" />
 		<PreferenceCategory android:title="@string/pref_cat_experimental">
+			<CheckBoxPreference
+				android:title="@string/wal_mode"
+				android:summary="@string/wal_mode_summ"
+				android:defaultValue="false"
+				android:key="walMode"/>
 			<CheckBoxPreference
 				android:title="@string/fix_hebrew_text"
 				android:summary="@string/fix_hebrew_text_summ"

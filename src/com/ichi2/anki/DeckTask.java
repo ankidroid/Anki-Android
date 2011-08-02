@@ -17,8 +17,14 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.TreeSet;
+
+import com.ichi2.anki.DeckPicker.AnkiFilter;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -47,6 +53,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_DELETE_CARD = 12;
     public static final int TASK_TYPE_LOAD_STATISTICS = 13;
     public static final int TASK_TYPE_OPTIMIZE_DECK = 14;
+    public static final int TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE = 15;
+    public static final int TASK_TYPE_CLOSE_DECK = 16;
 
     /**
      * Possible outputs trying to load a deck.
@@ -151,6 +159,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_OPTIMIZE_DECK:
                 return doInBackgroundOptimizeDeck(params);
 
+            case TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE:
+                return doInBackgroundSetJournalMode(params);
+                
+            case TASK_TYPE_CLOSE_DECK:
+                return doInBackgroundCloseDeck(params);
+                
             default:
                 return null;
         }
@@ -479,6 +493,53 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         long result = 0;
     	result = deck.optimizeDeck();
         return new TaskData(deck, result);
+    }
+
+
+    private TaskData doInBackgroundSetJournalMode(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSetJournalMode");
+        String path = params[0].getOrder();
+        Deck currentDeck = params[0].getDeck();
+        if (currentDeck != null) {
+        	currentDeck.closeDeck(false);
+        }
+
+        int len = 0;
+		File[] fileList;
+
+		File dir = new File(path);
+		fileList = dir.listFiles(new AnkiFilter());
+
+		if (dir.exists() && dir.isDirectory() && fileList != null) {
+			len = fileList.length;
+		} else {
+			return null;
+		}
+
+		if (len > 0 && fileList != null) {
+			Log.i(AnkiDroidApp.TAG, "Set journal mode: number of anki files = " + len);
+			for (File file : fileList) {
+				// on deck open, journal mode will be automatically set
+				String filePath = file.getAbsolutePath();
+				Deck deck = Deck.openDeck(filePath, false);
+				if (deck != null) {
+					Log.i(AnkiDroidApp.TAG, "Journal mode of file " + filePath + " set");
+					deck.closeDeck(false);					
+				}
+			}
+		}
+        return null;
+    }
+
+    
+    private TaskData doInBackgroundCloseDeck(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
+    	Deck deck = params[0].getDeck();
+    	boolean wait = params[0].getBoolean();
+    	if (deck != null) {
+    		deck.closeDeck(wait);
+    	}
+    	return null;
     }
 
 

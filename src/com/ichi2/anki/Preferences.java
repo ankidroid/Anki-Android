@@ -24,15 +24,24 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.text.format.Time;
 import android.util.Log;
+import android.view.View;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.tomgibara.android.veecheck.Veecheck;
@@ -43,11 +52,15 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
  */
 public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
+	private static final int DIALOG_WAL = 0;
+
     private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
     private CheckBoxPreference zoomCheckboxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference animationsCheckboxPreference;
+    private CheckBoxPreference walModePreference;
+    private AlertDialog walModeAlert;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
@@ -55,6 +68,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme"};
     private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds", "animationDuration"};
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
+    private ProgressDialog mProgressDialog;
+    private boolean lockWalAction = false;
+    private boolean walModeInitiallySet = false;
+    private boolean enableWalMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +88,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
+        walModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("walMode");
+        walModeInitiallySet = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
+        enableWalMode = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         animationsCheckboxPreference.setEnabled(listpref.getValue().equals("2"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
@@ -205,6 +225,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             updateListPreference(key);
         } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
             updateSeekBarPreference(key);
+        } else if (key.equals("walMode") && !lockWalAction) {
+        	lockWalAction = true;
+        	if (sharedPreferences.getBoolean("walMode", false)) {
+        		showDialog(DIALOG_WAL);
+        	} else if (walModeInitiallySet) {
+        		walModeInitiallySet = false;
+            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE, mDeckOperationHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory())));
+        	} else {
+        		lockWalAction = false;        		
+        	}
         }
     }
 
@@ -222,4 +252,64 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         names[count] = defaultValue;
         return names;
     }
+
+
+    private void setReloadDeck() {
+    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mDeckOperationHandler, new DeckTask.TaskData(0, AnkiDroidApp.deck(), 0l, false));
+		setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
+    }
+
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+		Resources res = getResources();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        switch (id) {
+        case DIALOG_WAL:
+    		builder.setTitle(res.getString(R.string.wal_mode));
+    		builder.setCancelable(false);
+    		builder.setMessage(res.getString(R.string.wal_mode_message));
+    		builder.setNegativeButton(res.getString(R.string.no), new OnClickListener() {
+
+    			@Override
+    			public void onClick(DialogInterface arg0, int arg1) {
+    				walModePreference.setChecked(false);
+    				lockWalAction = false;
+    			}
+    		});
+    		builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+
+    			@Override
+    			public void onClick(DialogInterface arg0, int arg1) {
+    				walModePreference.setChecked(true);
+    	        	lockWalAction = false;
+    				setReloadDeck();
+    			}
+    		});
+        }
+		return builder.create();    	
+    }
+
+
+    private DeckTask.TaskListener mDeckOperationHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+        	mProgressDialog = ProgressDialog.show(Preferences.this, "", getResources().getString(R.string.wal_mode_set_message), true);
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.dismiss();
+        	}
+        	lockWalAction = false;
+        }
+    };
+
 }

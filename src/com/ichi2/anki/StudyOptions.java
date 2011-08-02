@@ -109,6 +109,7 @@ public class StudyOptions extends Activity {
     
     public static final int RESULT_RESTART = 100;
     public static final int RESULT_CLOSE = 101;
+    public static final int RESULT_RELOAD_DECK = 102;
 
     /**
 * Constants for selecting which content view to display
@@ -706,9 +707,10 @@ public class StudyOptions extends Activity {
 
 
     private void closeStudyOptions() {
-        closeOpenedDeck();
+        if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
+        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));	
+        }
         MetaDB.closeDB();
-        finish();
     }
 
 
@@ -1899,6 +1901,8 @@ public class StudyOptions extends Activity {
             showContentView();
             if (resultCode == RESULT_RESTART) {
             	restartApp();
+            } else if (resultCode == RESULT_RELOAD_DECK) {
+            	displayProgressDialogAndLoadDeck();
             }
             // If there is no deck loaded the controls have not to be shown
             // if(deckLoaded && cardsToReview)
@@ -2195,6 +2199,28 @@ public class StudyOptions extends Activity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             // Pass
+        }
+    };
+
+
+    DeckTask.TaskListener mCloseDeckHandler = new DeckTask.TaskListener() {
+
+        @Override
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+                    .getString(R.string.close_current_deck), true);
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	AnkiDroidApp.setDeck(null);
+            finish();
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
         }
     };
 
