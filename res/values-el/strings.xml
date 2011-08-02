@@ -450,6 +450,7 @@
   <string name="calculating_statistics">Υπολογισμός στατιστικών</string>
   <string name="fix_arabic_text">Improve Arabic display</string>
   <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
+  <string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us to solve this issue by reporting your device\'s vendor and name at https://code.google.com/p/ankidroid/</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Όλες οι τράπουλες: 1 από %2$d δέουσες (%3$s)</item>
     <item quantity="other">Όλες οι τράπουλες: %1$d από %2$d δέουσες (%3$s)</item>
