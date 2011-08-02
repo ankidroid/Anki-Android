@@ -153,6 +153,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private BroadcastReceiver mUnmountReceiver = null;
 
+	private String mCurrentLoadedDeckPath = null;
 	private String mPrefDeckPath = null;
 	private int mPrefDeckOrder = 0;
 	private boolean mPrefStartupDeckPicker = false;
@@ -478,6 +479,11 @@ public class DeckPicker extends Activity implements Runnable {
         		return false;
         		}
         	});
+        
+        Deck deck = AnkiDroidApp.deck();
+        if (deck != null) {
+        	mCurrentLoadedDeckPath = deck.getDeckPath();
+        }
 	}
 
 	@Override
@@ -748,6 +754,9 @@ public class DeckPicker extends Activity implements Runnable {
     		setResult(StudyOptions.RESULT_CLOSE);
     		finish();
 		} else {
+			if (backPressed) {
+				setResult(StudyOptions.RESULT_DONT_RELOAD_DECK);
+			}
 			finish();
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 	    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
@@ -1031,9 +1040,14 @@ public class DeckPicker extends Activity implements Runnable {
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					}
-
+					boolean openedDeck = false;
 					try {
-						deck = Deck.openDeck(path, false);
+						if (mCurrentLoadedDeckPath != null && path.equals(mCurrentLoadedDeckPath)) {
+							deck = AnkiDroidApp.deck();
+							openedDeck = true;
+						} else {
+							deck = Deck.openDeck(path, false);							
+						}
 						version = deck.getVersion();
 					} catch (SQLException e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
@@ -1050,7 +1064,9 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("msgtype", MSG_UPGRADE_FAILURE);
 						data.putInt("version", version);
 						data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
-						deck.closeDeck(false);
+						if (!openedDeck) {
+							deck.closeDeck(false);							
+						}
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					} else {
@@ -1063,7 +1079,10 @@ public class DeckPicker extends Activity implements Runnable {
 						int totalCardsCompletionBar = totalRevCards + totalNewCards;
 
 						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
-						deck.closeDeck(false);
+						
+						if (!openedDeck) {
+							deck.closeDeck(false);							
+						}
 
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_UPGRADE_SUCCESS);
@@ -1413,7 +1432,7 @@ public class DeckPicker extends Activity implements Runnable {
             if (mSwipeEnabled) {
                 try {
        				if (e1.getX() - e2.getX() > StudyOptions.sSwipeMinDistance && Math.abs(velocityX) > StudyOptions.sSwipeThresholdVelocity && Math.abs(e1.getY() - e2.getY()) < StudyOptions.sSwipeMaxOffPath) {
-       					closeDeckPicker();
+       					closeDeckPicker(true);
                     }
        			}
                 catch (Exception e) {

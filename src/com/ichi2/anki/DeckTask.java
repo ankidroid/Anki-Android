@@ -267,6 +267,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadDeck(TaskData... params) {
         String deckFilename = params[0].getString();
+        Deck oldDeck = params[0].getDeck();
+        if (oldDeck != null) {
+        	oldDeck.closeDeck(false);
+        }
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
         Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
@@ -415,7 +419,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadCards(TaskData... params) {
         Deck deck = params[0].getDeck();
-        String order = params[0].getOrder();
+        String order = params[0].getString();
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
        	publishProgress(new TaskData(deck.getAllCards(order)));
         return null;
@@ -498,7 +502,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundSetJournalMode(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSetJournalMode");
-        String path = params[0].getOrder();
+        String path = params[0].getString();
         Deck currentDeck = params[0].getDeck();
         if (currentDeck != null) {
         	currentDeck.closeDeck(false);
@@ -563,7 +567,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private boolean previousCardSuspended; // answer card resulted in card marked as leech and suspended
         private boolean mBool = false;
         private ArrayList<String[]> mAllCards;
-        private String mOrder;
         private long mLong;
         private Context mContext;
         private int mType;
@@ -625,7 +628,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(Deck deck, String order) {
             mDeck = deck;
-            mOrder = order;
+            mMsg = order;
         }
 
  
@@ -658,11 +661,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public Deck getDeck() {
             return mDeck;
-        }
-
-
-        public String getOrder() {
-            return mOrder;
         }
 
 

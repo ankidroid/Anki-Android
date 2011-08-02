@@ -110,6 +110,7 @@ public class StudyOptions extends Activity {
     public static final int RESULT_RESTART = 100;
     public static final int RESULT_CLOSE = 101;
     public static final int RESULT_RELOAD_DECK = 102;
+    public static final int RESULT_DONT_RELOAD_DECK = 103;
 
     /**
 * Constants for selecting which content view to display
@@ -1691,7 +1692,7 @@ public class StudyOptions extends Activity {
 
 
     private void openDeckPicker() {
-        closeOpenedDeck();
+//        closeOpenedDeck();
         // deckLoaded = false;
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
@@ -1871,7 +1872,9 @@ public class StudyOptions extends Activity {
                     showContentView(CONTENT_NO_DECK);
             	} else {
                 	showContentView(CONTENT_STUDY_OPTIONS);
-                    displayProgressDialogAndLoadDeck();            		
+                	if (resultCode != RESULT_DONT_RELOAD_DECK) {
+                        displayProgressDialogAndLoadDeck();
+                    }
             	}
                 return;
             }
@@ -2098,10 +2101,10 @@ public class StudyOptions extends Activity {
 
             if (updateAllCards) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
-                        new DeckTask.TaskData(mDeckFilename));
+                        new DeckTask.TaskData(AnkiDroidApp.deck(), mDeckFilename));
             } else {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(
-                        mDeckFilename));
+                		AnkiDroidApp.deck(), mDeckFilename));
             }
         } else {
             if (mDeckFilename == null) {
@@ -2214,8 +2217,11 @@ public class StudyOptions extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.dismiss();
+        	}
         	AnkiDroidApp.setDeck(null);
-            finish();
+            StudyOptions.this.finish();
         }
 
 
