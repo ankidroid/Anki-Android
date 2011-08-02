@@ -450,7 +450,7 @@
   <string name="calculating_statistics">Statistik wird berechnet</string>
   <string name="fix_arabic_text">Arabisch verbessern</string>
   <string name="fix_arabic_text_summ">Provisorische Lösung für Arabisch-Unterstützung unter Android. Falls aktiviert, ist keine Kartenänderung möglich.</string>
-  <string name="wal_warning">Die SQLite-Version Ihres Geräts verhindert die korrekte Anki-Einstellung des Journal-Modes\nDie Stapel-Synchronisierung über AnkiDroid ist deshalb nicht möglich, bis wir eine Lösung dafür gefunden haben.\nHelfen Sie mit, das Problem zu lösen, indem Sie Name und Hersteller Ihres betroffenen Geräts unter https://code.google.com/p/ankidroid/ melden.</string>
+  <string name="wal_warning">Die SQLite-Version Ihres Geräts verhindert die korrekte Anki-Einstellung des Journal-Modes\nDie Stapel-Synchronisierung über AnkiDroid ist deshalb nicht möglich, bis wir eine Lösung dafür gefunden haben.\nHelfen Sie mit, das Problem zu lösen, indem einen Fehlerreport senden.\nWeitere Informationen finden Sie unter http://bit.ly/n5MaOF</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Alle Stapel: 1 von %2$d fällig (%3$s)</item>
     <item quantity="other">Alle Stapel: %1$d von %2$d fällig (%3$s)</item>

@@ -604,5 +604,5 @@
 <string name="fix_arabic_text">Improve Arabic display</string>
 <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
 
-<string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us to solve this issue by reporting your device\'s vendor and name at https://code.google.com/p/ankidroid/</string>
+<string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us solving this issue by sending an error report.\n Visit http://bit.ly/n5MaOF for more information.</string>
 </resources>

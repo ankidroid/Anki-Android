@@ -1694,7 +1694,6 @@ public class StudyOptions extends Activity {
     private void syncDeck(String conflictResolution) {
     	if (mWalWarning != AnkiDb.NO_WAL_WARNING) {
     		showWalWarningDialog();
-            new FeedbackElement(this).createReport("WAL problem detected");
     		return;
     	}
 
@@ -1934,8 +1933,11 @@ public class StudyOptions extends Activity {
             builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
     			@Override
     			public void onClick(DialogInterface dialog, int which) {
-    	            mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
-    	            PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
+				if (mWalWarning == AnkiDb.WAL_WARNING_SHOW) {
+			            new FeedbackElement(this).createReport("WAL problem detected");
+		    	            mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
+    	        		    PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
+				}
     			}
             });
             builder.setCancelable(true);
