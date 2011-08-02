@@ -73,10 +73,10 @@
     <item>1年</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>％s 小时</item>
-    <item>％s 天</item>
-    <item>％s 月</item>
-    <item>％s 年</item>
+    <item>%s小时</item>
+    <item>%s天</item>
+    <item>%s月</item>
+    <item>%s年</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>1小时后</item>
