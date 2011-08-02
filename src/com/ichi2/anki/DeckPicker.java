@@ -736,8 +736,8 @@ public class DeckPicker extends Activity implements Runnable {
 
 
 	private void enableButtons(boolean enabled) {
-		mSyncAllButton.setEnabled(enabled);
-		mStatisticsAllButton.setEnabled(enabled);		
+		mSyncAllButton.setEnabled(enabled && PrefSettings.getSharedPrefs(getBaseContext()).getInt("walWarning", AnkiDb.NO_WAL_WARNING) == AnkiDb.NO_WAL_WARNING);
+		mStatisticsAllButton.setEnabled(enabled);
 	}
 
 

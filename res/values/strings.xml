@@ -603,4 +603,6 @@
 <string name="calculating_statistics">Calculating statistics</string>
 <string name="fix_arabic_text">Improve Arabic display</string>
 <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
+
+<string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nOf course you can still copy your decks from the sd-card to your computer but you will have to reset the journal mode before you can use them again with Anki Desktop.\nVisit http://fixdeck.appspot.com for more Information.\nApart from syncing, AnkiDroid should work fine.\nPlease help us to solve this issue by reporting your device\'s vendor and name at https://code.google.com/p/ankidroid/</string>
 </resources>
