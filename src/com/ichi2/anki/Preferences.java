@@ -27,21 +27,20 @@ import java.util.TreeMap;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.text.format.Time;
 import android.util.Log;
-import android.view.View;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.tomgibara.android.veecheck.Veecheck;
@@ -60,7 +59,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference animationsCheckboxPreference;
     private CheckBoxPreference walModePreference;
-    private AlertDialog walModeAlert;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
@@ -71,7 +69,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ProgressDialog mProgressDialog;
     private boolean lockWalAction = false;
     private boolean walModeInitiallySet = false;
-    private boolean enableWalMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +87,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
         walModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("walMode");
         walModeInitiallySet = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
-        enableWalMode = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         animationsCheckboxPreference.setEnabled(listpref.getValue().equals("2"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
@@ -102,6 +98,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : mShowValueInSummSeek) {
             updateSeekBarPreference(key);
         }
+        enableWalSupport();
     }
 
 
@@ -144,6 +141,31 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             }        	
         } catch (NullPointerException e) {
         	Log.e(AnkiDroidApp.TAG, "Exception when updating seekbar preference: " + e);
+        }
+    }
+
+
+    private void enableWalSupport() {
+    	Cursor cursor = null;
+    	String sqliteVersion = "";
+    	SQLiteDatabase database = null;
+        try {
+        	database = SQLiteDatabase.openOrCreateDatabase(":memory:", null);
+        	cursor = database.rawQuery("select sqlite_version() AS sqlite_version", null);
+        	while(cursor.moveToNext()){
+        	   sqliteVersion = cursor.getString(0);
+        	}
+        } finally {
+        	database.close();
+            if (cursor != null) {
+            	cursor.close();
+            }
+        }
+        if (sqliteVersion.length() >= 3 && Double.parseDouble(sqliteVersion.subSequence(0, 3).toString()) >= 3.8) {
+        	walModePreference.setEnabled(true);
+        } else {
+        	Log.e(AnkiDroidApp.TAG, "WAL mode not available due to a SQLite version lower than 3.7.0");
+        	walModePreference.setChecked(false);
         }
     }
 

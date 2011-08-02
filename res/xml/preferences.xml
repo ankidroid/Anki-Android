@@ -390,6 +390,7 @@
 				android:title="@string/wal_mode"
 				android:summary="@string/wal_mode_summ"
 				android:defaultValue="false"
+				android:enabled="false"
 				android:key="walMode"/>
 			<CheckBoxPreference
 				android:title="@string/fix_hebrew_text"
