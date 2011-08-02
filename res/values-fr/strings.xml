@@ -456,7 +456,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="calculating_statistics">Calcul des statistiques…</string>
   <string name="fix_arabic_text">Améliorer l\'affichage de l\'arabe</string>
   <string name="fix_arabic_text_summ">Solution partielle pour un support limité de l\'arabe par la plateforme Android. Lorsqu\'il est activé il n\'est pas possible de modifier les cartes.</string>
-  <string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us to solve this issue by reporting your device\'s vendor and name at https://code.google.com/p/ankidroid/</string>
+  <string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us solving this issue by sending an error report.\n Visit http://bit.ly/n5MaOF for more information.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Tous les paquets: 1 dû parmi %2$d (%3$s)</item>
     <item quantity="other">Tous les paquets: %1$d dûs parmi %2$d (%3$s)</item>
