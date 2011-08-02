@@ -646,6 +646,6 @@
 <string name="wal_mode">WAL journal</string>
 <string name="wal_mode_summ">WAL journal-mode speeds up AnkiDroid but breaks compatibility to Anki Desktop (no syncing).</string>
 <string name="wal_mode_message">Be aware that enabling WAL journal-mode disables AnkiDroid\'s syncing feature. You will not be able to use your decks anymore with Anki Desktop until you disable WAL again.\nEnable it anyway?</string>
-<string name="wal_mode_set_message">Set journal mode</string>
-<string name="close_current_deck">Closing deck</string>
+<string name="wal_mode_set_message">Setting journal mode\nPlease wait...</string>
+<string name="close_current_deck">Closing deck\nPlease wait...</string>
 </resources>

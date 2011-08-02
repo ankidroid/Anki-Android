@@ -1631,7 +1631,7 @@ public class StudyOptions extends Activity {
         Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck,
                 R.drawable.ic_menu_manage);
         Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync,
-                R.drawable.ic_menu_refresh);
+                R.drawable.ic_menu_refresh);        	
         Utils.addMenuItem(menu, Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card,
                 R.drawable.ic_menu_add);
         Utils.addMenuItem(menu, Menu.NONE, MENU_MORE_OPTIONS, Menu.NONE, R.string.studyoptions_more,
@@ -1648,10 +1648,10 @@ public class StudyOptions extends Activity {
         menu.findItem(MENU_OPEN).setEnabled(mSdCardAvailable);
         menu.findItem(MENU_ADD_FACT).setEnabled(deckChangeable);
         menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangeable);
-		menu.findItem(MENU_SYNC).setEnabled(deckChangeable);
+		menu.findItem(MENU_SYNC).setEnabled(deckChangeable);        	
 
-        // Show sync menu items only if sync is enabled.
-		menu.findItem(MENU_SYNC).setVisible(true);
+        // Show sync menu items only if wal isn't set
+		menu.findItem(MENU_SYNC).setVisible(!(mWalWarning == AnkiDb.WAL_SET_ENABLED));
         return true;
     }
 
@@ -1996,7 +1996,7 @@ public class StudyOptions extends Activity {
         	editor.commit();
             mNewVersionAlert = Themes.htmlOkDialog(this, getResources().getString(R.string.new_version_title) + " " + getVersion(), getVersionMessage());
         }
-
+        mWalWarning = PrefSettings.getSharedPrefs(getBaseContext()).getInt("walWarning", AnkiDb.NO_WAL_WARNING);
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
         final float gestureScale = getResources().getDisplayMetrics().density;
         int sensibility = preferences.getInt("swipeSensibility", 100);
