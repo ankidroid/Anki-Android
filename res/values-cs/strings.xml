@@ -362,7 +362,7 @@
   <string name="sync_downloading_media">Downloading media %1$d/%2$d...</string>
   <string name="sync_no_changes_message">Nenalezeny žádné změny.</string>
   <string name="sync_log_error_message">Chyba: Balíček nebyl synchronizován</string>
-  <string name="sync_log_error_specific">Chyba synchronizace, typ:% 1 $ s, zpráva:% 2 $ s</string>
+  <string name="sync_log_error_specific">Chyba synchronizace, typ:%1$s, zpráva:%2$s</string>
   <string name="sync_log_no_changes_message">Nenalezeny žádné změny</string>
   <string name="sync_log_uploading_message">Úplná synchronizace z místního úložiště</string>
   <string name="sync_log_downloading_message">Plná synchronizace ze serveru</string>
