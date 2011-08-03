@@ -65,6 +65,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -244,6 +245,7 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private View mMainLayout;
     private WebView mCard;
+    private View mLookUpIcon;
     private FrameLayout mCardContainer;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
@@ -451,6 +453,7 @@ public class Reviewer extends Activity implements IButtonListener{
             Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             selectAndCopyText();
+            mLookUpIcon.setVisibility(View.VISIBLE);
             return true;
         }
     };
@@ -934,6 +937,7 @@ public class Reviewer extends Activity implements IButtonListener{
         long savedTimer = mCardTimer.getBase();
         CharSequence savedAnswerField = mAnswerField.getText();
         boolean cardVisible = mCardContainer.getVisibility() == View.VISIBLE;
+        int lookupButtonVis = mLookUpIcon.getVisibility();
 
         // Reload layout
         initLayout(R.layout.flashcard);
@@ -982,7 +986,7 @@ public class Reviewer extends Activity implements IButtonListener{
         		showEaseButtons();
         	}
         }
-
+        mLookUpIcon.setVisibility(lookupButtonVis);
         mConfigurationChanged = false;
     }
 
@@ -1271,6 +1275,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private boolean lookUp() {
+    	mLookUpIcon.setVisibility(View.GONE);
     	if (mPrefTextSelection && mClipboard.hasText() && mIsDictionaryAvailable) {
     	    mIsSelecting = false;
     		switch (mDictionary) {
@@ -1342,6 +1347,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void answerCard(int ease) {
         mIsSelecting = false;
+        mLookUpIcon.setVisibility(View.GONE);
+        mClipboard.setText("");
         Deck deck = AnkiDroidApp.deck();
     	switch (ease) {
     		case Card.EASE_FAILED:
@@ -1505,6 +1512,18 @@ public class Reviewer extends Activity implements IButtonListener{
             invertColors();
         }
 
+        mLookUpIcon = findViewById(R.id.lookup_button);
+        mLookUpIcon.setVisibility(View.GONE);
+        mLookUpIcon.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				if (mClipboard.hasText()) {
+					lookUp();
+				}
+			}
+        	
+        });
         initControls();
     }
 

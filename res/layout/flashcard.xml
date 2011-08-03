@@ -132,6 +132,14 @@
 		<FrameLayout android:id="@+id/whiteboard"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"/>
+		<ImageView android:id="@+id/lookup_button"
+			android:padding="5dip"
+			android:layout_gravity="right"
+			android:src="@drawable/ic_lookup"
+			android:visibility="gone"
+			android:clickable="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
 		<FrameLayout android:id="@+id/flashcard_border"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"/>
