@@ -104,8 +104,17 @@ public class Statistics {
 
     public static boolean refreshAllDeckStatistics(Context context, String[] deckPaths, int type, int period, String title) {
         initVariables(context, type, period, title);
+        Deck currentDeck = AnkiDroidApp.deck();
+        String currentDeckPath = null;
+        if (currentDeck != null) {
+        	currentDeckPath = currentDeck.getDeckPath();
+        }
     	for (String dp : deckPaths) {
-            sDeck = Deck.openDeck(dp);
+    		if (currentDeckPath != null && dp.equals(currentDeckPath)) {
+    			sDeck = currentDeck;
+    		} else {
+                sDeck = Deck.openDeck(dp);    			
+    		}
             if (sDeck == null) {
                 continue;
             }
