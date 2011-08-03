@@ -754,9 +754,6 @@ public class DeckPicker extends Activity implements Runnable {
     		setResult(StudyOptions.RESULT_CLOSE);
     		finish();
 		} else {
-			if (backPressed) {
-				setResult(StudyOptions.RESULT_DONT_RELOAD_DECK);
-			}
 			finish();
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 	    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);

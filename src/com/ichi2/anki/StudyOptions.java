@@ -1861,7 +1861,6 @@ public class StudyOptions extends Activity {
             	openDeckPicker();
             	return;
             }
-
             if (resultCode != RESULT_OK) {
                 Log.e(AnkiDroidApp.TAG, "onActivityResult - Deck browser returned with error");
                 // Make sure we open the database again in onResume() if user pressed "back"
@@ -1872,8 +1871,10 @@ public class StudyOptions extends Activity {
                     showContentView(CONTENT_NO_DECK);
             	} else {
                 	showContentView(CONTENT_STUDY_OPTIONS);
-                	if (resultCode != RESULT_DONT_RELOAD_DECK) {
-                        displayProgressDialogAndLoadDeck();
+                    if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
+                    	if (resultCode != RESULT_DONT_RELOAD_DECK) {
+                            displayProgressDialogAndLoadDeck();
+                        }                    	
                     }
             	}
                 return;
@@ -1896,9 +1897,10 @@ public class StudyOptions extends Activity {
     		}
 
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
-            boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
-            displayProgressDialogAndLoadDeck(updateAllCards);
-
+            if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
+                boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
+                displayProgressDialogAndLoadDeck(updateAllCards);	
+            }
         } else if (requestCode == PREFERENCES_UPDATE) {
             restorePreferences();
             showContentView();
