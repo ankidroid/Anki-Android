@@ -350,7 +350,7 @@ public class DeckPicker extends Activity implements Runnable {
             mMissingMediaAlert.show();
             
             Deck deck = (Deck) data.result;
-            deck.closeDeck();
+            closeDeck(deck);
          }
     };
 
@@ -673,12 +673,12 @@ public class DeckPicker extends Activity implements Runnable {
 			return true;
 		case R.id.optimize_deck:
 			deckPath = data.get("filepath");
-			deck = Deck.openDeck(deckPath, false);
+			deck = getDeck(deckPath);
 	    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, null));
 			return true;
 		case R.id.download_missing_media:
 		    deckPath = data.get("filepath");
-		    deck = Deck.openDeck(deckPath);
+		    deck = getDeck(deckPath);
 		    Reviewer.setupMedia(deck);
 		    Connection.downloadMissingMedia(mDownloadMediaListener, new Connection.Payload(new Object[] {deck}));
 		    return true;
@@ -1037,14 +1037,8 @@ public class DeckPicker extends Activity implements Runnable {
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					}
-					boolean openedDeck = false;
 					try {
-						if (mCurrentLoadedDeckPath != null && path.equals(mCurrentLoadedDeckPath)) {
-							deck = AnkiDroidApp.deck();
-							openedDeck = true;
-						} else {
-							deck = Deck.openDeck(path, false);							
-						}
+						deck = getDeck(path);
 						version = deck.getVersion();
 					} catch (SQLException e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
@@ -1061,9 +1055,7 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putInt("msgtype", MSG_UPGRADE_FAILURE);
 						data.putInt("version", version);
 						data.putString("notes", Deck.upgradeNotesToMessages(deck, getResources()));
-						if (!openedDeck) {
-							deck.closeDeck(false);							
-						}
+						closeDeck(deck);
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					} else {
@@ -1077,9 +1069,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
 						
-						if (!openedDeck) {
-							deck.closeDeck(false);							
-						}
+						closeDeck(deck);
 
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_UPGRADE_SUCCESS);
@@ -1201,8 +1191,27 @@ public class DeckPicker extends Activity implements Runnable {
 		}
 		return dir.delete();
 	} 
-	
-	
+
+
+	public Deck getDeck(String filePath) {
+		Deck loadedDeck = AnkiDroidApp.deck();
+		if (loadedDeck != null && loadedDeck.getDeckPath().equals(filePath)) {
+			return loadedDeck;
+		} else {
+			return Deck.openDeck(filePath, false);			
+		}
+	}
+
+
+	public void closeDeck(Deck deck) {
+		Deck loadedDeck = AnkiDroidApp.deck();
+		if (!(loadedDeck != null && loadedDeck == deck)) {
+			deck.closeDeck(false);
+		}
+		
+	}
+
+
 	private void removeDeck(String deckFilename) {
 		if (deckFilename != null) {
 			File file = new File(deckFilename);
@@ -1326,7 +1335,7 @@ public class DeckPicker extends Activity implements Runnable {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
             }
-            result.getDeck().closeDeck();
+            closeDeck(result.getDeck());
     		AlertDialog dialog = (AlertDialog) onCreateDialog(DIALOG_OPTIMIZE_DATABASE);
     		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.optimize_deck_message), Math.round(result.getLong() / 1024)));
     		dialog.show();
