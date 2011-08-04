@@ -26,15 +26,22 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.style.StrikethroughSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.Fact.Field;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -132,10 +139,16 @@ public class CardEditor extends Activity {
         while (iter.hasNext()) {
             FieldEditText newTextbox = new FieldEditText(this, iter.next());
             TextView label = newTextbox.getLabel();
+            ImageView circle = newTextbox.getCircle();
             mEditFields.add(newTextbox);
-
+            FrameLayout frame = new FrameLayout(this);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+            params.rightMargin = 10;
+            circle.setLayoutParams(params);
+            frame.addView(newTextbox);
+            frame.addView(circle);
             mFieldsLayoutContainer.addView(label);
-            mFieldsLayoutContainer.addView(newTextbox);
+            mFieldsLayoutContainer.addView(frame);
         }
 
         mFactTags = mEditorFact.getTags();
@@ -362,7 +375,10 @@ public class CardEditor extends Activity {
     private class FieldEditText extends EditText {
 
         private Field mPairField;
-
+        private String mCutString[];
+        private boolean mCutMode = false;
+        private boolean[] mEnabled;
+        private ImageView mCircle;
 
         public FieldEditText(Context context, Field pairField) {
             super(context);
@@ -371,7 +387,40 @@ public class CardEditor extends Activity {
             	this.setText(ArabicUtilities.reshapeSentence(pairField.getValue()));
             } else {
             	this.setText(pairField.getValue());
-            }
+            }       	
+            this.setMinimumWidth(400);
+            this.setOnClickListener(new View.OnClickListener() {
+
+            	@Override
+            	public void onClick(View v) {
+            		if (mCutMode) {
+                		setSpannables();
+            		}
+            	}
+            });
+        }
+
+
+        @Override
+        public void onTextChanged(CharSequence text, int start, int before, int after) {
+      		super.onTextChanged(text, start, before, after);
+      		if (mCircle != null) {
+      			int visibility = mCircle.getVisibility();
+          		if (text.length() == 0) {
+          			if (visibility == View.VISIBLE) {
+              			mCircle.setVisibility(View.GONE);
+              			mCircle.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 300, 0));          				
+          			}
+          		} else if (visibility == View.GONE) {
+          			mCircle.setVisibility(View.VISIBLE);
+          			mCircle.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 300, 0));      			
+          		}      			
+      		}
+      		if (before != after) {
+          		mCutString = text.toString().split(" ");
+          		mEnabled = new boolean[mCutString.length];
+          		mCutMode = false;
+      		}
         }
 
 
@@ -379,6 +428,45 @@ public class CardEditor extends Activity {
             TextView label = new TextView(this.getContext());
             label.setText(mPairField.getFieldModel().getName());
             return label;
+        }
+
+
+        public ImageView getCircle() {          
+        	mCircle = new ImageView(this.getContext());
+        	mCircle.setImageResource(R.drawable.ic_circle_normal);
+        	mCircle.setOnClickListener(new View.OnClickListener() {
+        		@Override
+        		public void onClick(View v) {
+        			ImageView view = ((ImageView)v);
+        			Editable editText = FieldEditText.this.getText();
+        			if (mCutMode) {
+            			view.setImageResource(R.drawable.ic_circle_normal);
+            			for (boolean enabled : mEnabled) {
+            				if (enabled) {
+            					removeDeleted();
+            					break;
+            				}
+            			}
+            			StrikethroughSpan[] ss = editText.getSpans(0, editText.length(), StrikethroughSpan.class);
+            			for (StrikethroughSpan s : ss) {
+            				editText.removeSpan(s);
+            			}
+            			mCutMode = false;
+        			} else {
+            			view.setImageResource(R.drawable.ic_circle_pressed);        				
+            			mCutMode = true;
+                  		mCutString = editText.toString().split(" ");
+                  		mEnabled = new boolean[mCutString.length];
+            			int pos = 0;
+            			for (int i = 0; i < mCutString.length; i++) {
+            				editText.setSpan(new StrikethroughSpan(), pos, pos + mCutString[i].length(), 0);
+            				pos += mCutString[i].length() + 1;
+            			}
+        			}
+    			}    	
+            });
+        	mCircle.setVisibility(View.VISIBLE);
+            return mCircle;
         }
 
 
@@ -390,6 +478,61 @@ public class CardEditor extends Activity {
             }
             return false;
         }
-    }
 
+
+        public void setSpannables() {
+			int cursorPosition = this.getSelectionStart();
+			String text = this.getText().toString();
+			int beginWord = text.lastIndexOf(" ", cursorPosition - 1) + 1;
+			if (beginWord == -1) {
+				beginWord = 0;
+			}
+			int endWord = text.indexOf(" ", cursorPosition);
+			if (endWord == -1) {
+				endWord = text.length();
+			}
+			Editable editText = this.getText();
+			StrikethroughSpan[] ss = this.getText().getSpans(beginWord, endWord, StrikethroughSpan.class);
+			if (ss.length != 0) {
+				enableStringPart(true, cursorPosition);
+				editText.removeSpan(ss[0]);
+			} else {
+				enableStringPart(false, cursorPosition);
+				editText.setSpan(new StrikethroughSpan(), beginWord, endWord, 0);
+			}
+			this.setText(editText);
+        }
+
+
+        private void enableStringPart(boolean enable, int position) {
+        	int counter = 0;
+        	for (int i = 0; i < mCutString.length; i++) {
+        		counter += mCutString[i].length() + 1;
+        		if (counter > position) {
+        			mEnabled[i] = enable;
+        			break;
+        		}
+        	}
+        }
+
+
+        public void removeDeleted() {
+        	if (this.getText().length() > 0) {
+            	StringBuilder sb = new StringBuilder();
+            	for (int i = 0; i < mCutString.length; i++) {
+            		if (mEnabled[i]) {
+            			sb.append(mCutString[i]);
+        				sb.append(" ");
+            		}
+            	}
+            	int last = sb.length() - 1;
+            	while (sb.substring(last).equals(" ") || sb.substring(last).equals(",")) {
+            		sb.deleteCharAt(last);
+            		last--;
+            	}
+            	this.setText(sb.toString());
+        	}
+        }
+    }
 }
+
