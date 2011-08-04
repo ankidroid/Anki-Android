@@ -155,6 +155,7 @@
 		<item>optional wal journaling mode</item>
 		<item>better progress bars while learning</item>
 		<item>intent-based card addition</item>
+		<item>more convenient lookup via appearing icon</item>
 		<item>new text selection in card adder and card editor</item>
 		<item>possibility of swapping question/answer very easily</item>
 		<item>automatically choose correct leo.org-dictionary</item>

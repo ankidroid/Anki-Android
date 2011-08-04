@@ -355,6 +355,8 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mAnimationDurationTurn = 500;
     private int mAnimationDurationMove = 500;
 
+    private int mFadeDuration = 300;
+
 
  	/**
  	 * Zeemote controller
@@ -454,6 +456,7 @@ public class Reviewer extends Activity implements IButtonListener{
             vibratorManager.vibrate(50);
             selectAndCopyText();
             mLookUpIcon.setVisibility(View.VISIBLE);
+            mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
             return true;
         }
     };
@@ -1347,7 +1350,10 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void answerCard(int ease) {
         mIsSelecting = false;
-        mLookUpIcon.setVisibility(View.GONE);
+        if (mLookUpIcon.getVisibility() == View.VISIBLE) {
+            mLookUpIcon.setVisibility(View.GONE);
+            mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));        	
+        }
         mClipboard.setText("");
         Deck deck = AnkiDroidApp.deck();
     	switch (ease) {
