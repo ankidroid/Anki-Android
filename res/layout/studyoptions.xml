@@ -219,14 +219,18 @@
 		</LinearLayout>
 		<LinearLayout
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="45dip">
 			<Button android:id="@+id/studyoptions_statistics"
    		     	android:layout_height="fill_parent"
-			style="?android:attr/buttonStyleSmall"
+				android:drawableLeft="@drawable/ic_chart"
+				android:paddingLeft="10dip"	
+				style="?android:attr/buttonStyleSmall"
    		     	android:layout_width="0dip"
    		     	android:layout_weight="1"
 				android:text="@string/statistics"/>
 			<Button
+				android:drawableLeft="@drawable/ic_cards"
+				android:paddingLeft="10dip"	
 				android:id="@+id/studyoptions_card_browser"
 				android:layout_width="0dip" 
 			style="?android:attr/buttonStyleSmall"
