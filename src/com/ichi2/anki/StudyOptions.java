@@ -1499,6 +1499,7 @@ public class StudyOptions extends Activity {
 
 
     private void hideDeckInformation() {
+    	setTitle(getResources().getString(R.string.app_name));
         mTextDeckName.setVisibility(View.INVISIBLE);
         mStatisticsField.setVisibility(View.INVISIBLE);
     }
