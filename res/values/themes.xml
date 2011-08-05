@@ -9,8 +9,7 @@
         <item name="android:colorForeground">#0000</item>
         <item name="android:colorBackground">@color/background_blue</item>
         <item name="android:alertDialogStyle">@style/Blue.AlertDialog</item>
-        <item name="android:buttonBarButtonStyle">@style/Blue.Button.Small</item>
-
+    <!--<item name="android:buttonBarButtonStyle">@style/Blue.Button.Small</item>-->
         <item name="android:editTextStyle">@style/Blue.Edittext</item>
 	</style>
 </resources>
