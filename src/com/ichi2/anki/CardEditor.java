@@ -27,12 +27,15 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
+import android.text.method.KeyListener;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -379,6 +382,7 @@ public class CardEditor extends Activity {
         private boolean mCutMode = false;
         private boolean[] mEnabled;
         private ImageView mCircle;
+        private KeyListener mKeyListener;
 
         public FieldEditText(Context context, Field pairField) {
             super(context);
@@ -441,6 +445,8 @@ public class CardEditor extends Activity {
         			Editable editText = FieldEditText.this.getText();
         			if (mCutMode) {
             			view.setImageResource(R.drawable.ic_circle_normal);
+            			FieldEditText.this.setKeyListener(mKeyListener);
+            			FieldEditText.this.setCursorVisible(true);
             			for (boolean enabled : mEnabled) {
             				if (enabled) {
             					removeDeleted();
@@ -453,7 +459,12 @@ public class CardEditor extends Activity {
             			}
             			mCutMode = false;
         			} else {
-            			view.setImageResource(R.drawable.ic_circle_pressed);        				
+            			view.setImageResource(R.drawable.ic_circle_pressed);
+            			InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            			imm.hideSoftInputFromWindow(FieldEditText.this.getWindowToken(), 0);
+            			mKeyListener = FieldEditText.this.getKeyListener();
+            			FieldEditText.this.setKeyListener(null);
+            			FieldEditText.this.setCursorVisible(false);
             			mCutMode = true;
                   		mCutString = editText.toString().split(" ");
                   		mEnabled = new boolean[mCutString.length];
@@ -463,7 +474,7 @@ public class CardEditor extends Activity {
             				pos += mCutString[i].length() + 1;
             			}
         			}
-    			}    	
+    			}
             });
         	mCircle.setVisibility(View.VISIBLE);
             return mCircle;
