@@ -23,6 +23,11 @@
     <style name="Blue.CompoundButton.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
 	    <item name="android:button">@drawable/blue_btn_check</item>
     </style>
+    <style name="Blue.CompoundButton.RadioButton">
+        <item name="android:background">@android:drawable/btn_radio</item>
+        <item name="android:button">?android:attr/listChoiceIndicatorSingle</item>
+    </style>
+    
 
 	<!-- Dialog styles --> 
     <style name="Blue.AlertDialog">
