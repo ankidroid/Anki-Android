@@ -949,8 +949,7 @@ public class Reviewer extends Activity implements IButtonListener{
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND, Menu.NONE, R.string.menu_suspend_card);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.card_browser_delete_card);
         if (mPrefTextSelection) {
-            item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, String.format(getString(R.string.menu_search), 
-            			res.getStringArray(R.array.dictionary_labels)[mDictionary]));
+            item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, res.getString(R.string.menu_select));
             item.setIcon(R.drawable.ic_menu_search);
         }
         item = menu.add(Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card);
@@ -976,9 +975,13 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         if (mPrefTextSelection) {
             item = menu.findItem(MENU_SEARCH);
-            Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + mClipboard.hasText());
-            boolean lookupPossible = mClipboard.hasText() && mIsDictionaryAvailable;
-            item.setEnabled(lookupPossible);
+            if (mClipboard.hasText()) {
+            	item.setTitle(String.format(getString(R.string.menu_search), getResources().getStringArray(R.array.dictionary_labels)[mDictionary]));
+        		item.setEnabled(mIsDictionaryAvailable);
+            } else {
+            	item.setTitle(getResources().getString(R.string.menu_select));
+        		item.setEnabled(true);
+            }
         }
         if (mPrefFullscreenReview) {
             // Temporarily remove top bar to avoid annoying screen flickering
@@ -1066,7 +1069,8 @@ public class Reviewer extends Activity implements IButtonListener{
                 return true;
 
             case MENU_SEARCH:
-                return lookUp();
+            	lookUpOrSelectText();
+                return true;
 
             case MENU_MARK:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(0,
@@ -1172,58 +1176,66 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
+    private void lookUpOrSelectText() {
+        if (mClipboard.hasText()) {
+            Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + mClipboard.hasText());
+            lookUp();
+    	} else {
+        	selectAndCopyText();    		
+    	}
+    }
+
+
     private boolean lookUp() {
-    	if (mPrefTextSelection && mClipboard.hasText() && mIsDictionaryAvailable) {
-    	    mIsSelecting = false;
-    		switch (mDictionary) {
-            	case DICTIONARY_AEDICT:
-            		Intent aedictSearchIntent = new Intent(mDictionaryAction);
-            		aedictSearchIntent.putExtra("kanjis", mClipboard.getText());
-            		startActivity(aedictSearchIntent);
-                    mClipboard.setText("");
-                    return true;
-            	case DICTIONARY_LEO_WEB:
-            		// localisation is needless here since leo.org translates only into or out of German 
-            		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
-            		String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
-            		for (int i = 0; i < itemValues.length; i++) {
-                		if (language.equals(itemValues[i])) {
-            		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
-                    		startActivity(leoSearchIntent);
-                            mClipboard.setText("");
-                            return true;
-                		}                    			
-            		}
-            		final CharSequence[] items = {"Englisch", "Franz√∂sisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
-            		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            		builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
-            		builder.setItems(items, new DialogInterface.OnClickListener() {
-            			public void onClick(DialogInterface dialog, int item) {
-            				String language = itemValues[item].toString();
-            				Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
-            				startActivity(leoSearchIntent);
-            				mClipboard.setText("");
-            				storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
-            			}
-            		});
-            		AlertDialog alert = builder.create();
-            		alert.show();
-            		return true;
-                case DICTIONARY_LEO_APP:
-                    Intent leoSearchIntent = new Intent(mDictionaryAction);
-                    leoSearchIntent.putExtra(Intent.EXTRA_TEXT, mClipboard.getText());
-                    leoSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
-                    startActivity(leoSearchIntent);
-                    mClipboard.setText("");
-                    return true;
-            	case DICTIONARY_COLORDICT:
-            		Intent colordictSearchIntent = new Intent(mDictionaryAction);
-            		colordictSearchIntent.putExtra("EXTRA_QUERY", mClipboard.getText());
-            		startActivity(colordictSearchIntent);
-                    mClipboard.setText("");
-                    return true;     
-        	}
-        }
+	    mIsSelecting = false;
+		switch (mDictionary) {
+        	case DICTIONARY_AEDICT:
+        		Intent aedictSearchIntent = new Intent(mDictionaryAction);
+        		aedictSearchIntent.putExtra("kanjis", mClipboard.getText());
+        		startActivity(aedictSearchIntent);
+                mClipboard.setText("");
+                return true;
+        	case DICTIONARY_LEO_WEB:
+        		// localisation is needless here since leo.org translates only into or out of German 
+        		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
+        		String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
+        		for (int i = 0; i < itemValues.length; i++) {
+            		if (language.equals(itemValues[i])) {
+        		    	Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
+                		startActivity(leoSearchIntent);
+                        mClipboard.setText("");
+                        return true;
+            		}                    			
+        		}
+        		final CharSequence[] items = {"Englisch", "Franz√∂sisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
+        		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        		builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
+        		builder.setItems(items, new DialogInterface.OnClickListener() {
+        			public void onClick(DialogInterface dialog, int item) {
+        				String language = itemValues[item].toString();
+        				Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language + "de&search=" + mClipboard.getText()));
+        				startActivity(leoSearchIntent);
+        				mClipboard.setText("");
+        				storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
+        			}
+        		});
+        		AlertDialog alert = builder.create();
+        		alert.show();
+        		return true;
+            case DICTIONARY_LEO_APP:
+                Intent leoSearchIntent = new Intent(mDictionaryAction);
+                leoSearchIntent.putExtra(Intent.EXTRA_TEXT, mClipboard.getText());
+                leoSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+                startActivity(leoSearchIntent);
+                mClipboard.setText("");
+                return true;
+        	case DICTIONARY_COLORDICT:
+        		Intent colordictSearchIntent = new Intent(mDictionaryAction);
+        		colordictSearchIntent.putExtra("EXTRA_QUERY", mClipboard.getText());
+        		startActivity(colordictSearchIntent);
+                mClipboard.setText("");
+                return true;     
+    	}
         return true;
     }
 
@@ -1250,6 +1262,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void answerCard(int ease) {
         mIsSelecting = false;
+        mClipboard.setText("");
         Deck deck = AnkiDroidApp.deck();
     	switch (ease) {
     		case Card.EASE_FAILED:
@@ -1317,6 +1330,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mPrefTextSelection) {
 			mCard.setOnLongClickListener(mLongClickHandler);            
 			mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+			mClipboard.setText("");
         }
         mCard.setOnTouchListener(new View.OnTouchListener() { 
 				@Override
@@ -2397,7 +2411,7 @@ public class Reviewer extends Activity implements IButtonListener{
                     AnkiDroidApp.deck(), mCurrentCard));
     		break;
     	case GESTURE_LOOKUP:
-    		lookUp();
+    		lookUpOrSelectText();
     		break;
     	case GESTURE_BURY:
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_BURY_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
