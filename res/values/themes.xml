@@ -14,7 +14,7 @@
         <item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
-        <item name="android:panelBackground">@color/blue_background_blue</item>
+        <item name="android:panelBackground">@drawable/blue_menu_background</item>
         <item name="android:panelFullBackground">@drawable/blue_menu_background_fill_parent_width</item>
 	</style>
 </resources>

@@ -455,8 +455,6 @@ public class Reviewer extends Activity implements IButtonListener{
             Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             selectAndCopyText();
-            mLookUpIcon.setVisibility(View.VISIBLE);
-            mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
             return true;
         }
     };
@@ -1286,7 +1284,7 @@ public class Reviewer extends Activity implements IButtonListener{
             Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + mClipboard.hasText());
             lookUp();
     	} else {
-        	selectAndCopyText();    		
+        	selectAndCopyText();
     	}
     }
 
@@ -2530,6 +2528,8 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private void selectAndCopyText() {
         try {
+            mLookUpIcon.setVisibility(View.VISIBLE);
+            mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
             KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
             shiftPressEvent.dispatch(mCard);
             mIsSelecting = true;
