@@ -420,6 +420,7 @@
 <string name="menu_suspend_card">Suspend Card</string>
 <string name="menu_bury_card">Bury Card</string>
 <string name="menu_edit_card">Edit Card</string>
+<string name="menu_select">Select text</string>
 <string name="menu_search">Lookup in %1$s</string>
 <string name="menu_mark_card">Mark Card</string>
 <string name="menu_marked">Marked</string>
