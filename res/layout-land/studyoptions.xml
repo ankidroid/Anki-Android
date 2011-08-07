@@ -202,7 +202,8 @@
 	         	android:layout_width="0dip"
     	     	android:layout_weight="1"
 				android:text="@string/studyoptions_start"
-				android:drawableLeft="@drawable/chronometer"/>	
+				android:paddingLeft="10dip"	
+				android:drawableLeft="@drawable/phone"/>	
 			<LinearLayout
 				android:layout_weight="1"
 				android:orientation="vertical"
