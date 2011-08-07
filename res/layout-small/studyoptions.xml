@@ -16,17 +16,15 @@
 			android:textSize="26sp" 
 			android:textStyle="bold"
 			android:ellipsize="end"
-			android:lines="2"
+			android:lines="1"
 			android:gravity="center" 
 			android:layout_width="fill_parent" 
 			android:layout_height="wrap_content"
 			android:visibility="invisible"
-			android:layout_marginBottom="8dp" 
 			android:text=""/>
-	<RelativeLayout
+	<LinearLayout android:id="@+id/studyoptions_bottom"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:gravity="center_vertical">
-
 		<LinearLayout
 			android:id="@+id/studyoptions_statistic_field" 
 			android:orientation="vertical"
@@ -122,8 +120,7 @@
 				</FrameLayout>
 			</LinearLayout>
 			<TableLayout
-				android:id="@+id/table"
-				android:layout_marginTop="10dp"		
+				android:id="@+id/table"	
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_horizontal">
@@ -166,7 +163,8 @@
 						android:gravity="right"
 						android:text=""/>
 				</TableRow>
-				<TableRow>
+				<TableRow
+					android:visibility="gone">
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
@@ -181,13 +179,33 @@
 				</TableRow>
 			</TableLayout>
 		</LinearLayout>
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<CheckBox 
+				android:id="@+id/studyoptions_night_mode"
+				android:text="@string/studyoptions_night_mode"
+				android:textSize="14dip"
+				android:layout_weight="1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<CheckBox
+				android:id="@+id/studyoptions_swap"
+				android:text="@string/studyoptions_swap_qa"
+				android:textSize="14dip"
+				android:layout_weight="1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+		</LinearLayout>
 		<TextView
 			android:id="@+id/studyoptions_help"
 			android:layout_width="wrap_content"
+			android:visibility="gone"
 			android:layout_alignParentRight="true"
 			android:layout_margin="2dp"
 			android:drawableLeft="@drawable/help_inverted" android:layout_height="wrap_content" android:layout_centerVertical="true"/>
-	</RelativeLayout>	
+	</LinearLayout>	
 		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
@@ -195,10 +213,8 @@
 				android:id="@+id/studyoptions_start"
          		android:layout_height="fill_parent"
 	         	android:layout_width="0dip"
-    	     	android:layout_weight="3"
-				android:text="@string/studyoptions_start"
-				android:paddingLeft="15dip"	
-				android:drawableLeft="@drawable/phone"/>	
+    	     	android:layout_weight="1"
+				android:text="@string/studyoptions_start"/>	
 			<LinearLayout
 				android:layout_weight="1"
 				android:orientation="vertical"
@@ -237,26 +253,6 @@
 				android:layout_weight="1" 
 				android:text="@string/card_browser"/> 
 		</LinearLayout>
-		<LinearLayout
-			android:id="@+id/studyoptions_bottom"
-			android:gravity="center_vertical"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="2dip">
-			<CheckBox 
-				android:id="@+id/studyoptions_night_mode"
-				android:text="@string/studyoptions_night_mode"
-				android:textSize="14dip"
-				android:layout_weight="1"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"/>
-			<CheckBox
-				android:id="@+id/studyoptions_swap"
-				android:text="@string/studyoptions_swap_qa"
-				android:textSize="14dip"
-				android:layout_weight="1"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"/>
-		</LinearLayout>
+
 	</LinearLayout>
 </LinearLayout>
