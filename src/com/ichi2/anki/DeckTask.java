@@ -19,12 +19,9 @@ package com.ichi2.anki;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.TreeSet;
 
 import com.ichi2.anki.DeckPicker.AnkiFilter;
-import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.res.Resources;

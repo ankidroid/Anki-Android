@@ -708,17 +708,25 @@ public class StudyOptions extends Activity {
 
 
     private void closeStudyOptions() {
+        MetaDB.closeDB();
         if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
         	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));	
+        } else {
+        	AnkiDroidApp.setDeck(null);
+            StudyOptions.this.finish();
         }
-        MetaDB.closeDB();
     }
 
 
     private void restartApp() {
     	// restarts application in order to apply new themes or localisations
     	Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-    	closeStudyOptions();
+        if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
+        	AnkiDroidApp.deck().closeDeck();
+        }
+    	AnkiDroidApp.setDeck(null);
+        MetaDB.closeDB();
+        StudyOptions.this.finish();
     	startActivity(i);
     }
 

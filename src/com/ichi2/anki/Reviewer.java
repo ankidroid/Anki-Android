@@ -1371,7 +1371,9 @@ public class Reviewer extends Activity implements IButtonListener{
             mLookUpIcon.setVisibility(View.GONE);
             mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));        	
         }
-        mClipboard.setText("");
+        if (mPrefTextSelection) {
+            mClipboard.setText("");
+        }
         Deck deck = AnkiDroidApp.deck();
     	switch (ease) {
     		case Card.EASE_FAILED:
