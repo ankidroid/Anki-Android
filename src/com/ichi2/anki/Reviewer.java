@@ -1151,6 +1151,24 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
+	private void lookupLeo(String language, CharSequence text) {
+		switch(mDictionary) {
+		case DICTIONARY_LEO_WEB:
+			Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language
+				+ "de&search=" + text));
+			startActivity(leoSearchIntent);
+			break;
+		case DICTIONARY_LEO_APP:
+			Intent leoAppSearchIntent = new Intent(mDictionaryAction);
+			leoAppSearchIntent.putExtra("org.leo.android.dict.DICTIONARY", language + "de");
+			leoAppSearchIntent.putExtra(Intent.EXTRA_TEXT, text);
+			leoAppSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
+			startActivity(leoAppSearchIntent);
+			break;
+		default:
+		}
+	}
+
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
         closeReviewer();
@@ -1216,6 +1234,7 @@ public class Reviewer extends Activity implements IButtonListener{
         				String language = itemValues[item].toString();
         				storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
         				lookupLeo(language, mClipboard.getText());
+        				mClipboard.setText("");
         			}
         		});
         		AlertDialog alert = builder.create();
