@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Sospendi carta</string>
   <string name="menu_bury_card">Nascondere scheda</string>
   <string name="menu_edit_card">Modifica la carta</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">Ricerca in %1$s</string>
   <string name="menu_mark_card">Etichetta la carta</string>
   <string name="menu_marked">Etichettata</string>

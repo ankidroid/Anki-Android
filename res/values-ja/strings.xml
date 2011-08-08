@@ -313,6 +313,7 @@
   <string name="menu_suspend_card">カードの表示を中止</string>
   <string name="menu_bury_card">カードを埋める</string>
   <string name="menu_edit_card">カードの編集</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">%1$sで探す</string>
   <string name="menu_mark_card">マークをつける</string>
   <string name="menu_marked">マークを消す</string>

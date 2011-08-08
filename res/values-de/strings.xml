@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Dauerhaft aussetzen</string>
   <string name="menu_bury_card">Vorläufig aussetzen</string>
   <string name="menu_edit_card">Karte bearbeiten</string>
+  <string name="menu_select">Text auswählen</string>
   <string name="menu_search">In %1$s nachschlagen</string>
   <string name="menu_mark_card">Karte markieren</string>
   <string name="menu_marked">Markiert</string>

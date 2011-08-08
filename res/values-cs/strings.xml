@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Vyřadit kartu</string>
   <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">Upravit kartu</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">Vyhledat v %1$s</string>
   <string name="menu_mark_card">Označit kartu</string>
   <string name="menu_marked">Označená</string>

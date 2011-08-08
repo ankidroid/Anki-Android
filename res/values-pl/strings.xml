@@ -185,10 +185,10 @@
   <string name="language">Język</string>
   <string name="language_summ">Wybierz język którego AnkiDroid ma używać. W tej chwili: XXX</string>
   <string name="language_system">Język systemu</string>
-  <string name="timeout_answer_text">Automatic display answer</string>
-  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
-  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
-  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
+  <string name="timeout_answer_text">Automatyczne wyświetlanie odpowiedzi</string>
+  <string name="timeout_answer_summ">Po wyświetleniu pytania przez określoną ilość czasu, odpowiedź jest wyświetlana automatycznie bez udziału użytkownika</string>
+  <string name="timeout_answer_seconds">Sekundy przed pokazaniem odpowiedzi</string>
+  <string name="timeout_answer_seconds_summ">Wybierz ilość czasu, po którym odpowiedź jest automatycznie wyświetlana</string>
   <string name="select_locale_title">Wybór języka</string>
   <string name="personaldeckpicker_title">Otwórz talię online</string>
   <string name="shareddeckpicker_title">Wybierz talię do pobrania</string>
@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Zawieś kartę</string>
   <string name="menu_bury_card">Zakop kartę</string>
   <string name="menu_edit_card">Edytuj kartę</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">Wyszukiwanie w %1$s</string>
   <string name="menu_mark_card">Oznacz kartę</string>
   <string name="menu_marked">Oznaczona</string>
@@ -330,7 +331,7 @@
   <string name="studyoptions_feedback">Informacje zwrotne</string>
   <string name="username">Użytkownik</string>
   <string name="password">Hasło</string>
-  <string name="password_warning">Note: Will be sent in clear text</string>
+  <string name="password_warning">Uwaga: Będzie wysyłane w postaci zwykłego tekstu</string>
   <string name="log_in">Zaloguj się</string>
   <string name="sign_up_description">Nie masz konta AnkiOnline? To nic nie kosztuje!</string>
   <string name="sign_up">Zarejestruj się</string>
@@ -448,9 +449,9 @@
   <string name="statistics_zoom_out">Pomniejsz</string>
   <string name="statistics_all_decks">(wszystkie talie)</string>
   <string name="calculating_statistics">Obliczanie statystyk</string>
-  <string name="fix_arabic_text">Improve Arabic display</string>
-  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
-  <string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us solving this issue by sending an error report.\n Visit http://bit.ly/n5MaOF for more information.</string>
+  <string name="fix_arabic_text">Popraw wyświetlanie arabskiego</string>
+  <string name="fix_arabic_text_summ">Częściowe obejście problemu z ograniczonym wsparciem dla arabskiego przez Androida. Kiedy jest włączone to niemożliwa jest edycja kart.</string>
+  <string name="wal_warning">Implementacja sqlite w twoim urządzeniu nie pozwala poprawnie używać trybu z żurnalem.\nZ tego powodu nie będzie możliwe korzystanie z funkcji synchronizacji.\nPoza tym AnkiDroid powinien działać poprawnie.\nPomóż nam rozwiązać ten problem wysyłając raport błędu.\nOdwiedź http://bit.ly/n5MaOF aby uzyskać więcej informacji.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Wszystkie talie: 1 z %2$d zaległa (%3$s)</item>
     <item quantity="other">Wszystkie talie: %1$d z %2$d zaległe (%3$s)</item>

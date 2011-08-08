@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Tạm dừng thẻ</string>
   <string name="menu_bury_card">Bury Card</string>
   <string name="menu_edit_card">Chỉnh sửa thẻ</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">Tra cứu trong %1$s</string>
   <string name="menu_mark_card">Đánh dấu thẻ</string>
   <string name="menu_marked">Đã đánh dấu</string>

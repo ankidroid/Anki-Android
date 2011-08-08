@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">不要复习</string>
   <string name="menu_bury_card">留到下回合</string>
   <string name="menu_edit_card">编辑卡片</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">在%1$s中查找</string>
   <string name="menu_mark_card">标记卡片</string>
   <string name="menu_marked">已标记</string>

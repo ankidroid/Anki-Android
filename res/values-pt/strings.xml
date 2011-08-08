@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Suspender Card</string>
   <string name="menu_bury_card">Enterrar card</string>
   <string name="menu_edit_card">Editar Card</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">Pesquisa em %1$s</string>
   <string name="menu_mark_card">Marcar Card</string>
   <string name="menu_marked">Marcado</string>

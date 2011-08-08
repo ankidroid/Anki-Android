@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Suspèn la fitxa</string>
   <string name="menu_bury_card">Aparca la fitxa</string>
   <string name="menu_edit_card">Edita la fitxa</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">Cerca-ho a %1$s</string>
   <string name="menu_mark_card">Marca la fitxa</string>
   <string name="menu_marked">Marcada</string>

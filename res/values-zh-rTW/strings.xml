@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">暫停卡片</string>
   <string name="menu_bury_card">Bury卡片</string>
   <string name="menu_edit_card">編輯卡片</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">在%1$s中查詢</string>
   <string name="menu_mark_card">標記卡片</string>
   <string name="menu_marked">標記</string>

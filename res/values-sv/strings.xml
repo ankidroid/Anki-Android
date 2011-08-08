@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Åsidosätt kort</string>
   <string name="menu_bury_card">Begrav kort tillfälligt</string>
   <string name="menu_edit_card">Redigera kort</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">Sökning i %1$s</string>
   <string name="menu_mark_card">Markera kort</string>
   <string name="menu_marked">Märkt</string>
