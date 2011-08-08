@@ -62,23 +62,36 @@ public class AnkiDb {
             	} else {
             		mode = "DELETE";
             	}
-                cur = mDatabase.rawQuery("PRAGMA journal_mode = " + mode, null);
+                cur = mDatabase.rawQuery("PRAGMA journal_mode", null);
                 if (cur.moveToFirst()) {
-                	String journalMode = cur.getString(0);
-                    Log.w(AnkiDroidApp.TAG, "Trying to set journal mode to " + mode + ". Result: " + journalMode);
-                	if (!journalMode.equalsIgnoreCase("wal")) {
-                		prefs.edit().putInt("walWarning", NO_WAL_WARNING).commit();
-                	} else {
-                		if (mode.equals("WAL")) {
-                			prefs.edit().putInt("walWarning", WAL_SET_ENABLED).commit();                			
-                		} else {
-                            Log.e(AnkiDroidApp.TAG, "Journal could not be changed to DELETE. Deck will probably be unreadable on sqlite < 3.7");
-                            if (prefs.getInt("walWarning", NO_WAL_WARNING) == NO_WAL_WARNING) {
-                            	prefs.edit().putInt("walWarning", WAL_WARNING_SHOW).commit();
-                            }                			
-                		}
+                	String journalModeOld = cur.getString(0);
+                	Log.w(AnkiDroidApp.TAG, "Current Journal mode: " + journalModeOld);                    		
+                	if (!journalModeOld.equalsIgnoreCase(mode)) {
+                    	cur = mDatabase.rawQuery("PRAGMA journal_mode = " + mode, null);
+                    	if (cur.moveToFirst()) {
+                        	String journalModeNew = cur.getString(0);
+                        	Log.w(AnkiDroidApp.TAG, "Old journal mode was:" + journalModeOld + ". Trying to set journal mode to " + mode + ". Result: " + journalModeNew);                    		
+                        	if (!journalModeNew.equalsIgnoreCase("wal")) {
+                        		prefs.edit().putInt("walWarning", NO_WAL_WARNING).commit();
+                        	} else {
+                        		if (mode.equals("WAL")) {
+                        			prefs.edit().putInt("walWarning", WAL_SET_ENABLED).commit();                			
+                        		} else {
+                                    Log.e(AnkiDroidApp.TAG, "Journal could not be changed to DELETE. Deck will probably be unreadable on sqlite < 3.7");
+                                    if (prefs.getInt("walWarning", NO_WAL_WARNING) == NO_WAL_WARNING) {
+                                    	prefs.edit().putInt("walWarning", WAL_WARNING_SHOW).commit();
+                                    }                			
+                        		}
+                        	}
+                    	}
                 	}
                 }
+//                cur = mDatabase.rawQuery("PRAGMA synchronous = 0", null);
+//                cur = mDatabase.rawQuery("PRAGMA synchronous", null);
+//                if (cur.moveToFirst()) {
+//                	String syncMode = cur.getString(0);
+//                	Log.w(AnkiDroidApp.TAG, "Current synchronous setting: " + syncMode);                    		
+//                }
             } finally {
                 if (cur != null) {
                     cur.close();
