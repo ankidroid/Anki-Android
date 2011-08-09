@@ -421,7 +421,7 @@ public class CardEditor extends Activity {
           		}      			
       		}
       		if (before != after) {
-          		mCutString = text.toString().split(" ");
+          		mCutString = text.toString().split("[\\n\\s]");
           		mEnabled = new boolean[mCutString.length];
           		mCutMode = false;
       		}
