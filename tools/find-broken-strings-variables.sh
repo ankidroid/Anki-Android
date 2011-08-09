@@ -13,7 +13,10 @@ grep -R '%' values* |
  grep -v ' % '      | # Lone % character, not a variable
  grep -v '%<'       | # Same, at the end of the string
  grep -v '% '       | # Same, at the beginning of the string
+ grep -v '%で'      | # Same, no spaces in Japanese
  grep -v '%s'       | # Single string variable
  grep -v '%d'       | # Single decimal variable
  grep -v '%[0-9][0-9]\?$s' | # Multiple string variable
  grep -v '%[0-9][0-9]\?$d'   # Multiple decimal variable
+
+grep -R '％' values*

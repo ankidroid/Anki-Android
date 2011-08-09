@@ -33,6 +33,8 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -2067,8 +2069,11 @@ public class StudyOptions extends Activity {
             builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
     			@Override
     			public void onClick(DialogInterface dialog, int which) {
-    	            mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
-    	            PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
+				if (mWalWarning == AnkiDb.WAL_WARNING_SHOW) {
+			            new FeedbackElement(StudyOptions.this).createReport("WAL problem detected");
+		    	            mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
+    	        		    PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
+				}
     			}
             });
             builder.setCancelable(true);
@@ -2144,7 +2149,15 @@ public class StudyOptions extends Activity {
             // if(updateDialog == null || !updateDialog.isShowing())
             // {
             mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
-                    .getString(R.string.loading_deck), true);
+                    .getString(R.string.loading_deck), true, true, new OnCancelListener() {
+
+						@Override
+						public void onCancel(DialogInterface dialog) {
+				            closeOpenedDeck();
+				            MetaDB.closeDB();
+				            finish();
+						}
+            });
 	    	hideDeckInformation();
             // }
         }

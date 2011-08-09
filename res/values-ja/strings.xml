@@ -185,10 +185,10 @@
   <string name="language">言語</string>
   <string name="language_summ">AnkiDroidが使用する言語を選択します. 現在値: XXX</string>
   <string name="language_system">システム言語</string>
-  <string name="timeout_answer_text">Automatic display answer</string>
-  <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
-  <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
-  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
+  <string name="timeout_answer_text">答えを自動的に表示</string>
+  <string name="timeout_answer_summ">質問が表示されたあと指定時間が経過すると、答えを自動的に表示する</string>
+  <string name="timeout_answer_seconds">答えが表示されるまでの秒数</string>
+  <string name="timeout_answer_seconds_summ">答えが自動的に表示されるまでの時間を選択して下さい</string>
   <string name="select_locale_title">言語を選択</string>
   <string name="personaldeckpicker_title">オンライン単語帳を開く</string>
   <string name="shareddeckpicker_title">ダウンロードする単語帳を選択</string>
@@ -313,6 +313,7 @@
   <string name="menu_suspend_card">カードの表示を中止</string>
   <string name="menu_bury_card">カードを埋める</string>
   <string name="menu_edit_card">カードの編集</string>
+  <string name="menu_select">Select text</string>
   <string name="menu_search">%1$sで探す</string>
   <string name="menu_mark_card">マークをつける</string>
   <string name="menu_marked">マークを消す</string>
@@ -331,7 +332,7 @@
   <string name="studyoptions_feedback">フィードバック</string>
   <string name="username">ユーザ名</string>
   <string name="password">パスワード</string>
-  <string name="password_warning">Note: Will be sent in clear text</string>
+  <string name="password_warning">注：クリアテキストで送信されます</string>
   <string name="log_in">ログイン</string>
   <string name="sign_up_description">AnkiOnlineのアカウントはお持ちですか？無料で取得できます。</string>
   <string name="sign_up">サインアップ</string>
@@ -449,8 +450,9 @@
   <string name="statistics_zoom_out">ズームアウト</string>
   <string name="statistics_all_decks">(すべての単語帳)</string>
   <string name="calculating_statistics">統計を計算しています</string>
-  <string name="fix_arabic_text">Improve Arabic display</string>
-  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
+  <string name="fix_arabic_text">アラビア語の表示を改善</string>
+  <string name="fix_arabic_text_summ">Android プラットフォームではアラビア語のサポートが制限されています。有効にした場合、カードを修正することはできません。</string>
+  <string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us solving this issue by sending an error report.\n Visit http://bit.ly/n5MaOF for more information.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">すべての単語帳: 期限切れ%2$d(%3$s)枚中 1枚</item>
     <item quantity="other">すべての単語帳: 期限切れ%2$d(%3$s)枚中 %1$d枚</item>

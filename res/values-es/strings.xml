@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Suspender Tarjeta</string>
   <string name="menu_bury_card">Enterrar Tarjeta</string>
   <string name="menu_edit_card">Editar tarjeta</string>
+  <string name="menu_select">Seleccionar texto</string>
   <string name="menu_search">Búsqueda en %1$s</string>
   <string name="menu_mark_card">Marcar Tarjeta</string>
   <string name="menu_marked">Marcada</string>
@@ -450,6 +451,7 @@
   <string name="calculating_statistics">Calculando estadísticas</string>
   <string name="fix_arabic_text">Mejorar la visualización del árabe</string>
   <string name="fix_arabic_text_summ">Solución parcial para un soporte limitado de la lengua árabe por la plataforma Android. Cuando se activa, no es posible modificar las tarjetas.</string>
+  <string name="wal_warning">La implementación sqlite de tu dispositivo no permite establecer el modo correcto de "anki journal".\nPor ello, no serás capaz de sincronizar tus mazos a través de la herramienta de sincronización de AnkiDroid hasta que encontremos una solución al problema.\nQuitando esto, AnkiDroid debería funcionar bien.\nPor favor, ayúdanos a resolver este problema enviándonos un informe de error.\n Visita http://bit.ly/n5MaOF para más información.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Total: 1 de %2$d pend. (%3$s)</item>
     <item quantity="other">Total: %1$d de %2$d pend. (%3$s)</item>

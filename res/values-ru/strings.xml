@@ -222,7 +222,7 @@
   <string name="card_browser_show_marked">Показать отмеченные</string>
   <string name="card_browser_show_suspended">Показать отложенные</string>
   <string name="card_browser_search">Поиск</string>
-  <string name="card_browser_search_suspended">Поиск \"приостановленных\"</string>
+  <string name="card_browser_search_suspended">\"приостановленные\"</string>
   <string name="card_browser_search_by_tag">Поиск по тегам</string>
   <string name="card_browser_tags_shown">Теги: %1$s</string>
   <string name="card_browser_change_display_order">Изменение сортировки</string>
@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Отложить карту</string>
   <string name="menu_bury_card">Скрыть карту</string>
   <string name="menu_edit_card">Редактирование карты</string>
+  <string name="menu_select">Выделить текст</string>
   <string name="menu_search">Поиск в %1$s</string>
   <string name="menu_mark_card">Отметить карту</string>
   <string name="menu_marked">Отмечено</string>
@@ -449,8 +450,9 @@
   <string name="statistics_zoom_out">Уменьшить</string>
   <string name="statistics_all_decks">(все колоды)</string>
   <string name="calculating_statistics">Расчет статистики</string>
-  <string name="fix_arabic_text">Улучшить арабского показ</string>
-  <string name="fix_arabic_text_summ">Хитрый трюк для ограниченной поддержки арабского для Android-платформы. Если активировать, то будет невозможна модификация карт.</string>
+  <string name="fix_arabic_text">Улучшить вывод арабского</string>
+  <string name="fix_arabic_text_summ">Включить ограниченную поддержку арабского для Android-платформы. Если активировано, то невозможна модификация карт.</string>
+  <string name="wal_warning">Програмный компонент sqlite Вашего устройство не позволяет должным образом использовать журнальный режим Anki.\nПоэтому вы не можете синхронизировать ваши колоды через AnkiDroid, пока не будет найдено решение для этого. Синхронизируйте простым копированием файлов в файловой системе. \nЗа исключением этого AnkiDroid будет работать нормально. \nПожалуйста сообщите нам если знаете решение этой проблемы, послав отчет об ошибке. \nПосетите http://bit.ly/n5MaOF для дальнейшей информации.</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Все колоды: повтор 1 из %2$d (%3$s)</item>
     <item quantity="other">Все колоды: повтор %1$d из %2$d (%3$s)</item>

@@ -124,7 +124,7 @@
 		android:layout_above="@+id/answer_nextTime_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-		<WebView android:id="@+id/flashcard"
+		<FrameLayout android:id="@+id/flashcard"
 			android:longClickable="true"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"

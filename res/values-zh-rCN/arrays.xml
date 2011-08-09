@@ -73,10 +73,10 @@
     <item>1年</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>％s 小时</item>
-    <item>％s 天</item>
-    <item>％s 月</item>
-    <item>％s 年</item>
+    <item>%s小时</item>
+    <item>%s天</item>
+    <item>%s月</item>
+    <item>%s年</item>
   </string-array>
   <string-array name="next_review_in_s">
     <item>1小时后</item>
@@ -136,14 +136,14 @@
     <item>1年</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
-    <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>按上次访问</item>
+    <item>按字母顺序排列</item>
+    <item>按到期卡片数量</item>
+    <item>按总卡片数量</item>
+    <item>按新卡片数量</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
+    <item>不采取行动</item>
     <item>答按钮1</item>
     <item>答按钮2</item>
     <item>答按钮3</item>
@@ -152,13 +152,13 @@
     <item>Answer better than recommended</item>
     <item>撤销</item>
     <item>重做</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
+    <item>编辑卡片</item>
+    <item>标记卡片</item>
     <item>Lookup expression</item>
     <item>留到下回合</item>
     <item>不要复习</item>
     <item>删除卡片</item>
     <item>清除白板</item>
-    <item>Abort learning</item>
+    <item>中止学习</item>
   </string-array>
 </resources>

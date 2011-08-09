@@ -642,7 +642,7 @@
 <string name="fact_adder_select_deck">Select deck</string>
 <string name="fact_adder_deck_not_loaded">Deck could not be loaded.\nPlease selected another one</string>
 
-<string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nOf course you can still copy your decks from the sd-card to your computer but you will have to reset the journal mode before you can use them again with Anki Desktop.\nVisit http://fixdeck.appspot.com for more Information.\nApart from syncing, AnkiDroid should work fine.</string>
+<string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us solving this issue by sending an error report.\n Visit http://bit.ly/n5MaOF for more information.</string>
 
 <string name="wal_mode">WAL journal</string>
 <string name="wal_mode_summ">WAL journal-mode speeds up AnkiDroid but breaks compatibility to Anki Desktop (no syncing). Only available on newer Android systems.</string>

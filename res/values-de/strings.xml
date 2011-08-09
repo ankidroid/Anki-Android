@@ -138,7 +138,7 @@
   <string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
   <string name="display_font_size">Relative Schriftgröße</string>
   <string name="display_font_size_summ">Schriftgröße im Lernbildschirm relativ zu der im Stapel definierten Schriftgröße. Im Moment: XXX %</string>
-  <string name="card_browser_font_size">Schriftgröße in der Kartenübersicht</string>
+  <string name="card_browser_font_size">Schriftgröße Kartenübersicht</string>
   <string name="card_browser_font_size_summ">Relative Größe der Schrift in der Kartenübersicht. Momentan: XXX %</string>
   <string name="button_size">Schaltflächengröße</string>
   <string name="button_size_summ">Größe der Antworten-Schaltflächen im Lernbildschirm. Im Moment: XXX %</string>
@@ -176,7 +176,7 @@
   <string name="play_sounds_at_start_summ">Sounds beim Anzeigen der Frage/Antwort sofort abspielen</string>
   <string name="shake_intensity">Schüttel-Schwellwert</string>
   <string name="shake_intensity_summ">Schwelle, ab der ein Schütteln erkannt wird: XXX</string>
-  <string name="sync_fetch_missing_media">Mediadaten ebenfalls synchronisieren</string>
+  <string name="sync_fetch_missing_media">Mediadaten synchronisieren</string>
   <string name="sync_fetch_missing_media_summ">Mediadaten automatisch beziehen, wenn synchronisiert wird.</string>
   <string name="fix_hebrew_text">Umgekehrte Textrichtung für Hebräisch</string>
   <string name="fix_hebrew_text_summ">Erzwingt umgekehrte Textrichtung, um Hebräisch auf dem Android-System darzustellen. Vokale werden nicht unterstützt</string>
@@ -312,6 +312,7 @@
   <string name="menu_suspend_card">Dauerhaft aussetzen</string>
   <string name="menu_bury_card">Vorläufig aussetzen</string>
   <string name="menu_edit_card">Karte bearbeiten</string>
+  <string name="menu_select">Text auswählen</string>
   <string name="menu_search">In %1$s nachschlagen</string>
   <string name="menu_mark_card">Karte markieren</string>
   <string name="menu_marked">Markiert</string>
@@ -450,6 +451,7 @@
   <string name="calculating_statistics">Statistik wird berechnet</string>
   <string name="fix_arabic_text">Arabisch verbessern</string>
   <string name="fix_arabic_text_summ">Provisorische Lösung für Arabisch-Unterstützung unter Android. Falls aktiviert, ist keine Kartenänderung möglich.</string>
+  <string name="wal_warning">Die SQLite-Version Ihres Geräts verhindert die korrekte Anki-Einstellung des Journal-Modes\nDie Stapel-Synchronisierung über AnkiDroid ist deshalb nicht möglich, bis wir eine Lösung dafür gefunden haben.\nHelfen Sie mit, das Problem zu lösen, indem einen Fehlerreport senden.\nWeitere Informationen finden Sie unter http://bit.ly/n5MaOF</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Alle Stapel: 1 von %2$d fällig (%3$s)</item>
     <item quantity="other">Alle Stapel: %1$d von %2$d fällig (%3$s)</item>
