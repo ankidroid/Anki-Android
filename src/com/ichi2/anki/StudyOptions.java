@@ -174,6 +174,8 @@ public class StudyOptions extends Activity {
     private AlertDialog mUserNotLoggedInAlert;
     private AlertDialog mConnectionErrorAlert;
 	private AlertDialog mSyncLogAlert;
+	private AlertDialog mNoSpaceLeftAlert;
+	private AlertDialog mBackupErrorAlert;
 	private AlertDialog mSyncConflictResolutionAlert;
 	private AlertDialog mNewVersionAlert;
 	private AlertDialog mWalWarningAlert;
@@ -1007,6 +1009,18 @@ public class StudyOptions extends Activity {
         builder.setTitle(getResources().getString(R.string.sync_log_title));
 		builder.setPositiveButton(getResources().getString(R.string.ok), null);
 		mSyncLogAlert = builder.create();
+
+        builder.setTitle(getResources().getString(R.string.backup_deck_error_title));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setMessage(getResources().getString(R.string.backup_deck_no_space_left));
+		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+		mNoSpaceLeftAlert = builder.create();
+
+        builder.setTitle(getResources().getString(R.string.backup_deck_error_title));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setMessage(getResources().getString(R.string.backup_deck_error));
+		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+		mBackupErrorAlert = builder.create();
 
 		builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -2149,7 +2163,7 @@ public class StudyOptions extends Activity {
             // if(updateDialog == null || !updateDialog.isShowing())
             // {
             mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
-                    .getString(R.string.loading_deck), true, true, new OnCancelListener() {
+                    .getString(R.string.backup_deck), true, true, new OnCancelListener() {
 
 						@Override
 						public void onCancel(DialogInterface dialog) {
@@ -2225,7 +2239,26 @@ public class StudyOptions extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            // Pass
+        	String message = values[0].getString();
+        	if (message != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.setMessage(message);
+        	} else {
+            	switch (values[0].getInt()) {
+        		case BackupManager.RETURN_BACKUP_CREATED:
+        		case BackupManager.RETURN_TODAY_ALREADY_BACKUP_DONE:
+            		if (mProgressDialog.isShowing()) {
+                		mProgressDialog.setMessage(getResources()
+                                .getString(R.string.loading_deck));
+                	}
+        			break;
+        		case BackupManager.RETURN_ERROR:
+        			mBackupErrorAlert.show();
+        			break;
+        		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
+        			mNoSpaceLeftAlert.show();
+        			break;
+        		}        		
+        	}
         }
     };
 

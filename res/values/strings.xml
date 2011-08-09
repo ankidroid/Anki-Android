@@ -648,5 +648,11 @@
 <string name="wal_mode_summ">WAL journal-mode speeds up AnkiDroid but breaks compatibility to Anki Desktop (no syncing). Only available on newer Android systems.</string>
 <string name="wal_mode_message">Be aware that enabling WAL journal-mode disables AnkiDroid\'s syncing feature. You will not be able to use your decks anymore with Anki Desktop until you disable WAL again.\nEnable it anyway?</string>
 <string name="wal_mode_set_message">Setting journal mode.\nPlease wait...</string>
-<string name="close_current_deck">Saving deck.\nPlease wait...</string>
+<string name="close_current_deck">Closing current deck.\nPlease wait...</string>
+
+<string name="backup_deck">Creating backup.\nPlease wait...</string>
+<string name="backup_deck_no_space_left">Backup could not be created because too less disc space is left</string>
+<string name="backup_deck_error">Error while saving backup</string>
+<string name="backup_deck_error_title">Backup Manager</string>
+
 </resources>

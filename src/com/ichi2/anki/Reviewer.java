@@ -2124,7 +2124,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     public void fillFlashcard(boolean flip) {
     	if (!flip) {
-	        Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl);
+	        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 	        mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
 	        mNextCard.setVisibility(View.VISIBLE);
 	        mCardFrame.removeView(mCard);

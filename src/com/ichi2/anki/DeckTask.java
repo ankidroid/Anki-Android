@@ -266,8 +266,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         String deckFilename = params[0].getString();
         Deck oldDeck = params[0].getDeck();
         if (oldDeck != null) {
+        	publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.close_current_deck)));
         	oldDeck.closeDeck(false);
         }
+        publishProgress(new TaskData(BackupManager.backupDeck(deckFilename)));
+
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
         Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
