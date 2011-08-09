@@ -1275,7 +1275,9 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void answerCard(int ease) {
         mIsSelecting = false;
-        mClipboard.setText("");
+        if (mClipboard != null) {
+            mClipboard.setText("");
+        }
         Deck deck = AnkiDroidApp.deck();
     	switch (ease) {
     		case Card.EASE_FAILED:
