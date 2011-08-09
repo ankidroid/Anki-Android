@@ -153,6 +153,7 @@
 		<item>Sort order in deckpicker can now be changed</item>
 		<item>Time estimate of tomorrow\'s workload</item>
 		<item>Support for custom fonts</item>
+		<item>Correct Leo.org dictionary is now chosen automatically</item>
 		<item>A lot of bugfixes</item>
 	</string-array>
 </resources>
