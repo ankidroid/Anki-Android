@@ -238,6 +238,8 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private View mMainLayout;
     private WebView mCard;
+    private WebView mNextCard;
+    private FrameLayout mCardFrame;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
@@ -357,7 +359,7 @@ public class Reviewer extends Activity implements IButtonListener{
      */
  	private final SensorEventListener mSensorListener = new SensorEventListener() {
  	    public void onSensorChanged(SensorEvent se) {
- 	      
+
  	      float x = se.values[0];
  	      float y = se.values[1];
  	      float z = se.values[2] / 2;
@@ -1306,25 +1308,19 @@ public class Reviewer extends Activity implements IButtonListener{
                 mCurrentEase, deck, mCurrentCard));
     }
 
-
     // Set the content view to the one provided and initialize accessors.
     private void initLayout(Integer layout) {
         setContentView(layout);
 
         mMainLayout = findViewById(R.id.main_layout);
-        
-        mCard = (WebView) findViewById(R.id.flashcard);
-        mCard.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        if (mZoomEnabled) {
-        	mCard.getSettings().setBuiltInZoomControls(true);
-        }
-        mCard.getSettings().setJavaScriptEnabled(true);
-        mCard.setWebChromeClient(new AnkiDroidWebChromeClient());
-        mCard.addJavascriptInterface(new JavaScriptInterface(), "interface");
-        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
-            mCard.setFocusableInTouchMode(false);
-        }
-        Log.i(AnkiDroidApp.TAG, "Focusable = " + mCard.isFocusable() + ", Focusable in touch mode = " + mCard.isFocusableInTouchMode());
+
+        mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
+        mCard = createWebView();
+        mNextCard = createWebView();
+        mNextCard.setVisibility(View.GONE);
+        mCardFrame.removeAllViews();
+        mCardFrame.addView(mCard);
+        mCardFrame.addView(mNextCard);
 
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
@@ -1427,6 +1423,54 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
+    private WebView createWebView() {
+        WebView webView = new WebView(getApplicationContext());
+        webView.setWillNotCacheDrawing(true);
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        if (mZoomEnabled) {
+            webView.getSettings().setBuiltInZoomControls(true);
+        }
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebChromeClient(new AnkiDroidWebChromeClient());
+        webView.addJavascriptInterface(new JavaScriptInterface(), "interface");
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
+            webView.setFocusableInTouchMode(false);
+        }
+        Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
+        if (mPrefTextSelection) {
+            webView.setOnLongClickListener(mLongClickHandler);
+            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        }
+        webView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (gestureDetector.onTouchEvent(event)) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+        mScaleInPercent = webView.getScale();
+        if (mPrefTextSelection) {
+            webView.setOnLongClickListener(mLongClickHandler);
+            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        }
+        webView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (gestureDetector.onTouchEvent(event)) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+        mScaleInPercent = webView.getScale();
+        return webView;
+    }
+
+
     private void invertColors() {
         Resources res = getResources();
         int bgColor = res.getColor(R.color.background_color_inv);
@@ -1526,7 +1570,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void initControls() {
-        mCard.setVisibility(View.VISIBLE);
+        mCardFrame.setVisibility(View.VISIBLE);
         mTextBarRed.setVisibility(View.VISIBLE);
         mTextBarBlack.setVisibility(View.VISIBLE);
         mTextBarBlue.setVisibility(View.VISIBLE);
@@ -1892,9 +1936,15 @@ public class Reviewer extends Activity implements IButtonListener{
         String card =
             mCardTemplate.replace("::content::", content).replace("::style::", style.toString());
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
-        Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl );
-        mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
-      
+        Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl);
+        mNextCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
+        mNextCard.setVisibility(View.VISIBLE);
+        mCardFrame.removeView(mCard);
+        mCard.destroy();
+        mCard = mNextCard;
+        mNextCard = createWebView();
+        mNextCard.setVisibility(View.GONE);
+        mCardFrame.addView(mNextCard);
         if (!mConfigurationChanged && mPlaySoundsAtStart) {
         	if (!mSpeakText) {
         		Sound.playSounds(null, 0);
@@ -2145,7 +2195,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void unblockControls() {
-        mCard.setEnabled(true);
+        mCardFrame.setEnabled(true);
         mFlipCard.setEnabled(true);
 
         switch (mCurrentEase) {
@@ -2200,7 +2250,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void blockControls() {
-        mCard.setEnabled(false);
+        mCardFrame.setEnabled(false);
         mFlipCard.setEnabled(false);
 
         switch (mCurrentEase) {
