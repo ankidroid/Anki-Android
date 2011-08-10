@@ -41,11 +41,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -61,6 +58,7 @@ import android.widget.ToggleButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -176,6 +174,7 @@ public class StudyOptions extends Activity {
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mNoSpaceLeftAlert;
 	private AlertDialog mBackupErrorAlert;
+	private AlertDialog mDeckNotLoadedAlert;
 	private AlertDialog mSyncConflictResolutionAlert;
 	private AlertDialog mNewVersionAlert;
 	private AlertDialog mWalWarningAlert;
@@ -303,6 +302,11 @@ public class StudyOptions extends Activity {
 	public static int sSwipeThresholdVelocity;
 
     /**
+	* Backup
+	*/
+	File[] mBackups;
+
+	/**
 	* Statistics
 	*/
 	public static int mStatisticType;
@@ -878,15 +882,14 @@ public class StudyOptions extends Activity {
         mTextNewTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new_total);
         mNightMode = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_night_mode);
         mNightMode.setChecked(mInvertedColors);
-        mNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-            boolean isChecked) {
-                if (mInvertedColors != isChecked) {
-                    mInvertedColors = isChecked;
-                    savePreferences("invertedColors");
-                }
-            }
+        mNightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            	@Override
+            	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            		if (mInvertedColors != isChecked) {
+            			mInvertedColors = isChecked;
+                    	savePreferences("invertedColors");
+            		}
+            	}
             });
         mSwapQA = (CheckBox) mStudyOptionsView.findViewById(R.id.studyoptions_swap);
         mSwapQA.setChecked(mSwap);
@@ -1010,13 +1013,13 @@ public class StudyOptions extends Activity {
 		builder.setPositiveButton(getResources().getString(R.string.ok), null);
 		mSyncLogAlert = builder.create();
 
-        builder.setTitle(getResources().getString(R.string.backup_deck_error_title));
+        builder.setTitle(getResources().getString(R.string.backup_manager_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(getResources().getString(R.string.backup_deck_no_space_left));
 		builder.setPositiveButton(getResources().getString(R.string.ok), null);
 		mNoSpaceLeftAlert = builder.create();
 
-        builder.setTitle(getResources().getString(R.string.backup_deck_error_title));
+        builder.setTitle(getResources().getString(R.string.backup_manager_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(getResources().getString(R.string.backup_deck_error));
 		builder.setPositiveButton(getResources().getString(R.string.ok), null);
@@ -1088,6 +1091,101 @@ public class StudyOptions extends Activity {
         builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
         builder.setSingleChoiceItems(getResources().getStringArray(R.array.statistics_type_labels), Statistics.TYPE_DUE, mStatisticListener);
         mStatisticTypeAlert = builder.create();
+
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(res.getString(R.string.backup_manager_title));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setPositiveButton(res.getString(R.string.retry), new OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                displayProgressDialogAndLoadDeck();
+            }
+        });
+        builder.setNeutralButton(res.getString(R.string.backup_restore), new OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	mBackups = BackupManager.getDeckBackups(new File(mDeckFilename));
+            	if (mBackups.length == 0) {
+            		// TODO: reload dialog
+            		Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.backup_restore_no_backups), true);
+            	} else {
+            		CharSequence[] dates = new CharSequence[mBackups.length];
+            		for (int i = 0; i < mBackups.length; i++) {
+            			dates[i] = mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2}).anki", "$1");
+            		}
+            		AlertDialog.Builder builder = new AlertDialog.Builder(StudyOptions.this);
+            		builder.setTitle(getResources().getString(R.string.backup_restore_select_title))
+            			.setIcon(android.R.drawable.ic_input_get)
+                    	.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener(){
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK, mRestoreDeckHandler, new DeckTask.TaskData(null, new String[] {mDeckFilename, mBackups[which].getPath()}, 0, 0));
+								dialog.dismiss();
+							}
+						}).setCancelable(true).setOnCancelListener(new OnCancelListener() {
+
+							@Override
+							public void onCancel(DialogInterface arg0) {
+								mDeckNotLoadedAlert.show();
+							}
+						}).show();
+        		}
+            }
+        });
+        builder.setNegativeButton(res.getString(R.string.delete_deck_title), new OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	Resources res = getResources();
+            	AlertDialog.Builder builder = new AlertDialog.Builder(StudyOptions.this);
+            	builder.setCancelable(true).setTitle(res.getString(R.string.delete_deck_title))
+            		.setIcon(android.R.drawable.ic_dialog_alert)
+            		.setMessage(String.format(res.getString(R.string.delete_deck_message), new File(mDeckFilename).getName().replace(".anki", "")))
+            		.setPositiveButton(res.getString(R.string.delete_deck_confirm), new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							File file = new File(mDeckFilename);
+							boolean deleted = file.delete();
+							if (deleted) {
+								// remove media directory
+								DeckPicker.removeDir(new File(mDeckFilename.replace(".anki", ".media")));
+
+								Log.i(AnkiDroidApp.TAG, "Broken deck " + mDeckFilename + " has been deleted");
+							} else {
+								Log.e(AnkiDroidApp.TAG, "Broken deck " + mDeckFilename + " could not be deleted");
+							}
+							Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.delete_deck_success, new File(mDeckFilename).getName().replace(".anki", "")), true);
+							showContentView(CONTENT_NO_DECK);
+						}
+					}).setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							mDeckNotLoadedAlert.show();
+						}
+					}).setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							mDeckNotLoadedAlert.show();
+						}
+					}).show();
+						
+            }
+        });
+        builder.setCancelable(true);
+        builder.setOnCancelListener(new OnCancelListener() {
+
+			@Override
+			public void onCancel(DialogInterface arg0) {
+				showContentView(CONTENT_DECK_NOT_LOADED);
+			}
+        });
+        mDeckNotLoadedAlert = builder.create();
     }
 
 
@@ -2156,22 +2254,62 @@ public class StudyOptions extends Activity {
     }
 
 
+    DeckTask.TaskListener mRestoreDeckHandler = new DeckTask.TaskListener() {
+
+    	@Override
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+                    .getString(R.string.backup_restore_deck), true);
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+			switch (result.getInt()) {
+    		case BackupManager.RETURN_DECK_RESTORED:
+    			displayProgressDialogAndLoadDeck();
+    			return;    			
+    		case BackupManager.RETURN_ERROR:
+        		mDeckNotLoadedAlert.show();
+        		Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.backup_restore_error), true);
+    			break;
+    		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
+    			mDeckNotLoadedAlert.show();
+    			mNoSpaceLeftAlert.show();
+    			break;
+    		}        		
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.dismiss();
+        	}
+        }
+
+		@Override
+		public void onProgressUpdate(TaskData... values) {
+		}
+
+    };
+
+
     DeckTask.TaskListener mLoadDeckHandler = new DeckTask.TaskListener() {
 
         @Override
         public void onPreExecute() {
             // if(updateDialog == null || !updateDialog.isShowing())
             // {
-            mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
-                    .getString(R.string.backup_deck), true, true, new OnCancelListener() {
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.setMessage(getResources().getString(R.string.loading_deck));
+        	} else {
+                mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
+                        .getString(R.string.backup_deck), true, true, new OnCancelListener() {
 
-						@Override
-						public void onCancel(DialogInterface dialog) {
-				            closeOpenedDeck();
-				            MetaDB.closeDB();
-				            finish();
-						}
-            });
+    						@Override
+    						public void onCancel(DialogInterface dialog) {
+    				            closeOpenedDeck();
+    				            MetaDB.closeDB();
+    				            finish();
+    						}
+                });        		
+        	}
 	    	hideDeckInformation();
             // }
         }
@@ -2205,7 +2343,9 @@ public class StudyOptions extends Activity {
                     break;
 
                 case DeckTask.DECK_NOT_LOADED:
-                    showContentView(CONTENT_DECK_NOT_LOADED);
+                	showContentView(CONTENT_STUDY_OPTIONS);
+                	mDeckNotLoadedAlert.setMessage(getResources().getString(R.string.open_deck_failed, new File(mDeckFilename).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck)));
+                    mDeckNotLoadedAlert.show();
                     break;
 
                 case DeckTask.DECK_EMPTY:
@@ -2239,16 +2379,16 @@ public class StudyOptions extends Activity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+        	Resources res = getResources();
         	String message = values[0].getString();
-        	if (message != null && mProgressDialog.isShowing()) {
-        		mProgressDialog.setMessage(message);
-        	} else {
-            	switch (values[0].getInt()) {
+        	if (message == null) {
+				switch (values[0].getInt()) {
         		case BackupManager.RETURN_BACKUP_CREATED:
+            		Themes.showThemedToast(StudyOptions.this, res.getString(R.string.backup_deck_success), true);
         		case BackupManager.RETURN_TODAY_ALREADY_BACKUP_DONE:
+        		case BackupManager.RETURN_DECK_NOT_CHANGED:
             		if (mProgressDialog.isShowing()) {
-                		mProgressDialog.setMessage(getResources()
-                                .getString(R.string.loading_deck));
+                		mProgressDialog.setMessage(res.getString(R.string.loading_deck));
                 	}
         			break;
         		case BackupManager.RETURN_ERROR:
@@ -2257,7 +2397,9 @@ public class StudyOptions extends Activity {
         		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
         			mNoSpaceLeftAlert.show();
         			break;
-        		}        		
+        		}
+        	} else {
+        		mProgressDialog.setMessage(message);        			
         	}
         }
     };

@@ -59,6 +59,24 @@
 				android:entries="@array/deck_order_labels"
 				android:entryValues="@array/deck_order_values" />	
 		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_backup">
+		<CheckBoxPreference 
+			android:title="@string/pref_backup"
+			android:defaultValue="true"
+			android:summary="@string/pref_backup_summ"
+			android:disableDependentsState="false"
+			android:key="useBackup" />
+		<com.hlidskialf.android.preference.SeekBarPreference 
+	      		android:key="backupMax"
+			android:title="@string/pref_backup_max"
+			android:dependency="useBackup"
+	        	android:summary="@string/pref_backup_max_summ"
+			android:defaultValue="3"
+	        	android:text=""
+	        	app:min="1"
+	        	android:max="10" 
+	        	app:interval="1"/>
+		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_sync">
 			<CheckBoxPreference
 				android:title="@string/sync_fetch_missing_media"

@@ -52,6 +52,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	private static final int DIALOG_WAL = 0;
+	private static final int DIALOG_BACKUP = 1;
 
     private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
@@ -59,16 +60,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference animationsCheckboxPreference;
     private CheckBoxPreference walModePreference;
+    private CheckBoxPreference useBackupPreference;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
     private static String[] mAppLanguages = {"ar", "ca", "cs", "de", "el", "es_ES", "fi", "fr", "hu", "it", "ja", "ko", "pl", "pt_PT", "ro", "ru", "sr", "sv-SE", "vi", "zh-CN", "zh-TW", "en"};
     private static String[] mShowValueInSummList = {"language", "startup_mode", "hideQuestionInAnswer", "dictionary", "reportErrorMode", "minimumCardsDueForNotification", "deckOrder", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft", "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight", "gestureTapLeft", "theme"};
-    private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds", "animationDuration"};
+    private static String[] mShowValueInSummSeek = {"relativeDisplayFontSize", "relativeCardBrowserFontSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility", "timeoutAnswerSeconds", "animationDuration", "backupMax"};
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private ProgressDialog mProgressDialog;
-    private boolean lockWalAction = false;
+    private boolean lockCheckAction = false;
     private boolean walModeInitiallySet = false;
+    private String dialogMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
         walModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("walMode");
+        useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         walModeInitiallySet = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         animationsCheckboxPreference.setEnabled(listpref.getValue().equals("2"));
@@ -247,15 +251,26 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             updateListPreference(key);
         } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
             updateSeekBarPreference(key);
-        } else if (key.equals("walMode") && !lockWalAction) {
-        	lockWalAction = true;
+        } else if (key.equals("walMode") && !lockCheckAction) {
+        	lockCheckAction = true;
         	if (sharedPreferences.getBoolean("walMode", false)) {
         		showDialog(DIALOG_WAL);
         	} else if (walModeInitiallySet) {
         		walModeInitiallySet = false;
+        		dialogMessage = getResources().getString(R.string.wal_mode_set_message);
             	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE, mDeckOperationHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory())));
         	} else {
-        		lockWalAction = false;        		
+        		lockCheckAction = false;        		
+        	}
+        } else if (key.equals("useBackup")) {
+        	if (lockCheckAction)  {
+        		lockCheckAction = false;
+        	} else if (!useBackupPreference.isChecked()) {
+        		lockCheckAction = true;
+        		useBackupPreference.setChecked(true);
+    			showDialog(DIALOG_BACKUP);
+        	} else {
+        		setReloadDeck();
         	}
         }
     }
@@ -277,6 +292,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
 
     private void setReloadDeck() {
+    	dialogMessage = getResources().getString(R.string.close_current_deck);
     	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mDeckOperationHandler, new DeckTask.TaskData(0, AnkiDroidApp.deck(), 0l, false));
 		setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
     }
@@ -291,23 +307,40 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     		builder.setTitle(res.getString(R.string.wal_mode));
     		builder.setCancelable(false);
     		builder.setMessage(res.getString(R.string.wal_mode_message));
-    		builder.setNegativeButton(res.getString(R.string.no), new OnClickListener() {
-
-    			@Override
-    			public void onClick(DialogInterface arg0, int arg1) {
-    				walModePreference.setChecked(false);
-    				lockWalAction = false;
-    			}
-    		});
     		builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
 
     			@Override
     			public void onClick(DialogInterface arg0, int arg1) {
     				walModePreference.setChecked(true);
-    	        	lockWalAction = false;
+    	        	lockCheckAction = false;
     				setReloadDeck();
     			}
     		});
+    		builder.setNegativeButton(res.getString(R.string.no), new OnClickListener() {
+
+    			@Override
+    			public void onClick(DialogInterface arg0, int arg1) {
+    				walModePreference.setChecked(false);
+    				lockCheckAction = false;
+    			}
+    		});
+    		break;
+        case DIALOG_BACKUP:
+    		builder.setTitle(res.getString(R.string.backup_manager_title));
+    		builder.setCancelable(false);
+    		builder.setMessage(res.getString(R.string.pref_backup_warning));
+    		builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+
+    			@Override
+    			public void onClick(DialogInterface arg0, int arg1) {
+    				lockCheckAction = true;
+    				useBackupPreference.setChecked(false);
+    				dialogMessage = getResources().getString(R.string.backup_delete);
+    				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_BACKUPS, mDeckOperationHandler, null);
+    			}
+    		});
+    		builder.setNegativeButton(res.getString(R.string.no), null);
+    		break;
         }
 		return builder.create();    	
     }
@@ -316,7 +349,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private DeckTask.TaskListener mDeckOperationHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
-        	mProgressDialog = ProgressDialog.show(Preferences.this, "", getResources().getString(R.string.wal_mode_set_message), true);
+        	mProgressDialog = ProgressDialog.show(Preferences.this, "", dialogMessage, true);
         }
 
 
@@ -330,7 +363,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         	if (mProgressDialog != null && mProgressDialog.isShowing()) {
         		mProgressDialog.dismiss();
         	}
-        	lockWalAction = false;
+        	lockCheckAction = false;
         }
     };
 

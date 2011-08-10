@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.ichi2.anki.DeckPicker.AnkiFilter;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -52,6 +53,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_OPTIMIZE_DECK = 14;
     public static final int TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE = 15;
     public static final int TASK_TYPE_CLOSE_DECK = 16;
+    public static final int TASK_TYPE_DELETE_BACKUPS = 17;
+    public static final int TASK_TYPE_RESTORE_DECK = 18;
+
 
     /**
      * Possible outputs trying to load a deck.
@@ -162,6 +166,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_CLOSE_DECK:
                 return doInBackgroundCloseDeck(params);
                 
+            case TASK_TYPE_DELETE_BACKUPS:
+                return doInBackgroundDeleteBackups(params);
+                
+            case TASK_TYPE_RESTORE_DECK:
+                return doInBackgroundRestoreDeck(params);
+                
             default:
                 return null;
         }
@@ -265,12 +275,15 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundLoadDeck(TaskData... params) {
         String deckFilename = params[0].getString();
         Deck oldDeck = params[0].getDeck();
+        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         if (oldDeck != null) {
-        	publishProgress(new TaskData(AnkiDroidApp.getInstance().getBaseContext().getResources().getString(R.string.close_current_deck)));
+        	publishProgress(new TaskData(res.getString(R.string.close_current_deck)));
         	oldDeck.closeDeck(false);
         }
-        publishProgress(new TaskData(BackupManager.backupDeck(deckFilename)));
-
+        if (PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)) {
+        	publishProgress(new TaskData(res.getString(R.string.backup_deck)));
+            publishProgress(new TaskData(BackupManager.backupDeck(deckFilename)));
+        }
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
         Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
@@ -544,6 +557,19 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     		deck.closeDeck(wait);
     	}
     	return null;
+    }
+
+
+    private TaskData doInBackgroundDeleteBackups(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteBackups");
+    	return new TaskData(BackupManager.deleteAllBackups());
+    }
+
+
+    private TaskData doInBackgroundRestoreDeck(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
+        String[] paths = params[0].getDeckList();
+    	return new TaskData(BackupManager.restoreDeckBackup(paths[0], paths[1]));
     }
 
 

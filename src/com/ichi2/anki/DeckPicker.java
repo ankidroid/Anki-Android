@@ -30,6 +30,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -62,6 +63,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -91,6 +93,7 @@ public class DeckPicker extends Activity implements Runnable {
 	private static final int DIALOG_SELECT_STATISTICS_TYPE = 4;
 	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 5;	
 	private static final int DIALOG_OPTIMIZE_DATABASE = 6;
+	private static final int DIALOG_DELETE_BACKUPS = 7;
 
 	/**
 	 * Menus
@@ -135,9 +138,16 @@ public class DeckPicker extends Activity implements Runnable {
 	private AlertDialog mSyncLogAlert;
 	private AlertDialog mUpgradeNotesAlert;
 	private AlertDialog mMissingMediaAlert;
+	private AlertDialog mDeckNotLoadedAlert;
+	private AlertDialog mNoSpaceLeftAlert;
 	private Button mSyncAllButton;
 	private Button mStatisticsAllButton;
 	private View mDeckpickerButtons;
+
+	private File[] mBackups;
+	private ArrayList<String> mBrokenDecks;
+	private boolean mRestoredOrDeleted = false;
+	private ArrayList<String> mAlreadyDealtWith;
 
 	private SimpleAdapter mDeckListAdapter;
 	private ArrayList<HashMap<String, String>> mDeckList;
@@ -153,12 +163,11 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private BroadcastReceiver mUnmountReceiver = null;
 
-	private String mCurrentLoadedDeckPath = null;
 	private String mPrefDeckPath = null;
 	private int mPrefDeckOrder = 0;
 	private boolean mPrefStartupDeckPicker = false;
-	private String mRemoveDeckFilename = null;
-	private String mRemoveDeckPath = null;
+	private String mCurrentDeckFilename = null;
+	private String mCurrentDeckPath = null;
 
 	private int mTotalDueCards = 0;
 	private int mTotalCards = 0;
@@ -244,6 +253,8 @@ public class DeckPicker extends Activity implements Runnable {
 			setTitleText();
             if (data.getBoolean("lastDeck")) {
                 enableButtons(true);
+                mRestoredOrDeleted = false;
+                handleRestoreDecks(false);
             }
 		}
 	};
@@ -374,6 +385,8 @@ public class DeckPicker extends Activity implements Runnable {
 		registerExternalStorageListener();
 
 		initDialogs();
+		mBrokenDecks = new ArrayList<String>();
+		mAlreadyDealtWith = new ArrayList<String>();
 
 		mDeckpickerButtons = (View) findViewById(R.id.deckpicker_buttons);
 		mSyncAllButton = (Button) findViewById(R.id.sync_all_button);
@@ -478,12 +491,7 @@ public class DeckPicker extends Activity implements Runnable {
         		}
         		return false;
         		}
-        	});
-        
-        Deck deck = AnkiDroidApp.deck();
-        if (deck != null) {
-        	mCurrentLoadedDeckPath = deck.getDeckPath();
-        }
+        	});        
 	}
 
 	@Override
@@ -547,15 +555,15 @@ public class DeckPicker extends Activity implements Runnable {
 		case DIALOG_DELETE_DECK:
 			builder.setTitle(res.getString(R.string.delete_deck_title));
 			builder.setIcon(android.R.drawable.ic_dialog_alert);
-			builder.setMessage(String.format(res.getString(R.string.delete_deck_message), mRemoveDeckFilename));
+			builder.setMessage(String.format(res.getString(R.string.delete_deck_message), mCurrentDeckFilename));
 			builder.setPositiveButton(res.getString(R.string.delete_deck_confirm),
 					new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							removeDeck(mRemoveDeckPath);
-							mRemoveDeckPath = null;
-							mRemoveDeckFilename = null;
+							removeDeck(mCurrentDeckPath);
+							mCurrentDeckPath = null;
+							mCurrentDeckFilename = null;
 						}
 					});
 			builder.setNegativeButton(res.getString(R.string.cancel),
@@ -563,8 +571,8 @@ public class DeckPicker extends Activity implements Runnable {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						mRemoveDeckPath = null;
-						mRemoveDeckFilename = null;
+						mCurrentDeckPath = null;
+						mCurrentDeckFilename = null;
 					}
 				});
 			builder.setOnCancelListener(
@@ -572,8 +580,44 @@ public class DeckPicker extends Activity implements Runnable {
 
 						@Override
 						public void onCancel(DialogInterface dialog) {
-							mRemoveDeckPath = null;
-							mRemoveDeckFilename = null;
+							mCurrentDeckPath = null;
+							mCurrentDeckFilename = null;
+						}
+					});					
+			dialog = builder.create();
+			break;
+		case DIALOG_DELETE_BACKUPS:
+			builder.setTitle(res.getString(R.string.backup_manager_title));
+			builder.setIcon(android.R.drawable.ic_dialog_alert);
+			builder.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), mCurrentDeckFilename));
+			builder.setPositiveButton(res.getString(R.string.delete_deck_confirm),
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if (BackupManager.deleteDeckBackups(mCurrentDeckPath, 0)) {
+								Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_delete_deck_backups, mCurrentDeckFilename), true);
+							}
+							mCurrentDeckPath = null;
+							mCurrentDeckFilename = null;
+						}
+					});
+			builder.setNegativeButton(res.getString(R.string.cancel),
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mCurrentDeckPath = null;
+						mCurrentDeckFilename = null;
+					}
+				});
+			builder.setOnCancelListener(
+					new DialogInterface.OnCancelListener() {
+
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							mCurrentDeckPath = null;
+							mCurrentDeckFilename = null;
 						}
 					});					
 			dialog = builder.create();
@@ -606,10 +650,14 @@ public class DeckPicker extends Activity implements Runnable {
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		Resources res = getResources();
+		AlertDialog ad = (AlertDialog)dialog;
 		switch (id) {
 		case DIALOG_DELETE_DECK:
-			AlertDialog ad = (AlertDialog)dialog;
-			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), mRemoveDeckFilename));
+			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), mCurrentDeckFilename));
+			break;
+		case DIALOG_DELETE_BACKUPS:
+			ad.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), mCurrentDeckFilename));
+			break;
 		}		
 	}
 
@@ -646,8 +694,8 @@ public class DeckPicker extends Activity implements Runnable {
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		int selectedPosition = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
-		mRemoveDeckFilename = mDeckList.get(selectedPosition).get("name");
-		menu.setHeaderTitle(mRemoveDeckFilename);
+		mCurrentDeckFilename = mDeckList.get(selectedPosition).get("name");
+		menu.setHeaderTitle(mCurrentDeckFilename);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.contextmenu_deckpicker, menu);
 	}
@@ -664,8 +712,8 @@ public class DeckPicker extends Activity implements Runnable {
 		Deck deck = null;
 		switch (item.getItemId()) {
 		case R.id.delete_deck:
-			mRemoveDeckPath = null;
-			mRemoveDeckPath = data.get("filepath");
+			mCurrentDeckPath = null;
+			mCurrentDeckPath = data.get("filepath");
 			showDialog(DIALOG_DELETE_DECK);
 			return true;
 		case R.id.reset_language:
@@ -682,6 +730,14 @@ public class DeckPicker extends Activity implements Runnable {
 		    Reviewer.setupMedia(deck);
 		    Connection.downloadMissingMedia(mDownloadMediaListener, new Connection.Payload(new Object[] {deck}));
 		    return true;
+		case R.id.remove_backups:
+			mCurrentDeckPath = null;
+			mCurrentDeckPath = data.get("filepath");
+			showDialog(DIALOG_DELETE_BACKUPS);
+			return true;
+//		case R.id.restore_backups:
+//			BackupManager.restoreDeckBackup(DeckPicker.this, data.get("filepath"));
+//			return true;
 		default:
 			return super.onContextItemSelected(item);
 		}
@@ -752,12 +808,34 @@ public class DeckPicker extends Activity implements Runnable {
 	private void closeDeckPicker(boolean backPressed) {
 		if (mPrefStartupDeckPicker && backPressed) {
     		setResult(StudyOptions.RESULT_CLOSE);
+    		Deck deck = AnkiDroidApp.deck();
+    		if (deck != null) {
+    			deck.closeDeck();
+    		}
     		finish();
 		} else {
 			finish();
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 	    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
 	    	}			
+		}
+	}
+
+
+	private void handleRestoreDecks(boolean reloadIfEmpty) {
+		if (mBrokenDecks.size() != 0) {
+			while (true) {
+				mCurrentDeckPath = mBrokenDecks.remove(0);
+				if (!mAlreadyDealtWith.contains(mCurrentDeckPath) || mBrokenDecks.size() == 0) {
+					break;
+				}
+			}
+        	mDeckNotLoadedAlert.setMessage(getResources().getString(R.string.open_deck_failed, new File(mCurrentDeckPath).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck)));
+			mDeckNotLoadedAlert.show();
+		} else if (reloadIfEmpty) {
+			if (mRestoredOrDeleted) {
+				populateDeckList(mPrefDeckPath);				
+			}
 		}
 	}
 
@@ -776,26 +854,123 @@ public class DeckPicker extends Activity implements Runnable {
 
 
 	private void initDialogs() {
+		Resources res = getResources();
 		// Sync Log dialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(getResources().getString(R.string.sync_log_title));
-		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+		builder.setTitle(res.getString(R.string.sync_log_title));
+		builder.setPositiveButton(res.getString(R.string.ok), null);
 		mSyncLogAlert = builder.create();
 		// Upgrade notes dialog
 		builder = new AlertDialog.Builder(this);
-		builder.setTitle(getResources().getString(
+		builder.setTitle(res.getString(
 				R.string.deckpicker_upgrade_notes_title));
-		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+		builder.setPositiveButton(res.getString(R.string.ok), null);
 		mUpgradeNotesAlert = builder.create();
 		builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.deckpicker_download_missing_title));
-        builder.setPositiveButton(getResources().getString(R.string.ok), null);
+        builder.setTitle(res.getString(R.string.deckpicker_download_missing_title));
+        builder.setPositiveButton(res.getString(R.string.ok), null);
         mMissingMediaAlert = builder.create();
         mProgressDialog = new ProgressDialog(DeckPicker.this);
         mProgressDialog.setTitle(R.string.deckpicker_download_missing_title);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setMax(100);
         mProgressDialog.setCancelable(false);
+
+        // backup system restore dialog
+        builder.setTitle(getResources().getString(R.string.backup_manager_title));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setMessage(getResources().getString(R.string.backup_deck_no_space_left));
+		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+		mNoSpaceLeftAlert = builder.create();
+
+        builder.setTitle(res.getString(R.string.backup_manager_title));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setPositiveButton(res.getString(R.string.backup_restore), new Dialog.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	mBackups = BackupManager.getDeckBackups(new File(mCurrentDeckPath));
+            	if (mBackups.length == 0) {
+            		// show dialog
+            		Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_no_backups), true);
+            	} else {
+            		CharSequence[] dates = new CharSequence[mBackups.length];
+            		for (int i = 0; i < mBackups.length; i++) {
+            			dates[i] = mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2}).anki", "$1");
+            		}
+            		AlertDialog.Builder builder = new AlertDialog.Builder(DeckPicker.this);
+            		builder.setTitle(getResources().getString(R.string.backup_restore_select_title))
+            			.setIcon(android.R.drawable.ic_input_get)
+                    	.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener(){
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK, mRestoreDeckHandler, new DeckTask.TaskData(null, new String[] {mCurrentDeckPath, mBackups[which].getPath()}, 0, 0));
+								dialog.dismiss();
+							}
+						}).setCancelable(true).setOnCancelListener(new OnCancelListener() {
+
+							@Override
+							public void onCancel(DialogInterface arg0) {
+								mDeckNotLoadedAlert.show();
+							}
+						}).show();
+        		}
+            }
+        });
+        builder.setNegativeButton(res.getString(R.string.delete_deck_title), new Dialog.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            	Resources res = getResources();
+            	AlertDialog.Builder builder = new AlertDialog.Builder(DeckPicker.this);
+            	builder.setCancelable(true).setTitle(res.getString(R.string.delete_deck_title))
+            		.setIcon(android.R.drawable.ic_dialog_alert)
+            		.setMessage(String.format(res.getString(R.string.delete_deck_message), new File(mCurrentDeckPath).getName().replace(".anki", "")))
+            		.setPositiveButton(res.getString(R.string.delete_deck_confirm), new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							File file = new File(mCurrentDeckPath);
+							boolean deleted = file.delete();
+							if (deleted) {
+								// remove media directory
+								DeckPicker.removeDir(new File(mCurrentDeckPath.replace(".anki", ".media")));
+
+								Log.i(AnkiDroidApp.TAG, "Broken deck " + mCurrentDeckPath + " has been deleted");
+							} else {
+								Log.e(AnkiDroidApp.TAG, "Broken deck " + mCurrentDeckPath + " could not be deleted");
+							}
+							Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.delete_deck_success, new File(mCurrentDeckPath).getName().replace(".anki", "")), true);
+							mRestoredOrDeleted = true;
+							handleRestoreDecks(true);
+						}
+					}).setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							mDeckNotLoadedAlert.show();
+						}
+					}).setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							mDeckNotLoadedAlert.show();
+						}
+					}).show();
+						
+            }
+        });
+        builder.setCancelable(true);
+        builder.setOnCancelListener(new OnCancelListener() {
+
+			@Override
+			public void onCancel(DialogInterface arg0) {
+				mAlreadyDealtWith.add(mCurrentDeckPath);
+				handleRestoreDecks(true);
+			}
+		});
+        mDeckNotLoadedAlert = builder.create();
 	}
 	
 	
@@ -1024,6 +1199,7 @@ public class DeckPicker extends Activity implements Runnable {
 					} catch (SQLException e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
 								+ path);
+						mBrokenDecks.add(path);
 						continue;
 					}
 
@@ -1043,6 +1219,7 @@ public class DeckPicker extends Activity implements Runnable {
 					} catch (SQLException e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
 								+ path);
+						mBrokenDecks.add(path);
 						continue;
 					}
 
@@ -1182,7 +1359,7 @@ public class DeckPicker extends Activity implements Runnable {
 	}
 
 	
-	public boolean removeDir(File dir){
+	public static boolean removeDir(File dir){
 		if (dir.isDirectory()){
 			File[] files = dir.listFiles();
 			for (File aktFile: files){
@@ -1219,7 +1396,7 @@ public class DeckPicker extends Activity implements Runnable {
 			if (deleted) {
 				Log.i(AnkiDroidApp.TAG, "DeckPicker - " + deckFilename + " deleted");
 				mDeckIsSelected = false;
-				
+
 				// remove media directory
 				String mediaDir = deckFilename.replace(".anki", ".media");
 				boolean mediadeleted = removeDir(new File(mediaDir));
@@ -1228,6 +1405,10 @@ public class DeckPicker extends Activity implements Runnable {
 				} else {
 					Log.e(AnkiDroidApp.TAG, "Error: Could not delete " + mediaDir);										
 				}
+
+				// remove backups
+				BackupManager.deleteDeckBackups(deckFilename, 0);
+				Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.delete_deck_success, file.getName().replace(".anki", "")), true);
 
 				populateDeckList(mPrefDeckPath);
 			} else {
@@ -1321,6 +1502,43 @@ public class DeckPicker extends Activity implements Runnable {
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 		}
     	
+    };
+
+
+    DeckTask.TaskListener mRestoreDeckHandler = new DeckTask.TaskListener() {
+
+    	@Override
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+                    .getString(R.string.backup_restore_deck), true);
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+			switch (result.getInt()) {
+    		case BackupManager.RETURN_DECK_RESTORED:
+    			mRestoredOrDeleted = true;
+                handleRestoreDecks(true);
+                break;    			
+    		case BackupManager.RETURN_ERROR:
+        		mDeckNotLoadedAlert.show();
+        		Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_error), true);
+    			break;
+    		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
+    			mDeckNotLoadedAlert.show();
+    			mNoSpaceLeftAlert.show();
+    			break;
+    		}        		
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.dismiss();
+        	}
+        }
+
+		@Override
+		public void onProgressUpdate(TaskData... values) {
+		}
+
     };
 
 
