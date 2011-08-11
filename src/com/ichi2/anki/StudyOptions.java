@@ -306,6 +306,7 @@ public class StudyOptions extends Activity {
 	* Backup
 	*/
 	File[] mBackups;
+	public static final int MIN_FREE_SPACE = 10;
 
 	/**
 	* Statistics
@@ -1016,8 +1017,7 @@ public class StudyOptions extends Activity {
 
         builder.setTitle(getResources().getString(R.string.backup_manager_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setMessage(getResources().getString(R.string.backup_deck_no_space_left));
-		builder.setPositiveButton(getResources().getString(R.string.ok), null);
+        builder.setPositiveButton(getResources().getString(R.string.ok), null);
 		mNoSpaceLeftAlert = builder.create();
 
         builder.setTitle(getResources().getString(R.string.backup_manager_title));
@@ -2284,6 +2284,7 @@ public class StudyOptions extends Activity {
     			break;
     		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
     			mDeckNotLoadedAlert.show();
+    			mNoSpaceLeftAlert.setMessage(getResources().getString(R.string.backup_deck_no_space_left));
     			mNoSpaceLeftAlert.show();
     			break;
     		}        		
@@ -2404,6 +2405,11 @@ public class StudyOptions extends Activity {
         			mBackupErrorAlert.show();
         			break;
         		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
+        			mNoSpaceLeftAlert.setMessage(getResources().getString(R.string.backup_deck_no_space_left));
+        			mNoSpaceLeftAlert.show();
+        			break;
+        		case BackupManager.RETURN_LOW_SYSTEM_SPACE:
+        			mNoSpaceLeftAlert.setMessage(getResources().getString(R.string.sd_space_warning, MIN_FREE_SPACE));
         			mNoSpaceLeftAlert.show();
         			break;
         		}

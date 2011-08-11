@@ -651,7 +651,8 @@
 <string name="close_current_deck">Closing current deck.\nPlease wait...</string>
 
 <string name="backup_deck">Creating backup.\nPlease wait...</string>
-<string name="backup_deck_no_space_left">Backup action could not be executed due to insufficient disc space.\n\nFree some space or lower the backup depth.</string>
+<string name="backup_deck_no_space_left">Backup action could not be executed due to insufficient space on the sd card.\n\nFree some space or lower the backup depth.</string>
+<string name="sd_space_warning">Less than %d mb space on the sd card left.\nFree some space to avoid data loss.</string>
 <string name="backup_deck_success">Backup successfully created</string>
 <string name="backup_deck_error">Error while saving backup. Please backup your decks manually.</string>
 <string name="backup_manager_title">Backup manager</string>
