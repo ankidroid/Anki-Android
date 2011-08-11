@@ -52,7 +52,8 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	private static final int DIALOG_WAL = 0;
-	private static final int DIALOG_BACKUP = 1;
+	private static final int DIALOG_ASYNC = 1;
+	private static final int DIALOG_BACKUP = 2;
 
     private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
@@ -61,6 +62,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference animationsCheckboxPreference;
     private CheckBoxPreference walModePreference;
     private CheckBoxPreference useBackupPreference;
+    private CheckBoxPreference asyncModePreference;
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
@@ -90,6 +92,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
         walModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("walMode");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
+        asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
         walModeInitiallySet = mPrefMan.getSharedPreferences().getBoolean("walMode", false);
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         animationsCheckboxPreference.setEnabled(listpref.getValue().equals("2"));
@@ -272,6 +275,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         	} else {
         		setReloadDeck();
         	}
+        } else if (key.equals("asyncMode")) {
+        	if (lockCheckAction)  {
+        		lockCheckAction = false;
+        	} else if (asyncModePreference.isChecked()) {
+        		lockCheckAction = true;
+        		asyncModePreference.setChecked(false);
+    			showDialog(DIALOG_ASYNC);
+        	} else {
+        		setReloadDeck();
+        	}
         }
     }
 
@@ -337,6 +350,21 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     				useBackupPreference.setChecked(false);
     				dialogMessage = getResources().getString(R.string.backup_delete);
     				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_BACKUPS, mDeckOperationHandler, null);
+    			}
+    		});
+    		builder.setNegativeButton(res.getString(R.string.no), null);
+    		break;
+        case DIALOG_ASYNC:
+    		builder.setTitle(res.getString(R.string.async_mode));
+    		builder.setCancelable(false);
+    		builder.setMessage(res.getString(R.string.async_mode_message));
+    		builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+
+    			@Override
+    			public void onClick(DialogInterface arg0, int arg1) {
+    				lockCheckAction = true;
+    				asyncModePreference.setChecked(true);
+    				setReloadDeck();
     			}
     		});
     		builder.setNegativeButton(res.getString(R.string.no), null);

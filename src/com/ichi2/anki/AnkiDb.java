@@ -86,12 +86,16 @@ public class AnkiDb {
                     	}
                 	}
                 }
-//                cur = mDatabase.rawQuery("PRAGMA synchronous = 0", null);
-//                cur = mDatabase.rawQuery("PRAGMA synchronous", null);
-//                if (cur.moveToFirst()) {
-//                	String syncMode = cur.getString(0);
-//                	Log.w(AnkiDroidApp.TAG, "Current synchronous setting: " + syncMode);                    		
-//                }
+                if (prefs.getBoolean("asyncMode", false)) {
+                    cur = mDatabase.rawQuery("PRAGMA synchronous = 0", null);                	
+                } else {
+                    cur = mDatabase.rawQuery("PRAGMA synchronous = 2", null);
+                }
+                cur = mDatabase.rawQuery("PRAGMA synchronous", null);
+                if (cur.moveToFirst()) {
+                	String syncMode = cur.getString(0);
+                	Log.w(AnkiDroidApp.TAG, "Current synchronous setting: " + syncMode);                    		
+                }
             } finally {
                 if (cur != null) {
                     cur.close();

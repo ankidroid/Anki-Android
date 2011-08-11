@@ -411,6 +411,11 @@
 				android:enabled="false"
 				android:key="walMode"/>
 			<CheckBoxPreference
+				android:title="@string/async_mode"
+				android:summary="@string/async_mode_summ"
+				android:defaultValue="false"
+				android:key="asyncMode"/>
+			<CheckBoxPreference
 				android:title="@string/fix_hebrew_text"
 				android:summary="@string/fix_hebrew_text_summ"
 				android:defaultValue="false"

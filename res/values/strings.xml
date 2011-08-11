@@ -648,6 +648,11 @@
 <string name="wal_mode_summ">WAL journal-mode speeds up AnkiDroid but breaks compatibility to Anki Desktop if you copy your decks manually. Only available on newer Android systems.</string>
 <string name="wal_mode_message">Be aware that after enabling WAL journal-mode you will not anymore be able to copy your decks manually to your your computer to use them with Anki Desktop until you disable WAL again. Syncing will then only be possible via AnkiDroid\'s syncing feature.\nEnable it anyway?</string>
 <string name="wal_mode_set_message">Setting journal mode.\nPlease wait...</string>
+<string name="async_mode">Synchronous off</string>
+<string name="async_mode_summ">This speeds AnkiDroid up but can corrupt databases when the whole Android system crashes. So use backups.</string>
+<string name="async_mode_message">Be aware that this option is less safe and can cause deck corruptions when Android crashes (e.g. due to power shortage).\nIt is HIGHLY recommended to use the backup system if this option is set.\nEnable it anyway?</string>
+
+
 <string name="close_current_deck">Closing current deck.\nPlease wait...</string>
 
 <string name="backup_deck">Creating backup.\nPlease wait...</string>
