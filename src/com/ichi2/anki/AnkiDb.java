@@ -49,7 +49,7 @@ public class AnkiDb {
     /**
      * Open a database connection to an ".anki" SQLite file.
      */
-    public AnkiDb(String ankiFilename) {
+    public AnkiDb(String ankiFilename, boolean forceDeleteJournalMode) {
         mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
                 | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         if (mDatabase != null) {
@@ -57,7 +57,7 @@ public class AnkiDb {
             try {
                 String mode;
             	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-            	if (prefs.getBoolean("walMode", false)) {
+            	if (prefs.getBoolean("walMode", false) && !forceDeleteJournalMode) {
             		mode = "WAL";
             	} else {
             		mode = "DELETE";
@@ -70,7 +70,7 @@ public class AnkiDb {
                     	cur = mDatabase.rawQuery("PRAGMA journal_mode = " + mode, null);
                     	if (cur.moveToFirst()) {
                         	String journalModeNew = cur.getString(0);
-                        	Log.w(AnkiDroidApp.TAG, "Old journal mode was:" + journalModeOld + ". Trying to set journal mode to " + mode + ". Result: " + journalModeNew);                    		
+                        	Log.w(AnkiDroidApp.TAG, "Old journal mode was: " + journalModeOld + ". Trying to set journal mode to " + mode + ". Result: " + journalModeNew);                    		
                         	if (!journalModeNew.equalsIgnoreCase("wal")) {
                         		prefs.edit().putInt("walWarning", NO_WAL_WARNING).commit();
                         	} else {

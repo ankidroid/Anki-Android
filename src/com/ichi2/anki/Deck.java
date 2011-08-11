@@ -232,13 +232,14 @@ public class Deck {
     public static synchronized Deck openDeck(String path) throws SQLException {
         return openDeck(path, true);
     }
-
-
     public static synchronized Deck openDeck(String path, boolean rebuild) throws SQLException {
+    	return openDeck(path, true, false);
+    }
+    public static synchronized Deck openDeck(String path, boolean rebuild, boolean forceDeleteJournalMode) throws SQLException {
         Deck deck = null;
         Cursor cursor = null;
         Log.i(AnkiDroidApp.TAG, "openDeck - Opening database " + path);
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path, forceDeleteJournalMode);
 
         try {
             // Read in deck table columns
@@ -4735,4 +4736,27 @@ public class Deck {
     	values.put("deckAge", (int)((Utils.now() - created) / 86400));
     	return values;
     }
+
+
+    public static boolean isWalEnabled(String deckPath) {
+        Cursor cursor = null;
+        boolean value = false;
+        boolean dbAlreadyOpened = AnkiDatabaseManager.isDatabaseOpen(deckPath);
+        try {
+            cursor = AnkiDatabaseManager.getDatabase(deckPath).getDatabase().rawQuery(
+            		"PRAGMA journal_mode", null);
+        	if (cursor.moveToFirst()) {
+        		value = cursor.getString(0).equalsIgnoreCase("wal");
+        	}
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        if (!dbAlreadyOpened) {
+            AnkiDatabaseManager.closeDatabase(deckPath);
+        }
+        return value;
+    }
+
 }

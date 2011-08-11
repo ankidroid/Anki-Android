@@ -275,6 +275,8 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     private TaskData doInBackgroundLoadDeck(TaskData... params) {
         String deckFilename = params[0].getString();
         Deck oldDeck = params[0].getDeck();
+        boolean forceDeleteJournalMode = params[0].getBoolean();
+
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         if (oldDeck != null) {
         	publishProgress(new TaskData(res.getString(R.string.close_current_deck)));
@@ -293,7 +295,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
         try {
             // Open the right deck.
-            Deck deck = Deck.openDeck(deckFilename);
+            Deck deck = Deck.openDeck(deckFilename, true, forceDeleteJournalMode);
             // Start by getting the first card and displaying it.
             // Card card = deck.getCard();
             Log.i(AnkiDroidApp.TAG, "Deck loaded!");
@@ -303,7 +305,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             }
             BackupManager.cleanUpAfterBackupCreation(true);
             publishProgress(new TaskData(backupResult));
-            return new TaskData(DECK_LOADED, deck, null);
+            return new TaskData(DECK_LOADED, deck, 0, forceDeleteJournalMode);
         } catch (SQLException e) {
             Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
             return new TaskData(DECK_NOT_LOADED);
@@ -664,6 +666,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         public TaskData(Deck deck, String order) {
             mDeck = deck;
             mMsg = order;
+        }
+
+ 
+        public TaskData(Deck deck, String order, boolean bool) {
+            mDeck = deck;
+            mMsg = order;
+            mBool = bool;
         }
 
  

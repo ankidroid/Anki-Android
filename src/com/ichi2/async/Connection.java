@@ -297,12 +297,18 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         //Log.i(AnkiDroidApp.TAG, "username = " + username);
         //Log.i(AnkiDroidApp.TAG, "password = " + password);
 
+        Deck currentDeck = AnkiDroidApp.deck();
+        if (currentDeck != null) {
+        	currentDeck.closeDeck();
+        }
+
         ArrayList<HashMap<String, String>> decksToSync = (ArrayList<HashMap<String, String>>) data.data[2];
         for (HashMap<String, String> deckToSync : decksToSync) {
             Log.i(AnkiDroidApp.TAG, "Synchronizing deck");
             String deckPath = deckToSync.get("filepath");
             try {
-                Deck deck = Deck.openDeck(deckPath);
+            	boolean forceDeleteJournalMode =  Deck.isWalEnabled(deckPath);
+                Deck deck = Deck.openDeck(deckPath, true, forceDeleteJournalMode);
 
                 Payload syncDeckData = new Payload(new Object[] { username, password, deck, deckPath, null });
                 syncDeckData = doInBackgroundSyncDeck(syncDeckData);
