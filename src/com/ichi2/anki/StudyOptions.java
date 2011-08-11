@@ -16,6 +16,7 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -1106,17 +1107,33 @@ public class StudyOptions extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
+            	Resources res = getResources();
             	mBackups = BackupManager.getDeckBackups(new File(mDeckFilename));
             	if (mBackups.length == 0) {
-            		// TODO: reload dialog
-            		Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.backup_restore_no_backups), true);
+            		AlertDialog.Builder builder = new AlertDialog.Builder(StudyOptions.this);
+            		builder.setTitle(res.getString(R.string.backup_manager_title))
+            			.setIcon(android.R.drawable.ic_dialog_alert)
+            			.setMessage(res.getString(R.string.backup_restore_no_backups))
+            			.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
+
+				            @Override
+				            public void onClick(DialogInterface dialog, int which) {
+						mDeckNotLoadedAlert.show();
+				            }
+					}).setCancelable(true).setOnCancelListener(new OnCancelListener() {
+
+						@Override
+						public void onCancel(DialogInterface arg0) {
+							mDeckNotLoadedAlert.show();
+						}
+					}).show();
             	} else {
             		CharSequence[] dates = new CharSequence[mBackups.length];
             		for (int i = 0; i < mBackups.length; i++) {
             			dates[i] = mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2}).anki", "$1");
             		}
             		AlertDialog.Builder builder = new AlertDialog.Builder(StudyOptions.this);
-            		builder.setTitle(getResources().getString(R.string.backup_restore_select_title))
+            		builder.setTitle(res.getString(R.string.backup_restore_select_title))
             			.setIcon(android.R.drawable.ic_input_get)
                     	.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener(){
 
@@ -1148,17 +1165,9 @@ public class StudyOptions extends Activity {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							File file = new File(mDeckFilename);
-							boolean deleted = file.delete();
-							if (deleted) {
-								// remove media directory
-								DeckPicker.removeDir(new File(mDeckFilename.replace(".anki", ".media")));
-
-								Log.i(AnkiDroidApp.TAG, "Broken deck " + mDeckFilename + " has been deleted");
-							} else {
-								Log.e(AnkiDroidApp.TAG, "Broken deck " + mDeckFilename + " could not be deleted");
+							if (BackupManager.moveDeckToBrokenFolder(mDeckFilename)) {
+								Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.delete_deck_success, new File(mDeckFilename).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", "")), false);
 							}
-							Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.delete_deck_success, new File(mDeckFilename).getName().replace(".anki", "")), true);
 							showContentView(CONTENT_NO_DECK);
 						}
 					}).setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {

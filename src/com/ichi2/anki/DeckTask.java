@@ -280,9 +280,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	publishProgress(new TaskData(res.getString(R.string.close_current_deck)));
         	oldDeck.closeDeck(false);
         }
+        int backupResult = BackupManager.RETURN_NULL;
         if (PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)) {
         	publishProgress(new TaskData(res.getString(R.string.backup_deck)));
-            publishProgress(new TaskData(BackupManager.backupDeck(deckFilename)));
+        	backupResult = BackupManager.backupDeck(deckFilename);
         }
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
@@ -293,7 +294,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             // Start by getting the first card and displaying it.
             // Card card = deck.getCard();
             Log.i(AnkiDroidApp.TAG, "Deck loaded!");
-            
+            if (deck == null) {
+                BackupManager.cleanUpAfterBackupCreation(false);
+                return new TaskData(DECK_NOT_LOADED);
+            }
+            BackupManager.cleanUpAfterBackupCreation(true);
+            publishProgress(new TaskData(backupResult));
             return new TaskData(DECK_LOADED, deck, null);
         } catch (SQLException e) {
             Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());

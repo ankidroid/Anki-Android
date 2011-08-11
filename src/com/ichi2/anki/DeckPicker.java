@@ -834,7 +834,8 @@ public class DeckPicker extends Activity implements Runnable {
 			mDeckNotLoadedAlert.show();
 		} else if (reloadIfEmpty) {
 			if (mRestoredOrDeleted) {
-				populateDeckList(mPrefDeckPath);				
+				mBrokenDecks = new ArrayList<String>();
+				populateDeckList(mPrefDeckPath);
 			}
 		}
 	}
@@ -889,17 +890,33 @@ public class DeckPicker extends Activity implements Runnable {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
+            	Resources res = getResources();
             	mBackups = BackupManager.getDeckBackups(new File(mCurrentDeckPath));
             	if (mBackups.length == 0) {
-            		// show dialog
-            		Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_no_backups), true);
+            		AlertDialog.Builder builder = new AlertDialog.Builder(DeckPicker.this);
+            		builder.setTitle(res.getString(R.string.backup_manager_title))
+            			.setIcon(android.R.drawable.ic_dialog_alert)
+            			.setMessage(res.getString(R.string.backup_restore_no_backups))
+            			.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
+
+				            @Override
+				            public void onClick(DialogInterface dialog, int which) {
+						mDeckNotLoadedAlert.show();
+				            }
+					}).setCancelable(true).setOnCancelListener(new OnCancelListener() {
+
+						@Override
+						public void onCancel(DialogInterface arg0) {
+							mDeckNotLoadedAlert.show();
+						}
+					}).show();
             	} else {
             		CharSequence[] dates = new CharSequence[mBackups.length];
             		for (int i = 0; i < mBackups.length; i++) {
             			dates[i] = mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2}).anki", "$1");
             		}
             		AlertDialog.Builder builder = new AlertDialog.Builder(DeckPicker.this);
-            		builder.setTitle(getResources().getString(R.string.backup_restore_select_title))
+            		builder.setTitle(res.getString(R.string.backup_restore_select_title))
             			.setIcon(android.R.drawable.ic_input_get)
                     	.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener(){
 
@@ -931,19 +948,11 @@ public class DeckPicker extends Activity implements Runnable {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							File file = new File(mCurrentDeckPath);
-							boolean deleted = file.delete();
-							if (deleted) {
-								// remove media directory
-								DeckPicker.removeDir(new File(mCurrentDeckPath.replace(".anki", ".media")));
-
-								Log.i(AnkiDroidApp.TAG, "Broken deck " + mCurrentDeckPath + " has been deleted");
-							} else {
-								Log.e(AnkiDroidApp.TAG, "Broken deck " + mCurrentDeckPath + " could not be deleted");
+							if (BackupManager.moveDeckToBrokenFolder(mCurrentDeckPath)) {
+								Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.delete_deck_success, new File(mCurrentDeckPath).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", "")), false);								
+								mRestoredOrDeleted = true;
+								handleRestoreDecks(true);
 							}
-							Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.delete_deck_success, new File(mCurrentDeckPath).getName().replace(".anki", "")), true);
-							mRestoredOrDeleted = true;
-							handleRestoreDecks(true);
 						}
 					}).setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
 
@@ -1405,11 +1414,6 @@ public class DeckPicker extends Activity implements Runnable {
 				} else {
 					Log.e(AnkiDroidApp.TAG, "Error: Could not delete " + mediaDir);										
 				}
-
-				// remove backups
-				BackupManager.deleteDeckBackups(deckFilename, 0);
-				Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.delete_deck_success, file.getName().replace(".anki", "")), true);
-
 				populateDeckList(mPrefDeckPath);
 			} else {
 				Log.e(AnkiDroidApp.TAG, "Error: Could not delete "
@@ -1534,7 +1538,7 @@ public class DeckPicker extends Activity implements Runnable {
         		mProgressDialog.dismiss();
         	}
         }
-
+ 
 		@Override
 		public void onProgressUpdate(TaskData... values) {
 		}

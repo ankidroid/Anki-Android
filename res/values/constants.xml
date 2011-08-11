@@ -151,12 +151,13 @@
 	<string-array name="new_version_features">
 		<item>two new themes</item>
 		<item>animations</item>
+		<item>backup system</item>
 		<item>new statistic: deck summary</item>
 		<item>optional wal journaling mode</item>
 		<item>better progress bars while learning</item>
 		<item>intent-based card addition</item>
 		<item>more convenient lookup via appearing icon</item>
 		<item>new text selection in card adder and card editor</item>
-		<item>possibility of swapping question/answer very easily</item>
+		<item>option to swap question/answer very easily</item>
 	</string-array>
 </resources>
