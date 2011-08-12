@@ -268,7 +268,9 @@ public class DeckPicker extends Activity implements Runnable {
 
 		@Override
 		public void onPreExecute() {
-			// Pass
+			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
+				mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources().getString(R.string.sync_prepare_syncing), true);
+			}
 		}
 
 		@Override
@@ -281,10 +283,7 @@ public class DeckPicker extends Activity implements Runnable {
                 values[0] = ((String)values[3]);
                 values[1] = res.getString(R.string.sync_downloading_media, done, total);
             }
-			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-				mProgressDialog = ProgressDialog.show(DeckPicker.this,
-						(String) values[0], (String) values[1]);
-			} else {
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.setTitle((String) values[0]);
 				mProgressDialog.setMessage((String) values[1]);
 			}
@@ -1421,8 +1420,7 @@ public class DeckPicker extends Activity implements Runnable {
 
 	private void waitForDeckLoaderThread() {
 		mDeckIsSelected = true;
-		Log
-				.i(AnkiDroidApp.TAG,
+		Log.i(AnkiDroidApp.TAG,
 						"DeckPicker - waitForDeckLoaderThread(), mDeckIsSelected set to true");
 		mLock.lock();
 		try {

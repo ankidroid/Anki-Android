@@ -344,6 +344,11 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         String syncName = deckPath.substring(deckPath.lastIndexOf("/") + 1, deckPath.length() - 5);
         String conflictResolution = (String) data.data[4];
 
+        if (deck == null) {
+        	publishProgress(syncName, res.getString(R.string.sync_set_journal_mode));
+        	deck = Deck.openDeck(deckPath, true, true);
+        }
+
         syncChangelog.put("deckName", syncName);
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deckPath);

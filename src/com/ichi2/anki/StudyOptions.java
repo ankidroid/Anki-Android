@@ -1954,13 +1954,11 @@ public class StudyOptions extends Activity {
 
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = AnkiDroidApp.deck();
-        	if (Deck.isWalEnabled(mDeckFilename)) {
-        		displayProgressDialogAndLoadDeck(false, true);
-        		return;
-        	}
-
             Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
             Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
+        	if (Deck.isWalEnabled(mDeckFilename)) {
+        		deck = null;
+        	}
             Connection.syncDeck(mSyncListener, new Connection.Payload(new Object[] { username, password, deck,
                     mDeckFilename, conflictResolution }));
         } else {
@@ -2033,7 +2031,7 @@ public class StudyOptions extends Activity {
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
                 boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
-                displayProgressDialogAndLoadDeck(updateAllCards, false);	
+                displayProgressDialogAndLoadDeck(updateAllCards);	
             }
         } else if (requestCode == PREFERENCES_UPDATE) {
             restorePreferences();
@@ -2220,11 +2218,11 @@ public class StudyOptions extends Activity {
 
 
     private void displayProgressDialogAndLoadDeck() {
-        displayProgressDialogAndLoadDeck(false, false);
+        displayProgressDialogAndLoadDeck(false);
     }
 
 
-    private void displayProgressDialogAndLoadDeck(boolean updateAllCards, boolean forceDeleteJournalMode) {
+    private void displayProgressDialogAndLoadDeck(boolean updateAllCards) {
         Log.i(AnkiDroidApp.TAG, "displayProgressDialogAndLoadDeck - Loading deck " + mDeckFilename);
 
         // Don't open database again in onResume() until we know for sure this attempt to load the deck is finished
@@ -2240,10 +2238,10 @@ public class StudyOptions extends Activity {
 
             if (updateAllCards) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_AND_UPDATE_CARDS, mLoadDeckHandler,
-                        new DeckTask.TaskData(AnkiDroidApp.deck(), mDeckFilename, forceDeleteJournalMode));
+                        new DeckTask.TaskData(AnkiDroidApp.deck(), mDeckFilename));
             } else {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK, mLoadDeckHandler, new DeckTask.TaskData(
-                		AnkiDroidApp.deck(), mDeckFilename, forceDeleteJournalMode));
+                		AnkiDroidApp.deck(), mDeckFilename));
             }
         } else {
             if (mDeckFilename == null) {
@@ -2385,9 +2383,6 @@ public class StudyOptions extends Activity {
             Deck deck = AnkiDroidApp.deck();
             if (deck != null) {
                 mToggleLimit.setChecked(deck.isLimitedByTag() || deck.getSessionRepLimit() + deck.getSessionTimeLimit() > 0);
-            }
-            if (result.getBoolean()) {
-            	syncDeck(null);
             }
         }
 
