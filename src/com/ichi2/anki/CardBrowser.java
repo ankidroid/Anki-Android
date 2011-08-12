@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -41,7 +42,6 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -120,6 +120,15 @@ public class CardBrowser extends Activity {
 
 	private boolean mPrefFixArabic;
 
+    private Handler mTimerHandler = new Handler();
+    private static final int WAIT_TIME_UNTIL_UPDATE = 500;
+
+	private Runnable updateList = new Runnable() {
+    	public void run() {
+    		updateCardsList();
+    	}
+    };
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Themes.applyTheme(this);
@@ -189,7 +198,8 @@ public class CardBrowser extends Activity {
 		mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
 		mSearchEditText.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(Editable s) {
-				updateCardsList();
+		    	mTimerHandler.removeCallbacks(updateList);
+		    	mTimerHandler.postDelayed(updateList, WAIT_TIME_UNTIL_UPDATE);
 			}
 
 			public void beforeTextChanged(CharSequence s, int start, int count,
