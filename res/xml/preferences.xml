@@ -133,6 +133,11 @@
 			android:defaultValue="true"
 			android:summary="@string/show_progress_bars_summ"
 			android:key="progressBars" />
+		<CheckBoxPreference
+			android:title="@string/fix_orientation"
+			android:defaultValue="false"
+			android:summary="@string/fix_orientation_summ"
+			android:key="fixOrientation" />
 		<ListPreference
 			android:title="@string/hide_question_in_answer"
 			android:summary="@string/hide_question_in_answer_summ"

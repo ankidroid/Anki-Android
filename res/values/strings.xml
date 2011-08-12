@@ -160,7 +160,7 @@
 <string name="show_timer">Show timer</string>
 <string name="show_timer_summ">Timer showing the time it is taking you to answer</string>
 <string name="show_progress_bars">Show progress bars</string>
-<string name="show_progress_bars_summ">Shows proportion of today\'s yes answers and proportion of total yes answers on mature cards</string>
+<string name="show_progress_bars_summ">Shows today\'s progress and proportion of today\'s yes answers while reviewing</string>
 <!-- show_whiteboard -> Reviewer.java -->
 <string name="show_whiteboard_summ">Lets you write on the screen</string>
 <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
@@ -680,5 +680,8 @@
 <string name="delete_deck_success">Deck %1$s deleted. Backup in folder %2$s.</string>
 <string name="backup_delete_deck_backups_alert">Really delete all backups of deck %s?</string>
 <string name="open_deck_failed">Deck %1$s could not be opened. It is either not a real anki file or has been corrupted.\n\nYou can try to restore the deck from a backup; the current deck will then be moved to the subfolder \'%2$s\' (information about repairing corrupted decks: %3$s).\n\nHit the back button to close this dialog.</string>
+
+<string name="fix_orientation">Fix orientation</string>
+<string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
 
 </resources>
