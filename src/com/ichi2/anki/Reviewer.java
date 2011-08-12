@@ -534,6 +534,11 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             mShakeActionStarted = false;
+            if (result.getString().equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
+            	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_unsuspended), true);
+            } else if (result.getString().equals("redo suspend")) {
+            	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
+            }
         }
     };
 
@@ -2722,7 +2727,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		if (AnkiDroidApp.deck().undoAvailable()) {
     			setNextCardAnimation(true);
         		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
-                        AnkiDroidApp.deck(), mCurrentCard));    			
+                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));    			
     		}
     		break;
     	case GESTURE_REDO:

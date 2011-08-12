@@ -683,5 +683,6 @@
 
 <string name="fix_orientation">Fix orientation</string>
 <string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
-
+<string name="card_unsuspended">Card suspension undone</string>
+<string name="card_suspended">Card resuspended</string>
 </resources>

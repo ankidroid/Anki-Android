@@ -3029,8 +3029,11 @@ public class Deck {
         updateFactTags(new long[] { scard.getFact().getId() });
         card.setLeechFlag(true);
         if (getBool("suspendLeeches")) {
-            suspendCards(new long[] { card.getId() });
-            card.setSuspendedFlag(true);
+        	String undoName = UNDO_TYPE_SUSPEND_CARD;
+        	setUndoStart(undoName);
+        	suspendCards(new long[] { card.getId() });
+        	card.setSuspendedFlag(true);
+        	setUndoEnd(undoName);
         }
         reset();
     }

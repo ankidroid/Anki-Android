@@ -396,11 +396,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         long currentCardId = params[0].getLong();
         boolean inReview = params[0].getBoolean();
         long oldCardId = 0;
+        String undoType;
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
         	oldCardId = deck.undo(currentCardId, inReview);
+        	undoType = deck.getUndoType();
+        	if (undoType == Deck.UNDO_TYPE_SUSPEND_CARD) {
+        		oldCardId = currentCardId;
+        	}
             newCard = deck.getCard();
             if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
             	newCard = deck.cardFromId(oldCardId);
@@ -411,7 +416,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             ankiDB.getDatabase().endTransaction();
         }
 
-        return new TaskData(deck.getUndoType(), oldCardId);
+        return new TaskData(undoType, oldCardId);
     }
 
 
@@ -435,8 +440,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         } finally {
             ankiDB.getDatabase().endTransaction();
         }
-
-        return new TaskData(deck.getUndoType(), oldCardId);
+        String undoType = deck.getUndoType();
+        if (undoType == Deck.UNDO_TYPE_SUSPEND_CARD) {
+        	undoType = "redo suspend";
+        }
+        return new TaskData(undoType, oldCardId);
     }
 
 
