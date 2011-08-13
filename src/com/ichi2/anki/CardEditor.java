@@ -377,9 +377,8 @@ public class CardEditor extends Activity {
     public class FieldEditText extends EditText {
 
         private Field mPairField;
-        private String mCutString[];
+        private WordRow mCutString[];
         private boolean mCutMode = false;
-        private boolean[] mEnabled;
         private ImageView mCircle;
         private KeyListener mKeyListener;
         private Context mContext;
@@ -399,7 +398,7 @@ public class CardEditor extends Activity {
             	@Override
             	public void onClick(View v) {
             		if (mCutMode) {
-                		setSpannables();
+            			updateSpannables();
             		}
             	}
             });
@@ -421,12 +420,28 @@ public class CardEditor extends Activity {
           			mCircle.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 300, 0));      			
           		}      			
       		}
-      		if (before != after) {
-          		mCutString = text.toString().split("[\\n\\s]");
-          		mEnabled = new boolean[mCutString.length];
-          		mCutMode = false;
-      		}
         }
+
+
+        private void splitText(String text) {
+        	final String[] separatorsReg = new String[] {",", ";", "\\.", "\\)", "\\(", "\\]", "\\[", ":"}; 
+        	final String[] separators = new String[] {",", ";", ".", ")", "(", "]", "[", ":"};
+
+        	for (int i = 0; i < separatorsReg.length; i++) {
+        		text = text.replaceAll(separatorsReg[i], " " + separators[i] + " ");
+        	}
+        	String[] cut = text.split("\\s");
+        	mCutString = new WordRow[cut.length];
+        	for (int i = 0; i < cut.length; i++) {
+        		mCutString[i] = new WordRow(cut[i]);
+            	for (String s : separators) {
+            		if (s.equals(cut[i])) {
+            			mCutString[i].mEnabled = true;
+            			break;
+            		}
+            	}
+        	}
+  		}
 
 
         public TextView getLabel() {
@@ -448,8 +463,8 @@ public class CardEditor extends Activity {
             			view.setImageResource(R.drawable.ic_circle_normal);
             			FieldEditText.this.setKeyListener(mKeyListener);
             			FieldEditText.this.setCursorVisible(true);
-            			for (boolean enabled : mEnabled) {
-            				if (enabled) {
+            			for (WordRow row : mCutString) {
+            				if (row.mEnabled) {
             					removeDeleted();
             					break;
             				}
@@ -467,12 +482,19 @@ public class CardEditor extends Activity {
             			FieldEditText.this.setKeyListener(null);
             			FieldEditText.this.setCursorVisible(false);
             			mCutMode = true;
-                  		mCutString = editText.toString().split(" ");
-                  		mEnabled = new boolean[mCutString.length];
+            			String text = editText.toString();
+            			splitText(text);
             			int pos = 0;
-            			for (int i = 0; i < mCutString.length; i++) {
-            				editText.setSpan(new StrikethroughSpan(), pos, pos + mCutString[i].length(), 0);
-            				pos += mCutString[i].length() + 1;
+            			for (WordRow row : mCutString) {
+            				if (row.mWord.length() == 0) {
+            					continue;
+            				}
+            				row.mBegin = text.indexOf(row.mWord, pos);
+            				row.mEnd = row.mBegin + row.mWord.length();
+            				if (!row.mEnabled) {
+                				editText.setSpan(new StrikethroughSpan(), row.mBegin, row.mEnd, 0);            					
+            				}
+            				pos = row.mEnd;
             			}
         			}
     			}
@@ -496,58 +518,67 @@ public class CardEditor extends Activity {
         }
 
 
-        public void setSpannables() {
+        public void updateSpannables() {
 			int cursorPosition = this.getSelectionStart();
-			String text = this.getText().toString();
-			int beginWord = text.lastIndexOf(" ", cursorPosition - 1) + 1;
-			if (beginWord == -1) {
-				beginWord = 0;
-			}
-			int endWord = text.indexOf(" ", cursorPosition);
-			if (endWord == -1) {
-				endWord = text.length();
-			}
 			Editable editText = this.getText();
-			StrikethroughSpan[] ss = this.getText().getSpans(beginWord, endWord, StrikethroughSpan.class);
-			if (ss.length != 0) {
-				enableStringPart(true, cursorPosition);
-				editText.removeSpan(ss[0]);
-			} else {
-				enableStringPart(false, cursorPosition);
-				editText.setSpan(new StrikethroughSpan(), beginWord, endWord, 0);
+			for (WordRow row : mCutString) {
+				if (row.mBegin <= cursorPosition && row.mEnd > cursorPosition) {
+					if (!row.mEnabled) {
+						StrikethroughSpan[] ss = this.getText().getSpans(cursorPosition, cursorPosition, StrikethroughSpan.class);
+						if (ss.length != 0) {
+							editText.removeSpan(ss[0]);
+						}
+						row.mEnabled = true;
+					} else {
+						editText.setSpan(new StrikethroughSpan(), row.mBegin, row.mEnd, 0);
+						row.mEnabled = false;
+						break;						
+					}
+				}
 			}
 			this.setText(editText);
+			this.setSelection(cursorPosition);
         }
 
 
-        private void enableStringPart(boolean enable, int position) {
-        	int counter = 0;
-        	for (int i = 0; i < mCutString.length; i++) {
-        		counter += mCutString[i].length() + 1;
-        		if (counter > position) {
-        			mEnabled[i] = enable;
-        			break;
-        		}
+        public String cleanText(String text) {
+        	final String[] from = new String[] {"\\(", "\\[", "\\)", "\\]", "\\.", ",", ";"};
+        	final String[] to = new String[] {" (", " [", ") ", "] ", ". ", ", ", "; "};
+        	for (int i = 0; i < from.length; i++) {
+        		text = text.replaceAll("\\s*" + from[i] + "*\\s*" + from[i] + "+\\s*", to[i]);
         	}
+        	final String[] from1 = new String[] {"\\(", "\\[", ",", ";", "\\.", ",", ";", "\\.", " ", "^", "^", "^", "^"};
+        	final String[] from2 = new String[] {"\\)", "\\]", ",", ";", "\\.", "$", "$", "$",   "$", "\\.", ",", ";", " "};
+        	for (int i = 0; i < from1.length; i++) {
+        		text = text.replaceAll(from1[i] + "\\s*" + from2[i], "");
+        	}
+        	return text;
         }
 
 
         public void removeDeleted() {
         	if (this.getText().length() > 0) {
             	StringBuilder sb = new StringBuilder();
-            	for (int i = 0; i < mCutString.length; i++) {
-            		if (mEnabled[i]) {
-            			sb.append(mCutString[i]);
-        				sb.append(" ");
+            	for (WordRow row : mCutString) {
+            		if (row.mEnabled) {
+            			sb.append(row.mWord);
+            			sb.append(" ");
             		}
             	}
-            	int last = sb.length() - 1;
-            	while (sb.substring(last).equals(" ") || sb.substring(last).equals(",")) {
-            		sb.deleteCharAt(last);
-            		last--;
-            	}
-            	this.setText(sb.toString());
+            	this.setText(cleanText(sb.toString()));
         	}
+        }
+
+
+        private class WordRow {
+        	public String mWord;
+            public int mBegin;
+            public int mEnd;
+            public boolean mEnabled = false;
+
+            WordRow(String word) {
+            	mWord = word;
+            }
         }
     }
 }
