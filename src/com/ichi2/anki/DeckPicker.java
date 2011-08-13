@@ -33,6 +33,7 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.res.Resources;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -1391,7 +1392,11 @@ public class DeckPicker extends Activity implements Runnable {
 	public void closeDeck(Deck deck) {
 		Deck loadedDeck = AnkiDroidApp.deck();
 		if (!(loadedDeck != null && loadedDeck == deck)) {
-			deck.closeDeck(false);
+			try {
+				deck.closeDeck(true);				
+			} catch (SQLiteException e) {
+				Log.e(AnkiDroidApp.TAG, "Error while closing " + deck.name() + ": " + e);
+			}
 		}
 		
 	}
