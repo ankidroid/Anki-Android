@@ -27,7 +27,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.method.KeyListener;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
@@ -375,7 +374,7 @@ public class CardEditor extends Activity {
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
-    private class FieldEditText extends EditText {
+    public class FieldEditText extends EditText {
 
         private Field mPairField;
         private String mCutString[];
@@ -383,9 +382,11 @@ public class CardEditor extends Activity {
         private boolean[] mEnabled;
         private ImageView mCircle;
         private KeyListener mKeyListener;
+        private Context mContext;
 
         public FieldEditText(Context context, Field pairField) {
             super(context);
+            mContext = context;
             mPairField = pairField;
             if(mPrefFixArabic) {
             	this.setText(ArabicUtilities.reshapeSentence(pairField.getValue()));
@@ -460,7 +461,7 @@ public class CardEditor extends Activity {
             			mCutMode = false;
         			} else {
             			view.setImageResource(R.drawable.ic_circle_pressed);
-            			InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            			InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
             			imm.hideSoftInputFromWindow(FieldEditText.this.getWindowToken(), 0);
             			mKeyListener = FieldEditText.this.getKeyListener();
             			FieldEditText.this.setKeyListener(null);
@@ -476,7 +477,11 @@ public class CardEditor extends Activity {
         			}
     			}
             });
-        	mCircle.setVisibility(View.VISIBLE);
+        	if (this.getText().toString().length() > 0) {
+            	mCircle.setVisibility(View.VISIBLE);
+        	} else {
+        		mCircle.setVisibility(View.GONE);
+        	}
             return mCircle;
         }
 

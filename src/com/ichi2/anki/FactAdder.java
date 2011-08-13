@@ -29,9 +29,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.method.KeyListener;
-import android.text.method.TextKeyListener;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -52,6 +50,7 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.CardEditor.FieldEditText;
 import com.ichi2.anki.DeckPicker.AnkiFilter;
 import com.ichi2.anki.Fact.Field;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -534,7 +533,7 @@ public class FactAdder extends Activity {
         mEditFields = new LinkedList<FieldEditText>();
         TreeSet<Field> fields = mNewFact.getFields();
         for (Field f : fields) {
-            FieldEditText newTextbox = new FieldEditText(this, f);
+            FieldEditText newTextbox = (new CardEditor()).new FieldEditText(this, f);
             TextView label = newTextbox.getLabel();
             ImageView circle = newTextbox.getCircle();
             mEditFields.add(newTextbox);
@@ -691,168 +690,6 @@ public class FactAdder extends Activity {
     private void finishNoStorageAvailable() {
         setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
         closeFactAdder();
-    }
-
-    // TODO: remove redundance with CardEditor.java::FieldEditText
-    private class FieldEditText extends EditText {
-
-        private Field mPairField;
-        private String mCutString[];
-        private boolean mCutMode = false;
-        private boolean[] mEnabled;
-        private ImageView mCircle;
-        private KeyListener mKeyListener;
-
-        public FieldEditText(Context context, Field pairField) {
-            super(context);
-            mPairField = pairField;
-            this.setMinimumWidth(400);
-            this.setOnClickListener(new View.OnClickListener() {
-
-            	@Override
-            	public void onClick(View v) {
-            		if (mCutMode) {
-                		setSpannables();
-            		}
-            	}
-            });
-        }
-
-
-        @Override
-        public void onTextChanged(CharSequence text, int start, int before, int after) {
-      		super.onTextChanged(text, start, before, after);
-      		if (mCircle != null) {
-      			int visibility = mCircle.getVisibility();
-          		if (text.length() == 0) {
-          			if (visibility == View.VISIBLE) {
-              			mCircle.setVisibility(View.GONE);
-              			mCircle.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 300, 0));          				
-          			}
-          		} else if (visibility == View.GONE) {
-          			mCircle.setVisibility(View.VISIBLE);
-          			mCircle.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 300, 0));      			
-          		}      			
-      		}
-      		if (before != after) {
-          		mCutString = text.toString().split("[\\n\\s\\r\\$]");
-          		mEnabled = new boolean[mCutString.length];
-          		mCutMode = false;
-      		}
-        }
-
-
-        public TextView getLabel() {
-            TextView label = new TextView(this.getContext());
-            label.setText(mPairField.getFieldModel().getName());
-            return label;
-        }
-
-
-        public ImageView getCircle() {          
-        	mCircle = new ImageView(this.getContext());
-        	mCircle.setImageResource(R.drawable.ic_circle_normal);
-        	mCircle.setOnClickListener(new View.OnClickListener() {
-        		@Override
-        		public void onClick(View v) {
-        			ImageView view = ((ImageView)v);
-        			Editable editText = FieldEditText.this.getText();
-        			if (mCutMode) {
-            			view.setImageResource(R.drawable.ic_circle_normal);
-            			FieldEditText.this.setKeyListener(mKeyListener);
-            			FieldEditText.this.setCursorVisible(true);
-            			for (boolean enabled : mEnabled) {
-            				if (enabled) {
-            					removeDeleted();
-            					break;
-            				}
-            			}
-            			StrikethroughSpan[] ss = editText.getSpans(0, editText.length(), StrikethroughSpan.class);
-            			for (StrikethroughSpan s : ss) {
-            				editText.removeSpan(s);
-            			}
-            			mCutMode = false;
-        			} else {
-            			view.setImageResource(R.drawable.ic_circle_pressed);
-            			InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            			imm.hideSoftInputFromWindow(FieldEditText.this.getWindowToken(), 0);
-            			mKeyListener = FieldEditText.this.getKeyListener();
-            			FieldEditText.this.setKeyListener(null);
-            			FieldEditText.this.setCursorVisible(false);
-            			mCutMode = true;
-                  		mCutString = editText.toString().split(" ");
-                  		mEnabled = new boolean[mCutString.length];
-            			int pos = 0;
-            			for (int i = 0; i < mCutString.length; i++) {
-            				editText.setSpan(new StrikethroughSpan(), pos, pos + mCutString[i].length(), 0);
-            				pos += mCutString[i].length() + 1;
-            			}
-        			}
-    			}    	
-            });
-        	mCircle.setVisibility(View.GONE);
-            return mCircle;
-        }
-
-
-        public void updateField() {
-            mPairField.setValue(this.getText().toString());
-        }
-
-
-        public void setSpannables() {
-			int cursorPosition = this.getSelectionStart();
-			String text = this.getText().toString();
-			int beginWord = text.lastIndexOf(" ", cursorPosition - 1) + 1;
-			if (beginWord == -1) {
-				beginWord = 0;
-			}
-			int endWord = text.indexOf(" ", cursorPosition);
-			if (endWord == -1) {
-				endWord = text.length();
-			}
-			Editable editText = this.getText();
-			StrikethroughSpan[] ss = this.getText().getSpans(beginWord, endWord, StrikethroughSpan.class);
-			if (ss.length != 0) {
-				enableStringPart(true, cursorPosition);
-				editText.removeSpan(ss[0]);
-			} else {
-				enableStringPart(false, cursorPosition);
-				editText.setSpan(new StrikethroughSpan(), beginWord, endWord, 0);
-			}
-			this.setText(editText);
-        }
-
-
-        private void enableStringPart(boolean enable, int position) {
-        	int counter = 0;
-        	for (int i = 0; i < mCutString.length; i++) {
-        		counter += mCutString[i].length() + 1;
-        		if (counter > position) {
-        			mEnabled[i] = enable;
-        			break;
-        		}
-        	}
-        }
-
-
-        public void removeDeleted() {
-        	if (this.getText().length() > 0) {
-            	StringBuilder sb = new StringBuilder();
-            	for (int i = 0; i < mCutString.length; i++) {
-            		if (mEnabled[i]) {
-            			sb.append(mCutString[i]);
-        				sb.append(" ");
-            		}
-            	}
-            	int last = sb.length() - 1;
-            	while (sb.substring(last).equals(" ") || sb.substring(last).equals(",")) {
-            		sb.deleteCharAt(last);
-            		last--;
-            	}
-            	this.setText(sb.toString());
-        	}
-        }
     }
 }
 
