@@ -328,7 +328,7 @@
 <string name="cancel">Cancel</string>
 <string name="download_overwrite">Overwrite</string>
 <string name="download_cancel">Cancel Download</string>
-<string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
+<string name="download_message">Deck %1$s already exists in Local. Do you want to overwrite?</string>
 
 <!-- SharedDeckPicker.java -->
 <string name="shared_decks">Shared Decks</string>
