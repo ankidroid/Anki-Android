@@ -534,10 +534,13 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             mShakeActionStarted = false;
-            if (result.getString().equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
-            	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_unsuspended), true);
-            } else if (result.getString().equals("redo suspend")) {
-            	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
+            if (result != null) {
+                String str = result.getString();
+                if (str != null && str.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
+                	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_unsuspended), true);
+                } else if (result.getString().equals("redo suspend")) {
+                	Themes.showThemedToast(Reviewer.this, getResources().getString(R.string.card_suspended), true);           	
+                }            	
             }
         }
     };
