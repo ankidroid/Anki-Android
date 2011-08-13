@@ -1072,21 +1072,10 @@ public class DeckPicker extends Activity implements Runnable {
             } else {
             	SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
                 if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
-                    finish();
-                    Intent i = new Intent(DeckPicker.this, DeckPicker.class);
-                    startActivity(i);
-                    if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-                    }
-                }            	
+                	populateDeckList(mPrefDeckPath);                }            	
             }
         } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
-            finish();
-            Intent i = new Intent(DeckPicker.this, DeckPicker.class);
-            startActivity(i);
-            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-            }
+        	populateDeckList(mPrefDeckPath);
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         }
     }
@@ -1099,6 +1088,7 @@ public class DeckPicker extends Activity implements Runnable {
 		    mPrefDeckPath = location;
 		}
 
+		mDeckIsSelected = false;
 		mTotalDueCards = 0;
 		mTotalCards = 0;
 		setTitleText();
@@ -1323,6 +1313,7 @@ public class DeckPicker extends Activity implements Runnable {
                 AnkiDroidApp.deck().closeDeck();
                 AnkiDroidApp.setDeck(null);
             }
+            Intent i = getIntent();
             startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
             if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
@@ -1398,7 +1389,6 @@ public class DeckPicker extends Activity implements Runnable {
 				Log.e(AnkiDroidApp.TAG, "Error while closing " + deck.name() + ": " + e);
 			}
 		}
-		
 	}
 
 
