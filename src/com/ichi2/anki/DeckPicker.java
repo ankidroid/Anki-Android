@@ -212,6 +212,7 @@ public class DeckPicker extends Activity implements Runnable {
 			int due = data.getInt("due");
 			int total = data.getInt("total");
 			int totalNew = data.getInt("totalNew");
+			double modified = data.getDouble("mod");
 
 			if (msgtype == DeckPicker.MSG_UPGRADE_NEEDED) {
 				dueString = res.getString(R.string.deckpicker_upgrading);
@@ -239,6 +240,7 @@ public class DeckPicker extends Activity implements Runnable {
 					map.put("new", newString);
 					map.put("showProgress", showProgress);
                     map.put("notes", notes);
+                    map.put("mod", String.format("%f", modified));
                     map.put("rateOfCompletionMat", completionMat);                    
                     map.put("rateOfCompletionAll", completionAll);
                     map.put("dueInt", Integer.toString(due));                    
@@ -477,7 +479,7 @@ public class DeckPicker extends Activity implements Runnable {
 		SharedPreferences preferences = PrefSettings
 				.getSharedPrefs(getBaseContext());
 		mPrefDeckPath = preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory());
-		mPrefDeckOrder = Integer.parseInt(preferences.getString("deckOrder", "0"));
+		mPrefDeckOrder = Integer.parseInt(preferences.getString("deckOrder", Integer.toString(ORDER_ALPHABETICAL)));
 		mPrefStartupDeckPicker = Integer.parseInt(preferences.getString("startup_mode", "2")) == StudyOptions.SUM_DECKPICKER;
 		populateDeckList(mPrefDeckPath);
 
@@ -1129,8 +1131,7 @@ public class DeckPicker extends Activity implements Runnable {
 							.put("due", res
 									.getString(R.string.deckpicker_loaddeck));
 					data.put("new", "");
-					data.put("mod", String.format("%f", Deck
-							.getLastModified(absPath)));
+					data.put("mod", "0");						
 					data.put("filepath", absPath);
                     data.put("showProgress", "true");
                     data.put("rateOfCompletionMat", "-1");
@@ -1160,7 +1161,7 @@ public class DeckPicker extends Activity implements Runnable {
 			data.put("name", res.getString(R.string.deckpicker_nodeck));
 			data.put("new", "");
 			data.put("due", "");
-			data.put("mod", "1");
+			data.put("mod", "0");
 			data.put("showProgress", "false");
             data.put("rateOfCompletionMat", "-1");
             data.put("rateOfCompletionAll", "-1");
@@ -1248,6 +1249,7 @@ public class DeckPicker extends Activity implements Runnable {
 						int matureCards = deck.getMatureCardCount(mCompletionBarRestrictToActive);
 						int totalRevCards = deck.getTotalRevFailedCount(mCompletionBarRestrictToActive);
 						int totalCardsCompletionBar = totalRevCards + totalNewCards;
+						double modified = deck.getModified();
 
 						String upgradeNotes = Deck.upgradeNotesToMessages(deck, getResources());
 						
@@ -1256,6 +1258,7 @@ public class DeckPicker extends Activity implements Runnable {
 						data.putString("absPath", path);
 						data.putInt("msgtype", MSG_UPGRADE_SUCCESS);
 						data.putInt("due", dueCards);
+						data.putDouble("mod", modified);
 						data.putInt("total", totalCards);
 						data.putInt("new", newCards);
 						data.putInt("totalNew", totalNewCards);
@@ -1608,20 +1611,7 @@ public class DeckPicker extends Activity implements Runnable {
 		@Override
 		public int compare(HashMap<String, String> object1,
 				HashMap<String, String> object2) {
-			if (mPrefDeckOrder == ORDER_BY_DATE) {
-	    		// Order by last modification date (last deck modified first)
-				if (object2.get("mod").compareToIgnoreCase(object1.get("mod")) != 0) {
-					return object2.get("mod").compareToIgnoreCase(
-							object1.get("mod"));
-					// But if there are two decks with the same date of
-					// modification, order them in alphabetical order
-				} else {
-					return object1.get("filepath").compareToIgnoreCase(
-							object2.get("filepath"));
-				}
-	    	} else {
-	    		return object1.get("filepath").compareToIgnoreCase(object2.get("filepath"));
-	    	}
+    		return object1.get("filepath").compareToIgnoreCase(object2.get("filepath"));
 		}
 	}
 
@@ -1632,7 +1622,16 @@ public class DeckPicker extends Activity implements Runnable {
 		public int compare(HashMap<String, String> object1,
 				HashMap<String, String> object2) {
 		    try {
-		    	if (mPrefDeckOrder == ORDER_BY_DUE_CARDS) {
+		    	if (mPrefDeckOrder == ORDER_BY_DATE) {
+					// If there are two decks with the same date of modification, order them in alphabetical order
+					if (object2.get("mod").compareToIgnoreCase(object1.get("mod")) != 0) {
+						return object2.get("mod").compareToIgnoreCase(
+								object1.get("mod"));
+					} else {
+						return object1.get("filepath").compareToIgnoreCase(
+								object2.get("filepath"));
+					}
+		    	} else if (mPrefDeckOrder == ORDER_BY_DUE_CARDS) {
 					return - Integer.valueOf(object1.get("dueInt")).compareTo(Integer.valueOf(object2.get("dueInt")));
 		    	} else if (mPrefDeckOrder == ORDER_BY_TOTAL_CARDS) {
 		    		return - Integer.valueOf(object1.get("total")).compareTo(Integer.valueOf(object2.get("total")));

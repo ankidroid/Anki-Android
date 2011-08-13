@@ -2242,36 +2242,6 @@ public class Deck {
     }
 
 
-    public static double getLastModified(String deckPath) {
-        double value;
-        Cursor cursor = null;
-        // Log.i(AnkiDroidApp.TAG, "Deck - getLastModified from deck = " + deckPath);
-
-        boolean dbAlreadyOpened = AnkiDatabaseManager.isDatabaseOpen(deckPath);
-
-        try {
-            cursor = AnkiDatabaseManager.getDatabase(deckPath).getDatabase().rawQuery(
-                    "SELECT modified" + " FROM decks" + " LIMIT 1", null);
-
-            if (!cursor.moveToFirst()) {
-                value = -1;
-            } else {
-                value = cursor.getDouble(0);
-            }
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-
-        if (!dbAlreadyOpened) {
-            AnkiDatabaseManager.closeDatabase(deckPath);
-        }
-
-        return value;
-    }
-
-
     /*
      * Getters and Setters for deck properties NOTE: The setters flushMod()
      * *********************************************************
