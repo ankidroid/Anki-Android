@@ -24,9 +24,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.SharedPreferences;
+import android.os.Environment;
+import android.os.StatFs;
 import android.util.Log;
 
 public class BackupManager {
@@ -101,7 +104,7 @@ public class BackupManager {
             return RETURN_TODAY_ALREADY_BACKUP_DONE;
         }
 
-        if (deckFile.getUsableSpace() < deckFile.length() + (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
+        if (getFreeDiscSpace(deckFile) < deckFile.length() + (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
             Log.e(AnkiDroidApp.TAG, "Not enough space on sd card to backup " + deckFile.getName() + ".");
         	return RETURN_NOT_ENOUGH_SPACE;
         }
@@ -125,6 +128,15 @@ public class BackupManager {
 	}
 
 
+	public static long getFreeDiscSpace(File file) {
+		return getFreeDiscSpace(file.getPath());
+	}
+	public static long getFreeDiscSpace(String path) {
+    	StatFs stat = new StatFs(path);
+    	return stat.getAvailableBlocks() * stat.getBlockSize();
+	}
+
+
 	public static boolean cleanUpAfterBackupCreation(boolean deckLoaded) {
 		if (deckLoaded) {
 			return deleteDeckBackups(mLastDeckBackups, mMaxBackups - 1);
@@ -144,7 +156,7 @@ public class BackupManager {
     	// copy backup to new position and rename it
     	File backupFile = new File(backupPath);
     	File deckFile = new File(deckpath);
-        if (deckFile.getUsableSpace() < deckFile.length() + (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
+        if (getFreeDiscSpace(deckFile) < deckFile.length() + (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
             Log.e(AnkiDroidApp.TAG, "Not enough space on sd card to restore " + deckFile.getName() + ".");
         	return RETURN_NOT_ENOUGH_SPACE;
         }

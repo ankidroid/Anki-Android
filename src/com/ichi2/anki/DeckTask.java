@@ -286,7 +286,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         	publishProgress(new TaskData(res.getString(R.string.backup_deck)));
         	backupResult = BackupManager.backupDeck(deckFilename);
         }
-        if (new File(deckFilename).getUsableSpace() < (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
+        if (BackupManager.getFreeDiscSpace(deckFilename) < (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
         	backupResult = BackupManager.RETURN_LOW_SYSTEM_SPACE;
         }
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
