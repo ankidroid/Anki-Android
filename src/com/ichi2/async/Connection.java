@@ -345,6 +345,7 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         String conflictResolution = (String) data.data[4];
 
         if (deck == null) {
+        	// if syncing in study options screen, deck is set to null if wal mode is enabled
         	publishProgress(syncName, res.getString(R.string.sync_set_journal_mode));
         	deck = Deck.openDeck(deckPath, true, true);
         }

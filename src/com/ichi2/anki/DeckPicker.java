@@ -33,7 +33,6 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.res.Resources;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -272,7 +271,7 @@ public class DeckPicker extends Activity implements Runnable {
 		@Override
 		public void onPreExecute() {
 			if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-				mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources().getString(R.string.sync_prepare_syncing), true);
+				mProgressDialog = ProgressDialog.show(DeckPicker.this, getResources().getString(R.string.sync_all_title), getResources().getString(R.string.sync_prepare_syncing), true);
 			}
 		}
 
