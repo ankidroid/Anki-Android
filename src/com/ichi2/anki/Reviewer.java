@@ -1658,7 +1658,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void setDueMessage() {
-		if (mCurrentCard != null && AnkiDroidApp.deck().getScheduler().equals("reviewEarly")) {
+    	Deck deck = AnkiDroidApp.deck();
+		if (deck!= null && mCurrentCard != null && deck.getScheduler().equals("reviewEarly")) {
 			double due = (mCurrentCard.getCombinedDue() - Utils.now()) / 86400.0;
 			if (due > 0.041) {
 	    		mChosenAnswer.setText(Utils.getReadableInterval(Reviewer.this, due, true));				
