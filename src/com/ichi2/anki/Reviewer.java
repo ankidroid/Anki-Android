@@ -1878,16 +1878,21 @@ public class Reviewer extends Activity implements IButtonListener{
         content = recalculateHardCodedFontSize(content, mDisplayFontSize);
         
         // Add CSS for font color and font size
-        Model myModel = null;
+        int backgroundColor = Color.WHITE;
         if (mCurrentCard != null) {
         	final String japaneseModelTag = "Japanese";
         	
             Deck currentDeck = AnkiDroidApp.deck();
-            myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
+            Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
             baseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + Model.invertColors(content, mInvertedColors);
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
-            mMainLayout.setBackgroundColor(Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors)));
+            backgroundColor = Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors));
+            mMainLayout.setBackgroundColor(backgroundColor);
+            if (backgroundColor == Color.BLACK && !mInvertedColors) {
+            	mInvertedColors = true;
+            	invertColors();
+            }
         } else {
             mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             baseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
@@ -1950,8 +1955,8 @@ public class Reviewer extends Activity implements IButtonListener{
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl);
 
         if (mCustomFontFiles.length != 0) {
-        	if (myModel != null) {
-            	mNextCard.setBackgroundColor(Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors)));        		
+        	if (backgroundColor != Color.WHITE) {
+            	mNextCard.setBackgroundColor(backgroundColor);        		
         	}
             mNextCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
             mNextCard.setVisibility(View.VISIBLE);
