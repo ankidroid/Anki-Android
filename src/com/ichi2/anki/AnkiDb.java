@@ -65,11 +65,13 @@ public class AnkiDb {
                 cur = mDatabase.rawQuery("PRAGMA journal_mode", null);
                 if (cur.moveToFirst()) {
                 	String journalModeOld = cur.getString(0);
+                	cur.close();
                 	Log.w(AnkiDroidApp.TAG, "Current Journal mode: " + journalModeOld);                    		
                 	if (!journalModeOld.equalsIgnoreCase(mode)) {
                     	cur = mDatabase.rawQuery("PRAGMA journal_mode = " + mode, null);
                     	if (cur.moveToFirst()) {
                         	String journalModeNew = cur.getString(0);
+                        	cur.close();
                         	Log.w(AnkiDroidApp.TAG, "Old journal mode was: " + journalModeOld + ". Trying to set journal mode to " + mode + ". Result: " + journalModeNew);                    		
                         	if (!journalModeNew.equalsIgnoreCase("wal")) {
                         		prefs.edit().putInt("walWarning", NO_WAL_WARNING).commit();
@@ -87,17 +89,19 @@ public class AnkiDb {
                 	}
                 }
                 if (prefs.getBoolean("asyncMode", false)) {
-                    cur = mDatabase.rawQuery("PRAGMA synchronous = 0", null);                	
+                    cur = mDatabase.rawQuery("PRAGMA synchronous = 0", null);
                 } else {
                     cur = mDatabase.rawQuery("PRAGMA synchronous = 2", null);
                 }
+                cur.close();
                 cur = mDatabase.rawQuery("PRAGMA synchronous", null);
                 if (cur.moveToFirst()) {
                 	String syncMode = cur.getString(0);
                 	Log.w(AnkiDroidApp.TAG, "Current synchronous setting: " + syncMode);                    		
                 }
+                cur.close();
             } finally {
-                if (cur != null) {
+                if (cur != null && !cur.isClosed()) {
                     cur.close();
                 }
             }

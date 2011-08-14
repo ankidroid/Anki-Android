@@ -1383,11 +1383,7 @@ public class DeckPicker extends Activity implements Runnable {
 	public void closeDeck(Deck deck) {
 		Deck loadedDeck = AnkiDroidApp.deck();
 		if (!(loadedDeck != null && loadedDeck == deck)) {
-			try {
-				deck.closeDeck(true);				
-			} catch (SQLiteException e) {
-				Log.e(AnkiDroidApp.TAG, "Error while closing " + deck.name() + ": " + e);
-			}
+			deck.closeDeck(true);				
 		}
 	}
 
