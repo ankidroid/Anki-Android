@@ -286,6 +286,10 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mClosing = false;
 
     private long mSavedTimer = 0;
+
+    private File[] mCustomFontFiles;
+    private String mCustomDefaultFontCss;
+
 	/** 
 	 * Shake Detection
 	 */
@@ -723,6 +727,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
             registerExternalStorageListener();
 
+      	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
             initLayout(R.layout.flashcard);
 
             switch (mDictionary) {
@@ -1317,12 +1322,15 @@ public class Reviewer extends Activity implements IButtonListener{
         mMainLayout = findViewById(R.id.main_layout);
 
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
-        mCard = createWebView();
-        mNextCard = createWebView();
-        mNextCard.setVisibility(View.GONE);
         mCardFrame.removeAllViews();
+        mCard = createWebView();
         mCardFrame.addView(mCard);
-        mCardFrame.addView(mNextCard);
+        
+        if (mCustomFontFiles.length != 0) {
+            mNextCard = createWebView();
+            mNextCard.setVisibility(View.GONE);
+            mCardFrame.addView(mNextCard);        	
+        }
 
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
@@ -1485,7 +1493,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mForegroundColor = fgColor;
         mTextBarBlack.setTextColor(fgColor);
         mTextBarBlue.setTextColor(res.getColor(R.color.textbar_blue_color_inv));
-        mCard.setBackgroundColor(res.getColor(R.color.background_color_inv));
+        mCard.setBackgroundColor(bgColor);
         if (mPrefWhiteboard) {
             mWhiteboard.setInvertedColor(true);
         }
@@ -1870,11 +1878,12 @@ public class Reviewer extends Activity implements IButtonListener{
         content = recalculateHardCodedFontSize(content, mDisplayFontSize);
         
         // Add CSS for font color and font size
+        Model myModel = null;
         if (mCurrentCard != null) {
         	final String japaneseModelTag = "Japanese";
         	
             Deck currentDeck = AnkiDroidApp.deck();
-            Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
+            myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
             baseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
             content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + Model.invertColors(content, mInvertedColors);
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
@@ -1919,7 +1928,7 @@ public class Reviewer extends Activity implements IButtonListener{
         } else {
         	content = question + answer;
         }
-        
+
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
         content = content.replace("font-weight:600;", "font-weight:700;");
@@ -1939,14 +1948,23 @@ public class Reviewer extends Activity implements IButtonListener{
             mCardTemplate.replace("::content::", content).replace("::style::", style.toString());
         // Log.i(AnkiDroidApp.TAG, "card html = \n" + card);
         Log.i(AnkiDroidApp.TAG, "base url = " + baseUrl);
-        mNextCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
-        mNextCard.setVisibility(View.VISIBLE);
-        mCardFrame.removeView(mCard);
-        mCard.destroy();
-        mCard = mNextCard;
-        mNextCard = createWebView();
-        mNextCard.setVisibility(View.GONE);
-        mCardFrame.addView(mNextCard);
+
+        if (mCustomFontFiles.length != 0) {
+        	if (myModel != null) {
+            	mNextCard.setBackgroundColor(Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors)));        		
+        	}
+            mNextCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
+            mNextCard.setVisibility(View.VISIBLE);
+            mCardFrame.removeView(mCard);
+            mCard.destroy();
+            mCard = mNextCard;
+            mNextCard = createWebView();
+            mNextCard.setVisibility(View.GONE);
+            mCardFrame.addView(mNextCard);
+        } else {
+            mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);        	
+        }
+
         if (!mConfigurationChanged && mPlaySoundsAtStart) {
         	if (!mSpeakText) {
         		Sound.playSounds(null, 0);
@@ -1994,7 +2012,7 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private String getCustomFontsStyle() {
       StringBuilder builder = new StringBuilder();
-      for (File fontFile : Utils.getCustomFonts(getBaseContext())) {
+      for (File fontFile : mCustomFontFiles) {
         String fontFace = String.format(
             "@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
             Utils.removeExtension(fontFile.getName()), fontFile.getAbsolutePath());
@@ -2008,12 +2026,16 @@ public class Reviewer extends Activity implements IButtonListener{
 
     /** Returns the CSS used to set the default font. */
     private String getDefaultFontStyle() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-        String defaultFont = preferences.getString("defaultFont", null);
-        if (defaultFont == null || "".equals(defaultFont)) {
-            return "";
-        }
-        return "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";
+    	if (mCustomDefaultFontCss == null) {
+            SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+            String defaultFont = preferences.getString("defaultFont", null);
+            if (defaultFont == null || "".equals(defaultFont)) {
+            	mCustomDefaultFontCss = "";
+            } else {
+                mCustomDefaultFontCss = "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";            	
+            }
+    	}
+    	return mCustomDefaultFontCss;
     }
 
 
