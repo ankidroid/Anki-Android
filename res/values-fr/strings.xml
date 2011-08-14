@@ -318,7 +318,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="menu_suspend_card">Suspendre la carte</string>
   <string name="menu_bury_card">Enterrer la carte</string>
   <string name="menu_edit_card">Modifier la fiche</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_select">Sélectionner texte</string>
   <string name="menu_search">Recherche dans %1$s</string>
   <string name="menu_mark_card">Marquer la carte</string>
   <string name="menu_marked">Marqué</string>

@@ -255,7 +255,7 @@
   <string name="error">Fehler</string>
   <string name="cancelling">Bricht ab...</string>
   <string name="loading_personal_decks">Verfügbare eigene Stapel laden...</string>
-  <string name="connection_error_title">Vorsicht</string>
+  <string name="connection_error_title">Achtung</string>
   <string name="connection_error_return_message">Ein Netzwerkfehler ist aufgetreten. Versuchen Sie es erneut oder brechen Sie ab und kehren zum vorherigen Fenster zurück.</string>
   <string name="retry">Erneut versuchen</string>
   <string name="cancel">Abbrechen</string>
