@@ -211,6 +211,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mSpeakText;
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
+    private boolean mNightMode = false;
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
@@ -924,9 +925,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mPrefWhiteboard) {
             mWhiteboard.rotate();
         }
-        if (mInvertedColors) {
-            invertColors();
-        }
+
         updateStatisticBars();
         mConfigurationChanged = false;
     }
@@ -1605,8 +1604,9 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
         mPrefTextSelection = preferences.getBoolean("textSelection", false);
         mDeckFilename = preferences.getString("deckFilename", "");
-        mInvertedColors = preferences.getBoolean("invertedColors", false);
-        mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
+        mNightMode = preferences.getBoolean("invertedColors", false);
+    	mInvertedColors = mNightMode;
+    	mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
@@ -1886,9 +1886,9 @@ public class Reviewer extends Activity implements IButtonListener{
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
             baseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
-            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + Model.invertColors(content, mInvertedColors);
+            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode) + Model.invertColors(content, mNightMode);
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
-            backgroundColor = Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors));
+            backgroundColor = Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mNightMode));
             mMainLayout.setBackgroundColor(backgroundColor);
             if (backgroundColor == Color.BLACK && !mInvertedColors) {
             	mInvertedColors = true;
