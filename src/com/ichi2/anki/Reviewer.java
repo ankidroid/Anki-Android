@@ -1433,7 +1433,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private WebView createWebView() {
-        WebView webView = new WebView(getApplicationContext());
+        WebView webView = new WebView(this);
         webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
