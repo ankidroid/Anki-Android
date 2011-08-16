@@ -14,15 +14,16 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.themes;
 
+import com.ichi2.anki.R;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -240,8 +241,8 @@ public class Themes {
 	}
 
 
-	public static AlertDialog htmlOkDialog(Context context, String title, String text) {
-    	AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	public static StyledDialog htmlOkDialog(Context context, String title, String text) {
+		StyledDialog.Builder builder = new StyledDialog.Builder(context);
         builder.setTitle(title);
         WebView view = new WebView(context);
         view.setBackgroundColor(context.getResources().getColor(mDialogBackgroundColor));
@@ -250,6 +251,33 @@ public class Themes {
         builder.setPositiveButton(context.getResources().getString(R.string.ok), null);
         builder.setCancelable(true);
         return builder.create();
+	}
+
+
+	public static void setStyledDialogBackgrounds(View main, int buttonNumbers) {
+		// TODO: theme
+		((View) main.findViewById(R.id.topPanel)).setBackgroundResource(R.drawable.blue_popup_top_dark);
+		((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(R.drawable.blue_divider_horizontal_bright);
+		((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
+		((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_center_bright);
+		((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
+
+		if (buttonNumbers == 0) {
+			((LinearLayout) main.findViewById(R.id.buttonPanel)).setVisibility(View.GONE);
+			if (((View) main.findViewById(R.id.customPanel)).getVisibility() != View.GONE) {
+    		   ((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_dark);
+    	   } else if (((View) main.findViewById(R.id.listViewPanel)).getVisibility() != View.GONE) {
+    		   ((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_bright);
+    	   } else if (((View) main.findViewById(R.id.contentPanel)).getVisibility() != View.GONE) {
+    		   ((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_dark);
+    	   }
+       } else {
+    	   ((View) main.findViewById(R.id.buttonPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_medium);
+       }
+       if (buttonNumbers > 1) {
+    	   main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
+    	   main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
+       }
 	}
 
 }

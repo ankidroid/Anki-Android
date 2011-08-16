@@ -53,6 +53,7 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.CardEditor.FieldEditText;
 import com.ichi2.anki.DeckPicker.AnkiFilter;
 import com.ichi2.anki.Fact.Field;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;

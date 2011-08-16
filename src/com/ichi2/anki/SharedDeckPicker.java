@@ -56,6 +56,7 @@ import com.ichi2.anki.services.IDownloadManagerService;
 import com.ichi2.anki.services.ISharedDeckServiceCallback;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.themes.Themes;
 
 import java.util.ArrayList;
 import java.util.List;

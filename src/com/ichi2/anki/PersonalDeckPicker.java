@@ -51,6 +51,7 @@ import com.ichi2.anki.services.IDownloadManagerService;
 import com.ichi2.anki.services.IPersonalDeckServiceCallback;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;

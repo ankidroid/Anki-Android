@@ -1,0 +1,450 @@
+/****************************************************************************************
+ * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ *                                                                                      *
+ * based on custom Dialog windows by antoine vianey                                     *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
+package com.ichi2.themes;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ichi2.anki.R;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+ 
+
+public class StyledDialog extends Dialog {
+ 
+	public static final int BUTTON_POSITIVE = 0;
+	public static final int BUTTON_NEGATIVE = 1;
+	public static final int BUTTON_NEUTRAL = 2;
+
+	Context mContext;
+	OnClickListener mListener;
+	
+    public StyledDialog(Context context) {
+        super(context, R.style.StyledDialog);
+        mContext = context;
+    }
+
+
+    public void setMessage(CharSequence message) {
+    	View main = super.getWindow().getDecorView();
+    	((TextView) main.findViewById(R.id.message)).setText(message);
+        ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
+    }
+
+
+    public void setMessage(String message) {
+    	View main = super.getWindow().getDecorView();
+    	((TextView) main.findViewById(R.id.message)).setText(message);
+        ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
+    }
+
+
+    public void setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener) {
+    	View main = super.getWindow().getDecorView();
+    	mListener = listener;
+    	List<String> list = new ArrayList<String>();
+        for (String titel : values) {
+        	list.add(titel);
+        }
+    	ListView listview = (ListView) main.findViewById(R.id.listview);
+    	listview.setOnItemClickListener(new OnItemClickListener() {
+    			@Override    
+    			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    				mListener.onClick(StyledDialog.this, position);
+		    	}
+    	    });
+    	listview.setAdapter(new ArrayAdapter(mContext, R.layout.select_dialog_multichoice, 0, list));
+    	listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+    	for (int i = 0; i < checked.length; i++) {
+    		listview.setItemChecked(i, checked[i]);
+    	}
+        ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
+	}
+
+
+    public static class Builder {
+ 
+        private Context context;
+        private String title;
+        private String message;
+        private String positiveButtonText;
+        private String negativeButtonText;
+        private String neutralButtonText;
+        private View contentView;
+        private int icon;
+ 
+        private DialogInterface.OnClickListener positiveButtonClickListener;
+        private DialogInterface.OnClickListener negativeButtonClickListener;
+        private DialogInterface.OnClickListener neutralButtonClickListener;
+        private DialogInterface.OnCancelListener cancelListener;
+        private boolean cancelable = true;
+
+        private String[] itemTitels;
+        private int checkedItem;
+        private boolean[] multipleCheckedItems;
+        private int listStyle = 0;
+        private DialogInterface.OnClickListener itemClickListener;
+ 
+
+        public Builder(Context context) {
+            this.context = context;
+        }
+
+
+        /**
+         * Set the Dialog message from String
+         * @param title
+         * @return
+         */
+        public Builder setMessage(String message) {
+            this.message = message;
+            return this;
+        }
+
+
+        /**
+         * Set the Dialog message from resource
+         * @param title
+         * @return
+         */
+        public Builder setMessage(int message) {
+            this.message = (String) context.getText(message);
+            return this;
+        }
+ 
+
+        public Builder setIcon(int icon) {
+            this.icon = icon;
+            return this;
+        }
+
+
+        /**
+         * Set the Dialog title from resource
+         * @param title
+         * @return
+         */
+        public Builder setTitle(int title) {
+            this.title = (String) context.getText(title);
+            return this;
+        }
+
+
+        /**
+         * Set the Dialog title from String
+         * @param title
+         * @return
+         */
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+
+        /**
+         * Set a custom content view for the Dialog.
+         * If a message is set, the contentView is not
+         * added to the Dialog...
+         * @param v
+         * @return
+         */
+        public Builder setContentView(View v) {
+            this.contentView = v;
+            return this;
+        }
+ 
+
+        public Builder setView(View v) {
+            this.contentView = v;
+            return this;
+        }
+
+
+        /**
+         * Set the positive button resource and it's listener
+         * @param positiveButtonText
+         * @param listener
+         * @return
+         */
+        public Builder setPositiveButton(int positiveButtonText,
+                DialogInterface.OnClickListener listener) {
+            this.positiveButtonText = (String) context
+                    .getText(positiveButtonText);
+            this.positiveButtonClickListener = listener;
+            return this;
+        }
+
+
+        /**
+         * Set the positive button text and it's listener
+         * @param positiveButtonText
+         * @param listener
+         * @return
+         */
+        public Builder setPositiveButton(String positiveButtonText,
+                DialogInterface.OnClickListener listener) {
+            this.positiveButtonText = positiveButtonText;
+            this.positiveButtonClickListener = listener;
+            return this;
+        }
+
+
+        /**
+         * Set the negative button resource and it's listener
+         * @param negativeButtonText
+         * @param listener
+         * @return
+         */
+        public Builder setNegativeButton(int negativeButtonText,
+                DialogInterface.OnClickListener listener) {
+            this.negativeButtonText = (String) context
+                    .getText(negativeButtonText);
+            this.negativeButtonClickListener = listener;
+            return this;
+        }
+
+
+        /**
+         * Set the negative button text and it's listener
+         * @param negativeButtonText
+         * @param listener
+         * @return
+         */
+        public Builder setNegativeButton(String negativeButtonText,
+                DialogInterface.OnClickListener listener) {
+            this.negativeButtonText = negativeButtonText;
+            this.negativeButtonClickListener = listener;
+            return this;
+        }
+
+
+        /**
+         * Set the neutral button resource and it's listener
+         * @param neutralButtonText
+         * @param listener
+         * @return
+         */
+        public Builder setNeutralButton(int neutralButtonText,
+                DialogInterface.OnClickListener listener) {
+            this.neutralButtonText = (String) context
+                    .getText(neutralButtonText);
+            this.neutralButtonClickListener = listener;
+            return this;
+        }
+
+
+        /**
+         * Set the neutral button text and it's listener
+         * @param neutralButtonText
+         * @param listener
+         * @return
+         */
+        public Builder setNeutralButton(String neutralButtonText,
+                DialogInterface.OnClickListener listener) {
+            this.neutralButtonText = neutralButtonText;
+            this.neutralButtonClickListener = listener;
+            return this;
+        }
+
+
+        public Builder setOnCancelListener(DialogInterface.OnCancelListener listener) {
+            this.cancelListener = listener;
+            return this;
+        }
+
+
+        public Builder setCancelable(boolean cancelable) {
+            this.cancelable = cancelable;
+            return this;
+        }
+
+
+        public Builder setItems(String[] values, DialogInterface.OnClickListener listener) {
+        	this.itemTitels = values;
+        	this.itemClickListener = listener;
+        	this.listStyle = 1;
+        	return this;
+        }
+
+
+        public Builder setSingleChoiceItems(String[] values, int checked, DialogInterface.OnClickListener listener) {
+        	this.itemTitels = values;
+        	this.checkedItem = checked;
+        	this.itemClickListener = listener;
+        	this.listStyle = 2;
+        	return this;
+        }
+
+
+        public Builder setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener) {
+        	this.itemTitels = values;
+        	this.multipleCheckedItems = checked;
+        	this.itemClickListener = listener;
+        	this.listStyle = 3;
+        	return this;
+        }
+
+
+        /**
+         * Create the styled dialog
+         */
+        public StyledDialog create() {
+            final StyledDialog dialog = new StyledDialog(context);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View layout = inflater.inflate(R.layout.alert_dialog, null);
+            dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+
+            // set title
+            ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);
+            ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);
+
+            // set buttons
+            int numberOfButtons = 0;
+            if (positiveButtonText != null) {
+            	Button button1 = (Button) layout.findViewById(R.id.button1);
+                button1.setText(positiveButtonText);
+                button1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (positiveButtonClickListener != null) {
+                        	positiveButtonClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                        }
+                    	dialog.dismiss();
+                    }
+                });
+            	numberOfButtons++;
+            } else {
+                layout.findViewById(R.id.button1).setVisibility(View.GONE);
+            }
+            if (negativeButtonText != null) {
+            	Button button2 = (Button) layout.findViewById(R.id.button2);
+                button2.setText(negativeButtonText);
+                button2.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (negativeButtonClickListener != null) {
+                        	negativeButtonClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                        }
+                    	dialog.dismiss();
+                    }
+                });
+            	numberOfButtons++;
+            } else {
+                layout.findViewById(R.id.button2).setVisibility(View.GONE);
+            }
+            if (neutralButtonText != null) {
+            	Button button3 = (Button) layout.findViewById(R.id.button3);
+                button3.setText(neutralButtonText);
+                button3.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (neutralButtonClickListener != null) {
+                        	neutralButtonClickListener.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                        }
+                    	dialog.dismiss();
+                    }
+                });
+            	numberOfButtons++;
+            } else {
+                layout.findViewById(R.id.button3).setVisibility(View.GONE);
+            }
+
+            dialog.setCancelable(cancelable);
+            dialog.setOnCancelListener(cancelListener);
+
+            // set the message
+            if (message != null) {
+                ((TextView) layout.findViewById(R.id.message)).setText(message);
+            } else {
+            	((LinearLayout) layout.findViewById(R.id.contentPanel)).setVisibility(View.GONE);
+            }
+
+            // set single and multiple choice listview
+            if (itemTitels != null) {
+            	List<String> list = new ArrayList<String>();
+                for (String titel : itemTitels) {
+                	list.add(titel);
+                }
+            	ListView listview = (ListView) layout.findViewById(R.id.listview);
+            	listview.setOnItemClickListener(new OnItemClickListener() {
+            			@Override    
+            			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            					itemClickListener.onClick(dialog, position);
+            		    	}
+        		    });
+            	switch (listStyle) {
+            	case 1:
+        	    	listview.setAdapter(new ArrayAdapter(context, R.layout.select_dialog_nochoice, 0, list));
+        	    	listview.setChoiceMode(ListView.CHOICE_MODE_NONE);
+        	    	break;
+            	case 2:
+        	    	listview.setAdapter(new ArrayAdapter(context, R.layout.select_dialog_singlechoice, checkedItem, list));
+        	    	listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+	            	listview.setItemChecked(checkedItem, true);
+	            	break;
+            	case 3:
+        	    	listview.setAdapter(new ArrayAdapter(context, R.layout.select_dialog_multichoice, 0, list));
+        	    	listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        	    	for (int i = 0; i < multipleCheckedItems.length; i++) {
+        	    		listview.setItemChecked(i, multipleCheckedItems[i]);
+        	    	}
+        	    	break;
+            	}
+                ((View) layout.findViewById(R.id.titleDivider)).setVisibility(View.GONE);
+            } else {
+            	((View) layout.findViewById(R.id.listViewPanel)).setVisibility(View.GONE);
+            }
+
+            // set a custom view
+            if (contentView != null) {
+            	FrameLayout frame = (FrameLayout) layout.findViewById(R.id.custom);
+            	frame.removeAllViews();
+            	frame.addView(contentView);
+            } else {
+            	((View) layout.findViewById(R.id.customPanel)).setVisibility(View.GONE);
+            }
+
+            // set background
+            Themes.setStyledDialogBackgrounds(layout, numberOfButtons);
+
+            dialog.setContentView(layout);
+            return dialog;
+        }
+ 
+
+        public void show() {
+        	create().show();
+        }
+
+
+    }
+ 
+}

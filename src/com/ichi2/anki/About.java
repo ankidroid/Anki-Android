@@ -17,6 +17,8 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.themes.Themes;
+
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;

@@ -21,7 +21,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -66,6 +65,8 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
@@ -135,11 +136,11 @@ public class DeckPicker extends Activity implements Runnable {
 	private DeckPicker mSelf;
 
 	private ProgressDialog mProgressDialog;
-	private AlertDialog mSyncLogAlert;
-	private AlertDialog mUpgradeNotesAlert;
-	private AlertDialog mMissingMediaAlert;
-	private AlertDialog mDeckNotLoadedAlert;
-	private AlertDialog mNoSpaceLeftAlert;
+	private StyledDialog mSyncLogAlert;
+	private StyledDialog mUpgradeNotesAlert;
+	private StyledDialog mMissingMediaAlert;
+	private StyledDialog mDeckNotLoadedAlert;
+	private StyledDialog mNoSpaceLeftAlert;
 	private Button mSyncAllButton;
 	private Button mStatisticsAllButton;
 	private View mDeckpickerButtons;
@@ -514,9 +515,9 @@ public class DeckPicker extends Activity implements Runnable {
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		Dialog dialog;
+		StyledDialog dialog;
 		Resources res = getResources();
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
 		switch (id) {
 		case DIALOG_NO_SDCARD:
@@ -644,14 +645,14 @@ public class DeckPicker extends Activity implements Runnable {
 		default:
 			dialog = null;
 		}
-
 		return dialog;
 	}
-	
+
+
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		Resources res = getResources();
-		AlertDialog ad = (AlertDialog)dialog;
+		StyledDialog ad = (StyledDialog)dialog;
 		switch (id) {
 		case DIALOG_DELETE_DECK:
 			ad.setMessage(String.format(res.getString(R.string.delete_deck_message), mCurrentDeckFilename));
@@ -856,17 +857,17 @@ public class DeckPicker extends Activity implements Runnable {
 	private void initDialogs() {
 		Resources res = getResources();
 		// Sync Log dialog
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
 		builder.setTitle(res.getString(R.string.sync_log_title));
 		builder.setPositiveButton(res.getString(R.string.ok), null);
 		mSyncLogAlert = builder.create();
 		// Upgrade notes dialog
-		builder = new AlertDialog.Builder(this);
+		builder = new StyledDialog.Builder(this);
 		builder.setTitle(res.getString(
 				R.string.deckpicker_upgrade_notes_title));
 		builder.setPositiveButton(res.getString(R.string.ok), null);
 		mUpgradeNotesAlert = builder.create();
-		builder = new AlertDialog.Builder(this);
+		builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.deckpicker_download_missing_title));
         builder.setPositiveButton(res.getString(R.string.ok), null);
         mMissingMediaAlert = builder.create();
@@ -892,7 +893,7 @@ public class DeckPicker extends Activity implements Runnable {
             	Resources res = getResources();
             	mBackups = BackupManager.getDeckBackups(new File(mCurrentDeckPath));
             	if (mBackups.length == 0) {
-            		AlertDialog.Builder builder = new AlertDialog.Builder(DeckPicker.this);
+            		StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
             		builder.setTitle(res.getString(R.string.backup_manager_title))
             			.setIcon(android.R.drawable.ic_dialog_alert)
             			.setMessage(res.getString(R.string.backup_restore_no_backups))
@@ -910,11 +911,11 @@ public class DeckPicker extends Activity implements Runnable {
 						}
 					}).show();
             	} else {
-            		CharSequence[] dates = new CharSequence[mBackups.length];
+            		String[] dates = new String[mBackups.length];
             		for (int i = 0; i < mBackups.length; i++) {
             			dates[i] = mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2}).anki", "$1");
             		}
-            		AlertDialog.Builder builder = new AlertDialog.Builder(DeckPicker.this);
+            		StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
             		builder.setTitle(res.getString(R.string.backup_restore_select_title))
             			.setIcon(android.R.drawable.ic_input_get)
                     	.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener(){
@@ -939,7 +940,7 @@ public class DeckPicker extends Activity implements Runnable {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             	Resources res = getResources();
-            	AlertDialog.Builder builder = new AlertDialog.Builder(DeckPicker.this);
+            	StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
             	builder.setCancelable(true).setTitle(res.getString(R.string.delete_deck_title))
             		.setIcon(android.R.drawable.ic_dialog_alert)
             		.setMessage(String.format(res.getString(R.string.delete_deck_message), new File(mCurrentDeckPath).getName().replace(".anki", "")))
@@ -1546,7 +1547,7 @@ public class DeckPicker extends Activity implements Runnable {
                 }
             }
             closeDeck(result.getDeck());
-    		AlertDialog dialog = (AlertDialog) onCreateDialog(DIALOG_OPTIMIZE_DATABASE);
+    		StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OPTIMIZE_DATABASE);
     		dialog.setMessage(String.format(Utils.ENGLISH_LOCALE, getResources().getString(R.string.optimize_deck_message), Math.round(result.getLong() / 1024)));
     		dialog.show();
 		}

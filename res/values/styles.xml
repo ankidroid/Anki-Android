@@ -50,8 +50,28 @@
         <item name="android:textSize">10sp</item>
     </style>
 
-	<style name="Blue.Edittext" parent="@android:style/Widget.EditText">
- 		<item name="android:background">@drawable/blue_edit_text</item>
- 	</style>
+    <style name="Blue.Edittext" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/blue_edit_text</item>
+    </style>
+
+    <style name="Blue.Widget.ProgressBar" parent="@android:style/Widget.ProgressBar">>
+        <item name="android:indeterminateDrawable">@drawable/blue_progress_medium_white</item>
+    </style>
+
+    <style name="Blue.Widget.ProgressBar.Small" parent="@android:style/Widget.ProgressBar.Small">
+        <item name="android:indeterminateDrawable">@drawable/blue_progress_small</item>
+    </style>
     
+    <style name="Blue.Widget.ListView" parent="@android:Widget.ListView">
+        <item name="android:listSelector">@drawable/blue_list_selector_background</item>
+    </style>
+
+    <style name="Blue.Widget.ListView.DropDown" parent="@android:Widget.ListView.DropDown">
+        <item name="android:listSelector">@drawable/blue_list_selector_background</item>
+    </style>
+
+    <style name="Blue.Widget.ListView.Menu" parent="@android:Widget.ListView.Menu">
+        <item name="android:listSelector">@drawable/blue_list_selector_background</item>
+    </style>
+
 </resources>

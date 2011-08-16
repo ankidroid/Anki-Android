@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class MyAccount extends Activity {

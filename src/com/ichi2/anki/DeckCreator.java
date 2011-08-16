@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;

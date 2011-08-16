@@ -52,7 +52,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptions;
-import com.ichi2.anki.Themes;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class ChartBuilder extends Activity {

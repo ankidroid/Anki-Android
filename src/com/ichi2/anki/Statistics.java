@@ -18,6 +18,9 @@ package com.ichi2.anki;
 
 import java.util.Map.Entry;
 
+import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.Themes;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
