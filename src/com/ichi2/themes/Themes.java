@@ -255,12 +255,19 @@ public class Themes {
 
 
 	public static void setStyledDialogBackgrounds(View main, int buttonNumbers) {
+		setStyledDialogBackgrounds(main, buttonNumbers, false);
+	}
+	public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
 		// TODO: theme
 		((View) main.findViewById(R.id.topPanel)).setBackgroundResource(R.drawable.blue_popup_top_dark);
 		((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(R.drawable.blue_divider_horizontal_bright);
 		((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
 		((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_center_bright);
-		((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
+		if (brightCustomPanelBackground) {
+			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_bright);			
+		} else {
+			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
+		}
 
 		if (buttonNumbers == 0) {
 			((LinearLayout) main.findViewById(R.id.buttonPanel)).setVisibility(View.GONE);

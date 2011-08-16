@@ -1439,7 +1439,7 @@ public class StudyOptions extends Activity {
 	                mSelectedTags.add(tag);
 	            }
 	        }
-	        ((StyledDialog) dialog).setMultiChoiceItems(allTags, checked,
+	        ad.setMultiChoiceItems(allTags, checked,
 	                new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -1454,7 +1454,7 @@ public class StudyOptions extends Activity {
 						}
 	                });
 	        break;
-		}		
+		}
 	}
 
 

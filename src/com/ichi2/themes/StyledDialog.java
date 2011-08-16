@@ -101,6 +101,7 @@ public class StyledDialog extends Dialog {
         private String negativeButtonText;
         private String neutralButtonText;
         private View contentView;
+        private boolean brightViewBackground = false;
         private int icon;
  
         private DialogInterface.OnClickListener positiveButtonClickListener;
@@ -185,7 +186,11 @@ public class StyledDialog extends Dialog {
  
 
         public Builder setView(View v) {
+        	return setView(v, false);
+        }
+        public Builder setView(View v, boolean bright) {
             this.contentView = v;
+            this.brightViewBackground = bright;
             return this;
         }
 
@@ -322,7 +327,7 @@ public class StyledDialog extends Dialog {
             final StyledDialog dialog = new StyledDialog(context);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View layout = inflater.inflate(R.layout.alert_dialog, null);
+            View layout = inflater.inflate(R.layout.styled_dialog, null);
             dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
             // set title
@@ -433,7 +438,7 @@ public class StyledDialog extends Dialog {
             }
 
             // set background
-            Themes.setStyledDialogBackgrounds(layout, numberOfButtons);
+            Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
 
             dialog.setContentView(layout);
             return dialog;
