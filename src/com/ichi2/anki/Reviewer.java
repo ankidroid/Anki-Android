@@ -1343,23 +1343,6 @@ public class Reviewer extends Activity implements IButtonListener{
             mAccelLast = SensorManager.GRAVITY_EARTH;	
         }
 
-        if (mPrefTextSelection) {
-			mCard.setOnLongClickListener(mLongClickHandler);            
-			mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-			mClipboard.setText("");
-        }
-        mCard.setOnTouchListener(new View.OnTouchListener() { 
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-				    if (gestureDetector.onTouchEvent(event)) {
-                    	return true;
-                	}
-                	return false;  	           
-				}
-           	});
-        
-        mScaleInPercent = mCard.getScale();
-
         mEase1 = (Button) findViewById(R.id.ease1);
         mEase1.setOnClickListener(mSelectEaseHandler);
 
@@ -1465,17 +1448,6 @@ public class Reviewer extends Activity implements IButtonListener{
             webView.setOnLongClickListener(mLongClickHandler);
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
-        webView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-        mScaleInPercent = webView.getScale();
         return webView;
     }
 
@@ -1962,6 +1934,8 @@ public class Reviewer extends Activity implements IButtonListener{
             mNextCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
             mNextCard.setVisibility(View.VISIBLE);
             mCardFrame.removeView(mCard);
+            mCard.setOnTouchListener(null);
+            mCard.setOnLongClickListener(null);
             mCard.destroy();
             mCard = mNextCard;
             mNextCard = createWebView();
