@@ -15,7 +15,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -28,15 +27,13 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.method.KeyListener;
-import android.text.style.StrikethroughSpan;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,10 +46,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.CardEditor.FieldEditText;
 import com.ichi2.anki.DeckPicker.AnkiFilter;
 import com.ichi2.anki.Fact.Field;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -77,6 +74,7 @@ import java.util.TreeSet;
 public class FactAdder extends Activity {
 
     private static final int DIALOG_MODEL_SELECT = 0;
+    private static final int DIALOG_TAGS = 1;
 
     private static final String INTENT_CREATE_FLASHCARD = "org.openintents.indiclash.CREATE_FLASHCARD";
     private static final String INTENT_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -97,8 +95,8 @@ public class FactAdder extends Activity {
     private ListView mCardModelListView;
     private Button mTags;
 
-    private AlertDialog mCardModelDialog;
-    private AlertDialog mDeckSelectDialog;
+    private StyledDialog mCardModelDialog;
+    private StyledDialog mDeckSelectDialog;
     
     private Deck mDeck;
     private Long mCurrentSelectedModelId;
@@ -116,13 +114,12 @@ public class FactAdder extends Activity {
     private HashSet<String> mSelectedTags;
     private String mFactTags = "";
     private EditText mNewTagEditText;
-    private AlertDialog mTagsDialog;
-    private AlertDialog mAddNewTag;
+    private StyledDialog mTagsDialog;
 
     private ProgressDialog mProgressDialog;
 
     private HashMap<String, String> mFullDeckPaths;
-    private CharSequence[] mDeckNames;
+    private String[] mDeckNames;
     private String mSourceLanguage;
     private String mTargetLanguage;
     private String mSourceText;
@@ -251,7 +248,7 @@ public class FactAdder extends Activity {
 
             @Override
             public void onClick(View v) {
-                recreateTagsDialog();
+                showDialog(DIALOG_TAGS);
                 if (!mTagsDialog.isShowing()) {
                     mTagsDialog.show();
                 }
@@ -274,57 +271,6 @@ public class FactAdder extends Activity {
         mModels = Model.getModels(mDeck);
         mCurrentSelectedModelId = mDeck.getCurrentModelId();
         modelChanged();
-        initDialogs();
-    }
-
-
-    private void initDialogs() {
-        Resources res = getResources();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View contentView = getLayoutInflater().inflate(R.layout.edittext, null);
-        //contentView.setBackgroundColor(res.getColor(R.color.background));
-        mNewTagEditText =  (EditText) contentView.findViewById(R.id.edit_text);
-        builder.setView(contentView);
-        builder.setTitle(res.getString(R.string.add_new_tag));
-        builder.setPositiveButton(res.getString(R.string.add), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String tag = mNewTagEditText.getText().toString();
-                if (tag.equals("")) {
-                    recreateTagsDialog();
-                    mTagsDialog.show();
-                } else {
-                    String[] oldTags = allTags;
-                    mFactTags += ", " + tag;
-                    Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
-                    allTags = new String[oldTags.length + 1];
-                    allTags[0] = oldTags[0]; 
-                    allTags[1] = tag;
-                    for (int i = 1; i < oldTags.length; i++) {
-                        allTags[i + 1] = oldTags[i];
-                    }
-                    recreateTagsDialog();
-                    mTagsDialog.show();                    
-                }
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                recreateTagsDialog();
-                mTagsDialog.show();                    
-            }
-        });
-        builder.setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                recreateTagsDialog();
-                mTagsDialog.show();
-            }
-        });
-        mAddNewTag = builder.create();
-        
-        
     }
 
 
@@ -364,10 +310,10 @@ public class FactAdder extends Activity {
 			}
 		}            
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
         builder.setTitle(R.string.fact_adder_select_deck);
         // Convert to Array
-        mDeckNames = new CharSequence[tree.size()];
+        mDeckNames = new String[tree.size()];
         tree.toArray(mDeckNames);
 
         builder.setItems(mDeckNames, new DialogInterface.OnClickListener() {
@@ -399,8 +345,10 @@ public class FactAdder extends Activity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        Dialog dialog;
-        AlertDialog.Builder builder;
+		StyledDialog dialog = null;
+		Resources res = getResources();
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
+
 
         switch (id) {
         case DIALOG_MODEL_SELECT:
@@ -409,8 +357,6 @@ public class FactAdder extends Activity {
             final ArrayList<Long> dialogIds = new ArrayList<Long>();
 
             Model mModel;
-
-            builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.select_model);
             for (Long i : mModels.keySet()) {
                 mModel = mModels.get(i);
@@ -418,7 +364,7 @@ public class FactAdder extends Activity {
                 dialogIds.add(i);
             }
             // Convert to Array
-            CharSequence[] items = new CharSequence[dialogItems.size()];
+            String[] items = new String[dialogItems.size()];
             dialogItems.toArray(items);
 
             builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -441,11 +387,117 @@ public class FactAdder extends Activity {
                 }
             });
             return builder.create();
-            default:
-                dialog = null;
-        }
-        return dialog;
-    }
+
+        case DIALOG_TAGS:
+	        builder.setTitle(R.string.studyoptions_limit_select_tags);
+	        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+	                String tags = mSelectedTags.toString();
+	                mFactTags = tags.substring(1, tags.length() - 1);
+	                mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
+	            }
+	        });
+        	builder.setNegativeButton(res.getString(R.string.cancel), null);
+
+        	mNewTagEditText =  (EditText) new EditText(this);
+
+        	InputFilter filter = new InputFilter() { 
+        	    public CharSequence filter(CharSequence source, int start, int end, 
+        	        Spanned dest, int dstart, int dend) {
+        	        for (int i = start; i < end; i++) { 
+        	            if (!(Character.isLetterOrDigit(source.charAt(i)))) { 
+        	                return "";
+        	            }
+        	        }
+        	        return null; 
+        	    } 
+        	}; 
+        	mNewTagEditText.setFilters(new InputFilter[]{filter});
+
+        	ImageView mAddTextButton = new ImageView(this);
+        	mAddTextButton.setImageResource(R.drawable.ic_addtag);
+        	mAddTextButton.setOnClickListener(new View.OnClickListener() {
+        		@Override
+        		public void onClick(View v) {
+    				String tag = mNewTagEditText.getText().toString();
+    				if (tag.length() != 0) {
+    					for (int i = 0; i < allTags.length; i++) {
+    						if (allTags[i].equalsIgnoreCase(tag)) {
+    							mNewTagEditText.setText("");
+    							return;
+    						}
+    					}
+                        mSelectedTags.add(tag);
+                        String[] oldTags = allTags;
+        	            allTags = new String[oldTags.length + 1];
+        	            allTags[0] = tag;
+        	            for (int j = 1; j < allTags.length; j++) {
+        	                allTags[j] = oldTags[j - 1];
+        	            }
+        				mTagsDialog.addMultiChoiceItems(tag, true);
+						mNewTagEditText.setText("");    					
+        			}
+        		}
+        	});
+
+            FrameLayout frame = new FrameLayout(this);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+            params.rightMargin = 10;
+            mAddTextButton.setLayoutParams(params);
+            frame.addView(mNewTagEditText);
+            frame.addView(mAddTextButton);
+
+	        builder.setView(frame, true);
+	        dialog = builder.create();
+		mTagsDialog = dialog;
+			break;
+		}
+		return dialog;
+	}
+
+
+    @Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		StyledDialog ad = (StyledDialog)dialog;
+		switch (id) {
+		case DIALOG_TAGS:
+	        if (allTags == null) {
+	            String[] oldTags = AnkiDroidApp.deck().allUserTags();
+	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+	            allTags = new String[oldTags.length];
+	            for (int i = 0; i < oldTags.length; i++) {
+	                allTags[i] = oldTags[i];
+	            }
+	        }
+	        mSelectedTags.clear();
+	        List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
+	        int length = allTags.length;
+	        boolean[] checked = new boolean[length];
+	        for (int i = 0; i < length; i++) {
+	            String tag = allTags[i];
+	            if (selectedList.contains(tag)) {
+	                checked[i] = true;
+	                mSelectedTags.add(tag);
+	            }
+	        }
+			ad.setMultiChoiceItems(allTags, checked,
+	                new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface arg0, int which) {
+	                        String tag = allTags[which];
+	                        if (mSelectedTags.contains(tag)) {
+	                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+	                            mSelectedTags.remove(tag);
+	                        } else {
+	                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+	                            mSelectedTags.add(tag);
+	                        }
+						}
+	                });
+			break;
+		}
+	}
 
 
     private void modelChanged() {
@@ -578,12 +630,12 @@ public class FactAdder extends Activity {
                 } else {
                 	mNewSelectedCardModels.put(m, mCardModels.get(m));
                 }
-           		mCardModelDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(!mNewSelectedCardModels.isEmpty());
+           		mCardModelDialog.getButton(StyledDialog.BUTTON_POSITIVE).setEnabled(!mNewSelectedCardModels.isEmpty());
             }
         });
         mCardModelListView.setItemsCanFocus(false);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.select_card_model));
         builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
             @Override
@@ -602,61 +654,6 @@ public class FactAdder extends Activity {
         mCardModelDialog = builder.create();
     }
 
-
-    private void recreateTagsDialog() {
-        Resources res = getResources();
-        if (allTags == null) {
-            String[] oldTags = mDeck.allUserTags();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
-            allTags = new String[oldTags.length + 1];
-            allTags[0] = res.getString(R.string.add_new_tag);
-            for (int i = 0; i < oldTags.length; i++) {
-                allTags[i + 1] = oldTags[i];
-            }
-        }
-        mSelectedTags.clear();
-        List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
-        int length = allTags.length;
-        boolean[] checked = new boolean[length];
-        for (int i = 0; i < length; i++) {
-            String tag = allTags[i];
-            if (selectedList.contains(tag)) {
-                checked[i] = true;
-                mSelectedTags.add(tag);
-            }
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.studyoptions_limit_select_tags);
-        builder.setMultiChoiceItems(allTags, checked,
-                new DialogInterface.OnMultiChoiceClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-                        if (whichButton == 0) {
-                            dialog.dismiss();
-                            mNewTagEditText.setText("");
-                            mAddNewTag.show();
-                        } else {
-                            String tag = allTags[whichButton];
-                            if (!isChecked) {
-                                Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                                mSelectedTags.remove(tag);
-                            } else {
-                                Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                                mSelectedTags.add(tag);
-                            }                            
-                        }
-                    }
-                });
-        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String tags = mSelectedTags.toString();
-                mFactTags = tags.substring(1, tags.length() - 1);
-                mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), null);
-        mTagsDialog = builder.create();
-    }
 
     /**
      * Registers an intent to listen for ACTION_MEDIA_EJECT notifications.

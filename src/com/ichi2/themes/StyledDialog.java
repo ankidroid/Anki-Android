@@ -104,7 +104,21 @@ public class StyledDialog extends Dialog {
 	    	break;
     	}
     }
-    
+
+
+    public Button getButton(int which) {
+    	switch (which) {
+    	case Dialog.BUTTON_POSITIVE:
+    		return (Button) super.getWindow().getDecorView().findViewById(R.id.button1);
+    	case Dialog.BUTTON_NEGATIVE:
+    		return (Button) super.getWindow().getDecorView().findViewById(R.id.button2);
+    	case Dialog.BUTTON_NEUTRAL:
+    		return (Button) super.getWindow().getDecorView().findViewById(R.id.button3);
+		default:
+    		return null;
+    	}
+    }
+
 
     public void addMultiChoiceItems(String value, boolean checked) {
     	mItemList.add(0, value);
