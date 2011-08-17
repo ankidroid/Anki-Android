@@ -24,11 +24,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
 

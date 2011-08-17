@@ -17,7 +17,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -51,6 +50,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -71,7 +71,7 @@ public class CardBrowser extends Activity {
 	private SimpleAdapter mCardsAdapter;
 	private EditText mSearchEditText;
 
-	private AlertDialog mSelectOrderDialog;
+	private StyledDialog mSelectOrderDialog;
 	private ProgressDialog mProgressDialog;
 	private boolean mUndoRedoDialogShowing = false;
 	private Card mSelectedCard;
@@ -117,7 +117,7 @@ public class CardBrowser extends Activity {
 
 	private String[] allTags;
 	private HashSet<String> mSelectedTags;
-	private AlertDialog mTagsDialog;
+	private StyledDialog mTagsDialog;
 
 	private boolean mPrefFixArabic;
 
@@ -283,7 +283,7 @@ public class CardBrowser extends Activity {
 
 			Dialog dialog;
 			Resources res = getResources();
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			StyledDialog.Builder builder = new StyledDialog.Builder(this);
 			builder.setTitle(res.getString(R.string.delete_card_title));
 			builder.setIcon(android.R.drawable.ic_dialog_alert);
 			builder.setMessage(String.format(res
@@ -452,7 +452,7 @@ public class CardBrowser extends Activity {
 
 	private void initAllDialogs() {
 		Resources res = getResources();
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
 		builder.setTitle(res
 				.getString(R.string.card_browser_change_display_order_title));
@@ -481,14 +481,14 @@ public class CardBrowser extends Activity {
 		}
 		mSelectedTags.clear();
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
 		builder.setTitle(R.string.studyoptions_limit_select_tags);
-		builder.setMultiChoiceItems(allTags, null,
-				new DialogInterface.OnMultiChoiceClickListener() {
-					public void onClick(DialogInterface dialog,
-							int whichButton, boolean isChecked) {
-						String tag = allTags[whichButton];
-						if (!isChecked) {
+		builder.setMultiChoiceItems(allTags, new boolean[0],
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						String tag = allTags[which];
+						if (mSelectedTags.contains(tag)) {
 							Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
 							mSelectedTags.remove(tag);
 						} else {
@@ -689,7 +689,7 @@ public class CardBrowser extends Activity {
 			ArrayList<String[]> allCards = values[0].getAllCards();
 			if (allCards == null) {
 				Resources res = getResources();
-				AlertDialog.Builder builder = new AlertDialog.Builder(
+				StyledDialog.Builder builder = new StyledDialog.Builder(
 						CardBrowser.this);
 				builder.setTitle(res.getString(R.string.error));
 				builder.setIcon(android.R.drawable.ic_dialog_alert);

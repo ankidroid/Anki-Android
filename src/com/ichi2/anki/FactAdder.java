@@ -401,6 +401,7 @@ public class FactAdder extends Activity {
         	builder.setNegativeButton(res.getString(R.string.cancel), null);
 
         	mNewTagEditText =  (EditText) new EditText(this);
+        	mNewTagEditText.setHint(R.string.add_new_tag);
 
         	InputFilter filter = new InputFilter() { 
         	    public CharSequence filter(CharSequence source, int start, int end, 

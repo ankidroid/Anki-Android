@@ -26,6 +26,7 @@ import com.ichi2.anki.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -462,7 +463,6 @@ public class StyledDialog extends Dialog {
         public void show() {
         	create().show();
         }
-
 
     }
  

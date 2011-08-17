@@ -15,7 +15,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,6 +36,7 @@ import android.widget.Toast;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -90,7 +90,7 @@ public class Feedback extends Activity {
     protected EditText mEtFeedbackText;
     protected boolean mPostingFeedback;
     protected InputMethodManager mImm = null;
-    protected AlertDialog mNoConnectionAlert = null;
+    protected StyledDialog mNoConnectionAlert = null;
 
     protected String mReportErrorMode;
     protected String mFeedbackUrl;
@@ -111,7 +111,7 @@ public class Feedback extends Activity {
     private void initAllAlertDialogs() {
         Resources res = getResources();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);

@@ -27,7 +27,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -85,6 +84,7 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.RubyParser;
@@ -1324,8 +1324,8 @@ public class Reviewer extends Activity implements IButtonListener{
                 		}
             		}        			
         		}
-        		final CharSequence[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
-        		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        		final String[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
+        		StyledDialog.Builder builder = new StyledDialog.Builder(this);
         		builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
         		builder.setItems(items, new DialogInterface.OnClickListener() {
         			public void onClick(DialogInterface dialog, int item) {
@@ -1335,7 +1335,7 @@ public class Reviewer extends Activity implements IButtonListener{
         				mClipboard.setText("");
         			}
         		});
-        		AlertDialog alert = builder.create();
+        		StyledDialog alert = builder.create();
         		alert.show();
                 return true;
         	case DICTIONARY_COLORDICT:
@@ -1352,7 +1352,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private void showDeleteCardDialog() {
         Dialog dialog;
         Resources res = getResources();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.delete_card_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(String.format(res.getString(R.string.delete_card_message), Utils.stripHTML(mCurrentCard.getQuestion()), Utils.stripHTML(mCurrentCard.getAnswer())));

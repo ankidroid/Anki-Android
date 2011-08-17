@@ -15,7 +15,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,6 +34,7 @@ import android.widget.TextView;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
@@ -49,9 +49,9 @@ public class MyAccount extends Activity {
     private TextView mUsernameLoggedIn;
 
     private ProgressDialog mProgressDialog;
-    private AlertDialog mNoConnectionAlert;
-    private AlertDialog mConnectionErrorAlert;
-    private AlertDialog mInvalidUserPassAlert;
+    private StyledDialog mNoConnectionAlert;
+    private StyledDialog mConnectionErrorAlert;
+    private StyledDialog mInvalidUserPassAlert;
 
 
     @Override
@@ -187,7 +187,7 @@ public class MyAccount extends Activity {
     private void initAllAlertDialogs() {
         Resources res = getResources();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);

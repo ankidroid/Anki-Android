@@ -22,7 +22,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -289,6 +288,7 @@ public class CardEditor extends Activity {
         	builder.setNegativeButton(res.getString(R.string.cancel), null);
 
         	mNewTagEditText =  (EditText) new EditText(this);
+        	mNewTagEditText.setHint(R.string.add_new_tag);
 
         	InputFilter filter = new InputFilter() { 
         	    public CharSequence filter(CharSequence source, int start, int end, 
