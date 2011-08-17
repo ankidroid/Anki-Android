@@ -150,6 +150,7 @@ public class StudyOptions extends Activity {
     private static final int DIALOG_TAGS = 14;
     private static final int DIALOG_LIMIT_SESSION = 15;
     private static final int DIALOG_DOWNLOAD_SELECTOR = 16;
+    private static final int DIALOG_CRAM = 17;
 
     private String mCurrentDialogMessage;
 
@@ -352,8 +353,7 @@ public class StudyOptions extends Activity {
                         mToggleCram.setChecked(!mToggleCram.isChecked());
                         activeCramTags.clear();
                         cramOrder = cramOrderList[0];
-                        recreateCramTagsDialog();
-                        mCramTagsDialog.show();
+                        showDialog(DIALOG_CRAM);
                     } else {
                         onCramStop();
                         resetAndUpdateValuesFromDeck();
@@ -1368,6 +1368,34 @@ public class StudyOptions extends Activity {
 	        });
 	        dialog = builder.create();
 	        break;
+		case DIALOG_CRAM:
+	        builder.setTitle(R.string.studyoptions_cram_dialog_title);
+	        builder.setPositiveButton(res.getString(R.string.begin_cram), new OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+	                mToggleCram.setChecked(true);
+	                onCram();
+	            }
+	        });
+	        builder.setNegativeButton(res.getString(R.string.cancel), null);
+
+	        Spinner spinner = new Spinner(this);
+	        spinner.setAdapter(ArrayAdapter.createFromResource(this, R.array.cram_review_order_labels, android.R.layout.simple_spinner_item));
+	        spinner.setSelection(0);
+	        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+	            @Override
+	            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+	                cramOrder = cramOrderList[position];
+	            }
+	            @Override
+	            public void onNothingSelected(AdapterView<?> arg0) {
+	                return;
+	            }
+	        });
+
+	        builder.setView(spinner, true);
+	        dialog = builder.create();
+	        break;
 
 		default:
 			dialog = null;
@@ -1454,61 +1482,28 @@ public class StudyOptions extends Activity {
 						}
 	                });
 	        break;
+
+		case DIALOG_CRAM:
+	        activeCramTags.clear();
+	        allCramTags = AnkiDroidApp.deck().allTags_();
+
+	        ad.setMultiChoiceItems(allCramTags, new boolean[allCramTags.length], 
+	        		new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface arg0, int which) {
+					String tag = allCramTags[which];
+					if (activeCramTags.contains(tag)) {
+	                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+	                    activeCramTags.remove(tag);						
+					} else {
+	                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+	                    activeCramTags.add(tag);						
+					}
+				}
+	        });
+			break;
 		}
 	}
-
-
-    // This has to be called every time we open a new deck AND whenever we edit any tags.
-    private void recreateCramTagsDialog() {
-        Resources res = getResources();
-
-        // Dialog for selecting the cram tags
-        activeCramTags.clear();
-        allCramTags = AnkiDroidApp.deck().allTags_();
-        Log.i(AnkiDroidApp.TAG, "all cram tags: " + Arrays.toString(allCramTags));
-
-        View contentView = getLayoutInflater().inflate(R.layout.studyoptions_cram_dialog_contents, null);
-        mCramTagsListView = (ListView) contentView.findViewById(R.id.cram_tags_list);
-        mCramTagsListView.setAdapter(new ArrayAdapter<String>(this, R.layout.dialog_check_item,
-                    allCramTags));
-        mCramTagsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (((CheckedTextView)view).isChecked()) {
-                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + allCramTags[position]);
-                    activeCramTags.remove(allCramTags[position]);
-                } else {
-                    Log.i(AnkiDroidApp.TAG, "checked tag: " + allCramTags[position]);
-                    activeCramTags.add(allCramTags[position]);
-                }
-            }
-        });
-        mCramTagsListView.setItemsCanFocus(false);
-        mSpinnerCramOrder = (Spinner) contentView.findViewById(R.id.cram_order_spinner);
-        mSpinnerCramOrder.setSelection(0);
-        mSpinnerCramOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                cramOrder = cramOrderList[position];
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                return;
-            }
-        });
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-        builder.setTitle(R.string.studyoptions_cram_dialog_title);
-        builder.setPositiveButton(res.getString(R.string.begin_cram), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mToggleCram.setChecked(true);
-                onCram();
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), null);
-        builder.setView(contentView);
-        mCramTagsDialog = builder.create();
-    }
 
 
     private void showContentView(int which) {

@@ -106,7 +106,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="5dip"
-            android:paddingBottom="5dip" />
+            android:paddingBottom="0dip" />
     </FrameLayout>
 
     <LinearLayout android:id="@+id/buttonPanel"
@@ -118,7 +118,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="4dip"
+            android:paddingTop="2dip"
             android:paddingLeft="2dip"
             android:paddingRight="2dip">
             <!-- android:useLargestChild="true"-->
