@@ -19,7 +19,13 @@
         <item name="android:listViewStyle">@style/Blue.Widget.ListView</item>
         <item name="android:dropDownListViewStyle">@style/Blue.Widget.ListView.DropDown</item>
         <item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>
-		<item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
+        <item name="android:dividerHorizontal">@drawable/blue_divider_horizontal_bright</item>
+        <item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
+
+        <item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>
+
+
 
   <!--      <item name="android:popupMenuStyle">@style/Blue.Widget.PopupMenu</item>
         <item name="android:progressBarStyle">@style/Blue.Widget.ProgressBar</item>

@@ -264,7 +264,7 @@ public class Themes {
 		((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
 		((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_center_bright);
 		if (brightCustomPanelBackground) {
-			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_bright);			
+			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_medium);			
 		} else {
 			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
 		}

@@ -41,14 +41,14 @@ import android.widget.AdapterView.OnItemClickListener;
  
 
 public class StyledDialog extends Dialog {
- 
-	public static final int BUTTON_POSITIVE = 0;
-	public static final int BUTTON_NEGATIVE = 1;
-	public static final int BUTTON_NEUTRAL = 2;
 
-	Context mContext;
-	OnClickListener mListener;
-	
+	private Context mContext;
+	private List<String> mItemList;
+	private ArrayAdapter mListAdapter;
+	private OnClickListener mListener;
+	private ListView mListView;
+
+
     public StyledDialog(Context context) {
         super(context, R.style.StyledDialog);
         mContext = context;
@@ -69,26 +69,54 @@ public class StyledDialog extends Dialog {
     }
 
 
-    public void setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener) {
-    	View main = super.getWindow().getDecorView();
-    	mListener = listener;
-    	List<String> list = new ArrayList<String>();
+    public void setItems(int type, ListView listview, String[] values, int checkedItem, boolean[] checked, DialogInterface.OnClickListener listener) {
+    	mListView = listview;
+    	mItemList = new ArrayList<String>();
         for (String titel : values) {
-        	list.add(titel);
+        	mItemList.add(titel);
         }
-    	ListView listview = (ListView) main.findViewById(R.id.listview);
-    	listview.setOnItemClickListener(new OnItemClickListener() {
+        mListener = listener;
+        mListView.setOnItemClickListener(new OnItemClickListener() {
     			@Override    
     			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    				mListener.onClick(StyledDialog.this, position);
-		    	}
-    	    });
-    	listview.setAdapter(new ArrayAdapter(mContext, R.layout.select_dialog_multichoice, 0, list));
-    	listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-    	for (int i = 0; i < checked.length; i++) {
-    		listview.setItemChecked(i, checked[i]);
+    					mListener.onClick(StyledDialog.this, position);
+    		    	}
+		    });
+    	switch (type) {
+    	case 1:
+    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_nochoice, 0, mItemList);
+    		mListView.setAdapter(mListAdapter);
+    		mListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
+	    	break;
+    	case 2:
+    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_singlechoice, checkedItem, mItemList);
+    		mListView.setAdapter(mListAdapter);
+    		mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+    		mListView.setItemChecked(checkedItem, true);
+        	break;
+    	case 3:
+    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_multichoice, 0, mItemList);
+    		mListView.setAdapter(mListAdapter);
+    		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+	    	for (int i = 0; i < checked.length; i++) {
+	    		listview.setItemChecked(i, checked[i]);
+	    	}
+	    	break;
     	}
+    }
+    
+
+    public void addMultiChoiceItems(String value, boolean checked) {
+    	mItemList.add(0, value);
+    	mListView.setItemChecked(0, true);
+    	mListAdapter.notifyDataSetChanged();
+    }
+
+
+    public void setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener) {
+    	View main = super.getWindow().getDecorView();
         ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
+    	setItems(3, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, checked, listener);
 	}
 
 
@@ -394,36 +422,8 @@ public class StyledDialog extends Dialog {
 
             // set single and multiple choice listview
             if (itemTitels != null) {
-            	List<String> list = new ArrayList<String>();
-                for (String titel : itemTitels) {
-                	list.add(titel);
-                }
-            	ListView listview = (ListView) layout.findViewById(R.id.listview);
-            	listview.setOnItemClickListener(new OnItemClickListener() {
-            			@Override    
-            			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            					itemClickListener.onClick(dialog, position);
-            		    	}
-        		    });
-            	switch (listStyle) {
-            	case 1:
-        	    	listview.setAdapter(new ArrayAdapter(context, R.layout.select_dialog_nochoice, 0, list));
-        	    	listview.setChoiceMode(ListView.CHOICE_MODE_NONE);
-        	    	break;
-            	case 2:
-        	    	listview.setAdapter(new ArrayAdapter(context, R.layout.select_dialog_singlechoice, checkedItem, list));
-        	    	listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-	            	listview.setItemChecked(checkedItem, true);
-	            	break;
-            	case 3:
-        	    	listview.setAdapter(new ArrayAdapter(context, R.layout.select_dialog_multichoice, 0, list));
-        	    	listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        	    	for (int i = 0; i < multipleCheckedItems.length; i++) {
-        	    		listview.setItemChecked(i, multipleCheckedItems[i]);
-        	    	}
-        	    	break;
-            	}
-                ((View) layout.findViewById(R.id.titleDivider)).setVisibility(View.GONE);
+            	dialog.setItems(listStyle, (ListView) layout.findViewById(R.id.listview), itemTitels, checkedItem, multipleCheckedItems, itemClickListener);
+                // ((View) layout.findViewById(R.id.titleDivider)).setVisibility(View.GONE);
             } else {
             	((View) layout.findViewById(R.id.listViewPanel)).setVisibility(View.GONE);
             }

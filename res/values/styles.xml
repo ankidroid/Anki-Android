@@ -74,4 +74,13 @@
         <item name="android:listSelector">@drawable/blue_list_selector_background</item>
     </style>
 
+    <style name="Blue.Widget.Spinner" parent="@android:style/Widget.Spinner">
+        <item name="android:background">@drawable/blue_btn_dropdown</item>
+    </style>
+
+    <style name="Blue.Widget.DropDownItem.Spinner" parent="@android:style/Widget.DropDownItem.Spinner">
+        <item name="android:checkMark">@drawable/blue_btn_radio</item>
+    </style>
+
+
 </resources>

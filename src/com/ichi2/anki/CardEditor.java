@@ -27,6 +27,8 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.method.KeyListener;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
@@ -93,6 +95,7 @@ public class CardEditor extends Activity {
     private HashSet<String> mSelectedTags;
     private String mFactTags;
     private EditText mNewTagEditText;
+    private ImageView mAddTextButton;
     private StyledDialog mTagsDialog;
     
     private boolean mPrefFixArabic;
@@ -284,31 +287,58 @@ public class CardEditor extends Activity {
 	            }
 	        });
         	builder.setNegativeButton(res.getString(R.string.cancel), null);
-	        mNewTagEditText =  (EditText) new EditText(this);
-//	        builder.setPositiveButton(res.getString(R.string.add), new OnClickListener() {
-//          @Override
-//          public void onClick(DialogInterface dialog, int which) {
-//              String tag = mNewTagEditText.getText().toString();
-//              if (tag.equals("")) {
-//                  recreateTagsDialog();
-//                  mTagsDialog.show();
-//              } else {
-//                  String[] oldTags = allTags;
-//                  mFactTags += ", " + tag;
-//                  Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
-//                  allTags = new String[oldTags.length + 1];
-//                  allTags[0] = oldTags[0]; 
-//                  allTags[1] = tag;
-//                  for (int i = 1; i < oldTags.length; i++) {
-//                      allTags[i + 1] = oldTags[i];
-//                  }
-//              	showDialog(DIALOG_TAGS);
-//            
-//              }
-//          }
-//      });
-	        builder.setView(mNewTagEditText, true);
+
+        	mNewTagEditText =  (EditText) new EditText(this);
+
+        	InputFilter filter = new InputFilter() { 
+        	    public CharSequence filter(CharSequence source, int start, int end, 
+        	        Spanned dest, int dstart, int dend) {
+        	        for (int i = start; i < end; i++) { 
+        	            if (!(Character.isLetterOrDigit(source.charAt(i)))) { 
+        	                return "";
+        	            }
+        	        }
+        	        return null; 
+        	    } 
+        	}; 
+        	mNewTagEditText.setFilters(new InputFilter[]{filter});
+
+        	ImageView mAddTextButton = new ImageView(this);
+        	mAddTextButton.setImageResource(R.drawable.ic_addtag);
+        	mAddTextButton.setOnClickListener(new View.OnClickListener() {
+        		@Override
+        		public void onClick(View v) {
+    				String tag = mNewTagEditText.getText().toString();
+    				if (tag.length() != 0) {
+    					for (int i = 0; i < allTags.length; i++) {
+    						if (allTags[i].equalsIgnoreCase(tag)) {
+    							mNewTagEditText.setText("");
+    							return;
+    						}
+    					}
+                        mSelectedTags.add(tag);
+                        String[] oldTags = allTags;
+        	            allTags = new String[oldTags.length + 1];
+        	            allTags[0] = tag;
+        	            for (int j = 1; j < allTags.length; j++) {
+        	                allTags[j] = oldTags[j - 1];
+        	            }
+        				mTagsDialog.addMultiChoiceItems(tag, true);
+						mNewTagEditText.setText("");    					
+        			}
+        		}
+        	});
+
+            FrameLayout frame = new FrameLayout(this);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+            params.rightMargin = 10;
+            mAddTextButton.setLayoutParams(params);
+            frame.addView(mNewTagEditText);
+            frame.addView(mAddTextButton);
+
+	        builder.setView(frame, true);
 	        dialog = builder.create();
+		mTagsDialog = dialog;
 			break;
 		}
 		return dialog;
