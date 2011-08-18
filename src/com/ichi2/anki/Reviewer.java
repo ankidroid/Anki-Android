@@ -436,7 +436,19 @@ public class Reviewer extends Activity implements IButtonListener{
             return true;
         }
     };
+    
+    
+    private View.OnTouchListener mGestureListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (gestureDetector.onTouchEvent(event)) {
+                return true;
+            }
+            return false;
+        }
+    };
 
+    
     private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
@@ -1433,15 +1445,7 @@ public class Reviewer extends Activity implements IButtonListener{
             webView.setOnLongClickListener(mLongClickHandler);
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
-        webView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
-                }
-            });
+        webView.setOnTouchListener(mGestureListener);
 
         mScaleInPercent = webView.getScale();
         if (mPrefTextSelection) {
@@ -1934,8 +1938,6 @@ public class Reviewer extends Activity implements IButtonListener{
             mNextCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);
             mNextCard.setVisibility(View.VISIBLE);
             mCardFrame.removeView(mCard);
-            mCard.setOnTouchListener(null);
-            mCard.setOnLongClickListener(null);
             mCard.destroy();
             mCard = mNextCard;
             mNextCard = createWebView();
