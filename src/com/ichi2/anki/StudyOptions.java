@@ -962,14 +962,12 @@ public class StudyOptions extends Activity {
         public void onClick(DialogInterface dialog, int which) {
         	if (mStatisticType == -1) {
         		mStatisticType = which;
-        		dialog.dismiss();
         		if (mStatisticType != Statistics.TYPE_DECK_SUMMARY) {
         			showDialog(DIALOG_STATISTIC_PERIOD);
         		} else {
         			openStatistics(0);
         		}
         	} else {
-        		dialog.dismiss();
         		openStatistics(which);
         	}
         }
@@ -1380,7 +1378,10 @@ public class StudyOptions extends Activity {
 	        builder.setNegativeButton(res.getString(R.string.cancel), null);
 
 	        Spinner spinner = new Spinner(this);
-	        spinner.setAdapter(ArrayAdapter.createFromResource(this, R.array.cram_review_order_labels, android.R.layout.simple_spinner_item));
+	        
+	        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.cram_review_order_labels, android.R.layout.simple_spinner_item);
+	        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	        spinner.setAdapter(adapter);
 	        spinner.setSelection(0);
 	        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 	            @Override

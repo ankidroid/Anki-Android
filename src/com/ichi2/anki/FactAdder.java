@@ -34,10 +34,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -74,7 +71,8 @@ import java.util.TreeSet;
 public class FactAdder extends Activity {
 
     private static final int DIALOG_MODEL_SELECT = 0;
-    private static final int DIALOG_TAGS = 1;
+    private static final int DIALOG_CARD_MODEL_SELECT = 1;
+    private static final int DIALOG_TAGS = 2;
 
     private static final String INTENT_CREATE_FLASHCARD = "org.openintents.indiclash.CREATE_FLASHCARD";
     private static final String INTENT_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -228,8 +226,7 @@ public class FactAdder extends Activity {
         mCardModelButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-            	recreateCardModelDialog();
-            	mCardModelDialog.show();
+		showDialog(DIALOG_CARD_MODEL_SELECT);
             }
 
         });
@@ -386,7 +383,8 @@ public class FactAdder extends Activity {
                     }
                 }
             });
-            return builder.create();
+            dialog = builder.create();
+            break;
 
         case DIALOG_TAGS:
 	        builder.setTitle(R.string.studyoptions_limit_select_tags);
@@ -453,6 +451,26 @@ public class FactAdder extends Activity {
 	        dialog = builder.create();
 		mTagsDialog = dialog;
 			break;
+
+        case DIALOG_CARD_MODEL_SELECT:
+        builder.setTitle(res.getString(R.string.select_card_model));
+        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) { 
+            	mSelectedCardModels.clear();
+            	mSelectedCardModels.putAll(mNewSelectedCardModels);
+            	cardModelsChanged();
+            }
+        });
+        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        mCardModelDialog = builder.create();
+        dialog = mCardModelDialog;
+	break;
+
 		}
 		return dialog;
 	}
@@ -497,6 +515,39 @@ public class FactAdder extends Activity {
 						}
 	                });
 			break;
+
+		case DIALOG_CARD_MODEL_SELECT:
+    	mCardModels = mDeck.cardModels(mNewFact);
+    	int size = mCardModels.size();
+    	String dialogItems[] = new String [size];
+        cardModelIds.clear();       
+    	int i = 0;
+        for (Long id2 : mCardModels.keySet()) {
+        	dialogItems[i] = mCardModels.get(id2).getName();
+        	cardModelIds.add(id2);
+            i++;
+        }
+    	boolean[] checkedItems = new boolean[size];
+        for (int j = 0; j < size; j++) {;
+		checkedItems[j] = mSelectedCardModels.containsKey(cardModelIds.get(j));
+        }
+        mNewSelectedCardModels.clear();
+        mNewSelectedCardModels.putAll(mSelectedCardModels);
+		ad.setMultiChoiceItems(dialogItems, checkedItems,
+                new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int which) {
+						long m = cardModelIds.get(which);
+						if (mNewSelectedCardModels.containsKey(m)) {
+							mNewSelectedCardModels.remove(m);
+						} else {
+							mNewSelectedCardModels.put(m, mCardModels.get(m));
+						}
+						mCardModelDialog.getButton(StyledDialog.BUTTON_POSITIVE).setEnabled(!mNewSelectedCardModels.isEmpty());
+					}
+                });
+		ad.getButton(StyledDialog.BUTTON_POSITIVE).setEnabled(!mNewSelectedCardModels.isEmpty());
+		break;
 		}
 	}
 
@@ -600,59 +651,6 @@ public class FactAdder extends Activity {
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(frame);
         }
-    }
-
-    private void recreateCardModelDialog() {
-    	Resources res = getResources();
-    	mCardModels = mDeck.cardModels(mNewFact);
-    	int size = mCardModels.size();
-    	String dialogItems[] = new String [size];
-        cardModelIds.clear();       
-    	int i = 0;
-        for (Long id : mCardModels.keySet()) {
-        	dialogItems[i] = mCardModels.get(id).getName();
-        	cardModelIds.add(id);
-            i++;
-        }
-        View contentView = getLayoutInflater().inflate(R.layout.fact_adder_card_model_list, null);
-        mCardModelListView = (ListView) contentView.findViewById(R.id.card_model_list);
-        mCardModelListView.setAdapter(new ArrayAdapter<String>(this, R.layout.dialog_check_item, dialogItems));
-        for (int j = 0; j < size; j++) {;
-        	mCardModelListView.setItemChecked(j, mSelectedCardModels.containsKey(cardModelIds.get(j)));
-        }
-        mNewSelectedCardModels.clear();
-        mNewSelectedCardModels.putAll(mSelectedCardModels);
-        mCardModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            	long m = cardModelIds.get(position);
-            	if (((CheckedTextView)view).isChecked()) {
-            		mNewSelectedCardModels.remove(m);
-                } else {
-                	mNewSelectedCardModels.put(m, mCardModels.get(m));
-                }
-           		mCardModelDialog.getButton(StyledDialog.BUTTON_POSITIVE).setEnabled(!mNewSelectedCardModels.isEmpty());
-            }
-        });
-        mCardModelListView.setItemsCanFocus(false);
-
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-        builder.setTitle(res.getString(R.string.select_card_model));
-        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) { 
-            	mSelectedCardModels.clear();
-            	mSelectedCardModels.putAll(mNewSelectedCardModels);
-            	cardModelsChanged();
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.setView(contentView);            	
-        mCardModelDialog = builder.create();
     }
 
 

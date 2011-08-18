@@ -669,10 +669,8 @@ public class DeckPicker extends Activity implements Runnable {
         public void onClick(DialogInterface dialog, int which) {
 			if (mStatisticType == -1 && which != Statistics.TYPE_DECK_SUMMARY) {
 				mStatisticType = which;
-        		dialog.dismiss();
            		showDialog(DIALOG_SELECT_STATISTICS_PERIOD);
         	} else {
-        		dialog.dismiss();
 		    	if (mFileList != null && mFileList.length > 0) {
 					String[] deckPaths = new String[mFileList.length];
 					int i = 0;

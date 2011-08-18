@@ -26,7 +26,6 @@ import com.ichi2.anki.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -77,12 +76,22 @@ public class StyledDialog extends Dialog {
         	mItemList.add(titel);
         }
         mListener = listener;
-        mListView.setOnItemClickListener(new OnItemClickListener() {
-    			@Override    
-    			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    					mListener.onClick(StyledDialog.this, position);
-    		    	}
-		    });
+    	if (type == 3) {
+	        mListView.setOnItemClickListener(new OnItemClickListener() {
+    				@Override    
+    				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    						mListener.onClick(StyledDialog.this, position);
+    			    	}
+			    });
+    	} else {
+	        mListView.setOnItemClickListener(new OnItemClickListener() {
+    				@Override    
+    				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    						mListener.onClick(StyledDialog.this, position);
+						StyledDialog.this.dismiss();
+    			    	}
+			    });
+    	}
     	switch (type) {
     	case 1:
     		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_nochoice, 0, mItemList);

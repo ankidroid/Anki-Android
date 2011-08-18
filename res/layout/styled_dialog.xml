@@ -94,8 +94,8 @@
         <ListView android:id="@+id/listview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dip"
-            android:paddingBottom="5dip" />
+            android:paddingTop="0dip"
+            android:paddingBottom="0dip" />
     </FrameLayout>
 
     <FrameLayout android:id="@+id/customPanel"
@@ -105,8 +105,10 @@
         <FrameLayout android:id="@+id/custom"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dip"
-            android:paddingBottom="0dip" />
+            android:paddingTop="4dip"
+            android:paddingBottom="0dip"
+            android:paddingLeft="2dip"
+            android:paddingRight="2dip"/>
     </FrameLayout>
 
     <LinearLayout android:id="@+id/buttonPanel"
@@ -118,7 +120,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="2dip"
+            android:paddingTop="3dip"
             android:paddingLeft="2dip"
             android:paddingRight="2dip">
             <!-- android:useLargestChild="true"-->
@@ -132,18 +134,21 @@
                 android:layout_gravity="left"
                 android:layout_weight="1"
                 android:maxLines="2"
+                style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <Button android:id="@+id/button3"
                 android:layout_width="0dip"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:maxLines="2"
+                style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <Button android:id="@+id/button2"
                 android:layout_width="0dip"
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 android:maxLines="2"
+                style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <LinearLayout android:id="@+id/rightSpacer"
                 android:layout_width="0dip"

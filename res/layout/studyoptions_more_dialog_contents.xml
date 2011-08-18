@@ -14,15 +14,18 @@
 		<Spinner
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
-			style="?android:attr/listChoiceIndicatorSingle"
 			android:id="@+id/studyoptions_new_card_order"
+			android:dropDownSelector="@android:layout/simple_spinner_dropdown_item"
 			android:entries="@array/studyoptions_more_new_card_order" />
 		<Spinner
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
 			android:id="@+id/studyoptions_new_card_schedule"
+			android:dropDownSelector="@android:layout/simple_spinner_dropdown_item"
 			android:entries="@array/studyoptions_more_new_card_schedule" />
-		<Spinner android:layout_width="fill_parent" android:id="@+id/studyoptions_rev_card_order" android:entries="@array/studyoptions_more_rev_card_order" android:layout_height="wrap_content"></Spinner>
+		<Spinner android:layout_width="fill_parent" android:id="@+id/studyoptions_rev_card_order" 
+					android:dropDownSelector="@android:layout/simple_spinner_dropdown_item"
+			android:entries="@array/studyoptions_more_rev_card_order" android:layout_height="wrap_content"></Spinner>
 		<Spinner
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"

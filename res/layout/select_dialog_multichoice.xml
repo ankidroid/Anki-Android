@@ -19,7 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:textAppearance="?android:attr/textAppearanceMedium"
     android:gravity="center_vertical"
     android:paddingLeft="12dip"
     android:paddingRight="7dip"
