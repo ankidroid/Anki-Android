@@ -1942,7 +1942,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mCard = mNextCard;
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
-            mCardFrame.addView(mNextCard);
+            mCardFrame.addView(mNextCard, 0);
         } else {
             mCard.loadDataWithBaseURL(baseUrl, card, "text/html", "utf-8", null);        	
         }
