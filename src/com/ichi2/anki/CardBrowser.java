@@ -71,7 +71,6 @@ public class CardBrowser extends Activity {
 	private SimpleAdapter mCardsAdapter;
 	private EditText mSearchEditText;
 
-	private StyledDialog mSelectOrderDialog;
 	private ProgressDialog mProgressDialog;
 	private boolean mUndoRedoDialogShowing = false;
 	private Card mSelectedCard;
@@ -90,6 +89,8 @@ public class CardBrowser extends Activity {
 	private static final int CONTEXT_MENU_SUSPEND = 1;
 	private static final int CONTEXT_MENU_DELETE = 2;
 	private static final int CONTEXT_MENU_DETAILS = 3;
+
+	private static final int DIALOG_ORDER = 0;
 
 	private static final int BACKGROUND_NORMAL = 0;
 	private static final int BACKGROUND_MARKED = 1;
@@ -216,7 +217,6 @@ public class CardBrowser extends Activity {
 
 		setTitle(mDeck.getDeckName());
 
-		initAllDialogs();
 		allTags = null;
 		mSelectedTags = new HashSet<String>();
 
@@ -429,7 +429,7 @@ public class CardBrowser extends Activity {
 			mTagsDialog.show();
 			return true;
 		case MENU_CHANGE_ORDER:
-			mSelectOrderDialog.show();
+			showDialog(DIALOG_ORDER);
 			return true;
 		}
 		return false;
@@ -450,24 +450,30 @@ public class CardBrowser extends Activity {
 		}
 	}
 
-	private void initAllDialogs() {
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		StyledDialog dialog = null;
 		Resources res = getResources();
 		StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
-		builder.setTitle(res
-				.getString(R.string.card_browser_change_display_order_title));
-		builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-		builder.setSingleChoiceItems(getResources().getStringArray(
-				R.array.card_browser_order_labels), mSelectedOrder,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						mSelectedOrder = whichButton;
-						mSelectOrderDialog.dismiss();
-						getCards();
-					}
-				});
-		mSelectOrderDialog = builder.create();
+		switch (id) {
+		case DIALOG_ORDER:
+			builder.setTitle(res
+					.getString(R.string.card_browser_change_display_order_title));
+			builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
+	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.card_browser_order_labels), mSelectedOrder, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface arg0, int which) {
+					mSelectedOrder = which;
+					getCards();
+				}
+	        });
+			dialog = builder.create();
+		}
+		return dialog;
 	}
+
 
 	private void recreateTagsDialog() {
 		Resources res = getResources();

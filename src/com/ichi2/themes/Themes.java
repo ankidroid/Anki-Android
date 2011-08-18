@@ -258,33 +258,35 @@ public class Themes {
 		setStyledDialogBackgrounds(main, buttonNumbers, false);
 	}
 	public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
-		// TODO: theme
-		((View) main.findViewById(R.id.topPanel)).setBackgroundResource(R.drawable.blue_popup_top_dark);
-		((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(R.drawable.blue_divider_horizontal_bright);
-		((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
-		((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_center_bright);
-		if (brightCustomPanelBackground) {
-			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_medium);			
-		} else {
-			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
+		switch (mCurrentTheme) {
+		case THEME_BLUE:
+			((View) main.findViewById(R.id.topPanel)).setBackgroundResource(R.drawable.blue_popup_top_dark);
+			((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(R.drawable.blue_divider_horizontal_bright);
+			((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
+			((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_center_bright);
+			if (brightCustomPanelBackground) {
+				((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_medium);			
+			} else {
+				((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
+			}
+			if (buttonNumbers == 0) {
+				((LinearLayout) main.findViewById(R.id.buttonPanel)).setVisibility(View.GONE);
+				if (((View) main.findViewById(R.id.customPanel)).getVisibility() != View.GONE) {
+	    		   ((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_dark);
+	    	   } else if (((View) main.findViewById(R.id.listViewPanel)).getVisibility() != View.GONE) {
+	    		   ((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_bright);
+	    	   } else if (((View) main.findViewById(R.id.contentPanel)).getVisibility() != View.GONE) {
+	    		   ((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_dark);
+	    	   }
+	       } else {
+	    	   ((View) main.findViewById(R.id.buttonPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_medium);
+	       }
+			break;
 		}
-
-		if (buttonNumbers == 0) {
-			((LinearLayout) main.findViewById(R.id.buttonPanel)).setVisibility(View.GONE);
-			if (((View) main.findViewById(R.id.customPanel)).getVisibility() != View.GONE) {
-    		   ((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_dark);
-    	   } else if (((View) main.findViewById(R.id.listViewPanel)).getVisibility() != View.GONE) {
-    		   ((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_bright);
-    	   } else if (((View) main.findViewById(R.id.contentPanel)).getVisibility() != View.GONE) {
-    		   ((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_dark);
-    	   }
-       } else {
-    	   ((View) main.findViewById(R.id.buttonPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_medium);
-       }
-       if (buttonNumbers > 1) {
-    	   main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
-    	   main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
-       }
+		if (buttonNumbers > 1) {
+			main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
+			main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
+		}
 	}
 
 }

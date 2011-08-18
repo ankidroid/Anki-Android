@@ -99,7 +99,7 @@ public class StyledDialog extends Dialog {
     		mListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
 	    	break;
     	case 2:
-    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_singlechoice, checkedItem, mItemList);
+    		mListAdapter = new ArrayAdapter(mContext, R.layout.select_dialog_singlechoice, 0, mItemList);
     		mListView.setAdapter(mListAdapter);
     		mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     		mListView.setItemChecked(checkedItem, true);
