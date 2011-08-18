@@ -39,7 +39,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -90,7 +89,6 @@ public class FactAdder extends Activity {
     private Button mModelButton;
     private Button mSwapButton;
     private Button mCardModelButton;
-    private ListView mCardModelListView;
     private Button mTags;
 
     private StyledDialog mCardModelDialog;
@@ -206,11 +204,17 @@ public class FactAdder extends Activity {
         mAddButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+            	boolean empty = true;
                 for (FieldEditText current : mEditFields) {
                     current.updateField();
+                    if (current.getText().length() != 0) {
+                    	empty = false;
+                    }
                 }
-                mNewFact.setTags(mFactTags);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mDeck, mNewFact, mSelectedCardModels));                
+                if (!empty) {
+                    mNewFact.setTags(mFactTags);
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mDeck, mNewFact, mSelectedCardModels));                	
+                }
             }
         });
 

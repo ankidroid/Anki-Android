@@ -465,8 +465,10 @@ public class CardBrowser extends Activity {
 	        builder.setSingleChoiceItems(getResources().getStringArray(R.array.card_browser_order_labels), mSelectedOrder, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface arg0, int which) {
-					mSelectedOrder = which;
-					getCards();
+					if (which != mSelectedOrder) {
+						mSelectedOrder = which;
+						getCards();						
+					}
 				}
 	        });
 			dialog = builder.create();
