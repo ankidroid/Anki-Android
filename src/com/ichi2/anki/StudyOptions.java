@@ -1937,9 +1937,10 @@ public class StudyOptions extends Activity {
     			@Override
     			public void onClick(DialogInterface dialog, int which) {
 				if (mWalWarning == AnkiDb.WAL_WARNING_SHOW) {
-			            new FeedbackElement(StudyOptions.this).createReport("WAL problem detected");
-		    	            mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
-    	        		    PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
+				        Log.e(AnkiDroidApp.TAG, "WAL problem detected");
+			            //new FeedbackElement(StudyOptions.this).createReport("WAL problem detected");
+		    	        //    mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
+    	        		//    PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
 				}
     			}
             });
