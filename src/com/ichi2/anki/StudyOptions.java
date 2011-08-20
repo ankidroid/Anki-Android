@@ -47,7 +47,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -337,6 +336,8 @@ public class StudyOptions extends Activity {
     private double mProgressAllLimit;
     private double mProgressMature;
     private double mProgressAll;
+
+    private boolean mIsClosing = false;
 
     /**
 * Callbacks for UI events
@@ -628,6 +629,7 @@ public class StudyOptions extends Activity {
         }
 
     	initAllContentViews();
+
     	updateValuesFromDeck();
     	showContentView();
         mToggleCram.setChecked(cramChecked);
@@ -1665,7 +1667,7 @@ public class StudyOptions extends Activity {
     private void updateValuesFromDeck() {
         Deck deck = AnkiDroidApp.deck();
         Resources res = getResources();
-        if (deck != null) {
+        if (deck != null && !mIsClosing) {
             // TODO: updateActives() from anqiqt/ui/main.py
             int dueCount = deck.getDueCount();
             int cardsCount = deck.getCardCount();
@@ -2330,7 +2332,7 @@ public class StudyOptions extends Activity {
     				            MetaDB.closeDB();
     				            finish();
     						}
-                });        		
+                });
         	}
 	    	hideDeckInformation();
             // }
@@ -2436,6 +2438,7 @@ public class StudyOptions extends Activity {
 
         @Override
         public void onPreExecute() {
+        	mIsClosing = true;
             mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
                     .getString(R.string.close_current_deck), true);
         }
@@ -2443,6 +2446,7 @@ public class StudyOptions extends Activity {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+        	mIsClosing = false;
         	if (mProgressDialog != null && mProgressDialog.isShowing()) {
         		mProgressDialog.dismiss();
         	}
