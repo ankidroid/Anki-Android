@@ -218,6 +218,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private boolean mIsDictionaryAvailable;
     private boolean mIsSelecting = false;
+    private boolean mTouchStarted = false;
 
     @SuppressWarnings("unused")
     private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
@@ -241,6 +242,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private WebView mCard;
     private WebView mNextCard;
     private FrameLayout mCardFrame;
+    private FrameLayout mTouchLayer;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
@@ -392,6 +394,22 @@ public class Reviewer extends Activity implements IButtonListener{
         }
     };
 
+
+    private final Handler longClickHandler = new Handler();
+    private final Runnable longClickTestRunnable = new Runnable() {
+        public void run() {
+        	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            vibratorManager.vibrate(50);
+            longClickHandler.postDelayed(startSelection, 300);
+        }
+    };
+    private final Runnable startSelection = new Runnable() {
+        public void run() {
+            selectAndCopyText();
+        }
+    };
+
+
     // Handler for the "show answer" button
     private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
@@ -426,25 +444,29 @@ public class Reviewer extends Activity implements IButtonListener{
     };
 
 
-    private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View view) {
-            Log.i(AnkiDroidApp.TAG, "onLongClick");
-            Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibratorManager.vibrate(50);
-            selectAndCopyText();
-            return true;
-        }
-    };
-    
-    
     private View.OnTouchListener mGestureListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (gestureDetector.onTouchEvent(event)) {
                 return true;
             }
-            return false;
+            if (mPrefTextSelection) {
+            	switch (event.getAction()) {
+            	case MotionEvent.ACTION_DOWN:
+            		longClickHandler.postDelayed(longClickTestRunnable, 500);
+            		mTouchStarted = true;
+            		break;
+            	case MotionEvent.ACTION_UP:
+            	case MotionEvent.ACTION_MOVE:
+                    if(mTouchStarted) {
+                    	mTouchStarted = false;
+                        longClickHandler.removeCallbacks(longClickTestRunnable);
+                    }
+            		break;
+            	}
+            }
+            mCard.dispatchTouchEvent(event);            	
+            return true;
         }
     };
 
@@ -1333,6 +1355,12 @@ public class Reviewer extends Activity implements IButtonListener{
         mMainLayout = findViewById(R.id.main_layout);
 
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
+        mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
+        mTouchLayer.setOnTouchListener(mGestureListener);
+        if (mPrefTextSelection) {
+            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        }
+
         mCardFrame.removeAllViews();
         mCard = createWebView();
         mCardFrame.addView(mCard);
@@ -1441,17 +1469,8 @@ public class Reviewer extends Activity implements IButtonListener{
             webView.setFocusableInTouchMode(false);
         }
         Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
-        if (mPrefTextSelection) {
-            webView.setOnLongClickListener(mLongClickHandler);
-            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        }
-        webView.setOnTouchListener(mGestureListener);
 
         mScaleInPercent = webView.getScale();
-        if (mPrefTextSelection) {
-            webView.setOnLongClickListener(mLongClickHandler);
-            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        }
         return webView;
     }
 
@@ -2606,7 +2625,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		       		executeCommand(mGestureTapLeft);
     				}    				
     			}
- 			} else {
+ 			} else if(mClipboard.getText().length() != 0){
  				mIsSelecting = false;
  			}
     		return false;
