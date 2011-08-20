@@ -219,6 +219,20 @@ public class BackupManager {
 	}
 
 
+	public static boolean removeDeck(File deckFile) {
+    	String deckName = deckFile.getName();
+    	File directory = new File(deckFile.getParent());
+    	for (File f : directory.listFiles()) {
+    		if (f.getName().startsWith(deckName)) {
+    			if (!removeDir(f)) {
+    				return false;
+    			}
+    		}
+    	}
+    	return true;
+	}
+
+
 	public static boolean deleteDeckBackups(String deckpath, int keepNumber) {
 		return deleteDeckBackups(getDeckBackups(new File(deckpath)), keepNumber);
 	}
@@ -237,7 +251,17 @@ public class BackupManager {
 
 
 	public static boolean deleteAllBackups() {
-		return DeckPicker.removeDir(getBackupDirectory());
+		return removeDir(getBackupDirectory());
 	}
 
+
+	public static boolean removeDir(File dir){
+		if (dir.isDirectory()){
+			File[] files = dir.listFiles();
+			for (File aktFile: files){
+				removeDir(aktFile);
+			}
+		}
+		return dir.delete();
+	}
 }
