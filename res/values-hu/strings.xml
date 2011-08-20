@@ -261,7 +261,7 @@
   <string name="cancel">Mégse</string>
   <string name="download_overwrite">Overwrite</string>
   <string name="download_cancel">Cancel Download</string>
-  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
+  <string name="download_message">Deck %1$s already exists in Local. Do you want to overwrite?</string>
   <string name="shared_decks">Megosztott paklik</string>
   <string name="updating">Frissítés...</string>
   <string name="loading_shared_decks">Elérhető megosztott paklik betöltése...</string>

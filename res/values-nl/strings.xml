@@ -261,7 +261,7 @@
   <string name="cancel">Annuleren</string>
   <string name="download_overwrite">Overschrijven</string>
   <string name="download_cancel">Download Annuleren</string>
-  <string name="download_message">Dek %1$s bestaat al in Local. Overschrijven?</string>
+  <string name="download_message">Deck %1$s already exists in Local. Do you want to overwrite?</string>
   <string name="shared_decks">Gedeelde Dekken</string>
   <string name="updating">Updaten...</string>
   <string name="loading_shared_decks">Bezig met laden beschikbare gedeelde decks...</string>

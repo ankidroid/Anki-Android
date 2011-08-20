@@ -230,7 +230,7 @@
   <string name="card_browser_card_details">Информация о карте</string>
   <string name="card_details_question">Вопрос</string>
   <string name="card_details_answer">Ответ</string>
-  <string name="card_details_due">Повтор</string>
+  <string name="card_details_due">Повторы</string>
   <string name="card_details_now">Сейчас</string>
   <string name="card_details_interval">Интервал</string>
   <string name="card_details_ease">Лёгкость</string>
@@ -292,7 +292,7 @@
   <string name="studyoptions_welcome_message">С AnkiDroid вы можете изучать большие объемы лексики или любого другого материала. AnkiDroid покажет вам карточки перед тем, как вы забудете их (по спец. алгоритму). Все карточки организованны в \"колоды\", их можно загрузить с сайта (общедоступные) или создать свою с AnkiDroid или Anki. Свои можно синхронизировать через AnkiWeb или копировать колоды в каталог %s.\nНажмите, чтобы узнать больше.</string>
   <string name="studyoptions_deck_not_loaded_title">Колода не может быть открыта</string>
   <string name="studyoptions_deck_not_loaded_message">Колода, которую вы выбрали, возможно повреждена. Пожалуйста, откройте ее с помощью десктоп-версии Anki и проверьте (или восстановите) для использования ее в Ankidroid.\n\nСейчас вы можете выбрать другую колоду или создать колоду с примерами с помощью клавиш ниже.</string>
-  <string name="studyoptions_no_external_storage_title">Нет доступа ко внешнему хранилищу</string>
+  <string name="studyoptions_no_external_storage_title">Нет доступа к внешнему хранилищу</string>
   <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
   <string name="studyoptions_load_other_deck">Открыть другие колоды</string>
   <string name="studyoptions_load_sample_deck">Открыть колоду с примерами</string>
