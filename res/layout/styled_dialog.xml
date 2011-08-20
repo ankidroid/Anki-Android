@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="3dip"
-            android:paddingBottom="3dip"
+            android:paddingBottom="0dip"
             android:paddingLeft="2dip"
             android:paddingRight="2dip">
             <!-- android:useLargestChild="true"-->

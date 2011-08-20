@@ -21,6 +21,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
@@ -57,6 +58,7 @@ public class Themes {
 	private static int mDialogBackgroundColor = 0;
 	private static int mToastBackground = 0;
 	private static int[] mCardbrowserItemBorder;
+	private static int[] mChartColors;
 	
 
 	public static void applyTheme(Context context) {
@@ -67,6 +69,7 @@ public class Themes {
 			case THEME_DEFAULT:
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
+				mChartColors = new int[] {android.R.color.white, android.R.color.black};
 				break;
 			case THEME_ANDROID_LIGHT:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_light;
@@ -77,6 +80,7 @@ public class Themes {
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mReviewerProgressbar = mProgressbarsYoungColor;
+				mChartColors = new int[] {Color.parseColor("#000000"), Color.parseColor("#ffffff")};
 				break;				
 			case THEME_BLUE:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
@@ -96,6 +100,7 @@ public class Themes {
 				mBackgroundDarkColor = R.color.background_dark_blue;
 				mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
 				mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
+				mChartColors = new int[] {Color.parseColor("#000000"), Color.parseColor("#ffffff")};
 				break;
 			}
 		}
@@ -289,4 +294,7 @@ public class Themes {
 		}
 	}
 
+	public static int[] getChartColors() {
+		return mChartColors;
+	}
 }

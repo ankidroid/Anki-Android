@@ -236,11 +236,13 @@ public class ChartBuilder extends Activity {
         }
         View mainView = getLayoutInflater().inflate(R.layout.statistics, null);
         setContentView(mainView);
-        Themes.setWallpaper(mainView, true);
+        int[] colors = Themes.getChartColors();
+        mainView.setBackgroundColor(colors[1]);
         mTitle = (TextView) findViewById(R.id.statistics_title);
         if (mChartView == null) {
             if (mFullScreen) {
                 mTitle.setText(Statistics.sTitle);
+                mTitle.setTextColor(colors[0]);
             } else {
                 setTitle(Statistics.sTitle);
                 mTitle.setVisibility(View.GONE);
@@ -263,10 +265,10 @@ public class ChartBuilder extends Activity {
             mRenderer.setYAxisMin(0);
             mRenderer.setXTitle(Statistics.axisLabels[0]);
             mRenderer.setYTitle(Statistics.axisLabels[1]);
-            mRenderer.setBackgroundColor(getResources().getColor(R.color.transparent)); 
-            mRenderer.setMarginsColor(getResources().getColor(R.color.transparent));
-//            mRenderer.setAxesColor(Color.BLACK);
-//            mRenderer.setLabelsColor(Color.BLACK);
+            mRenderer.setBackgroundColor(colors[1]);
+            mRenderer.setMarginsColor(colors[1]);
+            mRenderer.setAxesColor(colors[0]);
+            mRenderer.setLabelsColor(colors[0]);
             mRenderer.setZoomEnabled(false, false);
             if (Statistics.sSeriesList[0][0] > 100 || Statistics.sSeriesList[0][1] > 100 || Statistics.sSeriesList[0][Statistics.sSeriesList[0].length - 1] > 100) {
                 mRenderer.setMargins(new int[] { 15, 50, 25, 0 });
