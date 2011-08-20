@@ -33,14 +33,15 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
@@ -59,6 +60,8 @@ import android.widget.ToggleButton;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.tomgibara.android.veecheck.util.PrefSettings;
+import com.zeemote.zc.Controller;
+import com.zeemote.zc.ui.android.ControllerAndroidUi;
 
 import java.io.File;
 import java.io.IOException;
@@ -1934,9 +1937,10 @@ public class StudyOptions extends Activity {
     			@Override
     			public void onClick(DialogInterface dialog, int which) {
 				if (mWalWarning == AnkiDb.WAL_WARNING_SHOW) {
-			            new FeedbackElement(StudyOptions.this).createReport("WAL problem detected");
-		    	            mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
-    	        		    PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
+				        Log.e(AnkiDroidApp.TAG, "WAL problem detected");
+			            //new FeedbackElement(StudyOptions.this).createReport("WAL problem detected");
+		    	        //    mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
+    	        		//    PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
 				}
     			}
             });
