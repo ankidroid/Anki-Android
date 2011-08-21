@@ -2539,12 +2539,14 @@ public class Reviewer extends Activity implements IButtonListener{
         if (typeAnswer()) {
             mAnswerField.setEnabled(true);
         }
+        mTouchLayer.setVisibility(View.VISIBLE);
     }
 
 
     private void blockControls() {
         mCardFrame.setEnabled(false);
         mFlipCard.setEnabled(false);
+        mTouchLayer.setVisibility(View.INVISIBLE);
 
         switch (mCurrentEase) {
             case Card.EASE_FAILED:
