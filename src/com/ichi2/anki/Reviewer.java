@@ -216,8 +216,10 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mSpeakText;
     private boolean mPlaySoundsAtStart;
     private boolean mInvertedColors = false;
+    private int mCurrentBackgroundColor;
     private boolean mBlackWhiteboard = true;
     private boolean mSwapQA = false;
+    private boolean mNightMode = false;
     private boolean mIsLastCard = false;
     private boolean mShowProgressBars;
     private boolean mPrefUseTimer;
@@ -226,6 +228,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private boolean mIsDictionaryAvailable;
     private boolean mIsSelecting = false;
+    private boolean mTouchStarted = false;
 
     @SuppressWarnings("unused")
     private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
@@ -251,6 +254,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private WebView mCard;
     private WebView mNextCard;
     private FrameLayout mCardFrame;
+    private FrameLayout mTouchLayer;
     private TextView mTextBarRed;
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
@@ -297,6 +301,10 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mClosing = false;
 
     private long mSavedTimer = 0;
+
+    private File[] mCustomFontFiles;
+    private String mCustomDefaultFontCss;
+
 	/** 
 	 * Shake Detection
 	 */
@@ -418,6 +426,22 @@ public class Reviewer extends Activity implements IButtonListener{
         }
     };
 
+
+    private final Handler longClickHandler = new Handler();
+    private final Runnable longClickTestRunnable = new Runnable() {
+        public void run() {
+        	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            vibratorManager.vibrate(50);
+            longClickHandler.postDelayed(startSelection, 300);
+        }
+    };
+    private final Runnable startSelection = new Runnable() {
+        public void run() {
+            selectAndCopyText();
+        }
+    };
+
+
     // Handler for the "show answer" button
     private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
@@ -452,17 +476,33 @@ public class Reviewer extends Activity implements IButtonListener{
     };
 
 
-    private View.OnLongClickListener mLongClickHandler = new View.OnLongClickListener() {
+    private View.OnTouchListener mGestureListener = new View.OnTouchListener() {
         @Override
-        public boolean onLongClick(View view) {
-            Log.i(AnkiDroidApp.TAG, "onLongClick");
-            Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            vibratorManager.vibrate(50);
-            selectAndCopyText();
+        public boolean onTouch(View v, MotionEvent event) {
+            if (gestureDetector.onTouchEvent(event)) {
+                return true;
+            }
+            if (mPrefTextSelection) {
+            	switch (event.getAction()) {
+            	case MotionEvent.ACTION_DOWN:
+            		longClickHandler.postDelayed(longClickTestRunnable, 500);
+            		mTouchStarted = true;
+            		break;
+            	case MotionEvent.ACTION_UP:
+            	case MotionEvent.ACTION_MOVE:
+                    if(mTouchStarted) {
+                    	mTouchStarted = false;
+                        longClickHandler.removeCallbacks(longClickTestRunnable);
+                    }
+            		break;
+            	}
+            }
+            mCard.dispatchTouchEvent(event);            	
             return true;
         }
     };
 
+    
     private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
@@ -787,6 +827,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
             registerExternalStorageListener();
 
+      	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
             initLayout(R.layout.flashcard);
 
             switch (mDictionary) {
@@ -1424,12 +1465,21 @@ public class Reviewer extends Activity implements IButtonListener{
 		setInAnimation(false);
 
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
-        mCard = createWebView();
-        mNextCard = createWebView();
-        mNextCard.setVisibility(View.GONE);
+        mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
+        mTouchLayer.setOnTouchListener(mGestureListener);
+        if (mPrefTextSelection) {
+            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        }
+
         mCardFrame.removeAllViews();
+        mCard = createWebView();
         mCardFrame.addView(mCard);
-        mCardFrame.addView(mNextCard);
+        
+        if (mCustomFontFiles.length != 0) {
+            mNextCard = createWebView();
+            mNextCard.setVisibility(View.GONE);
+            mCardFrame.addView(mNextCard);        	
+        }
 
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
@@ -1442,23 +1492,6 @@ public class Reviewer extends Activity implements IButtonListener{
             mAccelCurrent = SensorManager.GRAVITY_EARTH;
             mAccelLast = SensorManager.GRAVITY_EARTH;	
         }
-
-        if (mPrefTextSelection) {
-			mCard.setOnLongClickListener(mLongClickHandler);            
-			mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-			mClipboard.setText("");
-        }
-        mCard.setOnTouchListener(new View.OnTouchListener() { 
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-				    if (gestureDetector.onTouchEvent(event)) {
-                    	return true;
-                	}
-                	return false;  	           
-				}
-           	});
-        
-        mScaleInPercent = mCard.getScale();
 
         mEase1 = (Button) findViewById(R.id.ease1);
         mEase1.setOnClickListener(mSelectEaseHandler);
@@ -1554,7 +1587,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private WebView createWebView() {
-        WebView webView = new WebView(getApplicationContext());
+        WebView webView = new WebView(this);
         webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
@@ -1567,34 +1600,6 @@ public class Reviewer extends Activity implements IButtonListener{
             webView.setFocusableInTouchMode(false);
         }
         Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
-        if (mPrefTextSelection) {
-            webView.setOnLongClickListener(mLongClickHandler);
-            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        }
-        webView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-        mScaleInPercent = webView.getScale();
-        if (mPrefTextSelection) {
-            webView.setOnLongClickListener(mLongClickHandler);
-            mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        }
-        webView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
-                }
-            });
 
         mScaleInPercent = webView.getScale();
         return webView;
@@ -1634,7 +1639,7 @@ public class Reviewer extends Activity implements IButtonListener{
             findViewById(R.id.progress_bars_border2).setBackgroundColor(fgColor);
             findViewById(R.id.progress_bars_back1).setBackgroundColor(bgColor);
             findViewById(R.id.progress_bars_back2).setBackgroundColor(bgColor);
-        }        
+        }
     }
 
 
@@ -1755,7 +1760,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
         mPrefTextSelection = preferences.getBoolean("textSelection", false);
         mDeckFilename = preferences.getString("deckFilename", "");
-        mInvertedColors = preferences.getBoolean("invertedColors", false);
+        mNightMode = preferences.getBoolean("invertedColors", false);
+    	mInvertedColors = mNightMode;
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mSwapQA = preferences.getBoolean("swapqa", false);
         mPrefUseRubySupport = preferences.getBoolean("useRubySupport", false);
@@ -2040,11 +2046,9 @@ public class Reviewer extends Activity implements IButtonListener{
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
             mBaseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
-            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mInvertedColors) + Model.invertColors(content, mInvertedColors);
+            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode) + Model.invertColors(content, mNightMode);
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
-            if (Themes.changeFlashcardBorder()) {
-                mMainLayout.setBackgroundColor(Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mInvertedColors)));            	
-            }
+            mCurrentBackgroundColor = Color.parseColor(myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mNightMode));
         } else {
         	mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             mBaseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
@@ -2085,7 +2089,7 @@ public class Reviewer extends Activity implements IButtonListener{
         } else {
         	content = question + answer;
         }
-        
+
         // In order to display the bold style correctly, we have to change
         // font-weight to 700
         content = content.replace("font-weight:600;", "font-weight:700;");
@@ -2144,14 +2148,25 @@ public class Reviewer extends Activity implements IButtonListener{
     public void fillFlashcard(boolean flip) {
     	if (!flip) {
 	        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-	        mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
-	        mNextCard.setVisibility(View.VISIBLE);
-	        mCardFrame.removeView(mCard);
-	        mCard.destroy();
-	        mCard = mNextCard;
-	        mNextCard = createWebView();
-	        mNextCard.setVisibility(View.GONE);
-	        mCardFrame.addView(mNextCard);
+	        if (mCustomFontFiles.length != 0) {
+	            mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
+	            mNextCard.setVisibility(View.VISIBLE);
+	            mCardFrame.removeView(mCard);
+	            mCard.destroy();
+	            mCard = mNextCard;
+	            mNextCard = createWebView();
+	            mNextCard.setVisibility(View.GONE);
+	            mCardFrame.addView(mNextCard, 0);
+	        } else {
+	            mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);        	
+	        }
+            if (Themes.changeFlashcardBorder()) {
+                mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
+                if (mCurrentBackgroundColor == Color.BLACK && !mInvertedColors) {
+                	mInvertedColors = true;
+                	invertColors();
+                }
+			}
     		if (!sDisplayAnswer) {
         		updateForNewCard();
         		if (mShowWhiteboard) {
@@ -2265,7 +2280,7 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private String getCustomFontsStyle() {
       StringBuilder builder = new StringBuilder();
-      for (File fontFile : Utils.getCustomFonts(getBaseContext())) {
+      for (File fontFile : mCustomFontFiles) {
         String fontFace = String.format(
             "@font-face {font-family: \"%s\"; src: url(\"file://%s\");}",
             Utils.removeExtension(fontFile.getName()), fontFile.getAbsolutePath());
@@ -2279,12 +2294,16 @@ public class Reviewer extends Activity implements IButtonListener{
 
     /** Returns the CSS used to set the default font. */
     private String getDefaultFontStyle() {
-        SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
-        String defaultFont = preferences.getString("defaultFont", null);
-        if (defaultFont == null || "".equals(defaultFont)) {
-            return "";
-        }
-        return "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";
+    	if (mCustomDefaultFontCss == null) {
+            SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
+            String defaultFont = preferences.getString("defaultFont", null);
+            if (defaultFont == null || "".equals(defaultFont)) {
+            	mCustomDefaultFontCss = "";
+            } else {
+                mCustomDefaultFontCss = "BODY .question, BODY .answer { font-family: '" + defaultFont + "' }\n";            	
+            }
+    	}
+    	return mCustomDefaultFontCss;
     }
 
 
@@ -2879,7 +2898,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		       		executeCommand(mGestureTapLeft);
     				}    				
     			}
- 			} else {
+ 			} else if(mClipboard.getText().length() != 0){
  				mIsSelecting = false;
  			}
     		return false;

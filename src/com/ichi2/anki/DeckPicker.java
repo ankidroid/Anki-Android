@@ -1070,7 +1070,8 @@ public class DeckPicker extends Activity implements Runnable {
             } else {
             	SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
                 if (!mPrefDeckPath.equals(preferences.getString("deckPath", AnkiDroidApp.getStorageDirectory())) || mPrefDeckOrder != Integer.parseInt(preferences.getString("deckOrder", "0"))) {
-                	populateDeckList(mPrefDeckPath);                }            	
+                	populateDeckList(mPrefDeckPath);
+                }            	
             }
         } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
         	populateDeckList(mPrefDeckPath);

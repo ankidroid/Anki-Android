@@ -262,7 +262,7 @@
   <string name="cancel">إلغاء</string>
   <string name="download_overwrite">Overwrite</string>
   <string name="download_cancel">Cancel Download</string>
-  <string name="download_message">Deck %1$s already exist in Local. Do you want to overwrite?</string>
+  <string name="download_message">Deck %1$s already exists in Local. Do you want to overwrite?</string>
   <string name="shared_decks">Shared Decks</string>
   <string name="updating">تحديث...</string>
   <string name="loading_shared_decks">Loading available shared decks...</string>

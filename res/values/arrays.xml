@@ -128,7 +128,7 @@
 		<item>1 week</item>
 		<item>1 month</item>
 		<item>3 months</item>
-		<item>6 month</item>
+		<item>6 months</item>
 		<item>1 year</item>
 	</string-array>
 		<string-array name="deck_order_labels">

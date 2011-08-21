@@ -125,7 +125,9 @@
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 		<FrameLayout android:id="@+id/flashcard"
-			android:longClickable="true"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"/>
+		<FrameLayout android:id="@+id/touch_layer"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"/>
 		<FrameLayout android:id="@+id/whiteboard"

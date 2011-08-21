@@ -326,6 +326,7 @@ public class Model {
     private void prepareColorForCardModels(boolean invertedColors) {
         CardModel myCardModel = null;
         String color = null;
+        mColorCardModelMap.clear();
         for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
             myCardModel = entry.getValue();
             color = invertColor(myCardModel.getLastFontColour(), invertedColors);
@@ -349,6 +350,7 @@ public class Model {
             mDisplayPercentage = percentage;
             mInvertedColor = invertedColors;
             prepareCSSForCardModels(invertedColors);
+            prepareColorForCardModels(invertedColors);
         }
         return mCssCardModelMap.get(myCardModelId);
     }

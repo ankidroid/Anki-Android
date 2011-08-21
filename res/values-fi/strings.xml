@@ -312,7 +312,7 @@
   <string name="menu_suspend_card">Keskeytä kortti</string>
   <string name="menu_bury_card">Piilota kortti</string>
   <string name="menu_edit_card">Muokkaa korttia</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_select">Valitse teksti</string>
   <string name="menu_search">Haku %1$s</string>
   <string name="menu_mark_card">Merkitse kortti</string>
   <string name="menu_marked">Merkitty</string>
