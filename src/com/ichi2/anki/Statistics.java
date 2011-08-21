@@ -18,13 +18,11 @@ package com.ichi2.anki;
 
 import java.util.Map.Entry;
 
-import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 
 public class Statistics {
     public static String[] axisLabels = { "", "" };
@@ -305,6 +303,15 @@ public class Statistics {
     }
 
 
+    public static double getFraction(double numerator, double denominator) {
+    	if (denominator == 0) {
+    		return 0;
+    	} else {
+    		return numerator / denominator;
+    	}
+    }
+
+
     private static String getHtmlDeckSummary(Context context) {
     	Resources res = context.getResources();
 
@@ -334,14 +341,14 @@ public class Statistics {
        	builder.append(res.getString(R.string.deck_summary_cards)).append(" <b>").append(Integer.toString(cardCount)).append("</b><br>");
        	builder.append(res.getString(R.string.deck_summary_facts)).append(" <b>").append(Integer.toString(sDeckSummaryValues.getAsInteger("factCount"))).append("</b><br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_card_age)).append("</b><br>");
-       	builder.append(res.getString(R.string.deck_summary_cards_mature)).append(" <b>").append(Integer.toString(matureCount)).append("</b> (").append(String.format("%.1f &#37;", 100.0d * (double)matureCount/cardCount)).append(")<br>");
-       	builder.append(res.getString(R.string.deck_summary_cards_young)).append(" <b>").append(Integer.toString(youngCount)).append("</b> (").append(String.format("%.1f &#37;", 100.0d * (double)youngCount/cardCount)).append(")<br>");
-       	builder.append(res.getString(R.string.deck_summary_cards_unseen)).append(" <b>").append(Integer.toString(unseenCount)).append("</b> (").append(String.format("%.1f &#37;", 100.0d * (double)unseenCount/cardCount)).append(")<br>");
-       	builder.append(res.getString(R.string.deck_summary_average_interval, (double)intervalSum / (cardCount - unseenCount))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_cards_mature)).append(" <b>").append(Integer.toString(matureCount)).append("</b> (").append(String.format("%.1f &#37;", 100.0d * getFraction(matureCount, cardCount))).append(")<br>");
+       	builder.append(res.getString(R.string.deck_summary_cards_young)).append(" <b>").append(Integer.toString(youngCount)).append("</b> (").append(String.format("%.1f &#37;", 100.0d * getFraction(youngCount, cardCount))).append(")<br>");
+       	builder.append(res.getString(R.string.deck_summary_cards_unseen)).append(" <b>").append(Integer.toString(unseenCount)).append("</b> (").append(String.format("%.1f &#37;", 100.0d * getFraction(unseenCount, cardCount))).append(")<br>");
+       	builder.append(res.getString(R.string.deck_summary_average_interval, getFraction(intervalSum, (cardCount - unseenCount)))).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_answers_correct)).append("</b><br>");
-       	builder.append(res.getString(R.string.deck_summary_answers_mature, 100.0d * (double)(repsMatCount - repsMatNoCount) / repsMatCount, "&#37;", repsMatCount - repsMatNoCount, repsMatCount)).append("<br>");
-       	builder.append(res.getString(R.string.deck_summary_answers_young, 100.0d * (double)(repsYoungCount - repsYoungNoCount) / repsYoungCount, "&#37;", repsYoungCount - repsYoungNoCount, repsYoungCount)).append("<br>");
-       	builder.append(res.getString(R.string.deck_summary_answers_firstseen, 100.0d * (double)(repsFirstCount - repsFirstNoCount) / repsFirstCount, "&#37;", repsFirstCount - repsFirstNoCount, repsFirstCount)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_answers_mature, 100.0d * getFraction(repsMatCount - repsMatNoCount, repsMatCount), "&#37;", repsMatCount - repsMatNoCount, repsMatCount)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_answers_young, 100.0d * getFraction(repsYoungCount - repsYoungNoCount, repsYoungCount), "&#37;", repsYoungCount - repsYoungNoCount, repsYoungCount)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_answers_firstseen, 100.0d * getFraction(repsFirstCount - repsFirstNoCount, repsFirstCount), "&#37;", repsFirstCount - repsFirstNoCount, repsFirstCount)).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_week)).append("</b><br>");
        	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, reviewsLastWeek / Math.min((double)deckAge, 7.0d))).append("<br>");
        	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, newsLastWeek / Math.min((double)deckAge, 7.0d))).append("<br>");
