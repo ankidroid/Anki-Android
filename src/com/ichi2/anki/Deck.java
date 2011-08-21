@@ -4652,6 +4652,9 @@ public class Deck {
 
         // Set the UTC offset.
         db.getDatabase().execSQL("UPDATE decks SET utcOffset=" + Utils.utcOffset());
+
+        // Set correct c
+        db.getDatabase().execSQL("UPDATE decks SET created = " + Utils.now());
     }
 
 
