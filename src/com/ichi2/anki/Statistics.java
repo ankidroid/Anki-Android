@@ -333,7 +333,10 @@ public class Statistics {
        	int reviewsLastYear = sDeckSummaryValues.getAsInteger("reviewsLastYear");
        	int newsLastYear = sDeckSummaryValues.getAsInteger("newsLastYear");
        	int deckAge = sDeckSummaryValues.getAsInteger("deckAge");
-
+       	int newPerDay = sDeckSummaryValues.getAsInteger("newPerDay");
+       	int revTomorrow = sDeckSummaryValues.getAsInteger("revTomorrow");
+       	int newTomorrow = sDeckSummaryValues.getAsInteger("newTomorrow");
+       	int timeTomorrow = sDeckSummaryValues.getAsInteger("timeTomorrow");
 
     	StringBuilder builder = new StringBuilder();
        	builder.append("<html><body text=\"#FFFFFF\">");
@@ -349,17 +352,22 @@ public class Statistics {
        	builder.append(res.getString(R.string.deck_summary_answers_mature, 100.0d * getFraction(repsMatCount - repsMatNoCount, repsMatCount), "&#37;", repsMatCount - repsMatNoCount, repsMatCount)).append("<br>");
        	builder.append(res.getString(R.string.deck_summary_answers_young, 100.0d * getFraction(repsYoungCount - repsYoungNoCount, repsYoungCount), "&#37;", repsYoungCount - repsYoungNoCount, repsYoungCount)).append("<br>");
        	builder.append(res.getString(R.string.deck_summary_answers_firstseen, 100.0d * getFraction(repsFirstCount - repsFirstNoCount, repsFirstCount), "&#37;", repsFirstCount - repsFirstNoCount, repsFirstCount)).append("<br>");
+       	builder.append("<br><b>").append(res.getString(R.string.deck_summary_forecast)).append("</b><br>");
+       	builder.append(res.getString(R.string.deck_summary_tomorrow_due, revTomorrow)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_tomorrow_new, newTomorrow)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_tomorrow_time, timeTomorrow)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_finished_in, (int)Math.ceil(getFraction(unseenCount, newPerDay)))).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_week)).append("</b><br>");
-       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, reviewsLastWeek / Math.min((double)deckAge, 7.0d))).append("<br>");
-       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, newsLastWeek / Math.min((double)deckAge, 7.0d))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(reviewsLastWeek, Math.min((double)deckAge, 7.0d)))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastWeek, Math.min((double)deckAge, 7.0d)))).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_month)).append("</b><br>");
-       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, reviewsLastMonth / Math.min((double)deckAge, 30.0d))).append("<br>");
-       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, newsLastMonth / Math.min((double)deckAge, 30.0d))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(reviewsLastMonth, Math.min((double)deckAge, 30.0d)))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastMonth, Math.min((double)deckAge, 30.0d)))).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_year)).append("</b><br>");
-       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, reviewsLastYear / Math.min((double)deckAge, 365.0d))).append("<br>");
-       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, newsLastYear / Math.min((double)deckAge, 365.0d))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(reviewsLastYear, Math.min((double)deckAge, 365.0d)))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastYear, Math.min((double)deckAge, 365.0d)))).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_total)).append("</b><br>");
-       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, (repsMatCount + repsYoungCount + repsFirstCount) /(double)deckAge)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(repsMatCount + repsYoungCount + repsFirstCount, deckAge))).append("<br>");
        	builder.append("</body></html>");
        	return builder.toString();
     }

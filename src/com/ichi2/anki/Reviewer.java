@@ -1827,7 +1827,7 @@ public class Reviewer extends Activity implements IButtonListener{
 		if (mCurrentCard != null && deck != null && deck.getScheduler().equals("reviewEarly")) {
 			double due = (mCurrentCard.getCombinedDue() - Utils.now()) / 86400.0;
 			if (due > 0.041) {
-	    		mChosenAnswer.setText(Utils.getReadableInterval(Reviewer.this, due, true));				
+	    		mChosenAnswer.setText(Utils.getReadableInterval(Reviewer.this, due, true, false));				
 			}
 		}
     }

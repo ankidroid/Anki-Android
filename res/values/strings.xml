@@ -635,6 +635,12 @@
 <string name="deck_summary_average_month">Average seen last month</string>
 <string name="deck_summary_average_year">Average seen last year</string>
 <string name="deck_summary_average_total">Average seen ever</string>
+<string name="deck_summary_forecast">Forecast</string>
+<string name="deck_summary_tomorrow_due">Tomorrow due: &lt;b&gt;%d&lt;/b&gt; cards</string>
+<string name="deck_summary_tomorrow_new">Tomorrow new: &lt;b&gt;%d&lt;/b&gt; cards</string>
+<string name="deck_summary_tomorrow_time">Estimated time tomorrow: &lt;b&gt;%d&lt;/b&gt; min.</string>
+<string name="deck_summary_finished_in">New cards finished in: &lt;b&gt;%d&lt;/b&gt; days</string>
+
 <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
 <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
 <string name="deck_summary_all_decks">All decks</string>

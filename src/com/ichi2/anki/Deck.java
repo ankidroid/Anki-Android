@@ -4653,7 +4653,7 @@ public class Deck {
         // Set the UTC offset.
         db.getDatabase().execSQL("UPDATE decks SET utcOffset=" + Utils.utcOffset());
 
-        // Set correct c
+        // Set correct creation time
         db.getDatabase().execSQL("UPDATE decks SET created = " + Utils.now());
     }
 
@@ -4710,7 +4710,15 @@ public class Deck {
             }
         }
     	values.put("deckAge", (int)((Utils.now() - created) / 86400));
-    	return values;
+    	values.put("newPerDay", mNewCardsPerDay);
+    	int failedCards = getFailedDelayedCount();
+        int revCards = getNextDueCards(1);
+        int newCards = getNextNewCards();
+        int eta = getETA(failedCards, revCards, newCards, true);
+        values.put("revTomorrow", failedCards + revCards);
+        values.put("newTomorrow", newCards);
+        values.put("timeTomorrow", eta);
+        return values;
     }
 
 
