@@ -128,22 +128,16 @@ public class Statistics {
     			for (Entry<String, Object> entry : values.valueSet()) {
     				if (entry.getKey().equals("deckAge")) {
     					if (sDeckSummaryValues.containsKey(entry.getKey())) {
-    						sDeckSummaryValues.put(entry.getKey(), Math.max(sDeckSummaryValues.getAsLong(entry.getKey()), (Integer) entry.getValue()));
+    						sDeckSummaryValues.put(entry.getKey(), Math.max(sDeckSummaryValues.getAsInteger(entry.getKey()), (Integer) entry.getValue()));
+    					} else {
+    						sDeckSummaryValues.put(entry.getKey(), (Integer) entry.getValue());   
+    					}
+    				} else {
+    					if (sDeckSummaryValues.containsKey(entry.getKey())) {
+    						sDeckSummaryValues.put(entry.getKey(), sDeckSummaryValues.getAsInteger(entry.getKey()) + (Integer) entry.getValue());
     					} else {
     						sDeckSummaryValues.put(entry.getKey(), (Integer) entry.getValue());   
     					}    					
-    				} else if (entry.getValue().getClass().getSimpleName().equals("Long")) {   					
-    					if (sDeckSummaryValues.containsKey(entry.getKey())) {
-    						sDeckSummaryValues.put(entry.getKey(), sDeckSummaryValues.getAsLong(entry.getKey()) + (Long) entry.getValue());
-    					} else {
-    						sDeckSummaryValues.put(entry.getKey(), (Long) entry.getValue());   
-    					}
-    				} else if (entry.getValue().getClass().getSimpleName().equals("Float")) {
-    					if (sDeckSummaryValues.containsKey(entry.getKey())) {
-    						sDeckSummaryValues.put(entry.getKey(), sDeckSummaryValues.getAsFloat(entry.getKey()) + (Float) entry.getValue());
-    					} else {
-    						sDeckSummaryValues.put(entry.getKey(), (Float) entry.getValue());   
-    					}
     				}
 				}
     		} else {
@@ -356,7 +350,7 @@ public class Statistics {
        	builder.append(res.getString(R.string.deck_summary_tomorrow_due, revTomorrow)).append("<br>");
        	builder.append(res.getString(R.string.deck_summary_tomorrow_new, newTomorrow)).append("<br>");
        	builder.append(res.getString(R.string.deck_summary_tomorrow_time, timeTomorrow)).append("<br>");
-       	builder.append(res.getString(R.string.deck_summary_finished_in, (int)Math.ceil(getFraction(unseenCount, newPerDay)))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_finished_in, (int)Math.round(getFraction(unseenCount, newPerDay)))).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_week)).append("</b><br>");
        	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(reviewsLastWeek, Math.min((double)deckAge, 7.0d)))).append("<br>");
        	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastWeek, Math.min((double)deckAge, 7.0d)))).append("<br>");

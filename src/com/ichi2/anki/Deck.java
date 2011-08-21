@@ -4661,42 +4661,42 @@ public class Deck {
     public ContentValues getDeckSummary() {
     	ContentValues values = new ContentValues();
 
-    	values.put("cardCount", getDB().queryScalar("SELECT count(*) FROM cards"));
-    	values.put("factCount", getDB().queryScalar("SELECT count(*) FROM facts"));
-    	values.put("matureCount", getDB().queryScalar("SELECT count(*) FROM cards WHERE interval >= 21"));
-    	values.put("unseenCount", getDB().queryScalar("SELECT count(*) FROM cards WHERE reps = 0"));
+    	values.put("cardCount", (int)getDB().queryScalar("SELECT count(*) FROM cards"));
+    	values.put("factCount", (int)getDB().queryScalar("SELECT count(*) FROM facts"));
+    	values.put("matureCount", (int)getDB().queryScalar("SELECT count(*) FROM cards WHERE interval >= 21"));
+    	values.put("unseenCount", (int)getDB().queryScalar("SELECT count(*) FROM cards WHERE reps = 0"));
         Cursor cursor = null;
         try {
             cursor = getDB().getDatabase().rawQuery("SELECT sum(interval) FROM cards WHERE reps > 0", null);
             if (cursor.moveToFirst()) {
-            	values.put("intervalSum", cursor.getFloat(0));            	
+            	values.put("intervalSum", (int)cursor.getLong(0));            	
             }
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-    	values.put("repsMatCount", getDB().queryScalar("SELECT (matureEase1 + matureEase2 + matureEase3 + matureEase4) FROM stats WHERE type = 0"));
-    	values.put("repsMatNoCount", getDB().queryScalar("SELECT (matureEase1) FROM stats WHERE type = 0"));
-    	values.put("repsYoungCount", getDB().queryScalar("SELECT (youngEase1 + youngEase2 + youngEase3 + youngEase4) FROM stats WHERE type = 0"));
-    	values.put("repsYoungNoCount", getDB().queryScalar("SELECT (youngEase1) FROM stats WHERE type = 0"));
-    	values.put("repsFirstCount", getDB().queryScalar("SELECT (newEase1 + newEase2 + newEase3 + newEase4) FROM stats WHERE type = 0"));
-    	values.put("repsFirstNoCount", getDB().queryScalar("SELECT (newEase1) FROM stats WHERE type = 0"));
+    	values.put("repsMatCount", (int)getDB().queryScalar("SELECT (matureEase1 + matureEase2 + matureEase3 + matureEase4) FROM stats WHERE type = 0"));
+    	values.put("repsMatNoCount", (int)getDB().queryScalar("SELECT (matureEase1) FROM stats WHERE type = 0"));
+    	values.put("repsYoungCount", (int)getDB().queryScalar("SELECT (youngEase1 + youngEase2 + youngEase3 + youngEase4) FROM stats WHERE type = 0"));
+    	values.put("repsYoungNoCount", (int)getDB().queryScalar("SELECT (youngEase1) FROM stats WHERE type = 0"));
+    	values.put("repsFirstCount", (int)getDB().queryScalar("SELECT (newEase1 + newEase2 + newEase3 + newEase4) FROM stats WHERE type = 0"));
+    	values.put("repsFirstNoCount", (int)getDB().queryScalar("SELECT (newEase1) FROM stats WHERE type = 0"));
 
         Date value = Utils.genToday(getUtcOffset() + (86400 * 7));
-    	values.put("reviewsLastWeek", getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+    	values.put("reviewsLastWeek", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
         		"SELECT sum(youngEase1 + youngEase2 + youngEase3 + youngEase4 + matureEase1 + matureEase2 + matureEase3 + matureEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
-    	values.put("newsLastWeek", getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+    	values.put("newsLastWeek", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
         		"SELECT sum(newEase1 + newEase2 + newEase3 + newEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
         value = Utils.genToday(getUtcOffset() + (86400 * 30));
-    	values.put("reviewsLastMonth", getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+    	values.put("reviewsLastMonth", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
         		"SELECT sum(youngEase1 + youngEase2 + youngEase3 + youngEase4 + matureEase1 + matureEase2 + matureEase3 + matureEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
-    	values.put("newsLastMonth", getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+    	values.put("newsLastMonth", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
         		"SELECT sum(newEase1 + newEase2 + newEase3 + newEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
         value = Utils.genToday(getUtcOffset() + (86400 * 365));
-    	values.put("reviewsLastYear", getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+    	values.put("reviewsLastYear", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
         		"SELECT sum(youngEase1 + youngEase2 + youngEase3 + youngEase4 + matureEase1 + matureEase2 + matureEase3 + matureEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
-    	values.put("newsLastYear", getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+    	values.put("newsLastYear", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
         		"SELECT sum(newEase1 + newEase2 + newEase3 + newEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
         Float created = 0.0f;
     	try {
@@ -4715,9 +4715,9 @@ public class Deck {
         int revCards = getNextDueCards(1);
         int newCards = getNextNewCards();
         int eta = getETA(failedCards, revCards, newCards, true);
-        values.put("revTomorrow", failedCards + revCards);
-        values.put("newTomorrow", newCards);
-        values.put("timeTomorrow", eta);
+        values.put("revTomorrow", (int)(failedCards + revCards));
+        values.put("newTomorrow", (int)newCards);
+        values.put("timeTomorrow", (int)eta);
         return values;
     }
 

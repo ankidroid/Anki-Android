@@ -830,7 +830,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mNightMode) {
             	mCurrentBackgroundColor = Themes.getNightModeCardBackground();
             } else {
-            	mCurrentBackgroundColor = Color.WHITE;
+            	mCurrentBackgroundColor = android.R.color.white;
             }
             
       	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
@@ -1627,7 +1627,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mTextBarBlue.setTextColor(res.getColor(R.color.textbar_blue_color_inv));
 
         if (Themes.getTheme() != Themes.THEME_BLUE) {
-            mMainLayout.setBackgroundResource(res.getColor(mCurrentBackgroundColor));
+            mMainLayout.setBackgroundResource(mCurrentBackgroundColor);
             mFlipCard.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
             mEase1.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
             mEase2.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
