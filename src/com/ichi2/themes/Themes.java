@@ -30,9 +30,9 @@ import android.widget.Toast;
 
 public class Themes {
 
-	private final static int THEME_DEFAULT = 0;
-	private final static int THEME_ANDROID_LIGHT = 1;
-	private final static int THEME_BLUE= 2;
+	public final static int THEME_DEFAULT = 0;
+	public final static int THEME_ANDROID_LIGHT = 1;
+	public final static int THEME_BLUE= 2;
 
 	public final static int CALLER_STUDYOPTIONS = 1;
 	public final static int CALLER_DECKPICKER_DECK = 3;
@@ -184,7 +184,7 @@ public class Themes {
 		case CALLER_REVIEWER:
 	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
 	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
-	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);	        
+	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
 			break;
 		case CALLER_FEEDBACK:
 			((TextView)view).setTextColor(mProgressbarsFrameColor);
@@ -211,15 +211,6 @@ public class Themes {
 		mWallpaper = 0;
 		mBackgroundColor = 0;
 		mToastBackground = 0;
-	}
-
-
-	public static boolean changeFlashcardBorder() {
-		switch (mCurrentTheme) {
-		case THEME_BLUE:
-			return false;
-		}
-		return true;
 	}
 
 
@@ -325,5 +316,15 @@ public class Themes {
 
 	public static int[] getChartColors() {
 		return mChartColors;
+	}
+
+
+	public static int getNightModeCardBackground() {
+		switch (mCurrentTheme) {
+		case THEME_BLUE:
+			return R.color.reviewer_night_card_background;
+		default:
+			return Color.BLACK;
+		}
 	}
 }

@@ -61,11 +61,14 @@
 	<color name="studyoptions_progressbar_background_blue">#cecfd6</color>
 	<color name="studyoptions_progressbar_young_blue">#8a8a8a</color>
 	<color name="reviewer_progressbar_session_blue">#a9a9a9</color>
+	<color name="studyoptions_progressbar_background_nightmode">#d7d7d7</color>
 
 	<color name="deckpicker_background">#c6cfd6</color>
 	<color name="deckpicker_progressbar_young_light">#999999</color>
 
 	<color name="reviewer_background">#c6cfd6</color>
+	<color name="reviewer_background_night">#19242e</color>	
+	<color name="reviewer_night_card_background">#0c1217</color>	
 	<color name="background_blue">#c6cfd6</color>
 	<color name="background_dark_blue">#10171d</color>
 	<color name="background_dialog_blue">#10171d</color>
