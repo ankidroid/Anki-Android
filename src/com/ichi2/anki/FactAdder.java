@@ -453,7 +453,7 @@ public class FactAdder extends Activity {
 
 	        builder.setView(frame, true);
 	        dialog = builder.create();
-		mTagsDialog = dialog;
+	        mTagsDialog = dialog;
 			break;
 
         case DIALOG_CARD_MODEL_SELECT:

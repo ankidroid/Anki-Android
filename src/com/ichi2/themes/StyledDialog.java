@@ -19,6 +19,7 @@
 package com.ichi2.themes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.ichi2.anki.R;
@@ -32,6 +33,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -131,8 +133,15 @@ public class StyledDialog extends Dialog {
 
 
     public void addMultiChoiceItems(String value, boolean checked) {
+    	boolean[] checkedItems = new boolean[mListView.getChildCount()];
+    	for (int i = 0; i < mListView.getChildCount(); i++) {
+    		checkedItems[i] = ((CheckedTextView)mListView.getChildAt(i)).isChecked();
+    	}
     	mItemList.add(0, value);
     	mListView.setItemChecked(0, true);
+    	for (int i = 1; i < mListView.getChildCount(); i++) {
+    		mListView.setItemChecked(i, checkedItems[i-1]);
+    	}
     	mListAdapter.notifyDataSetChanged();
     }
 

@@ -338,7 +338,7 @@ public class CardEditor extends Activity {
 
 	        builder.setView(frame, true);
 	        dialog = builder.create();
-		mTagsDialog = dialog;
+	        mTagsDialog = dialog;
 			break;
 		}
 		return dialog;
