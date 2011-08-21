@@ -1478,7 +1478,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mCustomFontFiles.length != 0) {
             mNextCard = createWebView();
             mNextCard.setVisibility(View.GONE);
-            mCardFrame.addView(mNextCard);        	
+            mCardFrame.addView(mNextCard, 0);        	
         }
 
         // Initialize swipe
@@ -2149,6 +2149,7 @@ public class Reviewer extends Activity implements IButtonListener{
     	if (!flip) {
 	        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 	        if (mCustomFontFiles.length != 0) {
+	            mNextCard.setBackgroundColor(mCurrentBackgroundColor);
 	            mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
 	            mNextCard.setVisibility(View.VISIBLE);
 	            mCardFrame.removeView(mCard);
@@ -2170,7 +2171,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		if (!sDisplayAnswer) {
         		updateForNewCard();
         		if (mShowWhiteboard) {
-    				mWhiteboard.clear();        			
+    				mWhiteboard.clear();
         		}
     		setNextCardAnimation(false);
     		}
