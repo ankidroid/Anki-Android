@@ -53,7 +53,8 @@
                 android:paddingRight="10dip"
                 android:src="@android:drawable/ic_dialog_info" />
             <TextView android:id="@+id/alertTitle"
-                style="?android:attr/textAppearanceLargeInverse"
+                android:textColor="#ffff"
+                android:textSize="22sp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:layout_width="fill_parent"
@@ -80,7 +81,8 @@
             android:paddingLeft="14dip"
             android:paddingRight="10dip">
             <TextView android:id="@+id/message"
-                style="?android:attr/textAppearanceMediumInverse"
+                android:textColor="#ffff"
+                android:textSize="18sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dip" />
@@ -93,6 +95,8 @@
         android:layout_weight="100">
         <ListView android:id="@+id/listview"
             android:layout_width="fill_parent"
+            android:background="#ffffff"
+            android:cacheColorHint="#ffffff"
             android:layout_height="wrap_content"
             android:paddingTop="0dip"
             android:paddingBottom="0dip" />

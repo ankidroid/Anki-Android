@@ -59,6 +59,14 @@ public class Themes {
 	private static int mToastBackground = 0;
 	private static int[] mCardbrowserItemBorder;
 	private static int[] mChartColors;
+	private static int mPopupTopDark;
+	private static int mPopupCenterDark;
+	private static int mPopupCenterBright;
+	private static int mPopupCenterMedium;
+	private static int mPopupBottomDark;
+	private static int mPopupBottomBright;
+	private static int mPopupBottomMedium;
+	private static int mDividerHorizontalBright;
 	
 
 	public static void applyTheme(Context context) {
@@ -70,6 +78,14 @@ public class Themes {
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mChartColors = new int[] {android.R.color.white, android.R.color.black};
+				mPopupTopDark = R.drawable.popup_top_dark;
+				mPopupCenterDark = R.drawable.popup_center_dark;
+				mPopupCenterBright = R.drawable.popup_center_bright;
+				mPopupCenterMedium = R.drawable.popup_center_medium;
+				mPopupBottomDark = R.drawable.popup_bottom_dark;
+				mPopupBottomBright = R.drawable.popup_bottom_bright;
+				mPopupBottomMedium = R.drawable.popup_bottom_medium;
+				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				break;
 			case THEME_ANDROID_LIGHT:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_light;
@@ -81,6 +97,14 @@ public class Themes {
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mReviewerProgressbar = mProgressbarsYoungColor;
 				mChartColors = new int[] {Color.parseColor("#000000"), Color.parseColor("#ffffff")};
+				mPopupTopDark = R.drawable.popup_top_dark;
+				mPopupCenterDark = R.drawable.popup_center_dark;
+				mPopupCenterBright = R.drawable.popup_center_bright;
+				mPopupCenterMedium = R.drawable.popup_center_medium;
+				mPopupBottomDark = R.drawable.popup_bottom_dark;
+				mPopupBottomBright = R.drawable.popup_bottom_bright;
+				mPopupBottomMedium = R.drawable.popup_bottom_medium;
+				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				break;				
 			case THEME_BLUE:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
@@ -101,14 +125,23 @@ public class Themes {
 				mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
 				mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
 				mChartColors = new int[] {Color.parseColor("#000000"), Color.parseColor("#ffffff")};
+				mPopupTopDark = R.drawable.blue_popup_top_dark;
+				mPopupCenterDark = R.drawable.blue_popup_center_dark;
+				mPopupCenterBright = R.drawable.blue_popup_center_bright;
+				mPopupCenterMedium = R.drawable.blue_popup_center_medium;
+				mPopupBottomDark = R.drawable.blue_popup_bottom_dark;
+				mPopupBottomBright = R.drawable.blue_popup_bottom_bright;
+				mPopupBottomMedium = R.drawable.blue_popup_bottom_medium;
+				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				break;
 			}
 		}
 		switch (mCurrentTheme) {
 		case THEME_DEFAULT:
+			context.setTheme(R.style.Theme_Black);
 			break;
 		case THEME_ANDROID_LIGHT:
-			context.setTheme(android.R.style.Theme_Light);
+			context.setTheme(R.style.Theme_Light);
 			break;
 		case THEME_BLUE:
 			context.setTheme(R.style.Theme_Blue);
@@ -263,31 +296,27 @@ public class Themes {
 		setStyledDialogBackgrounds(main, buttonNumbers, false);
 	}
 	public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
-		switch (mCurrentTheme) {
-		case THEME_BLUE:
-			((View) main.findViewById(R.id.topPanel)).setBackgroundResource(R.drawable.blue_popup_top_dark);
-			((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(R.drawable.blue_divider_horizontal_bright);
-			((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
-			((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_center_bright);
-			if (brightCustomPanelBackground) {
-				((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_medium);			
-			} else {
-				((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_center_dark);
-			}
-			if (buttonNumbers == 0) {
-				((LinearLayout) main.findViewById(R.id.buttonPanel)).setVisibility(View.GONE);
-				if (((View) main.findViewById(R.id.customPanel)).getVisibility() != View.GONE) {
-	    		   ((View) main.findViewById(R.id.customPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_dark);
-	    	   } else if (((View) main.findViewById(R.id.listViewPanel)).getVisibility() != View.GONE) {
-	    		   ((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_bright);
-	    	   } else if (((View) main.findViewById(R.id.contentPanel)).getVisibility() != View.GONE) {
-	    		   ((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_dark);
-	    	   }
-	       } else {
-	    	   ((View) main.findViewById(R.id.buttonPanel)).setBackgroundResource(R.drawable.blue_popup_bottom_medium);
-	       }
-			break;
+		((View) main.findViewById(R.id.topPanel)).setBackgroundResource(mPopupTopDark);
+		((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
+		((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(mPopupCenterDark);
+		((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(mPopupCenterBright);
+		if (brightCustomPanelBackground) {
+			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(mPopupCenterMedium);			
+		} else {
+			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(mPopupCenterDark);
 		}
+		if (buttonNumbers == 0) {
+			((LinearLayout) main.findViewById(R.id.buttonPanel)).setVisibility(View.GONE);
+			if (((View) main.findViewById(R.id.customPanel)).getVisibility() != View.GONE) {
+    		   ((View) main.findViewById(R.id.customPanel)).setBackgroundResource(mPopupBottomDark);
+    	   } else if (((View) main.findViewById(R.id.listViewPanel)).getVisibility() != View.GONE) {
+    		   ((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(mPopupBottomBright);
+    	   } else if (((View) main.findViewById(R.id.contentPanel)).getVisibility() != View.GONE) {
+    		   ((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(mPopupBottomDark);
+    	   }
+        } else {
+    	   ((View) main.findViewById(R.id.buttonPanel)).setBackgroundResource(mPopupBottomMedium);
+        }
 		if (buttonNumbers > 1) {
 			main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
 			main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);

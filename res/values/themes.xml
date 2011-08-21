@@ -20,12 +20,13 @@
         <item name="android:dropDownListViewStyle">@style/Blue.Widget.ListView.DropDown</item>
         <item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>
         <item name="android:dividerHorizontal">@drawable/blue_divider_horizontal_bright</item>
-        <item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
+
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="android:dropdownListPreferredItemHeight">40dip</item>
 
         <item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>
         <item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>
+        <item name="listItemBackgroundDrawable">@drawable/blue_list_selector_background</item>
 
 
 
@@ -36,10 +37,6 @@
     <item name="android:panelBackground">@drawable/blue_menu_background</item>
         <item name="android:panelFullBackground">@drawable/blue_menu_background_fill_parent_width</item>-->
 	</style>
-<!-- 
-    <style name="Blue.Theme.ExpandedMenu" parent="Theme.ExpandedMenu">
-        <item name="android:listViewStyle">@style/Blue.Widget.ListView.Menu</item>
-    </style>-->
 
     <style name="StyledDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowBackground">@color/transparent</item>
@@ -47,4 +44,11 @@
         <item name="android:windowIsFloating">true</item>
     </style>
 
+	<style name="Theme_Light" parent="android:style/Theme.Light">
+		<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
+	</style>
+
+	<style name="Theme_Black" parent="android:style/Theme">
+		<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
+	</style>
 </resources>
