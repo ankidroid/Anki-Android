@@ -2625,7 +2625,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		       		executeCommand(mGestureTapLeft);
     				}    				
     			}
- 			} else if(mClipboard.getText().length() != 0){
+ 			} else if(mClipboard != null && mClipboard.getText() != null && mClipboard.getText().length() != 0){
  				mIsSelecting = false;
  			}
     		return false;
