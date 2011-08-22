@@ -327,7 +327,6 @@ public class Statistics {
        	int reviewsLastYear = sDeckSummaryValues.getAsInteger("reviewsLastYear");
        	int newsLastYear = sDeckSummaryValues.getAsInteger("newsLastYear");
        	int deckAge = sDeckSummaryValues.getAsInteger("deckAge");
-       	int newPerDay = sDeckSummaryValues.getAsInteger("newPerDay");
        	int revTomorrow = sDeckSummaryValues.getAsInteger("revTomorrow");
        	int newTomorrow = sDeckSummaryValues.getAsInteger("newTomorrow");
        	int timeTomorrow = sDeckSummaryValues.getAsInteger("timeTomorrow");
@@ -350,7 +349,7 @@ public class Statistics {
        	builder.append(res.getString(R.string.deck_summary_tomorrow_due, revTomorrow)).append("<br>");
        	builder.append(res.getString(R.string.deck_summary_tomorrow_new, newTomorrow)).append("<br>");
        	builder.append(res.getString(R.string.deck_summary_tomorrow_time, timeTomorrow)).append("<br>");
-       	builder.append(res.getString(R.string.deck_summary_finished_in, (int)Math.round(getFraction(unseenCount, newPerDay)))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_finished_in, (int)Math.round(getFraction(unseenCount, newTomorrow)))).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_week)).append("</b><br>");
        	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(reviewsLastWeek, Math.min((double)deckAge, 7.0d)))).append("<br>");
        	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastWeek, Math.min((double)deckAge, 7.0d)))).append("<br>");

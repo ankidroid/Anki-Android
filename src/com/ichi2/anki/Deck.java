@@ -4710,10 +4710,9 @@ public class Deck {
             }
         }
     	values.put("deckAge", (int)((Utils.now() - created) / 86400));
-    	values.put("newPerDay", mNewCardsPerDay);
-    	int failedCards = getFailedDelayedCount();
-        int revCards = getNextDueCards(1);
-        int newCards = getNextNewCards();
+    	int failedCards = getFailedDelayedCount() + getFailedSoonCount();
+        int revCards = getNextDueCards(1) + getNextDueCards(0);
+        int newCards = Math.min(mNewCardsPerDay, (int)getDB().queryScalar("SELECT count(*) FROM cards WHERE reps = 0 AND type >= 0"));
         int eta = getETA(failedCards, revCards, newCards, true);
         values.put("revTomorrow", (int)(failedCards + revCards));
         values.put("newTomorrow", (int)newCards);
