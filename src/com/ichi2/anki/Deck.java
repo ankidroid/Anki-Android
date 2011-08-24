@@ -232,13 +232,14 @@ public class Deck {
     public static synchronized Deck openDeck(String path) throws SQLException {
         return openDeck(path, true);
     }
-
-
     public static synchronized Deck openDeck(String path, boolean rebuild) throws SQLException {
+    	return openDeck(path, true, false);
+    }
+    public static synchronized Deck openDeck(String path, boolean rebuild, boolean forceDeleteJournalMode) throws SQLException {
         Deck deck = null;
         Cursor cursor = null;
         Log.i(AnkiDroidApp.TAG, "openDeck - Opening database " + path);
-        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path);
+        AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(path, forceDeleteJournalMode);
 
         try {
             // Read in deck table columns
@@ -1191,6 +1192,15 @@ public class Deck {
     	}
     }
 
+    public double getSessionProgress() {
+    	int done = mDailyStats.getReps();
+    	int total = done + mFailedSoonCount + mRevCount + mNewCountToday;
+    	if (hasFinishScheduler()) {
+    		return 1.0d;
+    	} else {
+    		return (double) done / total;    		
+    	}
+    }
 
     public int getETA() {
     	if (mDailyStats.getReps() >= 10 && mDailyStats.getAverageTime() > 0) {
@@ -2232,36 +2242,6 @@ public class Deck {
     }
 
 
-    public static double getLastModified(String deckPath) {
-        double value;
-        Cursor cursor = null;
-        // Log.i(AnkiDroidApp.TAG, "Deck - getLastModified from deck = " + deckPath);
-
-        boolean dbAlreadyOpened = AnkiDatabaseManager.isDatabaseOpen(deckPath);
-
-        try {
-            cursor = AnkiDatabaseManager.getDatabase(deckPath).getDatabase().rawQuery(
-                    "SELECT modified" + " FROM decks" + " LIMIT 1", null);
-
-            if (!cursor.moveToFirst()) {
-                value = -1;
-            } else {
-                value = cursor.getDouble(0);
-            }
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-
-        if (!dbAlreadyOpened) {
-            AnkiDatabaseManager.closeDatabase(deckPath);
-        }
-
-        return value;
-    }
-
-
     /*
      * Getters and Setters for deck properties NOTE: The setters flushMod()
      * *********************************************************
@@ -3019,8 +2999,11 @@ public class Deck {
         updateFactTags(new long[] { scard.getFact().getId() });
         card.setLeechFlag(true);
         if (getBool("suspendLeeches")) {
-            suspendCards(new long[] { card.getId() });
-            card.setSuspendedFlag(true);
+        	String undoName = UNDO_TYPE_SUSPEND_CARD;
+        	setUndoStart(undoName);
+        	suspendCards(new long[] { card.getId() });
+        	card.setSuspendedFlag(true);
+        	setUndoEnd(undoName);
         }
         reset();
     }
@@ -4669,5 +4652,94 @@ public class Deck {
 
         // Set the UTC offset.
         db.getDatabase().execSQL("UPDATE decks SET utcOffset=" + Utils.utcOffset());
+
+        // Set correct creation time
+        db.getDatabase().execSQL("UPDATE decks SET created = " + Utils.now());
     }
+
+
+    public ContentValues getDeckSummary() {
+    	ContentValues values = new ContentValues();
+
+    	values.put("cardCount", (int)getDB().queryScalar("SELECT count(*) FROM cards"));
+    	values.put("factCount", (int)getDB().queryScalar("SELECT count(*) FROM facts"));
+    	values.put("matureCount", (int)getDB().queryScalar("SELECT count(*) FROM cards WHERE interval >= 21"));
+    	values.put("unseenCount", (int)getDB().queryScalar("SELECT count(*) FROM cards WHERE reps = 0"));
+        Cursor cursor = null;
+        try {
+            cursor = getDB().getDatabase().rawQuery("SELECT sum(interval) FROM cards WHERE reps > 0", null);
+            if (cursor.moveToFirst()) {
+            	values.put("intervalSum", (int)cursor.getLong(0));            	
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    	values.put("repsMatCount", (int)getDB().queryScalar("SELECT (matureEase1 + matureEase2 + matureEase3 + matureEase4) FROM stats WHERE type = 0"));
+    	values.put("repsMatNoCount", (int)getDB().queryScalar("SELECT (matureEase1) FROM stats WHERE type = 0"));
+    	values.put("repsYoungCount", (int)getDB().queryScalar("SELECT (youngEase1 + youngEase2 + youngEase3 + youngEase4) FROM stats WHERE type = 0"));
+    	values.put("repsYoungNoCount", (int)getDB().queryScalar("SELECT (youngEase1) FROM stats WHERE type = 0"));
+    	values.put("repsFirstCount", (int)getDB().queryScalar("SELECT (newEase1 + newEase2 + newEase3 + newEase4) FROM stats WHERE type = 0"));
+    	values.put("repsFirstNoCount", (int)getDB().queryScalar("SELECT (newEase1) FROM stats WHERE type = 0"));
+
+        Date value = Utils.genToday(getUtcOffset() + (86400 * 7));
+    	values.put("reviewsLastWeek", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+        		"SELECT sum(youngEase1 + youngEase2 + youngEase3 + youngEase4 + matureEase1 + matureEase2 + matureEase3 + matureEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
+    	values.put("newsLastWeek", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+        		"SELECT sum(newEase1 + newEase2 + newEase3 + newEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
+        value = Utils.genToday(getUtcOffset() + (86400 * 30));
+    	values.put("reviewsLastMonth", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+        		"SELECT sum(youngEase1 + youngEase2 + youngEase3 + youngEase4 + matureEase1 + matureEase2 + matureEase3 + matureEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
+    	values.put("newsLastMonth", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+        		"SELECT sum(newEase1 + newEase2 + newEase3 + newEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
+        value = Utils.genToday(getUtcOffset() + (86400 * 365));
+    	values.put("reviewsLastYear", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+        		"SELECT sum(youngEase1 + youngEase2 + youngEase3 + youngEase4 + matureEase1 + matureEase2 + matureEase3 + matureEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
+    	values.put("newsLastYear", (int)getDB().queryScalar(String.format(Utils.ENGLISH_LOCALE,
+        		"SELECT sum(newEase1 + newEase2 + newEase3 + newEase4) FROM stats WHERE day > \'%tF\' AND type = %d", value, Stats.STATS_DAY)));
+        Float created = 0.0f;
+    	try {
+            cursor = getDB().getDatabase().rawQuery("SELECT created FROM decks", null);
+            if (cursor.moveToFirst()) {
+            	created = cursor.getFloat(0);
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    	values.put("deckAge", (int)((Utils.now() - created) / 86400));
+    	int failedCards = getFailedDelayedCount() + getFailedSoonCount();
+        int revCards = getNextDueCards(1) + getNextDueCards(0);
+        int newCards = Math.min(mNewCardsPerDay, (int)getDB().queryScalar("SELECT count(*) FROM cards WHERE reps = 0 AND type >= 0"));
+        int eta = getETA(failedCards, revCards, newCards, true);
+        values.put("revTomorrow", (int)(failedCards + revCards));
+        values.put("newTomorrow", (int)newCards);
+        values.put("timeTomorrow", (int)eta);
+        return values;
+    }
+
+
+    public static boolean isWalEnabled(String deckPath) {
+        Cursor cursor = null;
+        boolean value = false;
+        boolean dbAlreadyOpened = AnkiDatabaseManager.isDatabaseOpen(deckPath);
+        try {
+            cursor = AnkiDatabaseManager.getDatabase(deckPath).getDatabase().rawQuery(
+            		"PRAGMA journal_mode", null);
+        	if (cursor.moveToFirst()) {
+        		value = cursor.getString(0).equalsIgnoreCase("wal");
+        	}
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        if (!dbAlreadyOpened) {
+            AnkiDatabaseManager.closeDatabase(deckPath);
+        }
+        return value;
+    }
+
 }

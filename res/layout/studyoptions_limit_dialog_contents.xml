@@ -35,8 +35,8 @@
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
 					android:gravity="center_vertical"
+					android:textColor="#ffff"
 					android:text="@string/studyoptions_session"
-					android:textColor="#ffffff"
 					android:textSize="14dip"/>
 			</LinearLayout>
 		    <LinearLayout
@@ -54,10 +54,10 @@
 					android:checked="false"/>
 				<TextView
 					android:layout_width="fill_parent"
+					android:textColor="#ffff"
 					android:layout_height="wrap_content"
 					android:gravity="center_vertical"
 					android:text="@string/studyoptions_tag"
-					android:textColor="#ffffff"
 					android:textSize="14dip"/>
 			</LinearLayout>
 		</LinearLayout>

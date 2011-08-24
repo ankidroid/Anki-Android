@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 /**
@@ -147,6 +148,14 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
                 commit();
             }
 
+
+			@Override
+			public android.content.SharedPreferences.Editor putStringSet(
+					String arg0, Set<String> arg1) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
         }
 
 
@@ -215,6 +224,13 @@ public class DeckPreferences extends PreferenceActivity implements OnSharedPrefe
         public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
             listeners.remove(listener);
         }
+
+
+		@Override
+		public Set<String> getStringSet(String arg0, Set<String> arg1) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
     }
 

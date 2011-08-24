@@ -2,10 +2,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/studyoptions_main"
-	android:visibility="invisible"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:padding="5dp"
 	android:gravity="center"
 	android:orientation="vertical">
 	<RelativeLayout
@@ -16,43 +14,48 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
-			android:drawableLeft="@drawable/help"/>
+			android:layout_margin="2dp"
+			android:drawableLeft="@drawable/help_inverted"/>
 	</RelativeLayout>	
 	<LinearLayout
 		android:orientation="vertical"
 		android:gravity="center"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-		<TextView 
-			android:id="@+id/studyoptions_deck_name" 
+		<TextView
+			android:id="@+id/studyoptions_deck_name"
 			android:textSize="26sp" 
-			android:textStyle="bold" 
-			android:textColor="#ffffff"
-			android:ellipsize="end" 
+			android:textStyle="bold"
+			android:ellipsize="end"
 			android:lines="2"
 			android:gravity="center" 
 			android:layout_width="fill_parent" 
-			android:layout_height="wrap_content" 
-			android:text="Deck name"/>
+			android:layout_height="wrap_content"
+			android:visibility="invisible"
+			android:layout_marginBottom="8dp" 
+			android:text=""/>
 		<LinearLayout
-			android:layout_marginTop="3dp"		
+			android:id="@+id/studyoptions_statistic_field" 
 			android:orientation="vertical"
 			android:gravity="center"
 			android:layout_gravity="center"
+			android:layout_marginBottom="8dp"
 			android:layout_width="wrap_content"
+			android:visibility="invisible"
 			android:layout_height="wrap_content">
 			<LinearLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
 				<FrameLayout 
-					android:background="@color/progressbar_border_inverted"
+					android:id="@+id/studyoptions_progressbar1_border"
+					android:background="@color/studyoptions_progressbar_frame_default"
 					android:layout_width="fill_parent"
 					android:layout_height="5dp"
 					android:padding="0.5dip"
 					android:layout_marginBottom="3dp">	
 					<FrameLayout android:id="@+id/studyoptions_bars_max"
-						android:background="@color/progressbar_background_inverted"
+						android:background="@color/studyoptions_progressbar_background_default"
 						android:layout_width="fill_parent"
 						android:layout_height="fill_parent">
 						<View android:id="@+id/studyoptions_daily_bar"
@@ -62,13 +65,15 @@
 					</FrameLayout>
 				</FrameLayout>
 				<FrameLayout
-					android:background="@color/progressbar_border_inverted"
+					android:id="@+id/studyoptions_progressbar2_border"
+					android:background="@color/studyoptions_progressbar_frame_default"
 					android:layout_width="fill_parent"
 					android:layout_height="5dp"
 					android:padding="0.5dip"
 					android:layout_marginBottom="3dp">	
 					<FrameLayout 
-						android:background="@color/progressbar_background_inverted"
+						android:id="@+id/studyoptions_progressbar2_content"
+						android:background="@color/studyoptions_progressbar_background_default"
 						android:layout_width="fill_parent"
 						android:layout_height="fill_parent">
 						<View android:id="@+id/studyoptions_mature_bar"
@@ -78,50 +83,52 @@
 					</FrameLayout>
 				</FrameLayout>
 				<FrameLayout android:id="@+id/studyoptions_global_limit_bars"
-					android:background="@color/progressbar_border_inverted"
+					android:background="@color/studyoptions_progressbar_frame_default"
 					android:layout_width="fill_parent"
 					android:layout_height="5dp"
 					android:padding="0.5dip"
 					android:visibility="gone"
 					android:layout_marginBottom="3dp">	
-					<LinearLayout 
-						android:background="@color/progressbar_background_inverted"
+					<LinearLayout
+						android:id="@+id/studyoptions_global_limit_bars_content"
+						android:background="@color/studyoptions_progressbar_background_default"
 						android:layout_width="fill_parent"
 						android:layout_height="fill_parent">
 						<View android:id="@+id/studyoptions_global_mat_limit_bar"
 							android:layout_width="0dip"
 							android:layout_height="fill_parent"
-							android:background="#CDCDCD"/>
+							android:background="@color/studyoptions_progressbar_mature_default"/>
 						<View android:id="@+id/studyoptions_global_limit_bar"
 							android:layout_width="0dip"
 							android:layout_height="fill_parent"
-							android:background="#8d8d8d" />
+							android:background="@color/studyoptions_progressbar_young_default" />
 					</LinearLayout>
 				</FrameLayout>
 				<FrameLayout
-					android:background="@color/progressbar_border_inverted"
+					android:id="@+id/studyoptions_progressbar4_border"
+					android:background="@color/studyoptions_progressbar_frame_default"
 					android:layout_width="fill_parent"
 					android:layout_height="5dp"
 					android:padding="0.5dip">	
 					<LinearLayout 
-						android:background="@color/progressbar_background_inverted"
+						android:id="@+id/studyoptions_progressbar4_content"
+						android:background="@color/studyoptions_progressbar_background_default"
 						android:layout_width="fill_parent"
 						android:layout_height="fill_parent">
 						<View android:id="@+id/studyoptions_global_mat_bar"
 							android:layout_width="0dip"
 							android:layout_height="fill_parent"
-							android:background="#CDCDCD"/>
+							android:background="@color/studyoptions_progressbar_mature_default"/>
 						<View android:id="@+id/studyoptions_global_bar"
 							android:layout_width="0dip"
 							android:layout_height="fill_parent"
-							android:background="#8d8d8d" />
+							android:background="@color/studyoptions_progressbar_young_default" />
 					</LinearLayout>
 				</FrameLayout>
 			</LinearLayout>	
 			<TableLayout
 				android:id="@+id/table"
-				android:layout_marginTop="18dp"		
-				android:layout_marginBottom="15dp"		
+				android:layout_marginTop="10dp"		
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_horizontal">
@@ -129,61 +136,53 @@
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/studyoptions_reviews_due"
-						android:textColor="#ffffff"/>
+						android:text="@string/studyoptions_reviews_due"/>
 					<TextView 
 						android:id="@+id/studyoptions_reviews_due"
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="4dp"
 						android:gravity="right"
-						android:text="0"
-						android:textColor="#ffffff"/>
+						android:text=""/>
 				</TableRow>
 				<TableRow>
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/studyoptions_new_today"
-						android:textColor="#ffffff"/>
+						android:text="@string/studyoptions_new_today"/>
 					<TextView 
 						android:id="@+id/studyoptions_new_today"
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="4dp"
 						android:gravity="right"
-						android:text="0"
-						android:textColor="#ffffff"/>
+						android:text=""/>
 				</TableRow>
 				<TableRow>
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/studyoptions_new_total"
-						android:textColor="#ffffff"/>
+						android:text="@string/studyoptions_new_total"/>
 					<TextView 
 						android:id="@+id/studyoptions_new_total"
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="4dp"
 						android:gravity="right"
-						android:text="0"
-						android:textColor="#ffffff"/>
+						android:text=""/>
 				</TableRow>
 				<TableRow>
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/studyoptions_eta"
-						android:textColor="#ffffff"/>
+						android:text="@string/studyoptions_eta"/>
 					<TextView 
 						android:id="@+id/studyoptions_eta"
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="4dp"
 						android:gravity="right"
-						android:text="-"
-						android:textColor="#ffffff"/>
+						android:text="-"/>
 				</TableRow>
 			</TableLayout>
 		</LinearLayout>
@@ -193,6 +192,7 @@
 			<Button 
 				android:id="@+id/studyoptions_start"
          		android:layout_height="fill_parent"
+				android:paddingLeft="15dip"	
 	         	android:layout_width="0dip"
     	     	android:layout_weight="3"
 				android:text="@string/studyoptions_start"
@@ -202,7 +202,7 @@
 				android:orientation="vertical"
 				android:layout_width="0dip"
 				android:layout_height="wrap_content">
-				<ToggleButton 
+				<ToggleButton
 					android:id="@+id/studyoptions_limit" 
 					android:layout_height="0dip"
          			android:layout_width="fill_parent"
@@ -220,26 +220,44 @@
 		</LinearLayout>
 		<LinearLayout
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="45dip">
 			<Button android:id="@+id/studyoptions_statistics"
    		     	android:layout_height="fill_parent"
+				android:drawableLeft="@drawable/ic_chart"
+				android:paddingLeft="10dip"	
+				style="?android:attr/buttonStyleSmall"
    		     	android:layout_width="0dip"
    		     	android:layout_weight="1"
 				android:text="@string/statistics"/>
 			<Button
+				android:drawableLeft="@drawable/ic_cards"
+				android:paddingLeft="10dip"	
 				android:id="@+id/studyoptions_card_browser"
 				android:layout_width="0dip" 
+			style="?android:attr/buttonStyleSmall"
 				android:layout_height="fill_parent"
 				android:layout_weight="1" 
 				android:text="@string/card_browser"/> 
 		</LinearLayout>
 		<LinearLayout
+			android:id="@+id/studyoptions_bottom"
+			android:gravity="center_vertical"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:layout_marginTop="6dp"
+			android:layout_marginBottom="8dp">
 			<CheckBox 
 				android:id="@+id/studyoptions_night_mode"
 				android:text="@string/studyoptions_night_mode"
 				android:textSize="14dip"
+				android:layout_weight="1"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"/>
+			<CheckBox
+				android:id="@+id/studyoptions_swap"
+				android:text="@string/studyoptions_swap_qa"
+				android:textSize="14dip"
+				android:layout_weight="1"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"/>
 		</LinearLayout>

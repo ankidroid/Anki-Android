@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+	android:gravity="center"
+	android:layout_marginBottom="5dip"
+	android:orientation="vertical">
+	<TextView
+		android:layout_alignParentTop="true"
+		android:layout_marginTop="10dip"
+		android:layout_height="wrap_content"
+		android:textStyle="bold"
+		android:visibility="gone"
+		android:textSize="28dip"
+		android:gravity="center"
+		android:layout_width="fill_parent"
+		android:id="@+id/studyoptions_nodeck_title" />
+	<ScrollView
+		android:layout_below="@+id/studyoptions_nodeck_title"
+		android:layout_above="@+id/studyoptions_nodeck_buttons"
+		android:layout_marginTop="5dip"
+		android:layout_marginLeft="5dip"
+		android:layout_marginRight="5dip"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"> 
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:paddingLeft="20dip"
+			android:paddingRight="20dip"
+			android:id="@+id/studyoptions_nodeck_message" />
+	</ScrollView>
+	<LinearLayout
+		android:id="@+id/studyoptions_nodeck_buttons"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:paddingRight="10dip"
+		android:paddingLeft="10dip"
+		android:orientation="vertical"
+		android:layout_alignParentBottom="true"
+		android:layout_marginTop="10dip">
+		<Button
+       		android:layout_height="fill_parent"
+       		android:layout_width="fill_parent"
+         	android:layout_gravity="center"
+			android:gravity="center"
+			android:id="@+id/studyoptions_load_sample_deck"
+			android:text="@string/studyoptions_load_sample_deck" />
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:orientation="horizontal">
+			<Button
+    	     	android:layout_height="wrap_content"
+    	     	android:layout_width="0dip"
+	   	      	android:layout_weight="1"
+   		      	android:layout_gravity="center"
+				android:gravity="center"
+				android:id="@+id/studyoptions_load_other_deck"
+				android:text="@string/studyoptions_load_other_deck" />
+			<Button
+       		  	android:layout_height="fill_parent"
+       			android:layout_width="0dip"
+        	 	android:layout_weight="1"
+       			android:layout_gravity="center"
+				android:gravity="center"
+				android:id="@+id/studyoptions_download_deck"
+				android:text="@string/menu_download_deck" />
+		</LinearLayout>
+	</LinearLayout>
+</RelativeLayout>

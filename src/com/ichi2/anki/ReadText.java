@@ -18,8 +18,10 @@ package com.ichi2.anki;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import com.ichi2.themes.StyledDialog;
+
 import android.speech.tts.TextToSpeech;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -86,7 +88,7 @@ public class ReadText {
 
         // Otherwise ask 
         Resources res = mReviewer.getResources();
-        AlertDialog.Builder builder = new AlertDialog.Builder(mReviewer);
+        StyledDialog.Builder builder = new StyledDialog.Builder(mReviewer);
         if (availableTtsLocales.size() == 0) {
         	builder.setTitle(res.getString(R.string.no_tts_available_title));
             builder.setMessage(res.getString(R.string.no_tts_available_message));
@@ -103,7 +105,7 @@ public class ReadText {
                 dialogItems.add(availableTtsLocales.get(i)[1]);
                 dialogIds.add(availableTtsLocales.get(i)[0]);
             }
-            CharSequence[] items = new CharSequence[dialogItems.size()];
+            String[] items = new String[dialogItems.size()];
             dialogItems.toArray(items);
 
             builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -114,8 +116,7 @@ public class ReadText {
     			}
             });        	
         }
-        AlertDialog alert = builder.create();
-        alert.show();
+        builder.create().show();
     }
 
 

@@ -15,26 +15,39 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.text.method.KeyListener;
+import android.text.style.StrikethroughSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.Fact.Field;
+import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.Arrays;
@@ -58,7 +71,9 @@ import org.amr.arabic.ArabicUtilities;
  */
 public class CardEditor extends Activity {
 
-    /**
+	private static final int DIALOG_TAGS = 0;
+
+	/**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private BroadcastReceiver mUnmountReceiver = null;
@@ -79,8 +94,8 @@ public class CardEditor extends Activity {
     private HashSet<String> mSelectedTags;
     private String mFactTags;
     private EditText mNewTagEditText;
-    private AlertDialog mTagsDialog;
-    private AlertDialog mAddNewTag;
+    private ImageView mAddTextButton;
+    private StyledDialog mTagsDialog;
     
     private boolean mPrefFixArabic;
 
@@ -90,13 +105,17 @@ public class CardEditor extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         registerExternalStorageListener();
 
-        setContentView(R.layout.card_editor);
+        View mainView = getLayoutInflater().inflate(R.layout.card_editor, null);
+        setContentView(mainView);
+        Themes.setWallpaper(mainView);
 
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
+        Themes.setTextViewStyle(mFieldsLayoutContainer);
 
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
@@ -127,10 +146,16 @@ public class CardEditor extends Activity {
         while (iter.hasNext()) {
             FieldEditText newTextbox = new FieldEditText(this, iter.next());
             TextView label = newTextbox.getLabel();
+            ImageView circle = newTextbox.getCircle();
             mEditFields.add(newTextbox);
-
+            FrameLayout frame = new FrameLayout(this);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+            params.rightMargin = 10;
+            circle.setLayoutParams(params);
+            frame.addView(newTextbox);
+            frame.addView(circle);
             mFieldsLayoutContainer.addView(label);
-            mFieldsLayoutContainer.addView(newTextbox);
+            mFieldsLayoutContainer.addView(frame);
         }
 
         mFactTags = mEditorFact.getTags();
@@ -139,10 +164,7 @@ public class CardEditor extends Activity {
 
             @Override
             public void onClick(View v) {
-                recreateTagsDialog();
-                if (!mTagsDialog.isShowing()) {
-                    mTagsDialog.show();                    
-                }
+            	showDialog(DIALOG_TAGS);
             }
 
         });
@@ -182,8 +204,6 @@ public class CardEditor extends Activity {
             }
 
         });
-
-        initDialogs();
     }
 
 
@@ -243,137 +263,265 @@ public class CardEditor extends Activity {
     private void closeCardEditor() {
         finish();
         if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-            MyAnimation.slide(CardEditor.this, MyAnimation.RIGHT);
+            ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.RIGHT);
         }    
     }
 
 
-    private void initDialogs() {
-        Resources res = getResources();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View contentView = getLayoutInflater().inflate(R.layout.edittext, null);
-        //contentView.setBackgroundColor(res.getColor(R.color.background));
-        mNewTagEditText =  (EditText) contentView.findViewById(R.id.edit_text);
-        builder.setView(contentView);
-        builder.setTitle(res.getString(R.string.add_new_tag));
-        builder.setPositiveButton(res.getString(R.string.add), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String tag = mNewTagEditText.getText().toString();
-                if (tag.equals("")) {
-                    recreateTagsDialog();
-                    mTagsDialog.show();
-                } else {
-                    String[] oldTags = allTags;
-                    mFactTags += ", " + tag;
-                    Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
-                    allTags = new String[oldTags.length + 1];
-                    allTags[0] = oldTags[0]; 
-                    allTags[1] = tag;
-                    for (int i = 1; i < oldTags.length; i++) {
-                        allTags[i + 1] = oldTags[i];
-                    }
-                    recreateTagsDialog();
-                    mTagsDialog.show();                    
-                }
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                recreateTagsDialog();
-                mTagsDialog.show();
-            }
-        });
-        builder.setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                recreateTagsDialog();
-                mTagsDialog.show();
-            }
-        });
-        mAddNewTag = builder.create();
-    }
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		StyledDialog dialog = null;
+		Resources res = getResources();
+		StyledDialog.Builder builder = new StyledDialog.Builder(this);
+
+		switch (id) {
+		case DIALOG_TAGS:
+	        builder.setTitle(R.string.studyoptions_limit_select_tags);
+	        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+	                String tags = mSelectedTags.toString();
+	                mFactTags = tags.substring(1, tags.length() - 1);
+	                mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
+	            }
+	        });
+        	builder.setNegativeButton(res.getString(R.string.cancel), null);
+
+        	mNewTagEditText =  (EditText) new EditText(this);
+        	mNewTagEditText.setHint(R.string.add_new_tag);
+
+        	InputFilter filter = new InputFilter() { 
+        	    public CharSequence filter(CharSequence source, int start, int end, 
+        	        Spanned dest, int dstart, int dend) {
+        	        for (int i = start; i < end; i++) { 
+        	            if (!(Character.isLetterOrDigit(source.charAt(i)))) { 
+        	                return "";
+        	            }
+        	        }
+        	        return null; 
+        	    } 
+        	}; 
+        	mNewTagEditText.setFilters(new InputFilter[]{filter});
+
+        	ImageView mAddTextButton = new ImageView(this);
+        	mAddTextButton.setImageResource(R.drawable.ic_addtag);
+        	mAddTextButton.setOnClickListener(new View.OnClickListener() {
+        		@Override
+        		public void onClick(View v) {
+    				String tag = mNewTagEditText.getText().toString();
+    				if (tag.length() != 0) {
+    					for (int i = 0; i < allTags.length; i++) {
+    						if (allTags[i].equalsIgnoreCase(tag)) {
+    							mNewTagEditText.setText("");
+    							return;
+    						}
+    					}
+                        mSelectedTags.add(tag);
+                        String[] oldTags = allTags;
+        	            allTags = new String[oldTags.length + 1];
+        	            allTags[0] = tag;
+        	            for (int j = 1; j < allTags.length; j++) {
+        	                allTags[j] = oldTags[j - 1];
+        	            }
+        				mTagsDialog.addMultiChoiceItems(tag, true);
+						mNewTagEditText.setText("");    					
+        			}
+        		}
+        	});
+
+            FrameLayout frame = new FrameLayout(this);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+            params.rightMargin = 10;
+            mAddTextButton.setLayoutParams(params);
+            frame.addView(mNewTagEditText);
+            frame.addView(mAddTextButton);
+
+	        builder.setView(frame, true);
+	        dialog = builder.create();
+	        mTagsDialog = dialog;
+			break;
+		}
+		return dialog;
+	}
 
 
-    private void recreateTagsDialog() {
-        Resources res = getResources();
-        if (allTags == null) {
-            String[] oldTags = AnkiDroidApp.deck().allUserTags();
-            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
-            allTags = new String[oldTags.length + 1];
-            allTags[0] = res.getString(R.string.add_new_tag);
-            for (int i = 0; i < oldTags.length; i++) {
-                allTags[i + 1] = oldTags[i];
-            }
-        }
-        mSelectedTags.clear();
-        List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
-        int length = allTags.length;
-        boolean[] checked = new boolean[length];
-        for (int i = 0; i < length; i++) {
-            String tag = allTags[i];
-            if (selectedList.contains(tag)) {
-                checked[i] = true;
-                mSelectedTags.add(tag);
-            }
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.studyoptions_limit_select_tags);
-        builder.setMultiChoiceItems(allTags, checked,
-                new DialogInterface.OnMultiChoiceClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-                        if (whichButton == 0) {
-                            dialog.dismiss();
-                            mNewTagEditText.setText("");
-                            mAddNewTag.show();
-                        } else {
-                            String tag = allTags[whichButton];
-                            if (!isChecked) {
-                                Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                                mSelectedTags.remove(tag);
-                            } else {
-                                Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                                mSelectedTags.add(tag);
-                            }                              
-                        }
-                    }
-                });
-        builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String tags = mSelectedTags.toString();
-                mFactTags = tags.substring(1, tags.length() - 1);
-                mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), null);
-        mTagsDialog = builder.create();
-    }
+    @Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		StyledDialog ad = (StyledDialog)dialog;
+		switch (id) {
+		case DIALOG_TAGS:
+	        if (allTags == null) {
+	            String[] oldTags = AnkiDroidApp.deck().allUserTags();
+	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(oldTags));            
+	            allTags = new String[oldTags.length];
+	            for (int i = 0; i < oldTags.length; i++) {
+	                allTags[i] = oldTags[i];
+	            }
+	        }
+	        mSelectedTags.clear();
+	        List<String> selectedList = Arrays.asList(Utils.parseTags(mFactTags));
+	        int length = allTags.length;
+	        boolean[] checked = new boolean[length];
+	        for (int i = 0; i < length; i++) {
+	            String tag = allTags[i];
+	            if (selectedList.contains(tag)) {
+	                checked[i] = true;
+	                mSelectedTags.add(tag);
+	            }
+	        }
+			ad.setMultiChoiceItems(allTags, checked,
+	                new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface arg0, int which) {
+	                        String tag = allTags[which];
+	                        if (mSelectedTags.contains(tag)) {
+	                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+	                            mSelectedTags.remove(tag);
+	                        } else {
+	                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+	                            mSelectedTags.add(tag);
+	                        }
+						}
+	                });
+			break;
+		}
+	}
+
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
-    private class FieldEditText extends EditText {
+    public class FieldEditText extends EditText {
 
         private Field mPairField;
-
+        private WordRow mCutString[];
+        private boolean mCutMode = false;
+        private ImageView mCircle;
+        private KeyListener mKeyListener;
+        private Context mContext;
 
         public FieldEditText(Context context, Field pairField) {
             super(context);
+            mContext = context;
             mPairField = pairField;
             if(mPrefFixArabic) {
             	this.setText(ArabicUtilities.reshapeSentence(pairField.getValue()));
             } else {
             	this.setText(pairField.getValue());
-            }
+            }       	
+            this.setMinimumWidth(400);
+            this.setOnClickListener(new View.OnClickListener() {
+
+            	@Override
+            	public void onClick(View v) {
+            		if (mCutMode) {
+            			updateSpannables();
+            		}
+            	}
+            });
         }
+
+
+        @Override
+        public void onTextChanged(CharSequence text, int start, int before, int after) {
+      		super.onTextChanged(text, start, before, after);
+      		if (mCircle != null) {
+      			int visibility = mCircle.getVisibility();
+          		if (text.length() == 0) {
+          			if (visibility == View.VISIBLE) {
+              			mCircle.setVisibility(View.GONE);
+              			mCircle.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 300, 0));          				
+          			}
+          		} else if (visibility == View.GONE) {
+          			mCircle.setVisibility(View.VISIBLE);
+          			mCircle.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 300, 0));      			
+          		}      			
+      		}
+        }
+
+
+        private void splitText(String text) {
+        	final String[] separatorsReg = new String[] {",", ";", "\\.", "\\)", "\\(", "\\]", "\\[", ":"}; 
+        	final String[] separators = new String[] {",", ";", ".", ")", "(", "]", "[", ":"};
+
+        	for (int i = 0; i < separatorsReg.length; i++) {
+        		text = text.replaceAll(separatorsReg[i], " " + separators[i] + " ");
+        	}
+        	String[] cut = text.split("\\s");
+        	mCutString = new WordRow[cut.length];
+        	for (int i = 0; i < cut.length; i++) {
+        		mCutString[i] = new WordRow(cut[i]);
+            	for (String s : separators) {
+            		if (s.equals(cut[i])) {
+            			mCutString[i].mEnabled = true;
+            			break;
+            		}
+            	}
+        	}
+  		}
 
 
         public TextView getLabel() {
             TextView label = new TextView(this.getContext());
             label.setText(mPairField.getFieldModel().getName());
             return label;
+        }
+
+
+        public ImageView getCircle() {          
+        	mCircle = new ImageView(this.getContext());
+        	mCircle.setImageResource(R.drawable.ic_circle_normal);
+        	mCircle.setOnClickListener(new View.OnClickListener() {
+        		@Override
+        		public void onClick(View v) {
+        			ImageView view = ((ImageView)v);
+        			Editable editText = FieldEditText.this.getText();
+        			if (mCutMode) {
+            			view.setImageResource(R.drawable.ic_circle_normal);
+            			FieldEditText.this.setKeyListener(mKeyListener);
+            			FieldEditText.this.setCursorVisible(true);
+            			for (WordRow row : mCutString) {
+            				if (row.mEnabled) {
+            					removeDeleted();
+            					break;
+            				}
+            			}
+            			StrikethroughSpan[] ss = editText.getSpans(0, editText.length(), StrikethroughSpan.class);
+            			for (StrikethroughSpan s : ss) {
+            				editText.removeSpan(s);
+            			}
+            			mCutMode = false;
+        			} else {
+            			view.setImageResource(R.drawable.ic_circle_pressed);
+            			InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            			imm.hideSoftInputFromWindow(FieldEditText.this.getWindowToken(), 0);
+            			mKeyListener = FieldEditText.this.getKeyListener();
+            			FieldEditText.this.setKeyListener(null);
+            			FieldEditText.this.setCursorVisible(false);
+            			mCutMode = true;
+            			String text = editText.toString();
+            			splitText(text);
+            			int pos = 0;
+            			for (WordRow row : mCutString) {
+            				if (row.mWord.length() == 0) {
+            					continue;
+            				}
+            				row.mBegin = text.indexOf(row.mWord, pos);
+            				row.mEnd = row.mBegin + row.mWord.length();
+            				if (!row.mEnabled) {
+                				editText.setSpan(new StrikethroughSpan(), row.mBegin, row.mEnd, 0);            					
+            				}
+            				pos = row.mEnd;
+            			}
+        			}
+    			}
+            });
+        	if (this.getText().toString().length() > 0) {
+            	mCircle.setVisibility(View.VISIBLE);
+        	} else {
+        		mCircle.setVisibility(View.GONE);
+        	}
+            return mCircle;
         }
 
 
@@ -385,6 +533,70 @@ public class CardEditor extends Activity {
             }
             return false;
         }
-    }
 
+
+        public void updateSpannables() {
+			int cursorPosition = this.getSelectionStart();
+			Editable editText = this.getText();
+			for (WordRow row : mCutString) {
+				if (row.mBegin <= cursorPosition && row.mEnd > cursorPosition) {
+					if (!row.mEnabled) {
+						StrikethroughSpan[] ss = this.getText().getSpans(cursorPosition, cursorPosition, StrikethroughSpan.class);
+						if (ss.length != 0) {
+							editText.removeSpan(ss[0]);
+						}
+						row.mEnabled = true;
+					} else {
+						editText.setSpan(new StrikethroughSpan(), row.mBegin, row.mEnd, 0);
+						row.mEnabled = false;
+						break;						
+					}
+				}
+			}
+			this.setText(editText);
+			this.setSelection(cursorPosition);
+        }
+
+
+        public String cleanText(String text) {
+        	final String[] from = new String[] {"\\(", "\\[", "\\)", "\\]", "\\.", ",", ";"};
+        	final String[] to = new String[] {" (", " [", ") ", "] ", ". ", ", ", "; "};
+        	for (int i = 0; i < from.length; i++) {
+        		text = text.replaceAll("\\s*" + from[i] + "*\\s*" + from[i] + "+\\s*", to[i]);
+        	}
+        	final String[] from1 = new String[] {"\\(", "\\[", ",", ";", "\\.", ",", ";", "\\.", " ", "^", "^", "^", "^"};
+        	final String[] from2 = new String[] {"\\)", "\\]", ",", ";", "\\.", "$", "$", "$",   "$", "\\.", ",", ";", " "};
+        	for (int i = 0; i < from1.length; i++) {
+        		text = text.replaceAll(from1[i] + "\\s*" + from2[i], "");
+        	}
+        	return text;
+        }
+
+
+        public void removeDeleted() {
+        	if (this.getText().length() > 0) {
+            	StringBuilder sb = new StringBuilder();
+            	for (WordRow row : mCutString) {
+            		if (row.mEnabled) {
+            			sb.append(row.mWord);
+            			sb.append(" ");
+            		}
+            	}
+            	this.setText(cleanText(sb.toString()));
+        	}
+        }
+
+
+        private class WordRow {
+        	public String mWord;
+            public int mBegin;
+            public int mEnd;
+            public boolean mEnabled = false;
+
+            WordRow(String word) {
+            	mWord = word;
+            }
+        }
+    }
 }
+

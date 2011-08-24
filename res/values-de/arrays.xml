@@ -127,6 +127,7 @@
     <item>Intervalle</item>
     <item>Gelernte Karten</item>
     <item>Lernzeit</item>
+ 	<item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 Woche</item>

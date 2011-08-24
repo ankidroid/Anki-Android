@@ -44,32 +44,64 @@ public class AnkiDb {
     public static final int NO_WAL_WARNING = 0;
     public static final int WAL_WARNING_SHOW = 1;
     public static final int WAL_WARNING_ALREADY_SHOWN = 2;
+    public static final int WAL_SET_ENABLED = 3;
 
     /**
      * Open a database connection to an ".anki" SQLite file.
      */
-    public AnkiDb(String ankiFilename) {
+    public AnkiDb(String ankiFilename, boolean forceDeleteJournalMode) {
         mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null, SQLiteDatabase.OPEN_READWRITE
                 | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         if (mDatabase != null) {
             Cursor cur = null;
             try {
-                cur = mDatabase.rawQuery("PRAGMA journal_mode = DELETE", null);
+                String mode;
+            	SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+            	if (prefs.getBoolean("walMode", false) && !forceDeleteJournalMode) {
+            		mode = "WAL";
+            	} else {
+            		mode = "DELETE";
+            	}
+                cur = mDatabase.rawQuery("PRAGMA journal_mode", null);
                 if (cur.moveToFirst()) {
-                	String journalMode = cur.getString(0);
-                    Log.w(AnkiDroidApp.TAG, "Trying to set journal mode to DELETE. Result: " + journalMode);
-                	if (journalMode.equalsIgnoreCase("delete")) {
-                        PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit().putInt("walWarning", NO_WAL_WARNING).commit();
-                	} else {
-                        Log.e(AnkiDroidApp.TAG, "Journal could not be changed to DELETE. Deck will probably be unreadable on sqlite < 3.7");
-                        SharedPreferences prefs = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-                        if (prefs.getInt("walWarning", NO_WAL_WARNING) == NO_WAL_WARNING) {
-                        	prefs.edit().putInt("walWarning", WAL_WARNING_SHOW).commit();
-                        }
+                	String journalModeOld = cur.getString(0);
+                	cur.close();
+                	Log.w(AnkiDroidApp.TAG, "Current Journal mode: " + journalModeOld);                    		
+                	if (!journalModeOld.equalsIgnoreCase(mode)) {
+                    	cur = mDatabase.rawQuery("PRAGMA journal_mode = " + mode, null);
+                    	if (cur.moveToFirst()) {
+                        	String journalModeNew = cur.getString(0);
+                        	cur.close();
+                        	Log.w(AnkiDroidApp.TAG, "Old journal mode was: " + journalModeOld + ". Trying to set journal mode to " + mode + ". Result: " + journalModeNew);                    		
+                        	if (!journalModeNew.equalsIgnoreCase("wal")) {
+                        		prefs.edit().putInt("walWarning", NO_WAL_WARNING).commit();
+                        	} else {
+                        		if (mode.equals("WAL")) {
+                        			prefs.edit().putInt("walWarning", WAL_SET_ENABLED).commit();                			
+                        		} else {
+                                    Log.e(AnkiDroidApp.TAG, "Journal could not be changed to DELETE. Deck will probably be unreadable on sqlite < 3.7");
+                                    if (prefs.getInt("walWarning", NO_WAL_WARNING) == NO_WAL_WARNING) {
+                                    	prefs.edit().putInt("walWarning", WAL_WARNING_SHOW).commit();
+                                    }                			
+                        		}
+                        	}
+                    	}
                 	}
                 }
+                if (prefs.getBoolean("asyncMode", false)) {
+                    cur = mDatabase.rawQuery("PRAGMA synchronous = 0", null);
+                } else {
+                    cur = mDatabase.rawQuery("PRAGMA synchronous = 2", null);
+                }
+                cur.close();
+                cur = mDatabase.rawQuery("PRAGMA synchronous", null);
+                if (cur.moveToFirst()) {
+                	String syncMode = cur.getString(0);
+                	Log.w(AnkiDroidApp.TAG, "Current synchronous setting: " + syncMode);                    		
+                }
+                cur.close();
             } finally {
-                if (cur != null) {
+                if (cur != null && !cur.isClosed()) {
                     cur.close();
                 }
             }
