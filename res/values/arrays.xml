@@ -158,7 +158,7 @@
 		<item>Abort learning</item>
 	</string-array>
 	<string-array name="theme_labels">
-		<item>Default</item>
+		<item>Android Dark</item>
 		<item>Android Light</item>
 		<item>Blue</item>
 	</string-array>

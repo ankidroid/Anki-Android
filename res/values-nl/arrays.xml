@@ -127,12 +127,13 @@
     <item>Intervals</item>
     <item>Overhoringen</item>
     <item>Reviewing time</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 week</item>
     <item>1 month</item>
     <item>3 months</item>
-    <item>6 month</item>
+    <item>6 months</item>
     <item>1 year</item>
   </string-array>
   <string-array name="deck_order_labels">
@@ -160,5 +161,10 @@
     <item>Delete card</item>
     <item>Clear Whiteboard</item>
     <item>Abort learning</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>

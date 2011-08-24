@@ -127,6 +127,7 @@
     <item>Fréquences</item>
     <item>Révisions</item>
     <item>Temps de révision</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>semaine</item>
@@ -160,5 +161,10 @@
     <item>Supprimer la carte</item>
     <item>Effacer le tableau</item>
     <item>Quitter l\'apprentissage</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>

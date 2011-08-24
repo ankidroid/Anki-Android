@@ -127,12 +127,13 @@
     <item>Intervallumok</item>
     <item>Ismétlések</item>
     <item>Ismétlés ideje</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 hét</item>
     <item>1 hónap</item>
     <item>3 hónap</item>
-    <item>6 hónap</item>
+    <item>6 months</item>
     <item>1 év</item>
   </string-array>
   <string-array name="deck_order_labels">
@@ -160,5 +161,10 @@
     <item>Kártya törlése</item>
     <item>Tábla törlése</item>
     <item>Tanulás megszakítása</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>
