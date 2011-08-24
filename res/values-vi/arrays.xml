@@ -127,12 +127,13 @@
     <item>Các khoảng thời gian</item>
     <item>Ôn tập</item>
     <item>Thời gian ôn tập</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 tuần</item>
     <item>1 tháng</item>
     <item>3 tháng</item>
-    <item>6 tháng</item>
+    <item>6 months</item>
     <item>1 năm</item>
   </string-array>
   <string-array name="deck_order_labels">
@@ -160,5 +161,10 @@
     <item>Xóa thẻ</item>
     <item>Xóa bảng viết</item>
     <item>Hủy bỏ việc học</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>

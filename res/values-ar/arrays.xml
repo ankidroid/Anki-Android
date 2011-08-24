@@ -127,12 +127,13 @@
     <item>فترات</item>
     <item>مراجعات</item>
     <item>وقت العرض</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 أسبوع</item>
     <item>1 شهر</item>
     <item>3 أشهر</item>
-    <item>6 أشهر</item>
+    <item>6 months</item>
     <item>1 سنة</item>
   </string-array>
   <string-array name="deck_order_labels">
@@ -160,5 +161,10 @@
     <item>حذف بطاقة</item>
     <item>مسح اللوح الأبيض</item>
     <item>حول التعليم</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>

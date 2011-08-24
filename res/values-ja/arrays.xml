@@ -127,6 +127,7 @@
     <item>期間</item>
     <item>繰り返し数</item>
     <item>勉強時間</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1週間</item>
@@ -160,5 +161,10 @@
     <item>カードを削除</item>
     <item>ホワイトボードを消去します</item>
     <item>学習を中止します</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>

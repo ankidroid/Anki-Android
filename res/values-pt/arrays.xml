@@ -127,6 +127,7 @@
     <item>Intervalos</item>
     <item>Revisões</item>
     <item>Tempo de Revisão</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 semana</item>
@@ -160,5 +161,10 @@
     <item>Excluir card</item>
     <item>Limpar Whiteboard</item>
     <item>Abort learning</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>

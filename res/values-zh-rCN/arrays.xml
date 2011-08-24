@@ -127,6 +127,7 @@
     <item>复习间隔</item>
     <item>复习次数</item>
     <item>复习时间</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1周</item>
@@ -160,5 +161,10 @@
     <item>删除卡片</item>
     <item>清除白板</item>
     <item>中止学习</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>

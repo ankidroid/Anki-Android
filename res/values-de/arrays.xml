@@ -127,7 +127,7 @@
     <item>Intervalle</item>
     <item>Gelernte Karten</item>
     <item>Lernzeit</item>
- 	<item>Deck Summary</item>
+    <item>Zusammenfassung</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 Woche</item>
@@ -161,5 +161,10 @@
     <item>Karte löschen</item>
     <item>Tafel säubern</item>
     <item>Lernen beenden</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dunkel</item>
+    <item>Android Hell</item>
+    <item>Blau</item>
   </string-array>
 </resources>

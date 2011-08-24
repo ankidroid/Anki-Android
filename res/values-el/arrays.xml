@@ -127,6 +127,7 @@
     <item>Διαστήματα</item>
     <item>Αναθεωρήσεις</item>
     <item>χρόνος αναθεώρησης</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 εβδομάδα</item>
@@ -160,5 +161,10 @@
     <item>Διαγραφή κάρτας</item>
     <item>Καθαρισμός Πίνακα</item>
     <item>Ματαίωση μάθησης</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>

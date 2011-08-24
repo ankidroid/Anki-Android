@@ -127,6 +127,7 @@
     <item>Интервалы</item>
     <item>Просмотры</item>
     <item>Общее время просмотров</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 неделя</item>
@@ -160,5 +161,10 @@
     <item>Удалить карту</item>
     <item>Очистка доски</item>
     <item>Прервать обучения</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>

@@ -127,6 +127,7 @@
     <item>Intervalos</item>
     <item>Repasos</item>
     <item>Tiempo de repaso</item>
+    <item>Deck Summary</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 semana</item>
@@ -160,5 +161,10 @@
     <item>Eliminar tarjeta</item>
     <item>Limpiar Pizarra</item>
     <item>Interrumpir aprendizaje</item>
+  </string-array>
+  <string-array name="theme_labels">
+    <item>Android Dark</item>
+    <item>Android Light</item>
+    <item>Blue</item>
   </string-array>
 </resources>
