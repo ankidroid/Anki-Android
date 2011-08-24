@@ -568,7 +568,9 @@ public class Reviewer extends Activity implements IButtonListener{
                 mCardTimer.start();
             }
             displayCardQuestion();
-            mProgressDialog.dismiss();
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();            	
+            }
         }
 
 
