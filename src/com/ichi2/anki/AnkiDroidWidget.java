@@ -44,7 +44,7 @@ import java.util.List;
 public class AnkiDroidWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(AnkiDroidApp.TAG, "onUpdate");
+        // Log.i(AnkiDroidApp.TAG, "onUpdate");
         WidgetStatus.update(context);
     }
 
@@ -58,7 +58,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        Log.d(AnkiDroidApp.TAG, "Widget disabled");
+        // Log.d(AnkiDroidApp.TAG, "Widget disabled");
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetEnabled", false).commit();
     }
@@ -146,7 +146,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
         @Override
         public void onStart(Intent intent, int startId) {
-            Log.i(AnkiDroidApp.TAG, "OnStart");
+            // Log.i(AnkiDroidApp.TAG, "OnStart");
 
             boolean updateDueDecksNow = true;
             if (intent != null) {
@@ -168,7 +168,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     updateDueDecksNow = false;
                 } else if (ACTION_UPDATE.equals(intent.getAction())) {
                     // Updating the widget is done below for all actions.
-                    Log.d(AnkiDroidApp.TAG, "AnkiDroidWidget.UpdateService: UPDATE");
+                    // Log.d(AnkiDroidApp.TAG, "AnkiDroidWidget.UpdateService: UPDATE");
                 }
             }
             RemoteViews updateViews = buildUpdate(this, updateDueDecksNow);
@@ -179,7 +179,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
         }
 
         private RemoteViews buildUpdate(Context context, boolean updateDueDecksNow) {
-            Log.i(AnkiDroidApp.TAG, "buildUpdate");
+            // Log.i(AnkiDroidApp.TAG, "buildUpdate");
 
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -353,7 +353,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
 
         @Override
         public IBinder onBind(Intent arg0) {
-            Log.i(AnkiDroidApp.TAG, "onBind");
+            // Log.i(AnkiDroidApp.TAG, "onBind");
             return null;
         }
     }
