@@ -323,7 +323,7 @@ public class Utils {
      * @throws IOException 
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
-        // Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
+        Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
         new File(destination).createNewFile();
 
         long startTimeMillis = System.currentTimeMillis();
@@ -334,23 +334,23 @@ public class Utils {
         long sizeBytes = 0;
         int len;
         if (source == null) {
-            // Log.i(AnkiDroidApp.TAG, "source is null!");
+            Log.i(AnkiDroidApp.TAG, "source is null!");
         }
         while ((len = source.read(buf)) > 0) {
             output.write(buf, 0, len);
             sizeBytes += len;
-            // // Log.i(AnkiDroidApp.TAG, "Write...");
+            // Log.i(AnkiDroidApp.TAG, "Write...");
         }
         long endTimeMillis = System.currentTimeMillis();
 
-        // Log.i(AnkiDroidApp.TAG, "Finished writing!");
+        Log.i(AnkiDroidApp.TAG, "Finished writing!");
         long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
         long sizeKb = sizeBytes / 1024;
         long speedKbSec = 0;
         if (endTimeMillis != startTimeMillis) {
             speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
         }
-        // Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
+        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
         output.close();
     }
 
@@ -391,7 +391,7 @@ public class Utils {
                             buff.newLine();
                             buff.close();
                         }
-                        // Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
                         printJSONObject((JSONObject) value, indentation + "-", writeToFile);
                     } else {
                         if (writeToFile) {
@@ -400,7 +400,7 @@ public class Utils {
                             buff.newLine();
                             buff.close();
                         }
-                        // Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
+                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
                 } catch (JSONException e) {
                     Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
@@ -415,7 +415,7 @@ public class Utils {
 
 
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
-        // Log.i(AnkiDroidApp.TAG, "saveJSONObject");
+        Log.i(AnkiDroidApp.TAG, "saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();

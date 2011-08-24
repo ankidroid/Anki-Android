@@ -260,7 +260,7 @@ public class Card {
             mTimerStarted += Utils.now() - mTimerStopped;
             mTimerStopped = Double.NaN;
         } else {
-            // Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
+            Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
         }
     }
 
