@@ -14,16 +14,7 @@
      limitations under the License.
 -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:exitFadeDuration="@android:integer/config_mediumAnimTime">
-
-    <item android:state_window_focused="false" android:drawable="@color/white" />
-
-    <!-- Even though these two point to the same resource, have two states so the drawable will invalidate itself when coming out of pressed state. -->
-    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@color/white" />
-    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@color/white" />
-    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/blue_list_selector_background_pressed" />
-    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/blue_list_selector_background_pressed" />
-    <item android:state_focused="true"                                                             android:drawable="@color/white" />
-    
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+﻿    <item android:state_pressed="false" android:drawable="@drawable/blue_list_selector_background_normal" />
+    <item android:state_pressed="true" android:drawable="@drawable/blue_list_selector_background_pressed" />
 </selector>
