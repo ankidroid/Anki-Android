@@ -15,7 +15,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,6 +34,8 @@ import android.widget.TextView;
 
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 public class MyAccount extends Activity {
@@ -48,13 +49,14 @@ public class MyAccount extends Activity {
     private TextView mUsernameLoggedIn;
 
     private ProgressDialog mProgressDialog;
-    private AlertDialog mNoConnectionAlert;
-    private AlertDialog mConnectionErrorAlert;
-    private AlertDialog mInvalidUserPassAlert;
+    private StyledDialog mNoConnectionAlert;
+    private StyledDialog mConnectionErrorAlert;
+    private StyledDialog mInvalidUserPassAlert;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
         initAllContentViews();
@@ -136,6 +138,9 @@ public class MyAccount extends Activity {
 
     private void initAllContentViews() {
         mLoginToMyAccountView = getLayoutInflater().inflate(R.layout.my_account, null);
+        Themes.setWallpaper(mLoginToMyAccountView);
+        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.MyAccountLayout));
+        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.no_account_text));
         mUsername = (EditText) mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = (EditText) mLoginToMyAccountView.findViewById(R.id.password);
 
@@ -161,6 +166,8 @@ public class MyAccount extends Activity {
         });
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
+        Themes.setWallpaper(mLoggedIntoMyAccountView);
+        Themes.setTitleStyle(mLoggedIntoMyAccountView.findViewById(R.id.logged_text));
         mUsernameLoggedIn = (TextView) mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
         Button logoutButton = (Button) mLoggedIntoMyAccountView.findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new OnClickListener() {
@@ -180,7 +187,7 @@ public class MyAccount extends Activity {
     private void initAllAlertDialogs() {
         Resources res = getResources();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
@@ -188,11 +195,13 @@ public class MyAccount extends Activity {
         builder.setPositiveButton(res.getString(R.string.ok), null);
         mNoConnectionAlert = builder.create();
 
+	builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.log_in));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.invalid_username_password));
         mInvalidUserPassAlert = builder.create();
 
+	builder = new StyledDialog.Builder(this);
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.connection_error_message));

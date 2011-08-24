@@ -16,6 +16,11 @@
 
 package com.ichi2.anki;
 
+import java.util.Map.Entry;
+
+import com.ichi2.themes.Themes;
+
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 
@@ -28,6 +33,7 @@ public class Statistics {
     public static double[][] sSeriesList;
 
     private static Deck sDeck;
+    private static ContentValues sDeckSummaryValues;
     public static int sType;
 
     public static int sZoom = 0;
@@ -39,11 +45,16 @@ public class Statistics {
 	public static final int TYPE_CUMULATIVE_DUE = 1; 
 	public static final int TYPE_INTERVALS = 2; 
 	public static final int TYPE_REVIEWS = 3;
-	public static final int TYPE_REVIEWING_TIME = 4; 
+	public static final int TYPE_REVIEWING_TIME = 4;
+	public static final int TYPE_DECK_SUMMARY = 5;
 
 
     public static void initVariables(Context context, int type, int period, String title) {
         Resources res = context.getResources();
+        if (type == TYPE_DECK_SUMMARY) {
+        	sDeckSummaryValues = new ContentValues();
+        	return;
+        }
         sType = type;
         sTitle = title;
         axisLabels[0] = res.getString(R.string.statistics_period_x_axis);
@@ -82,35 +93,68 @@ public class Statistics {
     public static boolean refreshDeckStatistics(Context context, Deck deck, int type, int period, String title) {
         initVariables(context, type, period, title);
         sDeck = deck;
-        sSeriesList = getSeriesList(context, type, period);
-        if (sSeriesList != null) {
-        	return true;
+        if (type == TYPE_DECK_SUMMARY) {
+        	sDeckSummaryValues = sDeck.getDeckSummary();
+        	return sDeckSummaryValues != null ? true : false;
         } else {
-        	return false;
+            sSeriesList = getSeriesList(context, type, period);
+        	return sSeriesList != null ? true : false;        	
         }
     }
 
 
     public static boolean refreshAllDeckStatistics(Context context, String[] deckPaths, int type, int period, String title) {
         initVariables(context, type, period, title);
+        Deck currentDeck = AnkiDroidApp.deck();
+        String currentDeckPath = null;
+        if (currentDeck != null) {
+        	currentDeckPath = currentDeck.getDeckPath();
+        }
     	for (String dp : deckPaths) {
-            double[][] seriesList;
-            sDeck = Deck.openDeck(dp);
+    		if (currentDeckPath != null && dp.equals(currentDeckPath)) {
+    			sDeck = currentDeck;
+    		} else {
+                sDeck = Deck.openDeck(dp);    			
+    		}
             if (sDeck == null) {
                 continue;
             }
-            seriesList = getSeriesList(context, type, period);
-            sDeck.closeDeck(false);
-            for (int i = 0; i < sSeriesList.length; i++) {
-                for (int j = 0; j < period; j++) {
-                	sSeriesList[i][j] += seriesList[i][j];
-                }        	
-            }
+    		if (type == TYPE_DECK_SUMMARY) {
+    			sDeckSummaryValues.put("title", context.getResources().getString(R.string.deck_summary_all_decks));
+    			ContentValues values = sDeck.getDeckSummary();
+    			if (values == null) {
+                    continue;
+                }
+    			for (Entry<String, Object> entry : values.valueSet()) {
+    				if (entry.getKey().equals("deckAge")) {
+    					if (sDeckSummaryValues.containsKey(entry.getKey())) {
+    						sDeckSummaryValues.put(entry.getKey(), Math.max(sDeckSummaryValues.getAsInteger(entry.getKey()), (Integer) entry.getValue()));
+    					} else {
+    						sDeckSummaryValues.put(entry.getKey(), (Integer) entry.getValue());   
+    					}
+    				} else {
+    					if (sDeckSummaryValues.containsKey(entry.getKey())) {
+    						sDeckSummaryValues.put(entry.getKey(), sDeckSummaryValues.getAsInteger(entry.getKey()) + (Integer) entry.getValue());
+    					} else {
+    						sDeckSummaryValues.put(entry.getKey(), (Integer) entry.getValue());   
+    					}    					
+    				}
+				}
+    		} else {
+                double[][] seriesList;
+                seriesList = getSeriesList(context, type, period);
+                sDeck.closeDeck(false);
+                for (int i = 0; i < sSeriesList.length; i++) {
+                    for (int j = 0; j < period; j++) {
+                    	sSeriesList[i][j] += seriesList[i][j];
+                    }        	
+                }    			
+    		}
     	}
-        if (sSeriesList != null) {
-        	return true;
+        if (type == TYPE_DECK_SUMMARY) {
+        	return sDeckSummaryValues != null ? true : false;
         } else {
-        	return false;
+        	return sSeriesList != null ? true : false;        	
         }
     }
 
@@ -250,5 +294,79 @@ public class Statistics {
             series[i] = sDeck.getCardsByInterval(i);
         }
         return series;
+    }
+
+
+    public static double getFraction(double numerator, double denominator) {
+    	if (denominator == 0) {
+    		return 0;
+    	} else {
+    		return numerator / denominator;
+    	}
+    }
+
+
+    private static String getHtmlDeckSummary(Context context) {
+    	Resources res = context.getResources();
+
+       	int cardCount = sDeckSummaryValues.getAsInteger("cardCount");
+       	int matureCount = sDeckSummaryValues.getAsInteger("matureCount");
+       	int unseenCount = sDeckSummaryValues.getAsInteger("unseenCount");
+       	int youngCount = cardCount - unseenCount - matureCount;
+       	int intervalSum = sDeckSummaryValues.getAsInteger("intervalSum");
+       	int repsMatCount = sDeckSummaryValues.getAsInteger("repsMatCount");
+       	int repsMatNoCount = sDeckSummaryValues.getAsInteger("repsMatNoCount");
+       	int repsYoungCount = sDeckSummaryValues.getAsInteger("repsYoungCount");
+       	int repsYoungNoCount = sDeckSummaryValues.getAsInteger("repsYoungNoCount");
+       	int repsFirstCount = sDeckSummaryValues.getAsInteger("repsFirstCount");
+       	int repsFirstNoCount = sDeckSummaryValues.getAsInteger("repsFirstNoCount");
+       	int reviewsLastWeek = sDeckSummaryValues.getAsInteger("reviewsLastWeek");
+       	int newsLastWeek = sDeckSummaryValues.getAsInteger("newsLastWeek");
+       	int reviewsLastMonth = sDeckSummaryValues.getAsInteger("reviewsLastMonth");
+       	int newsLastMonth = sDeckSummaryValues.getAsInteger("newsLastMonth");
+       	int reviewsLastYear = sDeckSummaryValues.getAsInteger("reviewsLastYear");
+       	int newsLastYear = sDeckSummaryValues.getAsInteger("newsLastYear");
+       	int deckAge = sDeckSummaryValues.getAsInteger("deckAge");
+       	int revTomorrow = sDeckSummaryValues.getAsInteger("revTomorrow");
+       	int newTomorrow = sDeckSummaryValues.getAsInteger("newTomorrow");
+       	int timeTomorrow = sDeckSummaryValues.getAsInteger("timeTomorrow");
+
+    	StringBuilder builder = new StringBuilder();
+       	builder.append("<html><body text=\"#FFFFFF\">");
+       	builder.append(res.getString(R.string.deck_summary_deck_age, deckAge)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_cards)).append(" <b>").append(Integer.toString(cardCount)).append("</b><br>");
+       	builder.append(res.getString(R.string.deck_summary_facts)).append(" <b>").append(Integer.toString(sDeckSummaryValues.getAsInteger("factCount"))).append("</b><br>");
+       	builder.append("<br><b>").append(res.getString(R.string.deck_summary_card_age)).append("</b><br>");
+       	builder.append(res.getString(R.string.deck_summary_cards_mature)).append(" <b>").append(Integer.toString(matureCount)).append("</b> (").append(String.format("%.1f &#37;", 100.0d * getFraction(matureCount, cardCount))).append(")<br>");
+       	builder.append(res.getString(R.string.deck_summary_cards_young)).append(" <b>").append(Integer.toString(youngCount)).append("</b> (").append(String.format("%.1f &#37;", 100.0d * getFraction(youngCount, cardCount))).append(")<br>");
+       	builder.append(res.getString(R.string.deck_summary_cards_unseen)).append(" <b>").append(Integer.toString(unseenCount)).append("</b> (").append(String.format("%.1f &#37;", 100.0d * getFraction(unseenCount, cardCount))).append(")<br>");
+       	builder.append(res.getString(R.string.deck_summary_average_interval, getFraction(intervalSum, (cardCount - unseenCount)))).append("<br>");
+       	builder.append("<br><b>").append(res.getString(R.string.deck_summary_answers_correct)).append("</b><br>");
+       	builder.append(res.getString(R.string.deck_summary_answers_mature, 100.0d * getFraction(repsMatCount - repsMatNoCount, repsMatCount), "&#37;", repsMatCount - repsMatNoCount, repsMatCount)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_answers_young, 100.0d * getFraction(repsYoungCount - repsYoungNoCount, repsYoungCount), "&#37;", repsYoungCount - repsYoungNoCount, repsYoungCount)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_answers_firstseen, 100.0d * getFraction(repsFirstCount - repsFirstNoCount, repsFirstCount), "&#37;", repsFirstCount - repsFirstNoCount, repsFirstCount)).append("<br>");
+       	builder.append("<br><b>").append(res.getString(R.string.deck_summary_forecast)).append("</b><br>");
+       	builder.append(res.getString(R.string.deck_summary_tomorrow_due, revTomorrow)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_tomorrow_new, newTomorrow)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_tomorrow_time, timeTomorrow)).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_finished_in, (int)Math.round(getFraction(unseenCount, newTomorrow)))).append("<br>");
+       	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_week)).append("</b><br>");
+       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(reviewsLastWeek, Math.min((double)deckAge, 7.0d)))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastWeek, Math.min((double)deckAge, 7.0d)))).append("<br>");
+       	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_month)).append("</b><br>");
+       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(reviewsLastMonth, Math.min((double)deckAge, 30.0d)))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastMonth, Math.min((double)deckAge, 30.0d)))).append("<br>");
+       	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_year)).append("</b><br>");
+       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(reviewsLastYear, Math.min((double)deckAge, 365.0d)))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastYear, Math.min((double)deckAge, 365.0d)))).append("<br>");
+       	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_total)).append("</b><br>");
+       	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(repsMatCount + repsYoungCount + repsFirstCount, deckAge))).append("<br>");
+       	builder.append("</body></html>");
+       	return builder.toString();
+    }
+
+
+    public static void showDeckSummary(Context context) {
+        Themes.htmlOkDialog(context, sDeckSummaryValues.containsKey("title") ? sDeckSummaryValues.getAsString("title") : sDeck.getDeckName(), getHtmlDeckSummary(context)).show();
     }
 }

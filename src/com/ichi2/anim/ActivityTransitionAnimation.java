@@ -1,8 +1,11 @@
-package com.ichi2.anki;
+package com.ichi2.anim;
+
+import com.ichi2.anki.R;
+import com.ichi2.anki.R.anim;
 
 import android.app.Activity;
 
-public class MyAnimation {
+public class ActivityTransitionAnimation {
 	public static int LEFT = 0;
 	public static int RIGHT = 1;
 	public static int FADE = 2;

@@ -19,4 +19,4 @@
 	android:zAdjustment="top"
         android:fromAlpha="0.0"
         android:toAlpha="1.0"
-        android:duration="200" />
+        android:duration="500" />

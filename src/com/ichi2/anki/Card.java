@@ -750,81 +750,81 @@ public class Card {
 
     public String getCardDetails(Context context) {
     	Resources res = context.getResources();
-        StringBuilder builder = new StringBuilder();
-        builder.append("<html><body text=\"#FFFFFF\"><table><colgroup><col span=\"1\" style=\"width: 40%;\"><col span=\"1\" style=\"width: 60%;\"></colgroup><tr><td>");
+    	StringBuilder builder = new StringBuilder();
+       	builder.append("<html><body text=\"#FFFFFF\"><b>");
         builder.append(res.getString(R.string.card_details_question));
-        builder.append("</td><td>");
+        builder.append("</b>: ");
         builder.append(Utils.stripHTML(mQuestion));
-        builder.append("</td></tr><tr><td>");
+        builder.append("<br><b>");
         builder.append(res.getString(R.string.card_details_answer));
-        builder.append("</td><td>");
+        builder.append("</b>: ");
         builder.append(Utils.stripHTML(mAnswer));
-        builder.append("</td></tr><tr><td>");
+        builder.append("<br><b>");
+        builder.append(res.getString(R.string.card_details_tags));
+        builder.append("</b>: ");
+        String tags = Arrays.toString(mDeck.allUserTags("WHERE id = " + mFactId));
+        builder.append(tags.substring(1, tags.length() - 1));
+        builder.append("<br><br>");
         builder.append(res.getString(R.string.card_details_due));
-        builder.append("</td><td>");
+        builder.append(": ");
         if (mYesCount + mNoCount == 0) {
             builder.append("-");
         } else if (mCombinedDue < mDeck.getDueCutoff()) {
-            builder.append(res.getString(R.string.card_details_now));
+            builder.append("<b>").append(res.getString(R.string.card_details_now)).append("</b>");
         } else {
-            builder.append(Utils.getReadableInterval(context, (mCombinedDue - Utils.now()) / 86400.0, true));
+            builder.append(Utils.getReadableInterval(context, (mCombinedDue - Utils.now()) / 86400.0, true, true));
         }
-        builder.append("</td></tr><tr><td>");
+        builder.append("<br>");
         builder.append(res.getString(R.string.card_details_interval));
-        builder.append("</td><td>");
+        builder.append(": ");
         if (mInterval == 0) {
             builder.append("-");
         } else {
-            builder.append(Utils.getReadableInterval(context, mInterval));
+            builder.append(Utils.getReadableInterval(context, mInterval, false, true));
         }
-        builder.append("</td></tr><tr><td>");
+        builder.append("<br><br>");
         builder.append(res.getString(R.string.card_details_ease));
-        builder.append("</td><td>");
+        builder.append(": <b>");
         double ease = Math.round(mFactor * 100);
         builder.append(ease / 100);
-        builder.append("</td></tr><tr><td>");
+        builder.append("</b><br>");
         builder.append(res.getString(R.string.card_details_average_time));
-        builder.append("</td><td>");
+        builder.append(": <b>");
         if (mYesCount + mNoCount == 0) {
             builder.append("-");
         } else {
             builder.append(Utils.doubleToTime(mAverageTime));
         }
-        builder.append("</td></tr><tr><td>");
+        builder.append("</b><br>");
         builder.append(res.getString(R.string.card_details_total_time));
-        builder.append("</td><td>");
+        builder.append(": <b>");
         builder.append(Utils.doubleToTime(mReviewTime));
-        builder.append("</td></tr><tr><td>");
+        builder.append("</b><br><br>");
         builder.append(res.getString(R.string.card_details_yes_count));
-        builder.append("</td><td>");
+        builder.append(": <b>");
         builder.append(mYesCount);
-        builder.append("</td></tr><tr><td>");
+        builder.append("</b><br>");
         builder.append(res.getString(R.string.card_details_no_count));
-        builder.append("</td><td>");
+        builder.append(": <b>");
         builder.append(mNoCount);
-        builder.append("</td></tr><tr><td>");
+        builder.append("</b><br><br>");
         builder.append(res.getString(R.string.card_details_added));
-        builder.append("</td><td>");
+        builder.append(": <b>");
         builder.append(DateFormat.getDateFormat(context).format((long) (mCreated - mDeck.getUtcOffset()) * 1000l));
-        builder.append("</td></tr><tr><td>");
+        builder.append("</b><br>");
         builder.append(res.getString(R.string.card_details_changed));
-        builder.append("</td><td>");
+        builder.append(": <b>");
         builder.append(DateFormat.getDateFormat(context).format((long) (mModified - mDeck.getUtcOffset()) * 1000l));
-        builder.append("</td></tr><tr><td>");
-        builder.append(res.getString(R.string.card_details_tags));
-        builder.append("</td><td>");
-        String tags = Arrays.toString(mDeck.allUserTags("WHERE id = " + mFactId));
-        builder.append(tags.substring(1, tags.length() - 1));
-        builder.append("</td></tr><tr><td>");
+        builder.append("</b><br><br>");
         builder.append(res.getString(R.string.card_details_model));
-        builder.append("</td><td>");
+        builder.append(": <b>");
         Model model = Model.getModel(mDeck, mCardModelId, false);
         builder.append(model.getName());
-        builder.append("</td></tr><tr><td>");
+        builder.append("</b><br>");
         builder.append(res.getString(R.string.card_details_card_model));
-        builder.append("</td><td>");
+        builder.append(": <b>");
         builder.append(model.getCardModel(mCardModelId).getName());
-        builder.append("</td></tr></html></body>");
+        builder.append("</b></body></html>");
     return builder.toString();
     }
 

@@ -55,9 +55,27 @@
 				android:title="@string/deck_order"
 				android:summary="@string/deck_order_summ"
 				android:key="deckOrder"
-				android:defaultValue="0"
+				android:defaultValue="1"
 				android:entries="@array/deck_order_labels"
 				android:entryValues="@array/deck_order_values" />	
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_backup">
+		<CheckBoxPreference 
+			android:title="@string/pref_backup"
+			android:defaultValue="true"
+			android:summary="@string/pref_backup_summ"
+			android:disableDependentsState="false"
+			android:key="useBackup" />
+		<com.hlidskialf.android.preference.SeekBarPreference 
+	      		android:key="backupMax"
+			android:title="@string/pref_backup_max"
+			android:dependency="useBackup"
+	        	android:summary="@string/pref_backup_max_summ"
+			android:defaultValue="3"
+	        	android:text=""
+	        	app:min="1"
+	        	android:max="10" 
+	        	app:interval="1"/>
 		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_sync">
 			<CheckBoxPreference
@@ -69,6 +87,32 @@
 	</PreferenceScreen>
 	
 	<PreferenceScreen android:title="@string/pref_cat_qadisplay">
+		<PreferenceCategory android:title="@string/pref_cat_themes">
+			<ListPreference
+				android:title="@string/select_theme"
+				android:key="theme"
+				android:summary=""
+				android:defaultValue="2"
+				android:entries="@array/theme_labels"
+				android:entryValues="@array/theme_values" />
+			<CheckBoxPreference
+				android:title="@string/theme_animations"
+				android:defaultValue="true"
+				android:summary="@string/theme_animations_summ"
+				android:disableDependentsState="false"
+				android:key="themeAnimations" />
+			<com.hlidskialf.android.preference.SeekBarPreference 
+      			android:key="animationDuration"
+      	  		android:title="@string/animation_speed"
+      	  		android:summary="@string/animation_speed_summ"
+				android:defaultValue="500"
+        		android:dependency="themeAnimations"
+        		android:text=" ms"
+        		app:min="100"
+        		android:max="2000" 
+        		app:interval="50" />
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_flashcard">
 		<CheckBoxPreference
 			android:title="@string/fullscreen_review"
 			android:defaultValue="true"
@@ -89,6 +133,11 @@
 			android:defaultValue="true"
 			android:summary="@string/show_progress_bars_summ"
 			android:key="progressBars" />
+		<CheckBoxPreference
+			android:title="@string/fix_orientation"
+			android:defaultValue="false"
+			android:summary="@string/fix_orientation_summ"
+			android:key="fixOrientation" />
 		<ListPreference
 			android:title="@string/hide_question_in_answer"
 			android:summary="@string/hide_question_in_answer_summ"
@@ -128,6 +177,7 @@
         	app:min="100"
         	android:max="170" 
         	app:interval="10" />	
+	</PreferenceCategory>
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/pref_cat_extras">
 		<CheckBoxPreference
@@ -150,6 +200,12 @@
 				android:defaultValue="6"
    	    	 	android:text=""
    		     	android:max="30" />
+			<CheckBoxPreference
+				android:title="@string/whiteboard_black"
+				android:summary="@string/whiteboard_black_summ"
+				android:defaultValue="false"
+				android:dependency="whiteboard"
+				android:key="blackWhiteboard" />
        	</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_sounds">
 			<CheckBoxPreference
@@ -353,6 +409,17 @@
 			android:entryValues="@array/error_reporting_choice_values"
 			android:key="reportErrorMode" />
 		<PreferenceCategory android:title="@string/pref_cat_experimental">
+			<CheckBoxPreference
+				android:title="@string/wal_mode"
+				android:summary="@string/wal_mode_summ"
+				android:defaultValue="false"
+				android:enabled="false"
+				android:key="walMode"/>
+			<CheckBoxPreference
+				android:title="@string/async_mode"
+				android:summary="@string/async_mode_summ"
+				android:defaultValue="false"
+				android:key="asyncMode"/>
 			<CheckBoxPreference
 				android:title="@string/fix_hebrew_text"
 				android:summary="@string/fix_hebrew_text_summ"

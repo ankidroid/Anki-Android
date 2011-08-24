@@ -443,11 +443,11 @@ public class Utils {
 
 
     public static String getReadableInterval(Context context, double numberOfDays) {
-    	return getReadableInterval(context, numberOfDays, false);
+    	return getReadableInterval(context, numberOfDays, false, false);
     }
 
 
-    public static String getReadableInterval(Context context, double numberOfDays, boolean inFormat) {
+    public static String getReadableInterval(Context context, double numberOfDays, boolean inFormat, boolean bold) {
     	double adjustedInterval;
     	int type;
     	if (numberOfDays < 1) {
@@ -473,23 +473,32 @@ public class Utils {
    	    	if (adjustedInterval == 1){
    	       		return context.getResources().getStringArray(R.array.next_review_s)[type];
    	       	} else {
-   	       		return String.format(context.getResources().getStringArray(R.array.next_review_p)[type], formatDouble(type, adjustedInterval));
+   	       		return String.format(context.getResources().getStringArray(R.array.next_review_p)[type], formatDouble(type, adjustedInterval, bold));
    	    	}   			
    		} else {
    	    	if (adjustedInterval == 1){
    	       		return context.getResources().getStringArray(R.array.next_review_in_s)[type]; 			       			
    	       	} else {
-   	       		return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval));
+   	       		return String.format(context.getResources().getStringArray(R.array.next_review_in_p)[type], formatDouble(type, adjustedInterval, bold));
    	    	}   			
    		}
     }
 
 
-    private static String formatDouble(int type, double adjustedInterval) {
-    	if (type == 0 || (adjustedInterval * 10) % 10 == 0){
-			return String.valueOf((int) adjustedInterval);        			   			
+    private static String formatDouble(int type, double adjustedInterval, boolean bold) {
+    	String start;
+    	String end;
+    	if (bold) {
+    		start = "<b>";
+    		end = "</b>";
     	} else {
-       		return String.valueOf(adjustedInterval); 	
+    		start = "";
+    		end = "";
+    	}
+    	if (type == 0 || (adjustedInterval * 10) % 10 == 0){
+			return start + String.valueOf((int) adjustedInterval) + end;        			   			
+    	} else {
+       		return start + String.valueOf(adjustedInterval) + end; 	
 		}
     }
 
@@ -751,19 +760,24 @@ public class Utils {
 
 
     public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar) {
+    	updateProgressBars(context, view, progress, maxX, y, singleBar, true);
+    }
+	public static void updateProgressBars(Context context, View view, double progress, int maxX, int y, boolean singleBar, boolean changeColor) {
         if (view == null) {
             return;
         }
         if (singleBar) {
-            if (progress < 0.5) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_1));
-            } else if (progress < 0.65) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_2));
-            } else if (progress < 0.75) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_3));
-            } else {
-                view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_4));            
-            }            
+        	if (changeColor) {
+                if (progress < 0.5) {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_1));
+                } else if (progress < 0.65) {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_2));
+                } else if (progress < 0.75) {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_3));
+                } else {
+                    view.setBackgroundColor(context.getResources().getColor(R.color.progressbar_4));            
+                }        		
+        	}
             FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);            
             lparam.height = y;
             lparam.width = (int) (maxX * progress);

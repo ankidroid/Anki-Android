@@ -17,8 +17,12 @@
 
 package com.ichi2.anki;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import com.ichi2.anki.DeckPicker.AnkiFilter;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -47,6 +51,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_DELETE_CARD = 12;
     public static final int TASK_TYPE_LOAD_STATISTICS = 13;
     public static final int TASK_TYPE_OPTIMIZE_DECK = 14;
+    public static final int TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE = 15;
+    public static final int TASK_TYPE_CLOSE_DECK = 16;
+    public static final int TASK_TYPE_DELETE_BACKUPS = 17;
+    public static final int TASK_TYPE_RESTORE_DECK = 18;
+
 
     /**
      * Possible outputs trying to load a deck.
@@ -151,6 +160,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             case TASK_TYPE_OPTIMIZE_DECK:
                 return doInBackgroundOptimizeDeck(params);
 
+            case TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE:
+                return doInBackgroundSetJournalMode(params);
+                
+            case TASK_TYPE_CLOSE_DECK:
+                return doInBackgroundCloseDeck(params);
+                
+            case TASK_TYPE_DELETE_BACKUPS:
+                return doInBackgroundDeleteBackups(params);
+                
+            case TASK_TYPE_RESTORE_DECK:
+                return doInBackgroundRestoreDeck(params);
+                
             default:
                 return null;
         }
@@ -253,6 +274,21 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadDeck(TaskData... params) {
         String deckFilename = params[0].getString();
+        Deck oldDeck = params[0].getDeck();
+
+        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+        if (oldDeck != null) {
+        	publishProgress(new TaskData(res.getString(R.string.close_current_deck)));
+        	oldDeck.closeDeck(false);
+        }
+        int backupResult = BackupManager.RETURN_NULL;
+        if (PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("useBackup", true)) {
+        	publishProgress(new TaskData(res.getString(R.string.backup_deck)));
+        	backupResult = BackupManager.backupDeck(deckFilename);
+        }
+        if (BackupManager.getFreeDiscSpace(deckFilename) < (StudyOptions.MIN_FREE_SPACE * 1024 * 1024)) {
+        	backupResult = BackupManager.RETURN_LOW_SYSTEM_SPACE;
+        }
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeck - deckFilename = " + deckFilename);
 
         Log.i(AnkiDroidApp.TAG, "loadDeck - SD card mounted and existent file -> Loading deck...");
@@ -262,7 +298,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             // Start by getting the first card and displaying it.
             // Card card = deck.getCard();
             Log.i(AnkiDroidApp.TAG, "Deck loaded!");
-            
+            if (deck == null) {
+                BackupManager.cleanUpAfterBackupCreation(false);
+                return new TaskData(DECK_NOT_LOADED);
+            }
+            BackupManager.cleanUpAfterBackupCreation(true);
+            publishProgress(new TaskData(backupResult));
             return new TaskData(DECK_LOADED, deck, null);
         } catch (SQLException e) {
             Log.i(AnkiDroidApp.TAG, "The database " + deckFilename + " could not be opened = " + e.getMessage());
@@ -355,11 +396,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         long currentCardId = params[0].getLong();
         boolean inReview = params[0].getBoolean();
         long oldCardId = 0;
+        String undoType;
 
         AnkiDb ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
         ankiDB.getDatabase().beginTransaction();
         try {
         	oldCardId = deck.undo(currentCardId, inReview);
+        	undoType = deck.getUndoType();
+        	if (undoType == Deck.UNDO_TYPE_SUSPEND_CARD) {
+        		oldCardId = currentCardId;
+        	}
             newCard = deck.getCard();
             if (oldCardId != 0 && newCard != null && oldCardId != newCard.getId()) {
             	newCard = deck.cardFromId(oldCardId);
@@ -370,7 +416,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
             ankiDB.getDatabase().endTransaction();
         }
 
-        return new TaskData(deck.getUndoType(), oldCardId);
+        return new TaskData(undoType, oldCardId);
     }
 
 
@@ -394,14 +440,17 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         } finally {
             ankiDB.getDatabase().endTransaction();
         }
-
-        return new TaskData(deck.getUndoType(), oldCardId);
+        String undoType = deck.getUndoType();
+        if (undoType == Deck.UNDO_TYPE_SUSPEND_CARD) {
+        	undoType = "redo suspend";
+        }
+        return new TaskData(undoType, oldCardId);
     }
 
 
     private TaskData doInBackgroundLoadCards(TaskData... params) {
         Deck deck = params[0].getDeck();
-        String order = params[0].getOrder();
+        String order = params[0].getString();
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
        	publishProgress(new TaskData(deck.getAllCards(order)));
         return null;
@@ -482,6 +531,66 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    private TaskData doInBackgroundSetJournalMode(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSetJournalMode");
+        String path = params[0].getString();
+        Deck currentDeck = params[0].getDeck();
+        if (currentDeck != null) {
+        	currentDeck.closeDeck(false);
+        }
+
+        int len = 0;
+		File[] fileList;
+
+		File dir = new File(path);
+		fileList = dir.listFiles(new AnkiFilter());
+
+		if (dir.exists() && dir.isDirectory() && fileList != null) {
+			len = fileList.length;
+		} else {
+			return null;
+		}
+
+		if (len > 0 && fileList != null) {
+			Log.i(AnkiDroidApp.TAG, "Set journal mode: number of anki files = " + len);
+			for (File file : fileList) {
+				// on deck open, journal mode will be automatically set
+				String filePath = file.getAbsolutePath();
+				Deck deck = Deck.openDeck(filePath, false);
+				if (deck != null) {
+					Log.i(AnkiDroidApp.TAG, "Journal mode of file " + filePath + " set");
+					deck.closeDeck(false);					
+				}
+			}
+		}
+        return null;
+    }
+
+    
+    private TaskData doInBackgroundCloseDeck(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseDeck");
+    	Deck deck = params[0].getDeck();
+    	boolean wait = params[0].getBoolean();
+    	if (deck != null) {
+    		deck.closeDeck(wait);
+    	}
+    	return null;
+    }
+
+
+    private TaskData doInBackgroundDeleteBackups(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteBackups");
+    	return new TaskData(BackupManager.deleteAllBackups());
+    }
+
+
+    private TaskData doInBackgroundRestoreDeck(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
+        String[] paths = params[0].getDeckList();
+    	return new TaskData(BackupManager.restoreDeckBackup(paths[0], paths[1]));
+    }
+
+
     public static interface TaskListener {
         public void onPreExecute();
 
@@ -502,7 +611,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private boolean previousCardSuspended; // answer card resulted in card marked as leech and suspended
         private boolean mBool = false;
         private ArrayList<String[]> mAllCards;
-        private String mOrder;
         private long mLong;
         private Context mContext;
         private int mType;
@@ -564,7 +672,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public TaskData(Deck deck, String order) {
             mDeck = deck;
-            mOrder = order;
+            mMsg = order;
         }
 
  
@@ -597,11 +705,6 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         public Deck getDeck() {
             return mDeck;
-        }
-
-
-        public String getOrder() {
-            return mOrder;
         }
 
 

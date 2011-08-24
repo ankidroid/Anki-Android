@@ -3,5 +3,84 @@
 	<style name="WidgetBackground">
         <item name="android:background">@drawable/widget_bg</item>
     </style>
-    <style name="BottomButton"/>
+
+    <style name="Blue">
+        <item name="android:background">@color/reviewer_background</item>
+    </style>
+
+    <!-- Button styles -->
+    <style name="Blue.Button" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/blue_btn_default</item>
+    </style>
+    <style name="Blue.Button.Small" parent="@android:style/Widget.Button.Small">
+        <item name="android:background">@drawable/blue_btn_small</item>
+    </style>
+    <style name="Blue.Button.Toggle" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/blue_btn_toggle_bg</item>
+    </style>
+    <style name="Blue.CompoundButton">
+    </style>
+    <style name="Blue.CompoundButton.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+	    <item name="android:button">@drawable/blue_btn_check</item>
+    </style>
+    <style name="Blue.CompoundButton.RadioButton">
+        <item name="android:background">@android:drawable/btn_radio</item>
+        <item name="android:button">?android:attr/listChoiceIndicatorSingle</item>
+    </style>
+    
+
+	<!-- Dialog styles --> 
+    <style name="Blue.AlertDialog">
+        <item name="android:fullDark">@drawable/blue_popup_full_dark</item>
+        <item name="android:topDark">@drawable/blue_popup_top_dark</item>
+        <item name="android:centerDark">@drawable/blue_popup_center_dark</item>
+        <item name="android:bottomDark">@drawable/blue_popup_bottom_dark</item>
+
+        <item name="android:fullBright">@drawable/blue_popup_full_bright</item>
+        <item name="android:topBright">@drawable/blue_popup_top_bright</item>
+        <item name="android:centerBright">@drawable/blue_popup_center_bright</item>
+        <item name="android:bottomBright">@drawable/blue_popup_bottom_bright</item>
+
+        <item name="android:bottomMedium">@drawable/blue_popup_bottom_medium</item>
+        <item name="android:centerMedium">@drawable/blue_popup_center_medium</item>
+        <item name="android:buttonStyle">@style/Blue.Button</item>
+        
+        <item name="android:textColor">#00FF00</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="Blue.Edittext" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/blue_edit_text</item>
+    </style><!--
+
+    <style name="Blue.Widget.ProgressBar" parent="@android:style/Widget.ProgressBar">>
+        <item name="android:indeterminateDrawable">@drawable/blue_progress_medium_white</item>
+    </style>
+
+    <style name="Blue.Widget.ProgressBar.Small" parent="@android:style/Widget.ProgressBar.Small">
+        <item name="android:indeterminateDrawable">@drawable/blue_progress_small</item>
+    </style>
+    
+    --><style name="Blue.Widget.ListView" parent="@android:Widget.ListView">
+        <item name="android:listSelector">@drawable/blue_list_selector_background</item>
+    </style>
+
+    <style name="Blue.Widget.ListView.DropDown" parent="@android:Widget.ListView.DropDown">
+        <item name="android:listSelector">@drawable/blue_list_selector_background</item>
+    </style>
+
+    <style name="Blue.Widget.ListView.Menu" parent="@android:Widget.ListView.Menu">
+        <item name="android:listSelector">@drawable/blue_list_selector_background</item>
+    </style>
+
+    <style name="Blue.Widget.Spinner" parent="@android:style/Widget.Spinner">
+        <item name="android:background">@drawable/blue_btn_dropdown</item>
+    </style>
+
+    <style name="Blue.Widget.DropDownItem.Spinner" parent="@android:style/Widget.DropDownItem.Spinner">
+        <item name="android:checkMark">@drawable/blue_btn_radio</item>
+    </style>
+
+
 </resources>
