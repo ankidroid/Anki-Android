@@ -350,10 +350,7 @@ public class Utils {
         if (endTimeMillis != startTimeMillis) {
             speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
         }
-        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: "
-            + "Size: " + sizeKb + "Kb, "
-            + "Duration: " + durationSeconds + "s, "
-            + "Speed: " + speedKbSec + "Kb/s");
+        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
         output.close();
     }
 

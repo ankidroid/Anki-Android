@@ -189,13 +189,11 @@ public class MetaDB {
                         + "SET deckpath=\'" + deckPath + "\', "
                         + "state=" + Integer.toString(state) + " "
                         + "WHERE _id=" + cur.getString(0) + ";");
-                Log.i(AnkiDroidApp.TAG,
-                        "Store whiteboard state (" + state + ") for deck " + deckPath);
+                Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + deckPath);
             } else {
                 mMetaDb.execSQL("INSERT INTO whiteboardState (deckpath, state) VALUES (?, ?)",
                         new Object[]{deckPath, state});
-                Log.i(AnkiDroidApp.TAG,
-                        "Store whiteboard state (" + state + ") for deck " + deckPath);
+                Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + deckPath);
             }
         } catch(Exception e) {
               Log.e("Error", "Error storing whiteboard state in MetaDB ", e);
