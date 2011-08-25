@@ -832,7 +832,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mNightMode) {
             	mCurrentBackgroundColor = Themes.getNightModeCardBackground();
             } else {
-            	mCurrentBackgroundColor = android.R.color.white;
+            	mCurrentBackgroundColor = R.color.white;
             }
             
       	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());

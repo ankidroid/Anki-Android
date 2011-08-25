@@ -324,7 +324,7 @@ public class Themes {
 		case THEME_BLUE:
 			return R.color.reviewer_night_card_background;
 		default:
-			return android.R.color.black;
+			return R.color.black;
 		}
 	}
 }

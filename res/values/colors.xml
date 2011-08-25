@@ -74,5 +74,6 @@
 	<color name="background_dialog_blue">#10171d</color>
 	<color name="transparent">#00000000</color>
 	<color name="white">#ffffff</color>
+	<color name="white">#000000</color>
 	
 </resources>
