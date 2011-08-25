@@ -1483,7 +1483,9 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mPrefTextSelection) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
-
+        if (!mChangeBorderStyle) {
+            ((View)findViewById(R.id.flashcard_border)).setVisibility(View.VISIBLE);        	
+        }
         mCardFrame.removeAllViews();
         mCard = createWebView();
         mCardFrame.addView(mCard);
@@ -1631,8 +1633,8 @@ public class Reviewer extends Activity implements IButtonListener{
             buttonDrawable = invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[1];
             mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[0]);
         } else {
-            mMainLayout.setBackgroundResource(R.color.reviewer_background_night);
-        	findViewById(R.id.flashcard_border).setBackgroundResource(R.drawable.blue_bg_webview_night);
+            mMainLayout.setBackgroundResource(invert ? R.color.reviewer_background_night : R.color.reviewer_background);
+        	findViewById(R.id.flashcard_border).setBackgroundResource(invert ? R.drawable.blue_bg_webview_night : R.drawable.blue_bg_webview);
             buttonDrawable = invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[1];
             if (invert) {
                 mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[0]);            	
@@ -2184,7 +2186,8 @@ public class Reviewer extends Activity implements IButtonListener{
 	            mNextCard.setVisibility(View.GONE);
 	            mCardFrame.addView(mNextCard, 0);
 	        } else {
-	            mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);        	
+	            mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
+	            mCard.setBackgroundColor(mCurrentBackgroundColor);
 	        }
 	        if (mChangeBorderStyle) {
 		        switch (mCurrentBackgroundColor) {
