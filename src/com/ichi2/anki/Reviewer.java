@@ -2165,7 +2165,7 @@ public class Reviewer extends Activity implements IButtonListener{
     	if (!flip) {
 	        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 	        if (mCustomFontFiles.length != 0) {
-	            mNextCard.setBackgroundColor(getResources().getColor(mCurrentBackgroundColor));
+	            //mNextCard.setBackgroundColor(getResources().getColor(mCurrentBackgroundColor));
 	            mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
 	            mNextCard.setVisibility(View.VISIBLE);
 	            mCardFrame.removeView(mCard);
