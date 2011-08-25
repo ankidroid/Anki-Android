@@ -325,13 +325,16 @@ public class Model {
     /**
      * Prepares the Background Colors for all CardModels in this Model
      */
-    private void prepareColorForCardModels(boolean invertedColors) {
+    private void prepareColorForCardModels(boolean invertedColors, int nightModeBackground) {
         CardModel myCardModel = null;
         String color = null;
         mColorCardModelMap.clear();
         for (Map.Entry<Long, CardModel> entry : mCardModelsMap.entrySet()) {
             myCardModel = entry.getValue();
             color = invertColor(myCardModel.getLastFontColour(), invertedColors);
+        	if (nightModeBackground != Color.BLACK && Color.parseColor(color) == Color.BLACK) {
+        		color = String.format("#%X", nightModeBackground);
+        	}
             mColorCardModelMap.put(myCardModel.getId(), color);
         }
     }
@@ -351,27 +354,19 @@ public class Model {
         if (mDisplayPercentage != percentage || mInvertedColor != invertedColors) {
             mDisplayPercentage = percentage;
             mInvertedColor = invertedColors;
-            prepareColorForCardModels(invertedColors);
+            prepareColorForCardModels(invertedColors, nightModeBackground);
             prepareCSSForCardModels(invertedColors, nightModeBackground);
         }
         return mCssCardModelMap.get(myCardModelId);
     }
 
 
-    protected final int getBackgroundColor(long myCardModelId, boolean invertedColors, int alternativeColor) {
-    	if (mColorCardModelMap.size() == 0) {
-    		prepareColorForCardModels(invertedColors);
-    	}
+    protected final int getBackgroundColor(long myCardModelId) {
 		String color = mColorCardModelMap.get(myCardModelId);
 		if (color != null) {
-			int intColor = Color.parseColor(color);
-			if (intColor == Color.BLACK) {
-				return alternativeColor;
-			} else {
-				return intColor;
-			}
+			return Color.parseColor(color);
 		} else {
-			return android.R.color.white;
+			return Color.WHITE;
         }
     }
 

@@ -40,6 +40,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -259,6 +260,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
     private TextView mChosenAnswer;
+    private Drawable[] mDefaultButtonDrawable;
     private LinearLayout mProgressBars;
     private View mSessionYesBar;
     private View mSessionProgressBar;
@@ -287,6 +289,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mNextTimeTextColor;
     private int mNextTimeTextRecomColor;
     private int mForegroundColor;
+    private boolean mChangeBorderStyle;
     
     private int mButtonHeight = 0;
     
@@ -790,6 +793,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
+        mChangeBorderStyle = Themes.getTheme() != Themes.THEME_BLUE;
+
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
@@ -830,11 +835,11 @@ public class Reviewer extends Activity implements IButtonListener{
             registerExternalStorageListener();
 
             if (mNightMode) {
-            	mCurrentBackgroundColor = Themes.getNightModeCardBackground();
+            	mCurrentBackgroundColor = Themes.getNightModeCardBackground(this);
             } else {
-            	mCurrentBackgroundColor = R.color.white;
+            	mCurrentBackgroundColor = Color.WHITE;
             }
-            
+
       	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
             initLayout(R.layout.flashcard);
 
@@ -1023,7 +1028,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mWhiteboard.rotate();
         }
         if (mInvertedColors) {
-            invertColors();
+            invertColors(true);
         }
 
         // If the card hasn't loaded yet, don't refresh it
@@ -1528,6 +1533,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setOnClickListener(mFlipCardListener);
         mFlipCard.setText(getResources().getString(R.string.show_answer));
+    	mDefaultButtonDrawable = new Drawable[]{mFlipCard.getBackground(), mEase1.getBackground()};
 
         mTextBarRed = (TextView) findViewById(R.id.red_number);
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
@@ -1575,7 +1581,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);        	
         mForegroundColor = getResources().getColor(R.color.next_time_usual_color);        	
         if (mInvertedColors) {
-            invertColors();
+            invertColors(true);
         }
 
         mLookUpIcon = findViewById(R.id.lookup_button);
@@ -1614,48 +1620,50 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    private void invertColors() {
-        Resources res = getResources();
-        int fgColor = res.getColor(R.color.foreground_color_inv);
+    private void invertColors(boolean invert) {
+        Resources res = getResources();        
+        int fgColor = invert ? res.getColor(R.color.foreground_color_inv) : res.getColor(R.color.black);
+        mCard.setBackgroundColor(mCurrentBackgroundColor);
 
-        mCard.setBackgroundColor(res.getColor(mCurrentBackgroundColor));
-
-        mNextTimeTextColor = res.getColor(R.color.next_time_usual_color_inv);
-        mNextTimeTextRecomColor = res.getColor(R.color.next_time_recommended_color_inv);
-        mNext4.setTextColor(mNextTimeTextColor);
-        mCardTimer.setTextColor(fgColor);
-        mForegroundColor = fgColor;
-        mTextBarBlack.setTextColor(fgColor);
-        mTextBarBlue.setTextColor(res.getColor(R.color.textbar_blue_color_inv));
-
-        if (Themes.getTheme() != Themes.THEME_BLUE) {
-            mMainLayout.setBackgroundResource(mCurrentBackgroundColor);
-            mFlipCard.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
-            mEase1.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
-            mEase2.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
-            mEase3.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
-            mEase4.setBackgroundDrawable(res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal));
+        Drawable buttonDrawable;
+        if (mChangeBorderStyle) {
+            mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
+            buttonDrawable = invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[1];
+            mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[0]);
         } else {
             mMainLayout.setBackgroundResource(R.color.reviewer_background_night);
         	findViewById(R.id.flashcard_border).setBackgroundResource(R.drawable.blue_bg_webview_night);
-            mFlipCard.setBackgroundDrawable(res.getDrawable(R.drawable.blue_btn_night));
-            mEase1.setBackgroundDrawable(res.getDrawable(R.drawable.blue_btn_night));
-            mEase2.setBackgroundDrawable(res.getDrawable(R.drawable.blue_btn_night));
-            mEase3.setBackgroundDrawable(res.getDrawable(R.drawable.blue_btn_night));
-            mEase4.setBackgroundDrawable(res.getDrawable(R.drawable.blue_btn_night));
+            buttonDrawable = invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[1];
+            if (invert) {
+                mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[0]);            	
+            }
         }
-        mFlipCard.setTextColor(fgColor);
-        mEase1.setTextColor(fgColor);
-        mEase2.setTextColor(fgColor);
-        mEase3.setTextColor(fgColor);
-        mEase4.setTextColor(fgColor);
+        if (invert || mChangeBorderStyle) {
+            mNextTimeTextColor = invert ? res.getColor(R.color.next_time_usual_color_inv) : res.getColor(R.color.next_time_usual_color);
+            mNextTimeTextRecomColor = invert ? res.getColor(R.color.next_time_recommended_color_inv) : res.getColor(R.color.next_time_recommended_color);
+            mNext4.setTextColor(mNextTimeTextColor);
+            mCardTimer.setTextColor(fgColor);
+            mForegroundColor = fgColor;
+            mTextBarBlack.setTextColor(fgColor);
+            mTextBarBlue.setTextColor(invert ? res.getColor(R.color.textbar_blue_color_inv) : res.getColor(R.color.textbar_blue_color));
 
-        fgColor = R.color.studyoptions_progressbar_frame_light;
-        int bgColor = R.color.studyoptions_progressbar_background_nightmode;
-        findViewById(R.id.progress_bars_border1).setBackgroundResource(fgColor);
-        findViewById(R.id.progress_bars_border2).setBackgroundResource(fgColor);
-        findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
-        findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
+            mEase1.setBackgroundDrawable(buttonDrawable);
+            mEase2.setBackgroundDrawable(buttonDrawable);
+            mEase3.setBackgroundDrawable(buttonDrawable);
+            mEase4.setBackgroundDrawable(buttonDrawable);
+            mFlipCard.setTextColor(fgColor);
+            mEase1.setTextColor(fgColor);
+            mEase2.setTextColor(fgColor);
+            mEase3.setTextColor(fgColor);
+            mEase4.setTextColor(fgColor);
+
+            fgColor = R.color.studyoptions_progressbar_frame_light;
+            int bgColor = R.color.studyoptions_progressbar_background_nightmode;
+            findViewById(R.id.progress_bars_border1).setBackgroundResource(fgColor);
+            findViewById(R.id.progress_bars_border2).setBackgroundResource(fgColor);
+            findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
+            findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
+        }
     }
 
 
@@ -2062,9 +2070,10 @@ public class Reviewer extends Activity implements IButtonListener{
             Deck currentDeck = AnkiDroidApp.deck();
             Model myModel = Model.getModel(currentDeck, mCurrentCard.getCardModelId(), false);
             mBaseUrl = Utils.getBaseUrl(mMediaDir, myModel, currentDeck);
-            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode, mCurrentBackgroundColor) + Model.invertColors(content, mNightMode);
+            int nightBackground = Themes.getNightModeCardBackground(this);
+            content = myModel.getCSSForFontColorSize(mCurrentCard.getCardModelId(), mDisplayFontSize, mNightMode, nightBackground) + Model.invertColors(content, mNightMode);
             isJapaneseModel = myModel.hasTag(japaneseModelTag);
-            mCurrentBackgroundColor = myModel.getBackgroundColor(mCurrentCard.getCardModelId(), mNightMode, Themes.getNightModeCardBackground());
+            mCurrentBackgroundColor = myModel.getBackgroundColor(mCurrentCard.getCardModelId());
         } else {
         	mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             mBaseUrl = Utils.urlEncodeMediaDir(mDeckFilename.replace(".anki", ".media/"));
@@ -2165,7 +2174,7 @@ public class Reviewer extends Activity implements IButtonListener{
     	if (!flip) {
 	        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 	        if (mCustomFontFiles.length != 0) {
-	            //mNextCard.setBackgroundColor(getResources().getColor(mCurrentBackgroundColor));
+	            mNextCard.setBackgroundColor(mCurrentBackgroundColor);
 	            mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
 	            mNextCard.setVisibility(View.VISIBLE);
 	            mCardFrame.removeView(mCard);
@@ -2177,16 +2186,36 @@ public class Reviewer extends Activity implements IButtonListener{
 	        } else {
 	            mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);        	
 	        }
-            if (mCurrentBackgroundColor == Color.BLACK && !mInvertedColors) {
-            	mInvertedColors = true;
-            	invertColors();
-            }
+	        if (mChangeBorderStyle) {
+		        switch (mCurrentBackgroundColor) {
+		        case Color.WHITE:
+		        	if (mInvertedColors) {
+		        		mInvertedColors = false;
+		            	invertColors(false);	        		
+		        	}
+			        break;
+		        case Color.BLACK:
+			        if (!mInvertedColors) {
+		            	mInvertedColors = true;
+		            	invertColors(true);
+			        }
+			        break;
+		        default:
+		            if (Themes.getTheme() != Themes.THEME_BLUE) {
+		                mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
+		            }
+	            	if (mInvertedColors != mNightMode) {
+	    	            mInvertedColors = mNightMode;
+	    	            invertColors(mNightMode);            		
+	            	}
+		        }	        	
+	        }
     		if (!sDisplayAnswer) {
         		updateForNewCard();
         		if (mShowWhiteboard) {
     				mWhiteboard.clear();
         		}
-    		setNextCardAnimation(false);
+        		setNextCardAnimation(false);
     		}
     	} else {
     		Animation3D rotation;

@@ -50,7 +50,7 @@
 		android:paddingLeft="8dp"
 		android:text=""
 		android:textSize="14dip"
-		android:textColor="#0000ff" />
+		android:textColor="@color/textbar_blue_color" />
 	<TextView android:id="@+id/choosen_answer"
 		android:layout_centerHorizontal="true"
 		android:layout_alignTop="@+id/red_number"

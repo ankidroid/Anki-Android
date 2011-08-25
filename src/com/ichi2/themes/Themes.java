@@ -319,12 +319,12 @@ public class Themes {
 	}
 
 
-	public static int getNightModeCardBackground() {
+	public static int getNightModeCardBackground(Context context) {
 		switch (mCurrentTheme) {
 		case THEME_BLUE:
-			return R.color.reviewer_night_card_background;
+			return context.getResources().getColor(R.color.reviewer_night_card_background);
 		default:
-			return R.color.black;
+			return Color.BLACK;
 		}
 	}
 }
