@@ -1451,6 +1451,7 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         mCardFrame.removeAllViews();
         mCard = createWebView();
+        mCard.setBackgroundColor(mCurrentBackgroundColor);
         mCardFrame.addView(mCard);
         
         if (mCustomFontFiles.length != 0) {
