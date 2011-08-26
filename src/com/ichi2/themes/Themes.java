@@ -308,7 +308,8 @@ public class Themes {
     		   ((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(mPopupBottomDark);
     	   }
         } else {
-    	   ((View) main.findViewById(R.id.buttonPanel)).setBackgroundResource(mPopupBottomMedium);
+        	LinearLayout buttonPanel = (LinearLayout) main.findViewById(R.id.buttonPanel);
+        	buttonPanel.setBackgroundResource(mPopupBottomMedium);
         }
 		if (buttonNumbers > 1) {
 			main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
