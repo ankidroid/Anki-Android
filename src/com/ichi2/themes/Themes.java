@@ -53,7 +53,7 @@ public class Themes {
 	private static int mTitleStyle = 0;
 	private static int mTextViewStyle= 0;
 	private static int mWallpaper = 0;
-	private static int mBackgroundColor = 0;
+	private static int mBackgroundColor;
 	private static int mBackgroundDarkColor = 0;
 	private static int mDialogBackgroundColor = 0;
 	private static int mToastBackground = 0;
@@ -86,6 +86,7 @@ public class Themes {
 				mPopupBottomBright = R.drawable.popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.popup_bottom_medium;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
+				mBackgroundColor = R.color.white;
 				break;
 			case THEME_ANDROID_LIGHT:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_light;
@@ -105,6 +106,7 @@ public class Themes {
 				mPopupBottomBright = R.drawable.popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.popup_bottom_medium;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
+				mBackgroundColor = R.color.white;
 				break;				
 			case THEME_BLUE:
 				mProgressbarsBackgroundColor = R.color.studyoptions_progressbar_background_blue;
