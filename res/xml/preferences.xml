@@ -226,6 +226,12 @@
 				android:summary="@string/text_selection_summ"
 				android:key="textSelection" 
 				android:disableDependentsState="false"/>
+			<CheckBoxPreference
+				android:title="@string/text_selection_click"
+				android:defaultValue="false"
+				android:summary="@string/text_selection_click_summ"
+				android:key="textSelectionLongclickWorkaround" 
+				android:dependency="textSelection"/>
 			<ListPreference
 				android:title="@string/dictionary"
 				android:summary="@string/dictionary_summ"

@@ -198,6 +198,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
     private boolean mPrefTextSelection;
+    private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;    
@@ -433,6 +434,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private final Handler longClickHandler = new Handler();
     private final Runnable longClickTestRunnable = new Runnable() {
         public void run() {
+    		Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
         	Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             longClickHandler.postDelayed(startSelection, 300);
@@ -485,7 +487,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (gestureDetector.onTouchEvent(event)) {
                 return true;
             }
-            if (mPrefTextSelection) {
+            if (mPrefTextSelection && !mLongClickWorkaround) {
             	switch (event.getAction()) {
             	case MotionEvent.ACTION_DOWN:
             		longClickHandler.postDelayed(longClickTestRunnable, 500);
@@ -500,12 +502,28 @@ public class Reviewer extends Activity implements IButtonListener{
             		break;
             	}
             }
-            mCard.dispatchTouchEvent(event);            	
-            return true;
+            mCard.dispatchTouchEvent(event);
+            return false;
         }
     };
 
     
+    private View.OnLongClickListener mLongClickListener = new View.OnLongClickListener() {
+
+    	@Override
+    	public boolean onLongClick(View view) {
+    		if (mIsSelecting) {
+    			return false;
+    		}
+    		Log.i(AnkiDroidApp.TAG, "onLongClick");
+    		Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+    		vibratorManager.vibrate(50);
+            longClickHandler.postDelayed(startSelection, 300);
+    		return true;
+    	}
+    };
+
+
     private DeckTask.TaskListener mMarkCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
@@ -1480,6 +1498,9 @@ public class Reviewer extends Activity implements IButtonListener{
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
+    	if (mPrefTextSelection && mLongClickWorkaround) {
+            mTouchLayer.setOnLongClickListener(mLongClickListener);
+    	}
         if (mPrefTextSelection) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
@@ -1785,6 +1806,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
         mPrefTextSelection = preferences.getBoolean("textSelection", false);
+        mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
     	mInvertedColors = mNightMode;
@@ -2661,10 +2683,9 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     private void selectAndCopyText() {
         try {
-            mLookUpIcon.setVisibility(View.VISIBLE);
-            mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
             KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
             shiftPressEvent.dispatch(mCard);
+            shiftPressEvent.isShiftPressed();
             mIsSelecting = true;
         } catch (Exception e) {
             throw new AssertionError(e);
@@ -2946,9 +2967,21 @@ public class Reviewer extends Activity implements IButtonListener{
     		       		executeCommand(mGestureTapLeft);
     				}    				
     			}
- 			} else if(mPrefTextSelection && mClipboard.getText() != null && mClipboard.getText().length() != 0){
- 				mIsSelecting = false;
  			}
+    		mIsSelecting = false;
+    		if (mPrefTextSelection && mClipboard != null) {
+                if (mClipboard.getText().length() != 0) {
+                	if (mLookUpIcon.getVisibility() != View.VISIBLE) {
+            			mLookUpIcon.setVisibility(View.VISIBLE);
+                        mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));                		
+                	}
+                } else {
+                	if (mLookUpIcon.getVisibility() == View.VISIBLE) {
+                        mLookUpIcon.setVisibility(View.GONE);
+                        mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));                		
+                	}
+                }                
+    		}
     		return false;
     	}
     	
