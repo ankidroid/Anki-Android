@@ -127,7 +127,7 @@
     <item>Интервалы</item>
     <item>Просмотры</item>
     <item>Общее время просмотров</item>
-    <item>Deck Summary</item>
+    <item>Сводка по колоде</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 неделя</item>
@@ -163,8 +163,8 @@
     <item>Прервать обучения</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
+    <item>Андроид Темный </item>
+    <item>Андроид Светлый</item>
+    <item>Синяя</item>
   </string-array>
 </resources>

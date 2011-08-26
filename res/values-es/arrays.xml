@@ -127,7 +127,7 @@
     <item>Intervalos</item>
     <item>Repasos</item>
     <item>Tiempo de repaso</item>
-    <item>Deck Summary</item>
+    <item>Resumen de Mazos</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 semana</item>
@@ -165,6 +165,6 @@
   <string-array name="theme_labels">
     <item>Android Dark</item>
     <item>Android Light</item>
-    <item>Blue</item>
+    <item>Azul</item>
   </string-array>
 </resources>

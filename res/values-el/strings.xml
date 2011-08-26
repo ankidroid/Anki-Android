@@ -134,6 +134,8 @@
   <string name="write_answers_summ">Σας επιτρέπει να να γράψετε απαντήσεις στην οθόνη και να συγκρίνετε με τη σωστή</string>
   <string name="text_selection">Ενεργοποίηση επιλογής κειμένου</string>
   <string name="text_selection_summ">Lets you select and copy text from cards (by menu or long click) in order to perform lookups in an external dictionary</string>
+  <string name="text_selection_click">Longclick Workaround</string>
+  <string name="text_selection_click_summ">Enable this if you are not able to start text selection via long click</string>
   <string name="dictionary">Λεξικό</string>
   <string name="dictionary_summ">Λεξικό στο οποίο θα εκτελούνται οι αναζητήσεις: XXX</string>
   <string name="reset_languages">Επαναφορά Γλώσσών</string>

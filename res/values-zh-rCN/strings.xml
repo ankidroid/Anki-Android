@@ -134,6 +134,8 @@
   <string name="write_answers_summ">允许你填写答案，与正确答案进行比对</string>
   <string name="text_selection">允许选择文本</string>
   <string name="text_selection_summ">Lets you select and copy text from cards (by menu or long click) in order to perform lookups in an external dictionary</string>
+  <string name="text_selection_click">Longclick Workaround</string>
+  <string name="text_selection_click_summ">Enable this if you are not able to start text selection via long click</string>
   <string name="dictionary">词典</string>
   <string name="dictionary_summ">选择要查阅的词典: XXX</string>
   <string name="reset_languages">重置语言</string>

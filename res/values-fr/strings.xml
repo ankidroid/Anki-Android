@@ -134,6 +134,8 @@
   <string name="write_answers_summ">Vous permet d\'écrire la réponse et la comparer avec la bonne</string>
   <string name="text_selection">Autoriser la sélection de texte</string>
   <string name="text_selection_summ">Lets you select and copy text from cards (by menu or long click) in order to perform lookups in an external dictionary</string>
+  <string name="text_selection_click">Longclick Workaround</string>
+  <string name="text_selection_click_summ">Enable this if you are not able to start text selection via long click</string>
   <string name="dictionary">Dictionnaire</string>
   <string name="dictionary_summ">Dictionnaire dans lequel les recherches doivent être effectuées: XXX</string>
   <string name="reset_languages">Réinitialiser les langues</string>

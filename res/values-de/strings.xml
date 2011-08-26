@@ -134,6 +134,8 @@
   <string name="write_answers_summ">Erlaubt das Eingeben von Antworten und vergleicht die Eingabe mit der richtigen Antwort</string>
   <string name="text_selection">Text markieren</string>
   <string name="text_selection_summ">Erlaubt es, Text auszuwählen und zu kopieren (per Menü oder Langklick), um diesen in einem externen Wörterbuch nachzuschlagen</string>
+  <string name="text_selection_click">Langklick Problemlösung</string>
+  <string name="text_selection_click_summ">Fall der Langklick zum Textauswählen nicht funktioniert</string>
   <string name="dictionary">Wörterbuch</string>
   <string name="dictionary_summ">Wörterbuch, in dem nachgeschlagen werden soll: XXX</string>
   <string name="reset_languages">Sprachzuordnungen zurücksetzen</string>
