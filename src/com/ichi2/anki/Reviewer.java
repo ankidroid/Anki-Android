@@ -544,6 +544,9 @@ public class Reviewer extends Activity implements IButtonListener{
     };
 
     private DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
+    	boolean mSessionComplete;
+    	boolean mNoMoreCards;
+
         @Override
         public void onPreExecute() {
         }
@@ -551,21 +554,24 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            mCurrentCard = values[0].getCard();
-            if (mPrefWhiteboard) {
-                mWhiteboard.clear();
-            }
-
-            if (mPrefTimer) {
-                mCardTimer.setBase(SystemClock.elapsedRealtime());
-                mCardTimer.start();
-            }
-            displayCardQuestion();
+        	boolean[] results = postAnswerCard(values);
+        	mSessionComplete = results[0];
+        	mNoMoreCards = results[1];
         }
 
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
+            // Check for no more cards before session complete. If they are both true,
+            // no more cards will take precedence when returning to study options.
+            if (mNoMoreCards) {
+                Reviewer.this.setResult(RESULT_NO_MORE_CARDS);
+                mShowCongrats = true;
+                closeReviewer();
+            } else if (mSessionComplete) {
+                Reviewer.this.setResult(RESULT_SESSION_COMPLETED);
+                closeReviewer();
+            }
         }
     };
 
@@ -626,73 +632,9 @@ public class Reviewer extends Activity implements IButtonListener{
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            Resources res = getResources();
-            mSessionComplete = false;
-            mNoMoreCards = false;
-            // Check to see if session rep or time limit has been reached
-            Deck deck = AnkiDroidApp.deck();
-            long sessionRepLimit = deck.getSessionRepLimit();
-            long sessionTime = deck.getSessionTimeLimit();
-            String sessionMessage = null;
-            String leechMessage;
-            Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
-
-            if (values[0].isPreviousCardLeech()) {
-                if (values[0].isPreviousCardSuspended()) {
-                    leechMessage = res.getString(R.string.leech_suspend_notification);
-                } else {
-                    leechMessage = res.getString(R.string.leech_notification);
-                }
-                Themes.showThemedToast(Reviewer.this, leechMessage, false);
-            }
-
-            if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
-                mSessionComplete = true;
-                sessionMessage = res.getString(R.string.session_question_limit_reached);
-            } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
-                // session time limit reached, flag for halt once async task has completed.
-                mSessionComplete = true;
-                sessionMessage = res.getString(R.string.session_time_limit_reached);
-            } else if (mIsLastCard) {
-                mNoMoreCards = true;
-                mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
-                        .getString(R.string.saving_changes), true);
-                setOutAnimation(true);
-            } else {
-                // session limits not reached, show next card
-                Card newCard = values[0].getCard();
-
-                // If the card is null means that there are no more cards scheduled for review.
-                if (newCard == null) {
-                    mNoMoreCards = true;
-                    mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
-                            .getString(R.string.saving_changes), true);
-                    setOutAnimation(false);
-                    return;
-                }
-
-                // Start reviewing next card
-                mCurrentCard = newCard;
-                if (mPrefWriteAnswers) { //only bother query deck if needed
-                	String[] answer = mCurrentCard.getComparedFieldAnswer();
-                	comparedFieldAnswer = answer[0];
-                	comparedFieldClass = answer[1];
-                } else {
-                	comparedFieldAnswer = null;
-                }
-                if (mChosenAnswer.getText().equals("")) {
-                    setDueMessage();
-                }
-                Reviewer.this.setProgressBarIndeterminateVisibility(false);
-                // Reviewer.this.enableControls();
-                Reviewer.this.unblockControls();
-                Reviewer.this.displayCardQuestion();
-            }
-
-            // Show a message to user if a session limit has been reached.
-            if (sessionMessage != null) {
-            	Themes.showThemedToast(Reviewer.this, sessionMessage, true);
-            }
+        	boolean[] results = postAnswerCard(values);
+        	mSessionComplete = results[0];
+        	mNoMoreCards = results[1];
         }
 
 
@@ -1687,6 +1629,78 @@ public class Reviewer extends Activity implements IButtonListener{
             findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
             findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
         }
+    }
+
+
+    private boolean[] postAnswerCard(DeckTask.TaskData... values) {
+        Resources res = getResources();
+        boolean sessionComplete = false;
+        boolean noMoreCards = false;
+        // Check to see if session rep or time limit has been reached
+        Deck deck = AnkiDroidApp.deck();
+        long sessionRepLimit = deck.getSessionRepLimit();
+        long sessionTime = deck.getSessionTimeLimit();
+        String sessionMessage = null;
+        String leechMessage;
+        Log.i(AnkiDroidApp.TAG, "reviewer leech flag: " + values[0].isPreviousCardLeech() + " " + values[0].isPreviousCardSuspended());
+
+        if (values[0].isPreviousCardLeech()) {
+            if (values[0].isPreviousCardSuspended()) {
+                leechMessage = res.getString(R.string.leech_suspend_notification);
+            } else {
+                leechMessage = res.getString(R.string.leech_notification);
+            }
+            Themes.showThemedToast(Reviewer.this, leechMessage, false);
+        }
+
+        if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
+        	sessionComplete = true;
+            sessionMessage = res.getString(R.string.session_question_limit_reached);
+        } else if ((sessionTime > 0) && (System.currentTimeMillis() >= mSessionTimeLimit)) {
+            // session time limit reached, flag for halt once async task has completed.
+        	sessionComplete = true;
+            sessionMessage = res.getString(R.string.session_time_limit_reached);
+        } else if (mIsLastCard) {
+        	noMoreCards = true;
+            mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                    .getString(R.string.saving_changes), true);
+            setOutAnimation(true);
+        } else {
+            // session limits not reached, show next card
+            Card newCard = values[0].getCard();
+
+            // If the card is null means that there are no more cards scheduled for review.
+            if (newCard == null) {
+            	noMoreCards = true;
+                mProgressDialog = ProgressDialog.show(Reviewer.this, "", getResources()
+                        .getString(R.string.saving_changes), true);
+                setOutAnimation(false);
+                return new boolean[] {sessionComplete, noMoreCards};
+            }
+
+            // Start reviewing next card
+            mCurrentCard = newCard;
+            if (mPrefWriteAnswers) { //only bother query deck if needed
+            	String[] answer = mCurrentCard.getComparedFieldAnswer();
+            	comparedFieldAnswer = answer[0];
+            	comparedFieldClass = answer[1];
+            } else {
+            	comparedFieldAnswer = null;
+            }
+            if (mChosenAnswer.getText().equals("")) {
+                setDueMessage();
+            }
+            Reviewer.this.setProgressBarIndeterminateVisibility(false);
+            // Reviewer.this.enableControls();
+            Reviewer.this.unblockControls();
+            Reviewer.this.displayCardQuestion();
+        }
+
+        // Show a message to user if a session limit has been reached.
+        if (sessionMessage != null) {
+        	Themes.showThemedToast(Reviewer.this, sessionMessage, true);
+        }
+        return new boolean[] {sessionComplete, noMoreCards};
     }
 
 
