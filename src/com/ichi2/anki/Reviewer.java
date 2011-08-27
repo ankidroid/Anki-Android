@@ -1453,13 +1453,12 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mPrefTextSelection) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
+        mCardFrame.removeAllViews();
+        mCard = createWebView();
+        mCardFrame.addView(mCard);
         if (!mChangeBorderStyle) {
             ((View)findViewById(R.id.flashcard_border)).setVisibility(View.VISIBLE);        	
         }
-        mCardFrame.removeAllViews();
-        mCard = createWebView();
-        mCard.setBackgroundColor(mCurrentBackgroundColor);
-        mCardFrame.addView(mCard);
         
         if (mCustomFontFiles.length != 0) {
             mNextCard = createWebView();
