@@ -802,6 +802,9 @@ public class Reviewer extends Activity implements IButtonListener{
 
       	  	mCustomFontFiles = Utils.getCustomFonts(getBaseContext());
             initLayout(R.layout.flashcard);
+            if (mPrefTextSelection) {
+                mClipboard.setText("");
+            }
 
             switch (mDictionary) {
             	case DICTIONARY_AEDICT:
@@ -1205,6 +1208,9 @@ public class Reviewer extends Activity implements IButtonListener{
             	fillFlashcard(mShowAnimations);
             }
         }
+        if (mPrefTextSelection) {
+        	mClipboard.setText("");
+        }
     }
 
     private boolean isCramming() {
@@ -1334,9 +1340,10 @@ public class Reviewer extends Activity implements IButtonListener{
             		for (int i = 0; i < itemValues.length; i++) {
                 		if (language.equals(itemValues[i])) {
                 			lookupLeo(language, mClipboard.getText());
+                			mClipboard.setText("");
                             return true;
                 		}
-            		}        			
+            		}
         		}
         		final String[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
         		StyledDialog.Builder builder = new StyledDialog.Builder(this);
@@ -1386,12 +1393,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void answerCard(int ease) {
         mIsSelecting = false;
-        if (mLookUpIcon.getVisibility() == View.VISIBLE) {
-            mLookUpIcon.setVisibility(View.GONE);
-            mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));        	
-        }
         if (mPrefTextSelection) {
             mClipboard.setText("");
+            if (mLookUpIcon.getVisibility() == View.VISIBLE) {
+                mLookUpIcon.setVisibility(View.GONE);
+                mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));        	
+            }        	
         }
         Deck deck = AnkiDroidApp.deck();
     	switch (ease) {
@@ -2093,7 +2100,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
-
 
         mBaseUrl = "";
         Boolean isJapaneseModel = false;
