@@ -318,7 +318,7 @@ public class StudyOptions extends Activity {
 	* Backup
 	*/
 	File[] mBackups;
-	public static final int MIN_FREE_SPACE = 10000;
+	public static final int MIN_FREE_SPACE = 10;
 
 	/**
 	* Statistics
