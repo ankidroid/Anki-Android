@@ -18,6 +18,7 @@ package com.ichi2.preferences;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences.Editor;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.widget.Toast;
@@ -25,23 +26,31 @@ import android.widget.Toast;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.R;
+import com.tomgibara.android.veecheck.util.PrefSettings;
 
-public class LanguageDialogPreference extends DialogPreference implements DialogInterface.OnClickListener {
+public class CustomDialogPreference extends DialogPreference implements DialogInterface.OnClickListener {
     private Context mContext;
 
-    public LanguageDialogPreference(Context context, AttributeSet attrs) {
+    public CustomDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
 
+
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            if (MetaDB.resetLanguages(mContext)) {
-                Toast successReport = 
-                    Toast.makeText(this.getContext() , 
-                            AnkiDroidApp.getAppResources().getString(R.string.reset_languages_confirmation), Toast.LENGTH_SHORT);
-                successReport.show();
-            }
+        	if (this.getTitle().equals(mContext.getResources().getString(R.string.reset_dialogs))) {
+        		Editor editor = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit();
+        		editor.putBoolean("dontShowLowMemory", false);
+        		editor.commit();
+        	} else {
+            	if (MetaDB.resetLanguages(mContext)) {
+                    Toast successReport = 
+                        Toast.makeText(this.getContext() , 
+                                AnkiDroidApp.getAppResources().getString(R.string.reset_languages_confirmation), Toast.LENGTH_SHORT);
+                    successReport.show();
+                }	
+        	}
         }
     }
 

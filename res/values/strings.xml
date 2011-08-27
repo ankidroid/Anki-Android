@@ -30,6 +30,7 @@
 <string name="yes">Yes</string>
 <string name="no">No</string>
 <string name="ok">OK</string>
+<string name="dont_show_again">Don\'t show again</string>
 
 <!-- Deck.java upgrade deck notes -->
 <!--<string name="deck_not_loaded">Failed to load deck.</string>-->
@@ -181,6 +182,9 @@
 <string name="dictionary_summ">Dictionary in which lookups should be performed: XXX</string>
 <string name="reset_languages">Reset Languages</string>
 <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+<string name="reset_dialogs">Reset Dialogs</string>
+<string name="reset_dialogs_question">Reset all dialogs?</string>
+<string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
 <string name="reset_languages_question">Reset all language assignments?</string>
 <string name="reset_languages_confirmation">All language assignments reset</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>

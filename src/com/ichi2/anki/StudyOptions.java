@@ -153,6 +153,7 @@ public class StudyOptions extends Activity {
     private static final int DIALOG_LIMIT_SESSION = 15;
     private static final int DIALOG_DOWNLOAD_SELECTOR = 16;
     private static final int DIALOG_CRAM = 17;
+    private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 18;
 
     private String mCurrentDialogMessage;
 
@@ -317,7 +318,7 @@ public class StudyOptions extends Activity {
 	* Backup
 	*/
 	File[] mBackups;
-	public static final int MIN_FREE_SPACE = 10;
+	public static final int MIN_FREE_SPACE = 10000;
 
 	/**
 	* Statistics
@@ -993,6 +994,14 @@ public class StudyOptions extends Activity {
 			break;
 
 		case DIALOG_NO_SPACE_LEFT:
+	        builder.setNegativeButton(getResources().getString(R.string.dont_show_again), new OnClickListener() {
+
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+	            	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("dontShowLowMemory", true).commit();
+	            }
+	        });
+		case DIALOG_BACKUP_NO_SPACE_LEFT:
 	        builder.setTitle(getResources().getString(R.string.backup_manager_title));
 	        builder.setIcon(android.R.drawable.ic_dialog_alert);
 	        builder.setPositiveButton(getResources().getString(R.string.ok), null);
@@ -2424,15 +2433,17 @@ public class StudyOptions extends Activity {
         			break;
         		case BackupManager.RETURN_NOT_ENOUGH_SPACE:
         			mCurrentDialogMessage = getResources().getString(R.string.backup_deck_no_space_left);
-        			showDialog(DIALOG_NO_SPACE_LEFT);
+        			showDialog(DIALOG_BACKUP_NO_SPACE_LEFT);
         			break;
         		case BackupManager.RETURN_LOW_SYSTEM_SPACE:
-        			mCurrentDialogMessage = getResources().getString(R.string.sd_space_warning, MIN_FREE_SPACE);
-        			showDialog(DIALOG_NO_SPACE_LEFT);
+        			if (!PrefSettings.getSharedPrefs(getBaseContext()).getBoolean("dontShowLowMemory", false)) {
+            			mCurrentDialogMessage = getResources().getString(R.string.sd_space_warning, MIN_FREE_SPACE);
+            			showDialog(DIALOG_NO_SPACE_LEFT);        				
+        			}
         			break;
         		}
         	} else {
-        		mProgressDialog.setMessage(message);        			
+        		mProgressDialog.setMessage(message);
         	}
         }
     };

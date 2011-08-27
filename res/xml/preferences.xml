@@ -242,7 +242,8 @@
 				android:entryValues="@array/dictionary_values" />
 		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_reset">
-			<com.ichi2.preferences.LanguageDialogPreference
+			<com.ichi2.preferences.CustomDialogPreference
+				android:dialogIcon="@android:drawable/ic_dialog_alert"
 				android:title="@string/reset_languages"
 				android:positiveButtonText="@string/yes"
 				android:negativeButtonText="@string/no"
@@ -414,6 +415,16 @@
 			android:entries="@array/error_reporting_choice_labels"
 			android:entryValues="@array/error_reporting_choice_values"
 			android:key="reportErrorMode" />
+		<PreferenceCategory android:title="@string/pref_cat_reset">
+			<com.ichi2.preferences.CustomDialogPreference
+				android:dialogIcon="@android:drawable/ic_dialog_alert"
+				android:title="@string/reset_dialogs"
+				android:positiveButtonText="@string/yes"
+				android:negativeButtonText="@string/no"
+				android:dialogTitle="@string/reset_dialogs"
+				android:dialogMessage="@string/reset_dialogs_question"			
+				android:summary="@string/reset_dialogs_summ" />
+		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_experimental">
 			<CheckBoxPreference
 				android:title="@string/wal_mode"
