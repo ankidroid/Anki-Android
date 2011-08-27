@@ -77,7 +77,7 @@ public class Themes {
 			case THEME_DEFAULT:
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
-				mChartColors = new int[] {android.R.color.white, android.R.color.black};
+				mChartColors = new int[] {Color.WHITE, Color.BLACK};
 				mPopupTopDark = R.drawable.popup_top_dark;
 				mPopupCenterDark = R.drawable.popup_center_dark;
 				mPopupCenterBright = R.drawable.popup_center_bright;
@@ -97,7 +97,7 @@ public class Themes {
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mReviewerProgressbar = mProgressbarsYoungColor;
-				mChartColors = new int[] {Color.parseColor("#000000"), Color.parseColor("#ffffff")};
+				mChartColors = new int[] {Color.BLACK, Color.WHITE};
 				mPopupTopDark = R.drawable.popup_top_dark;
 				mPopupCenterDark = R.drawable.popup_center_dark;
 				mPopupCenterBright = R.drawable.popup_center_bright;
@@ -126,7 +126,7 @@ public class Themes {
 				mBackgroundDarkColor = R.color.background_dark_blue;
 				mReviewerProgressbar = R.color.reviewer_progressbar_session_blue;
 				mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
-				mChartColors = new int[] {Color.parseColor("#000000"), Color.parseColor("#ffffff")};
+				mChartColors = new int[] {Color.BLACK, Color.WHITE};
 				mPopupTopDark = R.drawable.blue_popup_top_dark;
 				mPopupCenterDark = R.drawable.blue_popup_center_dark;
 				mPopupCenterBright = R.drawable.blue_popup_center_bright;
