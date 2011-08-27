@@ -303,6 +303,7 @@
 <string name="card_details_question">Question</string>
 <string name="card_details_answer">Answer</string>
 <string name="card_details_due">Due</string>
+<string name="card_details_last_due">Last due</string>
 <string name="card_details_now">Now</string>
 <string name="card_details_interval">Interval</string>
 <string name="card_details_ease">Ease</string>

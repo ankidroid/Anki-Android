@@ -748,31 +748,43 @@ public class Card {
     }
 
 
-    public String getCardDetails(Context context) {
+    public String getCardDetails(Context context, boolean full) {
     	Resources res = context.getResources();
     	StringBuilder builder = new StringBuilder();
        	builder.append("<html><body text=\"#FFFFFF\"><b>");
-        builder.append(res.getString(R.string.card_details_question));
-        builder.append("</b>: ");
-        builder.append(Utils.stripHTML(mQuestion));
-        builder.append("<br><b>");
-        builder.append(res.getString(R.string.card_details_answer));
-        builder.append("</b>: ");
-        builder.append(Utils.stripHTML(mAnswer));
-        builder.append("<br><b>");
+       	if (full) {
+            builder.append(res.getString(R.string.card_details_question));
+            builder.append("</b>: ");
+            builder.append(Utils.stripHTML(mQuestion));
+            builder.append("<br><b>");
+            builder.append(res.getString(R.string.card_details_answer));
+            builder.append("</b>: ");
+            builder.append(Utils.stripHTML(mAnswer));
+            builder.append("<br><b>");
+       	}
         builder.append(res.getString(R.string.card_details_tags));
         builder.append("</b>: ");
         String tags = Arrays.toString(mDeck.allUserTags("WHERE id = " + mFactId));
         builder.append(tags.substring(1, tags.length() - 1));
         builder.append("<br><br>");
-        builder.append(res.getString(R.string.card_details_due));
+        if (full) {
+            builder.append(res.getString(R.string.card_details_due));
+            builder.append(": ");
+            if (mYesCount + mNoCount == 0) {
+                builder.append("-");
+            } else if (mCombinedDue < mDeck.getDueCutoff()) {
+                builder.append("<b>").append(res.getString(R.string.card_details_now)).append("</b>");
+            } else {
+                builder.append(Utils.fmtTimeSpan(mCombinedDue - Utils.now(), Utils.TIME_FORMAT_IN, true));
+            }
+            builder.append("<br>");        	
+        }
+        builder.append(res.getString(R.string.card_details_last_due));
         builder.append(": ");
-        if (mYesCount + mNoCount == 0) {
+        if (mYesCount + mNoCount == 0 || mLastDue == 0) {
             builder.append("-");
-        } else if (mCombinedDue < mDeck.getDueCutoff()) {
-            builder.append("<b>").append(res.getString(R.string.card_details_now)).append("</b>");
         } else {
-            builder.append(Utils.getReadableInterval(context, (mCombinedDue - Utils.now()) / 86400.0, true, true));
+        	builder.append(Utils.fmtTimeSpan(Utils.now() - mLastDue, Utils.TIME_FORMAT_BEFORE, true));
         }
         builder.append("<br>");
         builder.append(res.getString(R.string.card_details_interval));
@@ -780,7 +792,7 @@ public class Card {
         if (mInterval == 0) {
             builder.append("-");
         } else {
-            builder.append(Utils.getReadableInterval(context, mInterval, false, true));
+            builder.append(Utils.fmtTimeSpan(mInterval * 86400, Utils.TIME_FORMAT_DEFAULT, true));
         }
         builder.append("<br><br>");
         builder.append(res.getString(R.string.card_details_ease));

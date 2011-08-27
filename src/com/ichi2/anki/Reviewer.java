@@ -447,6 +447,15 @@ public class Reviewer extends Activity implements IButtonListener{
     };
 
 
+    private View.OnClickListener mCardStatisticsListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.i(AnkiDroidApp.TAG, "Show card statistics");
+			Themes.htmlOkDialog(Reviewer.this, getResources().getString(R.string.card_browser_card_details), mCurrentCard.getCardDetails(Reviewer.this, false)).show();
+        }
+    };
+
+
     // Handler for the "show answer" button
     private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
@@ -456,6 +465,7 @@ public class Reviewer extends Activity implements IButtonListener{
             displayCardAnswer();
         }
     };
+
 
     private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
@@ -694,7 +704,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private Runnable removeChosenAnswerText=new Runnable() {
     	public void run() {
     		mChosenAnswer.setText("");
-    		mChosenAnswer.setTextColor(mForegroundColor);
     		setDueMessage();
     	}
     };
@@ -1515,9 +1524,11 @@ public class Reviewer extends Activity implements IButtonListener{
         	mSessionYesBar = (View) findViewById(R.id.daily_bar);
             mSessionProgressBar = (View) findViewById(R.id.session_progress);
             mProgressBars = (LinearLayout) findViewById(R.id.progress_bars);
+            mProgressBars.setOnClickListener(mCardStatisticsListener);
         }
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
+        mCardTimer.setOnClickListener(mCardStatisticsListener);
     	if (mPrefTimer && (!mShowAnimations || mConfigurationChanged)) {
     		switchVisibility(mCardTimer, View.VISIBLE);
     	}
@@ -1694,15 +1705,14 @@ public class Reviewer extends Activity implements IButtonListener{
             } else {
             	comparedFieldAnswer = null;
             }
-            if (mChosenAnswer.getText().equals("")) {
-                setDueMessage();
-            }
             Reviewer.this.setProgressBarIndeterminateVisibility(false);
             // Reviewer.this.enableControls();
             Reviewer.this.unblockControls();
             Reviewer.this.displayCardQuestion();
         }
-
+        if (mChosenAnswer.getText().equals("")) {
+            setDueMessage();
+        }
         // Show a message to user if a session limit has been reached.
         if (sessionMessage != null) {
         	Themes.showThemedToast(Reviewer.this, sessionMessage, true);
@@ -1894,10 +1904,8 @@ public class Reviewer extends Activity implements IButtonListener{
     private void setDueMessage() {
     	Deck deck = AnkiDroidApp.deck();
 		if (mCurrentCard != null && deck != null && deck.getScheduler().equals("reviewEarly")) {
-			double due = (mCurrentCard.getCombinedDue() - Utils.now()) / 86400.0;
-			if (due > 0.041) {
-	    		mChosenAnswer.setText(Utils.getReadableInterval(Reviewer.this, due, true, false));				
-			}
+    		mChosenAnswer.setTextColor(mForegroundColor);
+    		mChosenAnswer.setText(Utils.fmtTimeSpan(mCurrentCard.getCombinedDue() - Utils.now(), Utils.TIME_FORMAT_IN));				
 		}
     }
 
@@ -2917,7 +2925,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (ease == 1){
         	return res.getString(R.string.soon);
         } else {
-        	return Utils.getReadableInterval(this, mCurrentCard.nextInterval(mCurrentCard, ease));
+        	return Utils.fmtTimeSpan(mCurrentCard.nextInterval(mCurrentCard, ease) * 86400, Utils.TIME_FORMAT_DEFAULT);
         }
     }
 

@@ -305,7 +305,7 @@ public class CardBrowser extends Activity {
 			dialog.show();
 			return true;
 		case CONTEXT_MENU_DETAILS:
-			Themes.htmlOkDialog(this, getResources().getString(R.string.card_browser_card_details), mSelectedCard.getCardDetails(this)).show();
+			Themes.htmlOkDialog(this, getResources().getString(R.string.card_browser_card_details), mSelectedCard.getCardDetails(this, true)).show();
 			return true;
 		default:
 			return super.onContextItemSelected(item);
