@@ -39,7 +39,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -64,8 +63,6 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
-import com.zeemote.zc.Controller;
-import com.zeemote.zc.ui.android.ControllerAndroidUi;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,6 +94,7 @@ public class StudyOptions extends Activity {
     private static final int MENU_PREFERENCES = 5;
     private static final int MENU_ADD_FACT = 6;
     private static final int MENU_MORE_OPTIONS = 7;
+    private static final int MENU_ROTATE = 8;
 
     /**
 * Available options performed by other activities
@@ -1790,6 +1788,8 @@ public class StudyOptions extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_OPEN, Menu.NONE, R.string.menu_open_deck,
                 R.drawable.ic_menu_manage);
+        Utils.addMenuItem(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_rotate,
+                android.R.drawable.ic_menu_always_landscape_portrait);        
         Utils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.menu_sync,
                 R.drawable.ic_menu_refresh);        	
         Utils.addMenuItem(menu, Menu.NONE, MENU_ADD_FACT, Menu.NONE, R.string.menu_add_card,
@@ -1840,6 +1840,14 @@ public class StudyOptions extends Activity {
             	startActivityForResult(new Intent(StudyOptions.this, FactAdder.class), ADD_FACT);
                 if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
                     ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
+                }
+                return true;
+
+            case MENU_ROTATE:
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                } else {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);                	
                 }
                 return true;
 
