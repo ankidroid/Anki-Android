@@ -16,12 +16,14 @@
 
 package com.ichi2.themes;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
@@ -141,12 +143,15 @@ public class Themes {
 		switch (mCurrentTheme) {
 		case THEME_DEFAULT:
 			context.setTheme(R.style.Theme_Black);
+			Log.i(AnkiDroidApp.TAG, "Set theme: dark");
 			break;
 		case THEME_ANDROID_LIGHT:
 			context.setTheme(R.style.Theme_Light);
+			Log.i(AnkiDroidApp.TAG, "Set theme: light");
 			break;
 		case THEME_BLUE:
 			context.setTheme(R.style.Theme_Blue);
+			Log.i(AnkiDroidApp.TAG, "Set theme: blue");
 			break;
 		}
 	}
