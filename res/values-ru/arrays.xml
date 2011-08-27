@@ -145,12 +145,12 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Нет действия</item>
-    <item>Для ответа кнопка 1</item>
-    <item>Для ответа кнопка 2</item>
-    <item>Для ответа кнопка 3</item>
-    <item>Для ответа кнопка 4</item>
+    <item>Кнопка ответа 1</item>
+    <item>Кнопка ответа 2</item>
+    <item>Кнопка ответа 3</item>
+    <item>Кнопка ответа 4</item>
     <item>Рекомендованный ответ (зелёный)</item>
-    <item>Лучше, чем рекомендованный ответ</item>
+    <item>Лучше, чем рекомендованный</item>
     <item>Откат</item>
     <item>Впёред</item>
     <item>Изменить карту</item>
