@@ -1932,9 +1932,7 @@ public class StudyOptions extends Activity {
     private void loadSampleDeck() {
         // If decks directory does not exist, create it.
         File decksDirectory = new File(mPrefDeckPath);
-        if (!decksDirectory.isDirectory()) {
-            decksDirectory.mkdirs();
-        }
+        AnkiDroidApp.createDecksDirectoryIfMissing(decksDirectory);
 
         File sampleDeckFile = new File(mPrefDeckPath, SAMPLE_DECK_NAME);
 
@@ -2164,6 +2162,7 @@ public class StudyOptions extends Activity {
         	editor.putString("lastVersion", getVersion());
         	editor.commit();
             mNewVersionAlert = Themes.htmlOkDialog(this, getResources().getString(R.string.new_version_title) + " " + getVersion(), getVersionMessage());
+            AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
         }
         mWalWarning = PrefSettings.getSharedPrefs(getBaseContext()).getInt("walWarning", AnkiDb.NO_WAL_WARNING);
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/

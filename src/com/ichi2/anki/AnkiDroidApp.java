@@ -36,6 +36,8 @@ import com.tomgibara.android.veecheck.Veecheck;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
+import java.io.IOException;
+
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.event.BatteryEvent;
 import com.zeemote.zc.event.ControllerEvent;
@@ -98,11 +100,12 @@ public class AnkiDroidApp extends Application implements IStatusListener {
 
             // Create the folder "AnkiDroid", if not exists, where the decks
             // will be stored by default
-            new File(getStorageDirectory() + "/AnkiDroid").mkdir();
+            String deckPath = getStorageDirectory() + "/AnkiDroid";
+            createDecksDirectoryIfMissing(new File(deckPath));
 
             // Put the base path in preferences pointing to the default
             // "AnkiDroid" folder
-            editor.putString("deckPath", getStorageDirectory() + "/AnkiDroid");
+            editor.putString("deckPath", deckPath);
 
             // Using commit instead of apply even though we don't need a return value.
             // Reason: apply() not available on Android 1.5
@@ -126,6 +129,31 @@ public class AnkiDroidApp extends Application implements IStatusListener {
 
     public static String getStorageDirectory() {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
+
+    public static void createDecksDirectoryIfMissing(File decksDirectory) {
+    	if (!decksDirectory.isDirectory()) {
+    		decksDirectory.mkdirs();
+        }
+    	try {
+			new File(decksDirectory.getAbsolutePath() + "/.nomedia").createNewFile();
+		} catch (IOException e) {
+			Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created");
+		}
+		createNoMediaFileIfMissing(decksDirectory);
+    }
+
+
+    public static void createNoMediaFileIfMissing(File decksDirectory) {
+    	File mediaFile = new File(decksDirectory.getAbsolutePath() + "/.nomedia");
+    	if (!mediaFile.exists()) {
+        	try {
+        		mediaFile.createNewFile();
+    		} catch (IOException e) {
+    			Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created in path " + decksDirectory.getAbsolutePath());
+    		}    		
+    	}
     }
 
 

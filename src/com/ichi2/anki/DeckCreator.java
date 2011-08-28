@@ -104,15 +104,13 @@ public class DeckCreator extends Activity {
      */
     private boolean createDeck(String filename) {
         Log.d(AnkiDroidApp.TAG, "Creating deck: " + filename);
-        
+
         filename = filename + ".anki";
-        
+
         // If decks directory does not exist, create it.
         File decksDirectory = new File(mPrefDeckPath);
-        if (!decksDirectory.isDirectory()) {
-            decksDirectory.mkdirs();
-        }
-        
+        AnkiDroidApp.createDecksDirectoryIfMissing(decksDirectory);
+
         File destinationFile = new File(mPrefDeckPath, filename);
         if (destinationFile.exists()) {
             return false;
