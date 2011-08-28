@@ -164,6 +164,7 @@
 		<item>more convenient lookup via appearing icon</item>
 		<item>new text selection in card adder and card editor</item>
 		<item>option to swap question/answer very easily</item>
+		<item>support for line breaks in card editor and card browser</item>
 		<item>hide AnkiDroid folder from Android\'s media scanner</item>
 	</string-array>
 </resources>
