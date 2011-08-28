@@ -237,7 +237,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         // deck.reset();
         deck.setUndoEnd(undoName);
-        publishProgress(new TaskData(deck.getCurrentCard()));
+        publishProgress(new TaskData(editCard));
 
         return null;
     }

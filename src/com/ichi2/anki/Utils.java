@@ -149,14 +149,14 @@ public class Utils {
     	int formatId;
     	switch (format) {
     	case TIME_FORMAT_IN:
-    		if (time == 1) {
+    		if (Math.round(time * 10) == 10) {
     			formatId = R.array.next_review_in_s;
     		} else {
     			formatId = R.array.next_review_in_p;    			
     		}
     		break;
     	case TIME_FORMAT_BEFORE:
-    		if (time == 1) {
+    		if (Math.round(time * 10) == 10) {
     			formatId = R.array.next_review_before_s;
     		} else {
     			formatId = R.array.next_review_before_p;    			
@@ -164,7 +164,7 @@ public class Utils {
     		break;
     	case TIME_FORMAT_DEFAULT:
     	default:
-    		if (time == 1) {
+    		if (Math.round(time * 10) == 10) {
     			formatId = R.array.next_review_s;
     		} else {
     			formatId = R.array.next_review_p;    			

@@ -248,7 +248,7 @@
   <string name="card_details_question">Frage</string>
   <string name="card_details_answer">Antwort</string>
   <string name="card_details_due">Fällig</string>
-  <string name="card_details_last_due">Letztes Mal fällig:</string>
+  <string name="card_details_last_due">Letztes Mal fällig</string>
   <string name="card_details_now">Jetzt</string>
   <string name="card_details_interval">Intervall</string>
   <string name="card_details_ease">Schwierigkeit</string>

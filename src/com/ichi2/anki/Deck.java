@@ -3252,13 +3252,13 @@ public class Deck {
             while (cur.moveToNext()) {
             	String[] data = new String[5];
             	data[0] = Long.toString(cur.getLong(0));
-                String string = Utils.stripHTML(cur.getString(1));
+                String string = Utils.stripHTML(cur.getString(1).replace("<br>", "\n"));
             	if (string.length() < 55) {
                     data[1] = string;
             	} else {
                     data[1] = string.substring(0, 55) + "...";                   
             	}
-            	string = Utils.stripHTML(cur.getString(2));
+            	string = Utils.stripHTML(cur.getString(2).replace("<br>", "\n"));
                 if (string.length() < 55) {
                     data[2] = string;
                 } else {

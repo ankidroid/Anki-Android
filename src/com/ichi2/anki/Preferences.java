@@ -286,6 +286,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         	} else {
         		setReloadDeck();
         	}
+        } else if (key.equals("deckPath")) {
+        	File decksDirectory = new File(sharedPreferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+        	if (decksDirectory.exists()) {
+        		AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
+        	}
         }
     }
 

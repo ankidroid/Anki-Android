@@ -36,6 +36,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -451,7 +452,18 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onClick(View view) {
             Log.i(AnkiDroidApp.TAG, "Show card statistics");
-			Themes.htmlOkDialog(Reviewer.this, getResources().getString(R.string.card_browser_card_details), mCurrentCard.getCardDetails(Reviewer.this, false)).show();
+            stopTimer();
+			Themes.htmlOkDialog(Reviewer.this, getResources().getString(R.string.card_browser_card_details), mCurrentCard.getCardDetails(Reviewer.this, false), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					restartTimer();
+				}
+			}, new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface arg0) {
+					restartTimer();
+				}
+			}).show();
         }
     };
 
@@ -878,14 +890,7 @@ public class Reviewer extends Activity implements IButtonListener{
         super.onPause();
         Log.i(AnkiDroidApp.TAG, "Reviewer - onPause()");
 
-        // Stop visible timer and card timer 
-        if (mPrefTimer) {
-            mSavedTimer = SystemClock.elapsedRealtime() - mCardTimer.getBase();
-            mCardTimer.stop();
-        }
-        if (mCurrentCard != null) {
-           mCurrentCard.stopTimer();
-        }
+        stopTimer();
         if (!mClosing) {
             // Save changes
             Deck deck = AnkiDroidApp.deck();
@@ -910,13 +915,7 @@ public class Reviewer extends Activity implements IButtonListener{
       if (mShakeEnabled) {
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
       }
-      if (mCurrentCard != null) {
-          mCurrentCard.resumeTimer();          
-      }
-      if (mPrefTimer && mSavedTimer != 0) {
-          mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
-          mCardTimer.start();
-      }
+      restartTimer();
       if (AnkiDroidApp.zeemoteController() != null) {
     	  Log.d("Zeemote","Adding listener in onResume");
     	  AnkiDroidApp.zeemoteController().addButtonListener(this);
@@ -1262,6 +1261,29 @@ public class Reviewer extends Activity implements IButtonListener{
     
     private void storeLanguage(String language, int questionAnswer) {
     	MetaDB.storeLanguage(this, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);		
+    }
+
+
+    private void stopTimer() {
+        // Stop visible timer and card timer 
+        if (mPrefTimer) {
+            mSavedTimer = SystemClock.elapsedRealtime() - mCardTimer.getBase();
+            mCardTimer.stop();
+        }
+        if (mCurrentCard != null) {
+           mCurrentCard.stopTimer();
+        }
+    }
+
+
+    private void restartTimer() {
+        if (mCurrentCard != null) {
+            mCurrentCard.resumeTimer();          
+        }
+        if (mPrefTimer && mSavedTimer != 0) {
+            mCardTimer.setBase(SystemClock.elapsedRealtime() - mSavedTimer);
+            mCardTimer.start();
+        }    	
     }
 
 

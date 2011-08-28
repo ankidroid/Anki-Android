@@ -298,6 +298,7 @@ public class DownloadManagerService extends Service {
     public void resumeDownload(Download download) {
         // Create tmp folder where the temporal decks are going to be stored
         new File(mDestination + "/tmp/").mkdirs();
+        AnkiDroidApp.createNoMediaFileIfMissing(new File(mDestination));
 
         if (download instanceof SharedDeckDownload) {
             SharedDeckDownload sharedDeckDownload = (SharedDeckDownload) download;
