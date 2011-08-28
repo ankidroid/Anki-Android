@@ -67,28 +67,52 @@
     <item>ランダムな順序で表示する</item>
   </string-array>
   <string-array name="next_review_s">
+    <item>1 second</item>
+    <item>1 minute</item>
     <item>1時間</item>
     <item>1日</item>
     <item>1ヶ月</item>
     <item>1年</item>
   </string-array>
   <string-array name="next_review_p">
+    <item>%s seconds</item>
+    <item>%s minutes</item>
     <item>%s時間</item>
     <item>%s日間</item>
     <item>%sヶ月</item>
     <item>%s年</item>
   </string-array>
   <string-array name="next_review_in_s">
+    <item>in 1 second</item>
+    <item>in 1 minute</item>
     <item>1時間で</item>
     <item>1日後</item>
     <item>1ヶ月後</item>
     <item>1年後</item>
   </string-array>
   <string-array name="next_review_in_p">
+    <item>in %s seconds</item>
+    <item>in %s minutes</item>
     <item>%s時間後</item>
     <item>%s日後</item>
     <item>%sヶ月後</item>
     <item>%s年後</item>
+  </string-array>
+  <string-array name="next_review_before_s">
+    <item>1 second before</item>
+    <item>1 minute before</item>
+    <item>1 hour before</item>
+    <item>1 day before</item>
+    <item>1 month before</item>
+    <item>1 year before</item>
+  </string-array>
+  <string-array name="next_review_before_p">
+    <item>%s seconds before</item>
+    <item>%s minutes before</item>
+    <item>%s hours before</item>
+    <item>%s days before</item>
+    <item>%s months before</item>
+    <item>%s years before</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>新しいカードを無作為に選んで表示する</item>

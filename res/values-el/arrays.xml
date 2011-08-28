@@ -67,28 +67,52 @@
     <item>Εμφάνιση κατά τυχαία σειρά</item>
   </string-array>
   <string-array name="next_review_s">
+    <item>1 second</item>
+    <item>1 minute</item>
     <item>1 ώρα</item>
     <item>1 ημέρα</item>
     <item>1 μήνας</item>
     <item>1 έτος</item>
   </string-array>
   <string-array name="next_review_p">
+    <item>%s seconds</item>
+    <item>%s minutes</item>
     <item>%s ώρες</item>
     <item>%s μέρες</item>
     <item>%s μήνες</item>
     <item>%s χρόνια</item>
   </string-array>
   <string-array name="next_review_in_s">
+    <item>in 1 second</item>
+    <item>in 1 minute</item>
     <item>σε 1 ώρα</item>
     <item>σε 1 ημέρα</item>
     <item>σε 1 μήνα</item>
     <item>σε 1 χρόνο</item>
   </string-array>
   <string-array name="next_review_in_p">
+    <item>in %s seconds</item>
+    <item>in %s minutes</item>
     <item>σε %s ώρες</item>
     <item>σε %s ημέρες</item>
     <item>σε %s μήνες</item>
     <item>σε %s χρόνια</item>
+  </string-array>
+  <string-array name="next_review_before_s">
+    <item>1 second before</item>
+    <item>1 minute before</item>
+    <item>1 hour before</item>
+    <item>1 day before</item>
+    <item>1 month before</item>
+    <item>1 year before</item>
+  </string-array>
+  <string-array name="next_review_before_p">
+    <item>%s seconds before</item>
+    <item>%s minutes before</item>
+    <item>%s hours before</item>
+    <item>%s days before</item>
+    <item>%s months before</item>
+    <item>%s years before</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Νέες κάρτες σε τυχαία σειρά</item>

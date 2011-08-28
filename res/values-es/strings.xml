@@ -28,6 +28,7 @@
   <string name="yes">Sí</string>
   <string name="no">No</string>
   <string name="ok">Aceptar</string>
+  <string name="dont_show_again">Don\'t show again</string>
   <string name="deck_upgrade_too_old_version">Los mazos con versiones anteriores a la 39 no están soportados por AnkiDroid, por favor abre el mazo con la versión de escritorio de Anki para actualizarlo a la última versión.</string>
   <string name="deck_upgrade_version_61_has_latex">El mazo no puede ser completamente actualizado, ya que contiene expresiones LaTeX; por favor, abre el mazo con la versión para PC de Anki, para actualizarlo a la última versión y regenerar LaTeX.</string>
   <string name="deckpicker_title_nosdcard">La tarjeta SD no está disponible</string>
@@ -140,6 +141,9 @@
   <string name="dictionary_summ">Diccionario en el que realizar las consultas: XXX</string>
   <string name="reset_languages">Restablecer Idiomas</string>
   <string name="reset_languages_summ">Restablece las asignaciones de idioma (para texto a voz y diccionarios) para todos los mazos. Para restablecer asignaciones individualmente, hazlo desde el selector de mazos</string>
+  <string name="reset_dialogs">Reset Dialogs</string>
+  <string name="reset_dialogs_question">Reset all dialogs?</string>
+  <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
   <string name="reset_languages_confirmation">Restablecer todas las asignaciones de idiomas</string>
   <string name="use_ruby_support">Soporte para anotacion ruby</string>
@@ -244,6 +248,7 @@
   <string name="card_details_question">Pregunta</string>
   <string name="card_details_answer">Respuesta</string>
   <string name="card_details_due">Programada</string>
+  <string name="card_details_last_due">Last due</string>
   <string name="card_details_now">Ahora</string>
   <string name="card_details_interval">Intervalo</string>
   <string name="card_details_ease">Dificultad</string>
@@ -499,7 +504,7 @@
   <string name="wal_warning">La implementación sqlite de tu dispositivo no permite establecer el modo correcto de "anki journal".\nPor ello, no serás capaz de sincronizar tus mazos a través de la herramienta de sincronización de AnkiDroid hasta que encontremos una solución al problema.\nQuitando esto, AnkiDroid debería funcionar bien.\nPor favor, ayúdanos a resolver este problema enviándonos un informe de error.\n Visita http://bit.ly/n5MaOF para más información.</string>
   <string name="wal_mode">WAL journal</string>
   <string name="wal_mode_summ">WAL journal-mode speeds up AnkiDroid but breaks compatibility to Anki Desktop if you copy your decks manually. Only available on newer Android systems.</string>
-  <string name="wal_mode_message">Be aware that after enabling WAL journal-mode you might be not anymore be able to copy your decks manually to your your computer to use them with Anki Desktop until you disable WAL again. Syncing will then only be possible via AnkiDroid\'s syncing feature.\nEnable it anyway?</string>
+  <string name="wal_mode_message">Be aware that after enabling WAL journal-mode you may no longer be able to copy your decks manually to your your computer to use them with Anki Desktop until you disable WAL again. Syncing will then only be possible via AnkiDroid\'s syncing feature.\nEnable it anyway?</string>
   <string name="wal_mode_set_message">Setting journal mode.\nPlease wait...</string>
   <string name="sync_set_journal_mode">Setting correct journal mode...</string>
   <string name="async_mode">Synchronous off</string>

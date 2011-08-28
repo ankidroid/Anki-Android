@@ -28,6 +28,7 @@
   <string name="yes">نعم</string>
   <string name="no">لا</string>
   <string name="ok">موافق</string>
+  <string name="dont_show_again">Don\'t show again</string>
   <string name="deck_upgrade_too_old_version">Decks with versions older than 39 are not supported by AnkiDroid; please open the deck with Anki desktop to upgrade it to the latest version.</string>
   <string name="deck_upgrade_version_61_has_latex">The deck can\'t be fully upgraded, because it contains LaTeX expressions; please open the deck with Anki desktop to upgrade it to the latest version and regenerate LaTeX.</string>
   <string name="deckpicker_title_nosdcard">SD card is unmounted</string>
@@ -141,6 +142,9 @@
   <string name="dictionary_summ">Dictionary in which lookups should be performed: XXX</string>
   <string name="reset_languages">إعادة تعيين اللغات</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_dialogs">Reset Dialogs</string>
+  <string name="reset_dialogs_question">Reset all dialogs?</string>
+  <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">Reset all language assignments?</string>
   <string name="reset_languages_confirmation">All language assignments reset</string>
   <string name="use_ruby_support">توفير دعم روبي للشرح</string>
@@ -245,6 +249,7 @@
   <string name="card_details_question">سؤال</string>
   <string name="card_details_answer">جواب</string>
   <string name="card_details_due">Due</string>
+  <string name="card_details_last_due">Last due</string>
   <string name="card_details_now">الآن</string>
   <string name="card_details_interval">الفاصل الزمني</string>
   <string name="card_details_ease">سهولة</string>
@@ -500,7 +505,7 @@
   <string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us solving this issue by sending an error report.\n Visit http://bit.ly/n5MaOF for more information.</string>
   <string name="wal_mode">WAL journal</string>
   <string name="wal_mode_summ">WAL journal-mode speeds up AnkiDroid but breaks compatibility to Anki Desktop if you copy your decks manually. Only available on newer Android systems.</string>
-  <string name="wal_mode_message">Be aware that after enabling WAL journal-mode you might be not anymore be able to copy your decks manually to your your computer to use them with Anki Desktop until you disable WAL again. Syncing will then only be possible via AnkiDroid\'s syncing feature.\nEnable it anyway?</string>
+  <string name="wal_mode_message">Be aware that after enabling WAL journal-mode you may no longer be able to copy your decks manually to your your computer to use them with Anki Desktop until you disable WAL again. Syncing will then only be possible via AnkiDroid\'s syncing feature.\nEnable it anyway?</string>
   <string name="wal_mode_set_message">Setting journal mode.\nPlease wait...</string>
   <string name="sync_set_journal_mode">Setting correct journal mode...</string>
   <string name="async_mode">Synchronous off</string>

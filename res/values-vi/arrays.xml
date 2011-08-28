@@ -67,28 +67,52 @@
     <item>Hiển thị theo thứ tự ngẫu nhiên</item>
   </string-array>
   <string-array name="next_review_s">
+    <item>1 second</item>
+    <item>1 minute</item>
     <item>1 giờ</item>
     <item>1 ngày</item>
     <item>1 tháng</item>
     <item>1 năm</item>
   </string-array>
   <string-array name="next_review_p">
+    <item>%s seconds</item>
+    <item>%s minutes</item>
     <item>%s giờ</item>
     <item>%s ngày</item>
     <item>%s tháng</item>
     <item>%s năm</item>
   </string-array>
   <string-array name="next_review_in_s">
+    <item>in 1 second</item>
+    <item>in 1 minute</item>
     <item>trong 1 giờ</item>
     <item>trong 1 ngày</item>
     <item>trong 1 tháng</item>
     <item>trong 1 năm</item>
   </string-array>
   <string-array name="next_review_in_p">
+    <item>in %s seconds</item>
+    <item>in %s minutes</item>
     <item>trong %s giờ</item>
     <item>trong %s ngày</item>
     <item>trong %s tháng</item>
     <item>trong %s năm</item>
+  </string-array>
+  <string-array name="next_review_before_s">
+    <item>1 second before</item>
+    <item>1 minute before</item>
+    <item>1 hour before</item>
+    <item>1 day before</item>
+    <item>1 month before</item>
+    <item>1 year before</item>
+  </string-array>
+  <string-array name="next_review_before_p">
+    <item>%s seconds before</item>
+    <item>%s minutes before</item>
+    <item>%s hours before</item>
+    <item>%s days before</item>
+    <item>%s months before</item>
+    <item>%s years before</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Thẻ mới theo thứ tự ngẫu nhiên</item>

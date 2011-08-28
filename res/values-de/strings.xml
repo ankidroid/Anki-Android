@@ -28,6 +28,7 @@
   <string name="yes">Ja</string>
   <string name="no">Nein</string>
   <string name="ok">OK</string>
+  <string name="dont_show_again">Nicht mehr anzeigen</string>
   <string name="deck_upgrade_too_old_version">Stapel mit einer älteren Version als 39 werden nicht durch AnkiDroid unterstützt. Öffnen Sie den Stapel mit Anki-Desktop um ihn auf die neueste Version zu aktualisieren.</string>
   <string name="deck_upgrade_version_61_has_latex">Der Stapel kann nicht voll synchronisiert werden, weil er LaTeX-Ausdrücke enthält; bitte öffnen Sie den Stapel mit der Desktop-Version von Anki, um ihn auf die neueste Version zu aktualisieren und die LaTeX-Ausdrücke neu zu erzeugen.</string>
   <string name="deckpicker_title_nosdcard">SD-Karte ist ausgehängt</string>
@@ -140,6 +141,9 @@
   <string name="dictionary_summ">Wörterbuch, in dem nachgeschlagen werden soll: XXX</string>
   <string name="reset_languages">Sprachzuordnungen zurücksetzen</string>
   <string name="reset_languages_summ">Setzt die Sprachzuordnungen (für Vorlesen und Wörterbücher) für alle Stapel zurück. Für einzelne Stapel: siehe Stapelauswahl</string>
+  <string name="reset_dialogs">Dialoge zurücksetzen</string>
+  <string name="reset_dialogs_question">Dialoge zurücksetzen?</string>
+  <string name="reset_dialogs_summ">Setzt alle Dialoge zurück, die nicht mehr angezeigt werden</string>
   <string name="reset_languages_question">Sämtliche Sprachzuordnungen zurücksetzen?</string>
   <string name="reset_languages_confirmation">Sämtliche Sprachzuordnungen zurückgesetzt</string>
   <string name="use_ruby_support">Ruby-Anmerkungen</string>
@@ -244,6 +248,7 @@
   <string name="card_details_question">Frage</string>
   <string name="card_details_answer">Antwort</string>
   <string name="card_details_due">Fällig</string>
+  <string name="card_details_last_due">Letztes Mal fällig:</string>
   <string name="card_details_now">Jetzt</string>
   <string name="card_details_interval">Intervall</string>
   <string name="card_details_ease">Schwierigkeit</string>

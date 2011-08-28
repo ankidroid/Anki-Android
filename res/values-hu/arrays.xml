@@ -67,28 +67,52 @@
     <item>Véletlenszerűen mutat</item>
   </string-array>
   <string-array name="next_review_s">
+    <item>1 second</item>
+    <item>1 minute</item>
     <item>1 óra</item>
     <item>1 nap</item>
     <item>1 hónap</item>
     <item>egy év</item>
   </string-array>
   <string-array name="next_review_p">
+    <item>%s seconds</item>
+    <item>%s minutes</item>
     <item>%s óra</item>
     <item>%s nap</item>
     <item>%s hónap</item>
     <item>%s év</item>
   </string-array>
   <string-array name="next_review_in_s">
+    <item>in 1 second</item>
+    <item>in 1 minute</item>
     <item>egy órán belül</item>
     <item>egy napon belül</item>
     <item>egy hónapon belül</item>
     <item>egy éven belül</item>
   </string-array>
   <string-array name="next_review_in_p">
+    <item>in %s seconds</item>
+    <item>in %s minutes</item>
     <item>%s órán belül</item>
     <item>%s napon belül</item>
     <item>%s hónapon belül</item>
     <item>%s éven belül</item>
+  </string-array>
+  <string-array name="next_review_before_s">
+    <item>1 second before</item>
+    <item>1 minute before</item>
+    <item>1 hour before</item>
+    <item>1 day before</item>
+    <item>1 month before</item>
+    <item>1 year before</item>
+  </string-array>
+  <string-array name="next_review_before_p">
+    <item>%s seconds before</item>
+    <item>%s minutes before</item>
+    <item>%s hours before</item>
+    <item>%s days before</item>
+    <item>%s months before</item>
+    <item>%s years before</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Új kártyák véletlenszerűen</item>

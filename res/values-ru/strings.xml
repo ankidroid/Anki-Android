@@ -28,6 +28,7 @@
   <string name="yes">Да</string>
   <string name="no">Нет</string>
   <string name="ok">OK</string>
+  <string name="dont_show_again">Don\'t show again</string>
   <string name="deck_upgrade_too_old_version">Колоды версий до 39 не поддерживаются AnkiDroid, пожалуйста, откройте колоду настольной версией Anki для обновлении колоды до последней версии.</string>
   <string name="deck_upgrade_version_61_has_latex">Колода не может быть полностью обновлена, так как она содержит LaTeX-выражения; пожалуйста откройте колоду в десктоп-версии Anki и пересохраните файл колоды (чтобы обновить её до последнего нового формата и перегенерировать LaTeX).</string>
   <string name="deckpicker_title_nosdcard">SD-карта отмонтирована</string>
@@ -140,6 +141,9 @@
   <string name="dictionary_summ">Словарь, в котором будет произведён поиск: XXX</string>
   <string name="reset_languages">Сброс языков</string>
   <string name="reset_languages_summ">Сброс языка (для преобразования текста в звук и словарей) для всех колод. Сброс для конкретных колод - в оглавлении колод</string>
+  <string name="reset_dialogs">Reset Dialogs</string>
+  <string name="reset_dialogs_question">Reset all dialogs?</string>
+  <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">Сброс всех языков?</string>
   <string name="reset_languages_confirmation">Сброс всех языков</string>
   <string name="use_ruby_support">Поддерживать Ruby-аннотации</string>
@@ -244,6 +248,7 @@
   <string name="card_details_question">Вопрос</string>
   <string name="card_details_answer">Ответ</string>
   <string name="card_details_due">Повторы</string>
+  <string name="card_details_last_due">Last due</string>
   <string name="card_details_now">Сейчас</string>
   <string name="card_details_interval">Интервал</string>
   <string name="card_details_ease">Лёгкость</string>

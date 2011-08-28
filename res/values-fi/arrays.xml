@@ -67,28 +67,52 @@
     <item>Näytä satunnaisessa järjestyksessä</item>
   </string-array>
   <string-array name="next_review_s">
+    <item>1 second</item>
+    <item>1 minute</item>
     <item>1 tunti</item>
     <item>1 päivä</item>
     <item>1 kuukausi</item>
     <item>1 vuosi</item>
   </string-array>
   <string-array name="next_review_p">
+    <item>%s seconds</item>
+    <item>%s minutes</item>
     <item>%s tuntia</item>
     <item>%s päivää</item>
     <item>%s kuukautta</item>
     <item>%s vuotta</item>
   </string-array>
   <string-array name="next_review_in_s">
+    <item>in 1 second</item>
+    <item>in 1 minute</item>
     <item>tunnin kuluttua</item>
     <item>päivän kuluttua</item>
     <item>kuukauden kuluttua</item>
     <item>vuoden kuluttua</item>
   </string-array>
   <string-array name="next_review_in_p">
+    <item>in %s seconds</item>
+    <item>in %s minutes</item>
     <item>%s tunnin kuluttua</item>
     <item>%s päivän kuluttua</item>
     <item>%s kuukauden kuluttua</item>
     <item>%s vuoden kuluttua</item>
+  </string-array>
+  <string-array name="next_review_before_s">
+    <item>1 second before</item>
+    <item>1 minute before</item>
+    <item>1 hour before</item>
+    <item>1 day before</item>
+    <item>1 month before</item>
+    <item>1 year before</item>
+  </string-array>
+  <string-array name="next_review_before_p">
+    <item>%s seconds before</item>
+    <item>%s minutes before</item>
+    <item>%s hours before</item>
+    <item>%s days before</item>
+    <item>%s months before</item>
+    <item>%s years before</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Uudet kortit satunnaisessa järjestyksessä</item>

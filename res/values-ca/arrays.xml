@@ -67,28 +67,52 @@
     <item>Mostra-les desordenades</item>
   </string-array>
   <string-array name="next_review_s">
+    <item>1 second</item>
+    <item>1 minute</item>
     <item>1 hora</item>
     <item>1 dia</item>
     <item>1 mes</item>
     <item>1 any</item>
   </string-array>
   <string-array name="next_review_p">
+    <item>%s seconds</item>
+    <item>%s minutes</item>
     <item>%s hores</item>
     <item>%s dies</item>
     <item>%s mesos</item>
     <item>%s anys</item>
   </string-array>
   <string-array name="next_review_in_s">
+    <item>in 1 second</item>
+    <item>in 1 minute</item>
     <item>en 1 hora</item>
     <item>demà</item>
     <item>en 1 mes</item>
     <item>en 1 any</item>
   </string-array>
   <string-array name="next_review_in_p">
+    <item>in %s seconds</item>
+    <item>in %s minutes</item>
     <item>en %s hores</item>
     <item>en %s dies</item>
     <item>en %s mesos</item>
     <item>en %s anys</item>
+  </string-array>
+  <string-array name="next_review_before_s">
+    <item>1 second before</item>
+    <item>1 minute before</item>
+    <item>1 hour before</item>
+    <item>1 day before</item>
+    <item>1 month before</item>
+    <item>1 year before</item>
+  </string-array>
+  <string-array name="next_review_before_p">
+    <item>%s seconds before</item>
+    <item>%s minutes before</item>
+    <item>%s hours before</item>
+    <item>%s days before</item>
+    <item>%s months before</item>
+    <item>%s years before</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Mostra les fitxes noves desendreçades</item>

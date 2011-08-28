@@ -67,28 +67,52 @@
     <item>Pokaż w losowej kolejności</item>
   </string-array>
   <string-array name="next_review_s">
+    <item>1 second</item>
+    <item>1 minute</item>
     <item>1 godzina</item>
     <item>1 dzień</item>
     <item>1 miesiąc</item>
     <item>1 rok</item>
   </string-array>
   <string-array name="next_review_p">
+    <item>%s seconds</item>
+    <item>%s minutes</item>
     <item>%s godzin</item>
     <item>%s dni</item>
     <item>%s miesięcy</item>
     <item>%s lat</item>
   </string-array>
   <string-array name="next_review_in_s">
+    <item>in 1 second</item>
+    <item>in 1 minute</item>
     <item>za 1 godzinę</item>
     <item>za 1 dzień</item>
     <item>za miesiąc</item>
     <item>za rok</item>
   </string-array>
   <string-array name="next_review_in_p">
+    <item>in %s seconds</item>
+    <item>in %s minutes</item>
     <item>za %s godzin</item>
     <item>za %s dni</item>
     <item>za %s miesięcy</item>
     <item>za %s lat</item>
+  </string-array>
+  <string-array name="next_review_before_s">
+    <item>1 second before</item>
+    <item>1 minute before</item>
+    <item>1 hour before</item>
+    <item>1 day before</item>
+    <item>1 month before</item>
+    <item>1 year before</item>
+  </string-array>
+  <string-array name="next_review_before_p">
+    <item>%s seconds before</item>
+    <item>%s minutes before</item>
+    <item>%s hours before</item>
+    <item>%s days before</item>
+    <item>%s months before</item>
+    <item>%s years before</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Nowe karty w kolejności losowej</item>

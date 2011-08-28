@@ -28,6 +28,7 @@
   <string name="yes">Sí</string>
   <string name="no">No</string>
   <string name="ok">D\'acord</string>
+  <string name="dont_show_again">Don\'t show again</string>
   <string name="deck_upgrade_too_old_version">El paquets de les versions posteriors a la 39 no són compatibles amb AnkiDroid, si us plau, obriu el paquet a la versió de l\'Anki d\'escriptori per actualitzar-ho a la versió més recent.</string>
   <string name="deck_upgrade_version_61_has_latex">El paquet no es pot actualitzar del tot, ja que conté expressions LaTeX, podeu obrir el paquet amb la versió de l\'Anki d\'escriptori per actualitzar el paquet a la darrera versió i regenerar el LaTeX.</string>
   <string name="deckpicker_title_nosdcard">La targeta SD no està disponible</string>
@@ -140,6 +141,9 @@
   <string name="dictionary_summ">Diccionari on realitzar les cerques: XXX</string>
   <string name="reset_languages">Reinicia tots el idiomes</string>
   <string name="reset_languages_summ">Reinicia les assignacions d\'idioma (per text a la síntesi de veu i els diccionaris) per a tots els paquets. Reinicia les assignacions específiques dels paquets al selector de paquets</string>
+  <string name="reset_dialogs">Reset Dialogs</string>
+  <string name="reset_dialogs_question">Reset all dialogs?</string>
+  <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">Voleu reiniciar les assignacions de tots el idiomes?</string>
   <string name="reset_languages_confirmation">Restableix tots els idiomes</string>
   <string name="use_ruby_support">Permet anotacions de ruby</string>
@@ -244,6 +248,7 @@
   <string name="card_details_question">Pregunta</string>
   <string name="card_details_answer">Resposta</string>
   <string name="card_details_due">Pendents</string>
+  <string name="card_details_last_due">Last due</string>
   <string name="card_details_now">Ara</string>
   <string name="card_details_interval">Interval</string>
   <string name="card_details_ease">Fàcil</string>
@@ -499,7 +504,7 @@
   <string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us solving this issue by sending an error report.\n Visit http://bit.ly/n5MaOF for more information.</string>
   <string name="wal_mode">WAL journal</string>
   <string name="wal_mode_summ">WAL journal-mode speeds up AnkiDroid but breaks compatibility to Anki Desktop if you copy your decks manually. Only available on newer Android systems.</string>
-  <string name="wal_mode_message">Be aware that after enabling WAL journal-mode you might be not anymore be able to copy your decks manually to your your computer to use them with Anki Desktop until you disable WAL again. Syncing will then only be possible via AnkiDroid\'s syncing feature.\nEnable it anyway?</string>
+  <string name="wal_mode_message">Be aware that after enabling WAL journal-mode you may no longer be able to copy your decks manually to your your computer to use them with Anki Desktop until you disable WAL again. Syncing will then only be possible via AnkiDroid\'s syncing feature.\nEnable it anyway?</string>
   <string name="wal_mode_set_message">Setting journal mode.\nPlease wait...</string>
   <string name="sync_set_journal_mode">Setting correct journal mode...</string>
   <string name="async_mode">Synchronous off</string>
