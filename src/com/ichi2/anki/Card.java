@@ -781,7 +781,7 @@ public class Card {
         }
         builder.append(res.getString(R.string.card_details_last_due));
         builder.append(": ");
-        if (mYesCount + mNoCount == 0 || mLastDue == 0) {
+        if (mYesCount + mNoCount == 0 || mLastDue == 0 || mInterval == 0) {
             builder.append("-");
         } else {
         	builder.append(Utils.fmtTimeSpan(Utils.now() - mLastDue, Utils.TIME_FORMAT_BEFORE, true));

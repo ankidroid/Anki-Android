@@ -22,6 +22,8 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -278,14 +280,18 @@ public class Themes {
 
 
 	public static StyledDialog htmlOkDialog(Context context, String title, String text) {
+		return htmlOkDialog(context, title, text, null, null);
+	}
+	public static StyledDialog htmlOkDialog(Context context, String title, String text, OnClickListener okListener, OnCancelListener cancelListener) {
 		StyledDialog.Builder builder = new StyledDialog.Builder(context);
         builder.setTitle(title);
         WebView view = new WebView(context);
         view.setBackgroundColor(context.getResources().getColor(mDialogBackgroundColor));
         view.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
         builder.setView(view);
-        builder.setPositiveButton(context.getResources().getString(R.string.ok), null);
+        builder.setPositiveButton(context.getResources().getString(R.string.ok), okListener);
         builder.setCancelable(true);
+        builder.setOnCancelListener(cancelListener);
         return builder.create();
 	}
 
