@@ -131,7 +131,9 @@ public class BackupManager {
 	}
 	public static long getFreeDiscSpace(String path) {
     	StatFs stat = new StatFs(path);
-    	return stat.getAvailableBlocks() * stat.getBlockSize();
+    	long blocks = stat.getAvailableBlocks();
+    	long blocksize = stat.getBlockSize();
+    	return blocks * blocksize;
 	}
 
 

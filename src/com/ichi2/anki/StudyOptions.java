@@ -2321,7 +2321,7 @@ public class StudyOptions extends Activity {
     			mCurrentDialogMessage = getResources().getString(R.string.backup_deck_no_space_left);
     			showDialog(DIALOG_NO_SPACE_LEFT);
     			break;
-    		}        		
+    		}
         	if (mProgressDialog != null && mProgressDialog.isShowing()) {
         		mProgressDialog.dismiss();
         	}
