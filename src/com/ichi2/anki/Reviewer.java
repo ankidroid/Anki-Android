@@ -1475,6 +1475,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mCardContainer.setVisibility(mConfigurationChanged ? View.VISIBLE : View.INVISIBLE);
 		setInAnimation(false);
 
+        findViewById(R.id.top_bar).setOnClickListener(mCardStatisticsListener);
+
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
@@ -1546,11 +1548,9 @@ public class Reviewer extends Activity implements IButtonListener{
         	mSessionYesBar = (View) findViewById(R.id.daily_bar);
             mSessionProgressBar = (View) findViewById(R.id.session_progress);
             mProgressBars = (LinearLayout) findViewById(R.id.progress_bars);
-            mProgressBars.setOnClickListener(mCardStatisticsListener);
         }
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
-        mCardTimer.setOnClickListener(mCardStatisticsListener);
     	if (mPrefTimer && (mConfigurationChanged)) {
     		switchVisibility(mCardTimer, View.VISIBLE);
     	}
