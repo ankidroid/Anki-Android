@@ -538,6 +538,7 @@
   <string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
+  <string name="menu_rotate">Rotate</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Todos decks: %1$d de %2$d due (%3$s)</item>
     <item quantity="other">Todos decks: %1$d de %2$d due (%3$s)</item>

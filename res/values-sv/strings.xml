@@ -28,7 +28,7 @@
   <string name="yes">Ja</string>
   <string name="no">Nej</string>
   <string name="ok">Ok</string>
-  <string name="dont_show_again">Don\'t show again</string>
+  <string name="dont_show_again">Visa inte igen</string>
   <string name="deck_upgrade_too_old_version">Kortlekar med en version äldre än 39 stöds inte av AnkiDroid. Öppna dessa med Anki desktop för att uppgradera till den senaste versionen.</string>
   <string name="deck_upgrade_version_61_has_latex">Kortleken kan inte uppgraderas helt, den innehåller LaTeX-uttryck. Var god öppna kortleken med Anki desktop för att uppgradera till den senaste versionen och skapa om LaTeX.</string>
   <string name="deckpicker_title_nosdcard">SD-kortet är frånkopplat</string>
@@ -287,7 +287,7 @@
   <string name="resume_download">Återuppta hämtningen</string>
   <string name="pause_download">Pausa hämtning</string>
   <string name="duplicate_download">Denna kortlek hämtas redan</string>
-  <string name="sync_all_title">Sync all decks</string>
+  <string name="sync_all_title">Synka alla kortlekar</string>
   <string name="sync_all">Synka alla</string>
   <string name="sync_prepare_syncing">Förbereder synkning ...</string>
   <string name="fact">kort</string>
@@ -489,7 +489,7 @@
   <string name="deck_summary_average_month">Average seen last month</string>
   <string name="deck_summary_average_year">Average seen last year</string>
   <string name="deck_summary_average_total">Average seen ever</string>
-  <string name="deck_summary_forecast">Forecast</string>
+  <string name="deck_summary_forecast">Prognos</string>
   <string name="deck_summary_tomorrow_due">Tomorrow due: &lt;b&gt;%d&lt;/b&gt; cards</string>
   <string name="deck_summary_tomorrow_new">Tomorrow new: &lt;b&gt;%d&lt;/b&gt; cards</string>
   <string name="deck_summary_tomorrow_time">Estimated time tomorrow: &lt;b&gt;%d&lt;/b&gt; min.</string>
@@ -538,6 +538,7 @@
   <string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
+  <string name="menu_rotate">Rotera</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Alla kortlekar: 1 av %2$d i kö (%3$s)</item>
     <item quantity="other">Alla kortlekar: %1$d av %2$d i kö (%3$s)</item>

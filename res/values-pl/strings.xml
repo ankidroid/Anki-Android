@@ -538,6 +538,7 @@
   <string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
+  <string name="menu_rotate">Rotate</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Wszystkie talie: 1 z %2$d zaległa (%3$s)</item>
     <item quantity="other">Wszystkie talie: %1$d z %2$d zaległe (%3$s)</item>

@@ -67,52 +67,52 @@
     <item>Mostrar en order aleatorio</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
+    <item>1 segundo</item>
+    <item>1 minuto</item>
     <item>1 hora</item>
     <item>1 día</item>
     <item>1 mes</item>
     <item>1 año</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
-    <item>%s minutes</item>
+    <item>%s segundos</item>
+    <item>%s minutos</item>
     <item>%s horas</item>
     <item>%s días</item>
     <item>%s meses</item>
     <item>%s años</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 second</item>
-    <item>in 1 minute</item>
+    <item>en 1 segundo</item>
+    <item>en 1 minuto</item>
     <item>en 1 hora</item>
     <item>en 1 día</item>
     <item>en 1 mes</item>
     <item>en 1 año</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s seconds</item>
-    <item>in %s minutes</item>
+    <item>en %s segundos</item>
+    <item>en %s minutos</item>
     <item>en %s horas</item>
     <item>en %s días</item>
     <item>en %s meses</item>
     <item>en %s años</item>
   </string-array>
   <string-array name="next_review_before_s">
-    <item>1 second before</item>
-    <item>1 minute before</item>
-    <item>1 hour before</item>
-    <item>1 day before</item>
-    <item>1 month before</item>
-    <item>1 year before</item>
+    <item>Hace 1 segundo</item>
+    <item>Hace 1 minuto</item>
+    <item>Hace 1 hora</item>
+    <item>Hace 1 día</item>
+    <item>Hace 1 mes</item>
+    <item>Hace 1 año</item>
   </string-array>
   <string-array name="next_review_before_p">
-    <item>%s seconds before</item>
-    <item>%s minutes before</item>
-    <item>%s hours before</item>
-    <item>%s days before</item>
-    <item>%s months before</item>
-    <item>%s years before</item>
+    <item>Hace %s segundos</item>
+    <item>Hace %s minutos</item>
+    <item>%s horas antes</item>
+    <item>%s días antes</item>
+    <item>%s meses antes</item>
+    <item>%s años antes</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
     <item>Tarjetas nuevas en orden aleatorio</item>

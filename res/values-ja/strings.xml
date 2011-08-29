@@ -539,6 +539,7 @@
   <string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
+  <string name="menu_rotate">Rotate</string>
   <plurals name="deckpicker_title">
     <item quantity="one">すべての単語帳: 期限切れ%2$d(%3$s)枚中 1枚</item>
     <item quantity="other">すべての単語帳: 期限切れ%2$d(%3$s)枚中 %1$d枚</item>

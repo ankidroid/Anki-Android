@@ -544,6 +544,7 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
+  <string name="menu_rotate">Rotate</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Tous les paquets: 1 dû parmi %2$d (%3$s)</item>
     <item quantity="other">Tous les paquets: %1$d dûs parmi %2$d (%3$s)</item>

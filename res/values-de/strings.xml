@@ -538,6 +538,7 @@
   <string name="fix_orientation_summ">Verhindert während des Lernens das Ändern der Orientierung</string>
   <string name="card_unsuspended">Aussetzung rückgängig gemacht</string>
   <string name="card_suspended">Karte wieder ausgesetzt</string>
+  <string name="menu_rotate">Drehen</string>
   <plurals name="deckpicker_title">
     <item quantity="one">Alle Stapel: 1 von %2$d fällig (%3$s)</item>
     <item quantity="other">Alle Stapel: %1$d von %2$d fällig (%3$s)</item>

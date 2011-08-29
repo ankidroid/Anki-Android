@@ -68,6 +68,7 @@
   </string-array>
   <string-array name="next_review_s">
     <item>1 second</item>
+    <item>1 minute</item>
     <item>1 시간</item>
     <item>1 일</item>
     <item>1 개</item>
@@ -75,6 +76,7 @@
   </string-array>
   <string-array name="next_review_p">
     <item>%s seconds</item>
+    <item>%s minutes</item>
     <item>%s 시간</item>
     <item>%s 일</item>
     <item>%s 개월</item>

@@ -67,32 +67,32 @@
     <item>Visa i slumpmässig ordning</item>
   </string-array>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
+    <item>1 sekund</item>
+    <item>1 minut</item>
     <item>1 timme</item>
     <item>1 dag</item>
     <item>1 månad</item>
     <item>1 år</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
-    <item>%s minutes</item>
+    <item>%s sekunder</item>
+    <item>%s minuter</item>
     <item>%s timmar</item>
     <item>%s dagar</item>
     <item>%s månader</item>
     <item>%s år</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 second</item>
-    <item>in 1 minute</item>
+    <item>om 1 sekund</item>
+    <item>om 1 minut</item>
     <item>om 1 timme</item>
     <item>om 1 dag</item>
     <item>om 1 månad</item>
     <item>om 1 år</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>in %s seconds</item>
-    <item>in %s minutes</item>
+    <item>om %s sekunder</item>
+    <item>om %s minuter</item>
     <item>om %s timmar</item>
     <item>om %s dagar</item>
     <item>om %s månader</item>
