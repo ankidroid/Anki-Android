@@ -1472,7 +1472,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
-		mCardContainer.setVisibility(mShowAnimations && !mConfigurationChanged ? View.INVISIBLE : View.VISIBLE);
+        mCardContainer.setVisibility(mConfigurationChanged ? View.VISIBLE : View.INVISIBLE);
 		setInAnimation(false);
 
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
@@ -1551,10 +1551,10 @@ public class Reviewer extends Activity implements IButtonListener{
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
         mCardTimer.setOnClickListener(mCardStatisticsListener);
-    	if (mPrefTimer && (!mShowAnimations || mConfigurationChanged)) {
+    	if (mPrefTimer && (mConfigurationChanged)) {
     		switchVisibility(mCardTimer, View.VISIBLE);
     	}
-    	if (mShowProgressBars && (!mShowAnimations || mConfigurationChanged)) {
+    	if (mShowProgressBars && (mConfigurationChanged)) {
     		switchVisibility(mProgressBars, View.VISIBLE);
     	}
 
@@ -1812,11 +1812,14 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void switchVisibility(View view, int visible) {
+    	switchVisibility(view, visible, mShowAnimations && !mConfigurationChanged);
+    }
+    private void switchVisibility(View view, int visible, boolean fade) {
     	view.setVisibility(visible);
-    	if (mShowAnimations && !mConfigurationChanged) {
-    		int duration = mAnimationDurationTurn / 2;
+    	if (fade) {
+    		int duration = mShowAnimations ? mAnimationDurationTurn / 2 : mFadeDuration;
     		if (visible == View.VISIBLE) {
-        		view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, duration, duration));    			
+        		view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, duration, mShowAnimations ? duration : 0));    			
     		} else {
         		view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, duration, 0));
     		}
@@ -1826,15 +1829,15 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void switchTopBarVisibility(int visible) {
     	if (mPrefTimer) {
-    		switchVisibility(mCardTimer, visible);
+    		switchVisibility(mCardTimer, visible, true);
     	}
     	if (mShowProgressBars) {
-    		switchVisibility(mProgressBars, visible);
+    		switchVisibility(mProgressBars, visible, true);
     	}
-    	switchVisibility(mTextBarRed, visible);
-    	switchVisibility(mTextBarBlack, visible);
-    	switchVisibility(mTextBarBlue, visible);
-    	switchVisibility(mChosenAnswer, visible);
+    	switchVisibility(mTextBarRed, visible, true);
+    	switchVisibility(mTextBarBlack, visible, true);
+    	switchVisibility(mTextBarBlue, visible, true);
+    	switchVisibility(mChosenAnswer, visible, true);
     }
 
 
@@ -2284,6 +2287,11 @@ public class Reviewer extends Activity implements IButtonListener{
 	    	            invertColors(mNightMode);            		
 	            	}
 		        }	        	
+	        }
+	        if (!mShowAnimations && mCardContainer.getVisibility() == View.INVISIBLE) {
+    	    	switchTopBarVisibility(View.VISIBLE);
+				mCardContainer.setVisibility(View.VISIBLE);
+				mCardContainer.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
 	        }
     		if (!sDisplayAnswer) {
         		updateForNewCard();
