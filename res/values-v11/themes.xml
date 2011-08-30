@@ -47,3 +47,4 @@
 		<item name="listItemBackgroundDrawable">@android:drawable/list_selector_background</item>
 	</style>
 </resources>
+
