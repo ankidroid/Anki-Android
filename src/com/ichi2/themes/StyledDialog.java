@@ -398,47 +398,29 @@ public class StyledDialog extends Dialog {
             // set buttons
             int numberOfButtons = 0;
             if (positiveButtonText != null) {
-            	Button button1 = (Button) layout.findViewById(R.id.button1);
+                Button button1 = (Button) layout.findViewById(R.id.button1);
                 button1.setText(positiveButtonText);
-                button1.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if (positiveButtonClickListener != null) {
-                        	positiveButtonClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                        }
-                    	dialog.dismiss();
-                    }
-                });
-            	numberOfButtons++;
+                button1.setOnClickListener(
+                        new OnClickForwarder(dialog, DialogInterface.BUTTON_POSITIVE, positiveButtonClickListener));
+                numberOfButtons++;
             } else {
                 layout.findViewById(R.id.button1).setVisibility(View.GONE);
             }
             if (negativeButtonText != null) {
-            	Button button2 = (Button) layout.findViewById(R.id.button2);
+                Button button2 = (Button) layout.findViewById(R.id.button2);
                 button2.setText(negativeButtonText);
-                button2.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if (negativeButtonClickListener != null) {
-                        	negativeButtonClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                        }
-                    	dialog.dismiss();
-                    }
-                });
-            	numberOfButtons++;
+                button2.setOnClickListener(
+                        new OnClickForwarder(dialog, DialogInterface.BUTTON_NEGATIVE, negativeButtonClickListener));
+                numberOfButtons++;
             } else {
                 layout.findViewById(R.id.button2).setVisibility(View.GONE);
             }
             if (neutralButtonText != null) {
-            	Button button3 = (Button) layout.findViewById(R.id.button3);
+                Button button3 = (Button) layout.findViewById(R.id.button3);
                 button3.setText(neutralButtonText);
-                button3.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if (neutralButtonClickListener != null) {
-                        	neutralButtonClickListener.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
-                        }
-                    	dialog.dismiss();
-                    }
-                });
-            	numberOfButtons++;
+                button3.setOnClickListener(
+                        new OnClickForwarder(dialog, DialogInterface.BUTTON_NEUTRAL, neutralButtonClickListener));
+                numberOfButtons++;
             } else {
                 layout.findViewById(R.id.button3).setVisibility(View.GONE);
             }
@@ -483,5 +465,28 @@ public class StyledDialog extends Dialog {
         }
 
     }
- 
+
+
+    private static class OnClickForwarder implements View.OnClickListener {
+
+        private final DialogInterface mDialog;
+        private final int mWhich;
+        private final DialogInterface.OnClickListener mListener;
+
+
+        public OnClickForwarder(DialogInterface dialog, int which, DialogInterface.OnClickListener listener) {
+            mDialog = dialog;
+            mWhich = which;
+            mListener = listener;
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            if (mListener != null) {
+                mListener.onClick(mDialog, mWhich);
+            }
+            mDialog.dismiss();
+        }
+    }
 }
