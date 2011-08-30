@@ -1465,14 +1465,16 @@ public class StudyOptions extends Activity {
 		case DIALOG_MORE:
 	        // Update spinner selections from deck prior to showing the dialog.
 	        Deck deck = AnkiDroidApp.deck();
-	        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
-	        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
-	        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
-	        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
-	        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
-	        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
-	        mCheckBoxPerDay.setChecked(deck.getPerDay());
-	        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());
+	        if (deck != null) {
+		        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
+		        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
+		        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
+		        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
+		        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
+		        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
+		        mCheckBoxPerDay.setChecked(deck.getPerDay());
+		        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());	        	
+	        }
 			break;
 			
 		case DIALOG_LIMIT_SESSION:
