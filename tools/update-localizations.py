@@ -18,12 +18,14 @@
 # http://crowdin.net/download/project/ankidroid.zip
 
 # Below is the list of official AnkiDroid localizations.
-# Add a language if it is more than 40% translated.
+# Add a language if 01-core.xml is translated
 # Do not remove languages.
 # When you add a language, please also add it to mAppLanguages in Preferences.java
+
 languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'vi', 'zh-CN', 'zh-TW'];
+#languages = ['ar', 'ca', 'cs', 'de', 'el', 'es-ES', 'fi', 'fr', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'ro', 'ru', 'sr', 'sv-SE', 'vi', 'zh-CN', 'zh-TW', 'th', 'sk', 'da', 'ko', 'he', 'uk'];
 
-
+fileNames = ['01-core', '02-strings', '03-statistics', '04-cardbrowser', '05-dialogs', '06-network', '07-feedback', '08-widget', '09-backup', '10-preferences', '11-arrays'];
 
 
 import os
@@ -76,13 +78,10 @@ for language in languages:
 		os.mkdir(valuesDirectory)
 
 	# Copy localization files, mask chars and append gnu/gpl licence
-	newfile = valuesDirectory + 'arrays.xml'
-	file(newfile, 'w').write(zip.read(language + "/arrays.xml"))
-	replacechars(newfile)
-
-	newfile = valuesDirectory + 'strings.xml'
-	file(newfile, 'w').write(zip.read(language + "/strings.xml"))
-	replacechars(newfile)
+	for f in fileNames:
+		newfile = valuesDirectory + f + '.xml'
+		file(newfile, 'w').write(zip.read(language + "/" + f + ".xml"))
+		replacechars(newfile)
 
 print "removing crowdin-file"
 os.remove(zipname)
