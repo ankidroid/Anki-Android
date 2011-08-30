@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
@@ -249,10 +250,17 @@ public class MyAccount extends Activity {
 
                 Log.i(AnkiDroidApp.TAG, "User successfully logged!");
 
-                // Show logged view
-                mUsernameLoggedIn.setText((String) data.data[0]);
-                setContentView(mLoggedIntoMyAccountView);
-
+                if (MyAccount.this.getIntent().getExtras().getBoolean("notLoggedIn")) {
+                	MyAccount.this.setResult(RESULT_OK, MyAccount.this.getIntent());
+                	finish();
+			        if (StudyOptions.getApiLevel() > 4) {
+			            ActivityTransitionAnimation.slide(MyAccount.this, ActivityTransitionAnimation.RIGHT);
+			        }
+                } else {
+                    // Show logged view
+                    mUsernameLoggedIn.setText((String) data.data[0]);
+                    setContentView(mLoggedIntoMyAccountView);
+                }
             } else {
                 if (data.returnType == AnkiDroidProxy.LOGIN_INVALID_USER_PASS) {
                     if (mInvalidUserPassAlert != null) {
