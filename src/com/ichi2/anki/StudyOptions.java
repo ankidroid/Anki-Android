@@ -31,6 +31,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -60,6 +61,9 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.DeckTask.TaskData;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
+import com.ichi2.compat.Compat;
+import com.ichi2.compat.CompatV11;
+import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
@@ -341,6 +345,9 @@ public class StudyOptions extends Activity {
 
     private boolean mIsClosing = false;
 
+    /** Used to perform operation in a platform specific way. */
+    private Compat mCompat;
+
     /**
 * Callbacks for UI events
 */
@@ -613,7 +620,25 @@ public class StudyOptions extends Activity {
        			return false;
        		}
        	};
+
+        if (getApiLevel() >= 11) {
+            mCompat = new CompatV11();
+        } else {
+            mCompat = new CompatV3();
+        }
     }
+
+
+    /** Returns the API level of this device. */
+    private int getApiLevel() {
+        try {
+            return Integer.parseInt(Build.VERSION.SDK);
+        } catch (NumberFormatException e) {
+            // If there is an error, return the minimum supported version.
+            return 3;
+        }
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig){
@@ -726,6 +751,7 @@ public class StudyOptions extends Activity {
         	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));	
         } else {
         	AnkiDroidApp.setDeck(null);
+            mCompat.invalidateOptionsMenu(this);
             StudyOptions.this.finish();
         }
     }
@@ -738,6 +764,7 @@ public class StudyOptions extends Activity {
         	AnkiDroidApp.deck().closeDeck();
         }
     	AnkiDroidApp.setDeck(null);
+        mCompat.invalidateOptionsMenu(this);
         MetaDB.closeDB();
         StudyOptions.this.finish();
     	startActivity(i);
@@ -799,6 +826,7 @@ public class StudyOptions extends Activity {
         if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
             AnkiDroidApp.deck().closeDeck();
             AnkiDroidApp.setDeck(null);
+            mCompat.invalidateOptionsMenu(this);
         }
     }
 
@@ -1903,6 +1931,7 @@ public class StudyOptions extends Activity {
             {
                 AnkiDroidApp.deck().closeDeck();
                 AnkiDroidApp.setDeck(null);
+                mCompat.invalidateOptionsMenu(this);
             }
             startActivityForResult(
                     new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
@@ -1920,6 +1949,7 @@ public class StudyOptions extends Activity {
         {
             AnkiDroidApp.deck().closeDeck();
             AnkiDroidApp.setDeck(null);
+            mCompat.invalidateOptionsMenu(this);
         }
         // deckLoaded = false;
         startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
@@ -2033,6 +2063,7 @@ public class StudyOptions extends Activity {
                 boolean fileNotDeleted = mDeckFilename != null && new File(mDeckFilename).exists();
             	if (!fileNotDeleted) {
                     AnkiDroidApp.setDeck(null);
+                    mCompat.invalidateOptionsMenu(this);
                     showContentView(CONTENT_NO_DECK);
             	} else {
                 	showContentView(CONTENT_STUDY_OPTIONS);
@@ -2367,6 +2398,7 @@ public class StudyOptions extends Activity {
             // {
             // AnkidroidApp.deck().closeDeck();
             // AnkidroidApp.setDeck(null);
+            // mCompat.invalidateOptionsMenu(StudyOptions.this);
             // }
             allTags = null;
 
@@ -2375,6 +2407,7 @@ public class StudyOptions extends Activity {
                     // Set the deck in the application instance, so other activities
                     // can access the loaded deck.
                     AnkiDroidApp.setDeck(result.getDeck());
+                    mCompat.invalidateOptionsMenu(StudyOptions.this);
 
                     updateValuesFromDeck();
                     showContentView(CONTENT_STUDY_OPTIONS);
@@ -2473,6 +2506,7 @@ public class StudyOptions extends Activity {
         		mProgressDialog.dismiss();
         	}
         	AnkiDroidApp.setDeck(null);
+            mCompat.invalidateOptionsMenu(StudyOptions.this);
             StudyOptions.this.finish();
         }
 
