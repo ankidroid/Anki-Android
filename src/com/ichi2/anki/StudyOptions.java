@@ -621,12 +621,24 @@ public class StudyOptions extends Activity {
        		}
        	};
 
-        if (false /*Build.VERSION.SDK_INT >= 11   See first comment at https://github.com/nicolas-raoul/Anki-Android/commit/1df32ed57 */) {
+        if (getApiLevel() >= 11) {
             mCompat = new CompatV11();
         } else {
             mCompat = new CompatV3();
         }
     }
+
+
+    /** Returns the API level of this device. */
+    private int getApiLevel() {
+        try {
+            return Integer.parseInt(Build.VERSION.SDK);
+        } catch (NumberFormatException e) {
+            // If there is an error, return the minimum supported version.
+            return 3;
+        }
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig){
