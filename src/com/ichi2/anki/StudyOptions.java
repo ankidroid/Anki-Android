@@ -621,7 +621,7 @@ public class StudyOptions extends Activity {
        		}
        	};
 
-        if (Build.VERSION.SDK_INT >= 11) {
+        if (false /*Build.VERSION.SDK_INT >= 11   See first comment at https://github.com/nicolas-raoul/Anki-Android/commit/1df32ed57 */) {
             mCompat = new CompatV11();
         } else {
             mCompat = new CompatV3();
