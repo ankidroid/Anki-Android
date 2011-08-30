@@ -405,9 +405,9 @@ public class CardEditor extends Activity {
             mContext = context;
             mPairField = pairField;
             if(mPrefFixArabic) {
-            	this.setText(ArabicUtilities.reshapeSentence(pairField.getValue().replace("<br>","\n")));
+            	this.setText(ArabicUtilities.reshapeSentence(pairField.getValue().replaceAll("<br(\\s*\\/*)>","\n")));
             } else {
-            	this.setText(pairField.getValue().replace("<br>","\n"));
+            	this.setText(pairField.getValue().replaceAll("<br(\\s*\\/*)>","\n"));
             }       	
             this.setMinimumWidth(400);
             this.setOnClickListener(new View.OnClickListener() {
@@ -526,7 +526,7 @@ public class CardEditor extends Activity {
 
 
         public boolean updateField() {
-            String newValue = this.getText().toString().replace("\n", "<br>");
+            String newValue = this.getText().toString().replace("\n", "<br />");
             if (!mPairField.getValue().equals(newValue)) {
                 mPairField.setValue(newValue);
                 return true;
