@@ -250,8 +250,9 @@ public class MyAccount extends Activity {
 
                 Log.i(AnkiDroidApp.TAG, "User successfully logged!");
 
-                if (MyAccount.this.getIntent().getExtras().getBoolean("notLoggedIn")) {
-                	MyAccount.this.setResult(RESULT_OK, MyAccount.this.getIntent());
+                Intent i = MyAccount.this.getIntent();
+                if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
+                	MyAccount.this.setResult(RESULT_OK, i);
                 	finish();
 			        if (StudyOptions.getApiLevel() > 4) {
 			            ActivityTransitionAnimation.slide(MyAccount.this, ActivityTransitionAnimation.RIGHT);
