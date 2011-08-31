@@ -709,6 +709,11 @@ public class DeckPicker extends Activity implements Runnable {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		int selectedPosition = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
 		mCurrentDeckFilename = mDeckList.get(selectedPosition).get("name");
+		
+		if (mCurrentDeckFilename == null || mCurrentDeckFilename.equalsIgnoreCase(getResources().getString(R.string.deckpicker_nodeck))) {
+			return;
+		}
+		
 		menu.setHeaderTitle(mCurrentDeckFilename);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.contextmenu_deckpicker, menu);
