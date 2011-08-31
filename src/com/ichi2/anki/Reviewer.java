@@ -1928,7 +1928,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void setDueMessage() {
     	Deck deck = AnkiDroidApp.deck();
-		if (mCurrentCard != null && deck != null && deck.getScheduler().equals("reviewEarly")) {
+		if (mCurrentCard != null && deck != null && deck.getScheduler().equals("reviewEarly") && mCurrentCard.getType() != Card.TYPE_FAILED) {
     		mChosenAnswer.setTextColor(mForegroundColor);
     		mChosenAnswer.setText(Utils.fmtTimeSpan(mCurrentCard.getCombinedDue() - Utils.now(), Utils.TIME_FORMAT_IN));				
 		}

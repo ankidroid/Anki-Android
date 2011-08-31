@@ -112,6 +112,7 @@ public class StudyOptions extends Activity {
     private static final int ADD_FACT = 6;
     private static final int BROWSE_CARDS = 7;
     private static final int STATISTICS = 8;
+    private static final int LOG_IN = 9;
     
     public static final int RESULT_RESTART = 100;
     public static final int RESULT_CLOSE = 101;
@@ -630,7 +631,7 @@ public class StudyOptions extends Activity {
 
 
     /** Returns the API level of this device. */
-    private int getApiLevel() {
+    public static int getApiLevel() {
         try {
             return Integer.parseInt(Build.VERSION.SDK);
         } catch (NumberFormatException e) {
@@ -776,7 +777,7 @@ public class StudyOptions extends Activity {
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
     		startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        	if (getApiLevel() > 4) {
        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
     	} else if (mCurrentContentView == CONTENT_CONGRATS) {
@@ -793,7 +794,7 @@ public class StudyOptions extends Activity {
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
             reviewer.putExtra("deckFilename", mDeckFilename);
             startActivityForResult(reviewer, REQUEST_REVIEW);
-        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        	if (getApiLevel() > 4) {
        			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
         	}
         }
@@ -808,7 +809,7 @@ public class StudyOptions extends Activity {
     		Intent reviewer = new Intent(StudyOptions.this, Reviewer.class);
     		reviewer.putExtra("deckFilename", mDeckFilename);
         	startActivityForResult(reviewer, REQUEST_REVIEW);
-    		if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    		if (getApiLevel() > 4) {
     			ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
     		}
         }
@@ -1059,7 +1060,11 @@ public class StudyOptions extends Activity {
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
 	                Intent myAccount = new Intent(StudyOptions.this, MyAccount.class);
-	                startActivity(myAccount);
+	                myAccount.putExtra("notLoggedIn", true);
+	                startActivityForResult(myAccount, LOG_IN);
+			        if (getApiLevel() > 4) {
+			            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
+			        }
 	            }
 	        });
 	        builder.setNegativeButton(res.getString(R.string.cancel), null);
@@ -1460,14 +1465,16 @@ public class StudyOptions extends Activity {
 		case DIALOG_MORE:
 	        // Update spinner selections from deck prior to showing the dialog.
 	        Deck deck = AnkiDroidApp.deck();
-	        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
-	        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
-	        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
-	        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
-	        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
-	        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
-	        mCheckBoxPerDay.setChecked(deck.getPerDay());
-	        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());
+	        if (deck != null) {
+		        mSpinnerNewCardOrder.setSelection(deck.getNewCardOrder());
+		        mSpinnerNewCardSchedule.setSelection(deck.getNewCardSpacing());
+		        mSpinnerRevCardOrder.setSelection(deck.getRevCardOrder());
+		        mSpinnerFailCardOption.setVisibility(View.GONE); // TODO: Not implemented yet.
+		        mEditMaxFailCard.setText(String.valueOf(deck.getFailedCardMax()));
+		        mEditNewPerDay.setText(String.valueOf(deck.getNewCardsPerDay()));
+		        mCheckBoxPerDay.setChecked(deck.getPerDay());
+		        mCheckBoxSuspendLeeches.setChecked(deck.getSuspendLeeches());	        	
+	        }
 			break;
 			
 		case DIALOG_LIMIT_SESSION:
@@ -1866,7 +1873,7 @@ public class StudyOptions extends Activity {
 
             case MENU_ADD_FACT:
             	startActivityForResult(new Intent(StudyOptions.this, FactAdder.class), ADD_FACT);
-                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                if (getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
                 }
                 return true;
@@ -1891,7 +1898,7 @@ public class StudyOptions extends Activity {
         Intent decksPicker = new Intent(StudyOptions.this, DeckPicker.class);
         mInDeckPicker = true;
         startActivityForResult(decksPicker, PICK_DECK_REQUEST);
-    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    	if (getApiLevel() > 4) {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
         // Log.i(AnkiDroidApp.TAG, "openDeckPicker - Ending");
@@ -1912,7 +1919,7 @@ public class StudyOptions extends Activity {
     private void openCardBrowser() {
         Intent cardBrowser = new Intent(StudyOptions.this, CardBrowser.class);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        if (getApiLevel() > 4) {
             ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
         }
     }
@@ -1935,7 +1942,7 @@ public class StudyOptions extends Activity {
             }
             startActivityForResult(
                     new Intent(StudyOptions.this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
-        	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        	if (getApiLevel() > 4) {
         		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         	}
         } else {
@@ -1953,7 +1960,7 @@ public class StudyOptions extends Activity {
         }
         // deckLoaded = false;
         startActivityForResult(new Intent(StudyOptions.this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
-    	if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+    	if (getApiLevel() > 4) {
     		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     	}
     }
@@ -2129,6 +2136,8 @@ public class StudyOptions extends Activity {
         	resetAndUpdateValuesFromDeck();
         } else if (requestCode == BROWSE_CARDS && resultCode == RESULT_OK) {
         	resetAndUpdateValuesFromDeck();
+        } else if (requestCode == LOG_IN && resultCode == RESULT_OK) {
+        	syncDeck(null);
         } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
         	showContentView(CONTENT_STUDY_OPTIONS);
         }
@@ -2598,9 +2607,9 @@ public class StudyOptions extends Activity {
 		    	} else {
 	            	Intent intent = new Intent(StudyOptions.this, com.ichi2.charts.ChartBuilder.class);
 			    	startActivityForResult(intent, STATISTICS);
-			        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+			        if (getApiLevel() > 4) {
 			            ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.DOWN);
-			        }		    		
+			        }
 		    	}
 			}
 		}

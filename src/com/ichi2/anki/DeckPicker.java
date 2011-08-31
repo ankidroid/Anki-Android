@@ -88,13 +88,14 @@ public class DeckPicker extends Activity implements Runnable {
 	 * Dialogs
 	 */
 	private static final int DIALOG_NO_SDCARD = 0;
-	private static final int DIALOG_USER_NOT_LOGGED_IN = 1;
-	private static final int DIALOG_NO_CONNECTION = 2;
-	private static final int DIALOG_DELETE_DECK = 3;
-	private static final int DIALOG_SELECT_STATISTICS_TYPE = 4;
-	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 5;	
-	private static final int DIALOG_OPTIMIZE_DATABASE = 6;
-	private static final int DIALOG_DELETE_BACKUPS = 7;
+	private static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 1;
+	private static final int DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD = 2;
+	private static final int DIALOG_NO_CONNECTION = 3;
+	private static final int DIALOG_DELETE_DECK = 4;
+	private static final int DIALOG_SELECT_STATISTICS_TYPE = 5;
+	private static final int DIALOG_SELECT_STATISTICS_PERIOD = 6;	
+	private static final int DIALOG_OPTIMIZE_DATABASE = 7;
+	private static final int DIALOG_DELETE_BACKUPS = 8;
 
 	/**
 	 * Menus
@@ -132,6 +133,8 @@ public class DeckPicker extends Activity implements Runnable {
     private static final int DOWNLOAD_PERSONAL_DECK = 2;
     private static final int DOWNLOAD_SHARED_DECK = 3;
     private static final int REPORT_FEEDBACK = 4;
+    private static final int LOG_IN_FOR_DOWNLOAD = 5;
+    private static final int LOG_IN_FOR_SYNC = 6;
 
 	private DeckPicker mSelf;
 
@@ -395,18 +398,7 @@ public class DeckPicker extends Activity implements Runnable {
 		mSyncAllButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (AnkiDroidApp.isUserLoggedIn()) {
-                    mSyncAllButton.setClickable(false);
-					SharedPreferences preferences = PrefSettings
-							.getSharedPrefs(getBaseContext());
-					String username = preferences.getString("username", "");
-					String password = preferences.getString("password", "");
-					Connection.syncAllDecks(mSyncAllDecksListener,
-							new Connection.Payload(new Object[] { username,
-									password, mDeckList }));
-				} else {
-					showDialog(DIALOG_USER_NOT_LOGGED_IN);
-				}
+				syncAllDecks();
 			}
 
 		});
@@ -527,21 +519,43 @@ public class DeckPicker extends Activity implements Runnable {
 			dialog = builder.create();
 			break;
 
-		case DIALOG_USER_NOT_LOGGED_IN:
+		case DIALOG_USER_NOT_LOGGED_IN_SYNC:
+		case DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD:
 			builder.setTitle(res.getString(R.string.connection_error_title));
 			builder.setIcon(android.R.drawable.ic_dialog_alert);
 			builder.setMessage(res
 					.getString(R.string.no_user_password_error_message));
-			builder.setPositiveButton(res.getString(R.string.log_in),
-					new DialogInterface.OnClickListener() {
+			if (id == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
+				builder.setPositiveButton(res.getString(R.string.log_in),
+						new DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Intent myAccount = new Intent(DeckPicker.this,
-									MyAccount.class);
-							startActivity(myAccount);
-						}
-					});
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								Intent myAccount = new Intent(DeckPicker.this,
+										MyAccount.class);
+								myAccount.putExtra("notLoggedIn", true);
+								startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
+						        if (StudyOptions.getApiLevel() > 4) {
+						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+						        }
+							}
+						});				
+			} else {
+				builder.setPositiveButton(res.getString(R.string.log_in),
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								Intent myAccount = new Intent(DeckPicker.this,
+										MyAccount.class);
+								myAccount.putExtra("notLoggedIn", true);
+								startActivityForResult(myAccount, LOG_IN_FOR_DOWNLOAD);
+						        if (StudyOptions.getApiLevel() > 4) {
+						            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+						        }
+							}
+						});
+			}
 			builder.setNegativeButton(res.getString(R.string.cancel), null);
 			dialog = builder.create();
 			break;
@@ -820,7 +834,7 @@ public class DeckPicker extends Activity implements Runnable {
     		finish();
 		} else {
 			finish();
-			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+			if (StudyOptions.getApiLevel() > 4) {
 	    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
 	    	}			
 		}
@@ -853,6 +867,22 @@ public class DeckPicker extends Activity implements Runnable {
 			mDeckpickerButtons.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0)); 
 		} else {
 			mDeckpickerButtons.setVisibility(View.INVISIBLE);
+		}
+	}
+
+
+	private void syncAllDecks() {
+		if (AnkiDroidApp.isUserLoggedIn()) {
+            mSyncAllButton.setClickable(false);
+			SharedPreferences preferences = PrefSettings
+					.getSharedPrefs(getBaseContext());
+			String username = preferences.getString("username", "");
+			String password = preferences.getString("password", "");
+			Connection.syncAllDecks(mSyncAllDecksListener,
+					new Connection.Payload(new Object[] { username,
+							password, mDeckList }));
+		} else {
+			showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
 		}
 	}
 
@@ -1023,8 +1053,8 @@ public class DeckPicker extends Activity implements Runnable {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case MENU_CREATE_DECK:
-                startActivityForResult(new Intent(DeckPicker.this, DeckCreator.class), CREATE_DECK);;
-                if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+                startActivityForResult(new Intent(DeckPicker.this, DeckCreator.class), CREATE_DECK);
+                if (StudyOptions.getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
                 }
                 return true;
@@ -1081,6 +1111,10 @@ public class DeckPicker extends Activity implements Runnable {
         } else if ((requestCode == CREATE_DECK || requestCode == DOWNLOAD_PERSONAL_DECK || requestCode == DOWNLOAD_SHARED_DECK) && resultCode == RESULT_OK) {
         	populateDeckList(mPrefDeckPath);
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
+        } else if (requestCode == LOG_IN_FOR_DOWNLOAD && resultCode == RESULT_OK) {
+        	openPersonalDeckPicker();
+        } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
+        	syncAllDecks();
         }
     }
 
@@ -1319,11 +1353,11 @@ public class DeckPicker extends Activity implements Runnable {
             }
             Intent i = getIntent();
             startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
-            if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+            if (StudyOptions.getApiLevel() > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
             }
         } else {
-            showDialog(DIALOG_USER_NOT_LOGGED_IN);
+            showDialog(DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD);
         }
     }
 
@@ -1336,7 +1370,7 @@ public class DeckPicker extends Activity implements Runnable {
         }
         // deckLoaded = false;
         startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
-        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+        if (StudyOptions.getApiLevel() > 4) {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         }
     }
@@ -1462,7 +1496,7 @@ public class DeckPicker extends Activity implements Runnable {
 		    	} else {
 			    	Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
 			    	startActivity(intent);
-			        if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+			        if (StudyOptions.getApiLevel() > 4) {
 			            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
 			        }	
 		    	}
