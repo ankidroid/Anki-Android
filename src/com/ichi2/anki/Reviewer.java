@@ -959,6 +959,15 @@ public class Reviewer extends Activity implements IButtonListener{
         	closeReviewer();
         	return true;
         }
+         /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
+        if (keyCode == 92)  {
+        	mCard.pageUp(false);
+        	return true;
+        }
+        if (keyCode == 93)  {
+        	mCard.pageDown(false);
+        	return true;
+        }
 
         return super.onKeyDown(keyCode, event);
     }
