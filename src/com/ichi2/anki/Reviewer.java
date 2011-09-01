@@ -1612,6 +1612,22 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mZoomEnabled) {
             webView.getSettings().setBuiltInZoomControls(true);
         }
+        /** Solving bug 720: <input> focus issue */
+        webView.requestFocus(View.FOCUS_DOWN);
+        webView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_UP:
+                        if (!v.hasFocus()) {
+                            v.requestFocus();
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.addJavascriptInterface(new JavaScriptInterface(), "interface");
