@@ -1615,28 +1615,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private WebView createWebView() {
-        WebView webView = new WebView(this);
+        WebView webView = new MyWebView(this);
         webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
             webView.getSettings().setBuiltInZoomControls(true);
         }
-        /** Solving bug 720: <input> focus issue */
-        webView.requestFocus(View.FOCUS_DOWN);
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                    case MotionEvent.ACTION_UP:
-                        if (!v.hasFocus()) {
-                            v.requestFocus();
-                        }
-                        break;
-                }
-                return false;
-            }
-        });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.addJavascriptInterface(new JavaScriptInterface(), "interface");
@@ -2989,6 +2973,19 @@ public class Reviewer extends Activity implements IButtonListener{
     	setOutAnimation(true);    		
     	mClosing = true;
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), ""));
+    }
+    
+    /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189*/
+    class MyWebView extends WebView {
+
+    	public MyWebView(Context context) {
+    		super(context);
+    	}
+
+    	@Override
+    	public boolean onCheckIsTextEditor() {
+    		return true; 
+    	}
     }
 
     class MyGestureDetector extends SimpleOnGestureListener {
