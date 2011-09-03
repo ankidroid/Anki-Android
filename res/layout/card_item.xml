@@ -8,10 +8,14 @@
   		android:id="@+id/card_question"
 		android:layout_width="0dip"
 		android:layout_height="fill_parent"
-		android:layout_weight="1"/>
+		android:maxLines="3"
+		android:layout_weight="1"
+		android:layout_marginRight="0.5dip"/>
   	<TextView 
   		android:id="@+id/card_answer"
 		android:layout_width="0dip"
 		android:layout_height="fill_parent"
-		android:layout_weight="1"/>
+		android:maxLines="3"
+		android:layout_weight="1"
+		android:layout_marginLeft="0.5dip"/>
 </LinearLayout>
