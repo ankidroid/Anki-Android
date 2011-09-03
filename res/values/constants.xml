@@ -166,5 +166,6 @@
 		<item>option to swap question/answer very easily</item>
 		<item>support for line breaks in card editor and card browser</item>
 		<item>hide AnkiDroid folder from Android\'s media scanner</item>
+		<item>Support for Page Up/Page Down hardware buttons</item>
 	</string-array>
 </resources>
