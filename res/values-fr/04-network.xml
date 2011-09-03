@@ -45,9 +45,9 @@
   <string name="resume_download">Reprendre le téléchargement</string>
   <string name="pause_download">Suspendre le téléchargement</string>
   <string name="duplicate_download">Ce paquet est déjà en cours de téléchargement</string>
-  <string name="sync_all_title">Sync all decks</string>
+  <string name="sync_all_title">Synchroniser tous les paquets</string>
   <string name="sync_all">Synchroniser tous</string>
-  <string name="sync_prepare_syncing">Preparing syncing...</string>
+  <string name="sync_prepare_syncing">Préparation de la synchronisation...</string>
   <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
   <string name="no_user_password_error_message">Afin de procéder à cette opération, vous devez avoir un compte AnkiOnline et être connecté.</string>
   <string name="sync_progress_bar_title">Synchronisation de %s</string>
