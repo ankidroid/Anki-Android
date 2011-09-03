@@ -2972,7 +2972,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private void closeReviewer() {
     	setOutAnimation(true);    		
     	mClosing = true;
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), ""));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
     }
     
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189*/

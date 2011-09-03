@@ -92,7 +92,7 @@
   </string-array>
   <string-array name="next_review_before_s">
     <item>1 seconde avant</item>
-    <item>& minute avant</item>
+    <item>1 minute avant</item>
     <item>1 heure avant</item>
     <item>1 jour avant</item>
     <item>1 mois avant</item>

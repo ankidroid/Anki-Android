@@ -3243,33 +3243,41 @@ public class Deck {
     }
 
 
-    public ArrayList<String[]> getAllCards(String order) {
-    	ArrayList<String[]> allCards = new ArrayList<String[]>();
+    public ArrayList<HashMap<String, String>> getCards(int chunk, String startId) {
+    	ArrayList<HashMap<String, String>> cards = new ArrayList<HashMap<String, String>>();
 
         Cursor cur = null;
         try {
         	cur = getDB().getDatabase().rawQuery("SELECT cards.id, cards.question, cards.answer, " +
-        			"facts.tags, models.tags, cardModels.name, cards.priority FROM cards, facts, " +
+        			"facts.tags, models.tags, cardModels.name, cards.priority, cards.due, cards.interval, " +
+        			"cards.factor, cards.created FROM cards, facts, " +
         			"models, cardModels WHERE cards.factId == facts.id AND facts.modelId == models.id " +
-        			"AND cards.cardModelId = cardModels.id ORDER BY " + order, null);
+        			"AND cards.cardModelId = cardModels.id " + (startId != "" ? ("AND cards.id > " + startId) : "") +
+        			" ORDER BY cards.id LIMIT " + chunk, null);
             while (cur.moveToNext()) {
-            	String[] data = new String[5];
-            	data[0] = Long.toString(cur.getLong(0));
-            	data[1] = Utils.stripHTML(cur.getString(1).replaceAll("<br(\\s*\\/*)>","\n"));
-            	data[2] = Utils.stripHTML(cur.getString(2).replaceAll("<br(\\s*\\/*)>","\n"));
+            	HashMap<String, String> data = new HashMap<String, String>();
+            	data.put("id", Long.toString(cur.getLong(0)));
+            	data.put("question", Utils.stripHTML(cur.getString(1).replaceAll("<br(\\s*\\/*)>","\n")));
+            	data.put("answer", Utils.stripHTML(cur.getString(2).replaceAll("<br(\\s*\\/*)>","\n")));
             	String tags = cur.getString(3);
+            	String flags = null;
            	    if (tags.contains(TAG_MARKED)) {
-           	        data[3] = "1";
+           	    	flags = "1";
            	    } else {
-           	        data[3] = "0";
+           	    	flags = "0";
            	    }
-           	    data[4] = tags + " " + cur.getString(4) + " " + cur.getString(5);
             	if (cur.getString(6).equals("-3")) {
-                    data[3] = data[3] + "1";
+            		flags = flags + "1";
                 } else {
-                    data[3] = data[3] + "0";
+                	flags = flags + "0";
                 }
-            	allCards.add(data);
+            	data.put("tags", tags + " " + cur.getString(4) + " " + cur.getString(5));
+            	data.put("flags", flags);
+            	data.put("due", Double.toString(cur.getDouble(6)));
+            	data.put("interval", Double.toString(cur.getDouble(7)));
+            	data.put("factor", Double.toString(cur.getDouble(8)));
+            	data.put("created", Double.toString(cur.getDouble(9)));
+            	cards.add(data);
             }
         } catch (SQLException e) {
             Log.e(AnkiDroidApp.TAG, "getAllCards: " + e.toString());
@@ -3279,7 +3287,7 @@ public class Deck {
                 cur.close();
             }
         }
-    	return allCards;
+    	return cards;
     }
 
 

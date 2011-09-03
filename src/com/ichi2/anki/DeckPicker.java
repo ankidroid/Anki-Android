@@ -741,7 +741,7 @@ public class DeckPicker extends Activity implements Runnable {
 		case R.id.optimize_deck:
 			deckPath = data.get("filepath");
 			deck = getDeck(deckPath);
-	    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, null));
+	    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, 0));
 			return true;
 		case R.id.download_missing_media:
 		    deckPath = data.get("filepath");
