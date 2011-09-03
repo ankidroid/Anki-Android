@@ -2968,6 +2968,9 @@ public class Deck {
         int fmax = 0;
         if (hasKey("leechFails")) {
             fmax = getInt("leechFails");
+            if (fmax == 0) {
+            	return false;
+            }
         } else {
             // No leech threshold found in DeckVars
             return false;
