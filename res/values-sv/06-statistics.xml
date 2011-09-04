@@ -37,7 +37,7 @@
   <string name="deck_summary_cards">Antal kort:</string>
   <string name="deck_summary_facts">Number of facts:</string>
   <string name="deck_summary_cards_mature">Mogna kort:</string>
-  <string name="deck_summary_cards_young">Young cards:</string>
+  <string name="deck_summary_cards_young">Unga kort:</string>
   <string name="deck_summary_cards_unseen">Osedda kort:</string>
   <string name="deck_summary_card_age">Card age</string>
   <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>

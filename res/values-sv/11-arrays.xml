@@ -116,8 +116,8 @@
     <item>Avbryt inlärning</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
+    <item>Android Mörk</item>
+    <item>Android Ljus</item>
+    <item>Blå</item>
   </string-array>
 </resources>

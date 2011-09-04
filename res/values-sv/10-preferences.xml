@@ -62,9 +62,9 @@
   <string name="dictionary_summ">Ordbok där sökningar ska göras: XXX</string>
   <string name="reset_languages">Återställ språk</string>
   <string name="reset_languages_summ">Återställ språktilldelningar (för text till tal och ordböcker) för alla kortlekar. Återställ specifika kortlekstilldelningar i kortleksväljaren</string>
-  <string name="reset_dialogs">Reset Dialogs</string>
-  <string name="reset_dialogs_question">Reset all dialogs?</string>
-  <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
+  <string name="reset_dialogs">Återställ Dialogrutor</string>
+  <string name="reset_dialogs_question">Återställ alla dialogrutor?</string>
+  <string name="reset_dialogs_summ">Återställ alla dialogrutor som är inställda på att inte visas igen</string>
   <string name="reset_languages_question">Återställ alla språktilldelningar?</string>
   <string name="reset_languages_confirmation">Alla språktilldelningar återställda</string>
   <string name="use_ruby_support">Stöd för ruby-kommentarer</string>
