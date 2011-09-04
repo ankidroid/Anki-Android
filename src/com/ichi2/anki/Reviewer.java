@@ -1369,6 +1369,7 @@ public class Reviewer extends Activity implements IButtonListener{
             return false;
         } else {
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);
+            editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_REVIEWER_CARD);
         	sEditorCard = mCurrentCard;
         	setOutAnimation(true);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);

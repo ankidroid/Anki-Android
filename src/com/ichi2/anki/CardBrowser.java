@@ -56,7 +56,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -194,6 +193,7 @@ public class CardBrowser extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
+				editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_BROWSER_CARD);
 				mPositionInCardsList = position;
 				mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(
 						mPositionInCardsList).get("id")));
@@ -394,8 +394,9 @@ public class CardBrowser extends Activity {
 					new DeckTask.TaskData(0, mDeck, 0, true));
 			return true;
 		case MENU_ADD_FACT:
-			startActivityForResult(
-					new Intent(CardBrowser.this, FactAdder.class), ADD_FACT);
+			Intent intent = new Intent(CardBrowser.this, CardEditor.class);
+			intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+			startActivityForResult(intent, ADD_FACT);
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 				ActivityTransitionAnimation.slide(CardBrowser.this,
 						ActivityTransitionAnimation.LEFT);

@@ -1872,7 +1872,9 @@ public class StudyOptions extends Activity {
                 return true;
 
             case MENU_ADD_FACT:
-            	startActivityForResult(new Intent(StudyOptions.this, FactAdder.class), ADD_FACT);
+            	Intent intent = new Intent(StudyOptions.this, CardEditor.class);
+            	intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+            	startActivityForResult(intent, ADD_FACT);
                 if (getApiLevel() > 4) {
                     ActivityTransitionAnimation.slide(StudyOptions.this, ActivityTransitionAnimation.LEFT);
                 }
