@@ -1565,7 +1565,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mNext3.setVisibility(View.GONE);
             mNext4.setVisibility(View.GONE);
         }
-        
+
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setOnClickListener(mFlipCardListener);
         mFlipCard.setText(getResources().getString(R.string.show_answer));
@@ -1830,10 +1830,11 @@ public class Reviewer extends Activity implements IButtonListener{
     	switchVisibility(mEase3, View.GONE);
     	switchVisibility(mEase4, View.GONE);
     	if (mshowNextReviewTime) {
-    		switchVisibility(mNext1, View.INVISIBLE);
-    		switchVisibility(mNext2, View.INVISIBLE);
-    		switchVisibility(mNext3, View.INVISIBLE);
-    		switchVisibility(mNext4, View.INVISIBLE);
+    		int visibility = typeAnswer() ? View.GONE : View.INVISIBLE;
+    		switchVisibility(mNext1, visibility);
+    		switchVisibility(mNext2, visibility);
+    		switchVisibility(mNext3, visibility);
+    		switchVisibility(mNext4, visibility);
     	}
     	if (mFlipCard.getVisibility() != View.VISIBLE) {
     		switchVisibility(mFlipCard, View.VISIBLE);
@@ -1883,7 +1884,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mPrefWhiteboard) {
             mWhiteboard.setVisibility(mShowWhiteboard ? View.VISIBLE : View.GONE);            
         }
-        mAnswerField.setVisibility((typeAnswer()) ? View.VISIBLE : View.GONE);
+        mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
     }
 
 
