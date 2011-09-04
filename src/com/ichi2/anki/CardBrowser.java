@@ -985,19 +985,44 @@ public class CardBrowser extends Activity {
 		public int compare(HashMap<String, String> object1,
 				HashMap<String, String> object2) {
 		    try {
+		    	int result;
 		    	switch (mSelectedOrder) {
 		    	case CARD_ORDER_ANSWER:
-		    		return object1.get("answer").compareToIgnoreCase(object2.get("answer"));
+		    		result = object1.get("answer").compareToIgnoreCase(object2.get("answer"));
+		    		if (result == 0) {
+		    			result = object1.get("question").compareToIgnoreCase(object2.get("question"));
+		    		}
+		    		return result;
 		    	case CARD_ORDER_QUESTION:
-		    		return object1.get("question").compareToIgnoreCase(object2.get("question"));
+		    		result = object1.get("question").compareToIgnoreCase(object2.get("question"));
+		    		if (result == 0) {
+		    			result = object1.get("answer").compareToIgnoreCase(object2.get("answer"));
+		    		}
+		    		return result;
 		    	case CARD_ORDER_DUE:
-		    		return Double.valueOf(object1.get("due")).compareTo(Double.valueOf(object2.get("due")));
+		    		result = Double.valueOf(object1.get("due")).compareTo(Double.valueOf(object2.get("due")));
+		    		if (result == 0) {
+		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
+		    		}
+		    		return result;
 		    	case CARD_ORDER_INTERVAL:
-		    		return Double.valueOf(object1.get("interval")).compareTo(Double.valueOf(object2.get("interval")));
+		    		result = Double.valueOf(object1.get("interval")).compareTo(Double.valueOf(object2.get("interval")));
+		    		if (result == 0) {
+		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
+		    		}
+		    		return result;
 		    	case CARD_ORDER_FACTOR:
-		    		return Double.valueOf(object1.get("factor")).compareTo(Double.valueOf(object2.get("factor")));
+		    		result = Double.valueOf(object1.get("factor")).compareTo(Double.valueOf(object2.get("factor")));
+		    		if (result == 0) {
+		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
+		    		}
+		    		return result;
 		    	case CARD_ORDER_CREATED:
-		    		return Double.valueOf(object1.get("created")).compareTo(Double.valueOf(object2.get("created")));
+		    		result = Double.valueOf(object1.get("created")).compareTo(Double.valueOf(object2.get("created")));
+		    		if (result == 0) {
+		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
+		    		}
+		    		return result;
 		    	}
 		    	return 0;
 		    }
