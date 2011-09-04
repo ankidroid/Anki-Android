@@ -159,5 +159,6 @@
 		<item>support for line breaks in card editor and card browser</item>
 		<item>hide AnkiDroid folder from Android\'s media scanner</item>
 		<item>support for huge decks in card browser</item>
+		<item>support for scrolling with hardware buttons</item>
 	</string-array>
 </resources>

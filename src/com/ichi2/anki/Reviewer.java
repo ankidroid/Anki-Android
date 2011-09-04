@@ -210,6 +210,8 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mRelativeButtonSize;
     private String mDictionaryAction;
     private int mDictionary;
+    private boolean mDoubleScrolling;
+    private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
     private boolean mShakeEnabled = false;
     private int mShakeIntensity;
@@ -962,10 +964,30 @@ public class Reviewer extends Activity implements IButtonListener{
          /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
         if (keyCode == 92)  {
         	mCard.pageUp(false);
+        	if (mDoubleScrolling)  {
+        		mCard.pageUp(false);
+        	}
         	return true;
         }
         if (keyCode == 93)  {
         	mCard.pageDown(false);
+        	if (mDoubleScrolling)  {
+        		mCard.pageDown(false);
+        	}
+        	return true;
+        }
+        if (mScrollingButtons && keyCode == 94)  {
+        	mCard.pageUp(false);
+        	if (mDoubleScrolling)  {
+        		mCard.pageUp(false);
+        	}
+        	return true;
+        }
+        if (mScrollingButtons && keyCode == 95)  {
+        	mCard.pageDown(false);
+        	if (mDoubleScrolling)  {
+        		mCard.pageDown(false);
+        	}
         	return true;
         }
 
@@ -1895,7 +1917,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mShowProgressBars = preferences.getBoolean("progressBars", true);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
         mWaitSecond = preferences.getInt("timeoutAnswerSeconds", 20);
-
+        mScrollingButtons = preferences.getBoolean("scrolling_buttons", true);
+        mDoubleScrolling =  preferences.getBoolean("double_scrolling", true);
         mGesturesEnabled = preferences.getBoolean("swipe", false);
         if (mGesturesEnabled) {
          	mGestureShake = Integer.parseInt(preferences.getString("gestureShake", "0"));
