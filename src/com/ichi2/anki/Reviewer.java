@@ -1838,7 +1838,13 @@ public class Reviewer extends Activity implements IButtonListener{
     	}
     	if (mFlipCard.getVisibility() != View.VISIBLE) {
     		switchVisibility(mFlipCard, View.VISIBLE);
-        	mFlipCard.requestFocus();    		
+        	mFlipCard.requestFocus();
+    	} else if (typeAnswer()) {
+            mAnswerField.requestFocus();
+
+            // Show soft keyboard
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
     	}
     }
 
