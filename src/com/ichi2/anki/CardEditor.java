@@ -804,6 +804,9 @@ public class CardEditor extends Activity {
 
 	public class FieldEditText extends EditText {
 
+	    public final String NEW_LINE = System.getProperty("line.separator");
+	    public final String NL_MARK = "newLineMark";
+
 		private Field mPairField;
 		private WordRow mCutString[];
 		private boolean mCutMode = false;
@@ -817,10 +820,10 @@ public class CardEditor extends Activity {
 			mPairField = pairField;
 			if (mPrefFixArabic) {
 				this.setText(ArabicUtilities.reshapeSentence(pairField
-						.getValue().replaceAll("<br(\\s*\\/*)>", "\n")));
+						.getValue().replaceAll("<br(\\s*\\/*)>", NEW_LINE)));
 			} else {
 				this.setText(pairField.getValue().replaceAll("<br(\\s*\\/*)>",
-						"\n"));
+						NEW_LINE));
 			}
 			this.setMinimumWidth(400);
 			this.setOnClickListener(new View.OnClickListener() {
@@ -858,24 +861,13 @@ public class CardEditor extends Activity {
 		}
 
 		private void splitText(String text) {
-			final String[] separatorsReg = new String[] { ",", ";", "\\.",
-					"\\)", "\\(", "\\]", "\\[", ":" };
-			final String[] separators = new String[] { ",", ";", ".", ")", "(",
-					"]", "[", ":" };
-
-			for (int i = 0; i < separatorsReg.length; i++) {
-				text = text.replaceAll(separatorsReg[i], " " + separators[i]
-						+ " ");
-			}
+			text = text.replace(NEW_LINE, " " + NL_MARK + " ");
 			String[] cut = text.split("\\s");
 			mCutString = new WordRow[cut.length];
 			for (int i = 0; i < cut.length; i++) {
 				mCutString[i] = new WordRow(cut[i]);
-				for (String s : separators) {
-					if (s.equals(cut[i])) {
-						mCutString[i].mEnabled = true;
-						break;
-					}
+				if (mCutString[i].mWord.equals(NL_MARK)) {
+					mCutString[i].mEnabled = true;
 				}
 			}
 		}
@@ -899,7 +891,7 @@ public class CardEditor extends Activity {
 						FieldEditText.this.setKeyListener(mKeyListener);
 						FieldEditText.this.setCursorVisible(true);
 						for (WordRow row : mCutString) {
-							if (row.mEnabled) {
+							if (row.mEnabled && !row.mWord.equals(NL_MARK)) {
 								removeDeleted();
 								break;
 							}
@@ -924,7 +916,7 @@ public class CardEditor extends Activity {
 						splitText(text);
 						int pos = 0;
 						for (WordRow row : mCutString) {
-							if (row.mWord.length() == 0) {
+							if (row.mWord.length() == 0 || row.mWord.equals(NL_MARK)) {
 								continue;
 							}
 							row.mBegin = text.indexOf(row.mWord, pos);
@@ -948,7 +940,7 @@ public class CardEditor extends Activity {
 		}
 
 		public boolean updateField() {
-			String newValue = this.getText().toString().replace("\n", "<br />");
+			String newValue = this.getText().toString().replace(NEW_LINE, "<br />");
 			if (!mPairField.getValue().equals(newValue)) {
 				mPairField.setValue(newValue);
 				return true;
@@ -982,21 +974,9 @@ public class CardEditor extends Activity {
 		}
 
 		public String cleanText(String text) {
-			final String[] from = new String[] { "\\(", "\\[", "\\)", "\\]",
-					"\\.", ",", ";" };
-			final String[] to = new String[] { " (", " [", ") ", "] ", ". ",
-					", ", "; " };
-			for (int i = 0; i < from.length; i++) {
-				text = text.replaceAll("\\s*" + from[i] + "*\\s*" + from[i]
-						+ "+\\s*", to[i]);
-			}
-			final String[] from1 = new String[] { "\\(", "\\[", ",", ";",
-					"\\.", ",", ";", "\\.", " ", "^", "^", "^", "^" };
-			final String[] from2 = new String[] { "\\)", "\\]", ",", ";",
-					"\\.", "$", "$", "$", "$", "\\.", ",", ";", " " };
-			for (int i = 0; i < from1.length; i++) {
-				text = text.replaceAll(from1[i] + "\\s*" + from2[i], "");
-			}
+			text = text.replaceAll("\\s*(" + NL_MARK + "\\s*)+", NEW_LINE);
+			text = text.replaceAll("^[,;:\\s\\)\\]" + NEW_LINE + "]*", "");
+			text = text.replaceAll("[,;:\\s\\(\\[" + NEW_LINE + "]*$", "");
 			return text;
 		}
 
