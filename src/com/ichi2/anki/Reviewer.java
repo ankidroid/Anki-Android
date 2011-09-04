@@ -234,6 +234,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mIsDictionaryAvailable;
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
+    private boolean mIsAnswering = false;
 
     @SuppressWarnings("unused")
     private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
@@ -484,6 +485,9 @@ public class Reviewer extends Activity implements IButtonListener{
     private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+        	if (mIsAnswering) {
+        		return;
+        	}
             switch (view.getId()) {
                 case R.id.ease1:
                     answerCard(Card.EASE_FAILED);
@@ -508,6 +512,9 @@ public class Reviewer extends Activity implements IButtonListener{
     private View.OnTouchListener mGestureListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+        	if (mIsAnswering) {
+        		return true;
+        	}
             if (gestureDetector.onTouchEvent(event)) {
                 return true;
             }
@@ -1455,6 +1462,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void answerCard(int ease) {
         mIsSelecting = false;
+        mIsAnswering = true;
         if (mPrefTextSelection) {
             mClipboard.setText("");
             if (mLookUpIcon.getVisibility() == View.VISIBLE) {
@@ -2057,7 +2065,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void displayCardQuestion() {
         sDisplayAnswer = false;
-        
+        mIsAnswering = false;
+
         if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
         	mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
         	mFlipCard.setHeight(mButtonHeight);
