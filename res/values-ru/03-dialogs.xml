@@ -53,6 +53,6 @@
   <string name="notification_title">Подтвердить обновление Ankidroid</string>
   <string name="notification_message">Новая версия Ankidroid доступна на Android Market.\n\nУстановить?</string>
   <string name="notification_stop">Не уведомлять меня об этом обновлении снова</string>
-  <string name="swap_qa_title">Отразить Q/A</string>
+  <string name="swap_qa_title">Поменять Q/A</string>
   <string name="swap_qa_text">Имейте в виду, что простая замена вопроса на ответ, а ответа на вопрос идет вразрез с концепцией интервальных повторений по спец. алгоритму. В идеале вы должны создать на базе имеющихся новые карты, в которых будут зеркально заменены вопрос и ответ. Это можно легко сделать в Anki Desktop.\n Всё равно заменить вопрос на ответ, а ответ на вопрос?</string>
 </resources>

@@ -65,9 +65,6 @@
 			android:label="@string/about_title" 
 			android:configChanges="locale"/>
 		<activity android:name="CardEditor" 
-			android:label="@string/cardeditor_title"
-			android:configChanges="keyboardHidden|orientation|locale"/>
-		<activity android:name="FactAdder" 
 			android:label="@string/fact_adder_intent_title"
 			android:configChanges="keyboardHidden|orientation|locale">
             <intent-filter>

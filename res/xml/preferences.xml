@@ -376,6 +376,20 @@
 				android:summary="@string/zoom_summ"
 				android:key="zoom"/>
 		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/pref_cat_scrolling">
+			<CheckBoxPreference
+				android:id="@+id/scrolling_buttons_checkbox"
+				android:title="@string/more_scrolling_buttons"
+				android:defaultValue="false"
+				android:summary="@string/more_scrolling_buttons_summ"
+				android:key="scrolling_buttons"/>
+			<CheckBoxPreference
+			    android:id="@+id/double_scrolling_checkbox"
+				android:title="@string/double_scrolling_gap"
+				android:defaultValue="false"
+				android:summary="@string/double_scrolling_gap_summ"
+				android:key="double_scrolling"/>
+		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_zeemote">
 			<CheckBoxPreference
 				android:id="@+id/zeemote_checkbox"

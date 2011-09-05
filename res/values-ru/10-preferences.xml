@@ -71,8 +71,8 @@
   <string name="use_ruby_support_summ">Если найдены символы \'[\' и \']\', то заключенный в них текст будет рассмотрен как Ruby-аннотация</string>
   <string name="display_font_size">Размер шрифта</string>
   <string name="display_font_size_summ">Размер шрифта для использования на дисплее относительно размера шрифта, сохранённого в колоде. На данный момент: XXX %</string>
-  <string name="card_browser_font_size">Относительный размер шрифта, использующийся в редакторе карт (на главном экране)</string>
-  <string name="card_browser_font_size_summ">Размер шрифта, использующийся в редакторе карт. На данный момент: XXX %</string>
+  <string name="card_browser_font_size">Размер шрифта в редакторе карт</string>
+  <string name="card_browser_font_size_summ">Относительный размер шрифта, использующийся в редакторе карт. На данный момент: XXX %</string>
   <string name="button_size">Размер кнопок</string>
   <string name="button_size_summ">Относительный размер кнопок на экране обзора. На данный момент: XXX %</string>
   <string name="hide_question_in_answer">Вопрос при ответе?</string>
@@ -140,7 +140,7 @@
   <string name="studyoptions_limit_tags_active">С: %1$s</string>
   <string name="studyoptions_limit_tags_inactive">Без: %1$s</string>
   <string name="studyoptions_limit_button_text">Лимит</string>
-  <string name="studyoptions_limit_dialog_title">Ограничение обучения</string>
+  <string name="studyoptions_limit_dialog_title">Ограничения</string>
   <string name="studyoptions_session">Урок</string>
   <string name="studyoptions_tag">По тегам</string>
   <string name="studyoptions_tag_new">Показать новые карты по тегам:</string>

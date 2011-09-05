@@ -73,14 +73,6 @@
 		<item>200</item>
 		<item>1000000</item>
 	</string-array>
-	<string-array name="card_browser_order_values">
-		<item>SUBSTR(cards.question, 34) COLLATE NOCASE</item>
-		<item>SUBSTR(cards.answer, 34) COLLATE NOCASE</item>
-		<item>combinedDue ASC</item>
-		<item>interval ASC</item>
-		<item>factor DESC</item>
-		<item>cards.created DESC</item>
-	</string-array>
 	<string-array name="statistics_type_values">
 		<item>0</item>
 		<item>1</item>
@@ -166,5 +158,7 @@
 		<item>option to swap question/answer very easily</item>
 		<item>support for line breaks in card editor and card browser</item>
 		<item>hide AnkiDroid folder from Android\'s media scanner</item>
+		<item>support for huge decks in card browser</item>
+		<item>support for scrolling with hardware buttons</item>
 	</string-array>
 </resources>

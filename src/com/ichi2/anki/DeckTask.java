@@ -19,6 +19,9 @@ package com.ichi2.anki;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import com.ichi2.anki.DeckPicker.AnkiFilter;
@@ -55,6 +58,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_CLOSE_DECK = 16;
     public static final int TASK_TYPE_DELETE_BACKUPS = 17;
     public static final int TASK_TYPE_RESTORE_DECK = 18;
+    public static final int TASK_TYPE_SORT_CARDS = 19;
 
 
     /**
@@ -171,7 +175,10 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
                 
             case TASK_TYPE_RESTORE_DECK:
                 return doInBackgroundRestoreDeck(params);
-                
+
+            case TASK_TYPE_SORT_CARDS:
+                return doInBackgroundSortCards(params);
+
             default:
                 return null;
         }
@@ -450,10 +457,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadCards(TaskData... params) {
         Deck deck = params[0].getDeck();
-        String order = params[0].getString();
+        int chunk = params[0].getInt();
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
-       	publishProgress(new TaskData(deck.getAllCards(order)));
-        return null;
+    	String startId = "";
+    	while (true) {
+    		ArrayList<HashMap<String, String>> cards = deck.getCards(chunk, startId);
+    		if (cards.size() == 0) {
+    			return null;	
+    		} else {
+               	publishProgress(new TaskData(cards));
+               	startId = cards.get(cards.size() - 1).get("id");    			
+    		}
+    	}
     }
 
 
@@ -591,6 +606,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    private TaskData doInBackgroundSortCards(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
+		Collections.sort(params[0].getCards(), params[0].getComparator());
+		return null;
+    }
+
+
     public static interface TaskListener {
         public void onPreExecute();
 
@@ -610,12 +632,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         private boolean previousCardLeech;     // answer card resulted in card marked as leech
         private boolean previousCardSuspended; // answer card resulted in card marked as leech and suspended
         private boolean mBool = false;
-        private ArrayList<String[]> mAllCards;
+        private ArrayList<HashMap<String, String>> mCards;
         private long mLong;
         private Context mContext;
         private int mType;
         private String[] mDeckList;
         private LinkedHashMap<Long, CardModel> mCardModels;
+        private Comparator<? super HashMap<String, String>> mComparator;
 
 
         public TaskData(int value, Deck deck, Card card) {
@@ -655,11 +678,14 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
-        public TaskData(ArrayList<String[]> allCards) {
-        	if (allCards != null) {
-        		mAllCards = new ArrayList<String[]>();
-        		mAllCards.addAll(allCards);
-        	}
+        public TaskData(ArrayList<HashMap<String, String>> cards) {
+        	mCards = cards;
+        }
+
+
+        public TaskData(ArrayList<HashMap<String, String>> cards, Comparator<? super HashMap<String, String>> comparator) {
+        	mCards = cards;
+        	mComparator = comparator;
         }
 
 
@@ -673,6 +699,12 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         public TaskData(Deck deck, String order) {
             mDeck = deck;
             mMsg = order;
+        }
+
+ 
+        public TaskData(Deck deck, int chunk) {
+            mDeck = deck;
+            mInteger = chunk;
         }
 
  
@@ -708,8 +740,13 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         }
 
 
-        public ArrayList<String[]> getAllCards() {
-        	return mAllCards;
+        public ArrayList<HashMap<String, String>> getCards() {
+        	return mCards;
+        }
+
+
+        public Comparator<? super HashMap<String, String>> getComparator() {
+        	return mComparator;
         }
 
 

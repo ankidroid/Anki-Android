@@ -169,6 +169,7 @@ public class StyledDialog extends Dialog {
         private DialogInterface.OnClickListener negativeButtonClickListener;
         private DialogInterface.OnClickListener neutralButtonClickListener;
         private DialogInterface.OnCancelListener cancelListener;
+        private DialogInterface.OnDismissListener dismissListener;
         private boolean cancelable = true;
 
         private String[] itemTitels;
@@ -349,6 +350,12 @@ public class StyledDialog extends Dialog {
         }
 
 
+        public Builder setOnDismissListener(DialogInterface.OnDismissListener listener) {
+            this.dismissListener = listener;
+            return this;
+        }
+
+
         public Builder setCancelable(boolean cancelable) {
             this.cancelable = cancelable;
             return this;
@@ -427,6 +434,8 @@ public class StyledDialog extends Dialog {
 
             dialog.setCancelable(cancelable);
             dialog.setOnCancelListener(cancelListener);
+            
+            dialog.setOnDismissListener(dismissListener);
 
             // set the message
             if (message != null) {

@@ -56,6 +56,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -85,6 +86,8 @@ public class CardBrowser extends Activity {
 	/** Modifier of percentage of the font size of the card browser */
 	private int mrelativeBrowserFontSize = CardModel.DEFAULT_FONT_SIZE_RATIO;
 
+	public static final int LOAD_CHUNK = 200;
+
 	private static final int CONTEXT_MENU_MARK = 0;
 	private static final int CONTEXT_MENU_SUSPEND = 1;
 	private static final int CONTEXT_MENU_DELETE = 2;
@@ -110,11 +113,18 @@ public class CardBrowser extends Activity {
 	private static final int ADD_FACT = 1;
 	private static final int DEFAULT_FONT_SIZE_RATIO = 100;
 
+	private static final int CARD_ORDER_ANSWER = 0;
+	private static final int CARD_ORDER_QUESTION = 1;
+	private static final int CARD_ORDER_DUE = 2;
+	private static final int CARD_ORDER_INTERVAL = 3;
+	private static final int CARD_ORDER_FACTOR = 4;
+	private static final int CARD_ORDER_CREATED = 5;
+
 	private int[] mBackground;
 
 	private boolean mShowOnlyMarSus = false;
 
-	private int mSelectedOrder = 5;
+	private int mSelectedOrder = CARD_ORDER_CREATED;
 
 	private String[] allTags;
 	private HashSet<String> mSelectedTags;
@@ -155,7 +165,7 @@ public class CardBrowser extends Activity {
 
 		mCardsAdapter = new SizeControlledListAdapter(this, mCards,
 				R.layout.card_item, new String[] { "question", "answer",
-						"marSus" }, new int[] { R.id.card_question,
+						"flags" }, new int[] { R.id.card_question,
 						R.id.card_answer, R.id.card_item },
 				mrelativeBrowserFontSize);
 		mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
@@ -183,6 +193,7 @@ public class CardBrowser extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
+				editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_BROWSER_CARD);
 				mPositionInCardsList = position;
 				mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(
 						mPositionInCardsList).get("id")));
@@ -383,8 +394,9 @@ public class CardBrowser extends Activity {
 					new DeckTask.TaskData(0, mDeck, 0, true));
 			return true;
 		case MENU_ADD_FACT:
-			startActivityForResult(
-					new Intent(CardBrowser.this, FactAdder.class), ADD_FACT);
+			Intent intent = new Intent(CardBrowser.this, CardEditor.class);
+			intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+			startActivityForResult(intent, ADD_FACT);
 			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 				ActivityTransitionAnimation.slide(CardBrowser.this,
 						ActivityTransitionAnimation.LEFT);
@@ -400,7 +412,7 @@ public class CardBrowser extends Activity {
 						.get(i).get("answer").toLowerCase().indexOf(
 								mSearchEditText.getText().toString()
 										.toLowerCase()) != -1)
-						&& mAllCards.get(i).get("marSus").subSequence(0, 1)
+						&& mAllCards.get(i).get("flags").subSequence(0, 1)
 								.equals("1")) {
 					mCards.add(mAllCards.get(i));
 				}
@@ -417,7 +429,7 @@ public class CardBrowser extends Activity {
 						.get(i).get("answer").toLowerCase().indexOf(
 								mSearchEditText.getText().toString()
 										.toLowerCase()) != -1)
-						&& mAllCards.get(i).get("marSus").subSequence(1, 2)
+						&& mAllCards.get(i).get("flags").subSequence(1, 2)
 								.equals("1")) {
 					mCards.add(mAllCards.get(i));
 				}
@@ -467,7 +479,7 @@ public class CardBrowser extends Activity {
 				public void onClick(DialogInterface arg0, int which) {
 					if (which != mSelectedOrder) {
 						mSelectedOrder = which;
-						getCards();						
+						DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SORT_CARDS, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));
 					}
 				}
 	        });
@@ -563,8 +575,7 @@ public class CardBrowser extends Activity {
 	private void getCards() {
 		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
 				mLoadCardsHandler,
-				new DeckTask.TaskData(mDeck, getResources().getStringArray(
-						R.array.card_browser_order_values)[mSelectedOrder]));
+				new DeckTask.TaskData(mDeck, LOAD_CHUNK));
 	}
 
 	public static Card getEditorCard() {
@@ -613,19 +624,19 @@ public class CardBrowser extends Activity {
 		for (long cardId : mDeck.getCardsFromFactId(factId)) {
 			int positionC = getPosition(mCards, cardId);
 			int positionA = getPosition(mAllCards, cardId);
-			String marSus = mAllCards.get(positionA).get("marSus");
+			String marSus = mAllCards.get(positionA).get("flags");
 			if (mark) {
 				marSus = "1" + marSus.substring(1, 2);
 				if (positionC != -1) {
-					mCards.get(positionC).put("marSus", marSus);
+					mCards.get(positionC).put("flags", marSus);
 				}
-				mAllCards.get(positionA).put("marSus", marSus);
+				mAllCards.get(positionA).put("flags", marSus);
 			} else {
 				marSus = "0" + marSus.substring(1, 2);
 				if (positionC != -1) {
-					mCards.get(positionC).put("marSus", marSus);
+					mCards.get(positionC).put("flags", marSus);
 				}
-				mAllCards.get(positionA).put("marSus", marSus);
+				mAllCards.get(positionA).put("flags", marSus);
 			}
 		}
 		updateList();
@@ -633,19 +644,19 @@ public class CardBrowser extends Activity {
 
 	private void suspendCard(Card card, int position, boolean suspend) {
 		int posA = getPosition(mAllCards, card.getId());
-		String marSus = mAllCards.get(posA).remove("marSus");
+		String marSus = mAllCards.get(posA).remove("flags");
 		if (suspend) {
 			marSus = marSus.substring(0, 1) + "1";
 			if (position != -1) {
-				mCards.get(position).put("marSus", marSus);
+				mCards.get(position).put("flags", marSus);
 			}
-			mAllCards.get(posA).put("marSus", marSus);
+			mAllCards.get(posA).put("flags", marSus);
 		} else {
 			marSus = marSus.substring(0, 1) + "0";
 			if (position != -1) {
-				mCards.get(position).put("marSus", marSus);
+				mCards.get(position).put("flags", marSus);
 			}
-			mAllCards.get(posA).put("marSus", marSus);
+			mAllCards.get(posA).put("flags", marSus);
 		}
 		updateList();
 	}
@@ -660,7 +671,7 @@ public class CardBrowser extends Activity {
 				data.put("id", mAllCards.get(i).get("id"));
 				data.put("question", mAllCards.get(i).get("question"));
 				data.put("answer", mAllCards.get(i).get("answer"));
-				data.put("marSus", mAllCards.get(i).get("marSus"));
+				data.put("flags", mAllCards.get(i).get("flags"));
 				data.put("allCardPos", Integer.toString(i));
 				mDeletedCards.add(data);
 				mAllCards.remove(i);
@@ -689,13 +700,25 @@ public class CardBrowser extends Activity {
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
+			// This verification would not be necessary if
+			// onConfigurationChanged it's executed correctly (which seems
+			// that emulator does not do)
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SORT_CARDS, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));
+//			if (mProgressDialog.isShowing()) {
+//				try {
+//					mProgressDialog.dismiss();
+//				} catch (Exception e) {
+//					Log.e(AnkiDroidApp.TAG,
+//							"onPostExecute - Dialog dismiss Exception = "
+//									+ e.getMessage());
+//				}
+//			}
 		}
 
 		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
-			mAllCards.clear();
-			ArrayList<String[]> allCards = values[0].getAllCards();
-			if (allCards == null) {
+			ArrayList<HashMap<String, String>> cards = values[0].getCards();
+			if (cards == null) {
 				Resources res = getResources();
 				StyledDialog.Builder builder = new StyledDialog.Builder(
 						CardBrowser.this);
@@ -719,35 +742,15 @@ public class CardBrowser extends Activity {
 				});
 				builder.create().show();
 			} else {
-				for (String[] item : allCards) {
-					// reshape Arabic words
-					if (mPrefFixArabic) {
-						item[1] = ArabicUtilities.reshapeSentence(item[1]);
-						item[2] = ArabicUtilities.reshapeSentence(item[2]);
+				if (mPrefFixArabic) {
+					for (HashMap<String, String> entry : cards) {
+						entry.put("question", ArabicUtilities.reshapeSentence(entry.get("question")));
+						entry.put("answer", ArabicUtilities.reshapeSentence(entry.get("answer")));
 					}
-
-					HashMap<String, String> data = new HashMap<String, String>();
-					data.put("id", item[0]);
-					data.put("question", item[1]);
-					data.put("answer", item[2]);
-					data.put("marSus", item[3]);
-					data.put("tags", item[4]);
-					mAllCards.add(data);
 				}
-				updateCardsList();
-			}
-
-			// This verification would not be necessary if
-			// onConfigurationChanged it's executed correctly (which seems
-			// that emulator does not do)
-			if (mProgressDialog.isShowing()) {
-				try {
-					mProgressDialog.dismiss();
-				} catch (Exception e) {
-					Log.e(AnkiDroidApp.TAG,
-							"onPostExecute - Dialog dismiss Exception = "
-									+ e.getMessage());
-				}
+				mAllCards.addAll(cards);
+				mCards.addAll(cards);
+				updateList();
 			}
 		}
 	};
@@ -812,6 +815,33 @@ public class CardBrowser extends Activity {
 		}
 	};
 
+
+	private DeckTask.TaskListener mSortCardsHandler = new DeckTask.TaskListener() {
+		@Override
+		public void onPreExecute() {
+			Resources res = getResources();
+			if (mProgressDialog.isShowing()) {
+				mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
+			} else {
+				mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
+						.getString(R.string.card_browser_sorting_cards), true);				
+			}
+		}
+
+		@Override
+		public void onProgressUpdate(DeckTask.TaskData... values) {
+		}
+
+		@Override
+		public void onPostExecute(DeckTask.TaskData result) {
+			updateCardsList();
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
+			}
+		}
+	};
+
+
 	private DeckTask.TaskListener mUndoRedoHandler = new DeckTask.TaskListener() {
 		@Override
 		public void onPreExecute() {
@@ -837,8 +867,8 @@ public class CardBrowser extends Activity {
 							"question"));
 					data.put("answer", mDeletedCards.get(position)
 							.get("answer"));
-					data.put("marSus", mDeletedCards.get(position)
-							.get("marSus"));
+					data.put("flags", mDeletedCards.get(position)
+							.get("flags"));
 					mAllCards.add(Integer.parseInt(mDeletedCards.get(position)
 							.get("allCardPos")), data);
 					mDeletedCards.remove(position);
@@ -947,7 +977,61 @@ public class CardBrowser extends Activity {
 
 			return view;
 		}
+	}
 
+
+	private class HashMapCompare implements
+	Comparator<HashMap<String, String>> {
+		@Override
+		public int compare(HashMap<String, String> object1,
+				HashMap<String, String> object2) {
+		    try {
+		    	int result;
+		    	switch (mSelectedOrder) {
+		    	case CARD_ORDER_ANSWER:
+		    		result = object1.get("answer").compareToIgnoreCase(object2.get("answer"));
+		    		if (result == 0) {
+		    			result = object1.get("question").compareToIgnoreCase(object2.get("question"));
+		    		}
+		    		return result;
+		    	case CARD_ORDER_QUESTION:
+		    		result = object1.get("question").compareToIgnoreCase(object2.get("question"));
+		    		if (result == 0) {
+		    			result = object1.get("answer").compareToIgnoreCase(object2.get("answer"));
+		    		}
+		    		return result;
+		    	case CARD_ORDER_DUE:
+		    		result = Double.valueOf(object1.get("due")).compareTo(Double.valueOf(object2.get("due")));
+		    		if (result == 0) {
+		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
+		    		}
+		    		return result;
+		    	case CARD_ORDER_INTERVAL:
+		    		result = Double.valueOf(object1.get("interval")).compareTo(Double.valueOf(object2.get("interval")));
+		    		if (result == 0) {
+		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
+		    		}
+		    		return result;
+		    	case CARD_ORDER_FACTOR:
+		    		result = Double.valueOf(object1.get("factor")).compareTo(Double.valueOf(object2.get("factor")));
+		    		if (result == 0) {
+		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
+		    		}
+		    		return result;
+		    	case CARD_ORDER_CREATED:
+		    		result = Double.valueOf(object1.get("created")).compareTo(Double.valueOf(object2.get("created")));
+		    		if (result == 0) {
+		    			Long.valueOf(object1.get("id")).compareTo(Long.valueOf(object2.get("id")));
+		    		}
+		    		return result;
+		    	}
+		    	return 0;
+		    }
+		    catch (Exception e) {
+		    	Log.e(AnkiDroidApp.TAG, "Error on sorting cards: " + e);
+		        return 0;
+		    }
+		}
 	}
 
 }

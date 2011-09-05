@@ -57,6 +57,6 @@
   <string name="studyoptions_deck_not_loaded_message">Kortleken är inte en giltig Anki-kortlek. Använd datorversionen av Anki för att skapa en giltig kortlek innan du laddar den i AnkiDroid.\n\n Under tiden kan du välja en annan kortlek eller ladda provkortleken med knapparna nedan.</string>
   <string name="studyoptions_no_external_storage_title">Inget externt lagringutrymme tillgängligt</string>
   <string name="studyoptions_no_external_storage_message">Ingen extern lagring är tillgänglig för tillfället. AnkiDroid måste ha tillgång till SD-kortet för att läsa och ladda dina Anki-kortlekar. Kontrollera att SD-kortet är monterat och försök igen.</string>
-  <string name="fact_adder_intent_title">AnkiDroid Card</string>
+  <string name="fact_adder_intent_title">AnkiDroid-kort</string>
   <string name="fact_adder_swap">Swap</string>
 </resources>

@@ -210,6 +210,8 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mRelativeButtonSize;
     private String mDictionaryAction;
     private int mDictionary;
+    private boolean mDoubleScrolling;
+    private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
     private boolean mShakeEnabled = false;
     private int mShakeIntensity;
@@ -232,6 +234,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mIsDictionaryAvailable;
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
+    private boolean mIsAnswering = false;
 
     @SuppressWarnings("unused")
     private boolean mUpdateNotifications; // TODO use Veecheck only if this is true
@@ -482,6 +485,9 @@ public class Reviewer extends Activity implements IButtonListener{
     private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+        	if (mIsAnswering) {
+        		return;
+        	}
             switch (view.getId()) {
                 case R.id.ease1:
                     answerCard(Card.EASE_FAILED);
@@ -506,6 +512,9 @@ public class Reviewer extends Activity implements IButtonListener{
     private View.OnTouchListener mGestureListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+        	if (mIsAnswering) {
+        		return true;
+        	}
             if (gestureDetector.onTouchEvent(event)) {
                 return true;
             }
@@ -962,10 +971,30 @@ public class Reviewer extends Activity implements IButtonListener{
          /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
         if (keyCode == 92)  {
         	mCard.pageUp(false);
+        	if (mDoubleScrolling)  {
+        		mCard.pageUp(false);
+        	}
         	return true;
         }
         if (keyCode == 93)  {
         	mCard.pageDown(false);
+        	if (mDoubleScrolling)  {
+        		mCard.pageDown(false);
+        	}
+        	return true;
+        }
+        if (mScrollingButtons && keyCode == 94)  {
+        	mCard.pageUp(false);
+        	if (mDoubleScrolling)  {
+        		mCard.pageUp(false);
+        	}
+        	return true;
+        }
+        if (mScrollingButtons && keyCode == 95)  {
+        	mCard.pageDown(false);
+        	if (mDoubleScrolling)  {
+        		mCard.pageDown(false);
+        	}
         	return true;
         }
 
@@ -1340,6 +1369,7 @@ public class Reviewer extends Activity implements IButtonListener{
             return false;
         } else {
             Intent editCard = new Intent(Reviewer.this, CardEditor.class);
+            editCard.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.EDIT_REVIEWER_CARD);
         	sEditorCard = mCurrentCard;
         	setOutAnimation(true);
             startActivityForResult(editCard, EDIT_CURRENT_CARD);
@@ -1433,6 +1463,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void answerCard(int ease) {
         mIsSelecting = false;
+        mIsAnswering = true;
         if (mPrefTextSelection) {
             mClipboard.setText("");
             if (mLookUpIcon.getVisibility() == View.VISIBLE) {
@@ -1543,7 +1574,7 @@ public class Reviewer extends Activity implements IButtonListener{
             mNext3.setVisibility(View.GONE);
             mNext4.setVisibility(View.GONE);
         }
-        
+
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setOnClickListener(mFlipCardListener);
         mFlipCard.setText(getResources().getString(R.string.show_answer));
@@ -1808,14 +1839,21 @@ public class Reviewer extends Activity implements IButtonListener{
     	switchVisibility(mEase3, View.GONE);
     	switchVisibility(mEase4, View.GONE);
     	if (mshowNextReviewTime) {
-    		switchVisibility(mNext1, View.INVISIBLE);
-    		switchVisibility(mNext2, View.INVISIBLE);
-    		switchVisibility(mNext3, View.INVISIBLE);
-    		switchVisibility(mNext4, View.INVISIBLE);
+    		int visibility = typeAnswer() ? View.GONE : View.INVISIBLE;
+    		switchVisibility(mNext1, visibility);
+    		switchVisibility(mNext2, visibility);
+    		switchVisibility(mNext3, visibility);
+    		switchVisibility(mNext4, visibility);
     	}
     	if (mFlipCard.getVisibility() != View.VISIBLE) {
     		switchVisibility(mFlipCard, View.VISIBLE);
-        	mFlipCard.requestFocus();    		
+        	mFlipCard.requestFocus();
+    	} else if (typeAnswer()) {
+            mAnswerField.requestFocus();
+
+            // Show soft keyboard
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
     	}
     }
 
@@ -1861,7 +1899,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mPrefWhiteboard) {
             mWhiteboard.setVisibility(mShowWhiteboard ? View.VISIBLE : View.GONE);            
         }
-        mAnswerField.setVisibility((typeAnswer()) ? View.VISIBLE : View.GONE);
+        mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
     }
 
 
@@ -1895,7 +1933,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mShowProgressBars = preferences.getBoolean("progressBars", true);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
         mWaitSecond = preferences.getInt("timeoutAnswerSeconds", 20);
-
+        mScrollingButtons = preferences.getBoolean("scrolling_buttons", true);
+        mDoubleScrolling =  preferences.getBoolean("double_scrolling", true);
         mGesturesEnabled = preferences.getBoolean("swipe", false);
         if (mGesturesEnabled) {
          	mGestureShake = Integer.parseInt(preferences.getString("gestureShake", "0"));
@@ -2027,7 +2066,8 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void displayCardQuestion() {
         sDisplayAnswer = false;
-        
+        mIsAnswering = false;
+
         if (mButtonHeight == 0 && mRelativeButtonSize != 100) {
         	mButtonHeight = mFlipCard.getHeight() * mRelativeButtonSize / 100;
         	mFlipCard.setHeight(mButtonHeight);
@@ -2972,7 +3012,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private void closeReviewer() {
     	setOutAnimation(true);    		
     	mClosing = true;
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), ""));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
     }
     
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189*/
