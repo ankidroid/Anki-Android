@@ -1405,7 +1405,7 @@ public class Reviewer extends Activity implements IButtonListener{
             case DICTIONARY_LEO_APP:
         		// localisation is needless here since leo.org translates only into or out of German 
         		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
-        		String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
+                        String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
         		if (language.length() > 0) {
             		for (int i = 0; i < itemValues.length; i++) {
                 		if (language.equals(itemValues[i])) {
@@ -1421,7 +1421,7 @@ public class Reviewer extends Activity implements IButtonListener{
         		builder.setItems(items, new DialogInterface.OnClickListener() {
         			public void onClick(DialogInterface dialog, int item) {
         				String language = itemValues[item].toString();
-        				storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
+                        storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
         				lookupLeo(language, mClipboard.getText());
         				mClipboard.setText("");
         			}
@@ -2215,15 +2215,15 @@ public class Reviewer extends Activity implements IButtonListener{
         String answer = "";
         if (isQuestionDisplayed()) {
         	if (sDisplayAnswer && (questionStartsAt != -1)) {
-        		question = Sound.parseSounds(mBaseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION);
-        		answer = Sound.parseSounds(mBaseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
+                question = Sound.parseSounds(mBaseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGES_QA_QUESTION);
+                answer = Sound.parseSounds(mBaseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGES_QA_ANSWER);
         	} else {
-            	question = Sound.parseSounds(mBaseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
+                question = Sound.parseSounds(mBaseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGES_QA_QUESTION) + "<hr/>";
         	}
         } else {
-        	int qa = MetaDB.LANGUAGE_QUESTION;
+            int qa = MetaDB.LANGUAGES_QA_QUESTION;
         	if (sDisplayAnswer) {
-        		qa = MetaDB.LANGUAGE_ANSWER;
+                qa = MetaDB.LANGUAGES_QA_ANSWER;
         	}
         	answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
         }
@@ -2267,9 +2267,9 @@ public class Reviewer extends Activity implements IButtonListener{
             if (!mSpeakText) {
                 Sound.playSounds(null, 0);
             } else if (!sDisplayAnswer) {
-                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGE_QUESTION);
+                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGES_QA_QUESTION);
             } else {
-                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGE_ANSWER);
+                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
             }
         }
     }
