@@ -35,29 +35,29 @@
   <string name="statistics_all_decks">(alla kortlekar)</string>
   <string name="calculating_statistics">Beräknar statistik</string>
   <string name="deck_summary_cards">Antal kort:</string>
-  <string name="deck_summary_facts">Number of facts:</string>
+  <string name="deck_summary_facts">Antal fakta:</string>
   <string name="deck_summary_cards_mature">Mogna kort:</string>
   <string name="deck_summary_cards_young">Unga kort:</string>
   <string name="deck_summary_cards_unseen">Osedda kort:</string>
-  <string name="deck_summary_card_age">Card age</string>
-  <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
-  <string name="deck_summary_answers_correct">Correct Answers</string>
-  <string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">Reviews:</string>
+  <string name="deck_summary_card_age">Kort-ålder</string>
+  <string name="deck_summary_average_interval">Genomsnittligt intervall: &lt;b&gt;%.1f&lt;/b&gt; dagar</string>
+  <string name="deck_summary_answers_correct">Korrekta svar</string>
+  <string name="deck_summary_answers_mature">Mogna kort: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d av %4$d)</string>
+  <string name="deck_summary_answers_young">Unga kort: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d av %4$d)</string>
+  <string name="deck_summary_answers_firstseen">Förstagångskort: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d av %4$d)</string>
+  <string name="deck_summary_reviews">Repetitioner:</string>
   <string name="deck_summary_news">Nya kort:</string>
-  <string name="deck_summary_average_week">Average seen last week</string>
-  <string name="deck_summary_average_month">Average seen last month</string>
-  <string name="deck_summary_average_year">Average seen last year</string>
-  <string name="deck_summary_average_total">Average seen ever</string>
+  <string name="deck_summary_average_week">Genomsnittligt sedda senaste veckan</string>
+  <string name="deck_summary_average_month">Genomsnittligt sedda senaste månaden</string>
+  <string name="deck_summary_average_year">Genomsnittligt sedda senaste året</string>
+  <string name="deck_summary_average_total">Genomsnittligt sedda någonsin</string>
   <string name="deck_summary_forecast">Prognos</string>
-  <string name="deck_summary_tomorrow_due">Tomorrow due: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_new">Tomorrow new: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_time">Estimated time tomorrow: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">New cards finished in: &lt;b&gt;%d&lt;/b&gt; days</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
-  <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
+  <string name="deck_summary_tomorrow_due">I kö i morgon: &lt;b&gt;%d&lt;/b&gt; kort</string>
+  <string name="deck_summary_tomorrow_new">Nya i morgon: &lt;b&gt;%d&lt;/b&gt; kort</string>
+  <string name="deck_summary_tomorrow_time">Beräknad tid i morgon: &lt;b&gt;%d&lt;/b&gt; min.</string>
+  <string name="deck_summary_finished_in">Nya kort avklarade om: &lt;b&gt;%d&lt;/b&gt; dagar</string>
+  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kort/dag</string>
+  <string name="deck_summary_deck_age">Kortleksålder: &lt;b&gt;%d&lt;/b&gt; dagar</string>
   <string name="deck_summary_all_decks">Alla kortlekar</string>
   <string-array name="statistics_type_labels">
     <item>I kö</item>
@@ -65,7 +65,7 @@
     <item>Intervall</item>
     <item>Repetitioner</item>
     <item>Repetitionstid</item>
-    <item>Deck Summary</item>
+    <item>Kortlekssammanfattning</item>
   </string-array>
   <string-array name="statistics_period_labels">
     <item>1 vecka</item>
@@ -91,19 +91,19 @@
     <item>om %s år</item>
   </string-array>
   <string-array name="next_review_before_s">
-    <item>1 second before</item>
-    <item>1 minute before</item>
-    <item>1 hour before</item>
-    <item>1 day before</item>
-    <item>1 month before</item>
-    <item>1 year before</item>
+    <item>1 sekund innan</item>
+    <item>1 minut innan</item>
+    <item>1 timme innan</item>
+    <item>1 dag innan</item>
+    <item>1 månad innan</item>
+    <item>1 år innan</item>
   </string-array>
   <string-array name="next_review_before_p">
-    <item>%s seconds before</item>
-    <item>%s minutes before</item>
-    <item>%s hours before</item>
-    <item>%s days before</item>
-    <item>%s months before</item>
-    <item>%s years before</item>
+    <item>%s sekunder innan</item>
+    <item>%s minuter innan</item>
+    <item>%s timmar innan</item>
+    <item>%s dagar innan</item>
+    <item>%s månader innan</item>
+    <item>%s år innan</item>
   </string-array>
 </resources>

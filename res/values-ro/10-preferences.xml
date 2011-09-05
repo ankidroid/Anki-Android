@@ -101,6 +101,11 @@
   <string name="gestures_tap_bottom">Tap bottom</string>
   <string name="gestures_tap_left">Tap left</string>
   <string name="gestures_tap_right">Tap right</string>
+  <string name="pref_cat_scrolling">Hardware up/down buttons</string>
+  <string name="more_scrolling_buttons">eReader</string>
+  <string name="more_scrolling_buttons_summ">Also use Kanji/Katakana, Emoji/Kao-moji buttons for scrolling.</string>
+  <string name="double_scrolling_gap">Double scrolling</string>
+  <string name="double_scrolling_gap_summ">Enable this if you want to double the scroll gap.</string>
   <string name="swipe_sensibility">Swipe Sensitivity</string>
   <string name="swipe_sensibility_summ">Sensitivity of swipe gestures: XXX</string>
   <string name="tts">Text to Speech</string>

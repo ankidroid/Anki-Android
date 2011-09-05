@@ -64,7 +64,7 @@
   <string name="alert_logging_message">Probíhá přihlašování, čekejte prosím...</string>
   <string name="invalid_username_password">Neplatné uživatelské jméno nebo heslo.</string>
   <string name="sync_too_busy">Server too busy. Try again later.</string>
-  <string name="login_generic_error">Failed to login.</string>
+  <string name="login_generic_error">Failed to log in.</string>
   <string name="download_finished">Stahování dokončeno</string>
   <string name="deck_downloaded">Balíček byl stažen</string>
   <string name="sync_connecting_message">Probíhá spojení...</string>

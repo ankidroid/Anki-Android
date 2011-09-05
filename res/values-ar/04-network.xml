@@ -64,7 +64,7 @@
   <string name="alert_logging_message">تسجيل الدخول، الرجاء الانتظار...</string>
   <string name="invalid_username_password">اسم المستخدم أو كلمة المرور غير صالحة.</string>
   <string name="sync_too_busy">Server too busy. Try again later.</string>
-  <string name="login_generic_error">Failed to login.</string>
+  <string name="login_generic_error">Failed to log in.</string>
   <string name="download_finished">الانتهاء من التحميل</string>
   <string name="deck_downloaded">Deck downloaded</string>
   <string name="sync_connecting_message">الاتصال...</string>

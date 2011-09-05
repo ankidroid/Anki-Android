@@ -101,6 +101,11 @@
   <string name="gestures_tap_bottom">Unten antippen</string>
   <string name="gestures_tap_left">Links antippen</string>
   <string name="gestures_tap_right">Rechts antippen</string>
+  <string name="pref_cat_scrolling">Hoch/Runter-Tasten</string>
+  <string name="more_scrolling_buttons">eReader</string>
+  <string name="more_scrolling_buttons_summ">Kanji/Katakana- und Emoji/Kao-moji-Tasten ebenfalls zum Scrollen benutzen.</string>
+  <string name="double_scrolling_gap">Doppeltes scrollen</string>
+  <string name="double_scrolling_gap_summ">Verdoppelt die Scroll-Schrittweite.</string>
   <string name="swipe_sensibility">Wischempfindlichkeit</string>
   <string name="swipe_sensibility_summ">Empfindlichkeit der Wisch-Gesten: XXX</string>
   <string name="tts">Vorlesen</string>

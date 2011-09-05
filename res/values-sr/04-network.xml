@@ -64,7 +64,7 @@
   <string name="alert_logging_message">Prijavljivanje u toku, molimo da sačekate...</string>
   <string name="invalid_username_password">Pogrešno korisničko ime ili lozinka.</string>
   <string name="sync_too_busy">Server too busy. Try again later.</string>
-  <string name="login_generic_error">Failed to login.</string>
+  <string name="login_generic_error">Failed to log in.</string>
   <string name="download_finished">Preuzimanje gotovo</string>
   <string name="deck_downloaded">Špil je preuzet</string>
   <string name="sync_connecting_message">Povezivanje u toku...</string>

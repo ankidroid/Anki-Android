@@ -64,7 +64,7 @@
   <string name="alert_logging_message">Đăng nhập, xin vui lòng chờ...</string>
   <string name="invalid_username_password">Tên người dùng hoặc mật khẩu không hợp lệ.</string>
   <string name="sync_too_busy">Server too busy. Try again later.</string>
-  <string name="login_generic_error">Failed to login.</string>
+  <string name="login_generic_error">Failed to log in.</string>
   <string name="download_finished">Tải xuống hoàn tất</string>
   <string name="deck_downloaded">Tập thẻ đã được tải xong</string>
   <string name="sync_connecting_message">Đang kết nối...</string>

@@ -101,6 +101,11 @@
   <string name="gestures_tap_bottom">Tryck på botten</string>
   <string name="gestures_tap_left">Tryck till vänster</string>
   <string name="gestures_tap_right">Tryck till höger</string>
+  <string name="pref_cat_scrolling">Hardware up/down buttons</string>
+  <string name="more_scrolling_buttons">eReader</string>
+  <string name="more_scrolling_buttons_summ">Also use Kanji/Katakana, Emoji/Kao-moji buttons for scrolling.</string>
+  <string name="double_scrolling_gap">Double scrolling</string>
+  <string name="double_scrolling_gap_summ">Enable this if you want to double the scroll gap.</string>
   <string name="swipe_sensibility">Dragkänslighet</string>
   <string name="swipe_sensibility_summ">Känslighet för drag-gester: XXX</string>
   <string name="tts">Text till tal</string>
@@ -128,8 +133,8 @@
   <string name="theme_animations_summ">Show animations when flipping cards</string>
   <string name="animation_speed">Animation Duration</string>
   <string name="animation_speed_summ">Duration of transition animations: XXX ms</string>
-  <string name="pref_cat_backup">Backups</string>
-  <string name="pref_backup">Use backups</string>
+  <string name="pref_cat_backup">Säkerhetskopior</string>
+  <string name="pref_backup">Använd säkerhetskopior</string>
   <string name="pref_backup_summ">Create automatically a backup before opening a deck (once a day)</string>
   <string name="pref_backup_max">Backup depth</string>
   <string name="pref_backup_max_summ">Maximum number of backups per deck: XXX</string>

@@ -59,12 +59,12 @@
   <string name="studyoptions_congrats_syncdeck">Synkronisera kortlek</string>
   <string name="studyoptions_congrats_open_other_deck">Öppna annan kortlek</string>
   <string name="studyoptions_congrats_finish">Tillbaka till Studieskärmen</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
+  <string name="card_unsuspended">Kort återställt</string>
+  <string name="card_suspended">Kort åsidosatt igen</string>
   <string name="menu_rotate">Rotera</string>
   <string name="undo">Ångra</string>
   <string name="redo">Gör om</string>
-  <string name="close_current_deck">Closing current deck.\nPlease wait...</string>
+  <string name="close_current_deck">Stänger aktuell kortlek.\nVar god vänta...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Återställning av språk</string>
@@ -98,7 +98,7 @@
   <string name="studyoptions_load_other_deck">Ladda annan kortlek</string>
   <string name="studyoptions_load_sample_deck">Ladda exempelkortlek</string>
   <string name="studyoptions_night_mode">Nattläge</string>
-  <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="studyoptions_swap_qa">Växla fråga/svar</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minut</item>

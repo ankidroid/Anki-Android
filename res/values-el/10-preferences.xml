@@ -101,6 +101,11 @@
   <string name="gestures_tap_bottom">Ακουμπήστε κάτω</string>
   <string name="gestures_tap_left">Ακουμπήστε αριστερά</string>
   <string name="gestures_tap_right">Ακουμπήστε δεξιά</string>
+  <string name="pref_cat_scrolling">Hardware up/down buttons</string>
+  <string name="more_scrolling_buttons">eReader</string>
+  <string name="more_scrolling_buttons_summ">Also use Kanji/Katakana, Emoji/Kao-moji buttons for scrolling.</string>
+  <string name="double_scrolling_gap">Double scrolling</string>
+  <string name="double_scrolling_gap_summ">Enable this if you want to double the scroll gap.</string>
   <string name="swipe_sensibility">Ευαισθησία σάρωσης</string>
   <string name="swipe_sensibility_summ">Ευαισθησία των swipe χειρονομιών: XXX</string>
   <string name="tts">Κείμενο σε ομιλία</string>

@@ -64,7 +64,7 @@
   <string name="alert_logging_message">登入中，请稍等…</string>
   <string name="invalid_username_password">无效的用户名或密码。</string>
   <string name="sync_too_busy">Server too busy. Try again later.</string>
-  <string name="login_generic_error">Failed to login.</string>
+  <string name="login_generic_error">Failed to log in.</string>
   <string name="download_finished">下载完成</string>
   <string name="deck_downloaded">牌组已下载</string>
   <string name="sync_connecting_message">正在连接…</string>
