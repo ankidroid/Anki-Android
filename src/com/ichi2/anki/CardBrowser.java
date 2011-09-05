@@ -601,15 +601,15 @@ public class CardBrowser extends Activity {
 
 	private void updateCard(Card card, ArrayList<HashMap<String, String>> list,
 			int position) {
-		list.get(position).put("question", Utils.stripHTML(card.getQuestion().replace("<br>", "\n")));
-		list.get(position).put("answer", Utils.stripHTML(card.getAnswer().replace("<br>", "\n")));
+		list.get(position).put("question", Utils.stripHTML(card.getQuestion().replaceAll("<br(\\s*\\/*)>","\n")));
+		list.get(position).put("answer", Utils.stripHTML(card.getAnswer().replaceAll("<br(\\s*\\/*)>","\n")));
 		for (long cardId : mDeck.getCardsFromFactId(card.getFactId())) {
 			if (cardId != card.getId()) {
 				int positionC = getPosition(mCards, cardId);
 				int positionA = getPosition(mAllCards, cardId);
 				Card c = mDeck.cardFromId(cardId);
-				String question = Utils.stripHTML(c.getQuestion().replace("<br>", "\n"));
-				String answer = Utils.stripHTML(c.getAnswer().replace("<br>", "\n"));
+				String question = Utils.stripHTML(c.getQuestion().replaceAll("<br(\\s*\\/*)>","\n"));
+				String answer = Utils.stripHTML(c.getAnswer().replaceAll("<br(\\s*\\/*)>","\n"));
 				if (positionC != -1) {
 					mCards.get(positionC).put("question", question);
 					mCards.get(positionC).put("answer", answer);
