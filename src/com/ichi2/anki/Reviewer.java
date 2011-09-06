@@ -1539,6 +1539,11 @@ public class Reviewer extends Activity implements IButtonListener{
             mCardFrame.addView(mNextCard, 0);        	
         }
 
+        // hunt for input issue 720
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
+            mCard.setFocusableInTouchMode(true);	
+        }
+        
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
         
@@ -2309,6 +2314,10 @@ public class Reviewer extends Activity implements IButtonListener{
 	            mNextCard = createWebView();
 	            mNextCard.setVisibility(View.GONE);
 	            mCardFrame.addView(mNextCard, 0);
+	            // hunt for input issue 720
+	            if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
+	            	mCard.setFocusableInTouchMode(true);
+	            }
 	        } else {
 	            mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
 	            mCard.setBackgroundColor(mCurrentBackgroundColor);
