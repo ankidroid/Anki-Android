@@ -1539,9 +1539,10 @@ public class Reviewer extends Activity implements IButtonListener{
             mCardFrame.addView(mNextCard, 0);        	
         }
 
-        // hunt for input issue 720
+        // hunt for input issue 720, like android issue 3341
         if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
-            mCard.setFocusableInTouchMode(true);	
+            mCard.setFocusable(true);
+            mCard.setFocusableInTouchMode(true);
         }
         
         // Initialize swipe
@@ -2314,8 +2315,9 @@ public class Reviewer extends Activity implements IButtonListener{
 	            mNextCard = createWebView();
 	            mNextCard.setVisibility(View.GONE);
 	            mCardFrame.addView(mNextCard, 0);
-	            // hunt for input issue 720
+	            // hunt for input issue 720, like android issue 3341
 	            if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
+	            	mCard.setFocusable(true);
 	            	mCard.setFocusableInTouchMode(true);
 	            }
 	        } else {
