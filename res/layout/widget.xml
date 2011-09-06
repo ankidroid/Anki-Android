@@ -28,6 +28,7 @@
             android:layout_marginBottom="5dip"
             android:includeFontPadding="false"
             android:textSize="18dip"
+            android:singleLine="true"
             android:textStyle="bold"
             android:textColor="#000000"
             android:text="@string/widget_loading"
