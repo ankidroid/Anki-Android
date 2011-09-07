@@ -836,7 +836,7 @@ public class DeckPicker extends Activity implements Runnable {
 			finish();
 			if (StudyOptions.getApiLevel() > 4) {
 	    		ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-	    	}			
+	    	}
 		}
 	}
 

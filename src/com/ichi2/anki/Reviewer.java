@@ -904,6 +904,7 @@ public class Reviewer extends Activity implements IButtonListener{
             // Save changes
             Deck deck = AnkiDroidApp.deck();
             deck.commitToDB();
+            WidgetStatus.update(getBaseContext());
         }
 
         if (mShakeEnabled) {
@@ -915,7 +916,7 @@ public class Reviewer extends Activity implements IButtonListener{
         if (AnkiDroidApp.zeemoteController() != null) { 
         	Log.d("Zeemote","Removing listener in onPause");
         	AnkiDroidApp.zeemoteController().removeButtonListener(this);
-        }
+        }        
     }
 
     @Override

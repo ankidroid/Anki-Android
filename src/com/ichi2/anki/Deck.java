@@ -1202,6 +1202,10 @@ public class Deck {
     	}
     }
 
+    public int getTodaysReps() {
+    	return mDailyStats.getReps();
+    }
+
     public int getETA() {
     	if (mDailyStats.getReps() >= 10 && mDailyStats.getAverageTime() > 0) {
     		return getETA(mFailedSoonCount, mRevCount, mNewCountToday, false);
