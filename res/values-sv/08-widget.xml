@@ -29,6 +29,8 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-kort i kö</string>
   <string name="widget_no_cards_due">Inga kort i kö</string>
   <string name="widget_loading">Widget laddar...</string>
+  <string name="widget_medium">AnkiDroid Medium</string>
+  <string name="widget_small">AnkiDroid Small</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 kort i kö om %2$s</item>
     <item quantity="other">%1$d kort i kö om %2$s</item>
