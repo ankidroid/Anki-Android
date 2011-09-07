@@ -1406,7 +1406,7 @@ public class Reviewer extends Activity implements IButtonListener{
             case DICTIONARY_LEO_APP:
         		// localisation is needless here since leo.org translates only into or out of German 
         		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
-        		String language = getLanguage(MetaDB.LANGUAGE_UNDEFINED);
+                        String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
         		if (language.length() > 0) {
             		for (int i = 0; i < itemValues.length; i++) {
                 		if (language.equals(itemValues[i])) {
@@ -1422,7 +1422,7 @@ public class Reviewer extends Activity implements IButtonListener{
         		builder.setItems(items, new DialogInterface.OnClickListener() {
         			public void onClick(DialogInterface dialog, int item) {
         				String language = itemValues[item].toString();
-        				storeLanguage(language, MetaDB.LANGUAGE_UNDEFINED);
+                        storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
         				lookupLeo(language, mClipboard.getText());
         				mClipboard.setText("");
         			}
@@ -1540,6 +1540,12 @@ public class Reviewer extends Activity implements IButtonListener{
             mCardFrame.addView(mNextCard, 0);        	
         }
 
+        // hunt for input issue 720, like android issue 3341
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
+            mCard.setFocusable(true);
+            mCard.setFocusableInTouchMode(true);
+        }
+        
         // Initialize swipe
         gestureDetector = new GestureDetector(new MyGestureDetector());
         
@@ -1654,6 +1660,24 @@ public class Reviewer extends Activity implements IButtonListener{
             webView.getSettings().setBuiltInZoomControls(true);
         }
         webView.getSettings().setJavaScriptEnabled(true);
+        // all-in on input issue 720, like android issue 7189
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
+        	webView.requestFocus(View.FOCUS_DOWN);
+        	webView.setOnTouchListener(new View.OnTouchListener() {
+           		@Override
+            		public boolean onTouch(View v, MotionEvent event) {
+                		switch (event.getAction()) {
+                    			case MotionEvent.ACTION_DOWN:
+                    			case MotionEvent.ACTION_UP:
+                       		 		if (!v.hasFocus()) {
+                            				v.requestFocus();
+                        			}
+                        			break;
+                			}
+                			return false;
+            			}
+        		});
+        }
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.addJavascriptInterface(new JavaScriptInterface(), "interface");
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
@@ -2216,15 +2240,15 @@ public class Reviewer extends Activity implements IButtonListener{
         String answer = "";
         if (isQuestionDisplayed()) {
         	if (sDisplayAnswer && (questionStartsAt != -1)) {
-        		question = Sound.parseSounds(mBaseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGE_QUESTION);
-        		answer = Sound.parseSounds(mBaseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGE_ANSWER);
+                question = Sound.parseSounds(mBaseUrl, content.substring(0, questionStartsAt), mSpeakText, MetaDB.LANGUAGES_QA_QUESTION);
+                answer = Sound.parseSounds(mBaseUrl, content.substring(questionStartsAt, content.length()), mSpeakText, MetaDB.LANGUAGES_QA_ANSWER);
         	} else {
-            	question = Sound.parseSounds(mBaseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGE_QUESTION) + "<hr/>";        		
+                question = Sound.parseSounds(mBaseUrl, content.substring(0, content.length() - 5), mSpeakText, MetaDB.LANGUAGES_QA_QUESTION) + "<hr/>";
         	}
         } else {
-        	int qa = MetaDB.LANGUAGE_QUESTION;
+            int qa = MetaDB.LANGUAGES_QA_QUESTION;
         	if (sDisplayAnswer) {
-        		qa = MetaDB.LANGUAGE_ANSWER;
+                qa = MetaDB.LANGUAGES_QA_ANSWER;
         	}
         	answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
         }
@@ -2268,9 +2292,9 @@ public class Reviewer extends Activity implements IButtonListener{
             if (!mSpeakText) {
                 Sound.playSounds(null, 0);
             } else if (!sDisplayAnswer) {
-                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGE_QUESTION);
+                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGES_QA_QUESTION);
             } else {
-                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGE_ANSWER);
+                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
             }
         }
     }
@@ -2310,6 +2334,11 @@ public class Reviewer extends Activity implements IButtonListener{
 	            mNextCard = createWebView();
 	            mNextCard.setVisibility(View.GONE);
 	            mCardFrame.addView(mNextCard, 0);
+	            // hunt for input issue 720, like android issue 3341
+	            if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
+	            	mCard.setFocusable(true);
+	            	mCard.setFocusableInTouchMode(true);
+	            }
 	        } else {
 	            mCard.loadDataWithBaseURL(mBaseUrl, mCardContent, "text/html", "utf-8", null);
 	            mCard.setBackgroundColor(mCurrentBackgroundColor);

@@ -11,18 +11,37 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+
+/**
+ * Used to store additional information besides what is stored in the deck itself.
+ * <p>
+ * Currently it used to store:
+ * <ul>
+ *   <li>The languages associated with questions and answers.</li>
+ *   <li>The state of the whiteboard.</li>
+ *   <li>The cached state of the widget.</li>
+ * </ul>
+ */
 public class MetaDB {
+    /** The name of the file storing the meta-db. */
     private static final String DATABASE_NAME = "ankidroid.db";
 
-    public static final int LANGUAGE_QUESTION = 0;
-    public static final int LANGUAGE_ANSWER = 1;
-    public static final int LANGUAGE_UNDEFINED = 2;
+    // Possible values for the qa column of the languages table.
+    /** The language refers to the question. */
+    public static final int LANGUAGES_QA_QUESTION = 0;
+    /** The language refers to the answer. */
+    public static final int LANGUAGES_QA_ANSWER = 1;
+    /** The language does not refer to either the question or answer. */
+    public static final int LANGUAGES_QA_UNDEFINED = 2;
 
+    /** The pattern used to remove quotes from file names. */
     private static final Pattern quotePattern = Pattern.compile("[\"']");
 
+    /** The database object used by the meta-db. */
     private static SQLiteDatabase mMetaDb = null;
 
 
+    /** Remove any pairs of quotes from the given text. */
     private static String stripQuotes(String text) {
         Matcher matcher = quotePattern.matcher(text);
         text = matcher.replaceAll("");
@@ -30,21 +49,22 @@ public class MetaDB {
     }
 
 
-    public static void openDB(Context context) {
+    /** Open the meta-db and creates any table that is missing. */
+    private static void openDB(Context context) {
         try {
             mMetaDb = context.openOrCreateDatabase(DATABASE_NAME,  0, null);
             mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS languages ("
-                    + " _id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "deckpath TEXT NOT NULL, modelid INTEGER NOT NULL, "
-                    + "cardmodelid INTEGER NOT NULL, "
-                    + "qa INTEGER, "
-                    + "language TEXT)");
+                            + " _id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            + "deckpath TEXT NOT NULL, modelid INTEGER NOT NULL, "
+                            + "cardmodelid INTEGER NOT NULL, "
+                            + "qa INTEGER, "
+                            + "language TEXT)");
             mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS whiteboardState ("
-                    + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "deckpath TEXT NOT NULL, "
-                    + "state INTEGER)");
+                            + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            + "deckpath TEXT NOT NULL, "
+                            + "state INTEGER)");
             mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS widgetStatus ("
                     + "deckPath TEXT NOT NULL PRIMARY KEY, "
@@ -60,19 +80,26 @@ public class MetaDB {
         }
     }
 
+
+    /** Open the meta-db but only if it currently closed. */
     private static void openDBIfClosed(Context context) {
         if (mMetaDb == null || !mMetaDb.isOpen()) {
             openDB(context);
         }
     }
 
+
+    /** Close the meta-db. */
     public static void closeDB() {
         if (mMetaDb != null && mMetaDb.isOpen()) {
             mMetaDb.close();
+            mMetaDb = null;
             Log.i(AnkiDroidApp.TAG, "Closing MetaDB");
         }
     }
 
+
+    /** Reset the content of the meta-db, erasing all its content. */
     public static boolean resetDB(Context context) {
         openDBIfClosed(context);
         try {
@@ -89,6 +116,8 @@ public class MetaDB {
         return false;
     }
 
+
+    /** Reset the language associations for all the decks and card models. */
     public static boolean resetLanguages(Context context) {
         if (mMetaDb == null || !mMetaDb.isOpen()) {
             openDB(context);
@@ -104,6 +133,8 @@ public class MetaDB {
         return false;
     }
 
+
+    /** Reset the widget status. */
     public static boolean resetWidget(Context context) {
         if (mMetaDb == null || !mMetaDb.isOpen()) {
             openDB(context);
@@ -119,20 +150,43 @@ public class MetaDB {
         return false;
     }
 
-    public static void storeLanguage(Context context, String deckPath, long modelId, long cardModelId, int qa, String language) {
+    /**
+     * Associates a language to a deck, model, and card model for a given type.
+     *
+     * @param deckPath the deck for which to store the language association
+     * @param modelId the model for which to store the language association
+     * @param cardModelId the card model for which to store the language association
+     * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
+     *           {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
+     * @param language the language to associate, as a two-characters, lowercase string
+     */
+    public static void storeLanguage(Context context, String deckPath, long modelId, long cardModelId, int qa,
+            String language) {
         openDBIfClosed(context);
         deckPath = stripQuotes(deckPath);
         try {
             mMetaDb.execSQL(
                     "INSERT INTO languages (deckpath, modelid, cardmodelid, qa, language) "
-                    + " VALUES (?, ?, ?, ?, ?);",
-                    new Object[]{deckPath, modelId, cardModelId, qa, language});
+                            + " VALUES (?, ?, ?, ?, ?);",
+                            new Object[]{deckPath, modelId, cardModelId, qa, language});
             Log.i(AnkiDroidApp.TAG, "Store language for deck " + deckPath);
         } catch(Exception e) {
             Log.e("Error", "Error storing language in MetaDB ", e);
         }
     }
 
+
+    /**
+     * Returns the language associated with the given deck, model and card model, for the given type.
+     *
+     * @param deckPath the deck for which to store the language association
+     * @param modelId the model for which to store the language association
+     * @param cardModelId the card model for which to store the language association
+     * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
+     *           {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
+     * return the language associate with the type, as a two-characters, lowercase string, or the empty string if no
+     *        association is defined
+     */
     public static String getLanguage(Context context, String deckPath, long modelId, long cardModelId, int qa) {
         openDBIfClosed(context);
         String language = "";
@@ -140,12 +194,12 @@ public class MetaDB {
         Cursor cur = null;
         try {
             String query =
-                "SELECT language FROM languages "
-                + "WHERE deckpath = \'" + deckPath+ "\' "
-                + "AND modelid = " + modelId + " "
-                + "AND cardmodelid = " + cardModelId + " "
-                + "AND qa = " + qa + " "
-                + "LIMIT 1";
+                    "SELECT language FROM languages "
+                            + "WHERE deckpath = \'" + deckPath+ "\' "
+                            + "AND modelid = " + modelId + " "
+                            + "AND cardmodelid = " + cardModelId + " "
+                            + "AND qa = " + qa + " "
+                            + "LIMIT 1";
             cur = mMetaDb.rawQuery(query, null);
             Log.i(AnkiDroidApp.TAG, "getLanguage: " + query);
             if (cur.moveToNext()) {
@@ -161,6 +215,13 @@ public class MetaDB {
         return language;
     }
 
+
+    /**
+     * Resets all the language associates for a given deck.
+     *
+     * @param deckPath the deck for which to reset the language associations
+     * @return whether an error occurred while resetting the language for the deck
+     */
     public static boolean resetDeckLanguages(Context context, String deckPath) {
         openDBIfClosed(context);
         deckPath = stripQuotes(deckPath);
@@ -174,6 +235,13 @@ public class MetaDB {
         return false;
     }
 
+
+    /**
+     * Returns the state of the whiteboard for the given deck.
+     *
+     * @param deckPath the deck for which to retrieve the whiteboard state
+     * @return 1 if the whiteboard should be shown, 0 otherwise
+     */
     public static int getWhiteboardState(Context context, String deckPath) {
         openDBIfClosed(context);
         Cursor cur = null;
@@ -186,8 +254,8 @@ public class MetaDB {
                 return 0;
             }
         } catch(Exception e) {
-              Log.e("Error", "Error retrieving whiteboard state from MetaDB ", e);
-              return 0;
+            Log.e("Error", "Error retrieving whiteboard state from MetaDB ", e);
+            return 0;
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -196,6 +264,13 @@ public class MetaDB {
     }
 
 
+
+    /**
+     * Stores the state of the whiteboard for a given deck.
+     *
+     * @param deckPath the deck for which to store the whiteboard state
+     * @param state 1 if the whiteboard should be shown, 0 otherwise
+     */
     public static void storeWhiteboardState(Context context, String deckPath, int state) {
         openDBIfClosed(context);
         deckPath = stripQuotes(deckPath);
@@ -215,7 +290,7 @@ public class MetaDB {
                 Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + deckPath);
             }
         } catch(Exception e) {
-              Log.e("Error", "Error storing whiteboard state in MetaDB ", e);
+            Log.e("Error", "Error storing whiteboard state in MetaDB ", e);
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -223,6 +298,12 @@ public class MetaDB {
         }
     }
 
+
+    /**
+     * Return the current status of the widget.
+     *
+     * @return an array of {@link DeckStatus} objects, each representing the status of one of the known decks
+     */
     public static DeckStatus[] getWidgetStatus(Context context) {
         openDBIfClosed(context);
         Cursor cursor = null;
@@ -256,6 +337,12 @@ public class MetaDB {
         return new DeckStatus[0];
     }
 
+
+    /**
+     * Return the current status of the widget.
+     *
+     * @return an int array, containing due, reps, time, currentDeckdue
+     */
     public static int[] getWidgetSmallStatus(Context context) {
         openDBIfClosed(context);
         Cursor cursor = null;
@@ -285,6 +372,14 @@ public class MetaDB {
         return new int[]{due, reps, time, currentDeckdue};
     }
 
+
+    /**
+     * Stores the current state of the widget.
+     * <p>
+     * It replaces any stored state for the widget.
+     *
+     * @param decks an array of {@link DeckStatus} objects, one for each of the know decks.
+     */
     public static void storeWidgetStatus(Context context, DeckStatus[] decks) {
         openDBIfClosed(context);
         mMetaDb.beginTransaction();
