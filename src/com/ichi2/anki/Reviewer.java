@@ -1676,6 +1676,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 			return false;
             			}
         		});
+        }
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.addJavascriptInterface(new JavaScriptInterface(), "interface");
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
