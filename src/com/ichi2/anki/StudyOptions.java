@@ -603,7 +603,7 @@ public class StudyOptions extends Activity {
             if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
                 showContentView(CONTENT_NO_DECK);
             } else {
-            	if (showDeckPickerOnStartup() && !hasErrorFiles()) {
+            	if ((showDeckPickerOnStartup() || getIntent().getBooleanExtra("startDeckpicker", false)) && !hasErrorFiles()) {
             		openDeckPicker();
             	} else {
             		// Load previous deck.
@@ -719,14 +719,14 @@ public class StudyOptions extends Activity {
     }
 
 
-    // @Override
-    // protected void onPause() {
-    //     super.onPause();
-    //     // Update the widget when pausing this activity.
-    //     if (!mInDeckPicker) {
-    //         WidgetStatus.update(getBaseContext());            
-    //     }
-    // }
+     @Override
+     protected void onPause() {
+         super.onPause();
+         // Update the widget when pausing this activity.
+         if (!mInDeckPicker) {
+             WidgetStatus.update(getBaseContext());
+         }
+     }
 
 
     @Override

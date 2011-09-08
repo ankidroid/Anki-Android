@@ -20,7 +20,7 @@
 -->
 <resources>
 
-<string name="backup_deck">Saving backup.\nPlease wait...</string>
+<string name="backup_deck">Backup handling.\nPlease wait...</string>
 <string name="backup_deck_no_space_left">Backup action could not be executed due to insufficient space on your sd card.\n\nFree some space or lower the backup depth.</string>
 <string name="sd_space_warning">Less than %d mb space on your sd card left.\nFree some space to avoid data loss.</string>
 <string name="backup_deck_success">Backup successfully created</string>
@@ -37,6 +37,5 @@
 <string name="delete_deck_success">Deck %1$s deleted. Backup in folder %2$s</string>
 <string name="backup_delete_deck_backups_alert">Really delete all backups of deck %s?</string>
 <string name="open_deck_failed">File %1$s could not be opened. It is either not a real anki file or has been corrupted.\n\nYou can try to restore the deck from a backup; the current deck will then be moved to the subfolder \'%2$s\' (information about repairing corrupted decks: %3$s).\n\nHit the back button to close this dialog</string>
-
 
 </resources>

@@ -29,6 +29,8 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
   <string name="widget_no_cards_due">Ei ole tiedossa korttien määrää</string>
   <string name="widget_loading">Ladataan widgettiä...</string>
+  <string name="widget_medium">AnkiDroid Medium</string>
+  <string name="widget_small">AnkiDroid Small</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 kortti määrästä %2$s</item>
     <item quantity="other">%1$d korttia %2$s kortista</item>

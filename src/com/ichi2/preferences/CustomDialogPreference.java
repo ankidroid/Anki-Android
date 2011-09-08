@@ -43,11 +43,18 @@ public class CustomDialogPreference extends DialogPreference implements DialogIn
         		Editor editor = PrefSettings.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit();
         		editor.putBoolean("dontShowLowMemory", false);
         		editor.commit();
+        	} else if (this.getTitle().equals(mContext.getResources().getString(R.string.reset_all))) {
+            	if (MetaDB.resetDB(mContext)) {
+                    Toast successReport = 
+                        Toast.makeText(this.getContext() , 
+                                AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), Toast.LENGTH_SHORT);
+                    successReport.show();
+                }	
         	} else {
             	if (MetaDB.resetLanguages(mContext)) {
                     Toast successReport = 
                         Toast.makeText(this.getContext() , 
-                                AnkiDroidApp.getAppResources().getString(R.string.reset_languages_confirmation), Toast.LENGTH_SHORT);
+                                AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), Toast.LENGTH_SHORT);
                     successReport.show();
                 }	
         	}

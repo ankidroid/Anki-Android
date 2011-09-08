@@ -1,13 +1,16 @@
 package com.ichi2.anki;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.tomgibara.android.veecheck.util.PrefSettings;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Used to store additional information besides what is stored in the deck itself.
@@ -64,12 +67,14 @@ public class MetaDB {
                             + "state INTEGER)");
             mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS widgetStatus ("
-                            + "deckPath TEXT NOT NULL PRIMARY KEY, "
-                            + "deckName TEXT NOT NULL, "
-                            + "newCards INTEGER NOT NULL, "
-                            + "dueCards INTEGER NOT NULL, "
-                            + "failedCards INTEGER NOT NULL)");
-            Log.i(AnkiDroidApp.TAG, "Opening MetaDB");
+                    + "deckPath TEXT NOT NULL PRIMARY KEY, "
+                    + "deckName TEXT NOT NULL, "
+                    + "newCards INTEGER NOT NULL, "
+                    + "dueCards INTEGER NOT NULL, "
+                    + "failedCards INTEGER NOT NULL, "
+            		+ "eta INTEGER NOT NULL, "
+            		+ "reps INTEGER NOT NULL)");
+        Log.i(AnkiDroidApp.TAG, "Opening MetaDB");
         } catch(Exception e) {
             Log.e("Error", "Error opening MetaDB ", e);
         }
@@ -128,6 +133,22 @@ public class MetaDB {
         return false;
     }
 
+
+    /** Reset the widget status. */
+    public static boolean resetWidget(Context context) {
+        if (mMetaDb == null || !mMetaDb.isOpen()) {
+            openDB(context);
+        }
+        try {
+            Log.i(AnkiDroidApp.TAG, "Resetting widget status");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
+            openDB(context);
+            return true;
+        } catch(Exception e) {
+            Log.e("Error", "Error resetting MetaDB ", e);
+        }
+        return false;
+    }
 
     /**
      * Associates a language to a deck, model, and card model for a given type.
@@ -288,7 +309,7 @@ public class MetaDB {
         Cursor cursor = null;
         try {
             cursor = mMetaDb.query("widgetStatus",
-                    new String[]{"deckPath", "deckName", "newCards", "dueCards", "failedCards"},
+                    new String[]{"deckPath", "deckName", "newCards", "dueCards", "failedCards", "eta", "reps"},
                     null, null, null, null, "deckName");
             int count = cursor.getCount();
             DeckStatus[] decks = new DeckStatus[count];
@@ -301,7 +322,9 @@ public class MetaDB {
                         cursor.getString(cursor.getColumnIndexOrThrow("deckName")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("newCards")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("dueCards")),
-                        cursor.getInt(cursor.getColumnIndexOrThrow("failedCards")));
+                        cursor.getInt(cursor.getColumnIndexOrThrow("failedCards")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("eta")),
+                		cursor.getInt(cursor.getColumnIndexOrThrow("reps")));
             }
             return decks;
         } catch (SQLiteException e) {
@@ -312,6 +335,41 @@ public class MetaDB {
             }
         }
         return new DeckStatus[0];
+    }
+
+
+    /**
+     * Return the current status of the widget.
+     *
+     * @return an int array, containing due, reps, time, currentDeckdue
+     */
+    public static int[] getWidgetSmallStatus(Context context) {
+        openDBIfClosed(context);
+        Cursor cursor = null;
+        int due = 0;
+        int time = 0;
+        int currentDeckdue = 0;
+        int reps = 0;
+        String currentDeck = PrefSettings.getSharedPrefs(context).getString("deckFilename", "");
+        try {
+            cursor = mMetaDb.query("widgetStatus",
+                    new String[]{"dueCards", "failedCards", "newCards", "reps", "eta", "deckPath"},
+                    null, null, null, null, null);
+            while (cursor.moveToNext()) {
+            	int d = cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
+            	due += d;
+            	reps += cursor.getInt(3);
+            	time += cursor.getInt(4);
+            	if (currentDeck.equals(cursor.getString(5))) {
+            		currentDeckdue = d;
+            	}
+            }
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return new int[]{due, reps, time, currentDeckdue};
     }
 
 
@@ -329,14 +387,15 @@ public class MetaDB {
         mMetaDb.execSQL("DELETE FROM widgetStatus");
         try {
             for (DeckStatus deck : decks) {
-                mMetaDb.execSQL("INSERT INTO widgetStatus(deckPath, deckName, newCards, dueCards, failedCards) "
-                        + "VALUES (?, ?, ?, ?, ?)",
-                        new Object[]{deck.mDeckPath, deck.mDeckName, deck.mNewCards, deck.mDueCards, deck.mFailedCards}
+                mMetaDb.execSQL("INSERT INTO widgetStatus(deckPath, deckName, newCards, dueCards, failedCards, eta, reps) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                        new Object[]{deck.mDeckPath, deck.mDeckName, deck.mNewCards, deck.mDueCards, deck.mFailedCards, deck.mEta, deck.mReps}
                         );
             }
             mMetaDb.setTransactionSuccessful();
         } catch (SQLiteException e) {
             Log.e(AnkiDroidApp.TAG, "MetaDB.storeWidgetStatus: failed", e);
+            Log.i(AnkiDroidApp.TAG, "Trying to reset Widget: " + resetWidget(context));
         }
         mMetaDb.endTransaction();
     }

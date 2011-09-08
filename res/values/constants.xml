@@ -144,6 +144,7 @@
 		<item>two new themes</item>
 		<item>animations</item>
 		<item>backup system</item>
+		<item>small widget</item>
 		<item>new statistic: deck summary</item>
 		<item>optional wal journaling mode to speed things up</item>
 		<item>optional sync=off mode to speed things up</item>

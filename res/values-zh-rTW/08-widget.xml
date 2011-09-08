@@ -29,6 +29,8 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d張AnkiDroid卡片到期</string>
   <string name="widget_no_cards_due">無卡片到期</string>
   <string name="widget_loading">Widget loading...</string>
+  <string name="widget_medium">AnkiDroid Medium</string>
+  <string name="widget_small">AnkiDroid Small</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1張卡片於%2$s到期</item>
     <item quantity="other">%1$d張卡片於%2$s到期</item>

@@ -29,6 +29,8 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d kart AnkiDroid do przeglądnięcia</string>
   <string name="widget_no_cards_due">Nie ma więcej kart do przejrzenia</string>
   <string name="widget_loading">Ładowanie widżetu...</string>
+  <string name="widget_medium">AnkiDroid Medium</string>
+  <string name="widget_small">AnkiDroid Small</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 karta za %2$s</item>
     <item quantity="other">%1$d kart zaległe w %2$s</item>

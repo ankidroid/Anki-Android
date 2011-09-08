@@ -101,11 +101,11 @@
   <string name="gestures_tap_bottom">Tocar la parte inferior</string>
   <string name="gestures_tap_left">Tocar la parte izquierda</string>
   <string name="gestures_tap_right">Tocar la parte derecha</string>
-  <string name="pref_cat_scrolling">Hardware up/down buttons</string>
+  <string name="pref_cat_scrolling">Botones arriba/abajo de hardware</string>
   <string name="more_scrolling_buttons">eReader</string>
-  <string name="more_scrolling_buttons_summ">Also use Kanji/Katakana, Emoji/Kao-moji buttons for scrolling.</string>
-  <string name="double_scrolling_gap">Double scrolling</string>
-  <string name="double_scrolling_gap_summ">Enable this if you want to double the scroll gap.</string>
+  <string name="more_scrolling_buttons_summ">Usar también botones Kanji/Katakana, Emoji/Kao-moji para despalzarse.</string>
+  <string name="double_scrolling_gap">Desplazamiento doble</string>
+  <string name="double_scrolling_gap_summ">Activa esta opción si quieres doblar la distancia de desplazamiento.</string>
   <string name="swipe_sensibility">Sensibilidad de los gestos</string>
   <string name="swipe_sensibility_summ">Sensibilidad de los gestos: XXX</string>
   <string name="tts">Texto a Voz</string>

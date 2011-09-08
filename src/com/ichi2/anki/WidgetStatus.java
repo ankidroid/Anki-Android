@@ -34,6 +34,10 @@ import java.util.Collections;
  * It contains the status of each of the decks.
  */
 public final class WidgetStatus {
+
+	static boolean mediumWidget = false;
+	static boolean smallWidget = false;
+
     /** This class should not be instantiated. */
     private WidgetStatus() {}
 
@@ -43,6 +47,16 @@ public final class WidgetStatus {
         // TODO(flerda): Split widget from notifications.
         SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
         if (preferences.getBoolean("widgetEnabled", false)) {
+            mediumWidget = true;
+        } else {
+            mediumWidget = false;
+        }
+        if (preferences.getBoolean("widgetSmallEnabled", false)) {
+            smallWidget = true;
+        } else {
+            smallWidget = false;
+        }
+	if (mediumWidget || smallWidget) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
             AsyncTask<Context,Void,Context> updateDeckStatusAsyncTask =
                     new UpdateDeckStatusAsyncTask();
@@ -55,6 +69,11 @@ public final class WidgetStatus {
     /** Returns the status of each of the decks. */
     public static DeckStatus[] fetch(Context context) {
         return MetaDB.getWidgetStatus(context);
+    }
+
+    /** Returns the status of each of the decks. */
+    public static int[] fetchSmall(Context context) {
+        return MetaDB.getWidgetSmallStatus(context);
     }
 
     private static class UpdateDeckStatusAsyncTask extends AsyncTask<Context, Void, Context> {
@@ -105,9 +124,11 @@ public final class WidgetStatus {
                         }
                         continue;
                     }
-                    int dueCards = deck.getDueCount();
+                    int dueCards = deck.getRevCount();
                     int newCards = deck.getNewCountToday();
                     int failedCards = deck.getFailedSoonCount();
+                    int eta = deck.getETA();
+                    int reps = deck.getTodaysReps();
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.
                     Deck currentDeck = AnkiDroidApp.deck();
@@ -116,7 +137,7 @@ public final class WidgetStatus {
                     }
 
                     // Add the information about the deck
-                    decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards));
+                    decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());
@@ -139,9 +160,18 @@ public final class WidgetStatus {
         protected void onPostExecute(Context context) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
             MetaDB.storeWidgetStatus(context, mDecks);
-            Intent intent = new Intent(context, AnkiDroidWidget.UpdateService.class);
-            intent.setAction(AnkiDroidWidget.UpdateService.ACTION_UPDATE);
-            context.startService(intent);
+	    if (mediumWidget) {
+	        Intent intent;
+                intent = new Intent(context, AnkiDroidWidget.UpdateService.class);
+                intent.setAction(AnkiDroidWidget.UpdateService.ACTION_UPDATE);
+                context.startService(intent);
+            }
+            if (smallWidget) {
+	        Intent intent;
+                intent = new Intent(context, AnkiDroidWidgetSmall.UpdateService.class);
+                intent.setAction(AnkiDroidWidgetSmall.UpdateService.ACTION_UPDATE);            	
+                context.startService(intent);
+            } 
         }
 
         /** Comparator that sorts instances of {@link DeckStatus} based on number of due cards. */

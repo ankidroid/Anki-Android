@@ -82,5 +82,10 @@
         <item name="android:checkMark">@drawable/blue_btn_radio</item>
     </style>
 
+    <style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
 
 </resources>
