@@ -2,6 +2,8 @@
     android:id="@+id/ankidroid_widget_small_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:layout_marginLeft="23.4dp"
+    android:layout_marginRight="23.4dp"
     android:focusable="false"
     android:orientation="horizontal"
     android:padding="4dip"

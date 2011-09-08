@@ -111,7 +111,13 @@ public final class WidgetStatus {
 
                     Log.i(AnkiDroidApp.TAG, "Found deck: " + absPath);
 
-                    Deck deck = Deck.openDeck(absPath, false);
+                    Deck deck;
+                    Deck currentDeck = AnkiDroidApp.deck();
+                    if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
+                    	deck = currentDeck;
+                    } else {
+                    	deck = Deck.openDeck(absPath, false);
+                    }
                     if (deck == null) {
                         Log.e(AnkiDroidApp.TAG, "Skipping null deck: " + absPath);
                         // Use the data from the last time we updated the deck, if available.
@@ -128,16 +134,15 @@ public final class WidgetStatus {
                     int newCards = deck.getNewCountToday();
                     int failedCards = deck.getFailedSoonCount();
                     int eta = deck.getETA();
-                    int reps = deck.getTodaysReps();
+                    int time = deck.getReviewTime(0) / 60;
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.
-                    Deck currentDeck = AnkiDroidApp.deck();
                     if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
                         deck.closeDeck();
                     }
 
                     // Add the information about the deck
-                    decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
+                    decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, time));
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());

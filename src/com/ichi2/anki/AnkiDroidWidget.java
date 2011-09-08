@@ -22,9 +22,11 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -42,6 +44,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnkiDroidWidget extends AppWidgetProvider {
+
+    private static BroadcastReceiver mMountReceiver = null;
+    private static boolean remounted = false;
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i(AnkiDroidApp.TAG, "onUpdate");
@@ -117,8 +123,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             red.setSpan(new ForegroundColorSpan(Color.RED), 0, red.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            int revCards = deck.mDueCards - deck.mFailedCards;
-            SpannableString black = new SpannableString(Integer.toString(revCards));
+            SpannableString black = new SpannableString(Integer.toString(deck.mDueCards));
             black.setSpan(new ForegroundColorSpan(Color.BLACK), 0, black.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -199,6 +204,30 @@ public class AnkiDroidWidget extends AppWidgetProvider {
                     context.getText(R.string.sdcard_missing_message));
                 updateViews.setTextViewText(R.id.anki_droid_name, "");
                 updateViews.setTextViewText(R.id.anki_droid_status, "");
+                if (mMountReceiver == null) {
+                	mMountReceiver = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                            String action = intent.getAction();
+                        	if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                                Log.i(AnkiDroidApp.TAG, "mMountReceiver - Action = Media Mounted");
+                                if (remounted) {
+                                    WidgetStatus.update(getBaseContext());                                	
+                                	remounted = false;
+                                    if (mMountReceiver != null) {
+                                        unregisterReceiver(mMountReceiver);
+                                    }
+                                } else {
+                                	remounted = true;
+                                }
+                            }
+                        }
+                    };
+                    IntentFilter iFilter = new IntentFilter();
+                    iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+                    iFilter.addDataScheme("file");
+                    registerReceiver(mMountReceiver, iFilter);
+                }
                 return updateViews;
             }
 
@@ -308,7 +337,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             dueCardsCount = 0;
             for (DeckStatus deck : decks) {
                 if (deck.mDueCards > 0) {
-                  dueCardsCount += deck.mDueCards;
+                  dueCardsCount += deck.mDueCards + deck.mFailedCards + deck.mNewCards;
                   dueDecks.add(deck);
                 }
             }

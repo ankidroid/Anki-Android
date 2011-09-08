@@ -1311,7 +1311,7 @@ public class DeckPicker extends Activity implements Runnable {
                         }
 						msg.setData(data);
 						
-						mTotalDueCards += dueCards;
+						mTotalDueCards += dueCards + newCards;
 						mTotalCards += totalCards;
 						mTotalTime += Math.max(deck.getETA(), 0);
 

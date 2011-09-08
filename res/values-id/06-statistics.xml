@@ -43,8 +43,8 @@
   <string name="deck_summary_average_interval">Purata jarak: &lt;b&gt;%.1f&lt;/b&gt; hari</string>
   <string name="deck_summary_answers_correct">Jawapan yang betul</string>
   <string name="deck_summary_answers_mature">Kad matang: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d dari %4$d)</string>
-  <string name="deck_summary_answers_young">Kad muda: &lt;b&gt;% 1 $ .1 f% 2 $ s &lt;/ b&gt; (% 3 $ d dari% 4 $ d)</string>
-  <string name="deck_summary_answers_firstseen">Dilihat pertama kali: &lt;b&gt;% 1 $ .1 f% 2 $ s &lt;/ b&gt; (% 3 $ d dari% 4 $ d)</string>
+  <string name="deck_summary_answers_young">Kad muda: &lt;b&gt;%1$.1f %2$s &lt;/ b&gt; (%3$d dari %4$d)</string>
+  <string name="deck_summary_answers_firstseen">Dilihat pertama kali: &lt;b&gt;%1$.1f %2$s &lt;/ b&gt; (%3$d dari %4$d)</string>
   <string name="deck_summary_reviews">Ulasan:</string>
   <string name="deck_summary_news">Kad baru:</string>
   <string name="deck_summary_average_week">Purata dilihat minggu lepas</string>

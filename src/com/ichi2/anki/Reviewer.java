@@ -792,7 +792,7 @@ public class Reviewer extends Activity implements IButtonListener{
         Deck deck = AnkiDroidApp.deck();
         if (deck == null) {
             setResult(StudyOptions.CONTENT_NO_EXTERNAL_STORAGE);
-            closeReviewer();
+			finish();
         } else {
             mMediaDir = setupMedia(deck);
             restorePreferences();
@@ -922,6 +922,9 @@ public class Reviewer extends Activity implements IButtonListener{
     @Override
     protected void onResume() {
       super.onResume();
+      if (AnkiDroidApp.deck() == null) {
+    	  finish();
+      }
       if (mShakeEnabled) {
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
       }
