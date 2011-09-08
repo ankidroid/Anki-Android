@@ -35,6 +35,6 @@
   <string name="backup_restore_no_backups">Tiada salinan dek dalam AnkiDroid. Jika ia berada dalam komputer anda, sila salin ke dalam folder AnkiDroid.</string>
   <string name="backup_delete_deck_backups">Salinan dek %s dipadam</string>
   <string name="delete_deck_success">Dek %1$s dipadam. Salinan berada dalam folder %2$s</string>
-  <string name="backup_delete_deck_backups_alert">Benar-benar menghapus semua salinan dek % s?</string>
+  <string name="backup_delete_deck_backups_alert">Benar-benar menghapus semua salinan dek %s?</string>
   <string name="open_deck_failed">Fail %1$s tidak boleh dibuka. Samada bukan fail anki atau rosak.\n\nCuba salinan; dek sekarang akan dimasuk ke dalam subfolder \'%2$s\' (bagaimana membetulkan dek: %3$s).\n\nTekan butang patah balik untuk tutup dialog ini.</string>
 </resources>

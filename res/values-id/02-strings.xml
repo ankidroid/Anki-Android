@@ -22,7 +22,7 @@
 <resources>
   <string name="CardEditorCancelButton">Batal</string>
   <string name="CardEditorSaveButton">Simpan</string>
-  <string name="CardEditorTags">Tag: %1$ s</string>
+  <string name="CardEditorTags">Tag: %1$s</string>
   <string name="add_new_tag">Tambah tag baru</string>
   <string name="sdcard_missing_message">Kad SD tidak tercapai kerana sedang diguna sebagai storan USB. Tanggalkan USB untuk mendapatkan dek anda.</string>
   <string name="show_whiteboard">Tunjuk Papan hitam</string>
@@ -50,7 +50,7 @@
   <string name="select">Pilih</string>
   <string name="saving_changes">Menyimpan perubahan...</string>
   <string name="studyoptions_nodeck_title">Dek tidak dimuat</string>
-  <string name="studyoptions_nodeck_message">Tiada dek terpasang. Dek Anki berada di direktori \"% s\" kad SD. Lokasi ini boleh diubah melalui Keutamaan (pada peranti, tekan \"Menu\" dan pilih \"Keutamaan\").</string>
+  <string name="studyoptions_nodeck_message">Tiada dek terpasang. Dek Anki berada di direktori \"%s\" kad SD. Lokasi ini boleh diubah melalui Keutamaan (pada peranti, tekan \"Menu\" dan pilih \"Keutamaan\").</string>
   <string name="studyoptions_welcome_title">Selamat Datang ke AnkiDroid</string>
   <string name="studyoptions_welcome_message">Dengan AnkiDroid, anda boleh belajar banyak perkataan dengan efisyen. AnkiDroid akan mengingatkan anda sebelum anda lupa. \nSemua maklumat disusun dalam dek yang boleh dimuat turun atau direka sendiri dengan AnkiDroid atau Desktop Anki. Kemudian sync dengan AnkiWeb atau salin ke dalam %s. Klik di sini untuk lanjut. </string>
   <string name="studyoptions_deck_not_loaded_title">Dek Tidak Dapat Dimuat</string>

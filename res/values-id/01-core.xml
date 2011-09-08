@@ -88,7 +88,7 @@
   <string name="menu_bury_card">Pendam Kad</string>
   <string name="menu_edit_card">Edit Kad</string>
   <string name="menu_select">Pilih teks</string>
-  <string name="menu_search">Pencarian di %1$ s</string>
+  <string name="menu_search">Pencarian di %1$s</string>
   <string name="menu_mark_card">Tanda Kad</string>
   <string name="menu_marked">Bertanda</string>
   <string name="menu_create_deck">Reka dek</string>
@@ -116,32 +116,32 @@
     <item>%s tahun</item>
   </string-array>
   <plurals name="studyoptions_window_title">
-    <item quantity="one">% 1 $ s (1 dari% 3 $ d menunggu)</item>
-    <item quantity="other">% 1 $ s (% 2 $ d dari% 3 $ d menunggu)</item>
+    <item quantity="one">%1$s (1 dari %3$d menunggu)</item>
+    <item quantity="other">%1$s (%2$d dari %3$d menunggu)</item>
   </plurals>
   <plurals name="deckpicker_title">
-    <item quantity="one">Semua dek: 1 dari% 2 menunggu d $ (% 3 $ s)</item>
-    <item quantity="other">Semua dek:% 1 $ d dari% 2 menunggu d $ (% 3 $ s)</item>
+    <item quantity="one">Semua dek: 1 dari %2$d menunggu (%3$s)</item>
+    <item quantity="other">Semua dek: %1$d dari %2$d menunggu (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 %2$ d menunggu</item>
-    <item quantity="other">% 1 $ d dari% 2 $ d menunggu</item>
+    <item quantity="one">1 %2$d menunggu</item>
+    <item quantity="other">%1$d dari %2$d menunggu</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$ s (1 minit lagi)</item>
-    <item quantity="other">%1$ s (%2$ d min. lagi)</item>
+    <item quantity="one">%1$s (1 minit lagi)</item>
+    <item quantity="other">%1$s (%2$d min. lagi)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Anda selesai sekarang. \nEsok ada: \n1 kad untuk reviu dan %2$s.\n Anggaran tempoh: %3$ s</item>
-    <item quantity="other">Anda selesai sekarang. \nEsok ada:\n%1$d kad untuk reviu dan %2$s.\n Anggaran tempoh: %3$ s</item>
+    <item quantity="one">Anda selesai sekarang. \nEsok ada: \n1 kad untuk reviu dan %2$s.\n Anggaran tempoh: %3$s</item>
+    <item quantity="other">Anda selesai sekarang. \nEsok ada:\n%1$d kad untuk reviu dan %2$s.\n Anggaran tempoh: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 kad</item>
-    <item quantity="other">% 1 $ d kad baru</item>
+    <item quantity="other">%1$d kad baru</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1 min.</item>
