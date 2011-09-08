@@ -113,7 +113,8 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
             boolean mounted = AnkiDroidApp.isSdCardMounted();
             if (!mounted) {
-                updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
+                updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
+                updateViews.setTextViewText(R.id.widget_due, "-");
                 updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
                 updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
                 if (mMountReceiver == null) {
