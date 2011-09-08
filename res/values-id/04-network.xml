@@ -37,7 +37,7 @@
   <string name="cancel">Batal</string>
   <string name="download_overwrite">Timpa</string>
   <string name="download_cancel">Batal Muat turun</string>
-  <string name="download_message">Dek %1$ s sudah ada di lokal. Apakah anda ingin menimpa?</string>
+  <string name="download_message">Dek %1$s sudah ada di lokal. Apakah anda ingin menimpa?</string>
   <string name="shared_decks">Dek Kongsi</string>
   <string name="updating">Memperbarui ...</string>
   <string name="loading_shared_decks">Memuat dek bersama yang tersedia ...</string>
@@ -77,23 +77,23 @@
   <string name="sync_determining_differences_message">Menentukan perbedaan...</string>
   <string name="sync_transferring_payload_message">Memindah muatan...</string>
   <string name="sync_applying_reply_message">Menerapkan balasan...</string>
-  <string name="sync_downloading_media">Muat turun media % 1$d/%2$d...</string>
+  <string name="sync_downloading_media">Muat turun media %1$d/%2$d...</string>
   <string name="sync_no_changes_message">Tidak ada perubahan ditemukan.</string>
   <string name="sync_log_error_message">Ralat: Dek belum disinkronisasi</string>
-  <string name="sync_log_error_specific">Ralat sinkronisasi , masa: %1$ s, pesanan: %2$ s</string>
+  <string name="sync_log_error_specific">Ralat sinkronisasi , masa: %1$s, pesanan: %2$s</string>
   <string name="sync_log_no_changes_message">Tidak ada perubahan ditemukan</string>
   <string name="sync_log_uploading_message">Sinkronisasi penuh dari lokal</string>
   <string name="sync_log_downloading_message">Sinkronisasi penuh dari server</string>
   <string name="sync_log_zero_facts">Selesai, tidak ada kad berubah</string>
-  <string name="sync_log_clocks_unsynchronized">Waktu peranti anda berbeda dari server %1$ s$ d 2% detik; tidak boleh sinkronisasi.</string>
+  <string name="sync_log_clocks_unsynchronized">Waktu peranti anda berbeda dari server %1$s 2%$d detik; tidak boleh sinkronisasi.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, waktu zon peranti mungkin salah</string>
   <string name="sync_log_clocks_unsynchronized_date">, tarikh peranti mungkin salah</string>
   <string name="sync_log_old_version">Protokol sinkronisasi telah berubah, silakan upgrade ke AnkiDroid terbaru. Lihat %s</string>
   <string name="sync_log_conflict_resolution_required">Dek telah berubah sisi lokal maupun jauh. Silakan buka dek dan melakukan sinkronisasi dari sana untuk menyelesaikan konflik.</string>
-  <string name="sync_log_create_deck_failed">Gagal untuk menciptakan dek di server: %1$ s</string>
+  <string name="sync_log_create_deck_failed">Gagal untuk menciptakan dek di server: %1$s</string>
   <string name="sync_log_finish_error">Ralat penghabis arahan pada server</string>
   <string name="sync_conflict_title">Konflik Sinkronisasi</string>
-  <string name="sync_conflict_message">Dek % s telah diubah pada kedua sisi lokal dan di luar. Sisi mana yang harus disimpan?</string>
+  <string name="sync_conflict_message">Dek %s telah diubah pada kedua sisi lokal dan di luar. Sisi mana yang harus disimpan?</string>
   <string name="sync_conflict_local">Kekalkan Lokal</string>
   <string name="sync_conflict_remote">Kekalkan Diluar</string>
   <string name="sync_conflict_cancel">Batal Sinkronisasi</string>
@@ -104,10 +104,10 @@
   <string name="deckpreferences_title">Keutamaan Dek</string>
   <plurals name="sync_log_facts_to_server_message">
     <item quantity="one">1 kad ke server</item>
-    <item quantity="other">%1$ d kad ke server</item>
+    <item quantity="other">%1$d kad ke server</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
     <item quantity="one">1 kad dari server</item>
-    <item quantity="other">%1$ d kad dari server</item>
+    <item quantity="other">%1$d kad dari server</item>
   </plurals>
 </resources>

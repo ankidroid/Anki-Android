@@ -42,9 +42,9 @@
   <string name="deck_summary_card_age">Tuổi thẻ</string>
   <string name="deck_summary_average_interval">Khoảng thời gian trung bình: &lt;b&gt; %.1f &lt;/b&gt; ngày</string>
   <string name="deck_summary_answers_correct">Câu trả lời đúng</string>
-  <string name="deck_summary_answers_mature">Dành cho thẻ trưởng thành: &lt;b&gt; %1$.1f %2$ s &lt;/b&gt; %2$ s (%3$ d %4$ d)</string>
-  <string name="deck_summary_answers_young">Thẻ trẻ: &lt;b&gt; %1$.1f %2$ s &lt;/b&gt; (%3$ d %4$ d)</string>
-  <string name="deck_summary_answers_firstseen">Nhìn thấy lần đầu tiên: &lt;b&gt; %1$.1f %2$ s &lt;/b&gt; (%3$ d %4$ d)</string>
+  <string name="deck_summary_answers_mature">Dành cho thẻ trưởng thành: &lt;b&gt; %1$.1f %2$s &lt;/b&gt; %2$s (%3$d %4$d)</string>
+  <string name="deck_summary_answers_young">Thẻ trẻ: &lt;b&gt; %1$.1f %2$s &lt;/b&gt; (%3$d %4$d)</string>
+  <string name="deck_summary_answers_firstseen">Nhìn thấy lần đầu tiên: &lt;b&gt; %1$.1f %2$s &lt;/b&gt; (%3$d %4$d)</string>
   <string name="deck_summary_reviews">Xem lại:</string>
   <string name="deck_summary_news">Thẻ mới:</string>
   <string name="deck_summary_average_week">Trung bình được xem tuần trước</string>
@@ -53,11 +53,11 @@
   <string name="deck_summary_average_total">Average seen ever</string>
   <string name="deck_summary_forecast">Dự báo</string>
   <string name="deck_summary_tomorrow_due">Hạn ngày mai: &lt;b&gt; %d &lt;/b&gt; thẻ</string>
-  <string name="deck_summary_tomorrow_new">Mới ngày mai: &lt;b&gt;% d &lt;/ b&gt; thẻ</string>
-  <string name="deck_summary_tomorrow_time">Thời gian dự kiến ​​vào ngày mai: &lt;b&gt;% d &lt;/ b&gt; min.</string>
-  <string name="deck_summary_finished_in">Thẻ mới hoàn thành trong: &lt;b&gt;% d &lt;/ b&gt; ngày</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;% .1 f &lt;/ b&gt; thẻ / ngày</string>
-  <string name="deck_summary_deck_age">Tuổi bài: &lt;b&gt;% d &lt;/ b&gt; ngày</string>
+  <string name="deck_summary_tomorrow_new">Mới ngày mai: &lt;b&gt;%d &lt;/ b&gt; thẻ</string>
+  <string name="deck_summary_tomorrow_time">Thời gian dự kiến ​​vào ngày mai: &lt;b&gt;%d &lt;/ b&gt; min.</string>
+  <string name="deck_summary_finished_in">Thẻ mới hoàn thành trong: &lt;b&gt;%d &lt;/ b&gt; ngày</string>
+  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1 f &lt;/ b&gt; thẻ / ngày</string>
+  <string name="deck_summary_deck_age">Tuổi bài: &lt;b&gt;%d &lt;/ b&gt; ngày</string>
   <string name="deck_summary_all_decks">Tất cả các bài</string>
   <string-array name="statistics_type_labels">
     <item>Tới hạn</item>

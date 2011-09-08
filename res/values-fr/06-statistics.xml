@@ -40,7 +40,7 @@
   <string name="deck_summary_cards_young">Cartes récentes :</string>
   <string name="deck_summary_cards_unseen">Cartes pas encore rencontrées :</string>
   <string name="deck_summary_card_age">Vieillese des cartes</string>
-  <string name="deck_summary_average_interval">Intervalle moyen : &lt;b&gt;% .1 f &lt;/ b&gt; jours</string>
+  <string name="deck_summary_average_interval">Intervalle moyen : &lt;b&gt;%.1f &lt;/ b&gt; jours</string>
   <string name="deck_summary_answers_correct">Bonnes réponses</string>
   <string name="deck_summary_answers_mature">Cartes matures : &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d sur %4$d)</string>
   <string name="deck_summary_answers_young">Cartes récentes : &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d sur %4$d)</string>

@@ -27,14 +27,14 @@
   <string name="optimize_deck_message">Data dioptimum. \nMengecil %d kb</string>
   <string name="contextmenu_deckpicker_delete_deck">Padam Dek</string>
   <string name="delete_deck_title">Padam Dek</string>
-  <string name="delete_deck_message">Apakah anda benar-benar ingin memadam dek % s?</string>
+  <string name="delete_deck_message">Apakah anda benar-benar ingin memadam dek %s?</string>
   <string name="delete_deck_confirm">Padam</string>
   <string name="new_version_title">Versi Baru:</string>
   <string name="new_version_message">Bahan Baru:</string>
   <string name="no_tts_available_title">Teks-Kepada-Bahasa</string>
   <string name="no_tts_available_message">Tiada teks-kepada-bahasa tersedia</string>
   <string name="tts_no_tts">Jangan sebut</string>
-  <string name="about_content">% 1 $ s Kad imbas untuk Android &lt;/ h2&gt; AnkiDroid &lt;p&gt; dapat membaca kad .anki dibuat dari % 2 $ s perisian &lt;/ a&gt; Anki. &lt;/ P&gt; Untuk membantu kita membuat AnkiDroid lebih baik, sila laporkan bug% 3 $ s di sini &lt;/ a&gt;; Permintaan baru juga! Sila gunakan% 4 $ s wiki &lt;/ a&gt; dan katakan Hi pada forum % 5 $ s  &lt;/ a&gt; &lt;/ p&gt; AnkiDroid ialah perisian terbuka %6$s &lt;/ A&gt;, semua orang didorong untuk% 7 $ s bergabung &lt;/ a&gt;% 8 $ s menyumbang &lt;/ a&gt; :-) Orang biasa juga dapat membantu, misalnya dengan memperbarui wiki dan gambar,% 9 $ s menderma &lt;/ a&gt; untuk Anki, atau blogging tentang AnkiDroid! &lt;/ P&gt; AnkiDroid &lt;p&gt; dirilis di bawah 10% $ s lesen GNU GPL v3 &lt;/ a&gt; dan kod sumber 11% $ s di sini &lt;/ a&gt;.</string>
+  <string name="about_content">%1$s Kad imbas untuk Android &lt;/ h2&gt; AnkiDroid &lt;p&gt; dapat membaca kad .anki dibuat dari %2$s perisian &lt;/ a&gt; Anki. &lt;/ P&gt; Untuk membantu kita membuat AnkiDroid lebih baik, sila laporkan bug %3$s di sini &lt;/ a&gt;; Permintaan baru juga! Sila gunakan %4$s wiki &lt;/ a&gt; dan katakan Hi pada forum %5$s  &lt;/ a&gt; &lt;/ p&gt; AnkiDroid ialah perisian terbuka %6$s &lt;/ A&gt;, semua orang didorong untuk %7$s bergabung &lt;/ a&gt; %8$s menyumbang &lt;/ a&gt; :-) Orang biasa juga dapat membantu, misalnya dengan memperbarui wiki dan gambar, %9$s menderma &lt;/ a&gt; untuk Anki, atau blogging tentang AnkiDroid! &lt;/ P&gt; AnkiDroid &lt;p&gt; dirilis di bawah %10$s lesen GNU GPL v3 &lt;/ a&gt; dan kod sumber %11$sdi sini &lt;/ a&gt;.</string>
   <string name="dont_show_again">Jangan tampilkan lagi</string>
   <string name="deck_upgrade_too_old_version">Dek selepas versi 39 tidak disokong AnkiDroid. Sila guna Anki Desktop untuk mendapatkan versi terbaru.</string>
   <string name="deck_upgrade_version_61_has_latex">Dek tidak dapat ditingkatkan kerana ada ekspresi LaTeX. Sila guna Desktop Anki untuk mengubah kepada versi baru dan membaiki LaTeX.</string>
@@ -45,8 +45,8 @@
   <string name="deckpicker_upgrade_notes_button">Catatan</string>
   <string name="deckpicker_download_missing_title">Mengambil media yang kurang</string>
   <string name="deckpicker_download_missing_none">Tiada fail media kurang</string>
-  <string name="deckpicker_download_missing_success">Berjaya mendapat %1$ d, kurang %2$ d</string>
-  <string name="deckpicker_download_missing_error">Ralam dalam fail: %1$ s</string>
+  <string name="deckpicker_download_missing_success">Berjaya mendapat %1$d, kurang %2$d</string>
+  <string name="deckpicker_download_missing_error">Ralam dalam fail: %1$s</string>
   <string name="notify_ticker">Kemaskini Aplikasi</string>
   <string name="notify_title">AnkiDroid Dikemaskini</string>
   <string name="notify_message">Muat turun versi baru</string>
