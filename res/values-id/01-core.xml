@@ -145,6 +145,6 @@
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1 min.</item>
-    <item quantity="other">%1$ d min.</item>
+    <item quantity="other">%1$d min.</item>
   </plurals>
 </resources>
