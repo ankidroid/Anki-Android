@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="WidgetBackground">
-        <item name="android:background">@drawable/widget_bg</item>
-    </style>
 
     <style name="Blue">
         <item name="android:background">@color/reviewer_background</item>

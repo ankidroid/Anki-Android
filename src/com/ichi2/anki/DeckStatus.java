@@ -10,16 +10,16 @@ public class DeckStatus {
     public int mDueCards;
     public int mFailedCards;
     public int mEta;
-    public int mReps;
+    public int mTime;
 
     public DeckStatus(String deckPath, String deckName, int newCards, int dueCards,
-            int failedCards, int eta, int reps) {
+            int failedCards, int eta, int time) {
         mDeckPath = deckPath;
         mDeckName = deckName;
         mNewCards = newCards;
         mDueCards = dueCards;
         mFailedCards = failedCards;
         mEta = eta;
-        mReps = reps;
+        mTime = time;
     }
 }

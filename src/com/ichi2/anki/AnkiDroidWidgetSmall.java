@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 
@@ -70,8 +71,8 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
-        /** The cached number of today's reps. */
-        private int reps;
+        /** The cached amount of today's reviewing time. */
+        private int time;
 
         /** The cached estimated reviewing time. */
         private int eta;
@@ -112,9 +113,9 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
             boolean mounted = AnkiDroidApp.isSdCardMounted();
             if (!mounted) {
-                updateViews.setTextViewText(R.id.widget_due, "-");
-                updateViews.setTextViewText(R.id.widget_eta, "-");
-
+                updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
+                updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
+                updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
                 if (mMountReceiver == null) {
                 	mMountReceiver = new BroadcastReceiver() {
                         @Override
@@ -147,18 +148,26 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                 	int[] counts = WidgetStatus.fetchSmall(context);
                 	
                 	dueCardsCount = counts[0];
-                	reps = counts[1];
-                	int totalReps = dueCardsCount + reps;
-                	int progress = 0;
-                	if (reps != 0) {
-                		progress = (int) Math.round((100.0d * reps) / totalReps);
-                	}
+                	time = counts[1];
                 	eta = counts[2];
+                	int totaltime = eta + time;
+                	int progress = 0;
+                	if (totaltime != 0) {
+                		progress = (int) Math.round((100.0d * time) / totaltime);
+                	}
                 	startDeckPicker = counts[3] == 0;
-
-                    updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
-                    updateViews.setTextViewText(R.id.widget_eta, Integer.toString(eta));
-                    updateViews.setProgressBar(R.id.widget_progress, 100, progress, false);
+			if (dueCardsCount == 0) {
+		                updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
+		                updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
+		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
+			} else {
+		                updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
+		                updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);
+		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.VISIBLE);
+	                    updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
+	                    updateViews.setTextViewText(R.id.widget_eta, Integer.toString(eta));
+	                    updateViews.setProgressBar(R.id.widget_progress, 100, progress, false);
+			}
                 }
             }
             // Add a click listener to open Anki from the icon.
