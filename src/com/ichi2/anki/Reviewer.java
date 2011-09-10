@@ -99,7 +99,6 @@ import com.zeemote.zc.event.ButtonEvent;
 import com.zeemote.zc.event.IButtonListener;
 import com.zeemote.zc.util.JoystickToButtonAdapter;
 
-
 public class Reviewer extends Activity implements IButtonListener{
     /**
      * Result codes that are returned when this activity finishes.
@@ -760,9 +759,19 @@ public class Reviewer extends Activity implements IButtonListener{
 				break;
 			case MSG_ZEEMOTE_BUTTON_B:
 				if (!sDisplayAnswer) {
+					try {
 	                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGES_QA_QUESTION);
+					}
+					catch (Exception ex){
+		        		Log.e("Zeemote","Error on playing question audio: "+ex.getMessage());
+		        	}
 	            } else {
-	                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
+	            	try {
+	            	Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
+	            	}
+					catch (Exception ex){
+		        		Log.e("Zeemote","Error on playing answer audio: "+ex.getMessage());
+		        	}
 	            }
 				break;
 			case MSG_ZEEMOTE_BUTTON_C:
