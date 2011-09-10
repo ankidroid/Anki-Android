@@ -98,6 +98,7 @@ import org.amr.arabic.ArabicUtilities;
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.event.ButtonEvent;
 import com.zeemote.zc.event.IButtonListener;
+import com.zeemote.zc.util.JoystickToButtonAdapter;
 import com.zeemote.zc.ui.android.ControllerAndroidUi;
 
 
@@ -148,6 +149,10 @@ public class Reviewer extends Activity implements IButtonListener{
     private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
     private static final int MSG_ZEEMOTE_BUTTON_C = MSG_ZEEMOTE_BUTTON_A+2;
     private static final int MSG_ZEEMOTE_BUTTON_D = MSG_ZEEMOTE_BUTTON_A+3;
+    private static final int MSG_ZEEMOTE_STICK_UP = MSG_ZEEMOTE_BUTTON_A+4;
+    private static final int MSG_ZEEMOTE_STICK_DOWN = MSG_ZEEMOTE_BUTTON_A+5;
+    private static final int MSG_ZEEMOTE_STICK_LEFT = MSG_ZEEMOTE_BUTTON_A+6;
+    private static final int MSG_ZEEMOTE_STICK_RIGHT = MSG_ZEEMOTE_BUTTON_A+7;
     
     /** Regex pattern used in removing tags from text before diff */
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
@@ -383,6 +388,7 @@ public class Reviewer extends Activity implements IButtonListener{
  	 */
  	//Controller controller = null;
  	ControllerAndroidUi controllerUi;
+	protected JoystickToButtonAdapter adapter;
 
     private int zEase;
     
@@ -733,37 +739,37 @@ public class Reviewer extends Activity implements IButtonListener{
 	Handler ZeemoteHandler = new Handler() {
 		public void handleMessage(Message msg){
 			switch(msg.what){
-			case MSG_ZEEMOTE_BUTTON_A:
+			case MSG_ZEEMOTE_STICK_UP:
 				if (sDisplayAnswer) {
-						if (mCurrentCard.isRev()) {
    						answerCard(Card.EASE_MID);
-						} else {
-							answerCard(Card.EASE_HARD);
-						}
-					} else {
+					} 			
+				break;
+			case MSG_ZEEMOTE_STICK_DOWN:
+				if (sDisplayAnswer) {
+   						answerCard(Card.EASE_FAILED);
+					} 			
+				break;
+			case MSG_ZEEMOTE_STICK_LEFT:
+				if (sDisplayAnswer) {
+   						answerCard(Card.EASE_HARD);
+					} 			
+				break;
+			case MSG_ZEEMOTE_STICK_RIGHT:
+				if (sDisplayAnswer) {
+   						answerCard(Card.EASE_EASY);
+					} 			
+				break;
+			case MSG_ZEEMOTE_BUTTON_A:
+				break;
+			case MSG_ZEEMOTE_BUTTON_B:
+				break;
+			case MSG_ZEEMOTE_BUTTON_C:
+				break;
+			case MSG_ZEEMOTE_BUTTON_D:
+				if (!sDisplayAnswer) {
 						displayCardAnswer(); 
 					}				
 				break;
-			case MSG_ZEEMOTE_BUTTON_B:
-				if (sDisplayAnswer) {
-   					answerCard(Card.EASE_FAILED);
-					} else {
-   			        displayCardAnswer();    						
-					}
-				break;
-			case MSG_ZEEMOTE_BUTTON_C:
-				   
-				break;
-			case MSG_ZEEMOTE_BUTTON_D:
-				if (sDisplayAnswer) {
-						if (mCurrentCard.isRev()) {
-   						answerCard(Card.EASE_EASY);
-						} else {
-							answerCard(Card.EASE_MID);
-						}
-					} else {
-						displayCardAnswer(); 
-					}				break;
 			}
 			super.handleMessage(msg);
 		}
@@ -913,9 +919,13 @@ public class Reviewer extends Activity implements IButtonListener{
 
         Sound.stopSounds();
 
-        if (AnkiDroidApp.zeemoteController() != null) { 
+        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
         	Log.d("Zeemote","Removing listener in onPause");
         	AnkiDroidApp.zeemoteController().removeButtonListener(this);
+        	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
+    		adapter.removeButtonListener(this);
+    		adapter = null;
+
         }        
     }
 
@@ -929,9 +939,14 @@ public class Reviewer extends Activity implements IButtonListener{
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
       }
       restartTimer();
-      if (AnkiDroidApp.zeemoteController() != null) {
+      if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
     	  Log.d("Zeemote","Adding listener in onResume");
     	  AnkiDroidApp.zeemoteController().addButtonListener(this);
+      	  adapter = new JoystickToButtonAdapter();
+      	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
+  		  
+      	  adapter.addButtonListener(this);
+    	  
       }
     }
 
@@ -1481,7 +1496,7 @@ public class Reviewer extends Activity implements IButtonListener{
     		    mChosenAnswer.setText("\u2022");
     		    mChosenAnswer.setTextColor(mNext1.getTextColors());
     	    	if ((deck.getDueCount() + deck.getNewCountToday()) == 1) {
-    	    		mIsLastCard = true;
+    	    		mIsLastCard  = true;
                 }
     			break;
     		case Card.EASE_HARD:
@@ -3172,6 +3187,13 @@ public class Reviewer extends Activity implements IButtonListener{
 		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); //Button A = 0, Button B = 1...
 		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A) && (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { //make sure messages from future buttons don't get throug
 			this.ZeemoteHandler.sendMessage(msg);
+		}
+		if (arg0.getButtonID()==-1)
+		{
+			msg.what = MSG_ZEEMOTE_BUTTON_D+arg0.getButtonGameAction();
+			if ((msg.what >= MSG_ZEEMOTE_STICK_UP) && (msg.what <= MSG_ZEEMOTE_STICK_RIGHT)) { //make sure messages from future buttons don't get throug
+				this.ZeemoteHandler.sendMessage(msg);
+			}
 		}
 	}
 }
