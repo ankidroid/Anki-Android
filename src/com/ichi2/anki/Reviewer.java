@@ -760,10 +760,21 @@ public class Reviewer extends Activity implements IButtonListener{
 					} 			
 				break;
 			case MSG_ZEEMOTE_BUTTON_A:
+				closeReviewer();
 				break;
 			case MSG_ZEEMOTE_BUTTON_B:
+				if (!sDisplayAnswer) {
+	                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGES_QA_QUESTION);
+	            } else {
+	                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
+	            }
 				break;
 			case MSG_ZEEMOTE_BUTTON_C:
+				if (AnkiDroidApp.deck().undoAvailable()){
+            	setNextCardAnimation(true);
+            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));
+				}
 				break;
 			case MSG_ZEEMOTE_BUTTON_D:
 				if (!sDisplayAnswer) {
