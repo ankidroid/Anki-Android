@@ -101,6 +101,7 @@ public class StudyOptions extends Activity {
     private static final int MENU_ADD_FACT = 6;
     private static final int MENU_MORE_OPTIONS = 7;
     private static final int MENU_ROTATE = 8;
+    private static final int MENU_ZEEMOTE = 9;
 
     /**
 * Available options performed by other activities
@@ -633,10 +634,10 @@ public class StudyOptions extends Activity {
             mCompat = new CompatV3();
         }
         //Zeemote controller initialization
-		if (mZeemoteEnabled){
          
 		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
 		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
+    	if (mZeemoteEnabled){
 		 if (!AnkiDroidApp.zeemoteController().isConnected())
 		 {
     		 Log.d("Zeemote","starting connection in onCreate");
@@ -1859,6 +1860,8 @@ public class StudyOptions extends Activity {
                 R.drawable.ic_menu_archive);
         Utils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences,
                 R.drawable.ic_menu_preferences);
+        Utils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE, R.string.menu_zeemote,
+                R.drawable.ic_menu_zeemote);
         return true;
     }
 
@@ -1913,6 +1916,11 @@ public class StudyOptions extends Activity {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);                	
                 }
                 return true;
+            case MENU_ZEEMOTE:
+            	if ((AnkiDroidApp.zeemoteController() != null)) {
+            		controllerUi.showControllerMenu();
+            	}
+            	return true;
 
             default:
                 return super.onOptionsItemSelected(item);
