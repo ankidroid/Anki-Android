@@ -67,6 +67,8 @@ import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
+import com.zeemote.zc.Controller;
+import com.zeemote.zc.ui.android.ControllerAndroidUi;
 
 import java.io.File;
 import java.io.IOException;
@@ -195,6 +197,7 @@ public class StudyOptions extends Activity {
     boolean mInvertedColors = false;
     boolean mSwap = false;
     String mLocale;
+    private boolean mZeemoteEnabled;
 
     /**
 * Alerts to inform the user about different situations
@@ -348,6 +351,8 @@ public class StudyOptions extends Activity {
 
     /** Used to perform operation in a platform specific way. */
     private Compat mCompat;
+ 	ControllerAndroidUi controllerUi;
+
 
     /**
 * Callbacks for UI events
@@ -560,7 +565,7 @@ public class StudyOptions extends Activity {
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
-        Log.i(AnkiDroidApp.TAG, "StudyOptions Activity");
+        Log.i(AnkiDroidApp.TAG, "StudyOptions - OnCreate()");
 
         if (hasErrorFiles()) {
             Intent i = new Intent(this, Feedback.class);
@@ -627,6 +632,17 @@ public class StudyOptions extends Activity {
         } else {
             mCompat = new CompatV3();
         }
+        //Zeemote controller initialization
+		if (mZeemoteEnabled){
+         
+		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
+		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
+		 if (!AnkiDroidApp.zeemoteController().isConnected())
+		 {
+    		 Log.d("Zeemote","starting connection in onCreate");
+			 controllerUi.startConnectionProcess();
+		 }
+		}
     }
 
 
@@ -714,6 +730,16 @@ public class StudyOptions extends Activity {
         MetaDB.closeDB();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
+        }
+        //Disconnect Zeemote if connected
+        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
+        	try {
+        		Log.d("Zeemote","trying to disconnect in onDestroy...");
+        		AnkiDroidApp.zeemoteController().disconnect();
+        	}
+        	catch (IOException ex){
+        		Log.e("Zeemote","Error on zeemote disconnection in onDestroy: "+ex.getMessage());
+        	}
         }
         savePreferences("close");
     }
@@ -2224,6 +2250,7 @@ public class StudyOptions extends Activity {
         mInvertedColors = preferences.getBoolean("invertedColors", false);
         mSwap = preferences.getBoolean("swapqa", false);
         mLocale = preferences.getString("language", "");
+        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
        	setLanguage(mLocale);
         return preferences;
     }

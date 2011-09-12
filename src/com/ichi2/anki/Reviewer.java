@@ -95,12 +95,9 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 import org.amr.arabic.ArabicUtilities;
 
 //zeemote imports
-import com.zeemote.zc.Controller;
 import com.zeemote.zc.event.ButtonEvent;
 import com.zeemote.zc.event.IButtonListener;
 import com.zeemote.zc.util.JoystickToButtonAdapter;
-import com.zeemote.zc.ui.android.ControllerAndroidUi;
-
 
 public class Reviewer extends Activity implements IButtonListener{
     /**
@@ -386,8 +383,6 @@ public class Reviewer extends Activity implements IButtonListener{
  	/**
  	 * Zeemote controller
  	 */
- 	//Controller controller = null;
- 	ControllerAndroidUi controllerUi;
 	protected JoystickToButtonAdapter adapter;
 
     private int zEase;
@@ -764,9 +759,19 @@ public class Reviewer extends Activity implements IButtonListener{
 				break;
 			case MSG_ZEEMOTE_BUTTON_B:
 				if (!sDisplayAnswer) {
+					try {
 	                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGES_QA_QUESTION);
+					}
+					catch (Exception ex){
+		        		Log.e("Zeemote","Error on playing question audio: "+ex.getMessage());
+		        	}
 	            } else {
-	                Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
+	            	try {
+	            	Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
+	            	}
+					catch (Exception ex){
+		        		Log.e("Zeemote","Error on playing answer audio: "+ex.getMessage());
+		        	}
 	            }
 				break;
 			case MSG_ZEEMOTE_BUTTON_C:
@@ -814,18 +819,6 @@ public class Reviewer extends Activity implements IButtonListener{
             mMediaDir = setupMedia(deck);
             restorePreferences();
 
-            //Zeemote controller initialization
-    		if (mZeemoteEnabled){
-             
-    		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
-    		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
-    		 if (!AnkiDroidApp.zeemoteController().isConnected())
-    		 {
-        		 Log.d("Zeemote","starting connection in onCreate");
-    			 controllerUi.startConnectionProcess();
-    		 }
-    		}
-            
             deck.resetUndo();
             // Remove the status bar and title bar
             if (mPrefFullscreenReview) {
@@ -978,15 +971,6 @@ public class Reviewer extends Activity implements IButtonListener{
         }
         if (mSpeakText && Integer.valueOf(android.os.Build.VERSION.SDK) > 3) {
             ReadText.releaseTts();        	
-        }
-        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
-        	try {
-        		Log.d("Zeemote","trying to disconnect in onDestroy...");
-        		AnkiDroidApp.zeemoteController().disconnect();
-        	}
-        	catch (IOException ex){
-        		Log.e("Zeemote","Error on zeemote disconnection in onDestroy: "+ex.getMessage());
-        	}
         }
     }
 
