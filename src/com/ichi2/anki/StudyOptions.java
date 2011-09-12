@@ -69,6 +69,7 @@ import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.ui.android.ControllerAndroidUi;
+import com.zeemote.util.Strings;
 
 import java.io.File;
 import java.io.IOException;
@@ -637,7 +638,14 @@ public class StudyOptions extends Activity {
          
 		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
 		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
-    	if (mZeemoteEnabled){
+		 com.zeemote.util.Strings zstrings = com.zeemote.util.Strings.getStrings();
+		 if (zstrings.isLocaleAvailable(mLocale)){
+			 Log.d("Zeemote","Zeemote locale "+mLocale+" is available. Setting.");
+			 zstrings.setLocale(mLocale);
+		 } else {
+			 Log.d("Zeemote","Zeemote locale "+mLocale+" is not available.");
+		 }
+		 if (mZeemoteEnabled){
 		 if (!AnkiDroidApp.zeemoteController().isConnected())
 		 {
     		 Log.d("Zeemote","starting connection in onCreate");
@@ -1917,6 +1925,8 @@ public class StudyOptions extends Activity {
                 }
                 return true;
             case MENU_ZEEMOTE:
+            	
+            	Log.d("Zeemote","Locale: "+mLocale);
             	if ((AnkiDroidApp.zeemoteController() != null)) {
             		controllerUi.showControllerMenu();
             	}
