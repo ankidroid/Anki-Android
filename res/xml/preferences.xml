@@ -474,19 +474,17 @@
 				android:summary="@string/default_font_summ"
 				android:key="defaultFont"
 				android:defaultValue=""/>
-                        <CheckBoxPreference
-                               android:title="@string/timeout_answer_text"
-                               android:summary="@string/timeout_answer_summ"
-                               android:defaultValue="false"
-                               android:disableDependentsState="false"
-                               android:key="timeoutAnswer"/>
-                       <com.hlidskialf.android.preference.SeekBarPreference
-                               android:dependency="timeoutAnswer"
-                               android:summary="@string/timeout_answer_seconds"
-                               android:max="30"
-                               android:title="@string/timeout_answer_seconds"
-                               android:defaultValue="6"
-                               android:key="timeoutAnswerSeconds"/>
+			<CheckBoxPreference android:title="@string/timeout_answer_text"
+				android:summary="@string/timeout_answer_summ" android:defaultValue="false"
+				android:disableDependentsState="false" android:key="timeoutAnswer" />
+			<com.hlidskialf.android.preference.SeekBarPreference
+				android:summary="@string/timeout_answer_seconds" android:dependency="timeoutAnswer"
+				android:key="timeoutAnswerSeconds" android:defaultValue="6"
+				android:title="@string/timeout_answer_seconds" android:max="30" />
+			<com.hlidskialf.android.preference.SeekBarPreference
+				android:summary="@string/timeout_question_seconds" android:dependency="timeoutAnswer"
+				android:key="timeoutQuestionSeconds" android:defaultValue="60" 
+				android:title="@string/timeout_question_seconds" android:max="60" />
 		</PreferenceCategory>
 	</PreferenceScreen>
 </PreferenceScreen>
