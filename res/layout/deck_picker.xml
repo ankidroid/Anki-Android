@@ -12,7 +12,10 @@
 		android:layout_height="0dp"
 		android:layout_weight="1"
 		android:background="?android:attr/colorBackground"
-		android:fastScrollEnabled="true"/>
+        android:drawSelectorOnTop="true" 
+        android:listSelector="@drawable/deckpicker_list_selector"  
+		android:fastScrollEnabled="true" 
+		android:focusable="true"/>
 
 	<LinearLayout
 		android:id="@+id/deckpicker_buttons"

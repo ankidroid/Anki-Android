@@ -95,7 +95,7 @@
 <string name="zoom">Enable Zoom</string>
 <string name="zoom_summ">Show zoom controls when reviewing</string>
 <string name="zeemote">Zeemote JS1 support</string>
-<string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
+<string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
 <string name="swipe">Enable Gestures</string>
 <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
 <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>

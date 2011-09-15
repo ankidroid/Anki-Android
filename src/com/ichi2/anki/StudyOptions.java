@@ -15,6 +15,7 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -33,6 +34,8 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -44,6 +47,7 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputConnection;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -54,6 +58,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -69,7 +74,9 @@ import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 import com.zeemote.zc.Controller;
 import com.zeemote.zc.ui.android.ControllerAndroidUi;
-import com.zeemote.util.Strings;
+import com.zeemote.zc.event.ButtonEvent;
+import com.zeemote.zc.event.IButtonListener;
+import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,7 +88,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-public class StudyOptions extends Activity {
+public class StudyOptions extends Activity implements IButtonListener {
 	
     /**
 * Default database.
@@ -166,6 +173,17 @@ public class StudyOptions extends Activity {
 
     private StyledDialog mNewVersionAlert;
     private StyledDialog mWalWarningAlert;
+    
+    /** Zeemote messages */
+    private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
+    private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
+    private static final int MSG_ZEEMOTE_BUTTON_C = MSG_ZEEMOTE_BUTTON_A+2;
+    private static final int MSG_ZEEMOTE_BUTTON_D = MSG_ZEEMOTE_BUTTON_A+3;
+    private static final int MSG_ZEEMOTE_STICK_UP = MSG_ZEEMOTE_BUTTON_A+4;
+    private static final int MSG_ZEEMOTE_STICK_DOWN = MSG_ZEEMOTE_BUTTON_A+5;
+    private static final int MSG_ZEEMOTE_STICK_LEFT = MSG_ZEEMOTE_BUTTON_A+6;
+    private static final int MSG_ZEEMOTE_STICK_RIGHT = MSG_ZEEMOTE_BUTTON_A+7;
+    
 
     /**
 * Download Manager Service stub
@@ -353,7 +371,13 @@ public class StudyOptions extends Activity {
 
     /** Used to perform operation in a platform specific way. */
     private Compat mCompat;
+    
+    /**
+ 	 * Zeemote controller
+ 	 */
+	protected JoystickToButtonAdapter adapter;
  	ControllerAndroidUi controllerUi;
+ 	
 
 
     /**
@@ -498,6 +522,43 @@ public class StudyOptions extends Activity {
 
     };
 
+	Handler ZeemoteHandler = new Handler() {
+		public void handleMessage(Message msg){
+			switch(msg.what){
+			case MSG_ZEEMOTE_STICK_UP:
+				//sendKey(KeyEvent.KEYCODE_DPAD_UP);
+				break;
+			case MSG_ZEEMOTE_STICK_DOWN:
+				//sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+				break;
+			case MSG_ZEEMOTE_STICK_LEFT:
+				//sendKey(KeyEvent.KEYCODE_DPAD_LEFT);
+				break;
+			case MSG_ZEEMOTE_STICK_RIGHT:
+				//sendKey(KeyEvent.KEYCODE_DPAD_RIGHT);
+				break;				
+			case MSG_ZEEMOTE_BUTTON_A:
+				//sendKey(KeyEvent.KEYCODE_ENTER);
+				openReviewer();
+				break;
+			case MSG_ZEEMOTE_BUTTON_B:
+				//sendKey(KeyEvent.KEYCODE_BACK);
+	            if (mCurrentContentView == CONTENT_CONGRATS) {
+	            	finishCongrats();
+	            } else  {
+	            	openDeckPicker();
+	            } 
+				break;
+			case MSG_ZEEMOTE_BUTTON_C:
+				sendKey(KeyEvent.KEYCODE_BACK);
+				break;
+			case MSG_ZEEMOTE_BUTTON_D:
+				break;
+			}
+			super.handleMessage(msg);
+		}
+	};
+    
 
     private Boolean isValidInt(String test) {
         try {
@@ -509,7 +570,15 @@ public class StudyOptions extends Activity {
     }
 
 
-    private Boolean isValidLong(String test) {
+    protected void sendKey(int keycode) {
+	    
+    	this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,keycode));
+		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,keycode));
+		Log.d("Zeemote","dispatched key "+keycode);
+	}
+
+
+	private Boolean isValidLong(String test) {
         try {
             Long.parseLong(test);
             return true;
@@ -756,6 +825,14 @@ public class StudyOptions extends Activity {
 
      @Override
      protected void onPause() {
+         if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
+         	Log.d("Zeemote","Removing listener in onPause");
+         	AnkiDroidApp.zeemoteController().removeButtonListener(this);
+         	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
+     		adapter.removeButtonListener(this);
+     		adapter = null;
+         }        
+    	 
          super.onPause();
          // Update the widget when pausing this activity.
          if (!mInDeckPicker) {
@@ -765,6 +842,19 @@ public class StudyOptions extends Activity {
 
 
     @Override
+	protected void onResume() {
+    	super.onResume();
+	      if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
+	    	  Log.d("Zeemote","Adding listener in onResume");
+	    	  AnkiDroidApp.zeemoteController().addButtonListener(this);
+	      	  adapter = new JoystickToButtonAdapter();
+	      	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
+	      	  adapter.addButtonListener(this);
+	      }
+	}
+
+
+	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
@@ -2735,4 +2825,29 @@ public class StudyOptions extends Activity {
         loadDeckIntent.putExtra(StudyOptions.EXTRA_DECK, deckPath);
         return loadDeckIntent;
     }
+
+
+	@Override
+	public void buttonPressed(ButtonEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void buttonReleased(ButtonEvent arg0) {
+		Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
+		Message msg = Message.obtain();
+		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); //Button A = 0, Button B = 1...
+		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A) && (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { //make sure messages from future buttons don't get throug
+			this.ZeemoteHandler.sendMessage(msg);
+		}
+		if (arg0.getButtonID()==-1)
+		{
+			msg.what = MSG_ZEEMOTE_BUTTON_D+arg0.getButtonGameAction();
+			if ((msg.what >= MSG_ZEEMOTE_STICK_UP) && (msg.what <= MSG_ZEEMOTE_STICK_RIGHT)) { //make sure messages from future buttons don't get throug
+				this.ZeemoteHandler.sendMessage(msg);
+			}
+		}
+	}
 }

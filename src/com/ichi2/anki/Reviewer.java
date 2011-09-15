@@ -736,7 +736,7 @@ public class Reviewer extends Activity implements IButtonListener{
 			switch(msg.what){
 			case MSG_ZEEMOTE_STICK_UP:
 				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_MID);
+   						answerCard(Card.EASE_EASY);
 					} 			
 				break;
 			case MSG_ZEEMOTE_STICK_DOWN:
@@ -751,13 +751,10 @@ public class Reviewer extends Activity implements IButtonListener{
 				break;
 			case MSG_ZEEMOTE_STICK_RIGHT:
 				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_EASY);
+   						answerCard(Card.EASE_MID);
 					} 			
 				break;
 			case MSG_ZEEMOTE_BUTTON_A:
-				closeReviewer();
-				break;
-			case MSG_ZEEMOTE_BUTTON_B:
 				if (!sDisplayAnswer) {
 					try {
 	                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGES_QA_QUESTION);
@@ -773,6 +770,9 @@ public class Reviewer extends Activity implements IButtonListener{
 		        		Log.e("Zeemote","Error on playing answer audio: "+ex.getMessage());
 		        	}
 	            }
+				break;
+			case MSG_ZEEMOTE_BUTTON_B:
+				closeReviewer();
 				break;
 			case MSG_ZEEMOTE_BUTTON_C:
 				if (AnkiDroidApp.deck().undoAvailable()){
@@ -929,8 +929,8 @@ public class Reviewer extends Activity implements IButtonListener{
         	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
     		adapter.removeButtonListener(this);
     		adapter = null;
-
-        }        
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
     }
 
     @Override
@@ -948,9 +948,8 @@ public class Reviewer extends Activity implements IButtonListener{
     	  AnkiDroidApp.zeemoteController().addButtonListener(this);
       	  adapter = new JoystickToButtonAdapter();
       	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
-  		  
       	  adapter.addButtonListener(this);
-    	  
+      	  getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
       }
     }
 
