@@ -790,7 +790,8 @@ public class Reviewer extends Activity implements IButtonListener{
 			super.handleMessage(msg);
 		}
 	};
-	private int mWaitSecond;
+	private int mWaitAnswerSecond;
+	private int mWaitQuestionSecond;
 
     
     
@@ -1970,7 +1971,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
-        mWaitSecond = preferences.getInt("timeoutAnswerSeconds", 20);
+        mWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
+        mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling =  preferences.getBoolean("double_scrolling", false);
         mGesturesEnabled = preferences.getBoolean("swipe", false);
@@ -2093,14 +2095,14 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private Handler mTimeoutHandler = new Handler();
 
-    private Runnable mShowAnswerTask=new Runnable() {
-	public void run() {
-            if (mPrefTimer) {
-                mCardTimer.stop();
-            }
-            mFlipCard.performClick();
-	}
-    };
+	private Runnable mShowAnswerTask = new Runnable() {
+		public void run() {
+			if (mPrefTimer) {
+				mCardTimer.stop();
+			}
+			mFlipCard.performClick();
+		}
+	};
 
     private void displayCardQuestion() {
         sDisplayAnswer = false;
@@ -2147,7 +2149,7 @@ public class Reviewer extends Activity implements IButtonListener{
         // If the user want to show answer automatically
         if (mPrefUseTimer) {
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-            mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitSecond * 1000  );            
+            mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitAnswerSecond * 1000  );            
         }
     }
 
