@@ -790,7 +790,8 @@ public class Reviewer extends Activity implements IButtonListener{
 			super.handleMessage(msg);
 		}
 	};
-	private int mWaitSecond;
+	private int mWaitAnswerSecond;
+	private int mWaitQuestionSecond;
 
     
     
@@ -1970,7 +1971,8 @@ public class Reviewer extends Activity implements IButtonListener{
         mPlaySoundsAtStart = preferences.getBoolean("playSoundsAtStart", true);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
-        mWaitSecond = preferences.getInt("timeoutAnswerSeconds", 20);
+        mWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
+        mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling =  preferences.getBoolean("double_scrolling", false);
         mGesturesEnabled = preferences.getBoolean("swipe", false);
@@ -2091,15 +2093,26 @@ public class Reviewer extends Activity implements IButtonListener{
         Utils.updateProgressBars(this, mSessionYesBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
     }
 
+    /* Handler for the delay in auto showing question and/or answer
+     * One toggle for both question and answer, could set longer
+     * delay for auto next question
+     */
     private Handler mTimeoutHandler = new Handler();
 
-    private Runnable mShowAnswerTask=new Runnable() {
-	public void run() {
+    private Runnable mShowQuestionTask = new Runnable() {
+        public void run() {
+            //Assume hitting the "Again" button when auto next question
+            mEase1.performClick();
+        }
+    };
+
+    private Runnable mShowAnswerTask = new Runnable() {
+        public void run() {
             if (mPrefTimer) {
                 mCardTimer.stop();
             }
             mFlipCard.performClick();
-	}
+        }
     };
 
     private void displayCardQuestion() {
@@ -2147,7 +2160,7 @@ public class Reviewer extends Activity implements IButtonListener{
         // If the user want to show answer automatically
         if (mPrefUseTimer) {
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-            mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitSecond * 1000  );            
+            mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitAnswerSecond * 1000  );            
         }
     }
 
@@ -2214,6 +2227,12 @@ public class Reviewer extends Activity implements IButtonListener{
         mIsSelecting = false;
         updateCard(displayString);
         showEaseButtons();
+
+        // If the user want to show next question automatically
+        if (mPrefUseTimer) {
+            mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+            mTimeoutHandler.postDelayed(mShowQuestionTask, mWaitQuestionSecond * 1000  );            
+        }
     }
 
 
