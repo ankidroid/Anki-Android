@@ -2093,16 +2093,27 @@ public class Reviewer extends Activity implements IButtonListener{
         Utils.updateProgressBars(this, mSessionYesBar, deck.getProgress(false), mStatisticBarsMax, mStatisticBarsHeight, true);
     }
 
+    /* Handler for the delay in auto showing question and/or answer
+     * One toggle for both question and answer, could set longer
+     * delay for auto next question
+     */
     private Handler mTimeoutHandler = new Handler();
 
-	private Runnable mShowAnswerTask = new Runnable() {
-		public void run() {
-			if (mPrefTimer) {
-				mCardTimer.stop();
-			}
-			mFlipCard.performClick();
-		}
-	};
+    private Runnable mShowQuestionTask = new Runnable() {
+        public void run() {
+            //Assume hitting the "Again" button when auto next question
+            mEase1.performClick();
+        }
+    };
+
+    private Runnable mShowAnswerTask = new Runnable() {
+        public void run() {
+            if (mPrefTimer) {
+                mCardTimer.stop();
+            }
+            mFlipCard.performClick();
+        }
+    };
 
     private void displayCardQuestion() {
         sDisplayAnswer = false;
@@ -2216,6 +2227,12 @@ public class Reviewer extends Activity implements IButtonListener{
         mIsSelecting = false;
         updateCard(displayString);
         showEaseButtons();
+
+        // If the user want to show next question automatically
+        if (mPrefUseTimer) {
+            mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+            mTimeoutHandler.postDelayed(mShowQuestionTask, mWaitQuestionSecond * 1000  );            
+        }
     }
 
 
