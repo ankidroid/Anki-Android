@@ -59,12 +59,12 @@
   <string name="log_in">Войти</string>
   <string name="sign_up_description">У вас нет AnkiOnline-аккаунта? Заведите бесплатно!</string>
   <string name="sign_up">Зарегистрироваться</string>
-  <string name="logged_as">Будет использован</string>
+  <string name="logged_as">Используется логин</string>
   <string name="log_out">Завершить сеанс</string>
   <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
   <string name="invalid_username_password">Неправильное имя пользователя или пароль.</string>
   <string name="sync_too_busy">Сервер перегружен. Попробуйте еще раз позже.</string>
-  <string name="login_generic_error">Не удалось войти в систему.</string>
+  <string name="login_generic_error">Не удалось войти на сервер.</string>
   <string name="download_finished">Загрузка завершена</string>
   <string name="deck_downloaded">Колода скачана</string>
   <string name="sync_connecting_message">Соединение...</string>
@@ -72,18 +72,18 @@
   <string name="sync_summary_from_server_message">Получение с сервера...</string>
   <string name="sync_preparing_full_sync_message">Подготовка полной синхронизации...</string>
   <string name="sync_uploading_message">Выгрузка данных...</string>
-  <string name="sync_downloading_message">Скачивание...</string>
-  <string name="sync_complete_message">Закрытие...</string>
+  <string name="sync_downloading_message">Скачивание с сервера...</string>
+  <string name="sync_complete_message">Завершение синхронизации...</string>
   <string name="sync_determining_differences_message">Определение различий ...</string>
-  <string name="sync_transferring_payload_message">Пересылка требуемых изменений...</string>
-  <string name="sync_applying_reply_message">Внесение полученного...</string>
+  <string name="sync_transferring_payload_message">Передача изменений...</string>
+  <string name="sync_applying_reply_message">Использование полученных данных с сервера...</string>
   <string name="sync_downloading_media">Скачивание медиа-файлов %1$d/%2$d...</string>
   <string name="sync_no_changes_message">Не найдено изменений.</string>
   <string name="sync_log_error_message">Ошибка: Колода не была синхронизирована</string>
   <string name="sync_log_error_specific">Ошибка синхронизации, тип: %1$s, сообщение: %2$s</string>
   <string name="sync_log_no_changes_message">Не найдено изменений</string>
   <string name="sync_log_uploading_message">Полностью синхронизировано с локальными данными</string>
-  <string name="sync_log_downloading_message">Полная синхронизация с сервером</string>
+  <string name="sync_log_downloading_message">Полная синхронизация с сервера</string>
   <string name="sync_log_zero_facts">Завершено, карты не изменены</string>
   <string name="sync_log_clocks_unsynchronized">Время на вашем Android-устройстве отличается на %1$d секунд от времени сервера%2$s, поэтому невозможно синхронизировать.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, установленная временная зона устройства возможно ошибочна</string>
@@ -91,24 +91,23 @@
   <string name="sync_log_old_version">Протокол синхронизации был изменён, пожалуйста, установите последнюю версию AnkiDroid. (См. http://code.google.com/p/ankidroid)</string>
   <string name="sync_log_conflict_resolution_required">У колоды несколько версий. Она была изменена локально и на сервере. Пожалуйста, откройте колоду и вызовете синхронизацию при этом, чтобы избежать конфликтов.</string>
   <string name="sync_log_create_deck_failed">Не удалось создать колоду на сервере: %1$s</string>
-  <string name="sync_log_finish_error">Fehler beim Senden des Ende-Befehls (zum Server)
-Ошибка при отправке последней директивы (на сервер)</string>
+  <string name="sync_log_finish_error">Ошибка при отправке последней директивы (на сервер)</string>
   <string name="sync_conflict_title">Конфликт синхронизации</string>
   <string name="sync_conflict_message">Колода %s была изменена как локально так и на сервере. Какую версию нужно сохранить?</string>
   <string name="sync_conflict_local">Сохранить локальную</string>
   <string name="sync_conflict_remote">Сохранить серверную</string>
   <string name="sync_conflict_cancel">Отменить синхронизацию</string>
   <string name="personaldeckpicker_title">Открыть онлайн-колоду</string>
-  <string name="shareddeckpicker_title">Выберите колоду, которую вы хотите загрузить</string>
+  <string name="shareddeckpicker_title">Выберите колоду, которую хотите загрузить</string>
   <string name="downloaddeck_search">Поиск</string>
   <string name="preferences_title">Настройки</string>
   <string name="deckpreferences_title">Настройки колоды</string>
   <plurals name="sync_log_facts_to_server_message">
-    <item quantity="one">1 карта на сервер</item>
-    <item quantity="other">%1$d карт на сервер</item>
+    <item quantity="one">1 карта на сервер передано</item>
+    <item quantity="other">%1$d карт на сервер передано</item>
   </plurals>
   <plurals name="sync_log_facts_from_server_message">
-    <item quantity="one">1 карта с сервера</item>
-    <item quantity="other">%1$d карт с сервера</item>
+    <item quantity="one">1 карта с сервера получена</item>
+    <item quantity="other">%1$d карт с сервера получено</item>
   </plurals>
 </resources>

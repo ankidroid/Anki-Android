@@ -59,12 +59,12 @@
   <string name="studyoptions_congrats_syncdeck">Synchronizuj talię</string>
   <string name="studyoptions_congrats_open_other_deck">Otwórz inną talię</string>
   <string name="studyoptions_congrats_finish">Wróć do ekranu nauki</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
-  <string name="menu_rotate">Rotate</string>
+  <string name="card_unsuspended">Karta reaktywowana</string>
+  <string name="card_suspended">Karta zawieszona</string>
+  <string name="menu_rotate">Obrót</string>
   <string name="undo">Cofnij</string>
   <string name="redo">Ponów</string>
-  <string name="close_current_deck">Closing current deck.\nPlease wait...</string>
+  <string name="close_current_deck">Zamykanie bieżącej talii.\nProszę czekać...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Zresetuj przypisanie języka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Reset języka</string>
@@ -87,7 +87,7 @@
   <string name="menu_suspend_card">Zawieś kartę</string>
   <string name="menu_bury_card">Zakop kartę</string>
   <string name="menu_edit_card">Edytuj kartę</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_select">Zaznacz tekst</string>
   <string name="menu_search">Wyszukiwanie w %1$s</string>
   <string name="menu_mark_card">Oznacz kartę</string>
   <string name="menu_marked">Oznaczona</string>
@@ -98,18 +98,18 @@
   <string name="studyoptions_load_other_deck">Wczytaj inną talię</string>
   <string name="studyoptions_load_sample_deck">Wczytaj przykładową talię</string>
   <string name="studyoptions_night_mode">Tryb nocny</string>
-  <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="studyoptions_swap_qa">Zamień Pyt/Odp</string>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
+    <item>1 sekunda</item>
+    <item>1 minuta</item>
     <item>1 godzina</item>
     <item>1 dzień</item>
     <item>1 miesiąc</item>
     <item>1 rok</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
-    <item>%s minutes</item>
+    <item>%s sekund(y)</item>
+    <item>%s minut(y)</item>
     <item>%s godzin</item>
     <item>%s dni</item>
     <item>%s miesięcy</item>
