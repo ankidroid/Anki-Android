@@ -83,12 +83,12 @@
     <item>1 yıl sonra</item>
   </string-array>
   <string-array name="next_review_in_p">
-    <item>&s saniye sonra</item>
-    <item>&s dakika sonra</item>
-    <item>&s saat sonra</item>
-    <item>&s gün sonra</item>
-    <item>&s ay sonra</item>
-    <item>&s yıl sonra</item>
+    <item>%s saniye sonra</item>
+    <item>%s dakika sonra</item>
+    <item>%s saat sonra</item>
+    <item>%s gün sonra</item>
+    <item>%s ay sonra</item>
+    <item>%s yıl sonra</item>
   </string-array>
   <string-array name="next_review_before_s">
     <item>1 saniye önce</item>
