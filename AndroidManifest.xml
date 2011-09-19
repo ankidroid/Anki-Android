@@ -91,7 +91,6 @@
 		<activity android:name="com.ichi2.veecheck.Notification" 
 			android:label="@string/notification_title"
 			android:configChanges="locale"/>
-		<activity android:name="com.zeemote.zc.ui.android.ControllerAndroidUi$Activity" />
 		<receiver android:name="com.ichi2.veecheck.CheckReceiver"
 					android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
 			<intent-filter>

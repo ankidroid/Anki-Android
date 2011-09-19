@@ -34,7 +34,6 @@
 <string name="pref_cat_swipe">Swipe</string>
 <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
 <string name="pref_cat_zoom">Zoom</string>
-<string name="pref_cat_zeemote">Zeemote</string>
 <string name="pref_cat_reset">Reset</string>
 <string name="pref_cat_other">Other</string>
 <string name="pref_cat_experimental">EXPERIMENTAL</string>
@@ -94,8 +93,6 @@
 <string name="fullscreen_review_summ">You can decide if you want to use all available screen space during card reviewing</string>
 <string name="zoom">Enable Zoom</string>
 <string name="zoom_summ">Show zoom controls when reviewing</string>
-<string name="zeemote">Zeemote JS1 support</string>
-<string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
 <string name="swipe">Enable Gestures</string>
 <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
 <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>

@@ -4,9 +4,5 @@
 	<classpathentry kind="lib" path="libs/achartengine-0.6.0.r140-1.5.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="libs/zc-strings-1.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/ZControllerLib-android-1.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/ZControllerLib-android-ui-1.5.1.jar"/>
-	<classpathentry kind="lib" path="libs/ZControllerLib-common-1.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

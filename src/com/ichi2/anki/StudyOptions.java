@@ -69,11 +69,6 @@ import com.ichi2.compat.CompatV3;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
-import com.zeemote.zc.Controller;
-import com.zeemote.zc.ui.android.ControllerAndroidUi;
-import com.zeemote.zc.event.ButtonEvent;
-import com.zeemote.zc.event.IButtonListener;
-import com.zeemote.zc.util.JoystickToButtonAdapter;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,7 +80,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-public class StudyOptions extends Activity implements IButtonListener {
+public class StudyOptions extends Activity {
 	
     /**
 * Default database.
@@ -106,7 +101,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int MENU_ADD_FACT = 6;
     private static final int MENU_MORE_OPTIONS = 7;
     private static final int MENU_ROTATE = 8;
-    private static final int MENU_ZEEMOTE = 9;
 
     /**
 * Available options performed by other activities
@@ -171,17 +165,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private StyledDialog mNewVersionAlert;
     private StyledDialog mWalWarningAlert;
     
-    /** Zeemote messages */
-    private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
-    private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
-    private static final int MSG_ZEEMOTE_BUTTON_C = MSG_ZEEMOTE_BUTTON_A+2;
-    private static final int MSG_ZEEMOTE_BUTTON_D = MSG_ZEEMOTE_BUTTON_A+3;
-    private static final int MSG_ZEEMOTE_STICK_UP = MSG_ZEEMOTE_BUTTON_A+4;
-    private static final int MSG_ZEEMOTE_STICK_DOWN = MSG_ZEEMOTE_BUTTON_A+5;
-    private static final int MSG_ZEEMOTE_STICK_LEFT = MSG_ZEEMOTE_BUTTON_A+6;
-    private static final int MSG_ZEEMOTE_STICK_RIGHT = MSG_ZEEMOTE_BUTTON_A+7;
-    
-
     /**
 * Download Manager Service stub
 */
@@ -214,7 +197,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     boolean mInvertedColors = false;
     boolean mSwap = false;
     String mLocale;
-    private boolean mZeemoteEnabled;
 
     /**
 * Alerts to inform the user about different situations
@@ -370,14 +352,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private Compat mCompat;
     
     /**
- 	 * Zeemote controller
- 	 */
-	protected JoystickToButtonAdapter adapter;
- 	ControllerAndroidUi controllerUi;
- 	
-
-
-    /**
 * Callbacks for UI events
 */
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
@@ -519,44 +493,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     };
 
-	Handler ZeemoteHandler = new Handler() {
-		public void handleMessage(Message msg){
-			switch(msg.what){
-			case MSG_ZEEMOTE_STICK_UP:
-				//sendKey(KeyEvent.KEYCODE_DPAD_UP);
-				break;
-			case MSG_ZEEMOTE_STICK_DOWN:
-				//sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
-				break;
-			case MSG_ZEEMOTE_STICK_LEFT:
-				//sendKey(KeyEvent.KEYCODE_DPAD_LEFT);
-				break;
-			case MSG_ZEEMOTE_STICK_RIGHT:
-				//sendKey(KeyEvent.KEYCODE_DPAD_RIGHT);
-				break;				
-			case MSG_ZEEMOTE_BUTTON_A:
-				//sendKey(KeyEvent.KEYCODE_ENTER);
-				openReviewer();
-				break;
-			case MSG_ZEEMOTE_BUTTON_B:
-				//sendKey(KeyEvent.KEYCODE_BACK);
-	            if (mCurrentContentView == CONTENT_CONGRATS) {
-	            	finishCongrats();
-	            } else  {
-	            	openDeckPicker();
-	            } 
-				break;
-			case MSG_ZEEMOTE_BUTTON_C:
-				sendKey(KeyEvent.KEYCODE_BACK);
-				break;
-			case MSG_ZEEMOTE_BUTTON_D:
-				break;
-			}
-			super.handleMessage(msg);
-		}
-	};
-    
-
     private Boolean isValidInt(String test) {
         try {
             Integer.parseInt(test);
@@ -565,15 +501,6 @@ public class StudyOptions extends Activity implements IButtonListener {
             return false;
         }
     }
-
-
-    protected void sendKey(int keycode) {
-	    
-    	this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,keycode));
-		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,keycode));
-		Log.d("Zeemote","dispatched key "+keycode);
-	}
-
 
 	private Boolean isValidLong(String test) {
         try {
@@ -700,24 +627,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         } else {
             mCompat = new CompatV3();
         }
-        //Zeemote controller initialization
          
-		 if (AnkiDroidApp.zeemoteController() == null) AnkiDroidApp.setZeemoteController(new Controller(Controller.CONTROLLER_1));     
-		 controllerUi = new ControllerAndroidUi(this, AnkiDroidApp.zeemoteController());
-		 com.zeemote.util.Strings zstrings = com.zeemote.util.Strings.getStrings();
-		 if (zstrings.isLocaleAvailable(mLocale)){
-			 Log.d("Zeemote","Zeemote locale "+mLocale+" is available. Setting.");
-			 zstrings.setLocale(mLocale);
-		 } else {
-			 Log.d("Zeemote","Zeemote locale "+mLocale+" is not available.");
-		 }
-		 if (mZeemoteEnabled){
-		 if (!AnkiDroidApp.zeemoteController().isConnected())
-		 {
-    		 Log.d("Zeemote","starting connection in onCreate");
-			 controllerUi.startConnectionProcess();
-		 }
-		}
     }
 
 
@@ -806,50 +716,18 @@ public class StudyOptions extends Activity implements IButtonListener {
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
-        //Disconnect Zeemote if connected
-        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
-        	try {
-        		Log.d("Zeemote","trying to disconnect in onDestroy...");
-        		AnkiDroidApp.zeemoteController().disconnect();
-        	}
-        	catch (IOException ex){
-        		Log.e("Zeemote","Error on zeemote disconnection in onDestroy: "+ex.getMessage());
-        	}
-        }
         savePreferences("close");
     }
 
 
      @Override
      protected void onPause() {
-         if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
-         	Log.d("Zeemote","Removing listener in onPause");
-         	AnkiDroidApp.zeemoteController().removeButtonListener(this);
-         	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
-     		adapter.removeButtonListener(this);
-     		adapter = null;
-         }        
-    	 
          super.onPause();
          // Update the widget when pausing this activity.
          if (!mInDeckPicker) {
              WidgetStatus.update(getBaseContext());
          }
      }
-
-
-    @Override
-	protected void onResume() {
-    	super.onResume();
-	      if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
-	    	  Log.d("Zeemote","Adding listener in onResume");
-	    	  AnkiDroidApp.zeemoteController().addButtonListener(this);
-	      	  adapter = new JoystickToButtonAdapter();
-	      	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
-	      	  adapter.addButtonListener(this);
-	      }
-	}
-
 
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
@@ -1955,8 +1833,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                 R.drawable.ic_menu_archive);
         Utils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences,
                 R.drawable.ic_menu_preferences);
-        Utils.addMenuItem(menu, Menu.NONE, MENU_ZEEMOTE, Menu.NONE, R.string.menu_zeemote,
-                R.drawable.ic_menu_zeemote);
         return true;
     }
 
@@ -2011,13 +1887,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);                	
                 }
                 return true;
-            case MENU_ZEEMOTE:
-            	
-            	Log.d("Zeemote","Locale: "+mLocale);
-            	if ((AnkiDroidApp.zeemoteController() != null)) {
-            		controllerUi.showControllerMenu();
-            	}
-            	return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -2355,7 +2224,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         mInvertedColors = preferences.getBoolean("invertedColors", false);
         mSwap = preferences.getBoolean("swapqa", false);
         mLocale = preferences.getString("language", "");
-        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
        	setLanguage(mLocale);
         return preferences;
     }
@@ -2823,28 +2691,4 @@ public class StudyOptions extends Activity implements IButtonListener {
         return loadDeckIntent;
     }
 
-
-	@Override
-	public void buttonPressed(ButtonEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void buttonReleased(ButtonEvent arg0) {
-		Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
-		Message msg = Message.obtain();
-		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); //Button A = 0, Button B = 1...
-		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A) && (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { //make sure messages from future buttons don't get throug
-			this.ZeemoteHandler.sendMessage(msg);
-		}
-		if (arg0.getButtonID()==-1)
-		{
-			msg.what = MSG_ZEEMOTE_BUTTON_D+arg0.getButtonGameAction();
-			if ((msg.what >= MSG_ZEEMOTE_STICK_UP) && (msg.what <= MSG_ZEEMOTE_STICK_RIGHT)) { //make sure messages from future buttons don't get throug
-				this.ZeemoteHandler.sendMessage(msg);
-			}
-		}
-	}
 }

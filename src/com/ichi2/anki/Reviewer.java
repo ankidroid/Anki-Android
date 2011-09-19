@@ -94,12 +94,8 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import org.amr.arabic.ArabicUtilities;
 
-//zeemote imports
-import com.zeemote.zc.event.ButtonEvent;
-import com.zeemote.zc.event.IButtonListener;
-import com.zeemote.zc.util.JoystickToButtonAdapter;
 
-public class Reviewer extends Activity implements IButtonListener{
+public class Reviewer extends Activity {
     /**
      * Result codes that are returned when this activity finishes.
      */
@@ -140,17 +136,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private static final int MENU_MARK = 5;
     private static final int MENU_UNDO = 6;
     private static final int MENU_REDO = 7;
-
-    /** Zeemote messages */
-    private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
-    private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
-    private static final int MSG_ZEEMOTE_BUTTON_C = MSG_ZEEMOTE_BUTTON_A+2;
-    private static final int MSG_ZEEMOTE_BUTTON_D = MSG_ZEEMOTE_BUTTON_A+3;
-    private static final int MSG_ZEEMOTE_STICK_UP = MSG_ZEEMOTE_BUTTON_A+4;
-    private static final int MSG_ZEEMOTE_STICK_DOWN = MSG_ZEEMOTE_BUTTON_A+5;
-    private static final int MSG_ZEEMOTE_STICK_LEFT = MSG_ZEEMOTE_BUTTON_A+6;
-    private static final int MSG_ZEEMOTE_STICK_RIGHT = MSG_ZEEMOTE_BUTTON_A+7;
-    
+   
     /** Regex pattern used in removing tags from text before diff */
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
@@ -205,7 +191,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
     private boolean mZoomEnabled;    
-    private boolean mZeemoteEnabled;    
     private boolean mPrefUseRubySupport; // Parse for ruby annotations
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
@@ -380,13 +365,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private int mFadeDuration = 300;
 
 
- 	/**
- 	 * Zeemote controller
- 	 */
-	protected JoystickToButtonAdapter adapter;
-
-    private int zEase;
-    
     /**
      * The answer in the compare to field for the current card if answer should be given by learner.
      * Null if the CardLayout in the deck says do not type answer. See also Card.getComparedFieldAnswer().
@@ -730,66 +708,6 @@ public class Reviewer extends Activity implements IButtonListener{
     	}
     };
     
-    //Zeemote handler
-	Handler ZeemoteHandler = new Handler() {
-		public void handleMessage(Message msg){
-			switch(msg.what){
-			case MSG_ZEEMOTE_STICK_UP:
-				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_EASY);
-					} 			
-				break;
-			case MSG_ZEEMOTE_STICK_DOWN:
-				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_FAILED);
-					} 			
-				break;
-			case MSG_ZEEMOTE_STICK_LEFT:
-				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_HARD);
-					} 			
-				break;
-			case MSG_ZEEMOTE_STICK_RIGHT:
-				if (sDisplayAnswer) {
-   						answerCard(Card.EASE_MID);
-					} 			
-				break;
-			case MSG_ZEEMOTE_BUTTON_A:
-				if (!sDisplayAnswer) {
-					try {
-	                Sound.playSounds(Utils.stripHTML(getQuestion()), MetaDB.LANGUAGES_QA_QUESTION);
-					}
-					catch (Exception ex){
-		        		Log.e("Zeemote","Error on playing question audio: "+ex.getMessage());
-		        	}
-	            } else {
-	            	try {
-	            	Sound.playSounds(Utils.stripHTML(getAnswer()), MetaDB.LANGUAGES_QA_ANSWER);
-	            	}
-					catch (Exception ex){
-		        		Log.e("Zeemote","Error on playing answer audio: "+ex.getMessage());
-		        	}
-	            }
-				break;
-			case MSG_ZEEMOTE_BUTTON_B:
-				closeReviewer();
-				break;
-			case MSG_ZEEMOTE_BUTTON_C:
-				if (AnkiDroidApp.deck().undoAvailable()){
-            	setNextCardAnimation(true);
-            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
-                        AnkiDroidApp.deck(), mCurrentCard.getId(), false));
-				}
-				break;
-			case MSG_ZEEMOTE_BUTTON_D:
-				if (!sDisplayAnswer) {
-						displayCardAnswer(); 
-					}				
-				break;
-			}
-			super.handleMessage(msg);
-		}
-	};
 	private int mWaitAnswerSecond;
 	private int mWaitQuestionSecond;
 
@@ -924,14 +842,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
         Sound.stopSounds();
 
-        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
-        	Log.d("Zeemote","Removing listener in onPause");
-        	AnkiDroidApp.zeemoteController().removeButtonListener(this);
-        	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
-    		adapter.removeButtonListener(this);
-    		adapter = null;
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        }
     }
 
     @Override
@@ -944,14 +854,6 @@ public class Reviewer extends Activity implements IButtonListener{
           mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);    	  
       }
       restartTimer();
-      if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
-    	  Log.d("Zeemote","Adding listener in onResume");
-    	  AnkiDroidApp.zeemoteController().addButtonListener(this);
-      	  adapter = new JoystickToButtonAdapter();
-      	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
-      	  adapter.addButtonListener(this);
-      	  getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-      }
     }
 
     @Override
@@ -1938,7 +1840,6 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", true);
         mshowNextReviewTime = preferences.getBoolean("showNextReviewTime", true);
         mZoomEnabled = preferences.getBoolean("zoom", false);
-        mZeemoteEnabled = preferences.getBoolean("zeemote", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", CardModel.DEFAULT_FONT_SIZE_RATIO);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
@@ -3166,27 +3067,4 @@ public class Reviewer extends Activity implements IButtonListener{
 	    	return false;
     }
 
-
-	@Override
-	public void buttonPressed(ButtonEvent arg0) {
-		Log.d("Zeemote","Button pressed, id: "+arg0.getButtonID());
-	}
-
-
-	@Override
-	public void buttonReleased(ButtonEvent arg0) {
-		Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
-		Message msg = Message.obtain();
-		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); //Button A = 0, Button B = 1...
-		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A) && (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { //make sure messages from future buttons don't get throug
-			this.ZeemoteHandler.sendMessage(msg);
-		}
-		if (arg0.getButtonID()==-1)
-		{
-			msg.what = MSG_ZEEMOTE_BUTTON_D+arg0.getButtonGameAction();
-			if ((msg.what >= MSG_ZEEMOTE_STICK_UP) && (msg.what <= MSG_ZEEMOTE_STICK_RIGHT)) { //make sure messages from future buttons don't get throug
-				this.ZeemoteHandler.sendMessage(msg);
-			}
-		}
-	}
 }
