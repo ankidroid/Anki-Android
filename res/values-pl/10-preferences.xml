@@ -86,7 +86,7 @@
   <string name="zoom">Włącz powiększenie</string>
   <string name="zoom_summ">Pokaż kontrolki zbliżenia podczas powtórek</string>
   <string name="zeemote">Wsparcie kontrolera Zeemote JS1</string>
-  <string name="zeemote_summ">Użyj przycisków kontrolera Zeemote JS1, aby obsługiwać przeglądanie.  A: Dobrze, B: Jeszcze raz D: Łatwo</string>
+  <string name="zeemote_summ">Użyj kontrolera Zeemote JS1, aby obsługiwać przeglądanie.</string>
   <string name="swipe">Włącz gesty</string>
   <string name="swipe_summ_off">Użyj gestów do przełączania ekranów i kart odpowiedzi. Ta opcja nie jest zgodna z kontrolkami powiększania</string>
   <string name="swipe_summ_on">Przesuń poziomo, aby przełączyć pomiędzy ekranami. Skonfiguruj inne czynności poniżej</string>

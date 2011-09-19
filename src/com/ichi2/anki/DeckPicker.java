@@ -79,10 +79,16 @@ import java.util.TreeSet;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+//zeemote imports
+import com.zeemote.zc.event.ButtonEvent;
+import com.zeemote.zc.event.IButtonListener;
+import com.zeemote.zc.util.JoystickToButtonAdapter;
+
+
 /**
  * Allows the user to choose a deck from the filesystem.
  */
-public class DeckPicker extends Activity implements Runnable {
+public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 	/**
 	 * Dialogs
@@ -115,6 +121,16 @@ public class DeckPicker extends Activity implements Runnable {
 	private static final int MSG_UPGRADE_NEEDED = 0;
 	private static final int MSG_UPGRADE_SUCCESS = 1;
 	private static final int MSG_UPGRADE_FAILURE = 2;
+    /** Zeemote messages */
+    private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
+    private static final int MSG_ZEEMOTE_BUTTON_B = MSG_ZEEMOTE_BUTTON_A+1;
+    private static final int MSG_ZEEMOTE_BUTTON_C = MSG_ZEEMOTE_BUTTON_A+2;
+    private static final int MSG_ZEEMOTE_BUTTON_D = MSG_ZEEMOTE_BUTTON_A+3;
+    private static final int MSG_ZEEMOTE_STICK_UP = MSG_ZEEMOTE_BUTTON_A+4;
+    private static final int MSG_ZEEMOTE_STICK_DOWN = MSG_ZEEMOTE_BUTTON_A+5;
+    private static final int MSG_ZEEMOTE_STICK_LEFT = MSG_ZEEMOTE_BUTTON_A+6;
+    private static final int MSG_ZEEMOTE_STICK_RIGHT = MSG_ZEEMOTE_BUTTON_A+7;
+	
 
 	/**
 	 * Deck orders
@@ -187,6 +203,12 @@ public class DeckPicker extends Activity implements Runnable {
  	private GestureDetector gestureDetector;
  	View.OnTouchListener gestureListener;
  	private boolean mSwipeEnabled;
+ 	
+ 	/**
+ 	 * Zeemote controller
+ 	 */
+	protected JoystickToButtonAdapter adapter;
+ 	
  	
 	// ----------------------------------------------------------------------------
 	// LISTENERS
@@ -370,7 +392,38 @@ public class DeckPicker extends Activity implements Runnable {
          }
     };
 
+    //Zeemote handler
+	Handler ZeemoteHandler = new Handler() {
+		public void handleMessage(Message msg){
+			switch(msg.what){
+			case MSG_ZEEMOTE_STICK_UP:
+				mDeckListView.requestFocusFromTouch();
+				sendKey(KeyEvent.KEYCODE_DPAD_UP);
+				break;
+			case MSG_ZEEMOTE_STICK_DOWN:
+				mDeckListView.requestFocusFromTouch();
+				sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+				break;
+			case MSG_ZEEMOTE_STICK_LEFT:
+				break;
+			case MSG_ZEEMOTE_STICK_RIGHT:
+				break;
+			case MSG_ZEEMOTE_BUTTON_A:
+				sendKey(KeyEvent.KEYCODE_ENTER);
+				break;
+			case MSG_ZEEMOTE_BUTTON_B:
+				sendKey(KeyEvent.KEYCODE_BACK);
+				break;
+			case MSG_ZEEMOTE_BUTTON_C:
+				break;
+			case MSG_ZEEMOTE_BUTTON_D:
+				break;
+			}
+			super.handleMessage(msg);
+		}
+	};
 
+    
 	// ----------------------------------------------------------------------------
 	// ANDROID METHODS
 	// ----------------------------------------------------------------------------
@@ -488,10 +541,23 @@ public class DeckPicker extends Activity implements Runnable {
         	});        
 	}
 
+	protected void sendKey(int keycode) {
+		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,keycode));
+		this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,keycode));
+	}
+
 	@Override
 	protected void onPause() {
 		Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
 
+        if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){ 
+        	Log.d("Zeemote","Removing listener in onPause");
+        	AnkiDroidApp.zeemoteController().removeButtonListener(this);
+        	AnkiDroidApp.zeemoteController().removeJoystickListener(adapter);
+    		adapter.removeButtonListener(this);
+    		adapter = null;
+        }        
+        
 		super.onPause();
 		waitForDeckLoaderThread();
 	}
@@ -1680,4 +1746,39 @@ public class DeckPicker extends Activity implements Runnable {
 	    else
 	    	return false;
     }
+
+	@Override
+	public void buttonPressed(ButtonEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void buttonReleased(ButtonEvent arg0) {
+		Log.d("Zeemote","Button released, id: "+arg0.getButtonID());
+		Message msg = Message.obtain();
+		msg.what = MSG_ZEEMOTE_BUTTON_A + arg0.getButtonID(); //Button A = 0, Button B = 1...
+		if ((msg.what >= MSG_ZEEMOTE_BUTTON_A) && (msg.what <= MSG_ZEEMOTE_BUTTON_D)) { //make sure messages from future buttons don't get throug
+			this.ZeemoteHandler.sendMessage(msg);
+		}
+		if (arg0.getButtonID()==-1)
+		{
+			msg.what = MSG_ZEEMOTE_BUTTON_D+arg0.getButtonGameAction();
+			if ((msg.what >= MSG_ZEEMOTE_STICK_UP) && (msg.what <= MSG_ZEEMOTE_STICK_RIGHT)) { //make sure messages from future buttons don't get throug
+				this.ZeemoteHandler.sendMessage(msg);
+			}
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	      if ((AnkiDroidApp.zeemoteController() != null) && (AnkiDroidApp.zeemoteController().isConnected())){
+	    	  Log.d("Zeemote","Adding listener in onResume");
+	    	  AnkiDroidApp.zeemoteController().addButtonListener(this);
+	      	  adapter = new JoystickToButtonAdapter();
+	      	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
+	      	  adapter.addButtonListener(this);
+	      }
+	}
 }
