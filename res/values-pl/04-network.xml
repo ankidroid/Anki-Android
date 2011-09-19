@@ -45,9 +45,9 @@
   <string name="resume_download">Wznów pobieranie</string>
   <string name="pause_download">Wstrzymaj pobieranie</string>
   <string name="duplicate_download">Ta talia jest już pobierana</string>
-  <string name="sync_all_title">Sync all decks</string>
+  <string name="sync_all_title">Synchronizuj wszystkie talie</string>
   <string name="sync_all">Synchronizuj wszystkie</string>
-  <string name="sync_prepare_syncing">Preparing syncing...</string>
+  <string name="sync_prepare_syncing">Przygotowywanie synchronizacji...</string>
   <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
   <string name="no_user_password_error_message">Aby kontynuować tę operację, musisz posiadać konto AnkiOnline i być zalogowany.</string>
   <string name="sync_progress_bar_title">Synchronizacja %s</string>
@@ -88,7 +88,7 @@
   <string name="sync_log_clocks_unsynchronized">Czas urządzenia różni się od tego na serwerze o %1$d sekund%2$s, synchronizacja niemożliwa.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, być może źle ustawiono strefę czasową</string>
   <string name="sync_log_clocks_unsynchronized_date">, być może źle ustawiono datę</string>
-  <string name="sync_log_old_version">Zmienił się protokół synchronizacji, należy zaktualizować AnkiDroid do najnowszej wersji. Zobacz http://code.google.com/p/ankidroid</string>
+  <string name="sync_log_old_version">Zmienił się protokół synchronizacji, należy zaktualizować AnkiDroid do najnowszej wersji. Zobacz %s</string>
   <string name="sync_log_conflict_resolution_required">Talia kart została zmieniona po obu stronach. Proszę otworzyć talię kart i wykonać synchronizację by rozwiązać problem.</string>
   <string name="sync_log_create_deck_failed">Nie udało się utworzyć talii na serwerze: %1$s</string>
   <string name="sync_log_finish_error">Wystąpił błąd podczas wysyłania zakończenia w kierunku do serwera</string>

@@ -42,7 +42,7 @@
   <string name="card_details_question">Pytanie</string>
   <string name="card_details_answer">Odpowiedź</string>
   <string name="card_details_due">Zaległe</string>
-  <string name="card_details_last_due">Last due</string>
+  <string name="card_details_last_due">Ostatnio zaległa</string>
   <string name="card_details_now">Teraz</string>
   <string name="card_details_interval">Odstęp</string>
   <string name="card_details_ease">Łatwość</string>

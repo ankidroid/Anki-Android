@@ -1555,7 +1555,6 @@ public class Reviewer extends Activity implements IButtonListener{
 
         // hunt for input issue 720, like android issue 3341
         if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
-            mCard.setFocusable(true);
             mCard.setFocusableInTouchMode(true);
         }
         
@@ -1677,24 +1676,6 @@ public class Reviewer extends Activity implements IButtonListener{
         webView.addJavascriptInterface(new JavaScriptInterface(), "interface");
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 7) {
             webView.setFocusableInTouchMode(false);
-        }
-        // wip on input issue 720, like android issue 7189
-        if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
-        	webView.requestFocus(View.FOCUS_DOWN);
-        	/**webView.setOnTouchListener(new View.OnTouchListener() {
-           		@Override
-            		public boolean onTouch(View v, MotionEvent event) {
-                		switch (event.getAction()) {
-                    			case MotionEvent.ACTION_DOWN:
-                    			case MotionEvent.ACTION_UP:
-                       		 		if (!v.hasFocus()) {
-                            				v.requestFocus();
-                        			}
-                        			break;
-                			}
-                			return false;
-            			}
-        		});*/
         }
         Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
 
@@ -2367,7 +2348,6 @@ public class Reviewer extends Activity implements IButtonListener{
 	            mCardFrame.addView(mNextCard, 0);
 	            // hunt for input issue 720, like android issue 3341
 	            if (Integer.parseInt(android.os.Build.VERSION.SDK) < 8) {
-	            	mCard.setFocusable(true);
 	            	mCard.setFocusableInTouchMode(true);
 	            }
 	        } else {

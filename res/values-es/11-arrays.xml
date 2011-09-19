@@ -116,8 +116,8 @@
     <item>Interrumpir aprendizaje</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
+    <item>Android Oscuro</item>
+    <item>Android Luminoso</item>
     <item>Azul</item>
   </string-array>
 </resources>

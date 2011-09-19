@@ -116,8 +116,8 @@
     <item>Przerwij naukę</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
+    <item>Android Ciemny</item>
+    <item>Android Jasny</item>
+    <item>Niebieski</item>
   </string-array>
 </resources>

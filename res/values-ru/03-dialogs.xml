@@ -38,7 +38,7 @@
   <string name="dont_show_again">Не показывать снова</string>
   <string name="deck_upgrade_too_old_version">Колоды версий до 39 не поддерживаются AnkiDroid, пожалуйста, откройте колоду настольной версией Anki для обновлении колоды до последней версии.</string>
   <string name="deck_upgrade_version_61_has_latex">Колода не может быть полностью обновлена, так как она содержит LaTeX-выражения; пожалуйста откройте колоду в десктоп-версии Anki и пересохраните файл колоды (чтобы обновить её до последнего нового формата и перегенерировать LaTeX).</string>
-  <string name="sync_log_title">Ход выполнения синхронизации</string>
+  <string name="sync_log_title">Ход синхронизации</string>
   <string name="deckpicker_upgrading">Обновление колоды...</string>
   <string name="deckpicker_upgrade_failed">Обновление не удалось!</string>
   <string name="deckpicker_upgrade_notes_title">Результаты обновления колоды</string>
