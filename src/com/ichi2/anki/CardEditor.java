@@ -208,7 +208,6 @@ public class CardEditor extends Activity {
 		mModelButton = (Button) findViewById(R.id.CardEditorModelButton);
 		mCardModelButton = (Button) findViewById(R.id.CardEditorCardModelButton);
 		mTags = (Button) findViewById(R.id.CardEditorTagButton);
-		mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
 
 		mNewSelectedCardModels = new LinkedHashMap<Long, CardModel>();
 		cardModelIds = new ArrayList<Long>();
@@ -265,6 +264,7 @@ public class CardEditor extends Activity {
 			mFactTags = mEditorFact.getTags();
 		}
 
+		mTags.setText(getResources().getString(R.string.CardEditorTags, mFactTags));
 		mModified = false;
 
 		SharedPreferences preferences = PrefSettings
