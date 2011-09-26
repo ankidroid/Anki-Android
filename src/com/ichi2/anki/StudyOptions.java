@@ -848,6 +848,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 	      	  AnkiDroidApp.zeemoteController().addJoystickListener(adapter);
 	      	  adapter.addButtonListener(this);
 	      }
+	      if ((mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) && (mProgressDialog == null || !mProgressDialog.isShowing())) {
+		      showDeckInformation(true);
+	      }
 	}
 
 
