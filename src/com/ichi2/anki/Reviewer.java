@@ -1445,7 +1445,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 return true;
         	case DICTIONARY_COLORDICT:
         		Intent colordictSearchIntent = new Intent(mDictionaryAction);
-        		colordictSearchIntent.putExtra("EXTRA_QUERY", mClipboard.getText());
+        		colordictSearchIntent.putExtra("EXTRA_QUERY", mClipboard.getText().toString().trim().replaceAll("[,;:\\s\\(\\[\\)\\]]*$", ""));
         		startActivity(colordictSearchIntent);
                 mClipboard.setText("");
                 return true;     
