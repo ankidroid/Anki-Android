@@ -120,7 +120,7 @@
 		</service>
 		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
 		<!-- Broadcast Receiver that will process AppWidget updates -->
-		<receiver android:name=".AnkiDroidWidget" android:label="AnkiDroid">
+		<receiver android:name=".AnkiDroidWidget" android:label="@string/widget_medium">
 			<intent-filter>
 			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
@@ -128,6 +128,14 @@
 		</receiver>
 		<!-- Service to perform web API queries -->
 		<service android:name=".AnkiDroidWidget$UpdateService" />
+		<receiver android:name=".AnkiDroidWidgetSmall" android:label="@string/widget_small">
+			<intent-filter>
+			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_provider_small" />
+		</receiver>
+		<!-- Service to perform web API queries -->
+		<service android:name=".AnkiDroidWidgetSmall$UpdateService" />
 </application>
 	<uses-sdk  android:minSdkVersion="3"
 		android:targetSdkVersion="11"/>
