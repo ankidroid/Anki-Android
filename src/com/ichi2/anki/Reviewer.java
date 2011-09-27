@@ -1943,8 +1943,16 @@ public class Reviewer extends Activity implements IButtonListener{
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
-        mDictionary = Integer.parseInt(preferences.getString("dictionary",
-                Integer.toString(DICTIONARY_AEDICT)));
+        
+        int customDictionary = MetaDB.getLookupDictionary(this, mDeckFilename);
+        if (customDictionary != -1) {
+        	mDictionary = customDictionary;
+        } else {
+            mDictionary = Integer.parseInt(preferences.getString("dictionary",
+                    Integer.toString(DICTIONARY_AEDICT)));
+        	
+        }
+
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mSpeakText = preferences.getBoolean("tts", false);

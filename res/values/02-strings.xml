@@ -69,4 +69,7 @@
 <string name="fact_adder_intent_title">AnkiDroid Card</string>
 <string name="fact_adder_swap">Swap</string>
 
+<string name="deckpicker_select_dictionary_title">Select Dictionary</string>
+<string name="deckpicker_select_dictionary_default">Default</string>
+
 </resources>
