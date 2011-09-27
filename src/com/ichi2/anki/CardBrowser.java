@@ -703,16 +703,16 @@ public class CardBrowser extends Activity {
 			// This verification would not be necessary if
 			// onConfigurationChanged it's executed correctly (which seems
 			// that emulator does not do)
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SORT_CARDS, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));
-//			if (mProgressDialog.isShowing()) {
-//				try {
-//					mProgressDialog.dismiss();
-//				} catch (Exception e) {
-//					Log.e(AnkiDroidApp.TAG,
-//							"onPostExecute - Dialog dismiss Exception = "
-//									+ e.getMessage());
-//				}
-//			}
+//			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SORT_CARDS, mSortCardsHandler, new DeckTask.TaskData(mAllCards, new HashMapCompare()));
+			if (mProgressDialog.isShowing()) {
+				try {
+					mProgressDialog.dismiss();
+				} catch (Exception e) {
+					Log.e(AnkiDroidApp.TAG,
+							"onPostExecute - Dialog dismiss Exception = "
+									+ e.getMessage());
+				}
+			}
 		}
 
 		@Override
