@@ -127,6 +127,7 @@ public class CardEditor extends Activity {
 	private Fact mEditorFact;
 	private boolean mAddFact = false;
 	private boolean mForCopy = false;
+	private boolean mIntentAdd = false;
 
 	private Deck mDeck;
 	private Long mCurrentSelectedModelId;
@@ -238,6 +239,7 @@ public class CardEditor extends Activity {
 			mSourceText = extras.getString("SOURCE_TEXT");
 			mTargetText = extras.getString("TARGET_TEXT");
 			mAddFact = true;
+			mIntentAdd = true;
 		} else if (action != null
 				&& action.equals(INTENT_CREATE_FLASHCARD_SEND)) {
 			prepareForIntentAddition();
@@ -245,6 +247,7 @@ public class CardEditor extends Activity {
 			mSourceText = extras.getString(Intent.EXTRA_SUBJECT);
 			mTargetText = extras.getString(Intent.EXTRA_TEXT);
 			mAddFact = true;
+			mIntentAdd = true;
 		} else {
 			mDeck = AnkiDroidApp.deck();
 			switch (intent.getIntExtra(CARD_EDITOR_ACTION, ADD_CARD)) {
@@ -457,12 +460,21 @@ public class CardEditor extends Activity {
 			return true;
 		case MENU_RESET:
 			if (mAddFact) {
-				for (FieldEditText current : mEditFields) {
-					current.setText("");
+				if (mIntentAdd) {
+					if (mSourceText != null) {
+						mEditFields.get(0).setText(mSourceText);
+					}
+					if (mTargetText != null) {
+						mEditFields.get(1).setText(mTargetText);
+					}
+				} else {
+					for (FieldEditText current : mEditFields) {
+						current.setText("");
+					}
+					if (!mEditFields.isEmpty()) {
+						mEditFields.getFirst().requestFocus();
+					}					
 				}
-				if (!mEditFields.isEmpty()) {
-					mEditFields.getFirst().requestFocus();				
-				}				
 			} else {
 				populateEditFields();
 			}
@@ -860,6 +872,8 @@ public class CardEditor extends Activity {
 	}
 
 	private void swapText(boolean reset) {
+		String sourceText = mEditFields.get(mSourcePosition).getText().toString();
+		String targetText = mEditFields.get(mTargetPosition).getText().toString();
 		if (mEditFields.size() > mSourcePosition) {
 			mEditFields.get(mSourcePosition).setText("");
 		}
@@ -883,11 +897,11 @@ public class CardEditor extends Activity {
 				}
 			}
 		}
-		if (mSourceText != null) {
-			mEditFields.get(mSourcePosition).setText(mSourceText);
+		if (sourceText != null) {
+			mEditFields.get(mSourcePosition).setText(sourceText);
 		}
-		if (mSourceText != null) {
-			mEditFields.get(mTargetPosition).setText(mTargetText);
+		if (targetText != null) {
+			mEditFields.get(mTargetPosition).setText(targetText);
 		}
 	}
 
