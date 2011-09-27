@@ -404,7 +404,7 @@ public class CardEditor extends Activity {
 		MenuItem item;
 		Resources res = getResources();
 		Lookup.initialize(this, mDeck.getDeckPath());
-		item = menu.add(Menu.NONE, MENU_LOOKUP, Menu.NONE, res.getString(R.string.card_editor_lookup));
+		item = menu.add(Menu.NONE, MENU_LOOKUP, Menu.NONE, Lookup.getSearchStringTitle());
 		item.setIcon(R.drawable.ic_menu_search);
 		item.setEnabled(Lookup.isAvailable());
 		item = menu.add(Menu.NONE, MENU_RESET, Menu.NONE, res.getString(R.string.card_editor_reset));
@@ -442,7 +442,6 @@ public class CardEditor extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Resources res = getResources();
 		switch (item.getItemId()) {
 		case MENU_COPY_CARD:
 		case MENU_ADD_CARD:
