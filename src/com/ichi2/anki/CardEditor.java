@@ -378,6 +378,7 @@ public class CardEditor extends Activity {
 		}
 	}
 
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -473,7 +474,7 @@ public class CardEditor extends Activity {
 					}
 					if (!mEditFields.isEmpty()) {
 						mEditFields.getFirst().requestFocus();
-					}					
+					}
 				}
 			} else {
 				populateEditFields();
@@ -873,7 +874,13 @@ public class CardEditor extends Activity {
 
 	private void swapText(boolean reset) {
 		String sourceText = mEditFields.get(mSourcePosition).getText().toString();
+		if (sourceText.length() == 0) {
+			sourceText = mSourceText;
+		}
 		String targetText = mEditFields.get(mTargetPosition).getText().toString();
+		if (targetText.length() == 0) {
+			targetText = mTargetText;
+		}
 		if (mEditFields.size() > mSourcePosition) {
 			mEditFields.get(mSourcePosition).setText("");
 		}
