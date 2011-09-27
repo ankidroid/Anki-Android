@@ -530,6 +530,40 @@ public class Card {
     }
 
 
+    public void resetCard() {
+        Log.i(AnkiDroidApp.TAG, "Reset Card: " + mId);
+    	mModified = Utils.now();
+    	mPriority = PRIORITY_NORMAL;
+        mInterval = 0;
+        mLastInterval = 0;
+        mDue = Utils.now();
+        mLastDue = 0;
+        mFactor = Deck.INITIAL_FACTOR;
+        mLastFactor = Deck.INITIAL_FACTOR;
+        mFirstAnswered = 0;
+        mReps = 0;
+        mSuccessive = 0;
+        mAverageTime = 0;
+        mReviewTime = 0;
+        mYoungEase0 = 0;
+        mYoungEase1 = 0;
+        mYoungEase2 = 0;
+        mYoungEase3 = 0;
+        mYoungEase4 = 0;
+        mMatureEase0 = 0;
+        mMatureEase1 = 0;
+        mMatureEase2 = 0;
+        mMatureEase3 = 0;
+        mMatureEase4 = 0;
+        mYesCount = 0;
+        mNoCount = 0;
+        mRelativeDelay = 0;
+        mType = TYPE_NEW;
+        mCombinedDue = 0;
+        toDB();
+    }
+
+
     public boolean fromDB(long id) {
         Cursor cursor = null;
 

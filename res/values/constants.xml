@@ -153,6 +153,8 @@
 		<item>lookup dictionary now for every deck selectable</item>
 		<item>card details now accessible via click on top bar</item>
 		<item>option to fix screen orientation</item>
+		<item>better card editor: lookup, add card, copy card, reset</item>
+		<item>possibility to reset cards progress (in card editor)</item>
 		<item>faster card browser searching</item>
 		<item>intent-based card addition</item>
 		<item>more convenient lookup via appearing icon</item>

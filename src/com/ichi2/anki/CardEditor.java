@@ -36,6 +36,8 @@ import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -84,15 +86,25 @@ public class CardEditor extends Activity {
 	public static final int EDIT_REVIEWER_CARD = 0;
 	public static final int EDIT_BROWSER_CARD = 1;
 	public static final int ADD_CARD = 2;
+	public static final int COPY_CARD = 3;
 
 	private static final int DIALOG_MODEL_SELECT = 0;
 	private static final int DIALOG_CARD_MODEL_SELECT = 1;
 	private static final int DIALOG_TAGS = 2;
 	private static final int DIALOG_DECK_SELECT = 3;
+	private static final int DIALOG_RESET_CARD = 4;
 
 	private static final String INTENT_CREATE_FLASHCARD = "org.openintents.indiclash.CREATE_FLASHCARD";
 	private static final String INTENT_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
+	private static final int MENU_LOOKUP = 0;
+	private static final int MENU_RESET = 1;
+	private static final int MENU_COPY_CARD = 2;
+	private static final int MENU_ADD_CARD = 3;
+	private static final int MENU_RESET_CARD_PROGRESS = 4;
+
+	private static final int ACTION_ADD_CARD = 0;
+	
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
 	 */
@@ -114,6 +126,7 @@ public class CardEditor extends Activity {
 
 	private Fact mEditorFact;
 	private boolean mAddFact = false;
+	private boolean mForCopy = false;
 
 	private Deck mDeck;
 	private Long mCurrentSelectedModelId;
@@ -179,6 +192,9 @@ public class CardEditor extends Activity {
 
 		@Override
 		public void onPostExecute(DeckTask.TaskData result) {
+			if (mForCopy) {
+				closeCardEditor();
+			}
 		}
 	};
 
@@ -230,6 +246,7 @@ public class CardEditor extends Activity {
 			mTargetText = extras.getString(Intent.EXTRA_TEXT);
 			mAddFact = true;
 		} else {
+			mDeck = AnkiDroidApp.deck();
 			switch (intent.getIntExtra(CARD_EDITOR_ACTION, ADD_CARD)) {
 			case EDIT_REVIEWER_CARD:
 				mEditorFact = Reviewer.getEditorCard().getFact();
@@ -237,12 +254,24 @@ public class CardEditor extends Activity {
 			case EDIT_BROWSER_CARD:
 				mEditorFact = CardBrowser.getEditorCard().getFact();
 				break;
+			case COPY_CARD:
+				mForCopy = true;
 			case ADD_CARD:
 				mAddFact = true;
-				mDeck = AnkiDroidApp.deck();
 				loadContents();
 				modelChanged();
 				mSave.setEnabled(false);
+				if (mForCopy) {
+					String[] contents = intent.getStringExtra("contents").split("\\x1f");
+					for (int i = 0; i < mEditFields.size(); i++) {
+						if (i < contents.length) {
+							mEditFields.get(i).setText(contents[i]);
+							if (contents[i].length() > 0) {
+								mSave.setEnabled(true);								
+							}
+						}
+					}
+				}
 				break;
 			}
 		}
@@ -364,6 +393,90 @@ public class CardEditor extends Activity {
 			unregisterReceiver(mUnmountReceiver);
 		}
 	}
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuItem item;
+		Resources res = getResources();
+		item = menu.add(Menu.NONE, MENU_LOOKUP, Menu.NONE, res.getString(R.string.card_editor_lookup));
+		item.setIcon(R.drawable.ic_menu_search);
+		item.setEnabled(false);
+		item = menu.add(Menu.NONE, MENU_RESET, Menu.NONE, res.getString(R.string.card_editor_reset));
+		item.setIcon(R.drawable.ic_menu_revert);
+		if (!mAddFact) {
+			item = menu.add(Menu.NONE, MENU_ADD_CARD, Menu.NONE, res.getString(R.string.card_editor_add_card));
+			item.setIcon(R.drawable.ic_menu_add);			
+		}
+		item = menu.add(Menu.NONE, MENU_COPY_CARD, Menu.NONE, res.getString(R.string.card_editor_copy_card));
+		item.setIcon(R.drawable.ic_menu_upload);
+		if (!mAddFact) {
+			item = menu.add(Menu.NONE, MENU_RESET_CARD_PROGRESS, Menu.NONE, res.getString(R.string.card_editor_reset_card));
+			item.setIcon(R.drawable.ic_menu_delete);			
+		}
+		return true;
+	}
+
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		for (int i = 0; i < mEditFields.size(); i++) {
+			if (mEditFields.get(i).getText().length() > 0) {
+		        menu.findItem(MENU_COPY_CARD).setEnabled(true);
+				break;
+			} else if (i == mEditFields.size() - 1) {
+		        menu.findItem(MENU_COPY_CARD).setEnabled(false);				
+			}
+		}
+		return true;
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Resources res = getResources();
+		switch (item.getItemId()) {
+		case MENU_COPY_CARD:
+		case MENU_ADD_CARD:
+			Intent intent = new Intent(CardEditor.this, CardEditor.class);
+			if (item.getItemId() == MENU_COPY_CARD) {
+				intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.COPY_CARD);
+				StringBuilder contents = new StringBuilder();
+				for (FieldEditText current : mEditFields) {
+					contents.append(current.getText().toString()).append("\u001f");
+				}
+				intent.putExtra("contents", contents.toString());
+			} else {
+				intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
+			}
+			startActivityForResult(intent, ACTION_ADD_CARD);
+			if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
+				ActivityTransitionAnimation.slide(CardEditor.this,
+						ActivityTransitionAnimation.LEFT);
+			}
+			return true;
+		case MENU_RESET:
+			if (mAddFact) {
+				for (FieldEditText current : mEditFields) {
+					current.setText("");
+				}
+				if (!mEditFields.isEmpty()) {
+					mEditFields.getFirst().requestFocus();				
+				}				
+			} else {
+				populateEditFields();
+			}
+			return true;
+		case MENU_LOOKUP:
+			// TODO
+			return true;
+		case MENU_RESET_CARD_PROGRESS:
+			showDialog(DIALOG_RESET_CARD);
+			return true;
+		}
+		return false;
+	}
+
 
 	// ----------------------------------------------------------------------------
 	// CUSTOM METHODS
@@ -615,6 +728,26 @@ public class CardEditor extends Activity {
 					});
 			mCardModelDialog = builder.create();
 			dialog = mCardModelDialog;
+			break;
+		case DIALOG_RESET_CARD:
+    		builder.setTitle(res.getString(R.string.reset_card_dialog_title));
+    		builder.setMessage(res.getString(R.string.reset_card_dialog_message));
+			builder.setPositiveButton(res.getString(R.string.yes),
+					new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							for (long cardId : mDeck.getCardsFromFactId(mEditorFact.getId())) {
+								mDeck.cardFromId(cardId).resetCard();
+							}
+							mDeck.reset();
+							setResult(RESULT_OK);
+							Themes.showThemedToast(CardEditor.this, getResources().getString(
+									R.string.reset_card_dialog_confirmation), true);
+						}
+					});
+			builder.setNegativeButton(res.getString(R.string.no), null);
+			builder.setCancelable(true);
+			dialog = builder.create();
 			break;
 		}
 		return dialog;
