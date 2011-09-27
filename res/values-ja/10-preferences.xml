@@ -62,11 +62,14 @@
   <string name="dictionary_summ">この単語を辞書で検索します:XXX</string>
   <string name="reset_languages">言語設定をリセットします</string>
   <string name="reset_languages_summ">すべての単語帳の言語の設定(テキスト読み上げ, 辞書)をリセットします. 単語帳選択で選択した単語帳の設定をリセットします</string>
+  <string name="reset_all">Reset All</string>
+  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Reset Dialogs</string>
   <string name="reset_dialogs_question">Reset all dialogs?</string>
   <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">言語の割り当てをリセットしますか?</string>
-  <string name="reset_languages_confirmation">言語割り当てのリセット</string>
+  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">ふりがなを振る</string>
   <string name="use_ruby_support_summ">\'[\'と\']\'に囲まれたテキストはふりがなとして処理</string>
   <string name="display_font_size">表示フォントサイズ</string>
@@ -86,7 +89,7 @@
   <string name="zoom">ズームを有効にする</string>
   <string name="zoom_summ">勉強中にズームコントロールを表示します</string>
   <string name="zeemote">Zeemote JS1のサポート</string>
-  <string name="zeemote_summ">復習のナビゲートにZeemote JS1コン​​トローラーのボタンを使用します. A:良い B:もう一度 D：簡単</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">ジェスチャーを有効にする</string>
   <string name="swipe_summ_off">画面と解答カードの切り替えにジェスチャを使用します. このオプションは, ズーム昨日と互換性がありません</string>
   <string name="swipe_summ_on">水平方向のスワイプで画面を切り替えることができます. 他のアクションは下で設定します</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">質問が表示されたあと指定時間が経過すると、答えを自動的に表示する</string>
   <string name="timeout_answer_seconds">答えが表示されるまでの秒数</string>
   <string name="timeout_answer_seconds_summ">答えが自動的に表示されるまでの時間を選択して下さい</string>
+  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">言語を選択</string>
   <string name="select_theme">Theme</string>
   <string name="theme_animations">Animations</string>

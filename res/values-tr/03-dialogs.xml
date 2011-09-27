@@ -55,4 +55,7 @@
   <string name="notification_stop">Bu güncellemeyi bana bir daha hatırlatma</string>
   <string name="swap_qa_title">S/Y Yerlerini Değiştir</string>
   <string name="swap_qa_text">Yalnızca soru ve yanıtların yerini değiştirmek aralıklı yineleme fikrine aykırıdır. Ters öğrenim yönü için yeni kartlar oluşturmalısınız. Bunu Anki Masaüstü ile kolaylıkla yapabilirsiniz.\nS/Y yerleri yine de değiştirilsin mi?</string>
+  <string name="reset_card_dialog_title">Reset card progress</string>
+  <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
+  <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 </resources>

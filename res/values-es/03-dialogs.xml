@@ -55,4 +55,7 @@
   <string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
   <string name="swap_qa_title">Intercambiar Pregunta/Respuesta</string>
   <string name="swap_qa_text">Ten en cuenta que el simple intercambio de preguntas y respuestas es contrario al concepto de repetición espaciada. Lo ideal es crear nuevas tarjetas para la dirección de aprendizaje inversa. Puedes hacer esto fácilmente con Anki Desktop.\n¿Intercambiar Pregunta/Respuesta de todos modos?</string>
+  <string name="reset_card_dialog_title">Reset card progress</string>
+  <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
+  <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 </resources>

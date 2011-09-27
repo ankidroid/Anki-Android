@@ -62,11 +62,14 @@
   <string name="dictionary_summ">Dictionnaire dans lequel les recherches doivent être effectuées: XXX</string>
   <string name="reset_languages">Réinitialiser les langues</string>
   <string name="reset_languages_summ">Réinitialiser les affectations de langue (synthèse vocale et dictionnaires) pour tous les paquets. Réinitialiser les affectations spécifiques dans la liste des paquets</string>
+  <string name="reset_all">Reset All</string>
+  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Réinitialiser les fenêtres</string>
   <string name="reset_dialogs_question">Réinitialiser toutes les fenêtres ?</string>
   <string name="reset_dialogs_summ">Réinitialise toutes les fenêtres que vous ne vouliez plus voir</string>
   <string name="reset_languages_question">Réinitialiser toutes les affectations de langues ?</string>
-  <string name="reset_languages_confirmation">Toutes les affectations de langues ont été réinitialisées</string>
+  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">Montrer les annotations ruby</string>
   <string name="use_ruby_support_summ">Si les caractères \'[\' et \']\' sont trouvés, considérer le texte comme une annotation ruby</string>
   <string name="display_font_size">Fonte d\'affichage en taille relative</string>
@@ -86,7 +89,7 @@
   <string name="zoom">Activer le Zoom</string>
   <string name="zoom_summ">Afficher les contrôles de Zoom lors des révisions</string>
   <string name="zeemote">Support Zeemote JS1</string>
-  <string name="zeemote_summ">Utilisez les boutons du contrôleur JS1 Zeemote. A: Bon, B: Encore, D: Facile</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">Permettre la commande par geste</string>
   <string name="swipe_summ_off">Utilisez des gestes pour basculer entre les écrans et les cartes de réponse. Cette option n\'est pas compatible avec les commandes de contrôle du zoom</string>
   <string name="swipe_summ_on">Faites glisser horizontalement pour basculer entre les écrans. Configurez les autres actions ci-dessous</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">Montre la réponse après avoir montré la question pendant un certain temps.</string>
   <string name="timeout_answer_seconds">Secondes avant de montrer la réponse</string>
   <string name="timeout_answer_seconds_summ">Sélectionnez la duré avant que la réponse soit automatiquement affichée</string>
+  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">Sélectionnez la langue</string>
   <string name="select_theme">Thème</string>
   <string name="theme_animations">Animations</string>

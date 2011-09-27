@@ -62,11 +62,14 @@
   <string name="dictionary_summ">Словарь, в котором будет произведён поиск: XXX</string>
   <string name="reset_languages">Сброс языков</string>
   <string name="reset_languages_summ">Сброс языка (для преобразования текста в звук и словарей) для всех колод. Сброс для конкретных колод - в оглавлении колод</string>
+  <string name="reset_all">Reset All</string>
+  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Восстанавливать диалоги</string>
   <string name="reset_dialogs_question">Показывать все диалоги?</string>
   <string name="reset_dialogs_summ">Снова показывать диалоги, которые были скрыты</string>
   <string name="reset_languages_question">Сброс всех языков?</string>
-  <string name="reset_languages_confirmation">Сброс всех языков</string>
+  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">Поддерживать Ruby-аннотации</string>
   <string name="use_ruby_support_summ">Если найдены символы \'[\' и \']\', то заключенный в них текст будет рассмотрен как Ruby-аннотация</string>
   <string name="display_font_size">Размер шрифта</string>
@@ -86,7 +89,7 @@
   <string name="zoom">Включить масштабирование</string>
   <string name="zoom_summ">Показывать кнопку \"Увеличить\" при просмотре колоды</string>
   <string name="zeemote">Поддержка Zeemote JS1</string>
-  <string name="zeemote_summ">Используйте кнопки управления устройства Zeemote JS1 для навигации при обучении. A: Хорошо, B: Снова, D: Легко</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">Включить жесты</string>
   <string name="swipe_summ_off">Используйте жесты для переключения между экранами. Не работает одновременно с кнопками масштабирования</string>
   <string name="swipe_summ_on">Горизонтальное движение для переключения между экранами. Настройка других действий ниже</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">После показа вопроса через заданное время будет автоматически показан ответ без нажатия кнопки пользователем</string>
   <string name="timeout_answer_seconds">Секунд до показа ответа</string>
   <string name="timeout_answer_seconds_summ">Установка интервала времени, через которое ответ будет автоматически показан</string>
+  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">Выберите язык</string>
   <string name="select_theme">Тема</string>
   <string name="theme_animations">Анимация</string>

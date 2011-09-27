@@ -55,4 +55,7 @@
   <string name="notification_stop">Nie informuj mnie ponownie o tej aktualizacji</string>
   <string name="swap_qa_title">Zamień Pyt/Odp</string>
   <string name="swap_qa_text">Pamiętaj, że zamienianie po prostu miejscami pytania i odpowiedzi przeczy idei planowanych powtórek.  Do nauki \"w drugą stronę\" lepiej tworzyć nowe karty, co można łatwo zrobić w wersji desktopowej Anki.\nCzy mimo to zamienić pytanie i odpowiedź?</string>
+  <string name="reset_card_dialog_title">Reset card progress</string>
+  <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
+  <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 </resources>

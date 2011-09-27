@@ -69,6 +69,7 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Đặt lại ngôn ngữ phân công</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Đặt lại ngôn ngữ</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Bắt đầu chế độ nhồi</string>
   <string name="end_cram">Dừng chế độ nhồi</string>
   <string name="cram">Nhồi nhét</string>
@@ -80,6 +81,7 @@
   <string name="menu_synchronize">Đồng bộ hóa</string>
   <string name="menu_my_account">Tài khoản của tôi</string>
   <string name="menu_preferences">Tuỳ chọn</string>
+  <string name="menu_zeemote">Zeemote</string>
   <string name="menu_deck_properties">Thuộc tính tập thẻ</string>
   <string name="menu_add_card">Thêm thẻ</string>
   <string name="menu_about">Giới thiệu</string>

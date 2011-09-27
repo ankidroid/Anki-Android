@@ -62,11 +62,14 @@
   <string name="dictionary_summ">Kamus di mana pencarian harus dilakukan: XXX</string>
   <string name="reset_languages">Reset bahasa</string>
   <string name="reset_languages_summ">Reset tugas bahasa (untuk teks ke bahasa dan kamus) untuk semua dek. Reset tugas spesifik pada pemilih dek</string>
+  <string name="reset_all">Reset All</string>
+  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Dialog Reset</string>
   <string name="reset_dialogs_question">Reset semua dialog?</string>
   <string name="reset_dialogs_summ">Reset semua dialog yang diatur akan tidak ditampilkan lagi</string>
   <string name="reset_languages_question">Reset semua tugas bahasa?</string>
-  <string name="reset_languages_confirmation">Reset semua tugasan bahasa</string>
+  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">Memberikan dukungan ayat ruby</string>
   <string name="use_ruby_support_summ">Jika karakter \' [\' dan \']\' ditemukan, maka teks dipilih ditangani sebagai ayat ruby</string>
   <string name="display_font_size">Tampilan relatif ukuran font</string>
@@ -86,7 +89,7 @@
   <string name="zoom">Aktifkan Zum</string>
   <string name="zoom_summ">Tampilkan kawalan zum ketika mereviu</string>
   <string name="zeemote">Sokongan Zeemote JS1 </string>
-  <string name="zeemote_summ">Guna butang pada Zeemote JS1 untuk kawalan.A:Baik,B:Ulang,D:Mudah</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">Mengaktifkan gerakan</string>
   <string name="swipe_summ_off">Gunakan gerakan untuk beralih antara layar dan kad jawapan. Pilihan ini tidak serasi dengan kawalan zum</string>
   <string name="swipe_summ_on">Sapu mendatar untuk tukar skrin. Set aktiviti lain di bawah</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">Selepas Soalan ditayang, Jawapan akan ditayang selepas selang masa dipenuhi </string>
   <string name="timeout_answer_seconds">Saat sebelum jawapan ditunjuk</string>
   <string name="timeout_answer_seconds_summ">Pilih tempoh masa sebelum jawapan dipapar secara automatik</string>
+  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">Pilih Bahasa</string>
   <string name="select_theme">Tema</string>
   <string name="theme_animations">Animasi</string>

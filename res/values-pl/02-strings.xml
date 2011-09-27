@@ -59,4 +59,11 @@
   <string name="studyoptions_no_external_storage_message">Brak zewnętrznej pamięci masowej. AnkiDroid potrzebuje dostępu do karty SD aby móc wczytać twoje talie Anki. Sprawdź, czy twoja karta SD jest zamontowana i spróbuj ponownie.</string>
   <string name="fact_adder_intent_title">Karta AnkiDroid</string>
   <string name="fact_adder_swap">Zamień</string>
+  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
+  <string name="deckpicker_select_dictionary_default">Default</string>
+  <string name="card_editor_lookup">Lookup</string>
+  <string name="card_editor_add_card">Add card</string>
+  <string name="card_editor_reset">Reset</string>
+  <string name="card_editor_copy_card">Copy card</string>
+  <string name="card_editor_reset_card">Reset progress</string>
 </resources>

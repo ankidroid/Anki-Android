@@ -62,11 +62,14 @@
   <string name="dictionary_summ">Dictionary in which lookups should be performed: XXX</string>
   <string name="reset_languages">Reset Languages</string>
   <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
+  <string name="reset_all">Reset All</string>
+  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Reset Dialogs</string>
   <string name="reset_dialogs_question">Reset all dialogs?</string>
   <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">Reset all language assignments?</string>
-  <string name="reset_languages_confirmation">All language assignments reset</string>
+  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">Provide ruby annotation support</string>
   <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
   <string name="display_font_size">Relative display font size</string>
@@ -86,7 +89,7 @@
   <string name="zoom">Enable Zoom</string>
   <string name="zoom_summ">Show zoom controls when reviewing</string>
   <string name="zeemote">Zeemote JS1 support</string>
-  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">Enable Gestures</string>
   <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
   <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
   <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
+  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">Select Language</string>
   <string name="select_theme">Theme</string>
   <string name="theme_animations">Animations</string>

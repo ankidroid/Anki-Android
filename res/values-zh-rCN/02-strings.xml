@@ -59,4 +59,11 @@
   <string name="studyoptions_no_external_storage_message">现在没有可用的外部存储空间，AnkiDroid需要访问SD卡来读取并载入你的Anki牌组。请确认你已经挂载了SD卡并重试。</string>
   <string name="fact_adder_intent_title">AnkiDroid Card</string>
   <string name="fact_adder_swap">Swap</string>
+  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
+  <string name="deckpicker_select_dictionary_default">Default</string>
+  <string name="card_editor_lookup">Lookup</string>
+  <string name="card_editor_add_card">Add card</string>
+  <string name="card_editor_reset">Reset</string>
+  <string name="card_editor_copy_card">Copy card</string>
+  <string name="card_editor_reset_card">Reset progress</string>
 </resources>

@@ -59,4 +59,11 @@
   <string name="studyoptions_no_external_storage_message">目前沒有可用的記憶卡。Ankidroid需要讀寫記憶卡的權限才能運作。請確認您的記憶卡裝載無誤，再試一次。</string>
   <string name="fact_adder_intent_title">AnkiDroid Card</string>
   <string name="fact_adder_swap">Swap</string>
+  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
+  <string name="deckpicker_select_dictionary_default">Default</string>
+  <string name="card_editor_lookup">Lookup</string>
+  <string name="card_editor_add_card">Add card</string>
+  <string name="card_editor_reset">Reset</string>
+  <string name="card_editor_copy_card">Copy card</string>
+  <string name="card_editor_reset_card">Reset progress</string>
 </resources>

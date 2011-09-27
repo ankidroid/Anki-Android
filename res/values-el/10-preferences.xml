@@ -62,11 +62,14 @@
   <string name="dictionary_summ">Λεξικό στο οποίο θα εκτελούνται οι αναζητήσεις: XXX</string>
   <string name="reset_languages">Επαναφορά Γλώσσών</string>
   <string name="reset_languages_summ">Επαναφορά αναθέσεων γλώσσας (για κείμενο σε ομιλία και λεξικά) για όλες τις τράπουλες. Επαναφέρετε αναθέσεις για συγκεκριμένες τράπουλες στον επιλογέα τραπουλών</string>
+  <string name="reset_all">Reset All</string>
+  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Reset Dialogs</string>
   <string name="reset_dialogs_question">Reset all dialogs?</string>
   <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">Επαναφορά όλων των αναθέσεων γλωσσών;</string>
-  <string name="reset_languages_confirmation">Όλες οι γλώσσες επαναφέρθηκαν</string>
+  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">Υποστήριξη οδηγειών για ruby</string>
   <string name="use_ruby_support_summ">Αν βρεθούν οι χαρακτήρες \'[\' and \']\', τότε το εσώκλειστο κείμενο θα χρησιμοποιηθεί ως οδηγεία για ruby</string>
   <string name="display_font_size">Σχετικό μέγεθος γραμματοσειράς</string>
@@ -86,7 +89,7 @@
   <string name="zoom">Ενεργοποίηση Ζουμ</string>
   <string name="zoom_summ">Εμφάνιση ελέγχων ζουμ κατά την επανάληψη</string>
   <string name="zeemote">Υποστήριξη Zeemote JS1</string>
-  <string name="zeemote_summ">Χρησιμοποιήστε τα κουμπιά του ελεγκτή Zeemote JS1, για να επιλέξετε τις απαντήσεις. Α: καλή, B: ξανά, D: εύκολη</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">Ενεργοποίηση χειρονομίων</string>
   <string name="swipe_summ_off">Χρησιμοποιήστε χειρονομίες για να αλλάξετε μεταξύ οθόνων και να απαντήσετε κάρτες. Αυτή η επιλογή δεν είναι συμβατή με τους ελέγχους ζουμ</string>
   <string name="swipe_summ_on">Σαρώστε οριζόντια για να αλλάξετε οθόνες. Ρυθμίσετε άλλες ενέργειες παρακάτω</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">Μετά την εμφάνιση της ερώτησης για συγκεκριμένο χρόνο, η απάντηση εμφανίζεται αυτόματα, χωρίς παρέμβαση του χρήστη</string>
   <string name="timeout_answer_seconds">Δευτερόλεπτα πριν την εμφάνιση της απάντησης</string>
   <string name="timeout_answer_seconds_summ">Επιλέξτε το χρονικό διάστημα πριν από την αυτόματη εμφάνιση της απάντησης</string>
+  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">Επιλογή Γλώσσας</string>
   <string name="select_theme">Theme</string>
   <string name="theme_animations">Animations</string>
