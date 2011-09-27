@@ -210,8 +210,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private String mDeckFilename;
     private int mPrefHideQuestionInAnswer; // Hide the question when showing the answer
     private int mRelativeButtonSize;
-    private String mDictionaryAction;
-    private int mDictionary;
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
@@ -233,7 +231,6 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mShowAnimations = true;
     private String mLocale;
 
-    private boolean mIsDictionaryAvailable;
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
     private boolean mIsAnswering = false;
@@ -245,13 +242,6 @@ public class Reviewer extends Activity implements IButtonListener{
     
     private String mMediaDir;
 
-    /**
-     * Searches
-     */
-    private static final int DICTIONARY_AEDICT = 0;
-    private static final int DICTIONARY_LEO_WEB = 1;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
-    private static final int DICTIONARY_LEO_APP = 2;    // German web dictionary for English, French, Spanish, Italian, Chinese, Russian
-    private static final int DICTIONARY_COLORDICT = 3;
     
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -845,30 +835,8 @@ public class Reviewer extends Activity implements IButtonListener{
             initLayout(R.layout.flashcard);
             if (mPrefTextSelection) {
                 mClipboard.setText("");
+                Lookup.initialize(this, mDeckFilename);
             }
-
-            switch (mDictionary) {
-            	case DICTIONARY_AEDICT:
-            		mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
-                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
-            		break;
-                case DICTIONARY_LEO_WEB:
-                    mDictionaryAction = "android.intent.action.VIEW";
-                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
-                    break;
-                case DICTIONARY_LEO_APP:
-                    mDictionaryAction = "android.intent.action.SEND";                   
-                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction, new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
-                    break;
-                case DICTIONARY_COLORDICT:
-                    mDictionaryAction = "colordict.intent.action.SEARCH";                   
-                    mIsDictionaryAvailable = Utils.isIntentAvailable(this, mDictionaryAction);
-                    break;
-                default:
-                    mIsDictionaryAvailable = false;
-                    break;
-            }
-            Log.i(AnkiDroidApp.TAG, "Is intent available = " + mIsDictionaryAvailable);
 
             // Load the template for the card and set on it the available width for images
             try {
@@ -1132,8 +1100,8 @@ public class Reviewer extends Activity implements IButtonListener{
         if (mPrefTextSelection) {
             item = menu.findItem(MENU_SEARCH);
             if (mClipboard.hasText()) {
-            	item.setTitle(String.format(getString(R.string.menu_search), getResources().getStringArray(R.array.dictionary_labels)[mDictionary]));
-        		item.setEnabled(mIsDictionaryAvailable);
+            	item.setTitle(Lookup.getSearchStringTitle());
+        		item.setEnabled(Lookup.isAvailable());
             } else {
             	item.setTitle(getResources().getString(R.string.menu_select));
         		item.setEnabled(true);
@@ -1306,16 +1274,6 @@ public class Reviewer extends Activity implements IButtonListener{
     }
 
 
-    private String getLanguage(int questionAnswer) {
-    	String language = MetaDB.getLanguage(this, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);
-		return language;
-    }
-    
-    private void storeLanguage(String language, int questionAnswer) {
-    	MetaDB.storeLanguage(this, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);		
-    }
-
-
     private void stopTimer() {
         // Stop visible timer and card timer 
         if (mPrefTimer) {
@@ -1350,25 +1308,6 @@ public class Reviewer extends Activity implements IButtonListener{
         config.locale = locale;
         this.getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
     }
-
-
-	private void lookupLeo(String language, CharSequence text) {
-		switch(mDictionary) {
-		case DICTIONARY_LEO_WEB:
-			Intent leoSearchIntent = new Intent(mDictionaryAction, Uri.parse("http://pda.leo.org/?lp=" + language
-				+ "de&search=" + text));
-			startActivity(leoSearchIntent);
-			break;
-		case DICTIONARY_LEO_APP:
-			Intent leoAppSearchIntent = new Intent(mDictionaryAction);
-			leoAppSearchIntent.putExtra("org.leo.android.dict.DICTIONARY", language + "de");
-			leoAppSearchIntent.putExtra(Intent.EXTRA_TEXT, text);
-			leoAppSearchIntent.setComponent(new ComponentName("org.leo.android.dict", "org.leo.android.dict.LeoDict"));
-			startActivity(leoAppSearchIntent);
-			break;
-		default:
-		}
-	}
 
 
     private void finishNoStorageAvailable() {
@@ -1408,49 +1347,10 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean lookUp() {
     	mLookUpIcon.setVisibility(View.GONE);
 	    mIsSelecting = false;
-		switch (mDictionary) {
-        	case DICTIONARY_AEDICT:
-        		Intent aedictSearchIntent = new Intent(mDictionaryAction);
-        		aedictSearchIntent.putExtra("kanjis", mClipboard.getText());
-        		startActivity(aedictSearchIntent);
-                mClipboard.setText("");
-                return true;
-        	case DICTIONARY_LEO_WEB:
-            case DICTIONARY_LEO_APP:
-        		// localisation is needless here since leo.org translates only into or out of German 
-        		final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
-                        String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
-        		if (language.length() > 0) {
-            		for (int i = 0; i < itemValues.length; i++) {
-                		if (language.equals(itemValues[i])) {
-                			lookupLeo(language, mClipboard.getText());
-                			mClipboard.setText("");
-                            return true;
-                		}
-            		}
-        		}
-        		final String[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
-        		StyledDialog.Builder builder = new StyledDialog.Builder(this);
-        		builder.setTitle("\"" + mClipboard.getText() + "\" nachschlagen");
-        		builder.setItems(items, new DialogInterface.OnClickListener() {
-        			public void onClick(DialogInterface dialog, int item) {
-        				String language = itemValues[item].toString();
-                        storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
-        				lookupLeo(language, mClipboard.getText());
-        				mClipboard.setText("");
-        			}
-        		});
-        		StyledDialog alert = builder.create();
-        		alert.show();
-                return true;
-        	case DICTIONARY_COLORDICT:
-        		Intent colordictSearchIntent = new Intent(mDictionaryAction);
-        		colordictSearchIntent.putExtra("EXTRA_QUERY", mClipboard.getText().toString().trim().replaceAll("[,;:\\s\\(\\[\\)\\]]*$", ""));
-        		startActivity(colordictSearchIntent);
-                mClipboard.setText("");
-                return true;     
-    	}
-        return true;
+	    if (Lookup.lookUp(mClipboard.getText().toString(), mCurrentCard)) {
+	        mClipboard.setText("");
+	    }
+	    return true;
     }
 
 
@@ -1943,15 +1843,6 @@ public class Reviewer extends Activity implements IButtonListener{
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
-        
-        int customDictionary = MetaDB.getLookupDictionary(this, mDeckFilename);
-        if (customDictionary != -1) {
-        	mDictionary = customDictionary;
-        } else {
-            mDictionary = Integer.parseInt(preferences.getString("dictionary",
-                    Integer.toString(DICTIONARY_AEDICT)));
-        	
-        }
 
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
