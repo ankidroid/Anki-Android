@@ -366,6 +366,14 @@ public class Stats {
 
 
     /**
+     * @return the reps
+     */
+    public int getYesReps() {
+        return mReps - mNewEase0 - mNewEase1 - mMatureEase0 - mMatureEase1 - mYoungEase0 - mYoungEase1;
+    }
+
+
+    /**
      * @return the average time
      */
     public double getAverageTime() {

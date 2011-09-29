@@ -71,8 +71,8 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         /** The cached number of total due cards. */
         private int dueCardsCount;
 
-        /** The cached amount of today's reviewing time. */
-        private int time;
+        /** The cached amount of today's yes reps. */
+        private int reps;
 
         /** The cached estimated reviewing time. */
         private int eta;
@@ -149,12 +149,12 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                 	int[] counts = WidgetStatus.fetchSmall(context);
                 	
                 	dueCardsCount = counts[0];
-                	time = counts[1];
+                	reps = counts[1];
                 	eta = counts[2];
-                	int totaltime = eta + time;
+                	int totalreps = reps + dueCardsCount;
                 	int progress = 0;
-                	if (totaltime != 0) {
-                		progress = (int) Math.round((100.0d * time) / totaltime);
+                	if (totalreps != 0) {
+                		progress = (int) Math.round((100.0d * reps) / totalreps);
                 	}
                 	startDeckPicker = counts[3] == 0;
 			if (dueCardsCount == 0) {

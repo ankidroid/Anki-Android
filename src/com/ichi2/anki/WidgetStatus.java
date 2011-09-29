@@ -134,7 +134,7 @@ public final class WidgetStatus {
                     int newCards = deck.getNewCountToday();
                     int failedCards = deck.getFailedSoonCount();
                     int eta = deck.getETA();
-                    int time = deck.getReviewTime(0) / 60;
+                    int reps = deck.getSessionYesReps();
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.
                     if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
@@ -142,7 +142,7 @@ public final class WidgetStatus {
                     }
 
                     // Add the information about the deck
-                    decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, time));
+                    decks.add(new DeckStatus(absPath, deckName, newCards, dueCards, failedCards, eta, reps));
                 } catch (SQLException e) {
                     Log.i(AnkiDroidApp.TAG, "Could not open deck");
                     Log.e(AnkiDroidApp.TAG, e.toString());
