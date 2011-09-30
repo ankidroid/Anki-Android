@@ -62,11 +62,14 @@
   <string name="dictionary_summ">Dizionario in cui le ricerche devono essere effettuate: XXX</string>
   <string name="reset_languages">Reimpostare le lingue</string>
   <string name="reset_languages_summ">Ripristina le assegnazioni della lingua (per sintesi vocale e dizionari) per tutti i corsi. Ripristina le assegnazioni di corsi specifici sul selettore di corsi</string>
+  <string name="reset_all">Reset All</string>
+  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Reset Dialogs</string>
   <string name="reset_dialogs_question">Reset all dialogs?</string>
   <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">Reimpostare tutte le assegnazioni di lingua?</string>
-  <string name="reset_languages_confirmation">Reimpostate tutte le assegnazioni di lingua</string>
+  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">Fornisce support alle annotazioni ruby</string>
   <string name="use_ruby_support_summ">Se i caratteri \'[\ e \']\' sono nel testo, il testo racchiuso sarà considerato come una annotazione ruby</string>
   <string name="display_font_size">Dimensione carattere del display</string>
@@ -86,7 +89,7 @@
   <string name="zoom">Abilita lo zoom</string>
   <string name="zoom_summ">Mostra controlli Zoom durante le ripetizioni</string>
   <string name="zeemote">Zeemote JS1 support</string>
-  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">Abilitare le Gestures</string>
   <string name="swipe_summ_off">Utilizzare le gestures per passare tra le schermate e le risposte. Questa opzione non è compatibile con i comandi dello zoom</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
   <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
   <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
+  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">Scegli la lingua</string>
   <string name="select_theme">Theme</string>
   <string name="theme_animations">Animations</string>

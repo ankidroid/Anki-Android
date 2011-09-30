@@ -64,7 +64,7 @@
     <item>Oluşturulma tarihi</item>
   </string-array>
   <plurals name="card_browser_title">
-    <item quantity="one">%1$s: %3$d karttan 1\'i gösterildi</item>
-    <item quantity="other">%1$s: %3$d karttan %2$d tanesi gösterildi</item>
+    <item quantity="one">%1$s: %3$d karttan 1\'i gösteriliyor</item>
+    <item quantity="other">%1$s: %3$d karttan %2$d tanesi gösteriliyor</item>
   </plurals>
 </resources>

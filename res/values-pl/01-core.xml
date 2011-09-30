@@ -69,6 +69,7 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Zresetuj przypisanie języka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Reset języka</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optymalizacja bazy danych</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Zacznij zakuwanie</string>
   <string name="end_cram">Zakończ zakuwanie</string>
   <string name="cram">Zakuwaj</string>
@@ -80,6 +81,7 @@
   <string name="menu_synchronize">Synchronizuj</string>
   <string name="menu_my_account">Moje konto</string>
   <string name="menu_preferences">Ustawienia</string>
+  <string name="menu_zeemote">Zeemote</string>
   <string name="menu_deck_properties">Właściwości talii</string>
   <string name="menu_add_card">Dodaj kartę</string>
   <string name="menu_about">O programie</string>

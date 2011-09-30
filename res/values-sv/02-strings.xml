@@ -59,4 +59,11 @@
   <string name="studyoptions_no_external_storage_message">Ingen extern lagring är tillgänglig för tillfället. AnkiDroid måste ha tillgång till SD-kortet för att läsa och ladda dina Anki-kortlekar. Kontrollera att SD-kortet är monterat och försök igen.</string>
   <string name="fact_adder_intent_title">AnkiDroid-kort</string>
   <string name="fact_adder_swap">Byt riktning</string>
+  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
+  <string name="deckpicker_select_dictionary_default">Default</string>
+  <string name="card_editor_lookup">Lookup</string>
+  <string name="card_editor_add_card">Add card</string>
+  <string name="card_editor_reset">Reset</string>
+  <string name="card_editor_copy_card">Copy card</string>
+  <string name="card_editor_reset_card">Reset progress</string>
 </resources>

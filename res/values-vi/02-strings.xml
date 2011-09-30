@@ -59,4 +59,11 @@
   <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
   <string name="fact_adder_intent_title">Thẻ AnkiDroid</string>
   <string name="fact_adder_swap">Chuyển đổi</string>
+  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
+  <string name="deckpicker_select_dictionary_default">Default</string>
+  <string name="card_editor_lookup">Lookup</string>
+  <string name="card_editor_add_card">Add card</string>
+  <string name="card_editor_reset">Reset</string>
+  <string name="card_editor_copy_card">Copy card</string>
+  <string name="card_editor_reset_card">Reset progress</string>
 </resources>

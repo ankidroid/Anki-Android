@@ -55,4 +55,7 @@
   <string name="notification_stop">Jangan beritahu saya tentang kemaskini ini lagi</string>
   <string name="swap_qa_title">Swab Soal/Jawab</string>
   <string name="swap_qa_text">Anda perlu sedar, swap soalan dan jawapan bukan konsep ulangan dengan waktu. Seeloknya anda buat kad baru untuk ini dengan Anki Desktop. \nSwap Soal Jawab juga?</string>
+  <string name="reset_card_dialog_title">Reset card progress</string>
+  <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
+  <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 </resources>

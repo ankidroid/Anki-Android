@@ -55,4 +55,7 @@
   <string name="notification_stop">Toon me geen meldingen voer deze update meer</string>
   <string name="swap_qa_title">Swap Q/A</string>
   <string name="swap_qa_text">Be aware that simply swapping question and answer runs contrary to the concept of spaced repetition. Ideally you should create new cards for the reversed learning direction. You can do this easily with Anki Desktop.\nSwap Q/A anyway?</string>
+  <string name="reset_card_dialog_title">Reset card progress</string>
+  <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
+  <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 </resources>

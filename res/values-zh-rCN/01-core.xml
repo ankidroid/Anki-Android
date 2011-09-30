@@ -69,6 +69,7 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">取消指定牌组语言</string>
   <string name="contextmenu_deckpicker_reset_reset_message">重置语言设置</string>
   <string name="contextmenu_deckpicker_optimize_deck">优化数据库</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">开始强记模式</string>
   <string name="end_cram">停止强记模式</string>
   <string name="cram">强记模式</string>
@@ -80,6 +81,7 @@
   <string name="menu_synchronize">同步</string>
   <string name="menu_my_account">我的账号</string>
   <string name="menu_preferences">偏好设置</string>
+  <string name="menu_zeemote">Zeemote</string>
   <string name="menu_deck_properties">牌组属性</string>
   <string name="menu_add_card">添加卡片</string>
   <string name="menu_about">关于</string>

@@ -55,4 +55,7 @@
   <string name="notification_stop">Не уведомлять меня об этом обновлении снова</string>
   <string name="swap_qa_title">Поменять Q/A</string>
   <string name="swap_qa_text">Имейте в виду, что простая замена вопроса на ответ, а ответа на вопрос идет вразрез с концепцией интервальных повторений по спец. алгоритму. В идеале вы должны создать на базе имеющихся новые карты, в которых будут зеркально заменены вопрос и ответ. Это можно легко сделать в Anki Desktop.\n Всё равно заменить вопрос на ответ, а ответ на вопрос?</string>
+  <string name="reset_card_dialog_title">Reset card progress</string>
+  <string name="reset_card_dialog_message">This resets the learning progress for all cards of this fact (they will look like new cards).\nReally continue?</string>
+  <string name="reset_card_dialog_confirmation">All cards of this fact reset</string>
 </resources>

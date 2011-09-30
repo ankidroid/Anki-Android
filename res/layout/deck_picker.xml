@@ -12,8 +12,6 @@
 		android:layout_height="0dp"
 		android:layout_weight="1"
 		android:background="?android:attr/colorBackground"
-        android:drawSelectorOnTop="true" 
-        android:listSelector="@drawable/deckpicker_list_selector"  
 		android:fastScrollEnabled="true" 
 		android:focusable="true"/>
 
@@ -28,7 +26,6 @@
 			android:layout_height="fill_parent"
 			android:layout_weight="1"
 			android:layout_marginTop="3dp"
-			android:layout_marginBottom="3dp"
 			android:enabled="true"
 			android:text="@string/sync_all"/>
 		
@@ -37,7 +34,6 @@
 			android:layout_height="fill_parent"
 			android:layout_weight="1"
 			android:layout_marginTop="3dp"
-			android:layout_marginBottom="3dp"
 			android:enabled="true"
 			android:text="@string/statistics"/>
 	</LinearLayout>

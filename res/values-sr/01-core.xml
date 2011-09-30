@@ -69,6 +69,7 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Počni sa Štrebanjem</string>
   <string name="end_cram">Prestani sa Štrebanjem</string>
   <string name="cram">Štrebanje</string>
@@ -80,6 +81,7 @@
   <string name="menu_synchronize">Sinhronizuj</string>
   <string name="menu_my_account">Moj Račun</string>
   <string name="menu_preferences">Postavke</string>
+  <string name="menu_zeemote">Zeemote</string>
   <string name="menu_deck_properties">Špil Opcije</string>
   <string name="menu_add_card">Dodaj karticu</string>
   <string name="menu_about">O programu</string>

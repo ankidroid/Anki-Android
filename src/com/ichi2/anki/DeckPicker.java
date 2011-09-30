@@ -82,7 +82,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Allows the user to choose a deck from the filesystem.
  */
-public class DeckPicker extends Activity implements Runnable{
+public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 	/**
 	 * Dialogs
@@ -181,12 +181,15 @@ public class DeckPicker extends Activity implements Runnable{
 
 	boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for active cards
 
+	private int[] mDictValues;
+
 	/**
      * Swipe Detection
      */    
  	private GestureDetector gestureDetector;
  	View.OnTouchListener gestureListener;
  	private boolean mSwipeEnabled;
+ 	
  	
  	
 	// ----------------------------------------------------------------------------
@@ -717,17 +720,20 @@ public class DeckPicker extends Activity implements Runnable{
 		if (mCurrentDeckFilename == null || mCurrentDeckFilename.equalsIgnoreCase(getResources().getString(R.string.deckpicker_nodeck))) {
 			return;
 		}
-		
 		menu.setHeaderTitle(mCurrentDeckFilename);
+
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.contextmenu_deckpicker, menu);
+		SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());		
+		menu.findItem(R.id.set_custom_dictionary).setEnabled(preferences.getBoolean("textSelection", false));
 	}
 
-	
+
     @Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		waitForDeckLoaderThread();
+		Resources res = getResources();
 		
 		@SuppressWarnings("unchecked")
 		HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(info.position);
@@ -735,7 +741,6 @@ public class DeckPicker extends Activity implements Runnable{
 		Deck deck = null;
 		switch (item.getItemId()) {
 		case R.id.delete_deck:
-			mCurrentDeckPath = null;
 			mCurrentDeckPath = data.get("filepath");
 			showDialog(DIALOG_DELETE_DECK);
 			return true;
@@ -746,6 +751,35 @@ public class DeckPicker extends Activity implements Runnable{
 			deckPath = data.get("filepath");
 			deck = getDeck(deckPath);
 	    	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPTIMIZE_DECK, mOptimizeDeckHandler, new DeckTask.TaskData(deck, 0));
+			return true;
+		case R.id.set_custom_dictionary:
+			String[] dicts = res.getStringArray(R.array.dictionary_labels);
+			String[] vals = res.getStringArray(R.array.dictionary_values);
+			int currentSet = MetaDB.getLookupDictionary(DeckPicker.this, data.get("filepath"));
+
+			mCurrentDeckPath = data.get("filepath");
+			String[] labels = new String[dicts.length + 1];
+			mDictValues = new int[dicts.length + 1];
+			int currentChoice = 0;
+			labels[0] = res.getString(R.string.deckpicker_select_dictionary_default);
+			mDictValues[0] = -1;
+			for (int i = 1; i < labels.length; i++) {
+				labels[i] = dicts[i-1];
+				mDictValues[i] = Integer.parseInt(vals[i-1]);
+				if (currentSet == mDictValues[i]) {
+					currentChoice = i;
+				}
+			}
+			StyledDialog.Builder builder = new StyledDialog.Builder(this);
+			builder.setTitle(res.getString(R.string.deckpicker_select_dictionary_title));
+			builder.setSingleChoiceItems(labels, currentChoice, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					MetaDB.storeLookupDictionary(DeckPicker.this, mCurrentDeckPath, mDictValues[item]);
+				}
+			});
+			StyledDialog alert = builder.create();
+			alert.show();
+    
 			return true;
 		case R.id.download_missing_media:
 		    deckPath = data.get("filepath");

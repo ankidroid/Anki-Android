@@ -37,7 +37,7 @@
   <string name="about_title">Hakkında</string>
   <string name="cardeditor_title">Bilgi Düzenleyici</string>
   <string name="factadder_title">Kart Ekleyici</string>
-  <string name="factadder_saving_error">Bilgiler kaydedilirken hata oluştu</string>
+  <string name="factadder_saving_error">Bilgi kaydedilirken hata</string>
   <string name="saving_facts">Bilgiler kaydediliyor</string>
   <string name="deckcreator_title">Deste Oluşturucu</string>
   <string name="model">Model:</string>
@@ -58,5 +58,12 @@
   <string name="studyoptions_no_external_storage_title">Mevcut Harici Depolama Yok</string>
   <string name="studyoptions_no_external_storage_message">Şu anda mevcut harici depolama yok. AnkiDroid Anki destelerinizi okumak ve yüklemek için SD kart erişimine ihtiyaç duyar. SD kartınızın takılı olduğuna emin olup tekrar deneyin.</string>
   <string name="fact_adder_intent_title">AnkiDroid Kartı</string>
-  <string name="fact_adder_swap">Değiştir</string>
+  <string name="fact_adder_swap">Yer değiştir</string>
+  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
+  <string name="deckpicker_select_dictionary_default">Default</string>
+  <string name="card_editor_lookup">Lookup</string>
+  <string name="card_editor_add_card">Add card</string>
+  <string name="card_editor_reset">Reset</string>
+  <string name="card_editor_copy_card">Copy card</string>
+  <string name="card_editor_reset_card">Reset progress</string>
 </resources>

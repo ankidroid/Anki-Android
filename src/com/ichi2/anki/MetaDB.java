@@ -66,6 +66,11 @@ public class MetaDB {
                             + "deckpath TEXT NOT NULL, "
                             + "state INTEGER)");
             mMetaDb.execSQL(
+                    "CREATE TABLE IF NOT EXISTS customDictionary ("
+                            + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            + "deckpath TEXT NOT NULL, "
+                            + "dictionary INTEGER)");
+            mMetaDb.execSQL(
                     "CREATE TABLE IF NOT EXISTS widgetStatus ("
                     + "deckPath TEXT NOT NULL PRIMARY KEY, "
                     + "deckName TEXT NOT NULL, "
@@ -107,6 +112,8 @@ public class MetaDB {
             Log.i(AnkiDroidApp.TAG, "Resetting all language assignment");
             mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
             Log.i(AnkiDroidApp.TAG, "Resetting whiteboard state");
+            mMetaDb.execSQL("DROP TABLE IF EXISTS customDictionary;");
+            Log.i(AnkiDroidApp.TAG, "Resetting custom Dictionary");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
             Log.i(AnkiDroidApp.TAG, "Resetting widget status");
             return true;
@@ -264,7 +271,6 @@ public class MetaDB {
     }
 
 
-
     /**
      * Stores the state of the whiteboard for a given deck.
      *
@@ -291,6 +297,68 @@ public class MetaDB {
             }
         } catch(Exception e) {
             Log.e("Error", "Error storing whiteboard state in MetaDB ", e);
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    }
+
+
+    /**
+     * Returns a custom dictionary associated to a deck
+     *
+     * @param deckPath the deck for which a custom dictionary should be retrieved
+     * @return integer number of dictionary, -1 if not set (standard dictionary will be used)
+     */
+    public static int getLookupDictionary(Context context, String deckPath) {
+        openDBIfClosed(context);
+        Cursor cur = null;
+        try {
+            cur = mMetaDb.rawQuery("SELECT dictionary FROM customDictionary"
+                    + " WHERE deckpath = \'" + stripQuotes(deckPath) + "\'", null);
+            if (cur.moveToNext()) {
+                return cur.getInt(0);
+            } else {
+                return -1;
+            }
+        } catch(Exception e) {
+            Log.e("Error", "Error retrieving custom dictionary from MetaDB ", e);
+            return -1;
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    }
+
+
+    /**
+     * Stores a custom dictionary for a given deck.
+     *
+     * @param deckPath the deck for which a custom dictionary should be retrieved
+     * @param dictionary integer number of dictionary, -1 if not set (standard dictionary will be used)
+     */
+    public static void storeLookupDictionary(Context context, String deckPath, int dictionary) {
+        openDBIfClosed(context);
+        deckPath = stripQuotes(deckPath);
+        Cursor cur = null;
+        try {
+            cur = mMetaDb.rawQuery("SELECT _id FROM customDictionary"
+                    + " WHERE deckpath = \'" + deckPath + "\'", null);
+            if (cur.moveToNext()) {
+                mMetaDb.execSQL("UPDATE customDictionary "
+                        + "SET deckpath=\'" + deckPath + "\', "
+                        + "dictionary=" + Integer.toString(dictionary) + " "
+                        + "WHERE _id=" + cur.getString(0) + ";");
+                Log.i(AnkiDroidApp.TAG, "Store custom dictionary (" + dictionary + ") for deck " + deckPath);
+            } else {
+                mMetaDb.execSQL("INSERT INTO customDictionary (deckpath, dictionary) VALUES (?, ?)",
+                        new Object[]{deckPath, dictionary});
+                Log.i(AnkiDroidApp.TAG, "Store custom dictionary (" + dictionary + ") for deck " + deckPath);
+            }
+        } catch(Exception e) {
+            Log.e("Error", "Error storing custom dictionary to MetaDB ", e);
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();

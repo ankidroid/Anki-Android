@@ -62,11 +62,14 @@
   <string name="dictionary_summ">Wörterbuch, in dem nachgeschlagen werden soll: XXX</string>
   <string name="reset_languages">Sprachzuordnungen zurücksetzen</string>
   <string name="reset_languages_summ">Setzt die Sprachzuordnungen (für Vorlesen und Wörterbücher) für alle Stapel zurück. Für einzelne Stapel: siehe Stapelauswahl</string>
+  <string name="reset_all">Alles zurücksetzen</string>
+  <string name="reset_all_summ">Setzt alle Sprachzuordnungen, Widget-, Whiteboard- und Wörterbuch-Speicherzustände zurück</string>
   <string name="reset_dialogs">Dialoge zurücksetzen</string>
   <string name="reset_dialogs_question">Dialoge zurücksetzen?</string>
   <string name="reset_dialogs_summ">Setzt alle Dialoge zurück, die nicht mehr angezeigt werden</string>
   <string name="reset_languages_question">Sämtliche Sprachzuordnungen zurücksetzen?</string>
-  <string name="reset_languages_confirmation">Sämtliche Sprachzuordnungen zurückgesetzt</string>
+  <string name="reset_all_question">Alle Sprachzuordnungen, Widget-, Whiteboard- und Wörterbuch-Speicherzustände zurücksetzen?</string>
+  <string name="reset_confirmation">Alle Zustände zurücksetzen</string>
   <string name="use_ruby_support">Ruby-Anmerkungen</string>
   <string name="use_ruby_support_summ">Wenn die Zeichen \'[\' und \']\' gefunden werden, wird der enthaltene Text als eine Ruby Anmerkung behandelt</string>
   <string name="display_font_size">Relative Schriftgröße</string>
@@ -86,7 +89,7 @@
   <string name="zoom">Zoom aktivieren</string>
   <string name="zoom_summ">Zoom-Schaltflächen beim Lernen anzeigen</string>
   <string name="zeemote">Zeemote JS1 Unterstützung</string>
-  <string name="zeemote_summ">Benutzen Sie die Controllerknöpfe des Zeemote JS1, um zu lernen: A: gut, B: nochmal, D: einfach</string>
+  <string name="zeemote_summ">Zeemote JS1 Steuerung zum Navigieren benutzen</string>
   <string name="swipe">Gesten aktivieren</string>
   <string name="swipe_summ_off">Verwenden Sie Gesten, um zwischen Fenstern zu wechseln und Karten zu beantworten. Nicht kompatibel mit den Zoom-Schaltflächen</string>
   <string name="swipe_summ_on">Fensterwechsel mit horizontalem Wischen. Konfigurieren Sie zusätzliche Aktionen weiter unten</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">Zeige die Antwort automatisch nach einer bestimmten Zeit</string>
   <string name="timeout_answer_seconds">Sekunden bis zum automatischen Zeigen der Antwort</string>
   <string name="timeout_answer_seconds_summ">Wählen Sie den Zeitpunkt, ab dem automatisch die Antwort gezeigt werden soll</string>
+  <string name="timeout_question_seconds">Wartezeit in Sekunden, bevor die nächste Frage gezeigt wird</string>
+  <string name="timeout_question_seconds_summ">Wählen Sie die Zeit bis die nächste Frage automatisch gezeigt wird</string>
   <string name="select_locale_title">Sprache wählen</string>
   <string name="select_theme">Layout</string>
   <string name="theme_animations">Animationen</string>
@@ -135,7 +140,7 @@
   <string name="animation_speed_summ">Dauer von Übergangsanimationen: XXX ms</string>
   <string name="pref_cat_backup">Sicherungssystem</string>
   <string name="pref_backup">Benutze Sicherungen</string>
-  <string name="pref_backup_summ">Erstellt automatisch vor dem Öffnen deines Stapels eine Sicherungskopie (einmal pro Tag)</string>
+  <string name="pref_backup_summ">Erstellt automatisch vor dem Öffnen Ihres Stapels eine Sicherungskopie (einmal pro Tag)</string>
   <string name="pref_backup_max">Sicherungstiefe</string>
   <string name="pref_backup_max_summ">Maximal Anzahl von Sicherungskopien pro Stapel: XXX</string>
   <string name="pref_backup_warning">Die Deaktivierung des Sicherungssystems löscht alle bestehenden Sicherungen. Trotzdem fortfahren?</string>

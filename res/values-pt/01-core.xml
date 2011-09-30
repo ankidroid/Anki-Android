@@ -69,6 +69,7 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Redefinir as configuraçãoes de idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Redefinição de idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Otimizar o banco de dados</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Iniciar o modo \"Estudo Focado\"</string>
   <string name="end_cram">Parar modo \"Estudo focado\"</string>
   <string name="cram">Estudo Focado</string>
@@ -80,6 +81,7 @@
   <string name="menu_synchronize">Sincronizar</string>
   <string name="menu_my_account">Minha Conta</string>
   <string name="menu_preferences">Preferências</string>
+  <string name="menu_zeemote">Zeemote</string>
   <string name="menu_deck_properties">Propriedades do Deck</string>
   <string name="menu_add_card">Adicionar card</string>
   <string name="menu_about">Sobre</string>

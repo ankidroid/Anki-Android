@@ -62,11 +62,14 @@
   <string name="dictionary_summ">Sanakirja, jossa hakuja tulisi suorittaa: XXX</string>
   <string name="reset_languages">Palauta kielet</string>
   <string name="reset_languages_summ">Palauta kaikkia korttipakkojen kielten toimeksiannot (teksti puheeksi ja sanakirjojen). Palauttaa korttipakkakerääjän erityiskorttipakkojen toimeksiannot</string>
+  <string name="reset_all">Reset All</string>
+  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Reset Dialogs</string>
   <string name="reset_dialogs_question">Reset all dialogs?</string>
   <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">Palauta kaikkien kielten toimeksiannot?</string>
-  <string name="reset_languages_confirmation">Kaikkien kielten toimeksiannot palautetaan</string>
+  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">Tuki ruby-huomautusten käytölle</string>
   <string name="use_ruby_support_summ">Merkkien \'[\' ja \']\' välissä olevaa tekstiä käsitellään ruby-huomautuksena</string>
   <string name="display_font_size">Näyttöfontin suhteellinen koko</string>
@@ -86,7 +89,7 @@
   <string name="zoom">Ota zoomaus käyttöön</string>
   <string name="zoom_summ">Näytä zoomaussäätimet tarjastekun aikana</string>
   <string name="zeemote">Zeemote JS1 -tuki</string>
-  <string name="zeemote_summ">Use Zeemote JS1 controller buttons to navigate reviews. A: Good, B: Again, D: Easy</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">Ota eleet käyttöön</string>
   <string name="swipe_summ_off">Käytä eleitä vaihtaaksesi näyttöjä ja vastaessa kortteihin. Tämä vaihtoehto ei ole yhteensopiva zoomaussäätimen kanssa</string>
   <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
   <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
   <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
+  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">Valitse kieli</string>
   <string name="select_theme">Theme</string>
   <string name="theme_animations">Animations</string>

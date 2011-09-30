@@ -62,11 +62,14 @@
   <string name="dictionary_summ">Słownik, w którym należy przeprowadzić wyszukiwania: XXX</string>
   <string name="reset_languages">Zresetuj języki</string>
   <string name="reset_languages_summ">Zresetuj przypisanie języków (dla tekstu do mowy) dla wszystkich talii. Zresetuj ustawienia dla konkretnej talii na ekranie wyboru talii</string>
+  <string name="reset_all">Reset All</string>
+  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
   <string name="reset_dialogs">Reset okien</string>
   <string name="reset_dialogs_question">Przywrócić wszystkie okienka?</string>
   <string name="reset_dialogs_summ">Przywróć okna dialogowe dla których zaznaczono \"Nie pokazuj więcej\"</string>
   <string name="reset_languages_question">Reset wszystkich ustawień języków?</string>
-  <string name="reset_languages_confirmation">Wszystkie ustawienia języków zostały zresetowane</string>
+  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">Zapewnia wsparcie dla notacji ruby</string>
   <string name="use_ruby_support_summ">W razie znalezienia znaków \'[\' i \']\', tekst zawarty między nimi będzie traktowany jako notacja ruby</string>
   <string name="display_font_size">Względna wielkość czcionki wyświetlacza</string>
@@ -86,7 +89,7 @@
   <string name="zoom">Włącz powiększenie</string>
   <string name="zoom_summ">Pokaż kontrolki zbliżenia podczas powtórek</string>
   <string name="zeemote">Wsparcie kontrolera Zeemote JS1</string>
-  <string name="zeemote_summ">Użyj kontrolera Zeemote JS1, aby obsługiwać przeglądanie.</string>
+  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">Włącz gesty</string>
   <string name="swipe_summ_off">Użyj gestów do przełączania ekranów i kart odpowiedzi. Ta opcja nie jest zgodna z kontrolkami powiększania</string>
   <string name="swipe_summ_on">Przesuń poziomo, aby przełączyć pomiędzy ekranami. Skonfiguruj inne czynności poniżej</string>
@@ -127,6 +130,8 @@
   <string name="timeout_answer_summ">Po wyświetleniu pytania przez określoną ilość czasu, odpowiedź jest wyświetlana automatycznie bez udziału użytkownika</string>
   <string name="timeout_answer_seconds">Sekundy przed pokazaniem odpowiedzi</string>
   <string name="timeout_answer_seconds_summ">Wybierz ilość czasu, po którym odpowiedź jest automatycznie wyświetlana</string>
+  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
+  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">Wybór języka</string>
   <string name="select_theme">Temat</string>
   <string name="theme_animations">Animacje</string>

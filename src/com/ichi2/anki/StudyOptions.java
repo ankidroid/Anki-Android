@@ -80,7 +80,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-public class StudyOptions extends Activity {
+public class StudyOptions extends Activity extends Activity {
 	
     /**
 * Default database.

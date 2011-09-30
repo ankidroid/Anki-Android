@@ -60,4 +60,11 @@
   <string name="studyoptions_no_external_storage_message">外部メモリーが接続されていません。SDカードがマウントされているかどうか、確認してください。</string>
   <string name="fact_adder_intent_title">AnkiDroid Card</string>
   <string name="fact_adder_swap">Swap</string>
+  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
+  <string name="deckpicker_select_dictionary_default">Default</string>
+  <string name="card_editor_lookup">Lookup</string>
+  <string name="card_editor_add_card">Add card</string>
+  <string name="card_editor_reset">Reset</string>
+  <string name="card_editor_copy_card">Copy card</string>
+  <string name="card_editor_reset_card">Reset progress</string>
 </resources>
