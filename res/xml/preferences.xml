@@ -426,17 +426,22 @@
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/pref_cat_other">
 		<CheckBoxPreference
+			android:title="@string/show_broadcast_messages"
+			android:summary="@string/show_broadcast_messages_summ"
+			android:defaultValue="true"
+			android:key="showBroadcastMessages"/>
+<!-- 		<CheckBoxPreference
 			android:title="@string/update_notification"
 			android:defaultValue="true"
 			android:summary="@string/update_notification_summ"
-			android:key="enabled"/>
+			android:key="enabled"/>-->
 		<ListPreference
 			android:title="@string/error_reporting_choice"
 			android:summary="@string/error_reporting_choice_summary"
 			android:defaultValue="2"
 			android:entries="@array/error_reporting_choice_labels"
 			android:entryValues="@array/error_reporting_choice_values"
-			android:key="reportErrorMode" />
+			android:key="reportErrorMode" /> 
 		<PreferenceCategory android:title="@string/pref_cat_reset">
 			<com.ichi2.preferences.CustomDialogPreference
 				android:dialogIcon="@android:drawable/ic_dialog_alert"

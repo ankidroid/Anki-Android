@@ -169,4 +169,6 @@
 		<item>%s years</item>
 	</string-array>
 
+<string name="visit">Visit</string>
+
 </resources>

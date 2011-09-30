@@ -208,7 +208,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     private int mCurrentContentView;
 
-    private int mNewDayStartsAt = 4;
+    public static int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
     boolean mShowWelcomeScreen = false;
     boolean mInvertedColors = false;
@@ -2288,20 +2288,8 @@ public class StudyOptions extends Activity implements IButtonListener {
     		return true;
 
     	case SUM_DECKPICKER_ON_FIRST_START:
+    		return Utils.isNewDay(mLastTimeOpened);
 
-    		Calendar cal = Calendar.getInstance();
-    		if (cal.get(Calendar.HOUR_OF_DAY) < mNewDayStartsAt) {
-                cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) - 24 + mNewDayStartsAt);
-    		} else {
-                cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) + mNewDayStartsAt);
-    		}
-            cal.add(Calendar.MINUTE, -cal.get(Calendar.MINUTE));
-            cal.add(Calendar.SECOND, -cal.get(Calendar.SECOND));
-            if (cal.getTimeInMillis() > mLastTimeOpened) {
-            	return true;
-            } else {
-            	return false;
-            }
     	default:
     		return false;
     	}
@@ -2341,6 +2329,7 @@ public class StudyOptions extends Activity implements IButtonListener {
             AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
         }
         mWalWarning = PrefSettings.getSharedPrefs(getBaseContext()).getInt("walWarning", AnkiDb.NO_WAL_WARNING);
+     
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
         final float gestureScale = getResources().getDisplayMetrics().density;
         int sensibility = preferences.getInt("swipeSensibility", 100);
@@ -2360,6 +2349,8 @@ public class StudyOptions extends Activity implements IButtonListener {
         mLocale = preferences.getString("language", "");
         mZeemoteEnabled = preferences.getBoolean("zeemote", false);
        	setLanguage(mLocale);
+
+        BroadcastMessage.checkForNewMessage(this, preferences.getLong("lastTimeOpened", 0));
         return preferences;
     }
 

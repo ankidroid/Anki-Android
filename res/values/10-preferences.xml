@@ -214,5 +214,7 @@
 <string name="studyoptions_max_fail_card">Max fail cards</string>
 <string name="studyoptions_more_save">Save</string>
 
+<string name="show_broadcast_messages">Update Messages</string>
+<string name="show_broadcast_messages_summ">Show important AnkiDroid notifications like new version updates</string>
 
 </resources>
