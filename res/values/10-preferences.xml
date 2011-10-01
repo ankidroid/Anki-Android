@@ -74,6 +74,9 @@
 <string name="reset_dialogs_question">Reset all dialogs?</string>
 <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
 <string name="reset_languages_question">Reset all language assignments?</string>
+<string name="reset_messages">Reset Messages</string>
+<string name="reset_messages_question">Show current messages again?</string>
+<string name="reset_messages_summ">Show current AnkiDroid messages again even if they were already shown</string>
 <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
 <string name="reset_confirmation">All states reset</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
@@ -214,7 +217,7 @@
 <string name="studyoptions_max_fail_card">Max fail cards</string>
 <string name="studyoptions_more_save">Save</string>
 
-<string name="show_broadcast_messages">Update Messages</string>
-<string name="show_broadcast_messages_summ">Show important AnkiDroid notifications like new version updates</string>
+<string name="show_broadcast_messages">Show Current Messages</string>
+<string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
 
 </resources>
