@@ -226,6 +226,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Deck deck = params[0].getDeck();
         Card editCard = params[0].getCard();
         Fact editFact = editCard.getFact();
+        int cardReset = params[0].getInt();
 
         // Start undo routine
         String undoName = Deck.UNDO_TYPE_EDIT_CARD;
@@ -244,7 +245,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         // deck.reset();
         deck.setUndoEnd(undoName);
-        publishProgress(new TaskData(deck.cardFromId(editCard.getId())));
+        if (cardReset == 1) {
+            publishProgress(new TaskData(deck.getCard()));
+        } else {
+            publishProgress(new TaskData(deck.cardFromId(editCard.getId())));        	
+        }
 
         return null;
     }

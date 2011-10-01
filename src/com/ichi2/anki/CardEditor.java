@@ -122,12 +122,13 @@ public class CardEditor extends Activity {
 	private Button mCardModelButton;
 
 	private StyledDialog mCardModelDialog;
-	private StyledDialog mDeckSelectDialog;
 
 	private Fact mEditorFact;
 	private boolean mAddFact = false;
 	private boolean mForCopy = false;
 	private boolean mIntentAdd = false;
+
+	private boolean mCardReset = false;
 
 	private Deck mDeck;
 	private Long mCurrentSelectedModelId;
@@ -145,7 +146,6 @@ public class CardEditor extends Activity {
 	private HashSet<String> mSelectedTags;
 	private String mFactTags = "";
 	private EditText mNewTagEditText;
-	private ImageView mAddTextButton;
 	private StyledDialog mTagsDialog;
 
 	private ProgressDialog mProgressDialog;
@@ -352,10 +352,12 @@ public class CardEditor extends Activity {
 					}
 					// Only send result to save if something was actually
 					// changed
-					if (mModified) {
-						setResult(RESULT_OK);
-					} else {
-						setResult(RESULT_CANCELED);
+					if (!mCardReset) {
+						if (mModified) {
+							setResult(RESULT_OK);
+						} else {
+							setResult(RESULT_CANCELED);
+						}						
 					}
 					closeCardEditor();
 				}
@@ -367,7 +369,9 @@ public class CardEditor extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				setResult(RESULT_CANCELED);
+				if (!mCardReset) {
+					setResult(RESULT_CANCELED);					
+				}
 				closeCardEditor();
 			}
 
@@ -763,7 +767,8 @@ public class CardEditor extends Activity {
 								mDeck.cardFromId(cardId).resetCard();
 							}
 							mDeck.reset();
-							setResult(RESULT_OK);
+							setResult(Reviewer.RESULT_EDIT_CARD_RESET);
+							mCardReset = true;
 							Themes.showThemedToast(CardEditor.this, getResources().getString(
 									R.string.reset_card_dialog_confirmation), true);
 						}

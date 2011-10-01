@@ -30,7 +30,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,7 +46,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -105,6 +103,7 @@ public class Reviewer extends Activity implements IButtonListener{
      */
     public static final int RESULT_SESSION_COMPLETED = 1;
     public static final int RESULT_NO_MORE_CARDS = 2;
+    public static final int RESULT_EDIT_CARD_RESET = 3;
 
     /**
      * Available options performed by other activities.
@@ -1224,9 +1223,10 @@ public class Reviewer extends Activity implements IButtonListener{
 
         if (requestCode == EDIT_CURRENT_CARD) {
         	setInAnimation(true);
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK || resultCode == RESULT_EDIT_CARD_RESET) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(0,
+                int cardReset = (resultCode == RESULT_EDIT_CARD_RESET) ? 1 : 0;
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(cardReset,
                         AnkiDroidApp.deck(), mCurrentCard));
                 // TODO: code to save the changes made to the current card.
                 // TODO: resume with edited card
