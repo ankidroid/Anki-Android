@@ -222,6 +222,28 @@ public class Utils {
 
 
     /**
+     * @return double with percentage sign
+     */
+    public static boolean isNewDay(long millies) {
+		Calendar cal = Calendar.getInstance();
+		if (cal.get(Calendar.HOUR_OF_DAY) < StudyOptions.mNewDayStartsAt) {
+            cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) - 24 + StudyOptions.mNewDayStartsAt);
+		} else {
+            cal.add(Calendar.HOUR_OF_DAY, -cal.get(Calendar.HOUR_OF_DAY) + StudyOptions.mNewDayStartsAt);
+		}
+        cal.add(Calendar.MINUTE, -cal.get(Calendar.MINUTE));
+        cal.add(Calendar.SECOND, -cal.get(Calendar.SECOND));
+        if (cal.getTimeInMillis() > millies) {
+        	return true;
+        } else {
+        	return false;
+        }
+	
+
+    }
+
+
+    /**
      * @return a string with decimal separator according to current locale
      */
     public static String fmtDouble(Double value) {
