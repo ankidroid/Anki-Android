@@ -1202,7 +1202,8 @@ public class Deck {
     	}
     }
 
-    public int getSessionYesReps() {
+    public int getSessionFinishedCards() {
+    	//TODO: add failedTomorrowCount and leeches
     	return mDailyStats.getYesReps();
     }
 

@@ -134,7 +134,7 @@ public final class WidgetStatus {
                     int newCards = deck.getNewCountToday();
                     int failedCards = deck.getFailedSoonCount();
                     int eta = deck.getETA();
-                    int reps = deck.getSessionYesReps();
+                    int reps = deck.getSessionFinishedCards();
                     // Close the database connection, but only if this is not the current database.
                     // Probably we need to make this atomic to be sure it will not cause a failure.
                     if (currentDeck != null && currentDeck.getDB() != deck.getDB()) {
