@@ -1840,13 +1840,14 @@ public class StudyOptions extends Activity implements IButtonListener {
         if (deck != null && !mIsClosing) {
             // TODO: updateActives() from anqiqt/ui/main.py
             int dueCount = deck.getDueCount();
+            int newTodayCount = deck.getNewCountToday();
             int cardsCount = deck.getCardCount();
-            setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dueCount, deck.getDeckName(), dueCount, cardsCount));
+            setTitle(res.getQuantityString(R.plurals.studyoptions_window_title, dueCount + newTodayCount, deck.getDeckName(), dueCount + newTodayCount, cardsCount));
 
             mTextDeckName.setText(deck.getDeckName());
 
             mTextReviewsDue.setText(String.valueOf(dueCount));
-            mTextNewToday.setText(String.valueOf(deck.getNewCountToday()));
+            mTextNewToday.setText(String.valueOf(newTodayCount));
             String etastr = "-";
             int eta = deck.getETA();
             if (eta != -1) {
