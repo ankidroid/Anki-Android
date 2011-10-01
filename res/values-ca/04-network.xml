@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">Hi ha hagut un error de la xarxa.</string>
   <string name="no_user_password_error_message">Per tal de continuar, us cal un compte AnkiOnline i us heu de registrar.</string>
-  <string name="sync_progress_bar_title">S\'està sincronitzant %s</string>
   <string name="fact">fet</string>
   <string name="facts">fets</string>
   <string name="username">Nom d\'usuari</string>

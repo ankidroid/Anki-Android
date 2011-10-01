@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Wyślij błędy i swoje opinie</string>
   <string name="feedback_message_sent_success">Dziękujemy za informacje!</string>
   <string name="feedback_message_sent_failure">Nie można wysłać informacji, kod %1$s</string>
-  <string name="feedback_error_list_header">Lista błędów do wysłania</string>
   <string name="feedback_keep_latest">Zachowaj ostatni błąd</string>
   <string name="feedback_clear_all">Wyczyść wszystkie błędy</string>
   <string name="feedback_default_text">Wpisz swoje uwagi lub opisz błędy, które chcesz zgłosić.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Problem %1$d, poprawiony w najnowszej wersji</string>
   <string name="feedback_error_reply_malformed">Zgłoszony błąd, brak odpowiedzi</string>
   <string name="feedback_error_reply_failed">Wysłanie nieudane</string>
-  <plurals name="error_message">
-    <item quantity="one">Jest jeden błąd do zgłoszenia</item>
-    <item quantity="other">Jest %d błędów do zgłoszenia</item>
-  </plurals>
 </resources>

@@ -54,6 +54,7 @@
   <string name="card_details_changed">Veranderd</string>
   <string name="card_details_tags">Tags</string>
   <string name="card_details_model">Model</string>
+  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
   <string name="card_details_card_model">Kaartmodel</string>
   <string-array name="card_browser_order_labels">
     <item>Op vraag</item>

@@ -54,6 +54,7 @@
   <string name="card_details_changed">Modificada</string>
   <string name="card_details_tags">Etiquetas</string>
   <string name="card_details_model">Modelo</string>
+  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
   <string name="card_details_card_model">Modelo de tarjetas</string>
   <string-array name="card_browser_order_labels">
     <item>Por pregunta</item>

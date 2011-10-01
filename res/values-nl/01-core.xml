@@ -24,7 +24,6 @@
   <string name="yes">Yes</string>
   <string name="no">Nee</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Study Options</string>
   <string name="studyoptions_deck_name">Deknaam</string>
   <string name="studyoptions_reviews_due">Verwachte overhoringen:</string>
   <string name="studyoptions_new_today">Nieuw vandaag:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Bezig met laden deck...</string>
   <string name="deckpicker_nodeck">Geen decks gevonden.</string>
   <string name="show_answer">Toon Antwoord</string>
-  <string name="show_question">Toon vraag opnieuw</string>
-  <string name="card_hint">Flashcard</string>
   <string name="ease1_learning">Opnieuw</string>
   <string name="ease2_learning">Goed</string>
   <string name="ease3_learning">Makkelijk</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Makkelijk</string>
   <string name="loading">Laden...</string>
   <string name="studyoptions_continue">Doorgaan met overhoren</string>
-  <string name="studyoptions_well_done">Goed gedaan!</string>
   <string name="studyoptions_congrats_title">Gefeliciteerd!</string>
-  <string name="studyoptions_congrats_card">card</string>
-  <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">Learn More</string>
   <string name="studyoptions_congrats_reviewearly">Review Early</string>
   <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimaliseer database</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Start Cram mode</string>
-  <string name="end_cram">Stop Stamp-modus</string>
   <string name="cram">Stampen</string>
   <string name="menu_open_deck">Alle dekken</string>
   <string name="menu_sync">Synchroniseren</string>
   <string name="menu_download_deck">Dek downloaden</string>
   <string name="menu_download_shared_deck">Gedeeld dek</string>
   <string name="menu_download_personal_deck">Persoonlijk dek</string>
-  <string name="menu_synchronize">Synchroniseren</string>
   <string name="menu_my_account">Mijn Account</string>
   <string name="menu_preferences">Voorkeuren</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Dekeigenschappen</string>
   <string name="menu_add_card">Kaart toevoegen</string>
   <string name="menu_about">About</string>
   <string name="menu_remove_card">Dismiss Card</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">Laad voorbeelddek</string>
   <string name="studyoptions_night_mode">Nachtmodus</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

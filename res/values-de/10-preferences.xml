@@ -68,6 +68,9 @@
   <string name="reset_dialogs_question">Dialoge zurücksetzen?</string>
   <string name="reset_dialogs_summ">Setzt alle Dialoge zurück, die nicht mehr angezeigt werden</string>
   <string name="reset_languages_question">Sämtliche Sprachzuordnungen zurücksetzen?</string>
+  <string name="reset_messages">Nachrichten zurücksetzen</string>
+  <string name="reset_messages_question">Zeige aktuelle Nachrichten noch einmal?</string>
+  <string name="reset_messages_summ">Zeige aktuelle AnkiDroid-Nachrichten noch einmal</string>
   <string name="reset_all_question">Alle Sprachzuordnungen, Widget-, Whiteboard- und Wörterbuch-Speicherzustände zurücksetzen?</string>
   <string name="reset_confirmation">Alle Zustände zurücksetzen</string>
   <string name="use_ruby_support">Ruby-Anmerkungen</string>
@@ -129,9 +132,7 @@
   <string name="timeout_answer_text">Antwort zeigen</string>
   <string name="timeout_answer_summ">Zeige die Antwort automatisch nach einer bestimmten Zeit</string>
   <string name="timeout_answer_seconds">Sekunden bis zum automatischen Zeigen der Antwort</string>
-  <string name="timeout_answer_seconds_summ">Wählen Sie den Zeitpunkt, ab dem automatisch die Antwort gezeigt werden soll</string>
   <string name="timeout_question_seconds">Wartezeit in Sekunden, bevor die nächste Frage gezeigt wird</string>
-  <string name="timeout_question_seconds_summ">Wählen Sie die Zeit bis die nächste Frage automatisch gezeigt wird</string>
   <string name="select_locale_title">Sprache wählen</string>
   <string name="select_theme">Layout</string>
   <string name="theme_animations">Animationen</string>
@@ -192,4 +193,6 @@
   <string name="studyoptions_new_cards_per_day">Neue Karten pro Tag</string>
   <string name="studyoptions_max_fail_card">Maximum falscher Karten</string>
   <string name="studyoptions_more_save">Speichern</string>
+  <string name="show_broadcast_messages">Aktuelle Nachrichten anzeigen</string>
+  <string name="show_broadcast_messages_summ">Aktuelle AnkiDroid-Nachrichten, wie etwa Informationen über neue Versionen oder Ähnliches, anzeigen</string>
 </resources>

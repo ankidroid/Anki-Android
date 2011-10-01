@@ -46,7 +46,6 @@ Les non-développeurs peuvent aussi aider, par exemple en actualisant le wiki et
   <string name="deck_upgrade_version_61_has_latex">Le paquet ne peut être entièrement mis à jour, car il contient des expressions LaTeX. Veuillez ouvrir le paquet avec la version pour ordinateur d\'\Anki pour régénérer LaTeX.</string>
   <string name="sync_log_title">Journal des synchronisations</string>
   <string name="deckpicker_upgrading">Mise à jour du paquet…</string>
-  <string name="deckpicker_upgrade_failed">Échec de la mise à jour !</string>
   <string name="deckpicker_upgrade_notes_title">Résultats de la mise à jour des paquets</string>
   <string name="deckpicker_upgrade_notes_button">Remarques</string>
   <string name="deckpicker_download_missing_title">Récupérer des media manquants</string>

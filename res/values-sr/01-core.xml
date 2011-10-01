@@ -24,7 +24,6 @@
   <string name="yes">Da</string>
   <string name="no">Ne</string>
   <string name="ok">U redu</string>
-  <string name="studyoptions_title">Opcije za Učenje</string>
   <string name="studyoptions_deck_name">Ime špila</string>
   <string name="studyoptions_reviews_due">Pregleda na redu:</string>
   <string name="studyoptions_new_today">Novih danas:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Učitavanje špila...</string>
   <string name="deckpicker_nodeck">Nijedan špil nije pronađen.</string>
   <string name="show_answer">Prikaži Odgovor</string>
-  <string name="show_question">Prikaži Pitanje</string>
-  <string name="card_hint">Kartica</string>
   <string name="ease1_learning">Ponovo</string>
   <string name="ease2_learning">Dobro</string>
   <string name="ease3_learning">Lako</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Lako</string>
   <string name="loading">Učitavanje...</string>
   <string name="studyoptions_continue">Nastavi sa Pregledavanjem</string>
-  <string name="studyoptions_well_done">Bravo!</string>
   <string name="studyoptions_congrats_title">Čestitamo!</string>
-  <string name="studyoptions_congrats_card">kartica</string>
-  <string name="studyoptions_congrats_cards">kartica</string>
   <string name="studyoptions_congrats_learnmore">Uči Još</string>
   <string name="studyoptions_congrats_reviewearly">Pregledaj Ranije</string>
   <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Počni sa Štrebanjem</string>
-  <string name="end_cram">Prestani sa Štrebanjem</string>
   <string name="cram">Štrebanje</string>
   <string name="menu_open_deck">All decks</string>
   <string name="menu_sync">Sinhronizacija</string>
   <string name="menu_download_deck">Preuzet špil</string>
   <string name="menu_download_shared_deck">Zajednički špil</string>
   <string name="menu_download_personal_deck">Lični špil</string>
-  <string name="menu_synchronize">Sinhronizuj</string>
   <string name="menu_my_account">Moj Račun</string>
   <string name="menu_preferences">Postavke</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Špil Opcije</string>
   <string name="menu_add_card">Dodaj karticu</string>
   <string name="menu_about">O programu</string>
   <string name="menu_remove_card">Dismiss Card</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">Učitaj Primerni Špil</string>
   <string name="studyoptions_night_mode">Night Mode</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

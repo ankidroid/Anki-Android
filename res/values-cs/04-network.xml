@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">Došlo k síťové chybě.</string>
   <string name="no_user_password_error_message">Abyste v této operaci mohli pokračovat, potřebujete mít účet na AnkiOnline a být přihlášeni.</string>
-  <string name="sync_progress_bar_title">Synchronizování %s</string>
   <string name="fact">fakt</string>
   <string name="facts">fakta</string>
   <string name="username">Uživatelské jméno</string>

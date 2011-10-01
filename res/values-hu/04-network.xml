@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">Hálózati hiba történt.</string>
   <string name="no_user_password_error_message">Ehhez  művelethez szükséged van egy bejelentkezett AnkiOnline felhasználóra.</string>
-  <string name="sync_progress_bar_title">%s szinkronizálása</string>
   <string name="fact">tény</string>
   <string name="facts">tények</string>
   <string name="username">Felhasználói név</string>

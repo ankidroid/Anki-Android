@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Подготовка синхронизации...</string>
   <string name="connection_error_message">Ошибка сети.</string>
   <string name="no_user_password_error_message">Для того, чтобы продолжить эту операцию, вы должны иметь AnkiOnline-аккаунт (это бесплатно) и указать логин и пароль в настройках AnkiDroid.</string>
-  <string name="sync_progress_bar_title">Синхронизировано %s</string>
   <string name="fact">факт</string>
   <string name="facts">факты</string>
   <string name="username">Имя пользователя</string>

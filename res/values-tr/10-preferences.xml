@@ -62,14 +62,17 @@
   <string name="dictionary_summ">Aramaların gerçekleştirileceği sözlük: XXX</string>
   <string name="reset_languages">Dilleri Sıfırla</string>
   <string name="reset_languages_summ">Tüm destelerdeki dil atamalarını sıfırla (metin okuma ve sözlükler için). Belirli deste atamalarını sıfırlamak için deste seçiciyi kullanın.</string>
-  <string name="reset_all">Reset All</string>
-  <string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
+  <string name="reset_all">Hepsini Sıfırla</string>
+  <string name="reset_all_summ">Dil, bileşen, yazı tahtası ve sözlük durumlarını sıfırla</string>
   <string name="reset_dialogs">İletişim Kutularını Sıfırla</string>
   <string name="reset_dialogs_question">Tüm iletişim kutuları sıfırlansın mı?</string>
   <string name="reset_dialogs_summ">Yeniden gösterilmemeye ayarlanmış tüm iletişim kutularını sıfırla</string>
   <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
-  <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
-  <string name="reset_confirmation">All states reset</string>
+  <string name="reset_messages">Reset Messages</string>
+  <string name="reset_messages_question">Show current messages again?</string>
+  <string name="reset_messages_summ">Show current AnkiDroid messages another time</string>
+  <string name="reset_all_question">Tüm dil, bileşen, yazı tahtası ve sözlük durumları sıfırlansın mı?</string>
+  <string name="reset_confirmation">Tüm durumların sıfırlanması</string>
   <string name="use_ruby_support">Ruby dipnot desteği sağla</string>
   <string name="use_ruby_support_summ">\"[\" ve \"]\" karakterleri bulunuyorsa, aralarındaki metin ruby dipnotu olarak işlenir</string>
   <string name="display_font_size">Bağıl ekran yazı boyutu</string>
@@ -89,7 +92,7 @@
   <string name="zoom">Yakınlaştırmayı etkinleştir</string>
   <string name="zoom_summ">Gözden geçirme sırasında yakınlaştırma denetimlerini göster</string>
   <string name="zeemote">Zeemote JS1 desteği</string>
-  <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
+  <string name="zeemote_summ">Gözden geçirmelerde gezinmek için Zeemote JS1 denetimcisini kullan</string>
   <string name="swipe">Özel Hareketleri Etkinleştir</string>
   <string name="swipe_summ_off">Ekranlar arasında geçiş yapmak ve kartları yanıtlamak için özel hareketleri kullan. Bu seçenek yakınlaştırma denetimleriyle uyumlu değildir.</string>
   <string name="swipe_summ_on">Ekranlar arasında geçiş yapmak için yatay olarak sürükle. Diğer eylemleri aşağıda yapılandırın.</string>
@@ -129,9 +132,7 @@
   <string name="timeout_answer_text">Yanıtı kendiliğinden gösterme</string>
   <string name="timeout_answer_summ">Soruyu belli bir süre gösterdikten sonra yanıtı kullanıcı girdisi olmadan kendiliğinden gösterir.</string>
   <string name="timeout_answer_seconds">Yanıt gösterilmeden önceki saniye sayısı</string>
-  <string name="timeout_answer_seconds_summ">Yanıt kendiliğinden gözükmeden önceki süre miktarını seçin</string>
-  <string name="timeout_question_seconds">Seconds before the next question is shown</string>
-  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
+  <string name="timeout_question_seconds">Sonraki soru gösterilmeden önceki saniye sayısı</string>
   <string name="select_locale_title">Dil Seç</string>
   <string name="select_theme">Tema</string>
   <string name="theme_animations">Animasyonlar</string>
@@ -192,4 +193,6 @@
   <string name="studyoptions_new_cards_per_day">Gün başına yeni kart sayısı</string>
   <string name="studyoptions_max_fail_card">En fazla başarısız kart sayısı</string>
   <string name="studyoptions_more_save">Kaydet</string>
+  <string name="show_broadcast_messages">Show Current Messages</string>
+  <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
 </resources>

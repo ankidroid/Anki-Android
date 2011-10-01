@@ -54,6 +54,7 @@
   <string name="card_details_changed">更改</string>
   <string name="card_details_tags">標籤</string>
   <string name="card_details_model">模型</string>
+  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
   <string name="card_details_card_model">卡片模型</string>
   <string-array name="card_browser_order_labels">
     <item>依問題</item>

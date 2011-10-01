@@ -24,7 +24,6 @@
   <string name="yes">Sì</string>
   <string name="no">No</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Opzioni di studio</string>
   <string name="studyoptions_deck_name">Nome del mazzo</string>
   <string name="studyoptions_reviews_due">Da ripetere:</string>
   <string name="studyoptions_new_today">Nuove oggi:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Caricamento mazzo...</string>
   <string name="deckpicker_nodeck">Nessun mazzo trovato.</string>
   <string name="show_answer">Mostra la risposta</string>
-  <string name="show_question">Mostra la domanda</string>
-  <string name="card_hint">Carta</string>
   <string name="ease1_learning">Ancora</string>
   <string name="ease2_learning">Buono</string>
   <string name="ease3_learning">Facile</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Facile</string>
   <string name="loading">Sto caricando...</string>
   <string name="studyoptions_continue">Continua la revisione</string>
-  <string name="studyoptions_well_done">Ben fatto!</string>
   <string name="studyoptions_congrats_title">Congratulazioni!</string>
-  <string name="studyoptions_congrats_card">carta</string>
-  <string name="studyoptions_congrats_cards">carte</string>
   <string name="studyoptions_congrats_learnmore">Impara ancora</string>
   <string name="studyoptions_congrats_reviewearly">Rivedere presto</string>
   <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">Ottimizzare database</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Inizia studio focalizzato</string>
-  <string name="end_cram">Termina studio focalizzato</string>
   <string name="cram">Studio di massa</string>
   <string name="menu_open_deck">Tutti i corsi</string>
   <string name="menu_sync">Sincronizza</string>
   <string name="menu_download_deck">Scarica il mazzo</string>
   <string name="menu_download_shared_deck">Mazzo condiviso</string>
   <string name="menu_download_personal_deck">Mazzo privato</string>
-  <string name="menu_synchronize">Sincronizza</string>
   <string name="menu_my_account">Il mio Account</string>
   <string name="menu_preferences">Preferenze</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Proprietà del mazzo</string>
   <string name="menu_add_card">Aggiungi una carta</string>
   <string name="menu_about">Informazioni</string>
   <string name="menu_remove_card">Scartare carta</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">Carica un mazzo di esempio</string>
   <string name="studyoptions_night_mode">Modalità notturna</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

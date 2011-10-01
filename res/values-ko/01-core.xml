@@ -24,7 +24,6 @@
   <string name="yes">예</string>
   <string name="no">아니오</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Study Options</string>
   <string name="studyoptions_deck_name">Deck name</string>
   <string name="studyoptions_reviews_due">Reviews due:</string>
   <string name="studyoptions_new_today">New today:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Loading deck...</string>
   <string name="deckpicker_nodeck">No decks found.</string>
   <string name="show_answer">Show Answer</string>
-  <string name="show_question">Re-display Question</string>
-  <string name="card_hint">Flashcard</string>
   <string name="ease1_learning">Again</string>
   <string name="ease2_learning">Good</string>
   <string name="ease3_learning">Easy</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Easy</string>
   <string name="loading">Loading...</string>
   <string name="studyoptions_continue">Continue Reviewing</string>
-  <string name="studyoptions_well_done">잘한다!</string>
   <string name="studyoptions_congrats_title">Congratulations!</string>
-  <string name="studyoptions_congrats_card">card</string>
-  <string name="studyoptions_congrats_cards">cards</string>
   <string name="studyoptions_congrats_learnmore">더 배우기</string>
   <string name="studyoptions_congrats_reviewearly">Review Early</string>
   <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Start Cram mode</string>
-  <string name="end_cram">Stop Cram mode</string>
   <string name="cram">Cram</string>
   <string name="menu_open_deck">모든 묶음</string>
   <string name="menu_sync">Sync</string>
   <string name="menu_download_deck">Download deck</string>
   <string name="menu_download_shared_deck">Shared deck</string>
   <string name="menu_download_personal_deck">Personal deck</string>
-  <string name="menu_synchronize">Synchronize</string>
   <string name="menu_my_account">My Account</string>
   <string name="menu_preferences">Preferences</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Deck Properties</string>
   <string name="menu_add_card">Add card</string>
   <string name="menu_about">About</string>
   <string name="menu_remove_card">Dismiss Card</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">Load Sample Deck</string>
   <string name="studyoptions_night_mode">Night Mode</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

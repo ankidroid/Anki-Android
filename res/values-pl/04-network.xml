@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Przygotowywanie synchronizacji...</string>
   <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
   <string name="no_user_password_error_message">Aby kontynuować tę operację, musisz posiadać konto AnkiOnline i być zalogowany.</string>
-  <string name="sync_progress_bar_title">Synchronizacja %s</string>
   <string name="fact">fakt</string>
   <string name="facts">fakty</string>
   <string name="username">Użytkownik</string>

@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Đang chuẩn bị đồng bộ...</string>
   <string name="connection_error_message">Một lỗi mạng đã xảy ra.</string>
   <string name="no_user_password_error_message">Để tiếp tục thao tác này, bạn cần phải có một tài khoản AnkiOnline và đăng nhập.</string>
-  <string name="sync_progress_bar_title">Đang đồng bộ hoá %s</string>
   <string name="fact">fact</string>
   <string name="facts">facts</string>
   <string name="username">Tên người dùng</string>

@@ -24,7 +24,6 @@
   <string name="yes">Sí</string>
   <string name="no">No</string>
   <string name="ok">Aceptar</string>
-  <string name="studyoptions_title">Opciones de Estudio</string>
   <string name="studyoptions_deck_name">Nombre del mazo</string>
   <string name="studyoptions_reviews_due">Repasos programados:</string>
   <string name="studyoptions_new_today">Nuevas hoy:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Cargando mazo...</string>
   <string name="deckpicker_nodeck">No se ha encontrado ningún mazo.</string>
   <string name="show_answer">Mostrar respuesta</string>
-  <string name="show_question">Mostrar pregunta</string>
-  <string name="card_hint">Tarjeta</string>
   <string name="ease1_learning">Una vez más</string>
   <string name="ease2_learning">Bien</string>
   <string name="ease3_learning">Fácil</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Fácil</string>
   <string name="loading">Cargando...</string>
   <string name="studyoptions_continue">Continuar el repaso</string>
-  <string name="studyoptions_well_done">¡Bien hecho!</string>
   <string name="studyoptions_congrats_title">¡Enhorabuena!</string>
-  <string name="studyoptions_congrats_card">tarjeta</string>
-  <string name="studyoptions_congrats_cards">tarjetas</string>
   <string name="studyoptions_congrats_learnmore">Aprender más</string>
   <string name="studyoptions_congrats_reviewearly">Repasar anticipadamente</string>
   <string name="studyoptions_congrats_syncdeck">Sincronizar mazo</string>
@@ -69,20 +63,17 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer Idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimizar la base de datos</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Establecer diccionario personalizado</string>
   <string name="begin_cram">Comenzar a empollar</string>
-  <string name="end_cram">Dejar de empollar</string>
   <string name="cram">Empollar</string>
   <string name="menu_open_deck">Todos los mazos</string>
   <string name="menu_sync">Sincronizar</string>
   <string name="menu_download_deck">Descargar mazo</string>
   <string name="menu_download_shared_deck">Mazo compartido</string>
   <string name="menu_download_personal_deck">Mazo personal</string>
-  <string name="menu_synchronize">Sincronizar</string>
   <string name="menu_my_account">Mi Cuenta</string>
   <string name="menu_preferences">Preferencias</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Propiedades del mazo</string>
   <string name="menu_add_card">Añadir tarjeta</string>
   <string name="menu_about">Acerca de</string>
   <string name="menu_remove_card">Quitar Tarjeta</string>
@@ -100,7 +91,9 @@
   <string name="studyoptions_load_other_deck">Cargar otro mazo</string>
   <string name="studyoptions_load_sample_deck">Cargar mazo de ejemplo</string>
   <string name="studyoptions_night_mode">Modo Nocturno</string>
-  <string name="studyoptions_swap_qa">Intercambiar Pregunta/Respuesta</string>
+  <string name="studyoptions_swap_qa">Intercambiar Preg./Resp.</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

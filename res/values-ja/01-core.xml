@@ -24,7 +24,6 @@
   <string name="yes">はい</string>
   <string name="no">いいえ</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">学習設定</string>
   <string name="studyoptions_deck_name">単語帳名</string>
   <string name="studyoptions_reviews_due">残りのカード数:</string>
   <string name="studyoptions_new_today">新しいカード（今日）：</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">単語帳を読み込んでいます...</string>
   <string name="deckpicker_nodeck">単語帳がありません。</string>
   <string name="show_answer">答えを見る</string>
-  <string name="show_question">質問を再表示</string>
-  <string name="card_hint">フラッシュカード</string>
   <string name="ease1_learning">もう一度</string>
   <string name="ease2_learning">普通</string>
   <string name="ease3_learning">簡単</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">簡単</string>
   <string name="loading">ロード中...</string>
   <string name="studyoptions_continue">学習を続ける</string>
-  <string name="studyoptions_well_done">よくできました！</string>
   <string name="studyoptions_congrats_title">おめでとうございます！！</string>
-  <string name="studyoptions_congrats_card">カード</string>
-  <string name="studyoptions_congrats_cards">カード</string>
   <string name="studyoptions_congrats_learnmore">学習を続ける</string>
   <string name="studyoptions_congrats_reviewearly">学習の前倒し</string>
   <string name="studyoptions_congrats_syncdeck">単語帳を同期</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">データベースを最適化します</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">総復習を始める</string>
-  <string name="end_cram">総復習を止める</string>
   <string name="cram">総復習</string>
   <string name="menu_open_deck">すべての単語帳</string>
   <string name="menu_sync">同期</string>
   <string name="menu_download_deck">単語帳をダウンロード</string>
   <string name="menu_download_shared_deck">共有の単語帳</string>
   <string name="menu_download_personal_deck">個人の単語帳</string>
-  <string name="menu_synchronize">同期</string>
   <string name="menu_my_account">マイアカウント</string>
   <string name="menu_preferences">設定</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">単語帳プロパティー</string>
   <string name="menu_add_card">カードを追加</string>
   <string name="menu_about">このプログラムについて</string>
   <string name="menu_remove_card">カードの非表示</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">サンプル単語帳を開く</string>
   <string name="studyoptions_night_mode">ナイトモード</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

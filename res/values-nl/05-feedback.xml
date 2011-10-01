@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
   <string name="feedback_message_sent_success">Feedback received, thank you!</string>
   <string name="feedback_message_sent_failure">Unable to send feedback, code %1$s</string>
-  <string name="feedback_error_list_header">List of errors to send</string>
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
   <string name="feedback_default_text">Voer alstublieft uw feedback in, of informatie over de aard van de fouten die u rapporteert.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Kwestie %1$d, opgelost in de meest recente versie</string>
   <string name="feedback_error_reply_malformed">Bug gerapporteerd, geen reactie</string>
   <string name="feedback_error_reply_failed">Verzenden mislukt</string>
-  <plurals name="error_message">
-    <item quantity="one">There is one error to report</item>
-    <item quantity="other">There are %d errors to report</item>
-  </plurals>
 </resources>

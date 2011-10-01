@@ -24,7 +24,6 @@
   <string name="yes">Ano</string>
   <string name="no">Ne</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Studijní možnosti</string>
   <string name="studyoptions_deck_name">Jméno balíčku</string>
   <string name="studyoptions_reviews_due">K zopakování:</string>
   <string name="studyoptions_new_today">Dnes nových:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Načítám balíček ...</string>
   <string name="deckpicker_nodeck">Nalezeny žádné balíčky.</string>
   <string name="show_answer">Zobrazit odpověď</string>
-  <string name="show_question">Zobrazit otázku</string>
-  <string name="card_hint">Karta</string>
   <string name="ease1_learning">Znovu</string>
   <string name="ease2_learning">Dobře</string>
   <string name="ease3_learning">Snadně</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Snadně</string>
   <string name="loading">Načítání...</string>
   <string name="studyoptions_continue">Pokračovat v opakování</string>
-  <string name="studyoptions_well_done">Výborně!</string>
   <string name="studyoptions_congrats_title">Gratuluji!</string>
-  <string name="studyoptions_congrats_card">karta</string>
-  <string name="studyoptions_congrats_cards">karty</string>
   <string name="studyoptions_congrats_learnmore">Naučit se víc</string>
   <string name="studyoptions_congrats_reviewearly">Zopakovat dřív</string>
   <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Spustit Šprtací režim</string>
-  <string name="end_cram">Ukončit Šprtací režim</string>
   <string name="cram">Šprtat</string>
   <string name="menu_open_deck">All decks</string>
   <string name="menu_sync">Synchronizovat</string>
   <string name="menu_download_deck">Stáhnout balíček</string>
   <string name="menu_download_shared_deck">Sdílený balíček</string>
   <string name="menu_download_personal_deck">Vlastní balíček</string>
-  <string name="menu_synchronize">Synchronizovat</string>
   <string name="menu_my_account">Můj účet</string>
   <string name="menu_preferences">Nastavení</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Nastavení balíčku</string>
   <string name="menu_add_card">Přidat kartu</string>
   <string name="menu_about">O aplikaci</string>
   <string name="menu_remove_card">Dismiss Card</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">Načíst ukázkový balíček</string>
   <string name="studyoptions_night_mode">Night Mode</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

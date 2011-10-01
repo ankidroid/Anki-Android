@@ -24,7 +24,6 @@
   <string name="yes">是</string>
   <string name="no">否</string>
   <string name="ok">好</string>
-  <string name="studyoptions_title">学习选项</string>
   <string name="studyoptions_deck_name">牌组名称</string>
   <string name="studyoptions_reviews_due">到期复习卡片：</string>
   <string name="studyoptions_new_today">今日新卡片：</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">正在载入牌组…</string>
   <string name="deckpicker_nodeck">找不到牌组。</string>
   <string name="show_answer">显示答案</string>
-  <string name="show_question">重新显示问题</string>
-  <string name="card_hint">记忆卡片</string>
   <string name="ease1_learning">重来</string>
   <string name="ease2_learning">一般</string>
   <string name="ease3_learning">简单</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">简单</string>
   <string name="loading">正在载入…</string>
   <string name="studyoptions_continue">继续复习</string>
-  <string name="studyoptions_well_done">干得好！</string>
   <string name="studyoptions_congrats_title">恭喜！</string>
-  <string name="studyoptions_congrats_card">卡片</string>
-  <string name="studyoptions_congrats_cards">卡片</string>
   <string name="studyoptions_congrats_learnmore">继续学习</string>
   <string name="studyoptions_congrats_reviewearly">提前复习</string>
   <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">优化数据库</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">开始强记模式</string>
-  <string name="end_cram">停止强记模式</string>
   <string name="cram">强记模式</string>
   <string name="menu_open_deck">所有牌组</string>
   <string name="menu_sync">同步</string>
   <string name="menu_download_deck">下载牌组</string>
   <string name="menu_download_shared_deck">共享牌组</string>
   <string name="menu_download_personal_deck">个人牌组</string>
-  <string name="menu_synchronize">同步</string>
   <string name="menu_my_account">我的账号</string>
   <string name="menu_preferences">偏好设置</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">牌组属性</string>
   <string name="menu_add_card">添加卡片</string>
   <string name="menu_about">关于</string>
   <string name="menu_remove_card">忽略卡片</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">载入示例牌组</string>
   <string name="studyoptions_night_mode">夜间模式</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

@@ -36,7 +36,6 @@
   <string name="leech_notification">卡片被标记为记忆难点</string>
   <string name="about_title">关于</string>
   <string name="cardeditor_title">编辑条目</string>
-  <string name="factadder_title">添加卡片</string>
   <string name="factadder_saving_error">Error saving fact</string>
   <string name="saving_facts">Saving facts</string>
   <string name="deckcreator_title">牌组创建器</string>
@@ -61,7 +60,6 @@
   <string name="fact_adder_swap">Swap</string>
   <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
   <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_lookup">Lookup</string>
   <string name="card_editor_add_card">Add card</string>
   <string name="card_editor_reset">Reset</string>
   <string name="card_editor_copy_card">Copy card</string>

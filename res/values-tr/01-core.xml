@@ -24,7 +24,6 @@
   <string name="yes">Evet</string>
   <string name="no">Hayır</string>
   <string name="ok">Tamam</string>
-  <string name="studyoptions_title">Çalışma Seçenekleri</string>
   <string name="studyoptions_deck_name">Deste adı</string>
   <string name="studyoptions_reviews_due">Gözden geçirilecek:</string>
   <string name="studyoptions_new_today">Bugün yeni:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Deste yükleniyor...</string>
   <string name="deckpicker_nodeck">Deste bulunmuyor.</string>
   <string name="show_answer">Yanıtı Göster</string>
-  <string name="show_question">Soruyu Yeniden Göster</string>
-  <string name="card_hint">Bilgi Kartı</string>
   <string name="ease1_learning">Yeniden</string>
   <string name="ease2_learning">İyi</string>
   <string name="ease3_learning">Kolay</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Kolay</string>
   <string name="loading">Yükleniyor...</string>
   <string name="studyoptions_continue">Gözden Geçirmeye Devam Et</string>
-  <string name="studyoptions_well_done">Aferin!</string>
   <string name="studyoptions_congrats_title">Tebrikler!</string>
-  <string name="studyoptions_congrats_card">kart</string>
-  <string name="studyoptions_congrats_cards">kart</string>
   <string name="studyoptions_congrats_learnmore">Daha Fazlasını Öğren</string>
   <string name="studyoptions_congrats_reviewearly">Erkenden Gözden Geçirin</string>
   <string name="studyoptions_congrats_syncdeck">Desteyi eşitle</string>
@@ -69,20 +63,17 @@
   <string name="contextmenu_deckpicker_reset_language_assignments">Dil Görevlerini Sıfırla</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Dil sıfırlama</string>
   <string name="contextmenu_deckpicker_optimize_deck">Veritabanını iyileştir</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Harici sözlük ayarla</string>
   <string name="begin_cram">Yoğun çalışma modunu başlat</string>
-  <string name="end_cram">Yoğun çalışma modunu durdur</string>
   <string name="cram">Yoğun Çalışma</string>
   <string name="menu_open_deck">Tüm desteler</string>
   <string name="menu_sync">Eşitleme</string>
   <string name="menu_download_deck">Deste indir</string>
   <string name="menu_download_shared_deck">Paylaşılan deste</string>
   <string name="menu_download_personal_deck">Kişisel deste</string>
-  <string name="menu_synchronize">Eşitle</string>
   <string name="menu_my_account">Hesabım</string>
   <string name="menu_preferences">Tercihler</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Deste Özellikleri</string>
   <string name="menu_add_card">Kart ekle</string>
   <string name="menu_about">Hakkında</string>
   <string name="menu_remove_card">Kartı Çıkar</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">Örnek Desteyi Yükle</string>
   <string name="studyoptions_night_mode">Gece Modu</string>
   <string name="studyoptions_swap_qa">S/Y Değiştir</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>

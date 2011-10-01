@@ -36,7 +36,6 @@
   <string name="leech_notification">Karta oznaczona jako pijawka</string>
   <string name="about_title">O programie</string>
   <string name="cardeditor_title">Edytor kart</string>
-  <string name="factadder_title">Dodawanie kart</string>
   <string name="factadder_saving_error">Wystąpił błąd podczas zapisywania faktu</string>
   <string name="saving_facts">Zapisywanie faktów</string>
   <string name="deckcreator_title">Twórca talii</string>
@@ -61,7 +60,6 @@
   <string name="fact_adder_swap">Zamień</string>
   <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
   <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_lookup">Lookup</string>
   <string name="card_editor_add_card">Add card</string>
   <string name="card_editor_reset">Reset</string>
   <string name="card_editor_copy_card">Copy card</string>

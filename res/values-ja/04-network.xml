@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">ネットワークエラーが発生しました。</string>
   <string name="no_user_password_error_message">この操作を続行するには、AnkiOnlineのアカウントを取得し、ログインしてください。</string>
-  <string name="sync_progress_bar_title">%sを同期</string>
   <string name="fact">ファクト</string>
   <string name="facts">ファクト</string>
   <string name="username">ユーザ名</string>

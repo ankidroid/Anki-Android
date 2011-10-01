@@ -24,7 +24,6 @@
   <string name="yes">Tak</string>
   <string name="no">Nie</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Ustawienia nauki</string>
   <string name="studyoptions_deck_name">Nazwa talii</string>
   <string name="studyoptions_reviews_due">Do przeglądnięcia:</string>
   <string name="studyoptions_new_today">Nowe dzisiaj:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Ładowanie talii...</string>
   <string name="deckpicker_nodeck">Nie znaleziono talii.</string>
   <string name="show_answer">Pokaż Odpowiedź</string>
-  <string name="show_question">Pokaż Pytanie</string>
-  <string name="card_hint">Fiszka</string>
   <string name="ease1_learning">Powtórz</string>
   <string name="ease2_learning">Dobrze</string>
   <string name="ease3_learning">Łatwo</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Łatwo</string>
   <string name="loading">Ładowanie...</string>
   <string name="studyoptions_continue">Kontynuuj powtórki</string>
-  <string name="studyoptions_well_done">Dobra robota!</string>
   <string name="studyoptions_congrats_title">Gratulacje!</string>
-  <string name="studyoptions_congrats_card">karta</string>
-  <string name="studyoptions_congrats_cards">kart</string>
   <string name="studyoptions_congrats_learnmore">Dowiedz się więcej</string>
   <string name="studyoptions_congrats_reviewearly">Powtarzaj wcześnie</string>
   <string name="studyoptions_congrats_syncdeck">Synchronizuj talię</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optymalizacja bazy danych</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Zacznij zakuwanie</string>
-  <string name="end_cram">Zakończ zakuwanie</string>
   <string name="cram">Zakuwaj</string>
   <string name="menu_open_deck">Wszystkie talie</string>
   <string name="menu_sync">Synchronizuj</string>
   <string name="menu_download_deck">Pobierz talię</string>
   <string name="menu_download_shared_deck">Udostępniona talia</string>
   <string name="menu_download_personal_deck">Własna talia</string>
-  <string name="menu_synchronize">Synchronizuj</string>
   <string name="menu_my_account">Moje konto</string>
   <string name="menu_preferences">Ustawienia</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Właściwości talii</string>
   <string name="menu_add_card">Dodaj kartę</string>
   <string name="menu_about">O programie</string>
   <string name="menu_remove_card">Odrzuć kartę</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">Wczytaj przykładową talię</string>
   <string name="studyoptions_night_mode">Tryb nocny</string>
   <string name="studyoptions_swap_qa">Zamień Pyt/Odp</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>

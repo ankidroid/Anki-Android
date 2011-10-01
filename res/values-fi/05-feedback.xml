@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Lähetä virheet ja palautteesi</string>
   <string name="feedback_message_sent_success">Palaute vastaanotettu, kiitos!</string>
   <string name="feedback_message_sent_failure">Ei voitu lähettää palautetta, koodi %1$s</string>
-  <string name="feedback_error_list_header">Lähetä virhelista</string>
   <string name="feedback_keep_latest">Säilytä viimeisin virhe</string>
   <string name="feedback_clear_all">Poista kaikki virheet</string>
   <string name="feedback_default_text">Ana palautetta tai anna yleistietoa virheistä josta ilmoitat.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Virhe %1$d, korjattu uusimmassa versiossa</string>
   <string name="feedback_error_reply_malformed">Arkistoitu virhe, ei vastausta</string>
   <string name="feedback_error_reply_failed">Lähettäminen epäonnistui</string>
-  <plurals name="error_message">
-    <item quantity="one">Yksi virhe raportissa</item>
-    <item quantity="other">On %d raportoitavaa virhettä</item>
-  </plurals>
 </resources>

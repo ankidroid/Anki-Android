@@ -68,6 +68,9 @@
   <string name="reset_dialogs_question">Reset all dialogs?</string>
   <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">Reimpostare tutte le assegnazioni di lingua?</string>
+  <string name="reset_messages">Reset Messages</string>
+  <string name="reset_messages_question">Show current messages again?</string>
+  <string name="reset_messages_summ">Show current AnkiDroid messages another time</string>
   <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
   <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">Fornisce support alle annotazioni ruby</string>
@@ -129,9 +132,7 @@
   <string name="timeout_answer_text">Automatic display answer</string>
   <string name="timeout_answer_summ">After displaying the Question for a set amount of time, the answer is displayed automatically without user input</string>
   <string name="timeout_answer_seconds">Seconds before the answer is shown</string>
-  <string name="timeout_answer_seconds_summ">Select the amount of time before answer is automatically shown</string>
   <string name="timeout_question_seconds">Seconds before the next question is shown</string>
-  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">Scegli la lingua</string>
   <string name="select_theme">Theme</string>
   <string name="theme_animations">Animations</string>
@@ -192,4 +193,6 @@
   <string name="studyoptions_new_cards_per_day">Carte nuove al giorno</string>
   <string name="studyoptions_max_fail_card">Max fail cards</string>
   <string name="studyoptions_more_save">Salva</string>
+  <string name="show_broadcast_messages">Show Current Messages</string>
+  <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
 </resources>

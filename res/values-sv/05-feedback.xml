@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Skicka felrapporter och din feedback</string>
   <string name="feedback_message_sent_success">Feedback mottagen, tack!</string>
   <string name="feedback_message_sent_failure">Kunde inte skicka feedback, kod %1$s</string>
-  <string name="feedback_error_list_header">Lista över fel att skicka</string>
   <string name="feedback_keep_latest">Behåll senaste fel</string>
   <string name="feedback_clear_all">Rensa alla fel</string>
   <string name="feedback_default_text">Var god skriv in din feedback eller information om eventuella fel du rapporterar.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Problem %1$d, fixat i senaste versionen</string>
   <string name="feedback_error_reply_malformed">Bugg rapporterad, inget svar</string>
   <string name="feedback_error_reply_failed">Kunde inte skicka</string>
-  <plurals name="error_message">
-    <item quantity="one">Det finns ett fel att rapportera</item>
-    <item quantity="other">Det finns %d fel att rapportera</item>
-  </plurals>
 </resources>

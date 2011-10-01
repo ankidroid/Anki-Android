@@ -30,7 +30,6 @@
   <string name="feedback_send_feedback_and_errors">Enviar erros e os seus comentários</string>
   <string name="feedback_message_sent_success">Feedback recebido, obrigado!</string>
   <string name="feedback_message_sent_failure">Não foi possível enviar feedback, código %1$s</string>
-  <string name="feedback_error_list_header">Lista de erros para enviar</string>
   <string name="feedback_keep_latest">Erro de manter ultimo</string>
   <string name="feedback_clear_all">Limpar todos os erros</string>
   <string name="feedback_default_text">Digite seu feedback, ou informações sobre a natureza de qualquer erro que você esteja relatando.</string>
@@ -42,8 +41,4 @@
   <string name="feedback_error_reply_issue_fixed_prod">Problema %1$d, corrigido na ultima versão</string>
   <string name="feedback_error_reply_malformed">Filed bug, no response</string>
   <string name="feedback_error_reply_failed">Falhou ao enviar</string>
-  <plurals name="error_message">
-    <item quantity="one">Há um erro para relatar</item>
-    <item quantity="other">Existem %d erros para relatar</item>
-  </plurals>
 </resources>

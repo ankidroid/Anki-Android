@@ -24,7 +24,6 @@
   <string name="yes">Yes</string>
   <string name="no">No</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Tanulási lehetőségek</string>
   <string name="studyoptions_deck_name">Pakli neve</string>
   <string name="studyoptions_reviews_due">Esedékes gyakorlások:</string>
   <string name="studyoptions_new_today">Ma új:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Loading deck...</string>
   <string name="deckpicker_nodeck">No decks found.</string>
   <string name="show_answer">Válasz mutatása</string>
-  <string name="show_question">Kérdés mutatása újra</string>
-  <string name="card_hint">Tanulókártya</string>
   <string name="ease1_learning">Újra</string>
   <string name="ease2_learning">Jó</string>
   <string name="ease3_learning">Könnyű</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Könnyű</string>
   <string name="loading">Betöltés...</string>
   <string name="studyoptions_continue">Ismétlés folytatása</string>
-  <string name="studyoptions_well_done">Szép munka!</string>
   <string name="studyoptions_congrats_title">Gratulálok!</string>
-  <string name="studyoptions_congrats_card">kártya</string>
-  <string name="studyoptions_congrats_cards">kártyák</string>
   <string name="studyoptions_congrats_learnmore">További tanulás</string>
   <string name="studyoptions_congrats_reviewearly">Korai ismétlés</string>
   <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Start Cram mode</string>
-  <string name="end_cram">Stop Cram mode</string>
   <string name="cram">Cram</string>
   <string name="menu_open_deck">Összes pakli</string>
   <string name="menu_sync">Szinkronizálás</string>
   <string name="menu_download_deck">Pakli letöltése</string>
   <string name="menu_download_shared_deck">Megosztott pakli</string>
   <string name="menu_download_personal_deck">Személyes pakli</string>
-  <string name="menu_synchronize">Szinkronizálás</string>
   <string name="menu_my_account">Saját fiók</string>
   <string name="menu_preferences">Beállítások</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Pakli tulajdonságai</string>
   <string name="menu_add_card">Kártya hozzáadása</string>
   <string name="menu_about">Névjegy</string>
   <string name="menu_remove_card">Dismiss Card</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">Minta pakli betöltése</string>
   <string name="studyoptions_night_mode">Éjszakai mód</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

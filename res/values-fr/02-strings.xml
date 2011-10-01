@@ -36,7 +36,6 @@
   <string name="leech_notification">Carte marquée comme sangsue</string>
   <string name="about_title">À propos</string>
   <string name="cardeditor_title">Éditeur</string>
-  <string name="factadder_title">Ajout de carte</string>
   <string name="factadder_saving_error">Erreur à l\'enregistrement de la carte</string>
   <string name="saving_facts">Enregistrement des cartes</string>
   <string name="deckcreator_title">Créateur de paquet</string>
@@ -61,7 +60,6 @@
   <string name="fact_adder_swap">Inverser</string>
   <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
   <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_lookup">Lookup</string>
   <string name="card_editor_add_card">Add card</string>
   <string name="card_editor_reset">Reset</string>
   <string name="card_editor_copy_card">Copy card</string>

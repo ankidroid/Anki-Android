@@ -24,7 +24,6 @@
   <string name="yes">Kyllä</string>
   <string name="no">Ei</string>
   <string name="ok">OK</string>
-  <string name="studyoptions_title">Opiskeluasetukset</string>
   <string name="studyoptions_deck_name">Korttipakan nimi</string>
   <string name="studyoptions_reviews_due">Tarkastelujen määrä:</string>
   <string name="studyoptions_new_today">Uutta tänään:</string>
@@ -38,8 +37,6 @@
   <string name="deckpicker_loaddeck">Ladataan korttipakkaa...</string>
   <string name="deckpicker_nodeck">Korttipakkoja ei löydetty.</string>
   <string name="show_answer">Näytä vastaus</string>
-  <string name="show_question">Näytä kysymys</string>
-  <string name="card_hint">Kysymyskortti</string>
   <string name="ease1_learning">Uudestaan</string>
   <string name="ease2_learning">Hyvä</string>
   <string name="ease3_learning">Helppo</string>
@@ -50,10 +47,7 @@
   <string name="ease4_successive">Helppo</string>
   <string name="loading">Ladataan...</string>
   <string name="studyoptions_continue">Jatka tarkistamista</string>
-  <string name="studyoptions_well_done">Hyvin tehty!</string>
   <string name="studyoptions_congrats_title">Onneksi olkoon!</string>
-  <string name="studyoptions_congrats_card">kortti</string>
-  <string name="studyoptions_congrats_cards">Kortit</string>
   <string name="studyoptions_congrats_learnmore">Opi lisää</string>
   <string name="studyoptions_congrats_reviewearly">Tarkista etuajassa</string>
   <string name="studyoptions_congrats_syncdeck">Synkronoida korttipakka</string>
@@ -71,18 +65,15 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimoi tietokanta</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
   <string name="begin_cram">Aloita pänttäystila</string>
-  <string name="end_cram">Lopeta pänttäystila</string>
   <string name="cram">Päntätä</string>
   <string name="menu_open_deck">Kaikki korttipakat</string>
   <string name="menu_sync">Synkronointi</string>
   <string name="menu_download_deck">Lataa korttipakka</string>
   <string name="menu_download_shared_deck">Jaettu korttipakka</string>
   <string name="menu_download_personal_deck">Henkilökohtainen korttipakka</string>
-  <string name="menu_synchronize">Synkronoi</string>
   <string name="menu_my_account">Oma tili</string>
   <string name="menu_preferences">Asetukset</string>
   <string name="menu_zeemote">Zeemote</string>
-  <string name="menu_deck_properties">Korttipakan ominaisuudet</string>
   <string name="menu_add_card">Lisää kortti</string>
   <string name="menu_about">Tietoja</string>
   <string name="menu_remove_card">Poista kortti</string>
@@ -101,6 +92,8 @@
   <string name="studyoptions_load_sample_deck">Lataa näytekappalekorttipakka</string>
   <string name="studyoptions_night_mode">Yötila</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="visit">Visit</string>
+  <string name="later">Later</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

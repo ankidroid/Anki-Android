@@ -54,6 +54,7 @@
   <string name="card_details_changed">Изменено</string>
   <string name="card_details_tags">Теги</string>
   <string name="card_details_model">Модель</string>
+  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
   <string name="card_details_card_model">Модель карты</string>
   <string-array name="card_browser_order_labels">
     <item>по вопросу</item>

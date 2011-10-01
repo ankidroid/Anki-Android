@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Eşitlemeye hazırlanıyor...</string>
   <string name="connection_error_message">Bir ağ hatası oluştu.</string>
   <string name="no_user_password_error_message">Bu işleme devam etmek için, bir AnkiOnline hesabınızın olması ve giriş yapmış olmanız gerekir.</string>
-  <string name="sync_progress_bar_title">%s eşitleniyor</string>
   <string name="fact">bilgi</string>
   <string name="facts">bilgi</string>
   <string name="username">Kullanıcı adı</string>

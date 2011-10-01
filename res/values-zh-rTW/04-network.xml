@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Preparing syncing...</string>
   <string name="connection_error_message">網路出了點問題。</string>
   <string name="no_user_password_error_message">要繼續進行下一步，您需要有一個AnkiOnline的帳戶，並登入完成。</string>
-  <string name="sync_progress_bar_title">%s同步化中</string>
   <string name="fact">事實</string>
   <string name="facts">事實</string>
   <string name="username">使用者名稱</string>

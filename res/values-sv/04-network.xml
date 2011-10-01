@@ -50,7 +50,6 @@
   <string name="sync_prepare_syncing">Förbereder synkning ...</string>
   <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
   <string name="no_user_password_error_message">För att fortsätta med denna åtgärd måste du ha ett AnkiOnline-konto och vara inloggad.</string>
-  <string name="sync_progress_bar_title">Synkar %s</string>
   <string name="fact">kort</string>
   <string name="facts">kort</string>
   <string name="username">Användarnamn</string>

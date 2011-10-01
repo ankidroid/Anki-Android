@@ -68,6 +68,9 @@
   <string name="reset_dialogs_question">Reset all dialogs?</string>
   <string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
   <string name="reset_languages_question">言語の割り当てをリセットしますか?</string>
+  <string name="reset_messages">Reset Messages</string>
+  <string name="reset_messages_question">Show current messages again?</string>
+  <string name="reset_messages_summ">Show current AnkiDroid messages another time</string>
   <string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
   <string name="reset_confirmation">All states reset</string>
   <string name="use_ruby_support">ふりがなを振る</string>
@@ -129,9 +132,7 @@
   <string name="timeout_answer_text">答えを自動的に表示</string>
   <string name="timeout_answer_summ">質問が表示されたあと指定時間が経過すると、答えを自動的に表示する</string>
   <string name="timeout_answer_seconds">答えが表示されるまでの秒数</string>
-  <string name="timeout_answer_seconds_summ">答えが自動的に表示されるまでの時間を選択して下さい</string>
   <string name="timeout_question_seconds">Seconds before the next question is shown</string>
-  <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string>
   <string name="select_locale_title">言語を選択</string>
   <string name="select_theme">Theme</string>
   <string name="theme_animations">Animations</string>
@@ -192,4 +193,6 @@
   <string name="studyoptions_new_cards_per_day">一日分の新しいカード：</string>
   <string name="studyoptions_max_fail_card">失敗カードの最大数</string>
   <string name="studyoptions_more_save">保存</string>
+  <string name="show_broadcast_messages">Show Current Messages</string>
+  <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
 </resources>
