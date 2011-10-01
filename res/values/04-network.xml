@@ -72,7 +72,7 @@
 
 <string name="connection_error_message">A network error has occurred.</string>
 <string name="no_user_password_error_message">In order to proceed with this operation, you need to have an AnkiOnline account and be logged in.</string>
-<string name="sync_progress_bar_title">Syncing %s</string>
+<!-- <string name="sync_progress_bar_title">Syncing %s</string> -->
 
 <!-- SharedDeck.java -->
 <string name="fact">fact</string>
