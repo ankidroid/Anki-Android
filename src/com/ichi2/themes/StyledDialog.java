@@ -27,6 +27,7 @@ import com.ichi2.anki.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -46,6 +47,7 @@ public class StyledDialog extends Dialog {
 
 	private Context mContext;
 	private List<String> mItemList;
+	private boolean[] mCheckedItems;
 	private ArrayAdapter mListAdapter;
 	private OnClickListener mListener;
 	private ListView mListView;
@@ -133,23 +135,25 @@ public class StyledDialog extends Dialog {
 
 
     public void addMultiChoiceItems(String value, boolean checked) {
-    	boolean[] checkedItems = new boolean[mListView.getChildCount()];
-    	for (int i = 0; i < mListView.getChildCount(); i++) {
-    		checkedItems[i] = ((CheckedTextView)mListView.getChildAt(i)).isChecked();
-    	}
     	mItemList.add(0, value);
-    	mListView.setItemChecked(0, true);
-    	for (int i = 1; i < mListView.getChildCount(); i++) {
-    		mListView.setItemChecked(i, checkedItems[i-1]);
+    	mListView.setItemChecked(0, checked);
+    	boolean[] newChecked = new boolean[mItemList.size()];
+    	newChecked[0] = checked;
+    	for (int i = 1; i < mItemList.size(); i++) {
+    		boolean c = mCheckedItems[i-1];
+    		mListView.setItemChecked(i, c);
+    		newChecked[i] = c;
     	}
+    	mCheckedItems = newChecked;
     	mListAdapter.notifyDataSetChanged();
     }
 
 
     public void setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener) {
     	View main = super.getWindow().getDecorView();
+    	mCheckedItems = checked;
         ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
-    	setItems(3, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, checked, listener);
+    	setItems(3, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, mCheckedItems, listener);
 	}
 
 
