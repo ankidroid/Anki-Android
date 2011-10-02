@@ -615,7 +615,11 @@ public class Reviewer extends Activity implements IButtonListener{
                 mCardTimer.setBase(SystemClock.elapsedRealtime());
                 mCardTimer.start();
             }
-            displayCardQuestion();
+            if (sDisplayAnswer) {
+                displayCardAnswer();            	
+            } else {
+                displayCardQuestion();
+            }
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();            	
             }
@@ -1228,8 +1232,6 @@ public class Reviewer extends Activity implements IButtonListener{
                 int cardReset = (resultCode == RESULT_EDIT_CARD_RESET) ? 1 : 0;
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(cardReset,
                         AnkiDroidApp.deck(), mCurrentCard));
-                // TODO: code to save the changes made to the current card.
-                // TODO: resume with edited card
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
             } else {
