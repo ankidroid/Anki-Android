@@ -45,12 +45,15 @@ public class BroadcastMessage {
 
 	public static void checkForNewMessage(Context context, long lastTimeOpened) {
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(context);
+		// don't retrieve messages, if option in preferences is not set
 		if (!prefs.getBoolean("showBroadcastMessages", true)) {
 			return;
 		}
+		// retrieve messages on first start of the day
 		if (Utils.isNewDay(lastTimeOpened)) {
 			prefs.edit().putBoolean("showBroadcastMessageToday", true).commit();
 		}
+		// don't proceed if messages were already shown today
 		if (!prefs.getBoolean("showBroadcastMessageToday", true)) {
 			return;
 		}
