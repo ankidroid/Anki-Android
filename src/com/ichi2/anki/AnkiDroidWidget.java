@@ -336,7 +336,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
             dueCardsCount = 0;
             for (DeckStatus deck : decks) {
-                if (deck.mDueCards > 0) {
+                if (deck.mDueCards + deck.mFailedCards + deck.mNewCards > 0) {
                   dueCardsCount += deck.mDueCards + deck.mFailedCards + deck.mNewCards;
                   dueDecks.add(deck);
                 }
