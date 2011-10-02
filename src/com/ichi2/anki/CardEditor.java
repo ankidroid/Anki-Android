@@ -1059,18 +1059,7 @@ public class CardEditor extends Activity {
 						view.setImageResource(R.drawable.ic_circle_normal);
 						FieldEditText.this.setKeyListener(mKeyListener);
 						FieldEditText.this.setCursorVisible(true);
-						for (WordRow row : mCutString) {
-							if (row.mEnabled && !row.mWord.equals(NL_MARK)) {
-								removeDeleted();
-								break;
-							}
-						}
-						StrikethroughSpan[] ss = editText.getSpans(0, editText
-								.length(), StrikethroughSpan.class);
-						for (StrikethroughSpan s : ss) {
-							editText.removeSpan(s);
-						}
-						mCutMode = false;
+						updateContentAfterWordSelection(editText);
 					} else {
 						view.setImageResource(R.drawable.ic_circle_pressed);
 						InputMethodManager imm = (InputMethodManager) mContext
@@ -1109,6 +1098,9 @@ public class CardEditor extends Activity {
 		}
 
 		public boolean updateField() {
+			if (mCutMode) {
+				updateContentAfterWordSelection(FieldEditText.this.getText());
+			}
 			String newValue = this.getText().toString().replace(NEW_LINE, "<br />");
 			if (!mPairField.getValue().equals(newValue)) {
 				mPairField.setValue(newValue);
@@ -1116,6 +1108,23 @@ public class CardEditor extends Activity {
 			}
 			return false;
 		}
+
+
+		public void updateContentAfterWordSelection(Editable editText) {
+			for (WordRow row : mCutString) {
+				if (row.mEnabled && !row.mWord.equals(NL_MARK)) {
+					removeDeleted();
+					break;
+				}
+			}
+			StrikethroughSpan[] ss = editText.getSpans(0, editText
+					.length(), StrikethroughSpan.class);
+			for (StrikethroughSpan s : ss) {
+				editText.removeSpan(s);
+			}
+			mCutMode = false;
+		}
+
 
 		public void updateSpannables() {
 			int cursorPosition = this.getSelectionStart();
