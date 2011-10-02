@@ -164,5 +164,7 @@
 		<item>hide AnkiDroid folder from Android\'s media scanner</item>
 		<item>support for huge decks in card browser</item>
 		<item>support for scrolling with hardware buttons</item>
+		<item>new broadcasting system for showing upgrade messages</item>
+		<item>a lot of bug fixes</item>		
 	</string-array>
 </resources>
