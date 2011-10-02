@@ -851,6 +851,9 @@ public class StudyOptions extends Activity implements IButtonListener {
 	      if ((mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) && mTextDeckName.getVisibility() != View.VISIBLE && (mProgressDialog == null || !mProgressDialog.isShowing())) {
 		      showDeckInformation(true);
 	      }
+	      if (Utils.isNewDay(PrefSettings.getSharedPrefs(getBaseContext()).getLong("lastTimeOpened", 0)) && (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE)) {
+	    	  displayProgressDialogAndLoadDeck();
+	      }
 	}
 
 
