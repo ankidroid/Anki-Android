@@ -511,7 +511,7 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mPrefTextSelection && !mLongClickWorkaround) {
             	switch (event.getAction()) {
             	case MotionEvent.ACTION_DOWN:
-            		longClickHandler.postDelayed(longClickTestRunnable, 500);
+            		longClickHandler.postDelayed(longClickTestRunnable, 800);
             		mTouchStarted = true;
             		break;
             	case MotionEvent.ACTION_UP:
@@ -3008,6 +3008,17 @@ public class Reviewer extends Activity implements IButtonListener{
 			}
     		return false;
     	}
+
+    	
+    	@Override
+    	public boolean onSingleTapUp(MotionEvent e) {
+            if(mTouchStarted) {
+            	mTouchStarted = false;
+                longClickHandler.removeCallbacks(longClickTestRunnable);
+            }
+            return false;
+    	}
+
     	
     	@Override
     	public boolean onSingleTapConfirmed(MotionEvent e) {
