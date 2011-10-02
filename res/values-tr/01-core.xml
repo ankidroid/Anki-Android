@@ -92,8 +92,8 @@
   <string name="studyoptions_load_sample_deck">Örnek Desteyi Yükle</string>
   <string name="studyoptions_night_mode">Gece Modu</string>
   <string name="studyoptions_swap_qa">S/Y Değiştir</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
+  <string name="visit">Ziyaret et</string>
+  <string name="later">Daha sonra</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>

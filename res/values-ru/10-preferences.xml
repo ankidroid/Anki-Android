@@ -68,9 +68,9 @@
   <string name="reset_dialogs_question">Показывать все диалоги?</string>
   <string name="reset_dialogs_summ">Снова показывать диалоги, которые были скрыты</string>
   <string name="reset_languages_question">Сброс всех языков?</string>
-  <string name="reset_messages">Reset Messages</string>
-  <string name="reset_messages_question">Show current messages again?</string>
-  <string name="reset_messages_summ">Show current AnkiDroid messages another time</string>
+  <string name="reset_messages">Сброс сообщений</string>
+  <string name="reset_messages_question">Показать текущие сообщения еще раз?</string>
+  <string name="reset_messages_summ">Показать текущие сообщения AnkiDroid в другой раз</string>
   <string name="reset_all_question">Сброс состояний всех языков, виджета, доски и словарей?</string>
   <string name="reset_confirmation">Всё сброшено</string>
   <string name="use_ruby_support">Поддерживать Ruby-аннотации</string>
@@ -193,6 +193,6 @@
   <string name="studyoptions_new_cards_per_day">Новых карт в день</string>
   <string name="studyoptions_max_fail_card">Максимум трудных карт</string>
   <string name="studyoptions_more_save">Сохранить</string>
-  <string name="show_broadcast_messages">Show Current Messages</string>
-  <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
+  <string name="show_broadcast_messages">Показывать текущие сообщения</string>
+  <string name="show_broadcast_messages_summ">Показывать AnkiDroid уведомления, такие как новые версии программы или другие важные новости</string>
 </resources>

@@ -54,7 +54,7 @@
   <string name="card_details_changed">Değiştirilme tarihi</string>
   <string name="card_details_tags">Etiketler</string>
   <string name="card_details_model">Model</string>
-  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
+  <string name="card_browser_sorting_cards">Kartlar sıralanıyor.\nLütfen bekleyin...</string>
   <string name="card_details_card_model">Kart modeli</string>
   <string-array name="card_browser_order_labels">
     <item>Sorusuna göre</item>

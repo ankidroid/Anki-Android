@@ -92,8 +92,8 @@
   <string name="studyoptions_load_sample_deck">Открыть колоду с примерами</string>
   <string name="studyoptions_night_mode">Ночной режим</string>
   <string name="studyoptions_swap_qa">Отразить Q/A</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
+  <string name="visit">Посещение</string>
+  <string name="later">Позже</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минута</item>
