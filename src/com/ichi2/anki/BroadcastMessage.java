@@ -41,6 +41,8 @@ public class BroadcastMessage {
 	public static final String URL = "Url";
 	public static final String NOT_FOR_NEW_INSTALLATIONS = "notForNew";
 
+	private static StyledDialog mDialog;
+
 	private static final int TIMEOUT = 30000;
 
 	public static void checkForNewMessage(Context context, long lastTimeOpened) {
@@ -77,6 +79,15 @@ public class BroadcastMessage {
 			}
 		}
 		return 0;
+	}
+
+
+	public static void showDialog() {
+		if (mDialog != null && mDialog.isShowing()) {
+			// workaround for the dialog content not showing when starting AnkiDroid with Deckpicker and open then Studyoptions
+			mDialog.dismiss();
+			mDialog.show();
+		}
 	}
 
 
@@ -218,7 +229,8 @@ public class BroadcastMessage {
     			builder.setNeutralButton(context.getResources().getString(R.string.later), null);
     		}
     		try {
-        		builder.create().show();    			
+    			mDialog = builder.create();
+    			mDialog.show();
     		} catch (BadTokenException e) {
                 Log.e(AnkiDroidApp.TAG, "BroadcastMessage - BadTokenException on showing dialog: " + e);
     		}
