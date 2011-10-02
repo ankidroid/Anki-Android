@@ -197,12 +197,6 @@ public class BroadcastMessage {
 	    					setMessageRead(mContext, mNum, mIsLastMessage);
 						}
 					});
-	    		builder.setOnCancelListener(new OnCancelListener() {
-	    				@Override
-	    				public void onCancel(DialogInterface arg0) {
-	    					setMessageRead(mContext, mNum, mIsLastMessage);
-	    				}
-	    			});
 	    	} else {
 				return;
 	    	}
