@@ -85,8 +85,12 @@ public class BroadcastMessage {
 	public static void showDialog() {
 		if (mDialog != null && mDialog.isShowing()) {
 			// workaround for the dialog content not showing when starting AnkiDroid with Deckpicker and open then Studyoptions
-			mDialog.dismiss();
-			mDialog.show();
+			try {
+				mDialog.dismiss();
+				mDialog.show();			
+			} catch (IllegalArgumentException e) {
+				Log.e(AnkiDroidApp.TAG, "Error on dismissing and showing new messages dialog: " + e);
+			}
 		}
 	}
 
