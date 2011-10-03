@@ -106,6 +106,13 @@ public class Reviewer extends Activity implements IButtonListener{
     public static final int RESULT_EDIT_CARD_RESET = 3;
 
     /**
+     * Possible values for update card handler
+     */
+    public static final int UPDATE_CARD_NEW_CARD = 0;
+    public static final int UPDATE_CARD_SHOW_QUESTION = 1;
+    public static final int UPDATE_CARD_SHOW_ANSWER = 2;
+    
+    /**
      * Available options performed by other activities.
      */
     public static final int EDIT_CURRENT_CARD = 0;
@@ -607,6 +614,7 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mCurrentCard = values[0].getCard();
+            int showQuestion = values[0].getInt();
             if (mPrefWhiteboard) {
                 mWhiteboard.clear();
             }
@@ -615,7 +623,7 @@ public class Reviewer extends Activity implements IButtonListener{
                 mCardTimer.setBase(SystemClock.elapsedRealtime());
                 mCardTimer.start();
             }
-            if (sDisplayAnswer) {
+            if (showQuestion == UPDATE_CARD_SHOW_ANSWER) {
                 displayCardAnswer();            	
             } else {
                 displayCardQuestion();
@@ -770,7 +778,7 @@ public class Reviewer extends Activity implements IButtonListener{
 			case MSG_ZEEMOTE_BUTTON_C:
 				if (AnkiDroidApp.deck().undoAvailable()){
             	setNextCardAnimation(true);
-            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));
 				}
 				break;
@@ -1208,12 +1216,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
             case MENU_UNDO:
             	setNextCardAnimation(true);
-            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));
                 return true;
 
             case MENU_REDO:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));
                 return true;
         }
@@ -1229,8 +1237,11 @@ public class Reviewer extends Activity implements IButtonListener{
         	setInAnimation(true);
             if (resultCode == RESULT_OK || resultCode == RESULT_EDIT_CARD_RESET) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
-                int cardReset = (resultCode == RESULT_EDIT_CARD_RESET) ? 1 : 0;
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(cardReset,
+                int showQuestion = sDisplayAnswer ? UPDATE_CARD_SHOW_ANSWER : UPDATE_CARD_SHOW_QUESTION;
+                if (resultCode == RESULT_EDIT_CARD_RESET) {
+                	showQuestion = UPDATE_CARD_NEW_CARD;
+                }
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(showQuestion,
                         AnkiDroidApp.deck(), mCurrentCard));
             } else if (resultCode == StudyOptions.CONTENT_NO_EXTERNAL_STORAGE) {
                 finishNoStorageAvailable();
@@ -2867,13 +2878,13 @@ public class Reviewer extends Activity implements IButtonListener{
     	case GESTURE_UNDO:
     		if (AnkiDroidApp.deck().undoAvailable()) {
     			setNextCardAnimation(true);
-        		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+        		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));    			
     		}
     		break;
     	case GESTURE_REDO:
     		if (AnkiDroidApp.deck().redoAvailable()) {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(0,
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REDO, mUpdateCardHandler, new DeckTask.TaskData(UPDATE_CARD_SHOW_QUESTION,
                         AnkiDroidApp.deck(), mCurrentCard.getId(), false));    			
     		}
     		break;
