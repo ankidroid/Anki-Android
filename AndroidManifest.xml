@@ -120,7 +120,7 @@
 		</service>
 		<service android:name="com.ichi2.anki.services.DownloadManagerService"/>
 		<!-- Broadcast Receiver that will process AppWidget updates -->
-		<receiver android:name=".AnkiDroidWidget" android:label="@string/widget_medium">
+		<receiver android:name="AnkiDroidWidgetMedium" android:label="@string/widget_medium">
 			<intent-filter>
 			<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
