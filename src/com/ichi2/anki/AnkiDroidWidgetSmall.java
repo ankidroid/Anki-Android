@@ -157,18 +157,21 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                 		progress = (int) Math.round((100.0d * reps) / totalreps);
                 	}
                 	startDeckPicker = counts[3] == 0;
-			if (dueCardsCount == 0) {
+        			if (dueCardsCount == 0) {
 		                updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE);
-		                updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);
 		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.INVISIBLE);
-			} else {
+        			} else {
 		                updateViews.setViewVisibility(R.id.widget_due, View.VISIBLE);
-		                updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);
 		                updateViews.setViewVisibility(R.id.widget_progress_frame, View.VISIBLE);
 	                    updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
-	                    updateViews.setTextViewText(R.id.widget_eta, Integer.toString(eta));
 	                    updateViews.setProgressBar(R.id.widget_progress, 100, progress, false);
-			}
+					}
+        			if (eta <= 0) {
+		                updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);        				
+        			} else {
+		                updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);        				
+	                    updateViews.setTextViewText(R.id.widget_eta, Integer.toString(eta));
+        			}
                 }
             }
             // Add a click listener to open Anki from the icon.

@@ -167,8 +167,8 @@ public final class WidgetStatus {
             MetaDB.storeWidgetStatus(context, mDecks);
 	    if (mediumWidget) {
 	        Intent intent;
-                intent = new Intent(context, AnkiDroidWidget.UpdateService.class);
-                intent.setAction(AnkiDroidWidget.UpdateService.ACTION_UPDATE);
+                intent = new Intent(context, AnkiDroidWidgetMedium.UpdateService.class);
+                intent.setAction(AnkiDroidWidgetMedium.UpdateService.ACTION_UPDATE);
                 context.startService(intent);
             }
             if (smallWidget) {

@@ -43,7 +43,7 @@ import android.widget.RemoteViews;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnkiDroidWidget extends AppWidgetProvider {
+public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
     private static BroadcastReceiver mMountReceiver = null;
     private static boolean remounted = false;
@@ -178,7 +178,7 @@ public class AnkiDroidWidget extends AppWidgetProvider {
             }
             RemoteViews updateViews = buildUpdate(this, updateDueDecksNow);
 
-            ComponentName thisWidget = new ComponentName(this, AnkiDroidWidget.class);
+            ComponentName thisWidget = new ComponentName(this, AnkiDroidWidgetMedium.class);
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             manager.updateAppWidget(thisWidget, updateViews);
         }
