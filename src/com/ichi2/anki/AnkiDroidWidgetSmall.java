@@ -166,7 +166,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 	                    updateViews.setTextViewText(R.id.widget_due, Integer.toString(dueCardsCount));
 	                    updateViews.setProgressBar(R.id.widget_progress, 100, progress, false);
 					}
-        			if (eta <= 0) {
+        			if (eta <= 0 || dueCardsCount == 0) {
 		                updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE);        				
         			} else {
 		                updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE);        				

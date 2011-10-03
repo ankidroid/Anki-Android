@@ -101,6 +101,18 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     }
 
 
+    public static boolean taskIsRunning() {
+        try {
+            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+                return true;
+            }
+        } catch (Exception e) {
+            return true;
+        }
+        return false;
+    }
+
+
     @Override
     protected TaskData doInBackground(TaskData... params) {
         // Wait for previous thread (if any) to finish before continuing

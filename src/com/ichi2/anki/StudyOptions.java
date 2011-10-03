@@ -851,8 +851,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 	      if ((mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE) && mTextDeckName.getVisibility() != View.VISIBLE && (mProgressDialog == null || !mProgressDialog.isShowing())) {
 		      showDeckInformation(true);
 	      }
+	      // check for new day and reset deck if yes
 	      if (Utils.isNewDay(PrefSettings.getSharedPrefs(getBaseContext()).getLong("lastTimeOpened", 0)) && (mCurrentContentView == CONTENT_STUDY_OPTIONS || mCurrentContentView == CONTENT_SESSION_COMPLETE)) {
-	    	  displayProgressDialogAndLoadDeck();
+	    	  if (!DeckTask.taskIsRunning()) {
+		    	  displayProgressDialogAndLoadDeck();
+	    	  }
 	      }
 	      BroadcastMessage.showDialog();
 	}
@@ -2355,7 +2358,9 @@ public class StudyOptions extends Activity implements IButtonListener {
         mZeemoteEnabled = preferences.getBoolean("zeemote", false);
        	setLanguage(mLocale);
 
-        BroadcastMessage.checkForNewMessage(this, preferences.getLong("lastTimeOpened", 0));
+        BroadcastMessage.checkForNewMessage(this, mLastTimeOpened);
+        preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
+
         return preferences;
     }
 
