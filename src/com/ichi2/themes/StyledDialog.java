@@ -163,12 +163,10 @@ public class StyledDialog extends Dialog {
 	}
 
 
-    public View getListItem(int position) {
-    	if (mListView != null) {
-    		return mListView.getChildAt(position);
-    	} else {
-    		return null;
-    	}
+    public void changeListItem(int position, String text) {
+    	mItemList.remove(position);
+    	mItemList.add(position, text);
+    	mListAdapter.notifyDataSetChanged();
     }
 
 
