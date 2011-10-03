@@ -64,12 +64,17 @@ public class Themes {
 	private static int[] mCardbrowserItemBorder;
 	private static int[] mChartColors;
 	private static int mPopupTopDark;
+	private static int mPopupTopMedium;
+	private static int mPopupTopBright;
 	private static int mPopupCenterDark;
 	private static int mPopupCenterBright;
 	private static int mPopupCenterMedium;
 	private static int mPopupBottomDark;
 	private static int mPopupBottomBright;
 	private static int mPopupBottomMedium;
+	private static int mPopupFullDark;
+	private static int mPopupFullMedium;
+	private static int mPopupFullBright;
 	private static int mDividerHorizontalBright;
 	
 
@@ -83,12 +88,18 @@ public class Themes {
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mChartColors = new int[] {Color.WHITE, Color.BLACK};
 				mPopupTopDark = R.drawable.popup_top_dark;
+				mPopupTopBright = R.drawable.popup_top_bright;
+				mPopupTopMedium = R.drawable.popup_top_bright;
+				mPopupTopDark = R.drawable.popup_top_dark;
 				mPopupCenterDark = R.drawable.popup_center_dark;
 				mPopupCenterBright = R.drawable.popup_center_bright;
 				mPopupCenterMedium = R.drawable.popup_center_medium;
 				mPopupBottomDark = R.drawable.popup_bottom_dark;
 				mPopupBottomBright = R.drawable.popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.popup_bottom_medium;
+				mPopupFullBright = R.drawable.popup_full_bright;
+				mPopupFullDark = R.drawable.popup_full_dark;
+				mPopupFullMedium = R.drawable.popup_full_bright;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
 				break;
@@ -103,12 +114,17 @@ public class Themes {
 				mReviewerProgressbar = mProgressbarsYoungColor;
 				mChartColors = new int[] {Color.BLACK, Color.WHITE};
 				mPopupTopDark = R.drawable.popup_top_dark;
+				mPopupTopBright = R.drawable.popup_top_bright;
+				mPopupTopMedium = R.drawable.popup_top_bright;
 				mPopupCenterDark = R.drawable.popup_center_dark;
 				mPopupCenterBright = R.drawable.popup_center_bright;
 				mPopupCenterMedium = R.drawable.popup_center_medium;
 				mPopupBottomDark = R.drawable.popup_bottom_dark;
 				mPopupBottomBright = R.drawable.popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.popup_bottom_medium;
+				mPopupFullBright = R.drawable.popup_full_bright;
+				mPopupFullMedium = R.drawable.popup_full_bright;
+				mPopupFullDark = R.drawable.popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				mBackgroundColor = R.color.white;
 				break;				
@@ -132,12 +148,17 @@ public class Themes {
 				mCardbrowserItemBorder = new int[] {R.drawable.blue_bg_cardbrowser, R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended, R.drawable.blue_bg_cardbrowser_marked_suspended};
 				mChartColors = new int[] {Color.BLACK, Color.WHITE};
 				mPopupTopDark = R.drawable.blue_popup_top_dark;
+				mPopupTopBright = R.drawable.blue_popup_top_bright;
+				mPopupTopMedium = R.drawable.blue_popup_top_bright;
 				mPopupCenterDark = R.drawable.blue_popup_center_dark;
 				mPopupCenterBright = R.drawable.blue_popup_center_bright;
 				mPopupCenterMedium = R.drawable.blue_popup_center_medium;
 				mPopupBottomDark = R.drawable.blue_popup_bottom_dark;
 				mPopupBottomBright = R.drawable.blue_popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.blue_popup_bottom_medium;
+				mPopupFullBright = R.drawable.blue_popup_full_bright;
+				mPopupFullMedium = R.drawable.blue_popup_full_bright;
+				mPopupFullDark = R.drawable.blue_popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				break;
 			}
@@ -300,33 +321,90 @@ public class Themes {
 		setStyledDialogBackgrounds(main, buttonNumbers, false);
 	}
 	public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
-		((View) main.findViewById(R.id.topPanel)).setBackgroundResource(mPopupTopDark);
-		((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
-		((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(mPopupCenterDark);
-		((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(mPopupCenterBright);
-		if (brightCustomPanelBackground) {
-			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(mPopupCenterMedium);			
-		} else {
-			((View) main.findViewById(R.id.customPanel)).setBackgroundResource(mPopupCenterDark);
+		// order of styled dialog elements:
+		// 1. top panel (title)
+		// 2. content panel
+		// 3. listview panel
+		// 4. custom view panel
+		// 5. button panel
+		View topPanel = ((View) main.findViewById(R.id.topPanel));
+		boolean[] visibility = new boolean[5];
+
+		if (topPanel.getVisibility() == View.VISIBLE) {
+			topPanel.setBackgroundResource(mPopupTopDark);
+			((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
+			visibility[0] = true;
 		}
-		if (buttonNumbers == 0) {
-			((LinearLayout) main.findViewById(R.id.buttonPanel)).setVisibility(View.GONE);
-			if (((View) main.findViewById(R.id.customPanel)).getVisibility() != View.GONE) {
-    		   ((View) main.findViewById(R.id.customPanel)).setBackgroundResource(mPopupBottomDark);
-    	   } else if (((View) main.findViewById(R.id.listViewPanel)).getVisibility() != View.GONE) {
-    		   ((View) main.findViewById(R.id.listViewPanel)).setBackgroundResource(mPopupBottomBright);
-    	   } else if (((View) main.findViewById(R.id.contentPanel)).getVisibility() != View.GONE) {
-    		   ((View) main.findViewById(R.id.contentPanel)).setBackgroundResource(mPopupBottomDark);
-    	   }
-        } else {
+		View contentPanel = ((View) main.findViewById(R.id.contentPanel));
+		if (contentPanel.getVisibility() == View.VISIBLE) {
+			visibility[1] = true;
+		}
+		View listViewPanel = ((View) main.findViewById(R.id.listViewPanel));
+		if (listViewPanel.getVisibility() == View.VISIBLE) {
+			visibility[2] = true;
+		}
+		View customPanel = ((View) main.findViewById(R.id.customPanel));
+		if (customPanel.getVisibility() == View.VISIBLE) {
+			visibility[3] = true;
+		}
+		if (buttonNumbers > 0) {
         	LinearLayout buttonPanel = (LinearLayout) main.findViewById(R.id.buttonPanel);
         	buttonPanel.setBackgroundResource(mPopupBottomMedium);
+    		if (buttonNumbers > 1) {
+    			main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
+    			main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
+    		}
+			visibility[4] = true;
         }
-		if (buttonNumbers > 1) {
-			main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
-			main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
+
+		int first = -1;
+		int last = -1;
+		for (int i = 0; i < 5; i++) {
+			if (first == -1 && visibility[i]) {
+				first = i;
+			}
+			if (visibility[i]) {
+				last = i;
+			}
 		}
+
+		int res = mPopupCenterDark;
+		if (first == 1) {
+			res = mPopupTopDark;
+		}
+		if (last == 1) {
+			res = mPopupBottomDark;
+			if (first == 1) {
+				res = mPopupFullDark;
+			}
+		}
+		contentPanel.setBackgroundResource(res);
+
+		res = mPopupCenterBright;
+		if (first == 2) {
+			res = mPopupTopBright;
+		}
+		if (last == 2) {
+			res = mPopupBottomBright;
+			if (first == 2) {
+				res = mPopupFullBright;
+			}
+		}
+		listViewPanel.setBackgroundResource(res);
+
+		res = brightCustomPanelBackground ? mPopupCenterMedium : mPopupCenterDark;
+		if (first == 3) {
+			res = brightCustomPanelBackground ? mPopupTopMedium : mPopupTopDark;;
+		}
+		if (last == 3) {
+			res = brightCustomPanelBackground ? mPopupBottomMedium : mPopupBottomDark;;
+			if (first == 3) {
+				res = brightCustomPanelBackground ? mPopupFullMedium : mPopupFullDark;;
+			}
+		}
+		customPanel.setBackgroundResource(res);
 	}
+
 
 	public static int[] getChartColors() {
 		return mChartColors;

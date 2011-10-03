@@ -167,7 +167,7 @@ public class StyledDialog extends Dialog {
         private String neutralButtonText;
         private View contentView;
         private boolean brightViewBackground = false;
-        private int icon;
+        private int icon = 0;
  
         private DialogInterface.OnClickListener positiveButtonClickListener;
         private DialogInterface.OnClickListener negativeButtonClickListener;
@@ -403,8 +403,16 @@ public class StyledDialog extends Dialog {
             dialog.addContentView(layout, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
             // set title
-            ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);
-            ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);
+            if (title != null && title.length() > 0) {
+                ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);            	
+                if (icon != 0) {
+                    ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);            	
+                } else {
+                	layout.findViewById(R.id.icon).setVisibility(View.GONE);
+                }
+            } else {
+            	layout.findViewById(R.id.topPanel).setVisibility(View.GONE);
+            }
 
             // set buttons
             int numberOfButtons = 0;
@@ -434,6 +442,9 @@ public class StyledDialog extends Dialog {
                 numberOfButtons++;
             } else {
                 layout.findViewById(R.id.button3).setVisibility(View.GONE);
+            }
+            if (numberOfButtons == 0) {
+            	layout.findViewById(R.id.buttonPanel).setVisibility(View.GONE);
             }
 
             dialog.setCancelable(cancelable);
