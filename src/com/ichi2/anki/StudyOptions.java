@@ -2522,7 +2522,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         		mProgressDialog.setMessage(getResources().getString(R.string.loading_deck));
         	} else {
                 mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
-                        .getString(R.string.backup_deck), true, true, new OnCancelListener() {
+                        .getString(R.string.loading_deck), true, true, new OnCancelListener() {
 
     						@Override
     						public void onCancel(DialogInterface dialog) {
