@@ -149,7 +149,7 @@ public class Themes {
 				mChartColors = new int[] {Color.BLACK, Color.WHITE};
 				mPopupTopDark = R.drawable.blue_popup_top_dark;
 				mPopupTopBright = R.drawable.blue_popup_top_bright;
-				mPopupTopMedium = R.drawable.blue_popup_top_bright;
+				mPopupTopMedium = R.drawable.blue_popup_top_medium;
 				mPopupCenterDark = R.drawable.blue_popup_center_dark;
 				mPopupCenterBright = R.drawable.blue_popup_center_bright;
 				mPopupCenterMedium = R.drawable.blue_popup_center_medium;
@@ -157,7 +157,7 @@ public class Themes {
 				mPopupBottomBright = R.drawable.blue_popup_bottom_bright;
 				mPopupBottomMedium = R.drawable.blue_popup_bottom_medium;
 				mPopupFullBright = R.drawable.blue_popup_full_bright;
-				mPopupFullMedium = R.drawable.blue_popup_full_bright;
+				mPopupFullMedium = R.drawable.blue_popup_full_medium;
 				mPopupFullDark = R.drawable.blue_popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				break;

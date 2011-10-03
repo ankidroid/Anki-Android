@@ -66,6 +66,12 @@ public class StyledDialog extends Dialog {
     }
 
 
+    public void setTitle(String message) {
+    	View main = super.getWindow().getDecorView();
+    	((TextView) main.findViewById(R.id.alertTitle)).setText(message);
+    }
+
+
     public void setMessage(String message) {
     	View main = super.getWindow().getDecorView();
     	((TextView) main.findViewById(R.id.message)).setText(message);
@@ -155,6 +161,15 @@ public class StyledDialog extends Dialog {
         ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
     	setItems(3, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, mCheckedItems, listener);
 	}
+
+
+    public View getListItem(int position) {
+    	if (mListView != null) {
+    		return mListView.getChildAt(position);
+    	} else {
+    		return null;
+    	}
+    }
 
 
     public static class Builder {
