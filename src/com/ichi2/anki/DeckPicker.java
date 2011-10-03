@@ -808,6 +808,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			dialog = builder.create();
 			break;
 		case DIALOG_CONTEXT_MENU:
+			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			if (mCurrentDeckFilename == null || mCurrentDeckFilename.equalsIgnoreCase(getResources().getString(R.string.deckpicker_nodeck))) {
 				dialog = null;
 				break;
@@ -844,7 +845,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			ad.setMessage(String.format(res.getString(R.string.backup_delete_deck_backups_alert), mCurrentDeckFilename));
 			break;
 		case DIALOG_CONTEXT_MENU:
-			mCurrentDeckFilename = mDeckList.get(mContextMenuPosition).get("name");
 			ad.setTitle(mCurrentDeckFilename);
 			break;
 		}		
