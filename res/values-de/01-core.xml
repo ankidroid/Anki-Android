@@ -142,5 +142,5 @@
     <item quantity="one">1 Min.</item>
     <item quantity="other">%1$d Min.</item>
   </plurals>
-  <string name="download">Herunterladen</string>
+  <string name="download">Holen</string>
 </resources>

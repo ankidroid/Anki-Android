@@ -82,6 +82,12 @@ import org.amr.arabic.ArabicUtilities;
  */
 public class CardEditor extends Activity {
 
+	public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
+	public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
+	public static final String SOURCE_TEXT = "SOURCE_TEXT";
+	public static final String TARGET_TEXT = "TARGET_TEXT";
+	public static final String DECKPATH = "DECK_PATH";
+
 	public static final String CARD_EDITOR_ACTION = "cea";
 	public static final int EDIT_REVIEWER_CARD = 0;
 	public static final int EDIT_BROWSER_CARD = 1;
@@ -104,7 +110,7 @@ public class CardEditor extends Activity {
 	private static final int MENU_RESET_CARD_PROGRESS = 4;
 
 	private static final int ACTION_ADD_CARD = 0;
-	
+
 	/**
 	 * Broadcast that informs us when the sd card is about to be unmounted
 	 */
@@ -127,6 +133,7 @@ public class CardEditor extends Activity {
 	private boolean mAddFact = false;
 	private boolean mForCopy = false;
 	private boolean mIntentAdd = false;
+	private String mDeckPath;
 
 	private boolean mCardReset = false;
 
@@ -234,10 +241,10 @@ public class CardEditor extends Activity {
 		if (action != null && action.equals(INTENT_CREATE_FLASHCARD)) {
 			prepareForIntentAddition();
 			Bundle extras = intent.getExtras();
-			mSourceLanguage = extras.getString("SOURCE_LANGUAGE");
-			mTargetLanguage = extras.getString("TARGET_LANGUAGE");
-			mSourceText = extras.getString("SOURCE_TEXT");
-			mTargetText = extras.getString("TARGET_TEXT");
+			mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
+			mTargetLanguage = extras.getString(TARGET_LANGUAGE);
+			mSourceText = extras.getString(SOURCE_TEXT);
+			mTargetText = extras.getString(TARGET_TEXT);
 			mAddFact = true;
 			mIntentAdd = true;
 		} else if (action != null
@@ -249,7 +256,12 @@ public class CardEditor extends Activity {
 			mAddFact = true;
 			mIntentAdd = true;
 		} else {
-			mDeck = AnkiDroidApp.deck();
+			mDeckPath = intent.getStringExtra(DECKPATH);
+			if (mDeckPath != null && mDeckPath.length() > 0) {
+				mDeck = Deck.openDeck(mDeckPath, false);
+			} else {
+				mDeck = AnkiDroidApp.deck();
+			}
 			switch (intent.getIntExtra(CARD_EDITOR_ACTION, ADD_CARD)) {
 			case EDIT_REVIEWER_CARD:
 				mEditorFact = Reviewer.getEditorCard().getFact();
@@ -457,6 +469,9 @@ public class CardEditor extends Activity {
 					contents.append(current.getText().toString()).append("\u001f");
 				}
 				intent.putExtra("contents", contents.toString());
+				if (mDeckPath != null && mDeckPath.length() > 0) {
+					intent.putExtra(DECKPATH, mDeckPath);
+				}
 			} else {
 				intent.putExtra(CardEditor.CARD_EDITOR_ACTION, CardEditor.ADD_CARD);
 			}
@@ -553,6 +568,9 @@ public class CardEditor extends Activity {
 	}
 
 	private void closeCardEditor() {
+		if (mIntentAdd && mDeck != null) {
+			mDeck.closeDeck();
+		}
 		finish();
 		if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
 			ActivityTransitionAnimation.slide(CardEditor.this,
@@ -877,7 +895,8 @@ public class CardEditor extends Activity {
 	}
 
 	private void loadDeck(int item) {
-		mDeck = Deck.openDeck(mFullDeckPaths.get(mDeckNames[item]), false);
+		mDeckPath = mFullDeckPaths.get(mDeckNames[item]);
+		mDeck = Deck.openDeck(mDeckPath, false);
 		if (mDeck == null) {
 			Themes.showThemedToast(CardEditor.this, getResources().getString(
 					R.string.fact_adder_deck_not_loaded), true);
