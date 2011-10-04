@@ -518,14 +518,14 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mPrefTextSelection && !mLongClickWorkaround) {
             	switch (event.getAction()) {
             	case MotionEvent.ACTION_DOWN:
-            		longClickHandler.postDelayed(longClickTestRunnable, 800);
             		mTouchStarted = true;
+            		longClickHandler.postDelayed(longClickTestRunnable, 800);
             		break;
             	case MotionEvent.ACTION_UP:
             	case MotionEvent.ACTION_MOVE:
                     if(mTouchStarted) {
-                    	mTouchStarted = false;
                         longClickHandler.removeCallbacks(longClickTestRunnable);
+                    	mTouchStarted = false;
                     }
             		break;
             	}
@@ -3018,15 +3018,15 @@ public class Reviewer extends Activity implements IButtonListener{
     		if (mGesturesEnabled) {
         		executeCommand(mGestureDoubleTap);            	
 			}
-    		return false;
+    		return true;
     	}
 
     	
     	@Override
     	public boolean onSingleTapUp(MotionEvent e) {
             if(mTouchStarted) {
-            	mTouchStarted = false;
                 longClickHandler.removeCallbacks(longClickTestRunnable);
+            	mTouchStarted = false;
             }
             return false;
     	}
