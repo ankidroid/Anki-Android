@@ -804,7 +804,6 @@ public class Reviewer extends Activity implements IButtonListener{
     protected void onCreate(Bundle savedInstanceState) {
     	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
-
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
         mChangeBorderStyle = Themes.getTheme() != Themes.THEME_BLUE;
@@ -877,6 +876,7 @@ public class Reviewer extends Activity implements IButtonListener{
 
             // Load the first card and start reviewing. Uses the answer card task to load a card, but since we send null
             // as the card to answer, no card will be answered.
+
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0,
                     deck, null));
         }
@@ -2060,6 +2060,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
     private void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
+
+        // prevent answering (by e.g. gestures) before card is loaded
+        if (mCurrentCard == null) {
+        	return;
+        }
+
         sDisplayAnswer = true;
         setFlipCardAnimation();
         
