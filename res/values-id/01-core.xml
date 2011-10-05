@@ -58,7 +58,8 @@
   <string name="menu_rotate">Pusing</string>
   <string name="undo">Buat asal</string>
   <string name="redo">Buat semula</string>
-  <string name="close_current_deck">Penutupan dek. \nHarap tunggu...</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Muat turun media kurang</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Set Tugasan Bahasa</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Set bahasa</string>
@@ -94,6 +95,7 @@
   <string name="studyoptions_swap_qa">Swap Soal/Jawab</string>
   <string name="visit">Visit</string>
   <string name="later">Later</string>
+  <string name="download">Download</string>
   <string-array name="next_review_s">
     <item>1 saat</item>
     <item>1 minit</item>

@@ -58,7 +58,8 @@
   <string name="menu_rotate">旋轉</string>
   <string name="undo">還原</string>
   <string name="redo">取消還原</string>
-  <string name="close_current_deck">正在關閉目前牌組\ n請稍候...</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">正在下載缺少的媒體</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">重設語言</string>
   <string name="contextmenu_deckpicker_reset_reset_message">重設語言</string>
@@ -94,6 +95,7 @@
   <string name="studyoptions_swap_qa">問題/答案 互換</string>
   <string name="visit">Visit</string>
   <string name="later">Later</string>
+  <string name="download">Download</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分鐘</item>

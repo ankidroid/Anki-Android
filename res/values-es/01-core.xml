@@ -58,7 +58,8 @@
   <string name="menu_rotate">Rotar</string>
   <string name="undo">Deshacer</string>
   <string name="redo">Repetir</string>
-  <string name="close_current_deck">Cerrando el mazo actual.\nPor favor, espera...</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer Idioma</string>
@@ -94,6 +95,7 @@
   <string name="studyoptions_swap_qa">Intercambiar Preg./Resp.</string>
   <string name="visit">Visit</string>
   <string name="later">Later</string>
+  <string name="download">Download</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

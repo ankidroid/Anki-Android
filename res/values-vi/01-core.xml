@@ -58,7 +58,8 @@
   <string name="menu_rotate">Rotate</string>
   <string name="undo">Hoàn tác</string>
   <string name="redo">Làm lại</string>
-  <string name="close_current_deck">Đang đóng bài hiện tại \n Hãy chờ.</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Đặt lại ngôn ngữ phân công</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Đặt lại ngôn ngữ</string>
@@ -94,6 +95,7 @@
   <string name="studyoptions_swap_qa">Chuyển đổi Q/A</string>
   <string name="visit">Visit</string>
   <string name="later">Later</string>
+  <string name="download">Download</string>
   <string-array name="next_review_s">
     <item>1 second</item>
     <item>1 minute</item>

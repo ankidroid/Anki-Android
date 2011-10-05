@@ -58,7 +58,8 @@
   <string name="menu_rotate">Drehen</string>
   <string name="undo">Rückgängig</string>
   <string name="redo">Wiederholen</string>
-  <string name="close_current_deck">Aktueller Stapel wird geschlossen.\nBitte warten...</string>
+  <string name="close_previous_deck">Vorheriger Stapel wird geschlossen.\nBitte warten...</string>
+  <string name="close_deck">Stapel wird geschlossen.\nBitte warten...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Sprachen zurückgesetzt</string>
@@ -94,6 +95,7 @@
   <string name="studyoptions_swap_qa">F/A tauschen</string>
   <string name="visit">Besuchen</string>
   <string name="later">Später</string>
+  <string name="download">Holen</string>
   <string-array name="next_review_s">
     <item>1 Sekunde</item>
     <item>1 Minute</item>
@@ -142,5 +144,4 @@
     <item quantity="one">1 Min.</item>
     <item quantity="other">%1$d Min.</item>
   </plurals>
-  <string name="download">Holen</string>
 </resources>

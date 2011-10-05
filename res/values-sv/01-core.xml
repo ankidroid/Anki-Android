@@ -58,7 +58,8 @@
   <string name="menu_rotate">Rotera</string>
   <string name="undo">Ångra</string>
   <string name="redo">Gör om</string>
-  <string name="close_current_deck">Stänger aktuell kortlek.\nVar god vänta...</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Återställning av språk</string>
@@ -92,8 +93,9 @@
   <string name="studyoptions_load_sample_deck">Ladda exempelkortlek</string>
   <string name="studyoptions_night_mode">Nattläge</string>
   <string name="studyoptions_swap_qa">Växla fråga/svar</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
+  <string name="visit">Besök</string>
+  <string name="later">Senare</string>
+  <string name="download">Hämta</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minut</item>

@@ -58,7 +58,8 @@
   <string name="menu_rotate">Obrót</string>
   <string name="undo">Cofnij</string>
   <string name="redo">Ponów</string>
-  <string name="close_current_deck">Zamykanie bieżącej talii.\nProszę czekać...</string>
+  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
+  <string name="close_deck">Closing deck.\nPlease wait...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Zresetuj przypisanie języka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Reset języka</string>
@@ -94,6 +95,7 @@
   <string name="studyoptions_swap_qa">Zamień Pyt/Odp</string>
   <string name="visit">Visit</string>
   <string name="later">Later</string>
+  <string name="download">Download</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>

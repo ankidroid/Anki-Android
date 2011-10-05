@@ -315,7 +315,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
 
     private void setReloadDeck() {
-    	dialogMessage = getResources().getString(R.string.close_current_deck);
+    	dialogMessage = getResources().getString(R.string.close_deck);
     	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mDeckOperationHandler, new DeckTask.TaskData(0, AnkiDroidApp.deck(), 0l, false));
 		setResult(StudyOptions.RESULT_RELOAD_DECK, getIntent());
     }

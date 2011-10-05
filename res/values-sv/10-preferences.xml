@@ -68,9 +68,9 @@
   <string name="reset_dialogs_question">Återställ alla dialogrutor?</string>
   <string name="reset_dialogs_summ">Återställ alla dialogrutor som är inställda på att inte visas igen</string>
   <string name="reset_languages_question">Återställ alla språktilldelningar?</string>
-  <string name="reset_messages">Reset Messages</string>
-  <string name="reset_messages_question">Show current messages again?</string>
-  <string name="reset_messages_summ">Show current AnkiDroid messages another time</string>
+  <string name="reset_messages">Återställ meddelanden</string>
+  <string name="reset_messages_question">Visa aktuella meddelanden igen?</string>
+  <string name="reset_messages_summ">Visa aktuellt meddelande om AnkiDroid senare</string>
   <string name="reset_all_question">Återställ alla språk, gränssnittskomponeneter, whiteboardtavlor och ordlistor?</string>
   <string name="reset_confirmation">Alla tillstånd återsätllda</string>
   <string name="use_ruby_support">Stöd för ruby-kommentarer</string>
@@ -180,19 +180,19 @@
   <string name="fix_arabic_text_summ">Partiell lösning för Android-plattformens begränsade stöd för arabiska. När detta är aktiverat kan kort ej ändras.</string>
   <string name="wal_mode">WAL journal</string>
   <string name="wal_mode_summ">WAL journalläge snabbar upp AnkiDroid men tar bort kompatibiliteten med Anki Desktop om du kopierar dina kortlekar manuellt. Endast tillgängligt på nyare Androidsystem.</string>
-  <string name="wal_mode_message">Be aware that after enabling WAL journal-mode you may no longer be able to copy your decks manually to your your computer to use them with Anki Desktop until you disable WAL again. Syncing will then only be possible via AnkiDroid\'s syncing feature.\nEnable it anyway?</string>
+  <string name="wal_mode_message">Efter att du aktiverat WAL journal-läge kan du inte längre manuellt flytta kortlekar till din dator och använda dem med Anki Desktop förens du avaktiverat WAL igen. Synkronisering är då endast tillgängligt via AnkiDroids synkroniseringsfunktion.\nFörtsätt ändå?</string>
   <string name="wal_mode_set_message">Ställer in journalläge.\nVänligen vänta...</string>
   <string name="sync_set_journal_mode">Ställer in korrekt journalläge...</string>
   <string name="async_mode">Asynkront läge</string>
   <string name="async_mode_summ">Detta snabbar AnkiDroid upp men kan korrumpera databaser när hela Android-systemet kraschar, så använd säkerhetskopior</string>
-  <string name="async_mode_message">Be aware that this option is less safe and can cause deck corruptions when Android crashes (e.g. due to power shortage).\nIt is HIGHLY recommended to use the backup system if this option is set.\nEnable it anyway?</string>
+  <string name="async_mode_message">Detta alternativt är osäkert och kan göra dina kortlekar oanvändbara om AnkiDroid kraschar (t.ex. på grund av slut på batteriet).\nDet är rekommenderas STARKT att säkerhetskopieringssytemet används om detta alternativ är aktiverat.\nAktivera ändå?</string>
   <string name="fix_orientation">Fix orienting</string>
   <string name="fix_orientation_summ">Tillåt inte att orienteringen ändras under granskning</string>
   <string name="per_day">Per dag</string>
-  <string name="wal_warning">Your device\'s sqlite implementation does not allow to set the proper anki journal mode.\nTherefore you will not be able to sync your decks via AnkiDroid\'s syncing feature until we find a solution for that.\nApart from that, AnkiDroid should work fine.\nPlease help us solving this issue by sending an error report.\n Visit http://bit.ly/n5MaOF for more information.</string>
+  <string name="wal_warning">Din enhets sqlite-implementation tillåter inte korrekt Anki journalläge.\nDärför kommer du inte kunna synkronisera dina kortlekar via AnkiDroid synkroniseringsfunktion innan vi hittar en lösning på detta.\ni övrigt bör AnkiDroid fungera.\nVar vänlig hjälp oss genom att skicka in en felrapport.\nBesök http://bit.ly/n5MaOF för mer information.</string>
   <string name="studyoptions_new_cards_per_day">Nya kort per dag</string>
   <string name="studyoptions_max_fail_card">Max misslyckade kort</string>
   <string name="studyoptions_more_save">Spara</string>
-  <string name="show_broadcast_messages">Show Current Messages</string>
-  <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
+  <string name="show_broadcast_messages">Visa aktuella meddelanden</string>
+  <string name="show_broadcast_messages_summ">Visa meddelanden om nya versioner av AnkiDroid eller andra viktiga meddelanden</string>
 </resources>

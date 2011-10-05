@@ -22,7 +22,7 @@
 <resources>
   <string name="pref_cat_decks">Desteler</string>
   <string name="pref_cat_sync">Eşitleme</string>
-  <string name="pref_cat_qadisplay">Ekran</string>
+  <string name="pref_cat_qadisplay">Görüntü</string>
   <string name="pref_cat_general">Genel</string>
   <string name="pref_cat_start">Açılış</string>
   <string name="pref_cat_extras">Ekstralar</string>
@@ -97,11 +97,11 @@
   <string name="swipe_summ_off">Ekranlar arasında geçiş yapmak ve kartları yanıtlamak için özel hareketleri kullan. Bu seçenek yakınlaştırma denetimleriyle uyumlu değildir.</string>
   <string name="swipe_summ_on">Ekranlar arasında geçiş yapmak için yatay olarak sürükle. Diğer eylemleri aşağıda yapılandırın.</string>
   <string name="pref_cat_actions">Eylemler</string>
-  <string name="gestures_shake">Salla</string>
-  <string name="gestures_swipe_up">Yukarı sürükle</string>
-  <string name="gestures_swipe_down">Aşağı sürükle</string>
-  <string name="gestures_swipe_left">Sola sürükle</string>
-  <string name="gestures_swipe_right">Sağa sürükle</string>
+  <string name="gestures_shake">Sallama</string>
+  <string name="gestures_swipe_up">Yukarı sürükleme</string>
+  <string name="gestures_swipe_down">Aşağı sürükleme</string>
+  <string name="gestures_swipe_left">Sola sürükleme</string>
+  <string name="gestures_swipe_right">Sağa sürükleme</string>
   <string name="gestures_double_tap">Çift dokunma</string>
   <string name="gestures_tap_top">Yukarıya dokunma</string>
   <string name="gestures_tap_bottom">Aşağıya dokunma</string>
@@ -110,7 +110,7 @@
   <string name="pref_cat_scrolling">Fiziksel yukarı/aşağı düğmeleri</string>
   <string name="more_scrolling_buttons">eOkuyucu</string>
   <string name="more_scrolling_buttons_summ">Düşey kaydırma için Kanji/Katakana, Emoji/Kao-moji tuşlarını da kullan.</string>
-  <string name="double_scrolling_gap">İki katı kaydırma</string>
+  <string name="double_scrolling_gap">Hızlı kaydırma</string>
   <string name="double_scrolling_gap_summ">Kaydırma hızını iki katına çıkarmak istiyorsanız bunu etkinleştirin.</string>
   <string name="swipe_sensibility">Sürükleme Duyarlılığı</string>
   <string name="swipe_sensibility_summ">Sürükleme hareketlerinin duyarlılığı: XXX</string>
