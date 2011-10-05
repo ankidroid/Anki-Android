@@ -21,8 +21,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -39,12 +39,15 @@ public class BroadcastMessage {
 	public static final String TITLE = "Title";
 	public static final String TEXT = "Text";
 	public static final String URL = "Url";
-	public static final String NOT_FOR_NEW_INSTALLATIONS = "notForNew";
 
 	private static StyledDialog mDialog;
 
 	private static final int TIMEOUT = 30000;
 
+
+	public static void checkForNewMessage(Context context) {
+		checkForNewMessage(context, PrefSettings.getSharedPrefs(context).getLong("lastTimeOpened", 0));
+	}
 	public static void checkForNewMessage(Context context, long lastTimeOpened) {
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(context);
 		// don't retrieve messages, if option in preferences is not set
@@ -57,6 +60,7 @@ public class BroadcastMessage {
 		}
 		// don't proceed if messages were already shown today
 		if (!prefs.getBoolean("showBroadcastMessageToday", true)) {
+			Log.d(AnkiDroidApp.TAG, "BroadcastMessages: already shown today");
 			return;
 		}
         AsyncTask<Context,Void,Context> checkForNewMessage = new DownloadBroadcastMessage();
@@ -107,7 +111,6 @@ public class BroadcastMessage {
     	private static Context mContext;
 
     	private static boolean mShowDialog = false;
-    	private static boolean mIsLastMessage = false;
 
         @Override
         protected Context doInBackground(Context... params) {
@@ -117,6 +120,7 @@ public class BroadcastMessage {
             mContext = context;
 
     		SharedPreferences prefs = PrefSettings.getSharedPrefs(context);
+    		int lastNum = prefs.getInt("lastMessageNum", -1);
     		try {
         		Log.i(AnkiDroidApp.TAG, "BroadcastMessage: download file " + FILE_URL);
     			URL fileUrl;
@@ -129,35 +133,28 @@ public class BroadcastMessage {
     			Document dom = db.parse(conn.getInputStream());
     			Element docEle = dom.getDocumentElement();
     			NodeList nl = docEle.getElementsByTagName("Message");
+    			String currentVersion = AnkiDroidApp.getPkgVersion();
     			if(nl != null && nl.getLength() > 0) {
     				for(int i = 0 ; i < nl.getLength();i++) {
     					Element el = (Element)nl.item(i);
 
     					// get message number
     					mNum = Integer.parseInt(getXmlValue(el, NUM));
-    					int lastNum = prefs.getInt("lastMessageNum", -1);
-    					if (el.getAttribute(NOT_FOR_NEW_INSTALLATIONS).equals("1") && lastNum == -1) {
-    						prefs.edit().putInt("lastMessageNum", mNum).commit();
-    						return context;
-    					} else if (mNum <= lastNum) {
-    			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - message " + mNum + " already shown");
+    					if (mNum <= lastNum) {
+    			            		Log.d(AnkiDroidApp.TAG, "BroadcastMessage - message " + mNum + " already shown");
     						continue;
     					}
 
     					// get message version info
     					mMinVersion = getXmlValue(el, MIN_VERSION);
-    					if (mMinVersion != null && mMinVersion.length() >0) {
-        					if (compareVersions(mMinVersion, AnkiDroidApp.getPkgVersion()) > 0) {
-        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version, message only for > " + mMinVersion);
-        						continue;
-        					}
+    					if (mMinVersion != null && mMinVersion.length() > 0 && compareVersions(mMinVersion, currentVersion) > 0) {
+        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion + "), message " + mNum + " only for > " + mMinVersion);
+        			            continue;
     					}
     					mMaxVersion = getXmlValue(el, MAX_VERSION);
-    					if (mMaxVersion != null && mMaxVersion.length() >0) {
-        					if (compareVersions(mMaxVersion, AnkiDroidApp.getPkgVersion()) < 0) {
-        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version, message only for < " + mMaxVersion);
-        						continue;
-        					}
+    					if (mMaxVersion != null && mMaxVersion.length() > 0 && compareVersions(mMaxVersion, currentVersion) < 0) {
+        			            Log.d(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion + "), message " + mNum + " only for > " + mMaxVersion);
+        			            continue;
     					}
 
     					// get Title, Text, Url
@@ -165,14 +162,12 @@ public class BroadcastMessage {
     					mText = getXmlValue(el, TEXT);
     					mUrl = getXmlValue(el, URL);
     					if (mText != null && mText.length() > 0) {
-        	    			mShowDialog = true;
-        	    			if (i == nl.getLength() - 1) {
-        	    				mIsLastMessage = true;
-        	    			}
-        	    			return context;
+        	    				mShowDialog = true;
+        	    				return context;
     					}
     				}
     				// no valid message left
+    				Log.d(AnkiDroidApp.TAG, "BroadcastMessages: disable messaging system for today");
     				prefs.edit().putBoolean("showBroadcastMessageToday", false).commit();
     				mShowDialog = false;
     			}
@@ -200,16 +195,18 @@ public class BroadcastMessage {
             	return;
             }
 	    	StyledDialog.Builder builder = new StyledDialog.Builder(context);
+	    	Resources res = context.getResources();
 	    	if (mText != null && mText.length() > 0) {
 		        WebView view = new WebView(context);
-		        view.setBackgroundColor(context.getResources().getColor(Themes.getDialogBackgroundColor()));
+		        view.setBackgroundColor(res.getColor(Themes.getDialogBackgroundColor()));
 		        view.loadDataWithBaseURL("", "<html><body text=\"#FFFFFF\">" + mText + "</body></html>", "text/html", "UTF-8", "");
 		        builder.setView(view);
 	    		builder.setCancelable(true);
-	    		builder.setNegativeButton(context.getResources().getString(R.string.close),  new DialogInterface.OnClickListener() {
+	    		builder.setNegativeButton(res.getString(R.string.close),  new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-	    					setMessageRead(mContext, mNum, mIsLastMessage);
+	    					setMessageRead(mContext, mNum);
+	    			        BroadcastMessage.checkForNewMessage(mContext);
 						}
 					});
 	    	} else {
@@ -219,10 +216,10 @@ public class BroadcastMessage {
     			builder.setTitle(mTitle);
     		}
     		if (mUrl != null && mUrl.length() > 0) {
-    			builder.setPositiveButton(context.getResources().getString(R.string.visit), new DialogInterface.OnClickListener() {
+    			builder.setPositiveButton(mUrl.substring(mUrl.length() - 4).equals(".apk") ? res.getString(R.string.download) : res.getString(R.string.visit), new DialogInterface.OnClickListener() {
     				@Override
     				public void onClick(DialogInterface dialog, int which) {
-    					setMessageRead(mContext, mNum, mIsLastMessage);
+    					setMessageRead(mContext, mNum);
     					String action = "android.intent.action.VIEW";
     					if (Utils.isIntentAvailable(mContext, action)) {
     						Intent i = new Intent(action, Uri.parse(mUrl));
@@ -230,7 +227,7 @@ public class BroadcastMessage {
     					}
     				}
     			});
-    			builder.setNeutralButton(context.getResources().getString(R.string.later), null);
+    			builder.setNeutralButton(res.getString(R.string.later), null);
     		}
     		try {
     			mDialog = builder.create();
@@ -242,12 +239,10 @@ public class BroadcastMessage {
     }
 
 
-    private static void setMessageRead(Context context, int num, boolean last) {
+    private static void setMessageRead(Context context, int num) {
 		Editor editor = PrefSettings.getSharedPrefs(context).edit();
+		Log.d(AnkiDroidApp.TAG, "BroadcastMessages: set message " + num + " as read");
 		editor.putInt("lastMessageNum", num);
-		if (last) {
-			editor.putBoolean("showBroadcastMessageToday", false);
-		}
 		editor.commit();
     }
 
