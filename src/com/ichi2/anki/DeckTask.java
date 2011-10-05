@@ -302,7 +302,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         if (oldDeck != null) {
-        	publishProgress(new TaskData(res.getString(R.string.close_current_deck)));
+        	publishProgress(new TaskData(res.getString(R.string.close_previous_deck)));
         	oldDeck.closeDeck(false);
         }
         int backupResult = BackupManager.RETURN_NULL;

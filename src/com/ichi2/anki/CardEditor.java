@@ -206,6 +206,29 @@ public class CardEditor extends Activity {
 		}
 	};
 
+	DeckTask.TaskListener mCloseDeckHandler = new DeckTask.TaskListener() {
+
+        @Override
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(CardEditor.this, "", getResources()
+                    .getString(R.string.close_deck), true);
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.dismiss();
+        	}
+            CardEditor.this.finish();
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
+    };
+
 	// ----------------------------------------------------------------------------
 	// ANDROID METHODS
 	// ----------------------------------------------------------------------------
@@ -569,12 +592,9 @@ public class CardEditor extends Activity {
 
 	private void closeCardEditor() {
 		if (mIntentAdd && mDeck != null) {
-			mDeck.closeDeck();
-		}
-		finish();
-		if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
-			ActivityTransitionAnimation.slide(CardEditor.this,
-					ActivityTransitionAnimation.RIGHT);
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(mDeck, 0));
+		} else {
+			finish();
 		}
 	}
 

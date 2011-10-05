@@ -57,7 +57,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
@@ -70,7 +69,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -235,6 +233,30 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			mSelf.handleDeckSelection(p);
 		}
 	};
+
+
+	DeckTask.TaskListener mCloseDeckHandler = new DeckTask.TaskListener() {
+
+        @Override
+        public void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(DeckPicker.this, "", getResources()
+                    .getString(R.string.close_deck), true);
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+        	if (mProgressDialog != null && mProgressDialog.isShowing()) {
+        		mProgressDialog.dismiss();
+        	}
+        	DeckPicker.this.finish();
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
+    };
 
 
 	private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
@@ -948,9 +970,10 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
     		setResult(StudyOptions.RESULT_CLOSE);
     		Deck deck = AnkiDroidApp.deck();
     		if (deck != null) {
-    			deck.closeDeck();
+    			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(deck, 0));
+    		} else {
+    			finish();
     		}
-    		finish();
 		} else {
 			finish();
 			if (StudyOptions.getApiLevel() > 4) {

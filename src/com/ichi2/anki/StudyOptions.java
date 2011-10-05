@@ -879,9 +879,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void closeStudyOptions() {
+    	closeStudyOptions(true);
+    }
+    private void closeStudyOptions(boolean closeDeck) {
         MetaDB.closeDB();
-        if (AnkiDroidApp.deck() != null && mSdCardAvailable) {
-        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));	
+        if (closeDeck && AnkiDroidApp.deck() != null && mSdCardAvailable) {
+        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
         } else {
         	AnkiDroidApp.setDeck(null);
             mCompat.invalidateOptionsMenu(this);
@@ -2190,7 +2193,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         } else if (requestCode == PICK_DECK_REQUEST || requestCode == DOWNLOAD_PERSONAL_DECK
                 || requestCode == DOWNLOAD_SHARED_DECK) {
         	if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_CLOSE) {
-        		closeStudyOptions();
+        		closeStudyOptions(false);
         	} else if (requestCode == PICK_DECK_REQUEST && resultCode == RESULT_RESTART) {
         		restartApp();
         	}
@@ -2642,7 +2645,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         public void onPreExecute() {
         	mIsClosing = true;
             mProgressDialog = ProgressDialog.show(StudyOptions.this, "", getResources()
-                    .getString(R.string.close_current_deck), true);
+                    .getString(R.string.close_deck), true);
         }
 
 
