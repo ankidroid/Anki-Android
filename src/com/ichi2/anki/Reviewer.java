@@ -3061,7 +3061,7 @@ public class Reviewer extends Activity implements IButtonListener{
  			}
     		mIsSelecting = false;
     		if (mPrefTextSelection && mClipboard != null) {
-                if (mClipboard.getText().length() != 0) {
+                if (mClipboard.getText().length() != 0 && Lookup.isAvailable()) {
                 	if (mLookUpIcon.getVisibility() != View.VISIBLE) {
             			mLookUpIcon.setVisibility(View.VISIBLE);
                         mLookUpIcon.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));                		
