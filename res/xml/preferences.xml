@@ -97,7 +97,7 @@
 				android:entryValues="@array/theme_values" />
 			<CheckBoxPreference
 				android:title="@string/theme_animations"
-				android:defaultValue="true"
+				android:defaultValue="false"
 				android:summary="@string/theme_animations_summ"
 				android:disableDependentsState="false"
 				android:key="themeAnimations" />
@@ -222,7 +222,7 @@
 		<PreferenceCategory android:title="@string/pref_cat_lookup">
 			<CheckBoxPreference
 				android:title="@string/text_selection"
-				android:defaultValue="false"
+				android:defaultValue="true"
 				android:summary="@string/text_selection_summ"
 				android:key="textSelection" 
 				android:disableDependentsState="false"/>
@@ -240,24 +240,6 @@
 				android:dependency="textSelection"
 				android:entries="@array/dictionary_labels"
 				android:entryValues="@array/dictionary_values" />
-		</PreferenceCategory>
-		<PreferenceCategory android:title="@string/pref_cat_reset">
-			<com.ichi2.preferences.CustomDialogPreference
-				android:dialogIcon="@android:drawable/ic_dialog_alert"
-				android:title="@string/reset_languages"
-				android:positiveButtonText="@string/yes"
-				android:negativeButtonText="@string/no"
-				android:dialogTitle="@string/reset_languages"
-				android:dialogMessage="@string/reset_languages_question"
-				android:summary="@string/reset_languages_summ" />
-			<com.ichi2.preferences.CustomDialogPreference
-				android:dialogIcon="@android:drawable/ic_dialog_alert"
-				android:title="@string/reset_all"
-				android:positiveButtonText="@string/yes"
-				android:negativeButtonText="@string/no"
-				android:dialogTitle="@string/reset_all"
-				android:dialogMessage="@string/reset_all_question"
-				android:summary="@string/reset_all_summ" />
 		</PreferenceCategory>
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/pref_cat_navigation">
@@ -453,12 +435,28 @@
 				android:summary="@string/reset_messages_summ" />
 			<com.ichi2.preferences.CustomDialogPreference
 				android:dialogIcon="@android:drawable/ic_dialog_alert"
+				android:title="@string/reset_languages"
+				android:positiveButtonText="@string/yes"
+				android:negativeButtonText="@string/no"
+				android:dialogTitle="@string/reset_languages"
+				android:dialogMessage="@string/reset_languages_question"
+				android:summary="@string/reset_languages_summ" />	
+			<com.ichi2.preferences.CustomDialogPreference
+				android:dialogIcon="@android:drawable/ic_dialog_alert"
 				android:title="@string/reset_dialogs"
 				android:positiveButtonText="@string/yes"
 				android:negativeButtonText="@string/no"
 				android:dialogTitle="@string/reset_dialogs"
 				android:dialogMessage="@string/reset_dialogs_question"			
 				android:summary="@string/reset_dialogs_summ" />
+			<com.ichi2.preferences.CustomDialogPreference
+				android:dialogIcon="@android:drawable/ic_dialog_alert"
+				android:title="@string/reset_all"
+				android:positiveButtonText="@string/yes"
+				android:negativeButtonText="@string/no"
+				android:dialogTitle="@string/reset_all"
+				android:dialogMessage="@string/reset_all_question"
+				android:summary="@string/reset_all_summ" />
 		</PreferenceCategory>
 		<PreferenceCategory android:title="@string/pref_cat_experimental">
 			<CheckBoxPreference

@@ -1841,7 +1841,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mPrefTimer = preferences.getBoolean("timer", true);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", false);
-        mPrefTextSelection = preferences.getBoolean("textSelection", false);
+        mPrefTextSelection = preferences.getBoolean("textSelection", true);
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
@@ -1886,7 +1886,7 @@ public class Reviewer extends Activity implements IButtonListener{
          	mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "0"));
          	mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "0"));
         }
-        mShowAnimations = preferences.getBoolean("themeAnimations", true);
+        mShowAnimations = preferences.getBoolean("themeAnimations", false);
         if (mShowAnimations) {
             int animationDuration = preferences.getInt("animationDuration", 500);
            	mAnimationDurationTurn = animationDuration;
