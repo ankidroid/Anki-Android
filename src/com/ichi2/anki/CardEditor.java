@@ -442,7 +442,7 @@ public class CardEditor extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		View focus = this.getWindow().getCurrentFocus();
-        menu.findItem(MENU_LOOKUP).setEnabled(focus instanceof FieldEditText);			
+        menu.findItem(MENU_LOOKUP).setEnabled(focus instanceof FieldEditText && ((TextView)focus).getText().length() > 0);			
 
         for (int i = 0; i < mEditFields.size(); i++) {
 			if (mEditFields.get(i).getText().length() > 0) {
@@ -509,7 +509,7 @@ public class CardEditor extends Activity {
 				if (!field.isSelected()) {
 					field.selectAll();
 				}
-				Lookup.lookUp(field.getText().toString().substring(field.getSelectionStart(), field.getSelectionEnd()), mDeck.cardFromId(mDeck.getCardsFromFactId(mEditorFact.getId()).get(0)));
+				Lookup.lookUp(field.getText().toString().substring(field.getSelectionStart(), field.getSelectionEnd()), null);
 			}
 			return true;
 		case MENU_RESET_CARD_PROGRESS:

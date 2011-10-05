@@ -76,7 +76,7 @@ public class Lookup {
 
 
 	public static boolean lookUp(String text, Card card) {
-		mCurrentCard = card;
+		mCurrentCard = card;			
 		// clear text from leading and closing dots, commas, brackets etc.
 		text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
 		switch (mDictionary) {
@@ -167,12 +167,17 @@ public class Lookup {
 
 
     private static String getLanguage(int questionAnswer) {
-    	String language = MetaDB.getLanguage(mContext, mDeckFilename, Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);
-		return language;
+    	if (mCurrentCard == null) {
+    		return "";
+    	} else {
+        	return MetaDB.getLanguage(mContext, mDeckFilename, Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer);    		
+    	}
     }
     
     private static void storeLanguage(String language, int questionAnswer) {
-    	MetaDB.storeLanguage(mContext, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);
+    	if (mCurrentCard != null) {
+        	MetaDB.storeLanguage(mContext, mDeckFilename,  Model.getModel(AnkiDroidApp.deck(), mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId(), questionAnswer, language);    		
+    	}
     }
 
 }
