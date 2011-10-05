@@ -240,6 +240,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 			Intent intent = this.getIntent();
 			setResult(StudyOptions.RESULT_RESTART, intent);
 			finish();
+        } else if (key.equals("startup_mode")) {
+			Intent intent = this.getIntent();
+			setResult(StudyOptions.RESULT_RESTART, intent);
+			finish();
         } else if (key.equals("theme")) {
         	if (!sharedPreferences.getString("theme", "0").equals("2")) {
         		animationsCheckboxPreference.setChecked(false);
