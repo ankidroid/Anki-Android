@@ -48,15 +48,21 @@
 	</string-array>
 	<string-array name="dictionary_labels">
 		<item>Aedict</item>
+		<item>Eijiro (Web)</item>
 		<item>Leo.org (Web)</item>
 		<item>Leo.org (App)</item>
 		<item>ColorDict</item>
+		<item>Fora</item>
+		<item>Nciku (Web)</item>
 	</string-array>
 	<string-array name="dictionary_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
 	</string-array>
 	<string-array name="error_reporting_choice_values">
 		<item>0</item>
@@ -165,6 +171,7 @@
 		<item>support for huge decks in card browser</item>
 		<item>support for scrolling with hardware buttons</item>
 		<item>new broadcasting system for showing upgrade messages</item>
-		<item>a lot of bug fixes</item>		
+		<item>support for new dictionaries: fora, nciku, eijiro</item>
+		<item>a lot of bug fixes</item>
 	</string-array>
 </resources>
