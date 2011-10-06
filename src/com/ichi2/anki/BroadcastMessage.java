@@ -45,18 +45,19 @@ public class BroadcastMessage {
 	private static final int TIMEOUT = 30000;
 
 
-	public static void checkForNewMessage(Context context) {
-		checkForNewMessage(context, PrefSettings.getSharedPrefs(context).getLong("lastTimeOpened", 0));
+	public static void init(Context context, long lastTimeOpened) {
+		// retrieve messages on first start of the day
+		if (Utils.isNewDay(lastTimeOpened)) {
+			PrefSettings.getSharedPrefs(context).edit().putBoolean("showBroadcastMessageToday", true).commit();
+		}
 	}
-	public static void checkForNewMessage(Context context, long lastTimeOpened) {
+
+
+	public static void checkForNewMessage(Context context) {
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(context);
 		// don't retrieve messages, if option in preferences is not set
 		if (!prefs.getBoolean("showBroadcastMessages", true)) {
 			return;
-		}
-		// retrieve messages on first start of the day
-		if (Utils.isNewDay(lastTimeOpened)) {
-			prefs.edit().putBoolean("showBroadcastMessageToday", true).commit();
 		}
 		// don't proceed if messages were already shown today
 		if (!prefs.getBoolean("showBroadcastMessageToday", true)) {
@@ -121,6 +122,12 @@ public class BroadcastMessage {
 
     		SharedPreferences prefs = PrefSettings.getSharedPrefs(context);
     		int lastNum = prefs.getInt("lastMessageNum", -1);
+		if (lastNum == -1) {
+			// first start of AnkiDroid ever (or at least of a version which supports broadcast messages).
+			// do nothing yet but retrieve message the next time, AD is started
+			prefs.edit().putInt("lastMessageNum", 0).commit();
+			return context;
+		}
     		try {
         		Log.i(AnkiDroidApp.TAG, "BroadcastMessage: download file " + FILE_URL);
     			URL fileUrl;

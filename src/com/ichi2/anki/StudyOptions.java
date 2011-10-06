@@ -2330,15 +2330,30 @@ public class StudyOptions extends Activity implements IButtonListener {
         mPrefStudyOptions = preferences.getBoolean("study_options", true);
         mStartupMode = Integer.parseInt(preferences.getString("startup_mode",
                 Integer.toString(SUM_DECKPICKER_ON_FIRST_START)));
-        mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
         mSwipeEnabled = preferences.getBoolean("swipe", false);
+
+        mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
+        BroadcastMessage.init(this, mLastTimeOpened);
+       	preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
+
         if (!preferences.getString("lastVersion", "").equals(getVersion())) {
-        	Editor editor = preferences.edit();
-        	editor.putString("lastVersion", getVersion());
-        	editor.commit();
-            mNewVersionAlert = Themes.htmlOkDialog(this, getResources().getString(R.string.new_version_title) + " " + getVersion(), getVersionMessage());
-            AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
-        }
+           	mNewVersionAlert = Themes.htmlOkDialog(this, getResources().getString(R.string.new_version_title) + " " + getVersion(), getVersionMessage(), new DialogInterface.OnClickListener() {
+    			@Override
+    			public void onClick(DialogInterface dialog, int which) {
+		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putString("lastVersion", getVersion()).commit();
+			        BroadcastMessage.checkForNewMessage(StudyOptions.this);
+    			}
+            }, new DialogInterface.OnCancelListener() {
+    			@Override
+    			public void onCancel(DialogInterface dialog) {
+		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putString("lastVersion", getVersion()).commit();
+			        BroadcastMessage.checkForNewMessage(StudyOptions.this);
+    			}
+            });
+		AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
+        } else {
+	        BroadcastMessage.checkForNewMessage(this);
+	}
         mWalWarning = PrefSettings.getSharedPrefs(getBaseContext()).getInt("walWarning", AnkiDb.NO_WAL_WARNING);
      
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
@@ -2361,8 +2376,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         mZeemoteEnabled = preferences.getBoolean("zeemote", false);
        	setLanguage(mLocale);
 
-        BroadcastMessage.checkForNewMessage(this, mLastTimeOpened);
-        preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
 
         return preferences;
     }
