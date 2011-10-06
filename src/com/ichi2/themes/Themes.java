@@ -304,10 +304,16 @@ public class Themes {
 		return htmlOkDialog(context, title, text, null, null);
 	}
 	public static StyledDialog htmlOkDialog(Context context, String title, String text, OnClickListener okListener, OnCancelListener cancelListener) {
+		return htmlOkDialog(context, title, text, null, null, false);		
+	}
+	public static StyledDialog htmlOkDialog(Context context, String title, String text, OnClickListener okListener, OnCancelListener cancelListener, boolean includeBody) {
 		StyledDialog.Builder builder = new StyledDialog.Builder(context);
         builder.setTitle(title);
         WebView view = new WebView(context);
         view.setBackgroundColor(context.getResources().getColor(mDialogBackgroundColor));
+        if (includeBody) {
+        	text = "<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + text + "</body></html>";
+        }
         view.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
         builder.setView(view);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), okListener);

@@ -46,6 +46,7 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -79,7 +80,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -154,7 +154,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int DIALOG_BACKUP_ERROR = 5;
     private static final int DIALOG_DECK_NOT_LOADED = 6;
     private static final int DIALOG_SYNC_CONFLICT_RESOLUTION = 7;
-    private static final int DIALOG_NEW_VERSION = 8;
+    private static final int DIALOG_WELCOME = 8;
     private static final int DIALOG_STATISTIC_TYPE = 9;
     private static final int DIALOG_STATISTIC_PERIOD = 10;
     private static final int DIALOG_SWAP_QA = 11;
@@ -207,7 +207,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     public static int mNewDayStartsAt = 4;
     private long mLastTimeOpened;
-    boolean mShowWelcomeScreen = false;
     boolean mInvertedColors = false;
     boolean mSwap = false;
     String mLocale;
@@ -435,7 +434,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                 	openStatistics(0);
                 	return;
                 case R.id.studyoptions_nodeck_message:
-                	if (!mShowWelcomeScreen) {
+                	if (!mTextNoDeckTitle.getText().equals(getResources().getString(R.string.studyoptions_welcome_title))) {
                         startActivityForResult(
                                 new Intent(StudyOptions.this, Preferences.class),
                                 PREFERENCES_UPDATE);
@@ -813,7 +812,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         		Log.e("Zeemote","Error on zeemote disconnection in onDestroy: "+ex.getMessage());
         	}
         }
-        savePreferences("close");
     }
 
 
@@ -1138,7 +1136,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         }
     };
 
-    
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		StyledDialog dialog = null;
@@ -1575,6 +1573,46 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        dialog = builder.create();
 	        break;
 
+		case DIALOG_WELCOME:
+			builder.setTitle(R.string.studyoptions_welcome_title);
+	        WebView view = new WebView(this);
+	        view.setBackgroundColor(res.getColor(Themes.getDialogBackgroundColor()));
+	        view.loadDataWithBaseURL("", "<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + res.getString(R.string.studyoptions_welcome_dialog).replace("\n", "<br>") + "</body></html>", "text/html", "UTF-8", "");
+	        builder.setView(view);
+    		builder.setCancelable(true);
+			builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putBoolean("firstStart", false).commit();
+		        	mNewVersionAlert = null;
+		        	loadSampleDeck();
+	            }
+	        });
+	        builder.setNegativeButton(res.getString(R.string.no),  new OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putBoolean("firstStart", false).commit();
+		        	if (mNewVersionAlert != null) {
+		        		mNewVersionAlert.show();
+		        	} else {
+		        		BroadcastMessage.checkForNewMessage(StudyOptions.this);
+		        	}
+	            }
+	        });
+	        builder.setOnCancelListener(new OnCancelListener() {
+	            @Override
+	            public void onCancel(DialogInterface dialog) {
+		        	if (mNewVersionAlert != null) {
+		        		mNewVersionAlert.show();
+		        	} else {
+		        		BroadcastMessage.checkForNewMessage(StudyOptions.this);
+		        	}
+	            }
+
+	        });
+	        dialog = builder.create();
+			break;
+
 		default:
 			dialog = null;
 		}
@@ -1697,21 +1735,19 @@ public class StudyOptions extends Activity implements IButtonListener {
         switch (mCurrentContentView) {
             case CONTENT_NO_DECK:
                 setTitle(R.string.app_name);
-                if (mNewVersionAlert != null) {
-                	mShowWelcomeScreen = true;
-                	savePreferences("welcome");
-                	mNewVersionAlert.show();
-                	mNewVersionAlert = null;
-                }
-                mShowWelcomeScreen = PrefSettings.getSharedPrefs(getBaseContext()).getBoolean("welcome", false);
-                if (!mShowWelcomeScreen) {
-                    mTextNoDeckTitle.setText(R.string.studyoptions_nodeck_title);
-                    mTextNoDeckMessage.setText(String.format(
-                            getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
-                } else {
+                if (PrefSettings.getSharedPrefs(getBaseContext()).getBoolean("firstStart", true)) {
                     mTextNoDeckTitle.setText(R.string.studyoptions_welcome_title);
                     mTextNoDeckMessage.setText(String.format(
                             getResources().getString(R.string.studyoptions_welcome_message), mPrefDeckPath));
+                	showDialog(DIALOG_WELCOME);
+                } else {
+                    mTextNoDeckTitle.setText(R.string.studyoptions_nodeck_title);
+                    mTextNoDeckMessage.setText(String.format(
+                            getResources().getString(R.string.studyoptions_nodeck_message), mPrefDeckPath));
+                    if (mNewVersionAlert != null) {
+                    	mNewVersionAlert.show();
+                    	mNewVersionAlert = null;
+                    }
                 }
                 setContentView(mNoDeckView);
                 break;
@@ -2233,10 +2269,6 @@ public class StudyOptions extends Activity implements IButtonListener {
             Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
             mDeckFilename = intent.getExtras().getString(OPT_DB);
             savePreferences("deckFilename");
-    		if (mShowWelcomeScreen) {
-            	mShowWelcomeScreen = false;
-            	savePreferences("welcome");
-    		}
 
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
@@ -2303,10 +2335,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         Editor editor = preferences.edit();
         if (str.equals("deckFilename")) {
             editor.putString("deckFilename", mDeckFilename);
-        } else if (str.equals("close")) {
-        	editor.putLong("lastTimeOpened", System.currentTimeMillis());
-        } else if (str.equals("welcome")) {
-        	editor.putBoolean("welcome", mShowWelcomeScreen);
         } else if (str.equals("invertedColors")) {
             editor.putBoolean("invertedColors", mInvertedColors);
         } else if (str.equals("swapqa")) {
@@ -2338,15 +2366,16 @@ public class StudyOptions extends Activity implements IButtonListener {
             }, new DialogInterface.OnCancelListener() {
     			@Override
     			public void onCancel(DialogInterface dialog) {
-		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putString("lastVersion", getVersion()).commit();
 			        BroadcastMessage.checkForNewMessage(StudyOptions.this);
     			}
-            });
+            }, true);
            	AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
         } else {
-	        BroadcastMessage.checkForNewMessage(this);
+        	if (!preferences.getBoolean("firstStart", true)) {
+    	        BroadcastMessage.checkForNewMessage(this);        		
+        	}
         }
-     
+
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
         final float gestureScale = getResources().getDisplayMetrics().density;
         int sensibility = preferences.getInt("swipeSensibility", 100);
@@ -2387,7 +2416,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private String getVersionMessage() {
     	Resources res = getResources();
         StringBuilder builder = new StringBuilder();
-        builder.append("<html><body text=\"#FFFFFF\">");
         builder.append(res.getString(R.string.new_version_message));
         builder.append("<ul>");
         String[] features = res.getStringArray(R.array.new_version_features);
