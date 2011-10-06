@@ -58,8 +58,8 @@
   <string name="menu_rotate">Повернуть</string>
   <string name="undo">Откат</string>
   <string name="redo">Вперёд</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="close_previous_deck">Закрытие предыдущей колоды.\nПожалуйста, подождите...</string>
+  <string name="close_deck">Закрытие колоды.\nПожалуйста, подождите...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Скачать недостающие медиа-файлы</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Сброс языка</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Сброс языка</string>

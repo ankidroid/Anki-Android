@@ -195,4 +195,6 @@
   <string name="studyoptions_more_save">Αποθήκευση</string>
   <string name="show_broadcast_messages">Show Current Messages</string>
   <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
+  <string name="input_workaround">Input Workaround</string>
+  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
 </resources>

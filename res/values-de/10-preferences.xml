@@ -195,4 +195,6 @@
   <string name="studyoptions_more_save">Speichern</string>
   <string name="show_broadcast_messages">Aktuelle Nachrichten anzeigen</string>
   <string name="show_broadcast_messages_summ">Aktuelle AnkiDroid-Nachrichten, wie etwa Informationen über neue Versionen oder Ähnliches, anzeigen</string>
+  <string name="input_workaround">Eingabe-Fehlerbehebung</string>
+  <string name="input_workaround_summ">Fehlerbehebung für Fokusierungsprobleme mit HTML-Eingabe-Feldern. Verursacht Probleme auf einigen Geräten.</string>
 </resources>
