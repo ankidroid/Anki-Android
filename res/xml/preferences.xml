@@ -480,6 +480,11 @@
 				android:summary="@string/fix_arabic_text_summ"
 				android:defaultValue="false"
 				android:key="fixArabicText"/>
+			<CheckBoxPreference
+				android:title="@string/input_workaround"
+				android:summary="@string/input_workaround_summ"
+				android:defaultValue="false"
+				android:key="inputWorkaround"/>
 			<ListPreference
 				android:title="@string/default_font"
 				android:summary="@string/default_font_summ"

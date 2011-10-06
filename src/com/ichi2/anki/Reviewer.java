@@ -207,6 +207,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
     private boolean mPrefTextSelection;
+    private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
     private boolean mshowNextReviewTime;
@@ -530,8 +531,17 @@ public class Reviewer extends Activity implements IButtonListener{
             		break;
             	}
             }
-            if (event != null) {
-	            mCard.dispatchTouchEvent(event);
+            try {
+                if (event != null) {
+    	            mCard.dispatchTouchEvent(event);
+                }            	
+            } catch (NullPointerException e) {
+            	Log.e(AnkiDroidApp.TAG, "Error on dispatching touch event: " + e);
+            	if (mInputWorkaround) {
+                	Log.e(AnkiDroidApp.TAG, "Error on using InputWorkaround: " + e + " --> disabled");
+                	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("inputWorkaround", false).commit();            		
+            	}
+            	finish();
             }
             return false;
         }
@@ -1861,7 +1871,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mPrefHideQuestionInAnswer = Integer.parseInt(preferences.getString("hideQuestionInAnswer",
                 Integer.toString(HQIA_DO_SHOW)));
-
+        mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixHebrew = preferences.getBoolean("fixHebrewText", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mSpeakText = preferences.getBoolean("tts", false);
@@ -2988,7 +2998,11 @@ public class Reviewer extends Activity implements IButtonListener{
 
     	@Override
     	public boolean onCheckIsTextEditor() {
-    		return true; 
+    		if (mInputWorkaround) {
+        		return true;
+    		} else {
+        		return super.onCheckIsTextEditor();    			
+    		}
     	}
     }
 
