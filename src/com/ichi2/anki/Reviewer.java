@@ -895,8 +895,10 @@ public class Reviewer extends Activity implements IButtonListener{
         if (!mClosing) {
             // Save changes
             Deck deck = AnkiDroidApp.deck();
-            DeckTask.waitToFinish(); 
-            deck.commitToDB();
+            if (deck != null) {
+	            DeckTask.waitToFinish();
+	            deck.commitToDB();
+            }
             WidgetStatus.update(getBaseContext());
         }
 
