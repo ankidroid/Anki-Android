@@ -155,21 +155,19 @@ public class StudyOptions extends Activity implements IButtonListener {
     private static final int DIALOG_DECK_NOT_LOADED = 6;
     private static final int DIALOG_SYNC_CONFLICT_RESOLUTION = 7;
     private static final int DIALOG_NEW_VERSION = 8;
-    private static final int DIALOG_WAL_WARNING = 9;
-    private static final int DIALOG_STATISTIC_TYPE = 10;
-    private static final int DIALOG_STATISTIC_PERIOD = 11;
-    private static final int DIALOG_SWAP_QA = 12;
-    private static final int DIALOG_MORE = 13;
-    private static final int DIALOG_TAGS = 14;
-    private static final int DIALOG_LIMIT_SESSION = 15;
-    private static final int DIALOG_DOWNLOAD_SELECTOR = 16;
-    private static final int DIALOG_CRAM = 17;
-    private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 18;
+    private static final int DIALOG_STATISTIC_TYPE = 9;
+    private static final int DIALOG_STATISTIC_PERIOD = 10;
+    private static final int DIALOG_SWAP_QA = 11;
+    private static final int DIALOG_MORE = 12;
+    private static final int DIALOG_TAGS = 13;
+    private static final int DIALOG_LIMIT_SESSION = 14;
+    private static final int DIALOG_DOWNLOAD_SELECTOR = 15;
+    private static final int DIALOG_CRAM = 16;
+    private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
 
     private String mCurrentDialogMessage;
 
     private StyledDialog mNewVersionAlert;
-    private StyledDialog mWalWarningAlert;
     
     /** Zeemote messages */
     private static final int MSG_ZEEMOTE_BUTTON_A = 0x110;
@@ -204,7 +202,6 @@ public class StudyOptions extends Activity implements IButtonListener {
     private String mDeckFilename;
     private int mStartupMode;
     private boolean mSwipeEnabled;
-    private int mWalWarning;
 
     private int mCurrentContentView;
 
@@ -1982,7 +1979,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         menu.findItem(MENU_ADD_FACT).setEnabled(deckChangeable);
         menu.findItem(MENU_MORE_OPTIONS).setEnabled(deckChangeable);
 		menu.findItem(MENU_SYNC).setEnabled(deckChangeable);        	
-//		menu.findItem(MENU_SYNC).setVisible(!(mWalWarning == AnkiDb.WAL_SET_ENABLED));
         return true;
     }
 
@@ -2160,10 +2156,6 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 
     private void syncDeck(String conflictResolution) {
-//    	if (mWalWarning != AnkiDb.NO_WAL_WARNING) {
-//    		showWalWarningDialog();
-//    		return;
-//    	}
         SharedPreferences preferences = PrefSettings.getSharedPrefs(getBaseContext());
 
         String username = preferences.getString("username", "");
@@ -2350,11 +2342,10 @@ public class StudyOptions extends Activity implements IButtonListener {
 			        BroadcastMessage.checkForNewMessage(StudyOptions.this);
     			}
             });
-		AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
+           	AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
         } else {
 	        BroadcastMessage.checkForNewMessage(this);
-	}
-        mWalWarning = PrefSettings.getSharedPrefs(getBaseContext()).getInt("walWarning", AnkiDb.NO_WAL_WARNING);
+        }
      
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
         final float gestureScale = getResources().getDisplayMetrics().density;
@@ -2407,29 +2398,6 @@ public class StudyOptions extends Activity implements IButtonListener {
         }
         builder.append("</ul>");
     	return builder.toString();
-    }
-
-
-    private void showWalWarningDialog() {
-    	if (mWalWarningAlert == null) {
-        	Resources res = getResources();
-            StyledDialog.Builder builder = new StyledDialog.Builder(this);
-            builder.setMessage(res.getString(R.string.wal_warning));
-            builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-    			@Override
-    			public void onClick(DialogInterface dialog, int which) {
-				if (mWalWarning == AnkiDb.WAL_WARNING_SHOW) {
-				        Log.e(AnkiDroidApp.TAG, "WAL problem detected");
-			            //new FeedbackElement(StudyOptions.this).createReport("WAL problem detected");
-		    	        //    mWalWarning = AnkiDb.WAL_WARNING_ALREADY_SHOWN;
-    	        		//    PrefSettings.getSharedPrefs(getBaseContext()).edit().putInt("walWarning", mWalWarning).commit();
-				}
-    			}
-            });
-            builder.setCancelable(true);
-        	mWalWarningAlert = builder.create();    		
-    	}
-    	mWalWarningAlert.show();
     }
 
 
@@ -2600,10 +2568,6 @@ public class StudyOptions extends Activity implements IButtonListener {
                     mProgressDialog.dismiss();
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-                mWalWarning = PrefSettings.getSharedPrefs(getBaseContext()).getInt("walWarning", AnkiDb.NO_WAL_WARNING);
-                if (mWalWarning == AnkiDb.WAL_WARNING_SHOW) {
-                	showWalWarningDialog();
                 }
                 if (mNewVersionAlert != null) {
                     mNewVersionAlert.show();
