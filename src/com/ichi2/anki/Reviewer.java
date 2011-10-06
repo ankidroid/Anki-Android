@@ -1525,7 +1525,7 @@ public class Reviewer extends Activity implements IButtonListener{
         mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCard.setOnClickListener(mFlipCardListener);
         mFlipCard.setText(getResources().getString(R.string.show_answer));
-    	mDefaultButtonDrawable = new Drawable[]{mFlipCard.getBackground(), mEase1.getBackground()};
+    	mDefaultButtonDrawable = new Drawable[]{mFlipCard.getBackground(), mEase1.getBackground(), mEase2.getBackground(), mEase3.getBackground(), mEase4.getBackground()};
 
         mTextBarRed = (TextView) findViewById(R.id.red_number);
         mTextBarBlack = (TextView) findViewById(R.id.black_number);
@@ -1617,18 +1617,21 @@ public class Reviewer extends Activity implements IButtonListener{
         int fgColor = invert ? res.getColor(R.color.foreground_color_inv) : res.getColor(R.color.black);
         mCard.setBackgroundColor(mCurrentBackgroundColor);
 
-        Drawable buttonDrawable;
         if (mChangeBorderStyle) {
             mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
-            buttonDrawable = invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[1];
             mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[0]);
+            mEase1.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[1]);
+            mEase2.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[2]);
+            mEase3.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[3]);
+            mEase4.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.btn_keyboard_key_fulltrans_normal) : mDefaultButtonDrawable[4]);
         } else {
             mMainLayout.setBackgroundResource(invert ? R.color.reviewer_background_night : R.color.reviewer_background);
         	findViewById(R.id.flashcard_border).setBackgroundResource(invert ? R.drawable.blue_bg_webview_night : R.drawable.blue_bg_webview);
-            buttonDrawable = invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[1];
-            if (invert) {
-                mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[0]);            	
-            }
+            mFlipCard.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[0]);
+            mEase1.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[1]);
+            mEase2.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[2]);
+            mEase3.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[3]);
+            mEase4.setBackgroundDrawable(invert ? res.getDrawable(R.drawable.blue_btn_night) : mDefaultButtonDrawable[4]);
         }
         if (invert || mChangeBorderStyle) {
             mNextTimeTextColor = invert ? res.getColor(R.color.next_time_usual_color_inv) : res.getColor(R.color.next_time_usual_color);
@@ -1639,10 +1642,6 @@ public class Reviewer extends Activity implements IButtonListener{
             mTextBarBlack.setTextColor(fgColor);
             mTextBarBlue.setTextColor(invert ? res.getColor(R.color.textbar_blue_color_inv) : res.getColor(R.color.textbar_blue_color));
 
-            mEase1.setBackgroundDrawable(buttonDrawable);
-            mEase2.setBackgroundDrawable(buttonDrawable);
-            mEase3.setBackgroundDrawable(buttonDrawable);
-            mEase4.setBackgroundDrawable(buttonDrawable);
             mFlipCard.setTextColor(fgColor);
             mEase1.setTextColor(fgColor);
             mEase2.setTextColor(fgColor);
