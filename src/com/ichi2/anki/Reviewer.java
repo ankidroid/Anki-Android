@@ -530,7 +530,9 @@ public class Reviewer extends Activity implements IButtonListener{
             		break;
             	}
             }
-            mCard.dispatchTouchEvent(event);
+            if (event != null) {
+	            mCard.dispatchTouchEvent(event);
+            }
             return false;
         }
     };
