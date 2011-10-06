@@ -530,7 +530,9 @@ public class Reviewer extends Activity implements IButtonListener{
             		break;
             	}
             }
-            mCard.dispatchTouchEvent(event);
+            if (event != null) {
+	            mCard.dispatchTouchEvent(event);
+            }
             return false;
         }
     };
@@ -893,8 +895,10 @@ public class Reviewer extends Activity implements IButtonListener{
         if (!mClosing) {
             // Save changes
             Deck deck = AnkiDroidApp.deck();
-            DeckTask.waitToFinish(); 
-            deck.commitToDB();
+            if (deck != null) {
+	            DeckTask.waitToFinish();
+	            deck.commitToDB();
+            }
             WidgetStatus.update(getBaseContext());
         }
 
