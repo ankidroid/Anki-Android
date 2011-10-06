@@ -111,8 +111,8 @@ public class AnkiDroidApp extends Application {
         // It may also necessary in the case where an application has been
         // updated
         // Here for simplicity, we do it every time the application is launched
-        Intent intent = new Intent(Veecheck.getRescheduleAction(this));
-        sendBroadcast(intent);
+        // Intent intent = new Intent(Veecheck.getRescheduleAction(this));
+        // sendBroadcast(intent);
     }
 
 

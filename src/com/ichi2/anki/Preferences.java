@@ -56,7 +56,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 	private static final int DIALOG_ASYNC = 1;
 	private static final int DIALOG_BACKUP = 2;
 
-    private boolean mVeecheckStatus;
+//    private boolean mVeecheckStatus;
     private PreferenceManager mPrefMan;
     private CheckBoxPreference zoomCheckboxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
@@ -85,7 +85,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         mPrefMan.setSharedPreferencesName(PrefSettings.SHARED_PREFS_NAME);
 
         addPreferencesFromResource(R.xml.preferences);
-        mVeecheckStatus = mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, PrefSettings.DEFAULT_ENABLED);
+//        mVeecheckStatus = mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, PrefSettings.DEFAULT_ENABLED);
         
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
@@ -227,9 +227,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     protected void onPause() {
         super.onPause();
         // Reschedule the checking in case the user has changed the veecheck switch
-        if (mVeecheckStatus ^ mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, mVeecheckStatus)) {
-            sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
-        }
+//        if (mVeecheckStatus ^ mPrefMan.getSharedPreferences().getBoolean(PrefSettings.KEY_ENABLED, mVeecheckStatus)) {
+//            sendBroadcast(new Intent(Veecheck.getRescheduleAction(this)));
+//        }
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
