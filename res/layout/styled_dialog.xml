@@ -139,6 +139,8 @@
                 android:layout_gravity="left"
                 android:layout_weight="1"
                 android:maxLines="2"
+				android:singleLine="false"
+				android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <Button android:id="@+id/button3"
@@ -146,6 +148,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:maxLines="2"
+				android:singleLine="false"
+				android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <Button android:id="@+id/button2"
@@ -153,6 +157,8 @@
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 android:maxLines="2"
+				android:singleLine="false"
+				android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <LinearLayout android:id="@+id/rightSpacer"
