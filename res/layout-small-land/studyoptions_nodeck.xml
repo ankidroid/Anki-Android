@@ -45,7 +45,7 @@
          	android:layout_gravity="center"
 			android:gravity="center"
 			android:id="@+id/studyoptions_load_sample_deck"
-			android:text="@string/studyoptions_load_sample_deck" />
+			android:text="@string/studyoptions_load_tutorial_deck" />
 		<LinearLayout
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
