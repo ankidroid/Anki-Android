@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Что \"зубрить\" (теги)</string>
   <string name="statistics">Статистика</string>
   <string name="studyoptions_load_other_deck">Открыть другие колоды</string>
-  <string name="studyoptions_load_sample_deck">Открыть колоду с примерами</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Ночной режим</string>
   <string name="studyoptions_swap_qa">Отразить Q/A</string>
   <string name="visit">Посещение</string>

@@ -58,8 +58,8 @@
   <string name="menu_rotate">Rotar</string>
   <string name="undo">Deshacer</string>
   <string name="redo">Repetir</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="close_previous_deck">Cerrando el mazo anterior.\nPor favor, espera...</string>
+  <string name="close_deck">Cerrando el mazo.\nPor favor, espera...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer Idioma</string>
@@ -90,12 +90,12 @@
   <string name="studyoptions_cram_dialog_title">Etiquetas a empollar</string>
   <string name="statistics">Estadísticas</string>
   <string name="studyoptions_load_other_deck">Cargar otro mazo</string>
-  <string name="studyoptions_load_sample_deck">Cargar mazo de ejemplo</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Modo Nocturno</string>
   <string name="studyoptions_swap_qa">Intercambiar Preg./Resp.</string>
-  <string name="visit">Visit</string>
-  <string name="later">Later</string>
-  <string name="download">Download</string>
+  <string name="visit">Visita</string>
+  <string name="later">Más tarde</string>
+  <string name="download">Descargar</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Etichette per lo studio focalizzato</string>
   <string name="statistics">Statistiche</string>
   <string name="studyoptions_load_other_deck">Carica un altro mazzo</string>
-  <string name="studyoptions_load_sample_deck">Carica un mazzo di esempio</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Modalità notturna</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
   <string name="visit">Visit</string>

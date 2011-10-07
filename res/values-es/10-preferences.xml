@@ -68,9 +68,9 @@
   <string name="reset_dialogs_question">¿Restablecer todos los cuadros de diálogo?</string>
   <string name="reset_dialogs_summ">Restablecer todos los cuadros de diálogo establecidos para no mostrar de nuevo</string>
   <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
-  <string name="reset_messages">Reset Messages</string>
-  <string name="reset_messages_question">Show current messages again?</string>
-  <string name="reset_messages_summ">Show current AnkiDroid messages another time</string>
+  <string name="reset_messages">Restablecer Mensajes</string>
+  <string name="reset_messages_question">¿Mostrar mensajes actuales de nuevo?</string>
+  <string name="reset_messages_summ">Mostrar los mensajes actuales de AnkiDroid otra vez</string>
   <string name="reset_all_question">¿Restablecer todos los estados de idiomas, widget, pizarra y diccionarios?</string>
   <string name="reset_confirmation">Restablecer todos los estados</string>
   <string name="use_ruby_support">Soporte para anotacion ruby</string>
@@ -193,8 +193,8 @@
   <string name="studyoptions_new_cards_per_day">Tarjetas nuevas por día</string>
   <string name="studyoptions_max_fail_card">Max tarjetas falladas</string>
   <string name="studyoptions_more_save">Guardar</string>
-  <string name="show_broadcast_messages">Show Current Messages</string>
-  <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
-  <string name="input_workaround">Input Workaround</string>
-  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
+  <string name="show_broadcast_messages">Mostrar Mensajes Actuales</string>
+  <string name="show_broadcast_messages_summ">Mostrar notificaciones de AnkiDroid, como nuevas versiones u otras noticias importantes</string>
+  <string name="input_workaround">Solución para Entrada</string>
+  <string name="input_workaround_summ">Solución para atajar los problemas en cajas de texto HTML. Causa problemas en varios dispositivos.</string>
 </resources>

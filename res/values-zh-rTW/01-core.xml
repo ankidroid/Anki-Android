@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">要惡補的標籤</string>
   <string name="statistics">統計</string>
   <string name="studyoptions_load_other_deck">載入其他牌組</string>
-  <string name="studyoptions_load_sample_deck">載入示範牌組</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">夜間模式</string>
   <string name="studyoptions_swap_qa">問題/答案 互換</string>
   <string name="visit">Visit</string>

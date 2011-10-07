@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Marqueurs à bachoter</string>
   <string name="statistics">Statistiques</string>
   <string name="studyoptions_load_other_deck">Charger un autre paquet</string>
-  <string name="studyoptions_load_sample_deck">Charger un paquet d\'exemple</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Mode nuit</string>
   <string name="studyoptions_swap_qa">Inverser Q/R</string>
   <string name="visit">Visit</string>

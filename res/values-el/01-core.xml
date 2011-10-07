@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Ετικέτες προς εντατική μελέτη</string>
   <string name="statistics">Στατιστικά</string>
   <string name="studyoptions_load_other_deck">Φορτώστε άλλη τράπουλα</string>
-  <string name="studyoptions_load_sample_deck">Φορτώστε την τράπουλα δείγμα</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Νυκτερινή λειτουργία</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
   <string name="visit">Visit</string>

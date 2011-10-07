@@ -25,7 +25,7 @@
   <string name="no">Hayır</string>
   <string name="ok">Tamam</string>
   <string name="studyoptions_deck_name">Deste adı</string>
-  <string name="studyoptions_reviews_due">Gözden geçirilecek:</string>
+  <string name="studyoptions_reviews_due">Tekrarlanacak:</string>
   <string name="studyoptions_new_today">Bugün yeni:</string>
   <string name="studyoptions_new_total">Toplam yeni:</string>
   <string name="studyoptions_eta">Tahmini süre (dk):</string>
@@ -58,8 +58,8 @@
   <string name="menu_rotate">Çevir</string>
   <string name="undo">Geri Al</string>
   <string name="redo">Yeniden Yap</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="close_previous_deck">Önceki deste kapatılıyor.\nLütfen bekleyin...</string>
+  <string name="close_deck">Deste kapatılıyor.\nLütfen bekleyin...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Eksik ortamı indir</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Dil Görevlerini Sıfırla</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Dil sıfırlama</string>
@@ -90,12 +90,12 @@
   <string name="studyoptions_cram_dialog_title">Yoğun çalışılacak etiketler</string>
   <string name="statistics">İstatistikler</string>
   <string name="studyoptions_load_other_deck">Başka Deste Yükle</string>
-  <string name="studyoptions_load_sample_deck">Örnek Desteyi Yükle</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Gece Modu</string>
   <string name="studyoptions_swap_qa">S/Y Değiştir</string>
   <string name="visit">Ziyaret et</string>
   <string name="later">Daha sonra</string>
-  <string name="download">Download</string>
+  <string name="download">İndir</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>

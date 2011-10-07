@@ -22,7 +22,7 @@
 <resources>
   <string name="CardEditorCancelButton">Zrušit</string>
   <string name="CardEditorSaveButton">Uložit</string>
-  <string name="CardEditorTags">Tags: %1$s</string>
+  <string name="CardEditorTags">Štítky: %1$s</string>
   <string name="add_new_tag">Přidat novou značku</string>
   <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Pro přístup ke svým balíkům odpojte USB.</string>
   <string name="show_whiteboard">Zobrazit časovač / tabuli</string>
@@ -36,8 +36,8 @@
   <string name="leech_notification">Karta byla označena jako pijavice</string>
   <string name="about_title">O aplikaci</string>
   <string name="cardeditor_title">Editor karet</string>
-  <string name="factadder_saving_error">Error saving fact</string>
-  <string name="saving_facts">Saving facts</string>
+  <string name="factadder_saving_error">Chyba při ukládání faktů</string>
+  <string name="saving_facts">Ukládání faktů</string>
   <string name="deckcreator_title">Deck Creator</string>
   <string name="model">Model:</string>
   <string name="select_model">Model</string>
@@ -45,23 +45,23 @@
   <string name="cards">Karty:</string>
   <string name="add">Přidat</string>
   <string name="close">Zavřít</string>
-  <string name="select_card_model">Select Card Model</string>
-  <string name="select">Select</string>
+  <string name="select_card_model">Vyberte model karty</string>
+  <string name="select">Vybrat</string>
   <string name="saving_changes">Ukládání změn ...</string>
   <string name="studyoptions_nodeck_title">Žádný balíček není načten</string>
   <string name="studyoptions_nodeck_message">Žádný balíček není momentálně načten. Anki balíčky jsou uloženy v adresáři \"%s\" na vaší SD kartě. Toto umístění může být změněno v nastavení (zmáčkněte tlačítko \"Menu\" a zvolte \"Nastavení\").</string>
-  <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
+  <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
   <string name="studyoptions_welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\nAll information is organized in decks which you can either download from other users (shared decks) or create on your own with AnkiDroid or Anki Desktop. In the latter case you can sync your deck via AnkiWeb or copy it into directory %s.\nClick on this text to learn more.</string>
   <string name="studyoptions_deck_not_loaded_title">Balíček nemohl být načten</string>
   <string name="studyoptions_deck_not_loaded_message">Balíček, který jste zvolili není platný balíček aplikace Anki. Prosím použijte desktopovou verzi Anki pro vytvoření platného typu balíčku před tím, než jej otevřete v AnkiDroidu.\n\nMezitím můžete vybrat jiný balíček nebo načíst ukázkový balíček pomocí tlačítek níže.</string>
   <string name="studyoptions_no_external_storage_title">Není k dispozici externí paměť</string>
   <string name="studyoptions_no_external_storage_message">Žádná externí paměť není momentálně k dispozici. AnkiDroid potřebuje přistupovat k SD kartě, aby mohl načíst Anki balíčky. Zkontrolujte, zda je vaše SD karta připojena a akci opakujte.</string>
-  <string name="fact_adder_intent_title">AnkiDroid Card</string>
+  <string name="fact_adder_intent_title">AnkiDroid karta</string>
   <string name="fact_adder_swap">Swap</string>
-  <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
-  <string name="deckpicker_select_dictionary_default">Default</string>
-  <string name="card_editor_add_card">Add card</string>
-  <string name="card_editor_reset">Reset</string>
-  <string name="card_editor_copy_card">Copy card</string>
+  <string name="deckpicker_select_dictionary_title">Výběr slovníku</string>
+  <string name="deckpicker_select_dictionary_default">Výchozí</string>
+  <string name="card_editor_add_card">Přidat kartu</string>
+  <string name="card_editor_reset">Obnovit</string>
+  <string name="card_editor_copy_card">Kopírovat kartu</string>
   <string name="card_editor_reset_card">Reset progress</string>
 </resources>
