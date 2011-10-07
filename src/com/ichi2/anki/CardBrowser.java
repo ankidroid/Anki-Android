@@ -53,6 +53,7 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -757,8 +758,14 @@ public class CardBrowser extends Activity {
 						entry.put("answer", ArabicUtilities.reshapeSentence(entry.get("answer")));
 					}
 				}
-				mAllCards.addAll(cards);
-				mCards.addAll(cards);
+				try {
+					mAllCards.addAll(cards);
+					mCards.addAll(cards);					
+				} catch (OutOfMemoryError e) {
+			    	Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
+					Themes.showThemedToast(CardBrowser.this, getResources().getString(R.string.error_insufficient_memory), false);
+			    	finish();
+				}
 				updateList();
 			}
 		}
