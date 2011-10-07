@@ -540,8 +540,8 @@ public class Reviewer extends Activity implements IButtonListener{
             	if (mInputWorkaround) {
                 	Log.e(AnkiDroidApp.TAG, "Error on using InputWorkaround: " + e + " --> disabled");
                 	PrefSettings.getSharedPrefs(getBaseContext()).edit().putBoolean("inputWorkaround", false).commit();            		
+                	finish();
             	}
-            	finish();
             }
             return false;
         }
