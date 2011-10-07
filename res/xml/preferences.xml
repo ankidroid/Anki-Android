@@ -411,6 +411,7 @@
 			android:title="@string/show_broadcast_messages"
 			android:summary="@string/show_broadcast_messages_summ"
 			android:defaultValue="true"
+			android:disableDependentsState="false" 
 			android:key="showBroadcastMessages"/>
 <!-- 		<CheckBoxPreference
 			android:title="@string/update_notification"
@@ -432,6 +433,7 @@
 				android:negativeButtonText="@string/no"
 				android:dialogTitle="@string/reset_messages"
 				android:dialogMessage="@string/reset_messages_question"			
+				android:dependency="showBroadcastMessages"
 				android:summary="@string/reset_messages_summ" />
 			<com.ichi2.preferences.CustomDialogPreference
 				android:dialogIcon="@android:drawable/ic_dialog_alert"

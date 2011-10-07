@@ -29,7 +29,7 @@ import android.util.Log;
 import android.view.WindowManager.BadTokenException;
 import android.webkit.WebView;
 
-public class BroadcastMessage {
+public class BroadcastMessages {
 
 	public static final String FILE_URL = "https://ankidroid.googlecode.com/files/broadcastMessages.xml";
 
@@ -46,6 +46,7 @@ public class BroadcastMessage {
 
 
 	public static void init(Context context, long lastTimeOpened) {
+		Log.d(AnkiDroidApp.TAG, "BroadcastMessages: init");
 		// retrieve messages on first start of the day
 		if (Utils.isNewDay(lastTimeOpened)) {
 			PrefSettings.getSharedPrefs(context).edit().putBoolean("showBroadcastMessageToday", true).commit();
@@ -53,7 +54,8 @@ public class BroadcastMessage {
 	}
 
 
-	public static void checkForNewMessage(Context context) {
+	public static void checkForNewMessages(Context context) {
+		Log.d(AnkiDroidApp.TAG, "BroadcastMessages: checkForNewMessages");
 		SharedPreferences prefs = PrefSettings.getSharedPrefs(context);
 		// don't retrieve messages, if option in preferences is not set
 		if (!prefs.getBoolean("showBroadcastMessages", true)) {
@@ -213,7 +215,7 @@ public class BroadcastMessage {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 	    					setMessageRead(mContext, mNum);
-	    			        BroadcastMessage.checkForNewMessage(mContext);
+	    			        BroadcastMessages.checkForNewMessages(mContext);
 						}
 					});
 	    	} else {
@@ -238,6 +240,7 @@ public class BroadcastMessage {
     		}
     		try {
     			mDialog = builder.create();
+			Log.d(AnkiDroidApp.TAG, "BroadcastMessages: show dialog");
     			mDialog.show();
     		} catch (BadTokenException e) {
                 Log.e(AnkiDroidApp.TAG, "BroadcastMessage - BadTokenException on showing dialog: " + e);
