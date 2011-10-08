@@ -41,6 +41,7 @@ import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.WindowManager.BadTokenException;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.themes.Themes;
@@ -233,70 +234,74 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("swipe")) {
-        	zoomCheckboxPreference.setChecked(false);
-        	zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
-        } else if (key.equals("language")) {
-			Intent intent = this.getIntent();
-			setResult(StudyOptions.RESULT_RESTART, intent);
-			finish();
-        } else if (key.equals("startup_mode")) {
-			Intent intent = this.getIntent();
-			setResult(StudyOptions.RESULT_RESTART, intent);
-			finish();
-        } else if (key.equals("theme")) {
-        	if (!sharedPreferences.getString("theme", "0").equals("2")) {
-        		animationsCheckboxPreference.setChecked(false);
-        		animationsCheckboxPreference.setEnabled(false);
-        	} else {
-        		animationsCheckboxPreference.setEnabled(true);
-        	}
-        	Themes.resetTheme();
-			Intent intent = this.getIntent();
-			setResult(StudyOptions.RESULT_RESTART, intent);
-			finish();
-        } else if (Arrays.asList(mShowValueInSummList).contains(key)) {
-            updateListPreference(key);
-        } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
-            updateSeekBarPreference(key);
-        } else if (key.equals("walMode") && !lockCheckAction) {
-        	lockCheckAction = true;
-        	if (sharedPreferences.getBoolean("walMode", false)) {
-        		showDialog(DIALOG_WAL);
-        	} else if (walModeInitiallySet) {
-        		walModeInitiallySet = false;
-        		dialogMessage = getResources().getString(R.string.wal_mode_set_message);
-            	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE, mDeckOperationHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory())));
-        	} else {
-        		lockCheckAction = false;        		
-        	}
-        } else if (key.equals("useBackup")) {
-        	if (lockCheckAction)  {
-        		lockCheckAction = false;
-        	} else if (!useBackupPreference.isChecked()) {
-        		lockCheckAction = true;
-        		useBackupPreference.setChecked(true);
-    			showDialog(DIALOG_BACKUP);
-        	} else {
-        		setReloadDeck();
-        	}
-        } else if (key.equals("asyncMode")) {
-        	if (lockCheckAction)  {
-        		lockCheckAction = false;
-        	} else if (asyncModePreference.isChecked()) {
-        		lockCheckAction = true;
-        		asyncModePreference.setChecked(false);
-    			showDialog(DIALOG_ASYNC);
-        	} else {
-        		setReloadDeck();
-        	}
-        } else if (key.equals("deckPath")) {
-        	File decksDirectory = new File(sharedPreferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
-        	if (decksDirectory.exists()) {
-        		AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
-        	}
+    	try {
+            if (key.equals("swipe")) {
+            	zoomCheckboxPreference.setChecked(false);
+            	zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
+            } else if (key.equals("language")) {
+    			Intent intent = this.getIntent();
+    			setResult(StudyOptions.RESULT_RESTART, intent);
+    			finish();
+            } else if (key.equals("startup_mode")) {
+    			Intent intent = this.getIntent();
+    			setResult(StudyOptions.RESULT_RESTART, intent);
+    			finish();
+            } else if (key.equals("theme")) {
+            	if (!sharedPreferences.getString("theme", "0").equals("2")) {
+            		animationsCheckboxPreference.setChecked(false);
+            		animationsCheckboxPreference.setEnabled(false);
+            	} else {
+            		animationsCheckboxPreference.setEnabled(true);
+            	}
+            	Themes.resetTheme();
+    			Intent intent = this.getIntent();
+    			setResult(StudyOptions.RESULT_RESTART, intent);
+    			finish();
+            } else if (Arrays.asList(mShowValueInSummList).contains(key)) {
+                updateListPreference(key);
+            } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
+                updateSeekBarPreference(key);
+            } else if (key.equals("walMode") && !lockCheckAction) {
+            	lockCheckAction = true;
+            	if (sharedPreferences.getBoolean("walMode", false)) {
+            		showDialog(DIALOG_WAL);
+            	} else if (walModeInitiallySet) {
+            		walModeInitiallySet = false;
+            		dialogMessage = getResources().getString(R.string.wal_mode_set_message);
+                	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SET_ALL_DECKS_JOURNAL_MODE, mDeckOperationHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), PrefSettings.getSharedPrefs(getBaseContext()).getString("deckPath", AnkiDroidApp.getStorageDirectory())));
+            	} else {
+            		lockCheckAction = false;        		
+            	}
+            } else if (key.equals("useBackup")) {
+            	if (lockCheckAction)  {
+            		lockCheckAction = false;
+            	} else if (!useBackupPreference.isChecked()) {
+            		lockCheckAction = true;
+            		useBackupPreference.setChecked(true);
+        			showDialog(DIALOG_BACKUP);
+            	} else {
+            		setReloadDeck();
+            	}
+            } else if (key.equals("asyncMode")) {
+            	if (lockCheckAction)  {
+            		lockCheckAction = false;
+            	} else if (asyncModePreference.isChecked()) {
+            		lockCheckAction = true;
+            		asyncModePreference.setChecked(false);
+        			showDialog(DIALOG_ASYNC);
+            	} else {
+            		setReloadDeck();
+            	}
+            } else if (key.equals("deckPath")) {
+            	File decksDirectory = new File(sharedPreferences.getString("deckPath", AnkiDroidApp.getStorageDirectory()));
+            	if (decksDirectory.exists()) {
+            		AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
+            	}
+            }
+        } catch (BadTokenException e) {
+        	Log.e(AnkiDroidApp.TAG, "Preferences: BadTokenException on showDialog: " + e);
         }
-    }
+   }
 
 
     /** Returns a list of the names of the installed custom fonts. */
