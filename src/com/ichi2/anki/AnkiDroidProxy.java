@@ -424,6 +424,9 @@ public class AnkiDroidProxy {
         } catch (JSONException e) {
             Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
             Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+        } catch (OutOfMemoryError e) {
+            Log.e(AnkiDroidApp.TAG, "OutOfMemoryError = " + e.getMessage());
+            Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
         }
         return null;
     }
