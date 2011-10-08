@@ -495,13 +495,15 @@ public class SharedDeckPicker extends Activity {
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
-
             if (data.success) {
                 mSharedDecks.clear();
                 mSharedDecks.addAll((List<SharedDeck>) data.result);
                 findDecks();
             } else {
-                if (mConnectionErrorAlert != null) {
+            	if (data.returnType == Connection.RETURN_TYPE_OUT_OF_MEMORY) {
+    				Themes.showThemedToast(SharedDeckPicker.this, getResources().getString(R.string.error_insufficient_memory), false);
+    		    	finish();            		
+            	} else if (mConnectionErrorAlert != null) {
                     mConnectionErrorAlert.show();
                 }
             }

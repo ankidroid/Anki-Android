@@ -73,7 +73,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private static Connection sInstance;
     private TaskListener mListener;
-    
+
+    public static final int RETURN_TYPE_OUT_OF_MEMORY = -1;
+
     public static final String CONFLICT_RESOLUTION = "ConflictResolutionRequired";
 
     
@@ -243,6 +245,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
     private Payload doInBackgroundGetSharedDecks(Payload data) {
         try {
             data.result = AnkiDroidProxy.getSharedDecks();
+        } catch (OutOfMemoryError e) {
+            data.success = false;
+            data.returnType = RETURN_TYPE_OUT_OF_MEMORY;
+	    	Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks: OutOfMemoryError: " + e);
         } catch (Exception e) {
             data.success = false;
             data.exception = e;
