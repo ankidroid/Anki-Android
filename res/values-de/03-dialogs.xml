@@ -56,6 +56,6 @@
   <string name="swap_qa_title">Frage/Antwort tauschen</string>
   <string name="swap_qa_text">Beachten Sie, dass es dem SRS-Konzept der geplanten Wiederholung von Karten zuwiderläuft, Antwort und Frage lediglich zu tauschen. Idealerweise sollte eine neue Karte für die umgekehrte Lernrichtung erstellt werden. Sie können das einfach und schnell mit Anki Desktop erledigen.\nTrotzdem Antwort und Frage vertauschen?</string>
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
-  <string name="reset_card_dialog_message">Dies setzt den Lernfortschritt für alle Karten dieses Fakts zurück (sie sehen danach aus wie neue Karten).\nWirklich fortfahren?</string>
+  <string name="reset_card_dialog_message">Dies setzt den Lernfortschritt für alle Karten dieses Fakts zurück (diese sehen danach aus wie neue Karten).\nWirklich fortfahren?</string>
   <string name="reset_card_dialog_confirmation">Alle Karten dieses Fakts wurden zurückgesetzt</string>
 </resources>
