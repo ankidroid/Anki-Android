@@ -179,6 +179,7 @@ public class StyledDialog extends Dialog {
         private String negativeButtonText;
         private String neutralButtonText;
         private View contentView;
+        private int bottomMargin = 0;
         private boolean brightViewBackground = false;
         private int icon = 0;
  
@@ -267,8 +268,12 @@ public class StyledDialog extends Dialog {
         public Builder setView(View v) {
         	return setView(v, false);
         }
-        public Builder setView(View v, boolean bright) {
+        public Builder setView(View v, boolean isSingleView) {
+        	return setView(v, isSingleView, false);
+        }
+        public Builder setView(View v, boolean isSingleView, boolean bright) {
             this.contentView = v;
+        	this.bottomMargin = isSingleView ? 5 : 0;
             this.brightViewBackground = bright;
             return this;
         }
@@ -483,6 +488,8 @@ public class StyledDialog extends Dialog {
             // set a custom view
             if (contentView != null) {
             	FrameLayout frame = (FrameLayout) layout.findViewById(R.id.custom);
+            	float factor = context.getResources().getDisplayMetrics().density;
+        		frame.setPadding((int)(2 * factor), (int)((5  - bottomMargin) * factor), (int)(2 * factor), (int)(bottomMargin * factor));
             	frame.removeAllViews();
             	frame.addView(contentView);
             } else {
