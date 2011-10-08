@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Stichwörter, die gepaukt werden sollen</string>
   <string name="statistics">Lernstatistik</string>
   <string name="studyoptions_load_other_deck">Stapel öffnen</string>
-  <string name="studyoptions_load_sample_deck">Beispielstapel öffnen</string>
+  <string name="studyoptions_load_tutorial_deck">Einführungsstapel öffnen</string>
   <string name="studyoptions_night_mode">Nachtmodus</string>
   <string name="studyoptions_swap_qa">F/A tauschen</string>
   <string name="visit">Besuchen</string>

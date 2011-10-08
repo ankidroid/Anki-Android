@@ -95,7 +95,7 @@ public class StudyOptions extends Activity implements IButtonListener {
     /**
 * Filename of the sample deck to load
 */
-    private static final String SAMPLE_DECK_NAME = "country-capitals.anki";
+    private static final String SAMPLE_DECK_NAME = "tutorial.anki";
 
     /**
 * Menus
@@ -852,7 +852,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		    	  displayProgressDialogAndLoadDeck();
 	    	  }
 	      }
-	      BroadcastMessage.showDialog();
+	      BroadcastMessages.showDialog();
 	}
 
 
@@ -1595,7 +1595,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		        	if (mNewVersionAlert != null) {
 		        		mNewVersionAlert.show();
 		        	} else {
-		        		BroadcastMessage.checkForNewMessage(StudyOptions.this);
+		        		BroadcastMessages.checkForNewMessages(StudyOptions.this);
 		        	}
 	            }
 	        });
@@ -1605,7 +1605,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		        	if (mNewVersionAlert != null) {
 		        		mNewVersionAlert.show();
 		        	} else {
-		        		BroadcastMessage.checkForNewMessage(StudyOptions.this);
+		        		BroadcastMessages.checkForNewMessages(StudyOptions.this);
 		        	}
 	            }
 
@@ -2159,10 +2159,10 @@ public class StudyOptions extends Activity implements IButtonListener {
                 InputStream stream = getResources().getAssets().open(SAMPLE_DECK_NAME);
                 Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
                 stream.close();
-                Log.i(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card was sucessful.");
+                Log.i(AnkiDroidApp.TAG, "onCreate - The copy of tutorial.anki to the sd card was sucessful.");
             } catch (IOException e) {
                 Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-                Log.e(AnkiDroidApp.TAG, "onCreate - The copy of country-capitals.anki to the sd card failed.");
+                Log.e(AnkiDroidApp.TAG, "onCreate - The copy of tutorial.anki to the sd card failed.");
                 openDeckPicker();
                 return;
             }
@@ -2199,8 +2199,12 @@ public class StudyOptions extends Activity implements IButtonListener {
 
         if (AnkiDroidApp.isUserLoggedIn()) {
             Deck deck = AnkiDroidApp.deck();
-            Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
-            Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));
+            if (deck != null) {
+                Log.i(AnkiDroidApp.TAG, "Synchronizing deck " + mDeckFilename + ", conflict resolution: " + conflictResolution);
+                Log.i(AnkiDroidApp.TAG, String.format(Utils.ENGLISH_LOCALE, "Before syncing - mod: %f, last sync: %f", deck.getModified(), deck.getLastSync()));            	
+            } else {
+            	return;
+            }
         	if (Deck.isWalEnabled(mDeckFilename)) {
         		deck = null;
         	}
@@ -2353,7 +2357,7 @@ public class StudyOptions extends Activity implements IButtonListener {
         mSwipeEnabled = preferences.getBoolean("swipe", false);
 
         mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
-        BroadcastMessage.init(this, mLastTimeOpened);
+        BroadcastMessages.init(this, mLastTimeOpened);
        	preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
 
         if (!preferences.getString("lastVersion", "").equals(getVersion())) {
@@ -2361,19 +2365,17 @@ public class StudyOptions extends Activity implements IButtonListener {
     			@Override
     			public void onClick(DialogInterface dialog, int which) {
 		        	PrefSettings.getSharedPrefs(StudyOptions.this.getBaseContext()).edit().putString("lastVersion", getVersion()).commit();
-			        BroadcastMessage.checkForNewMessage(StudyOptions.this);
+			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
     			}
             }, new DialogInterface.OnCancelListener() {
     			@Override
     			public void onCancel(DialogInterface dialog) {
-			        BroadcastMessage.checkForNewMessage(StudyOptions.this);
+			        BroadcastMessages.checkForNewMessages(StudyOptions.this);
     			}
             }, true);
            	AnkiDroidApp.createNoMediaFileIfMissing(new File(mPrefDeckPath));
-        } else {
-        	if (!preferences.getBoolean("firstStart", true)) {
-    	        BroadcastMessage.checkForNewMessage(this);        		
-        	}
+        } else if (!preferences.getBoolean("firstStart", true)) {
+        	BroadcastMessages.checkForNewMessages(this);        		
         }
 
         // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
@@ -2538,6 +2540,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
     						@Override
     						public void onCancel(DialogInterface dialog) {
+    							mNewVersionAlert = null;
     				            closeOpenedDeck();
     				            MetaDB.closeDB();
     				            finish();
@@ -2598,7 +2601,11 @@ public class StudyOptions extends Activity implements IButtonListener {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
                 if (mNewVersionAlert != null) {
-                    mNewVersionAlert.show();
+                	try {
+                        mNewVersionAlert.show();
+                    } catch (Exception e) {
+                        Log.e(AnkiDroidApp.TAG, "onPostExecute - Show new version dialog exception = " + e.getMessage());
+                	}
                     mNewVersionAlert = null;
                 }
             }

@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Đánh dấu để nhồi</string>
   <string name="statistics">Thống kê</string>
   <string name="studyoptions_load_other_deck">Mở tập thẻ khác</string>
-  <string name="studyoptions_load_sample_deck">Mở tập thẻ mẫu</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Chế độ ban đêm</string>
   <string name="studyoptions_swap_qa">Chuyển đổi Q/A</string>
   <string name="visit">Visit</string>

@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Tags para revisar</string>
   <string name="statistics">Estatísticas</string>
   <string name="studyoptions_load_other_deck">Carregar outro Deck</string>
-  <string name="studyoptions_load_sample_deck">Carregar Deck de exemplo</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Modo Noite</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
   <string name="visit">Visit</string>

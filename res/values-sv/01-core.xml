@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Taggar att råplugga</string>
   <string name="statistics">Statistik</string>
   <string name="studyoptions_load_other_deck">Ladda annan kortlek</string>
-  <string name="studyoptions_load_sample_deck">Ladda exempelkortlek</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Nattläge</string>
   <string name="studyoptions_swap_qa">Växla fråga/svar</string>
   <string name="visit">Besök</string>

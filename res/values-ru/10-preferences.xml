@@ -195,6 +195,6 @@
   <string name="studyoptions_more_save">Сохранить</string>
   <string name="show_broadcast_messages">Показывать текущие сообщения</string>
   <string name="show_broadcast_messages_summ">Показывать AnkiDroid уведомления, такие как новые версии программы или другие важные новости</string>
-  <string name="input_workaround">Input Workaround</string>
-  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
+  <string name="input_workaround">Трюк с полями ввода</string>
+  <string name="input_workaround_summ">Решение проблемы с html-полями ввода на нескольких устройствах.</string>
 </resources>

@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Tags to cram</string>
   <string name="statistics">Statistieken</string>
   <string name="studyoptions_load_other_deck">Ander Dek Laden</string>
-  <string name="studyoptions_load_sample_deck">Laad voorbeelddek</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Nachtmodus</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
   <string name="visit">Visit</string>

@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">选择标签进行强记</string>
   <string name="statistics">统计</string>
   <string name="studyoptions_load_other_deck">载入其他牌组</string>
-  <string name="studyoptions_load_sample_deck">载入示例牌组</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">夜间模式</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
   <string name="visit">Visit</string>

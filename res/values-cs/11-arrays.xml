@@ -77,7 +77,7 @@
     <item>Nové karty před opakováním</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
-    <item>Opakovat karty z největšího intervalu</item>
+    <item>Opakovat karty s největším intervalem</item>
     <item>Opakovat karty z nejkratšího intervalu</item>
     <item>Opakovat karty v pořadí přidání</item>
     <item>Opakovat karty v náhodném pořadí</item>
@@ -90,34 +90,34 @@
     <item>Zobrazit špatně zodpovězené karty za 3 dny</item>
   </string-array>
   <string-array name="deck_order_labels">
-    <item>By last access</item>
-    <item>Alphabetical</item>
+    <item>Podle data posledního přístupu</item>
+    <item>Abecedně</item>
     <item>By number of due cards</item>
-    <item>By number of total cards</item>
-    <item>By number of total new cards</item>
+    <item>Podle počtu všech karet</item>
+    <item>Podle celkového počtu nových karet</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Redo</item>
-    <item>Edit card</item>
-    <item>Mark card</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
-    <item>Delete card</item>
-    <item>Clear Whiteboard</item>
-    <item>Abort learning</item>
+    <item>Žádná akce</item>
+    <item>Tlačítko odpovědi 1</item>
+    <item>Tlačítko odpovědi 2</item>
+    <item>Tlačítko odpovědi 3</item>
+    <item>Tlačítko odpovědi 4</item>
+    <item>Doporučená odpověď (zelená)</item>
+    <item>Odpovědět lépe, než bylo doporučeno</item>
+    <item>Zpět</item>
+    <item>Vpřed</item>
+    <item>Upravit kartu</item>
+    <item>Označit kartu</item>
+    <item>Vyhledávání výrazu</item>
+    <item>Přeskočit kartu</item>
+    <item>Odložit kartu</item>
+    <item>Smazat kartu</item>
+    <item>Vymazat tabuli</item>
+    <item>Přerušit učení</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
+    <item>Android Tmavé</item>
+    <item>Android Světlé</item>
+    <item>Modré</item>
   </string-array>
 </resources>

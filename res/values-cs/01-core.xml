@@ -28,7 +28,7 @@
   <string name="studyoptions_reviews_due">K zopakování:</string>
   <string name="studyoptions_new_today">Dnes nových:</string>
   <string name="studyoptions_new_total">Nových celkově:</string>
-  <string name="studyoptions_eta">Estimated time (min):</string>
+  <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Začít opakovat</string>
   <string name="studyoptions_more">Studijní možnosti</string>
   <string name="studyoptions_more_dialog_title">Další volby</string>
@@ -38,36 +38,36 @@
   <string name="deckpicker_nodeck">Nalezeny žádné balíčky.</string>
   <string name="show_answer">Zobrazit odpověď</string>
   <string name="ease1_learning">Znovu</string>
-  <string name="ease2_learning">Dobře</string>
-  <string name="ease3_learning">Snadně</string>
-  <string name="ease4_learning">Velmi snadně</string>
+  <string name="ease2_learning">Dobré</string>
+  <string name="ease3_learning">Snadné</string>
+  <string name="ease4_learning">Jednoduché</string>
   <string name="ease1_successive">Znovu</string>
-  <string name="ease2_successive">Těžce</string>
-  <string name="ease3_successive">Dobře</string>
-  <string name="ease4_successive">Snadně</string>
-  <string name="loading">Načítání...</string>
+  <string name="ease2_successive">Těžké</string>
+  <string name="ease3_successive">Dobré</string>
+  <string name="ease4_successive">Snadné</string>
+  <string name="loading">Načítám...</string>
   <string name="studyoptions_continue">Pokračovat v opakování</string>
   <string name="studyoptions_congrats_title">Gratuluji!</string>
-  <string name="studyoptions_congrats_learnmore">Naučit se víc</string>
-  <string name="studyoptions_congrats_reviewearly">Zopakovat dřív</string>
-  <string name="studyoptions_congrats_syncdeck">Synchronize deck</string>
+  <string name="studyoptions_congrats_learnmore">Naučit se více</string>
+  <string name="studyoptions_congrats_reviewearly">Zopakovat dříve</string>
+  <string name="studyoptions_congrats_syncdeck">Synchronizovat balíček</string>
   <string name="studyoptions_congrats_open_other_deck">Otevřít jiný balíček</string>
   <string name="studyoptions_congrats_finish">Zpět na studijní obrazovku</string>
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
-  <string name="menu_rotate">Rotate</string>
+  <string name="menu_rotate">Otočit</string>
   <string name="undo">Vrátit zpět</string>
   <string name="redo">Zrušit vrácení</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
+  <string name="close_previous_deck">Uzavírám předchozí balíček.\nProsím čekejte...</string>
+  <string name="close_deck">Uzavírám balíček.\nProsím čekejte...</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Obnovit jazyk</string>
+  <string name="contextmenu_deckpicker_optimize_deck">Optimalizovat databázi</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
   <string name="begin_cram">Spustit Šprtací režim</string>
   <string name="cram">Šprtat</string>
-  <string name="menu_open_deck">All decks</string>
+  <string name="menu_open_deck">Všechny balíčky</string>
   <string name="menu_sync">Synchronizovat</string>
   <string name="menu_download_deck">Stáhnout balíček</string>
   <string name="menu_download_shared_deck">Sdílený balíček</string>
@@ -79,9 +79,9 @@
   <string name="menu_about">O aplikaci</string>
   <string name="menu_remove_card">Dismiss Card</string>
   <string name="menu_suspend_card">Vyřadit kartu</string>
-  <string name="menu_bury_card">Bury Card</string>
+  <string name="menu_bury_card">Přeskočit kartu</string>
   <string name="menu_edit_card">Upravit kartu</string>
-  <string name="menu_select">Select text</string>
+  <string name="menu_select">Vybrat text</string>
   <string name="menu_search">Vyhledat v %1$s</string>
   <string name="menu_mark_card">Označit kartu</string>
   <string name="menu_marked">Označená</string>
@@ -90,27 +90,27 @@
   <string name="studyoptions_cram_dialog_title">Značky pro šprtání</string>
   <string name="statistics">Statistiky</string>
   <string name="studyoptions_load_other_deck">Načíst jiný balíček</string>
-  <string name="studyoptions_load_sample_deck">Načíst ukázkový balíček</string>
-  <string name="studyoptions_night_mode">Night Mode</string>
-  <string name="studyoptions_swap_qa">Swap Q/A</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
+  <string name="studyoptions_night_mode">Noční režim</string>
+  <string name="studyoptions_swap_qa">Prohodit Otázka/odpověď</string>
   <string name="visit">Visit</string>
-  <string name="later">Later</string>
-  <string name="download">Download</string>
+  <string name="later">Později</string>
+  <string name="download">Stáhnout</string>
   <string-array name="next_review_s">
-    <item>1 second</item>
-    <item>1 minute</item>
-    <item>1 hour</item>
-    <item>1 day</item>
-    <item>1 month</item>
-    <item>1 year</item>
+    <item>1 sekunda</item>
+    <item>1 minuta</item>
+    <item>1 hodina</item>
+    <item>1 den</item>
+    <item>1 měsíc</item>
+    <item>1 rok</item>
   </string-array>
   <string-array name="next_review_p">
-    <item>%s seconds</item>
-    <item>%s minutes</item>
-    <item>%s hours</item>
-    <item>%s days</item>
-    <item>%s months</item>
-    <item>%s years</item>
+    <item>%s sekund</item>
+    <item>%s minut</item>
+    <item>%s hodin</item>
+    <item>%s dnů</item>
+    <item>%s měsíců</item>
+    <item>%s roků</item>
   </string-array>
   <plurals name="studyoptions_window_title">
     <item quantity="one">%1$s (1 of %3$d due)</item>
@@ -125,7 +125,7 @@
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 of %2$d due</item>
+    <item quantity="one">1 z %2$d k zopakování</item>
     <item quantity="other">zbývá %1$d / %2$d</item>
   </plurals>
   <plurals name="reviewer_window_title">
@@ -133,12 +133,12 @@
     <item quantity="other">%1$s (%2$d min. left)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">You have finished for now.\nTomorrow there will be:\n1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">You have finished for now.\nTomorrow there will be:\n%1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Pro dnešek hotovo.\nZítra bude:\n1 karet k opakování a %2$s.\n Odhadovaný čas: %3$s</item>
+    <item quantity="other">Pro dnešek hotovo.\nZítra bude:\n%1$d karet k opakování a %2$s.\n Odhadovaný čas: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 card</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="one">1 karta</item>
+    <item quantity="other">%1$d nových karet</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">1 min.</item>

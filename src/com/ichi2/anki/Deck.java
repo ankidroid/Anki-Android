@@ -4606,7 +4606,7 @@ public class Deck {
 
         if (create) {
             for (String tag : tags) {
-                getDB().getDatabase().execSQL("INSERT OR IGNORE INTO tags (tag) VALUES ('" + tag + "')");
+                getDB().getDatabase().execSQL("INSERT OR IGNORE INTO tags (tag) VALUES ('" + tag.replace("'", "''") + "')");
             }
         }
         if (tags.length != 0) {

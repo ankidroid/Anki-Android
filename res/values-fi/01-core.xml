@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Päntäämisen tagit</string>
   <string name="statistics">Tilastot</string>
   <string name="studyoptions_load_other_deck">Lataa muu korttipakka</string>
-  <string name="studyoptions_load_sample_deck">Lataa näytekappalekorttipakka</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">Yötila</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
   <string name="visit">Visit</string>

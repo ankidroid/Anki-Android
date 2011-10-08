@@ -452,10 +452,10 @@ public class MetaDB {
      */
     public static void storeWidgetStatus(Context context, DeckStatus[] decks) {
         openDBIfClosed(context);
-        mMetaDb.beginTransaction();
-        // First clear all the existing content.
-        mMetaDb.execSQL("DELETE FROM widgetStatus");
         try {
+            mMetaDb.beginTransaction();
+            // First clear all the existing content.
+            mMetaDb.execSQL("DELETE FROM widgetStatus");
             for (DeckStatus deck : decks) {
                 mMetaDb.execSQL("INSERT INTO widgetStatus(deckPath, deckName, newCards, dueCards, failedCards, eta, time) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?)",
@@ -463,11 +463,13 @@ public class MetaDB {
                         );
             }
             mMetaDb.setTransactionSuccessful();
+            mMetaDb.endTransaction();
+        } catch (IllegalStateException e) {
+            Log.e(AnkiDroidApp.TAG, "MetaDB.storeWidgetStatus: failed", e);
         } catch (SQLiteException e) {
             Log.e(AnkiDroidApp.TAG, "MetaDB.storeWidgetStatus: failed", e);
             closeDB();
             Log.i(AnkiDroidApp.TAG, "Trying to reset Widget: " + resetWidget(context));
         }
-        mMetaDb.endTransaction();
     }
 }

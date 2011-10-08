@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">このタグがついているカードを総復習する</string>
   <string name="statistics">統計</string>
   <string name="studyoptions_load_other_deck">他の単語帳を開く</string>
-  <string name="studyoptions_load_sample_deck">サンプル単語帳を開く</string>
+  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
   <string name="studyoptions_night_mode">ナイトモード</string>
   <string name="studyoptions_swap_qa">Swap Q/A</string>
   <string name="visit">Visit</string>
