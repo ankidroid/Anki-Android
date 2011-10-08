@@ -76,10 +76,10 @@
         <ScrollView android:id="@+id/scrollView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="2dip"
-            android:paddingBottom="12dip"
-            android:paddingLeft="14dip"
-            android:paddingRight="10dip">
+            android:paddingTop="8dip"
+            android:paddingBottom="10dip"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip">
             <TextView android:id="@+id/message"
                 android:textColor="#ffff"
                 android:textSize="18sp"

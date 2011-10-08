@@ -208,8 +208,8 @@ public class BroadcastMessages {
 	    	if (mText != null && mText.length() > 0) {
 		        WebView view = new WebView(context);
 		        view.setBackgroundColor(res.getColor(Themes.getDialogBackgroundColor()));
-		        view.loadDataWithBaseURL("", "<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + mText + "</body></html>", "text/html", "UTF-8", "");
-		        builder.setView(view);
+		        view.loadDataWithBaseURL("", "<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + mText + "<br></body></html>", "text/html", "UTF-8", "");
+		        builder.setView(view, true);
 	    		builder.setCancelable(true);
 	    		builder.setNegativeButton(res.getString(R.string.close),  new DialogInterface.OnClickListener() {
 						@Override

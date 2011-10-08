@@ -1374,7 +1374,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 
 	        builder.setTitle(R.string.studyoptions_more_dialog_title);
 	        builder.setPositiveButton(R.string.studyoptions_more_save, mDialogSaveListener);
-	        builder.setView(contentViewMore);
+	        builder.setView(contentViewMore, true);
 	        dialog = builder.create();
 	        break;
 
@@ -1513,7 +1513,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	                        || mLimitTagRevActiveCheckBox.isChecked() || mLimitTagRevInactiveCheckBox.isChecked())));
 	            }
 	        });
-	        builder.setView(contentView);
+	        builder.setView(contentView, true);
 	        dialog = builder.create();
 	        break;
 	        
@@ -1569,7 +1569,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	            }
 	        });
 
-	        builder.setView(spinner, true);
+	        builder.setView(spinner, false, true);
 	        dialog = builder.create();
 	        break;
 
@@ -1578,7 +1578,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        WebView view = new WebView(this);
 	        view.setBackgroundColor(res.getColor(Themes.getDialogBackgroundColor()));
 	        view.loadDataWithBaseURL("", "<html><body text=\"#FFFFFF\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">" + res.getString(R.string.studyoptions_welcome_dialog).replace("\n", "<br>") + "</body></html>", "text/html", "UTF-8", "");
-	        builder.setView(view);
+	        builder.setView(view, true);
     		builder.setCancelable(true);
 			builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
 	            @Override
