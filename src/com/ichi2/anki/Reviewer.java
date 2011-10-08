@@ -1676,7 +1676,7 @@ public class Reviewer extends Activity implements IButtonListener{
             } else {
                 leechMessage = res.getString(R.string.leech_notification);
             }
-            Themes.showThemedToast(Reviewer.this, leechMessage, false);
+            Themes.showThemedToast(Reviewer.this, leechMessage, true);
         }
 
         if ((sessionRepLimit > 0) && (mSessionCurrReps >= sessionRepLimit)) {
