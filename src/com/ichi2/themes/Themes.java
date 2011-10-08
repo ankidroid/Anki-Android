@@ -251,7 +251,13 @@ public class Themes {
 		if (solid) {
 			view.setBackgroundResource(mBackgroundDarkColor);
 		} else {
-			view.setBackgroundResource(mWallpaper);
+			try {
+				view.setBackgroundResource(mWallpaper);
+			} catch (OutOfMemoryError e) {
+				mWallpaper = mBackgroundColor;
+				view.setBackgroundResource(mWallpaper);
+				Log.e(AnkiDroidApp.TAG, "Themes: setWallpaper: OutOfMemoryError = " + e);
+			}
 		}
 	}
 
