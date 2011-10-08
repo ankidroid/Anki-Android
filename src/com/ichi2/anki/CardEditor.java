@@ -592,10 +592,13 @@ public class CardEditor extends Activity {
 
 	private void closeCardEditor() {
 		if (mIntentAdd && mDeck != null) {
-			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(mDeck, 0));
-		} else {
-			finish();
+			Deck deck = AnkiDroidApp.deck();
+			if (deck == null || !deck.getDeckPath().equals(mDeckPath)) {
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseDeckHandler, new DeckTask.TaskData(mDeck, 0));
+				return;
+			}
 		}
+		finish();
 	}
 
 	@Override
@@ -915,15 +918,21 @@ public class CardEditor extends Activity {
 	}
 
 	private void loadDeck(int item) {
-		mDeckPath = mFullDeckPaths.get(mDeckNames[item]);
-		mDeck = Deck.openDeck(mDeckPath, false);
-		if (mDeck == null) {
-			Themes.showThemedToast(CardEditor.this, getResources().getString(
-					R.string.fact_adder_deck_not_loaded), true);
+		String deckName = mDeckNames[item];
+		mDeckPath = mFullDeckPaths.get(deckName);
+		Deck deck = AnkiDroidApp.deck();
+		if (deck != null && deck.getDeckPath().equals(mDeckPath)) {
+			mDeck = deck;
 		} else {
-			setTitle(mDeckNames[item]);
-			loadContents();
+			mDeck = Deck.openDeck(mDeckPath, false);
+			if (mDeck == null) {
+				Themes.showThemedToast(CardEditor.this, getResources().getString(
+						R.string.fact_adder_deck_not_loaded), true);
+				return;
+			}			
 		}
+		setTitle(deckName);
+		loadContents();
 	}
 
 	private void swapText(boolean reset) {
