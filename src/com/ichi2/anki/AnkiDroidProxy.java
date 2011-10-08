@@ -517,6 +517,11 @@ public class AnkiDroidProxy {
     }
 
 
+    public static void resetSharedDecks() {
+    	sSharedDecks = null;
+    }
+
+
     private static List<SharedDeck> getSharedDecksListFromJSONArray(JSONArray jsonSharedDecks) throws JSONException {
         List<SharedDeck> sharedDecks = new ArrayList<SharedDeck>();
 

@@ -517,7 +517,7 @@ public class SharedDeckPicker extends Activity {
                         getResources().getString(R.string.loading_shared_decks), true, true, new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        Connection.cancelGetDecks();
+                        Connection.cancelGetSharedDecks();
                         closeSharedDeckPicker();
                     }
                 });

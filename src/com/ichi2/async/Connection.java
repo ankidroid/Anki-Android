@@ -152,10 +152,6 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
         return launchConnectionTask(listener, data);
     }
 
-    public static void cancelGetDecks() {
-    	sInstance.cancel(true);
-    }
-
 
     public static Connection syncAllDecks(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_SYNC_ALL_DECKS;
@@ -219,6 +215,12 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
             default:
                 return null;
         }
+    }
+
+
+    public static void cancelGetSharedDecks() {
+       	AnkiDroidProxy.resetSharedDecks();
+    	sInstance.cancel(true);
     }
 
 
