@@ -29,12 +29,13 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Themes {
 
-	public final static int THEME_DEFAULT = 0;
+	public final static int THEME_ANDROID_DARK = 0;
 	public final static int THEME_ANDROID_LIGHT = 1;
 	public final static int THEME_BLUE= 2;
 
@@ -43,6 +44,7 @@ public class Themes {
 	public final static int CALLER_REVIEWER= 4;
 	public final static int CALLER_FEEDBACK= 5;
 	public final static int CALLER_DOWNLOAD_DECK= 6;
+	public final static int CALLER_DECKPICKER = 7;
 
 	private static int mCurrentTheme = -1;
 	private static int mProgressbarsBackgroundColor;
@@ -76,6 +78,7 @@ public class Themes {
 	private static int mPopupFullMedium;
 	private static int mPopupFullBright;
 	private static int mDividerHorizontalBright;
+	private static int mDeckpickerSelector = 0;
 	
 
 	public static void applyTheme(Context context) {
@@ -83,7 +86,7 @@ public class Themes {
 			SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
 			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "2"));
 			switch (mCurrentTheme) {
-			case THEME_DEFAULT:
+			case THEME_ANDROID_DARK:
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mChartColors = new int[] {Color.WHITE, Color.BLACK};
@@ -160,11 +163,12 @@ public class Themes {
 				mPopupFullMedium = R.drawable.blue_popup_full_medium;
 				mPopupFullDark = R.drawable.blue_popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
+				mDeckpickerSelector = R.drawable.blue_deckpicker_list_selector;
 				break;
 			}
 		}
 		switch (mCurrentTheme) {
-		case THEME_DEFAULT:
+		case THEME_ANDROID_DARK:
 			context.setTheme(R.style.Theme_Black);
 			Log.i(AnkiDroidApp.TAG, "Set theme: dark");
 			break;
@@ -181,7 +185,7 @@ public class Themes {
 
 
 	public static void setContentStyle(View view, int caller) {
-		if (mCurrentTheme == THEME_DEFAULT) {
+		if (mCurrentTheme == THEME_ANDROID_DARK) {
 			return;
 		}
 		switch (caller) {
@@ -201,6 +205,9 @@ public class Themes {
 
 			((View) view.findViewById(R.id.studyoptions_global_limit_bar)).setBackgroundResource(mProgressbarsYoungColor);
 			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
+			break;
+		case CALLER_DECKPICKER:
+			((ListView)view.findViewById(R.id.files)).setSelector(mDeckpickerSelector);
 			break;
 		case CALLER_DECKPICKER_DECK:
 			if (view.getId() == R.id.DeckPickerCompletionMat) {
@@ -241,6 +248,25 @@ public class Themes {
 		mWallpaper = 0;
 		mBackgroundColor = 0;
 		mToastBackground = 0;
+		mDialogBackgroundColor = 0;
+		mBackgroundDarkColor = 0;
+		mReviewerProgressbar = 0;
+		mCardbrowserItemBorder = new int[] {0, 0, 0};
+		mChartColors = new int[] {0, 0};
+		mPopupTopDark = 0;
+		mPopupTopBright = 0;
+		mPopupTopMedium = 0;
+		mPopupCenterDark = 0;
+		mPopupCenterBright = 0;
+		mPopupCenterMedium = 0;
+		mPopupBottomDark = 0;
+		mPopupBottomBright = 0;
+		mPopupBottomMedium = 0;
+		mPopupFullBright = 0;
+		mPopupFullMedium = 0;
+		mPopupFullDark = 0;
+		mDividerHorizontalBright = 0;
+		mDeckpickerSelector = 0;
 	}
 
 

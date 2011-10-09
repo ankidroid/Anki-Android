@@ -546,7 +546,10 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		setTitleText();
 
 		mSelf = this;
-		setContentView(R.layout.deck_picker);
+
+		View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
+		setContentView(mainView);
+		Themes.setContentStyle(mainView, Themes.CALLER_DECKPICKER);
 
 		registerExternalStorageListener();
 
