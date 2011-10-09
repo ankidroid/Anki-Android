@@ -476,7 +476,6 @@ public class PersonalDeckPicker extends Activity {
                         getResources().getString(R.string.loading_personal_decks), true, true, new DialogInterface.OnCancelListener() {
                 	@Override
                 	public void onCancel(DialogInterface dialog) {
-                		Connection.cancelGetDecks();
                 		closePersonalDeckPicker();
                 	}
                 });

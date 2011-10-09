@@ -33,14 +33,14 @@
   <string name="studyoptions_more">Studijní možnosti</string>
   <string name="studyoptions_more_dialog_title">Další volby</string>
   <string name="deckpicker_title_nosdcard">SD karta je odpojena</string>
-  <string name="deckpicker_new">%d nových karet na den</string>
+  <string name="deckpicker_new">%d nových na den</string>
   <string name="deckpicker_loaddeck">Načítám balíček ...</string>
   <string name="deckpicker_nodeck">Nalezeny žádné balíčky.</string>
   <string name="show_answer">Zobrazit odpověď</string>
   <string name="ease1_learning">Znovu</string>
-  <string name="ease2_learning">Dobré</string>
-  <string name="ease3_learning">Snadné</string>
-  <string name="ease4_learning">Jednoduché</string>
+  <string name="ease2_learning">Těžké</string>
+  <string name="ease3_learning">Dobré</string>
+  <string name="ease4_learning">Snadné</string>
   <string name="ease1_successive">Znovu</string>
   <string name="ease2_successive">Těžké</string>
   <string name="ease3_successive">Dobré</string>
@@ -86,7 +86,7 @@
   <string name="menu_mark_card">Označit kartu</string>
   <string name="menu_marked">Označená</string>
   <string name="menu_create_deck">Vytvořit balíček</string>
-  <string name="studyoptions_feedback">Zpětná vazba</string>
+  <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_cram_dialog_title">Značky pro šprtání</string>
   <string name="statistics">Statistiky</string>
   <string name="studyoptions_load_other_deck">Načíst jiný balíček</string>
@@ -117,8 +117,8 @@
     <item quantity="other">%1$s (%2$d z %3$d k zopakování)</item>
   </plurals>
   <plurals name="deckpicker_title">
-    <item quantity="one">All decks: 1 of %2$d due (%3$s)</item>
-    <item quantity="other">All decks: %1$d of %2$d due (%3$s)</item>
+    <item quantity="one">Všechny balíčky: 1 z %2$d k zopakování (%3$s)</item>
+    <item quantity="other">Všechny balíčky: %1$d z %2$d k zopakování (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 min.</item>

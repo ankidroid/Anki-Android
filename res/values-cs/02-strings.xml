@@ -23,19 +23,19 @@
   <string name="CardEditorCancelButton">Zrušit</string>
   <string name="CardEditorSaveButton">Uložit</string>
   <string name="CardEditorTags">Štítky: %1$s</string>
-  <string name="add_new_tag">Přidat novou značku</string>
-  <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Pro přístup ke svým balíkům odpojte USB.</string>
-  <string name="show_whiteboard">Zobrazit časovač / tabuli</string>
+  <string name="add_new_tag">Přidat nový štítek</string>
+  <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
+  <string name="show_whiteboard">Zobrazit tabuli</string>
   <string name="hide_whiteboard">Skrýt tabuli</string>
   <string name="clear_whiteboard">Smazat tabuli</string>
   <string name="session_question_limit_reached">Dosaženo limitu otázek v sezení</string>
   <string name="session_time_limit_reached">Dosaženo časového limitu pro sezení</string>
   <string name="cram_edit_warning">Úprava karet není během šprtání povolena</string>
   <string name="suspend_leeches">Vyřadit pijavice</string>
-  <string name="leech_suspend_notification">Karta byla označena jako pijavice a byla vyřazena</string>
+  <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
   <string name="leech_notification">Karta byla označena jako pijavice</string>
   <string name="about_title">O aplikaci</string>
-  <string name="cardeditor_title">Editor karet</string>
+  <string name="cardeditor_title">Editor faktů</string>
   <string name="factadder_saving_error">Chyba při ukládání faktů</string>
   <string name="saving_facts">Ukládání faktů</string>
   <string name="deckcreator_title">Deck Creator</string>
@@ -64,4 +64,5 @@
   <string name="card_editor_reset">Obnovit</string>
   <string name="card_editor_copy_card">Kopírovat kartu</string>
   <string name="card_editor_reset_card">Reset progress</string>
+  <string name="error_insufficient_memory">Operaci není možná z důvodu nedostatku paměti na zařízení</string>
 </resources>

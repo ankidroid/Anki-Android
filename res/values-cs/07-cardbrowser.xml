@@ -32,24 +32,24 @@
   <string name="delete_card_message">Opravdu smazat tuto kartu?\n%1$s\n%2$s</string>
   <string name="card_browser_show_marked">Zobrazit označené karty</string>
   <string name="card_browser_show_suspended">Zobrazit pozastavena karty</string>
-  <string name="card_browser_search">Hledání</string>
-  <string name="card_browser_search_suspended">Hledání pozastavena</string>
-  <string name="card_browser_search_by_tag">Hledávání podle štítku</string>
+  <string name="card_browser_search">Najít</string>
+  <string name="card_browser_search_suspended">Hledání pozastaveno</string>
+  <string name="card_browser_search_by_tag">Hledat podle štítku</string>
   <string name="card_browser_tags_shown">Štítky: %1$s</string>
-  <string name="card_browser_change_display_order">Změnit pořadí zobrazení</string>
-  <string name="card_browser_change_display_order_title">Zvolte pořadí zobrazení</string>
+  <string name="card_browser_change_display_order">Změnit řazení</string>
+  <string name="card_browser_change_display_order_title">Zvolte řazení</string>
   <string name="card_browser_card_details">Detail karty</string>
   <string name="card_details_question">Otázka</string>
   <string name="card_details_answer">Odpověď</string>
-  <string name="card_details_due">Due</string>
-  <string name="card_details_last_due">Last due</string>
+  <string name="card_details_due">K opakování</string>
+  <string name="card_details_last_due">Poslední opakování</string>
   <string name="card_details_now">Nyní</string>
   <string name="card_details_interval">Interval</string>
-  <string name="card_details_ease">Ease</string>
+  <string name="card_details_ease">Snadnost</string>
   <string name="card_details_average_time">Průměrný čas</string>
   <string name="card_details_total_time">Celkový čas</string>
-  <string name="card_details_yes_count">Yes count</string>
-  <string name="card_details_no_count">No count</string>
+  <string name="card_details_yes_count">Počet odpovědí VÍM</string>
+  <string name="card_details_no_count">Počet odpovědí NEVÍM</string>
   <string name="card_details_added">Přidáno</string>
   <string name="card_details_changed">Změněno</string>
   <string name="card_details_tags">Štítky</string>
@@ -59,7 +59,7 @@
   <string-array name="card_browser_order_labels">
     <item>Otázka</item>
     <item>Odpověď</item>
-    <item>By due time</item>
+    <item>K zopakování</item>
     <item>Interval</item>
     <item>Obtížnost</item>
     <item>Vytvořeno</item>

@@ -27,7 +27,7 @@
   <string name="widget_minimum_cards_due_blink">Blikat</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Karty k zopakování</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid karet k zopakování</string>
-  <string name="widget_no_cards_due">No cards due</string>
+  <string name="widget_no_cards_due">Žádné karty k zopakování</string>
   <string name="widget_loading">Načítám Widget...</string>
   <string name="widget_medium">AnkiDroid Medium</string>
   <string name="widget_small">AnkiDroid Small</string>
