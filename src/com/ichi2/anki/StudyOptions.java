@@ -1671,8 +1671,13 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        break;
 
 		case DIALOG_TAGS:
+			Deck deck3 = AnkiDroidApp.deck();
+			if (deck3 == null) {
+				ad.setEnabled(false);
+				return;
+			}
 	        if (allTags == null) {
-	            allTags = AnkiDroidApp.deck().allTags_();
+	            allTags = deck3.allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
 		        if (allCramTags == null) {
 		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
