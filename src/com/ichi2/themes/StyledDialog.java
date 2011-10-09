@@ -51,6 +51,7 @@ public class StyledDialog extends Dialog {
 	private ArrayAdapter mListAdapter;
 	private OnClickListener mListener;
 	private ListView mListView;
+	private boolean mDoNotShow = false;
 
 
     public StyledDialog(Context context) {
@@ -58,6 +59,14 @@ public class StyledDialog extends Dialog {
         mContext = context;
     }
 
+    @Override
+    public void onAttachedToWindow() {
+    	super.onAttachedToWindow();
+    	if (mDoNotShow) {
+        	this.dismiss();    		
+    	}
+    }
+    
 
     public void setMessage(CharSequence message) {
     	View main = super.getWindow().getDecorView();
@@ -76,6 +85,11 @@ public class StyledDialog extends Dialog {
     	View main = super.getWindow().getDecorView();
     	((TextView) main.findViewById(R.id.message)).setText(message);
         ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
+    }
+
+
+    public void setEnabled(boolean enabled) {
+    	mDoNotShow = !enabled;
     }
 
 

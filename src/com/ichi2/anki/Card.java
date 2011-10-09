@@ -794,13 +794,17 @@ public class Card {
             builder.append(res.getString(R.string.card_details_answer));
             builder.append("</b>: ");
             builder.append(Utils.stripHTML(mAnswer));
-            builder.append("<br><b>");
+            builder.append("<br>");
        	}
-        builder.append(res.getString(R.string.card_details_tags));
-        builder.append("</b>: ");
-        String tags = Arrays.toString(mDeck.allUserTags("WHERE id = " + mFactId));
-        builder.append(tags.substring(1, tags.length() - 1));
-        builder.append("<br><br>");
+        String[] userTags = mDeck.allUserTags("WHERE id = " + mFactId);
+        if (userTags != null) {
+            String tags = Arrays.toString(userTags);        	
+            builder.append("<b>");
+            builder.append(res.getString(R.string.card_details_tags));
+            builder.append("</b>: ");
+            builder.append(tags.substring(1, tags.length() - 1));
+            builder.append("<br><br>");
+        }
         if (full) {
             builder.append(res.getString(R.string.card_details_due));
             builder.append(": ");

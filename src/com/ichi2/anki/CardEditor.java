@@ -829,6 +829,11 @@ public class CardEditor extends Activity {
 		case DIALOG_TAGS:
 			if (allTags == null) {
 				String[] oldTags = AnkiDroidApp.deck().allUserTags();
+		        if (oldTags == null) {
+		        	Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.error_insufficient_memory), false);
+		        	ad.setEnabled(false);
+		        	return;
+		        }
 				Log.i(AnkiDroidApp.TAG, "all tags: "
 								+ Arrays.toString(oldTags));
 				allTags = new String[oldTags.length];

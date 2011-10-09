@@ -79,6 +79,7 @@ import com.zeemote.zc.util.JoystickToButtonAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1673,6 +1674,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 	        if (allTags == null) {
 	            allTags = AnkiDroidApp.deck().allTags_();
 	            Log.i(AnkiDroidApp.TAG, "all tags: " + Arrays.toString(allTags));
+		        if (allCramTags == null) {
+		        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
+		        	ad.setEnabled(false);
+		        	return;
+		        }
 	        }
 	        mSelectedTags.clear();
 	        List<String> selectedList = Arrays.asList(Utils.parseTags(getSelectedTags(mSelectedLimitTagText)));
@@ -1704,7 +1710,11 @@ public class StudyOptions extends Activity implements IButtonListener {
 		case DIALOG_CRAM:
 	        activeCramTags.clear();
 	        allCramTags = AnkiDroidApp.deck().allTags_();
-
+	        if (allCramTags == null) {
+	        	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.error_insufficient_memory), false);
+	        	ad.setEnabled(false);
+	        	return;
+	        }
 	        ad.setMultiChoiceItems(allCramTags, new boolean[allCramTags.length], 
 	        		new DialogInterface.OnClickListener() {
 				@Override
@@ -1724,7 +1734,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 	}
 
 
-    private void showContentView(int which) {
+	private void showContentView(int which) {
         mCurrentContentView = which;
         showContentView();
     }

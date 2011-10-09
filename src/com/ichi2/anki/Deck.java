@@ -3151,15 +3151,20 @@ public class Deck {
 
 
     private String[] allTags_(String where) {
-        ArrayList<String> t = new ArrayList<String>();
-        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts " + where, 0));
-        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM models", 0));
-        t.addAll(getDB().queryColumn(String.class, "SELECT name FROM cardModels", 0));
-        String joined = Utils.joinTags(t);
-        String[] parsed = Utils.parseTags(joined);
-        List<String> joinedList = Arrays.asList(parsed);
-        TreeSet<String> joinedSet = new TreeSet<String>(joinedList);
-        return joinedSet.toArray(new String[joinedSet.size()]);
+    	try {
+            ArrayList<String> t = new ArrayList<String>();
+            t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts " + where, 0));
+            t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM models", 0));
+            t.addAll(getDB().queryColumn(String.class, "SELECT name FROM cardModels", 0));
+            String joined = Utils.joinTags(t);
+            String[] parsed = Utils.parseTags(joined);
+            List<String> joinedList = Arrays.asList(parsed);
+            TreeSet<String> joinedSet = new TreeSet<String>(joinedList);
+            return joinedSet.toArray(new String[joinedSet.size()]);
+    	} catch (OutOfMemoryError e) {
+    		Log.e(AnkiDroidApp.TAG, "OutOfMemoryError on retrieving allTags: " + e);
+    		return null;
+    	}
     }
 
 
@@ -3169,13 +3174,18 @@ public class Deck {
 
 
     public String[] allUserTags(String where) {
-        ArrayList<String> t = new ArrayList<String>();
-        t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts " + where, 0));
-        String joined = Utils.joinTags(t);
-        String[] parsed = Utils.parseTags(joined);
-        List<String> joinedList = Arrays.asList(parsed);
-        TreeSet<String> joinedSet = new TreeSet<String>(joinedList);
-        return joinedSet.toArray(new String[joinedSet.size()]);
+    	try {
+    		ArrayList<String> t = new ArrayList<String>();
+            t.addAll(getDB().queryColumn(String.class, "SELECT tags FROM facts " + where, 0));
+            String joined = Utils.joinTags(t);
+            String[] parsed = Utils.parseTags(joined);
+            List<String> joinedList = Arrays.asList(parsed);
+            TreeSet<String> joinedSet = new TreeSet<String>(joinedList);
+            return joinedSet.toArray(new String[joinedSet.size()]);
+    	} catch (OutOfMemoryError e) {
+    		Log.e(AnkiDroidApp.TAG, "OutOfMemoryError on retrieving allTags: " + e);
+    		return null;
+    	}
     }
 
 
@@ -3200,7 +3210,10 @@ public class Deck {
         if (cardIds == null) {
             getDB().getDatabase().execSQL("DELETE FROM cardTags");
             getDB().getDatabase().execSQL("DELETE FROM tags");
-            tagIds = tagIds(allTags_());
+            String[] allTags = allTags_();
+            if (allTags != null) {
+                tagIds = tagIds(allTags);
+            }
             cardsWithTags = splitTagsList();
         } else {
             Log.i(AnkiDroidApp.TAG, "updateCardTags cardIds: " + Arrays.toString(cardIds));
@@ -3208,7 +3221,10 @@ public class Deck {
             String factIds = Utils.ids2str(Utils.toPrimitive(getDB().queryColumn(Long.class,
                     "SELECT factId FROM cards WHERE id IN " + Utils.ids2str(cardIds), 0)));
             Log.i(AnkiDroidApp.TAG, "updateCardTags factIds: " + factIds);
-            tagIds = tagIds(allTags_("WHERE id IN " + factIds));
+            String[] allTags = allTags_("WHERE id IN " + factIds);
+            if (allTags != null) {
+                tagIds = tagIds(allTags);
+            }
             Log.i(AnkiDroidApp.TAG, "updateCardTags tagIds keys: " + Arrays.toString(tagIds.keySet().toArray(new String[tagIds.size()])));
             Log.i(AnkiDroidApp.TAG, "updateCardTags tagIds values: " + Arrays.toString(tagIds.values().toArray(new Long[tagIds.size()])));
             cardsWithTags = splitTagsList("AND facts.id IN " + factIds);
