@@ -465,7 +465,7 @@ public class CardEditor extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		View focus = this.getWindow().getCurrentFocus();
-        menu.findItem(MENU_LOOKUP).setEnabled(focus instanceof FieldEditText && ((TextView)focus).getText().length() > 0);			
+        menu.findItem(MENU_LOOKUP).setEnabled(focus instanceof FieldEditText && ((TextView)focus).getText().length() > 0 && Lookup.isAvailable());			
 
         for (int i = 0; i < mEditFields.size(); i++) {
 			if (mEditFields.get(i).getText().length() > 0) {

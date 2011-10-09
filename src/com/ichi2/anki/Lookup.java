@@ -76,7 +76,7 @@ public class Lookup {
 
 
 	public static boolean lookUp(String text, Card card) {
-		mCurrentCard = card;			
+		mCurrentCard = card;
 		// clear text from leading and closing dots, commas, brackets etc.
 		text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
 		switch (mDictionary) {
