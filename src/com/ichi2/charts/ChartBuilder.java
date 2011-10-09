@@ -228,6 +228,11 @@ public class ChartBuilder extends Activity {
     	Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
+        if (Statistics.sSeriesList == null) {
+            Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
+        	finish();
+        	return;
+        }
         if (mFullScreen) {
             getWindow()
                     .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
