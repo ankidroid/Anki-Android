@@ -13,6 +13,7 @@
 		android:layout_weight="1"
 		android:background="?android:attr/colorBackground"
 		android:fastScrollEnabled="true" 
+		android:drawSelectorOnTop="true"
 		android:focusable="true"/>
 
 	<LinearLayout
