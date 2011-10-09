@@ -182,7 +182,6 @@ public class CardEditor extends Activity {
 		@Override
 		public void onProgressUpdate(DeckTask.TaskData... values) {
 			if (values[0].getBoolean()) {
-				setResult(RESULT_OK);
 				mEditorFact = mDeck.newFact(mCurrentSelectedModelId);
 				populateEditFields();
 				mSave.setEnabled(false);
@@ -367,13 +366,15 @@ public class CardEditor extends Activity {
 						}
 					}
 					if (!empty) {
+						setResult(Reviewer.RESULT_EDIT_CARD_RESET);
 						mEditorFact.setTags(mFactTags);
 						DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT,
 								mSaveFactHandler, new DeckTask.TaskData(mDeck,
 										mEditorFact, mSelectedCardModels));
-						setResult(RESULT_OK);
 					} else {
-						setResult(RESULT_CANCELED);
+						if (!mCardReset) {
+							setResult(RESULT_CANCELED);
+						}
 					}
 				} else {
 					Iterator<FieldEditText> iter = mEditFields.iterator();
@@ -911,7 +912,18 @@ public class CardEditor extends Activity {
 		}
 	}
 
-	private void modelChanged() {
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Reviewer.RESULT_EDIT_CARD_RESET) {
+        	mCardReset = true;
+        	setResult(Reviewer.RESULT_EDIT_CARD_RESET);
+        }
+    }
+
+
+    private void modelChanged() {
 		mEditorFact = mDeck.newFact(mCurrentSelectedModelId);
 		mSelectedCardModels = mDeck.activeCardModels(mEditorFact);
 
