@@ -130,10 +130,15 @@ public class BackupManager {
 		return getFreeDiscSpace(file.getPath());
 	}
 	public static long getFreeDiscSpace(String path) {
-    	StatFs stat = new StatFs(path);
-    	long blocks = stat.getAvailableBlocks();
-    	long blocksize = stat.getBlockSize();
-    	return blocks * blocksize;
+		try {
+		    	StatFs stat = new StatFs(path);
+		    	long blocks = stat.getAvailableBlocks();
+		    	long blocksize = stat.getBlockSize();
+		    	return blocks * blocksize;
+		} catch (IllegalArgumentException e) {
+			Log.e(AnkiDroidApp.TAG, "Free space could not be retrieved: " + e);
+			return StudyOptions.MIN_FREE_SPACE * 1024 * 1024;
+		}	
 	}
 
 
