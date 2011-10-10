@@ -69,7 +69,6 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -388,7 +387,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			mDeckListAdapter.notifyDataSetChanged();
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
 			setTitleText();
-            if (data.getBoolean("lastDeck")) {
+            if (path == null) {
                 enableButtons(true);
                 mRestoredOrDeleted = false;
                 handleRestoreDecks(false);
@@ -1449,11 +1448,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						}
 						data.putInt("rateOfCompletionMat", rateOfCompletionMat);
                         data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
-                        if (i == mFileList.length) {
-                            data.putBoolean("lastDeck", true);
-                        } else {
-                            data.putBoolean("lastDeck", false);
-                        }
 						msg.setData(data);
 						
 						mTotalDueCards += dueCards + newCards;
