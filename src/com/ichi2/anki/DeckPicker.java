@@ -69,6 +69,7 @@ import com.tomgibara.android.veecheck.util.PrefSettings;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -1380,7 +1381,9 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					} catch (SQLException e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
 								+ path);
-						mBrokenDecks.add(path);
+						if (!mBrokenDecks.contains(path)) {
+							mBrokenDecks.add(path);
+						}
 						continue;
 					}
 
@@ -1394,15 +1397,11 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					}
-					try {
-						deck = getDeck(path);
-						version = deck.getVersion();
-					} catch (SQLException e) {
-						Log.w(AnkiDroidApp.TAG, "Could not open database "
-								+ path);
-						mBrokenDecks.add(path);
+					deck = getDeck(path);
+					if (deck == null) {
 						continue;
 					}
+					version = deck.getVersion();
 
 					Bundle data = new Bundle();
 					Message msg = Message.obtain();
@@ -1548,7 +1547,21 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		if (loadedDeck != null && loadedDeck.getDeckPath().equals(filePath)) {
 			return loadedDeck;
 		} else {
-			return Deck.openDeck(filePath, false);			
+			Deck deck = null;
+			try {
+				deck = Deck.openDeck(filePath, false);
+			} catch (SQLException e) {
+				Log.w(AnkiDroidApp.TAG, "Could not open database " + filePath + ": " + e);
+				if (!mBrokenDecks.contains(filePath)) {
+					mBrokenDecks.add(filePath);
+				}
+			} catch (RuntimeException e) {
+				Log.w(AnkiDroidApp.TAG, "Could not open database " + filePath + ": " + e);
+				if (!mBrokenDecks.contains(filePath)) {
+					mBrokenDecks.add(filePath);
+				}
+			}
+			return deck;
 		}
 	}
 
