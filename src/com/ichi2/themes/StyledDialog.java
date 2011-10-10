@@ -60,12 +60,20 @@ public class StyledDialog extends Dialog {
     }
 
     @Override
-    public void onAttachedToWindow() {
-    	super.onAttachedToWindow();
+    public void onResume() {
     	if (mDoNotShow) {
         	this.dismiss();    		
     	}
     }
+    
+
+//    @Override
+//    public void onAttachedToWindow() {
+//    	super.onAttachedToWindow();
+//    	if (mDoNotShow) {
+//        	this.dismiss();    		
+//    	}
+//    }
     
 
     public void setMessage(CharSequence message) {

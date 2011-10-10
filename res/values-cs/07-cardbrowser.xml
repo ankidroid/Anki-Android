@@ -25,7 +25,7 @@
   <string name="card_browser_cardloading_error">Chyba při načítání karet. Pravděpodobně to souvisí s omezením paměti vašeho přístroje. Zkuste to znovu s menším balíčkem.</string>
   <string name="card_browser_delete_card">Smazat kartu</string>
   <string name="card_browser_suspend_card">Vyřadit kartu</string>
-  <string name="card_browser_unsuspend_card">Unsuspend card</string>
+  <string name="card_browser_unsuspend_card">Zrušit vyřazení karty</string>
   <string name="card_browser_mark_card">Označit kartu</string>
   <string name="card_browser_unmark_card">Zrušit označení karty</string>
   <string name="delete_card_title">Smazat kartu</string>
@@ -55,7 +55,7 @@
   <string name="card_details_tags">Štítky</string>
   <string name="card_details_model">Model</string>
   <string name="card_browser_sorting_cards">Třídění karet.\nProsím čekejte...</string>
-  <string name="card_details_card_model">Model karty</string>
+  <string name="card_details_card_model">Šablona karty</string>
   <string-array name="card_browser_order_labels">
     <item>Otázka</item>
     <item>Odpověď</item>

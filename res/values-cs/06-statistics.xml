@@ -39,7 +39,7 @@
   <string name="deck_summary_cards_mature">Zralé karty:</string>
   <string name="deck_summary_cards_young">Mladé karty:</string>
   <string name="deck_summary_cards_unseen">Neviděné karty:</string>
-  <string name="deck_summary_card_age">Zralost karty</string>
+  <string name="deck_summary_card_age">Zralost karet</string>
   <string name="deck_summary_average_interval">Průměrný interval: &lt;b&gt;%.1f&lt;/b&gt; dnů</string>
   <string name="deck_summary_answers_correct">Správné odpovědi</string>
   <string name="deck_summary_answers_mature">Zralé karty: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d z %4$d)</string>
