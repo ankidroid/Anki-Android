@@ -69,7 +69,7 @@
   <string-array name="studyoptions_more_new_card_order">
     <item>Nové karty v náhodném pořadí</item>
     <item>Nové karty v pořadí přidání</item>
-    <item>Nové karty v pořadí opačném než v jakém byly přidány</item>
+    <item>Nové karty v opačném pořadí než v jakém byly přidány</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
     <item>Rozprostřít nové karty skrz opakování</item>
@@ -78,7 +78,7 @@
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
     <item>Opakovat karty s největším intervalem</item>
-    <item>Opakovat karty z nejkratšího intervalu</item>
+    <item>Opakovat karty s nejkratšího intervalu</item>
     <item>Opakovat karty v pořadí přidání</item>
     <item>Opakovat karty v náhodném pořadí</item>
   </string-array>
@@ -92,8 +92,8 @@
   <string-array name="deck_order_labels">
     <item>Podle data posledního přístupu</item>
     <item>Abecedně</item>
-    <item>By number of due cards</item>
-    <item>Podle počtu všech karet</item>
+    <item>Podle počtu karet ke zkoušení</item>
+    <item>Podle celkového počtu karet</item>
     <item>Podle celkového počtu nových karet</item>
   </string-array>
   <string-array name="gestures_labels">

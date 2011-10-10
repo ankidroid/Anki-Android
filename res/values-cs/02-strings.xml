@@ -38,7 +38,7 @@
   <string name="cardeditor_title">Editor faktů</string>
   <string name="factadder_saving_error">Chyba při ukládání faktů</string>
   <string name="saving_facts">Ukládání faktů</string>
-  <string name="deckcreator_title">Deck Creator</string>
+  <string name="deckcreator_title">Tvůrce balíčků</string>
   <string name="model">Model:</string>
   <string name="select_model">Model</string>
   <string name="card">Karta:</string>

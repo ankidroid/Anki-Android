@@ -72,7 +72,7 @@
   <string name="sync_preparing_full_sync_message">Příprava úplné synchronizace...</string>
   <string name="sync_uploading_message">Nahrávání...</string>
   <string name="sync_downloading_message">Stahování...</string>
-  <string name="sync_complete_message">Zavírání...</string>
+  <string name="sync_complete_message">Zavírám...</string>
   <string name="sync_determining_differences_message">Určování rozdílů...</string>
   <string name="sync_transferring_payload_message">Přenos dat...</string>
   <string name="sync_applying_reply_message">Použití odpovědi...</string>
@@ -94,7 +94,7 @@
   <string name="sync_conflict_title">Konflikt synchronizace</string>
   <string name="sync_conflict_message">Balíček %s byl změněn jak zde, tak na serveru. Kterou verzi chcete ponechat?</string>
   <string name="sync_conflict_local">Ponechat místní</string>
-  <string name="sync_conflict_remote">Ponechat vzdálený</string>
+  <string name="sync_conflict_remote">Ponechat vzdálenou</string>
   <string name="sync_conflict_cancel">Zrušit synchronizaci</string>
   <string name="personaldeckpicker_title">Otevřít online balíček</string>
   <string name="shareddeckpicker_title">Vyberte balíček, který chcete stáhnout</string>
