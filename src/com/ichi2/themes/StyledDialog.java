@@ -18,29 +18,27 @@
 
 package com.ichi2.themes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.ichi2.anki.R;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptions;
+
+import java.util.ArrayList;
+import java.util.List;
  
 
 public class StyledDialog extends Dialog {
@@ -60,21 +58,15 @@ public class StyledDialog extends Dialog {
     }
 
     @Override
-    public void onResume() {
+    public void onAttachedToWindow() {
+        if(StudyOptions.getApiLevel() >= 5) {
+            super.onAttachedToWindow();
+        }
     	if (mDoNotShow) {
-        	this.dismiss();    		
+        	this.dismiss();
     	}
     }
-    
 
-//    @Override
-//    public void onAttachedToWindow() {
-//    	super.onAttachedToWindow();
-//    	if (mDoNotShow) {
-//        	this.dismiss();    		
-//    	}
-//    }
-    
 
     public void setMessage(CharSequence message) {
     	View main = super.getWindow().getDecorView();
