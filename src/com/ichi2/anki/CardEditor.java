@@ -193,7 +193,12 @@ public class CardEditor extends Activity {
 						.getString(R.string.factadder_saving_error), true);
 			}
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-				mProgressDialog.dismiss();
+				try {
+					mProgressDialog.dismiss();
+				} catch (IllegalArgumentException e) {
+					Log.e(AnkiDroidApp.TAG, "Card Editor: Error on dismissing progress dialog: " + e);
+				}
+
 			}
 		}
 
