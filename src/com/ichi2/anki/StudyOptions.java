@@ -2184,7 +2184,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 		String[] questions = getResources().getStringArray(R.array.tutorial_questions);
 		String[] answers = getResources().getStringArray(R.array.tutorial_answers);
 		Deck deck = Deck.open(sampleDeckFile.getAbsolutePath(), false);
-		LinkedHashMap<Long, CardModel> cmodels == null;
+		LinkedHashMap<Long, CardModel> cmodels = null;
 		int len = Math.min(questions.length, answers.length);
 		for (int i = 0; i < len; i++) {
 			Fact fact = deck.newFact();
@@ -2195,6 +2195,7 @@ public class StudyOptions extends Activity implements IButtonListener {
 			for (Field f : fact.getFields()) {
 				if (fidx == 0) {
 					f.setValue(questions[i]);
+				}
 				else if (fidx == 1) {
 					f.setValue(answers[i]);
 				}
