@@ -83,6 +83,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -2166,49 +2167,14 @@ public class StudyOptions extends Activity implements IButtonListener {
         AnkiDroidApp.createDecksDirectoryIfMissing(decksDirectory);
 
         File sampleDeckFile = new File(mPrefDeckPath, SAMPLE_DECK_NAME);
-
         if (!sampleDeckFile.exists()) {
-            	// Create the deck.
-	        try {
-			// Copy the empty deck from the assets to the SD card.
-	            	InputStream stream = getResources().getAssets().open(EMPTY_DECK_NAME);
-	            	Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
-	            	stream.close();
-		} catch (IOException e) {
-	                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-        	        Log.e(AnkiDroidApp.TAG, "onCreate - The copy of tutorial.anki to the sd card failed.");
-        	        openDeckPicker();
-        	        return;
-	        }
-        	Deck.initializeEmptyDeck(sampleDeckFile);
-		String[] questions = getResources().getStringArray(R.array.tutorial_questions);
-		String[] answers = getResources().getStringArray(R.array.tutorial_answers);
-		Deck deck = Deck.open(sampleDeckFile.getAbsolutePath(), false);
-		LinkedHashMap<Long, CardModel> cmodels == null;
-		int len = Math.min(questions.length, answers.length);
-		for (int i = 0; i < len; i++) {
-			Fact fact = deck.newFact();
-			if (cmodels == null) {
-				cmodels = deck.activeCardModels(fact);
-			}
-			int fidx = 0;
-			for (Field f : fact.getFields()) {
-				if (fidx == 0) {
-					f.setValue(questions[i]);
-				else if (fidx == 1) {
-					f.setValue(answers[i]);
-				}
-				fidx++;
-			}
-			deck.addFact(fact, cmodels, i == len - 1);
-		}
-		mDeckFilename = sampleDeckFile;
-		displayProgressDialogAndLoadDeck();
+            mDeckFilename = sampleDeckFile.getAbsolutePath();
+        	DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, mLoadDeckHandler, new DeckTask.TaskData(sampleDeckFile.getAbsolutePath()));
         } else {
-	        Intent deckLoadIntent = new Intent();
-	        deckLoadIntent.putExtra(OPT_DB, sampleDeckFile.getAbsolutePath());
-	        onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
-	}
+        	Intent deckLoadIntent = new Intent();
+        	deckLoadIntent.putExtra(OPT_DB, sampleDeckFile.getAbsolutePath());
+        	onActivityResult(PICK_DECK_REQUEST, RESULT_OK, deckLoadIntent);
+    	}
     }
 
     private void syncDeckWithPrompt() {
@@ -2628,6 +2594,9 @@ public class StudyOptions extends Activity implements IButtonListener {
                 case DeckTask.DECK_EMPTY:
                     // displayNoCardsInDeck();
                     break;
+                case DeckTask.TUTORIAL_NOT_CREATED:
+                	Themes.showThemedToast(StudyOptions.this, getResources().getString(R.string.tutorial_loading_error), false);
+                	break;
             }
 
             // This verification would not be necessary if onConfigurationChanged it's executed correctly (which seems

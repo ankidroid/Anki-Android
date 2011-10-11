@@ -18,6 +18,8 @@
 package com.ichi2.anki;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,6 +61,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int TASK_TYPE_DELETE_BACKUPS = 17;
     public static final int TASK_TYPE_RESTORE_DECK = 18;
     public static final int TASK_TYPE_SORT_CARDS = 19;
+    public static final int TASK_TYPE_LOAD_TUTORIAL = 20;
 
 
     /**
@@ -67,6 +70,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     public static final int DECK_LOADED = 0;
     public static final int DECK_NOT_LOADED = 1;
     public static final int DECK_EMPTY = 2;
+    public static final int TUTORIAL_NOT_CREATED = 3;
 
     private static DeckTask sInstance;
     private static DeckTask sOldInstance;
@@ -190,6 +194,9 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
             case TASK_TYPE_SORT_CARDS:
                 return doInBackgroundSortCards(params);
+
+            case TASK_TYPE_LOAD_TUTORIAL:
+                return doInBackgroundLoadTutorial(params);
 
             default:
                 return null;
@@ -630,6 +637,51 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
 		Collections.sort(params[0].getCards(), params[0].getComparator());
 		return null;
+    }
+
+
+    private TaskData doInBackgroundLoadTutorial(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadTutorial");
+//        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+//        File sampleDeckFile = new File(params[0].getString());
+//    	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
+
+//        try {
+//    		// Copy the empty deck from the assets to the SD card.
+//            InputStream stream = res.getAssets().open(DeckCreator.EMPTY_DECK_NAME);
+//            Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
+//            stream.close();
+//        } catch (IOException e) {
+//        	Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+//        	Log.e(AnkiDroidApp.TAG, "onCreate - The copy of tutorial.anki to the sd card failed.");
+//        	sampleDeckFile.delete();
+        	return new TaskData(TUTORIAL_NOT_CREATED);
+//        }
+//    	Deck.initializeEmptyDeck(sampleDeckFile.getAbsolutePath());
+//    	String[] questions = res.getStringArray(R.array.tutorial_questions);
+//		String[] answers = res.getStringArray(R.array.tutorial_answers);
+//		Deck deck = Deck.openDeck(sampleDeckFile.getAbsolutePath(), false);
+//		LinkedHashMap<Long, CardModel> cmodels = null;
+//		int len = Math.min(questions.length, answers.length);
+//		for (int i = 0; i < len - 1; i++) {
+//			Fact fact = deck.newFact();
+//			fact.setTags("");
+//			if (cmodels == null) {
+//				cmodels = deck.activeCardModels(fact);
+//			}
+//			int fidx = 0;
+//			for (Fact.Field f : fact.getFields()) {
+//				if (fidx == 0) {
+//					f.setValue(questions[i]);
+//				} else if (fidx == 1) {
+//					f.setValue(answers[i]);
+//				}
+//				fidx++;
+//			}
+//			deck.addFact(fact, cmodels, i == len - 2);
+//		}
+//		AnkiDroidApp.setDeck(deck);
+//    	return new TaskData(DECK_LOADED, deck, null);
     }
 
 
