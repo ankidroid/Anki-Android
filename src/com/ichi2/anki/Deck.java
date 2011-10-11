@@ -3890,6 +3890,39 @@ public class Deck {
     }
 
 
+    public boolean importFact(Fact fact, CardModel cardModel) {
+        double now = Utils.now();
+        // add fact to fact table
+        ContentValues values = new ContentValues();
+        values.put("id", fact.getId());
+        values.put("modelId", fact.getModelId());
+        values.put("created", now);
+        values.put("modified", now);
+        values.put("tags", "");
+        values.put("spaceUntil", 0);
+        getDB().insert(this, "facts", null, values);
+
+        // add fields to fields table
+        for (Field f : fact.getFields()) {
+            values.clear();
+            values.put("value", f.getValue());
+            values.put("id", f.getId());
+            values.put("factId", f.getFactId());
+            values.put("fieldModelId", f.getFieldModelId());
+            values.put("ordinal", f.getOrdinal());
+            getDB().insert(this, "fields", null, values);
+        }
+
+        Card newCard = new Card(this, fact, cardModel, Utils.now());
+        HashMap<String, String> newQA = CardModel.formatQA(fact, newCard.getCardModel(), newCard.splitTags());
+        newCard.setQuestion(newQA.get("question"));
+        newCard.setAnswer(newQA.get("answer"));
+        newCard.addToDb();            
+
+        return true;
+    }
+
+
     /**
      * Bulk delete facts by ID. Don't touch cards, assume any cards have already been removed. Caller must .reset().
      *

@@ -33,6 +33,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -614,7 +615,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     	Deck deck = params[0].getDeck();
     	boolean wait = params[0].getBoolean();
     	if (deck != null) {
-    		deck.closeDeck(wait);
+    		try {
+    			deck.closeDeck(wait);
+    		} catch (SQLiteException e) {
+    			Log.e(AnkiDroidApp.TAG, "Error on closing deck: " + e);
+    		}
     	}
     	return null;
     }
@@ -642,46 +647,62 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private TaskData doInBackgroundLoadTutorial(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadTutorial");
-//        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-//        File sampleDeckFile = new File(params[0].getString());
-//    	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
-
-//        try {
-//    		// Copy the empty deck from the assets to the SD card.
-//            InputStream stream = res.getAssets().open(DeckCreator.EMPTY_DECK_NAME);
-//            Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
-//            stream.close();
-//        } catch (IOException e) {
-//        	Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-//        	Log.e(AnkiDroidApp.TAG, "onCreate - The copy of tutorial.anki to the sd card failed.");
-//        	sampleDeckFile.delete();
+        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+        File sampleDeckFile = new File(params[0].getString());
+    	publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
+    	AnkiDb ankiDB = null;
+    	try{
+    		// Copy the empty deck from the assets to the SD card.
+    		InputStream stream = res.getAssets().open(DeckCreator.EMPTY_DECK_NAME);
+    		Utils.writeToFile(stream, sampleDeckFile.getAbsolutePath());
+    		stream.close();
+        	Deck.initializeEmptyDeck(sampleDeckFile.getAbsolutePath());
+    		String[] questions = res.getStringArray(R.array.tutorial_questions);
+    		String[] answers = res.getStringArray(R.array.tutorial_answers);
+    		String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
+    		String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
+    		Deck deck = Deck.openDeck(sampleDeckFile.getAbsolutePath(), false);
+            ankiDB = AnkiDatabaseManager.getDatabase(deck.getDeckPath());
+            ankiDB.getDatabase().beginTransaction();
+            CardModel cardModel = null;
+    		int len = Math.min(questions.length, answers.length);
+    		for (int i = 0; i < len - 1 + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
+    			Fact fact = deck.newFact();
+    			if (cardModel == null) {
+    				cardModel = deck.activeCardModels(fact).entrySet().iterator().next().getValue();
+    			}
+    			int fidx = 0;
+    			for (Fact.Field f : fact.getFields()) {
+    				if (fidx == 0) {
+    					f.setValue((i < len - 1) ? questions[i] : sampleQuestions[i - len + 1]);
+    				} else if (fidx == 1) {
+    					f.setValue((i < len - 1) ? answers[i] : sampleAnswers[i - len + 1]);
+    				}
+    				fidx++;
+    			}
+    			if (!deck.importFact(fact, cardModel)) {
+    				sampleDeckFile.delete();
+    				return new TaskData(TUTORIAL_NOT_CREATED);
+    			}
+    		}
+    		deck.setSessionTimeLimit(0);
+    		deck.flushMod();
+    		deck.reset();
+    		AnkiDroidApp.setDeck(deck);
+            ankiDB.getDatabase().setTransactionSuccessful();
+        	return new TaskData(DECK_LOADED, deck, null);
+        } catch (IOException e) {
+        	Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+        	Log.e(AnkiDroidApp.TAG, "Empty deck could not be copied to the sd card.");
+        	sampleDeckFile.delete();
         	return new TaskData(TUTORIAL_NOT_CREATED);
-//        }
-//    	Deck.initializeEmptyDeck(sampleDeckFile.getAbsolutePath());
-//    	String[] questions = res.getStringArray(R.array.tutorial_questions);
-//		String[] answers = res.getStringArray(R.array.tutorial_answers);
-//		Deck deck = Deck.openDeck(sampleDeckFile.getAbsolutePath(), false);
-//		LinkedHashMap<Long, CardModel> cmodels = null;
-//		int len = Math.min(questions.length, answers.length);
-//		for (int i = 0; i < len - 1; i++) {
-//			Fact fact = deck.newFact();
-//			fact.setTags("");
-//			if (cmodels == null) {
-//				cmodels = deck.activeCardModels(fact);
-//			}
-//			int fidx = 0;
-//			for (Fact.Field f : fact.getFields()) {
-//				if (fidx == 0) {
-//					f.setValue(questions[i]);
-//				} else if (fidx == 1) {
-//					f.setValue(answers[i]);
-//				}
-//				fidx++;
-//			}
-//			deck.addFact(fact, cmodels, i == len - 2);
-//		}
-//		AnkiDroidApp.setDeck(deck);
-//    	return new TaskData(DECK_LOADED, deck, null);
+    	} catch (RuntimeException e) {
+        	Log.e(AnkiDroidApp.TAG, "Error on creating tutorial deck: " + e);
+        	sampleDeckFile.delete();
+        	return new TaskData(TUTORIAL_NOT_CREATED);
+    	} finally {
+    		ankiDB.getDatabase().endTransaction();
+    	}
     }
 
 
