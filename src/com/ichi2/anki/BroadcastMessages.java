@@ -72,14 +72,31 @@ public class BroadcastMessages {
 
 
 	private static int compareVersions(String ver1, String ver2) {
-		String[] version1 = ver1.replaceAll("([:alpha:])([:digit:])", "$1.$2").replaceAll("([:digit:])([:alpha:])", "$1.$2").split("\\.");
-		String[] version2 = ver2.replaceAll("([:alpha:])([:digit:])", "$1.$2").replaceAll("([:digit:])([:alpha:])", "$1.$2").split("\\.");
+		// 1.0alpha4 --> 1.0.alpha.4
+		String[] version1 = ver1.split("\\.");
+		String[] version2 = ver2.split("\\.");
 		for (int i = 0; i < Math.min(version1.length, version2.length); i++) {
 			int com = 0;
 			try {
 				com = Integer.valueOf(version1[i]).compareTo(Integer.valueOf(version2[i]));
 			} catch (NumberFormatException e) {
-				com = version1[i].compareToIgnoreCase(version2[i]);
+				String[] subVersion1 = version1[i].replaceAll("([:alpha:])([:digit:])", "$1.$2").replaceAll("([:digit:])([:alpha:])", "$1.$2").split("\\.");
+				String[] subVersion2 = version2[i].replaceAll("([:alpha:])([:digit:])", "$1.$2").replaceAll("([:digit:])([:alpha:])", "$1.$2").split("\\.");
+				for (int j = 0; j < Math.min(subVersion1.length, subVersion2.length); j++) {
+					try {
+						com = Integer.valueOf(subVersion1[j]).compareTo(Integer.valueOf(subVersion2[j]));
+					} catch (NumberFormatException f) {
+						com = subVersion1[j].compareToIgnoreCase(subVersion2[j]);
+					}
+					if (com != 0) {
+						return com;
+					}
+				}
+				if (subVersion1.length > subVersion2.length) {
+					return -1;
+				} else if (subVersion1.length < subVersion2.length) {
+					return 1;
+				}
 			}
 			if (com != 0) {
 				return com;
