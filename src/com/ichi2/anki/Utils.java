@@ -134,9 +134,9 @@ public class Utils {
     		type = TIME_MINUTES;
     	} else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
     		type = TIME_HOURS;
-    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 || unit < 4) {
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 29.5 || unit < 4) {
     		type = TIME_DAYS;
-    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 * 12 || unit < 5) {
+    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 * 11.95 || unit < 5) {
     		type = TIME_MONTHS;
     		point = 1;
     	} else {

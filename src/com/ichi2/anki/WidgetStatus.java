@@ -116,7 +116,12 @@ public final class WidgetStatus {
                     if (currentDeck != null && currentDeck.getDeckPath().equals(deckName)) {
                     	deck = currentDeck;
                     } else {
-                    	deck = Deck.openDeck(absPath, false);
+                    	try {
+                        	deck = Deck.openDeck(absPath, false);                    		
+            			} catch (RuntimeException e) {
+            				Log.w(AnkiDroidApp.TAG, "Widget: Could not open database " + absPath + ": " + e);
+            				deck = null;
+            			}
                     }
                     if (deck == null) {
                         Log.e(AnkiDroidApp.TAG, "Skipping null deck: " + absPath);

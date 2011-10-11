@@ -67,7 +67,7 @@ public class StyledDialog extends Dialog {
         	this.dismiss();
     	}
     }
-    
+
 
     public void setMessage(CharSequence message) {
     	View main = super.getWindow().getDecorView();

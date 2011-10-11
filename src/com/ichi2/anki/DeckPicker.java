@@ -387,7 +387,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 			mDeckListAdapter.notifyDataSetChanged();
 			Log.i(AnkiDroidApp.TAG, "DeckPicker - mDeckList notified of changes");
 			setTitleText();
-            if (data.getBoolean("lastDeck")) {
+            if (path == null) {
                 enableButtons(true);
                 mRestoredOrDeleted = false;
                 handleRestoreDecks(false);
@@ -1380,7 +1380,9 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 					} catch (SQLException e) {
 						Log.w(AnkiDroidApp.TAG, "Could not open database "
 								+ path);
-						mBrokenDecks.add(path);
+						if (!mBrokenDecks.contains(path)) {
+							mBrokenDecks.add(path);
+						}
 						continue;
 					}
 
@@ -1394,15 +1396,11 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						msg.setData(data);
 						mHandler.sendMessage(msg);
 					}
-					try {
-						deck = getDeck(path);
-						version = deck.getVersion();
-					} catch (SQLException e) {
-						Log.w(AnkiDroidApp.TAG, "Could not open database "
-								+ path);
-						mBrokenDecks.add(path);
+					deck = getDeck(path);
+					if (deck == null) {
 						continue;
 					}
+					version = deck.getVersion();
 
 					Bundle data = new Bundle();
 					Message msg = Message.obtain();
@@ -1450,11 +1448,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 						}
 						data.putInt("rateOfCompletionMat", rateOfCompletionMat);
                         data.putInt("rateOfCompletionAll", Math.max(0, rateOfCompletionAll - rateOfCompletionMat));
-                        if (i == mFileList.length) {
-                            data.putBoolean("lastDeck", true);
-                        } else {
-                            data.putBoolean("lastDeck", false);
-                        }
 						msg.setData(data);
 						
 						mTotalDueCards += dueCards + newCards;
@@ -1548,7 +1541,21 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 		if (loadedDeck != null && loadedDeck.getDeckPath().equals(filePath)) {
 			return loadedDeck;
 		} else {
-			return Deck.openDeck(filePath, false);			
+			Deck deck = null;
+			try {
+				deck = Deck.openDeck(filePath, false);
+			} catch (SQLException e) {
+				Log.w(AnkiDroidApp.TAG, "Could not open database " + filePath + ": " + e);
+				if (!mBrokenDecks.contains(filePath)) {
+					mBrokenDecks.add(filePath);
+				}
+			} catch (RuntimeException e) {
+				Log.w(AnkiDroidApp.TAG, "Could not open database " + filePath + ": " + e);
+				if (!mBrokenDecks.contains(filePath)) {
+					mBrokenDecks.add(filePath);
+				}
+			}
+			return deck;
 		}
 	}
 
