@@ -474,7 +474,7 @@ public class Reviewer extends Activity implements IButtonListener{
         @Override
         public void onClick(View view) {
             Log.i(AnkiDroidApp.TAG, "Flip card changed:");
-
+            mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             displayCardAnswer();
         }
     };
@@ -483,6 +483,7 @@ public class Reviewer extends Activity implements IButtonListener{
     private View.OnClickListener mSelectEaseHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+        	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
         	if (mIsAnswering) {
         		return;
         	}
@@ -2008,7 +2009,9 @@ public class Reviewer extends Activity implements IButtonListener{
     private Runnable mShowQuestionTask = new Runnable() {
         public void run() {
             //Assume hitting the "Again" button when auto next question
-            mEase1.performClick();
+            if (mEase1.isEnabled() == true && mEase1.getVisibility() == View.VISIBLE) {
+		mEase1.performClick();
+            }
         }
     };
 
@@ -2017,7 +2020,9 @@ public class Reviewer extends Activity implements IButtonListener{
             if (mPrefTimer) {
                 mCardTimer.stop();
             }
-            mFlipCard.performClick();
+            if (mFlipCard.isEnabled() == true && mFlipCard.getVisibility() == View.VISIBLE && !mIsAnswering) {
+		mFlipCard.performClick();
+            }
         }
     };
 
@@ -2983,6 +2988,12 @@ public class Reviewer extends Activity implements IButtonListener{
 
 
     private void closeReviewer() {
+	mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+	mTimeoutHandler.removeCallbacks(mShowQuestionTask);
+	mTimerHandler.removeCallbacks(removeChosenAnswerText);
+	longClickHandler.removeCallbacks(longClickTestRunnable);
+	longClickHandler.removeCallbacks(startSelection);
+
     	setOutAnimation(true);    		
     	mClosing = true;
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_DECK, mSaveAndResetDeckHandler, new DeckTask.TaskData(AnkiDroidApp.deck(), 0));
