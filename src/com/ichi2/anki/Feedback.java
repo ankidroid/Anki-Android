@@ -380,7 +380,7 @@ public class Feedback extends Activity {
             int errorIndex = (Integer)values[1];
             String state = (String)values[2];
 
-            if (isErrorType(postType)) {
+            if (isErrorType(postType) && mErrorReports.size() > errorIndex) {
                 mErrorReports.get(errorIndex).put("state", state);
                 if (!state.equals(Feedback.STATE_UPLOADING)) {
                     int returnCode = (Integer)values[3];
