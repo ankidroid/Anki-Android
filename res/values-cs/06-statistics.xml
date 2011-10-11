@@ -39,7 +39,7 @@
   <string name="deck_summary_cards_mature">Zralé karty:</string>
   <string name="deck_summary_cards_young">Mladé karty:</string>
   <string name="deck_summary_cards_unseen">Neviděné karty:</string>
-  <string name="deck_summary_card_age">Stáří karty</string>
+  <string name="deck_summary_card_age">Zralost karet</string>
   <string name="deck_summary_average_interval">Průměrný interval: &lt;b&gt;%.1f&lt;/b&gt; dnů</string>
   <string name="deck_summary_answers_correct">Správné odpovědi</string>
   <string name="deck_summary_answers_mature">Zralé karty: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d z %4$d)</string>
@@ -56,7 +56,7 @@
   <string name="deck_summary_tomorrow_new">Zítra nových: &lt;b&gt;%d&lt;/b&gt; karet</string>
   <string name="deck_summary_tomorrow_time">Odhadovaný zítřejší čas: &lt;b&gt;%d&lt;/b&gt; min.</string>
   <string name="deck_summary_finished_in">Nové karty dokončeny za: &lt;b&gt;%d&lt;/b&gt; dnů</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; karty/den</string>
+  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; karet/den</string>
   <string name="deck_summary_deck_age">Stáří balíčku: &lt;b&gt;%d&lt;/b&gt; dnů</string>
   <string name="deck_summary_all_decks">Všechny balíčky</string>
   <string-array name="statistics_type_labels">
@@ -75,12 +75,12 @@
     <item>1 rok</item>
   </string-array>
   <string-array name="next_review_in_s">
-    <item>in 1 second</item>
-    <item>in 1 minute</item>
-    <item>in 1 hour</item>
-    <item>in 1 day</item>
-    <item>in 1 month</item>
-    <item>in 1 year</item>
+    <item>za 1 sekundu</item>
+    <item>za 1 minutu</item>
+    <item>za 1 hodinu</item>
+    <item>za 1 den</item>
+    <item>za 1 měsíc</item>
+    <item>za 1 rok</item>
   </string-array>
   <string-array name="next_review_in_p">
     <item>za %s sekund</item>
@@ -91,19 +91,19 @@
     <item>za %s roků</item>
   </string-array>
   <string-array name="next_review_before_s">
-    <item>1 second before</item>
-    <item>1 minute before</item>
-    <item>1 hour before</item>
-    <item>1 day before</item>
-    <item>1 month before</item>
-    <item>1 year before</item>
+    <item>před 1 sekundou</item>
+    <item>před 1 minutou</item>
+    <item>před 1 hodinou</item>
+    <item>před 1 dnem</item>
+    <item>před 1 měsícem</item>
+    <item>před 1 rokem</item>
   </string-array>
   <string-array name="next_review_before_p">
-    <item>%s seconds before</item>
-    <item>%s minutes before</item>
-    <item>%s hours before</item>
-    <item>%s days before</item>
-    <item>%s months before</item>
-    <item>%s years before</item>
+    <item>před %s sekundami</item>
+    <item>před %s minutami</item>
+    <item>před %s hodinami</item>
+    <item>před %s dny</item>
+    <item>před %s měsíci</item>
+    <item>před %s roky</item>
   </string-array>
 </resources>

@@ -49,7 +49,7 @@
   <string name="show_progress_bars_summ">Shows today\'s progress and proportion of today\'s yes answers while reviewing</string>
   <string name="show_whiteboard_summ">Umožňuje psát na obrazovku</string>
   <string name="whiteboard_stroke_width">Šířka tahu na tabuli</string>
-  <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>
+  <string name="whiteboard_stroke_width_summ">Šířka čáry: XXX</string>
   <string name="whiteboard_black">Monochrome</string>
   <string name="whiteboard_black_summ">Use monochrome instead of colored stroke (for devices with lower memory, does not work in night mode)</string>
   <string name="write_answers">Psát odpovědi</string>
@@ -152,10 +152,10 @@
   <string name="studyoptions_limit_tags_inactive">Bez: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
   <string name="studyoptions_limit_dialog_title">Limit Learning</string>
-  <string name="studyoptions_session">Session</string>
+  <string name="studyoptions_session">Sezení</string>
   <string name="studyoptions_tag">Podle štítku</string>
-  <string name="studyoptions_tag_new">Show new cards by tag:</string>
-  <string name="studyoptions_tag_rev">Show review cards by tag:</string>
+  <string name="studyoptions_tag_new">Zobrazit nové karty podle štítků:</string>
+  <string name="studyoptions_tag_rev">Zobrazit opakované karty podle štítků:</string>
   <string name="studyoptions_session_minutes">Limit sezení (minuty):</string>
   <string name="studyoptions_session_questions">Limit sezení (otázky):</string>
   <string name="session_time_limit">Časové omezení sezení</string>

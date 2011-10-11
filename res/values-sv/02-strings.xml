@@ -64,5 +64,5 @@
   <string name="card_editor_reset">Återställ</string>
   <string name="card_editor_copy_card">Kopiera kort</string>
   <string name="card_editor_reset_card">Återställ framsteg</string>
-  <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
+  <string name="error_insufficient_memory">Åtgärden är inte möjlig på grund av otillräckligt med minne på enheten.</string>
 </resources>

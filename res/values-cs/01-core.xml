@@ -61,11 +61,11 @@
   <string name="close_previous_deck">Uzavírám předchozí balíček.\nProsím čekejte...</string>
   <string name="close_deck">Uzavírám balíček.\nProsím čekejte...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Obnovit jazyk</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Obnovení jazyka</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimalizovat databázi</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
-  <string name="begin_cram">Spustit Šprtací režim</string>
+  <string name="begin_cram">Spustit Šprtání</string>
   <string name="cram">Šprtat</string>
   <string name="menu_open_deck">Všechny balíčky</string>
   <string name="menu_sync">Synchronizovat</string>
@@ -77,7 +77,7 @@
   <string name="menu_zeemote">Zeemote</string>
   <string name="menu_add_card">Přidat kartu</string>
   <string name="menu_about">O aplikaci</string>
-  <string name="menu_remove_card">Dismiss Card</string>
+  <string name="menu_remove_card">Odmítnout kartu</string>
   <string name="menu_suspend_card">Vyřadit kartu</string>
   <string name="menu_bury_card">Přeskočit kartu</string>
   <string name="menu_edit_card">Upravit kartu</string>
@@ -90,9 +90,9 @@
   <string name="studyoptions_cram_dialog_title">Značky pro šprtání</string>
   <string name="statistics">Statistiky</string>
   <string name="studyoptions_load_other_deck">Načíst jiný balíček</string>
-  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
+  <string name="studyoptions_load_tutorial_deck">Načíst výukový balíček</string>
   <string name="studyoptions_night_mode">Noční režim</string>
-  <string name="studyoptions_swap_qa">Prohodit Otázka/odpověď</string>
+  <string name="studyoptions_swap_qa">Prohoď Q/A</string>
   <string name="visit">Visit</string>
   <string name="later">Později</string>
   <string name="download">Stáhnout</string>
@@ -113,7 +113,7 @@
     <item>%s roků</item>
   </string-array>
   <plurals name="studyoptions_window_title">
-    <item quantity="one">%1$s (1 of %3$d due)</item>
+    <item quantity="one">%1$s (1 z %3$d k zopakování)</item>
     <item quantity="other">%1$s (%2$d z %3$d k zopakování)</item>
   </plurals>
   <plurals name="deckpicker_title">
@@ -129,8 +129,8 @@
     <item quantity="other">zbývá %1$d / %2$d</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%1$s (1 min. left)</item>
-    <item quantity="other">%1$s (%2$d min. left)</item>
+    <item quantity="one">%1$s (1 min.)</item>
+    <item quantity="other">%1$s (%2$d min.)</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Pro dnešek hotovo.\nZítra bude:\n1 karet k opakování a %2$s.\n Odhadovaný čas: %3$s</item>

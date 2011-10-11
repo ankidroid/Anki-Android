@@ -58,8 +58,8 @@
   <string name="menu_rotate">Rotera</string>
   <string name="undo">Ångra</string>
   <string name="redo">Gör om</string>
-  <string name="close_previous_deck">Closing previous deck.\nPlease wait...</string>
-  <string name="close_deck">Closing deck.\nPlease wait...</string>
+  <string name="close_previous_deck">Stänger föregående kortlek.\nVänligen vänta...</string>
+  <string name="close_deck">Stänger kortleken.\nVänligen vänta...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Återställning av språk</string>
@@ -90,7 +90,7 @@
   <string name="studyoptions_cram_dialog_title">Taggar att råplugga</string>
   <string name="statistics">Statistik</string>
   <string name="studyoptions_load_other_deck">Ladda annan kortlek</string>
-  <string name="studyoptions_load_tutorial_deck">Load Tutorial Deck</string>
+  <string name="studyoptions_load_tutorial_deck">Ladda Övningskortlek</string>
   <string name="studyoptions_night_mode">Nattläge</string>
   <string name="studyoptions_swap_qa">Växla fråga/svar</string>
   <string name="visit">Besök</string>
