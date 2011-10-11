@@ -67,14 +67,16 @@ def replacechars(filename, fileExt):
 				errorOccured = True
 			line.append(["<![CDATA[" + contentLine[:sepPos] + "]]>", "<![CDATA[" + contentLine[sepPos+11:] + "]]>"])
 		for fi in line:
-			fi[0] = string.replace(fi[0], '\'', '\\\'')
-			fi[0] = string.replace(fi[0], '\"', '\\\"');
+			fi[0] = re.sub('\"+', '\\\"', fi[0])
+			fi[0] = re.sub('\'+', '\\\'', fi[0])
+			fi[0] = re.sub('\\\\{2,}', '\\\\', fi[0])
 			fin.write("    <item>" + fi[0] + "</item> \n");
 		fin.write(" </string-array>\n <string-array name=\"tutorial_answers\">\n");
 		for fi in line:
-			fi[1] = string.replace(fi[1], '\'', '\\\'');
-			fi[1] = string.replace(fi[1], '\"', '\\\"');
-			fin.write("    <item>" + fi[1] + "</item>\n");
+			fi[1] = re.sub('\"+', '\\\"', fi[1])
+			fi[1] = re.sub('\'+', '\\\'', fi[1])
+			fi[1] = re.sub('\\\\{2,}', '\\\\', fi[1])
+			fin.write("    <item>" + fi[1] + "</item> \n");
 		fin.write(" </string-array>\n</resources>");
 	s.close()
 	fin.close()
