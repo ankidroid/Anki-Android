@@ -65,4 +65,6 @@
   <string name="card_editor_copy_card">Копировать карту</string>
   <string name="card_editor_reset_card">Сброс прогресса</string>
   <string name="error_insufficient_memory">Операция не возможна из-за недостатка памяти на Вашем устройстве</string>
+  <string name="tutorial_load">Создание учебной колоды</string>
+  <string name="tutorial_loading_error">Учебная колода не может быть создана</string>
 </resources>

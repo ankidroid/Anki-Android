@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?> 
  <!-- 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -23,31 +19,29 @@
  <string-array name="tutorial_questions"> 
     <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br /><br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
     <item><![CDATA[The next card is shown now.<br /><br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br /><br />(click the button to show the back side)]]></item> 
-    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br /><br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
-    <item><![CDATA[Above every answer buttons, you find information about the time, after which the card will be shown again when answered by this button.]]></item> 
-    <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
-    <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
-    <item><![CDATA[Cards are put together in decks and can there be organised by help of all sorts of tags.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br /><br />You either download premade decks of other users (choose &quot;download deck&quot; in the deck summary\'s options menu) or create them by yourself. ]]></item> 
-    <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
+    <item><![CDATA[&quot;Какой город является столицей Буркина Фасо?&quot;<br /><br />Подумайте об ответе и нажмите затем &quot;Показать ответ&quot;]]></item> 
+    <item><![CDATA[Над каждой кнопкой (которая показывает легкость ответа) вы найдете информацию о времени, через которое карта будет показана снова при нажатии на эту кнопку.]]></item> 
+    <item><![CDATA[Цель состоит в том, чтобы показать Вам карту до того, как Вы её забудете. Эмпирические исследования показали, что таким образом информацию можно выучить более эффективно.]]></item> 
+    <item><![CDATA[Несколько слов об организации AnkiDroid: <br /><br>Вся информация должна быть введена в виде пары вопрос-ответ. Если Вы хотите учить в другом направлении (чтобы ответ стал вопросом, а вопрос ответом), то необходимо создать еще одну карту, где эти стороны обменены.]]></item> 
+    <item><![CDATA[Карты собраны в колоды, и ими можно манипулировать используя теги.]]></item> 
+    <item><![CDATA[Существуют два способа получения новых карт:<br /><br />Вы можете скачать готовые колоды других пользователей (выберите &quot;Загрузить колоду&quot; в меню оглавления колод) или создать их самостоятельно. ]]></item> 
+    <item><![CDATA[Но в любом случае, возможность создания Ваших собственных колод должна удовлетворить ваши потребности. Вы можете сделать это прямо в AnkiDroid...]]></item> 
     <item><![CDATA[Посмотрите на верхнюю панель:<br /><br />В левом верхнем углу вы найдете несколько индикаторов. Красное число - число неудачных карт (был нажат ответ &quot;Снова&quot;),]]></item> 
     <item><![CDATA[В правом углу информация о времени обдумывания ответа текущей карты и о вашем учебном прогрессе. ]]></item> 
-    <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
-    <item><![CDATA[]]></item> 
+    <item><![CDATA[Это были основные моменты использования AnkiDroid.<br /><br> Дополнительные сведения на сайте http://ankisrs.net/ ]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br /><br /><br />Click on the right one of the four buttons]]></item>
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br /><br />(click on one of the buttons to show the next card)]]></item>
-    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br /><br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item>
-    <item><![CDATA[This time period is calculated of the last time you answered the card, the current ease choice and ease choices of previous answers of that card.]]></item>
-    <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item>
-    <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item>
-    <item><![CDATA[You will learn about that quickly when you start to use AnkiDroid.]]></item>
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item>
-    <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item>
-    <item><![CDATA[чёрное - количество карт, которое Вам нужно повторить сегодня, синее - количество новых карт, которые Вам нужно выучить сегодня. <br /><br /> Принадлежность карты, которую Вы просматриваете в данный момент, к красной, черной или синей группе определяется тем, какое число (красное, чёрное или синее) сейчас подчёркнуто.]]></item>
-    <item><![CDATA[ Верхняя полоса показывает ваш прогресс, нижняя - процент &quot;да&quot;-ответов (была нажата кнопка не &quot;Снова&quot;).]]></item>
-    <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item>
-    <item><![CDATA[]]></item>
+    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br /><br /><br />Click on the right one of the four buttons]]></item> 
+    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br /><br />(click on one of the buttons to show the next card)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou (Уагадугу)&quot; - правильный ответ. <br /><br />Вы не знали? Тогда нажмите &quot;Снова&quot; чтобы увидеть эту карту снова через несколько минут. В противном случае выберите другую кнопку в зависимости от того, насколько легко Вам было ответить.]]></item> 
+    <item><![CDATA[Этот промежуток времени зависит от того, когда была эта карта показана последний раз, от сложности последнего ответа и от сложности всех предыдущих ответов на эту карту.]]></item> 
+    <item><![CDATA[Если Вы хотите больше узнать о алгоритме отложенных повторений посетите: <br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[ Не волнуйтесь, это может быть сделано автоматически. Нет необходимости добавлять одну и туже информацию в дважды.]]></item> 
+    <item><![CDATA[Вы поймёте это быстро, когда начнете использовать AnkiDroid.]]></item> 
+    <item><![CDATA[Вы найдете тысячи готовых колод и некоторые несомненно будут Вам полезны.]]></item> 
+    <item><![CDATA[... или (немного более удобно) используя настольное приложение Anki (бесплатно загрузить можно на сайте http://ankisrs.net/).<br><br> Вы можете синхронизировать ваши колоды с настольным приложением очень легко, так как передача данных не является проблемой.]]></item> 
+    <item><![CDATA[чёрное - количество карт, которое Вам нужно повторить сегодня, синее - количество новых карт, которые Вам нужно выучить сегодня. <br /><br /> Принадлежность карты, которую Вы просматриваете в данный момент, к красной, черной или синей группе определяется тем, какое число (красное, чёрное или синее) сейчас подчёркнуто.]]></item> 
+    <item><![CDATA[ Верхняя полоса показывает ваш прогресс, нижняя - процент &quot;да&quot;-ответов (была нажата кнопка не &quot;Снова&quot;).]]></item> 
+    <item><![CDATA[Просто попробуйте и посмотрите, соответствует ли она вашим потребностям. <br><br>Например, можно начать с оглавления колод (нажмите меню на главном экране и выберите &quot;Все колоды&quot;). Там Вы сможете скачать колоды или создать свою собственную (используйте кнопку меню в оглавлении колод).]]></item> 
  </string-array>
 </resources>

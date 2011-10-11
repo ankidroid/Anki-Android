@@ -65,4 +65,6 @@
   <string name="card_editor_copy_card">Karte kopieren</string>
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
   <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
+  <string name="tutorial_load">Einführungsstapel wird erstellt</string>
+  <string name="tutorial_loading_error">Einführungsstapel konnte nicht erstellt werden</string>
 </resources>

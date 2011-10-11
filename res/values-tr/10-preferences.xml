@@ -51,7 +51,7 @@
   <string name="whiteboard_stroke_width">Yazı tahtası kontur kalınlığı</string>
   <string name="whiteboard_stroke_width_summ">Kontur kalınlığı: XXX</string>
   <string name="whiteboard_black">Siyah-beyaz</string>
-  <string name="whiteboard_black_summ">Renkli yerleri siyah-beyaz gösterir (düşük hafızalı cihazlar için, gece modunda çalışmaz)</string>
+  <string name="whiteboard_black_summ">Renkli yerleri siyah-beyaz gösterir (düşük bellekli cihazlar için, gece modunda çalışmaz)</string>
   <string name="write_answers">Yanıtları yaz</string>
   <string name="write_answers_summ">Yanıtları yazıp doğrusuyla karşılaştırmanızı sağlar</string>
   <string name="text_selection">Metin seçimine izin ver</string>

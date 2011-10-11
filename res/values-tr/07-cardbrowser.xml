@@ -22,7 +22,7 @@
 <resources>
   <string name="card_browser">Kart Tarayıcısı</string>
   <string name="card_browser_load">Kartlar yükleniyor</string>
-  <string name="card_browser_cardloading_error">Kartlar yüklenirken hata. Bu muhtemelen cihazınızın hafıza kısıtlamalarıyla ilgili. Daha küçük bir desteyle tekrar deneyin.</string>
+  <string name="card_browser_cardloading_error">Kartlar yüklenirken hata. Bu muhtemelen cihazınızın bellek kısıtlamalarıyla ilgili. Daha küçük bir desteyle tekrar deneyin.</string>
   <string name="card_browser_delete_card">Kartı sil</string>
   <string name="card_browser_suspend_card">Kartı askıya al</string>
   <string name="card_browser_unsuspend_card">Kartı devreye sok</string>
