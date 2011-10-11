@@ -61,7 +61,7 @@ public class StyledDialog extends Dialog {
     @Override
     public void onAttachedToWindow() {
         if(StudyOptions.getApiLevel() >= 5) {
-            super.onAttachedToWindow();
+            //super.onAttachedToWindow(); Despite checking for the API level, I get the following error on Android 1.5 if this line is not commented: Could not find method android.app.Dialog.onAttachedToWindow
         }
     	if (mDoNotShow) {
         	this.dismiss();
