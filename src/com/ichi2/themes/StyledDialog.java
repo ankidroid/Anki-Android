@@ -57,6 +57,7 @@ public class StyledDialog extends Dialog {
         mContext = context;
     }
 
+
     @Override
     public void onAttachedToWindow() {
         if(StudyOptions.getApiLevel() >= 5) {
