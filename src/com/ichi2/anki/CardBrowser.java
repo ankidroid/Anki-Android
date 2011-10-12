@@ -194,7 +194,9 @@ public class CardBrowser extends Activity {
 		Themes.applyTheme(this);
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.card_browser);
+		View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
+		setContentView(mainView);
+		Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
 
 		mDeck = AnkiDroidApp.deck();
 		mDeck.resetUndo();

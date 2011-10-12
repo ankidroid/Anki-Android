@@ -45,6 +45,7 @@ public class Themes {
 	public final static int CALLER_FEEDBACK= 5;
 	public final static int CALLER_DOWNLOAD_DECK= 6;
 	public final static int CALLER_DECKPICKER = 7;
+	public final static int CALLER_CARDBROWSER = 8;
 
 	private static int mCurrentTheme = -1;
 	private static int mProgressbarsBackgroundColor;
@@ -128,6 +129,11 @@ public class Themes {
 		case CALLER_DECKPICKER:
 			if (mCurrentTheme == THEME_BLUE) {
 				((ListView)view.findViewById(R.id.files)).setSelector(R.drawable.blue_deckpicker_list_selector);
+			}
+			break;
+		case CALLER_CARDBROWSER:
+			if (mCurrentTheme == THEME_BLUE) {
+				((ListView)view.findViewById(R.id.card_browser_list)).setSelector(R.drawable.blue_cardbrowser_list_selector);
 			}
 			break;
 		case CALLER_DECKPICKER_DECK:
