@@ -78,9 +78,11 @@ public class Themes {
 	private static int mPopupFullMedium;
 	private static int mPopupFullBright;
 	private static int mDividerHorizontalBright;
-	
+
+	private static Context mContext;
 
 	public static void applyTheme(Context context) {
+		mContext = context;
 		if (mCurrentTheme == -1) {
 			loadTheme();
 		}
@@ -125,7 +127,7 @@ public class Themes {
 			break;
 		case CALLER_DECKPICKER:
 			if (mCurrentTheme == THEME_BLUE) {
-				((ListView)view.findViewById(R.id.files)).setSelector(R.drawable.blue_deckpicker_list_selector;);
+				((ListView)view.findViewById(R.id.files)).setSelector(R.drawable.blue_deckpicker_list_selector);
 			}
 			break;
 		case CALLER_DECKPICKER_DECK:
@@ -153,7 +155,7 @@ public class Themes {
 
 
 	public static void loadTheme(){
-			SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
+			SharedPreferences preferences = PrefSettings.getSharedPrefs(mContext);
 			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "2"));
 			switch (mCurrentTheme) {
 			case THEME_ANDROID_DARK:
