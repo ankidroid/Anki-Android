@@ -560,8 +560,23 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         boolean result = false;
 
         Resources res = context.getResources();
-        if (deckList.length == 1 && deckList[0].equals("") && AnkiDroidApp.deck() != null) {
-        	result = Statistics.refreshDeckStatistics(context, AnkiDroidApp.deck(), type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        	
+        if (deckList.length == 1) {
+        	if (deckList[0].length() == 0 && AnkiDroidApp.deck() != null) {
+            	result = Statistics.refreshDeckStatistics(context, AnkiDroidApp.deck(), type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        		
+        	} else {
+        		Deck deck;
+        		if (deckList[0].equals(AnkiDroidApp.deck().getDeckPath())) {
+        			deck = AnkiDroidApp.deck();
+        		} else {
+        			try {
+            			deck = Deck.openDeck(deckList[0], false);
+        			} catch (SQLException e) {
+        				Log.w(AnkiDroidApp.TAG, "Could not open database " + deckList[0] + ": " + e);
+        				return null;
+        			}
+        		}
+            	result = Statistics.refreshDeckStatistics(context, deck, type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type]);        		
+        	}
         } else {
         	result = Statistics.refreshAllDeckStatistics(context, deckList, type, Integer.parseInt(res.getStringArray(R.array.statistics_period_values)[period]), res.getStringArray(R.array.statistics_type_labels)[type] + " " + res.getString(R.string.statistics_all_decks));        	
         }

@@ -124,6 +124,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 //    private static final int CONTEXT_MENU_RESTORE_BACKUPS = 4;
     private static final int CONTEXT_MENU_REMOVE_BACKUPS = 4;
     private static final int CONTEXT_MENU_DELETE_DECK = 5;
+    private static final int CONTEXT_MENU_DECK_SUMMARY = 6;
     
 	/**
 	 * Message types
@@ -324,6 +325,10 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 //			case CONTEXT_MENU_RESTORE_BACKUPS:
 //				BackupManager.restoreDeckBackup(DeckPicker.this, data.get("filepath"));
 //				return true;
+			case CONTEXT_MENU_DECK_SUMMARY:
+				mStatisticType = Statistics.TYPE_DECK_SUMMARY;
+				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new DeckTask.TaskData(DeckPicker.this, new String[]{data.get("filepath")}, mStatisticType, 0));
+				return;
 			}
 		}
 	};
@@ -838,7 +843,7 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 				dialog = null;
 				break;
 			}
-			String[] entries = new String[6];
+			String[] entries = new String[7];
 			entries[CONTEXT_MENU_OPTIMIZE] = res.getString(R.string.contextmenu_deckpicker_optimize_deck);
 			entries[CONTEXT_MENU_CUSTOM_DICTIONARY] = res.getString(R.string.contextmenu_deckpicker_set_custom_dictionary);
 			entries[CONTEXT_MENU_DOWNLOAD_MEDIA] = res.getString(R.string.contextmenu_deckpicker_download_missing_media);
@@ -846,7 +851,9 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 //			entries[CONTEXT_MENU_RESTORE_BACKUPS] = res.getString(R.string.R.string.contextmenu_deckpicker_restore_backups);
 			entries[CONTEXT_MENU_REMOVE_BACKUPS] = res.getString(R.string.contextmenu_deckpicker_remove_backups);
 			entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
-	        builder.setTitle("contextmenu");
+			entries[CONTEXT_MENU_DECK_SUMMARY] = res.getStringArray(R.array.statistics_type_labels)[Statistics.TYPE_DECK_SUMMARY];
+
+			builder.setTitle("Context Menu");
 	        builder.setIcon(R.drawable.ic_menu_manage);
 	        builder.setItems(entries, mContextMenuListener);
 	        dialog = builder.create();
@@ -1632,6 +1639,9 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
+            }
+            if (result == null) {
+            	return;
             }
             if (result.getBoolean()) {
 		    	if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
