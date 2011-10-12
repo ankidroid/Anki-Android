@@ -254,7 +254,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             	} else {
             		animationsCheckboxPreference.setEnabled(true);
             	}
-            	Themes.resetTheme();
+            	Themes.loadTheme();
     			Intent intent = this.getIntent();
     			setResult(StudyOptions.RESULT_RESTART, intent);
     			finish();

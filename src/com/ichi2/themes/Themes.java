@@ -82,6 +82,77 @@ public class Themes {
 
 	public static void applyTheme(Context context) {
 		if (mCurrentTheme == -1) {
+			loadTheme();
+		}
+		switch (mCurrentTheme) {
+		case THEME_ANDROID_DARK:
+			context.setTheme(R.style.Theme_Black);
+			Log.i(AnkiDroidApp.TAG, "Set theme: dark");
+			break;
+		case THEME_ANDROID_LIGHT:
+			context.setTheme(R.style.Theme_Light);
+			Log.i(AnkiDroidApp.TAG, "Set theme: light");
+			break;
+		case THEME_BLUE:
+			context.setTheme(R.style.Theme_Blue);
+			Log.i(AnkiDroidApp.TAG, "Set theme: blue");
+			break;
+		}
+	}
+
+
+	public static void setContentStyle(View view, int caller) {
+		if (mCurrentTheme == THEME_ANDROID_DARK) {
+			return;
+		}
+		switch (caller) {
+		case CALLER_STUDYOPTIONS:
+			((View) view.findViewById(R.id.studyoptions_progressbar1_border)).setBackgroundResource(mProgressbarsFrameColor);
+			((View) view.findViewById(R.id.studyoptions_progressbar2_border)).setBackgroundResource(mProgressbarsFrameColor);
+			((View) view.findViewById(R.id.studyoptions_global_limit_bars)).setBackgroundResource(mProgressbarsFrameColor);
+			((View) view.findViewById(R.id.studyoptions_progressbar4_border)).setBackgroundResource(mProgressbarsFrameColor);
+
+			((View) view.findViewById(R.id.studyoptions_bars_max)).setBackgroundResource(mProgressbarsBackgroundColor);
+			((View) view.findViewById(R.id.studyoptions_progressbar2_content)).setBackgroundResource(mProgressbarsBackgroundColor);
+			((View) view.findViewById(R.id.studyoptions_global_limit_bars_content)).setBackgroundResource(mProgressbarsBackgroundColor);
+			((View) view.findViewById(R.id.studyoptions_progressbar4_content)).setBackgroundResource(mProgressbarsBackgroundColor);
+
+			((View) view.findViewById(R.id.studyoptions_global_mat_limit_bar)).setBackgroundResource(mProgressbarsMatureColor);
+			((View) view.findViewById(R.id.studyoptions_global_mat_bar)).setBackgroundResource(mProgressbarsMatureColor);
+
+			((View) view.findViewById(R.id.studyoptions_global_limit_bar)).setBackgroundResource(mProgressbarsYoungColor);
+			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
+			break;
+		case CALLER_DECKPICKER:
+			if (mCurrentTheme == THEME_BLUE) {
+				((ListView)view.findViewById(R.id.files)).setSelector(R.drawable.blue_deckpicker_list_selector;);
+			}
+			break;
+		case CALLER_DECKPICKER_DECK:
+			if (view.getId() == R.id.DeckPickerCompletionMat) {
+				view.setBackgroundResource(mProgressbarsFrameColor);
+			} else if (view.getId() == R.id.DeckPickerCompletionAll) {
+				view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
+			} else if (view.getId() == R.id.deckpicker_deck) {
+				view.setBackgroundResource(mDeckpickerItemBorder);
+			}
+			break;
+		case CALLER_REVIEWER:
+	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
+	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
+	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
+			break;
+		case CALLER_FEEDBACK:
+			((TextView)view).setTextColor(mProgressbarsFrameColor);
+			break;
+		case CALLER_DOWNLOAD_DECK:
+			view.setBackgroundResource(mDeckpickerItemBorder);
+			break;
+		}
+	}
+
+
+	public static void loadTheme(){
 			SharedPreferences preferences = PrefSettings.getSharedPrefs(context);
 			mCurrentTheme = Integer.parseInt(preferences.getString("theme", "2"));
 			switch (mCurrentTheme) {
@@ -164,108 +235,6 @@ public class Themes {
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
 				break;
 			}
-		}
-		switch (mCurrentTheme) {
-		case THEME_ANDROID_DARK:
-			context.setTheme(R.style.Theme_Black);
-			Log.i(AnkiDroidApp.TAG, "Set theme: dark");
-			break;
-		case THEME_ANDROID_LIGHT:
-			context.setTheme(R.style.Theme_Light);
-			Log.i(AnkiDroidApp.TAG, "Set theme: light");
-			break;
-		case THEME_BLUE:
-			context.setTheme(R.style.Theme_Blue);
-			Log.i(AnkiDroidApp.TAG, "Set theme: blue");
-			break;
-		}
-	}
-
-
-	public static void setContentStyle(View view, int caller) {
-		if (mCurrentTheme == THEME_ANDROID_DARK) {
-			return;
-		}
-		switch (caller) {
-		case CALLER_STUDYOPTIONS:
-			((View) view.findViewById(R.id.studyoptions_progressbar1_border)).setBackgroundResource(mProgressbarsFrameColor);
-			((View) view.findViewById(R.id.studyoptions_progressbar2_border)).setBackgroundResource(mProgressbarsFrameColor);
-			((View) view.findViewById(R.id.studyoptions_global_limit_bars)).setBackgroundResource(mProgressbarsFrameColor);
-			((View) view.findViewById(R.id.studyoptions_progressbar4_border)).setBackgroundResource(mProgressbarsFrameColor);
-
-			((View) view.findViewById(R.id.studyoptions_bars_max)).setBackgroundResource(mProgressbarsBackgroundColor);
-			((View) view.findViewById(R.id.studyoptions_progressbar2_content)).setBackgroundResource(mProgressbarsBackgroundColor);
-			((View) view.findViewById(R.id.studyoptions_global_limit_bars_content)).setBackgroundResource(mProgressbarsBackgroundColor);
-			((View) view.findViewById(R.id.studyoptions_progressbar4_content)).setBackgroundResource(mProgressbarsBackgroundColor);
-
-			((View) view.findViewById(R.id.studyoptions_global_mat_limit_bar)).setBackgroundResource(mProgressbarsMatureColor);
-			((View) view.findViewById(R.id.studyoptions_global_mat_bar)).setBackgroundResource(mProgressbarsMatureColor);
-
-			((View) view.findViewById(R.id.studyoptions_global_limit_bar)).setBackgroundResource(mProgressbarsYoungColor);
-			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
-			break;
-		case CALLER_DECKPICKER:
-			if (mCurrentTheme == THEME_BLUE) {
-				((ListView)view.findViewById(R.id.files)).setSelector(R.drawable.blue_deckpicker_list_selector;);
-			}
-			break;
-		case CALLER_DECKPICKER_DECK:
-			if (view.getId() == R.id.DeckPickerCompletionMat) {
-				view.setBackgroundResource(mProgressbarsFrameColor);
-			} else if (view.getId() == R.id.DeckPickerCompletionAll) {
-				view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
-			} else if (view.getId() == R.id.deckpicker_deck) {
-				view.setBackgroundResource(mDeckpickerItemBorder);
-			}
-			break;
-		case CALLER_REVIEWER:
-	        ((View)view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackground);
-	        ((View)view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
-	        ((View)view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
-			break;
-		case CALLER_FEEDBACK:
-			((TextView)view).setTextColor(mProgressbarsFrameColor);
-			break;
-		case CALLER_DOWNLOAD_DECK:
-			view.setBackgroundResource(mDeckpickerItemBorder);
-			break;
-		}
-	}
-
-
-	public static void resetTheme(){
-		mCurrentTheme = -1;
-		mProgressbarsBackgroundColor = 0;
-		mProgressbarsFrameColor = 0;
-		mProgressbarsMatureColor = 0;
-		mProgressbarsYoungColor = 0;
-		mProgressbarsDeckpickerYoungColor = 0;
-		mReviewerBackground = 0;
-		mFlashcardBorder = 0;
-		mDeckpickerItemBorder = 0;
-		mTitleStyle = 0;
-		mTextViewStyle = 0;
-		mWallpaper = 0;
-		mBackgroundColor = 0;
-		mToastBackground = 0;
-		mDialogBackgroundColor = 0;
-		mBackgroundDarkColor = 0;
-		mReviewerProgressbar = 0;
-		mCardbrowserItemBorder = new int[] {0, 0, 0};
-		mChartColors = new int[] {0, 0};
-		mPopupTopDark = 0;
-		mPopupTopBright = 0;
-		mPopupTopMedium = 0;
-		mPopupCenterDark = 0;
-		mPopupCenterBright = 0;
-		mPopupCenterMedium = 0;
-		mPopupBottomDark = 0;
-		mPopupBottomBright = 0;
-		mPopupBottomMedium = 0;
-		mPopupFullBright = 0;
-		mPopupFullMedium = 0;
-		mPopupFullDark = 0;
-		mDividerHorizontalBright = 0;
 	}
 
 
