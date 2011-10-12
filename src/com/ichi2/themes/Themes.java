@@ -166,9 +166,22 @@ public class Themes {
 			switch (mCurrentTheme) {
 			case THEME_ANDROID_DARK:
 				mDialogBackgroundColor = R.color.card_browser_background;
+				mProgressbarsBackgroundColor = 0;
+				mProgressbarsFrameColor = 0;
+				mProgressbarsMatureColor = 0;
+				mProgressbarsYoungColor = 0;
+				mProgressbarsDeckpickerYoungColor = 0;
+				mReviewerBackground = 0;
+				mFlashcardBorder = 0;
+				mDeckpickerItemBorder = 0;
+				mTitleStyle = 0;
+				mTextViewStyle = 0;
+				mWallpaper = 0;
+				mToastBackground = 0;
+				mBackgroundDarkColor = 0;
+				mReviewerProgressbar = 0;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mChartColors = new int[] {Color.WHITE, Color.BLACK};
-				mPopupTopDark = R.drawable.popup_top_dark;
 				mPopupTopBright = R.drawable.popup_top_bright;
 				mPopupTopMedium = R.drawable.popup_top_bright;
 				mPopupTopDark = R.drawable.popup_top_dark;
@@ -190,6 +203,14 @@ public class Themes {
 				mProgressbarsMatureColor = R.color.studyoptions_progressbar_mature_light;
 				mProgressbarsYoungColor = R.color.studyoptions_progressbar_young_light;
 				mProgressbarsDeckpickerYoungColor = R.color.deckpicker_progressbar_young_light;
+				mReviewerBackground = 0;
+				mFlashcardBorder = 0;
+				mDeckpickerItemBorder = 0;
+				mTitleStyle = 0;
+				mTextViewStyle = 0;
+				mWallpaper = 0;
+				mToastBackground = 0;
+				mBackgroundDarkColor = 0;
 				mDialogBackgroundColor = R.color.card_browser_background;
 				mCardbrowserItemBorder = new int[] {0, R.color.card_browser_marked, R.color.card_browser_suspended, R.color.card_browser_marked};
 				mReviewerProgressbar = mProgressbarsYoungColor;
