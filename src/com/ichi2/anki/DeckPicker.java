@@ -1485,11 +1485,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
     public void openPersonalDeckPicker() {
         if (AnkiDroidApp.isUserLoggedIn()) {
-            if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
-            {
-                AnkiDroidApp.deck().closeDeck();
-                AnkiDroidApp.setDeck(null);
-            }
             Intent i = getIntent();
             startActivityForResult(new Intent(this, PersonalDeckPicker.class), DOWNLOAD_PERSONAL_DECK);
             if (StudyOptions.getApiLevel() > 4) {
@@ -1502,11 +1497,6 @@ public class DeckPicker extends Activity implements Runnable, IButtonListener {
 
 
     public void openSharedDeckPicker() {
-        if (AnkiDroidApp.deck() != null)// && sdCardAvailable)
-        {
-            AnkiDroidApp.deck().closeDeck();
-            AnkiDroidApp.setDeck(null);
-        }
         // deckLoaded = false;
         startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
         if (StudyOptions.getApiLevel() > 4) {

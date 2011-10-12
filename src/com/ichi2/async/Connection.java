@@ -245,6 +245,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
 
     private Payload doInBackgroundGetSharedDecks(Payload data) {
+        if (AnkiDroidApp.deck() != null) {
+            AnkiDroidApp.deck().closeDeck();
+            AnkiDroidApp.setDeck(null);
+        }
         try {
             data.result = AnkiDroidProxy.getSharedDecks();
         } catch (OutOfMemoryError e) {
@@ -263,7 +267,10 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
 
     private Payload doInBackgroundGetPersonalDecks(Payload data) {
         Resources res = sContext.getResources();
-        
+        if (AnkiDroidApp.deck() != null) {
+            AnkiDroidApp.deck().closeDeck();
+            AnkiDroidApp.setDeck(null);
+        }
         try {
             String username = (String) data.data[0];
             String password = (String) data.data[1];
