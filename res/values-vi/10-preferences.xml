@@ -197,4 +197,5 @@
   <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
   <string name="input_workaround">Input Workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
+  <string name="write_answers_message">Before being able to write your answers, you have to define for every deck a field to compare the written answer with.\n\nYou can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).</string>
 </resources>

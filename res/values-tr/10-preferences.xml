@@ -197,4 +197,5 @@
   <string name="show_broadcast_messages_summ">Yeni sürüm güncellemeleri ve önemli diğer haberler gibi AnkiDroid bildirimlerini göster</string>
   <string name="input_workaround">Giriş Çözümü</string>
   <string name="input_workaround_summ">HTML giriş kutularındaki odaklama sorunları için çözüm. Bazı cihazlarda sorun yaratabilir.</string>
+  <string name="write_answers_message">Before being able to write your answers, you have to define for every deck a field to compare the written answer with.\n\nYou can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).</string>
 </resources>

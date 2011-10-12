@@ -17,8 +17,8 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br /><br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br /><br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br /><br />(click the button to show the back side)]]></item> 
+    <item><![CDATA[Благодарим Вас за установку AnkiDroid!<br />Краткое вступление. <br /><br />То, что вы видите сейчас является <span style=\'font-weight:600;\'>вопрос</span> учебной карточки.<br />Пожалуйста, нажмите на большую кнопку ниже... ]]></item> 
+    <item><![CDATA[Следующая карта показана сейчас.<br /><br />Идея проста: как и на бумажных карточках в &quot;реальном мире&quot; вы пишете вопрос на передней, а ответ на оборотной стороне карты.<br /><br /> (Нажмите кнопку, чтобы показать обратную сторону) ]]></item> 
     <item><![CDATA[&quot;Какой город является столицей Буркина Фасо?&quot;<br /><br />Подумайте об ответе и нажмите затем &quot;Показать ответ&quot;]]></item> 
     <item><![CDATA[Над каждой кнопкой (которая показывает легкость ответа) вы найдете информацию о времени, через которое карта будет показана снова при нажатии на эту кнопку.]]></item> 
     <item><![CDATA[Цель состоит в том, чтобы показать Вам карту до того, как Вы её забудете. Эмпирические исследования показали, что таким образом информацию можно выучить более эффективно.]]></item> 
@@ -31,8 +31,8 @@
     <item><![CDATA[Это были основные моменты использования AnkiDroid.<br /><br> Дополнительные сведения на сайте http://ankisrs.net/ ]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br /><br /><br />Click on the right one of the four buttons]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br /><br />(click on one of the buttons to show the next card)]]></item> 
+    <item><![CDATA[... для того, чтобы увидеть <span style=\'font-weight:600;\'>ответ</span> учебной карточки (ниже линии).<br /><br /><br />Нажмите на одну из четырех кнопок]]></item> 
+    <item><![CDATA[ Предположим, что вы хотите выучить столицы мира. Позвольте вопрос будет...<br /><br />(Нажмите на одну из кнопок, чтобы показать следующую карту)]]></item> 
     <item><![CDATA[&quot;Ouagadougou (Уагадугу)&quot; - правильный ответ. <br /><br />Вы не знали? Тогда нажмите &quot;Снова&quot; чтобы увидеть эту карту снова через несколько минут. В противном случае выберите другую кнопку в зависимости от того, насколько легко Вам было ответить.]]></item> 
     <item><![CDATA[Этот промежуток времени зависит от того, когда была эта карта показана последний раз, от сложности последнего ответа и от сложности всех предыдущих ответов на эту карту.]]></item> 
     <item><![CDATA[Если Вы хотите больше узнать о алгоритме отложенных повторений посетите: <br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 

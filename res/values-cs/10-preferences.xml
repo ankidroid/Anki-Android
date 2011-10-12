@@ -50,8 +50,8 @@
   <string name="show_whiteboard_summ">Umožňuje psát na obrazovku</string>
   <string name="whiteboard_stroke_width">Šířka tahu na tabuli</string>
   <string name="whiteboard_stroke_width_summ">Šířka čáry: XXX</string>
-  <string name="whiteboard_black">Monochrome</string>
-  <string name="whiteboard_black_summ">Použít černobílé místo barevných čar (pro zařízení s nižší pamětí, nefunguje v nočním režimu)</string>
+  <string name="whiteboard_black">Jednobarevné</string>
+  <string name="whiteboard_black_summ">Použít pouze jednu barvu na tabuli (pro zařízení s nižší pamětí, nefunguje v nočním režimu)</string>
   <string name="write_answers">Psát odpovědi</string>
   <string name="write_answers_summ">Umožňuje napsat odpověď a porovnat ji se správnou</string>
   <string name="text_selection">Povolit výběr textu</string>
@@ -91,7 +91,7 @@
   <string name="fullscreen_review_summ">Můžete se rozhodnout, zda chcete použít celý dostupný prostor obrazovky během opakování</string>
   <string name="zoom">Povolit zoom</string>
   <string name="zoom_summ">Zobrazit ovládání zoomu během opakování</string>
-  <string name="zeemote">Zeemote JS1 support</string>
+  <string name="zeemote">Podpora Zeemote JS1</string>
   <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
   <string name="swipe">Povolit gesta</string>
   <string name="swipe_summ_off">Použít gesta pro přepínání mezi obrazovkami a zodpovězenými kartami. Toto nastavení není kompatibilní s ovládacími prvky zoomu</string>
@@ -151,7 +151,7 @@
   <string name="studyoptions_limit_tags_active">S: %1$s</string>
   <string name="studyoptions_limit_tags_inactive">Bez: %1$s</string>
   <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit Learning</string>
+  <string name="studyoptions_limit_dialog_title">Limit učení</string>
   <string name="studyoptions_session">Sezení</string>
   <string name="studyoptions_tag">Podle štítku</string>
   <string name="studyoptions_tag_new">Zobrazit nové karty podle štítků:</string>
@@ -197,4 +197,5 @@
   <string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
   <string name="input_workaround">Input Workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
+  <string name="write_answers_message">Before being able to write your answers, you have to define for every deck a field to compare the written answer with.\n\nYou can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).</string>
 </resources>
