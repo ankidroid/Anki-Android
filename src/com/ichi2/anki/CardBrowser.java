@@ -909,7 +909,7 @@ public class CardBrowser extends Activity {
 		@Override
 		public void onPreExecute() {
 			Resources res = getResources();
-			if (mProgressDialog.isShowing()) {
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
 			} else {
 				mProgressDialog = ProgressDialog.show(CardBrowser.this, "", res
