@@ -78,8 +78,7 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
 
     private int mType;
     private TaskListener mListener;
-
-
+    private boolean mIsCanceled;
     
     public static DeckTask launchDeckTask(int type, TaskListener listener, TaskData... params) {
         sOldInstance = sInstance;
@@ -220,6 +219,11 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
     @Override
     protected void onPostExecute(TaskData result) {
         mListener.onPostExecute(result);
+    }
+
+
+    public static void cancelTask() {
+    	sInstance.mIsCanceled = true;
     }
 
 
@@ -488,15 +492,16 @@ public class DeckTask extends AsyncTask<DeckTask.TaskData, DeckTask.TaskData, De
         int chunk = params[0].getInt();
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadCards");
     	String startId = "";
-    	while (true) {
+    	while (!mIsCanceled) {
     		ArrayList<HashMap<String, String>> cards = deck.getCards(chunk, startId);
     		if (cards.size() == 0) {
-    			return null;	
+    			break;
     		} else {
                	publishProgress(new TaskData(cards));
                	startId = cards.get(cards.size() - 1).get("id");    			
     		}
     	}
+    	return null;
     }
 
 

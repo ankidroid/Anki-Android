@@ -53,7 +53,6 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 import com.tomgibara.android.veecheck.util.PrefSettings;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -700,7 +699,14 @@ public class CardBrowser extends Activity {
 			if (!mUndoRedoDialogShowing) {
 				mProgressDialog = ProgressDialog.show(CardBrowser.this, "",
 						getResources().getString(R.string.card_browser_load),
-						true);
+						true, true, new OnCancelListener() {
+
+							@Override
+							public void onCancel(DialogInterface arg0) {
+								DeckTask.cancelTask();
+							}
+					
+				});
 			} else {
 				mProgressDialog.setMessage(getResources().getString(
 						R.string.card_browser_load));
