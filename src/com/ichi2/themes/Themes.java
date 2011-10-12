@@ -37,7 +37,7 @@ public class Themes {
 
 	public final static int THEME_ANDROID_DARK = 0;
 	public final static int THEME_ANDROID_LIGHT = 1;
-	public final static int THEME_BLUE= 2;
+	public final static int THEME_BLUE = 2;
 
 	public final static int CALLER_STUDYOPTIONS = 1;
 	public final static int CALLER_DECKPICKER_DECK = 3;
@@ -78,7 +78,6 @@ public class Themes {
 	private static int mPopupFullMedium;
 	private static int mPopupFullBright;
 	private static int mDividerHorizontalBright;
-	private static int mDeckpickerSelector = 0;
 	
 
 	public static void applyTheme(Context context) {
@@ -163,7 +162,6 @@ public class Themes {
 				mPopupFullMedium = R.drawable.blue_popup_full_medium;
 				mPopupFullDark = R.drawable.blue_popup_full_dark;
 				mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
-				mDeckpickerSelector = R.drawable.blue_deckpicker_list_selector;
 				break;
 			}
 		}
@@ -207,7 +205,9 @@ public class Themes {
 			((View) view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
 			break;
 		case CALLER_DECKPICKER:
-			((ListView)view.findViewById(R.id.files)).setSelector(mDeckpickerSelector);
+			if (mCurrentTheme == THEME_BLUE) {
+				((ListView)view.findViewById(R.id.files)).setSelector(R.drawable.blue_deckpicker_list_selector;);
+			}
 			break;
 		case CALLER_DECKPICKER_DECK:
 			if (view.getId() == R.id.DeckPickerCompletionMat) {
@@ -266,7 +266,6 @@ public class Themes {
 		mPopupFullMedium = 0;
 		mPopupFullDark = 0;
 		mDividerHorizontalBright = 0;
-		mDeckpickerSelector = 0;
 	}
 
 
