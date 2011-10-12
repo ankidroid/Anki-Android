@@ -361,6 +361,7 @@ public class Statistics {
        	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(newsLastYear, Math.min((double)deckAge, 365.0d)))).append("<br>");
        	builder.append("<br><b>").append(res.getString(R.string.deck_summary_average_total)).append("</b><br>");
        	builder.append(res.getString(R.string.deck_summary_reviews)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(repsMatCount + repsYoungCount + repsFirstCount, deckAge))).append("<br>");
+       	builder.append(res.getString(R.string.deck_summary_news)).append(" ").append(res.getString(R.string.deck_summary_cards_per_day, getFraction(matureCount + youngCount, deckAge))).append("<br>");
        	builder.append("</body></html>");
        	return builder.toString();
     }
