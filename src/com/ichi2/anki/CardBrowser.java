@@ -94,6 +94,7 @@ public class CardBrowser extends Activity {
 
 	private static final int DIALOG_ORDER = 0;
 	private static final int DIALOG_CONTEXT_MENU = 1;
+	private static final int DIALOG_RELOAD_CARDS = 2;
 
 	private static final int BACKGROUND_NORMAL = 0;
 	private static final int BACKGROUND_MARKED = 1;
@@ -132,6 +133,10 @@ public class CardBrowser extends Activity {
 
 	private boolean mPrefFixArabic;
 
+	private boolean mPrefCacheCardBrowser;
+	private static ArrayList<HashMap<String, String>> sAllCardsCache;
+	private static String sCachedDeckPath;
+
     private Handler mTimerHandler = new Handler();
     private static final int WAIT_TIME_UNTIL_UPDATE = 500;
 
@@ -146,6 +151,9 @@ public class CardBrowser extends Activity {
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
+			if (mSelectedCard == null) {
+				return;
+			}
 			switch (which) {
 			case CONTEXT_MENU_MARK:
 				DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
@@ -205,6 +213,7 @@ public class CardBrowser extends Activity {
 		mrelativeBrowserFontSize = preferences.getInt(
 				"relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
 		mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
+		mPrefCacheCardBrowser = preferences.getBoolean("cardBrowserCache", false);
 
 		mCards = new ArrayList<HashMap<String, String>>();
 		mAllCards = new ArrayList<HashMap<String, String>>();
@@ -244,6 +253,10 @@ public class CardBrowser extends Activity {
 				mPositionInCardsList = position;
 				mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(
 						mPositionInCardsList).get("id")));
+				if (mSelectedCard == null) {
+					deleteCard(mCards.get(mPositionInCardsList).get("id"), mPositionInCardsList);
+					return;
+				}
 				sEditorCard = mSelectedCard;
 				editCard.putExtra("callfromcardbrowser", true);
 				startActivityForResult(editCard, EDIT_CARD);
@@ -296,6 +309,11 @@ public class CardBrowser extends Activity {
 			Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
 			if (mSearchEditText.getText().length() == 0 && !mShowOnlyMarSus
 					&& mSelectedTags.size() == 0) {
+				if (mPrefCacheCardBrowser) {
+					sCachedDeckPath = mDeck.getDeckPath();
+					sAllCardsCache = new ArrayList<HashMap<String, String>>();
+					sAllCardsCache.addAll(mAllCards);					
+				}
 				setResult(RESULT_OK);
 				finish();
 				if (Integer.valueOf(android.os.Build.VERSION.SDK) > 4) {
@@ -464,6 +482,42 @@ public class CardBrowser extends Activity {
 	        builder.setItems(entries, mContextMenuListener);
 	        dialog = builder.create();
 			break;
+		case DIALOG_RELOAD_CARDS:
+			builder.setTitle(res.getString(R.string.pref_cache_cardbrowser));
+			builder.setMessage(res.getString(R.string.pref_cache_cardbrowser_reload));
+			builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
+							mLoadCardsHandler,
+							new DeckTask.TaskData(mDeck, LOAD_CHUNK));	
+					}
+				
+			});
+			builder.setNegativeButton(res.getString(R.string.no), new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					mAllCards.addAll(sAllCardsCache);
+					mCards.addAll(mAllCards);
+					updateList();
+				}
+				
+			});
+			builder.setCancelable(true);
+			builder.setOnCancelListener(new OnCancelListener() {
+
+				@Override
+				public void onCancel(DialogInterface arg0) {
+					mAllCards.addAll(sAllCardsCache);
+					mCards.addAll(mAllCards);
+					updateList();
+				}
+				
+			});
+			dialog = builder.create();
+			break;
 		}
 		return dialog;
 	}
@@ -476,6 +530,11 @@ public class CardBrowser extends Activity {
 		switch (id) {
 		case DIALOG_CONTEXT_MENU:
 			mSelectedCard = mDeck.cardFromId(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
+			if (mSelectedCard == null) {
+				deleteCard(mCards.get(mPositionInCardsList).get("id"), mPositionInCardsList);
+				ad.setEnabled(false);
+				return;
+			}
 			if (mSelectedCard.isMarked()) {
 				ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
 				mIsMarked = true;
@@ -582,9 +641,17 @@ public class CardBrowser extends Activity {
 	}
 
 	private void getCards() {
-		DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
-				mLoadCardsHandler,
-				new DeckTask.TaskData(mDeck, LOAD_CHUNK));
+		if ((sCachedDeckPath != null && !sCachedDeckPath.equals(mDeck.getDeckPath())) || !mPrefCacheCardBrowser) {
+			sCachedDeckPath = null;
+			sAllCardsCache = null;
+		}
+		if (mPrefCacheCardBrowser && sAllCardsCache != null && !sAllCardsCache.isEmpty()) {
+			showDialog(DIALOG_RELOAD_CARDS);
+		} else {
+			DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_CARDS,
+					mLoadCardsHandler,
+					new DeckTask.TaskData(mDeck, LOAD_CHUNK));
+		}
 	}
 
 	public static Card getEditorCard() {

@@ -483,6 +483,11 @@
 				android:defaultValue="false"
 				android:key="fixArabicText"/>
 			<CheckBoxPreference
+				android:title="@string/pref_cache_cardbrowser"
+				android:summary="@string/pref_cache_cardbrowser_summ"
+				android:defaultValue="false"
+				android:key="cardBrowserCache"/>
+			<CheckBoxPreference
 				android:title="@string/input_workaround"
 				android:summary="@string/input_workaround_summ"
 				android:defaultValue="false"

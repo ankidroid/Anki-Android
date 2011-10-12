@@ -226,4 +226,9 @@
 
 <string name="write_answers_message">Before being able to write your answers, you have to define for every deck a field to compare the written answer with.\n\nYou can do this via Anki Desktop (deck properties -> edit model -> card layout).</string>
 
+<string name="pref_cache_cardbrowser">Card Browser Cache</string>
+<string name="pref_cache_cardbrowser_summ">Holds all card browser cards in cache (memory consumptive).</string>
+<string name="pref_cache_cardbrowser_reload">Reload all cards?</string>
+
+
 </resources>
