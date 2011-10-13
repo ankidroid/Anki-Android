@@ -2278,7 +2278,9 @@ public class StudyOptions extends Activity implements IButtonListener {
             Log.i(AnkiDroidApp.TAG, "onActivityResult = OK");
             mDeckFilename = intent.getExtras().getString(OPT_DB);
             savePreferences("deckFilename");
-
+            if (mDeckFilename == null || !new File(mDeckFilename).exists()) {
+            	showContentView(CONTENT_NO_DECK);
+            }
             // Log.i(AnkiDroidApp.TAG, "onActivityResult - deckSelected = " + deckSelected);
             if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
                 boolean updateAllCards = (requestCode == DOWNLOAD_SHARED_DECK);
