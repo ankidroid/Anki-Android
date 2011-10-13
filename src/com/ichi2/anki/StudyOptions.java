@@ -2261,7 +2261,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     if (AnkiDroidApp.deck() == null || !AnkiDroidApp.deck().getDeckPath().equals(mDeckFilename)) {
                     	if (resultCode != RESULT_DONT_RELOAD_DECK) {
                             displayProgressDialogAndLoadDeck();
-                        }                    	
+                        }
                     }
             	}
                 return;
@@ -2604,7 +2604,7 @@ public class StudyOptions extends Activity implements IButtonListener {
                     break;
 
                 case DeckTask.DECK_NOT_LOADED:
-                	showContentView(CONTENT_STUDY_OPTIONS);
+                	showContentView(CONTENT_DECK_NOT_LOADED);
                 	mCurrentDialogMessage = getResources().getString(R.string.open_deck_failed, new File(mDeckFilename).getName().replace(".anki", ""), BackupManager.BROKEN_DECKS_SUFFIX.replace("/", ""), getResources().getString(R.string.repair_deck));
         			showDialog(DIALOG_DECK_NOT_LOADED);
                     break;
